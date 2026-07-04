@@ -9,6 +9,7 @@ from e2r.census.census_runner_v4 import (
     CensusV4RunConfig,
     _brain_audit,
     _brain_web_attempt_blockers,
+    _command_string,
     _extractor_audit,
     _export_brain_web_bundle_leafs,
     _readiness_verdict,
@@ -26,6 +27,20 @@ def _read_jsonl(path: Path) -> list[dict]:
 
 
 class CensusV4RunModeHonestyTests(unittest.TestCase):
+    def test_reproduction_command_includes_runtime_budget_when_configured(self):
+        command = _command_string(
+            CensusV4RunConfig(
+                as_of_date="2026-07-01",
+                output_root="output/census_v4/unit",
+                v3_output_root="output/census_v3/2026-07-01",
+                run_mode="BRAIN_AND_WEB_ACQUISITION_ENABLED",
+                brain_web_mode="enabled",
+                brain_runtime_budget_seconds=900.0,
+            )
+        )
+
+        self.assertIn("--brain-runtime-budget-seconds 900.0", command)
+
     def test_brain_web_attempt_blocks_source_task_success_without_accepted_claims(self):
         blockers = _brain_web_attempt_blockers(
             real_provider_success_count=1,
@@ -258,12 +273,12 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
         self.assertFalse(readiness["brain_web_evidence_pass"])
         self.assertTrue(readiness["full_thesis_smoke_pass"])
         self.assertFalse(readiness["full_thesis_production_pass"])
-        self.assertFalse(readiness["all_archetype_replay_pass"])
+        self.assertTrue(readiness["all_archetype_replay_pass"])
         self.assertEqual(readiness["target_gate"], "anti_fake")
         self.assertTrue(readiness["target_gate_pass"])
         self.assertEqual(readiness["anti_fake_blockers"], [])
         self.assertGreater(len(readiness["remaining_operational_gaps"]), 0)
-        self.assertIn("all archetype", " ".join(readiness["remaining_operational_gaps"]).lower().replace("-", " "))
+        self.assertNotIn("all archetype", " ".join(readiness["remaining_operational_gaps"]).lower().replace("-", " "))
 
     def test_readiness_does_not_use_ambiguous_full_universe_label(self):
         readiness = census_v4_artifacts()["readiness"]
@@ -360,6 +375,58 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
         self.assertFalse(result.readiness_verdict["brain_web_readiness_gate"]["brain_web_evidence_pass_allowed"])
         self.assertIn("LLM planner real-provider success count is zero", " ".join(result.readiness_verdict["anti_fake_blockers"]))
 
+    def test_runtime_budget_exhausted_full_thesis_seed_is_audited_distinctly(self):
+        with TemporaryDirectory() as tmp:
+            output_root = Path(tmp) / "out"
+            result = run_census_mode_v4(
+                CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    output_root=str(output_root),
+                    v3_output_root="output/census_v3/2026-07-01",
+                    max_symbols=20,
+                    run_mode="BRAIN_AND_WEB_ACQUISITION_ENABLED",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="none",
+                    brain_source_acquisition="live_official_first",
+                    brain_universe_limit=2,
+                    brain_planner_success_limit=2,
+                    brain_planner_batch_size=1,
+                    brain_max_source_tasks_per_plan=1,
+                    brain_max_fetches_per_task=1,
+                    brain_accepted_claim_target=0,
+                    brain_max_distinct_candidate_attempts=2,
+                    brain_retry_max=1,
+                    brain_claim_extractor_provider="rule_fallback",
+                    brain_runtime_budget_seconds=0.0,
+                    brain_stage_promotion_mode="disabled",
+                    full_thesis_smoke_mode="disabled",
+                    fail_on_critical_audit=False,
+                    write_operational_docs=False,
+                )
+            )
+            gate = result.readiness_verdict["brain_web_readiness_gate"]
+            attempt = result.readiness_verdict["brain_web_attempt"]
+            seed_audit = json.loads((output_root / "full_thesis_seed_materialization_audit.json").read_text(encoding="utf-8"))
+            seed_trace = _read_jsonl(output_root / "full_thesis_seed_materialization_trace.jsonl")
+
+        self.assertEqual(result.readiness_verdict["verdict"], "NOT_READY")
+        self.assertGreater(attempt["full_thesis_seed_runtime_budget_exhausted_count"], 0)
+        self.assertEqual(
+            gate["full_thesis_seed_runtime_budget_exhausted_count"],
+            attempt["full_thesis_seed_runtime_budget_exhausted_count"],
+        )
+        self.assertIn("full-thesis seed planner stopped after runtime budget exhaustion", gate["blockers"])
+        self.assertNotIn("full-thesis seed planner runs have no real-provider success", gate["blockers"])
+        self.assertGreater(seed_audit["status_counts"].get("PLANNER_PENDING_RUNTIME_BUDGET_EXHAUSTED", 0), 0)
+        self.assertNotIn("PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS", seed_audit["status_counts"])
+        self.assertTrue(
+            all(
+                "full_thesis_seed_planner_stopped_after_runtime_budget_exhausted" in row["materialization_blockers"]
+                for row in seed_trace
+                if row["materialization_status"] == "PLANNER_PENDING_RUNTIME_BUDGET_EXHAUSTED"
+            )
+        )
+
     def test_cli_returns_nonzero_when_readiness_is_not_ready(self):
         with TemporaryDirectory() as tmp:
             code = census_v4_cli_main(
@@ -385,6 +452,9 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
     def test_cli_keyboard_interrupt_marks_partial_output_invalid(self):
         with TemporaryDirectory() as tmp:
             output_root = Path(tmp) / "interrupted"
+            output_root.mkdir(parents=True, exist_ok=True)
+            (output_root / "planner_runs.jsonl").write_text('{"planner_run_id":"P1"}\n{"planner_run_id":"P2"}\n', encoding="utf-8")
+            (output_root / "accepted_claims.jsonl").write_text("", encoding="utf-8")
             with patch(
                 "e2r.cli.run_e2r_census_v4_until_pass.run_census_mode_v4",
                 side_effect=KeyboardInterrupt("unit interrupt"),
@@ -405,6 +475,8 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                         "enabled",
                         "--brain-claim-extractor-timeout-seconds",
                         "12",
+                        "--brain-runtime-budget-seconds",
+                        "9",
                         "--write-operational-docs",
                         "false",
                     ]
@@ -419,6 +491,12 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
         self.assertFalse(marker["score_or_stage_evidence_allowed"])
         self.assertFalse(marker["full_thesis_promotion_allowed"])
         self.assertEqual(marker["config"]["brain_claim_extractor_timeout_seconds"], 12.0)
+        self.assertEqual(marker["config"]["brain_runtime_budget_seconds"], 9.0)
+        summary = marker["partial_output_summary"]
+        self.assertEqual(summary["files"]["planner_runs.jsonl"]["row_count"], 2)
+        self.assertEqual(summary["files"]["accepted_claims.jsonl"]["row_count"], 0)
+        self.assertGreaterEqual(summary["existing_file_count"], 2)
+        self.assertGreaterEqual(summary["nonempty_file_count"], 1)
 
     def test_cli_runner_exception_marks_partial_output_invalid(self):
         with TemporaryDirectory() as tmp:

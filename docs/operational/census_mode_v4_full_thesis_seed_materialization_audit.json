@@ -1,11 +1,19 @@
 {
-  "accepted_claim_seed_count": 0,
+  "accepted_claim_seed_count": 36,
+  "actual_materialization_pass_allowed": true,
   "controlled_smoke_full_thesis_final_scope_count": 0,
   "critical_count": 0,
   "critical_counts": {
     "accepted_claim_without_source_task_count": 0,
+    "blocker_follow_up_seed_missing_target_context_count": 0,
+    "event_or_partial_score_operator_use_allowed_count": 0,
+    "event_or_partial_stage_operator_use_allowed_count": 0,
+    "final_operator_score_use_missing_count": 0,
+    "final_operator_stage_use_missing_count": 0,
     "full_thesis_promoted_missing_full_e2r_score_count": 0,
     "full_thesis_promoted_missing_stagecourt_count": 0,
+    "full_thesis_promoted_operator_score_use_not_full_count": 0,
+    "full_thesis_promoted_operator_stage_use_not_full_count": 0,
     "full_thesis_scope_without_promoted_status_count": 0,
     "score_evidence_allowed_before_execution_count": 0,
     "seed_trace_count_mismatch_count": 0,
@@ -13,33 +21,76 @@
     "stage_promotion_allowed_before_execution_count": 0,
     "stagecourt_without_accepted_claim_count": 0
   },
+  "final_operator_score_use_counts": {
+    "FULL_E2R_SCORE": 32,
+    "NOT_FULL_E2R_SCORE": 53
+  },
+  "final_operator_stage_use_counts": {
+    "FULL_THESIS_STAGE": 32,
+    "NOT_FULL_THESIS_STAGE": 53
+  },
   "final_score_scale_counts": {
-    "EVENT_WEIGHTED_PARTIAL": 67,
-    "NO_SCORE": 18
+    "EVENT_WEIGHTED_PARTIAL": 41,
+    "FULL_E2R_100": 32,
+    "NO_SCORE": 12
   },
   "final_stage_scope_counts": {
-    "CENSUS_EVENT_BOARD": 85
+    "CENSUS_EVENT_BOARD": 53,
+    "FULL_THESIS": 32
   },
-  "full_thesis_promoted_seed_count": 0,
+  "full_thesis_promoted_seed_count": 32,
+  "full_thesis_seed_promotion_pass": true,
+  "ledger_integrity_pass_allowed": true,
   "next_actions_by_status": {
     "ACCEPTED_CLAIM_NOT_CREATED": "fetch_anchor_and_extract_score_eligible_claims",
     "FULL_THESIS_PROMOTED": "eligible_for_operator_full_thesis_stage_use",
     "PLANNER_NOT_RUN": "run_real_full_thesis_planner_for_seed",
     "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": "fix_or_retry_real_planner_provider",
+    "PLANNER_PENDING_RUNTIME_BUDGET_EXHAUSTED": "increase_runtime_budget_or_resume_seed_without_scoring",
     "SOURCE_TASK_NOT_EXECUTED": "execute_bounded_official_first_source_tasks",
     "STAGECOURT_READY_NOT_PROMOTED": "resolve_green_gate_or_material_gap_blockers",
     "STAGECOURT_TRACE_NOT_CREATED": "map_claims_to_primitives_scores_and_stagecourt"
   },
-  "operator_rule": "A seed row is only an investigation input until the trace reaches FULL_THESIS_PROMOTED. Earlier statuses must remain pending/source-provider/material-gap states and must not be used as an operator FULL_THESIS Stage.",
-  "planner_run_seed_count": 0,
-  "real_provider_success_seed_count": 0,
+  "operator_materialization_status": "FULL_THESIS_MATERIALIZED",
+  "operator_rule": "A seed row is only an investigation input until the trace reaches FULL_THESIS_PROMOTED. Earlier statuses must remain pending/source-provider/material-gap states and must not be used as an operator FULL_THESIS Stage. verdict=PASS only means ledger integrity passed; actual_materialization_pass_allowed must be true before claiming a real FULL_THESIS seed closure.",
+  "planner_run_seed_count": 85,
+  "real_provider_success_seed_count": 50,
   "schema_version": "e2r_census_v4_full_thesis_seed_materialization_audit_v1",
   "seed_event_count": 85,
-  "source_task_execution_seed_count": 0,
-  "stagecourt_trace_seed_count": 0,
+  "seed_source_family_counts": {
+    "CensusFullThesisQueue": 85
+  },
+  "source_task_execution_seed_count": 50,
+  "stagecourt_trace_seed_count": 32,
   "status_counts": {
-    "PLANNER_NOT_RUN": 85
+    "ACCEPTED_CLAIM_NOT_CREATED": 14,
+    "FULL_THESIS_PROMOTED": 32,
+    "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 35,
+    "STAGECOURT_TRACE_NOT_CREATED": 4
+  },
+  "status_counts_by_target_archetype": {
+    "UNKNOWN": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 14,
+      "FULL_THESIS_PROMOTED": 32,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 35,
+      "STAGECOURT_TRACE_NOT_CREATED": 4
+    }
+  },
+  "status_counts_by_target_primitive_gap": {
+    "UNKNOWN": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 14,
+      "FULL_THESIS_PROMOTED": 32,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 35,
+      "STAGECOURT_TRACE_NOT_CREATED": 4
+    }
+  },
+  "target_archetype_counts": {
+    "UNKNOWN": 85
+  },
+  "target_primitive_gap_counts": {
+    "UNKNOWN": 85
   },
   "trace_row_count": 85,
-  "verdict": "PASS"
+  "verdict": "PASS",
+  "verdict_scope": "ACTUAL_FULL_THESIS_MATERIALIZATION"
 }

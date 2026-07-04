@@ -3,12 +3,42 @@ import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from e2r.census.census_runner_v4 import CensusV4RunConfig, _brain_web_readiness_gate_audit, run_census_mode_v4
+from e2r.census.census_runner_v4 import (
+    CensusV4RunConfig,
+    _brain_web_readiness_gate_audit,
+    _extractor_audit,
+    _merge_jsonl_by_key,
+    run_census_mode_v4,
+)
 from e2r.production.metadata import write_jsonl
 from tests.census_v4_test_helpers import census_v4_artifacts, read_json
 
 
 class CensusV4BrainWebReadinessGateTests(unittest.TestCase):
+    def test_llm_extractor_hash_without_raw_prompt_response_files_fails_audit(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_jsonl(
+                root / "claim_extractor_runs.jsonl",
+                [
+                    {
+                        "claim_extractor_run_id": "EXT-1",
+                        "provider_mode": "llm",
+                        "prompt_hash": "prompt-hash",
+                        "response_hash": "response-hash",
+                        "raw_assertion_ids": ["RAW-1"],
+                    }
+                ],
+            )
+
+            audit = _extractor_audit(
+                CensusV4RunConfig(as_of_date="2026-07-01", brain_web_mode="enabled", run_mode="HYBRID_CENSUS"),
+                output_root=root,
+            )
+
+        self.assertEqual(audit["verdict"], "FAIL")
+        self.assertEqual(audit["llm_claim_extractor_missing_raw_prompt_response_path_count"], 1)
+
     def test_canonical_disabled_run_records_not_requested_not_pass(self):
         root = census_v4_artifacts()["output_root"]
         gate = read_json(root / "brain_web_readiness_gate_audit.json")
@@ -241,6 +271,105 @@ class CensusV4BrainWebReadinessGateTests(unittest.TestCase):
         self.assertNotIn("Brain/Web trace rows missing score_contribution_id", " ".join(gate["blockers"]))
         self.assertNotIn("Brain/Web trace rows missing stagecourt_trace_id", " ".join(gate["blockers"]))
         self.assertEqual(gate["verdict"], "READY_FOR_BRAIN_WEB_EVIDENCE_PASS")
+
+    def test_same_claim_reused_as_follow_up_nonrepresentative_trace_is_event_scoped(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_brain_gate_fixture(root, claim_id="CLM-A", contribution_claim_id="CLM-A", stage_claim_id="CLM-A")
+            contributions = _read_jsonl(root / "score_contributions.jsonl")
+            contributions[0]["candidate_event_id"] = "EVT-SCORE"
+            write_jsonl(root / "score_contributions.jsonl", contributions)
+            stage_traces = _read_jsonl(root / "stagecourt_traces.jsonl")
+            stage_traces[0]["candidate_event_id"] = "EVT-SCORE"
+            write_jsonl(root / "stagecourt_traces.jsonl", stage_traces)
+            traces = _read_jsonl(root / "brain_to_claim_trace.jsonl")
+            traces[0]["candidate_event_id"] = "EVT-SCORE"
+            traces[0]["source_task_id"] = "TASK-SCORE"
+            traces.append(
+                {
+                    **traces[0],
+                    "brain_to_claim_trace_id": "BCTRACE-FOLLOW",
+                    "candidate_event_id": "EVT-FOLLOW",
+                    "source_task_id": "TASK-FOLLOW",
+                    "score_contribution_id": None,
+                    "score_contribution_ids": [],
+                    "score_support_status": "ACCEPTED_NON_REPRESENTATIVE_NOT_SCORE_CONTRIBUTING",
+                    "representative_score_claim": False,
+                    "trace_status": "ACCEPTED_NON_REPRESENTATIVE_NOT_SCORE_CONTRIBUTING",
+                }
+            )
+            write_jsonl(root / "brain_to_claim_trace.jsonl", traces)
+
+            gate = _brain_web_readiness_gate_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={
+                    "real_provider_success_count": 1,
+                    "source_task_execution_count": 1,
+                    "accepted_claim_count": 1,
+                    "real_document_fetched_count": 1,
+                },
+                brain_stage_promotion={
+                    "verdict": "PROMOTION_APPLIED",
+                    "brain_promoted_stage_row_count": 1,
+                    "unsafe_promoted_stage_row_count": 0,
+                    "brain_snapshot_document_count": 0,
+                    "fake_provider_used_count": 0,
+                },
+                stage_rows=[
+                    {
+                        "candidate_event_id": "EVT-SCORE",
+                        "stagecourt_trace_id": "SCT-BRAIN-A",
+                        "accepted_claim_ids": ["CLM-A"],
+                        "score_scale": "EVENT_WEIGHTED_PARTIAL",
+                    }
+                ],
+            )
+
+        self.assertEqual(gate["brain_trace_missing_score_contribution_ref_count"], 0)
+        self.assertNotIn("Brain/Web trace rows missing score_contribution_id", " ".join(gate["blockers"]))
+        self.assertEqual(gate["verdict"], "READY_FOR_BRAIN_WEB_EVIDENCE_PASS")
+
+    def test_brain_to_claim_trace_merge_keeps_same_claim_across_events(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "brain_to_claim_trace.jsonl"
+            _merge_jsonl_by_key(
+                path,
+                [
+                    {
+                        "schema_version": "e2r_census_v4_brain_to_claim_trace_v1",
+                        "candidate_event_id": "EVT-SCORE",
+                        "source_task_id": "TASK-SCORE",
+                        "accepted_claim_id": "CLM-A",
+                        "score_contribution_id": "SCON-A",
+                    }
+                ],
+                "brain_to_claim_trace_id",
+            )
+            _merge_jsonl_by_key(
+                path,
+                [
+                    {
+                        "schema_version": "e2r_census_v4_brain_to_claim_trace_v1",
+                        "candidate_event_id": "EVT-FOLLOW",
+                        "source_task_id": "TASK-FOLLOW",
+                        "accepted_claim_id": "CLM-A",
+                        "score_contribution_id": None,
+                    }
+                ],
+                "brain_to_claim_trace_id",
+            )
+            traces = _read_jsonl(path)
+
+        self.assertEqual(len(traces), 2)
+        self.assertEqual({row["candidate_event_id"] for row in traces}, {"EVT-SCORE", "EVT-FOLLOW"})
+        self.assertEqual(len({row["brain_to_claim_trace_id"] for row in traces}), 2)
 
     def test_representative_brain_trace_without_stagecourt_is_blocker(self):
         with TemporaryDirectory() as tmp:

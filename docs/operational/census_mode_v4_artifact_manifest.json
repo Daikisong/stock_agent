@@ -1,734 +1,769 @@
 {
   "artifacts": [
     {
-      "byte_size": 6977,
+      "byte_size": 7288,
       "name": "acceptance_report.md",
-      "path": "output/census_v4/2026-07-01/acceptance_report.md",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/acceptance_report.md",
       "row_count": null,
-      "sha256": "dc83a5eb2407b5e1fd0eb364645c98de289df02cca0ce3f4ed000619c7b25d1d"
+      "sha256": "ea8753b7de49c6a0fae177ef88897db9d32e62a18cd645faf6a8695dde7de9ad"
     },
     {
-      "byte_size": 120129,
+      "byte_size": 449987,
       "name": "accepted_claims.jsonl",
-      "path": "output/census_v4/2026-07-01/accepted_claims.jsonl",
-      "row_count": 92,
-      "sha256": "b6a4accc4abc8df1614d3dcf7d898d8a63427071c61665c0bcf4f47ba94078cb"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/accepted_claims.jsonl",
+      "row_count": 264,
+      "sha256": "5f7eaa75ee6e80cef16d83680f4eb2f9605cf2163d20e8e1924135b80f334a50"
     },
     {
-      "byte_size": 120129,
+      "byte_size": 1690080,
       "name": "adjudicated_claims.jsonl",
-      "path": "output/census_v4/2026-07-01/adjudicated_claims.jsonl",
-      "row_count": 92,
-      "sha256": "b6a4accc4abc8df1614d3dcf7d898d8a63427071c61665c0bcf4f47ba94078cb"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/adjudicated_claims.jsonl",
+      "row_count": 1076,
+      "sha256": "ac5594e7994341c519fc2dfdc5fe35203cfda2a7a422248c6af05cfc9bef1d60"
     },
     {
-      "byte_size": 32056,
+      "byte_size": 15112,
+      "name": "all_archetype_replay_acceptance_manifest.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/all_archetype_replay_acceptance_manifest.json",
+      "row_count": null,
+      "sha256": "e85617a260baf9c5a9ca2fc8e96720cc260769a04f95efc157eed305534e1c47"
+    },
+    {
+      "byte_size": 1199,
+      "name": "all_archetype_replay_gap_plan.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/all_archetype_replay_gap_plan.json",
+      "row_count": null,
+      "sha256": "58f8b87514b1258af0274788473d017f53a1e303c03a6e73ac06f54aaf471f68"
+    },
+    {
+      "byte_size": 0,
+      "name": "all_archetype_replay_gap_seed_events.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/all_archetype_replay_gap_seed_events.jsonl",
+      "row_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 0,
+      "name": "all_archetype_replay_gap_source_tasks.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/all_archetype_replay_gap_source_tasks.jsonl",
+      "row_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 69894,
       "name": "all_archetype_replay_matrix.json",
-      "path": "output/census_v4/2026-07-01/all_archetype_replay_matrix.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/all_archetype_replay_matrix.json",
       "row_count": null,
-      "sha256": "368d5295be2f550ee361afd876602beda68d4e13e4076c3af87c2427fadde724"
+      "sha256": "138d29a657938760b49f249e464ae7879527416b8ed8a09ca674a52869eebc42"
     },
     {
-      "byte_size": 167214,
+      "byte_size": 246787,
       "name": "atomic_stage_decisions.jsonl",
-      "path": "output/census_v4/2026-07-01/atomic_stage_decisions.jsonl",
-      "row_count": 92,
-      "sha256": "92157b85cfa81835ca9a74672c6a8a0c78be97f3c2464f31d9b57b59ed58e0b3"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/atomic_stage_decisions.jsonl",
+      "row_count": 124,
+      "sha256": "7e7b784e79625852a67ce5085d7358ab319ffdf05a9f3628d1c67c2aee5a1cde"
     },
     {
-      "byte_size": 20156,
+      "byte_size": 24877,
       "name": "audit_summary.json",
-      "path": "output/census_v4/2026-07-01/audit_summary.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/audit_summary.json",
       "row_count": null,
-      "sha256": "9108ecaa3cf8e02fd5752550ac63b88698869af754e24af4ac2365e58384d97d"
+      "sha256": "f9c0642bbc7f798cba2da0c87e7557f4ee9448dcf7c4fa4a72eb0057dc6cdd2d"
     },
     {
       "byte_size": 1078,
       "name": "baseline_inputs_summary.json",
-      "path": "output/census_v4/2026-07-01/baseline_inputs_summary.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/baseline_inputs_summary.json",
       "row_count": null,
       "sha256": "26b4c78820a5b5c7d585753784daa1546a973bc0740c47dfea4e8e2c3c786e33"
     },
     {
       "byte_size": 1975182,
       "name": "baseline_scan_results.jsonl",
-      "path": "output/census_v4/2026-07-01/baseline_scan_results.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/baseline_scan_results.jsonl",
       "row_count": 3391,
       "sha256": "aba336c44d5185831d6f74e115e545e5c768c26c2714de49a70c99f3d068d048"
     },
     {
-      "byte_size": 0,
+      "byte_size": 7529153,
       "name": "brain_claim_mapping_trace.jsonl",
-      "path": "output/census_v4/2026-07-01/brain_claim_mapping_trace.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/brain_claim_mapping_trace.jsonl",
+      "row_count": 1852,
+      "sha256": "88cbb547f1aaa85b069fb52099eaf38da6a558ce24d00770e9852c680b9d3982"
     },
     {
-      "byte_size": 381,
+      "byte_size": 397,
       "name": "brain_planner_audit.json",
-      "path": "output/census_v4/2026-07-01/brain_planner_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/brain_planner_audit.json",
       "row_count": null,
-      "sha256": "0f66cd87e509f1b4503626df2ce119bfcf7e9e21d53ac1c1c895d7b3400aad78"
+      "sha256": "ad465846f99555268d5fa9ff30748b10f2344d1a0d182f3552d864fe60fdb2cc"
     },
     {
-      "byte_size": 1944,
+      "byte_size": 2348,
       "name": "brain_stage_promotion_audit.json",
-      "path": "output/census_v4/2026-07-01/brain_stage_promotion_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/brain_stage_promotion_audit.json",
       "row_count": null,
-      "sha256": "fe2b3fe17a6bdd20f0dbe2ec00d54dd67341f1a311216fcc749a28ec29f0ffea"
+      "sha256": "7ed4ec242eb22e65a7f9e4db3457b2b5ebd8c235837304e3cb83cf4237f50a90"
     },
     {
-      "byte_size": 0,
+      "byte_size": 402648,
       "name": "brain_to_claim_trace.jsonl",
-      "path": "output/census_v4/2026-07-01/brain_to_claim_trace.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/brain_to_claim_trace.jsonl",
+      "row_count": 307,
+      "sha256": "8fcae353fdb68778d85abc86f016b3a906d55b5306513bae1636b23cecb25099"
     },
     {
-      "byte_size": 160,
+      "byte_size": 162,
       "name": "brain_to_claim_trace_audit.json",
-      "path": "output/census_v4/2026-07-01/brain_to_claim_trace_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/brain_to_claim_trace_audit.json",
       "row_count": null,
-      "sha256": "41a24ee92367ca238d48251130fff9bf7e336ba6217a528abae3ce66d0cfa951"
+      "sha256": "9f17ac5d34a710139b02f5385909c86f1d100e1a3819a8b0cce4829c5050cb40"
     },
     {
-      "byte_size": 1338,
+      "byte_size": 2253,
       "name": "brain_web_attempt_audit.json",
-      "path": "output/census_v4/2026-07-01/brain_web_attempt_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/brain_web_attempt_audit.json",
       "row_count": null,
-      "sha256": "632e7db2a06e00240abeb90ee498ac1bcd5571d3bfb1434d0e6772bd8bfb7c3d"
+      "sha256": "b9e006f01228baa932758a97142b0ec213cc3044553e187996eb862031bb92b5"
     },
     {
-      "byte_size": 3806,
+      "byte_size": 4785,
       "name": "brain_web_readiness_gate_audit.json",
-      "path": "output/census_v4/2026-07-01/brain_web_readiness_gate_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/brain_web_readiness_gate_audit.json",
       "row_count": null,
-      "sha256": "66d13485c72d0002e9ca81f7e4088c044dd0e94582547f569f4a61b5e131cf8a"
+      "sha256": "3c660a69d0d47dec4e00d79202d9ec31a5c4d8d1e9282a870d413ef2697a7992"
     },
     {
-      "byte_size": 14371,
+      "byte_size": 99404,
+      "name": "brain_web_runtime_progress.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/brain_web_runtime_progress.json",
+      "row_count": null,
+      "sha256": "ac2a4966f4ccc56451f73d5b7c3dc192c5650567aff692674e257aa23617eba2"
+    },
+    {
+      "byte_size": 14231,
       "name": "c06_guard_replay_audit.json",
-      "path": "output/census_v4/2026-07-01/c06_guard_replay_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/c06_guard_replay_audit.json",
       "row_count": null,
-      "sha256": "4f391711b78e7d6e97a88f3b5f08e407a64c087ebda3847b624d394ff2875113"
+      "sha256": "a8cf0892464e83f226cb67c16c1421860868221a07bb9277c2c83d06da7625b2"
     },
     {
-      "byte_size": 8060,
+      "byte_size": 7743,
       "name": "c06_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-01/c06_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/c06_source_backed_semantic_replay.json",
       "row_count": null,
-      "sha256": "5d0d9740048626f8b43f49ee997bc7881d1d78e2a58b7aab8d5b3e038995684a"
+      "sha256": "def602e5737a885dff36639c3a4f1503f41c27b4d797efb9d3ae033a0d2a39b7"
     },
     {
-      "byte_size": 22925,
+      "byte_size": 22325,
       "name": "c08_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-01/c08_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/c08_source_backed_semantic_replay.json",
       "row_count": null,
-      "sha256": "6d345b8338332e4217e9dc4e223aff9e305290d7fa6ae507ee83cd5f050ce998"
+      "sha256": "d3a85c1c5e842846097534b9c3c31be17a3f5440312e587f7a75d00c32c6a0db"
     },
     {
-      "byte_size": 33534,
+      "byte_size": 31494,
       "name": "c15_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-01/c15_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/c15_source_backed_semantic_replay.json",
       "row_count": null,
-      "sha256": "b6ab09d2a0ec8bb369c4e27d5c573d64d8b68a3916916ec0ecd11b6435a7f938"
+      "sha256": "20247bf64fc55dc8a211620220647d1c99605598ef8e8fff425d4347339e59b5"
     },
     {
-      "byte_size": 47381,
+      "byte_size": 43264,
       "name": "c17_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-01/c17_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/c17_source_backed_semantic_replay.json",
       "row_count": null,
-      "sha256": "0d003a6e3434a78b5921be1248122dbfc47814bfccf0293aaf17a859ec2dfdb2"
+      "sha256": "05800e15d03a13706d9d7ec34880dec344ced9dbbc511588d09e051184b3827d"
     },
     {
-      "byte_size": 23328,
+      "byte_size": 21731,
       "name": "c24_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-01/c24_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/c24_source_backed_semantic_replay.json",
       "row_count": null,
-      "sha256": "c654a17313673236edbba2fe3180b604c3d8c19ad76c143bec069e5d201e3b74"
+      "sha256": "1cb42a4bac20603783b7a27d6bfb67c4b8b64752d9be15de2166bea8710d6e2e"
     },
     {
-      "byte_size": 28889,
+      "byte_size": 26303,
       "name": "c28_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-01/c28_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/c28_source_backed_semantic_replay.json",
       "row_count": null,
-      "sha256": "8011e27ed379cef3564eef00b29f32a0b946350b76bd4eabc56ff4c7de1e7439"
+      "sha256": "9b5c22e00e82d65e2bcfab7e4ea43da2e5ccc9f932108a12adbe303a8230461e"
     },
     {
       "byte_size": 2002128,
       "name": "census_assessment_events.jsonl",
-      "path": "output/census_v4/2026-07-01/census_assessment_events.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/census_assessment_events.jsonl",
       "row_count": 3391,
       "sha256": "1200e9ce61bcc6827836edf56b5d7009a0bbe0c41285ca376b3354bc6cd5d422"
     },
     {
-      "byte_size": 2308974,
+      "byte_size": 2343607,
       "name": "census_events.jsonl",
-      "path": "output/census_v4/2026-07-01/census_events.jsonl",
-      "row_count": 3617,
-      "sha256": "0a97994bb3ad7f634a20db6ef9b3ce65aa89ab6c8fa1ef2a9ac4d229258905cf"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/census_events.jsonl",
+      "row_count": 3649,
+      "sha256": "9bcee1c1b47a3d7c8aee8e32df70d7d44f308a20ce09d38de043d40eacc7cc13"
     },
     {
-      "byte_size": 3060039,
+      "byte_size": 3170484,
       "name": "census_stage_map.csv",
-      "path": "output/census_v4/2026-07-01/census_stage_map.csv",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/census_stage_map.csv",
       "row_count": 3391,
-      "sha256": "69c549decffd47d34e9d20052501c56c31a3142644e9d9ef0e62a3a40008925c"
+      "sha256": "91dc856d4a19367742ba9ec0d26cdb9e4bd0fd9f66886d4812bc11bdaf23c979"
     },
     {
-      "byte_size": 12707412,
+      "byte_size": 12775050,
       "name": "census_stage_map.jsonl",
-      "path": "output/census_v4/2026-07-01/census_stage_map.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/census_stage_map.jsonl",
       "row_count": 3391,
-      "sha256": "e821f3e948a8b1372c3fdd33d182d91e921f5d1ee13571c4255dc2635287ab97"
+      "sha256": "b4e918deba5db8501db5f95c75d0c46240cfc86d91f83bdb5b1e53a1deeebac1"
     },
     {
-      "byte_size": 12707412,
+      "byte_size": 12775050,
       "name": "census_stage_status.jsonl",
-      "path": "output/census_v4/2026-07-01/census_stage_status.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/census_stage_status.jsonl",
       "row_count": 3391,
-      "sha256": "e821f3e948a8b1372c3fdd33d182d91e921f5d1ee13571c4255dc2635287ab97"
+      "sha256": "b4e918deba5db8501db5f95c75d0c46240cfc86d91f83bdb5b1e53a1deeebac1"
     },
     {
-      "byte_size": 2281,
+      "byte_size": 2661,
       "name": "census_stage_summary.json",
-      "path": "output/census_v4/2026-07-01/census_stage_summary.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/census_stage_summary.json",
       "row_count": null,
-      "sha256": "9ff67f6dc7f006be793045a2ab93b779901873a9b19b091f819a9f1e809f20d0"
+      "sha256": "ab3dd2541eacc9b28efde5f1431b9daa6372f828f0ee73473f0693e296b82a61"
     },
     {
-      "byte_size": 0,
+      "byte_size": 94597,
       "name": "claim_extractor_runs.jsonl",
-      "path": "output/census_v4/2026-07-01/claim_extractor_runs.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/claim_extractor_runs.jsonl",
+      "row_count": 64,
+      "sha256": "f6a2460267231fac7815cfeeb4236cddb4573e3f8becb5a5fca10f170110cf8e"
     },
     {
       "byte_size": 1024,
       "name": "claim_to_stage_forensic_audit.json",
-      "path": "output/census_v4/2026-07-01/claim_to_stage_forensic_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/claim_to_stage_forensic_audit.json",
       "row_count": null,
-      "sha256": "a3f297d46967b3ed370c546db2392e118f9f71db95b7d574d70dc23e5220f896"
+      "sha256": "ea0f111c780aa17be1b9ef022537ca5c19fcb69aa1ea6f0fc939d5b6fd83e523"
     },
     {
       "byte_size": 2988779,
       "name": "claim_to_stage_trace.jsonl",
-      "path": "output/census_v4/2026-07-01/claim_to_stage_trace.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/claim_to_stage_trace.jsonl",
       "row_count": 3391,
       "sha256": "e054b0c6fa39b83fd6bb908f5b4014c9138cd7bcfc017f17d0aa95bad60aecc2"
     },
     {
-      "byte_size": 6613,
+      "byte_size": 6735,
       "name": "controlled_semantic_replay_audit.json",
-      "path": "output/census_v4/2026-07-01/controlled_semantic_replay_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/controlled_semantic_replay_audit.json",
       "row_count": null,
-      "sha256": "6bd8bebe97fae71c85f976beba0ab3c18c7df7f0bab87fac8f4a60d4421100b6"
+      "sha256": "5ff05368b447cdeac5a5af306fabba1326e57e322c209abf1c0c59979fee10c0"
     },
     {
-      "byte_size": 778,
+      "byte_size": 470,
       "name": "deep_backfill_plan.json",
-      "path": "output/census_v4/2026-07-01/deep_backfill_plan.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/deep_backfill_plan.json",
       "row_count": null,
-      "sha256": "cd66a20561d553d8676f624d0582490366fbd1c890bf882c1cc186cb0dc29798"
+      "sha256": "288b494797869f45769b85b7ca08de21e3d2197502da0ba1586f3e7a8c696ba1"
     },
     {
       "byte_size": 1065504,
       "name": "depth_decisions.jsonl",
-      "path": "output/census_v4/2026-07-01/depth_decisions.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/depth_decisions.jsonl",
       "row_count": 3391,
       "sha256": "9ec9ba713b088c640e7f81c927a5bf41d31ddadf8da6e1c1751701f95e71f523"
     },
     {
-      "byte_size": 63440,
+      "byte_size": 822847,
       "name": "evidence_anchors.jsonl",
-      "path": "output/census_v4/2026-07-01/evidence_anchors.jsonl",
-      "row_count": 92,
-      "sha256": "a9678d437a0463c8d7d374adca975b4b1027578b478852705809e4e7f3641310"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/evidence_anchors.jsonl",
+      "row_count": 355,
+      "sha256": "b644b34fb2a992f50f4630997914ec92659106e5496443d75ca1ec4f449a5ea6"
     },
     {
-      "byte_size": 104236,
+      "byte_size": 324472,
       "name": "evidence_claims.jsonl",
-      "path": "output/census_v4/2026-07-01/evidence_claims.jsonl",
-      "row_count": 92,
-      "sha256": "3bf1be65f61b627ca6ffbf10a40fd7bd3f18e0ed7894e19c45fa53a506d80dbc"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/evidence_claims.jsonl",
+      "row_count": 264,
+      "sha256": "11d1f6fac31d5dc4fd9581bf7e0d1cae04081e1618f103cd81e7a4a2694941eb"
     },
     {
-      "byte_size": 90028,
+      "byte_size": 181358,
       "name": "evidence_documents.jsonl",
-      "path": "output/census_v4/2026-07-01/evidence_documents.jsonl",
-      "row_count": 92,
-      "sha256": "b50a4f624d75cfe40ef5e7ad392b87994e4464a9fc8393f8d58118e65a8b1946"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/evidence_documents.jsonl",
+      "row_count": 208,
+      "sha256": "840c23826b6cd50618c0d94ae92d327dfd328678acd01e4d88ce977ddc3628f7"
     },
     {
-      "byte_size": 779,
+      "byte_size": 781,
       "name": "existing_ledger_reuse_audit.json",
-      "path": "output/census_v4/2026-07-01/existing_ledger_reuse_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/existing_ledger_reuse_audit.json",
       "row_count": null,
-      "sha256": "6bf80fd1c10b4861b879a4828bac0e3194475643fbbf9b0b2064a7e7934a6923"
+      "sha256": "9c8122f4961c0ddd1af40dd9dc1df42c64b046cf090cb2b90a277b2c2165ac53"
     },
     {
-      "byte_size": 1061,
+      "byte_size": 0,
+      "name": "full_thesis_blocker_follow_up_seed_events.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/full_thesis_blocker_follow_up_seed_events.jsonl",
+      "row_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 0,
+      "name": "full_thesis_blocker_follow_up_source_tasks.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/full_thesis_blocker_follow_up_source_tasks.jsonl",
+      "row_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "byte_size": 1656,
+      "name": "full_thesis_follow_up_iterations_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/full_thesis_follow_up_iterations_audit.json",
+      "row_count": null,
+      "sha256": "295b42eca83786af3486f96e54bf3cfa7ab652f8f96705d8fd20f67e2d8956e4"
+    },
+    {
+      "byte_size": 1461,
       "name": "full_thesis_production_audit.json",
-      "path": "output/census_v4/2026-07-01/full_thesis_production_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/full_thesis_production_audit.json",
       "row_count": null,
-      "sha256": "c1bfe123d53fa29b618ec76a7146c70ea6f3682a6b3a1ed0ac042d51caf6876c"
+      "sha256": "f03d324301a9b888ade3df5132a35ecc82d658968a5f15a24de01c46b57317e5"
     },
     {
-      "byte_size": 10618,
+      "byte_size": 14109,
       "name": "full_thesis_production_runner_audit.json",
-      "path": "output/census_v4/2026-07-01/full_thesis_production_runner_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/full_thesis_production_runner_audit.json",
       "row_count": null,
-      "sha256": "ad34274d1c2679f4674cb38e1d525e9383890d2e464a9b2a4cf0565d7957779a"
+      "sha256": "793c3356cf49e484603f07b285f60a10dda23ba881eed90499c176c1c1a7e189"
     },
     {
-      "byte_size": 238064,
+      "byte_size": 170250,
       "name": "full_thesis_refresh_queue.jsonl",
-      "path": "output/census_v4/2026-07-01/full_thesis_refresh_queue.jsonl",
-      "row_count": 85,
-      "sha256": "544ae1447cfbca9c37606199011fc351ef59fb507b57a47ab7cf4701c6616c7b"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/full_thesis_refresh_queue.jsonl",
+      "row_count": 53,
+      "sha256": "fd1825327b50535b213ed71383ff43548103496be18bbcd500c87f473f2476f5"
     },
     {
       "byte_size": 1191,
       "name": "full_thesis_refresh_queue_audit.json",
-      "path": "output/census_v4/2026-07-01/full_thesis_refresh_queue_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/full_thesis_refresh_queue_audit.json",
       "row_count": null,
-      "sha256": "cf0036952ddf6b559da41f84695fa75049823d897c9ac54ff0dd4d25d264835b"
+      "sha256": "9013b48e6710d092efbfa473afa47271836e374a8d0b55d0177d0a545c09c1d3"
     },
     {
-      "byte_size": 2007,
+      "byte_size": 3974,
       "name": "full_thesis_seed_materialization_audit.json",
-      "path": "output/census_v4/2026-07-01/full_thesis_seed_materialization_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/full_thesis_seed_materialization_audit.json",
       "row_count": null,
-      "sha256": "42d6a14baeb189701ab68d5eabe54d5d62e0c878cbc2d24e3464fbdd8b78d839"
+      "sha256": "29681a8e449f337362c36f9b7747c0b02687139549c1a5111011301acb15330d"
     },
     {
-      "byte_size": 93707,
+      "byte_size": 235068,
       "name": "full_thesis_seed_materialization_trace.jsonl",
-      "path": "output/census_v4/2026-07-01/full_thesis_seed_materialization_trace.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/full_thesis_seed_materialization_trace.jsonl",
       "row_count": 85,
-      "sha256": "3ab2e02534db83b207614d13e751d8557b00a982901e372b307988e6f0cdc56c"
+      "sha256": "5c40efd43678b6fe9d0702a5c1f66a10009efe34cb32e91b631410e9e5141d3d"
     },
     {
-      "byte_size": 15678,
+      "byte_size": 15704,
       "name": "full_thesis_smoke_tasks.jsonl",
-      "path": "output/census_v4/2026-07-01/full_thesis_smoke_tasks.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/full_thesis_smoke_tasks.jsonl",
       "row_count": 14,
-      "sha256": "1325b96e253555299d474243e0bb46e898bbaf1c7f8aad52114a3341a832d261"
+      "sha256": "ef5d9a6a47ff7e5f71f6c7b4c5b2edc820336265ba80b7238480163428c6ad7c"
     },
     {
-      "byte_size": 624,
-      "name": "full_unittest_result_artifact.json",
-      "path": "output/census_v4/2026-07-01/full_unittest_result_artifact.json",
-      "row_count": null,
-      "sha256": "e085b0c2ff6bb5f2d00ab4aaec6786d83dde1734de7afeed3f636e3e3723825d"
-    },
-    {
-      "byte_size": 749433,
-      "name": "full_unittest_result_artifact.log",
-      "path": "output/census_v4/2026-07-01/full_unittest_result_artifact.log",
-      "row_count": null,
-      "sha256": "e719c2aa9d8248613ca82ef4eb02e3eab00924123ba80e7629f0b1d41b226620"
-    },
-    {
-      "byte_size": 2674,
+      "byte_size": 26943,
       "name": "goal_completion_audit.json",
-      "path": "output/census_v4/2026-07-01/goal_completion_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/goal_completion_audit.json",
       "row_count": null,
-      "sha256": "1e465e971e2abcb79a5f9d01c157256b8d823db97668b3097ed9ddb87c576eb2"
+      "sha256": "288191dffdc415fbde0625456d4a3338458f5ce53bb0f6e86273a7fa71233f12"
     },
     {
-      "byte_size": 11879,
+      "byte_size": 41254,
       "name": "goal_requirement_matrix_audit.json",
-      "path": "output/census_v4/2026-07-01/goal_requirement_matrix_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/goal_requirement_matrix_audit.json",
       "row_count": null,
-      "sha256": "1f49d1a584ba1bc2dc22572f366d3dd380723f2e2c842d5bcdb30fba1ff814b9"
+      "sha256": "c04272820646a899ea13d16cdf4c28f2629f6d9145f71e37d3c67d698cdfa2d7"
     },
     {
-      "byte_size": 3973,
+      "byte_size": 3942,
       "name": "known_bad_regression_report.json",
-      "path": "output/census_v4/2026-07-01/known_bad_regression_report.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/known_bad_regression_report.json",
       "row_count": null,
-      "sha256": "962966318b425f8138c61448037c0c00ec3ffdabf2cc80682587e5f0c969d8d4"
+      "sha256": "7d16552bdba44ea9e9b08398125a368e59c8c2c3bc769de232931716a41065a5"
     },
     {
-      "byte_size": 3973,
+      "byte_size": 3942,
       "name": "known_bad_regression_report_audit.json",
-      "path": "output/census_v4/2026-07-01/known_bad_regression_report_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/known_bad_regression_report_audit.json",
       "row_count": null,
-      "sha256": "962966318b425f8138c61448037c0c00ec3ffdabf2cc80682587e5f0c969d8d4"
+      "sha256": "7d16552bdba44ea9e9b08398125a368e59c8c2c3bc769de232931716a41065a5"
     },
     {
       "byte_size": 713,
       "name": "last_effective_thesis_audit.json",
-      "path": "output/census_v4/2026-07-01/last_effective_thesis_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/last_effective_thesis_audit.json",
       "row_count": null,
       "sha256": "59a0a292b2269f749f20c82fb51d06e64e81ff99f7e4f07957783b3bc0690fa1"
     },
     {
       "byte_size": 1932286,
       "name": "last_effective_thesis_states.jsonl",
-      "path": "output/census_v4/2026-07-01/last_effective_thesis_states.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/last_effective_thesis_states.jsonl",
       "row_count": 3391,
       "sha256": "347e88862bd395565a5ae62c6daf87b46c630ae4e6f5801207514475e25057cb"
     },
     {
-      "byte_size": 9334,
+      "byte_size": 9936,
       "name": "leaf_artifact_audit.json",
-      "path": "output/census_v4/2026-07-01/leaf_artifact_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/leaf_artifact_audit.json",
       "row_count": null,
-      "sha256": "ef0a25726665dcb6e88575c4b269c58ec7f5e732f078154756eda48b8416be40"
+      "sha256": "fbf081cde9863deed3bd23d4f2732a389c3cf4e3e870cd87665350fd6e4fe38b"
     },
     {
-      "byte_size": 535,
+      "byte_size": 534,
       "name": "llm_claim_extraction_audit.json",
-      "path": "output/census_v4/2026-07-01/llm_claim_extraction_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/llm_claim_extraction_audit.json",
       "row_count": null,
-      "sha256": "dd8254f5368a77ca01aeac004e18d6a1dbf96c9ea61a983586f54a87df995d79"
+      "sha256": "7af1731b93b6b6d1f868a816e4bf210dc712f85c752a34a2e9bb269ce9d787d7"
     },
     {
-      "byte_size": 0,
+      "byte_size": 25680,
       "name": "llm_prompts.jsonl",
-      "path": "output/census_v4/2026-07-01/llm_prompts.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/llm_prompts.jsonl",
+      "row_count": 60,
+      "sha256": "c06f57cbe0462e0a33312c7810889b48a91478b530cfc914f2f95ed9752b1078"
     },
     {
-      "byte_size": 0,
+      "byte_size": 26160,
       "name": "llm_responses.jsonl",
-      "path": "output/census_v4/2026-07-01/llm_responses.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/llm_responses.jsonl",
+      "row_count": 60,
+      "sha256": "0f40c776a77d5640905884f5aa7cacf4b16aab5bb9e21d895662addcf708b730"
     },
     {
-      "byte_size": 9830,
+      "byte_size": 9876,
       "name": "non_representative_claim_audit.json",
-      "path": "output/census_v4/2026-07-01/non_representative_claim_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/non_representative_claim_audit.json",
       "row_count": null,
-      "sha256": "8db256a196513743772d1eb0f8df0e85a199441974273a8a59024491bec2aec8"
+      "sha256": "c3c1bc577a6d51cd4942b8cfc067c0c5a33a121578ad1e1c4e891f701ac53902"
     },
     {
       "byte_size": 153,
       "name": "official_event_counter_audit.json",
-      "path": "output/census_v4/2026-07-01/official_event_counter_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/official_event_counter_audit.json",
       "row_count": null,
       "sha256": "5945abe2c42dddce97c5ca43258dc5b2d07bda887c43643dc0e40f984c4d669d"
     },
     {
-      "byte_size": 1073,
+      "byte_size": 1200,
       "name": "operator_digest.md",
-      "path": "output/census_v4/2026-07-01/operator_digest.md",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/operator_digest.md",
       "row_count": null,
-      "sha256": "36b0333b717edd873a95e5315dc6090014ecd0462dd91a4e5c41448a553845e7"
+      "sha256": "933d83f30ae6e5b78f7b93895f70a67c38183af7633315c61ba8c64196124cb2"
     },
     {
-      "byte_size": 0,
+      "byte_size": 1301100,
       "name": "planner_runs.jsonl",
-      "path": "output/census_v4/2026-07-01/planner_runs.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/planner_runs.jsonl",
+      "row_count": 432,
+      "sha256": "fcb6cf966c8799599d726061a747919a509b240b9e7179fb99ee1f48d50ee0e3"
     },
     {
-      "byte_size": 55383,
+      "byte_size": 99136,
       "name": "primitive_mappings.jsonl",
-      "path": "output/census_v4/2026-07-01/primitive_mappings.jsonl",
-      "row_count": 92,
-      "sha256": "f009a429ff2343fdd4d8ca5d950a5fd0057ecbe839ca95d6c963b4e06e76d9ac"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/primitive_mappings.jsonl",
+      "row_count": 146,
+      "sha256": "92ce011efdd52f7fc5d3fd8735007ef2da5fd121d3548908dbe2b69d89a2ff01"
     },
     {
-      "byte_size": 1743,
+      "byte_size": 1889,
       "name": "primitive_state_chain_audit.json",
-      "path": "output/census_v4/2026-07-01/primitive_state_chain_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/primitive_state_chain_audit.json",
       "row_count": null,
-      "sha256": "30cc2f64e4e3a580d6c834bbcad5313929b7ce711edd523c3c08c14b3f8e0f77"
+      "sha256": "6db1bf4c4a793402a723edf0d175e8cd59b7c837a1d24e7539ea8246896eb710"
     },
     {
-      "byte_size": 30814,
+      "byte_size": 161288,
       "name": "primitive_states.jsonl",
-      "path": "output/census_v4/2026-07-01/primitive_states.jsonl",
-      "row_count": 92,
-      "sha256": "c2836a332f3e1798c22939bc9fbbbfc0ae7c7b864abcf7af6a347c110910effd"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/primitive_states.jsonl",
+      "row_count": 341,
+      "sha256": "bd379bb3a781cb8de2192b9343b78d203f0b960dc797d4c42d68df53cf4d0a61"
     },
     {
       "byte_size": 281,
       "name": "provider_gap_report.json",
-      "path": "output/census_v4/2026-07-01/provider_gap_report.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/provider_gap_report.json",
       "row_count": null,
       "sha256": "0223234b0cc7c6279633ed05fa3232fead6b7ab6133e9899fe2f885d8a816474"
     },
     {
-      "byte_size": 0,
+      "byte_size": 1996100,
       "name": "raw_assertion_rejections.jsonl",
-      "path": "output/census_v4/2026-07-01/raw_assertion_rejections.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/raw_assertion_rejections.jsonl",
+      "row_count": 1031,
+      "sha256": "4b1157c16aaf740f39754acb5359cfd637234f4143d9766e2584095063e870fc"
     },
     {
-      "byte_size": 120129,
+      "byte_size": 1677000,
       "name": "raw_assertions.jsonl",
-      "path": "output/census_v4/2026-07-01/raw_assertions.jsonl",
-      "row_count": 92,
-      "sha256": "b6a4accc4abc8df1614d3dcf7d898d8a63427071c61665c0bcf4f47ba94078cb"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/raw_assertions.jsonl",
+      "row_count": 1075,
+      "sha256": "7b4462cf3f4581db34fe416958d17a41637af450c39a16a85ede313b8087ad39"
     },
     {
-      "byte_size": 9786,
+      "byte_size": 35233,
       "name": "readiness_verdict.json",
-      "path": "output/census_v4/2026-07-01/readiness_verdict.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/readiness_verdict.json",
       "row_count": null,
-      "sha256": "e057e2feee603b374a7f5c624c4e4718567e711d68ad82bba6d106a0993e91fb"
+      "sha256": "cf26118d6cae069e70629a7c045bbcc0fab73e94554590633b4c15c679cbcaf2"
     },
     {
-      "byte_size": 2165,
+      "byte_size": 2212,
       "name": "report_generation_audit.json",
-      "path": "output/census_v4/2026-07-01/report_generation_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/report_generation_audit.json",
       "row_count": null,
-      "sha256": "b747fe567bfd81b590d442eb5b5b155d21208bcf85fd79bfb87a1a9b8a524610"
+      "sha256": "d922a2df3520d50261b435c923843b0388cbb28b8eb2b96cb5ad0a5310d19d79"
     },
     {
-      "byte_size": 200407,
-      "name": "research_brain_full_thesis_seed_events.jsonl",
-      "path": "output/census_v4/2026-07-01/research_brain_full_thesis_seed_events.jsonl",
+      "byte_size": 240270,
+      "name": "research_brain_candidate_seed_events_used.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/research_brain_candidate_seed_events_used.jsonl",
       "row_count": 85,
-      "sha256": "6813d41fd44c76edded81873a8291bc0e0248ad30881c8108867c3ca404c4081"
+      "sha256": "00383808544f3c4325f930f83098e8ccf40a93cd4bdc07de0b062a0bd248fc52"
     },
     {
-      "byte_size": 30452,
+      "byte_size": 240270,
+      "name": "research_brain_full_thesis_seed_events.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/research_brain_full_thesis_seed_events.jsonl",
+      "row_count": 85,
+      "sha256": "00383808544f3c4325f930f83098e8ccf40a93cd4bdc07de0b062a0bd248fc52"
+    },
+    {
+      "byte_size": 432050,
       "name": "research_brain_plans.jsonl",
-      "path": "output/census_v4/2026-07-01/research_brain_plans.jsonl",
-      "row_count": 92,
-      "sha256": "01cb8f7124e51d54ccce977c3caf89b3883b96edae5666910ad6f2732d56306d"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/research_brain_plans.jsonl",
+      "row_count": 524,
+      "sha256": "815ef60da1106470e2ab42b33f67d2961bef059ef4b33934db6c121394cc866c"
     },
     {
       "byte_size": 1031,
       "name": "research_brain_v4_bridge_audit.json",
-      "path": "output/census_v4/2026-07-01/research_brain_v4_bridge_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/research_brain_v4_bridge_audit.json",
       "row_count": null,
       "sha256": "c6c26f3c67c5cbdb9cfbb51d7647c753956edd10bec9ef362117374f50a283f4"
     },
     {
       "byte_size": 747,
       "name": "reviewer_A_trace_audit.json",
-      "path": "output/census_v4/2026-07-01/reviewer_A_trace_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/reviewer_A_trace_audit.json",
       "row_count": null,
       "sha256": "3b74356bc8593e3d3b6454701fa7f5b01f4a58f6bd06650e3fee03c347b6ae32"
     },
     {
       "byte_size": 859,
       "name": "reviewer_B_source_audit.json",
-      "path": "output/census_v4/2026-07-01/reviewer_B_source_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/reviewer_B_source_audit.json",
       "row_count": null,
       "sha256": "5a5b1e92dd9582664b8769ab2e4d1f036e91312171c18c6a09e18bd8830822b7"
     },
     {
       "byte_size": 885,
       "name": "reviewer_C_stage_audit.json",
-      "path": "output/census_v4/2026-07-01/reviewer_C_stage_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/reviewer_C_stage_audit.json",
       "row_count": null,
       "sha256": "c3591d477e16e216a3795b230aba4b7b6185357b45ba1097de670427b6eebd5a"
     },
     {
-      "byte_size": 2037,
+      "byte_size": 2151,
       "name": "run_metadata.json",
-      "path": "output/census_v4/2026-07-01/run_metadata.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/run_metadata.json",
       "row_count": null,
-      "sha256": "568d50a848c377d0a7e3847d17c332ba86655c5839dc58b9b1c659b887d1ccff"
+      "sha256": "85eac85e30c649bcaca966e13a165a99de70b4c8b66cd205631952b67e1c1d61"
     },
     {
-      "byte_size": 812,
+      "byte_size": 824,
       "name": "runtime_plausibility_audit.json",
-      "path": "output/census_v4/2026-07-01/runtime_plausibility_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/runtime_plausibility_audit.json",
       "row_count": null,
-      "sha256": "8312e5e7ccdf16794378559274b253d77b19ef3d61b0702ed58cea887de05433"
+      "sha256": "5a7ca51d5b196df3e1fe165dd34a2caf9c5216186c297a05a72ce17fe7c2634d"
     },
     {
-      "byte_size": 302295,
+      "byte_size": 396696,
       "name": "sample_leaf_bundle.jsonl",
-      "path": "output/census_v4/2026-07-01/sample_leaf_bundle.jsonl",
-      "row_count": 67,
-      "sha256": "3cb2966a33a95c5217996775ec833a40f742ea77e81c5aa46e3e9e22cb11fb10"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/sample_leaf_bundle.jsonl",
+      "row_count": 73,
+      "sha256": "12ace405ace902bf54d5821036c41b827b4fbfadb7b45d6c041355213a62a5ed"
     },
     {
-      "byte_size": 14345,
+      "byte_size": 17754,
       "name": "samsung_hynix_full_thesis_smoke.json",
-      "path": "output/census_v4/2026-07-01/samsung_hynix_full_thesis_smoke.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/samsung_hynix_full_thesis_smoke.json",
       "row_count": null,
-      "sha256": "20160800d11e17cf3d8947e0e99c3056de7913ed8af070fe9199d1715b8a1ab0"
+      "sha256": "62bca76d523c16b5f2072d38f38d8687bff55e647ec07c72b64bddc1a1d1c1a2"
     },
     {
-      "byte_size": 14345,
+      "byte_size": 17754,
       "name": "samsung_hynix_full_thesis_smoke_audit.json",
-      "path": "output/census_v4/2026-07-01/samsung_hynix_full_thesis_smoke_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/samsung_hynix_full_thesis_smoke_audit.json",
       "row_count": null,
-      "sha256": "20160800d11e17cf3d8947e0e99c3056de7913ed8af070fe9199d1715b8a1ab0"
+      "sha256": "62bca76d523c16b5f2072d38f38d8687bff55e647ec07c72b64bddc1a1d1c1a2"
     },
     {
-      "byte_size": 51103,
+      "byte_size": 115619,
       "name": "score_contributions.jsonl",
-      "path": "output/census_v4/2026-07-01/score_contributions.jsonl",
-      "row_count": 92,
-      "sha256": "9ce7498087abf7eb8fe15448ab3c08202e21844a79b6a5b91fea29cf2d9a4cb1"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/score_contributions.jsonl",
+      "row_count": 184,
+      "sha256": "795e1d6cb2e8fd48bd65eaa96f9af8f0ac015de768848447cf1419f07f18a187"
     },
     {
       "byte_size": 1505,
       "name": "sector_stage_distribution.json",
-      "path": "output/census_v4/2026-07-01/sector_stage_distribution.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/sector_stage_distribution.json",
       "row_count": null,
       "sha256": "d3cc040461f0a85b4f33025c1ef8ee5666fb60c1a6d17446297751f9d9a86738"
     },
     {
-      "byte_size": 3977,
+      "byte_size": 3576,
       "name": "self_repair_log.json",
-      "path": "output/census_v4/2026-07-01/self_repair_log.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/self_repair_log.json",
       "row_count": null,
-      "sha256": "9130eaa3026d09f398088c3e2524cd871bd47af8fa04e7a451fde675f887f8a5"
+      "sha256": "a499ba8417eaed2e3275b8fc456dd82489f74d1ef8cfbef88ec4aa906e8ab4b9"
     },
     {
-      "byte_size": 727,
+      "byte_size": 543,
       "name": "self_repair_summary.md",
-      "path": "output/census_v4/2026-07-01/self_repair_summary.md",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/self_repair_summary.md",
       "row_count": null,
-      "sha256": "c3e5cb7e7f2c4483fe8271ed171c6f03880229f16a038a4687722e21ee62e761"
+      "sha256": "0755ec22d0e86a2e73eaec1a342be616dbf325eff15f3e5e6014352c6d13ab15"
     },
     {
-      "byte_size": 1279,
-      "name": "source_coverage_audit.json",
-      "path": "output/census_v4/2026-07-01/source_coverage_audit.json",
+      "byte_size": 24153,
+      "name": "source_connector_capability_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/source_connector_capability_audit.json",
       "row_count": null,
-      "sha256": "04c98628f1e079db577ab132a6892c49d5c35d7045ec0c7b269ac1ce648c537e"
+      "sha256": "f82a7dc7fdd7479e490799cbe1449c5cc827757362202a14401e212fd5320ac4"
+    },
+    {
+      "byte_size": 1283,
+      "name": "source_coverage_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/source_coverage_audit.json",
+      "row_count": null,
+      "sha256": "ce33206c4418afc87f7ce123e18201b687424b9ffa3aa7235a05f655834a9849"
     },
     {
       "byte_size": 210,
       "name": "source_gap_report.json",
-      "path": "output/census_v4/2026-07-01/source_gap_report.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/source_gap_report.json",
       "row_count": null,
       "sha256": "a9567a0735c70b500df20523df7652878fa100e2a25092e8fd80773b711e81b0"
     },
     {
-      "byte_size": 130853,
+      "byte_size": 1411220,
       "name": "source_task_executions.jsonl",
-      "path": "output/census_v4/2026-07-01/source_task_executions.jsonl",
-      "row_count": 92,
-      "sha256": "456f3faebf70130087489dd486ec0752adb2d1c05e67c879d09ee72420bf8623"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/source_task_executions.jsonl",
+      "row_count": 481,
+      "sha256": "8fbbc5e05f8685f004034a5b107cdd6dffb2faf86dc486d217632e567cf43eb4"
     },
     {
-      "byte_size": 1329,
+      "byte_size": 1406,
       "name": "source_task_realness_audit.json",
-      "path": "output/census_v4/2026-07-01/source_task_realness_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/source_task_realness_audit.json",
       "row_count": null,
-      "sha256": "c76facd562e4e9995b1824b556d5c06b2712283429a5b553d67ab8082437185e"
+      "sha256": "f64d9189b2c397bf53e75494c8bb61ea1b8c4343a7d911be2ff0c44003eac786"
     },
     {
-      "byte_size": 2719,
+      "byte_size": 2741,
       "name": "source_task_satisfaction_audit.json",
-      "path": "output/census_v4/2026-07-01/source_task_satisfaction_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/source_task_satisfaction_audit.json",
       "row_count": null,
-      "sha256": "3dbccc75e50cb141c91b872d0b81cc811548ee8dfefe2a3da72883ea236d5f19"
+      "sha256": "c248aa7bd29642c2a622114dde1d6578b68bed8bb1a582183d954e5129f4d25d"
     },
     {
-      "byte_size": 62618,
+      "byte_size": 469218,
       "name": "source_tasks.jsonl",
-      "path": "output/census_v4/2026-07-01/source_tasks.jsonl",
-      "row_count": 92,
-      "sha256": "7bccfd48a9de7fb06c990f7c8e4ec79de41465fda33f86b4fe181fcda56ccbd7"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/source_tasks.jsonl",
+      "row_count": 481,
+      "sha256": "9a486d562d82479733ab6049f540c15f1485b7eb46021a5610a95b2a48757168"
     },
     {
       "byte_size": 5573147,
       "name": "source_timelines.jsonl",
-      "path": "output/census_v4/2026-07-01/source_timelines.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/source_timelines.jsonl",
       "row_count": 3391,
       "sha256": "c10b8530d69db6135b66b7bd4ada9742b0fb5ae0f895e4d4ebb8ac7bd3f694a4"
     },
     {
-      "byte_size": 66633,
+      "byte_size": 117582,
       "name": "stagecourt_traces.jsonl",
-      "path": "output/census_v4/2026-07-01/stagecourt_traces.jsonl",
-      "row_count": 92,
-      "sha256": "a33ad133dd4136f398ee31e63b6bba69da68d545dec9e3ca5dcf822a5a722849"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/stagecourt_traces.jsonl",
+      "row_count": 124,
+      "sha256": "1067113702bdef6e2b7785bab05e21470d090e6c586d88be5c747cbd0a10045c"
     },
     {
-      "byte_size": 624,
+      "byte_size": 657,
       "name": "test_result_artifact.json",
-      "path": "output/census_v4/2026-07-01/test_result_artifact.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/test_result_artifact.json",
       "row_count": null,
-      "sha256": "e085b0c2ff6bb5f2d00ab4aaec6786d83dde1734de7afeed3f636e3e3723825d"
+      "sha256": "4ed0bbb433cd91ff1501a06bf2752fccbb4ea2224ee8ea605a65fec91ed79650"
     },
     {
-      "byte_size": 729418,
-      "name": "test_result_artifact.log",
-      "path": "output/census_v4/2026-07-01/test_result_artifact.log",
-      "row_count": null,
-      "sha256": "acc832af5768c413ed2c6606f02a4abbe088df8e34aa2367fd3163f3e669468c"
-    },
-    {
-      "byte_size": 642,
-      "name": "test_result_artifact_after_claim_provider_patch.json",
-      "path": "output/census_v4/2026-07-01/test_result_artifact_after_claim_provider_patch.json",
-      "row_count": null,
-      "sha256": "275fbd2fc8dffae916c44866bc655cd761b3f9c2bf62ca7f2aacdb9d89ef8cc0"
-    },
-    {
-      "byte_size": 729844,
-      "name": "test_result_artifact_after_claim_provider_patch.log",
-      "path": "output/census_v4/2026-07-01/test_result_artifact_after_claim_provider_patch.log",
-      "row_count": null,
-      "sha256": "4d0d34f7e9cdc1349941ebfe6a493859c8377a2bb7c5be6735876cfeb6a65ff3"
-    },
-    {
-      "byte_size": 1348,
+      "byte_size": 1392,
       "name": "test_result_evidence_audit.json",
-      "path": "output/census_v4/2026-07-01/test_result_evidence_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/test_result_evidence_audit.json",
       "row_count": null,
-      "sha256": "75e823457a4a26dcc931add3688b8d5daf160c0c388cc20ee3b647d1c6df9469"
+      "sha256": "64e4213c9558dc9743f3b6d41cd1d41d4039f0089269db4e757dac8c6dce2d00"
     },
     {
       "byte_size": 1039689,
       "name": "universe.jsonl",
-      "path": "output/census_v4/2026-07-01/universe.jsonl",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/universe.jsonl",
       "row_count": 3940,
       "sha256": "4d75654fe29b34ac6f47251fa41a177a51f594bcb28b45d7fca679afe9700b2d"
     },
     {
-      "byte_size": 168949,
+      "byte_size": 81800,
       "name": "watchlist_seed_candidates.json",
-      "path": "output/census_v4/2026-07-01/watchlist_seed_candidates.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/watchlist_seed_candidates.json",
       "row_count": null,
-      "sha256": "7ec012f25b754925545cea834c95a14e86beabe6ddba6830e118d8838deb1125"
+      "sha256": "e0ed1197ac82aec5ec147824a7039b0f5189a635b524e7d287d880fba0bac902"
     },
     {
-      "byte_size": 0,
+      "byte_size": 156901,
       "name": "web_fetched_documents.jsonl",
-      "path": "output/census_v4/2026-07-01/web_fetched_documents.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/web_fetched_documents.jsonl",
+      "row_count": 64,
+      "sha256": "bac86024cc514bf76392af0a3450292e65fd69480e51089383b74988648b890b"
     },
     {
-      "byte_size": 585,
+      "byte_size": 607,
       "name": "web_naver_acquisition_audit.json",
-      "path": "output/census_v4/2026-07-01/web_naver_acquisition_audit.json",
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/web_naver_acquisition_audit.json",
       "row_count": null,
-      "sha256": "6c08b141a37abfb066a8a48e9aeb89ceb24b7c67ef60d83f744d5ada2a22ce41"
+      "sha256": "b48ee6c9938bcdb6b4f3c70aa4081451a313ac8668701c60935f42741fc00360"
     },
     {
-      "byte_size": 0,
+      "byte_size": 721635,
       "name": "web_rejected_documents.jsonl",
-      "path": "output/census_v4/2026-07-01/web_rejected_documents.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/web_rejected_documents.jsonl",
+      "row_count": 537,
+      "sha256": "8c1a8d3cce77869aa54eb1c416414c4075273f80c77ac99740e0a94e0673cf8d"
     },
     {
-      "byte_size": 0,
+      "byte_size": 3096744,
       "name": "web_search_results.jsonl",
-      "path": "output/census_v4/2026-07-01/web_search_results.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/web_search_results.jsonl",
+      "row_count": 1180,
+      "sha256": "26dd538b1dcc2ff930f128f3cdc1619c9536d001a3520a735a5cec6fc1994e38"
     },
     {
-      "byte_size": 0,
+      "byte_size": 116032,
       "name": "web_search_tasks.jsonl",
-      "path": "output/census_v4/2026-07-01/web_search_tasks.jsonl",
-      "row_count": 0,
-      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "path": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh/web_search_tasks.jsonl",
+      "row_count": 102,
+      "sha256": "ff4598c2d394850d8858fa4d3dd00c770e6d36e64c9f5f7abea513f6ad40dee6"
     }
   ],
-  "output_root": "output/census_v4/2026-07-01",
+  "output_root": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh",
   "schema_version": "e2r_census_v4_artifact_manifest_v1"
 }

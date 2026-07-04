@@ -2950,6 +2950,34 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertEqual(len({claim.claim_id for claim in result.adjudicated_claims}), 1)
         self.assertEqual(len(result.ledger.mappings), 1)
 
+    def test_v2_claim_ids_disambiguate_same_source_fact_for_different_targets(self):
+        document, anchor, raw = _current_target_risk_fixture()
+        common = dict(
+            raw=raw,
+            document=document,
+            anchor=anchor,
+            subject_entity_id="CORP_SHARED_SUBJECT",
+            relation_to_target=RelationToTarget.SELF,
+            directness=Directness.DIRECT,
+            verification_status=VerificationStatus.SEMANTIC_VERIFIED,
+            target_scope_status=TargetScopeStatus.DIRECT,
+            polarity=Polarity.NEGATIVE,
+            temporal_status=TemporalStatus.CURRENT,
+            semantic_status=SemanticStatus.PASS_,
+            investigation_status=InvestigationStatus.COMPLETE,
+            event_date=date(2026, 6, 1),
+        )
+        first = AdjudicatedClaim.from_raw(target_entity_id="CORP_TARGET_A", **common)
+        second = AdjudicatedClaim.from_raw(target_entity_id="CORP_TARGET_B", **common)
+        ledger = AppendOnlyEvidenceLedger()
+
+        ledger.append_claim(first)
+        ledger.append_claim(second)
+
+        self.assertNotEqual(first.claim_id, second.claim_id)
+        self.assertNotEqual(first.source_assertion_id, second.source_assertion_id)
+        self.assertEqual(set(ledger.claims), {first.claim_id, second.claim_id})
+
     def test_v2_orchestrator_prioritizes_operating_facts_before_budget_cut(self):
         text = (
             "TargetIssuer valuation upside remains substantial. "
@@ -11316,7 +11344,7 @@ class AgenticEvidenceOSTests(unittest.TestCase):
                                 "task_id": "PMAP-0c7b04166ff33d78ca04",
                                 "mappings": [
                                     {
-                                        "claim_id": "CLM-2be489ce52523cace4f9",
+                                        "claim_id": "CLM-58548a0584978395c970",
                                         "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
                                         "primitive_id": "order_backlog",
                                         "support_direction": "SUPPORT",

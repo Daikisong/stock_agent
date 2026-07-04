@@ -17,6 +17,7 @@ FINANCIAL_CONTRACT = "financial_contract"
 SHAREHOLDER_RETURN_CONTRACT = "shareholder_return_contract"
 SHARE_BUYBACK_TRUST_CONTRACT = "share_buyback_trust_contract"
 PLEDGE_OR_COLLATERAL_CONTRACT = "pledge_or_collateral_contract"
+LIQUIDITY_PROVIDER_CONTRACT = "liquidity_provider_contract"
 EQUITY_ISSUANCE_OR_SECURITY_REGISTRATION = "equity_issuance_or_security_registration"
 CAPITAL_ALLOCATION_EVENT = "capital_allocation_event"
 ADMINISTRATIVE_DISCLOSURE = "administrative_disclosure"
@@ -50,6 +51,8 @@ def classify_contract_event(row: Mapping[str, Any]) -> ContractSemanticClassific
         return _blocked(SHARE_BUYBACK_TRUST_CONTRACT, "share buyback trust is capital/shareholder-return, not customer demand")
     if _has_any(text, ("주식담보", "담보제공", "질권", "pledge", "collateral")):
         return _blocked(PLEDGE_OR_COLLATERAL_CONTRACT, "pledge/collateral contract is not customer revenue visibility")
+    if _has_any(text, ("유동성공급계약", "유동성 공급계약", "유동성공급자", "liquidity provider", "market making", "market-maker")):
+        return _blocked(LIQUIDITY_PROVIDER_CONTRACT, "liquidity provider/market-making contract supports trading liquidity, not customer revenue visibility")
     if _has_any(text, ("유상증자", "무상증자", "증권신고서", "지분증권", "전환사채", "신주인수권", "교환사채")):
         return _blocked(EQUITY_ISSUANCE_OR_SECURITY_REGISTRATION, "equity/security filing is capital allocation, not revenue contract")
     if _has_any(text, ("풍문또는보도에대한해명", "풍문 또는 보도", "해명(미확정)", "해명")):
@@ -115,6 +118,7 @@ __all__ = [
     "COMMERCIAL_SUPPLY_CONTRACT",
     "ContractSemanticClassification",
     "EQUITY_ISSUANCE_OR_SECURITY_REGISTRATION",
+    "LIQUIDITY_PROVIDER_CONTRACT",
     "PLEDGE_OR_COLLATERAL_CONTRACT",
     "SHARE_BUYBACK_TRUST_CONTRACT",
     "classify_contract_event",

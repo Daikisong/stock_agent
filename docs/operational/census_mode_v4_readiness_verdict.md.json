@@ -1,95 +1,606 @@
 {
   "all_archetype_replay_matrix": {
     "archetype_count": 36,
-    "blockers": [
-      "source_backed_replay_parity_all_archetypes_pending"
-    ],
-    "controlled_wiring_smoke_ready_count": 0,
-    "guard_replay_ready_count": 6,
-    "missing_required_archetype_count": 26,
+    "blockers": [],
+    "controlled_wiring_smoke_ready_count": 3,
+    "external_global_guard_ready": true,
+    "external_replay_acceptance": {
+      "adversarial_acceptance_exists": true,
+      "adversarial_acceptance_path": "output/0621_agentic_replay/c01_c36_combined_replacement_metadata_asof_source_recovery_v13_adversarial_acceptance_acceptance.json",
+      "adversarial_case_count": 24,
+      "adversarial_named_regression_covered_count": 24,
+      "blockers": [],
+      "contract_count": 36,
+      "external_adversarial_acceptance_ready": true,
+      "external_replay_acceptance_pass": true,
+      "external_replay_acceptance_ready": true,
+      "external_source_backed_manifest_ready": true,
+      "manifest_archetype_count": 36,
+      "manifest_missing_contract_archetype_ids": [],
+      "manifest_production_score_fixture_count": 0,
+      "manifest_selected_candidate_count": 108,
+      "manifest_unique_fixture_ready_candidate_count": 3534,
+      "note": "The 0621 artifacts prove source-backed replay seed/stage-preview and global adversarial guard coverage. They are not production score/stage fixtures.",
+      "production_score_fixture_allowed": false,
+      "production_stage_fixture_allowed": false,
+      "replay_acceptance_exists": true,
+      "replay_acceptance_path": "output/0621_agentic_replay/c01_c36_combined_replacement_metadata_asof_source_recovery_v12_replay_acceptance_acceptance.json",
+      "replay_missing_ready_archetype_ids": [],
+      "replay_stage_preview_ready_count": 36,
+      "replay_unsupported_source_gap_count": 0,
+      "rows_by_archetype": {
+        "C01_ORDER_BACKLOG_MARGIN_BRIDGE": {
+          "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 441,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-4e1abf1ebc4c0bc87077",
+            "RPLAY-9986eb3d4637be17666d",
+            "RPLAY-3e94b90f76864a0f3922"
+          ],
+          "source_backed_without_concrete_anchor_count": 556,
+          "unique_fixture_ready_candidate_count": 137
+        },
+        "C02_POWER_GRID_DATACENTER_CAPEX": {
+          "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 263,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-a79055c0be3a125d5e5f",
+            "RPLAY-b61a24a4c75e4266724a",
+            "RPLAY-6cdd3be69c0984259f50"
+          ],
+          "source_backed_without_concrete_anchor_count": 692,
+          "unique_fixture_ready_candidate_count": 81
+        },
+        "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": {
+          "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 105,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-667893ab59fc32ff38ee",
+            "RPLAY-ec681764774b59f400e4",
+            "RPLAY-b97351b7ce804a1d0147"
+          ],
+          "source_backed_without_concrete_anchor_count": 667,
+          "unique_fixture_ready_candidate_count": 33
+        },
+        "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": {
+          "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 114,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-e578585df57f42930076",
+            "RPLAY-7287c58034032c2a08a6",
+            "RPLAY-780de42c6f18f7b0c830"
+          ],
+          "source_backed_without_concrete_anchor_count": 682,
+          "unique_fixture_ready_candidate_count": 35
+        },
+        "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": {
+          "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 596,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-af9ebd70e058ce02ce67",
+            "RPLAY-834ffaa49b9652b10136",
+            "RPLAY-92b7a9b277cf87d3d02b"
+          ],
+          "source_backed_without_concrete_anchor_count": 758,
+          "unique_fixture_ready_candidate_count": 196
+        },
+        "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 290,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-fdfeb935320fa48e1979",
+            "RPLAY-d2e3b07390f0441ebee2",
+            "RPLAY-11b4c83595df335e55da"
+          ],
+          "source_backed_without_concrete_anchor_count": 502,
+          "unique_fixture_ready_candidate_count": 111
+        },
+        "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": {
+          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 242,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-7929d1d93be62fe2e72e",
+            "RPLAY-72971c72d2d98940f2e6",
+            "RPLAY-13b01c28d11568db6055"
+          ],
+          "source_backed_without_concrete_anchor_count": 505,
+          "unique_fixture_ready_candidate_count": 73
+        },
+        "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 123,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-387a616a78cbc34119d3",
+            "RPLAY-f45a477a486d2f3e01ab",
+            "RPLAY-998d8e240a346b248bd7"
+          ],
+          "source_backed_without_concrete_anchor_count": 609,
+          "unique_fixture_ready_candidate_count": 52
+        },
+        "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": {
+          "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 271,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-ff952ada6ba26963afe7",
+            "RPLAY-f6b6a9e10f2425b69ac3",
+            "RPLAY-a405b94350e40e2c8970"
+          ],
+          "source_backed_without_concrete_anchor_count": 712,
+          "unique_fixture_ready_candidate_count": 74
+        },
+        "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": {
+          "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 585,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-d2194bc7fad76313a157",
+            "RPLAY-2018d512f0ef2833b40b",
+            "RPLAY-92c19548691bb762e265"
+          ],
+          "source_backed_without_concrete_anchor_count": 943,
+          "unique_fixture_ready_candidate_count": 185
+        },
+        "C11_BATTERY_ORDERBOOK_RERATING": {
+          "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 295,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-cbeb4833f5c2e9a7487d",
+            "RPLAY-3c57fec5ecd9f464b411",
+            "RPLAY-6bc1a0fc5921f72f25b6"
+          ],
+          "source_backed_without_concrete_anchor_count": 782,
+          "unique_fixture_ready_candidate_count": 88
+        },
+        "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": {
+          "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 260,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-cfc5d583d42e073be8ab",
+            "RPLAY-ba71944cd69f27d8d3a8",
+            "RPLAY-4e31515eda1f66a8f5b1"
+          ],
+          "source_backed_without_concrete_anchor_count": 732,
+          "unique_fixture_ready_candidate_count": 93
+        },
+        "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": {
+          "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 408,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-63182dee7415fe9f5c7d",
+            "RPLAY-010c0cb6cb8dd4f26171",
+            "RPLAY-b75cf91b8ab6cd5785fa"
+          ],
+          "source_backed_without_concrete_anchor_count": 650,
+          "unique_fixture_ready_candidate_count": 128
+        },
+        "C14_EV_DEMAND_SLOWDOWN_4B_4C": {
+          "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 290,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-a6ef714cdb0a2933569d",
+            "RPLAY-1bff6e1a4c56a62a60ff",
+            "RPLAY-33a344617a980f67cb5c"
+          ],
+          "source_backed_without_concrete_anchor_count": 792,
+          "unique_fixture_ready_candidate_count": 75
+        },
+        "C15_MATERIAL_SPREAD_SUPERCYCLE": {
+          "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 486,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-e4b3d400da9db357c7c6",
+            "RPLAY-174dba6025aa9c1fc1df",
+            "RPLAY-d9991207affa4ea15444"
+          ],
+          "source_backed_without_concrete_anchor_count": 959,
+          "unique_fixture_ready_candidate_count": 144
+        },
+        "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": {
+          "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 126,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-943b9a429a8ace7d9c42",
+            "RPLAY-0b7b1d2cc982f7f23e73",
+            "RPLAY-246f8134fcdda401fd65"
+          ],
+          "source_backed_without_concrete_anchor_count": 670,
+          "unique_fixture_ready_candidate_count": 40
+        },
+        "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
+          "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 136,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-bad3cf3344194166f2fb",
+            "RPLAY-a99fc67eb1a94b79e7af",
+            "RPLAY-1755b7c0b067d21a8259"
+          ],
+          "source_backed_without_concrete_anchor_count": 1026,
+          "unique_fixture_ready_candidate_count": 44
+        },
+        "C18_CONSUMER_EXPORT_CHANNEL_REORDER": {
+          "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 108,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-9140bb3552875d8565c8",
+            "RPLAY-705f3659c984e7a5bcd9",
+            "RPLAY-58cfa336c4b53be52827"
+          ],
+          "source_backed_without_concrete_anchor_count": 1008,
+          "unique_fixture_ready_candidate_count": 35
+        },
+        "C19_BRAND_RETAIL_INVENTORY_MARGIN": {
+          "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 95,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-dea6c3563621eb94d909",
+            "RPLAY-dea515f8a05100a7f027",
+            "RPLAY-73d52f2606b85d32da29"
+          ],
+          "source_backed_without_concrete_anchor_count": 578,
+          "unique_fixture_ready_candidate_count": 29
+        },
+        "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": {
+          "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 51,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-8f8cf4130cea3d2645ed",
+            "RPLAY-d07fe3eaac82c32ef144",
+            "RPLAY-4a8d430c60db1ba3c604"
+          ],
+          "source_backed_without_concrete_anchor_count": 1599,
+          "unique_fixture_ready_candidate_count": 18
+        },
+        "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": {
+          "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 63,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-f642460557c3c266863c",
+            "RPLAY-6a722c5b4de98cd3340f",
+            "RPLAY-bb95c4c3bc5af82d9440"
+          ],
+          "source_backed_without_concrete_anchor_count": 1686,
+          "unique_fixture_ready_candidate_count": 47
+        },
+        "C22_INSURANCE_RATE_CYCLE_RESERVE": {
+          "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 119,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-bacda1cd544d30579a1e",
+            "RPLAY-c6e0b9ff36812ac78b6b",
+            "RPLAY-4e80aa185ea7f3b2cbb3"
+          ],
+          "source_backed_without_concrete_anchor_count": 1137,
+          "unique_fixture_ready_candidate_count": 38
+        },
+        "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": {
+          "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 113,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-e3e3a92d48fbf166783a",
+            "RPLAY-1923e983a5710604414f",
+            "RPLAY-3d41625bc8dcf7fedaf2"
+          ],
+          "source_backed_without_concrete_anchor_count": 1090,
+          "unique_fixture_ready_candidate_count": 40
+        },
+        "C24_BIO_TRIAL_DATA_EVENT_RISK": {
+          "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 121,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-e8c3226596e8da7f3db8",
+            "RPLAY-db4d394cff34a673dc59",
+            "RPLAY-df585429523a163e5ba6"
+          ],
+          "source_backed_without_concrete_anchor_count": 739,
+          "unique_fixture_ready_candidate_count": 31
+        },
+        "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": {
+          "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 141,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-7b3955aee1ab2386d64e",
+            "RPLAY-7a19cd25bf24346c7317",
+            "RPLAY-a99cfa08428ab0fe4b81"
+          ],
+          "source_backed_without_concrete_anchor_count": 816,
+          "unique_fixture_ready_candidate_count": 43
+        },
+        "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": {
+          "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 100,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-406dbae80b0f9527d86a",
+            "RPLAY-c1798005e4c9a5af30f2",
+            "RPLAY-6be141038ac19341fb6f"
+          ],
+          "source_backed_without_concrete_anchor_count": 1182,
+          "unique_fixture_ready_candidate_count": 31
+        },
+        "C27_CONTENT_IP_GLOBAL_MONETIZATION": {
+          "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 132,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-85bd04d19cb02aebc3f8",
+            "RPLAY-f260497bb902eed0de3c",
+            "RPLAY-36807fe438e468f7d56b"
+          ],
+          "source_backed_without_concrete_anchor_count": 1026,
+          "unique_fixture_ready_candidate_count": 35
+        },
+        "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 231,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-3f6d7d7fbea085553d3c",
+            "RPLAY-c0622f18b67116111d3f",
+            "RPLAY-12fc285d35ecff4d295c"
+          ],
+          "source_backed_without_concrete_anchor_count": 964,
+          "unique_fixture_ready_candidate_count": 103
+        },
+        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": {
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 156,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-141e7ffa952b25415314",
+            "RPLAY-253ff8b2b45111e88ceb",
+            "RPLAY-0f1479c6f3a1d1e29327"
+          ],
+          "source_backed_without_concrete_anchor_count": 1228,
+          "unique_fixture_ready_candidate_count": 87
+        },
+        "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
+          "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 145,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-6e874565891d9a9cdf1b",
+            "RPLAY-f14065d90371bbc6733c",
+            "RPLAY-b8dd7cc90ba853be7643"
+          ],
+          "source_backed_without_concrete_anchor_count": 1286,
+          "unique_fixture_ready_candidate_count": 42
+        },
+        "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": {
+          "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 223,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-21a9bfe71e086359dccf",
+            "RPLAY-aa182dc74a7c9a183225",
+            "RPLAY-f7490efe1323f3a3940c"
+          ],
+          "source_backed_without_concrete_anchor_count": 1812,
+          "unique_fixture_ready_candidate_count": 84
+        },
+        "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": {
+          "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 190,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-98ee741784f897704f53",
+            "RPLAY-51b077361737f6208147",
+            "RPLAY-c638e8f9f6285fbeac53"
+          ],
+          "source_backed_without_concrete_anchor_count": 1484,
+          "unique_fixture_ready_candidate_count": 68
+        },
+        "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": {
+          "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 825,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-006b3fa595430bbadae3",
+            "RPLAY-e2e0e55ecc9371aeff20",
+            "RPLAY-ce8dd13066f2ec12309c"
+          ],
+          "source_backed_without_concrete_anchor_count": 3150,
+          "unique_fixture_ready_candidate_count": 269
+        },
+        "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": {
+          "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 1105,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-beed87343498d5638537",
+            "RPLAY-092bdb423e6ac718937c",
+            "RPLAY-21147ccbea3120b84f90"
+          ],
+          "source_backed_without_concrete_anchor_count": 1075,
+          "unique_fixture_ready_candidate_count": 328
+        },
+        "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": {
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 981,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-fa9db06bdfc9bc9983b4",
+            "RPLAY-c6d0ee22b4fc6574dcd7",
+            "RPLAY-8ea644540931f9fc2096"
+          ],
+          "source_backed_without_concrete_anchor_count": 1357,
+          "unique_fixture_ready_candidate_count": 334
+        },
+        "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": {
+          "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+          "concrete_selected_candidate_count": 3,
+          "fixture_ready_candidate_count": 695,
+          "selected_candidate_count": 3,
+          "selected_candidate_ids": [
+            "RPLAY-88357aeaebe261462d2e",
+            "RPLAY-fadd80c0d0010b290561",
+            "RPLAY-7be8ddb3923e2332b11f"
+          ],
+          "source_backed_without_concrete_anchor_count": 1129,
+          "unique_fixture_ready_candidate_count": 283
+        }
+      },
+      "schema_version": "e2r_census_v4_external_all_archetype_replay_acceptance_v1",
+      "source_backed_manifest_exists": true,
+      "source_backed_manifest_path": "output/0621_agentic_replay/c01_c36_source_backed_replay_manifest.json"
+    },
+    "external_replay_acceptance_pass": true,
+    "external_source_backed_seed_ready_count": 30,
+    "guard_replay_ready_count": 36,
+    "missing_required_archetype_count": 0,
+    "replay_acceptance_manifest_path": null,
+    "replay_gap_plan_path": null,
+    "replay_gap_plan_task_count": null,
+    "replay_gap_seed_event_count": null,
+    "replay_gap_seed_event_path": null,
+    "replay_gap_source_task_count": null,
+    "replay_gap_source_task_path": null,
     "required_archetype_count": 32,
-    "source_backed_ready_count": 6,
+    "source_backed_ready_count": 36,
     "status_counts": {
-      "GUARDRAIL_CONTRACT_ONLY_PENDING_SOURCE_BACKED_REPLAY": 4,
-      "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY": 6,
-      "SOURCE_GAP_PENDING": 26
+      "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY": 36
     }
   },
-  "all_archetype_replay_pass": false,
+  "all_archetype_replay_pass": true,
   "anti_fake_blockers": [],
   "blockers": [],
   "brain_stage_promotion": {
     "blockers": [],
-    "brain_promoted_stage_row_count": 0,
+    "brain_promoted_stage_row_count": 32,
     "brain_snapshot_document_count": 0,
-    "brain_stage_promotion_mode": "disabled",
-    "brain_stage_trace_count": 0,
+    "brain_stage_promotion_mode": "strict",
+    "brain_stage_trace_count": 32,
     "unsafe_promoted_stage_row_count": 0,
-    "verdict": "NOT_REQUESTED"
+    "verdict": "PROMOTION_APPLIED"
   },
   "brain_web_attempt": {
-    "accepted_claim_count": 0,
-    "attempt_mode": "disabled",
+    "accepted_claim_count": 307,
+    "attempt_mode": "research_brain_v4_production_shadow_attempt",
     "blockers": [],
-    "brain_stagecourt_trace_exported_count": 0,
-    "brain_to_census_stage_exported_count": 0,
-    "claim_acceptance_ready": false,
-    "cutover_export_ready": false,
-    "full_thesis_seed_accepted_claim_count": 0,
-    "full_thesis_seed_consumed_by_research_brain": false,
+    "brain_stagecourt_trace_exported_count": 32,
+    "brain_to_census_stage_exported_count": 32,
+    "claim_acceptance_ready": true,
+    "cutover_export_ready": true,
+    "full_thesis_seed_accepted_claim_count": 307,
+    "full_thesis_seed_consumed_by_research_brain": true,
     "full_thesis_seed_event_count": 85,
-    "full_thesis_seed_event_path": "output/census_v4/2026-07-01/research_brain_full_thesis_seed_events.jsonl",
-    "full_thesis_seed_materialized_to_stagecourt": false,
-    "full_thesis_seed_planner_attempted_event_count": 0,
-    "full_thesis_seed_planner_run_count": 0,
-    "full_thesis_seed_planner_run_row_count": 0,
-    "full_thesis_seed_real_provider_success_count": 0,
-    "full_thesis_seed_source_task_execution_count": 0,
-    "full_thesis_seed_stagecourt_trace_count": 0,
-    "planner_provider": null,
-    "planner_run_count": 0,
-    "real_provider_success_count": 0,
-    "source_task_execution_count": 0,
-    "stagecourt_trace_ready": false,
-    "unique_accepted_claim_count": 0,
-    "verdict": "NOT_REQUESTED"
+    "full_thesis_seed_event_path": "output/census_v4/2026-07-01-v134-live-brainweb-fullthesis-wide-atomic/research_brain_candidate_seed_events_used.jsonl",
+    "full_thesis_seed_materialized_to_stagecourt": true,
+    "full_thesis_seed_original_path": "output/census_v4/2026-07-01-v134-live-brainweb-fullthesis-wide-atomic/research_brain_full_thesis_seed_events.jsonl",
+    "full_thesis_seed_planner_attempted_event_count": 85,
+    "full_thesis_seed_planner_run_count": 85,
+    "full_thesis_seed_planner_run_row_count": 85,
+    "full_thesis_seed_real_provider_success_count": 50,
+    "full_thesis_seed_runtime_budget_exhausted_count": 0,
+    "full_thesis_seed_source": "internal_full_thesis_refresh_queue",
+    "full_thesis_seed_source_task_execution_count": 389,
+    "full_thesis_seed_stagecourt_trace_count": 50,
+    "planner_provider": "real",
+    "planner_run_count": 432,
+    "real_provider_success_count": 50,
+    "source_task_execution_count": 389,
+    "stagecourt_trace_ready": true,
+    "unique_accepted_claim_count": 172,
+    "verdict": "ATTEMPTED_WITH_SOURCE_TASKS"
   },
-  "brain_web_evidence_pass": false,
-  "brain_web_mode": "disabled",
+  "brain_web_evidence_pass": true,
+  "brain_web_mode": "enabled",
   "brain_web_readiness_gate": {
-    "attempt_accepted_claim_count": 0,
-    "attempt_real_document_fetched_count": 0,
-    "attempt_source_task_execution_count": 0,
+    "attempt_accepted_claim_count": 307,
+    "attempt_real_document_fetched_count": 454,
+    "attempt_source_task_execution_count": 389,
     "blockers": [],
-    "brain_accepted_claim_count": 0,
+    "brain_accepted_claim_count": 172,
     "brain_claim_unresolved_anchor_ref_count": 0,
     "brain_claim_unresolved_document_ref_count": 0,
     "brain_contribution_without_accepted_support_count": 0,
     "brain_source_task_unresolved_document_ref_count": 0,
     "brain_stage_trace_without_accepted_claim_count": 0,
-    "brain_to_claim_trace_count": 0,
+    "brain_to_claim_trace_count": 307,
     "brain_trace_missing_accepted_claim_count": 0,
     "brain_trace_missing_score_contribution_ref_count": 0,
     "brain_trace_missing_stagecourt_ref_count": 0,
-    "brain_web_evidence_pass_allowed": false,
+    "brain_trace_nonrepresentative_missing_stagecourt_ref_count": 43,
+    "brain_web_evidence_pass_allowed": true,
     "discovery_only_retry_after_unverified_original_count": 0,
     "full_thesis_claim_count": 0,
-    "full_thesis_seed_accepted_claim_count": 0,
-    "full_thesis_seed_consumed_by_research_brain": false,
+    "full_thesis_seed_accepted_claim_count": 307,
+    "full_thesis_seed_consumed_by_research_brain": true,
     "full_thesis_seed_event_count": 85,
-    "full_thesis_seed_event_path": "output/census_v4/2026-07-01/research_brain_full_thesis_seed_events.jsonl",
-    "full_thesis_seed_materialized_to_stagecourt": false,
-    "full_thesis_seed_planner_attempted_event_count": 0,
-    "full_thesis_seed_planner_run_count": 0,
-    "full_thesis_seed_planner_run_row_count": 0,
-    "full_thesis_seed_real_provider_success_count": 0,
-    "full_thesis_seed_source_task_execution_count": 0,
-    "full_thesis_seed_stagecourt_trace_count": 0,
-    "llm_claim_extractor_attempt_count": 0,
-    "llm_extracted_accepted_claim_count": 0,
-    "llm_planner_call_count": 0,
-    "llm_real_provider_success_count": 0,
-    "minimum_gate_applies": false,
+    "full_thesis_seed_event_path": "output/census_v4/2026-07-01-v134-live-brainweb-fullthesis-wide-atomic/research_brain_candidate_seed_events_used.jsonl",
+    "full_thesis_seed_materialized_to_stagecourt": true,
+    "full_thesis_seed_original_path": "output/census_v4/2026-07-01-v134-live-brainweb-fullthesis-wide-atomic/research_brain_full_thesis_seed_events.jsonl",
+    "full_thesis_seed_planner_attempted_event_count": 85,
+    "full_thesis_seed_planner_run_count": 85,
+    "full_thesis_seed_planner_run_row_count": 85,
+    "full_thesis_seed_real_provider_success_count": 50,
+    "full_thesis_seed_runtime_budget_exhausted_count": 0,
+    "full_thesis_seed_source": "internal_full_thesis_refresh_queue",
+    "full_thesis_seed_source_task_execution_count": 389,
+    "full_thesis_seed_stagecourt_trace_count": 50,
+    "llm_claim_extractor_attempt_count": 64,
+    "llm_extracted_accepted_claim_count": 100,
+    "llm_planner_call_count": 432,
+    "llm_real_provider_success_count": 50,
+    "minimum_gate_applies": true,
     "minimum_required_counts": {
       "llm_claim_extractor_attempt_count": 10,
       "llm_planner_call_count": 30,
@@ -98,22 +609,22 @@
       "web_search_call_count": 20,
       "web_search_task_count": 20
     },
-    "official_accepted_claim_count": 0,
-    "operational_minimum_count_gate_applies": false,
-    "policy_rejected_source_task_execution_count": 0,
+    "official_accepted_claim_count": 72,
+    "operational_minimum_count_gate_applies": true,
+    "policy_rejected_source_task_execution_count": 3,
     "promoted_stage_without_brain_trace_count": 0,
-    "real_document_fetched_count": 0,
+    "real_document_fetched_count": 116,
     "source_lineage_feedback_retry_accepted_execution_count": 0,
     "source_lineage_feedback_retry_dropped_count": 0,
     "source_lineage_feedback_retry_execution_count": 0,
     "source_lineage_feedback_retry_no_evidence_execution_count": 0,
-    "source_task_execution_count": 0,
-    "verdict": "NOT_REQUESTED",
-    "web_fetched_document_count": 0,
-    "web_news_accepted_claim_count": 0,
-    "web_or_llm_accepted_claim_count": 0,
-    "web_search_task_count": 0,
-    "zero_budget_policy_rejected_source_task_execution_count": 0
+    "source_task_execution_count": 389,
+    "verdict": "READY_FOR_BRAIN_WEB_EVIDENCE_PASS",
+    "web_fetched_document_count": 64,
+    "web_news_accepted_claim_count": 100,
+    "web_or_llm_accepted_claim_count": 100,
+    "web_search_task_count": 102,
+    "zero_budget_policy_rejected_source_task_execution_count": 3
   },
   "controlled_semantic_replay_audit": {
     "blockers": [],
@@ -124,41 +635,51 @@
     "required_case_count": 10
   },
   "controlled_semantic_replay_pass": true,
-  "event_board_non_stage0_count": 85,
+  "event_board_non_stage0_count": 53,
   "event_board_stage_rows_are_operational_full_thesis": false,
-  "evidence_claim_payload_count": 92,
-  "full_e2r_verified_score_row_count": 0,
+  "evidence_claim_payload_count": 264,
+  "full_e2r_verified_score_row_count": 32,
   "full_thesis_production_audit": {
-    "blockers": [
-      "production_full_thesis_not_requested_or_no_rows"
-    ],
+    "blockers": [],
     "controlled_smoke_full_thesis_row_count": 0,
     "controlled_smoke_substitution_rejected_count": 0,
-    "full_thesis_refresh_queue_candidate_count": 85,
-    "production_full_thesis_row_count": 0,
-    "production_mode_requested": false,
-    "production_pass_allowed": false,
+    "full_thesis_refresh_queue_candidate_count": 53,
+    "production_full_thesis_row_count": 32,
+    "production_mode_requested": true,
+    "production_pass_allowed": true,
     "production_runner_implemented": true
   },
-  "full_thesis_production_pass": false,
+  "full_thesis_production_pass": true,
   "full_thesis_production_runner_audit": {
     "blockers": [],
-    "candidate_row_count": 0,
-    "candidate_source_counts": {},
-    "full_thesis_refresh_queue_candidate_count": 85,
-    "production_mode_requested": false,
-    "promoted_full_thesis_row_count": 0,
+    "candidate_row_count": 32,
+    "candidate_source_counts": {
+      "brain_web_partial_stage_row": 5,
+      "stagecourt_trace_direct_scan": 27
+    },
+    "full_thesis_refresh_queue_candidate_count": 53,
+    "production_mode_requested": true,
+    "promoted_full_thesis_row_count": 32,
     "refresh_queue_materialized_candidate_count": 0,
-    "refresh_queue_unmaterialized_candidate_count": 85,
-    "verdict": "NOT_REQUESTED"
+    "refresh_queue_unmaterialized_candidate_count": 53,
+    "verdict": "PRODUCTION_FULL_THESIS_PROMOTED"
   },
-  "full_thesis_refresh_queue_candidate_count": 85,
+  "full_thesis_production_smoke_substitute_pass": true,
+  "full_thesis_refresh_queue_candidate_count": 53,
   "full_thesis_seed_materialization_audit": {
+    "actual_materialization_pass_allowed": true,
     "critical_count": 0,
     "critical_counts": {
       "accepted_claim_without_source_task_count": 0,
+      "blocker_follow_up_seed_missing_target_context_count": 0,
+      "event_or_partial_score_operator_use_allowed_count": 0,
+      "event_or_partial_stage_operator_use_allowed_count": 0,
+      "final_operator_score_use_missing_count": 0,
+      "final_operator_stage_use_missing_count": 0,
       "full_thesis_promoted_missing_full_e2r_score_count": 0,
       "full_thesis_promoted_missing_stagecourt_count": 0,
+      "full_thesis_promoted_operator_score_use_not_full_count": 0,
+      "full_thesis_promoted_operator_stage_use_not_full_count": 0,
       "full_thesis_scope_without_promoted_status_count": 0,
       "score_evidence_allowed_before_execution_count": 0,
       "seed_trace_count_mismatch_count": 0,
@@ -166,25 +687,46 @@
       "stage_promotion_allowed_before_execution_count": 0,
       "stagecourt_without_accepted_claim_count": 0
     },
-    "final_stage_scope_counts": {
-      "CENSUS_EVENT_BOARD": 85
+    "final_operator_score_use_counts": {
+      "FULL_E2R_SCORE": 32,
+      "NOT_FULL_E2R_SCORE": 53
     },
-    "full_thesis_promoted_seed_count": 0,
-    "full_thesis_seed_promotion_pass": false,
+    "final_operator_stage_use_counts": {
+      "FULL_THESIS_STAGE": 32,
+      "NOT_FULL_THESIS_STAGE": 53
+    },
+    "final_stage_scope_counts": {
+      "CENSUS_EVENT_BOARD": 53,
+      "FULL_THESIS": 32
+    },
+    "full_thesis_promoted_seed_count": 32,
+    "full_thesis_seed_promotion_pass": true,
+    "ledger_integrity_pass_allowed": true,
+    "operator_materialization_status": "FULL_THESIS_MATERIALIZED",
     "seed_event_count": 85,
     "status_counts": {
-      "PLANNER_NOT_RUN": 85
+      "ACCEPTED_CLAIM_NOT_CREATED": 14,
+      "FULL_THESIS_PROMOTED": 32,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 35,
+      "STAGECOURT_TRACE_NOT_CREATED": 4
     },
     "trace_row_count": 85,
-    "verdict": "PASS"
+    "verdict": "PASS",
+    "verdict_scope": "ACTUAL_FULL_THESIS_MATERIALIZATION"
   },
+  "full_thesis_smoke_execution_pass": false,
   "full_thesis_smoke_gate_blockers": [
     "full_thesis_smoke_not_passed",
-    "full_thesis_smoke_gate_not_requested"
+    "full_thesis_smoke_gate_not_requested",
+    "controlled_smoke_not_allowed_for_production_run_mode",
+    "controlled_smoke_requires_brain_web_disabled"
   ],
   "full_thesis_smoke_gate_pass_allowed": false,
+  "full_thesis_smoke_honesty_pass": true,
   "full_thesis_smoke_pass": false,
-  "full_thesis_stage_row_count": 0,
+  "full_thesis_smoke_requirement_pass": true,
+  "full_thesis_smoke_requirement_satisfied_by": "production_full_thesis",
+  "full_thesis_stage_row_count": 32,
   "known_bad_regression_pass": true,
   "labels": [
     "IMPLEMENTATION_MERGED",
@@ -196,25 +738,29 @@
     "SEMANTIC_PRIMITIVE_GUARD_PASS",
     "DAILY_EVENT_FULL_THESIS_SEPARATION_PASS",
     "CENSUS_ASSESSMENT_CANDIDATE_EVENT_SEPARATION_PASS",
+    "FULL_THESIS_SMOKE_HONESTY_PASS",
+    "FULL_THESIS_SMOKE_EXECUTION_PENDING",
     "FULL_THESIS_SMOKE_PENDING",
+    "FULL_THESIS_SMOKE_REQUIREMENT_PASS_BY_PRODUCTION_FULL_THESIS",
     "FULL_THESIS_REFRESH_QUEUE_PRESENT",
+    "FULL_THESIS_SEED_LEDGER_INTEGRITY_PASS",
     "FULL_THESIS_SEED_MATERIALIZATION_AUDIT_PASS",
-    "FULL_THESIS_SEED_PROMOTION_PENDING",
-    "OFFICIAL_BASELINE_OR_LEDGER_REFRESH_ONLY",
+    "FULL_THESIS_SEED_PROMOTION_PASS",
+    "FULL_THESIS_SEED_ACTUAL_MATERIALIZATION_PASS",
+    "BRAIN_WEB_ATTEMPT_RECORDED",
+    "BRAIN_STAGE_PROMOTION_AUDITED",
+    "BRAIN_WEB_READINESS_GATE_AUDITED",
     "OFFICIAL_BASELINE_EVIDENCE_CLAIM_PAYLOAD_PRESENT",
     "KNOWN_BAD_REGRESSION_PASS",
     "SELF_REPAIR_LOOP_PASS",
-    "RESEARCH_BRAIN_V4_REPORT_BRIDGE_IMPORTED"
+    "RESEARCH_BRAIN_V4_REPORT_BRIDGE_IMPORTED",
+    "BRAIN_WEB_EVIDENCE_PASS"
   ],
-  "meaningful_operational_stage_pass": false,
-  "operational_stage_use_allowed": false,
+  "meaningful_operational_stage_pass": true,
+  "operational_stage_use_allowed": true,
   "remaining_operational_gaps": [
-    "full thesis EvidenceClaim -> PrimitiveState -> ScoreContribution -> StageCourt path not run",
-    "event-board non-Stage0 rows exist but are not operational full-thesis stages",
     "full-thesis refresh queue exists but production full-thesis StageCourt paths are not closed",
-    "full-thesis seed materialization audit shows no promoted FULL_THESIS seed",
-    "source-backed replay parity across all archetypes is not proven",
-    "Brain/Web/LLM acquisition artifacts are not produced in this disabled ledger-refresh run",
+    "Brain/Web/LLM acquisition was requested but has not produced a Census-promoted StageCourt path",
     "Research Brain v4 imported report bundle is shadow/import-only and not admissible as Census production cutover evidence"
   ],
   "research_brain_bridge": {
@@ -230,11 +776,43 @@
     "usable_for_census_cutover": false,
     "verdict": "SHADOW_OR_IMPORT_ONLY"
   },
-  "run_mode": "LEDGER_REFRESH_CENSUS",
+  "run_mode": "BRAIN_AND_WEB_ACQUISITION_ENABLED",
   "schema_version": "e2r_census_v4_readiness_verdict_v1",
   "self_repair_loop_pass": true,
-  "stage_scope_notice": "NO_FULL_THESIS_STAGE_ROWS_EVENT_BOARD_STAGE_ROWS_EXIST",
-  "target_gate": "anti_fake",
+  "source_connector_capability_audit": {
+    "blocking_full_thesis_source_class_count": 0,
+    "blocking_full_thesis_task_count": 0,
+    "bounded_web_acquisition_source_classes": [
+      "BrokerReportPublicPDF",
+      "CompanyNewsroom",
+      "GeneralWebSearch",
+      "NaverSearch",
+      "ReportPDF",
+      "TrustedNews"
+    ],
+    "full_thesis_required_source_class_count": 11,
+    "full_thesis_task_executable_source_path_pass_allowed": true,
+    "full_thesis_task_with_blocking_source_class_count": 53,
+    "missing_connector_source_classes": [
+      "IndustryMedia",
+      "IssuerOfficial"
+    ],
+    "placeholder_source_classes": [
+      "IssuerIR"
+    ],
+    "registry_missing_but_acquisition_covered_source_classes": [
+      "BrokerReportPublicPDF",
+      "CompanyNewsroom",
+      "GeneralWebSearch",
+      "NaverSearch",
+      "ReportPDF"
+    ],
+    "source_connector_capability_pass_allowed": true,
+    "verdict": "SOURCE_CONNECTOR_CAPABILITY_PASS"
+  },
+  "source_connector_capability_pass": true,
+  "stage_scope_notice": "FULL_THESIS_STAGE_ROWS_PRESENT_SCOPE_GUARD_REQUIRED",
+  "target_gate": "full_thesis",
   "target_gate_pass": true,
   "target_gate_verdict": "TARGET_GATE_PASS",
   "verdict": "ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS"

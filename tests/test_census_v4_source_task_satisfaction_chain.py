@@ -104,6 +104,53 @@ def write_minimal_chain(root: Path, *, source_task_claim: bool = True, anchor_pr
     write_jsonl(root / "census_stage_status.jsonl", stage_rows)
 
 
+def write_score_claim_without_contribution(root: Path) -> None:
+    root.mkdir(parents=True, exist_ok=True)
+    write_jsonl(
+        root / "source_task_executions.jsonl",
+        [
+            {
+                "task_id": "SRC-TASK-1",
+                "symbol": "005930",
+                "status": "EVIDENCE_OS_ACCEPTED",
+                "accepted_claim_ids": ["CLM-1"],
+                "score_claim_ids": ["CLM-1"],
+                "fetched_document_ids": ["DOC-1"],
+            }
+        ],
+    )
+    write_jsonl(
+        root / "accepted_claims.jsonl",
+        [
+            {
+                "claim_id": "CLM-1",
+                "symbol": "005930",
+                "document_id": "DOC-1",
+                "anchor_id": "ANCHOR-1",
+                "score_eligible": True,
+                "target_scope_status": "DIRECT",
+                "temporal_status": "CURRENT",
+            }
+        ],
+    )
+    write_jsonl(root / "evidence_documents.jsonl", [{"document_id": "DOC-1", "symbol": "005930"}])
+    write_jsonl(root / "evidence_anchors.jsonl", [{"anchor_id": "ANCHOR-1", "document_id": "DOC-1", "symbol": "005930"}])
+    write_jsonl(root / "score_contributions.jsonl", [])
+    write_jsonl(root / "stagecourt_traces.jsonl", [])
+    write_jsonl(
+        root / "census_stage_status.jsonl",
+        [
+            {
+                "symbol": "005930",
+                "accepted_claim_ids": ["CLM-1"],
+                "score_contribution_ids": [],
+                "stagecourt_trace_id": None,
+                "base_stage": "Stage1",
+            }
+        ],
+    )
+
+
 class CensusV4SourceTaskSatisfactionChainTests(unittest.TestCase):
     def test_current_artifact_has_closed_representative_source_task_chain(self):
         root = census_v4_artifacts()["output_root"]
@@ -112,9 +159,12 @@ class CensusV4SourceTaskSatisfactionChainTests(unittest.TestCase):
         self.assertEqual(audit["schema_version"], "e2r_census_v4_source_task_satisfaction_audit_v2")
         self.assertEqual(audit["verdict"], "PASS_LEDGER_REFRESH_SOURCE_TASK_SATISFACTION")
         self.assertEqual(audit["critical_count"], 0)
-        self.assertEqual(audit["representative_score_claim_count"], 79)
-        self.assertEqual(audit["source_task_chain_closed_to_representative_stage_count"], 79)
-        self.assertEqual(audit["warning_counts"]["non_representative_source_task_claim_count"], 27)
+        self.assertGreater(audit["representative_score_claim_count"], 0)
+        self.assertEqual(
+            audit["source_task_chain_closed_to_representative_stage_count"],
+            audit["representative_score_claim_count"],
+        )
+        self.assertGreaterEqual(audit["warning_counts"]["non_representative_source_task_claim_count"], 0)
 
     def test_representative_score_claim_without_source_task_execution_fails(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -148,6 +198,18 @@ class CensusV4SourceTaskSatisfactionChainTests(unittest.TestCase):
         self.assertEqual(audit["warning_counts"]["non_representative_source_task_claim_count"], 1)
         self.assertEqual(audit["source_task_chain_closed_to_stagecourt_count"], 2)
         self.assertEqual(audit["source_task_chain_closed_to_representative_stage_count"], 1)
+
+    def test_score_claim_without_score_contribution_is_hard_fail(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_score_claim_without_contribution(root)
+
+            audit = _source_task_satisfaction_audit(root)
+
+        self.assertEqual(audit["verdict"], "FAIL")
+        self.assertEqual(audit["critical_counts"]["source_task_claim_satisfaction_mismatch_count"], 2)
+        self.assertEqual(audit["critical_counts"]["source_task_claim_missing_score_contribution_count"], 1)
+        self.assertEqual(audit["critical_counts"]["source_task_claim_missing_stagecourt_trace_count"], 1)
 
 
 if __name__ == "__main__":

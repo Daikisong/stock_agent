@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 from datetime import datetime, timezone
+from typing import Any
 
 from e2r.census.census_runner_v4 import CensusV4RunConfig, run_census_mode_v4
 
@@ -17,6 +18,28 @@ RUN_MODES = (
     "BRAIN_AND_WEB_ACQUISITION_ENABLED",
     "FULL_LIVE_BRAIN_CENSUS",
     "HYBRID_CENSUS",
+)
+
+PARTIAL_OUTPUT_SUMMARY_FILES = (
+    "planner_runs.jsonl",
+    "llm_prompts.jsonl",
+    "llm_responses.jsonl",
+    "source_tasks.jsonl",
+    "source_task_executions.jsonl",
+    "claim_extractor_runs.jsonl",
+    "raw_assertions.jsonl",
+    "accepted_claims.jsonl",
+    "brain_to_claim_trace.jsonl",
+    "score_contributions.jsonl",
+    "stagecourt_traces.jsonl",
+    "research_brain_full_thesis_seed_events.jsonl",
+    "full_thesis_blocker_follow_up_seed_events.jsonl",
+    "full_thesis_blocker_follow_up_source_tasks.jsonl",
+    "full_thesis_follow_up_iterations_audit.json",
+    "brain_web_runtime_progress.json",
+    "brain_web_readiness_gate_audit.json",
+    "goal_requirement_matrix_audit.json",
+    "goal_completion_audit.json",
 )
 
 
@@ -46,6 +69,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--brain-retry-max", type=int, default=2)
     parser.add_argument("--brain-claim-extractor-provider", default="auto", choices=("auto", "codex_cli", "rule_fallback"))
     parser.add_argument("--brain-claim-extractor-timeout-seconds", type=float, default=60.0)
+    parser.add_argument("--brain-runtime-budget-seconds", type=float, default=None)
     parser.add_argument(
         "--brain-candidate-event-seed-path",
         help=(
@@ -55,6 +79,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--brain-stage-promotion-mode", default="disabled", choices=("disabled", "strict"))
     parser.add_argument("--full-thesis-smoke-mode", default="disabled", choices=("disabled", "controlled_replay"))
+    parser.add_argument(
+        "--full-thesis-smoke-artifact-root",
+        help=(
+            "Optional output directory or samsung_hynix_full_thesis_smoke.json file from a separate "
+            "controlled full-thesis smoke run. Used only as goal audit evidence; it never promotes "
+            "production score/stage rows."
+        ),
+    )
     parser.add_argument("--target-gate", default="anti_fake", choices=("anti_fake", "meaningful", "brain_web", "full_thesis", "full_thesis_smoke"))
     parser.add_argument("--max-iterations", type=int, default=1)
     parser.add_argument("--fail-on-run-mode-overclaim", default="false")
@@ -86,9 +118,11 @@ def main(argv: list[str] | None = None) -> int:
         brain_retry_max=args.brain_retry_max,
         brain_claim_extractor_provider=args.brain_claim_extractor_provider,
         brain_claim_extractor_timeout_seconds=args.brain_claim_extractor_timeout_seconds,
+        brain_runtime_budget_seconds=args.brain_runtime_budget_seconds,
         brain_candidate_event_seed_path=args.brain_candidate_event_seed_path,
         brain_stage_promotion_mode=args.brain_stage_promotion_mode,
         full_thesis_smoke_mode=args.full_thesis_smoke_mode,
+        full_thesis_smoke_artifact_root=args.full_thesis_smoke_artifact_root,
         target_gate=args.target_gate,
         max_iterations=args.max_iterations,
         fail_on_run_mode_overclaim=_parse_bool(args.fail_on_run_mode_overclaim),
@@ -130,6 +164,7 @@ def _write_invalid_partial_run_marker(*, config: CensusV4RunConfig, status: str,
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "output_root": str(output_root),
         "config": config.to_dict(),
+        "partial_output_summary": _partial_output_summary(output_root),
         "readiness_evidence_allowed": False,
         "score_or_stage_evidence_allowed": False,
         "full_thesis_promotion_allowed": False,
@@ -157,6 +192,38 @@ def _write_invalid_partial_run_marker(*, config: CensusV4RunConfig, status: str,
         + "\n",
         encoding="utf-8",
     )
+
+
+def _partial_output_summary(output_root: Path) -> dict[str, Any]:
+    files: dict[str, dict[str, Any]] = {}
+    for name in PARTIAL_OUTPUT_SUMMARY_FILES:
+        path = output_root / name
+        if not path.exists():
+            files[name] = {"exists": False}
+            continue
+        stat = path.stat()
+        row_count = None
+        if path.suffix == ".jsonl":
+            row_count = _line_count(path)
+        files[name] = {
+            "exists": True,
+            "size_bytes": stat.st_size,
+            "row_count": row_count,
+            "modified_at_utc": datetime.fromtimestamp(stat.st_mtime, timezone.utc).isoformat(),
+        }
+    existing = [item for item in files.values() if item.get("exists")]
+    nonempty = [item for item in existing if int(item.get("size_bytes") or 0) > 0]
+    return {
+        "schema_version": "e2r_census_v4_partial_output_summary_v1",
+        "existing_file_count": len(existing),
+        "nonempty_file_count": len(nonempty),
+        "files": files,
+    }
+
+
+def _line_count(path: Path) -> int:
+    with path.open("r", encoding="utf-8") as handle:
+        return sum(1 for _ in handle)
 
 
 def _exit_code_for_target_gate(*, result, target_gate: str) -> int:

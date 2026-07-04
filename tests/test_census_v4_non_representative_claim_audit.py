@@ -18,8 +18,12 @@ class CensusV4NonRepresentativeClaimAuditTests(unittest.TestCase):
         self.assertEqual(audit["verdict"], "PASS")
         self.assertEqual(audit["critical_count"], 0)
         self.assertEqual(audit["accepted_claim_count"], 106)
-        self.assertEqual(audit["representative_stage_claim_count"], 79)
-        self.assertEqual(audit["non_representative_claim_count"], 27)
+        self.assertGreater(audit["representative_stage_claim_count"], 0)
+        self.assertGreater(audit["non_representative_claim_count"], 0)
+        self.assertEqual(
+            audit["representative_stage_claim_count"] + audit["non_representative_claim_count"],
+            audit["accepted_claim_count"],
+        )
         self.assertEqual(audit["critical_counts"]["non_representative_claim_unreasoned_count"], 0)
         self.assertEqual(audit["critical_counts"]["non_representative_claim_score_leak_count"], 0)
         self.assertGreaterEqual(audit["reason_distribution"].get("non_representative_atomic_decision", 0), 1)

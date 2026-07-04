@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import json
+import os
 import re
+import time
 from collections import Counter
 from dataclasses import replace
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -64,6 +66,8 @@ def run_research_brain_v4_production_shadow(
     repo_root: str | Path = ".",
 ) -> Mapping[str, Any]:
     config.validate()
+    started_at = time.monotonic()
+    runtime_budget_exhausted = False
     as_of_date = date.fromisoformat(config.as_of_date)
     cards = build_memory_cards_from_v1_matrix(v1_archetype_matrix)
     cards_by_id = {card.archetype_id: card for card in cards}
@@ -78,14 +82,52 @@ def run_research_brain_v4_production_shadow(
         (*seed_events, *discovered_events),
         limit=_discovery_limit_for_config(config),
     )
+    runtime_progress_events: list[dict[str, Any]] = []
+    _record_runtime_progress_v4(
+        config=config,
+        progress_events=runtime_progress_events,
+        phase="events_selected",
+        candidate_event_count=len(events),
+        seed_event_count=len(seed_events),
+        discovered_event_count=len(discovered_events),
+        ordered_event_limit=_discovery_limit_for_config(config),
+    )
     if planner_provider is None:
         planner_provider = build_planner_provider_v4(mode=config.planner_provider, working_directory=repo_root)
-    claim_extractor = _claim_extractor_for_config(config=config, repo_root=repo_root)
+    claim_extractor = _claim_extractor_for_config(config=config, repo_root=repo_root, started_at=started_at)
     ordered_events = _planner_candidate_order(events=events, config=config, repo_root=repo_root, as_of_date=as_of_date)
+    _record_runtime_progress_v4(
+        config=config,
+        progress_events=runtime_progress_events,
+        phase="events_ordered",
+        ordered_event_count=len(ordered_events),
+        first_candidate_event_ids=[event.candidate_event_id for event in ordered_events[:10]],
+    )
     planner_runs: list[PlannerRunV4] = []
     next_event_index = 0
+    planner_attempt_limit = min(len(ordered_events), config.max_distinct_candidate_attempts)
     if config.planner_provider == PlannerProviderModeV4.FAKE.value:
-        for event_batch in _chunks(ordered_events, config.planner_batch_size):
+        for event_batch in _chunks(ordered_events[:planner_attempt_limit], config.planner_batch_size):
+            if _runtime_budget_exhausted_v4(config=config, started_at=started_at):
+                runtime_budget_exhausted = True
+                _record_runtime_progress_v4(
+                    config=config,
+                    progress_events=runtime_progress_events,
+                    phase="runtime_budget_exhausted",
+                    next_event_index=next_event_index,
+                    planned_event_count=len(planner_runs),
+                    total_event_count=len(ordered_events),
+                    runtime_budget_seconds=config.runtime_budget_seconds,
+                )
+                break
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=runtime_progress_events,
+                phase="planner_batch_start",
+                provider_mode=config.planner_provider,
+                batch_candidate_event_ids=[event.candidate_event_id for event in event_batch],
+                next_event_index=next_event_index,
+            )
             planner_runs.extend(
                 run_planner_provider_v4(
                     provider=planner_provider,
@@ -94,15 +136,52 @@ def run_research_brain_v4_production_shadow(
                     existing_evidence_by_event_id=_evidence_context_by_event(events=event_batch, config=config),
                 )
             )
-        next_event_index = len(ordered_events)
+            next_event_index += len(event_batch)
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=runtime_progress_events,
+                phase="planner_batch_end",
+                provider_mode=config.planner_provider,
+                planner_run_count=len(planner_runs),
+                real_provider_success_count=sum(1 for run in planner_runs if run.real_provider_success),
+            )
+        if not runtime_budget_exhausted:
+            next_event_index = planner_attempt_limit
     else:
         real_success_count = 0
-        while next_event_index < len(ordered_events) and real_success_count < config.planner_success_limit:
+        while next_event_index < planner_attempt_limit and real_success_count < config.planner_success_limit:
+            if _runtime_budget_exhausted_v4(config=config, started_at=started_at):
+                runtime_budget_exhausted = True
+                _record_runtime_progress_v4(
+                    config=config,
+                    progress_events=runtime_progress_events,
+                    phase="runtime_budget_exhausted",
+                    next_event_index=next_event_index,
+                    planned_event_count=len(planner_runs),
+                    total_event_count=len(ordered_events),
+                    runtime_budget_seconds=config.runtime_budget_seconds,
+                )
+                break
             remaining_success_budget = max(1, config.planner_success_limit - real_success_count)
+            remaining_attempt_budget = max(0, planner_attempt_limit - next_event_index)
+            if remaining_attempt_budget <= 0:
+                break
             event_batch = ordered_events[
-                next_event_index : next_event_index + min(config.planner_batch_size, remaining_success_budget)
+                next_event_index : next_event_index + min(config.planner_batch_size, remaining_success_budget, remaining_attempt_budget)
             ]
+            if not event_batch:
+                break
             next_event_index += len(event_batch)
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=runtime_progress_events,
+                phase="planner_batch_start",
+                provider_mode=config.planner_provider,
+                batch_candidate_event_ids=[event.candidate_event_id for event in event_batch],
+                next_event_index=next_event_index,
+                real_success_count=real_success_count,
+                remaining_success_budget=remaining_success_budget,
+            )
             batch_runs = run_planner_provider_v4(
                 provider=planner_provider,
                 events=event_batch,
@@ -111,13 +190,57 @@ def run_research_brain_v4_production_shadow(
             )
             planner_runs.extend(batch_runs)
             real_success_count += sum(1 for run in batch_runs if run.real_provider_success)
-    planner_runs = list(
-        _retry_planner_for_missing_external_web_plan(
-            planner_runs=planner_runs,
-            provider=planner_provider,
-            memory_cards=cards,
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=runtime_progress_events,
+                phase="planner_batch_end",
+                provider_mode=config.planner_provider,
+                batch_run_count=len(batch_runs),
+                batch_success_count=sum(1 for run in batch_runs if run.real_provider_success),
+                planner_run_count=len(planner_runs),
+                real_success_count=real_success_count,
+                next_event_index=next_event_index,
+            )
+    _record_runtime_progress_v4(
+        config=config,
+        progress_events=runtime_progress_events,
+        phase="missing_external_web_plan_retry_start",
+        planner_run_count=len(planner_runs),
+    )
+    if runtime_budget_exhausted or _runtime_budget_exhausted_v4(config=config, started_at=started_at):
+        runtime_budget_exhausted = True
+        _record_runtime_progress_v4(
             config=config,
+            progress_events=runtime_progress_events,
+            phase="missing_external_web_plan_retry_skipped_runtime_budget",
+            planner_run_count=len(planner_runs),
+            runtime_budget_seconds=config.runtime_budget_seconds,
         )
+    elif _optional_retry_would_starve_source_execution_v4(config=config, started_at=started_at):
+        _record_runtime_progress_v4(
+            config=config,
+            progress_events=runtime_progress_events,
+            phase="missing_external_web_plan_retry_skipped_insufficient_source_budget",
+            planner_run_count=len(planner_runs),
+            runtime_budget_seconds=config.runtime_budget_seconds,
+            runtime_budget_remaining_seconds=_runtime_budget_remaining_seconds_v4(config=config, started_at=started_at),
+            source_execution_reserved_budget_seconds=_source_execution_reserved_budget_seconds_v4(config=config),
+        )
+    else:
+        planner_runs = list(
+            _retry_planner_for_missing_external_web_plan(
+                planner_runs=planner_runs,
+                provider=planner_provider,
+                memory_cards=cards,
+                config=config,
+            )
+        )
+    _record_runtime_progress_v4(
+        config=config,
+        progress_events=runtime_progress_events,
+        phase="missing_external_web_plan_retry_end",
+        planner_run_count=len(planner_runs),
+        real_provider_success_count=sum(1 for run in planner_runs if run.real_provider_success),
     )
 
     source_runner = SourceAcquisitionRunnerV4(mode=config.source_acquisition, repo_root=repo_root)
@@ -139,20 +262,62 @@ def run_research_brain_v4_production_shadow(
         item_planner_run = run
         tasks = ()
         bundle = None
-        if run.output and primary and card and contract:
-            tasks = source_tasks_from_planner_output_v4(
+        skip_source_due_runtime_budget = runtime_budget_exhausted or _runtime_budget_exhausted_v4(config=config, started_at=started_at)
+        if skip_source_due_runtime_budget:
+            runtime_budget_exhausted = True
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=runtime_progress_events,
+                phase="source_execution_skipped_runtime_budget",
+                candidate_event_id=event.candidate_event_id,
+                symbol=event.symbol,
+                company_name=event.company_name,
+                run_index=run_index,
+                planner_run_count=len(planner_runs),
+                runtime_budget_seconds=config.runtime_budget_seconds,
+            )
+        _record_runtime_progress_v4(
+            config=config,
+            progress_events=runtime_progress_events,
+            phase="planner_run_processing_start",
+            candidate_event_id=event.candidate_event_id,
+            symbol=event.symbol,
+            company_name=event.company_name,
+            run_index=run_index,
+            planner_run_count=len(planner_runs),
+            primary_archetype=primary,
+            planner_provider_failed=run.provider_failed,
+        )
+        if not skip_source_due_runtime_budget and run.output and primary and card and contract:
+            planner_tasks = source_tasks_from_planner_output_v4(
                 event=event,
                 planner_output=run.output,
                 card_by_id=cards_by_id,
                 max_tasks=config.max_source_tasks_per_plan,
                 max_fetches_per_task=config.max_fetches_per_task,
             )
+            event_origin_tasks = _event_origin_structured_replay_tasks(event=event, primary_archetype=primary, contract=contract)
+            mandatory_official_tasks = _mandatory_official_status_tasks(event=event, primary_archetype=primary)
             tasks = tuple(
                 (
-                    *tasks,
-                    *_event_origin_structured_replay_tasks(event=event, primary_archetype=primary, contract=contract),
-                    *_mandatory_official_status_tasks(event=event, primary_archetype=primary),
+                    *planner_tasks,
+                    *event_origin_tasks,
+                    *mandatory_official_tasks,
                 )
+            )
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=runtime_progress_events,
+                phase="source_execution_start",
+                candidate_event_id=event.candidate_event_id,
+                symbol=event.symbol,
+                company_name=event.company_name,
+                primary_archetype=primary,
+                source_task_count=len(tasks),
+                planner_generated_source_task_count=len(planner_tasks),
+                event_origin_source_task_count=len(event_origin_tasks),
+                mandatory_official_source_task_count=len(mandatory_official_tasks),
+                primitive_gaps=_primitive_gaps_from_tasks(tasks),
             )
             bundle = execute_source_tasks_with_evidence_os_v4(
                 event=event,
@@ -161,16 +326,64 @@ def run_research_brain_v4_production_shadow(
                 as_of_date=as_of_date,
                 source_runner=source_runner,
                 claim_extractor=claim_extractor,
+                runtime_budget_exhausted=lambda: _runtime_budget_exhausted_v4(config=config, started_at=started_at),
+            )
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=runtime_progress_events,
+                phase="source_execution_end",
+                candidate_event_id=event.candidate_event_id,
+                symbol=event.symbol,
+                company_name=event.company_name,
+                source_task_execution_count=len(bundle.executions),
+                accepted_claim_count=_accepted_claim_count_from_bundle(bundle),
+                raw_assertion_count=len(bundle.raw_assertions),
+                claim_extractor_run_count=len(bundle.claim_extractor_runs),
             )
             seen_retry_signatures: set[tuple[Any, ...]] = set()
             retry_attempt_count = 0
             while retry_attempt_count < max(0, config.retry_max - 1):
+                if _runtime_budget_exhausted_v4(config=config, started_at=started_at):
+                    runtime_budget_exhausted = True
+                    _record_runtime_progress_v4(
+                        config=config,
+                        progress_events=runtime_progress_events,
+                        phase="feedback_retry_skipped_runtime_budget",
+                        candidate_event_id=event.candidate_event_id,
+                        symbol=event.symbol,
+                        company_name=event.company_name,
+                        retry_attempt_number=retry_attempt_count + 1,
+                        runtime_budget_seconds=config.runtime_budget_seconds,
+                    )
+                    break
+                _record_runtime_progress_v4(
+                    config=config,
+                    progress_events=runtime_progress_events,
+                    phase="feedback_retry_planner_start",
+                    candidate_event_id=event.candidate_event_id,
+                    symbol=event.symbol,
+                    company_name=event.company_name,
+                    retry_attempt_number=retry_attempt_count + 1,
+                    current_accepted_claim_count=_accepted_claim_count_from_bundle(bundle),
+                )
                 retry_run = _next_feedback_retry_planner_run(
                     planner_run=run,
                     bundle=bundle,
                     provider=planner_provider,
                     memory_cards=cards,
                     config=config,
+                )
+                _record_runtime_progress_v4(
+                    config=config,
+                    progress_events=runtime_progress_events,
+                    phase="feedback_retry_planner_end",
+                    candidate_event_id=event.candidate_event_id,
+                    symbol=event.symbol,
+                    company_name=event.company_name,
+                    retry_attempt_number=retry_attempt_count + 1,
+                    retry_created=retry_run is not None,
+                    retry_real_provider_success=bool(retry_run and retry_run.real_provider_success),
+                    retry_provider_error=retry_run.provider_error if retry_run else None,
                 )
                 if retry_run is None:
                     break
@@ -226,6 +439,18 @@ def run_research_brain_v4_production_shadow(
                 if not retry_tasks:
                     break
                 had_initial_acceptance = _bundle_has_accepted_claims(bundle)
+                _record_runtime_progress_v4(
+                    config=config,
+                    progress_events=runtime_progress_events,
+                    phase="feedback_retry_source_execution_start",
+                    candidate_event_id=event.candidate_event_id,
+                    symbol=event.symbol,
+                    company_name=event.company_name,
+                    retry_attempt_number=retry_attempt_count + 1,
+                    retry_primary_archetype=retry_primary,
+                    retry_source_task_count=len(retry_tasks),
+                    primitive_gaps=_primitive_gaps_from_tasks(retry_tasks),
+                )
                 retry_bundle = execute_source_tasks_with_evidence_os_v4(
                     event=event,
                     tasks=retry_tasks,
@@ -233,6 +458,20 @@ def run_research_brain_v4_production_shadow(
                     as_of_date=as_of_date,
                     source_runner=source_runner,
                     claim_extractor=claim_extractor,
+                    runtime_budget_exhausted=lambda: _runtime_budget_exhausted_v4(config=config, started_at=started_at),
+                )
+                _record_runtime_progress_v4(
+                    config=config,
+                    progress_events=runtime_progress_events,
+                    phase="feedback_retry_source_execution_end",
+                    candidate_event_id=event.candidate_event_id,
+                    symbol=event.symbol,
+                    company_name=event.company_name,
+                    retry_attempt_number=retry_attempt_count + 1,
+                    retry_source_task_execution_count=len(retry_bundle.executions),
+                    retry_accepted_claim_count=_accepted_claim_count_from_bundle(retry_bundle),
+                    total_accepted_claim_count=_accepted_claim_count_from_bundle(bundle)
+                    + _accepted_claim_count_from_bundle(retry_bundle),
                 )
                 tasks = tuple((*tasks, *retry_tasks))
                 bundle = _merge_evidence_os_bundles_v4(bundle, retry_bundle)
@@ -274,11 +513,44 @@ def run_research_brain_v4_production_shadow(
                 "score_valid_status": item.score_valid_status,
             }
         )
+        _record_runtime_progress_v4(
+            config=config,
+            progress_events=runtime_progress_events,
+            phase="planner_run_processing_end",
+            candidate_event_id=event.candidate_event_id,
+            symbol=event.symbol,
+            company_name=event.company_name,
+            run_index=run_index,
+            accepted_claim_count=_accepted_claim_count_from_bundle(bundle),
+            verified_score=item.verified_score,
+            base_stage=item.base_stage,
+            score_valid_status=item.score_valid_status,
+        )
         if run_index >= len(planner_runs) and _should_continue_for_accepted_claim_target(
             config=config,
             accepted_claim_count=_accepted_claim_count_from_bundles(bundles.values()),
             attempted_candidate_count=len(planned_event_ids),
         ):
+            if _runtime_budget_exhausted_v4(config=config, started_at=started_at):
+                runtime_budget_exhausted = True
+                _record_runtime_progress_v4(
+                    config=config,
+                    progress_events=runtime_progress_events,
+                    phase="accepted_claim_target_plan_more_skipped_runtime_budget",
+                    accepted_claim_count=_accepted_claim_count_from_bundles(bundles.values()),
+                    attempted_candidate_count=len(planned_event_ids),
+                    next_event_index=next_event_index,
+                    runtime_budget_seconds=config.runtime_budget_seconds,
+                )
+                continue
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=runtime_progress_events,
+                phase="accepted_claim_target_plan_more_start",
+                accepted_claim_count=_accepted_claim_count_from_bundles(bundles.values()),
+                attempted_candidate_count=len(planned_event_ids),
+                next_event_index=next_event_index,
+            )
             more_runs, next_event_index = _plan_more_events_for_accepted_claim_target(
                 ordered_events=ordered_events,
                 next_event_index=next_event_index,
@@ -286,6 +558,13 @@ def run_research_brain_v4_production_shadow(
                 provider=planner_provider,
                 cards=cards,
                 config=config,
+            )
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=runtime_progress_events,
+                phase="accepted_claim_target_plan_more_end",
+                added_planner_run_count=len(more_runs),
+                next_event_index=next_event_index,
             )
             if more_runs:
                 more_runs = list(
@@ -298,17 +577,38 @@ def run_research_brain_v4_production_shadow(
                 )
                 planner_runs.extend(more_runs)
                 planned_event_ids.update(run.event.candidate_event_id for run in more_runs)
+    if not runtime_budget_exhausted and _runtime_budget_exhausted_v4(config=config, started_at=started_at):
+        runtime_budget_exhausted = True
+        _record_runtime_progress_v4(
+            config=config,
+            progress_events=runtime_progress_events,
+            phase="runtime_budget_exhausted_after_source_execution",
+            next_event_index=next_event_index,
+            planned_event_count=len(planner_runs),
+            total_event_count=len(ordered_events),
+            runtime_budget_seconds=config.runtime_budget_seconds,
+        )
     for event in events:
         if event.candidate_event_id in planned_event_ids:
             continue
+        pending_reason = (
+            "planner_not_attempted_after_runtime_budget_exhausted"
+            if runtime_budget_exhausted
+            else "planner_not_attempted_after_real_planner_limit"
+        )
+        pending_provider_name = (
+            "not_attempted_after_runtime_budget_exhausted"
+            if runtime_budget_exhausted
+            else "not_attempted_after_real_planner_limit"
+        )
         pending_run = PlannerRunV4(
             event=event,
-            provider_name="not_attempted_after_real_planner_limit",
+            provider_name=pending_provider_name,
             provider_mode=PlannerProviderModeV4.NONE.value,
             real_provider_exercised=False,
             real_provider_success=False,
             fake_provider_used=False,
-            provider_error="planner_not_attempted_after_real_planner_limit",
+            provider_error=pending_reason,
         )
         planner_runs.append(pending_run)
         item = build_claim_backed_watchlist_item_v4(
@@ -362,6 +662,18 @@ def run_research_brain_v4_production_shadow(
         static_audit=static_audit,
         multi_day_shadow={"summary": {"five_day_run_count": 0}},
     )
+    _record_runtime_progress_v4(
+        config=config,
+        progress_events=runtime_progress_events,
+        phase="completed",
+        planner_run_count=len(all_planner_runs),
+        source_task_execution_count=len(executions),
+        watchlist_item_count=len(watchlist_items),
+        real_provider_success_count=int(planner_report["summary"].get("real_provider_success_count") or 0),
+        accepted_claim_count=int(source_report["summary"].get("accepted_claim_count") or 0),
+        runtime_budget_exhausted=runtime_budget_exhausted,
+        runtime_elapsed_seconds=round(time.monotonic() - started_at, 6),
+    )
     return {
         "config": config.to_dict(),
         "cards": cards,
@@ -382,7 +694,100 @@ def run_research_brain_v4_production_shadow(
     }
 
 
-def _claim_extractor_for_config(*, config: ProductionShadowV4Config, repo_root: str | Path) -> LLMContractBlindRawAssertionExtractor:
+def _record_runtime_progress_v4(
+    *,
+    config: ProductionShadowV4Config,
+    progress_events: list[dict[str, Any]],
+    phase: str,
+    **payload: Any,
+) -> None:
+    if not config.runtime_progress_path:
+        return
+    now = datetime.now(timezone.utc).isoformat()
+    event = {
+        "event_index": len(progress_events) + 1,
+        "created_at_utc": now,
+        "phase": phase,
+        **payload,
+    }
+    progress_events.append(event)
+    progress_path = Path(config.runtime_progress_path)
+    progress_path.parent.mkdir(parents=True, exist_ok=True)
+    recent_events = progress_events[-200:]
+    document = {
+        "schema_version": "e2r_research_brain_v4_runtime_progress_v1",
+        "status": "COMPLETED" if phase == "completed" else "RUNNING",
+        "updated_at_utc": now,
+        "pid": os.getpid(),
+        "latest_phase": phase,
+        "event_count": len(progress_events),
+        "recent_event_count": len(recent_events),
+        "latest_event": event,
+        "recent_events": recent_events,
+        "config": {
+            "as_of_date": config.as_of_date,
+            "planner_provider": config.planner_provider,
+            "source_acquisition": config.source_acquisition,
+            "candidate_event_seed_path": config.candidate_event_seed_path,
+            "universe_limit": config.universe_limit,
+            "planner_success_limit": config.planner_success_limit,
+            "planner_batch_size": config.planner_batch_size,
+            "max_source_tasks_per_plan": config.max_source_tasks_per_plan,
+            "max_fetches_per_task": config.max_fetches_per_task,
+            "accepted_claim_target": config.accepted_claim_target,
+            "max_distinct_candidate_attempts": config.max_distinct_candidate_attempts,
+            "retry_max": config.retry_max,
+            "claim_extractor_provider": config.claim_extractor_provider,
+            "claim_extractor_timeout_seconds": config.claim_extractor_timeout_seconds,
+            "runtime_budget_seconds": config.runtime_budget_seconds,
+        },
+    }
+    tmp_path = progress_path.with_name(progress_path.name + ".tmp")
+    tmp_path.write_text(json.dumps(document, ensure_ascii=False, indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8")
+    tmp_path.replace(progress_path)
+
+
+def _runtime_budget_exhausted_v4(*, config: ProductionShadowV4Config, started_at: float) -> bool:
+    if config.runtime_budget_seconds is None:
+        return False
+    return (time.monotonic() - started_at) >= float(config.runtime_budget_seconds)
+
+
+def _runtime_budget_remaining_seconds_v4(*, config: ProductionShadowV4Config, started_at: float) -> float | None:
+    if config.runtime_budget_seconds is None:
+        return None
+    return max(0.0, float(config.runtime_budget_seconds) - (time.monotonic() - started_at))
+
+
+def _source_execution_reserved_budget_seconds_v4(*, config: ProductionShadowV4Config) -> float:
+    timeout = float(config.claim_extractor_timeout_seconds or 0.0)
+    if timeout <= 0:
+        return 30.0
+    return max(30.0, min(90.0, timeout * 3.0))
+
+
+def _optional_retry_would_starve_source_execution_v4(*, config: ProductionShadowV4Config, started_at: float) -> bool:
+    remaining = _runtime_budget_remaining_seconds_v4(config=config, started_at=started_at)
+    if remaining is None:
+        return False
+    return remaining < _source_execution_reserved_budget_seconds_v4(config=config)
+
+
+def _primitive_gaps_from_tasks(tasks: Sequence[SourceTask]) -> list[str]:
+    gaps: list[str] = []
+    for task in tasks:
+        gap = task.get("primitive_gap") if isinstance(task, Mapping) else getattr(task, "primitive_gap", "")
+        if gap and str(gap) not in gaps:
+            gaps.append(str(gap))
+    return gaps
+
+
+def _claim_extractor_for_config(
+    *,
+    config: ProductionShadowV4Config,
+    repo_root: str | Path,
+    started_at: float | None = None,
+) -> LLMContractBlindRawAssertionExtractor:
     """Select the unstructured-text claim extractor for the v4 run mode.
 
     Frozen snapshots and fixture-like paths stay on the deterministic fallback
@@ -401,7 +806,15 @@ def _claim_extractor_for_config(*, config: ProductionShadowV4Config, repo_root: 
         )
     if mode == ClaimExtractorProviderModeV4.CODEX_CLI:
         return LLMContractBlindRawAssertionExtractor(
-            provider=CodexCLIExtractorProvider(repo_root=repo_root, timeout_seconds=config.claim_extractor_timeout_seconds)
+            provider=CodexCLIExtractorProvider(
+                repo_root=repo_root,
+                timeout_seconds=config.claim_extractor_timeout_seconds,
+                remaining_budget_seconds=(
+                    (lambda: _runtime_budget_remaining_seconds_v4(config=config, started_at=started_at))
+                    if started_at is not None
+                    else None
+                ),
+            )
         )
     return LLMContractBlindRawAssertionExtractor(provider=RuleFallbackExtractorProvider())
 
@@ -478,11 +891,14 @@ def _candidate_seed_events_from_config(*, config: ProductionShadowV4Config, as_o
             if not text:
                 continue
             payload = json.loads(text)
+            if payload.get("research_brain_eligible") is False:
+                continue
             event_date = _date_from_any(payload.get("event_date") or payload.get("as_of_date")) or as_of_date
             if event_date > as_of_date:
                 continue
-            symbol = str(payload.get("symbol") or "").zfill(6)
-            if not symbol:
+            raw_symbol = str(payload.get("symbol") or "").strip()
+            symbol = raw_symbol.zfill(6)
+            if not raw_symbol or not symbol.strip("0"):
                 continue
             rows.append(
                 CandidateEventV2(
@@ -847,6 +1263,7 @@ def run_multi_day_shadow_v4(
             retry_max=base_config.retry_max,
             claim_extractor_provider=base_config.claim_extractor_provider,
             claim_extractor_timeout_seconds=base_config.claim_extractor_timeout_seconds,
+            runtime_budget_seconds=base_config.runtime_budget_seconds,
             fake_provider_allowed=base_config.fake_provider_allowed,
         )
         result = run_research_brain_v4_production_shadow(
@@ -901,6 +1318,7 @@ def run_multi_day_shadow_v4(
             retry_max=base_config.retry_max,
             claim_extractor_provider=base_config.claim_extractor_provider,
             claim_extractor_timeout_seconds=base_config.claim_extractor_timeout_seconds,
+            runtime_budget_seconds=base_config.runtime_budget_seconds,
             fake_provider_allowed=base_config.fake_provider_allowed,
         )
         result = run_research_brain_v4_production_shadow(
@@ -2016,6 +2434,7 @@ def _full_thesis_queue_context_from_structured_payload(structured: Mapping[str, 
         "follow_up_origin",
         "follow_up_primitive_gap",
         "follow_up_archetype_id",
+        "primitive_gap",
         "present_primitives",
         "missing_green_primitives",
         "llm_query_required",

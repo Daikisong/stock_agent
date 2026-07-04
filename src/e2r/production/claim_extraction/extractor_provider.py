@@ -12,7 +12,7 @@ import tempfile
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 
 from .contract_blind_extractor import (
     _FORBIDDEN_CONTEXT_KEYS,
@@ -154,6 +154,8 @@ class ExtractorProviderResult:
     prompt_text_chars: int = 0
     prompt_text_compacted: bool = False
     prompt_text_limit: int | None = None
+    raw_prompt_payload: Mapping[str, Any] | None = None
+    raw_response_payload: Mapping[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         payload = asdict(self)
@@ -184,16 +186,32 @@ class CodexCLIExtractorProvider:
     provider_name = "codex_cli_contract_blind_extractor"
     provider_mode = "llm"
 
-    def __init__(self, *, repo_root: str | Path = ".", model: str | None = None, timeout_seconds: float | None = None) -> None:
+    def __init__(
+        self,
+        *,
+        repo_root: str | Path = ".",
+        model: str | None = None,
+        timeout_seconds: float | None = None,
+        remaining_budget_seconds: Callable[[], float | None] | None = None,
+    ) -> None:
         self.repo_root = Path(repo_root)
         self.model = model or os.environ.get("E2R_CODEX_EXTRACTOR_MODEL") or "codex-cli-default"
         self.timeout_seconds = timeout_seconds or float(os.environ.get("E2R_CODEX_EXTRACTOR_TIMEOUT_SECONDS") or 240.0)
+        self.remaining_budget_seconds = remaining_budget_seconds
 
     def extract(self, request: ExtractionInput) -> ExtractorProviderResult:
         started = time.monotonic()
         prompt_payload = _prompt_payload(request, text_limit=_PROMPT_DOCUMENT_TEXT_LIMIT)
+        initial_timeout = self._effective_timeout_seconds()
+        if initial_timeout is None:
+            return self._runtime_budget_result(
+                prompt_payload=prompt_payload,
+                started=started,
+                provider_error="codex_cli_runtime_budget_insufficient_before_initial_call",
+                attempt_count=0,
+            )
         try:
-            payload = self._run_once(prompt_payload)
+            payload = self._run_once(prompt_payload, timeout_seconds=initial_timeout)
             assertions = _records_from_payload(request, payload.get("raw_assertions") or ())
             return ExtractorProviderResult(
                 provider_name=self.provider_name,
@@ -203,8 +221,10 @@ class CodexCLIExtractorProvider:
                 prompt_hash=_stable_hash(prompt_payload),
                 initial_prompt_hash=_stable_hash(prompt_payload),
                 response_hash=_stable_hash(payload),
+                raw_prompt_payload=prompt_payload,
+                raw_response_payload=payload,
                 latency_ms=int((time.monotonic() - started) * 1000),
-                timeout_seconds=float(self.timeout_seconds),
+                timeout_seconds=float(initial_timeout),
                 attempt_count=1,
                 prompt_text_chars=int(prompt_payload.get("document_text_chars") or 0),
                 prompt_text_compacted=bool(prompt_payload.get("document_text_compacted")),
@@ -212,8 +232,19 @@ class CodexCLIExtractorProvider:
             )
         except subprocess.TimeoutExpired:
             retry_payload = _prompt_payload(request, text_limit=_TIMEOUT_RETRY_DOCUMENT_TEXT_LIMIT)
+            retry_timeout = self._effective_timeout_seconds()
+            if retry_timeout is None:
+                return self._runtime_budget_result(
+                    prompt_payload=retry_payload,
+                    started=started,
+                    provider_error="codex_cli_runtime_budget_insufficient_before_retry_call",
+                    attempt_count=1,
+                    initial_prompt_hash=_stable_hash(prompt_payload),
+                    retry_prompt_hash=_stable_hash(retry_payload),
+                    timeout_retry_attempted=True,
+                )
             try:
-                payload = self._run_once(retry_payload)
+                payload = self._run_once(retry_payload, timeout_seconds=retry_timeout)
                 assertions = _records_from_payload(request, payload.get("raw_assertions") or ())
                 return ExtractorProviderResult(
                     provider_name=self.provider_name,
@@ -224,8 +255,10 @@ class CodexCLIExtractorProvider:
                     initial_prompt_hash=_stable_hash(prompt_payload),
                     retry_prompt_hash=_stable_hash(retry_payload),
                     response_hash=_stable_hash(payload),
+                    raw_prompt_payload=retry_payload,
+                    raw_response_payload=payload,
                     latency_ms=int((time.monotonic() - started) * 1000),
-                    timeout_seconds=float(self.timeout_seconds),
+                    timeout_seconds=float(retry_timeout),
                     attempt_count=2,
                     timeout_retry_attempted=True,
                     prompt_text_chars=int(retry_payload.get("document_text_chars") or 0),
@@ -243,9 +276,10 @@ class CodexCLIExtractorProvider:
                     prompt_hash=_stable_hash(retry_payload),
                     initial_prompt_hash=_stable_hash(prompt_payload),
                     retry_prompt_hash=_stable_hash(retry_payload),
+                    raw_prompt_payload=retry_payload,
                     latency_ms=int((time.monotonic() - started) * 1000),
                     provider_error=f"codex_cli_timeout_initial_then_retry_{type(exc).__name__}: {exc}",
-                    timeout_seconds=float(self.timeout_seconds),
+                    timeout_seconds=float(retry_timeout),
                     attempt_count=2,
                     timeout_retry_attempted=True,
                     prompt_text_chars=int(retry_payload.get("document_text_chars") or 0),
@@ -260,9 +294,10 @@ class CodexCLIExtractorProvider:
                 prompt_hash=_stable_hash(retry_payload),
                 initial_prompt_hash=_stable_hash(prompt_payload),
                 retry_prompt_hash=_stable_hash(retry_payload),
+                raw_prompt_payload=retry_payload,
                 latency_ms=int((time.monotonic() - started) * 1000),
-                provider_error=f"codex_cli_timeout:initial={float(self.timeout_seconds):g}s;retry={float(self.timeout_seconds):g}s",
-                timeout_seconds=float(self.timeout_seconds),
+                provider_error=f"codex_cli_timeout:initial={float(initial_timeout):g}s;retry={float(retry_timeout):g}s",
+                timeout_seconds=float(retry_timeout),
                 attempt_count=2,
                 timeout_retry_attempted=True,
                 prompt_text_chars=int(retry_payload.get("document_text_chars") or 0),
@@ -277,16 +312,54 @@ class CodexCLIExtractorProvider:
                 raw_assertions=(),
                 prompt_hash=_stable_hash(prompt_payload),
                 initial_prompt_hash=_stable_hash(prompt_payload),
+                raw_prompt_payload=prompt_payload,
                 latency_ms=int((time.monotonic() - started) * 1000),
                 provider_error=f"{type(exc).__name__}: {exc}",
-                timeout_seconds=float(self.timeout_seconds),
+                timeout_seconds=float(initial_timeout),
                 attempt_count=1,
                 prompt_text_chars=int(prompt_payload.get("document_text_chars") or 0),
                 prompt_text_compacted=bool(prompt_payload.get("document_text_compacted")),
                 prompt_text_limit=int(prompt_payload.get("document_text_limit") or 0),
             )
 
-    def _run_once(self, prompt_payload: Mapping[str, Any]) -> Mapping[str, Any]:
+    def _effective_timeout_seconds(self) -> float | None:
+        remaining = self.remaining_budget_seconds() if self.remaining_budget_seconds is not None else None
+        if remaining is None:
+            return float(self.timeout_seconds)
+        effective = min(float(self.timeout_seconds), max(0.0, float(remaining) - _RUNTIME_BUDGET_TIMEOUT_GUARD_SECONDS))
+        return effective if effective >= _MIN_CODEX_EXTRACTOR_TIMEOUT_SECONDS else None
+
+    def _runtime_budget_result(
+        self,
+        *,
+        prompt_payload: Mapping[str, Any],
+        started: float,
+        provider_error: str,
+        attempt_count: int,
+        initial_prompt_hash: str | None = None,
+        retry_prompt_hash: str | None = None,
+        timeout_retry_attempted: bool = False,
+    ) -> ExtractorProviderResult:
+        return ExtractorProviderResult(
+            provider_name=self.provider_name,
+            provider_mode=self.provider_mode,
+            model=self.model,
+            raw_assertions=(),
+            prompt_hash=_stable_hash(prompt_payload),
+            initial_prompt_hash=initial_prompt_hash or _stable_hash(prompt_payload),
+            retry_prompt_hash=retry_prompt_hash,
+            raw_prompt_payload=prompt_payload,
+            latency_ms=int((time.monotonic() - started) * 1000),
+            provider_error=provider_error,
+            timeout_seconds=0.0,
+            attempt_count=attempt_count,
+            timeout_retry_attempted=timeout_retry_attempted,
+            prompt_text_chars=int(prompt_payload.get("document_text_chars") or 0),
+            prompt_text_compacted=bool(prompt_payload.get("document_text_compacted")),
+            prompt_text_limit=int(prompt_payload.get("document_text_limit") or 0),
+        )
+
+    def _run_once(self, prompt_payload: Mapping[str, Any], *, timeout_seconds: float) -> Mapping[str, Any]:
         prompt_text = _prompt_text(prompt_payload)
         with tempfile.TemporaryDirectory(prefix="e2r_llm_extractor_") as tmpdir:
             tmp = Path(tmpdir)
@@ -299,7 +372,7 @@ class CodexCLIExtractorProvider:
                 output_path=output_file,
                 output_schema_path=schema_file,
             )
-            completed = _run_codex_command(command, prompt=prompt_text, timeout=self.timeout_seconds)
+            completed = _run_codex_command(command, prompt=prompt_text, timeout=timeout_seconds)
             raw = output_file.read_text(encoding="utf-8") if output_file.exists() else completed.stdout
         if completed.returncode != 0:
             raise RuntimeError((completed.stderr or completed.stdout or "codex extractor failed").strip())
@@ -311,6 +384,8 @@ class CodexCLIExtractorProvider:
 
 _PROMPT_DOCUMENT_TEXT_LIMIT = 8_000
 _TIMEOUT_RETRY_DOCUMENT_TEXT_LIMIT = 3_600
+_RUNTIME_BUDGET_TIMEOUT_GUARD_SECONDS = 2.0
+_MIN_CODEX_EXTRACTOR_TIMEOUT_SECONDS = 3.0
 
 
 def _prompt_payload(request: ExtractionInput, *, text_limit: int = _PROMPT_DOCUMENT_TEXT_LIMIT) -> Mapping[str, Any]:

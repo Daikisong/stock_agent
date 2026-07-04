@@ -1,0 +1,28 @@
+{
+  "coverage_status_counts": {},
+  "schema_version": "e2r_replay_gap_plan_manifest_v1",
+  "source_claim_replay_task_schema_version": null,
+  "source_evidence_document_fixture_schema_version": null,
+  "source_fixture_seed_schema_version": null,
+  "source_replacement_evidence_document_fixture_schema_version": null,
+  "source_replay_acceptance_schema_version": "e2r_replay_acceptance_manifest_v1",
+  "summary": {
+    "claim_replay_ready_gap_task_count": 0,
+    "claim_replay_task_ready_gap_task_count": 0,
+    "evidence_contract_missing_task_count": 0,
+    "evidence_document_fixture_ready_gap_task_count": 0,
+    "gap_task_count": 0,
+    "post_chain_adjudication_blocked_gap_task_count": 0,
+    "post_chain_eligibility_blocked_gap_task_count": 0,
+    "post_chain_mapping_rejected_gap_task_count": 0,
+    "post_chain_no_raw_assertion_gap_task_count": 0,
+    "primitive_state_present_stage_not_ready_task_count": 0,
+    "production_cutover_ready": true,
+    "replay_stage_preview_ready_count": 32,
+    "replay_unsupported_source_gap_count": 0,
+    "snapshot_request_ready_gap_task_count": 0,
+    "source_backed_seed_gap_task_count": 0,
+    "unsupported_source_gap_task_count": 0
+  },
+  "tasks": []
+}

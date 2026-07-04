@@ -31,6 +31,7 @@ from e2r.research_brain.schemas import SourceTask
 from e2r.research_brain.v2_schemas import ArchetypeMemoryCard, CandidateEventV2, EventMagnitudeV2, LLMPlannerOutputV2
 from e2r.research_brain.v4_evidence_extraction_bridge import EvidenceOSExecutionBundleV4
 from e2r.research_brain.v4_production_orchestrator import (
+    _candidate_seed_events_from_config,
     _claim_extractor_for_config,
     _evidence_context_by_event,
     _bundle_has_direct_source_task_acceptance,
@@ -134,6 +135,258 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertEqual(summary["source_family_breakdown"], {"CensusFullThesisQueue": 1, "DART": 1})
         self.assertEqual(planner_runs[0].event.candidate_event_id, "CEV4-FTQUEUE-005930")
         self.assertEqual(planner_runs[0].event.symbol, "005930")
+
+    def test_candidate_event_seed_path_skips_rows_marked_not_research_brain_eligible(self):
+        with TemporaryDirectory() as tmp:
+            seed_path = Path(tmp) / "all_archetype_replay_gap_seed_events.jsonl"
+            seed_path.write_text(
+                json.dumps(
+                    {
+                        "candidate_event_id": "CEV4-ARREPLAYGAP-C01",
+                        "symbol": None,
+                        "company_name": None,
+                        "event_date": "2026-06-29",
+                        "detected_at": "2026-06-29",
+                        "source_family": "CensusAllArchetypeReplayGap",
+                        "source_id": str(seed_path),
+                        "event_type": "all_archetype_source_backed_replay_gap_seed",
+                        "event_title": "C01 source-backed replay gap seed",
+                        "event_summary": "planner input only; not a production candidate event",
+                        "raw_reason_codes": ["ALL_ARCHETYPE_SOURCE_BACKED_REPLAY_GAP"],
+                        "research_brain_eligible": False,
+                        "score_evidence_allowed": False,
+                        "stage_promotion_allowed_before_execution": False,
+                    },
+                    ensure_ascii=False,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            events = _candidate_seed_events_from_config(
+                config=ProductionShadowV4Config(
+                    as_of_date="2026-06-29",
+                    candidate_event_seed_path=str(seed_path),
+                ),
+                as_of_date=date(2026, 6, 29),
+            )
+
+        self.assertEqual(events, ())
+
+    def test_candidate_event_seed_path_skips_missing_or_zero_symbol_rows(self):
+        with TemporaryDirectory() as tmp:
+            seed_path = Path(tmp) / "bad_seed_rows.jsonl"
+            rows = [
+                {
+                    "candidate_event_id": "CEV4-BAD-NONE",
+                    "symbol": None,
+                    "event_date": "2026-06-29",
+                    "detected_at": "2026-06-29",
+                    "source_family": "BadSeed",
+                    "source_id": str(seed_path),
+                    "research_brain_eligible": True,
+                },
+                {
+                    "candidate_event_id": "CEV4-BAD-ZERO",
+                    "symbol": "000000",
+                    "event_date": "2026-06-29",
+                    "detected_at": "2026-06-29",
+                    "source_family": "BadSeed",
+                    "source_id": str(seed_path),
+                    "research_brain_eligible": True,
+                },
+                {
+                    "candidate_event_id": "CEV4-GOOD",
+                    "symbol": "660",
+                    "company_name": "SK하이닉스",
+                    "event_date": "2026-06-29",
+                    "detected_at": "2026-06-29",
+                    "source_family": "GoodSeed",
+                    "source_id": str(seed_path),
+                    "research_brain_eligible": True,
+                },
+            ]
+            seed_path.write_text(
+                "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows),
+                encoding="utf-8",
+            )
+
+            events = _candidate_seed_events_from_config(
+                config=ProductionShadowV4Config(
+                    as_of_date="2026-06-29",
+                    candidate_event_seed_path=str(seed_path),
+                ),
+                as_of_date=date(2026, 6, 29),
+            )
+
+        self.assertEqual(len(events), 1)
+        self.assertEqual(events[0].candidate_event_id, "CEV4-GOOD")
+        self.assertEqual(events[0].symbol, "000660")
+
+    def test_runtime_progress_file_records_research_brain_phases(self):
+        discovered = _planner_event_with_id("CE-UNIT-DISCOVERED", symbol="000660", company_name="SK하이닉스")
+        with TemporaryDirectory() as tmp:
+            progress_path = Path(tmp) / "brain_web_runtime_progress.json"
+            with patch(
+                "e2r.research_brain.v4_production_orchestrator.discover_daily_candidate_events_v4",
+                return_value=(discovered,),
+            ):
+                result = run_research_brain_v4_production_shadow(
+                    config=ProductionShadowV4Config(
+                        as_of_date="2026-06-29",
+                        planner_provider="none",
+                        source_acquisition="live_official_first",
+                        universe_limit=1,
+                        planner_success_limit=1,
+                        runtime_progress_path=str(progress_path),
+                    ),
+                    v1_archetype_matrix=load_v4_matrix(),
+                )
+            progress = json.loads(progress_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(result["planner_report"]["summary"]["planner_run_count"], 1)
+        self.assertEqual(progress["schema_version"], "e2r_research_brain_v4_runtime_progress_v1")
+        self.assertEqual(progress["status"], "COMPLETED")
+        self.assertEqual(progress["latest_phase"], "completed")
+        phases = [row["phase"] for row in progress["recent_events"]]
+        self.assertIn("events_selected", phases)
+        self.assertIn("planner_batch_start", phases)
+        self.assertIn("planner_run_processing_end", phases)
+        self.assertEqual(progress["config"]["planner_provider"], "none")
+
+    def test_runtime_budget_exhaustion_marks_unplanned_events_pending(self):
+        discovered = (
+            _planner_event_with_id("CE-UNIT-DISCOVERED-A", symbol="000660", company_name="SK하이닉스"),
+            _planner_event_with_id("CE-UNIT-DISCOVERED-B", symbol="005930", company_name="삼성전자"),
+        )
+        with TemporaryDirectory() as tmp:
+            progress_path = Path(tmp) / "brain_web_runtime_progress.json"
+            with patch(
+                "e2r.research_brain.v4_production_orchestrator.discover_daily_candidate_events_v4",
+                return_value=discovered,
+            ):
+                result = run_research_brain_v4_production_shadow(
+                    config=ProductionShadowV4Config(
+                        as_of_date="2026-06-29",
+                        planner_provider="fake",
+                        source_acquisition="test_fake",
+                        universe_limit=2,
+                        planner_success_limit=2,
+                        planner_batch_size=1,
+                        runtime_progress_path=str(progress_path),
+                        runtime_budget_seconds=0.0,
+                        fake_provider_allowed=True,
+                    ),
+                    v1_archetype_matrix=load_v4_matrix(),
+                )
+            progress = json.loads(progress_path.read_text(encoding="utf-8"))
+
+        planner_runs = result["planner_runs"]
+        self.assertEqual(len(planner_runs), 2)
+        self.assertTrue(all(run.provider_error == "planner_not_attempted_after_runtime_budget_exhausted" for run in planner_runs))
+        self.assertTrue(all(run.provider_name == "not_attempted_after_runtime_budget_exhausted" for run in planner_runs))
+        self.assertEqual(result["source_acquisition_report"]["summary"]["source_task_executed_count"], 0)
+        phases = [row["phase"] for row in progress["recent_events"]]
+        self.assertIn("runtime_budget_exhausted", phases)
+        self.assertEqual(progress["latest_phase"], "completed")
+        self.assertTrue(progress["latest_event"]["runtime_budget_exhausted"])
+
+    def test_runtime_budget_exhausted_after_source_execution_marks_remaining_events_pending(self):
+        discovered = (
+            _planner_event_with_id("CE-UNIT-DISCOVERED-A", symbol="000660", company_name="SK하이닉스"),
+            _planner_event_with_id("CE-UNIT-DISCOVERED-B", symbol="005930", company_name="삼성전자"),
+        )
+        with TemporaryDirectory() as tmp:
+            progress_path = Path(tmp) / "brain_web_runtime_progress.json"
+            budget_check_count = {"value": 0}
+
+            def budget_exhausted_after_source_started(*, config, started_at):
+                budget_check_count["value"] += 1
+                return budget_check_count["value"] >= 5
+
+            with patch(
+                "e2r.research_brain.v4_production_orchestrator.discover_daily_candidate_events_v4",
+                return_value=discovered,
+            ), patch(
+                "e2r.research_brain.v4_production_orchestrator._runtime_budget_exhausted_v4",
+                side_effect=budget_exhausted_after_source_started,
+            ):
+                result = run_research_brain_v4_production_shadow(
+                    config=ProductionShadowV4Config(
+                        as_of_date="2026-06-29",
+                        planner_provider="fake",
+                        source_acquisition="test_fake",
+                        universe_limit=2,
+                        planner_success_limit=1,
+                        planner_batch_size=1,
+                        max_distinct_candidate_attempts=1,
+                        retry_max=1,
+                        runtime_progress_path=str(progress_path),
+                        runtime_budget_seconds=60.0,
+                        fake_provider_allowed=True,
+                    ),
+                    v1_archetype_matrix=load_v4_matrix(),
+                )
+            progress = json.loads(progress_path.read_text(encoding="utf-8"))
+
+        planner_runs = result["planner_runs"]
+        pending_runs = [run for run in planner_runs if run.provider_name == "not_attempted_after_runtime_budget_exhausted"]
+        self.assertEqual(len(pending_runs), 1)
+        self.assertEqual(pending_runs[0].event.candidate_event_id, "CE-UNIT-DISCOVERED-B")
+        self.assertGreater(result["source_acquisition_report"]["summary"]["source_task_executed_count"], 0)
+        phases = [row["phase"] for row in progress["recent_events"]]
+        self.assertIn("runtime_budget_exhausted_after_source_execution", phases)
+        source_start_events = [row for row in progress["recent_events"] if row["phase"] == "source_execution_start"]
+        self.assertTrue(source_start_events)
+        source_start = source_start_events[0]
+        self.assertEqual(
+            source_start["source_task_count"],
+            source_start["planner_generated_source_task_count"]
+            + source_start["event_origin_source_task_count"]
+            + source_start["mandatory_official_source_task_count"],
+        )
+        self.assertEqual(progress["latest_phase"], "completed")
+        self.assertTrue(progress["latest_event"]["runtime_budget_exhausted"])
+
+    def test_missing_external_web_plan_retry_preserves_source_execution_budget(self):
+        discovered = (
+            _planner_event_with_id("CE-UNIT-DISCOVERED-A", symbol="000660", company_name="SK하이닉스"),
+        )
+        with TemporaryDirectory() as tmp:
+            progress_path = Path(tmp) / "brain_web_runtime_progress.json"
+            with patch(
+                "e2r.research_brain.v4_production_orchestrator.discover_daily_candidate_events_v4",
+                return_value=discovered,
+            ), patch(
+                "e2r.research_brain.v4_production_orchestrator._runtime_budget_remaining_seconds_v4",
+                return_value=1.0,
+            ), patch(
+                "e2r.research_brain.v4_production_orchestrator._retry_planner_for_missing_external_web_plan",
+                side_effect=AssertionError("optional retry should preserve source execution budget"),
+            ):
+                result = run_research_brain_v4_production_shadow(
+                    config=ProductionShadowV4Config(
+                        as_of_date="2026-06-29",
+                        planner_provider="fake",
+                        source_acquisition="test_fake",
+                        universe_limit=1,
+                        planner_success_limit=1,
+                        planner_batch_size=1,
+                        max_distinct_candidate_attempts=1,
+                        retry_max=1,
+                        runtime_progress_path=str(progress_path),
+                        runtime_budget_seconds=600.0,
+                        claim_extractor_timeout_seconds=15.0,
+                        fake_provider_allowed=True,
+                    ),
+                    v1_archetype_matrix=load_v4_matrix(),
+                )
+            progress = json.loads(progress_path.read_text(encoding="utf-8"))
+
+        phases = [row["phase"] for row in progress["recent_events"]]
+        self.assertIn("missing_external_web_plan_retry_skipped_insufficient_source_budget", phases)
+        self.assertIn("source_execution_start", phases)
+        self.assertGreater(result["source_acquisition_report"]["summary"]["source_task_executed_count"], 0)
 
     def test_cli_passes_candidate_event_seed_path_to_production_shadow_config(self):
         with TemporaryDirectory() as tmp:
@@ -341,6 +594,9 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
                 "follow_up_origin": "full_thesis_green_gate_blocker_follow_up",
                 "follow_up_primitive_gap": "hbm_capacity_pre_sold",
                 "follow_up_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "target_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "target_archetype_status": "GREEN_GATE_BLOCKER_FOLLOW_UP",
+                "primitive_gap": "hbm_capacity_pre_sold",
                 "present_primitives": ["named_customer_or_customer_quality"],
                 "missing_green_primitives": ["hbm_capacity_constraint", "hbm_capacity_pre_sold"],
                 "preferred_source_classes": ["DART", "KIND", "KRX", "IssuerIR", "CompanyGuide"],
@@ -349,7 +605,7 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
                 "official_first_required": True,
                 "llm_query_required": True,
                 "llm_query_allowed": True,
-                "general_search_allowed": False,
+                "general_search_allowed": True,
                 "hardcoded_query_count": 0,
                 "hardcoded_queries": [],
                 "query_intents": [],
@@ -381,12 +637,15 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertEqual(full_thesis_context["follow_up_task_id"], "FTGAP-UNIT")
         self.assertEqual(full_thesis_context["follow_up_primitive_gap"], "hbm_capacity_pre_sold")
         self.assertEqual(full_thesis_context["follow_up_archetype_id"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+        self.assertEqual(full_thesis_context["target_archetype"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+        self.assertEqual(full_thesis_context["target_archetype_status"], "GREEN_GATE_BLOCKER_FOLLOW_UP")
+        self.assertEqual(full_thesis_context["primitive_gap"], "hbm_capacity_pre_sold")
         self.assertEqual(full_thesis_context["present_primitives"], ["named_customer_or_customer_quality"])
         self.assertEqual(full_thesis_context["missing_green_primitives"], ["hbm_capacity_constraint", "hbm_capacity_pre_sold"])
         self.assertEqual(full_thesis_context["preferred_source_classes"][0], "DART")
         self.assertTrue(full_thesis_context["official_first_required"])
         self.assertTrue(full_thesis_context["llm_query_required"])
-        self.assertFalse(full_thesis_context["general_search_allowed"])
+        self.assertTrue(full_thesis_context["general_search_allowed"])
         self.assertEqual(full_thesis_context["hardcoded_query_count"], 0)
         self.assertEqual(full_thesis_context["query_intents"], [])
         self.assertEqual(full_thesis_context["max_queries"], 3)
@@ -588,6 +847,39 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertEqual(planner_runs[0].provider_error, "planner_output_missing_for_candidate")
         self.assertTrue(planner_runs[1].real_provider_success)
         self.assertEqual(result["planner_report"]["summary"]["real_provider_success_count"], 1)
+
+    def test_real_planner_does_not_exceed_distinct_candidate_attempt_cap_when_failures_repeat(self):
+        events = tuple(
+            _planner_event_with_id(f"CE-UNIT-FAIL-{index}", symbol=f"{index:06d}", company_name=f"실패기업{index}")
+            for index in range(5)
+        )
+        provider = _NoSuccessRealPlannerProvider()
+
+        with patch(
+            "e2r.research_brain.v4_production_orchestrator.discover_daily_candidate_events_v4",
+            return_value=events,
+        ):
+            result = run_research_brain_v4_production_shadow(
+                config=ProductionShadowV4Config(
+                    as_of_date="2026-06-29",
+                    planner_provider="real",
+                    source_acquisition="frozen_real_source_snapshot",
+                    universe_limit=5,
+                    planner_success_limit=5,
+                    planner_batch_size=1,
+                    max_distinct_candidate_attempts=2,
+                ),
+                v1_archetype_matrix=load_v4_matrix(),
+                planner_provider=provider,
+            )
+
+        planner_runs = result["planner_runs"]
+        real_attempts = [run for run in planner_runs if run.provider_name == provider.provider_name]
+        not_attempted = [run for run in planner_runs if run.provider_error == "planner_not_attempted_after_real_planner_limit"]
+        self.assertEqual([run.event.candidate_event_id for run in real_attempts], ["CE-UNIT-FAIL-0", "CE-UNIT-FAIL-1"])
+        self.assertEqual(len(not_attempted), 3)
+        self.assertEqual(result["planner_report"]["summary"]["real_provider_attempt_count"], 2)
+        self.assertEqual(result["planner_report"]["summary"]["real_provider_success_count"], 0)
 
     def test_auto_claim_extractor_uses_llm_for_live_full_bounded(self):
         config = ProductionShadowV4Config(
@@ -2377,7 +2669,7 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
             )
         )
 
-        def execute_side_effect(*, event, tasks, contract, as_of_date, source_runner, claim_extractor):
+        def execute_side_effect(*, event, tasks, contract, as_of_date, source_runner, claim_extractor, **_kwargs):
             if event.candidate_event_id == first.candidate_event_id:
                 return _rejected_bundle(event)
             return _bundle_with_direct_acceptance_and_rejected_claim(event)
@@ -2594,6 +2886,18 @@ class _MissingFirstRealPlannerProvider:
             for event in events
             if event.candidate_event_id == self.success_event_id
         }
+
+
+class _NoSuccessRealPlannerProvider:
+    provider_name = "unit_real_planner_no_success"
+    provider_mode = "real"
+    real_provider = True
+    fake_provider = False
+    model = "unit"
+    endpoint = "unit"
+
+    def plan_many(self, *, events, memory_cards, existing_evidence_by_event_id=None):
+        return {}
 
 
 class _SequentialPlannerProvider:

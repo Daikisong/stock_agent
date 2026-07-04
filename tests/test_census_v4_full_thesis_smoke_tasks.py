@@ -106,6 +106,10 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
         self.assertEqual(seed_audit["seed_event_count"], len(queue))
         self.assertEqual(seed_audit["trace_row_count"], len(queue))
         self.assertEqual(seed_audit["status_counts"], {"PLANNER_NOT_RUN": len(queue)})
+        self.assertEqual(seed_audit["seed_source_family_counts"], {"CensusFullThesisQueue": len(queue)})
+        self.assertEqual(seed_audit["target_archetype_counts"], {"UNKNOWN": len(queue)})
+        self.assertEqual(seed_audit["target_primitive_gap_counts"], {"UNKNOWN": len(queue)})
+        self.assertEqual(seed_audit["critical_counts"]["blocker_follow_up_seed_missing_target_context_count"], 0)
         self.assertEqual(seed_audit["critical_count"], 0)
         self.assertEqual(seed_audit["full_thesis_promoted_seed_count"], 0)
         self.assertEqual({row["final_stage_scope"] for row in seed_trace}, {"CENSUS_EVENT_BOARD"})
@@ -117,6 +121,8 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
         self.assertEqual({row["final_is_full_e2r_score"] for row in seed_trace}, {False})
         self.assertEqual({row["target_archetype_status"] for row in seed_trace}, {"BRAIN_HYPOTHESIS_REQUIRED"})
         self.assertEqual({row["target_archetype"] for row in seed_trace}, {None})
+        self.assertEqual({row["seed_source_family"] for row in seed_trace}, {"CensusFullThesisQueue"})
+        self.assertEqual({row["seed_event_type"] for row in seed_trace}, {"full_thesis_refresh_seed"})
         self.assertIn("source_primary_archetype", seed_trace[0])
         self.assertIn("source_missing_primitives", seed_trace[0])
         self.assertIn("source_material_gap_ids", seed_trace[0])
@@ -192,6 +198,76 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
             self.assertIn("source_backed_primitive_coverage_required", task["missing_full_thesis_primitives"])
             self.assertIn("unbounded_general_search", task["forbidden_source_classes"])
             self.assertEqual(task["blocked_reason"], "full_thesis_refresh_task_not_run")
+
+    def test_blocker_follow_up_seed_materialization_audit_keeps_target_gap_context(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            seed_path = root / "full_thesis_blocker_follow_up_seed_events.jsonl"
+            write_jsonl(
+                seed_path,
+                [
+                    {
+                        "candidate_event_id": "CEV4-FTGAP-C06-HBM",
+                        "symbol": "000660",
+                        "company_name": "SK하이닉스",
+                        "source_family": "CensusFullThesisBlockerFollowUp",
+                        "source_id": str(root / "full_thesis_blocker_follow_up_source_tasks.jsonl"),
+                        "event_type": "full_thesis_blocker_follow_up_seed",
+                        "target_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                        "primitive_gap": "hbm_capacity_constraint",
+                        "follow_up_task_id": "FTGAP-UNIT",
+                        "follow_up_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                        "follow_up_primitive_gap": "hbm_capacity_constraint",
+                        "seed_role": "planner_input_only",
+                        "score_evidence_allowed": False,
+                        "stage_promotion_allowed_before_execution": False,
+                        "structured_payload": {
+                            "target_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                            "primitive_gap": "hbm_capacity_constraint",
+                        },
+                    }
+                ],
+            )
+            write_jsonl(root / "planner_runs.jsonl", [])
+            write_jsonl(root / "source_task_executions.jsonl", [])
+            write_jsonl(root / "stagecourt_traces.jsonl", [])
+
+            _write_full_thesis_seed_materialization_trace(
+                output_root=root,
+                seed_path=seed_path,
+                stage_rows=[
+                    {
+                        "symbol": "000660",
+                        "stage_scope": "CENSUS_EVENT_BOARD",
+                        "operator_stage_use": "NOT_FULL_THESIS_STAGE",
+                        "operator_score_use": "NOT_FULL_E2R_SCORE",
+                        "full_thesis_stage": "FULL_THESIS_NOT_RUN",
+                        "full_thesis_score_scale": "NO_SCORE",
+                        "score_scale": "NO_SCORE",
+                    }
+                ],
+            )
+            trace = read_jsonl(root / "full_thesis_seed_materialization_trace.jsonl")
+            audit = read_json(root / "full_thesis_seed_materialization_audit.json")
+
+        self.assertEqual(len(trace), 1)
+        self.assertEqual(trace[0]["seed_source_family"], "CensusFullThesisBlockerFollowUp")
+        self.assertEqual(trace[0]["seed_event_type"], "full_thesis_blocker_follow_up_seed")
+        self.assertEqual(trace[0]["follow_up_task_id"], "FTGAP-UNIT")
+        self.assertEqual(trace[0]["target_archetype"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+        self.assertEqual(trace[0]["target_primitive_gap"], "hbm_capacity_constraint")
+        self.assertEqual(audit["seed_source_family_counts"], {"CensusFullThesisBlockerFollowUp": 1})
+        self.assertEqual(audit["target_archetype_counts"], {"C06_HBM_MEMORY_CUSTOMER_CAPACITY": 1})
+        self.assertEqual(audit["target_primitive_gap_counts"], {"hbm_capacity_constraint": 1})
+        self.assertEqual(
+            audit["status_counts_by_target_archetype"],
+            {"C06_HBM_MEMORY_CUSTOMER_CAPACITY": {"PLANNER_NOT_RUN": 1}},
+        )
+        self.assertEqual(
+            audit["status_counts_by_target_primitive_gap"],
+            {"hbm_capacity_constraint": {"PLANNER_NOT_RUN": 1}},
+        )
+        self.assertEqual(audit["critical_counts"]["blocker_follow_up_seed_missing_target_context_count"], 0)
 
     def test_enabled_provider_none_measures_seed_planner_consumption_without_materialization(self):
         with TemporaryDirectory() as tmp:
@@ -427,6 +503,8 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
                     "score_scale": "FULL_E2R_100" if symbol == "000007" else "NO_SCORE",
                     "is_full_thesis_stage": symbol == "000007",
                     "is_full_e2r_score": symbol == "000007",
+                    "full_thesis_candidate_event_id": event_id if symbol == "000007" else None,
+                    "full_thesis_candidate_event_ids": [event_id] if symbol == "000007" else [],
                 }
             )
 
@@ -557,7 +635,7 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
         self.assertNotIn("full_thesis_smoke_execution_pending", goal_completion["blockers"])
         self.assertIn("full_thesis_production_pass_false", goal_completion["blockers"])
         self.assertFalse(goal_completion["full_thesis_production_pass_allowed"])
-        self.assertIn("source_backed_replay_parity_all_archetypes_pending", goal_completion["blockers"])
+        self.assertNotIn("source_backed_replay_parity_all_archetypes_pending", goal_completion["blockers"])
 
     def test_samsung_hynix_smoke_records_full_thesis_trace_per_symbol(self):
         root = census_v4_artifacts()["output_root"]
@@ -677,6 +755,51 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
         self.assertTrue(all(row["stage_scope"] == "FULL_THESIS" for row in smoke_rows))
         self.assertFalse(any(row["is_full_thesis_stage"] for row in smoke_rows))
         self.assertFalse(any(row["is_full_e2r_score"] for row in smoke_rows))
+
+    def test_external_controlled_smoke_artifact_clears_smoke_requirement_without_promoting_production(self):
+        with TemporaryDirectory() as tmp:
+            smoke_root = Path(tmp) / "smoke"
+            run_census_mode_v4(
+                CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    output_root=str(smoke_root),
+                    v3_output_root="output/census_v3/2026-07-01",
+                    run_mode="LEDGER_REFRESH_CENSUS",
+                    brain_web_mode="disabled",
+                    full_thesis_smoke_mode="controlled_replay",
+                    target_gate="full_thesis_smoke",
+                    write_operational_docs=False,
+                )
+            )
+
+            output_root = Path(tmp) / "out"
+            run_census_mode_v4(
+                CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    output_root=str(output_root),
+                    v3_output_root="output/census_v3/2026-07-01",
+                    run_mode="LEDGER_REFRESH_CENSUS",
+                    brain_web_mode="disabled",
+                    full_thesis_smoke_artifact_root=str(smoke_root),
+                    write_operational_docs=False,
+                )
+            )
+            smoke = read_json(output_root / "samsung_hynix_full_thesis_smoke.json")
+            completion = read_json(output_root / "goal_completion_audit.json")
+            production = read_json(output_root / "full_thesis_production_audit.json")
+            stage_rows = read_jsonl(output_root / "census_stage_status.jsonl")
+
+        self.assertEqual(smoke["verdict"], "FULL_THESIS_SMOKE_PASS")
+        self.assertTrue(smoke["external_smoke_artifact_used"])
+        self.assertEqual(completion["full_thesis_smoke_requirement_satisfied_by"], "external_controlled_smoke")
+        self.assertTrue(completion["full_thesis_smoke_requirement_pass_allowed"])
+        self.assertTrue(completion["full_thesis_smoke_execution_pass_allowed"])
+        self.assertNotIn("full_thesis_smoke_pending", completion["blockers"])
+        self.assertNotIn("full_thesis_smoke_execution_pending", completion["blockers"])
+        self.assertIn("full_thesis_production_pass_false", completion["blockers"])
+        self.assertFalse(production["production_pass_allowed"])
+        self.assertEqual(production["production_full_thesis_row_count"], 0)
+        self.assertFalse(any(row.get("is_controlled_smoke_full_thesis_stage") is True for row in stage_rows))
 
 
 if __name__ == "__main__":

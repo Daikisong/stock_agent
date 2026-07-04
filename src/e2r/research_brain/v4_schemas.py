@@ -246,6 +246,8 @@ class ProductionShadowV4Config:
     retry_max: int = 2
     claim_extractor_provider: str = ClaimExtractorProviderModeV4.AUTO.value
     claim_extractor_timeout_seconds: float | None = 60.0
+    runtime_progress_path: str | None = None
+    runtime_budget_seconds: float | None = None
     fake_provider_allowed: bool = False
 
     def validate(self) -> None:
@@ -269,6 +271,8 @@ class ProductionShadowV4Config:
             raise ValueError("fake planner provider is not allowed for production shadow")
         if self.claim_extractor_timeout_seconds is not None and self.claim_extractor_timeout_seconds <= 0:
             raise ValueError("v4 production shadow requires positive claim_extractor_timeout_seconds")
+        if self.runtime_budget_seconds is not None and self.runtime_budget_seconds < 0:
+            raise ValueError("v4 production shadow requires non-negative runtime_budget_seconds")
         ClaimExtractorProviderModeV4(self.claim_extractor_provider)
 
     def to_dict(self) -> dict[str, Any]:

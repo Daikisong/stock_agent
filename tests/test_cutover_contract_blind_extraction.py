@@ -350,6 +350,62 @@ class CutoverContractBlindExtractionTests(unittest.TestCase):
         self.assertNotIn("score_gap_context", calls[1])
         self.assertNotIn("primitive_gap", calls[1])
 
+    def test_codex_extractor_runtime_budget_caps_subprocess_timeout(self):
+        observed_timeouts: list[float] = []
+
+        def fake_run(command, *, prompt, timeout):
+            observed_timeouts.append(timeout)
+            output_path = Path(command[command.index("-o") + 1])
+            output_path.write_text(json.dumps({"raw_assertions": []}), encoding="utf-8")
+            return subprocess.CompletedProcess(command, 0, "", "")
+
+        request = ExtractionInput(
+            target_entity_id="TICKER:005930",
+            target_aliases=("삼성전자", "005930"),
+            as_of_date="2026-07-01",
+            document_id="DOC-BUDGET",
+            anchor_id="ANCHOR-BUDGET",
+            source_text="삼성전자는 HBM 고객 물량 배정을 설명했다.",
+            extra_context={},
+        )
+
+        provider = CodexCLIExtractorProvider(
+            repo_root=".",
+            timeout_seconds=30,
+            remaining_budget_seconds=lambda: 7.0,
+        )
+        with patch("e2r.production.claim_extraction.extractor_provider._run_codex_command", side_effect=fake_run):
+            result = provider.extract(request)
+
+        self.assertIsNone(result.provider_error)
+        self.assertEqual(observed_timeouts, [5.0])
+        self.assertEqual(result.timeout_seconds, 5.0)
+
+    def test_codex_extractor_runtime_budget_insufficient_skips_subprocess(self):
+        request = ExtractionInput(
+            target_entity_id="TICKER:005930",
+            target_aliases=("삼성전자", "005930"),
+            as_of_date="2026-07-01",
+            document_id="DOC-BUDGET-SKIP",
+            anchor_id="ANCHOR-BUDGET-SKIP",
+            source_text="삼성전자는 HBM 고객 물량 배정을 설명했다.",
+            extra_context={},
+        )
+
+        provider = CodexCLIExtractorProvider(
+            repo_root=".",
+            timeout_seconds=30,
+            remaining_budget_seconds=lambda: 4.0,
+        )
+        with patch("e2r.production.claim_extraction.extractor_provider._run_codex_command") as run_mock:
+            result = provider.extract(request)
+
+        run_mock.assert_not_called()
+        self.assertEqual(result.provider_error, "codex_cli_runtime_budget_insufficient_before_initial_call")
+        self.assertEqual(result.attempt_count, 0)
+        self.assertEqual(result.timeout_seconds, 0.0)
+        self.assertTrue(result.raw_prompt_payload)
+
     def test_codex_extractor_timeout_retry_non_json_becomes_provider_error(self):
         calls: list[str] = []
 

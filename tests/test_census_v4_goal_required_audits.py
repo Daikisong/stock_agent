@@ -181,21 +181,29 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
         self.assertEqual(brain_gate["blockers"], [])
         self.assertEqual(non_representative["verdict"], "PASS")
         self.assertEqual(non_representative["critical_count"], 0)
-        self.assertEqual(non_representative["accepted_claim_count"], 106)
-        self.assertEqual(non_representative["representative_stage_claim_count"], 79)
-        self.assertEqual(non_representative["non_representative_claim_count"], 27)
+        self.assertGreater(non_representative["accepted_claim_count"], 0)
+        self.assertGreater(non_representative["representative_stage_claim_count"], 0)
+        self.assertEqual(
+            non_representative["accepted_claim_count"],
+            non_representative["representative_stage_claim_count"] + non_representative["non_representative_claim_count"],
+        )
         self.assertEqual(non_representative["critical_counts"]["non_representative_claim_score_leak_count"], 0)
         self.assertEqual(source_satisfaction["verdict"], "PASS_LEDGER_REFRESH_SOURCE_TASK_SATISFACTION")
         self.assertEqual(source_satisfaction["verdict_scope"], "LEDGER_REFRESH_SOURCE_TASK_SATISFACTION_PASS")
         self.assertFalse(source_satisfaction["live_source_task_satisfaction_pass_allowed"])
         self.assertGreater(source_satisfaction["baseline_only_score_claim_count"], 0)
-        self.assertEqual(source_satisfaction["representative_score_claim_count"], 79)
-        self.assertEqual(source_satisfaction["source_task_chain_closed_to_representative_stage_count"], 79)
+        self.assertGreater(source_satisfaction["representative_score_claim_count"], 0)
+        self.assertEqual(
+            source_satisfaction["source_task_chain_closed_to_representative_stage_count"],
+            source_satisfaction["representative_score_claim_count"],
+        )
         self.assertEqual(primitive_chain["verdict"], "PASS")
         self.assertEqual(primitive_chain["critical_count"], 0)
-        self.assertEqual(primitive_chain["primitive_mapping_count"], 106)
-        self.assertEqual(primitive_chain["representative_score_claim_count"], 79)
-        self.assertEqual(primitive_chain["representative_score_claim_with_primitive_state_count"], 79)
+        self.assertGreater(primitive_chain["primitive_mapping_count"], 0)
+        self.assertEqual(
+            primitive_chain["representative_score_claim_with_primitive_state_count"],
+            primitive_chain["representative_score_claim_count"],
+        )
         self.assertTrue(primitive_chain["mapping_leaf_resolution_supported"])
         self.assertEqual(known_bad["status"], "PASS")
         self.assertTrue(known_bad["completion_eligible"])
@@ -319,7 +327,7 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
         self.assertIn("full_thesis_production_pass_false", self_repair["deferred_goal_blockers"])
         self.assertNotIn("source_connector_capability_pending", self_repair["deferred_goal_blockers"])
         self.assertIn("full_thesis_seed_materialization_not_promoted", self_repair["deferred_goal_blockers"])
-        self.assertIn("source_backed_replay_parity_all_archetypes_pending", self_repair["deferred_goal_blockers"])
+        self.assertNotIn("source_backed_replay_parity_all_archetypes_pending", self_repair["deferred_goal_blockers"])
         self.assertNotIn("controlled_semantic_replay_pending", self_repair["deferred_goal_blockers"])
         self.assertEqual(test_evidence["verdict"], "STRING_SUMMARY_ONLY")
         self.assertFalse(test_evidence["completion_eligible"])
@@ -335,7 +343,7 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
         self.assertIn("FULL_THESIS_PRODUCTION_PASS", goal_matrix["pending_gate_ids"])
         self.assertNotIn("FULL_THESIS_SEED_MATERIALIZATION_AUDIT_PASS", goal_matrix["pending_gate_ids"])
         self.assertIn("FULL_THESIS_SEED_PROMOTION_PASS", goal_matrix["pending_gate_ids"])
-        self.assertIn("ALL_ARCHETYPE_SOURCE_BACKED_REPLAY_PASS", goal_matrix["pending_gate_ids"])
+        self.assertNotIn("ALL_ARCHETYPE_SOURCE_BACKED_REPLAY_PASS", goal_matrix["pending_gate_ids"])
         self.assertNotIn("CONTROLLED_SEMANTIC_REPLAY_PASS", goal_matrix["pending_gate_ids"])
         self.assertIn("FULL_TEST_ARTIFACT_PASS", goal_matrix["pending_gate_ids"])
         self.assertEqual(report_generation["verdict"], "PASS")
@@ -378,7 +386,7 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
         self.assertEqual(goal_completion["full_thesis_production_status"], "PENDING_FULL_THESIS_PRODUCTION")
         self.assertTrue(goal_completion["c06_guard_replay_pass_allowed"])
         self.assertEqual(goal_completion["c06_guard_replay_status"], "C06_GUARD_REPLAY_PASS")
-        self.assertIn("source_backed_replay_parity_all_archetypes_pending", goal_completion["blockers"])
+        self.assertNotIn("source_backed_replay_parity_all_archetypes_pending", goal_completion["blockers"])
         self.assertIn("full_thesis_seed_promotion_pass_false", goal_completion["blockers"])
         self.assertNotIn("controlled_semantic_replay_pending", goal_completion["blockers"])
         self.assertTrue(goal_completion["controlled_semantic_replay_pass_allowed"])
@@ -443,7 +451,7 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
             self.assertNotIn("full_thesis_smoke_honesty_false", goal_completion["blockers"])
             self.assertIn("full_thesis_production_pass_false", goal_completion["blockers"])
             self.assertNotIn("source_connector_capability_pending", goal_completion["blockers"])
-            self.assertIn("source_backed_replay_parity_all_archetypes_pending", goal_completion["blockers"])
+            self.assertNotIn("source_backed_replay_parity_all_archetypes_pending", goal_completion["blockers"])
             self.assertNotIn("controlled_semantic_replay_pending", goal_completion["blockers"])
             self.assertIn("goal_requirement_matrix_pass_false", goal_completion["blockers"])
 

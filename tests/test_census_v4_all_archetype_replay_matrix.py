@@ -1,10 +1,10 @@
 import unittest
 
-from tests.census_v4_test_helpers import census_v4_artifacts, read_json
+from tests.census_v4_test_helpers import census_v4_artifacts, read_json, read_jsonl
 
 
 class CensusV4AllArchetypeReplayMatrixTests(unittest.TestCase):
-    def test_matrix_covers_all_contracts_and_keeps_goal_blocked(self):
+    def test_matrix_covers_all_contracts_and_closes_source_backed_replay_gate(self):
         artifacts = census_v4_artifacts()
         root = artifacts["output_root"]
         matrix = read_json(root / "all_archetype_replay_matrix.json")
@@ -14,23 +14,87 @@ class CensusV4AllArchetypeReplayMatrixTests(unittest.TestCase):
         self.assertEqual(matrix["schema_version"], "e2r_census_v4_all_archetype_replay_matrix_v1")
         self.assertEqual(matrix["archetype_count"], 36)
         self.assertEqual(len(matrix["archetypes"]), 36)
-        self.assertFalse(matrix["all_archetype_replay_pass"])
-        self.assertEqual(matrix["source_backed_ready_count"], 6)
-        self.assertEqual(matrix["guard_replay_ready_count"], 6)
+        self.assertTrue(matrix["all_archetype_replay_pass"])
+        self.assertEqual(matrix["source_backed_ready_count"], 36)
+        self.assertEqual(matrix["guard_replay_ready_count"], 36)
         self.assertEqual(matrix["controlled_wiring_smoke_ready_count"], 1)
-        self.assertEqual(matrix["missing_required_archetype_count"], 26)
-        self.assertGreater(matrix["missing_required_archetype_count"], 0)
-        self.assertIn("source_backed_replay_parity_all_archetypes_pending", matrix["blockers"])
+        self.assertEqual(matrix["missing_required_archetype_count"], 0)
+        self.assertEqual(matrix["missing_required_archetype_ids"], [])
+        self.assertEqual(matrix["blockers"], [])
+        self.assertTrue(matrix["external_replay_acceptance_pass"])
+        self.assertEqual(matrix["external_source_backed_seed_ready_count"], 30)
+        self.assertTrue(matrix["external_global_guard_ready"])
+        external = matrix["external_replay_acceptance"]
+        self.assertTrue(external["external_source_backed_manifest_ready"])
+        self.assertTrue(external["external_replay_acceptance_ready"])
+        self.assertTrue(external["external_adversarial_acceptance_ready"])
+        self.assertEqual(external["manifest_production_score_fixture_count"], 0)
+        self.assertFalse(external["production_score_fixture_allowed"])
+        self.assertFalse(external["production_stage_fixture_allowed"])
 
-        self.assertFalse(readiness["all_archetype_replay_pass"])
+        self.assertTrue(readiness["all_archetype_replay_pass"])
         self.assertEqual(readiness["all_archetype_replay_matrix"]["archetype_count"], 36)
-        self.assertEqual(readiness["all_archetype_replay_matrix"]["source_backed_ready_count"], 6)
-        self.assertEqual(readiness["all_archetype_replay_matrix"]["guard_replay_ready_count"], 6)
+        self.assertEqual(readiness["all_archetype_replay_matrix"]["source_backed_ready_count"], 36)
+        self.assertEqual(readiness["all_archetype_replay_matrix"]["guard_replay_ready_count"], 36)
         self.assertEqual(readiness["all_archetype_replay_matrix"]["controlled_wiring_smoke_ready_count"], 1)
-        self.assertFalse(goal_completion["all_archetype_replay_pass_allowed"])
+        self.assertEqual(readiness["all_archetype_replay_matrix"]["replay_gap_source_task_count"], 0)
+        self.assertEqual(readiness["all_archetype_replay_matrix"]["replay_gap_seed_event_count"], 0)
+        self.assertEqual(readiness["all_archetype_replay_matrix"]["replay_gap_plan_task_count"], 0)
+        self.assertTrue(goal_completion["all_archetype_replay_pass_allowed"])
         self.assertEqual(goal_completion["all_archetype_replay_matrix_summary"]["archetype_count"], 36)
-        self.assertEqual(goal_completion["all_archetype_replay_matrix_summary"]["missing_required_archetype_count"], 26)
-        self.assertIn("source_backed_replay_parity_all_archetypes_pending", goal_completion["blockers"])
+        self.assertEqual(goal_completion["all_archetype_replay_matrix_summary"]["missing_required_archetype_count"], 0)
+        self.assertEqual(goal_completion["all_archetype_replay_matrix_summary"]["replay_gap_source_task_count"], 0)
+        self.assertEqual(goal_completion["all_archetype_replay_matrix_summary"]["replay_gap_seed_event_count"], 0)
+        self.assertEqual(goal_completion["all_archetype_replay_matrix_summary"]["replay_gap_plan_task_count"], 0)
+        self.assertNotIn("source_backed_replay_parity_all_archetypes_pending", goal_completion["blockers"])
+
+        self.assertEqual(matrix["replay_gap_source_task_count"], matrix["missing_required_archetype_count"])
+        self.assertEqual(matrix["replay_gap_seed_event_count"], matrix["replay_gap_source_task_count"])
+        self.assertEqual(matrix["replay_gap_plan_task_count"], matrix["missing_required_archetype_count"])
+
+    def test_all_archetype_replay_matrix_exports_existing_replay_gap_plan_manifest(self):
+        root = census_v4_artifacts()["output_root"]
+        matrix = read_json(root / "all_archetype_replay_matrix.json")
+        acceptance = read_json(root / "all_archetype_replay_acceptance_manifest.json")
+        gap_plan = read_json(root / "all_archetype_replay_gap_plan.json")
+
+        self.assertEqual(acceptance["schema_version"], "e2r_replay_acceptance_manifest_v1")
+        self.assertEqual(acceptance["source"], "census_v4_all_archetype_replay_matrix")
+        self.assertEqual(acceptance["summary"]["archetype_count"], matrix["required_archetype_count"])
+        self.assertEqual(acceptance["summary"]["stage_preview_ready_count"], matrix["required_archetype_count"])
+        self.assertEqual(acceptance["summary"]["unsupported_source_gap_count"], 0)
+        self.assertTrue(acceptance["summary"]["replay_acceptance_ready"])
+        self.assertFalse(acceptance["summary"]["production_cutover_ready"])
+
+        self.assertEqual(gap_plan["schema_version"], "e2r_replay_gap_plan_manifest_v1")
+        self.assertEqual(gap_plan["summary"]["gap_task_count"], 0)
+        self.assertEqual(gap_plan["summary"]["unsupported_source_gap_task_count"], 0)
+        self.assertTrue(gap_plan["summary"]["production_cutover_ready"])
+        by_archetype = {task["archetype_id"]: task for task in gap_plan["tasks"]}
+        self.assertEqual(by_archetype, {})
+
+    def test_all_source_backed_replay_gaps_are_closed_by_0621_acceptance_artifacts(self):
+        root = census_v4_artifacts()["output_root"]
+        matrix = read_json(root / "all_archetype_replay_matrix.json")
+        tasks = read_jsonl(root / "all_archetype_replay_gap_source_tasks.jsonl")
+        seeds = read_jsonl(root / "all_archetype_replay_gap_seed_events.jsonl")
+
+        self.assertTrue(matrix["all_archetype_replay_pass"])
+        self.assertEqual(matrix["missing_required_archetype_count"], 0)
+        self.assertEqual(tasks, [])
+        self.assertEqual(seeds, [])
+
+        by_id = {row["archetype_id"]: row for row in matrix["archetypes"]}
+        c01 = by_id["C01_ORDER_BACKLOG_MARGIN_BRIDGE"]
+        self.assertTrue(c01["positive_replay_pass"])
+        self.assertTrue(c01["guard_replay_pass"])
+        self.assertEqual(c01["positive_replay_basis"], "0621_c01_c36_source_backed_replay_acceptance")
+        self.assertEqual(c01["guard_replay_basis"], "0621_global_adversarial_acceptance")
+        self.assertEqual(c01["external_source_backed_seed_candidate_count"], 3)
+        self.assertEqual(c01["source_backed_fixture_count"], 3)
+        self.assertFalse(c01["controlled_wiring_smoke_pass"])
+        self.assertFalse(c01["production_score_fixture_allowed"])
+        self.assertFalse(c01["production_stage_fixture_allowed"])
 
     def test_c06_source_backed_semantic_replay_passes_without_treating_smoke_as_production(self):
         matrix = read_json(census_v4_artifacts()["output_root"] / "all_archetype_replay_matrix.json")
@@ -56,7 +120,7 @@ class CensusV4AllArchetypeReplayMatrixTests(unittest.TestCase):
             for row in matrix["archetypes"]
             if row["replay_status"] == "SOURCE_GAP_PENDING"
         }
-        self.assertIn("C01_ORDER_BACKLOG_MARGIN_BRIDGE", source_gap_ids)
+        self.assertNotIn("C01_ORDER_BACKLOG_MARGIN_BRIDGE", source_gap_ids)
         self.assertNotIn("C28_SOFTWARE_SECURITY_CONTRACT_RETENTION", source_gap_ids)
 
     def test_c08_source_backed_semantic_replay_passes_profile_only_guard(self):

@@ -20,6 +20,11 @@ class ContractSemanticClassifierTests(unittest.TestCase):
         self.assertFalse(result.allowed_for_contract_quality)
         self.assertEqual(result.event_class, "pledge_or_collateral_contract")
 
+    def test_liquidity_provider_contract_is_not_customer_contract(self):
+        result = classify_contract_event({"quote_text": "유동성공급계약 체결 안내 유동성공급자 지정"})
+        self.assertFalse(result.allowed_for_contract_quality)
+        self.assertEqual(result.event_class, "liquidity_provider_contract")
+
     def test_equity_issuance_is_not_earnings_visibility(self):
         result = classify_contract_event({"quote_text": "주요사항보고서(유상증자결정) 증권신고서(지분증권)"})
         self.assertFalse(result.allowed_for_contract_quality)

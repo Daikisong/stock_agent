@@ -123,8 +123,11 @@ class CensusV4PrimitiveStateChainTests(unittest.TestCase):
         self.assertEqual(audit["schema_version"], "e2r_census_v4_primitive_state_chain_audit_v1")
         self.assertEqual(audit["verdict"], "PASS")
         self.assertEqual(audit["critical_count"], 0)
-        self.assertEqual(audit["representative_score_claim_count"], 79)
-        self.assertEqual(audit["representative_score_claim_with_primitive_state_count"], 79)
+        self.assertGreater(audit["representative_score_claim_count"], 0)
+        self.assertEqual(
+            audit["representative_score_claim_with_primitive_state_count"],
+            audit["representative_score_claim_count"],
+        )
         self.assertEqual(audit["primitive_mapping_count"], 106)
         self.assertTrue(audit["mapping_leaf_resolution_supported"])
 

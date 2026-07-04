@@ -253,15 +253,6 @@ def _attempt_real_replay(*, row: Mapping[str, Any], as_of_date: date, repo_root:
     )
     if not eligibility.eligible:
         return _failed(row, "evidence_os_score_eligibility_failed:" + ",".join(eligibility.reasons))
-    claim_id = stable_claim_id(
-        document_hash=document.content_hash,
-        anchor_locator=anchor.locator,
-        subject_entity_id=str(row.get("symbol") or row.get("company_name") or "UNKNOWN"),
-        predicate=primitive,
-        value=quote,
-        assertion_fingerprint=record_id,
-        extraction_schema_version="research_brain_v4_source_quality_real_replay",
-    )
     return {
         "promoted": True,
         "record_id": record_id,
@@ -274,7 +265,7 @@ def _attempt_real_replay(*, row: Mapping[str, Any], as_of_date: date, repo_root:
         "source_date": source_date.isoformat(),
         "document_id": document.document_id,
         "anchor_id": anchor.anchor_id,
-        "claim_id": claim_id,
+        "claim_id": claim.claim_id,
         "evidence_os_claim_id": claim.claim_id,
         "mapping_id": mapping.mapping_id,
         "source_quality_class_after": "A2_REAL_REPLAY_VERIFIED",

@@ -593,7 +593,7 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(promotion_audit["verdict"], "PROMOTION_APPLIED")
         self.assertEqual(promotion_audit["brain_trace_promoted_reference_error_count"], 0)
 
-    def test_brain_partial_stage_is_not_production_full_thesis_without_green_gate_coverage(self):
+    def test_pending_material_gap_brain_stage_is_not_production_full_thesis_without_green_gate_coverage(self):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)
             _write_live_brain_promotion_fixture(root)
@@ -636,7 +636,30 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(audit["candidate_row_count"], 1)
         self.assertEqual(audit["promoted_full_thesis_row_count"], 0)
         self.assertEqual(audit["verdict"], "PENDING_PRODUCTION_FULL_THESIS")
-        self.assertIn("missing_green_gate_primitives", audit["blocked_candidates"][0]["blockers"])
+        self.assertEqual(audit["blocked_candidates"][0]["blockers"], ["score_status_not_final"])
+        self.assertEqual(audit["blocked_candidate_blocker_counts"]["score_status_not_final"], 1)
+        self.assertNotIn("missing_green_gate_primitives", audit["blocked_candidate_blocker_counts"])
+        self.assertEqual(audit["blocked_candidate_archetype_counts"]["C06_HBM_MEMORY_CUSTOMER_CAPACITY"], 1)
+        self.assertEqual(
+            audit["blocked_candidate_missing_green_primitive_counts"],
+            {
+                "customer_preorder_or_allocation": 1,
+                "hbm_capacity_constraint": 1,
+                "hbm_capacity_pre_sold": 1,
+                "revenue_visibility_contract": 1,
+            },
+        )
+        self.assertEqual(
+            audit["blocked_candidate_missing_green_primitive_counts_by_archetype"],
+            {
+                "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+                    "customer_preorder_or_allocation": 1,
+                    "hbm_capacity_constraint": 1,
+                    "hbm_capacity_pre_sold": 1,
+                    "revenue_visibility_contract": 1,
+                }
+            },
+        )
         self.assertEqual(audit["blocked_candidate_follow_up_source_task_count"], 4)
         self.assertEqual(audit["blocked_candidate_follow_up_seed_event_count"], 4)
         self.assertEqual(len(follow_up_tasks), 4)
@@ -657,8 +680,10 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
             self.assertTrue(task["planner_required"])
             self.assertTrue(task["llm_query_required"])
             self.assertTrue(task["llm_query_allowed"])
-            self.assertFalse(task["general_search_allowed"])
+            self.assertTrue(task["general_search_allowed"])
             self.assertTrue(task["official_first_required"])
+            self.assertEqual(task["follow_up_archetype_id"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+            self.assertEqual(task["follow_up_primitive_gap"], task["primitive_gap"])
             self.assertFalse(task["score_allowed_before_execution"])
             self.assertFalse(task["stage_promotion_allowed_before_execution"])
             self.assertEqual(task["hardcoded_query_count"], 0)
@@ -676,6 +701,9 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         for seed in follow_up_seed_events:
             self.assertEqual(seed["source_family"], "CensusFullThesisBlockerFollowUp")
             self.assertEqual(seed["event_type"], "full_thesis_blocker_follow_up_seed")
+            self.assertEqual(seed["target_archetype"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+            self.assertEqual(seed["target_archetype_status"], "GREEN_GATE_BLOCKER_FOLLOW_UP")
+            self.assertEqual(seed["primitive_gap"], seed["follow_up_primitive_gap"])
             self.assertIn(seed["follow_up_primitive_gap"], {task["primitive_gap"] for task in follow_up_tasks})
             self.assertEqual(seed["follow_up_archetype_id"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
             self.assertTrue(str(seed["follow_up_task_id"]).startswith("FTGAP-"))
@@ -688,10 +716,13 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
             self.assertEqual(seed["follow_up_task_id"], payload["follow_up_task_id"])
             self.assertEqual(seed["follow_up_archetype_id"], payload["follow_up_archetype_id"])
             self.assertEqual(seed["follow_up_primitive_gap"], payload["follow_up_primitive_gap"])
+            self.assertEqual(payload["target_archetype"], seed["target_archetype"])
+            self.assertEqual(payload["target_archetype_status"], seed["target_archetype_status"])
+            self.assertEqual(payload["primitive_gap"], seed["primitive_gap"])
             self.assertEqual(payload["follow_up_origin"], "full_thesis_green_gate_blocker_follow_up")
             self.assertTrue(payload["llm_query_required"])
             self.assertTrue(payload["llm_query_allowed"])
-            self.assertFalse(payload["general_search_allowed"])
+            self.assertTrue(payload["general_search_allowed"])
             self.assertEqual(payload["hardcoded_query_count"], 0)
             self.assertEqual(payload["hardcoded_queries"], [])
             self.assertEqual(payload["query_intents"], [])
@@ -714,6 +745,152 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
             for task_id in row.get("full_thesis_task_ids") or []
         }
         self.assertTrue(follow_up_task_ids <= audited_task_ids)
+
+    def test_final_brain_stage_with_green_gap_is_production_full_thesis_but_not_green_complete(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_live_brain_promotion_fixture(root)
+            traces = _read_jsonl(root / "stagecourt_traces.jsonl")
+            traces[0]["score_status"] = "FINAL"
+            traces[0]["base_stage"] = "Stage2-Watch"
+            traces[0]["investigation_status"] = "COMPLETE"
+            traces[0]["missing_green_primitives"] = [
+                "customer_preorder_or_allocation",
+                "hbm_capacity_constraint",
+                "hbm_capacity_pre_sold",
+                "revenue_visibility_contract",
+            ]
+            write_jsonl(root / "stagecourt_traces.jsonl", traces)
+            config = CensusV4RunConfig(
+                as_of_date="2026-07-01",
+                brain_web_mode="enabled",
+                brain_planner_provider="real",
+                brain_source_acquisition="live_official_first",
+                brain_stage_promotion_mode="strict",
+                target_gate="meaningful",
+            )
+            stage_rows, _ = _promote_brain_stage_rows(
+                config=config,
+                output_root=root,
+                brain_web_attempt={"real_provider_success_count": 1, "source_task_execution_count": 1, "accepted_claim_count": 1},
+                stage_rows=[
+                    {
+                        "symbol": "005930",
+                        "company_name": "삼성전자",
+                        "base_stage": "Stage1",
+                        "canonical_stage": "1",
+                        "stage_scope": "CENSUS_EVENT_BOARD",
+                        "score_scale": "NO_SCORE",
+                        "score_scope": "NO_SCORE",
+                        "full_thesis_stage": "FULL_THESIS_NOT_RUN",
+                    }
+                ],
+            )
+            stage_rows, audit = _apply_production_full_thesis_from_brain(
+                config=config,
+                output_root=root,
+                stage_rows=stage_rows,
+            )
+            production_audit = _full_thesis_production_audit(config=config, stage_rows=stage_rows)
+            follow_up_tasks = _read_jsonl(root / "full_thesis_blocker_follow_up_source_tasks.jsonl")
+
+        row = stage_rows[0]
+        self.assertEqual(audit["verdict"], "PRODUCTION_FULL_THESIS_PROMOTED")
+        self.assertEqual(audit["promoted_full_thesis_row_count"], 1)
+        self.assertEqual(audit["blocked_candidate_count"], 0)
+        self.assertEqual(audit["blocked_candidate_blocker_counts"], {})
+        self.assertEqual(len(follow_up_tasks), 0)
+        self.assertEqual(row["stage_scope"], "FULL_THESIS")
+        self.assertEqual(row["score_scale"], "FULL_E2R_100")
+        self.assertEqual(row["full_thesis_stage"], "Stage2-Watch")
+        self.assertEqual(
+            row["full_thesis_green_gap_primitives"],
+            [
+                "customer_preorder_or_allocation",
+                "hbm_capacity_constraint",
+                "hbm_capacity_pre_sold",
+                "revenue_visibility_contract",
+            ],
+        )
+        self.assertFalse(row["full_thesis_green_gate_complete"])
+        self.assertTrue(production_audit["production_pass_allowed"])
+        self.assertEqual(production_audit["production_full_thesis_row_count"], 1)
+
+    def test_green_gap_follow_up_trace_does_not_replace_representative_full_thesis_row(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_live_brain_full_thesis_fixture(root)
+            traces = _read_jsonl(root / "stagecourt_traces.jsonl")
+            traces.append(
+                {
+                    "stagecourt_trace_id": "SCT-BRAIN-FTGAP",
+                    "trace_id": "SCT-BRAIN-FTGAP",
+                    "symbol": "005930",
+                    "candidate_event_id": "CEV4-FTGAP-005930-GREEN-GAP",
+                    "source_origin": "research_brain_v4_attempt",
+                    "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    "accepted_claim_ids": ["CLM-1"],
+                    "score_contribution_ids": ["SCON-1"],
+                    "primitive_state_ids": ["PRIM-1"],
+                    "score_interval": {"lower": 4.0, "upper": 4.0},
+                    "score_status": "FINAL",
+                    "base_stage": "Stage0",
+                    "transition_overlay": "NONE",
+                    "investigation_status": "COMPLETE",
+                    "missing_green_primitives": [
+                        "customer_preorder_or_allocation",
+                        "revenue_visibility_contract",
+                        "hbm_capacity_constraint",
+                        "hbm_capacity_pre_sold",
+                    ],
+                }
+            )
+            write_jsonl(root / "stagecourt_traces.jsonl", traces)
+            config = CensusV4RunConfig(
+                as_of_date="2026-07-01",
+                brain_web_mode="enabled",
+                brain_planner_provider="real",
+                brain_source_acquisition="live_official_first",
+                brain_stage_promotion_mode="strict",
+                target_gate="meaningful",
+            )
+            stage_rows, audit = _apply_production_full_thesis_from_brain(
+                config=config,
+                output_root=root,
+                stage_rows=[
+                    {
+                        "symbol": "005930",
+                        "company_name": "삼성전자",
+                        "base_stage": "Stage1",
+                        "canonical_stage": "1",
+                        "stage_scope": "CENSUS_EVENT_BOARD",
+                        "score_scale": "NO_SCORE",
+                        "score_scope": "NO_SCORE",
+                        "full_thesis_stage": "FULL_THESIS_NOT_RUN",
+                    }
+                ],
+            )
+            atomic_rows = {item["atomic_stage_decision_id"]: item for item in _read_jsonl(root / "atomic_stage_decisions.jsonl")}
+            event_rows = {item["event_id"]: item for item in _read_jsonl(root / "census_events.jsonl")}
+
+        row = stage_rows[0]
+        self.assertEqual(audit["candidate_row_count"], 1)
+        self.assertEqual(audit["promoted_full_thesis_trace_count"], 1)
+        self.assertEqual(audit["promoted_stagecourt_trace_ids"], ["SCT-BRAIN-FULL"])
+        self.assertEqual(row["full_thesis_stagecourt_trace_ids"], ["SCT-BRAIN-FULL"])
+        self.assertEqual(row["full_thesis_candidate_event_id"], "CE-BRAIN-FULL")
+        self.assertIn("CE-BRAIN-FULL", row["candidate_event_ids"])
+        self.assertIn("CE-BRAIN-FULL", row["score_eligible_candidate_event_ids"])
+        self.assertEqual(row["full_e2r_verified_score"], 84.0)
+        self.assertTrue(row["atomic_stage_decision_id"].startswith("ATOMIC-FTPROD-"))
+        atomic = atomic_rows[row["atomic_stage_decision_id"]]
+        self.assertEqual(atomic["stage_scope"], "FULL_THESIS")
+        self.assertEqual(atomic["accepted_claim_ids"], row["accepted_claim_ids"])
+        self.assertEqual(atomic["score_contribution_ids"], row["score_contribution_ids"])
+        self.assertEqual(atomic["primitive_state_ids"], row["primitive_state_ids"])
+        event = event_rows[row["full_thesis_candidate_event_id"]]
+        self.assertEqual(event["event_category"], "FullThesisProductionEvent")
+        self.assertEqual(event["atomic_stage_decision_id"], row["atomic_stage_decision_id"])
 
     def test_full_green_gate_brain_stage_can_be_promoted_to_production_full_thesis(self):
         with TemporaryDirectory() as tmp:
@@ -750,6 +927,10 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
                 stage_rows=stage_rows,
             )
             production_audit = _full_thesis_production_audit(config=config, stage_rows=stage_rows)
+            atomic_rows = {item["atomic_stage_decision_id"]: item for item in _read_jsonl(root / "atomic_stage_decisions.jsonl")}
+            event_rows = {item["event_id"]: item for item in _read_jsonl(root / "census_events.jsonl")}
+            write_jsonl(root / "census_stage_status.jsonl", stage_rows)
+            primitive_chain = _primitive_state_chain_audit(root)
 
         row = stage_rows[0]
         self.assertEqual(audit["verdict"], "PRODUCTION_FULL_THESIS_PROMOTED")
@@ -763,12 +944,26 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(row["full_thesis_primary_archetype"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
         self.assertEqual(row["full_thesis_production_mode"], "research_brain_v4_production")
         self.assertEqual(row["full_thesis_missing_primitives"], [])
+        self.assertIn("CE-BRAIN-FULL", row["candidate_event_ids"])
+        self.assertIn("CE-BRAIN-FULL", row["score_eligible_candidate_event_ids"])
         self.assertEqual(row["full_e2r_verified_score"], 84.0)
         self.assertTrue(production_audit["production_pass_allowed"])
         self.assertEqual(production_audit["production_full_thesis_row_count"], 1)
         self.assertEqual(production_audit["controlled_smoke_full_thesis_row_count"], 0)
         self.assertEqual(row["full_thesis_source_task_ids"], ["TASK-1", "TASK-2", "TASK-3", "TASK-4"])
         self.assertTrue(all(proof["linked"] for proof in row["full_thesis_source_linkage_proof"]))
+        self.assertTrue(row["atomic_stage_decision_id"].startswith("ATOMIC-FTPROD-"))
+        atomic = atomic_rows[row["atomic_stage_decision_id"]]
+        self.assertTrue(atomic["is_representative"])
+        self.assertEqual(atomic["stagecourt_trace_id"], row["stagecourt_trace_id"])
+        self.assertEqual(atomic["accepted_claim_ids"], row["accepted_claim_ids"])
+        self.assertEqual(atomic["score_contribution_ids"], row["score_contribution_ids"])
+        self.assertEqual(atomic["primitive_state_ids"], row["primitive_state_ids"])
+        event = event_rows[row["full_thesis_candidate_event_id"]]
+        self.assertEqual(event["event_category"], "FullThesisProductionEvent")
+        self.assertEqual(event["atomic_stage_decision_id"], row["atomic_stage_decision_id"])
+        self.assertEqual(primitive_chain["verdict"], "PASS")
+        self.assertEqual(primitive_chain["critical_counts"]["atomic_decision_primitive_set_mismatch_count"], 0)
 
     def test_full_thesis_blocks_claim_not_linked_to_same_live_source_document(self):
         with TemporaryDirectory() as tmp:
@@ -1308,6 +1503,8 @@ def _write_live_brain_full_thesis_fixture(root: Path) -> None:
                 "temporal_status": "CURRENT",
                 "score_eligible": True,
                 "primitive_id": primitive,
+                "mapping_status": "ACCEPTED",
+                "support_direction": "SUPPORT",
                 "raw_assertion_id": f"RAWLLM-{idx}",
             }
             for idx, primitive in enumerate(primitives, 1)

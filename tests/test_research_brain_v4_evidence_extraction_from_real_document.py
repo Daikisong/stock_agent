@@ -7,7 +7,7 @@ from e2r.agentic.evidence_contract_v2 import load_evidence_contracts_v2
 from e2r.production.claim_extraction import ExtractorProviderResult, RawAssertionRecord
 from e2r.research_brain.v4_evidence_extraction_bridge import execute_source_tasks_with_evidence_os_v4
 from e2r.research_brain.schemas import SourceTask, SourceTaskType
-from e2r.research_brain.v4_schemas import SourceAcquisitionResultV4
+from e2r.research_brain.v4_schemas import SourceAcquisitionResultV4, SourceTaskExecutionStatusV4
 from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRunnerV4
 from tests.research_brain_v4_test_helpers import c06_source_task, sample_v4_event
 
@@ -127,6 +127,69 @@ class _SingleDocumentRunner:
 
 
 class ResearchBrainV4EvidenceExtractionFromRealDocumentTests(unittest.TestCase):
+    def test_runtime_budget_callback_skips_remaining_source_tasks(self):
+        contract = load_evidence_contracts_v2(require_all_archetypes=True)["C06_HBM_MEMORY_CUSTOMER_CAPACITY"]
+        event = sample_v4_event(symbol="005930", company_name="삼성전자")
+        calls = iter((False, False, True))
+        bundle = execute_source_tasks_with_evidence_os_v4(
+            event=event,
+            tasks=(
+                c06_source_task("cash_or_revision_conversion"),
+                c06_source_task("customer_preorder_or_allocation"),
+            ),
+            contract=contract,
+            as_of_date=date(2026, 7, 1),
+            source_runner=_SingleDocumentRunner(
+                symbol="005930",
+                company_name="삼성전자",
+                published_at=date(2026, 6, 25),
+                text="삼성전자 2026년 2분기 추정EPS 상향 및 HBM 고객 수요 확인",
+                source_class="CompanyGuide",
+                source_type=SourceType.API,
+            ),
+            runtime_budget_exhausted=lambda: next(calls),
+        )
+
+        self.assertEqual(len(bundle.executions), 2)
+        self.assertNotEqual(bundle.executions[0].status, SourceTaskExecutionStatusV4.BUDGET_EXHAUSTED.value)
+        self.assertEqual(bundle.executions[1].status, SourceTaskExecutionStatusV4.BUDGET_EXHAUSTED.value)
+        self.assertEqual(bundle.executions[1].provider_name, "research_brain_v4_runtime_budget")
+        self.assertIn("source_task_skipped_after_runtime_budget_exhausted", bundle.executions[1].provider_errors)
+        self.assertEqual(bundle.extraction_audit["runtime_budget_skipped_source_task_count"], 1)
+
+    def test_runtime_budget_callback_stops_document_extraction_inside_source_task(self):
+        contract = load_evidence_contracts_v2(require_all_archetypes=True)["C06_HBM_MEMORY_CUSTOMER_CAPACITY"]
+        event = sample_v4_event(symbol="000660", company_name="SK하이닉스")
+        calls = iter((False, True))
+        bundle = execute_source_tasks_with_evidence_os_v4(
+            event=event,
+            tasks=(c06_source_task("customer_preorder_or_allocation"),),
+            contract=contract,
+            as_of_date=date(2026, 7, 1),
+            source_runner=_SingleDocumentRunner(
+                symbol="000660",
+                company_name="SK하이닉스",
+                published_at=date(2026, 6, 30),
+                text="SK하이닉스 HBM 고객 배정 확인 문서",
+                source_class="BrokerReportPublicPDF",
+                source_type=SourceType.NEWS,
+            ),
+            runtime_budget_exhausted=lambda: next(calls),
+        )
+
+        self.assertEqual(len(bundle.executions), 1)
+        execution = bundle.executions[0]
+        self.assertEqual(execution.status, SourceTaskExecutionStatusV4.BUDGET_EXHAUSTED.value)
+        self.assertTrue(execution.fetched_document_ids)
+        self.assertEqual(execution.budget_used["fetches"], 1)
+        self.assertIn(
+            "source_task_document_extraction_stopped_after_runtime_budget_exhausted",
+            execution.provider_errors,
+        )
+        self.assertEqual(execution.stop_reason, "source_task_extraction_stopped_after_runtime_budget_exhausted")
+        self.assertEqual(bundle.extraction_audit["runtime_budget_stopped_document_extraction_count"], 1)
+        self.assertEqual(bundle.extraction_audit["llm_claim_extractor_attempt_count"], 0)
+
     def test_structured_contract_amount_and_duration_become_source_backed_claims(self):
         contract = load_evidence_contracts_v2(require_all_archetypes=True)["C05_EPC_MEGA_CONTRACT_MARGIN_GAP"]
         event = sample_v4_event(symbol="111111", company_name="한전변압기")

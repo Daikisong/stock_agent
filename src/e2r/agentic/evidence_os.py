@@ -524,6 +524,7 @@ class AdjudicatedClaim:
             document_hash=document.content_hash,
             anchor_locator=anchor.locator,
             subject_entity_id=subject_entity_id,
+            target_entity_id=target_entity_id,
             predicate=raw.predicate,
             value=raw.value if raw.value is not None else raw.object_text,
             assertion_fingerprint=assertion_fingerprint,
@@ -1193,6 +1194,7 @@ def stable_claim_id(
     subject_entity_id: str,
     predicate: str,
     value: Any,
+    target_entity_id: str = "",
     assertion_fingerprint: str = "",
     extraction_schema_version: str = EVIDENCE_OS_SCHEMA_VERSION,
 ) -> str:
@@ -1202,6 +1204,7 @@ def stable_claim_id(
         anchor_locator,
         assertion_fingerprint,
         _norm_text(subject_entity_id),
+        _norm_text(target_entity_id),
         _norm_text(predicate),
         _normalise_value(value),
         extraction_schema_version,

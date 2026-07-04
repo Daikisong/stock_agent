@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import date, datetime
 import re
-from typing import Any, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 from urllib.parse import urlsplit
 
 from e2r.agentic.evidence_os import (
@@ -83,6 +83,7 @@ def execute_source_tasks_with_evidence_os_v4(
     as_of_date: date,
     source_runner: SourceAcquisitionRunnerV4 | None = None,
     claim_extractor: LLMContractBlindRawAssertionExtractor | None = None,
+    runtime_budget_exhausted: Callable[[], bool] | None = None,
 ) -> EvidenceOSExecutionBundleV4:
     runner = source_runner or SourceAcquisitionRunnerV4()
     extractor = claim_extractor or LLMContractBlindRawAssertionExtractor()
@@ -119,8 +120,14 @@ def execute_source_tasks_with_evidence_os_v4(
         "anchor_validation_rejected_count": 0,
         "post_extraction_web_rejected_document_count": 0,
         "source_task_score_admissibility_rejected_count": 0,
+        "runtime_budget_skipped_source_task_count": 0,
+        "runtime_budget_stopped_document_extraction_count": 0,
     }
     for task in tasks:
+        if runtime_budget_exhausted is not None and runtime_budget_exhausted():
+            audit_counts["runtime_budget_skipped_source_task_count"] += 1
+            executions.append(_runtime_budget_skipped_execution(event=event, task=task))
+            continue
         result = runner.acquire(event=event, task=task, as_of_date=as_of_date)
         for document in result.documents:
             documents[document.document_id] = document
@@ -178,6 +185,7 @@ def execute_source_tasks_with_evidence_os_v4(
             claim_extractor_runs=claim_extractor_runs,
             raw_assertion_rejections=raw_assertion_rejections,
             claim_extractor=extractor,
+            runtime_budget_exhausted=runtime_budget_exhausted,
         )
         executions.append(execution)
     if any(execution.accepted_claim_ids and not execution.fetched_document_ids for execution in executions):
@@ -196,6 +204,26 @@ def execute_source_tasks_with_evidence_os_v4(
         web_rejected_documents=tuple(web_rejected_documents),
         claim_extractor_runs=tuple(claim_extractor_runs),
         raw_assertion_rejections=tuple(raw_assertion_rejections),
+    )
+
+
+def _runtime_budget_skipped_execution(*, event: CandidateEventV2, task: SourceTask) -> SourceTaskExecutionV4:
+    reason = "source_task_skipped_after_runtime_budget_exhausted"
+    return SourceTaskExecutionV4(
+        task_id=task.task_id,
+        source_task=task.to_dict(),
+        status=SourceTaskExecutionStatusV4.BUDGET_EXHAUSTED.value,
+        **_source_task_execution_identity(
+            event=event,
+            task=task,
+            source_class="runtime_budget",
+            provider_name="research_brain_v4_runtime_budget",
+        ),
+        not_eligible_reasons=(reason,),
+        primitive_gap_unsatisfied_ids=(task.primitive_gap,) if task.primitive_gap else (),
+        provider_errors=(reason,),
+        budget_used={"queries": 0, "candidates": 0, "fetches": 0},
+        stop_reason=reason,
     )
 
 
@@ -221,6 +249,7 @@ def _append_claims_for_task(
     claim_extractor_runs: list[Mapping[str, Any]],
     raw_assertion_rejections: list[Mapping[str, Any]],
     claim_extractor: LLMContractBlindRawAssertionExtractor,
+    runtime_budget_exhausted: Callable[[], bool] | None = None,
 ) -> SourceTaskExecutionV4:
     accepted: list[str] = []
     direct_accepted: list[str] = []
@@ -232,7 +261,16 @@ def _append_claims_for_task(
     anchor_ids: list[str] = []
     not_eligible: list[str] = []
     extractor_provider_errors: list[str] = []
+    runtime_budget_errors: list[str] = []
+    runtime_budget_stopped = False
     for document in documents:
+        if runtime_budget_exhausted is not None and runtime_budget_exhausted():
+            runtime_budget_stopped = True
+            reason = "source_task_document_extraction_stopped_after_runtime_budget_exhausted"
+            runtime_budget_errors.append(reason)
+            not_eligible.append(reason)
+            audit_counts["runtime_budget_stopped_document_extraction_count"] += 1
+            break
         document_assertion_ids: list[str] = []
         document_adjudicated_ids: list[str] = []
         document_accepted_ids: list[str] = []
@@ -275,6 +313,30 @@ def _append_claims_for_task(
         if signals:
             pass
         else:
+            if runtime_budget_exhausted is not None and runtime_budget_exhausted():
+                runtime_budget_stopped = True
+                reason = "claim_extraction_skipped_after_runtime_budget_exhausted"
+                runtime_budget_errors.append(reason)
+                not_eligible.append(reason)
+                document_not_eligible.append(reason)
+                audit_counts["runtime_budget_stopped_document_extraction_count"] += 1
+                _append_post_extraction_web_rejection_if_needed(
+                    event=event,
+                    task=task,
+                    as_of_date=as_of_date,
+                    document=document,
+                    anchor=anchor,
+                    web_fetched_by_document_id=web_fetched_by_document_id,
+                    post_extraction_web_rejected_documents=post_extraction_web_rejected_documents,
+                    audit_counts=audit_counts,
+                    document_assertion_ids=document_assertion_ids,
+                    document_rejected_ids=document_rejected_ids,
+                    document_not_eligible=document_not_eligible,
+                    document_provider_errors=(reason,),
+                    document_adjudicated_ids=document_adjudicated_ids,
+                    document_accepted_ids=document_accepted_ids,
+                )
+                break
             records = _extract_unstructured_records(
                 event=event,
                 document=document,
@@ -551,11 +613,15 @@ def _append_claims_for_task(
         if rerouted_unique
         else "PROVIDER_FAILED"
         if extractor_provider_errors
+        else "BUDGET_EXHAUSTED"
+        if runtime_budget_stopped
         else "NO_EVIDENCE_FOUND"
     )
     status = (
         SourceTaskExecutionStatusV4.EVIDENCE_OS_ACCEPTED.value
         if accepted_unique
+        else SourceTaskExecutionStatusV4.BUDGET_EXHAUSTED.value
+        if runtime_budget_stopped
         else SourceTaskExecutionStatusV4.PROVIDER_FAILED.value
         if extractor_provider_errors
         else SourceTaskExecutionStatusV4.NO_EVIDENCE_FOUND.value
@@ -583,17 +649,23 @@ def _append_claims_for_task(
         satisfaction_type=satisfaction_type,
         direct_accepted_claim_ids=direct_unique,
         rerouted_accepted_claim_ids=rerouted_unique,
-        score_claim_ids=accepted_unique,
+        # Score support is assigned only after the score contribution ledger is
+        # built. Accepted claims can be useful evidence without contributing
+        # points, so exporting all accepted claims here would make source-task
+        # satisfaction audits overclaim the score chain.
+        score_claim_ids=(),
         accepted_primitive_ids=accepted_primitive_unique,
         primitive_gap_satisfied_ids=(task.primitive_gap,) if satisfies_source_task else (),
         primitive_gap_unsatisfied_ids=() if satisfies_source_task else ((task.primitive_gap,) if task.primitive_gap else ()),
-        provider_errors=tuple(dict.fromkeys((*provider_errors, *extractor_provider_errors))),
+        provider_errors=tuple(dict.fromkeys((*provider_errors, *extractor_provider_errors, *runtime_budget_errors))),
         budget_used=dict(budget_used),
         stop_reason=(
             stop_reason
             if direct_unique
             else "rerouted_claim_accepted_original_gap_unsatisfied"
             if rerouted_unique
+            else "source_task_extraction_stopped_after_runtime_budget_exhausted"
+            if runtime_budget_stopped
             else "claim_extractor_provider_failed"
             if extractor_provider_errors
             else "no_score_eligible_real_claim"
@@ -1175,6 +1247,8 @@ def _claim_extractor_run_row(
             result.response_hash or "",
         ),
     )
+    raw_prompt_path = f"claim_extractor_raw/prompts/{run_id}.json" if result.prompt_hash and result.raw_prompt_payload is not None else None
+    raw_response_path = f"claim_extractor_raw/responses/{run_id}.json" if result.response_hash and result.raw_response_payload is not None else None
     return {
         "schema_version": "e2r_research_brain_v4_claim_extractor_run_v1",
         "claim_extractor_run_id": run_id,
@@ -1192,6 +1266,32 @@ def _claim_extractor_run_row(
         "initial_prompt_hash": result.initial_prompt_hash,
         "retry_prompt_hash": result.retry_prompt_hash,
         "response_hash": result.response_hash,
+        "raw_prompt_path": raw_prompt_path,
+        "raw_response_path": raw_response_path,
+        "_raw_prompt_payload": {
+            "schema_version": "e2r_research_brain_v4_claim_extractor_prompt_artifact_v1",
+            "claim_extractor_run_id": run_id,
+            "candidate_event_id": event.candidate_event_id,
+            "symbol": event.symbol,
+            "provider_name": result.provider_name,
+            "model": result.model,
+            "prompt_hash": result.prompt_hash,
+            "prompt_payload": result.raw_prompt_payload,
+        }
+        if raw_prompt_path
+        else None,
+        "_raw_response_payload": {
+            "schema_version": "e2r_research_brain_v4_claim_extractor_response_artifact_v1",
+            "claim_extractor_run_id": run_id,
+            "candidate_event_id": event.candidate_event_id,
+            "symbol": event.symbol,
+            "provider_name": result.provider_name,
+            "model": result.model,
+            "response_hash": result.response_hash,
+            "response_payload": result.raw_response_payload,
+        }
+        if raw_response_path
+        else None,
         "latency_ms": result.latency_ms,
         "timeout_seconds": result.timeout_seconds,
         "attempt_count": result.attempt_count,
