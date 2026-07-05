@@ -1021,7 +1021,10 @@ def _planner_run_event_is_full_thesis_seed(run: Mapping[str, Any]) -> bool:
     structured = event.get("structured_payload") if isinstance(event.get("structured_payload"), Mapping) else {}
     return (
         str(event.get("source_family") or "") == "CensusFullThesisQueue"
+        or str(event.get("source_family") or "") == "AllArchetypeRuntimeParityFollowUp"
         or str(event.get("event_type") or "") == "full_thesis_refresh_seed"
+        or str(event.get("event_type") or "") == "all_archetype_runtime_parity_follow_up_seed"
+        or str(event.get("seed_role") or "") == "planner_input_only"
         or str(structured.get("seed_role") or "") == "planner_input_only"
     )
 

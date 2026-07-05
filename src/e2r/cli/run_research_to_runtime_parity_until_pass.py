@@ -63,6 +63,13 @@ def main(argv: list[str] | None = None) -> int:
         "research_case_count": paths["research_reverse_bundle"]["inventory"]["record_count"],
         "research_memory_card_count": paths["research_reverse_bundle"]["cards"]["card_count"],
         "source_route_pattern_count": paths["source_route_reports"]["source_route_matrix"]["pattern_count"],
+        "all_archetype_runtime_status_matrix_path": str(paths["all_status_reports"]["json_path"]),
+        "all_archetype_runtime_status_row_count": paths["all_status_reports"]["matrix"]["registry_contract_count"],
+        "all_archetype_next_attempt_plan_path": str(paths["next_attempt_reports"]["json_path"]),
+        "all_archetype_next_attempt_plan_row_count": paths["next_attempt_reports"]["plan"]["plan_row_count"],
+        "all_archetype_next_source_task_count": paths["next_attempt_reports"]["plan"]["source_task_count"],
+        "all_archetype_runtime_execution_manifest_path": str(paths["execution_manifest_reports"]["json_path"]),
+        "all_archetype_runtime_execution_seed_event_count": paths["execution_manifest_reports"]["manifest"]["seed_event_count"],
         "research_memory_followup_task_count": paths["followup_audit"]["task_count"],
         "mandatory_replay_accepted_claim_count": paths["replay_reports"]["replay_matrix"]["accepted_claim_replay_count"],
         "mandatory_replay_source_proxy_repair_task_count": paths["replay_reports"]["replay_matrix"][

@@ -2,6 +2,8 @@ import json
 import unittest
 from pathlib import Path
 
+from e2r.research_reverse.research_file_scanner import scan_research_files
+
 
 class ResearchReverseCaseExtractorTests(unittest.TestCase):
     @classmethod
@@ -35,6 +37,21 @@ class ResearchReverseCaseExtractorTests(unittest.TestCase):
             row = by_prefix[prefix]
             self.assertGreater(row["record_count"], 0, prefix)
             self.assertGreater(row["url_backed_case_count"] + row["source_proxy_only_case_count"], 0, prefix)
+
+    def test_generated_goal4_status_artifacts_are_not_reingested_as_research(self) -> None:
+        files = {path.as_posix() for path in scan_research_files(Path("."))}
+        self.assertNotIn("docs/operational/all_archetype_runtime_status_matrix_2026-07-05.md", files)
+        self.assertNotIn("docs/operational/all_archetype_runtime_status_matrix_2026-07-05.json", files)
+        self.assertNotIn("docs/operational/all_archetype_runtime_status_matrix.json", files)
+        self.assertNotIn("docs/operational/all_archetype_next_runtime_attempt_plan_2026-07-05.md", files)
+        self.assertNotIn("docs/operational/all_archetype_next_runtime_attempt_plan_2026-07-05.json", files)
+        self.assertNotIn("docs/operational/all_archetype_next_runtime_attempt_plan.json", files)
+        self.assertNotIn("docs/operational/all_archetype_next_runtime_source_tasks_2026-07-05.jsonl", files)
+        self.assertNotIn("docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl", files)
+        self.assertNotIn("docs/operational/all_archetype_runtime_execution_manifest_2026-07-05.md", files)
+        self.assertNotIn("docs/operational/all_archetype_runtime_execution_manifest_2026-07-05.json", files)
+        self.assertNotIn("docs/operational/all_archetype_runtime_execution_manifest.json", files)
+        self.assertNotIn("docs/0705/goal4_research_to_runtime_status_2026-07-05.md", files)
 
 
 if __name__ == "__main__":

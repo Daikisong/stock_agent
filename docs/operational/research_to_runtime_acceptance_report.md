@@ -27,6 +27,19 @@
 - planner C05 top1 share: `0.828571`
 - research memory follow-up task count: `17`
 - research memory follow-up by archetype: `{"C01_ORDER_BACKLOG_MARGIN_BRIDGE": 1, "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 14, "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 2}`
+- all-archetype runtime status rows: `36`
+- C01~C32 contract rows: `32`
+- R13 cross-archetype rows: `4`
+- all contracts have memory card: `True`
+- all contracts have source route patterns: `True`
+- runtime proof counts: `{"NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP": 2, "NOT_PROVEN_PLANNER_ONLY": 4, "NOT_PROVEN_REPLAY_ONLY": 28, "NOT_PROVEN_SCORE_PATH_ONLY": 1, "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM": 1}`
+- next runtime attempt plan rows: `36`
+- next runtime source task shells: `114`
+- next runtime seed events: `114`
+- next runtime attempt types: `{"BLOCKED_CANDIDATE_GAP_CLOSURE": 2, "PLANNER_TO_SOURCE_TASK_MATERIALIZATION": 4, "PROMOTED_SCORE_PATH_GAP_CLOSURE": 1, "REPLAY_TO_PRODUCTION_RUNTIME_ATTEMPT": 28, "SOURCE_EXECUTION_REPAIR": 1}`
+- runtime execution manifest status: `READY_FOR_RESEARCH_BRAIN_INPUT_NOT_EXECUTED_BY_PARITY_CLI`
+- runtime execution seed path: `docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl`
+- runtime execution command target gate: `full_thesis`
 
 ## Production Vs Smoke
 

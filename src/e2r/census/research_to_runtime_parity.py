@@ -685,6 +685,9 @@ def render_research_to_runtime_acceptance_report(
     followup_audit: Mapping[str, Any],
     candidate_selection: Mapping[str, Any],
     planner_bias: Mapping[str, Any],
+    all_status_matrix: Mapping[str, Any],
+    next_attempt_plan: Mapping[str, Any],
+    execution_manifest: Mapping[str, Any],
 ) -> str:
     quality = research_inventory.get("source_quality_counts", {})
     lines = [
@@ -717,6 +720,19 @@ def render_research_to_runtime_acceptance_report(
         f"- planner C05 top1 share: `{planner_bias.get('c05_top1_share')}`",
         f"- research memory follow-up task count: `{followup_audit.get('task_count')}`",
         f"- research memory follow-up by archetype: `{json.dumps(followup_audit.get('tasks_by_archetype', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- all-archetype runtime status rows: `{all_status_matrix.get('registry_contract_count')}`",
+        f"- C01~C32 contract rows: `{all_status_matrix.get('c01_to_c32_contract_count')}`",
+        f"- R13 cross-archetype rows: `{all_status_matrix.get('r13_cross_archetype_contract_count')}`",
+        f"- all contracts have memory card: `{all_status_matrix.get('all_contracts_have_memory_card')}`",
+        f"- all contracts have source route patterns: `{all_status_matrix.get('all_contracts_have_source_route_patterns')}`",
+        f"- runtime proof counts: `{json.dumps(all_status_matrix.get('runtime_parity_proof_status_counts', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- next runtime attempt plan rows: `{next_attempt_plan.get('plan_row_count')}`",
+        f"- next runtime source task shells: `{next_attempt_plan.get('source_task_count')}`",
+        f"- next runtime seed events: `{next_attempt_plan.get('seed_event_count')}`",
+        f"- next runtime attempt types: `{json.dumps(next_attempt_plan.get('attempt_type_counts', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- runtime execution manifest status: `{execution_manifest.get('execution_status')}`",
+        f"- runtime execution seed path: `{execution_manifest.get('seed_event_path')}`",
+        f"- runtime execution command target gate: `{(execution_manifest.get('census_v4_config_kwargs') or {}).get('target_gate')}`",
         "",
         "## Production Vs Smoke",
         "",
@@ -822,6 +838,9 @@ def write_research_to_runtime_parity_artifacts(
     as_of_date: str | None = None,
     mandatory_archetype_prefixes: Sequence[str] = DEFAULT_MANDATORY_ARCHETYPE_PREFIXES,
 ) -> dict[str, Any]:
+    from e2r.census.all_archetype_next_attempt_planner import write_all_archetype_next_runtime_attempt_plan
+    from e2r.census.all_archetype_runtime_execution_manifest import write_all_archetype_runtime_execution_manifest
+    from e2r.census.all_archetype_runtime_status_matrix import write_all_archetype_runtime_status_matrix
     from e2r.census.full_thesis_candidate_selector import write_balanced_full_thesis_candidate_selection_audit
     from e2r.census.research_memory_followup_planner import write_research_memory_followup_task_audit
     from e2r.census.research_to_runtime_replay import write_research_to_runtime_replay_reports
@@ -891,6 +910,25 @@ def write_research_to_runtime_parity_artifacts(
         docs_dir=docs_path,
         mandatory_prefixes=mandatory_archetype_prefixes,
     )
+    all_status_reports = write_all_archetype_runtime_status_matrix(
+        parity_audit=audit,
+        memory_cards=research_reverse_bundle["cards"],
+        source_routes=source_route_reports["source_route_matrix"],
+        candidate_selection=candidate_selection_audit,
+        docs_dir=docs_path,
+    )
+    next_attempt_reports = write_all_archetype_next_runtime_attempt_plan(
+        status_matrix=all_status_reports["matrix"],
+        memory_cards=research_reverse_bundle["cards"],
+        docs_dir=docs_path,
+    )
+    execution_manifest_reports = write_all_archetype_runtime_execution_manifest(
+        next_attempt_plan=next_attempt_reports["plan"],
+        seed_event_path=next_attempt_reports["seed_event_path"],
+        source_task_path=next_attempt_reports["source_task_path"],
+        docs_dir=docs_path,
+        repo_root=repo_root,
+    )
     planner_bias_audit = write_planner_bias_audit(
         repo_root=repo_root,
         output_root=output_root,
@@ -934,6 +972,9 @@ def write_research_to_runtime_parity_artifacts(
             followup_audit=followup_audit,
             candidate_selection=candidate_selection_audit,
             planner_bias=planner_bias_audit,
+            all_status_matrix=all_status_reports["matrix"],
+            next_attempt_plan=next_attempt_reports["plan"],
+            execution_manifest=execution_manifest_reports["manifest"],
         ),
         encoding="utf-8",
     )
@@ -956,6 +997,9 @@ def write_research_to_runtime_parity_artifacts(
         "followup_audit": followup_audit,
         "replay_reports": replay_reports,
         "candidate_selection_audit": candidate_selection_audit,
+        "all_status_reports": all_status_reports,
+        "next_attempt_reports": next_attempt_reports,
+        "execution_manifest_reports": execution_manifest_reports,
         "planner_bias_audit": planner_bias_audit,
         "meaningful_acceptance": meaningful_acceptance,
         "meaningful_acceptance_path": meaningful_acceptance_path,

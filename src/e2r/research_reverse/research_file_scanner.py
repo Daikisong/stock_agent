@@ -20,6 +20,9 @@ DEFAULT_RESEARCH_GLOBS = (
 )
 
 GENERATED_GOAL4_PREFIXES = (
+    "all_archetype_next_runtime_",
+    "all_archetype_runtime_execution_manifest_",
+    "all_archetype_runtime_status_matrix_",
     "research_reverse_",
     "research_runtime_memory_",
     "research_source_route_",
@@ -33,7 +36,13 @@ GENERATED_GOAL4_PREFIXES = (
     "planner_bias_and_archetype_routing_audit_",
     "balanced_full_thesis_candidate_selection_audit_",
 )
+GENERATED_GOAL4_DOC_PREFIXES = (
+    "goal4_research_to_runtime_status_",
+)
 GENERATED_GOAL4_FILENAMES = {
+    "all_archetype_next_runtime_attempt_plan.json",
+    "all_archetype_runtime_execution_manifest.json",
+    "all_archetype_runtime_status_matrix.json",
     "census_mode_v4_full_thesis_evidence_completion_audit_v2.json",
     "full_thesis_candidate_selection_audit_v2.json",
     "full_thesis_evidence_completion_audit_v2.json",
@@ -43,9 +52,12 @@ GENERATED_GOAL4_FILENAMES = {
 
 
 def _is_generated_goal4_artifact(path: Path) -> bool:
-    return path.parent.as_posix().endswith("docs/operational") and (
-        path.name.startswith(GENERATED_GOAL4_PREFIXES) or path.name in GENERATED_GOAL4_FILENAMES
-    )
+    parent = path.parent.as_posix()
+    if parent.endswith("docs/operational"):
+        return path.name.startswith(GENERATED_GOAL4_PREFIXES) or path.name in GENERATED_GOAL4_FILENAMES
+    if parent.endswith("docs/0705"):
+        return path.name.startswith(GENERATED_GOAL4_DOC_PREFIXES)
+    return False
 
 
 def scan_research_files(repo_root: str | Path = ".", patterns: tuple[str, ...] = DEFAULT_RESEARCH_GLOBS) -> list[Path]:
@@ -68,4 +80,10 @@ def scan_research_files(repo_root: str | Path = ".", patterns: tuple[str, ...] =
     return sorted(files)
 
 
-__all__ = ["DEFAULT_RESEARCH_GLOBS", "GENERATED_GOAL4_FILENAMES", "GENERATED_GOAL4_PREFIXES", "scan_research_files"]
+__all__ = [
+    "DEFAULT_RESEARCH_GLOBS",
+    "GENERATED_GOAL4_DOC_PREFIXES",
+    "GENERATED_GOAL4_FILENAMES",
+    "GENERATED_GOAL4_PREFIXES",
+    "scan_research_files",
+]
