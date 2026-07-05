@@ -155,8 +155,7 @@ def render_planner_bias_markdown(audit: Mapping[str, Any]) -> str:
     lines.extend(["", "## Blockers", ""])
     for blocker in audit.get("blockers", []):
         lines.append(f"- `{blocker}`")
-    lines.append("")
-    return "\n".join(lines)
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def write_planner_bias_audit(

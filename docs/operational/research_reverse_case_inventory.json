@@ -1,7 +1,7 @@
 {
   "archetype_count": 36,
-  "documented_corpus_size": 2661,
-  "record_count": 11438,
+  "documented_corpus_size": 2663,
+  "record_count": 11459,
   "records": [
     {
       "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -60325,6 +60325,388 @@
     },
     {
       "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "order_backlog_to_sales",
+        "named_customer_quality",
+        "contract_quality",
+        "delivery_schedule",
+        "opm_expansion_pctp",
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-78e0c6cb3e2338493661",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_0705_documentation_and_push_state_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible",
+        "cost_overrun",
+        "delivery_schedule"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-b8eb34bbf413d44c5e32",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_0705_documentation_and_push_state_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "memory_price_increase_mentioned",
+        "medium_term_revision_visibility"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-957da67a10ebd736f220",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_0705_documentation_and_push_state_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "socket_or_test_demand_visible",
+        "margin_bridge_visible"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-75dfe84e46e771138559",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_0705_documentation_and_push_state_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "spread_expansion",
+        "utilization_rate",
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-a6f3708afd6e92521b2a",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_0705_documentation_and_push_state_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "spread_expansion",
+        "raw_material_cost_risk",
+        "utilization_rate",
+        "inventory_cycle",
+        "opm_expansion_pctp"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-72d43b4a4af29efdf41b",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_0705_documentation_and_push_state_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "trial_quality_visible",
+        "binary_event_unresolved",
+        "approval_not_confirmed",
+        "safety_signal",
+        "cash_runway_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-78fb30c5c40c29e3ebf0",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_0705_documentation_and_push_state_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-c79f9c60b731d7f25212",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_0705_documentation_and_push_state_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "tender_offer_confirmed",
+        "minority_cash_path",
+        "control_premium_floor",
+        "regulatory_approval_confirmed",
+        "event_spread_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-eba6f048a0e125ab1fbf",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_0705_documentation_and_push_state_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "high_mae_history",
+        "valuation_overheat",
+        "liquidity_or_microcap_risk",
+        "execution_risk_score",
+        "positioning_reversal_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-bf3d7339cf4252bf109b",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_0705_documentation_and_push_state_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "case_role": "4B",
       "company_name": null,
       "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
@@ -60707,6 +61089,44 @@
       "trigger_type": "capacity_or_shortage"
     },
     {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible",
+        "cost_overrun",
+        "delivery_schedule"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-5e105c64f97456c55839",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "392162",
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
       "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "case_role": "4B",
       "company_name": null,
@@ -60730,7 +61150,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-7a0a2619caf3d5c4e992",
+      "research_case_id": "RCASE-f226e9b74c804f4a818b",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60768,7 +61188,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-96f8b7d4e4e0899da6cd",
+      "research_case_id": "RCASE-105622802d3e79f48a4e",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60806,7 +61226,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-49a78df219fa5c4251c1",
+      "research_case_id": "RCASE-4ed7a11e3171067725f8",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60844,7 +61264,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-1b1e88579154740d11cd",
+      "research_case_id": "RCASE-5169b59c532c8ad337ea",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60882,7 +61302,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-265d45a311738124230c",
+      "research_case_id": "RCASE-fbaa588d696a7c797d16",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60920,7 +61340,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-a99ace0cb73e28c350b1",
+      "research_case_id": "RCASE-c6317e1f89a1a6c7e8c4",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60958,7 +61378,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-911cdb15ad84e902b673",
+      "research_case_id": "RCASE-570af06705bf6dffc2c2",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60972,6 +61392,398 @@
       "symbol": "392162",
       "trigger_date": null,
       "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "order_backlog_to_sales",
+        "named_customer_quality",
+        "contract_quality",
+        "delivery_schedule",
+        "opm_expansion_pctp",
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-76f2510d3ced074db5b7",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_target_materialization_audit_patch_2026-07-06.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "000000",
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible",
+        "cost_overrun",
+        "delivery_schedule"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-0bd8d43b6eee5407ca66",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_target_materialization_audit_patch_2026-07-06.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "000000",
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "memory_price_increase_mentioned",
+        "medium_term_revision_visibility"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-757894d9b17892d91b61",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_target_materialization_audit_patch_2026-07-06.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "000000",
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "socket_or_test_demand_visible",
+        "margin_bridge_visible"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-de11568ebdc605ba3efe",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_target_materialization_audit_patch_2026-07-06.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "000000",
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "spread_expansion",
+        "utilization_rate",
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-7734b3605cc0518520e4",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_target_materialization_audit_patch_2026-07-06.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "000000",
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "spread_expansion",
+        "raw_material_cost_risk",
+        "utilization_rate",
+        "inventory_cycle",
+        "opm_expansion_pctp"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-4bbc4f9d2cc91cd147cf",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_target_materialization_audit_patch_2026-07-06.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "000000",
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "trial_quality_visible",
+        "binary_event_unresolved",
+        "approval_not_confirmed",
+        "safety_signal",
+        "cash_runway_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-04af01036a00c83714ca",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_target_materialization_audit_patch_2026-07-06.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "000000",
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-74089cec62f28a2a16e0",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_target_materialization_audit_patch_2026-07-06.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "000000",
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "volume_growth_visible",
+        "mix_improvement",
+        "operating_leverage_visible",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-8e5fca0a08ffbcfc4c4a",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_target_materialization_audit_patch_2026-07-06.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "000000",
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "case_role": "stage3_green",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "tender_offer_confirmed",
+        "minority_cash_path",
+        "control_premium_floor",
+        "regulatory_approval_confirmed",
+        "event_spread_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-d9fea2fca4675b804a55",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_target_materialization_audit_patch_2026-07-06.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "000000",
+      "trigger_date": null,
+      "trigger_type": "risk_or_accounting"
     },
     {
       "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
@@ -548469,7 +549281,7 @@
     "A2_URL_BACKED": 3149,
     "EVIDENCE_URL_PENDING": 185,
     "PRICE_PATH_ONLY": 2237,
-    "SHADOW_ONLY": 534,
+    "SHADOW_ONLY": 555,
     "SOURCE_PROXY_ONLY": 5314
   }
 }

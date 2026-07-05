@@ -74,15 +74,19 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         for prefix in ("C08", "C15", "C24", "C28"):
             row = self.by_prefix[prefix]
             self.assertEqual(row["runtime_full_thesis_row_count"], 0, prefix)
-            self.assertEqual(row["runtime_parity_status"], "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM", prefix)
+            self.assertEqual(row["runtime_parity_status"], "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED", prefix)
+            self.assertEqual(row["runtime_source_task_execution_count"], 0, prefix)
+            self.assertGreater(row["targetless_source_task_execution_count"], 0, prefix)
             self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", row["blocker_classes"])
             self.assertIn("PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM", row["blocker_classes"])
+            self.assertIn("TARGET_MATERIALIZATION_REQUIRED", row["blocker_classes"])
 
         c17 = self.by_prefix["C17"]
         self.assertEqual(c17["runtime_full_thesis_row_count"], 0)
-        self.assertEqual(c17["runtime_parity_status"], "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE")
+        self.assertEqual(c17["runtime_parity_status"], "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED")
         self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", c17["blocker_classes"])
         self.assertIn("PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM", c17["blocker_classes"])
+        self.assertIn("TARGET_MATERIALIZATION_REQUIRED", c17["blocker_classes"])
 
     def test_split_label_v2_audit_is_written_and_matches_matrix(self) -> None:
         matrix = json.loads(

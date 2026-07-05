@@ -10,11 +10,11 @@
         "guard": 16,
         "positive": 1,
         "profile_cap": 1,
-        "stage3_green": 2
+        "stage3_green": 4
       },
       "evidence_url_pending_case_count": 3,
       "has_pattern_summary": true,
-      "record_count": 459,
+      "record_count": 461,
       "source_gap": false,
       "source_proxy_only_case_count": 251,
       "source_quality_counts": {
@@ -22,7 +22,7 @@
         "A2_URL_BACKED": 125,
         "EVIDENCE_URL_PENDING": 3,
         "PRICE_PATH_ONLY": 48,
-        "SHADOW_ONLY": 31,
+        "SHADOW_ONLY": 33,
         "SOURCE_PROXY_ONLY": 251
       },
       "top_missing_primitives": [
@@ -153,21 +153,22 @@
     {
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "case_role_counts": {
-        "4B": 33,
+        "4B": 34,
         "4C": 352,
         "guard": 8,
-        "positive": 1
+        "positive": 1,
+        "stage3_green": 2
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 394,
+      "record_count": 397,
       "source_gap": false,
       "source_proxy_only_case_count": 177,
       "source_quality_counts": {
         "A2_URL_BACKED": 108,
         "EVIDENCE_URL_PENDING": 8,
         "PRICE_PATH_ONLY": 74,
-        "SHADOW_ONLY": 27,
+        "SHADOW_ONLY": 30,
         "SOURCE_PROXY_ONLY": 177
       },
       "top_missing_primitives": [
@@ -194,11 +195,11 @@
         "guard": 41,
         "positive": 3,
         "profile_cap": 1,
-        "stage3_green": 5
+        "stage3_green": 7
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 484,
+      "record_count": 486,
       "source_gap": false,
       "source_proxy_only_case_count": 221,
       "source_quality_counts": {
@@ -206,7 +207,7 @@
         "A2_URL_BACKED": 103,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 54,
-        "SHADOW_ONLY": 97,
+        "SHADOW_ONLY": 99,
         "SOURCE_PROXY_ONLY": 221
       },
       "top_missing_primitives": [
@@ -270,11 +271,11 @@
         "4B": 23,
         "4C": 272,
         "guard": 6,
-        "stage3_green": 1
+        "stage3_green": 3
       },
       "evidence_url_pending_case_count": 2,
       "has_pattern_summary": true,
-      "record_count": 302,
+      "record_count": 304,
       "source_gap": false,
       "source_proxy_only_case_count": 177,
       "source_quality_counts": {
@@ -282,7 +283,7 @@
         "A2_URL_BACKED": 61,
         "EVIDENCE_URL_PENDING": 2,
         "PRICE_PATH_ONLY": 44,
-        "SHADOW_ONLY": 17,
+        "SHADOW_ONLY": 19,
         "SOURCE_PROXY_ONLY": 177
       },
       "top_missing_primitives": [
@@ -530,18 +531,18 @@
         "4C": 304,
         "guard": 3,
         "positive": 1,
-        "stage3_green": 1
+        "stage3_green": 3
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 358,
+      "record_count": 360,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 98,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 82,
-        "SHADOW_ONLY": 17,
+        "SHADOW_ONLY": 19,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
@@ -602,18 +603,18 @@
         "4C": 278,
         "guard": 3,
         "positive": 1,
-        "stage3_green": 1
+        "stage3_green": 3
       },
       "evidence_url_pending_case_count": 10,
       "has_pattern_summary": true,
-      "record_count": 328,
+      "record_count": 330,
       "source_gap": false,
       "source_proxy_only_case_count": 160,
       "source_quality_counts": {
         "A2_URL_BACKED": 69,
         "EVIDENCE_URL_PENDING": 10,
         "PRICE_PATH_ONLY": 75,
-        "SHADOW_ONLY": 14,
+        "SHADOW_ONLY": 16,
         "SOURCE_PROXY_ONLY": 160
       },
       "top_missing_primitives": [
@@ -861,18 +862,18 @@
         "4C": 244,
         "guard": 7,
         "positive": 1,
-        "stage3_green": 1
+        "stage3_green": 3
       },
       "evidence_url_pending_case_count": 7,
       "has_pattern_summary": true,
-      "record_count": 279,
+      "record_count": 281,
       "source_gap": false,
       "source_proxy_only_case_count": 143,
       "source_quality_counts": {
         "A2_URL_BACKED": 60,
         "EVIDENCE_URL_PENDING": 7,
         "PRICE_PATH_ONLY": 58,
-        "SHADOW_ONLY": 11,
+        "SHADOW_ONLY": 13,
         "SOURCE_PROXY_ONLY": 143
       },
       "top_missing_primitives": [
@@ -1006,11 +1007,11 @@
         "4C": 311,
         "guard": 13,
         "profile_cap": 1,
-        "stage3_green": 1
+        "stage3_green": 3
       },
       "evidence_url_pending_case_count": 7,
       "has_pattern_summary": true,
-      "record_count": 355,
+      "record_count": 357,
       "source_gap": false,
       "source_proxy_only_case_count": 187,
       "source_quality_counts": {
@@ -1018,7 +1019,7 @@
         "A2_URL_BACKED": 83,
         "EVIDENCE_URL_PENDING": 7,
         "PRICE_PATH_ONLY": 55,
-        "SHADOW_ONLY": 22,
+        "SHADOW_ONLY": 24,
         "SOURCE_PROXY_ONLY": 187
       },
       "top_missing_primitives": [
@@ -1043,18 +1044,19 @@
         "4B": 19,
         "4C": 247,
         "guard": 1,
-        "positive": 1
+        "positive": 1,
+        "stage3_green": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 268,
+      "record_count": 269,
       "source_gap": false,
       "source_proxy_only_case_count": 114,
       "source_quality_counts": {
         "A2_URL_BACKED": 71,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 68,
-        "SHADOW_ONLY": 10,
+        "SHADOW_ONLY": 11,
         "SOURCE_PROXY_ONLY": 114
       },
       "top_missing_primitives": [
@@ -1156,18 +1158,18 @@
         "guard": 6,
         "positive": 1,
         "profile_cap": 1,
-        "stage3_green": 1
+        "stage3_green": 3
       },
       "evidence_url_pending_case_count": 7,
       "has_pattern_summary": true,
-      "record_count": 417,
+      "record_count": 419,
       "source_gap": false,
       "source_proxy_only_case_count": 182,
       "source_quality_counts": {
         "A2_URL_BACKED": 132,
         "EVIDENCE_URL_PENDING": 7,
         "PRICE_PATH_ONLY": 81,
-        "SHADOW_ONLY": 15,
+        "SHADOW_ONLY": 17,
         "SOURCE_PROXY_ONLY": 182
       },
       "top_missing_primitives": [
@@ -1232,11 +1234,11 @@
         "4C": 908,
         "guard": 12,
         "positive": 1,
-        "stage3_green": 1
+        "stage3_green": 2
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 1001,
+      "record_count": 1002,
       "source_gap": false,
       "source_proxy_only_case_count": 286,
       "source_quality_counts": {
@@ -1244,7 +1246,7 @@
         "A2_URL_BACKED": 450,
         "EVIDENCE_URL_PENDING": 6,
         "PRICE_PATH_ONLY": 202,
-        "SHADOW_ONLY": 56,
+        "SHADOW_ONLY": 57,
         "SOURCE_PROXY_ONLY": 286
       },
       "top_missing_primitives": [

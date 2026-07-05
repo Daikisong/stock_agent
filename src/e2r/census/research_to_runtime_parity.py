@@ -16,6 +16,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
+from e2r.census.placeholder_symbols import is_placeholder_symbol
+
 
 DEFAULT_MANDATORY_ARCHETYPE_PREFIXES = ("C06", "C08", "C15", "C17", "C24", "C28")
 
@@ -131,9 +133,13 @@ class ArchetypeRuntimeAccumulator:
     runtime_seed_source_primary_count: int = 0
     runtime_seed_target_count: int = 0
     runtime_seed_effective_attempt_count: int = 0
+    archetype_level_discovery_seed_count: int = 0
+    target_materialization_required_seed_count: int = 0
+    placeholder_symbol_seed_count: int = 0
     runtime_planner_top1_count: int = 0
     runtime_planner_topk_count: int = 0
     runtime_source_task_execution_count: int = 0
+    targetless_source_task_execution_count: int = 0
     runtime_source_task_accepted_claim_count: int = 0
     runtime_follow_up_source_task_count: int = 0
     runtime_candidate_attempt_count: int = 0
@@ -158,8 +164,11 @@ class ArchetypeRuntimeAccumulator:
         return any(
             [
                 self.runtime_seed_effective_attempt_count,
+                self.archetype_level_discovery_seed_count,
+                self.target_materialization_required_seed_count,
                 self.runtime_planner_top1_count,
                 self.runtime_source_task_execution_count,
+                self.targetless_source_task_execution_count,
                 self.runtime_follow_up_source_task_count,
                 self.runtime_candidate_attempt_count,
                 self.runtime_accepted_claim_count,
@@ -179,6 +188,8 @@ class ArchetypeRuntimeAccumulator:
             return "ACCEPTED_CLAIM_NO_FULL_THESIS"
         if self.runtime_source_task_execution_count or self.runtime_follow_up_source_task_count:
             return "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM"
+        if self.targetless_source_task_execution_count:
+            return "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET"
         if self.runtime_planner_top1_count or self.runtime_planner_topk_count:
             return "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE"
         if self.source_backed_fixture_count:
@@ -201,6 +212,8 @@ class ArchetypeRuntimeAccumulator:
             return "ACCEPTED_CLAIM_PRESENT_BUT_FULL_THESIS_NOT_CLOSED"
         if self.runtime_source_task_execution_count or self.runtime_follow_up_source_task_count:
             return "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM"
+        if self.targetless_source_task_execution_count or self.target_materialization_required_seed_count:
+            return "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED"
         if self.runtime_planner_top1_count or self.runtime_planner_topk_count:
             return "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE"
         if self.source_backed_fixture_count:
@@ -226,6 +239,10 @@ class ArchetypeRuntimeAccumulator:
             or self.runtime_full_thesis_row_count
         ):
             blockers.add("PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM")
+        if self.target_materialization_required_seed_count or self.targetless_source_task_execution_count:
+            blockers.add("TARGET_MATERIALIZATION_REQUIRED")
+        if self.placeholder_symbol_seed_count:
+            blockers.add("PLACEHOLDER_SYMBOL_REJECTED")
         if self.promoted_target_unknown_count:
             blockers.add("TARGET_ARCHETYPE_UNKNOWN_PROMOTED")
         if self.promoted_source_primary_context_count:
@@ -245,9 +262,13 @@ class ArchetypeRuntimeAccumulator:
             "runtime_seed_source_primary_count": self.runtime_seed_source_primary_count,
             "runtime_seed_target_count": self.runtime_seed_target_count,
             "runtime_seed_effective_attempt_count": self.runtime_seed_effective_attempt_count,
+            "archetype_level_discovery_seed_count": self.archetype_level_discovery_seed_count,
+            "target_materialization_required_seed_count": self.target_materialization_required_seed_count,
+            "placeholder_symbol_seed_count": self.placeholder_symbol_seed_count,
             "runtime_planner_top1_count": self.runtime_planner_top1_count,
             "runtime_planner_topk_count": self.runtime_planner_topk_count,
             "runtime_source_task_execution_count": self.runtime_source_task_execution_count,
+            "targetless_source_task_execution_count": self.targetless_source_task_execution_count,
             "runtime_source_task_accepted_claim_count": self.runtime_source_task_accepted_claim_count,
             "runtime_follow_up_source_task_count": self.runtime_follow_up_source_task_count,
             "runtime_candidate_attempt_count": self.runtime_candidate_attempt_count,
@@ -312,7 +333,7 @@ def build_research_to_runtime_parity_audit(
             continue
         row = accumulators[archetype_id]
         row.runtime_refresh_queue_count += 1
-        if refresh.get("symbol"):
+        if refresh.get("symbol") and not is_placeholder_symbol(refresh.get("symbol")):
             row.symbols.add(str(refresh["symbol"]))
 
     planner_top1_by_run: dict[str, str] = {}
@@ -349,7 +370,7 @@ def build_research_to_runtime_parity_audit(
             row.runtime_planner_topk_count += 1
             if index == 0:
                 row.runtime_planner_top1_count += 1
-                if symbol:
+                if symbol and not is_placeholder_symbol(symbol):
                     row.planner_top1_symbols.add(str(symbol))
                     row.symbols.add(str(symbol))
 
@@ -368,14 +389,28 @@ def build_research_to_runtime_parity_audit(
             accumulators[source_primary_id].runtime_seed_source_primary_count += 1
         if effective_id:
             row = accumulators[effective_id]
+            seed_symbol = seed.get("symbol")
+            targetless_seed = is_placeholder_symbol(seed_symbol)
+            target_symbol_mode = str(seed.get("target_symbol_mode") or "")
+            target_materialization_status = str(seed.get("target_materialization_status") or "")
             row.runtime_seed_effective_attempt_count += 1
-            row.runtime_source_task_execution_count += int(seed.get("source_task_execution_count") or 0)
-            row.runtime_accepted_claim_count += int(seed.get("accepted_claim_count") or 0)
-            row.runtime_score_contribution_count += int(seed.get("score_contribution_count") or 0)
-            row.runtime_stagecourt_trace_count += int(seed.get("stagecourt_trace_count") or 0)
-            if seed.get("symbol"):
+            if target_symbol_mode == "ARCHETYPE_LEVEL_DISCOVERY":
+                row.archetype_level_discovery_seed_count += 1
+            if targetless_seed or target_materialization_status == "TARGET_MATERIALIZATION_REQUIRED":
+                row.target_materialization_required_seed_count += 1
+            if seed.get("target_symbol_placeholder_rejected") is True:
+                row.placeholder_symbol_seed_count += 1
+            source_execution_count = int(seed.get("source_task_execution_count") or 0)
+            if targetless_seed:
+                row.targetless_source_task_execution_count += source_execution_count
+            else:
+                row.runtime_source_task_execution_count += source_execution_count
+                row.runtime_accepted_claim_count += int(seed.get("accepted_claim_count") or 0)
+                row.runtime_score_contribution_count += int(seed.get("score_contribution_count") or 0)
+                row.runtime_stagecourt_trace_count += int(seed.get("stagecourt_trace_count") or 0)
+            if seed.get("symbol") and not targetless_seed:
                 row.symbols.add(str(seed["symbol"]))
-            if int(seed.get("accepted_claim_count") or 0) > 0 and seed.get("symbol"):
+            if int(seed.get("accepted_claim_count") or 0) > 0 and seed.get("symbol") and not targetless_seed:
                 row.accepted_claim_symbols.add(str(seed["symbol"]))
             if seed.get("promoted_to_full_thesis"):
                 target_status = seed.get("target_archetype_status")
@@ -394,10 +429,16 @@ def build_research_to_runtime_parity_audit(
         if not archetype_id:
             continue
         row = accumulators[archetype_id]
+        execution_symbol = execution.get("symbol")
+        targetless_execution = is_placeholder_symbol(execution_symbol)
+        if targetless_execution:
+            row.targetless_source_task_execution_count += 1
+            row.target_materialization_required_seed_count += 1
+            continue
         row.runtime_source_task_execution_count += 1
         accepted_count = len(execution.get("accepted_claim_ids") or [])
         row.runtime_source_task_accepted_claim_count += accepted_count
-        if execution.get("symbol"):
+        if execution.get("symbol") and not is_placeholder_symbol(execution.get("symbol")):
             row.symbols.add(str(execution["symbol"]))
             if accepted_count:
                 row.accepted_claim_symbols.add(str(execution["symbol"]))
@@ -413,7 +454,7 @@ def build_research_to_runtime_parity_audit(
         row.source_pending_required_or_green_gap_count += int(
             "source_pending_required_or_green_primitives" in set(blocked.get("blockers") or [])
         )
-        if blocked.get("symbol"):
+        if blocked.get("symbol") and not is_placeholder_symbol(blocked.get("symbol")):
             row.symbols.add(str(blocked["symbol"]))
             row.blocked_symbols.add(str(blocked["symbol"]))
         if blocked.get("blockers"):
@@ -425,7 +466,7 @@ def build_research_to_runtime_parity_audit(
             continue
         row = accumulators[archetype_id]
         row.runtime_follow_up_source_task_count += 1
-        if follow_up.get("symbol"):
+        if follow_up.get("symbol") and not is_placeholder_symbol(follow_up.get("symbol")):
             row.symbols.add(str(follow_up["symbol"]))
 
     stage_map_path = output_path / "census_stage_map.csv"
@@ -450,7 +491,7 @@ def build_research_to_runtime_parity_audit(
                     row.runtime_full_thesis_row_with_required_positive_missing_count += 1
                 if _parse_listish(stage_row.get("full_thesis_green_gap_primitives")):
                     row.runtime_full_thesis_row_with_green_gap_count += 1
-                if stage_row.get("symbol"):
+                if stage_row.get("symbol") and not is_placeholder_symbol(stage_row.get("symbol")):
                     row.symbols.add(str(stage_row["symbol"]))
                     row.full_thesis_symbols.add(str(stage_row["symbol"]))
 

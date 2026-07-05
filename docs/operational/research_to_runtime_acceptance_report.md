@@ -11,8 +11,8 @@
 
 ## Required Metrics
 
-- research case count: `11438`
-- source quality breakdown: `{"A1_URL_PENDING": 19, "A2_URL_BACKED": 3149, "EVIDENCE_URL_PENDING": 185, "PRICE_PATH_ONLY": 2237, "SHADOW_ONLY": 534, "SOURCE_PROXY_ONLY": 5314}`
+- research case count: `11459`
+- source quality breakdown: `{"A1_URL_PENDING": 19, "A2_URL_BACKED": 3149, "EVIDENCE_URL_PENDING": 185, "PRICE_PATH_ONLY": 2237, "SHADOW_ONLY": 555, "SOURCE_PROXY_ONLY": 5314}`
 - URL-backed replay count: `3149`
 - source-proxy-only repair count: `5314`
 - archetype memory card count: `36`
@@ -32,11 +32,11 @@
 - R13 cross-archetype rows: `4`
 - all contracts have memory card: `True`
 - all contracts have source route patterns: `True`
-- runtime proof counts: `{"NOT_PROVEN_PLANNER_ONLY": 8, "NOT_PROVEN_REPLAY_ONLY": 1, "NOT_PROVEN_SCORE_PATH_ONLY": 2, "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM": 25}`
+- runtime proof counts: `{"NOT_PROVEN_PLANNER_ONLY": 1, "NOT_PROVEN_SCORE_PATH_ONLY": 2, "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM": 1, "NOT_PROVEN_TARGET_MATERIALIZATION_REQUIRED": 32}`
 - next runtime attempt plan rows: `36`
 - next runtime source task shells: `111`
 - next runtime seed events: `111`
-- next runtime attempt types: `{"PLANNER_TO_SOURCE_TASK_MATERIALIZATION": 8, "PROMOTED_SCORE_PATH_GAP_CLOSURE": 2, "REPLAY_TO_PRODUCTION_RUNTIME_ATTEMPT": 1, "SOURCE_EXECUTION_REPAIR": 25}`
+- next runtime attempt types: `{"ARCHETYPE_TARGET_MATERIALIZATION": 32, "PLANNER_TO_SOURCE_TASK_MATERIALIZATION": 1, "PROMOTED_SCORE_PATH_GAP_CLOSURE": 2, "SOURCE_EXECUTION_REPAIR": 1}`
 - runtime execution manifest status: `READY_FOR_RESEARCH_BRAIN_INPUT_NOT_EXECUTED_BY_PARITY_CLI`
 - runtime execution seed path: `docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl`
 - runtime execution command target gate: `full_thesis`

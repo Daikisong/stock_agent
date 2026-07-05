@@ -7,7 +7,8 @@
     "MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW": 5,
     "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM": 30,
     "REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROW": 2,
-    "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES": 2
+    "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES": 2,
+    "TARGET_MATERIALIZATION_REQUIRED": 32
   },
   "blockers": [
     "C05_FULL_THESIS_MONOCULTURE",
@@ -68,12 +69,14 @@
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [
         "052400"
       ],
@@ -108,17 +111,22 @@
       "source_route_status": "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE",
       "symbols_sample": [
         "052400"
-      ]
+      ],
+      "target_materialization_required_seed_count": 0,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -133,7 +141,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -142,26 +150,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -176,7 +187,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 5,
       "runtime_refresh_queue_count": 0,
@@ -185,26 +196,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 28,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 17,
+      "targetless_source_task_execution_count": 28
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -219,7 +233,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 1,
       "runtime_planner_topk_count": 7,
       "runtime_refresh_queue_count": 0,
@@ -228,16 +242,16 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [
@@ -245,6 +259,7 @@
         "003380"
       ],
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [
         "003380"
       ],
@@ -259,6 +274,7 @@
         "003380"
       ],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [
         "002460",
         "003380"
@@ -313,13 +329,16 @@
         "024110",
         "026910",
         "028100"
-      ]
+      ],
+      "target_materialization_required_seed_count": 0,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [
         "005930"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [
         "005930"
       ],
@@ -333,6 +352,7 @@
         "005930"
       ],
       "mandatory_archetype": true,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [
         "005930"
       ],
@@ -367,17 +387,22 @@
       "source_route_status": "FULL_THESIS_SCORE_PATH_CLOSED",
       "symbols_sample": [
         "005930"
-      ]
+      ],
+      "target_materialization_required_seed_count": 0,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -392,7 +417,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 9,
       "runtime_refresh_queue_count": 0,
@@ -401,27 +426,30 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 16,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 11,
+      "targetless_source_task_execution_count": 16
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
         "MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW",
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": true,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -436,7 +464,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 5,
       "runtime_refresh_queue_count": 0,
@@ -445,26 +473,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 4,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -479,7 +510,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 2,
       "runtime_refresh_queue_count": 0,
@@ -495,19 +526,22 @@
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
       "source_route_status": "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE",
-      "symbols_sample": [
-        "000000"
-      ]
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 3,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -522,7 +556,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 1,
       "runtime_planner_topk_count": 14,
       "runtime_refresh_queue_count": 0,
@@ -531,26 +565,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -565,7 +602,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 16,
       "runtime_refresh_queue_count": 0,
@@ -574,26 +611,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 16,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 11,
+      "targetless_source_task_execution_count": 16
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -608,7 +648,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 4,
       "runtime_refresh_queue_count": 0,
@@ -624,19 +664,22 @@
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
       "source_route_status": "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE",
-      "symbols_sample": [
-        "000000"
-      ]
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 3,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -651,7 +694,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 1,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -660,26 +703,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 16,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 11,
+      "targetless_source_task_execution_count": 16
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -694,7 +740,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 1,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -710,20 +756,23 @@
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
       "source_route_status": "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE",
-      "symbols_sample": [
-        "000000"
-      ]
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 3,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
         "MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW",
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": true,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -738,7 +787,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 7,
       "runtime_refresh_queue_count": 0,
@@ -747,26 +796,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 6,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -781,7 +833,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 10,
       "runtime_refresh_queue_count": 0,
@@ -790,27 +842,30 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
         "MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW",
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": true,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -825,7 +880,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 4,
       "runtime_refresh_queue_count": 0,
@@ -841,17 +896,21 @@
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
       "source_route_status": "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE",
-      "symbols_sample": [
-        "000000"
-      ]
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 3,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
-      "blocker_classes": [],
+      "blocker_classes": [
+        "TARGET_MATERIALIZATION_REQUIRED"
+      ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -866,7 +925,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 0,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -882,19 +941,22 @@
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
       "source_route_status": "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE",
-      "symbols_sample": [
-        "000000"
-      ]
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 3,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -909,7 +971,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 2,
       "runtime_refresh_queue_count": 0,
@@ -918,26 +980,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -952,7 +1017,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 4,
       "runtime_refresh_queue_count": 0,
@@ -961,26 +1026,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 42,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 24,
+      "targetless_source_task_execution_count": 42
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -995,7 +1063,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -1004,26 +1072,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 30,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 18,
+      "targetless_source_task_execution_count": 30
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1038,7 +1109,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 6,
       "runtime_refresh_queue_count": 0,
@@ -1047,26 +1118,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1081,7 +1155,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -1090,27 +1164,30 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
         "MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW",
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": true,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1125,7 +1202,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 9,
       "runtime_refresh_queue_count": 0,
@@ -1134,26 +1211,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 5,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1168,7 +1248,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 9,
       "runtime_refresh_queue_count": 0,
@@ -1177,26 +1257,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1211,7 +1294,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 4,
       "runtime_refresh_queue_count": 0,
@@ -1220,26 +1303,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1254,7 +1340,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -1263,27 +1349,30 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 28,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 17,
+      "targetless_source_task_execution_count": 28
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
         "MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW",
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": true,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1298,7 +1387,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -1307,26 +1396,28 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 7,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [
         "017670",
         "024110"
@@ -1363,17 +1454,22 @@
       "symbols_sample": [
         "017670",
         "024110"
-      ]
+      ],
+      "target_materialization_required_seed_count": 0,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1388,7 +1484,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -1397,26 +1493,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 42,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 24,
+      "targetless_source_task_execution_count": 42
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1431,7 +1530,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 2,
       "runtime_planner_topk_count": 34,
       "runtime_refresh_queue_count": 0,
@@ -1440,26 +1539,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 16,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 11,
+      "targetless_source_task_execution_count": 16
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1474,7 +1576,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 4,
       "runtime_refresh_queue_count": 0,
@@ -1483,26 +1585,29 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
       "blocker_classes": [
-        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
+        "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM",
+        "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1517,7 +1622,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 3,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -1526,24 +1631,28 @@
       "runtime_seed_source_primary_count": 3,
       "runtime_seed_target_count": 3,
       "runtime_source_task_accepted_claim_count": 0,
-      "runtime_source_task_execution_count": 14,
+      "runtime_source_task_execution_count": 0,
       "runtime_stagecourt_trace_count": 0,
       "schema_version": "e2r_research_to_runtime_parity_row_v1",
       "source_backed_fixture_count": 3,
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
-      "source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "symbols_sample": [
-        "000000"
-      ]
+      "source_route_status": "ARCHETYPE_DISCOVERY_SOURCE_SHELL_NO_TARGET",
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 10,
+      "targetless_source_task_execution_count": 14
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
-      "blocker_classes": [],
+      "blocker_classes": [
+        "TARGET_MATERIALIZATION_REQUIRED"
+      ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1558,7 +1667,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 0,
       "runtime_planner_topk_count": 0,
       "runtime_refresh_queue_count": 0,
@@ -1574,17 +1683,21 @@
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
       "source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
-      "symbols_sample": [
-        "000000"
-      ]
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 3,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
-      "blocker_classes": [],
+      "blocker_classes": [
+        "TARGET_MATERIALIZATION_REQUIRED"
+      ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1599,7 +1712,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 0,
       "runtime_planner_topk_count": 3,
       "runtime_refresh_queue_count": 0,
@@ -1615,17 +1728,21 @@
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
       "source_route_status": "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE",
-      "symbols_sample": [
-        "000000"
-      ]
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 3,
+      "targetless_source_task_execution_count": 0
     },
     {
       "accepted_claim_symbols_sample": [],
       "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "archetype_level_discovery_seed_count": 0,
       "blocked_symbols": [],
-      "blocker_classes": [],
+      "blocker_classes": [
+        "TARGET_MATERIALIZATION_REQUIRED"
+      ],
       "full_thesis_symbols": [],
       "mandatory_archetype": false,
+      "placeholder_symbol_seed_count": 0,
       "planner_top1_symbols_sample": [],
       "promoted_source_primary_context_count": 0,
       "promoted_target_unknown_count": 0,
@@ -1640,7 +1757,7 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_full_thesis_row_with_green_gap_count": 0,
       "runtime_full_thesis_row_with_required_positive_missing_count": 0,
-      "runtime_parity_status": "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE",
+      "runtime_parity_status": "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED",
       "runtime_planner_top1_count": 0,
       "runtime_planner_topk_count": 2,
       "runtime_refresh_queue_count": 0,
@@ -1656,9 +1773,9 @@
       "source_pending_required_or_green_gap_count": 0,
       "source_proxy_leak_count": 0,
       "source_route_status": "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE",
-      "symbols_sample": [
-        "000000"
-      ]
+      "symbols_sample": [],
+      "target_materialization_required_seed_count": 3,
+      "targetless_source_task_execution_count": 0
     }
   ],
   "schema_version": "e2r_research_to_runtime_parity_matrix_v1",

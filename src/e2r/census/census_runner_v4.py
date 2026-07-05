@@ -25,6 +25,7 @@ from .census_runner_v3 import CensusV3RunConfig, run_census_mode_v3
 from .census_v4_auditor import audit_census_v4_leaf_artifacts, build_artifact_manifest
 from .existing_ledger_loader import with_primitive_state_id
 from .known_bad_regression import run_known_bad_regression
+from .placeholder_symbols import is_placeholder_symbol, normalized_real_symbol
 from .test_result_evidence import validate_test_result_artifact
 
 
@@ -6611,8 +6612,18 @@ def _write_full_thesis_seed_materialization_trace(
     trace_rows: list[dict[str, Any]] = []
     for seed in seed_rows:
         event_id = str(seed.get("candidate_event_id") or "")
-        symbol = str(seed.get("symbol") or "").zfill(6)
-        stage_row = stage_by_symbol.get(symbol) or {}
+        structured_payload = seed.get("structured_payload") if isinstance(seed.get("structured_payload"), Mapping) else {}
+        raw_symbol = seed.get("symbol")
+        symbol = normalized_real_symbol(raw_symbol)
+        target_symbol_mode = str(
+            seed.get("target_symbol_mode")
+            or structured_payload.get("target_symbol_mode")
+            or ("SYMBOL_SPECIFIC" if symbol else "ARCHETYPE_LEVEL_DISCOVERY")
+        )
+        target_materialization_status = "TARGET_SYMBOL_READY" if symbol else "TARGET_MATERIALIZATION_REQUIRED"
+        placeholder_symbol_rejected = bool(raw_symbol is not None and is_placeholder_symbol(raw_symbol))
+        stage_row = stage_by_symbol.get(symbol) if symbol else {}
+        stage_row = stage_row or {}
         stage_row_is_controlled_smoke = _is_controlled_smoke_full_thesis_stage(stage_row)
         if (
             stage_row.get("stage_scope") == "FULL_THESIS"
@@ -6620,7 +6631,6 @@ def _write_full_thesis_seed_materialization_trace(
             and not _full_thesis_stage_row_matches_seed_event(stage_row=stage_row, seed_event_id=event_id)
         ):
             stage_row = _non_representative_full_thesis_seed_stage_row(stage_row)
-        structured_payload = seed.get("structured_payload") if isinstance(seed.get("structured_payload"), Mapping) else {}
         controlled_smoke_final_scope = _is_controlled_smoke_full_thesis_stage(stage_row)
         planners = planner_by_event.get(event_id, [])
         source_rows = source_by_event.get(event_id, [])
@@ -6681,7 +6691,10 @@ def _write_full_thesis_seed_materialization_trace(
             {
                 "schema_version": "e2r_census_v4_full_thesis_seed_materialization_trace_v1",
                 "candidate_event_id": event_id,
-                "symbol": symbol,
+                "symbol": symbol or None,
+                "target_symbol_mode": target_symbol_mode,
+                "target_materialization_status": target_materialization_status,
+                "target_symbol_placeholder_rejected": placeholder_symbol_rejected,
                 "company_name": seed.get("company_name"),
                 "seed_source_family": seed.get("source_family"),
                 "seed_source_id": seed.get("source_id"),
@@ -6783,6 +6796,10 @@ def _full_thesis_seed_materialization_audit(
     seed_source_family_counts = Counter(str(row.get("seed_source_family") or "UNKNOWN") for row in trace_rows)
     target_archetype_counts = Counter(str(row.get("target_archetype") or "UNKNOWN") for row in trace_rows)
     target_primitive_gap_counts = Counter(str(row.get("target_primitive_gap") or "UNKNOWN") for row in trace_rows)
+    target_symbol_mode_counts = Counter(str(row.get("target_symbol_mode") or "UNKNOWN") for row in trace_rows)
+    target_materialization_status_counts = Counter(
+        str(row.get("target_materialization_status") or "UNKNOWN") for row in trace_rows
+    )
     status_by_target_archetype: dict[str, Counter[str]] = {}
     status_by_target_primitive_gap: dict[str, Counter[str]] = {}
     for row in trace_rows:
@@ -6828,6 +6845,11 @@ def _full_thesis_seed_materialization_audit(
             1
             for row in trace_rows
             if int(row.get("stagecourt_trace_count") or 0) > 0 and int(row.get("accepted_claim_count") or 0) <= 0
+        ),
+        "full_thesis_promoted_without_real_target_symbol_count": sum(
+            1
+            for row in trace_rows
+            if row.get("materialization_status") == "FULL_THESIS_PROMOTED" and not row.get("symbol")
         ),
         "full_thesis_promoted_missing_stagecourt_count": sum(
             1
@@ -6889,6 +6911,15 @@ def _full_thesis_seed_materialization_audit(
         "seed_source_family_counts": dict(sorted(seed_source_family_counts.items())),
         "target_archetype_counts": dict(sorted(target_archetype_counts.items())),
         "target_primitive_gap_counts": dict(sorted(target_primitive_gap_counts.items())),
+        "target_symbol_mode_counts": dict(sorted(target_symbol_mode_counts.items())),
+        "target_materialization_status_counts": dict(sorted(target_materialization_status_counts.items())),
+        "archetype_level_discovery_seed_count": int(target_symbol_mode_counts.get("ARCHETYPE_LEVEL_DISCOVERY", 0)),
+        "target_materialization_required_seed_count": int(
+            target_materialization_status_counts.get("TARGET_MATERIALIZATION_REQUIRED", 0)
+        ),
+        "target_symbol_placeholder_rejected_count": sum(
+            1 for row in trace_rows if row.get("target_symbol_placeholder_rejected") is True
+        ),
         "status_counts_by_target_archetype": {
             key: dict(sorted(counter.items()))
             for key, counter in sorted(status_by_target_archetype.items())

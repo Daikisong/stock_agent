@@ -59,15 +59,17 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
         self.assertEqual(self.by_prefix["C05"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
         self.assertEqual(self.by_prefix["C06"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
         self.assertEqual(self.by_prefix["C29"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
-        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
-        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
+        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "ARCHETYPE_TARGET_MATERIALIZATION")
+        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "ARCHETYPE_TARGET_MATERIALIZATION")
 
     def test_replay_only_archetypes_are_archetype_level_discovery_not_fake_symbol_scores(self) -> None:
         for prefix in ("C08", "C15", "C17", "C24", "C28"):
             row = self.by_prefix[prefix]
             self.assertEqual(row["target_symbol_mode"], "ARCHETYPE_LEVEL_DISCOVERY", prefix)
             self.assertEqual(row["target_symbols"], [], prefix)
+            self.assertTrue(row["requires_target_materialization_before_scoring"], prefix)
             self.assertFalse(row["score_allowed_before_execution"], prefix)
+        self.assertEqual(self.plan["target_materialization_required_task_count"], 96)
 
 
 if __name__ == "__main__":

@@ -8,6 +8,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
+from e2r.census.placeholder_symbols import is_placeholder_symbol
+
 
 DISCOVERY_ONLY_FAMILIES = {"GeneralWebSearch", "NaverSearch", "ResearchMemory"}
 FORBIDDEN_SOURCE_CLASSES = [
@@ -24,9 +26,6 @@ DEFAULT_FALLBACK_SOURCE_CLASSES = [
     "NaverSearch",
     "GeneralWebSearch",
 ]
-PLACEHOLDER_SYMBOLS = {"", "000000", "0000000", "UNKNOWN", "N/A", "NONE", "NULL"}
-
-
 def _stable_id(prefix: str, *parts: object, length: int = 20) -> str:
     raw = "|".join(str(part) for part in parts)
     digest = hashlib.sha1(raw.encode("utf-8")).hexdigest()[:length]
@@ -95,6 +94,8 @@ def _attempt_priority(row: Mapping[str, Any]) -> int:
         return 10
     if proof == "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP":
         return 20
+    if proof == "NOT_PROVEN_TARGET_MATERIALIZATION_REQUIRED":
+        return 25
     if proof == "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM":
         return 30
     if proof == "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED":
@@ -112,6 +113,8 @@ def _attempt_type(row: Mapping[str, Any]) -> str:
         return "PROMOTED_SCORE_PATH_GAP_CLOSURE"
     if proof == "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP":
         return "BLOCKED_CANDIDATE_GAP_CLOSURE"
+    if proof == "NOT_PROVEN_TARGET_MATERIALIZATION_REQUIRED":
+        return "ARCHETYPE_TARGET_MATERIALIZATION"
     if proof == "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM":
         return "SOURCE_EXECUTION_REPAIR"
     if proof == "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED":
@@ -130,7 +133,7 @@ def _symbols_for_attempt(row: Mapping[str, Any]) -> list[str | None]:
     clean_symbols = [
         str(symbol)
         for symbol in symbols
-        if symbol is not None and str(symbol).strip().upper() not in PLACEHOLDER_SYMBOLS
+        if symbol is not None and not is_placeholder_symbol(symbol)
     ]
     if clean_symbols:
         return clean_symbols[:2]
@@ -175,6 +178,7 @@ def build_all_archetype_next_runtime_attempt_plan(
                 "current_full_thesis_status": row.get("full_thesis_status"),
                 "target_symbol_mode": "SYMBOL_SPECIFIC" if symbols != [None] else "ARCHETYPE_LEVEL_DISCOVERY",
                 "target_symbols": [symbol for symbol in symbols if symbol],
+                "requires_target_materialization_before_scoring": symbols == [None],
                 "primitive_attempts": primitives,
                 "score_allowed_before_execution": False,
                 "stage_promotion_allowed_before_execution": False,
@@ -189,6 +193,20 @@ def build_all_archetype_next_runtime_attempt_plan(
             route_priority = _route_priority(card, primitive)
             for symbol in symbols:
                 task_id = _stable_id("RTTASK", as_of_date, archetype_id, primitive, symbol or "DISCOVERY")
+                target_symbol_mode = "SYMBOL_SPECIFIC" if symbol else "ARCHETYPE_LEVEL_DISCOVERY"
+                query_intents = [
+                    (
+                        "Ask the LLM planner to first materialize real current target companies/tickers "
+                        f"for archetype `{archetype_id}` and primitive `{primitive}`, then propose bounded "
+                        "official-first source routes. Do not score archetype-level discovery results until "
+                        "a real target symbol has source-backed Evidence OS claims."
+                    )
+                ] if symbol is None else [
+                    (
+                        "Ask the LLM planner for bounded official-first queries that verify current, "
+                        f"direct target-company evidence for primitive `{primitive}`."
+                    )
+                ]
                 source_task = {
                     "schema_version": "e2r_all_archetype_next_runtime_source_task_v1",
                     "task_id": task_id,
@@ -198,7 +216,8 @@ def build_all_archetype_next_runtime_attempt_plan(
                     "source_task_origin": "all_archetype_runtime_status_matrix",
                     "as_of_date": as_of_date,
                     "symbol": symbol,
-                    "target_symbol_mode": "SYMBOL_SPECIFIC" if symbol else "ARCHETYPE_LEVEL_DISCOVERY",
+                    "target_symbol_mode": target_symbol_mode,
+                    "requires_target_materialization_before_scoring": symbol is None,
                     "archetype_id": archetype_id,
                     "primitive_gap": primitive,
                     "current_runtime_parity_proof_status": proof_status,
@@ -209,12 +228,7 @@ def build_all_archetype_next_runtime_attempt_plan(
                     "general_search_allowed": True,
                     "llm_query_required": True,
                     "llm_query_allowed": True,
-                    "query_intents": [
-                        (
-                            "Ask the LLM planner for bounded official-first queries that verify current, "
-                            f"direct target-company evidence for primitive `{primitive}`."
-                        )
-                    ],
+                    "query_intents": query_intents,
                     "hardcoded_queries": [],
                     "hardcoded_query_count": 0,
                     "max_queries": 3,
@@ -248,7 +262,7 @@ def build_all_archetype_next_runtime_attempt_plan(
                         "event_date": as_of_date,
                         "detected_at": as_of_date,
                         "symbol": symbol,
-                        "target_symbol_mode": source_task["target_symbol_mode"],
+                        "target_symbol_mode": target_symbol_mode,
                         "target_archetype": archetype_id,
                         "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
                         "primitive_gap": primitive,
@@ -274,7 +288,7 @@ def build_all_archetype_next_runtime_attempt_plan(
                             "target_archetype": archetype_id,
                             "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
                             "primitive_gap": primitive,
-                            "target_symbol_mode": source_task["target_symbol_mode"],
+                            "target_symbol_mode": target_symbol_mode,
                             "seed_role": "planner_input_only",
                             "follow_up_origin": "all_archetype_runtime_status_matrix",
                             "preferred_source_classes": source_task["preferred_source_classes"],
@@ -317,6 +331,9 @@ def build_all_archetype_next_runtime_attempt_plan(
             task["max_queries"] is not None and task["max_candidates"] is not None and task["max_fetches"] is not None
             for task in source_tasks
         ),
+        "target_materialization_required_task_count": sum(
+            1 for task in source_tasks if task.get("requires_target_materialization_before_scoring") is True
+        ),
         "production_score_ready": False,
         "plan_rows": plan_rows,
         "source_tasks": source_tasks,
@@ -343,6 +360,7 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         f"- all_tasks_require_llm_query_generation: `{plan['all_tasks_require_llm_query_generation']}`",
         f"- all_tasks_have_no_hardcoded_queries: `{plan['all_tasks_have_no_hardcoded_queries']}`",
         f"- all_tasks_have_finite_budget: `{plan['all_tasks_have_finite_budget']}`",
+        f"- target_materialization_required_task_count: `{plan['target_materialization_required_task_count']}`",
         "",
         "## Plan Rows",
         "",

@@ -28,6 +28,10 @@ def _runtime_attempt_status(row: Mapping[str, Any]) -> str:
         return "SOURCE_TASK_EXECUTED"
     if int(row.get("runtime_follow_up_source_task_count") or 0):
         return "FOLLOWUP_SOURCE_TASK_CREATED"
+    if int(row.get("targetless_source_task_execution_count") or 0) or int(
+        row.get("target_materialization_required_seed_count") or 0
+    ):
+        return "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED"
     if int(row.get("runtime_planner_top1_count") or 0) or int(row.get("runtime_planner_topk_count") or 0):
         return "PLANNER_ATTEMPTED_ONLY"
     if int(row.get("source_backed_fixture_count") or 0):
@@ -45,6 +49,10 @@ def _runtime_source_execution_status(row: Mapping[str, Any], *, route_pattern_co
         return "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS"
     if followup:
         return "FOLLOWUP_SOURCE_TASK_CREATED_NOT_EXECUTED"
+    if int(row.get("targetless_source_task_execution_count") or 0):
+        return "TARGETLESS_SOURCE_SHELL_EXECUTED_NO_TARGET"
+    if int(row.get("target_materialization_required_seed_count") or 0):
+        return "TARGET_MATERIALIZATION_REQUIRED_BEFORE_SOURCE_EXECUTION"
     if route_pattern_count:
         return "ROUTE_RECOVERED_NOT_EXECUTED"
     return "SOURCE_ROUTE_NOT_RECOVERED"
@@ -90,6 +98,10 @@ def _proof_status(row: Mapping[str, Any], full_thesis_status: str) -> str:
         return "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED"
     if int(row.get("runtime_source_task_execution_count") or 0):
         return "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM"
+    if int(row.get("targetless_source_task_execution_count") or 0) or int(
+        row.get("target_materialization_required_seed_count") or 0
+    ):
+        return "NOT_PROVEN_TARGET_MATERIALIZATION_REQUIRED"
     if int(row.get("runtime_planner_top1_count") or 0) or int(row.get("runtime_planner_topk_count") or 0):
         return "NOT_PROVEN_PLANNER_ONLY"
     if int(row.get("source_backed_fixture_count") or 0):
@@ -108,6 +120,10 @@ def _next_action(row: Mapping[str, Any], *, full_thesis_status: str, accepted_cl
         return "MAP_ACCEPTED_CLAIMS_TO_SCORE_CONTRIBUTIONS_OR_EXPLAIN_REMAINING_GAPS"
     if int(row.get("runtime_source_task_execution_count") or 0):
         return "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS"
+    if int(row.get("targetless_source_task_execution_count") or 0) or int(
+        row.get("target_materialization_required_seed_count") or 0
+    ):
+        return "MATERIALIZE_REAL_TARGET_SYMBOLS_FROM_ARCHETYPE_DISCOVERY_BEFORE_SOURCE_EXECUTION"
     if int(row.get("runtime_planner_top1_count") or 0) or int(row.get("runtime_planner_topk_count") or 0):
         return "TURN_PLANNER_ATTEMPT_INTO_BOUNDED_SOURCE_TASKS"
     if int(row.get("source_backed_fixture_count") or 0):
@@ -130,6 +146,8 @@ def _reason_ko(
         return "source-backed accepted claim은 있지만 score contribution/full thesis closure까지 이어지지 않았다."
     if attempt_status == "PLANNER_ATTEMPTED_ONLY":
         return "planner 가설은 있었지만 production source task와 accepted claim으로 닫히지 않았다."
+    if attempt_status == "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED":
+        return "아키타입 수준 discovery seed는 실행됐지만 실제 target symbol이 없어 source-backed issuer claim으로 닫힐 수 없다."
     if attempt_status == "REPLAY_READY_NOT_RUNTIME_ATTEMPTED":
         return "연구 replay fixture는 준비됐지만 이번 production runtime에서 시도되지 않았다."
     if int(row.get("source_backed_fixture_count") or 0):
@@ -218,6 +236,12 @@ def build_all_archetype_runtime_status_matrix(
                 "runtime_planner_top1_count": row.get("runtime_planner_top1_count", 0),
                 "runtime_planner_topk_count": row.get("runtime_planner_topk_count", 0),
                 "runtime_source_task_execution_count": row.get("runtime_source_task_execution_count", 0),
+                "targetless_source_task_execution_count": row.get("targetless_source_task_execution_count", 0),
+                "archetype_level_discovery_seed_count": row.get("archetype_level_discovery_seed_count", 0),
+                "target_materialization_required_seed_count": row.get(
+                    "target_materialization_required_seed_count", 0
+                ),
+                "placeholder_symbol_seed_count": row.get("placeholder_symbol_seed_count", 0),
                 "runtime_source_task_accepted_claim_count": row.get("runtime_source_task_accepted_claim_count", 0),
                 "runtime_accepted_claim_count": row.get("runtime_accepted_claim_count", 0),
                 "runtime_stagecourt_trace_count": row.get("runtime_stagecourt_trace_count", 0),
@@ -240,6 +264,7 @@ def build_all_archetype_runtime_status_matrix(
     r13_rows = [row for row in status_rows if row["registry_scope"] == "R13_CROSS_ARCHETYPE"]
     proof_counts = Counter(row["runtime_parity_proof_status"] for row in status_rows)
     attempt_counts = Counter(row["runtime_attempt_status"] for row in status_rows)
+    source_execution_counts = Counter(row["runtime_source_route_execution_status"] for row in status_rows)
     full_thesis_counts = Counter(row["full_thesis_status"] for row in status_rows)
     accepted_counts = Counter(row["accepted_claim_status"] for row in status_rows)
 
@@ -263,6 +288,7 @@ def build_all_archetype_runtime_status_matrix(
         ),
         "runtime_parity_proof_status_counts": dict(sorted(proof_counts.items())),
         "runtime_attempt_status_counts": dict(sorted(attempt_counts.items())),
+        "runtime_source_route_execution_status_counts": dict(sorted(source_execution_counts.items())),
         "accepted_claim_status_counts": dict(sorted(accepted_counts.items())),
         "full_thesis_status_counts": dict(sorted(full_thesis_counts.items())),
         "meaningful_runtime_parity_ready": proof_counts.get("RUNTIME_PARITY_PROVEN", 0) == len(status_rows),
@@ -291,6 +317,7 @@ def render_all_archetype_runtime_status_markdown(matrix: Mapping[str, Any]) -> s
         "## Status Counts",
         "",
         f"- runtime_attempt_status_counts: `{json.dumps(matrix['runtime_attempt_status_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- runtime_source_route_execution_status_counts: `{json.dumps(matrix['runtime_source_route_execution_status_counts'], ensure_ascii=False, sort_keys=True)}`",
         f"- accepted_claim_status_counts: `{json.dumps(matrix['accepted_claim_status_counts'], ensure_ascii=False, sort_keys=True)}`",
         f"- full_thesis_status_counts: `{json.dumps(matrix['full_thesis_status_counts'], ensure_ascii=False, sort_keys=True)}`",
         f"- runtime_parity_proof_status_counts: `{json.dumps(matrix['runtime_parity_proof_status_counts'], ensure_ascii=False, sort_keys=True)}`",
