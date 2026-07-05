@@ -64,6 +64,12 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             "source_task_provider_error_counts",
             "source_task_not_eligible_reason_counts",
             "source_task_top_unsatisfied_primitives",
+            "claim_mapping_trace_log_count",
+            "claim_mapping_accepted_trace_count",
+            "claim_mapping_rejected_trace_count",
+            "claim_mapping_rejection_reason_counts",
+            "claim_mapping_top_rejection_reasons",
+            "claim_mapping_rejected_samples",
             "runtime_planner_attempt_count",
             "source_route_ready",
             "memory_card_ready",
@@ -78,6 +84,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
                 elif key.endswith("_counts"):
                     self.assertIsInstance(row[key], dict, (row["archetype_id"], key))
                 elif key.startswith("source_task_top_"):
+                    self.assertIsInstance(row[key], list, (row["archetype_id"], key))
+                elif key.startswith("claim_mapping_top_") or key == "claim_mapping_rejected_samples":
                     self.assertIsInstance(row[key], list, (row["archetype_id"], key))
                 else:
                     self.assertTrue(row[key], (row["archetype_id"], key))
@@ -133,6 +141,15 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             self.assertIn("NO_ACCEPTED_CLAIM", row["source_task_failure_axis_counts"], prefix)
             self.assertIn("NO_SCORE_ELIGIBLE_REAL_CLAIM", row["source_task_failure_axis_counts"], prefix)
             self.assertIn("PRIMITIVE_MAPPING_REJECTED", row["source_task_failure_axis_counts"], prefix)
+            self.assertGreater(row["claim_mapping_trace_log_count"], 0, prefix)
+            self.assertEqual(row["claim_mapping_accepted_trace_count"], 0, prefix)
+            self.assertGreater(row["claim_mapping_rejected_trace_count"], 0, prefix)
+            self.assertIn("primitive_mapping_rejected", row["claim_mapping_rejection_reason_counts"], prefix)
+            self.assertTrue(row["claim_mapping_rejected_samples"], prefix)
+            sample = row["claim_mapping_rejected_samples"][0]
+            self.assertIn("source_url", sample, prefix)
+            self.assertIn("quote_excerpt", sample, prefix)
+            self.assertIn("rejection_reasons", sample, prefix)
             self.assertEqual(row["targetless_source_task_execution_count"], 0, prefix)
             self.assertEqual(
                 row["next_required_action"],
@@ -149,6 +166,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(c17["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
         self.assertEqual(c17["source_task_any_accepted_claim_count"], 0)
         self.assertGreater(c17["source_task_failure_axis_counts"]["NO_ACCEPTED_CLAIM"], 0)
+        self.assertGreater(c17["claim_mapping_rejected_trace_count"], 0)
+        self.assertTrue(c17["claim_mapping_rejected_samples"])
         self.assertEqual(
             c17["next_required_action"],
             "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",

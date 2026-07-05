@@ -25,6 +25,26 @@ PRIMITIVE_MAPPING_REJECTED
 PROVIDER_ERROR_RECORDED
 ```
 
+이번 추가 패치로 `brain_claim_mapping_trace`도 매트릭스에 붙였다. 이제 source task 단위가 아니라 claim 매핑 단위로도 볼 수 있다.
+
+```text
+claim_mapping_trace_log_count
+claim_mapping_accepted_trace_count
+claim_mapping_rejected_trace_count
+claim_mapping_top_rejection_reasons
+claim_mapping_rejected_samples
+```
+
+쉬운 예:
+
+```text
+source task failure axis
+= 검사실에서 "검사 결과지 없음/부적합"이라고 표시한 상태
+
+claim mapping rejected sample
+= 실제 결과지 문구, 검사 항목, 불합격 사유까지 붙은 상태
+```
+
 ## 새 산출물
 
 - `docs/operational/all_archetype_runtime_parity_matrix.json`
@@ -98,12 +118,19 @@ source task execution log 기준 C08의 실제 실패 축:
 
 ```text
 execution_log_count: 14
+claim_mapping_trace_log_count: 53
+claim_mapping_accepted_trace_count: 0
+claim_mapping_rejected_trace_count: 53
 NO_ACCEPTED_CLAIM: 14
 NO_SCORE_ELIGIBLE_REAL_CLAIM: 11
 PRIMITIVE_GAP_UNSATISFIED: 11
 PRIMITIVE_MAPPING_REJECTED: 7
 MAPPING_NOT_ACCEPTED: 7
 PROVIDER_ERROR_RECORDED: 5
+top claim rejection:
+  primitive_mapping_rejected: 263
+  mapping_not_accepted: 53
+  source_class_document_type_mismatch: 17
 ```
 
 C24/C28도 같은 패턴이다.
@@ -111,17 +138,29 @@ C24/C28도 같은 패턴이다.
 ```text
 C24:
   execution_log_count: 21
+  claim_mapping_trace_log_count: 78
+  claim_mapping_accepted_trace_count: 0
+  claim_mapping_rejected_trace_count: 78
   NO_ACCEPTED_CLAIM: 21
   NO_SCORE_ELIGIBLE_REAL_CLAIM: 15
   PRIMITIVE_GAP_UNSATISFIED: 15
   PROVIDER_ERROR_RECORDED: 9
+  top claim rejection:
+    primitive_mapping_rejected: 416
+    mapping_not_accepted: 78
 
 C28:
   execution_log_count: 21
+  claim_mapping_trace_log_count: 60
+  claim_mapping_accepted_trace_count: 0
+  claim_mapping_rejected_trace_count: 60
   NO_ACCEPTED_CLAIM: 21
   NO_SCORE_ELIGIBLE_REAL_CLAIM: 15
   PRIMITIVE_GAP_UNSATISFIED: 15
   PROVIDER_ERROR_RECORDED: 9
+  top claim rejection:
+    primitive_mapping_rejected: 248
+    mapping_not_accepted: 60
 ```
 
 쉬운 예:
@@ -134,6 +173,27 @@ source task 실행
 ```
 
 따라서 다음 작업은 "source task를 더 많이 실행"이 아니라, `no_score_eligible_real_claim`과 `primitive_mapping_rejected`가 왜 생기는지 원문/primitive/source-class 단위로 좁히는 것이다.
+
+매트릭스 JSON의 각 row에는 이제 실제 샘플도 들어간다.
+
+```json
+{
+  "claim_id": "...",
+  "symbol": "058470",
+  "primitive_gap": "repeat_order_confirmed",
+  "primitive_id": "repeat_order_confirmed",
+  "mapping_status": "REJECTED",
+  "source_provider": "OpenDART",
+  "source_url": "https://dart.fss.or.kr/...",
+  "rejection_reasons": [
+    "mapping_not_accepted:REJECTED",
+    "primitive_mapping_rejected:..."
+  ],
+  "quote_excerpt": "분기보고서 ..."
+}
+```
+
+이 말은 C08의 현재 병목이 "리노공업 원문을 못 찾음"이 아니라, 찾은 DART 분기보고서 문구가 `repeat_order_confirmed` 같은 C08 필수 primitive로 accepted 되지 못했다는 뜻이다. 즉 다음 패치는 source route가 IR/고객사/수주/반복 주문 원문으로 향하게 만들거나, 현재 원문에서 실제 C08 claim이 있는데 mapper가 놓치는지 분해해야 한다.
 
 ## 자기참조 버그 수정
 
@@ -193,15 +253,15 @@ OK
 
 ## 다음 작업 방향
 
-다음 패치는 "source task 실패 축"에서 한 단계 더 들어가 **rejected claim / not eligible reason / primitive gap별 원문 사례를 붙이는 것**이어야 한다.
+다음 패치는 "claim mapping rejected sample"을 실제 패치 입력으로 사용해 **왜 mapper가 반복적으로 일반 DART 표지/개요 문구를 필수 primitive에 못 붙이는지**를 해결해야 한다.
 
 우선순위:
 
-1. `PRIMITIVE_MAPPING_REJECTED` 행에서 어떤 rejected claim이 어떤 primitive에 실패했는지 sample을 붙인다.
-2. `PROVIDER_ERROR_RECORDED` 행에서 source family별로 external blocker인지, route 설계 문제인지 분리한다.
+1. C08/C15/C17/C24/C28 canary의 `claim_mapping_rejected_samples`를 열어 원문이 정말 부적합한지, mapper가 너무 보수적인지, source route가 잘못됐는지 분류한다.
+2. `source_class_document_type_mismatch`와 `source_task_provider_error_score_block`을 source family별로 external blocker인지 route 설계 문제인지 분리한다.
 3. C08/C15/C17/C24/C28 canary부터 accepted claim 1개 이상을 만들 수 있는 운영 source route를 닫는다.
 4. 그 다음 required-positive gap이 남은 C01/C03/C05/C06/C31의 missing primitive별 follow-up task를 actual source/claim으로 연결한다.
 
 한 줄로 말하면:
 
-> 지금은 전 아키타입에 "어느 단계와 어떤 실패 축에서 막혔는지"가 붙었다. 다음은 실패 축별 rejected claim 원문을 붙이고, canary부터 accepted claim을 실제로 만들어야 한다.
+> 지금은 전 아키타입에 "어느 단계와 어떤 실패 축에서 막혔는지"뿐 아니라 "어떤 claim/quote가 왜 rejected 됐는지"까지 붙었다. 다음은 이 샘플을 이용해 canary부터 실제 accepted claim을 만들어야 한다.

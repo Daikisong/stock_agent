@@ -42,6 +42,86 @@
         "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES"
       ],
       "blocker_detail": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+      "claim_mapping_accepted_trace_count": 12,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-cd869e2f9a788f6b6221",
+          "contract_rule_id": "contract_visibility",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "contract_visibility",
+          "primitive_id": "contract_visibility",
+          "quote_excerpt": "분기보고서 6.5 코나아이 주식회사 1 Y 110111-1521700 분 기 보 고 서 (제 29 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 14일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 코나아이 주식회사 대 표 이 사 : 조 정 일 본 점 소 재 지 : 서울특별시 영등포구 은행로 3(여의도동, 익스콘벤처타워 8층) (전 화) 02-2168-7...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-4f00c3226607672652c7-official-contract-quality",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000696",
+          "symbol": "052400",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-cd869e2f9a788f6b6221",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "contract_visibility",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 코나아이 주식회사 1 Y 110111-1521700 분 기 보 고 서 (제 29 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 14일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 코나아이 주식회사 대 표 이 사 : 조 정 일 본 점 소 재 지 : 서울특별시 영등포구 은행로 3(여의도동, 익스콘벤처타워 8층) (전 화) 02-2168-7...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-4f00c3226607672652c7-official-contract-quality",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000696",
+          "symbol": "052400",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-a835e0d6359a02c91dc0",
+          "contract_rule_id": "official_report_snapshot_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "official_report_snapshot_current",
+          "primitive_id": "official_report_snapshot_current",
+          "quote_excerpt": "투자의견 컨센서스 [2026/07/03] 단위 : 배, 원, % Buy 4.0 강력매도 매도 중립 매수 강력매수 투자의견 투자의견 목표주가 EPS PER 추정기관수 4.0 505,625 45,532 6.8 24",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "CompanyGuide",
+          "source_task_id": "RSTASKV4CGSTATUS-eeb135e1d8f3a69624d6658f",
+          "source_url": "https://wcomp.fnguide.com",
+          "symbol": "052400",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 24,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 24,
+        "primitive_mapping_rejected": 44
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 44,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 24,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 36,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 411,
       "evidence_url_pending_count": 4,
@@ -215,6 +295,89 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-36b17d37f3fbf2d1a5c4",
+          "contract_rule_id": "official_report_snapshot_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "official_report_snapshot_current",
+          "primitive_id": "official_report_snapshot_current",
+          "quote_excerpt": "투자의견 컨센서스 [2026/07/03] 단위 : 배, 원, % Buy 4.0 강력매도 매도 중립 매수 강력매수 투자의견 투자의견 목표주가 EPS PER 추정기관수 4.0 505,625 45,532 6.8 24",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "CompanyGuide",
+          "source_task_id": "RSTASKV4CGSTATUS-e5afea6db9f778e94ee3207e",
+          "source_url": "https://wcomp.fnguide.com",
+          "symbol": "033100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-43a376124dc6ee81453a",
+          "contract_rule_id": "official_report_snapshot_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "official_report_snapshot_current",
+          "primitive_id": "official_report_snapshot_current",
+          "quote_excerpt": "투자의견 컨센서스 [2026/07/03] 단위 : 배, 원, % Buy 4.0 강력매도 매도 중립 매수 강력매수 투자의견 투자의견 목표주가 EPS PER 추정기관수 4.0 505,625 45,532 6.8 24",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "CompanyGuide",
+          "source_task_id": "RSTASKV4CGSTATUS-e5afea6db9f778e94ee3207e",
+          "source_url": "https://wcomp.fnguide.com",
+          "symbol": "033100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-57b20c3c37b2759af83d",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "official_disclosure_status_current",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "매출 및 매출원가- 진행 중인 공사와 관련된 누적공사수익 등 - 계약별 정보 여 단순기재오류(진행율 표시단위오류) (주1) 정정 전 (주2) 정정 후 재무제표 주석 27.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RSTASKV4DARTSTATUS-e5afea6db9f778e94ee3207e",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260602000220",
+          "symbol": "033100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 25,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 25,
+        "primitive_mapping_rejected": 89
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 89,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 25,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 25,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 328,
       "evidence_url_pending_count": 9,
@@ -380,6 +543,120 @@
         "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES"
       ],
       "blocker_detail": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+      "claim_mapping_accepted_trace_count": 12,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-06603e0198c38ce51c90",
+          "contract_rule_id": "export_contract",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "export_contract",
+          "primitive_id": "export_contract",
+          "quote_excerpt": "한국항공우주/단일판매ㆍ공급계약체결/(2026.06.30)단일판매ㆍ공급계약체결 정정신고(보고) 정정일자 2026-06-30 1.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-3c5ab053500e47b564fb-official-export-contract",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260630800769",
+          "symbol": "047810",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-06603e0198c38ce51c90",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "export_contract",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "한국항공우주/단일판매ㆍ공급계약체결/(2026.06.30)단일판매ㆍ공급계약체결 정정신고(보고) 정정일자 2026-06-30 1.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-3c5ab053500e47b564fb-official-export-contract",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260630800769",
+          "symbol": "047810",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-6be9572a66ac9f54008d",
+          "contract_rule_id": "export_contract",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "export_contract",
+          "primitive_id": "export_contract",
+          "quote_excerpt": "한국항공우주/단일판매ㆍ공급계약체결/(2026.06.30)단일판매ㆍ공급계약체결 정정신고(보고) 정정일자 2026-06-30 1.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-3c5ab053500e47b564fb-official-export-contract",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260630800769",
+          "symbol": "047810",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 40,
+      "claim_mapping_rejection_reason_counts": {
+        "anchor_validation": 20,
+        "mapping_not_accepted": 40,
+        "primitive_mapping_rejected": 60,
+        "semantic_rejected": 20,
+        "source_lineage_unverified_original": 20,
+        "source_provider_document_type_mismatch": 20,
+        "source_task_provider_error_score_block": 20,
+        "target_not_direct": 20,
+        "target_scope_not_allowed": 20,
+        "target_scope_not_direct": 20
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 60,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 40,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 20,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 20,
+          "reason": "anchor_validation"
+        },
+        {
+          "count": 20,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 20,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 20,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 20,
+          "reason": "source_task_provider_error_score_block"
+        }
+      ],
+      "claim_mapping_trace_log_count": 52,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 239,
       "evidence_url_pending_count": 5,
@@ -555,6 +832,91 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-7ce93609e24d9d4acac3",
+          "contract_rule_id": "project_award_confirmed",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "project_award_confirmed",
+          "primitive_id": "project_award_confirmed",
+          "quote_excerpt": "분기보고서 6.5 한신기계공업 주식회사 1 Y 130111-0010346 분 기 보 고 서 (제 51 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026 년 05 월 14일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 한신기계공업(주) 대 표 이 사 : 최 영 민 본 점 소 재 지 : 경기도 안산시 단원구 해봉로 330번길 23(신길동) (전 화) 031-491-3...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-C04-official-project-award",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000837",
+          "symbol": "011700",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-7ce93609e24d9d4acac3",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "project_award_confirmed",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 한신기계공업 주식회사 1 Y 130111-0010346 분 기 보 고 서 (제 51 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026 년 05 월 14일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 한신기계공업(주) 대 표 이 사 : 최 영 민 본 점 소 재 지 : 경기도 안산시 단원구 해봉로 330번길 23(신길동) (전 화) 031-491-3...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-C04-official-project-award",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000837",
+          "symbol": "011700",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-6456949e4743fb10f21a",
+          "contract_rule_id": "project_award_confirmed",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "project_award_confirmed",
+          "primitive_id": "project_award_confirmed",
+          "quote_excerpt": "분기보고서 6.5 한신기계공업 주식회사 1 Y 130111-0010346 분 기 보 고 서 (제 51 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026 년 05 월 14일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 한신기계공업(주) 대 표 이 사 : 최 영 민 본 점 소 재 지 : 경기도 안산시 단원구 해봉로 330번길 23(신길동) (전 화) 031-491-3...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-C04-official-project-award",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000837",
+          "symbol": "011700",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 14,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 14,
+        "primitive_mapping_rejected": 40
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 40,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 14,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 14,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 209,
       "evidence_url_pending_count": 4,
@@ -716,6 +1078,88 @@
         "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES"
       ],
       "blocker_detail": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+      "claim_mapping_accepted_trace_count": 12,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-dfffe8b31f4e24cf1d03",
+          "contract_rule_id": "contract_duration_months",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "contract_duration_months",
+          "primitive_id": "contract_duration_months",
+          "quote_excerpt": "하림지주/신규시설투자등/(2026.06.29)신규시설투자등 신규 시설투자 등 자회사인 팬오션(주) 의 주요경영사항신고 1. 투자구분 신규시설투자 - 투자대상 VLCC 2척 건조 2. 투자내역 투자금액(원) 377,556,900,000 자기자본(원) 5,723,481,850,269 자기자본대비(%) 6.6 대규모법인여부 해당 3. 투자목적 VLCC 선대 확대를 통한 Wet Bulk 사업 경쟁력 증진 4. 투자기간 시작일 2026-07-03 종료일 2030-0...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-0c09e67c2aa9d555612c-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901161",
+          "symbol": "003380",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-dfffe8b31f4e24cf1d03",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "contract_duration_months",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "하림지주/신규시설투자등/(2026.06.29)신규시설투자등 신규 시설투자 등 자회사인 팬오션(주) 의 주요경영사항신고 1. 투자구분 신규시설투자 - 투자대상 VLCC 2척 건조 2. 투자내역 투자금액(원) 377,556,900,000 자기자본(원) 5,723,481,850,269 자기자본대비(%) 6.6 대규모법인여부 해당 3. 투자목적 VLCC 선대 확대를 통한 Wet Bulk 사업 경쟁력 증진 4. 투자기간 시작일 2026-07-03 종료일 2030-0...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-0c09e67c2aa9d555612c-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901161",
+          "symbol": "003380",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-baf60be8563b2b2155d0",
+          "contract_rule_id": "contract_duration_months",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "contract_duration_months",
+          "primitive_id": "contract_duration_months",
+          "quote_excerpt": "하림지주/신규시설투자등/(2026.06.29)신규시설투자등 신규 시설투자 등 자회사인 팬오션(주) 의 주요경영사항신고 1. 투자구분 신규시설투자 - 투자대상 VLCC 2척 건조 2. 투자내역 투자금액(원) 377,556,900,000 자기자본(원) 5,723,481,850,269 자기자본대비(%) 6.6 대규모법인여부 해당 3. 투자목적 VLCC 선대 확대를 통한 Wet Bulk 사업 경쟁력 증진 4. 투자기간 시작일 2026-07-03 종료일 2030-0...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-0c09e67c2aa9d555612c-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260629901161",
+          "symbol": "003380",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 24,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 24,
+        "primitive_mapping_rejected": 48
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 48,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 24,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 36,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 352,
       "evidence_url_pending_count": 8,
@@ -907,6 +1351,94 @@
         "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES"
       ],
       "blocker_detail": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+      "claim_mapping_accepted_trace_count": 9,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-db7c5c89b17c390e434e",
+          "contract_rule_id": "revenue_visibility_contract",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "revenue_visibility_contract",
+          "primitive_id": "revenue_visibility_contract",
+          "quote_excerpt": "분기보고서 6.5 삼성전자 1 Y 130111-0006246 분 기 보 고 서 (제 58 기) 사업연도 2026.01.01 부터 2026.03.31 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 삼성전자주식회사 대 표 이 사 : 전 영 현 본 점 소 재 지 : 경기도 수원시 영통구 삼성로 129(매탄동) (전 화) 031-200-1114 (홈페이지) http://www....",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-7f33db04360ffa26109b-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002181",
+          "symbol": "005930",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-db7c5c89b17c390e434e",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "revenue_visibility_contract",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 삼성전자 1 Y 130111-0006246 분 기 보 고 서 (제 58 기) 사업연도 2026.01.01 부터 2026.03.31 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 삼성전자주식회사 대 표 이 사 : 전 영 현 본 점 소 재 지 : 경기도 수원시 영통구 삼성로 129(매탄동) (전 화) 031-200-1114 (홈페이지) http://www....",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-7f33db04360ffa26109b-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002181",
+          "symbol": "005930",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-e3c1d5d720f68b8dd12e",
+          "contract_rule_id": "revenue_visibility_contract",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "revenue_visibility_contract",
+          "primitive_id": "revenue_visibility_contract",
+          "quote_excerpt": "분기보고서 6.5 삼성전자 1 Y 130111-0006246 분 기 보 고 서 (제 58 기) 사업연도 2026.01.01 부터 2026.03.31 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 삼성전자주식회사 대 표 이 사 : 전 영 현 본 점 소 재 지 : 경기도 수원시 영통구 삼성로 129(매탄동) (전 화) 031-200-1114 (홈페이지) http://www....",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-7f33db04360ffa26109b-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002181",
+          "symbol": "005930",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 42,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 42,
+        "primitive_mapping_rejected": 150
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 150,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 42,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 51,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 381,
       "evidence_url_pending_count": 9,
@@ -1078,6 +1610,109 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-d7ce37054eb867a7d458",
+          "contract_rule_id": "official_report_snapshot_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "official_report_snapshot_current",
+          "primitive_id": "official_report_snapshot_current",
+          "quote_excerpt": "투자의견 컨센서스 [2026/07/03] 단위 : 배, 원, % Buy 4.0 강력매도 매도 중립 매수 강력매수 투자의견 투자의견 목표주가 EPS PER 추정기관수 4.0 505,625 45,532 6.8 24",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "CompanyGuide",
+          "source_task_id": "RSTASKV4CGSTATUS-91078a1970165da46bf7dfa7",
+          "source_url": "https://wcomp.fnguide.com",
+          "symbol": "031980",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-7cc6c2ca2485ecee35f0",
+          "contract_rule_id": "official_report_snapshot_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "official_report_snapshot_current",
+          "primitive_id": "official_report_snapshot_current",
+          "quote_excerpt": "투자의견 컨센서스 [2026/07/03] 단위 : 배, 원, % Buy 4.0 강력매도 매도 중립 매수 강력매수 투자의견 투자의견 목표주가 EPS PER 추정기관수 4.0 505,625 45,532 6.8 24",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "CompanyGuide",
+          "source_task_id": "RSTASKV4CGSTATUS-91078a1970165da46bf7dfa7",
+          "source_url": "https://wcomp.fnguide.com",
+          "symbol": "031980",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-df0aa698de4880460aef",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "official_disclosure_status_current",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "매출 및 수주상황5.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RSTASKV4DARTSTATUS-91078a1970165da46bf7dfa7",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001546",
+          "symbol": "031980",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 61,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 61,
+        "primitive_mapping_rejected": 103,
+        "semantic_rejected": 37,
+        "target_not_direct": 37,
+        "target_scope_not_allowed": 37,
+        "target_scope_not_direct": 37
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 103,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 61,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 37,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 37,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 37,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 37,
+          "reason": "target_not_direct"
+        }
+      ],
+      "claim_mapping_trace_log_count": 61,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 305,
       "evidence_url_pending_count": 3,
@@ -1247,6 +1882,128 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-590486fe8c96466433e4",
+          "contract_rule_id": "repeat_order_confirmed",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "repeat_order_confirmed",
+          "primitive_id": "repeat_order_confirmed",
+          "quote_excerpt": "분기보고서 6.5 리노공업(주) 1 Y 180111-0220664 분 기 보 고 서 (제 31 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 14일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 리노공업주식회사 대 표 이 사 : 이채윤 본 점 소 재 지 : 부산광역시 강서구 미음산단로105번길 10 (전 화) 051-831-3232 (홈페이지) https...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-b11e4a32ddf8d0ae9f2f-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000391",
+          "symbol": "058470",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-590486fe8c96466433e4",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "repeat_order_confirmed",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 리노공업(주) 1 Y 180111-0220664 분 기 보 고 서 (제 31 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 14일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 리노공업주식회사 대 표 이 사 : 이채윤 본 점 소 재 지 : 부산광역시 강서구 미음산단로105번길 10 (전 화) 051-831-3232 (홈페이지) https...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-b11e4a32ddf8d0ae9f2f-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000391",
+          "symbol": "058470",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-fece4a3a75fa97dfffb1",
+          "contract_rule_id": "repeat_order_confirmed",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "repeat_order_confirmed",
+          "primitive_id": "repeat_order_confirmed",
+          "quote_excerpt": "분기보고서 6.5 리노공업(주) 1 Y 180111-0220664 분 기 보 고 서 (제 31 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 14일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 리노공업주식회사 대 표 이 사 : 이채윤 본 점 소 재 지 : 부산광역시 강서구 미음산단로105번길 10 (전 화) 051-831-3232 (홈페이지) https...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-b11e4a32ddf8d0ae9f2f-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000391",
+          "symbol": "058470",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 53,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 53,
+        "primitive_mapping_rejected": 263,
+        "semantic_rejected": 3,
+        "source_class_document_type_mismatch": 17,
+        "source_provider_document_type_mismatch": 3,
+        "source_task_provider_error_score_block": 3,
+        "target_not_direct": 3,
+        "target_scope_not_allowed": 3,
+        "target_scope_not_direct": 3
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 263,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 53,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 17,
+          "reason": "source_class_document_type_mismatch"
+        },
+        {
+          "count": 3,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 3,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 3,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 3,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 3,
+          "reason": "source_task_provider_error_score_block"
+        }
+      ],
+      "claim_mapping_trace_log_count": 53,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 272,
       "evidence_url_pending_count": 3,
@@ -1414,6 +2171,96 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-f3e6b85a171bb49e22e6",
+          "contract_rule_id": "order_to_revenue_bridge",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "order_to_revenue_bridge",
+          "primitive_id": "order_to_revenue_bridge",
+          "quote_excerpt": "분기보고서 6.5 (주)이오테크닉스 1 Y 110111-0998629 분 기 보 고 서 (제 33 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 이오테크닉스 대 표 이 사 : 성규동, 박종구 본 점 소 재 지 : 경기도 안양시 동안구 동편로91 (전 화) 031-422-2501 (홈페이지)...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-7ec6a3c031d33382c18e-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001105",
+          "symbol": "039030",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-f3e6b85a171bb49e22e6",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "order_to_revenue_bridge",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 (주)이오테크닉스 1 Y 110111-0998629 분 기 보 고 서 (제 33 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 이오테크닉스 대 표 이 사 : 성규동, 박종구 본 점 소 재 지 : 경기도 안양시 동안구 동편로91 (전 화) 031-422-2501 (홈페이지)...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-7ec6a3c031d33382c18e-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001105",
+          "symbol": "039030",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-9d93e58b7a2bf13e9500",
+          "contract_rule_id": "order_to_revenue_bridge",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "order_to_revenue_bridge",
+          "primitive_id": "order_to_revenue_bridge",
+          "quote_excerpt": "분기보고서 6.5 (주)이오테크닉스 1 Y 110111-0998629 분 기 보 고 서 (제 33 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 이오테크닉스 대 표 이 사 : 성규동, 박종구 본 점 소 재 지 : 경기도 안양시 동안구 동편로91 (전 화) 031-422-2501 (홈페이지)...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-7ec6a3c031d33382c18e-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001105",
+          "symbol": "039030",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 34,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 34,
+        "primitive_mapping_rejected": 116,
+        "source_class_document_type_mismatch": 10
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 116,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 34,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 10,
+          "reason": "source_class_document_type_mismatch"
+        }
+      ],
+      "claim_mapping_trace_log_count": 34,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 297,
       "evidence_url_pending_count": 1,
@@ -1579,6 +2426,99 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-1781a5079bb95eacc6a1",
+          "contract_rule_id": "cycle_demand_visibility",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "cycle_demand_visibility",
+          "primitive_id": "cycle_demand_visibility",
+          "quote_excerpt": "티씨케이/신규시설투자등(자율공시)/(2026.06.26)신규시설투자등(자율공시) 정정신고(보고) 정정일자 2026-06-26 1. 정정관련 공시서류 신규 시설투자 등 2. 정정관련 공시서류제출일 2025-12-17 3. 정정사유 시행사(안성테크노밸리)의 사업준공 인허가 지연으로 인한 종료일 변경 4. 정정사항 정정항목 정정전 정정후 4.투자기간(종료일) 2026-06-30 2026-10-31 - 신규 시설투자 등(자율공시) 1. 투자구분 공장신설 2. 투자...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-237bd74a28de5acb2a5a-cycle-demand-official",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260626900949",
+          "symbol": "064760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-1781a5079bb95eacc6a1",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "cycle_demand_visibility",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "티씨케이/신규시설투자등(자율공시)/(2026.06.26)신규시설투자등(자율공시) 정정신고(보고) 정정일자 2026-06-26 1. 정정관련 공시서류 신규 시설투자 등 2. 정정관련 공시서류제출일 2025-12-17 3. 정정사유 시행사(안성테크노밸리)의 사업준공 인허가 지연으로 인한 종료일 변경 4. 정정사항 정정항목 정정전 정정후 4.투자기간(종료일) 2026-06-30 2026-10-31 - 신규 시설투자 등(자율공시) 1. 투자구분 공장신설 2. 투자...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-237bd74a28de5acb2a5a-cycle-demand-official",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260626900949",
+          "symbol": "064760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-5fe2986b39d288496c52",
+          "contract_rule_id": "cycle_demand_visibility",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "cycle_demand_visibility",
+          "primitive_id": "cycle_demand_visibility",
+          "quote_excerpt": "티씨케이/신규시설투자등(자율공시)/(2026.06.26)신규시설투자등(자율공시) 정정신고(보고) 정정일자 2026-06-26 1. 정정관련 공시서류 신규 시설투자 등 2. 정정관련 공시서류제출일 2025-12-17 3. 정정사유 시행사(안성테크노밸리)의 사업준공 인허가 지연으로 인한 종료일 변경 4. 정정사항 정정항목 정정전 정정후 4.투자기간(종료일) 2026-06-30 2026-10-31 - 신규 시설투자 등(자율공시) 1. 투자구분 공장신설 2. 투자...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-237bd74a28de5acb2a5a-cycle-demand-official",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260626900949",
+          "symbol": "064760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 48,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 48,
+        "primitive_mapping_rejected": 144,
+        "source_class_document_type_mismatch": 8
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 144,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 48,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 8,
+          "reason": "source_class_document_type_mismatch"
+        }
+      ],
+      "claim_mapping_trace_log_count": 48,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 354,
       "evidence_url_pending_count": 3,
@@ -1744,6 +2684,131 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-e4e5155d5a799a5c4458",
+          "contract_rule_id": "call_off_risk",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "call_off_risk",
+          "primitive_id": "call_off_risk",
+          "quote_excerpt": "분기보고서 6.5 (주)포스코퓨처엠 1 Y 174611-0001947 분 기 보 고 서 (제 56 기 1분기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)포스코퓨처엠 대 표 이 사 : 엄 기 천 본 점 소 재 지 : 경상북도 포항시 남구 신항로 110 (전 화) 054-290-0114 (홈페이지)...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-2718d2df9f1d26dead8a-T1-official-orderbook-risk",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001405",
+          "symbol": "003670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-e4e5155d5a799a5c4458",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "call_off_risk",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 (주)포스코퓨처엠 1 Y 174611-0001947 분 기 보 고 서 (제 56 기 1분기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)포스코퓨처엠 대 표 이 사 : 엄 기 천 본 점 소 재 지 : 경상북도 포항시 남구 신항로 110 (전 화) 054-290-0114 (홈페이지)...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-2718d2df9f1d26dead8a-T1-official-orderbook-risk",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001405",
+          "symbol": "003670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-4293682c25cacb94b0a4",
+          "contract_rule_id": "call_off_risk",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "call_off_risk",
+          "primitive_id": "call_off_risk",
+          "quote_excerpt": "분기보고서 6.5 (주)포스코퓨처엠 1 Y 174611-0001947 분 기 보 고 서 (제 56 기 1분기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)포스코퓨처엠 대 표 이 사 : 엄 기 천 본 점 소 재 지 : 경상북도 포항시 남구 신항로 110 (전 화) 054-290-0114 (홈페이지)...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-2718d2df9f1d26dead8a-T1-official-orderbook-risk",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001405",
+          "symbol": "003670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 101,
+      "claim_mapping_rejection_reason_counts": {
+        "anchor_validation": 41,
+        "mapping_not_accepted": 101,
+        "primitive_mapping_rejected": 269,
+        "semantic_rejected": 41,
+        "source_lineage_unverified_original": 41,
+        "source_provider_document_type_mismatch": 41,
+        "source_task_provider_error_score_block": 41,
+        "target_not_direct": 41,
+        "target_scope_not_allowed": 41,
+        "target_scope_not_direct": 41,
+        "temporal_not_allowed": 41,
+        "temporal_not_current": 3
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 269,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 101,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 41,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 41,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 41,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 41,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 41,
+          "reason": "anchor_validation"
+        },
+        {
+          "count": 41,
+          "reason": "temporal_not_allowed"
+        }
+      ],
+      "claim_mapping_trace_log_count": 101,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 281,
       "evidence_url_pending_count": 3,
@@ -1922,6 +2987,12 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [],
+      "claim_mapping_rejected_trace_count": 0,
+      "claim_mapping_rejection_reason_counts": {},
+      "claim_mapping_top_rejection_reasons": [],
+      "claim_mapping_trace_log_count": 0,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 281,
       "evidence_url_pending_count": 5,
@@ -2072,6 +3143,102 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-65cc5536ca573f14540f",
+          "contract_rule_id": "jv_utilization",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "jv_utilization",
+          "primitive_id": "jv_utilization",
+          "quote_excerpt": "분기보고서 6.5 롯데에너지머티리얼즈 주식회사 1 Y 214911-0003625 분 기 보 고 서 (제 40 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 롯데에너지머티리얼즈 주식회사 대 표 이 사 : 김연섭 본 점 소 재 지 : 전북특별자치도 익산시 석암로 3길 63-25 (전 화) 02-707-93...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-020150-C13-OFFICIAL-JV-UTIL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515000387",
+          "symbol": "020150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-65cc5536ca573f14540f",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "jv_utilization",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 롯데에너지머티리얼즈 주식회사 1 Y 214911-0003625 분 기 보 고 서 (제 40 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 롯데에너지머티리얼즈 주식회사 대 표 이 사 : 김연섭 본 점 소 재 지 : 전북특별자치도 익산시 석암로 3길 63-25 (전 화) 02-707-93...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-020150-C13-OFFICIAL-JV-UTIL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515000387",
+          "symbol": "020150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-d13b30fc279e452b3fb6",
+          "contract_rule_id": "jv_utilization",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "jv_utilization",
+          "primitive_id": "jv_utilization",
+          "quote_excerpt": "분기보고서 6.5 롯데에너지머티리얼즈 주식회사 1 Y 214911-0003625 분 기 보 고 서 (제 40 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 롯데에너지머티리얼즈 주식회사 대 표 이 사 : 김연섭 본 점 소 재 지 : 전북특별자치도 익산시 석암로 3길 63-25 (전 화) 02-707-93...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-020150-C13-OFFICIAL-JV-UTIL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515000387",
+          "symbol": "020150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 120,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 120,
+        "primitive_mapping_rejected": 624,
+        "source_class_document_type_mismatch": 24
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 624,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 120,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 24,
+          "reason": "source_class_document_type_mismatch"
+        }
+      ],
+      "claim_mapping_trace_log_count": 120,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 297,
       "evidence_url_pending_count": 6,
@@ -2238,6 +3405,88 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-5c7d20067aa6c5d62192",
+          "contract_rule_id": "ev_demand_slowdown",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "ev_demand_slowdown",
+          "primitive_id": "ev_demand_slowdown",
+          "quote_excerpt": "투자의견 컨센서스 [2026/07/03] 단위 : 배, 원, % Buy 4.0 강력매도 매도 중립 매수 강력매수 투자의견 투자의견 목표주가 EPS PER 추정기관수 4.0 505,625 45,532 6.8 24",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "CompanyGuide",
+          "source_task_id": "CEV4-RTATTEMPT-af72ad03eb4992d5297e-C14-official-demand-slowdown",
+          "source_url": "https://wcomp.fnguide.com",
+          "symbol": "002710",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-5c7d20067aa6c5d62192",
+          "contract_rule_id": "official_report_snapshot_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "ev_demand_slowdown",
+          "primitive_id": "official_report_snapshot_current",
+          "quote_excerpt": "투자의견 컨센서스 [2026/07/03] 단위 : 배, 원, % Buy 4.0 강력매도 매도 중립 매수 강력매수 투자의견 투자의견 목표주가 EPS PER 추정기관수 4.0 505,625 45,532 6.8 24",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "CompanyGuide",
+          "source_task_id": "CEV4-RTATTEMPT-af72ad03eb4992d5297e-C14-official-demand-slowdown",
+          "source_url": "https://wcomp.fnguide.com",
+          "symbol": "002710",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-449c8ad1c9bc4ec596c7",
+          "contract_rule_id": "ev_demand_slowdown",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "ev_demand_slowdown",
+          "primitive_id": "ev_demand_slowdown",
+          "quote_excerpt": "투자의견 컨센서스 [2026/07/03] 단위 : 배, 원, % Buy 4.0 강력매도 매도 중립 매수 강력매수 투자의견 투자의견 목표주가 EPS PER 추정기관수 4.0 505,625 45,532 6.8 24",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "CompanyGuide",
+          "source_task_id": "CEV4-RTATTEMPT-af72ad03eb4992d5297e-C14-official-demand-slowdown",
+          "source_url": "https://wcomp.fnguide.com",
+          "symbol": "002710",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 10,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 10,
+        "primitive_mapping_rejected": 20
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 20,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 10,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 10,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 304,
       "evidence_url_pending_count": 4,
@@ -2400,6 +3649,97 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-6321cd5eaf19c5fdf48b",
+          "contract_rule_id": "spread_expansion",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "spread_expansion",
+          "primitive_id": "spread_expansion",
+          "quote_excerpt": "분기보고서 6.5 KG케미칼(주) 1 Y 124311-0008999 분 기 보 고 서 (제 73 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : KG케미칼(주) 대 표 이 사 : 곽 정 현, 김 재 익 본 점 소 재 지 : 울산광역시 울주군 온산읍 당월로 322 (전 화) 02-2680-4283 (홈페...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-90BF-C15-SPREAD-OFFICIAL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515003040",
+          "symbol": "001390",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-6321cd5eaf19c5fdf48b",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "spread_expansion",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 KG케미칼(주) 1 Y 124311-0008999 분 기 보 고 서 (제 73 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : KG케미칼(주) 대 표 이 사 : 곽 정 현, 김 재 익 본 점 소 재 지 : 울산광역시 울주군 온산읍 당월로 322 (전 화) 02-2680-4283 (홈페...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-90BF-C15-SPREAD-OFFICIAL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515003040",
+          "symbol": "001390",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-1873f04a6671f36ebdba",
+          "contract_rule_id": "spread_expansion",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "spread_expansion",
+          "primitive_id": "spread_expansion",
+          "quote_excerpt": "분기보고서 6.5 KG케미칼(주) 1 Y 124311-0008999 분 기 보 고 서 (제 73 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : KG케미칼(주) 대 표 이 사 : 곽 정 현, 김 재 익 본 점 소 재 지 : 울산광역시 울주군 온산읍 당월로 322 (전 화) 02-2680-4283 (홈페...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-90BF-C15-SPREAD-OFFICIAL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515003040",
+          "symbol": "001390",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 48,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 48,
+        "primitive_mapping_rejected": 224
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 224,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 48,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 48,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 304,
       "evidence_url_pending_count": 5,
@@ -2560,6 +3900,97 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-581457ba50114accbafc",
+          "contract_rule_id": "policy_supply_support",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "policy_supply_support",
+          "primitive_id": "policy_supply_support",
+          "quote_excerpt": "분기보고서 6.5 (주)동진쎄미켐 1 Y 120111-0003848 분 기 보 고 서 (제 54 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 동진쎄미켐 대 표 이 사 : 이준혁 본 점 소 재 지 : 인천광역시 서구 백범로 644 (전 화) 032-578-5091 (홈페이지) https://w...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-49ef6fb2f350ade01199-official-policy-support",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001804",
+          "symbol": "005290",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-581457ba50114accbafc",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "policy_supply_support",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 (주)동진쎄미켐 1 Y 120111-0003848 분 기 보 고 서 (제 54 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 동진쎄미켐 대 표 이 사 : 이준혁 본 점 소 재 지 : 인천광역시 서구 백범로 644 (전 화) 032-578-5091 (홈페이지) https://w...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-49ef6fb2f350ade01199-official-policy-support",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001804",
+          "symbol": "005290",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-7a760c3cd1468fedd18c",
+          "contract_rule_id": "policy_supply_support",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "policy_supply_support",
+          "primitive_id": "policy_supply_support",
+          "quote_excerpt": "분기보고서 6.5 (주)동진쎄미켐 1 Y 120111-0003848 분 기 보 고 서 (제 54 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 동진쎄미켐 대 표 이 사 : 이준혁 본 점 소 재 지 : 인천광역시 서구 백범로 644 (전 화) 032-578-5091 (홈페이지) https://w...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-49ef6fb2f350ade01199-official-policy-support",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001804",
+          "symbol": "005290",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 42,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 42,
+        "primitive_mapping_rejected": 180
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 180,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 42,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 42,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 245,
       "evidence_url_pending_count": 8,
@@ -2725,6 +4156,129 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-d7af11c7f37e17b21061",
+          "contract_rule_id": "utilization_rate",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "utilization_rate",
+          "primitive_id": "utilization_rate",
+          "quote_excerpt": "분기보고서 6.5 롯데케미칼(주) 1 Y 110111-0193196 분 기 보 고 서 (제 51 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 롯데케미칼 주식회사 대 표 이 사 : 이 영 준 본 점 소 재 지 : 서울특별시 송파구 올림픽로 300(신천동) (전 화) 02-829-4114 (홈페이지) h...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-6037a375036d939d1d2f-official-utilization",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002934",
+          "symbol": "011170",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-d7af11c7f37e17b21061",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "utilization_rate",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 롯데케미칼(주) 1 Y 110111-0193196 분 기 보 고 서 (제 51 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 롯데케미칼 주식회사 대 표 이 사 : 이 영 준 본 점 소 재 지 : 서울특별시 송파구 올림픽로 300(신천동) (전 화) 02-829-4114 (홈페이지) h...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-6037a375036d939d1d2f-official-utilization",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002934",
+          "symbol": "011170",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-19dc72a063af7e24e1dd",
+          "contract_rule_id": "utilization_rate",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "utilization_rate",
+          "primitive_id": "utilization_rate",
+          "quote_excerpt": "분기보고서 6.5 롯데케미칼(주) 1 Y 110111-0193196 분 기 보 고 서 (제 51 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 롯데케미칼 주식회사 대 표 이 사 : 이 영 준 본 점 소 재 지 : 서울특별시 송파구 올림픽로 300(신천동) (전 화) 02-829-4114 (홈페이지) h...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-6037a375036d939d1d2f-official-utilization",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002934",
+          "symbol": "011170",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 178,
+      "claim_mapping_rejection_reason_counts": {
+        "anchor_validation": 52,
+        "mapping_not_accepted": 178,
+        "primitive_mapping_rejected": 614,
+        "semantic_rejected": 94,
+        "source_lineage_unverified_original": 76,
+        "source_provider_document_type_mismatch": 76,
+        "source_task_provider_error_score_block": 76,
+        "target_not_direct": 94,
+        "target_scope_not_allowed": 94,
+        "target_scope_not_direct": 90
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 614,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 178,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 94,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 94,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 94,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 90,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 76,
+          "reason": "source_task_provider_error_score_block"
+        },
+        {
+          "count": 76,
+          "reason": "source_provider_document_type_mismatch"
+        }
+      ],
+      "claim_mapping_trace_log_count": 178,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 278,
       "evidence_url_pending_count": 10,
@@ -2897,6 +4451,119 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-691b9baeed0a891d7500",
+          "contract_rule_id": "repeat_order_confirmed",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "repeat_order_confirmed",
+          "primitive_id": "repeat_order_confirmed",
+          "quote_excerpt": "분기보고서 6.5 주식회사 에이피알 1 Y 110111-5535012 분 기 보 고 서 (제 13 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026 년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 에이피알 대 표 이 사 : 김병훈 본 점 소 재 지 : 서울 송파구 올림픽로 300, 36층 (전 화) 070-4667-1770 (홈페이지) htt...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-7ebe590e9253e7d39142-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001577",
+          "symbol": "278470",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-691b9baeed0a891d7500",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "repeat_order_confirmed",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 주식회사 에이피알 1 Y 110111-5535012 분 기 보 고 서 (제 13 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026 년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 에이피알 대 표 이 사 : 김병훈 본 점 소 재 지 : 서울 송파구 올림픽로 300, 36층 (전 화) 070-4667-1770 (홈페이지) htt...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-7ebe590e9253e7d39142-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001577",
+          "symbol": "278470",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-7b6be92d80811119ff2c",
+          "contract_rule_id": "repeat_order_confirmed",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "repeat_order_confirmed",
+          "primitive_id": "repeat_order_confirmed",
+          "quote_excerpt": "분기보고서 6.5 주식회사 에이피알 1 Y 110111-5535012 분 기 보 고 서 (제 13 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026 년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 에이피알 대 표 이 사 : 김병훈 본 점 소 재 지 : 서울 송파구 올림픽로 300, 36층 (전 화) 070-4667-1770 (홈페이지) htt...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-7ebe590e9253e7d39142-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001577",
+          "symbol": "278470",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 53,
+      "claim_mapping_rejection_reason_counts": {
+        "anchor_validation": 11,
+        "mapping_not_accepted": 53,
+        "primitive_mapping_rejected": 191,
+        "semantic_rejected": 11,
+        "target_not_direct": 11,
+        "target_scope_not_allowed": 11,
+        "target_scope_not_direct": 11
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 191,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 53,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 11,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 11,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 11,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 11,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 11,
+          "reason": "anchor_validation"
+        }
+      ],
+      "claim_mapping_trace_log_count": 53,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 261,
       "evidence_url_pending_count": 9,
@@ -3063,6 +4730,128 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-1bbae2a8279f50e310e4",
+          "contract_rule_id": "inventory_spike",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "inventory_spike",
+          "primitive_id": "inventory_spike",
+          "quote_excerpt": "분기보고서 6.5 (주)에프앤에프 1 Y 110111-7875440 분 기 보 고 서 (제 6 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026 년 5 월 15 일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)에프앤에프 대 표 이 사 : 김 창 수 본 점 소 재 지 : 서울특별시 강남구 테헤란로8길 8 (전 화) 02-520-0001 (홈페이지) http:/...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-60e2345cfc3433903903-official-inventory",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002764",
+          "symbol": "383220",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-1bbae2a8279f50e310e4",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "inventory_spike",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 (주)에프앤에프 1 Y 110111-7875440 분 기 보 고 서 (제 6 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026 년 5 월 15 일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)에프앤에프 대 표 이 사 : 김 창 수 본 점 소 재 지 : 서울특별시 강남구 테헤란로8길 8 (전 화) 02-520-0001 (홈페이지) http:/...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-60e2345cfc3433903903-official-inventory",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002764",
+          "symbol": "383220",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-a8457afbd23634e0cdcd",
+          "contract_rule_id": "inventory_spike",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "inventory_spike",
+          "primitive_id": "inventory_spike",
+          "quote_excerpt": "분기보고서 6.5 (주)에프앤에프 1 Y 110111-7875440 분 기 보 고 서 (제 6 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026 년 5 월 15 일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)에프앤에프 대 표 이 사 : 김 창 수 본 점 소 재 지 : 서울특별시 강남구 테헤란로8길 8 (전 화) 02-520-0001 (홈페이지) http:/...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-60e2345cfc3433903903-official-inventory",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002764",
+          "symbol": "383220",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 52,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 52,
+        "primitive_mapping_rejected": 164,
+        "semantic_rejected": 12,
+        "source_lineage_unverified_original": 12,
+        "source_provider_document_type_mismatch": 12,
+        "source_task_provider_error_score_block": 12,
+        "target_not_direct": 12,
+        "target_scope_not_allowed": 12,
+        "target_scope_not_direct": 12
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 164,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 52,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 12,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 12,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 12,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 12,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 12,
+          "reason": "source_task_provider_error_score_block"
+        },
+        {
+          "count": 12,
+          "reason": "source_provider_document_type_mismatch"
+        }
+      ],
+      "claim_mapping_trace_log_count": 52,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 233,
       "evidence_url_pending_count": 7,
@@ -3231,6 +5020,91 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-bc37105ef637734f26bd",
+          "contract_rule_id": "brand_customer_diversification",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "brand_customer_diversification",
+          "primitive_id": "brand_customer_diversification",
+          "quote_excerpt": "분기보고서 6.5 주식회사 실리콘투 1 Y 110111-2425448 분 기 보 고 서 (제 25 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 실리콘투 대 표 이 사 : 김 성 운 본 점 소 재 지 : 경기도 성남시 분당구 판교역로 231 (삼평동) 에이치스퀘어 S-907 (전 화) 031-...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-80ca650d01f63cb0a1e6-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001136",
+          "symbol": "257720",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-bc37105ef637734f26bd",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "brand_customer_diversification",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 주식회사 실리콘투 1 Y 110111-2425448 분 기 보 고 서 (제 25 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 실리콘투 대 표 이 사 : 김 성 운 본 점 소 재 지 : 경기도 성남시 분당구 판교역로 231 (삼평동) 에이치스퀘어 S-907 (전 화) 031-...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-80ca650d01f63cb0a1e6-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001136",
+          "symbol": "257720",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-badd79be3977183a4ab7",
+          "contract_rule_id": "brand_customer_diversification",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "brand_customer_diversification",
+          "primitive_id": "brand_customer_diversification",
+          "quote_excerpt": "분기보고서 6.5 주식회사 실리콘투 1 Y 110111-2425448 분 기 보 고 서 (제 25 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 실리콘투 대 표 이 사 : 김 성 운 본 점 소 재 지 : 경기도 성남시 분당구 판교역로 231 (삼평동) 에이치스퀘어 S-907 (전 화) 031-...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-80ca650d01f63cb0a1e6-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001136",
+          "symbol": "257720",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 34,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 34,
+        "primitive_mapping_rejected": 116
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 116,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 34,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 34,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 268,
       "evidence_url_pending_count": 6,
@@ -3391,6 +5265,129 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-47130abca0729d43d880",
+          "contract_rule_id": "roe",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "roe",
+          "primitive_id": "roe",
+          "quote_excerpt": "분기보고서 6.5 (주)신한금융지주회사 1 Y 110111-2322438 분 기 보 고 서 (제 26 기 1분기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : ㈜신한금융지주회사 대 표 이 사 : 진 옥 동 본 점 소 재 지 : 서울특별시 중구 세종대로9길 20 (전 화) 02-6360-3000 (홈페이지)...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002273",
+          "symbol": "055550",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-47130abca0729d43d880",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "roe",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 (주)신한금융지주회사 1 Y 110111-2322438 분 기 보 고 서 (제 26 기 1분기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : ㈜신한금융지주회사 대 표 이 사 : 진 옥 동 본 점 소 재 지 : 서울특별시 중구 세종대로9길 20 (전 화) 02-6360-3000 (홈페이지)...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002273",
+          "symbol": "055550",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-73d2dddeb23d80c47f18",
+          "contract_rule_id": "roe",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "roe",
+          "primitive_id": "roe",
+          "quote_excerpt": "분기보고서 6.5 (주)신한금융지주회사 1 Y 110111-2322438 분 기 보 고 서 (제 26 기 1분기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : ㈜신한금융지주회사 대 표 이 사 : 진 옥 동 본 점 소 재 지 : 서울특별시 중구 세종대로9길 20 (전 화) 02-6360-3000 (홈페이지)...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002273",
+          "symbol": "055550",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 64,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 64,
+        "primitive_mapping_rejected": 176,
+        "semantic_rejected": 24,
+        "source_class_document_type_mismatch": 24,
+        "source_lineage_unverified_original": 14,
+        "source_provider_document_type_mismatch": 14,
+        "source_task_provider_error_score_block": 10,
+        "target_not_direct": 24,
+        "target_scope_not_allowed": 24,
+        "target_scope_not_direct": 24
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 176,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 64,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 24,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 24,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 24,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 24,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 24,
+          "reason": "source_class_document_type_mismatch"
+        },
+        {
+          "count": 14,
+          "reason": "source_provider_document_type_mismatch"
+        }
+      ],
+      "claim_mapping_trace_log_count": 64,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 293,
       "evidence_url_pending_count": 7,
@@ -3564,6 +5561,129 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-1c31e44adbaa023e4913",
+          "contract_rule_id": "reserve_quality_visible",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "reserve_quality_visible",
+          "primitive_id": "reserve_quality_visible",
+          "quote_excerpt": "분기보고서 6.5 삼성화재해상보험주식회사 1 Y 110111-0005078 분 기 보 고 서 (제77기 1분기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 삼성화재해상보험주식회사 대 표 이 사 : 이 문 화 본 점 소 재 지 : 서울특별시 서초구 서초대로74길 14 (전 화) 1588-5114 (홈페이지...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-13eae705eea991b8d946-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001950",
+          "symbol": "000810",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-1c31e44adbaa023e4913",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "reserve_quality_visible",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 삼성화재해상보험주식회사 1 Y 110111-0005078 분 기 보 고 서 (제77기 1분기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 삼성화재해상보험주식회사 대 표 이 사 : 이 문 화 본 점 소 재 지 : 서울특별시 서초구 서초대로74길 14 (전 화) 1588-5114 (홈페이지...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-13eae705eea991b8d946-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001950",
+          "symbol": "000810",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-493a4d7b812c12be55e0",
+          "contract_rule_id": "reserve_quality_visible",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "reserve_quality_visible",
+          "primitive_id": "reserve_quality_visible",
+          "quote_excerpt": "분기보고서 6.5 삼성화재해상보험주식회사 1 Y 110111-0005078 분 기 보 고 서 (제77기 1분기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 삼성화재해상보험주식회사 대 표 이 사 : 이 문 화 본 점 소 재 지 : 서울특별시 서초구 서초대로74길 14 (전 화) 1588-5114 (홈페이지...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-13eae705eea991b8d946-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001950",
+          "symbol": "000810",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 73,
+      "claim_mapping_rejection_reason_counts": {
+        "anchor_validation": 11,
+        "mapping_not_accepted": 73,
+        "primitive_mapping_rejected": 249,
+        "semantic_rejected": 25,
+        "source_lineage_unverified_original": 14,
+        "source_provider_document_type_mismatch": 14,
+        "source_task_provider_error_score_block": 14,
+        "target_not_direct": 25,
+        "target_scope_not_allowed": 25,
+        "target_scope_not_direct": 25
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 249,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 73,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 25,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 25,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 25,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 25,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 14,
+          "reason": "source_task_provider_error_score_block"
+        },
+        {
+          "count": 14,
+          "reason": "source_provider_document_type_mismatch"
+        }
+      ],
+      "claim_mapping_trace_log_count": 73,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 256,
       "evidence_url_pending_count": 7,
@@ -3732,6 +5852,127 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-2bf8a65371d2d661ed82",
+          "contract_rule_id": "approval_to_revenue_bridge",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "approval_to_revenue_bridge",
+          "primitive_id": "approval_to_revenue_bridge",
+          "quote_excerpt": "유한양행/단일판매ㆍ공급계약체결/(2026.05.20)단일판매ㆍ공급계약체결 단일판매ㆍ공급계약 체결 1.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-2944cc830470835ef29c-T1-official-approval-revenue",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260520800079",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-2bf8a65371d2d661ed82",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "approval_to_revenue_bridge",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "유한양행/단일판매ㆍ공급계약체결/(2026.05.20)단일판매ㆍ공급계약체결 단일판매ㆍ공급계약 체결 1.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-2944cc830470835ef29c-T1-official-approval-revenue",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260520800079",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-3ceb112c24daaadd021b",
+          "contract_rule_id": "approval_to_revenue_bridge",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "approval_to_revenue_bridge",
+          "primitive_id": "approval_to_revenue_bridge",
+          "quote_excerpt": "유한양행/단일판매ㆍ공급계약체결/(2026.05.20)단일판매ㆍ공급계약체결 단일판매ㆍ공급계약 체결 1.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-2944cc830470835ef29c-T1-official-approval-revenue",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260520800079",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 123,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 123,
+        "primitive_mapping_rejected": 461,
+        "semantic_rejected": 45,
+        "target_not_direct": 45,
+        "target_scope_not_allowed": 45,
+        "target_scope_not_direct": 45,
+        "temporal_not_allowed": 45,
+        "temporal_not_current": 2
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 461,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 123,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 45,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 45,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 45,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 45,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 45,
+          "reason": "temporal_not_allowed"
+        },
+        {
+          "count": 2,
+          "reason": "temporal_not_current"
+        }
+      ],
+      "claim_mapping_trace_log_count": 123,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 268,
       "evidence_url_pending_count": 9,
@@ -3902,6 +6143,97 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-fdc9b366609fe4e8f403",
+          "contract_rule_id": "trial_quality_visible",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "trial_quality_visible",
+          "primitive_id": "trial_quality_visible",
+          "quote_excerpt": "유한양행/단일판매ㆍ공급계약체결/(2026.05.20)단일판매ㆍ공급계약체결 단일판매ㆍ공급계약 체결 1.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-688a7c76eb7acc93475d-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260520800079",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-fdc9b366609fe4e8f403",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "trial_quality_visible",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "유한양행/단일판매ㆍ공급계약체결/(2026.05.20)단일판매ㆍ공급계약체결 단일판매ㆍ공급계약 체결 1.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-688a7c76eb7acc93475d-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260520800079",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-e4b7cf80e685b1ed95a2",
+          "contract_rule_id": "trial_quality_visible",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "trial_quality_visible",
+          "primitive_id": "trial_quality_visible",
+          "quote_excerpt": "유한양행/단일판매ㆍ공급계약체결/(2026.05.20)단일판매ㆍ공급계약체결 단일판매ㆍ공급계약 체결 1.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-688a7c76eb7acc93475d-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260520800079",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 78,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 78,
+        "primitive_mapping_rejected": 416
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 416,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 78,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 78,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 244,
       "evidence_url_pending_count": 7,
@@ -4067,6 +6399,97 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-4e072e291eb6c99636cc",
+          "contract_rule_id": "export_growth_pct",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "export_growth_pct",
+          "primitive_id": "export_growth_pct",
+          "quote_excerpt": "매출 및 수주상황 5.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-6645c0062d7e5173f10a-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515000567",
+          "symbol": "043150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-4e072e291eb6c99636cc",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "export_growth_pct",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "매출 및 수주상황 5.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-6645c0062d7e5173f10a-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515000567",
+          "symbol": "043150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-bce31e5fed043937663f",
+          "contract_rule_id": "export_growth_pct",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "export_growth_pct",
+          "primitive_id": "export_growth_pct",
+          "quote_excerpt": "매출 및 수주상황 5.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-6645c0062d7e5173f10a-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515000567",
+          "symbol": "043150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 42,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 42,
+        "primitive_mapping_rejected": 180
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 180,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 42,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 42,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 227,
       "evidence_url_pending_count": 7,
@@ -4228,6 +6651,129 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-7aef8a56a35bb344a8d3",
+          "contract_rule_id": "arpu_growth_pct",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "arpu_growth_pct",
+          "primitive_id": "arpu_growth_pct",
+          "quote_excerpt": "분기보고서 6.5 네이버(주) 1 Y 110111-1707178 분 기 보 고 서 (제 28 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 네이버 주식회사 대 표 이 사 : 최 수 연 본 점 소 재 지 : 경기도 성남시 분당구 정자일로 95 네이버1784 (전 화) 1588-3830 (홈페이지) ht...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-100b6f180bd27741c338-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001511",
+          "symbol": "035420",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-7aef8a56a35bb344a8d3",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "arpu_growth_pct",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 네이버(주) 1 Y 110111-1707178 분 기 보 고 서 (제 28 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 네이버 주식회사 대 표 이 사 : 최 수 연 본 점 소 재 지 : 경기도 성남시 분당구 정자일로 95 네이버1784 (전 화) 1588-3830 (홈페이지) ht...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-100b6f180bd27741c338-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001511",
+          "symbol": "035420",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-81fd4175730339ec2457",
+          "contract_rule_id": "arpu_growth_pct",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "arpu_growth_pct",
+          "primitive_id": "arpu_growth_pct",
+          "quote_excerpt": "분기보고서 6.5 네이버(주) 1 Y 110111-1707178 분 기 보 고 서 (제 28 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 네이버 주식회사 대 표 이 사 : 최 수 연 본 점 소 재 지 : 경기도 성남시 분당구 정자일로 95 네이버1784 (전 화) 1588-3830 (홈페이지) ht...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-100b6f180bd27741c338-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001511",
+          "symbol": "035420",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 105,
+      "claim_mapping_rejection_reason_counts": {
+        "anchor_validation": 29,
+        "mapping_not_accepted": 105,
+        "primitive_mapping_rejected": 273,
+        "semantic_rejected": 16,
+        "source_lineage_unverified_original": 29,
+        "source_provider_document_type_mismatch": 29,
+        "source_task_provider_error_score_block": 29,
+        "target_not_direct": 16,
+        "target_scope_not_allowed": 16,
+        "target_scope_not_direct": 16
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 273,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 105,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 29,
+          "reason": "source_task_provider_error_score_block"
+        },
+        {
+          "count": 29,
+          "reason": "source_provider_document_type_mismatch"
+        },
+        {
+          "count": 29,
+          "reason": "source_lineage_unverified_original"
+        },
+        {
+          "count": 29,
+          "reason": "anchor_validation"
+        },
+        {
+          "count": 16,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 16,
+          "reason": "semantic_rejected"
+        }
+      ],
+      "claim_mapping_trace_log_count": 105,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 245,
       "evidence_url_pending_count": 9,
@@ -4405,6 +6951,97 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-e6e1b514301b9ea65c2f",
+          "contract_rule_id": "global_launch_conversion",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "global_launch_conversion",
+          "primitive_id": "global_launch_conversion",
+          "quote_excerpt": "분기보고서 6.5 (주)씨제이이엔엠 1 Y 110111-1109134 분 기 보 고 서 (제 33 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)씨제이이엔엠 대 표 이 사 : 윤 상 현 본 점 소 재 지 : 서울특별시 서초구 과천대로 870-13 (전 화) 02-2107-0114 (홈페이지) ht...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-9332-C27-LAUNCH-OFFICIAL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001473",
+          "symbol": "035760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-e6e1b514301b9ea65c2f",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "global_launch_conversion",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 (주)씨제이이엔엠 1 Y 110111-1109134 분 기 보 고 서 (제 33 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)씨제이이엔엠 대 표 이 사 : 윤 상 현 본 점 소 재 지 : 서울특별시 서초구 과천대로 870-13 (전 화) 02-2107-0114 (홈페이지) ht...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-9332-C27-LAUNCH-OFFICIAL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001473",
+          "symbol": "035760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-82746823e8db51eeaaf0",
+          "contract_rule_id": "global_launch_conversion",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "global_launch_conversion",
+          "primitive_id": "global_launch_conversion",
+          "quote_excerpt": "분기보고서 6.5 (주)씨제이이엔엠 1 Y 110111-1109134 분 기 보 고 서 (제 33 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)씨제이이엔엠 대 표 이 사 : 윤 상 현 본 점 소 재 지 : 서울특별시 서초구 과천대로 870-13 (전 화) 02-2107-0114 (홈페이지) ht...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-9332-C27-LAUNCH-OFFICIAL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001473",
+          "symbol": "035760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 54,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 54,
+        "primitive_mapping_rejected": 192
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 192,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 54,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 54,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 256,
       "evidence_url_pending_count": 6,
@@ -4571,6 +7208,97 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-c3e6434197af86558973",
+          "contract_rule_id": "arr_growth_visible",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "arr_growth_visible",
+          "primitive_id": "arr_growth_visible",
+          "quote_excerpt": "분기보고서 6.5 (주)더존비즈온 1 Y 120111-0005266 분 기 보 고 서 (제 50 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 더존비즈온 대 표 이 사 : 이강수, 지용구 본 점 소 재 지 : 강원특별자치도 춘천시 남산면 버들1길 130 (전 화)02-6233-3000 (홈페이...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-bc089183ac06be44b76d-official-arr-growth",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002089",
+          "symbol": "012510",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-c3e6434197af86558973",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "arr_growth_visible",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 (주)더존비즈온 1 Y 120111-0005266 분 기 보 고 서 (제 50 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 더존비즈온 대 표 이 사 : 이강수, 지용구 본 점 소 재 지 : 강원특별자치도 춘천시 남산면 버들1길 130 (전 화)02-6233-3000 (홈페이...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-bc089183ac06be44b76d-official-arr-growth",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002089",
+          "symbol": "012510",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-87ad99ab3ba28149813e",
+          "contract_rule_id": "arr_growth_visible",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "arr_growth_visible",
+          "primitive_id": "arr_growth_visible",
+          "quote_excerpt": "분기보고서 6.5 (주)더존비즈온 1 Y 120111-0005266 분 기 보 고 서 (제 50 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 주식회사 더존비즈온 대 표 이 사 : 이강수, 지용구 본 점 소 재 지 : 강원특별자치도 춘천시 남산면 버들1길 130 (전 화)02-6233-3000 (홈페이...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-bc089183ac06be44b76d-official-arr-growth",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002089",
+          "symbol": "012510",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 60,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 60,
+        "primitive_mapping_rejected": 248
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 248,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 60,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 60,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 311,
       "evidence_url_pending_count": 8,
@@ -4735,6 +7463,130 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-0ba7c421bd74af3b2749",
+          "contract_rule_id": "volume_growth_visible",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "volume_growth_visible",
+          "primitive_id": "volume_growth_visible",
+          "quote_excerpt": "분기보고서 6.5 SK텔레콤 1 Y 110111-0371346 분 기 보 고 서 (제 43 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 에스케이텔레콤주식회사 대 표 이 사 : 정재헌 본 점 소 재 지 : 서울시 중구 을지로 65 SK T타워 (전 화) 02-6100-2114 (홈페이지) http://...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-5ae149e196c67999b43a-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001207",
+          "symbol": "017670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-0ba7c421bd74af3b2749",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "volume_growth_visible",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 SK텔레콤 1 Y 110111-0371346 분 기 보 고 서 (제 43 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 에스케이텔레콤주식회사 대 표 이 사 : 정재헌 본 점 소 재 지 : 서울시 중구 을지로 65 SK T타워 (전 화) 02-6100-2114 (홈페이지) http://...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-5ae149e196c67999b43a-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001207",
+          "symbol": "017670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-b0068fdc27bd6b8abcbb",
+          "contract_rule_id": "volume_growth_visible",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "volume_growth_visible",
+          "primitive_id": "volume_growth_visible",
+          "quote_excerpt": "분기보고서 6.5 SK텔레콤 1 Y 110111-0371346 분 기 보 고 서 (제 43 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 5월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : 에스케이텔레콤주식회사 대 표 이 사 : 정재헌 본 점 소 재 지 : 서울시 중구 을지로 65 SK T타워 (전 화) 02-6100-2114 (홈페이지) http://...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-5ae149e196c67999b43a-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001207",
+          "symbol": "017670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 111,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 111,
+        "primitive_mapping_rejected": 391,
+        "semantic_rejected": 11,
+        "source_lineage_unverified_original": 11,
+        "source_provider_document_type_mismatch": 11,
+        "source_task_provider_error_score_block": 11,
+        "target_not_direct": 11,
+        "target_scope_not_allowed": 11,
+        "target_scope_not_direct": 11,
+        "temporal_not_allowed": 11,
+        "temporal_not_current": 1
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 391,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 111,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 11,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 11,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 11,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 11,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 11,
+          "reason": "temporal_not_allowed"
+        },
+        {
+          "count": 11,
+          "reason": "source_task_provider_error_score_block"
+        }
+      ],
+      "claim_mapping_trace_log_count": 111,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 247,
       "evidence_url_pending_count": 5,
@@ -4909,6 +7761,97 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-9094dc4b130c0e73d160",
+          "contract_rule_id": "cash_collection_visible",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "cash_collection_visible",
+          "primitive_id": "cash_collection_visible",
+          "quote_excerpt": "건설계약 (연결)연결주석 18.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-07437236a0eb30df2ce5-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260701000631",
+          "symbol": "006360",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-9094dc4b130c0e73d160",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "cash_collection_visible",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "건설계약 (연결)연결주석 18.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-07437236a0eb30df2ce5-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260701000631",
+          "symbol": "006360",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-d40f47484415c6cdd0f7",
+          "contract_rule_id": "cash_collection_visible",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "cash_collection_visible",
+          "primitive_id": "cash_collection_visible",
+          "quote_excerpt": "건설계약 (연결)연결주석 18.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-07437236a0eb30df2ce5-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260701000631",
+          "symbol": "006360",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 66,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 66,
+        "primitive_mapping_rejected": 468
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 468,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 66,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 66,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 309,
       "evidence_url_pending_count": 5,
@@ -5076,6 +8019,97 @@
         "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES"
       ],
       "blocker_detail": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+      "claim_mapping_accepted_trace_count": 4,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-75ddd91264ee55d810a7",
+          "contract_rule_id": "direct_company_cash_route",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "direct_company_cash_route",
+          "primitive_id": "direct_company_cash_route",
+          "quote_excerpt": "매출 및 수주상황 5.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-777cd64015fdd246108d-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514001264",
+          "symbol": "051910",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-75ddd91264ee55d810a7",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "direct_company_cash_route",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "매출 및 수주상황 5.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-777cd64015fdd246108d-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514001264",
+          "symbol": "051910",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-75b5d707344eef2df58f",
+          "contract_rule_id": "direct_company_cash_route",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "direct_company_cash_route",
+          "primitive_id": "direct_company_cash_route",
+          "quote_excerpt": "매출 및 수주상황 5.",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
+            "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-777cd64015fdd246108d-T1",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514001264",
+          "symbol": "051910",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 40,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 40,
+        "primitive_mapping_rejected": 152
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 152,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 40,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 44,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 330,
       "evidence_url_pending_count": 8,
@@ -5241,6 +8275,97 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-93d97a0b59c14a5d9f45",
+          "contract_rule_id": "tender_offer_confirmed",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "tender_offer_confirmed",
+          "primitive_id": "tender_offer_confirmed",
+          "quote_excerpt": "분기보고서 6.5 (주)영풍 1 Y 110111-0003824 분 기 보 고 서 (제 76 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)영풍 대 표 이 사 : 김기호 본 점 소 재 지 : 서울특별시 강남구 강남대로 542 (전 화) 02-519-3314 (홈페이지) https://www.ypz...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-4ca7f0d6addca879bbf6-official-tender-confirmation",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002601",
+          "symbol": "000670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-93d97a0b59c14a5d9f45",
+          "contract_rule_id": "official_disclosure_status_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "tender_offer_confirmed",
+          "primitive_id": "official_disclosure_status_current",
+          "quote_excerpt": "분기보고서 6.5 (주)영풍 1 Y 110111-0003824 분 기 보 고 서 (제 76 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)영풍 대 표 이 사 : 김기호 본 점 소 재 지 : 서울특별시 강남구 강남대로 542 (전 화) 02-519-3314 (홈페이지) https://www.ypz...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-4ca7f0d6addca879bbf6-official-tender-confirmation",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002601",
+          "symbol": "000670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-e5e0d18b6be2e56d6b98",
+          "contract_rule_id": "tender_offer_confirmed",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "tender_offer_confirmed",
+          "primitive_id": "tender_offer_confirmed",
+          "quote_excerpt": "분기보고서 6.5 (주)영풍 1 Y 110111-0003824 분 기 보 고 서 (제 76 기) 사업연도 2026년 01월 01일 부터 2026년 03월 31일 까지 금융위원회 한국거래소 귀중 2026년 05월 15일 제출대상법인 유형 : 주권상장법인 면제사유발생 : 해당사항 없음 회 사 명 : (주)영풍 대 표 이 사 : 김기호 본 점 소 재 지 : 서울특별시 강남구 강남대로 542 (전 화) 02-519-3314 (홈페이지) https://www.ypz...",
+          "rejection_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "semantic_status": "PASS",
+          "source_provider": "OpenDART",
+          "source_task_id": "CEV4-RTATTEMPT-4ca7f0d6addca879bbf6-official-tender-confirmation",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002601",
+          "symbol": "000670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 26,
+      "claim_mapping_rejection_reason_counts": {
+        "mapping_not_accepted": 26,
+        "primitive_mapping_rejected": 148
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 148,
+          "reason": "primitive_mapping_rejected"
+        },
+        {
+          "count": 26,
+          "reason": "mapping_not_accepted"
+        }
+      ],
+      "claim_mapping_trace_log_count": 26,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 366,
       "evidence_url_pending_count": 7,
@@ -5398,6 +8523,129 @@
         "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "blocker_detail": "아키타입 discovery는 열렸지만 실제 종목 symbol이 materialize되지 않아 issuer claim으로 닫히지 않았다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [
+        {
+          "claim_id": "CLM-d8443fef2c9038cccfe4",
+          "contract_rule_id": "issuer_official_update_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "issuer_official_update_current",
+          "primitive_id": "issuer_official_update_current",
+          "quote_excerpt": "발행일 2023.07.27 증권사: HistoricalBroker 애널리스트: Fixture Analyst 제목: HD현대일렉트릭 줄을 서시오",
+          "rejection_reasons": [
+            "target_scope_not_direct:UNRELATED",
+            "temporal_not_current:HISTORICAL",
+            "mapping_not_accepted:REJECTED",
+            "snapshot_source_not_score_eligible",
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED"
+          ],
+          "semantic_status": "REJECTED",
+          "source_provider": "StoredIssuerOfficialOrReportSnapshot",
+          "source_task_id": "RSTASKV4IRSTATUS-1fb8990e4205f731680008e1",
+          "source_url": "snapshot://issuer_official/hd_hyundai_electric_report.txt",
+          "symbol": null,
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "HISTORICAL",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-42a729d26493b2aebfbb",
+          "contract_rule_id": "issuer_official_update_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "issuer_official_update_current",
+          "primitive_id": "issuer_official_update_current",
+          "quote_excerpt": "현재가 69,600원 목표주가 95,000원 목표주가 상향 25% 상승여력 36%",
+          "rejection_reasons": [
+            "target_scope_not_direct:UNRELATED",
+            "mapping_not_accepted:REJECTED",
+            "snapshot_source_not_score_eligible",
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED"
+          ],
+          "semantic_status": "REJECTED",
+          "source_provider": "StoredIssuerOfficialOrReportSnapshot",
+          "source_task_id": "RSTASKV4IRSTATUS-1fb8990e4205f731680008e1",
+          "source_url": "snapshot://issuer_official/hd_hyundai_electric_report.txt",
+          "symbol": null,
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        },
+        {
+          "claim_id": "CLM-5e1b9a668162c6fa3e4f",
+          "contract_rule_id": "issuer_official_update_current",
+          "mapping_status": "REJECTED",
+          "primitive_gap": "issuer_official_update_current",
+          "primitive_id": "issuer_official_update_current",
+          "quote_excerpt": "FY1 매출액 3,300,000 영업이익 620,000 EPS 13,500 FY2 매출액 3,800,000 영업이익 720,000 EPS 15,800",
+          "rejection_reasons": [
+            "target_scope_not_direct:UNRELATED",
+            "mapping_not_accepted:REJECTED",
+            "snapshot_source_not_score_eligible",
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED"
+          ],
+          "semantic_status": "REJECTED",
+          "source_provider": "StoredIssuerOfficialOrReportSnapshot",
+          "source_task_id": "RSTASKV4IRSTATUS-1fb8990e4205f731680008e1",
+          "source_url": "snapshot://issuer_official/hd_hyundai_electric_report.txt",
+          "symbol": null,
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT",
+          "trace_status": "REJECTED_BEFORE_SCORE"
+        }
+      ],
+      "claim_mapping_rejected_trace_count": 88,
+      "claim_mapping_rejection_reason_counts": {
+        "anchor_validation": 34,
+        "mapping_not_accepted": 88,
+        "primitive_mapping_rejected": 88,
+        "semantic_rejected": 88,
+        "snapshot_source_not_score_eligible": 88,
+        "target_not_direct": 88,
+        "target_scope_not_allowed": 88,
+        "target_scope_not_direct": 88,
+        "temporal_not_allowed": 88,
+        "temporal_not_current": 5
+      },
+      "claim_mapping_top_rejection_reasons": [
+        {
+          "count": 88,
+          "reason": "target_scope_not_direct"
+        },
+        {
+          "count": 88,
+          "reason": "mapping_not_accepted"
+        },
+        {
+          "count": 88,
+          "reason": "snapshot_source_not_score_eligible"
+        },
+        {
+          "count": 88,
+          "reason": "semantic_rejected"
+        },
+        {
+          "count": 88,
+          "reason": "target_scope_not_allowed"
+        },
+        {
+          "count": 88,
+          "reason": "target_not_direct"
+        },
+        {
+          "count": 88,
+          "reason": "temporal_not_allowed"
+        },
+        {
+          "count": 88,
+          "reason": "primitive_mapping_rejected"
+        }
+      ],
+      "claim_mapping_trace_log_count": 88,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 0,
       "evidence_url_pending_count": 0,
@@ -5560,6 +8808,12 @@
         "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "blocker_detail": "아키타입 discovery는 열렸지만 실제 종목 symbol이 materialize되지 않아 issuer claim으로 닫히지 않았다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [],
+      "claim_mapping_rejected_trace_count": 0,
+      "claim_mapping_rejection_reason_counts": {},
+      "claim_mapping_top_rejection_reasons": [],
+      "claim_mapping_trace_log_count": 0,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 0,
       "evidence_url_pending_count": 0,
@@ -5644,6 +8898,12 @@
         "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "blocker_detail": "아키타입 discovery는 열렸지만 실제 종목 symbol이 materialize되지 않아 issuer claim으로 닫히지 않았다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [],
+      "claim_mapping_rejected_trace_count": 0,
+      "claim_mapping_rejection_reason_counts": {},
+      "claim_mapping_top_rejection_reasons": [],
+      "claim_mapping_trace_log_count": 0,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 0,
       "evidence_url_pending_count": 0,
@@ -5726,6 +8986,12 @@
       "blocked_symbols": [],
       "blocker_classes": [],
       "blocker_detail": "planner 가설은 있었지만 bounded source task 생성/실행까지 이어지지 않았다.",
+      "claim_mapping_accepted_trace_count": 0,
+      "claim_mapping_rejected_samples": [],
+      "claim_mapping_rejected_trace_count": 0,
+      "claim_mapping_rejection_reason_counts": {},
+      "claim_mapping_top_rejection_reasons": [],
+      "claim_mapping_trace_log_count": 0,
       "contract_registration_status": "REGISTERED",
       "counterexample_case_count": 908,
       "evidence_url_pending_count": 7,

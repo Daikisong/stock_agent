@@ -198,6 +198,128 @@ def _load_source_task_execution_rows(parity_audit: Mapping[str, Any]) -> list[di
     return _read_jsonl(output_root / "source_task_executions.jsonl")
 
 
+def _load_claim_mapping_trace_rows(parity_audit: Mapping[str, Any]) -> list[dict[str, Any]]:
+    output_root = _resolve_output_root(parity_audit)
+    candidates: list[Path] = []
+    if output_root is not None:
+        candidates.append(output_root / "brain_claim_mapping_trace.jsonl")
+    repo_root = Path(__file__).resolve().parents[3]
+    candidates.append(repo_root / "docs" / "operational" / "census_mode_v4_brain_claim_mapping_trace.jsonl")
+    for path in candidates:
+        rows = _read_jsonl(path)
+        if rows:
+            return rows
+    return []
+
+
+def _short_text(value: Any, *, max_chars: int = 260) -> str:
+    text = " ".join(str(value or "").split())
+    if len(text) <= max_chars:
+        return text
+    return text[: max_chars - 3].rstrip() + "..."
+
+
+def _claim_trace_archetype_id(trace: Mapping[str, Any]) -> str | None:
+    archetype_id = str(trace.get("archetype_id") or "").strip()
+    if archetype_id:
+        return archetype_id
+    company_name = str(trace.get("company_name") or "").strip()
+    if company_name.startswith("C") or company_name.startswith("R13_"):
+        return company_name
+    return None
+
+
+def _claim_trace_rejection_reasons(trace: Mapping[str, Any]) -> list[str]:
+    raw_reasons = trace.get("eligibility_reasons") or trace.get("source_task_not_eligible_reasons") or []
+    reasons = [str(reason) for reason in raw_reasons if str(reason).strip()]
+    rejection_reason = str(trace.get("rejection_reason") or "").strip()
+    if rejection_reason:
+        reasons.extend(part.strip() for part in rejection_reason.split(";") if part.strip())
+    return list(dict.fromkeys(reasons))
+
+
+def _normalized_reason_key(reason: str) -> str:
+    return reason.split(":", 1)[0]
+
+
+def _claim_mapping_sample(trace: Mapping[str, Any]) -> dict[str, Any]:
+    reasons = _claim_trace_rejection_reasons(trace)
+    return {
+        "claim_id": trace.get("claim_id"),
+        "source_task_id": trace.get("source_task_id"),
+        "symbol": trace.get("symbol"),
+        "primitive_gap": trace.get("primitive_gap"),
+        "primitive_id": trace.get("primitive_id"),
+        "contract_rule_id": trace.get("contract_rule_id"),
+        "mapping_status": trace.get("mapping_status"),
+        "trace_status": trace.get("trace_status"),
+        "semantic_status": trace.get("semantic_status"),
+        "target_scope_status": trace.get("target_scope_status"),
+        "temporal_status": trace.get("temporal_status"),
+        "source_provider": trace.get("source_provider"),
+        "source_url": trace.get("source_url"),
+        "rejection_reasons": reasons[:6],
+        "quote_excerpt": _short_text(trace.get("quote_text") or trace.get("exact_quote")),
+    }
+
+
+def _claim_mapping_trace_audit_by_archetype(
+    claim_mapping_trace_rows: list[Mapping[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    audit: dict[str, dict[str, Any]] = {}
+    for trace in claim_mapping_trace_rows:
+        archetype_id = _claim_trace_archetype_id(trace)
+        if not archetype_id:
+            continue
+        row = audit.setdefault(
+            archetype_id,
+            {
+                "claim_mapping_trace_log_count": 0,
+                "claim_mapping_accepted_trace_count": 0,
+                "claim_mapping_rejected_trace_count": 0,
+                "claim_mapping_rejection_reason_counts": Counter(),
+                "claim_mapping_rejected_samples": [],
+            },
+        )
+        row["claim_mapping_trace_log_count"] += 1
+        accepted = trace.get("accepted") is True or trace.get("trace_status") == "ACCEPTED_FOR_SCORE"
+        if accepted:
+            row["claim_mapping_accepted_trace_count"] += 1
+            continue
+
+        row["claim_mapping_rejected_trace_count"] += 1
+        for reason in _claim_trace_rejection_reasons(trace):
+            row["claim_mapping_rejection_reason_counts"][_normalized_reason_key(reason)] += 1
+        if len(row["claim_mapping_rejected_samples"]) < 3:
+            row["claim_mapping_rejected_samples"].append(_claim_mapping_sample(trace))
+
+    normalized: dict[str, dict[str, Any]] = {}
+    for archetype_id, row in audit.items():
+        reason_counts = row["claim_mapping_rejection_reason_counts"]
+        normalized[archetype_id] = {
+            "claim_mapping_trace_log_count": row["claim_mapping_trace_log_count"],
+            "claim_mapping_accepted_trace_count": row["claim_mapping_accepted_trace_count"],
+            "claim_mapping_rejected_trace_count": row["claim_mapping_rejected_trace_count"],
+            "claim_mapping_rejection_reason_counts": dict(sorted(reason_counts.items())),
+            "claim_mapping_top_rejection_reasons": [
+                {"reason": reason, "count": count} for reason, count in reason_counts.most_common(8)
+            ],
+            "claim_mapping_rejected_samples": row["claim_mapping_rejected_samples"],
+        }
+    return normalized
+
+
+def _empty_claim_mapping_trace_audit() -> dict[str, Any]:
+    return {
+        "claim_mapping_trace_log_count": 0,
+        "claim_mapping_accepted_trace_count": 0,
+        "claim_mapping_rejected_trace_count": 0,
+        "claim_mapping_rejection_reason_counts": {},
+        "claim_mapping_top_rejection_reasons": [],
+        "claim_mapping_rejected_samples": [],
+    }
+
+
 def _source_task_failure_axes(execution: Mapping[str, Any]) -> list[str]:
     axes: list[str] = []
     accepted_claim_ids = execution.get("accepted_claim_ids") or []
@@ -486,12 +608,16 @@ def build_all_archetype_runtime_status_matrix(
     candidate_selection: Mapping[str, Any] | None = None,
     research_inventory: Mapping[str, Any] | None = None,
     runtime_source_task_executions: list[Mapping[str, Any]] | None = None,
+    claim_mapping_trace_rows: list[Mapping[str, Any]] | None = None,
 ) -> dict[str, Any]:
     cards_by_id = {card["archetype_id"]: card for card in memory_cards.get("cards", [])}
     inventory_counts = _inventory_counts_by_archetype(research_inventory)
     if runtime_source_task_executions is None:
         runtime_source_task_executions = _load_source_task_execution_rows(parity_audit)
+    if claim_mapping_trace_rows is None:
+        claim_mapping_trace_rows = _load_claim_mapping_trace_rows(parity_audit)
     source_task_execution_audit = _source_task_execution_audit_by_archetype(runtime_source_task_executions)
+    claim_mapping_trace_audit = _claim_mapping_trace_audit_by_archetype(claim_mapping_trace_rows)
     route_counts: Counter[str] = Counter()
     official_route_counts: Counter[str] = Counter()
     route_primitives: dict[str, set[str]] = defaultdict(set)
@@ -556,6 +682,7 @@ def build_all_archetype_runtime_status_matrix(
             full_thesis_status=full_thesis_status,
         )
         source_task_audit = source_task_execution_audit.get(archetype_id, _empty_source_task_execution_audit())
+        claim_mapping_audit = claim_mapping_trace_audit.get(archetype_id, _empty_claim_mapping_trace_audit())
         source_route_gaps: list[str] = []
         if route_pattern_count == 0:
             source_route_gaps.append("SOURCE_ROUTE_NOT_RECOVERED")
@@ -614,6 +741,7 @@ def build_all_archetype_runtime_status_matrix(
                 "runtime_source_task_count": runtime_source_task_count,
                 "runtime_source_task_executed_count": runtime_source_task_executed_count,
                 **source_task_audit,
+                **claim_mapping_audit,
                 "runtime_source_task_execution_count": row.get("runtime_source_task_execution_count", 0),
                 "targetless_source_task_execution_count": row.get("targetless_source_task_execution_count", 0),
                 "archetype_level_discovery_seed_count": row.get("archetype_level_discovery_seed_count", 0),
@@ -755,6 +883,12 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
             return "-"
         return ", ".join(f"{item['axis']}:{item['count']}" for item in axes[:3])
 
+    def fmt_claim_rejections(row: Mapping[str, Any]) -> str:
+        reasons = row.get("claim_mapping_top_rejection_reasons") or []
+        if not reasons:
+            return "-"
+        return ", ".join(f"{item['reason']}:{item['count']}" for item in reasons[:3])
+
     lines = [
         "# All Archetype Runtime Parity Summary - 2026-07-05",
         "",
@@ -779,15 +913,15 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
         "",
         "## Matrix",
         "",
-        "| archetype | runtime status | primary blocker | research cases | URL-backed | source tasks | execution logs | accepted claims | full rows | top source-task failure axes | req gap rate | green gap rate |",
-        "|---|---|---|---:|---:|---:|---:|---:|---:|---|---:|---:|",
+        "| archetype | runtime status | primary blocker | research cases | URL-backed | source tasks | execution logs | claim traces | accepted claims | full rows | top source-task failure axes | top claim rejection reasons | req gap rate | green gap rate |",
+        "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---:|---:|",
     ]
     for row in matrix.get("rows", []):
         accepted = int(row.get("runtime_accepted_claim_count") or 0) + int(
             row.get("runtime_source_task_accepted_claim_count") or 0
         )
         lines.append(
-            "| {archetype} | {runtime_status} | {blocker} | {research_cases} | {url_backed} | {source_tasks} | {execution_logs} | {accepted} | {full_rows} | {failure_axes} | {req_rate} | {green_rate} |".format(
+            "| {archetype} | {runtime_status} | {blocker} | {research_cases} | {url_backed} | {source_tasks} | {execution_logs} | {claim_traces} | {accepted} | {full_rows} | {failure_axes} | {claim_rejections} | {req_rate} | {green_rate} |".format(
                 archetype=row["archetype_id"],
                 runtime_status=row["runtime_status"],
                 blocker=row["primary_blocker_class"],
@@ -795,9 +929,11 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
                 url_backed=row["url_backed_case_count"],
                 source_tasks=row["runtime_source_task_count"],
                 execution_logs=row["source_task_execution_log_count"],
+                claim_traces=row["claim_mapping_trace_log_count"],
                 accepted=accepted,
                 full_rows=row["runtime_full_thesis_row_count"],
                 failure_axes=fmt_failure_axes(row),
+                claim_rejections=fmt_claim_rejections(row),
                 req_rate=fmt_rate(row["required_positive_missing_rate"]),
                 green_rate=fmt_rate(row["green_gap_rate"]),
             )
@@ -812,6 +948,7 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
             "- `PLANNING_ONLY`: planner나 discovery는 열렸지만 실제 종목/소스 실행으로 닫히지 않았다.",
             "- `REPLAY_ONLY_NOT_RUNTIME_PROVEN`: 과거 URL-backed 판례가 있을 뿐, 현재 production run에서 재검증되지 않았다.",
             "- `top source-task failure axes`: source task가 왜 accepted claim으로 닫히지 않았는지의 실행 로그 기반 요약이다.",
+            "- `top claim rejection reasons`: 실제 원문 claim 매핑 trace에서 왜 score-eligible claim이 되지 못했는지의 상위 원인이다.",
             "",
             "즉 이 summary에서 중요한 것은 높은 row count가 아니라 `accepted claims -> score contributions -> full thesis row`가 아키타입별로 닫혔는지다.",
             "",
@@ -838,6 +975,7 @@ def write_all_archetype_runtime_status_matrix(
         candidate_selection=candidate_selection,
         research_inventory=research_inventory,
         runtime_source_task_executions=_load_source_task_execution_rows(parity_audit),
+        claim_mapping_trace_rows=_load_claim_mapping_trace_rows(parity_audit),
     )
     json_path = docs_path / "all_archetype_runtime_status_matrix_2026-07-05.json"
     md_path = docs_path / "all_archetype_runtime_status_matrix_2026-07-05.md"
