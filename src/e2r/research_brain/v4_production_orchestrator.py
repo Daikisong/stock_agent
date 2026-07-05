@@ -896,18 +896,36 @@ def _candidate_seed_events_from_config(*, config: ProductionShadowV4Config, as_o
             event_date = _date_from_any(payload.get("event_date") or payload.get("as_of_date")) or as_of_date
             if event_date > as_of_date:
                 continue
+            structured_payload = dict(payload.get("structured_payload") or payload)
+            target_symbol_mode = str(payload.get("target_symbol_mode") or structured_payload.get("target_symbol_mode") or "")
+            seed_role = str(payload.get("seed_role") or structured_payload.get("seed_role") or "")
+            source_family = str(payload.get("source_family") or "CensusFullThesisQueue")
+            is_archetype_level_planner_seed = (
+                target_symbol_mode == "ARCHETYPE_LEVEL_DISCOVERY"
+                and seed_role == "planner_input_only"
+                and source_family == "AllArchetypeRuntimeParityFollowUp"
+            )
             raw_symbol = str(payload.get("symbol") or "").strip()
-            symbol = raw_symbol.zfill(6)
-            if not raw_symbol or not symbol.strip("0"):
+            symbol = raw_symbol.zfill(6) if raw_symbol else ""
+            if not raw_symbol and not is_archetype_level_planner_seed:
                 continue
+            if raw_symbol and not symbol.strip("0"):
+                continue
+            company_name = str(
+                payload.get("company_name")
+                or structured_payload.get("target_archetype")
+                or payload.get("target_archetype")
+                or symbol
+                or "ARCHETYPE_LEVEL_DISCOVERY"
+            )
             rows.append(
                 CandidateEventV2(
                     candidate_event_id=str(payload.get("candidate_event_id") or f"CEV4-SEED-{symbol}-{event_date.isoformat()}"),
                     symbol=symbol,
-                    company_name=str(payload.get("company_name") or symbol),
+                    company_name=company_name,
                     event_date=event_date.isoformat(),
                     detected_at=str(payload.get("detected_at") or as_of_date.isoformat()),
-                    source_family=str(payload.get("source_family") or "CensusFullThesisQueue"),
+                    source_family=source_family,
                     source_id=str(payload.get("source_id") or path),
                     event_type=str(payload.get("event_type") or "full_thesis_refresh_seed"),
                     raw_reason_codes=tuple(str(item) for item in payload.get("raw_reason_codes") or ()),
@@ -915,8 +933,8 @@ def _candidate_seed_events_from_config(*, config: ProductionShadowV4Config, as_o
                     event_title=str(payload.get("event_title") or f"{symbol} full thesis refresh seed"),
                     event_summary=str(payload.get("event_summary") or ""),
                     event_freshness_days=max(0, (as_of_date - event_date).days),
-                    issuer_directness=str(payload.get("issuer_directness") or "DIRECT"),
-                    structured_payload=dict(payload.get("structured_payload") or payload),
+                    issuer_directness=str(payload.get("issuer_directness") or ("INDUSTRY" if is_archetype_level_planner_seed else "DIRECT")),
+                    structured_payload=structured_payload,
                     research_brain_eligible=payload.get("research_brain_eligible") is not False,
                 )
             )
@@ -1051,7 +1069,9 @@ def _is_full_thesis_refresh_seed_event(event: CandidateEventV2) -> bool:
     structured = event.structured_payload if isinstance(event.structured_payload, Mapping) else {}
     return (
         str(event.source_family or "") == "CensusFullThesisQueue"
+        or str(event.source_family or "") == "AllArchetypeRuntimeParityFollowUp"
         or str(event.event_type or "") == "full_thesis_refresh_seed"
+        or str(event.event_type or "") == "all_archetype_runtime_parity_follow_up_seed"
         or str(structured.get("seed_role") or "") == "planner_input_only"
     )
 
@@ -2119,12 +2139,26 @@ def _select_unique_candidate_events(rows: Sequence[CandidateEventV2], *, limit: 
     used_by_family: Counter[str] = Counter()
 
     # A full-thesis refresh seed is not a score signal. It is the explicit queue
-    # telling Research Brain which event-board rows need a real full-thesis
-    # refresh. If we only take one seed for family diversity, most queued rows
-    # stay PLANNER_NOT_RUN while low-priority discovery examples consume the
-    # bounded live planner budget.
+    # telling Research Brain which event-board rows or Goal4 archetype gaps need
+    # a real source-backed attempt. If we only take one seed for family
+    # diversity, most queued rows stay PLANNER_NOT_RUN while low-priority
+    # discovery examples consume the bounded live planner budget.
+    selected_ids: set[str] = set()
+    for bucket in unique_by_family.values():
+        for event in bucket:
+            if not _is_full_thesis_refresh_seed_event(event):
+                continue
+            selected.append(event)
+            selected_ids.add(event.candidate_event_id)
+            used_by_family[event.source_family] += 1
+            if len(selected) >= limit:
+                return tuple(selected[:limit])
+
     for event in unique_by_family.get("CensusFullThesisQueue", ()):
+        if event.candidate_event_id in selected_ids:
+            continue
         selected.append(event)
+        selected_ids.add(event.candidate_event_id)
         used_by_family["CensusFullThesisQueue"] += 1
         if len(selected) >= limit:
             return tuple(selected[:limit])
@@ -2136,11 +2170,15 @@ def _select_unique_candidate_events(rows: Sequence[CandidateEventV2], *, limit: 
         if family == "CensusFullThesisQueue":
             continue
         bucket = unique_by_family[family]
-        if bucket:
-            selected.append(bucket[0])
+        for event in bucket:
+            if event.candidate_event_id in selected_ids:
+                continue
+            selected.append(event)
+            selected_ids.add(event.candidate_event_id)
             used_by_family[family] += 1
             if len(selected) >= limit:
                 return tuple(selected[:limit])
+            break
     fill_order_template = ("CompanyGuide", "CompanyGuide", "ReportRadar", "DART", "IR", "KRX", "KIND")
     fill_order = tuple(family for family in fill_order_template if family in unique_by_family) + tuple(
         family for family in unique_by_family if family not in set(fill_order_template)
@@ -2152,8 +2190,12 @@ def _select_unique_candidate_events(rows: Sequence[CandidateEventV2], *, limit: 
             index = used_by_family[family]
             if index >= len(bucket):
                 continue
-            selected.append(bucket[index])
+            event = bucket[index]
             used_by_family[family] += 1
+            if event.candidate_event_id in selected_ids:
+                continue
+            selected.append(event)
+            selected_ids.add(event.candidate_event_id)
             progressed = True
             if len(selected) >= limit:
                 break

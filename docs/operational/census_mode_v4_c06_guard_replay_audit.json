@@ -127,7 +127,7 @@
       "customer_preorder_or_allocation"
     ],
     "anchor_count": 1,
-    "as_of_date": "2026-07-01",
+    "as_of_date": "2026-07-05",
     "blockers": [],
     "claim_extractor_attempt_count": 1,
     "claim_extractor_non_llm_provider_count": 1,

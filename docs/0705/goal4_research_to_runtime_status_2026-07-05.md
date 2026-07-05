@@ -2,6 +2,19 @@
 
 이 문서는 `docs/core/goal4.md` 진행 상태를 2026-07-05 기준으로 고정한 작업 장부다.
 
+후속 실행 감사:
+
+- `docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md`
+
+주의:
+
+```text
+이 문서의 본문은 manifest 실행 전 상태를 설명한다.
+후속 patched Census v4 실행에서는 전수 seed 114개 투입은 고쳐졌지만,
+run은 INVALID_PARTIAL_OUTPUT으로 끝났고 production FULL_THESIS row는 0개/PENDING으로 바뀌었다.
+최신 실행 결과는 후속 감사 문서를 기준으로 본다.
+```
+
 짧은 결론:
 
 ```text

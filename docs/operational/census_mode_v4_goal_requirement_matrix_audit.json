@@ -1,17 +1,46 @@
 {
-  "as_of_date": "2026-07-01",
-  "blockers": [],
+  "as_of_date": "2026-07-05",
+  "blockers": [
+    "anti_fake_leaf_audit_not_pass",
+    "atomic_stage_decision_not_pass",
+    "score_scale_not_pass",
+    "stage_semantics_not_pass",
+    "semantic_primitive_guard_not_pass",
+    "ledger_reuse_or_source_coverage_not_pass",
+    "full_thesis_smoke_pending",
+    "full_thesis_production_pass_false",
+    "full_thesis_seed_materialization_audit_not_pass",
+    "full_thesis_seed_promotion_pass_false",
+    "brain_web_evidence_pass_false",
+    "self_repair_unresolved_failures",
+    "machine_readable_test_result_artifact_missing"
+  ],
   "brain_web_mode": "enabled",
-  "brain_web_requirement_pass": true,
-  "fail_gate_ids": [],
-  "goal_completion_minimum_pass": true,
-  "meaningful_operational_stage_requirement_pass": true,
-  "pending_gate_ids": [],
-  "production_full_thesis_requirement_pass": true,
+  "brain_web_requirement_pass": false,
+  "fail_gate_ids": [
+    "ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS",
+    "ATOMIC_STAGE_DECISION_PASS",
+    "SCORE_SCALE_PASS",
+    "STAGE_SEMANTICS_PASS",
+    "SEMANTIC_PRIMITIVE_GUARD_PASS",
+    "LEDGER_REUSE_AND_SOURCE_COVERAGE_PASS",
+    "FULL_THESIS_SEED_MATERIALIZATION_AUDIT_PASS",
+    "SELF_REPAIR_LOOP_PASS"
+  ],
+  "goal_completion_minimum_pass": false,
+  "meaningful_operational_stage_requirement_pass": false,
+  "pending_gate_ids": [
+    "FULL_THESIS_SMOKE_PASS",
+    "FULL_THESIS_PRODUCTION_PASS",
+    "FULL_THESIS_SEED_PROMOTION_PASS",
+    "BRAIN_WEB_EVIDENCE_PASS",
+    "FULL_TEST_ARTIFACT_PASS"
+  ],
+  "production_full_thesis_requirement_pass": false,
   "required_goal_completion_count": 22,
-  "required_goal_completion_fail_count": 0,
-  "required_goal_completion_pass_count": 22,
-  "required_goal_completion_pending_count": 0,
+  "required_goal_completion_fail_count": 8,
+  "required_goal_completion_pass_count": 9,
+  "required_goal_completion_pending_count": 5,
   "requirements": [
     {
       "blocker": "v3_forensic_review_missing",
@@ -27,7 +56,7 @@
     {
       "blocker": "hard_gate_config_not_enabled",
       "evidence": {
-        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-01 --universe krx --output-root output/census_v4/2026-07-01-v177-goal-followup-production-after-expanded-brain-web-width --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 45 --brain-planner-success-limit 35 --brain-planner-batch-size 5 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 3 --brain-max-distinct-candidate-attempts 45 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 7200.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --full-thesis-smoke-artifact-root output/census_v4/2026-07-01-v162-goal-followup-controlled-full-thesis-smoke-after-official-budget-fix --target-gate full_thesis --max-iterations 2 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --test-result-artifact output/census_v4/2026-07-01-v178-goal-gates-full-test-after-planner-audit-label-fix/full_unittest_result_artifact.json --write-operational-docs true",
+        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 114 --brain-planner-success-limit 114 --brain-planner-batch-size 5 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 114 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 7200.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",
         "fail_on_atomic_mismatch": true,
         "fail_on_critical_audit": true,
         "fail_on_run_mode_overclaim": true,
@@ -41,14 +70,14 @@
     {
       "blocker": "anti_fake_leaf_audit_not_pass",
       "evidence": {
-        "critical_count": 0,
+        "critical_count": 3,
         "eligible_symbol_count": 3391,
-        "leaf_verdict": "PASS",
+        "leaf_verdict": "FAIL",
         "stage_status_count": 3391
       },
       "gate_id": "ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "FAIL",
       "title": "full universe status board is leaf-audited and anti-fake"
     },
     {
@@ -61,51 +90,43 @@
       },
       "gate_id": "ATOMIC_STAGE_DECISION_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "FAIL",
       "title": "stage/score/status/trace come from atomic representative decisions"
     },
     {
       "blocker": "score_scale_not_pass",
       "evidence": {
         "operator_score_use_distribution": {
-          "FULL_E2R_SCORE": 10,
-          "NOT_FULL_E2R_SCORE": 3381
+          "NOT_FULL_E2R_SCORE": 3391
         },
         "raw_contribution_fallback_as_verified_score_count": 0,
         "score_scope_distribution": {
-          "BRAIN_OFFICIAL_CLAIM_BACKED_PARTIAL": 10,
-          "BRAIN_WEB_CLAIM_BACKED_PARTIAL": 3,
-          "EVENT_WEIGHTED_PARTIAL": 45,
-          "FULL_E2R_100": 10,
-          "NO_SCORE": 3323
+          "EVENT_WEIGHTED_PARTIAL": 66,
+          "NO_SCORE": 3325
         },
         "verified_score_not_full_e2r_count": 0
       },
       "gate_id": "SCORE_SCALE_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "FAIL",
       "title": "event scores and full E2R scores are not mixed"
     },
     {
       "blocker": "stage_semantics_not_pass",
       "evidence": {
         "operator_stage_use_distribution": {
-          "FULL_THESIS_STAGE": 10,
-          "NOT_FULL_THESIS_STAGE": 3381
+          "NOT_FULL_THESIS_STAGE": 3391
         },
         "pending_material_marked_complete_count": 0,
         "red_without_risk_signal_or_trace_count": 0,
         "source_pending_marked_red_count": 0,
         "stage_scope_distribution": {
-          "BRAIN_OFFICIAL_PARTIAL": 10,
-          "BRAIN_WEB_PARTIAL": 3,
-          "CENSUS_EVENT_BOARD": 3368,
-          "FULL_THESIS": 10
+          "CENSUS_EVENT_BOARD": 3391
         }
       },
       "gate_id": "STAGE_SEMANTICS_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "FAIL",
       "title": "Stage0/Stage2/Red/pending labels are semantically separated"
     },
     {
@@ -117,15 +138,15 @@
       },
       "gate_id": "SEMANTIC_PRIMITIVE_GUARD_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "FAIL",
       "title": "non-revenue contract wording cannot unlock contract/revision primitives"
     },
     {
       "blocker": "source_task_satisfaction_not_pass",
       "evidence": {
         "primitive_state_chain_verdict": "PASS",
-        "representative_score_claim_count": 89,
-        "source_task_chain_closed_to_representative_stage_count": 153,
+        "representative_score_claim_count": 66,
+        "source_task_chain_closed_to_representative_stage_count": 66,
         "source_task_satisfaction_verdict": "PASS_LEDGER_REFRESH_SOURCE_TASK_SATISFACTION"
       },
       "gate_id": "SOURCE_TASK_SATISFACTION_PASS",
@@ -138,15 +159,15 @@
       "evidence": {
         "existing_ledger_reuse_verdict": "PASS",
         "last_effective_thesis_verdict": "PASS",
-        "live_source_pass_allowed": true,
+        "live_source_pass_allowed": false,
         "runtime_mode": "BRAIN_AND_WEB_ACQUISITION_ENABLED",
-        "runtime_plausibility_verdict": "PASS_LIVE_RUNTIME_PLAUSIBILITY",
+        "runtime_plausibility_verdict": "FAIL",
         "source_coverage_verdict": "PASS_LEDGER_REFRESH_COVERAGE",
-        "source_task_realness_verdict": "LIVE_SOURCE_PASS"
+        "source_task_realness_verdict": "PASS_LEDGER_REFRESH_REALNESS"
       },
       "gate_id": "LEDGER_REUSE_AND_SOURCE_COVERAGE_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "FAIL",
       "title": "existing claims are lifecycle-refreshed and source coverage is honestly ledger-refresh scoped"
     },
     {
@@ -164,9 +185,8 @@
         ],
         "full_thesis_required_source_class_count": 11,
         "full_thesis_task_executable_source_path_pass_allowed": true,
-        "full_thesis_task_with_blocking_source_class_count": 96,
+        "full_thesis_task_with_blocking_source_class_count": 85,
         "missing_connector_source_classes": [
-          "IndustryMedia",
           "IssuerOfficial"
         ],
         "placeholder_source_classes": [
@@ -191,10 +211,10 @@
       "evidence": {
         "daily_event_and_full_thesis_separated": true,
         "full_thesis_smoke_honesty_status": "FULL_THESIS_SMOKE_HONESTY_PASS",
-        "full_thesis_status": "FULL_THESIS_REFRESH_RAN",
+        "full_thesis_status": "PENDING_FULL_THESIS_REFRESH",
         "hardcoded_query_count": 0,
         "score_allowed_before_execution": false,
-        "verdict": "FULL_THESIS_SMOKE_PASS"
+        "verdict": "PENDING_FULL_THESIS_REFRESH"
       },
       "gate_id": "FULL_THESIS_SMOKE_HONESTY_PASS",
       "required_for_goal_completion": true,
@@ -204,15 +224,17 @@
     {
       "blocker": "full_thesis_smoke_pending",
       "evidence": {
-        "controlled_smoke_execution_pass": true,
+        "controlled_smoke_execution_pass": false,
         "controlled_smoke_full_thesis_row_count": 0,
-        "full_thesis_promoted_seed_count": 10,
-        "full_thesis_smoke_execution_status": "FULL_THESIS_SMOKE_EXECUTION_PASS",
-        "full_thesis_status": "FULL_THESIS_REFRESH_RAN",
+        "full_thesis_promoted_seed_count": 0,
+        "full_thesis_smoke_execution_status": "FULL_THESIS_SMOKE_EXECUTION_PENDING",
+        "full_thesis_status": "PENDING_FULL_THESIS_REFRESH",
         "per_symbol": [
           {
-            "additional_daily_atomic_decision_ids": [],
-            "blocking_reason": null,
+            "additional_daily_atomic_decision_ids": [
+              "ATOMIC-0485086ca2055199dd6e"
+            ],
+            "blocking_reason": "full_thesis_source_tasks_planned_but_not_executed",
             "company_name": "SK하이닉스",
             "daily_event_claim_ids": [
               "CLM-14057362610ae62c7e02"
@@ -223,24 +245,8 @@
             "daily_event_stagecourt_trace_ids": [
               "SCT-e322086eb30eefe7c6dc"
             ],
-            "full_thesis_claim_ids": [
-              "CLM-FTSMOKE-f8e8d2e9a51d2c8b7743",
-              "CLM-FTSMOKE-730172eae7a38018abb2",
-              "CLM-FTSMOKE-80b08e6efc5b9e1f64c4",
-              "CLM-FTSMOKE-e6b12593788f729283ac",
-              "CLM-FTSMOKE-78be095d955867c54760",
-              "CLM-FTSMOKE-9c631fd582217709a493",
-              "CLM-FTSMOKE-6734db5c7dc9d0d8dc13"
-            ],
-            "full_thesis_score_contribution_ids": [
-              "SCON-FTSMOKE-c23d2f426c56e2660586",
-              "SCON-FTSMOKE-1f9ab4bd0324f1cda070",
-              "SCON-FTSMOKE-dd640406926983c07a09",
-              "SCON-FTSMOKE-af8fc0229f284a5a7d9c",
-              "SCON-FTSMOKE-b372cd71075c540871f4",
-              "SCON-FTSMOKE-57fe5ea519df2fb07026",
-              "SCON-FTSMOKE-9b2fd11083ebd30759e2"
-            ],
+            "full_thesis_claim_ids": [],
+            "full_thesis_score_contribution_ids": [],
             "full_thesis_source_task_ids": [
               "FTSMOKE-fd76cd442e38eae313be",
               "FTSMOKE-548f20b4ca4c69404991",
@@ -250,16 +256,16 @@
               "FTSMOKE-536e8bab52086cddf93d",
               "FTSMOKE-7dec07a3cda7d1a94362"
             ],
-            "full_thesis_stagecourt_trace_ids": [
-              "SCT-FTSMOKE-dbc73a5d59a1205ff1e5"
+            "full_thesis_stagecourt_trace_ids": [],
+            "missing_full_thesis_primitives": [
+              "full_thesis_refresh_task_not_run"
             ],
-            "missing_full_thesis_primitives": [],
-            "smoke_pass_allowed": true,
+            "smoke_pass_allowed": false,
             "symbol": "000660"
           },
           {
             "additional_daily_atomic_decision_ids": [],
-            "blocking_reason": null,
+            "blocking_reason": "full_thesis_source_tasks_planned_but_not_executed",
             "company_name": "삼성전자",
             "daily_event_claim_ids": [
               "CLM-9aaf6a921e683a2ee9b4"
@@ -270,24 +276,8 @@
             "daily_event_stagecourt_trace_ids": [
               "SCT-00c47e02e1f158d6cd22"
             ],
-            "full_thesis_claim_ids": [
-              "CLM-FTSMOKE-b4115f166ecd1bad2a3a",
-              "CLM-FTSMOKE-81b16e13280a7be83a9d",
-              "CLM-FTSMOKE-40b04448144ab16d18b7",
-              "CLM-FTSMOKE-62b6d251104985994def",
-              "CLM-FTSMOKE-365e10e1134fc712c771",
-              "CLM-FTSMOKE-3671e94f74f61adf0682",
-              "CLM-FTSMOKE-ce43c0a6b5c5e4549350"
-            ],
-            "full_thesis_score_contribution_ids": [
-              "SCON-FTSMOKE-47d53385e858fc745582",
-              "SCON-FTSMOKE-ed8b1f066baabe709d48",
-              "SCON-FTSMOKE-763a5b1906932ea491a4",
-              "SCON-FTSMOKE-2b6d3074ebd62e052883",
-              "SCON-FTSMOKE-6612432dbe02c37e0d17",
-              "SCON-FTSMOKE-7dc927fe15521d943946",
-              "SCON-FTSMOKE-ec473a506be3703dc067"
-            ],
+            "full_thesis_claim_ids": [],
+            "full_thesis_score_contribution_ids": [],
             "full_thesis_source_task_ids": [
               "FTSMOKE-e3779b2e978a1f923ae2",
               "FTSMOKE-954d18b35a7eff134922",
@@ -297,88 +287,82 @@
               "FTSMOKE-b914a94fb161d39edc5a",
               "FTSMOKE-52d7621452a6b40cd76f"
             ],
-            "full_thesis_stagecourt_trace_ids": [
-              "SCT-FTSMOKE-f222b2f65983d508933b"
+            "full_thesis_stagecourt_trace_ids": [],
+            "missing_full_thesis_primitives": [
+              "full_thesis_refresh_task_not_run"
             ],
-            "missing_full_thesis_primitives": [],
-            "smoke_pass_allowed": true,
+            "smoke_pass_allowed": false,
             "symbol": "005930"
           }
         ],
-        "production_full_thesis_row_count": 10,
+        "production_full_thesis_row_count": 0,
         "production_full_thesis_substitute_diagnostic_pass": false,
         "required_smoke_symbols_promoted_without_missing_primitives_count": 0,
         "required_symbols": [
           "005930",
           "000660"
         ],
-        "satisfied_by": "external_controlled_smoke",
-        "verdict": "FULL_THESIS_SMOKE_PASS"
+        "satisfied_by": null,
+        "verdict": "PENDING_FULL_THESIS_REFRESH"
       },
       "gate_id": "FULL_THESIS_SMOKE_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "PENDING",
       "title": "Samsung/Hynix controlled full-thesis smoke executed and passed"
     },
     {
       "blocker": "full_thesis_production_pass_false",
       "evidence": {
         "controlled_smoke_full_thesis_row_count": 0,
-        "production_full_thesis_row_count": 10,
+        "production_full_thesis_row_count": 0,
         "production_mode_requested": true,
-        "production_pass_allowed": true,
-        "verdict": "FULL_THESIS_PRODUCTION_PASS"
+        "production_pass_allowed": false,
+        "verdict": "PENDING_FULL_THESIS_PRODUCTION"
       },
       "gate_id": "FULL_THESIS_PRODUCTION_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "PENDING",
       "title": "production full-thesis rows exist without controlled-smoke substitution"
     },
     {
       "blocker": "full_thesis_seed_materialization_audit_not_pass",
       "evidence": {
-        "critical_count": 0,
-        "full_thesis_promoted_seed_count": 10,
-        "seed_event_count": 85,
+        "critical_count": 384,
+        "full_thesis_promoted_seed_count": 0,
+        "seed_event_count": 114,
         "status_counts": {
-          "ACCEPTED_CLAIM_NOT_CREATED": 12,
-          "FULL_THESIS_PROMOTED": 10,
-          "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 50,
-          "STAGECOURT_READY_NOT_PROMOTED": 13
+          "PLANNER_NOT_RUN": 114
         },
-        "trace_row_count": 85,
-        "verdict": "PASS"
+        "trace_row_count": 114,
+        "verdict": "FAIL"
       },
       "gate_id": "FULL_THESIS_SEED_MATERIALIZATION_AUDIT_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "FAIL",
       "title": "full thesis seed materialization trace/audit is internally consistent"
     },
     {
       "blocker": "full_thesis_seed_promotion_pass_false",
       "evidence": {
-        "critical_count": 0,
-        "full_thesis_promoted_seed_count": 10,
-        "seed_event_count": 85,
+        "critical_count": 384,
+        "full_thesis_promoted_seed_count": 0,
+        "seed_event_count": 114,
         "status_counts": {
-          "ACCEPTED_CLAIM_NOT_CREATED": 12,
-          "FULL_THESIS_PROMOTED": 10,
-          "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 50,
-          "STAGECOURT_READY_NOT_PROMOTED": 13
+          "PLANNER_NOT_RUN": 114
         },
-        "verdict": "PASS"
+        "verdict": "FAIL"
       },
       "gate_id": "FULL_THESIS_SEED_PROMOTION_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "PENDING",
       "title": "at least one full thesis seed has materialized into production FULL_THESIS"
     },
     {
       "blocker": "brain_web_evidence_pass_false",
       "evidence": {
-        "brain_web_evidence_pass_allowed": true,
-        "llm_claim_extractor_attempt_count": 45,
-        "llm_planner_call_count": 45,
+        "brain_web_evidence_pass_allowed": false,
+        "llm_claim_extractor_attempt_count": 0,
+        "llm_planner_call_count": 0,
         "minimum_required_counts": {
           "llm_claim_extractor_attempt_count": 10,
           "llm_planner_call_count": 30,
@@ -389,15 +373,15 @@
           "web_search_task_count": 20
         },
         "operational_minimum_count_gate_applies": true,
-        "verdict": "READY_FOR_BRAIN_WEB_EVIDENCE_PASS",
-        "web_fetched_document_count": 45,
-        "web_or_llm_accepted_claim_count": 69,
-        "web_search_call_count": 31,
-        "web_search_task_count": 31
+        "verdict": "BLOCKED",
+        "web_fetched_document_count": 0,
+        "web_or_llm_accepted_claim_count": 0,
+        "web_search_call_count": 0,
+        "web_search_task_count": 0
       },
       "gate_id": "BRAIN_WEB_EVIDENCE_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "PENDING",
       "title": "real planner/web/extractor/claim traces satisfy operational minimums"
     },
     {
@@ -961,29 +945,37 @@
     {
       "blocker": "self_repair_unresolved_failures",
       "evidence": {
-        "completion_eligible": true,
-        "deferred_goal_blockers": [],
+        "completion_eligible": false,
+        "deferred_goal_blockers": [
+          "brain_web_evidence_pass_false",
+          "full_thesis_smoke_pending",
+          "full_thesis_smoke_execution_pending",
+          "full_thesis_production_pass_false",
+          "full_thesis_seed_materialization_not_promoted"
+        ],
         "loop_executed": true,
-        "status": "RUN_COMPLETE",
-        "unresolved_failures": []
+        "status": "RUN_COMPLETE_WITH_UNRESOLVED_FAILURES",
+        "unresolved_failures": [
+          "RUNTIME_PLAUSIBILITY_AUDIT_FAILED"
+        ]
       },
       "gate_id": "SELF_REPAIR_LOOP_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "FAIL",
       "title": "self-repair/recheck loop ran and has no unresolved non-external failures"
     },
     {
       "blocker": "machine_readable_test_result_artifact_missing",
       "evidence": {
-        "artifact_error_count": 0,
-        "artifact_failed_count": 0,
-        "artifact_status": "OK",
-        "artifact_test_count": 5190,
-        "verdict": "MACHINE_READABLE_TEST_ARTIFACT_PASS"
+        "artifact_error_count": null,
+        "artifact_failed_count": null,
+        "artifact_status": null,
+        "artifact_test_count": null,
+        "verdict": "STRING_SUMMARY_ONLY"
       },
       "gate_id": "FULL_TEST_ARTIFACT_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "PENDING",
       "title": "machine-readable full test artifact is valid"
     }
   ],

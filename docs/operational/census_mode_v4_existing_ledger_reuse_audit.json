@@ -9,10 +9,10 @@
   },
   "lifecycle_refreshed_reused_claim_count": 92,
   "mode_note": "reused claims are imported from source-backed leaf artifacts and checked for current direct adjudication; this is not a new live-web claim pass",
-  "new_brain_web_claim_count": 121,
+  "new_brain_web_claim_count": 0,
   "reused_claim_count": 92,
   "reused_claim_in_claim_to_stage_trace_count": 92,
-  "reused_claim_in_representative_stage_count": 45,
+  "reused_claim_in_representative_stage_count": 66,
   "schema_version": "e2r_census_v4_existing_ledger_reuse_audit_v1",
   "v3_leaf_imported_claim_count": 92,
   "verdict": "PASS"

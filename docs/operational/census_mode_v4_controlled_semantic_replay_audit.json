@@ -1,5 +1,5 @@
 {
-  "as_of_date": "2026-07-01",
+  "as_of_date": "2026-07-05",
   "blockers": [],
   "case_count": 10,
   "cases": [
@@ -163,7 +163,7 @@
   ],
   "controlled_semantic_replay_pass": true,
   "fail_count": 0,
-  "output_root": "output/census_v4/2026-07-01-v177-goal-followup-production-after-expanded-brain-web-width",
+  "output_root": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched",
   "pass_count": 10,
   "pending_count": 0,
   "required_case_count": 10,

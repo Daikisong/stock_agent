@@ -261,6 +261,26 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
                     "source_id": str(seed_path),
                     "research_brain_eligible": True,
                 },
+                {
+                    "candidate_event_id": "CEV4-GOAL4-ARCHETYPE",
+                    "symbol": None,
+                    "event_date": "2026-06-29",
+                    "detected_at": "2026-06-29",
+                    "source_family": "AllArchetypeRuntimeParityFollowUp",
+                    "source_id": str(seed_path),
+                    "event_type": "all_archetype_runtime_parity_follow_up_seed",
+                    "target_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+                    "target_symbol_mode": "ARCHETYPE_LEVEL_DISCOVERY",
+                    "seed_role": "planner_input_only",
+                    "structured_payload": {
+                        "target_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+                        "target_symbol_mode": "ARCHETYPE_LEVEL_DISCOVERY",
+                        "seed_role": "planner_input_only",
+                    },
+                    "research_brain_eligible": True,
+                    "score_evidence_allowed": False,
+                    "stage_promotion_allowed_before_execution": False,
+                },
             ]
             seed_path.write_text(
                 "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows),
@@ -275,9 +295,13 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
                 as_of_date=date(2026, 6, 29),
             )
 
-        self.assertEqual(len(events), 1)
+        self.assertEqual(len(events), 2)
         self.assertEqual(events[0].candidate_event_id, "CEV4-GOOD")
         self.assertEqual(events[0].symbol, "000660")
+        self.assertEqual(events[1].candidate_event_id, "CEV4-GOAL4-ARCHETYPE")
+        self.assertEqual(events[1].symbol, "")
+        self.assertEqual(events[1].company_name, "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY")
+        self.assertEqual(events[1].issuer_directness, "INDUSTRY")
 
     def test_runtime_progress_file_records_research_brain_phases(self):
         discovered = _planner_event_with_id("CE-UNIT-DISCOVERED", symbol="000660", company_name="SK하이닉스")
@@ -560,6 +584,44 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
 
         self.assertEqual([event.candidate_event_id for event in selected], [event.candidate_event_id for event in seeds[:3]])
         self.assertTrue(all(event.source_family == "CensusFullThesisQueue" for event in selected))
+
+    def test_goal4_all_archetype_runtime_parity_seeds_consume_selection_budget_before_daily_fill(self):
+        seeds = tuple(
+            replace(
+                _planner_event_with_id(
+                    f"CEV4-RTATTEMPT-{idx:06d}",
+                    symbol="",
+                    company_name=f"C{idx:02d}_ARCHETYPE_DISCOVERY",
+                ),
+                source_family="AllArchetypeRuntimeParityFollowUp",
+                source_id="docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl",
+                event_type="all_archetype_runtime_parity_follow_up_seed",
+                event_title="planner input only",
+                event_summary="source-backed Evidence OS claim required before any production score/stage use",
+                issuer_directness="INDUSTRY",
+                structured_payload={
+                    "seed_role": "planner_input_only",
+                    "target_archetype": f"C{idx:02d}_ARCHETYPE_DISCOVERY",
+                    "target_symbol_mode": "ARCHETYPE_LEVEL_DISCOVERY",
+                },
+            )
+            for idx in range(1, 5)
+        )
+        daily_events = (
+            _planner_event_with_id("CE-UNIT-DART", symbol="114450", company_name="그린생명과학"),
+            replace(
+                _planner_event_with_id("CE-UNIT-CG", symbol="005930", company_name="삼성전자"),
+                source_family="CompanyGuide",
+                source_id="data/cache/company_guide/005930_recent_reports.json",
+                event_type="report_radar",
+            ),
+        )
+
+        selected = _select_unique_candidate_events((*seeds, *daily_events), limit=3)
+
+        self.assertEqual([event.candidate_event_id for event in selected], [event.candidate_event_id for event in seeds[:3]])
+        self.assertTrue(all(event.source_family == "AllArchetypeRuntimeParityFollowUp" for event in selected))
+        self.assertTrue(all(event.symbol == "" for event in selected))
 
     def test_full_thesis_seed_context_is_visible_to_planner_without_forcing_target_archetype(self):
         event = replace(

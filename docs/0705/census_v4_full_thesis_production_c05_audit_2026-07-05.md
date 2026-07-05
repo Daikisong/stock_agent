@@ -2,6 +2,19 @@
 
 이 문서는 2026-07-01 v177 production 산출물에서 나온 질문 6개를 그대로 추적한 감사 기록이다.
 
+후속 실행 감사:
+
+- `docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md`
+
+주의:
+
+```text
+이 문서는 "이전 산출물에서 왜 10개 production FULL_THESIS가 전부 C05였는가"를 설명한다.
+후속 patched Census v4 실행에서는 그 10개 C05 PASS가 유지되지 않고,
+production FULL_THESIS row_count=0, production_pass_allowed=false, INVALID_PARTIAL_OUTPUT으로 끝났다.
+따라서 최신 운영 상태는 후속 감사 문서의 NOT_READY/PENDING 판단을 기준으로 본다.
+```
+
 검증 기준 산출물:
 
 - `docs/operational/census_mode_v4_reproduction_command.md`
@@ -410,4 +423,3 @@ controlled smoke의 88/72점은 production 점수가 아니다.
 5. C06/C08/C15/C17/C24/C28별 production refresh coverage gate를 추가한다.
 6. 삼성/하이닉스 controlled smoke 점수는 production 점수와 UI/문서/감사 파일에서 더 강하게 분리한다.
 ```
-

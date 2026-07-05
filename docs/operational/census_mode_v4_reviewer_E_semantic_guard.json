@@ -1,6 +1,6 @@
 {
-  "critical_count": 0,
+  "critical_count": 3,
   "reviewer": "E_SEMANTIC_GUARD",
   "schema_version": "e2r_census_v4_reviewer_v1",
-  "verdict": "PASS"
+  "verdict": "FAIL"
 }
