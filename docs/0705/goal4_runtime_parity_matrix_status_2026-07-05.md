@@ -33,6 +33,9 @@ claim_mapping_accepted_trace_count
 claim_mapping_rejected_trace_count
 claim_mapping_top_rejection_reasons
 claim_mapping_rejected_samples
+claim_failure_top_modes
+claim_failure_primary_mode
+claim_failure_repair_hint
 ```
 
 쉬운 예:
@@ -121,6 +124,8 @@ execution_log_count: 14
 claim_mapping_trace_log_count: 53
 claim_mapping_accepted_trace_count: 0
 claim_mapping_rejected_trace_count: 53
+claim_failure_primary_mode: ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE
+claim_failure_repair_hint: REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE
 NO_ACCEPTED_CLAIM: 14
 NO_SCORE_ELIGIBLE_REAL_CLAIM: 11
 PRIMITIVE_GAP_UNSATISFIED: 11
@@ -141,6 +146,8 @@ C24:
   claim_mapping_trace_log_count: 78
   claim_mapping_accepted_trace_count: 0
   claim_mapping_rejected_trace_count: 78
+  claim_failure_primary_mode: ROUTE_SIGNAL_FAMILY_MISMATCH
+  claim_failure_repair_hint: REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY
   NO_ACCEPTED_CLAIM: 21
   NO_SCORE_ELIGIBLE_REAL_CLAIM: 15
   PRIMITIVE_GAP_UNSATISFIED: 15
@@ -154,6 +161,8 @@ C28:
   claim_mapping_trace_log_count: 60
   claim_mapping_accepted_trace_count: 0
   claim_mapping_rejected_trace_count: 60
+  claim_failure_primary_mode: ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE
+  claim_failure_repair_hint: REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE
   NO_ACCEPTED_CLAIM: 21
   NO_SCORE_ELIGIBLE_REAL_CLAIM: 15
   PRIMITIVE_GAP_UNSATISFIED: 15
@@ -185,6 +194,12 @@ source task 실행
   "mapping_status": "REJECTED",
   "source_provider": "OpenDART",
   "source_url": "https://dart.fss.or.kr/...",
+  "failure_modes": [
+    "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+    "PRIMITIVE_MAPPING_REJECTED",
+    "MAPPING_NOT_ACCEPTED"
+  ],
+  "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
   "rejection_reasons": [
     "mapping_not_accepted:REJECTED",
     "primitive_mapping_rejected:..."
@@ -194,6 +209,22 @@ source task 실행
 ```
 
 이 말은 C08의 현재 병목이 "리노공업 원문을 못 찾음"이 아니라, 찾은 DART 분기보고서 문구가 `repeat_order_confirmed` 같은 C08 필수 primitive로 accepted 되지 못했다는 뜻이다. 즉 다음 패치는 source route가 IR/고객사/수주/반복 주문 원문으로 향하게 만들거나, 현재 원문에서 실제 C08 claim이 있는데 mapper가 놓치는지 분해해야 한다.
+
+`claim_failure_primary_mode`로 보면 다음 행동이 더 분명하다.
+
+```text
+C08:
+  ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE
+  → DART 표지/개요 말고 repeat order/customer quality를 직접 말하는 source/section으로 reroute 필요
+
+C24:
+  ROUTE_SIGNAL_FAMILY_MISMATCH
+  → trial_quality_visible을 찾는데 공급계약 공시가 들어왔으므로 trial/endpoint/regulatory source로 source task 재계획 필요
+
+C28:
+  ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE
+  → DART 표지/개요 말고 ARR/RPO/renewal/retention이 있는 IR/실적자료/리포트 route 필요
+```
 
 ## 자기참조 버그 수정
 
@@ -253,15 +284,16 @@ OK
 
 ## 다음 작업 방향
 
-다음 패치는 "claim mapping rejected sample"을 실제 패치 입력으로 사용해 **왜 mapper가 반복적으로 일반 DART 표지/개요 문구를 필수 primitive에 못 붙이는지**를 해결해야 한다.
+다음 패치는 `claim_failure_primary_mode`별로 실제 source route를 고쳐야 한다. 지금은 단순 mapper 튜닝 문제가 아니라, 상당수 canary에서 **원문 자체가 필수 primitive를 직접 말하지 않는 source route 문제**로 보인다.
 
 우선순위:
 
-1. C08/C15/C17/C24/C28 canary의 `claim_mapping_rejected_samples`를 열어 원문이 정말 부적합한지, mapper가 너무 보수적인지, source route가 잘못됐는지 분류한다.
-2. `source_class_document_type_mismatch`와 `source_task_provider_error_score_block`을 source family별로 external blocker인지 route 설계 문제인지 분리한다.
-3. C08/C15/C17/C24/C28 canary부터 accepted claim 1개 이상을 만들 수 있는 운영 source route를 닫는다.
-4. 그 다음 required-positive gap이 남은 C01/C03/C05/C06/C31의 missing primitive별 follow-up task를 actual source/claim으로 연결한다.
+1. `ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE` 행은 DART 표지/개요에서 멈추지 말고 primitive-specific section/source로 reroute한다.
+2. `ROUTE_SIGNAL_FAMILY_MISMATCH` 행은 trial gap에 contract 공시가 들어오는 식의 source family mismatch를 planner feedback으로 되돌린다.
+3. `source_class_document_type_mismatch`와 `source_task_provider_error_score_block`을 source family별로 external blocker인지 route 설계 문제인지 분리한다.
+4. C08/C15/C17/C24/C28 canary부터 accepted claim 1개 이상을 만들 수 있는 운영 source route를 닫는다.
+5. 그 다음 required-positive gap이 남은 C01/C03/C05/C06/C31의 missing primitive별 follow-up task를 actual source/claim으로 연결한다.
 
 한 줄로 말하면:
 
-> 지금은 전 아키타입에 "어느 단계와 어떤 실패 축에서 막혔는지"뿐 아니라 "어떤 claim/quote가 왜 rejected 됐는지"까지 붙었다. 다음은 이 샘플을 이용해 canary부터 실제 accepted claim을 만들어야 한다.
+> 지금은 전 아키타입에 "어느 단계와 어떤 실패 축에서 막혔는지"뿐 아니라 "어떤 claim/quote가 왜 rejected 됐고 어떤 계층을 고쳐야 하는지"까지 붙었다. 다음은 이 failure mode를 planner/source route feedback으로 연결해 canary부터 실제 accepted claim을 만들어야 한다.

@@ -42,11 +42,37 @@
         "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES"
       ],
       "blocker_detail": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 24,
+        "PRIMITIVE_MAPPING_REJECTED": 24,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 12
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 24,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 24,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 12,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 12,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-cd869e2f9a788f6b6221",
           "contract_rule_id": "contract_visibility",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "contract_visibility",
           "primitive_id": "contract_visibility",
@@ -55,6 +81,7 @@
             "mapping_not_accepted:REJECTED",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-4f00c3226607672652c7-official-contract-quality",
@@ -67,6 +94,11 @@
         {
           "claim_id": "CLM-cd869e2f9a788f6b6221",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "contract_visibility",
           "primitive_id": "official_disclosure_status_current",
@@ -75,6 +107,7 @@
             "mapping_not_accepted:REJECTED",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-4f00c3226607672652c7-official-contract-quality",
@@ -87,6 +120,10 @@
         {
           "claim_id": "CLM-a835e0d6359a02c91dc0",
           "contract_rule_id": "official_report_snapshot_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "official_report_snapshot_current",
           "primitive_id": "official_report_snapshot_current",
@@ -96,6 +133,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "CompanyGuide",
           "source_task_id": "RSTASKV4CGSTATUS-eeb135e1d8f3a69624d6658f",
@@ -295,11 +333,31 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 25,
+        "PRIMITIVE_MAPPING_REJECTED": 25
+      },
+      "claim_failure_primary_mode": "PRIMITIVE_MAPPING_REJECTED",
+      "claim_failure_repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
+      "claim_failure_top_modes": [
+        {
+          "count": 25,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 25,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-36b17d37f3fbf2d1a5c4",
           "contract_rule_id": "official_report_snapshot_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "official_report_snapshot_current",
           "primitive_id": "official_report_snapshot_current",
@@ -309,6 +367,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "CompanyGuide",
           "source_task_id": "RSTASKV4CGSTATUS-e5afea6db9f778e94ee3207e",
@@ -321,6 +380,10 @@
         {
           "claim_id": "CLM-43a376124dc6ee81453a",
           "contract_rule_id": "official_report_snapshot_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "official_report_snapshot_current",
           "primitive_id": "official_report_snapshot_current",
@@ -330,6 +393,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "CompanyGuide",
           "source_task_id": "RSTASKV4CGSTATUS-e5afea6db9f778e94ee3207e",
@@ -342,6 +406,10 @@
         {
           "claim_id": "CLM-57b20c3c37b2759af83d",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "official_disclosure_status_current",
           "primitive_id": "official_disclosure_status_current",
@@ -352,6 +420,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RSTASKV4DARTSTATUS-e5afea6db9f778e94ee3207e",
@@ -543,11 +612,51 @@
         "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES"
       ],
       "blocker_detail": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+      "claim_failure_mode_counts": {
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": 20,
+        "MAPPING_NOT_ACCEPTED": 40,
+        "PRIMITIVE_MAPPING_REJECTED": 40,
+        "PROVIDER_ERROR_SCORE_BLOCK": 20,
+        "SEMANTIC_REJECTED": 20,
+        "TARGET_SCOPE_NOT_DIRECT": 20
+      },
+      "claim_failure_primary_mode": "TARGET_SCOPE_NOT_DIRECT",
+      "claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
+      "claim_failure_top_modes": [
+        {
+          "count": 40,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 40,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 20,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 20,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 20,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        },
+        {
+          "count": 20,
+          "mode": "PROVIDER_ERROR_SCORE_BLOCK"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 12,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-06603e0198c38ce51c90",
           "contract_rule_id": "export_contract",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "export_contract",
           "primitive_id": "export_contract",
@@ -557,6 +666,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-3c5ab053500e47b564fb-official-export-contract",
@@ -569,6 +679,10 @@
         {
           "claim_id": "CLM-06603e0198c38ce51c90",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "export_contract",
           "primitive_id": "official_disclosure_status_current",
@@ -578,6 +692,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-3c5ab053500e47b564fb-official-export-contract",
@@ -590,6 +705,10 @@
         {
           "claim_id": "CLM-6be9572a66ac9f54008d",
           "contract_rule_id": "export_contract",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "export_contract",
           "primitive_id": "export_contract",
@@ -599,6 +718,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-3c5ab053500e47b564fb-official-export-contract",
@@ -832,11 +952,37 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 14,
+        "PRIMITIVE_MAPPING_REJECTED": 14,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 12
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 14,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 14,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 12,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-7ce93609e24d9d4acac3",
           "contract_rule_id": "project_award_confirmed",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "project_award_confirmed",
           "primitive_id": "project_award_confirmed",
@@ -847,6 +993,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-C04-official-project-award",
@@ -859,6 +1006,11 @@
         {
           "claim_id": "CLM-7ce93609e24d9d4acac3",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "project_award_confirmed",
           "primitive_id": "official_disclosure_status_current",
@@ -869,6 +1021,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-C04-official-project-award",
@@ -881,6 +1034,11 @@
         {
           "claim_id": "CLM-6456949e4743fb10f21a",
           "contract_rule_id": "project_award_confirmed",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "project_award_confirmed",
           "primitive_id": "project_award_confirmed",
@@ -891,6 +1049,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-C04-official-project-award",
@@ -1078,11 +1237,36 @@
         "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES"
       ],
       "blocker_detail": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 24,
+        "PRIMITIVE_MAPPING_REJECTED": 24,
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": 4
+      },
+      "claim_failure_primary_mode": "ROUTE_SIGNAL_FAMILY_MISMATCH",
+      "claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
+      "claim_failure_top_modes": [
+        {
+          "count": 24,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 24,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 4,
+          "mode": "ROUTE_SIGNAL_FAMILY_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 12,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-dfffe8b31f4e24cf1d03",
           "contract_rule_id": "contract_duration_months",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "contract_duration_months",
           "primitive_id": "contract_duration_months",
@@ -1092,6 +1276,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-0c09e67c2aa9d555612c-001",
@@ -1104,6 +1289,10 @@
         {
           "claim_id": "CLM-dfffe8b31f4e24cf1d03",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "contract_duration_months",
           "primitive_id": "official_disclosure_status_current",
@@ -1113,6 +1302,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-0c09e67c2aa9d555612c-001",
@@ -1125,6 +1315,10 @@
         {
           "claim_id": "CLM-baf60be8563b2b2155d0",
           "contract_rule_id": "contract_duration_months",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "contract_duration_months",
           "primitive_id": "contract_duration_months",
@@ -1134,6 +1328,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-0c09e67c2aa9d555612c-001",
@@ -1351,11 +1546,37 @@
         "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES"
       ],
       "blocker_detail": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 42,
+        "PRIMITIVE_MAPPING_REJECTED": 42,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 36
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 42,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 42,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 36,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 9,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-db7c5c89b17c390e434e",
           "contract_rule_id": "revenue_visibility_contract",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "revenue_visibility_contract",
           "primitive_id": "revenue_visibility_contract",
@@ -1367,6 +1588,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-7f33db04360ffa26109b-01",
@@ -1379,6 +1601,11 @@
         {
           "claim_id": "CLM-db7c5c89b17c390e434e",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "revenue_visibility_contract",
           "primitive_id": "official_disclosure_status_current",
@@ -1390,6 +1617,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-7f33db04360ffa26109b-01",
@@ -1402,6 +1630,11 @@
         {
           "claim_id": "CLM-e3c1d5d720f68b8dd12e",
           "contract_rule_id": "revenue_visibility_contract",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "revenue_visibility_contract",
           "primitive_id": "revenue_visibility_contract",
@@ -1413,6 +1646,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-7f33db04360ffa26109b-01",
@@ -1610,11 +1844,41 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 61,
+        "PRIMITIVE_MAPPING_REJECTED": 61,
+        "SEMANTIC_REJECTED": 37,
+        "TARGET_SCOPE_NOT_DIRECT": 37
+      },
+      "claim_failure_primary_mode": "TARGET_SCOPE_NOT_DIRECT",
+      "claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
+      "claim_failure_top_modes": [
+        {
+          "count": 61,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 61,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 37,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 37,
+          "mode": "SEMANTIC_REJECTED"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-d7ce37054eb867a7d458",
           "contract_rule_id": "official_report_snapshot_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "official_report_snapshot_current",
           "primitive_id": "official_report_snapshot_current",
@@ -1624,6 +1888,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "CompanyGuide",
           "source_task_id": "RSTASKV4CGSTATUS-91078a1970165da46bf7dfa7",
@@ -1636,6 +1901,10 @@
         {
           "claim_id": "CLM-7cc6c2ca2485ecee35f0",
           "contract_rule_id": "official_report_snapshot_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "official_report_snapshot_current",
           "primitive_id": "official_report_snapshot_current",
@@ -1645,6 +1914,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "CompanyGuide",
           "source_task_id": "RSTASKV4CGSTATUS-91078a1970165da46bf7dfa7",
@@ -1657,6 +1927,10 @@
         {
           "claim_id": "CLM-df0aa698de4880460aef",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "official_disclosure_status_current",
           "primitive_id": "official_disclosure_status_current",
@@ -1667,6 +1941,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RSTASKV4DARTSTATUS-91078a1970165da46bf7dfa7",
@@ -1882,11 +2157,62 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 53,
+        "PRIMITIVE_MAPPING_REJECTED": 53,
+        "PROVIDER_ERROR_SCORE_BLOCK": 3,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 40,
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": 4,
+        "SEMANTIC_REJECTED": 3,
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 17,
+        "TARGET_SCOPE_NOT_DIRECT": 3
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 53,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 53,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 40,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 17,
+          "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
+        },
+        {
+          "count": 4,
+          "mode": "ROUTE_SIGNAL_FAMILY_MISMATCH"
+        },
+        {
+          "count": 3,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 3,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 3,
+          "mode": "PROVIDER_ERROR_SCORE_BLOCK"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-590486fe8c96466433e4",
           "contract_rule_id": "repeat_order_confirmed",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "repeat_order_confirmed",
           "primitive_id": "repeat_order_confirmed",
@@ -1899,6 +2225,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-b11e4a32ddf8d0ae9f2f-T1",
@@ -1911,6 +2238,11 @@
         {
           "claim_id": "CLM-590486fe8c96466433e4",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "repeat_order_confirmed",
           "primitive_id": "official_disclosure_status_current",
@@ -1923,6 +2255,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-b11e4a32ddf8d0ae9f2f-T1",
@@ -1935,6 +2268,11 @@
         {
           "claim_id": "CLM-fece4a3a75fa97dfffb1",
           "contract_rule_id": "repeat_order_confirmed",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "repeat_order_confirmed",
           "primitive_id": "repeat_order_confirmed",
@@ -1947,6 +2285,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-b11e4a32ddf8d0ae9f2f-T1",
@@ -2171,11 +2510,42 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 34,
+        "PRIMITIVE_MAPPING_REJECTED": 34,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 24,
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 10
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 34,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 34,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 24,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 10,
+          "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-f3e6b85a171bb49e22e6",
           "contract_rule_id": "order_to_revenue_bridge",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "order_to_revenue_bridge",
           "primitive_id": "order_to_revenue_bridge",
@@ -2186,6 +2556,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-7ec6a3c031d33382c18e-T1",
@@ -2198,6 +2569,11 @@
         {
           "claim_id": "CLM-f3e6b85a171bb49e22e6",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "order_to_revenue_bridge",
           "primitive_id": "official_disclosure_status_current",
@@ -2208,6 +2584,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-7ec6a3c031d33382c18e-T1",
@@ -2220,6 +2597,11 @@
         {
           "claim_id": "CLM-9d93e58b7a2bf13e9500",
           "contract_rule_id": "order_to_revenue_bridge",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "order_to_revenue_bridge",
           "primitive_id": "order_to_revenue_bridge",
@@ -2230,6 +2612,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-7ec6a3c031d33382c18e-T1",
@@ -2426,11 +2809,36 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 48,
+        "PRIMITIVE_MAPPING_REJECTED": 48,
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 8
+      },
+      "claim_failure_primary_mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH",
+      "claim_failure_repair_hint": "FIX_SOURCE_CLASS_OR_DOCUMENT_TYPE_ROUTE",
+      "claim_failure_top_modes": [
+        {
+          "count": 48,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 48,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 8,
+          "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-1781a5079bb95eacc6a1",
           "contract_rule_id": "cycle_demand_visibility",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "cycle_demand_visibility",
           "primitive_id": "cycle_demand_visibility",
@@ -2442,6 +2850,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-237bd74a28de5acb2a5a-cycle-demand-official",
@@ -2454,6 +2863,10 @@
         {
           "claim_id": "CLM-1781a5079bb95eacc6a1",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "cycle_demand_visibility",
           "primitive_id": "official_disclosure_status_current",
@@ -2465,6 +2878,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-237bd74a28de5acb2a5a-cycle-demand-official",
@@ -2477,6 +2891,10 @@
         {
           "claim_id": "CLM-5fe2986b39d288496c52",
           "contract_rule_id": "cycle_demand_visibility",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "cycle_demand_visibility",
           "primitive_id": "cycle_demand_visibility",
@@ -2488,6 +2906,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-237bd74a28de5acb2a5a-cycle-demand-official",
@@ -2684,11 +3103,57 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": 41,
+        "MAPPING_NOT_ACCEPTED": 101,
+        "PRIMITIVE_MAPPING_REJECTED": 101,
+        "PROVIDER_ERROR_SCORE_BLOCK": 41,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 36,
+        "SEMANTIC_REJECTED": 41,
+        "TARGET_SCOPE_NOT_DIRECT": 41
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 101,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 101,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 41,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 41,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 41,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        },
+        {
+          "count": 41,
+          "mode": "PROVIDER_ERROR_SCORE_BLOCK"
+        },
+        {
+          "count": 36,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-e4e5155d5a799a5c4458",
           "contract_rule_id": "call_off_risk",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "call_off_risk",
           "primitive_id": "call_off_risk",
@@ -2701,6 +3166,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-2718d2df9f1d26dead8a-T1-official-orderbook-risk",
@@ -2713,6 +3179,11 @@
         {
           "claim_id": "CLM-e4e5155d5a799a5c4458",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "call_off_risk",
           "primitive_id": "official_disclosure_status_current",
@@ -2725,6 +3196,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-2718d2df9f1d26dead8a-T1-official-orderbook-risk",
@@ -2737,6 +3209,11 @@
         {
           "claim_id": "CLM-4293682c25cacb94b0a4",
           "contract_rule_id": "call_off_risk",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "call_off_risk",
           "primitive_id": "call_off_risk",
@@ -2749,6 +3226,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-2718d2df9f1d26dead8a-T1-official-orderbook-risk",
@@ -2987,6 +3465,10 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {},
+      "claim_failure_primary_mode": null,
+      "claim_failure_repair_hint": null,
+      "claim_failure_top_modes": [],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [],
       "claim_mapping_rejected_trace_count": 0,
@@ -3143,11 +3625,47 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 120,
+        "PRIMITIVE_MAPPING_REJECTED": 120,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 80,
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": 20,
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 24
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 120,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 120,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 80,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 24,
+          "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
+        },
+        {
+          "count": 20,
+          "mode": "ROUTE_SIGNAL_FAMILY_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-65cc5536ca573f14540f",
           "contract_rule_id": "jv_utilization",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "jv_utilization",
           "primitive_id": "jv_utilization",
@@ -3160,6 +3678,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-020150-C13-OFFICIAL-JV-UTIL",
@@ -3172,6 +3691,11 @@
         {
           "claim_id": "CLM-65cc5536ca573f14540f",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "jv_utilization",
           "primitive_id": "official_disclosure_status_current",
@@ -3184,6 +3708,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-020150-C13-OFFICIAL-JV-UTIL",
@@ -3196,6 +3721,11 @@
         {
           "claim_id": "CLM-d13b30fc279e452b3fb6",
           "contract_rule_id": "jv_utilization",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "jv_utilization",
           "primitive_id": "jv_utilization",
@@ -3208,6 +3738,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-020150-C13-OFFICIAL-JV-UTIL",
@@ -3405,11 +3936,31 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 10
+      },
+      "claim_failure_primary_mode": "PRIMITIVE_MAPPING_REJECTED",
+      "claim_failure_repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
+      "claim_failure_top_modes": [
+        {
+          "count": 10,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 10,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-5c7d20067aa6c5d62192",
           "contract_rule_id": "ev_demand_slowdown",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "ev_demand_slowdown",
           "primitive_id": "ev_demand_slowdown",
@@ -3419,6 +3970,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "CompanyGuide",
           "source_task_id": "CEV4-RTATTEMPT-af72ad03eb4992d5297e-C14-official-demand-slowdown",
@@ -3431,6 +3983,10 @@
         {
           "claim_id": "CLM-5c7d20067aa6c5d62192",
           "contract_rule_id": "official_report_snapshot_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "ev_demand_slowdown",
           "primitive_id": "official_report_snapshot_current",
@@ -3440,6 +3996,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "CompanyGuide",
           "source_task_id": "CEV4-RTATTEMPT-af72ad03eb4992d5297e-C14-official-demand-slowdown",
@@ -3452,6 +4009,10 @@
         {
           "claim_id": "CLM-449c8ad1c9bc4ec596c7",
           "contract_rule_id": "ev_demand_slowdown",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "ev_demand_slowdown",
           "primitive_id": "ev_demand_slowdown",
@@ -3461,6 +4022,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "CompanyGuide",
           "source_task_id": "CEV4-RTATTEMPT-af72ad03eb4992d5297e-C14-official-demand-slowdown",
@@ -3649,11 +4211,42 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 48,
+        "PRIMITIVE_MAPPING_REJECTED": 48,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 32,
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": 4
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 48,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 48,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 32,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 4,
+          "mode": "ROUTE_SIGNAL_FAMILY_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-6321cd5eaf19c5fdf48b",
           "contract_rule_id": "spread_expansion",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "spread_expansion",
           "primitive_id": "spread_expansion",
@@ -3666,6 +4259,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-90BF-C15-SPREAD-OFFICIAL",
@@ -3678,6 +4272,11 @@
         {
           "claim_id": "CLM-6321cd5eaf19c5fdf48b",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "spread_expansion",
           "primitive_id": "official_disclosure_status_current",
@@ -3690,6 +4289,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-90BF-C15-SPREAD-OFFICIAL",
@@ -3702,6 +4302,11 @@
         {
           "claim_id": "CLM-1873f04a6671f36ebdba",
           "contract_rule_id": "spread_expansion",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "spread_expansion",
           "primitive_id": "spread_expansion",
@@ -3714,6 +4319,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-90BF-C15-SPREAD-OFFICIAL",
@@ -3900,11 +4506,42 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 42,
+        "PRIMITIVE_MAPPING_REJECTED": 42,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 32,
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": 4
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 42,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 42,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 32,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 4,
+          "mode": "ROUTE_SIGNAL_FAMILY_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-581457ba50114accbafc",
           "contract_rule_id": "policy_supply_support",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "policy_supply_support",
           "primitive_id": "policy_supply_support",
@@ -3917,6 +4554,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-49ef6fb2f350ade01199-official-policy-support",
@@ -3929,6 +4567,11 @@
         {
           "claim_id": "CLM-581457ba50114accbafc",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "policy_supply_support",
           "primitive_id": "official_disclosure_status_current",
@@ -3941,6 +4584,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-49ef6fb2f350ade01199-official-policy-support",
@@ -3953,6 +4597,11 @@
         {
           "claim_id": "CLM-7a760c3cd1468fedd18c",
           "contract_rule_id": "policy_supply_support",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "policy_supply_support",
           "primitive_id": "policy_supply_support",
@@ -3965,6 +4614,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-49ef6fb2f350ade01199-official-policy-support",
@@ -4156,11 +4806,62 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": 76,
+        "MAPPING_NOT_ACCEPTED": 178,
+        "PRIMITIVE_MAPPING_REJECTED": 178,
+        "PROVIDER_ERROR_SCORE_BLOCK": 76,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 60,
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": 12,
+        "SEMANTIC_REJECTED": 94,
+        "TARGET_SCOPE_NOT_DIRECT": 94
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 178,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 178,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 94,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 94,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 76,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        },
+        {
+          "count": 76,
+          "mode": "PROVIDER_ERROR_SCORE_BLOCK"
+        },
+        {
+          "count": 60,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 12,
+          "mode": "ROUTE_SIGNAL_FAMILY_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-d7af11c7f37e17b21061",
           "contract_rule_id": "utilization_rate",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "utilization_rate",
           "primitive_id": "utilization_rate",
@@ -4173,6 +4874,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-6037a375036d939d1d2f-official-utilization",
@@ -4185,6 +4887,11 @@
         {
           "claim_id": "CLM-d7af11c7f37e17b21061",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "utilization_rate",
           "primitive_id": "official_disclosure_status_current",
@@ -4197,6 +4904,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-6037a375036d939d1d2f-official-utilization",
@@ -4209,6 +4917,11 @@
         {
           "claim_id": "CLM-19dc72a063af7e24e1dd",
           "contract_rule_id": "utilization_rate",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "utilization_rate",
           "primitive_id": "utilization_rate",
@@ -4221,6 +4934,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-6037a375036d939d1d2f-official-utilization",
@@ -4451,11 +5165,52 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": 11,
+        "MAPPING_NOT_ACCEPTED": 53,
+        "PRIMITIVE_MAPPING_REJECTED": 53,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 32,
+        "SEMANTIC_REJECTED": 11,
+        "TARGET_SCOPE_NOT_DIRECT": 11
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 53,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 53,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 32,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 11,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 11,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 11,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-691b9baeed0a891d7500",
           "contract_rule_id": "repeat_order_confirmed",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "repeat_order_confirmed",
           "primitive_id": "repeat_order_confirmed",
@@ -4467,6 +5222,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-7ebe590e9253e7d39142-T1",
@@ -4479,6 +5235,11 @@
         {
           "claim_id": "CLM-691b9baeed0a891d7500",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "repeat_order_confirmed",
           "primitive_id": "official_disclosure_status_current",
@@ -4490,6 +5251,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-7ebe590e9253e7d39142-T1",
@@ -4502,6 +5264,11 @@
         {
           "claim_id": "CLM-7b6be92d80811119ff2c",
           "contract_rule_id": "repeat_order_confirmed",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "repeat_order_confirmed",
           "primitive_id": "repeat_order_confirmed",
@@ -4513,6 +5280,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-7ebe590e9253e7d39142-T1",
@@ -4730,11 +5498,57 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": 12,
+        "MAPPING_NOT_ACCEPTED": 52,
+        "PRIMITIVE_MAPPING_REJECTED": 52,
+        "PROVIDER_ERROR_SCORE_BLOCK": 12,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 24,
+        "SEMANTIC_REJECTED": 12,
+        "TARGET_SCOPE_NOT_DIRECT": 12
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 52,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 52,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 24,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 12,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 12,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 12,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        },
+        {
+          "count": 12,
+          "mode": "PROVIDER_ERROR_SCORE_BLOCK"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-1bbae2a8279f50e310e4",
           "contract_rule_id": "inventory_spike",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "inventory_spike",
           "primitive_id": "inventory_spike",
@@ -4747,6 +5561,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-60e2345cfc3433903903-official-inventory",
@@ -4759,6 +5574,11 @@
         {
           "claim_id": "CLM-1bbae2a8279f50e310e4",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "inventory_spike",
           "primitive_id": "official_disclosure_status_current",
@@ -4771,6 +5591,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-60e2345cfc3433903903-official-inventory",
@@ -4783,6 +5604,11 @@
         {
           "claim_id": "CLM-a8457afbd23634e0cdcd",
           "contract_rule_id": "inventory_spike",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "inventory_spike",
           "primitive_id": "inventory_spike",
@@ -4795,6 +5621,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-60e2345cfc3433903903-official-inventory",
@@ -5020,11 +5847,37 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 34,
+        "PRIMITIVE_MAPPING_REJECTED": 34,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 24
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 34,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 34,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 24,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-bc37105ef637734f26bd",
           "contract_rule_id": "brand_customer_diversification",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "brand_customer_diversification",
           "primitive_id": "brand_customer_diversification",
@@ -5035,6 +5888,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-80ca650d01f63cb0a1e6-T1",
@@ -5047,6 +5901,11 @@
         {
           "claim_id": "CLM-bc37105ef637734f26bd",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "brand_customer_diversification",
           "primitive_id": "official_disclosure_status_current",
@@ -5057,6 +5916,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-80ca650d01f63cb0a1e6-T1",
@@ -5069,6 +5929,11 @@
         {
           "claim_id": "CLM-badd79be3977183a4ab7",
           "contract_rule_id": "brand_customer_diversification",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "brand_customer_diversification",
           "primitive_id": "brand_customer_diversification",
@@ -5079,6 +5944,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-80ca650d01f63cb0a1e6-T1",
@@ -5265,11 +6131,62 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": 14,
+        "MAPPING_NOT_ACCEPTED": 64,
+        "PRIMITIVE_MAPPING_REJECTED": 64,
+        "PROVIDER_ERROR_SCORE_BLOCK": 10,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 24,
+        "SEMANTIC_REJECTED": 24,
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 24,
+        "TARGET_SCOPE_NOT_DIRECT": 24
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 64,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 64,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 24,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 24,
+          "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
+        },
+        {
+          "count": 24,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 24,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 14,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        },
+        {
+          "count": 10,
+          "mode": "PROVIDER_ERROR_SCORE_BLOCK"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-47130abca0729d43d880",
           "contract_rule_id": "roe",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "roe",
           "primitive_id": "roe",
@@ -5282,6 +6199,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-01",
@@ -5294,6 +6212,11 @@
         {
           "claim_id": "CLM-47130abca0729d43d880",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "roe",
           "primitive_id": "official_disclosure_status_current",
@@ -5306,6 +6229,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-01",
@@ -5318,6 +6242,11 @@
         {
           "claim_id": "CLM-73d2dddeb23d80c47f18",
           "contract_rule_id": "roe",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "roe",
           "primitive_id": "roe",
@@ -5330,6 +6259,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-01",
@@ -5561,11 +6491,57 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": 25,
+        "MAPPING_NOT_ACCEPTED": 73,
+        "PRIMITIVE_MAPPING_REJECTED": 73,
+        "PROVIDER_ERROR_SCORE_BLOCK": 14,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 32,
+        "SEMANTIC_REJECTED": 25,
+        "TARGET_SCOPE_NOT_DIRECT": 25
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 73,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 73,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 32,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 25,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 25,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 25,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        },
+        {
+          "count": 14,
+          "mode": "PROVIDER_ERROR_SCORE_BLOCK"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-1c31e44adbaa023e4913",
           "contract_rule_id": "reserve_quality_visible",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "reserve_quality_visible",
           "primitive_id": "reserve_quality_visible",
@@ -5578,6 +6554,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-13eae705eea991b8d946-001",
@@ -5590,6 +6567,11 @@
         {
           "claim_id": "CLM-1c31e44adbaa023e4913",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "reserve_quality_visible",
           "primitive_id": "official_disclosure_status_current",
@@ -5602,6 +6584,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-13eae705eea991b8d946-001",
@@ -5614,6 +6597,11 @@
         {
           "claim_id": "CLM-493a4d7b812c12be55e0",
           "contract_rule_id": "reserve_quality_visible",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "reserve_quality_visible",
           "primitive_id": "reserve_quality_visible",
@@ -5626,6 +6614,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-13eae705eea991b8d946-001",
@@ -5852,11 +6841,47 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 123,
+        "PRIMITIVE_MAPPING_REJECTED": 123,
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": 24,
+        "SEMANTIC_REJECTED": 45,
+        "TARGET_SCOPE_NOT_DIRECT": 45
+      },
+      "claim_failure_primary_mode": "ROUTE_SIGNAL_FAMILY_MISMATCH",
+      "claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
+      "claim_failure_top_modes": [
+        {
+          "count": 123,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 123,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 45,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 45,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 24,
+          "mode": "ROUTE_SIGNAL_FAMILY_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-2bf8a65371d2d661ed82",
           "contract_rule_id": "approval_to_revenue_bridge",
+          "failure_modes": [
+            "ROUTE_SIGNAL_FAMILY_MISMATCH",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "approval_to_revenue_bridge",
           "primitive_id": "approval_to_revenue_bridge",
@@ -5869,6 +6894,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-2944cc830470835ef29c-T1-official-approval-revenue",
@@ -5881,6 +6907,11 @@
         {
           "claim_id": "CLM-2bf8a65371d2d661ed82",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_SIGNAL_FAMILY_MISMATCH",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "approval_to_revenue_bridge",
           "primitive_id": "official_disclosure_status_current",
@@ -5893,6 +6924,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-2944cc830470835ef29c-T1-official-approval-revenue",
@@ -5905,6 +6937,11 @@
         {
           "claim_id": "CLM-3ceb112c24daaadd021b",
           "contract_rule_id": "approval_to_revenue_bridge",
+          "failure_modes": [
+            "ROUTE_SIGNAL_FAMILY_MISMATCH",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "approval_to_revenue_bridge",
           "primitive_id": "approval_to_revenue_bridge",
@@ -5917,6 +6954,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-2944cc830470835ef29c-T1-official-approval-revenue",
@@ -6143,11 +7181,37 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 78,
+        "PRIMITIVE_MAPPING_REJECTED": 78,
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": 24
+      },
+      "claim_failure_primary_mode": "ROUTE_SIGNAL_FAMILY_MISMATCH",
+      "claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
+      "claim_failure_top_modes": [
+        {
+          "count": 78,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 78,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 24,
+          "mode": "ROUTE_SIGNAL_FAMILY_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-fdc9b366609fe4e8f403",
           "contract_rule_id": "trial_quality_visible",
+          "failure_modes": [
+            "ROUTE_SIGNAL_FAMILY_MISMATCH",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "trial_quality_visible",
           "primitive_id": "trial_quality_visible",
@@ -6160,6 +7224,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-688a7c76eb7acc93475d-01",
@@ -6172,6 +7237,11 @@
         {
           "claim_id": "CLM-fdc9b366609fe4e8f403",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_SIGNAL_FAMILY_MISMATCH",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "trial_quality_visible",
           "primitive_id": "official_disclosure_status_current",
@@ -6184,6 +7254,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-688a7c76eb7acc93475d-01",
@@ -6196,6 +7267,11 @@
         {
           "claim_id": "CLM-e4b7cf80e685b1ed95a2",
           "contract_rule_id": "trial_quality_visible",
+          "failure_modes": [
+            "ROUTE_SIGNAL_FAMILY_MISMATCH",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "trial_quality_visible",
           "primitive_id": "trial_quality_visible",
@@ -6208,6 +7284,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
+          "repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-688a7c76eb7acc93475d-01",
@@ -6399,11 +7476,31 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 42,
+        "PRIMITIVE_MAPPING_REJECTED": 42
+      },
+      "claim_failure_primary_mode": "PRIMITIVE_MAPPING_REJECTED",
+      "claim_failure_repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
+      "claim_failure_top_modes": [
+        {
+          "count": 42,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 42,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-4e072e291eb6c99636cc",
           "contract_rule_id": "export_growth_pct",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "export_growth_pct",
           "primitive_id": "export_growth_pct",
@@ -6416,6 +7513,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-6645c0062d7e5173f10a-01",
@@ -6428,6 +7526,10 @@
         {
           "claim_id": "CLM-4e072e291eb6c99636cc",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "export_growth_pct",
           "primitive_id": "official_disclosure_status_current",
@@ -6440,6 +7542,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-6645c0062d7e5173f10a-01",
@@ -6452,6 +7555,10 @@
         {
           "claim_id": "CLM-bce31e5fed043937663f",
           "contract_rule_id": "export_growth_pct",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "export_growth_pct",
           "primitive_id": "export_growth_pct",
@@ -6464,6 +7571,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-6645c0062d7e5173f10a-01",
@@ -6651,11 +7759,57 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": 29,
+        "MAPPING_NOT_ACCEPTED": 105,
+        "PRIMITIVE_MAPPING_REJECTED": 105,
+        "PROVIDER_ERROR_SCORE_BLOCK": 29,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 36,
+        "SEMANTIC_REJECTED": 16,
+        "TARGET_SCOPE_NOT_DIRECT": 16
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 105,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 105,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 36,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 29,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        },
+        {
+          "count": 29,
+          "mode": "PROVIDER_ERROR_SCORE_BLOCK"
+        },
+        {
+          "count": 16,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 16,
+          "mode": "SEMANTIC_REJECTED"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-7aef8a56a35bb344a8d3",
           "contract_rule_id": "arpu_growth_pct",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "arpu_growth_pct",
           "primitive_id": "arpu_growth_pct",
@@ -6668,6 +7822,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-100b6f180bd27741c338-001",
@@ -6680,6 +7835,11 @@
         {
           "claim_id": "CLM-7aef8a56a35bb344a8d3",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "arpu_growth_pct",
           "primitive_id": "official_disclosure_status_current",
@@ -6692,6 +7852,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-100b6f180bd27741c338-001",
@@ -6704,6 +7865,11 @@
         {
           "claim_id": "CLM-81fd4175730339ec2457",
           "contract_rule_id": "arpu_growth_pct",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "arpu_growth_pct",
           "primitive_id": "arpu_growth_pct",
@@ -6716,6 +7882,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-100b6f180bd27741c338-001",
@@ -6951,11 +8118,37 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 54,
+        "PRIMITIVE_MAPPING_REJECTED": 54,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 36
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 54,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 54,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 36,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-e6e1b514301b9ea65c2f",
           "contract_rule_id": "global_launch_conversion",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "global_launch_conversion",
           "primitive_id": "global_launch_conversion",
@@ -6968,6 +8161,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-9332-C27-LAUNCH-OFFICIAL",
@@ -6980,6 +8174,11 @@
         {
           "claim_id": "CLM-e6e1b514301b9ea65c2f",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "global_launch_conversion",
           "primitive_id": "official_disclosure_status_current",
@@ -6992,6 +8191,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-9332-C27-LAUNCH-OFFICIAL",
@@ -7004,6 +8204,11 @@
         {
           "claim_id": "CLM-82746823e8db51eeaaf0",
           "contract_rule_id": "global_launch_conversion",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "global_launch_conversion",
           "primitive_id": "global_launch_conversion",
@@ -7016,6 +8221,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-9332-C27-LAUNCH-OFFICIAL",
@@ -7208,11 +8414,42 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 60,
+        "PRIMITIVE_MAPPING_REJECTED": 60,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 48,
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": 4
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 60,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 60,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 48,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 4,
+          "mode": "ROUTE_SIGNAL_FAMILY_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-c3e6434197af86558973",
           "contract_rule_id": "arr_growth_visible",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "arr_growth_visible",
           "primitive_id": "arr_growth_visible",
@@ -7225,6 +8462,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-bc089183ac06be44b76d-official-arr-growth",
@@ -7237,6 +8475,11 @@
         {
           "claim_id": "CLM-c3e6434197af86558973",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "arr_growth_visible",
           "primitive_id": "official_disclosure_status_current",
@@ -7249,6 +8492,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-bc089183ac06be44b76d-official-arr-growth",
@@ -7261,6 +8505,11 @@
         {
           "claim_id": "CLM-87ad99ab3ba28149813e",
           "contract_rule_id": "arr_growth_visible",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "arr_growth_visible",
           "primitive_id": "arr_growth_visible",
@@ -7273,6 +8522,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline",
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-bc089183ac06be44b76d-official-arr-growth",
@@ -7463,11 +8713,57 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": 11,
+        "MAPPING_NOT_ACCEPTED": 111,
+        "PRIMITIVE_MAPPING_REJECTED": 111,
+        "PROVIDER_ERROR_SCORE_BLOCK": 11,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 60,
+        "SEMANTIC_REJECTED": 11,
+        "TARGET_SCOPE_NOT_DIRECT": 11
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 111,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 111,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 60,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        },
+        {
+          "count": 11,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 11,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 11,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        },
+        {
+          "count": 11,
+          "mode": "PROVIDER_ERROR_SCORE_BLOCK"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-0ba7c421bd74af3b2749",
           "contract_rule_id": "volume_growth_visible",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "volume_growth_visible",
           "primitive_id": "volume_growth_visible",
@@ -7480,6 +8776,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-5ae149e196c67999b43a-T1",
@@ -7492,6 +8789,11 @@
         {
           "claim_id": "CLM-0ba7c421bd74af3b2749",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "volume_growth_visible",
           "primitive_id": "official_disclosure_status_current",
@@ -7504,6 +8806,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-5ae149e196c67999b43a-T1",
@@ -7516,6 +8819,11 @@
         {
           "claim_id": "CLM-b0068fdc27bd6b8abcbb",
           "contract_rule_id": "volume_growth_visible",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "volume_growth_visible",
           "primitive_id": "volume_growth_visible",
@@ -7528,6 +8836,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-5ae149e196c67999b43a-T1",
@@ -7761,11 +9070,31 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 66,
+        "PRIMITIVE_MAPPING_REJECTED": 66
+      },
+      "claim_failure_primary_mode": "PRIMITIVE_MAPPING_REJECTED",
+      "claim_failure_repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
+      "claim_failure_top_modes": [
+        {
+          "count": 66,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 66,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-9094dc4b130c0e73d160",
           "contract_rule_id": "cash_collection_visible",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "cash_collection_visible",
           "primitive_id": "cash_collection_visible",
@@ -7778,6 +9107,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-07437236a0eb30df2ce5-001",
@@ -7790,6 +9120,10 @@
         {
           "claim_id": "CLM-9094dc4b130c0e73d160",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "cash_collection_visible",
           "primitive_id": "official_disclosure_status_current",
@@ -7802,6 +9136,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-07437236a0eb30df2ce5-001",
@@ -7814,6 +9149,10 @@
         {
           "claim_id": "CLM-d40f47484415c6cdd0f7",
           "contract_rule_id": "cash_collection_visible",
+          "failure_modes": [
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "cash_collection_visible",
           "primitive_id": "cash_collection_visible",
@@ -7826,6 +9165,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "ST-07437236a0eb30df2ce5-001",
@@ -8019,11 +9359,37 @@
         "SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES"
       ],
       "blocker_detail": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 40,
+        "PRIMITIVE_MAPPING_REJECTED": 40,
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": 20
+      },
+      "claim_failure_primary_mode": "ROUTE_SIGNAL_FAMILY_MISMATCH",
+      "claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
+      "claim_failure_top_modes": [
+        {
+          "count": 40,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 40,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 20,
+          "mode": "ROUTE_SIGNAL_FAMILY_MISMATCH"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 4,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-75ddd91264ee55d810a7",
           "contract_rule_id": "direct_company_cash_route",
+          "failure_modes": [
+            "ROUTE_SIGNAL_FAMILY_MISMATCH",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "direct_company_cash_route",
           "primitive_id": "direct_company_cash_route",
@@ -8036,6 +9402,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-777cd64015fdd246108d-T1",
@@ -8048,6 +9415,11 @@
         {
           "claim_id": "CLM-75ddd91264ee55d810a7",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_SIGNAL_FAMILY_MISMATCH",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "direct_company_cash_route",
           "primitive_id": "official_disclosure_status_current",
@@ -8060,6 +9432,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-777cd64015fdd246108d-T1",
@@ -8072,6 +9445,11 @@
         {
           "claim_id": "CLM-75b5d707344eef2df58f",
           "contract_rule_id": "direct_company_cash_route",
+          "failure_modes": [
+            "ROUTE_SIGNAL_FAMILY_MISMATCH",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "direct_company_cash_route",
           "primitive_id": "direct_company_cash_route",
@@ -8084,6 +9462,7 @@
             "primitive_mapping_rejected:v4_signal:structured_consensus_visibility_current",
             "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility"
           ],
+          "repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-777cd64015fdd246108d-T1",
@@ -8275,11 +9654,37 @@
         "PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM"
       ],
       "blocker_detail": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+      "claim_failure_mode_counts": {
+        "MAPPING_NOT_ACCEPTED": 26,
+        "PRIMITIVE_MAPPING_REJECTED": 26,
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": 24
+      },
+      "claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+      "claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+      "claim_failure_top_modes": [
+        {
+          "count": 26,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 26,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 24,
+          "mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-93d97a0b59c14a5d9f45",
           "contract_rule_id": "tender_offer_confirmed",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "tender_offer_confirmed",
           "primitive_id": "tender_offer_confirmed",
@@ -8292,6 +9697,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-4ca7f0d6addca879bbf6-official-tender-confirmation",
@@ -8304,6 +9710,11 @@
         {
           "claim_id": "CLM-93d97a0b59c14a5d9f45",
           "contract_rule_id": "official_disclosure_status_current",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "tender_offer_confirmed",
           "primitive_id": "official_disclosure_status_current",
@@ -8316,6 +9727,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-4ca7f0d6addca879bbf6-official-tender-confirmation",
@@ -8328,6 +9740,11 @@
         {
           "claim_id": "CLM-e5e0d18b6be2e56d6b98",
           "contract_rule_id": "tender_offer_confirmed",
+          "failure_modes": [
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "tender_offer_confirmed",
           "primitive_id": "tender_offer_confirmed",
@@ -8340,6 +9757,7 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
             "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
           ],
+          "repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
           "semantic_status": "PASS",
           "source_provider": "OpenDART",
           "source_task_id": "CEV4-RTATTEMPT-4ca7f0d6addca879bbf6-official-tender-confirmation",
@@ -8523,11 +9941,49 @@
         "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "blocker_detail": "아키타입 discovery는 열렸지만 실제 종목 symbol이 materialize되지 않아 issuer claim으로 닫히지 않았다.",
+      "claim_failure_mode_counts": {
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": 34,
+        "MAPPING_NOT_ACCEPTED": 88,
+        "PRIMITIVE_MAPPING_REJECTED": 88,
+        "SEMANTIC_REJECTED": 88,
+        "TARGET_SCOPE_NOT_DIRECT": 88
+      },
+      "claim_failure_primary_mode": "TARGET_SCOPE_NOT_DIRECT",
+      "claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
+      "claim_failure_top_modes": [
+        {
+          "count": 88,
+          "mode": "TARGET_SCOPE_NOT_DIRECT"
+        },
+        {
+          "count": 88,
+          "mode": "SEMANTIC_REJECTED"
+        },
+        {
+          "count": 88,
+          "mode": "PRIMITIVE_MAPPING_REJECTED"
+        },
+        {
+          "count": 88,
+          "mode": "MAPPING_NOT_ACCEPTED"
+        },
+        {
+          "count": 34,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        }
+      ],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [
         {
           "claim_id": "CLM-d8443fef2c9038cccfe4",
           "contract_rule_id": "issuer_official_update_current",
+          "failure_modes": [
+            "TARGET_SCOPE_NOT_DIRECT",
+            "SEMANTIC_REJECTED",
+            "ANCHOR_OR_SOURCE_LINEAGE_REJECTED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "issuer_official_update_current",
           "primitive_id": "issuer_official_update_current",
@@ -8540,6 +9996,7 @@
             "semantic_rejected",
             "target_scope_not_allowed:UNRELATED"
           ],
+          "repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
           "semantic_status": "REJECTED",
           "source_provider": "StoredIssuerOfficialOrReportSnapshot",
           "source_task_id": "RSTASKV4IRSTATUS-1fb8990e4205f731680008e1",
@@ -8552,6 +10009,13 @@
         {
           "claim_id": "CLM-42a729d26493b2aebfbb",
           "contract_rule_id": "issuer_official_update_current",
+          "failure_modes": [
+            "TARGET_SCOPE_NOT_DIRECT",
+            "SEMANTIC_REJECTED",
+            "ANCHOR_OR_SOURCE_LINEAGE_REJECTED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "issuer_official_update_current",
           "primitive_id": "issuer_official_update_current",
@@ -8564,6 +10028,7 @@
             "target_scope_not_allowed:UNRELATED",
             "target_not_direct:NOT_TARGET_SCOPED"
           ],
+          "repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
           "semantic_status": "REJECTED",
           "source_provider": "StoredIssuerOfficialOrReportSnapshot",
           "source_task_id": "RSTASKV4IRSTATUS-1fb8990e4205f731680008e1",
@@ -8576,6 +10041,13 @@
         {
           "claim_id": "CLM-5e1b9a668162c6fa3e4f",
           "contract_rule_id": "issuer_official_update_current",
+          "failure_modes": [
+            "TARGET_SCOPE_NOT_DIRECT",
+            "SEMANTIC_REJECTED",
+            "ANCHOR_OR_SOURCE_LINEAGE_REJECTED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
           "mapping_status": "REJECTED",
           "primitive_gap": "issuer_official_update_current",
           "primitive_id": "issuer_official_update_current",
@@ -8588,6 +10060,7 @@
             "target_scope_not_allowed:UNRELATED",
             "target_not_direct:NOT_TARGET_SCOPED"
           ],
+          "repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
           "semantic_status": "REJECTED",
           "source_provider": "StoredIssuerOfficialOrReportSnapshot",
           "source_task_id": "RSTASKV4IRSTATUS-1fb8990e4205f731680008e1",
@@ -8808,6 +10281,10 @@
         "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "blocker_detail": "아키타입 discovery는 열렸지만 실제 종목 symbol이 materialize되지 않아 issuer claim으로 닫히지 않았다.",
+      "claim_failure_mode_counts": {},
+      "claim_failure_primary_mode": null,
+      "claim_failure_repair_hint": null,
+      "claim_failure_top_modes": [],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [],
       "claim_mapping_rejected_trace_count": 0,
@@ -8898,6 +10375,10 @@
         "TARGET_MATERIALIZATION_REQUIRED"
       ],
       "blocker_detail": "아키타입 discovery는 열렸지만 실제 종목 symbol이 materialize되지 않아 issuer claim으로 닫히지 않았다.",
+      "claim_failure_mode_counts": {},
+      "claim_failure_primary_mode": null,
+      "claim_failure_repair_hint": null,
+      "claim_failure_top_modes": [],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [],
       "claim_mapping_rejected_trace_count": 0,
@@ -8986,6 +10467,10 @@
       "blocked_symbols": [],
       "blocker_classes": [],
       "blocker_detail": "planner 가설은 있었지만 bounded source task 생성/실행까지 이어지지 않았다.",
+      "claim_failure_mode_counts": {},
+      "claim_failure_primary_mode": null,
+      "claim_failure_repair_hint": null,
+      "claim_failure_top_modes": [],
       "claim_mapping_accepted_trace_count": 0,
       "claim_mapping_rejected_samples": [],
       "claim_mapping_rejected_trace_count": 0,

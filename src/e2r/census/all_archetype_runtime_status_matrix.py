@@ -242,8 +242,124 @@ def _normalized_reason_key(reason: str) -> str:
     return reason.split(":", 1)[0]
 
 
+def _trace_quote_text(trace: Mapping[str, Any]) -> str:
+    return " ".join(str(trace.get("quote_text") or trace.get("exact_quote") or "").split())
+
+
+def _is_generic_dart_profile_text(trace: Mapping[str, Any]) -> bool:
+    source_provider = str(trace.get("source_provider") or "")
+    text = _trace_quote_text(trace)
+    if source_provider != "OpenDART":
+        return False
+    generic_markers = (
+        "분기보고서",
+        "분 기 보 고 서",
+        "제출대상법인 유형",
+        "대표이사 등의 확인",
+        "회사의 개요",
+        "목 차",
+    )
+    return any(marker in text for marker in generic_markers)
+
+
+def _primitive_gap_family(value: Any) -> str | None:
+    text = str(value or "").lower()
+    if any(token in text for token in ("trial", "endpoint", "clinical", "safety", "regulatory", "approval")):
+        return "BIO_CLINICAL_OR_REGULATORY"
+    if any(token in text for token in ("arr", "rpo", "renewal", "retention", "churn", "software")):
+        return "SOFTWARE_RETENTION"
+    if any(token in text for token in ("spread", "margin", "commodity", "utilization", "raw_material")):
+        return "SPREAD_OR_UTILIZATION"
+    if any(token in text for token in ("repeat_order", "customer_quality", "qualification", "customer_allocation")):
+        return "CUSTOMER_QUALITY_OR_REPEAT_ORDER"
+    if any(token in text for token in ("contract", "backlog", "orderbook", "delivery", "duration")):
+        return "CONTRACT_OR_BACKLOG"
+    if any(token in text for token in ("policy", "subsidy", "legislation", "cash_route")):
+        return "POLICY_OR_SUBSIDY"
+    return None
+
+
+def _trace_signal_family(trace: Mapping[str, Any], reasons: list[str]) -> str | None:
+    text = _trace_quote_text(trace).lower()
+    reason_text = " ".join(reasons).lower()
+    if _is_generic_dart_profile_text(trace):
+        return "GENERIC_DISCLOSURE_PROFILE"
+    if "단일판매" in text or "공급계약" in text or "contract_quality" in reason_text or "delivery_schedule" in reason_text:
+        return "CONTRACT_OR_BACKLOG"
+    if "pricing_power" in reason_text or "spread_expansion" in reason_text:
+        return "SPREAD_OR_UTILIZATION"
+    if "consensus" in reason_text or "revision" in reason_text:
+        return "CONSENSUS_OR_REVISION"
+    return None
+
+
+def _claim_failure_modes(trace: Mapping[str, Any]) -> list[str]:
+    reasons = _claim_trace_rejection_reasons(trace)
+    reason_keys = {_normalized_reason_key(reason) for reason in reasons}
+    modes: list[str] = []
+    if _is_generic_dart_profile_text(trace):
+        modes.append("ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE")
+
+    gap_family = _primitive_gap_family(trace.get("primitive_gap") or trace.get("primitive_id"))
+    signal_family = _trace_signal_family(trace, reasons)
+    if gap_family and signal_family and signal_family not in {gap_family, "GENERIC_DISCLOSURE_PROFILE"}:
+        modes.append("ROUTE_SIGNAL_FAMILY_MISMATCH")
+
+    if "source_class_document_type_mismatch" in reason_keys:
+        modes.append("SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH")
+    if reason_keys.intersection({"target_scope_not_direct", "target_scope_not_allowed", "target_not_direct"}):
+        modes.append("TARGET_SCOPE_NOT_DIRECT")
+    if "semantic_rejected" in reason_keys:
+        modes.append("SEMANTIC_REJECTED")
+    if any(key.startswith("anchor") or key.startswith("source_lineage") for key in reason_keys):
+        modes.append("ANCHOR_OR_SOURCE_LINEAGE_REJECTED")
+    if "source_task_provider_error_score_block" in reason_keys:
+        modes.append("PROVIDER_ERROR_SCORE_BLOCK")
+    if "primitive_mapping_rejected" in reason_keys:
+        modes.append("PRIMITIVE_MAPPING_REJECTED")
+    if "mapping_not_accepted" in reason_keys:
+        modes.append("MAPPING_NOT_ACCEPTED")
+    return list(dict.fromkeys(modes or ["REJECTED_UNCLASSIFIED"]))
+
+
+def _repair_hint_for_failure_mode(mode: str | None) -> str:
+    hints = {
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+        "ROUTE_SIGNAL_FAMILY_MISMATCH": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": "FIX_SOURCE_CLASS_OR_DOCUMENT_TYPE_ROUTE",
+        "TARGET_SCOPE_NOT_DIRECT": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
+        "SEMANTIC_REJECTED": "RECHECK_EXTRACTOR_SEMANTICS_OR_QUERY_INTENT",
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": "REPAIR_ORIGINAL_SOURCE_ANCHOR_LINEAGE",
+        "PROVIDER_ERROR_SCORE_BLOCK": "RESOLVE_PROVIDER_OR_MARK_EXTERNAL_BLOCKER",
+        "PRIMITIVE_MAPPING_REJECTED": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
+        "MAPPING_NOT_ACCEPTED": "INSPECT_MAPPING_DECISION_AND_REQUIRED_PRIMITIVE",
+    }
+    return hints.get(mode or "", "INSPECT_REJECTED_CLAIM_SAMPLE")
+
+
+def _primary_claim_failure_mode(failure_mode_counts: Counter[str]) -> str | None:
+    if not failure_mode_counts:
+        return None
+    priority = (
+        "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+        "ROUTE_SIGNAL_FAMILY_MISMATCH",
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH",
+        "TARGET_SCOPE_NOT_DIRECT",
+        "SEMANTIC_REJECTED",
+        "ANCHOR_OR_SOURCE_LINEAGE_REJECTED",
+        "PROVIDER_ERROR_SCORE_BLOCK",
+        "PRIMITIVE_MAPPING_REJECTED",
+        "MAPPING_NOT_ACCEPTED",
+    )
+    for mode in priority:
+        if failure_mode_counts.get(mode):
+            return mode
+    return failure_mode_counts.most_common(1)[0][0]
+
+
 def _claim_mapping_sample(trace: Mapping[str, Any]) -> dict[str, Any]:
     reasons = _claim_trace_rejection_reasons(trace)
+    modes = _claim_failure_modes(trace)
     return {
         "claim_id": trace.get("claim_id"),
         "source_task_id": trace.get("source_task_id"),
@@ -258,6 +374,8 @@ def _claim_mapping_sample(trace: Mapping[str, Any]) -> dict[str, Any]:
         "temporal_status": trace.get("temporal_status"),
         "source_provider": trace.get("source_provider"),
         "source_url": trace.get("source_url"),
+        "failure_modes": modes,
+        "repair_hint": _repair_hint_for_failure_mode(modes[0] if modes else None),
         "rejection_reasons": reasons[:6],
         "quote_excerpt": _short_text(trace.get("quote_text") or trace.get("exact_quote")),
     }
@@ -278,6 +396,7 @@ def _claim_mapping_trace_audit_by_archetype(
                 "claim_mapping_accepted_trace_count": 0,
                 "claim_mapping_rejected_trace_count": 0,
                 "claim_mapping_rejection_reason_counts": Counter(),
+                "claim_failure_mode_counts": Counter(),
                 "claim_mapping_rejected_samples": [],
             },
         )
@@ -290,12 +409,16 @@ def _claim_mapping_trace_audit_by_archetype(
         row["claim_mapping_rejected_trace_count"] += 1
         for reason in _claim_trace_rejection_reasons(trace):
             row["claim_mapping_rejection_reason_counts"][_normalized_reason_key(reason)] += 1
+        for mode in _claim_failure_modes(trace):
+            row["claim_failure_mode_counts"][mode] += 1
         if len(row["claim_mapping_rejected_samples"]) < 3:
             row["claim_mapping_rejected_samples"].append(_claim_mapping_sample(trace))
 
     normalized: dict[str, dict[str, Any]] = {}
     for archetype_id, row in audit.items():
         reason_counts = row["claim_mapping_rejection_reason_counts"]
+        failure_mode_counts = row["claim_failure_mode_counts"]
+        primary_mode = _primary_claim_failure_mode(failure_mode_counts)
         normalized[archetype_id] = {
             "claim_mapping_trace_log_count": row["claim_mapping_trace_log_count"],
             "claim_mapping_accepted_trace_count": row["claim_mapping_accepted_trace_count"],
@@ -304,6 +427,12 @@ def _claim_mapping_trace_audit_by_archetype(
             "claim_mapping_top_rejection_reasons": [
                 {"reason": reason, "count": count} for reason, count in reason_counts.most_common(8)
             ],
+            "claim_failure_mode_counts": dict(sorted(failure_mode_counts.items())),
+            "claim_failure_top_modes": [
+                {"mode": mode, "count": count} for mode, count in failure_mode_counts.most_common(8)
+            ],
+            "claim_failure_primary_mode": primary_mode,
+            "claim_failure_repair_hint": _repair_hint_for_failure_mode(primary_mode),
             "claim_mapping_rejected_samples": row["claim_mapping_rejected_samples"],
         }
     return normalized
@@ -316,6 +445,10 @@ def _empty_claim_mapping_trace_audit() -> dict[str, Any]:
         "claim_mapping_rejected_trace_count": 0,
         "claim_mapping_rejection_reason_counts": {},
         "claim_mapping_top_rejection_reasons": [],
+        "claim_failure_mode_counts": {},
+        "claim_failure_top_modes": [],
+        "claim_failure_primary_mode": None,
+        "claim_failure_repair_hint": None,
         "claim_mapping_rejected_samples": [],
     }
 
@@ -889,6 +1022,12 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
             return "-"
         return ", ".join(f"{item['reason']}:{item['count']}" for item in reasons[:3])
 
+    def fmt_claim_failure_modes(row: Mapping[str, Any]) -> str:
+        modes = row.get("claim_failure_top_modes") or []
+        if not modes:
+            return "-"
+        return ", ".join(f"{item['mode']}:{item['count']}" for item in modes[:3])
+
     lines = [
         "# All Archetype Runtime Parity Summary - 2026-07-05",
         "",
@@ -913,15 +1052,15 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
         "",
         "## Matrix",
         "",
-        "| archetype | runtime status | primary blocker | research cases | URL-backed | source tasks | execution logs | claim traces | accepted claims | full rows | top source-task failure axes | top claim rejection reasons | req gap rate | green gap rate |",
-        "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---:|---:|",
+        "| archetype | runtime status | primary blocker | research cases | URL-backed | source tasks | execution logs | claim traces | accepted claims | full rows | top source-task failure axes | top claim failure modes | top claim rejection reasons | req gap rate | green gap rate |",
+        "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---:|---:|",
     ]
     for row in matrix.get("rows", []):
         accepted = int(row.get("runtime_accepted_claim_count") or 0) + int(
             row.get("runtime_source_task_accepted_claim_count") or 0
         )
         lines.append(
-            "| {archetype} | {runtime_status} | {blocker} | {research_cases} | {url_backed} | {source_tasks} | {execution_logs} | {claim_traces} | {accepted} | {full_rows} | {failure_axes} | {claim_rejections} | {req_rate} | {green_rate} |".format(
+            "| {archetype} | {runtime_status} | {blocker} | {research_cases} | {url_backed} | {source_tasks} | {execution_logs} | {claim_traces} | {accepted} | {full_rows} | {failure_axes} | {claim_failure_modes} | {claim_rejections} | {req_rate} | {green_rate} |".format(
                 archetype=row["archetype_id"],
                 runtime_status=row["runtime_status"],
                 blocker=row["primary_blocker_class"],
@@ -933,6 +1072,7 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
                 accepted=accepted,
                 full_rows=row["runtime_full_thesis_row_count"],
                 failure_axes=fmt_failure_axes(row),
+                claim_failure_modes=fmt_claim_failure_modes(row),
                 claim_rejections=fmt_claim_rejections(row),
                 req_rate=fmt_rate(row["required_positive_missing_rate"]),
                 green_rate=fmt_rate(row["green_gap_rate"]),
@@ -948,6 +1088,7 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
             "- `PLANNING_ONLY`: planner나 discovery는 열렸지만 실제 종목/소스 실행으로 닫히지 않았다.",
             "- `REPLAY_ONLY_NOT_RUNTIME_PROVEN`: 과거 URL-backed 판례가 있을 뿐, 현재 production run에서 재검증되지 않았다.",
             "- `top source-task failure axes`: source task가 왜 accepted claim으로 닫히지 않았는지의 실행 로그 기반 요약이다.",
+            "- `top claim failure modes`: rejected claim을 route, source class, target/semantic, mapper 계층으로 나눈 원인 분류다.",
             "- `top claim rejection reasons`: 실제 원문 claim 매핑 trace에서 왜 score-eligible claim이 되지 못했는지의 상위 원인이다.",
             "",
             "즉 이 summary에서 중요한 것은 높은 row count가 아니라 `accepted claims -> score contributions -> full thesis row`가 아키타입별로 닫혔는지다.",

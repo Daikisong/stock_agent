@@ -69,6 +69,10 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             "claim_mapping_rejected_trace_count",
             "claim_mapping_rejection_reason_counts",
             "claim_mapping_top_rejection_reasons",
+            "claim_failure_mode_counts",
+            "claim_failure_top_modes",
+            "claim_failure_primary_mode",
+            "claim_failure_repair_hint",
             "claim_mapping_rejected_samples",
             "runtime_planner_attempt_count",
             "source_route_ready",
@@ -87,6 +91,10 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
                     self.assertIsInstance(row[key], list, (row["archetype_id"], key))
                 elif key.startswith("claim_mapping_top_") or key == "claim_mapping_rejected_samples":
                     self.assertIsInstance(row[key], list, (row["archetype_id"], key))
+                elif key == "claim_failure_top_modes":
+                    self.assertIsInstance(row[key], list, (row["archetype_id"], key))
+                elif key in {"claim_failure_primary_mode", "claim_failure_repair_hint"}:
+                    self.assertTrue(row[key] is None or isinstance(row[key], str), (row["archetype_id"], key))
                 else:
                     self.assertTrue(row[key], (row["archetype_id"], key))
 
@@ -145,11 +153,14 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             self.assertEqual(row["claim_mapping_accepted_trace_count"], 0, prefix)
             self.assertGreater(row["claim_mapping_rejected_trace_count"], 0, prefix)
             self.assertIn("primitive_mapping_rejected", row["claim_mapping_rejection_reason_counts"], prefix)
+            self.assertIn("PRIMITIVE_MAPPING_REJECTED", row["claim_failure_mode_counts"], prefix)
             self.assertTrue(row["claim_mapping_rejected_samples"], prefix)
             sample = row["claim_mapping_rejected_samples"][0]
             self.assertIn("source_url", sample, prefix)
             self.assertIn("quote_excerpt", sample, prefix)
             self.assertIn("rejection_reasons", sample, prefix)
+            self.assertIn("failure_modes", sample, prefix)
+            self.assertIn("repair_hint", sample, prefix)
             self.assertEqual(row["targetless_source_task_execution_count"], 0, prefix)
             self.assertEqual(
                 row["next_required_action"],
@@ -168,9 +179,27 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertGreater(c17["source_task_failure_axis_counts"]["NO_ACCEPTED_CLAIM"], 0)
         self.assertGreater(c17["claim_mapping_rejected_trace_count"], 0)
         self.assertTrue(c17["claim_mapping_rejected_samples"])
+        self.assertIn("ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE", c17["claim_failure_mode_counts"])
         self.assertEqual(
             c17["next_required_action"],
             "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
+        )
+
+    def test_canary_failure_modes_split_route_family_and_mapper_causes(self) -> None:
+        c08 = self.by_prefix["C08"]
+        self.assertIn("ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE", c08["claim_failure_mode_counts"])
+        self.assertIn("PRIMITIVE_MAPPING_REJECTED", c08["claim_failure_mode_counts"])
+        self.assertEqual(
+            c08["claim_failure_repair_hint"],
+            "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+        )
+
+        c24 = self.by_prefix["C24"]
+        self.assertIn("ROUTE_SIGNAL_FAMILY_MISMATCH", c24["claim_failure_mode_counts"])
+        self.assertIn("PRIMITIVE_MAPPING_REJECTED", c24["claim_failure_mode_counts"])
+        self.assertEqual(
+            c24["claim_failure_repair_hint"],
+            "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
         )
 
     def test_source_executed_without_accepted_claim_is_not_collapsed_into_planner_only(self) -> None:

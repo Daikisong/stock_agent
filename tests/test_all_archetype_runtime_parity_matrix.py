@@ -74,6 +74,10 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
                 "claim_mapping_rejected_trace_count",
                 "claim_mapping_rejection_reason_counts",
                 "claim_mapping_top_rejection_reasons",
+                "claim_failure_mode_counts",
+                "claim_failure_top_modes",
+                "claim_failure_primary_mode",
+                "claim_failure_repair_hint",
                 "claim_mapping_rejected_samples",
                 "runtime_accepted_claim_count",
                 "runtime_score_contribution_count",
@@ -125,6 +129,11 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         self.assertGreater(c08["claim_mapping_trace_log_count"], 0)
         self.assertEqual(c08["claim_mapping_accepted_trace_count"], 0)
         self.assertIn("primitive_mapping_rejected", c08["claim_mapping_rejection_reason_counts"])
+        self.assertIn("ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE", c08["claim_failure_mode_counts"])
+        self.assertEqual(
+            c08["claim_failure_repair_hint"],
+            "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+        )
         self.assertTrue(c08["claim_mapping_rejected_samples"])
         self.assertEqual(c08["runtime_full_thesis_row_count"], 0)
 
