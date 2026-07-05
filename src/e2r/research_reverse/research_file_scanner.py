@@ -37,6 +37,7 @@ GENERATED_GOAL4_PREFIXES = (
     "balanced_full_thesis_candidate_selection_audit_",
 )
 GENERATED_GOAL4_DOC_PREFIXES = (
+    "goal4_",
     "goal4_research_to_runtime_status_",
 )
 GENERATED_GOAL4_FILENAMES = {

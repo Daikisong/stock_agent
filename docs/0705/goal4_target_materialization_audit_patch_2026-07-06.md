@@ -175,6 +175,37 @@ attempt_type_counts:
 아키타입별로 실제 current target company/ticker를 먼저 materialize하는 일이다.
 ```
 
+2026-07-05 후속 보정:
+
+```text
+research_reverse_case_inventory 기반 target 후보 물질화 후:
+target_symbol_mode_counts:
+  ARCHETYPE_LEVEL_DISCOVERY = 3
+  RESEARCH_MEMORY_TARGET_CANDIDATE = 29
+  SYMBOL_SPECIFIC = 4
+
+research_memory_target_materialized_archetype_count = 29
+research_memory_target_materialized_task_count = 87
+target_materialization_unresolved_archetype_count = 3
+target_materialization_required_task_count = 9
+```
+
+해석:
+
+```text
+이 문서가 지적한 "32개는 실제 target symbol materialization 필요" 문제 중
+C01~C32는 연구자료 기반 후보 심볼이 붙었다.
+
+다만 이것은 점수 근거가 아니다.
+모든 후보는 current source-backed Evidence OS claim을 새로 통과해야 한다.
+```
+
+세부 후보 목록과 테스트 결과는 다음 문서에 고정했다.
+
+```text
+docs/0705/goal4_research_memory_target_materialization_plan_2026-07-05.md
+```
+
 ## 검증
 
 실행한 감사 명령:
@@ -206,7 +237,7 @@ PYTHONPATH=src python -m unittest tests.test_planner_bias_audit tests.test_resea
 -> Ran 9 tests, OK
 
 PYTHONPATH=src python -m unittest discover -s tests -v
--> Ran 5252 tests, OK
+-> Ran 5254 tests, OK
 
 git diff --check
 -> OK

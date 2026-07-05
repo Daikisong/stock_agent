@@ -5,11 +5,21 @@ from __future__ import annotations
 from typing import Any
 
 
-PLACEHOLDER_SYMBOLS = {"", "000000", "0000000", "UNKNOWN", "N/A", "NONE", "NULL"}
+PLACEHOLDER_SYMBOLS = {
+    "",
+    "000000",
+    "0000000",
+    "UNKNOWN",
+    "N/A",
+    "NONE",
+    "NULL",
+}
 
 
 def is_placeholder_symbol(value: Any) -> bool:
     text = str(value or "").strip().upper()
+    if len(text) in {6, 7} and len(set(text)) == 1 and text.isdigit():
+        return True
     return text in PLACEHOLDER_SYMBOLS
 
 

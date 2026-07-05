@@ -17,6 +17,11 @@ patched-v2 실행 자체는 114 seed로 수행됐다.
 - source_task_count = 111
 - target_symbol_mode_counts = {"ARCHETYPE_LEVEL_DISCOVERY": 32, "SYMBOL_SPECIFIC": 4}
 
+2026-07-05 후속 보정:
+- `docs/0705/goal4_research_memory_target_materialization_plan_2026-07-05.md`에서 연구자료 reverse case inventory를 반영해 next-attempt plan을 다시 물질화했다.
+- 최신 next-attempt plan의 target_symbol_mode_counts는 `{"ARCHETYPE_LEVEL_DISCOVERY": 3, "RESEARCH_MEMORY_TARGET_CANDIDATE": 29, "SYMBOL_SPECIFIC": 4}`다.
+- 이 보정은 점수 합격이 아니라, C01~C32 다음 실행에 실제 심볼 후보를 붙이는 패치다.
+
 추가로 C06 follow-up task는 source_pending 일부만 보지 않고
 missing_required / green gap 전체를 포함한다.
 현재 research_memory_followup_task_count = 7
@@ -25,7 +30,7 @@ missing_required / green gap 전체를 포함한다.
 
 검증:
 PYTHONPATH=src python -m unittest discover -s tests -v
--> Ran 5252 tests in 418.966s, OK
+-> Ran 5254 tests in 424.029s, OK
 ```
 
 쉬운 예:

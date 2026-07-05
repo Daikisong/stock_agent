@@ -5,7 +5,6 @@
       "4b_watch_patterns": [
         "RCASE-0a32fda43db192fb7221",
         "RCASE-168faa742f33fe1a7cac",
-        "RCASE-22bab87f27ddf1cce63f",
         "RCASE-23d9924e050a00e178a2",
         "RCASE-4496bf97ab6af2d417b5",
         "RCASE-4845618d4adafda73f4d",
@@ -22,7 +21,8 @@
         "RCASE-9ee457219b09d645041c",
         "RCASE-ab1c8cd7e90415ff0440",
         "RCASE-b185aaac1fc1738d9b2d",
-        "RCASE-ba4e1ca20f23716f2674"
+        "RCASE-ba4e1ca20f23716f2674",
+        "RCASE-c428451d772acef60706"
       ],
       "4c_hard_break_patterns": [
         "RCASE-003b343a19bf1bb62ea2",
@@ -2372,10 +2372,10 @@
         "RCASE-41e13e0b4d1c4e9bc32a",
         "RCASE-434670d348d7ae4d9d87",
         "RCASE-53c811d3fccccb0ddb5b",
-        "RCASE-5e105c64f97456c55839",
         "RCASE-617781fe6c330d96e38b",
         "RCASE-78719ec2913beb2fb59b",
-        "RCASE-7b09af090f2ab2daa1d8"
+        "RCASE-7b09af090f2ab2daa1d8",
+        "RCASE-89e9dda3e1a99eb9c258"
       ],
       "4c_hard_break_patterns": [
         "RCASE-00021fb7358d3012973a",
@@ -4210,7 +4210,6 @@
     },
     {
       "4b_watch_patterns": [
-        "RCASE-105622802d3e79f48a4e",
         "RCASE-3021bf589043127410d1",
         "RCASE-3b693d840ea318aab41f",
         "RCASE-3bab334591e05605c35b",
@@ -4220,7 +4219,6 @@
         "RCASE-7859b5b9aeede66b43ef",
         "RCASE-7aeb61890fc8b1c581ee",
         "RCASE-7dee7f9300833dc7e629",
-        "RCASE-8044ba01b5d4a7951109",
         "RCASE-8bae972b8fee4d8058c9",
         "RCASE-988e3ed79c790454643f",
         "RCASE-aa913f765e073d43618d",
@@ -4229,7 +4227,9 @@
         "RCASE-c26b80dee7c2fd98e277",
         "RCASE-c957739f7858d8039f42",
         "RCASE-cc5cb48146ffba086cd1",
-        "RCASE-d3a9f0cf90ff52388ea7"
+        "RCASE-d3a9f0cf90ff52388ea7",
+        "RCASE-da8af13329e81b874d34",
+        "RCASE-e840b42bb63b37c31321"
       ],
       "4c_hard_break_patterns": [
         "RCASE-019935f86c7fa95663b6",
@@ -8559,12 +8559,12 @@
         "RCASE-4200ddcc7149b485cf25",
         "RCASE-42ffa14295b17233e1f0",
         "RCASE-4dc5e2f3b03dabb1d980",
-        "RCASE-4ed7a11e3171067725f8",
         "RCASE-50ecdd3c53cda6529cbf",
         "RCASE-595fbeb2b2bb0fa60bde",
         "RCASE-5b500a6592212fa559d1",
         "RCASE-5c4b20f0d2893699ab8f",
-        "RCASE-5cd66bbe09cf5af64748"
+        "RCASE-5cd66bbe09cf5af64748",
+        "RCASE-65f63e3e2269d7bc3cd9"
       ],
       "4c_hard_break_patterns": [
         "RCASE-01158e28ffbb3e34cd5a",
@@ -10861,7 +10861,6 @@
         "RCASE-3c2116ccbe5f9d32efb0",
         "RCASE-42a26850ae11d69d08e1",
         "RCASE-50f8ab1cf488afc492d9",
-        "RCASE-5169b59c532c8ad337ea",
         "RCASE-70059a053d6ca6337b00",
         "RCASE-8aa625a21879b4435fbc",
         "RCASE-8b18dc14000e8cb6bef0",
@@ -10872,7 +10871,8 @@
         "RCASE-c60f30386542e02ffee0",
         "RCASE-cd06a3d187e2e8e5858b",
         "RCASE-e394db0b2e374c5e7ac7",
-        "RCASE-fb6a70c91c8b2d51a5fa"
+        "RCASE-fb6a70c91c8b2d51a5fa",
+        "RCASE-ff1bd57f0208cfebc40c"
       ],
       "4c_hard_break_patterns": [
         "RCASE-00a5967c8922854ee30e",
@@ -13743,7 +13743,6 @@
         "RCASE-2343c0986b7dbfd155cf",
         "RCASE-25b2ea36a0628cf1093a",
         "RCASE-3d8faa9c8fcbed97d461",
-        "RCASE-53d421c4deb76fbf9cc1",
         "RCASE-5748a0180745ff7b67cd",
         "RCASE-5b902fceadcb3382d035",
         "RCASE-6481f53e5618ef842c19",
@@ -13755,7 +13754,8 @@
         "RCASE-bbb66faa136c576e27d6",
         "RCASE-c2031b5eda7ebd9a925a",
         "RCASE-cb9dd094caaf1bb32bfb",
-        "RCASE-d1900757c450288da1ea"
+        "RCASE-d1900757c450288da1ea",
+        "RCASE-db95a833cea343ffdbb4"
       ],
       "4c_hard_break_patterns": [
         "RCASE-00751a2f3e8ae9e14b6c",
@@ -16034,7 +16034,6 @@
     },
     {
       "4b_watch_patterns": [
-        "RCASE-098010ae1a3369ac3580",
         "RCASE-1ea0c6a94dfb6a773f7d",
         "RCASE-22efb53152fe5b914380",
         "RCASE-2da1edc71f59cb72edfd",
@@ -16053,7 +16052,8 @@
         "RCASE-98b7084249e1d0c81686",
         "RCASE-9fe20d0f22100d1530d4",
         "RCASE-adbf069fc70694f20b5b",
-        "RCASE-b4135f12e61b0652f08a"
+        "RCASE-b4135f12e61b0652f08a",
+        "RCASE-bd97cbd68b5ad1e99ade"
       ],
       "4c_hard_break_patterns": [
         "RCASE-0047510e4ad7973a6f24",
@@ -18403,8 +18403,7 @@
       "green_blockers": [
         "green gap",
         "green_blocker",
-        "green_gate",
-        "required_positive_missing"
+        "green_gate"
       ],
       "green_unlock_primitives": [
         "tender_offer_confirmed",
@@ -19824,7 +19823,6 @@
         "RCASE-0934e65602a8cf8dc98a",
         "RCASE-0f0f924d258eb9f146ff",
         "RCASE-11124e664d6429eada90",
-        "RCASE-11d21844570370c4f4cc",
         "RCASE-1362e5a55fc179a618cb",
         "RCASE-16c078a4384ff8bbda7e",
         "RCASE-1837242db064b6ddd790",
@@ -19837,7 +19835,8 @@
         "RCASE-30482346114c3d6b7fd6",
         "RCASE-331868ab580cc44c3da0",
         "RCASE-3353acd17e6a365a8aaa",
-        "RCASE-3c54e17a2739fd78600b"
+        "RCASE-3c54e17a2739fd78600b",
+        "RCASE-3fafce2577cf39bc9050"
       ],
       "4c_hard_break_patterns": [
         "RCASE-002790caf4af1e7251b8",
@@ -19887,8 +19886,7 @@
       "green_blockers": [
         "green gap",
         "green_blocker",
-        "green_gate",
-        "required_positive_missing"
+        "green_gate"
       ],
       "green_unlock_primitives": [
         "high_mae_history",

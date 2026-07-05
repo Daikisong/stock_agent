@@ -13,9 +13,13 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             (cls.docs / "all_archetype_runtime_status_matrix_2026-07-05.json").read_text(encoding="utf-8")
         )
         cls.cards = json.loads((cls.docs / "research_runtime_memory_cards_v2.json").read_text(encoding="utf-8"))
+        cls.case_inventory = json.loads(
+            (cls.docs / "research_reverse_case_inventory.json").read_text(encoding="utf-8")
+        )
         cls.plan = build_all_archetype_next_runtime_attempt_plan(
             status_matrix=cls.status,
             memory_cards=cls.cards,
+            case_inventory=cls.case_inventory,
         )
         cls.by_prefix = {row["archetype_prefix"]: row for row in cls.plan["plan_rows"]}
 
@@ -62,14 +66,51 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
         self.assertEqual(self.by_prefix["C08"]["attempt_type"], "ARCHETYPE_TARGET_MATERIALIZATION")
         self.assertEqual(self.by_prefix["C24"]["attempt_type"], "ARCHETYPE_TARGET_MATERIALIZATION")
 
-    def test_replay_only_archetypes_are_archetype_level_discovery_not_fake_symbol_scores(self) -> None:
-        for prefix in ("C08", "C15", "C17", "C24", "C28"):
+    def test_replay_only_archetypes_are_materialized_as_research_memory_target_candidates(self) -> None:
+        expected_symbols = {
+            "C08": "058470",
+            "C15": "001390",
+            "C17": "011170",
+            "C24": "000100",
+            "C28": "012510",
+        }
+        for prefix, expected_symbol in expected_symbols.items():
             row = self.by_prefix[prefix]
-            self.assertEqual(row["target_symbol_mode"], "ARCHETYPE_LEVEL_DISCOVERY", prefix)
-            self.assertEqual(row["target_symbols"], [], prefix)
-            self.assertTrue(row["requires_target_materialization_before_scoring"], prefix)
+            self.assertEqual(row["target_symbol_mode"], "RESEARCH_MEMORY_TARGET_CANDIDATE", prefix)
+            self.assertEqual(row["target_symbols"], [expected_symbol], prefix)
+            self.assertFalse(row["requires_target_materialization_before_scoring"], prefix)
+            self.assertTrue(row["requires_current_source_confirmation_before_scoring"], prefix)
             self.assertFalse(row["score_allowed_before_execution"], prefix)
-        self.assertEqual(self.plan["target_materialization_required_task_count"], 96)
+            self.assertEqual(len(row["target_materialization_candidates"]), 1, prefix)
+            self.assertFalse(row["target_materialization_candidates"][0]["score_evidence_allowed_from_research"], prefix)
+
+        self.assertEqual(self.plan["target_symbol_mode_counts"]["RESEARCH_MEMORY_TARGET_CANDIDATE"], 29)
+        self.assertEqual(self.plan["target_materialization_required_task_count"], 9)
+
+    def test_c01_to_c32_all_have_symbol_specific_next_attempts(self) -> None:
+        unresolved_c_rows = [
+            row
+            for row in self.plan["plan_rows"]
+            if row["archetype_prefix"].startswith("C")
+            and row["requires_target_materialization_before_scoring"]
+        ]
+        self.assertEqual(unresolved_c_rows, [])
+
+    def test_research_memory_candidates_remain_planner_inputs_not_score_evidence(self) -> None:
+        materialized_tasks = [
+            task
+            for task in self.plan["source_tasks"]
+            if task["target_symbol_mode"] == "RESEARCH_MEMORY_TARGET_CANDIDATE"
+        ]
+        self.assertEqual(len(materialized_tasks), 87)
+        for task in materialized_tasks[:20]:
+            candidate = task["target_materialization_candidate"]
+            self.assertIsNotNone(candidate)
+            self.assertEqual(task["symbol"], candidate["symbol"])
+            self.assertFalse(candidate["score_evidence_allowed_from_research"])
+            self.assertTrue(task["requires_current_source_confirmation_before_scoring"])
+            self.assertFalse(task["requires_target_materialization_before_scoring"])
+            self.assertIn("Treat this only as a target candidate", task["query_intents"][0])
 
 
 if __name__ == "__main__":

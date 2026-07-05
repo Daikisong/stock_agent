@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 
-from e2r.census.placeholder_symbols import is_placeholder_symbol
+from e2r.census.placeholder_symbols import is_placeholder_symbol, normalized_real_symbol
 
 
 DISCOVERY_ONLY_FAMILIES = {"GeneralWebSearch", "NaverSearch", "ResearchMemory"}
@@ -26,6 +27,16 @@ DEFAULT_FALLBACK_SOURCE_CLASSES = [
     "NaverSearch",
     "GeneralWebSearch",
 ]
+
+SOURCE_QUALITY_PRIORITY = {
+    "A2_URL_BACKED": 60,
+    "EVIDENCE_URL_PENDING": 40,
+    "SOURCE_PROXY_ONLY": 30,
+    "PRICE_PATH_ONLY": 5,
+    "SHADOW_ONLY": 1,
+}
+
+
 def _stable_id(prefix: str, *parts: object, length: int = 20) -> str:
     raw = "|".join(str(part) for part in parts)
     digest = hashlib.sha1(raw.encode("utf-8")).hexdigest()[:length]
@@ -140,11 +151,98 @@ def _symbols_for_attempt(row: Mapping[str, Any]) -> list[str | None]:
     return [None]
 
 
+def _case_records(case_inventory: Mapping[str, Any] | None) -> list[Mapping[str, Any]]:
+    if not case_inventory:
+        return []
+    records = case_inventory.get("records") or case_inventory.get("case_records") or []
+    if not isinstance(records, list):
+        return []
+    return [record for record in records if isinstance(record, Mapping)]
+
+
+def _case_file_matches_archetype(source_file: str, archetype_id: str) -> bool:
+    return archetype_id in source_file
+
+
+def _case_file_mentions_prefix(source_file: str, archetype_id: str) -> bool:
+    prefix = _prefix(archetype_id)
+    return bool(re.search(rf"(^|[^A-Z0-9]){re.escape(prefix)}([^A-Z0-9]|$)", source_file))
+
+
+def _materialization_candidate_score(archetype_id: str, record: Mapping[str, Any]) -> int:
+    source_file = str(record.get("source_file") or "")
+    score = 0
+    if _case_file_matches_archetype(source_file, archetype_id):
+        score += 300
+    elif _case_file_mentions_prefix(source_file, archetype_id):
+        score += 150
+    if source_file.startswith("docs/round/"):
+        score += 100
+    score += SOURCE_QUALITY_PRIORITY.get(str(record.get("source_quality") or ""), 0)
+    if record.get("source_urls"):
+        score += 10
+    if record.get("company_name"):
+        score += 5
+    return score
+
+
+def _research_memory_target_candidates(
+    *,
+    archetype_id: str,
+    card: Mapping[str, Any],
+    case_inventory: Mapping[str, Any] | None,
+    max_symbols: int,
+) -> list[dict[str, Any]]:
+    """Pick research-memory symbols as next-run targets, never as score evidence."""
+
+    records = _case_records(case_inventory)
+    if not records:
+        return []
+    preferred_case_ids = set(card.get("url_backed_replay_cases") or []) | set(
+        card.get("source_family_success_examples") or []
+    )
+    candidates_by_symbol: dict[str, dict[str, Any]] = {}
+    for record in records:
+        if str(record.get("canonical_archetype_id") or "") != archetype_id:
+            continue
+        symbol = normalized_real_symbol(record.get("symbol"))
+        if not symbol:
+            continue
+        score = _materialization_candidate_score(archetype_id, record)
+        if record.get("research_case_id") in preferred_case_ids:
+            score += 100
+        if score <= 0:
+            continue
+        existing = candidates_by_symbol.get(symbol)
+        if existing and int(existing["materialization_score"]) >= score:
+            existing["support_case_ids"].append(record.get("research_case_id"))
+            continue
+        candidates_by_symbol[symbol] = {
+            "symbol": symbol,
+            "company_name": record.get("company_name"),
+            "target_materialization_source": "RESEARCH_REVERSE_CASE_INVENTORY",
+            "target_materialization_status": "RESEARCH_MEMORY_TARGET_CANDIDATE_SOURCE_RECHECK_REQUIRED",
+            "materialization_score": score,
+            "support_case_ids": [record.get("research_case_id")],
+            "support_case_source_quality": record.get("source_quality"),
+            "support_case_source_file": record.get("source_file"),
+            "support_case_role": record.get("case_role"),
+            "score_evidence_allowed_from_research": False,
+        }
+    candidates = sorted(
+        candidates_by_symbol.values(),
+        key=lambda item: (-int(item["materialization_score"]), str(item["symbol"])),
+    )
+    return candidates[:max_symbols]
+
+
 def build_all_archetype_next_runtime_attempt_plan(
     *,
     status_matrix: Mapping[str, Any],
     memory_cards: Mapping[str, Any],
+    case_inventory: Mapping[str, Any] | None = None,
     max_primitives_per_archetype: int = 3,
+    max_materialized_symbols_per_archetype: int = 1,
 ) -> dict[str, Any]:
     cards_by_id = {card["archetype_id"]: card for card in memory_cards.get("cards", [])}
     plan_rows: list[dict[str, Any]] = []
@@ -163,6 +261,19 @@ def build_all_archetype_next_runtime_attempt_plan(
             primitives = ["archetype_current_positive_bridge"]
         attempt_id = _stable_id("RTATTEMPT", as_of_date, archetype_id, proof_status)
         symbols = _symbols_for_attempt(row)
+        target_candidates: list[dict[str, Any]] = []
+        target_symbol_mode = "SYMBOL_SPECIFIC" if symbols != [None] else "ARCHETYPE_LEVEL_DISCOVERY"
+        if symbols == [None]:
+            target_candidates = _research_memory_target_candidates(
+                archetype_id=archetype_id,
+                card=card,
+                case_inventory=case_inventory,
+                max_symbols=max_materialized_symbols_per_archetype,
+            )
+            if target_candidates:
+                symbols = [candidate["symbol"] for candidate in target_candidates]
+                target_symbol_mode = "RESEARCH_MEMORY_TARGET_CANDIDATE"
+        candidate_by_symbol = {candidate["symbol"]: candidate for candidate in target_candidates}
         plan_rows.append(
             {
                 "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
@@ -176,9 +287,11 @@ def build_all_archetype_next_runtime_attempt_plan(
                 "current_source_execution_status": row.get("runtime_source_route_execution_status"),
                 "current_accepted_claim_status": row.get("accepted_claim_status"),
                 "current_full_thesis_status": row.get("full_thesis_status"),
-                "target_symbol_mode": "SYMBOL_SPECIFIC" if symbols != [None] else "ARCHETYPE_LEVEL_DISCOVERY",
+                "target_symbol_mode": target_symbol_mode,
                 "target_symbols": [symbol for symbol in symbols if symbol],
+                "target_materialization_candidates": target_candidates,
                 "requires_target_materialization_before_scoring": symbols == [None],
+                "requires_current_source_confirmation_before_scoring": True,
                 "primitive_attempts": primitives,
                 "score_allowed_before_execution": False,
                 "stage_promotion_allowed_before_execution": False,
@@ -193,20 +306,34 @@ def build_all_archetype_next_runtime_attempt_plan(
             route_priority = _route_priority(card, primitive)
             for symbol in symbols:
                 task_id = _stable_id("RTTASK", as_of_date, archetype_id, primitive, symbol or "DISCOVERY")
-                target_symbol_mode = "SYMBOL_SPECIFIC" if symbol else "ARCHETYPE_LEVEL_DISCOVERY"
-                query_intents = [
-                    (
-                        "Ask the LLM planner to first materialize real current target companies/tickers "
-                        f"for archetype `{archetype_id}` and primitive `{primitive}`, then propose bounded "
-                        "official-first source routes. Do not score archetype-level discovery results until "
-                        "a real target symbol has source-backed Evidence OS claims."
-                    )
-                ] if symbol is None else [
-                    (
-                        "Ask the LLM planner for bounded official-first queries that verify current, "
-                        f"direct target-company evidence for primitive `{primitive}`."
-                    )
-                ]
+                task_target_symbol_mode = target_symbol_mode if symbol else "ARCHETYPE_LEVEL_DISCOVERY"
+                materialization_candidate = candidate_by_symbol.get(str(symbol)) if symbol else None
+                if materialization_candidate:
+                    query_intents = [
+                        (
+                            f"Research memory materialized `{symbol}` as a candidate target for "
+                            f"`{archetype_id}` from case ids {materialization_candidate['support_case_ids']}. "
+                            "Treat this only as a target candidate. Ask the LLM planner for bounded "
+                            f"official-first queries that verify current, direct target-company evidence "
+                            f"for primitive `{primitive}` before any score/stage use."
+                        )
+                    ]
+                elif symbol is None:
+                    query_intents = [
+                        (
+                            "Ask the LLM planner to first materialize real current target companies/tickers "
+                            f"for archetype `{archetype_id}` and primitive `{primitive}`, then propose bounded "
+                            "official-first source routes. Do not score archetype-level discovery results until "
+                            "a real target symbol has source-backed Evidence OS claims."
+                        )
+                    ]
+                else:
+                    query_intents = [
+                        (
+                            "Ask the LLM planner for bounded official-first queries that verify current, "
+                            f"direct target-company evidence for primitive `{primitive}`."
+                        )
+                    ]
                 source_task = {
                     "schema_version": "e2r_all_archetype_next_runtime_source_task_v1",
                     "task_id": task_id,
@@ -216,8 +343,10 @@ def build_all_archetype_next_runtime_attempt_plan(
                     "source_task_origin": "all_archetype_runtime_status_matrix",
                     "as_of_date": as_of_date,
                     "symbol": symbol,
-                    "target_symbol_mode": target_symbol_mode,
+                    "target_symbol_mode": task_target_symbol_mode,
                     "requires_target_materialization_before_scoring": symbol is None,
+                    "requires_current_source_confirmation_before_scoring": True,
+                    "target_materialization_candidate": materialization_candidate,
                     "archetype_id": archetype_id,
                     "primitive_gap": primitive,
                     "current_runtime_parity_proof_status": proof_status,
@@ -262,7 +391,8 @@ def build_all_archetype_next_runtime_attempt_plan(
                         "event_date": as_of_date,
                         "detected_at": as_of_date,
                         "symbol": symbol,
-                        "target_symbol_mode": target_symbol_mode,
+                        "target_symbol_mode": task_target_symbol_mode,
+                        "target_materialization_candidate": materialization_candidate,
                         "target_archetype": archetype_id,
                         "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
                         "primitive_gap": primitive,
@@ -288,7 +418,9 @@ def build_all_archetype_next_runtime_attempt_plan(
                             "target_archetype": archetype_id,
                             "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
                             "primitive_gap": primitive,
-                            "target_symbol_mode": target_symbol_mode,
+                            "target_symbol_mode": task_target_symbol_mode,
+                            "target_materialization_candidate": materialization_candidate,
+                            "requires_current_source_confirmation_before_scoring": True,
                             "seed_role": "planner_input_only",
                             "follow_up_origin": "all_archetype_runtime_status_matrix",
                             "preferred_source_classes": source_task["preferred_source_classes"],
@@ -313,6 +445,9 @@ def build_all_archetype_next_runtime_attempt_plan(
     seed_events.sort(key=lambda item: (str(item["target_archetype"]), str(item["primitive_gap"]), str(item.get("symbol"))))
     by_attempt_type = Counter(row["attempt_type"] for row in plan_rows)
     by_symbol_mode = Counter(row["target_symbol_mode"] for row in plan_rows)
+    materialized_candidate_rows = [
+        row for row in plan_rows if row.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
+    ]
     return {
         "schema_version": "e2r_all_archetype_next_runtime_attempt_plan_v1",
         "as_of_date": as_of_date,
@@ -321,6 +456,13 @@ def build_all_archetype_next_runtime_attempt_plan(
         "seed_event_count": len(seed_events),
         "attempt_type_counts": dict(sorted(by_attempt_type.items())),
         "target_symbol_mode_counts": dict(sorted(by_symbol_mode.items())),
+        "research_memory_target_materialized_archetype_count": len(materialized_candidate_rows),
+        "research_memory_target_materialized_task_count": sum(
+            1 for task in source_tasks if task.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
+        ),
+        "target_materialization_unresolved_archetype_count": sum(
+            1 for row in plan_rows if row.get("requires_target_materialization_before_scoring") is True
+        ),
         "all_tasks_score_blocked_before_execution": all(
             not task["score_allowed_before_execution"] and not task["stage_promotion_allowed_before_execution"]
             for task in source_tasks
@@ -356,6 +498,9 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         f"- seed_event_count: `{plan['seed_event_count']}`",
         f"- attempt_type_counts: `{json.dumps(plan['attempt_type_counts'], ensure_ascii=False, sort_keys=True)}`",
         f"- target_symbol_mode_counts: `{json.dumps(plan['target_symbol_mode_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- research_memory_target_materialized_archetype_count: `{plan.get('research_memory_target_materialized_archetype_count', 0)}`",
+        f"- research_memory_target_materialized_task_count: `{plan.get('research_memory_target_materialized_task_count', 0)}`",
+        f"- target_materialization_unresolved_archetype_count: `{plan.get('target_materialization_unresolved_archetype_count', 0)}`",
         f"- all_tasks_score_blocked_before_execution: `{plan['all_tasks_score_blocked_before_execution']}`",
         f"- all_tasks_require_llm_query_generation: `{plan['all_tasks_require_llm_query_generation']}`",
         f"- all_tasks_have_no_hardcoded_queries: `{plan['all_tasks_have_no_hardcoded_queries']}`",
@@ -397,6 +542,15 @@ def _write_jsonl(path: Path, rows: list[Mapping[str, Any]]) -> None:
     )
 
 
+def _load_optional_json(path: Path) -> Mapping[str, Any] | None:
+    if not path.exists():
+        return None
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, Mapping):
+        return None
+    return payload
+
+
 def write_all_archetype_next_runtime_attempt_plan(
     *,
     status_matrix: Mapping[str, Any],
@@ -408,6 +562,7 @@ def write_all_archetype_next_runtime_attempt_plan(
     plan = build_all_archetype_next_runtime_attempt_plan(
         status_matrix=status_matrix,
         memory_cards=memory_cards,
+        case_inventory=_load_optional_json(docs_path / "research_reverse_case_inventory.json"),
     )
     json_path = docs_path / "all_archetype_next_runtime_attempt_plan_2026-07-05.json"
     alias_json_path = docs_path / "all_archetype_next_runtime_attempt_plan.json"
