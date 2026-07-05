@@ -1,0 +1,166 @@
+{
+  "blockers": [
+    "c05_share_over_balanced_selection_limit",
+    "full_thesis_archetype_count_below_meaningful_minimum",
+    "target_archetype_unknown_promoted",
+    "source_primary_context_promoted",
+    "required_positive_missing_promoted_rows"
+  ],
+  "current_c05_full_thesis_share": 1.0,
+  "current_distinct_full_thesis_archetype_count": 1,
+  "current_full_thesis_row_count": 10,
+  "mandatory_archetype_attempt_missing": [
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+    "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+    "C24_BIO_TRIAL_DATA_EVENT_RISK",
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+  ],
+  "mandatory_archetype_full_thesis_missing": [
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+    "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+    "C24_BIO_TRIAL_DATA_EVENT_RISK",
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+  ],
+  "meaningful_pass_allowed": false,
+  "next_required_archetype_attempt_count": 12,
+  "next_required_archetype_attempts": [
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "current_runtime_parity_status": "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP",
+      "current_source_route_status": "BLOCKED_FULL_THESIS_CANDIDATE",
+      "priority": 10,
+      "reason": "mandatory_archetype_missing_production_full_thesis",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 2,
+      "runtime_source_task_execution_count": 17,
+      "source_backed_fixture_count": 1
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "current_runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "current_source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
+      "priority": 10,
+      "reason": "mandatory_archetype_missing_production_full_thesis",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 4
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "current_runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "current_source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
+      "priority": 10,
+      "reason": "mandatory_archetype_missing_production_full_thesis",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 6
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "current_runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "current_source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
+      "priority": 10,
+      "reason": "mandatory_archetype_missing_production_full_thesis",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 10
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "current_runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "current_source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
+      "priority": 10,
+      "reason": "mandatory_archetype_missing_production_full_thesis",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 5
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "current_runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "current_source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
+      "priority": 10,
+      "reason": "mandatory_archetype_missing_production_full_thesis",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 7
+    },
+    {
+      "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "current_runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "current_source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
+      "priority": 20,
+      "reason": "source_backed_replay_ready_but_no_runtime_planner_top1",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 3
+    },
+    {
+      "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "current_runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "current_source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
+      "priority": 20,
+      "reason": "source_backed_replay_ready_but_no_runtime_planner_top1",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 3
+    },
+    {
+      "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "current_runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "current_source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
+      "priority": 20,
+      "reason": "source_backed_replay_ready_but_no_runtime_planner_top1",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 3
+    },
+    {
+      "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "current_runtime_parity_status": "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE",
+      "current_source_route_status": "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE",
+      "priority": 20,
+      "reason": "source_backed_replay_ready_but_no_runtime_planner_top1",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 3
+    },
+    {
+      "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "current_runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "current_source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
+      "priority": 20,
+      "reason": "source_backed_replay_ready_but_no_runtime_planner_top1",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 3
+    },
+    {
+      "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "current_runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "current_source_route_status": "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED",
+      "priority": 20,
+      "reason": "source_backed_replay_ready_but_no_runtime_planner_top1",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 0,
+      "runtime_source_task_execution_count": 0,
+      "source_backed_fixture_count": 3
+    }
+  ],
+  "schema_version": "e2r_balanced_full_thesis_candidate_selection_audit_v1",
+  "selection_rule": "Prioritize mandatory archetypes without production full thesis, then source-backed replay rows with no runtime planner top1, then attempted rows not promoted.",
+  "status": "BALANCED_FULL_THESIS_SELECTION_NOT_READY"
+}

@@ -1,0 +1,25 @@
+import json
+import unittest
+from pathlib import Path
+
+
+class MeaningfulFullThesisProductionAcceptanceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.audit = json.loads(Path("docs/operational/meaningful_full_thesis_production_acceptance.json").read_text())
+
+    def test_meaningful_acceptance_is_not_ready_for_c05_only_run(self) -> None:
+        self.assertEqual(self.audit["schema_version"], "e2r_meaningful_full_thesis_production_acceptance_v1")
+        self.assertEqual(self.audit["score_path_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_PASS")
+        self.assertEqual(self.audit["meaningful_status"], "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE")
+        self.assertFalse(self.audit["meaningful_pass_allowed"])
+        self.assertIn("c05_share_above_50_percent", self.audit["hard_fails"])
+        self.assertIn("planner_bias_audit_not_pass", self.audit["hard_fails"])
+
+    def test_replay_does_not_leak_into_production_score(self) -> None:
+        self.assertEqual(self.audit["research_replay_production_score_leak_count"], 0)
+        self.assertGreater(self.audit["source_proxy_repair_task_count"], 0)
+
+
+if __name__ == "__main__":
+    unittest.main()

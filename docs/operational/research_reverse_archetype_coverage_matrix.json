@@ -1,0 +1,1269 @@
+{
+  "archetype_count": 36,
+  "covered_archetype_count": 33,
+  "rows": [
+    {
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "case_role_counts": {
+        "4B": 28,
+        "4C": 410,
+        "guard": 16,
+        "positive": 1,
+        "profile_cap": 1,
+        "stage3_green": 2
+      },
+      "evidence_url_pending_case_count": 3,
+      "has_pattern_summary": true,
+      "record_count": 458,
+      "source_gap": false,
+      "source_proxy_only_case_count": 251,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 125,
+        "EVIDENCE_URL_PENDING": 3,
+        "PRICE_PATH_ONLY": 47,
+        "SHADOW_ONLY": 31,
+        "SOURCE_PROXY_ONLY": 251
+      },
+      "top_missing_primitives": [
+        "named_customer_quality",
+        "fcf_quality_score",
+        "opm_expansion_pctp",
+        "order_backlog_to_sales",
+        "delivery_schedule",
+        "contract_quality"
+      ],
+      "top_positive_primitives": [
+        "contract_quality",
+        "delivery_schedule",
+        "order_backlog_to_sales",
+        "opm_expansion_pctp",
+        "fcf_quality_score",
+        "named_customer_quality"
+      ],
+      "url_backed_case_count": 125
+    },
+    {
+      "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "case_role_counts": {
+        "4B": 25,
+        "4C": 327,
+        "guard": 10,
+        "profile_cap": 1
+      },
+      "evidence_url_pending_case_count": 7,
+      "has_pattern_summary": true,
+      "record_count": 363,
+      "source_gap": false,
+      "source_proxy_only_case_count": 199,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 2,
+        "A2_URL_BACKED": 90,
+        "EVIDENCE_URL_PENDING": 7,
+        "PRICE_PATH_ONLY": 50,
+        "SHADOW_ONLY": 15,
+        "SOURCE_PROXY_ONLY": 199
+      },
+      "top_missing_primitives": [
+        "lead_time_extended",
+        "pricing_power_confirmed",
+        "datacenter_customer",
+        "capacity_constraint",
+        "order_backlog_to_sales"
+      ],
+      "top_positive_primitives": [
+        "order_backlog_to_sales",
+        "capacity_constraint",
+        "datacenter_customer",
+        "lead_time_extended",
+        "pricing_power_confirmed"
+      ],
+      "url_backed_case_count": 90
+    },
+    {
+      "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "case_role_counts": {
+        "4B": 41,
+        "4C": 237,
+        "guard": 6,
+        "profile_cap": 1
+      },
+      "evidence_url_pending_case_count": 5,
+      "has_pattern_summary": true,
+      "record_count": 285,
+      "source_gap": false,
+      "source_proxy_only_case_count": 141,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 46,
+        "EVIDENCE_URL_PENDING": 5,
+        "PRICE_PATH_ONLY": 82,
+        "SHADOW_ONLY": 11,
+        "SOURCE_PROXY_ONLY": 141
+      },
+      "top_missing_primitives": [
+        "cost_overrun",
+        "government_customer",
+        "order_backlog_to_sales",
+        "export_contract",
+        "delivery_schedule"
+      ],
+      "top_positive_primitives": [
+        "delivery_schedule",
+        "export_contract",
+        "order_backlog_to_sales",
+        "government_customer",
+        "cost_overrun"
+      ],
+      "url_backed_case_count": 46
+    },
+    {
+      "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "case_role_counts": {
+        "4B": 26,
+        "4C": 207
+      },
+      "evidence_url_pending_case_count": 4,
+      "has_pattern_summary": true,
+      "record_count": 233,
+      "source_gap": false,
+      "source_proxy_only_case_count": 102,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 56,
+        "EVIDENCE_URL_PENDING": 4,
+        "PRICE_PATH_ONLY": 64,
+        "SHADOW_ONLY": 7,
+        "SOURCE_PROXY_ONLY": 102
+      },
+      "top_missing_primitives": [
+        "project_award_confirmed",
+        "permit_or_legal_delay",
+        "policy_or_regulatory_confirmed",
+        "direct_company_cash_route",
+        "cost_overrun"
+      ],
+      "top_positive_primitives": [
+        "cost_overrun",
+        "direct_company_cash_route",
+        "policy_or_regulatory_confirmed",
+        "permit_or_legal_delay",
+        "project_award_confirmed"
+      ],
+      "url_backed_case_count": 56
+    },
+    {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "case_role_counts": {
+        "4B": 32,
+        "4C": 351,
+        "guard": 8,
+        "positive": 1
+      },
+      "evidence_url_pending_case_count": 8,
+      "has_pattern_summary": true,
+      "record_count": 392,
+      "source_gap": false,
+      "source_proxy_only_case_count": 177,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 108,
+        "EVIDENCE_URL_PENDING": 8,
+        "PRICE_PATH_ONLY": 73,
+        "SHADOW_ONLY": 26,
+        "SOURCE_PROXY_ONLY": 177
+      },
+      "top_missing_primitives": [
+        "margin_bridge_visible",
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "cost_overrun",
+        "delivery_schedule"
+      ],
+      "top_positive_primitives": [
+        "delivery_schedule",
+        "cost_overrun",
+        "contract_duration_months",
+        "contract_amount_to_prior_sales",
+        "margin_bridge_visible"
+      ],
+      "url_backed_case_count": 108
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "case_role_counts": {
+        "4B": 52,
+        "4C": 379,
+        "guard": 41,
+        "positive": 3,
+        "profile_cap": 1,
+        "stage3_green": 5
+      },
+      "evidence_url_pending_case_count": 5,
+      "has_pattern_summary": true,
+      "record_count": 481,
+      "source_gap": false,
+      "source_proxy_only_case_count": 221,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 4,
+        "A2_URL_BACKED": 103,
+        "EVIDENCE_URL_PENDING": 5,
+        "PRICE_PATH_ONLY": 53,
+        "SHADOW_ONLY": 95,
+        "SOURCE_PROXY_ONLY": 221
+      },
+      "top_missing_primitives": [
+        "memory_price_increase_mentioned",
+        "revenue_visibility_contract",
+        "medium_term_revision_visibility",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "customer_preorder_or_allocation"
+      ],
+      "top_positive_primitives": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold",
+        "hbm_capacity_constraint",
+        "medium_term_revision_visibility",
+        "revenue_visibility_contract",
+        "memory_price_increase_mentioned"
+      ],
+      "url_backed_case_count": 103
+    },
+    {
+      "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "case_role_counts": {
+        "4B": 19,
+        "4C": 304,
+        "guard": 2
+      },
+      "evidence_url_pending_case_count": 3,
+      "has_pattern_summary": true,
+      "record_count": 325,
+      "source_gap": false,
+      "source_proxy_only_case_count": 199,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 78,
+        "EVIDENCE_URL_PENDING": 3,
+        "PRICE_PATH_ONLY": 37,
+        "SHADOW_ONLY": 8,
+        "SOURCE_PROXY_ONLY": 199
+      },
+      "top_missing_primitives": [
+        "customer_contract_visible",
+        "equipment_order_backlog",
+        "advanced_packaging_bottleneck",
+        "order_to_revenue_bridge",
+        "hbm_customer_order",
+        "relative_strength_score"
+      ],
+      "top_positive_primitives": [
+        "relative_strength_score",
+        "hbm_customer_order",
+        "advanced_packaging_bottleneck",
+        "order_to_revenue_bridge",
+        "equipment_order_backlog",
+        "customer_contract_visible"
+      ],
+      "url_backed_case_count": 78
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "case_role_counts": {
+        "4B": 21,
+        "4C": 271,
+        "guard": 6,
+        "stage3_green": 1
+      },
+      "evidence_url_pending_case_count": 2,
+      "has_pattern_summary": true,
+      "record_count": 299,
+      "source_gap": false,
+      "source_proxy_only_case_count": 177,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 61,
+        "EVIDENCE_URL_PENDING": 2,
+        "PRICE_PATH_ONLY": 43,
+        "SHADOW_ONLY": 15,
+        "SOURCE_PROXY_ONLY": 177
+      },
+      "top_missing_primitives": [
+        "socket_or_test_demand_visible",
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "margin_bridge_visible"
+      ],
+      "top_positive_primitives": [
+        "margin_bridge_visible",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "named_customer_quality",
+        "socket_or_test_demand_visible"
+      ],
+      "url_backed_case_count": 61
+    },
+    {
+      "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "case_role_counts": {
+        "4B": 17,
+        "4C": 296,
+        "guard": 1,
+        "positive": 1
+      },
+      "evidence_url_pending_case_count": 1,
+      "has_pattern_summary": true,
+      "record_count": 315,
+      "source_gap": false,
+      "source_proxy_only_case_count": 194,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 81,
+        "EVIDENCE_URL_PENDING": 1,
+        "PRICE_PATH_ONLY": 33,
+        "SHADOW_ONLY": 6,
+        "SOURCE_PROXY_ONLY": 194
+      },
+      "top_missing_primitives": [
+        "capex_cycle_risk",
+        "customer_quality_visible",
+        "order_to_revenue_bridge",
+        "valuation_overheat",
+        "price_only_blowoff"
+      ],
+      "top_positive_primitives": [
+        "price_only_blowoff",
+        "valuation_overheat",
+        "order_to_revenue_bridge",
+        "customer_quality_visible",
+        "capex_cycle_risk"
+      ],
+      "url_backed_case_count": 81
+    },
+    {
+      "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "case_role_counts": {
+        "4B": 14,
+        "4C": 353,
+        "guard": 17
+      },
+      "evidence_url_pending_case_count": 2,
+      "has_pattern_summary": true,
+      "record_count": 384,
+      "source_gap": false,
+      "source_proxy_only_case_count": 206,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 115,
+        "EVIDENCE_URL_PENDING": 2,
+        "PRICE_PATH_ONLY": 38,
+        "SHADOW_ONLY": 22,
+        "SOURCE_PROXY_ONLY": 206
+      },
+      "top_missing_primitives": [
+        "cycle_to_revenue_bridge",
+        "inventory_cycle_repair",
+        "cycle_demand_visibility",
+        "end_market_demand_visibility",
+        "supply_demand_tightness",
+        "memory_price_increase_mentioned",
+        "supply_discipline_mentioned",
+        "equipment_order_recovery",
+        "order_to_revenue_bridge",
+        "fcf_quality_score"
+      ],
+      "top_positive_primitives": [
+        "advanced_packaging_bottleneck",
+        "fcf_quality_score",
+        "memory_price_increase_mentioned",
+        "supply_discipline_mentioned",
+        "order_to_revenue_bridge",
+        "equipment_order_recovery",
+        "cycle_demand_visibility",
+        "end_market_demand_visibility",
+        "supply_demand_tightness",
+        "cycle_to_revenue_bridge"
+      ],
+      "url_backed_case_count": 115
+    },
+    {
+      "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "case_role_counts": {
+        "4B": 11,
+        "4C": 280,
+        "guard": 4
+      },
+      "evidence_url_pending_case_count": 3,
+      "has_pattern_summary": true,
+      "record_count": 295,
+      "source_gap": false,
+      "source_proxy_only_case_count": 153,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 84,
+        "EVIDENCE_URL_PENDING": 3,
+        "PRICE_PATH_ONLY": 46,
+        "SHADOW_ONLY": 9,
+        "SOURCE_PROXY_ONLY": 153
+      },
+      "top_missing_primitives": [
+        "ex_credit_margin",
+        "fcf_quality_score",
+        "order_backlog_to_sales",
+        "call_off_risk",
+        "customer_contract"
+      ],
+      "top_positive_primitives": [
+        "customer_contract",
+        "call_off_risk",
+        "order_backlog_to_sales",
+        "fcf_quality_score",
+        "ex_credit_margin"
+      ],
+      "url_backed_case_count": 84
+    },
+    {
+      "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "case_role_counts": {
+        "4B": 14,
+        "4C": 280,
+        "guard": 4
+      },
+      "evidence_url_pending_case_count": 5,
+      "has_pattern_summary": true,
+      "record_count": 298,
+      "source_gap": false,
+      "source_proxy_only_case_count": 163,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 75,
+        "EVIDENCE_URL_PENDING": 5,
+        "PRICE_PATH_ONLY": 47,
+        "SHADOW_ONLY": 8,
+        "SOURCE_PROXY_ONLY": 163
+      },
+      "top_missing_primitives": [
+        "volume_visibility",
+        "customer_capex_decline",
+        "contract_cancelled_or_delayed",
+        "call_off_risk",
+        "customer_contract"
+      ],
+      "top_positive_primitives": [
+        "customer_contract",
+        "call_off_risk",
+        "contract_cancelled_or_delayed",
+        "customer_capex_decline",
+        "volume_visibility"
+      ],
+      "url_backed_case_count": 75
+    },
+    {
+      "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "case_role_counts": {
+        "4B": 18,
+        "4C": 296,
+        "guard": 2
+      },
+      "evidence_url_pending_case_count": 6,
+      "has_pattern_summary": true,
+      "record_count": 316,
+      "source_gap": false,
+      "source_proxy_only_case_count": 183,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 77,
+        "EVIDENCE_URL_PENDING": 6,
+        "PRICE_PATH_ONLY": 45,
+        "SHADOW_ONLY": 5,
+        "SOURCE_PROXY_ONLY": 183
+      },
+      "top_missing_primitives": [
+        "ampc_or_subsidy_capture",
+        "policy_reversal_risk",
+        "ex_credit_margin",
+        "customer_contract",
+        "jv_utilization"
+      ],
+      "top_positive_primitives": [
+        "jv_utilization",
+        "customer_contract",
+        "ex_credit_margin",
+        "ampc_or_subsidy_capture",
+        "policy_reversal_risk"
+      ],
+      "url_backed_case_count": 77
+    },
+    {
+      "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "case_role_counts": {
+        "4B": 4,
+        "4C": 303,
+        "guard": 1
+      },
+      "evidence_url_pending_case_count": 4,
+      "has_pattern_summary": true,
+      "record_count": 308,
+      "source_gap": false,
+      "source_proxy_only_case_count": 171,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 97,
+        "EVIDENCE_URL_PENDING": 4,
+        "PRICE_PATH_ONLY": 32,
+        "SHADOW_ONLY": 4,
+        "SOURCE_PROXY_ONLY": 171
+      },
+      "top_missing_primitives": [
+        "price_cut_risk",
+        "customer_capex_decline",
+        "inventory_spike",
+        "thesis_break_confirmed",
+        "ev_demand_slowdown"
+      ],
+      "top_positive_primitives": [
+        "ev_demand_slowdown",
+        "thesis_break_confirmed",
+        "inventory_spike",
+        "customer_capex_decline",
+        "price_cut_risk"
+      ],
+      "url_backed_case_count": 97
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "case_role_counts": {
+        "4B": 47,
+        "4C": 303,
+        "guard": 3,
+        "positive": 1,
+        "stage3_green": 1
+      },
+      "evidence_url_pending_case_count": 5,
+      "has_pattern_summary": true,
+      "record_count": 355,
+      "source_gap": false,
+      "source_proxy_only_case_count": 156,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 98,
+        "EVIDENCE_URL_PENDING": 5,
+        "PRICE_PATH_ONLY": 81,
+        "SHADOW_ONLY": 15,
+        "SOURCE_PROXY_ONLY": 156
+      },
+      "top_missing_primitives": [
+        "pricing_power_confirmed",
+        "utilization_rate",
+        "fcf_quality_score",
+        "spread_expansion",
+        "inventory_cycle"
+      ],
+      "top_positive_primitives": [
+        "inventory_cycle",
+        "spread_expansion",
+        "fcf_quality_score",
+        "utilization_rate",
+        "pricing_power_confirmed"
+      ],
+      "url_backed_case_count": 98
+    },
+    {
+      "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "case_role_counts": {
+        "4B": 38,
+        "4C": 244,
+        "guard": 4
+      },
+      "evidence_url_pending_case_count": 8,
+      "has_pattern_summary": true,
+      "record_count": 286,
+      "source_gap": false,
+      "source_proxy_only_case_count": 140,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 55,
+        "EVIDENCE_URL_PENDING": 8,
+        "PRICE_PATH_ONLY": 76,
+        "SHADOW_ONLY": 7,
+        "SOURCE_PROXY_ONLY": 140
+      },
+      "top_missing_primitives": [
+        "permit_status",
+        "offtake_contract",
+        "supply_shortage",
+        "policy_supply_support",
+        "direct_company_cash_route"
+      ],
+      "top_positive_primitives": [
+        "direct_company_cash_route",
+        "offtake_contract",
+        "policy_supply_support",
+        "supply_shortage",
+        "permit_status"
+      ],
+      "url_backed_case_count": 55
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "case_role_counts": {
+        "4B": 44,
+        "4C": 277,
+        "guard": 3,
+        "positive": 1,
+        "stage3_green": 1
+      },
+      "evidence_url_pending_case_count": 10,
+      "has_pattern_summary": true,
+      "record_count": 326,
+      "source_gap": false,
+      "source_proxy_only_case_count": 160,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 69,
+        "EVIDENCE_URL_PENDING": 10,
+        "PRICE_PATH_ONLY": 74,
+        "SHADOW_ONLY": 13,
+        "SOURCE_PROXY_ONLY": 160
+      },
+      "top_missing_primitives": [
+        "raw_material_cost_risk",
+        "utilization_rate",
+        "inventory_cycle",
+        "opm_expansion_pctp",
+        "spread_expansion"
+      ],
+      "top_positive_primitives": [
+        "spread_expansion",
+        "opm_expansion_pctp",
+        "inventory_cycle",
+        "utilization_rate",
+        "raw_material_cost_risk"
+      ],
+      "url_backed_case_count": 69
+    },
+    {
+      "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "case_role_counts": {
+        "4B": 35,
+        "4C": 260,
+        "guard": 3,
+        "positive": 1,
+        "profile_cap": 1
+      },
+      "evidence_url_pending_case_count": 8,
+      "has_pattern_summary": true,
+      "record_count": 300,
+      "source_gap": false,
+      "source_proxy_only_case_count": 126,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 89,
+        "EVIDENCE_URL_PENDING": 8,
+        "PRICE_PATH_ONLY": 66,
+        "SHADOW_ONLY": 10,
+        "SOURCE_PROXY_ONLY": 126
+      },
+      "top_missing_primitives": [
+        "repeat_order_confirmed",
+        "channel_reorder_confirmed",
+        "export_growth_pct",
+        "sell_through_confirmed",
+        "opm_expansion_pctp"
+      ],
+      "top_positive_primitives": [
+        "opm_expansion_pctp",
+        "export_growth_pct",
+        "sell_through_confirmed",
+        "channel_reorder_confirmed",
+        "repeat_order_confirmed"
+      ],
+      "url_backed_case_count": 89
+    },
+    {
+      "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "case_role_counts": {
+        "4B": 20,
+        "4C": 232,
+        "guard": 5
+      },
+      "evidence_url_pending_case_count": 7,
+      "has_pattern_summary": true,
+      "record_count": 257,
+      "source_gap": false,
+      "source_proxy_only_case_count": 130,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 63,
+        "EVIDENCE_URL_PENDING": 7,
+        "PRICE_PATH_ONLY": 48,
+        "SHADOW_ONLY": 9,
+        "SOURCE_PROXY_ONLY": 130
+      },
+      "top_missing_primitives": [
+        "channel_reorder_confirmed",
+        "raw_material_cost_risk",
+        "inventory_spike",
+        "sell_through_confirmed",
+        "pricing_power_confirmed"
+      ],
+      "top_positive_primitives": [
+        "inventory_spike",
+        "pricing_power_confirmed",
+        "sell_through_confirmed",
+        "channel_reorder_confirmed",
+        "raw_material_cost_risk"
+      ],
+      "url_backed_case_count": 63
+    },
+    {
+      "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "case_role_counts": {
+        "4B": 30,
+        "4C": 267,
+        "guard": 9,
+        "profile_cap": 1
+      },
+      "evidence_url_pending_case_count": 5,
+      "has_pattern_summary": true,
+      "record_count": 307,
+      "source_gap": false,
+      "source_proxy_only_case_count": 112,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 102,
+        "EVIDENCE_URL_PENDING": 5,
+        "PRICE_PATH_ONLY": 74,
+        "SHADOW_ONLY": 13,
+        "SOURCE_PROXY_ONLY": 112
+      },
+      "top_missing_primitives": [
+        "brand_customer_diversification",
+        "export_growth_pct",
+        "platform_distribution_scale",
+        "repeat_order_confirmed",
+        "high_margin_mix_improvement"
+      ],
+      "top_positive_primitives": [
+        "high_margin_mix_improvement",
+        "export_growth_pct",
+        "platform_distribution_scale",
+        "repeat_order_confirmed",
+        "brand_customer_diversification"
+      ],
+      "url_backed_case_count": 102
+    },
+    {
+      "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "case_role_counts": {
+        "4B": 49,
+        "4C": 292,
+        "guard": 14,
+        "positive": 1,
+        "profile_cap": 1
+      },
+      "evidence_url_pending_case_count": 6,
+      "has_pattern_summary": true,
+      "record_count": 357,
+      "source_gap": false,
+      "source_proxy_only_case_count": 118,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 111,
+        "EVIDENCE_URL_PENDING": 6,
+        "PRICE_PATH_ONLY": 102,
+        "SHADOW_ONLY": 19,
+        "SOURCE_PROXY_ONLY": 118
+      },
+      "top_missing_primitives": [
+        "pbr_e",
+        "treasury_share_cancellation",
+        "credit_cost_quality",
+        "capital_return_execution",
+        "roe"
+      ],
+      "top_positive_primitives": [
+        "roe",
+        "capital_return_execution",
+        "pbr_e",
+        "credit_cost_quality",
+        "treasury_share_cancellation"
+      ],
+      "url_backed_case_count": 111
+    },
+    {
+      "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "case_role_counts": {
+        "4B": 41,
+        "4C": 255,
+        "guard": 8,
+        "profile_cap": 1
+      },
+      "evidence_url_pending_case_count": 6,
+      "has_pattern_summary": true,
+      "record_count": 305,
+      "source_gap": false,
+      "source_proxy_only_case_count": 114,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 84,
+        "EVIDENCE_URL_PENDING": 6,
+        "PRICE_PATH_ONLY": 87,
+        "SHADOW_ONLY": 13,
+        "SOURCE_PROXY_ONLY": 114
+      },
+      "top_missing_primitives": [
+        "csm_growth_visible",
+        "reserve_quality_visible",
+        "k_ics_ratio",
+        "loss_ratio_quality",
+        "capital_return_execution"
+      ],
+      "top_positive_primitives": [
+        "capital_return_execution",
+        "loss_ratio_quality",
+        "k_ics_ratio",
+        "csm_growth_visible",
+        "reserve_quality_visible"
+      ],
+      "url_backed_case_count": 84
+    },
+    {
+      "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "case_role_counts": {
+        "4B": 28,
+        "4C": 267,
+        "guard": 13,
+        "profile_cap": 1
+      },
+      "evidence_url_pending_case_count": 8,
+      "has_pattern_summary": true,
+      "record_count": 309,
+      "source_gap": false,
+      "source_proxy_only_case_count": 120,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 92,
+        "EVIDENCE_URL_PENDING": 8,
+        "PRICE_PATH_ONLY": 71,
+        "SHADOW_ONLY": 17,
+        "SOURCE_PROXY_ONLY": 120
+      },
+      "top_missing_primitives": [
+        "partner_economics_visible",
+        "regulatory_approval_confirmed",
+        "reimbursement_confirmed",
+        "approval_to_revenue_bridge",
+        "royalty_route"
+      ],
+      "top_positive_primitives": [
+        "royalty_route",
+        "approval_to_revenue_bridge",
+        "regulatory_approval_confirmed",
+        "reimbursement_confirmed",
+        "partner_economics_visible"
+      ],
+      "url_backed_case_count": 92
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "case_role_counts": {
+        "4B": 24,
+        "4C": 243,
+        "guard": 7,
+        "positive": 1,
+        "stage3_green": 1
+      },
+      "evidence_url_pending_case_count": 7,
+      "has_pattern_summary": true,
+      "record_count": 276,
+      "source_gap": false,
+      "source_proxy_only_case_count": 143,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 60,
+        "EVIDENCE_URL_PENDING": 7,
+        "PRICE_PATH_ONLY": 57,
+        "SHADOW_ONLY": 9,
+        "SOURCE_PROXY_ONLY": 143
+      },
+      "top_missing_primitives": [
+        "trial_quality_visible",
+        "approval_not_confirmed",
+        "safety_signal",
+        "cash_runway_risk",
+        "binary_event_unresolved"
+      ],
+      "top_positive_primitives": [
+        "binary_event_unresolved",
+        "cash_runway_risk",
+        "safety_signal",
+        "approval_not_confirmed",
+        "trial_quality_visible"
+      ],
+      "url_backed_case_count": 60
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "case_role_counts": {
+        "4B": 23,
+        "4C": 226,
+        "guard": 3,
+        "profile_cap": 1
+      },
+      "evidence_url_pending_case_count": 6,
+      "has_pattern_summary": true,
+      "record_count": 253,
+      "source_gap": false,
+      "source_proxy_only_case_count": 122,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 56,
+        "EVIDENCE_URL_PENDING": 6,
+        "PRICE_PATH_ONLY": 61,
+        "SHADOW_ONLY": 7,
+        "SOURCE_PROXY_ONLY": 122
+      },
+      "top_missing_primitives": [
+        "procedure_volume_growth",
+        "consumable_repeat_revenue",
+        "gross_margin_bridge",
+        "export_growth_pct",
+        "reimbursement_confirmed"
+      ],
+      "top_positive_primitives": [
+        "reimbursement_confirmed",
+        "export_growth_pct",
+        "gross_margin_bridge",
+        "consumable_repeat_revenue",
+        "procedure_volume_growth"
+      ],
+      "url_backed_case_count": 56
+    },
+    {
+      "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "case_role_counts": {
+        "4B": 28,
+        "4C": 244,
+        "guard": 7
+      },
+      "evidence_url_pending_case_count": 7,
+      "has_pattern_summary": true,
+      "record_count": 279,
+      "source_gap": false,
+      "source_proxy_only_case_count": 122,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 2,
+        "A2_URL_BACKED": 70,
+        "EVIDENCE_URL_PENDING": 7,
+        "PRICE_PATH_ONLY": 70,
+        "SHADOW_ONLY": 8,
+        "SOURCE_PROXY_ONLY": 122
+      },
+      "top_missing_primitives": [
+        "arpu_growth_pct",
+        "ad_revenue_growth_pct",
+        "take_rate_improvement",
+        "regulatory_risk",
+        "operating_leverage_visible"
+      ],
+      "top_positive_primitives": [
+        "operating_leverage_visible",
+        "ad_revenue_growth_pct",
+        "arpu_growth_pct",
+        "regulatory_risk",
+        "take_rate_improvement"
+      ],
+      "url_backed_case_count": 70
+    },
+    {
+      "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "case_role_counts": {
+        "4B": 19,
+        "4C": 255,
+        "guard": 2
+      },
+      "evidence_url_pending_case_count": 6,
+      "has_pattern_summary": true,
+      "record_count": 276,
+      "source_gap": false,
+      "source_proxy_only_case_count": 156,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 66,
+        "EVIDENCE_URL_PENDING": 6,
+        "PRICE_PATH_ONLY": 45,
+        "SHADOW_ONLY": 3,
+        "SOURCE_PROXY_ONLY": 156
+      },
+      "top_missing_primitives": [
+        "global_launch_conversion",
+        "token_or_theme_hype_risk",
+        "ip_monetization_visible",
+        "user_retention",
+        "repeat_revenue"
+      ],
+      "top_positive_primitives": [
+        "repeat_revenue",
+        "user_retention",
+        "ip_monetization_visible",
+        "global_launch_conversion",
+        "token_or_theme_hype_risk"
+      ],
+      "url_backed_case_count": 66
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "case_role_counts": {
+        "4B": 27,
+        "4C": 310,
+        "guard": 13,
+        "profile_cap": 1,
+        "stage3_green": 1
+      },
+      "evidence_url_pending_case_count": 7,
+      "has_pattern_summary": true,
+      "record_count": 352,
+      "source_gap": false,
+      "source_proxy_only_case_count": 187,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 83,
+        "EVIDENCE_URL_PENDING": 7,
+        "PRICE_PATH_ONLY": 54,
+        "SHADOW_ONLY": 20,
+        "SOURCE_PROXY_ONLY": 187
+      },
+      "top_missing_primitives": [
+        "arr_growth_visible",
+        "recurring_margin_leverage",
+        "rpo_to_sales",
+        "retention_or_renewal",
+        "nrr"
+      ],
+      "top_positive_primitives": [
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage",
+        "arr_growth_visible"
+      ],
+      "url_backed_case_count": 83
+    },
+    {
+      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "case_role_counts": {
+        "4B": 19,
+        "4C": 246,
+        "guard": 1,
+        "positive": 1
+      },
+      "evidence_url_pending_case_count": 5,
+      "has_pattern_summary": true,
+      "record_count": 267,
+      "source_gap": false,
+      "source_proxy_only_case_count": 114,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 71,
+        "EVIDENCE_URL_PENDING": 5,
+        "PRICE_PATH_ONLY": 67,
+        "SHADOW_ONLY": 10,
+        "SOURCE_PROXY_ONLY": 114
+      },
+      "top_missing_primitives": [
+        "pricing_power_confirmed",
+        "mix_improvement",
+        "operating_leverage_visible",
+        "volume_growth_visible",
+        "fcf_quality_score"
+      ],
+      "top_positive_primitives": [
+        "fcf_quality_score",
+        "volume_growth_visible",
+        "operating_leverage_visible",
+        "mix_improvement",
+        "pricing_power_confirmed"
+      ],
+      "url_backed_case_count": 71
+    },
+    {
+      "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "case_role_counts": {
+        "4B": 28,
+        "4C": 308,
+        "guard": 5,
+        "positive": 1,
+        "profile_cap": 1
+      },
+      "evidence_url_pending_case_count": 5,
+      "has_pattern_summary": true,
+      "record_count": 343,
+      "source_gap": false,
+      "source_proxy_only_case_count": 147,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 88,
+        "EVIDENCE_URL_PENDING": 5,
+        "PRICE_PATH_ONLY": 96,
+        "SHADOW_ONLY": 7,
+        "SOURCE_PROXY_ONLY": 147
+      },
+      "top_missing_primitives": [
+        "pf_exposure_reduced",
+        "occupancy_or_presale_visible",
+        "cash_collection_visible",
+        "funding_cost_risk",
+        "balance_sheet_repair"
+      ],
+      "top_positive_primitives": [
+        "balance_sheet_repair",
+        "cash_collection_visible",
+        "funding_cost_risk",
+        "occupancy_or_presale_visible",
+        "pf_exposure_reduced"
+      ],
+      "url_backed_case_count": 88
+    },
+    {
+      "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "case_role_counts": {
+        "4B": 41,
+        "4C": 328,
+        "guard": 3,
+        "positive": 1,
+        "profile_cap": 1,
+        "stage3_green": 1
+      },
+      "evidence_url_pending_case_count": 8,
+      "has_pattern_summary": true,
+      "record_count": 375,
+      "source_gap": false,
+      "source_proxy_only_case_count": 142,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 114,
+        "EVIDENCE_URL_PENDING": 8,
+        "PRICE_PATH_ONLY": 104,
+        "SHADOW_ONLY": 7,
+        "SOURCE_PROXY_ONLY": 142
+      },
+      "top_missing_primitives": [
+        "policy_or_regulatory_confirmed",
+        "direct_company_cash_route",
+        "subsidy_capture_visible",
+        "policy_headline_only",
+        "implementation_timeline"
+      ],
+      "top_positive_primitives": [
+        "implementation_timeline",
+        "policy_headline_only",
+        "subsidy_capture_visible",
+        "direct_company_cash_route",
+        "policy_or_regulatory_confirmed"
+      ],
+      "url_backed_case_count": 114
+    },
+    {
+      "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "case_role_counts": {
+        "4B": 41,
+        "4C": 365,
+        "guard": 6,
+        "positive": 1,
+        "profile_cap": 1,
+        "stage3_green": 1
+      },
+      "evidence_url_pending_case_count": 7,
+      "has_pattern_summary": true,
+      "record_count": 415,
+      "source_gap": false,
+      "source_proxy_only_case_count": 182,
+      "source_quality_counts": {
+        "A2_URL_BACKED": 132,
+        "EVIDENCE_URL_PENDING": 7,
+        "PRICE_PATH_ONLY": 80,
+        "SHADOW_ONLY": 14,
+        "SOURCE_PROXY_ONLY": 182
+      },
+      "top_missing_primitives": [
+        "tender_offer_confirmed",
+        "control_premium_floor",
+        "event_spread_risk",
+        "regulatory_approval_confirmed",
+        "minority_cash_path"
+      ],
+      "top_positive_primitives": [
+        "minority_cash_path",
+        "regulatory_approval_confirmed",
+        "control_premium_floor",
+        "event_spread_risk",
+        "tender_offer_confirmed"
+      ],
+      "url_backed_case_count": 132
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "case_role_counts": {},
+      "evidence_url_pending_case_count": 0,
+      "has_pattern_summary": false,
+      "record_count": 0,
+      "source_gap": true,
+      "source_proxy_only_case_count": 0,
+      "source_quality_counts": {},
+      "top_missing_primitives": [],
+      "top_positive_primitives": [],
+      "url_backed_case_count": 0
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "case_role_counts": {},
+      "evidence_url_pending_case_count": 0,
+      "has_pattern_summary": false,
+      "record_count": 0,
+      "source_gap": true,
+      "source_proxy_only_case_count": 0,
+      "source_quality_counts": {},
+      "top_missing_primitives": [],
+      "top_positive_primitives": [],
+      "url_backed_case_count": 0
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "case_role_counts": {},
+      "evidence_url_pending_case_count": 0,
+      "has_pattern_summary": false,
+      "record_count": 0,
+      "source_gap": true,
+      "source_proxy_only_case_count": 0,
+      "source_quality_counts": {},
+      "top_missing_primitives": [],
+      "top_positive_primitives": [],
+      "url_backed_case_count": 0
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "case_role_counts": {
+        "4B": 77,
+        "4C": 907,
+        "guard": 12,
+        "positive": 1,
+        "stage3_green": 1
+      },
+      "evidence_url_pending_case_count": 6,
+      "has_pattern_summary": true,
+      "record_count": 998,
+      "source_gap": false,
+      "source_proxy_only_case_count": 286,
+      "source_quality_counts": {
+        "A1_URL_PENDING": 1,
+        "A2_URL_BACKED": 450,
+        "EVIDENCE_URL_PENDING": 6,
+        "PRICE_PATH_ONLY": 201,
+        "SHADOW_ONLY": 54,
+        "SOURCE_PROXY_ONLY": 286
+      },
+      "top_missing_primitives": [
+        "positioning_reversal_risk",
+        "liquidity_or_microcap_risk",
+        "high_mae_history",
+        "valuation_overheat",
+        "execution_risk_score"
+      ],
+      "top_positive_primitives": [
+        "execution_risk_score",
+        "valuation_overheat",
+        "high_mae_history",
+        "liquidity_or_microcap_risk",
+        "positioning_reversal_risk"
+      ],
+      "url_backed_case_count": 450
+    }
+  ],
+  "schema_version": "e2r_research_reverse_archetype_coverage_matrix_v1",
+  "source_gap_archetype_count": 3
+}

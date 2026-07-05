@@ -1,0 +1,111 @@
+{
+  "gap_task_count": 15,
+  "schema_version": "e2r_research_source_route_gap_tasks_v1",
+  "tasks": [
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "price_only_blowoff",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW-price_only_blowoff"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "policy_headline_only",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW-policy_headline_only"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "evidence_source_quality",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW-evidence_source_quality"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "missing_cashflow_bridge",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW-missing_cashflow_bridge"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "theme_hype_without_revenue",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW-theme_hype_without_revenue"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "thesis_break_confirmed",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_4B_4C_REDTEAM-thesis_break_confirmed"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "contract_cancelled_or_delayed",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_4B_4C_REDTEAM-contract_cancelled_or_delayed"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "revision_slowdown",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_4B_4C_REDTEAM-revision_slowdown"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "accounting_trust_risk",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_4B_4C_REDTEAM-accounting_trust_risk"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "valuation_overheat",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_4B_4C_REDTEAM-valuation_overheat"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "auditor_or_disclosure_risk",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION-auditor_or_disclosure_risk"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "restatement_risk",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION-restatement_risk"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "share_count_drift",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION-share_count_drift"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "price_only_blowoff",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION-price_only_blowoff"
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "next_action": "use_official_first_route_and_record_source_blocker_if_no_current_anchor",
+      "primitive_id": "source_quality_conflict",
+      "status": "SOURCE_ROUTE_MEMORY_GAP",
+      "task_id": "SROUTE-GAP-R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION-source_quality_conflict"
+    }
+  ]
+}

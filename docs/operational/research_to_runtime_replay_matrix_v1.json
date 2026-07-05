@@ -1,0 +1,445 @@
+{
+  "accepted_claim_replay_count": 6,
+  "all_source_proxy_cases_planning_only": true,
+  "guard_replay_pass_count": 6,
+  "mandatory_archetype_count": 6,
+  "production_score_leak_count": 0,
+  "rows": [
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "current_lifecycle_validation_status": "CURRENT_PRODUCTION_CANDIDATE_BLOCKED",
+      "evidence_url_pending_case_count": 5,
+      "guard_accepted_claim_ids": [],
+      "guard_pass": true,
+      "guard_replay_file": "c06_guard_replay_audit.json",
+      "guard_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "pass": true,
+      "positive_accepted_claim_ids": [
+        "CLM-23b9ae0023c4ae107683"
+      ],
+      "positive_pass": true,
+      "positive_primitive_states": [
+        "customer_preorder_or_allocation"
+      ],
+      "positive_replay_file": "c06_source_backed_semantic_replay.json",
+      "positive_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "production_score_evidence_allowed": false,
+      "runtime_full_thesis_row_count": 0,
+      "runtime_parity_status": "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP",
+      "schema_version": "e2r_research_to_runtime_replay_row_v1",
+      "score_contribution_ids": [],
+      "source_proxy_only_case_count": 50,
+      "source_proxy_repair_required": true,
+      "source_proxy_repair_task_ids": [
+        "RTR-REPAIR-C06_HBM_MEMORY_CUSTOMER_CAPACITY-1",
+        "RTR-REPAIR-C06_HBM_MEMORY_CUSTOMER_CAPACITY-2",
+        "RTR-REPAIR-C06_HBM_MEMORY_CUSTOMER_CAPACITY-3"
+      ],
+      "stagecourt_trace_id": null,
+      "url_backed_replay_case_count": 50
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "current_lifecycle_validation_status": "LIFECYCLE_NOT_CURRENT",
+      "evidence_url_pending_case_count": 2,
+      "guard_accepted_claim_ids": [
+        "CLM-b7e9e4bf1538da38bcbf"
+      ],
+      "guard_pass": true,
+      "guard_replay_file": "c08_source_backed_semantic_replay.json",
+      "guard_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "pass": true,
+      "positive_accepted_claim_ids": [
+        "CLM-653f8ae351a2a43efd69",
+        "CLM-8fc683c97370b76f7203",
+        "CLM-1577da191799fe8b0e41"
+      ],
+      "positive_pass": true,
+      "positive_primitive_states": [
+        "socket_or_test_demand_visible",
+        "named_customer_quality"
+      ],
+      "positive_replay_file": "c08_source_backed_semantic_replay.json",
+      "positive_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "production_score_evidence_allowed": false,
+      "runtime_full_thesis_row_count": 0,
+      "runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "schema_version": "e2r_research_to_runtime_replay_row_v1",
+      "score_contribution_ids": [],
+      "source_proxy_only_case_count": 50,
+      "source_proxy_repair_required": true,
+      "source_proxy_repair_task_ids": [
+        "RTR-REPAIR-C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY-1",
+        "RTR-REPAIR-C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY-2",
+        "RTR-REPAIR-C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY-3"
+      ],
+      "stagecourt_trace_id": null,
+      "url_backed_replay_case_count": 50
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "current_lifecycle_validation_status": "LIFECYCLE_NOT_CURRENT",
+      "evidence_url_pending_case_count": 5,
+      "guard_accepted_claim_ids": [
+        "CLM-981242dee4a7213fa9b1",
+        "CLM-b7299d4f520672a1d012",
+        "CLM-1c5349d21bf3fa39d241",
+        "CLM-9d26dcc6130dac2eae78",
+        "CLM-828dbb0b3997e355bdee",
+        "CLM-16816cc93fe4395b6732"
+      ],
+      "guard_pass": true,
+      "guard_replay_file": "c15_source_backed_semantic_replay.json",
+      "guard_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "pass": true,
+      "positive_accepted_claim_ids": [
+        "CLM-981242dee4a7213fa9b1",
+        "CLM-b7299d4f520672a1d012",
+        "CLM-1c5349d21bf3fa39d241",
+        "CLM-9d26dcc6130dac2eae78",
+        "CLM-828dbb0b3997e355bdee",
+        "CLM-16816cc93fe4395b6732"
+      ],
+      "positive_pass": true,
+      "positive_primitive_states": [
+        "fcf_quality_score",
+        "pricing_power_confirmed",
+        "spread_expansion"
+      ],
+      "positive_replay_file": "c15_source_backed_semantic_replay.json",
+      "positive_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "production_score_evidence_allowed": false,
+      "runtime_full_thesis_row_count": 0,
+      "runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "schema_version": "e2r_research_to_runtime_replay_row_v1",
+      "score_contribution_ids": [],
+      "source_proxy_only_case_count": 50,
+      "source_proxy_repair_required": true,
+      "source_proxy_repair_task_ids": [
+        "RTR-REPAIR-C15_MATERIAL_SPREAD_SUPERCYCLE-1",
+        "RTR-REPAIR-C15_MATERIAL_SPREAD_SUPERCYCLE-2",
+        "RTR-REPAIR-C15_MATERIAL_SPREAD_SUPERCYCLE-3"
+      ],
+      "stagecourt_trace_id": null,
+      "url_backed_replay_case_count": 50
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "current_lifecycle_validation_status": "LIFECYCLE_NOT_CURRENT",
+      "evidence_url_pending_case_count": 10,
+      "guard_accepted_claim_ids": [
+        "CLM-bdb8d682f0cf4e645978",
+        "CLM-3282625c74e36b95dd36",
+        "CLM-0db84ab60899193fc46e",
+        "CLM-514889bd476148244d25"
+      ],
+      "guard_pass": true,
+      "guard_replay_file": "c17_source_backed_semantic_replay.json",
+      "guard_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "pass": true,
+      "positive_accepted_claim_ids": [
+        "CLM-30280e2392beb9412c4d",
+        "CLM-6ed8eec6d2540a6a7409",
+        "CLM-38d2c7486a945592f451",
+        "CLM-727184864ac8c1c52b6f",
+        "CLM-1ec195d162c432923346",
+        "CLM-921c3c1f1ebfa72f1f49"
+      ],
+      "positive_pass": true,
+      "positive_primitive_states": [
+        "opm_expansion_pctp",
+        "spread_expansion",
+        "utilization_rate"
+      ],
+      "positive_replay_file": "c17_source_backed_semantic_replay.json",
+      "positive_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "production_score_evidence_allowed": false,
+      "runtime_full_thesis_row_count": 0,
+      "runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "schema_version": "e2r_research_to_runtime_replay_row_v1",
+      "score_contribution_ids": [],
+      "source_proxy_only_case_count": 50,
+      "source_proxy_repair_required": true,
+      "source_proxy_repair_task_ids": [
+        "RTR-REPAIR-C17_CHEMICAL_COMMODITY_MARGIN_SPREAD-1",
+        "RTR-REPAIR-C17_CHEMICAL_COMMODITY_MARGIN_SPREAD-2",
+        "RTR-REPAIR-C17_CHEMICAL_COMMODITY_MARGIN_SPREAD-3"
+      ],
+      "stagecourt_trace_id": null,
+      "url_backed_replay_case_count": 50
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "current_lifecycle_validation_status": "LIFECYCLE_NOT_CURRENT",
+      "evidence_url_pending_case_count": 7,
+      "guard_accepted_claim_ids": [
+        "CLM-05599dd25940eae319aa",
+        "CLM-58f0ffd6557da39ae092",
+        "CLM-0f6173e2f72f48d637e6"
+      ],
+      "guard_pass": true,
+      "guard_replay_file": "c24_source_backed_semantic_replay.json",
+      "guard_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "pass": true,
+      "positive_accepted_claim_ids": [
+        "CLM-d320fe3c9d4e81d9b835",
+        "CLM-a8df3cbd0c013c0d7df6"
+      ],
+      "positive_pass": true,
+      "positive_primitive_states": [
+        "trial_quality_visible"
+      ],
+      "positive_replay_file": "c24_source_backed_semantic_replay.json",
+      "positive_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "production_score_evidence_allowed": false,
+      "runtime_full_thesis_row_count": 0,
+      "runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "schema_version": "e2r_research_to_runtime_replay_row_v1",
+      "score_contribution_ids": [],
+      "source_proxy_only_case_count": 50,
+      "source_proxy_repair_required": true,
+      "source_proxy_repair_task_ids": [
+        "RTR-REPAIR-C24_BIO_TRIAL_DATA_EVENT_RISK-1",
+        "RTR-REPAIR-C24_BIO_TRIAL_DATA_EVENT_RISK-2",
+        "RTR-REPAIR-C24_BIO_TRIAL_DATA_EVENT_RISK-3"
+      ],
+      "stagecourt_trace_id": null,
+      "url_backed_replay_case_count": 50
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "current_lifecycle_validation_status": "LIFECYCLE_NOT_CURRENT",
+      "evidence_url_pending_case_count": 7,
+      "guard_accepted_claim_ids": [
+        "CLM-a0fe8ac7cf3f483692ef",
+        "CLM-80b7094352b148fe9f3d",
+        "CLM-39db59bcaba20c270b93",
+        "CLM-5a0f0d9c66e4f2178747",
+        "CLM-b7010908f879e86dff36",
+        "CLM-84eecb76c1302581f304",
+        "CLM-ba371b3a4f109d231c3b"
+      ],
+      "guard_pass": true,
+      "guard_replay_file": "c28_source_backed_semantic_replay.json",
+      "guard_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "pass": true,
+      "positive_accepted_claim_ids": [
+        "CLM-a0fe8ac7cf3f483692ef",
+        "CLM-80b7094352b148fe9f3d",
+        "CLM-39db59bcaba20c270b93",
+        "CLM-5a0f0d9c66e4f2178747",
+        "CLM-b7010908f879e86dff36",
+        "CLM-84eecb76c1302581f304",
+        "CLM-ba371b3a4f109d231c3b"
+      ],
+      "positive_pass": true,
+      "positive_primitive_states": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "positive_replay_file": "c28_source_backed_semantic_replay.json",
+      "positive_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
+      "production_score_evidence_allowed": false,
+      "runtime_full_thesis_row_count": 0,
+      "runtime_parity_status": "RESEARCH_REPLAY_READY_BUT_NOT_RUNTIME_PROVEN",
+      "schema_version": "e2r_research_to_runtime_replay_row_v1",
+      "score_contribution_ids": [],
+      "source_proxy_only_case_count": 50,
+      "source_proxy_repair_required": true,
+      "source_proxy_repair_task_ids": [
+        "RTR-REPAIR-C28_SOFTWARE_SECURITY_CONTRACT_RETENTION-1",
+        "RTR-REPAIR-C28_SOFTWARE_SECURITY_CONTRACT_RETENTION-2",
+        "RTR-REPAIR-C28_SOFTWARE_SECURITY_CONTRACT_RETENTION-3"
+      ],
+      "stagecourt_trace_id": null,
+      "url_backed_replay_case_count": 50
+    }
+  ],
+  "schema_version": "e2r_research_to_runtime_replay_matrix_v1",
+  "source_proxy_repair_task_count": 18,
+  "source_repair_tasks": [
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-28e05cf4e2a25c799562",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C06_HBM_MEMORY_CUSTOMER_CAPACITY-1"
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-2e320d6e6096978cdf95",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C06_HBM_MEMORY_CUSTOMER_CAPACITY-2"
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-c7aed50be5f1c45fa5d9",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C06_HBM_MEMORY_CUSTOMER_CAPACITY-3"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-cc1df33d02944d0505e6",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY-1"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-9ccea3f5df5ed93d0fe9",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY-2"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-a1a2e9a9391cea0b1467",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY-3"
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-ef4c1078a365fb71c663",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C15_MATERIAL_SPREAD_SUPERCYCLE-1"
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-30cc8ba37d5c63293ffb",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C15_MATERIAL_SPREAD_SUPERCYCLE-2"
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-7cf8ba6a962bcdea3cef",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C15_MATERIAL_SPREAD_SUPERCYCLE-3"
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-fa95a5d1b3e12f628f4e",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C17_CHEMICAL_COMMODITY_MARGIN_SPREAD-1"
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-cc1740e694c8ca2af6c5",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C17_CHEMICAL_COMMODITY_MARGIN_SPREAD-2"
+    },
+    {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-4fea7d469feb84b95d58",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C17_CHEMICAL_COMMODITY_MARGIN_SPREAD-3"
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-913cc9d49e87536bdc73",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C24_BIO_TRIAL_DATA_EVENT_RISK-1"
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-02bba4fbc230b3d5fd78",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C24_BIO_TRIAL_DATA_EVENT_RISK-2"
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-96366ad4a5ce06f7fffb",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C24_BIO_TRIAL_DATA_EVENT_RISK-3"
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-9d0fea2932c3639f0e3d",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C28_SOFTWARE_SECURITY_CONTRACT_RETENTION-1"
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-3da3f884006e1812f0ab",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C28_SOFTWARE_SECURITY_CONTRACT_RETENTION-2"
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "next_action": "repair_url_or_fetch_current_source_backed_anchor_before_score",
+      "production_score_allowed": false,
+      "runtime_replay_status": "SOURCE_REPAIR_REQUIRED",
+      "schema_version": "e2r_research_to_runtime_source_repair_task_v1",
+      "source_case_id": "RCASE-47fc084d534922fd9a9d",
+      "source_case_quality": "SOURCE_PROXY_ONLY",
+      "task_id": "RTR-REPAIR-C28_SOFTWARE_SECURITY_CONTRACT_RETENTION-3"
+    }
+  ]
+}
