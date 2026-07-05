@@ -1,7 +1,7 @@
 {
   "all_archetype_replay_matrix_summary": {
     "archetype_count": 36,
-    "controlled_wiring_smoke_ready_count": 2,
+    "controlled_wiring_smoke_ready_count": 4,
     "external_global_guard_ready": true,
     "external_replay_acceptance": {
       "adversarial_acceptance_exists": true,
@@ -505,13 +505,13 @@
     "external_source_backed_seed_ready_count": 30,
     "guard_replay_ready_count": 36,
     "missing_required_archetype_count": 0,
-    "replay_acceptance_manifest_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched-v2/all_archetype_replay_acceptance_manifest.json",
-    "replay_gap_plan_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched-v2/all_archetype_replay_gap_plan.json",
+    "replay_acceptance_manifest_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-materialized-v1/all_archetype_replay_acceptance_manifest.json",
+    "replay_gap_plan_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-materialized-v1/all_archetype_replay_gap_plan.json",
     "replay_gap_plan_task_count": 0,
     "replay_gap_seed_event_count": 0,
-    "replay_gap_seed_event_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched-v2/all_archetype_replay_gap_seed_events.jsonl",
+    "replay_gap_seed_event_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-materialized-v1/all_archetype_replay_gap_seed_events.jsonl",
     "replay_gap_source_task_count": 0,
-    "replay_gap_source_task_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched-v2/all_archetype_replay_gap_source_tasks.jsonl",
+    "replay_gap_source_task_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-materialized-v1/all_archetype_replay_gap_source_tasks.jsonl",
     "required_archetype_count": 32,
     "source_backed_ready_count": 36,
     "status_counts": {
@@ -523,6 +523,7 @@
     "brain_web_evidence_pass_false",
     "full_thesis_smoke_pending",
     "full_thesis_smoke_execution_pending",
+    "full_thesis_production_pass_false",
     "full_thesis_seed_materialization_audit_not_pass",
     "machine_readable_test_result_artifact_missing",
     "goal_requirement_matrix_pass_false"
@@ -539,37 +540,36 @@
     "pending_count": 0,
     "required_case_count": 10
   },
-  "full_thesis_production_pass_allowed": true,
+  "full_thesis_production_pass_allowed": false,
   "full_thesis_production_smoke_substitute_pass_allowed": false,
-  "full_thesis_production_status": "FULL_THESIS_PRODUCTION_PASS",
+  "full_thesis_production_status": "PENDING_FULL_THESIS_PRODUCTION",
   "full_thesis_seed_actual_materialization_pass_allowed": false,
   "full_thesis_seed_ledger_integrity_pass_allowed": false,
   "full_thesis_seed_materialization_audit_pass_allowed": false,
   "full_thesis_seed_materialization_summary": {
     "actual_materialization_pass_allowed": false,
-    "critical_count": 384,
+    "critical_count": 48,
     "final_operator_score_use_counts": {
-      "FULL_E2R_SCORE": 3,
-      "NOT_FULL_E2R_SCORE": 15,
-      "UNKNOWN": 96
+      "FULL_E2R_SCORE": 4,
+      "NOT_FULL_E2R_SCORE": 95,
+      "UNKNOWN": 12
     },
     "final_operator_stage_use_counts": {
-      "FULL_THESIS_STAGE": 3,
-      "NOT_FULL_THESIS_STAGE": 15,
-      "UNKNOWN": 96
+      "FULL_THESIS_STAGE": 4,
+      "NOT_FULL_THESIS_STAGE": 95,
+      "UNKNOWN": 12
     },
-    "full_thesis_promoted_seed_count": 3,
+    "full_thesis_promoted_seed_count": 4,
     "ledger_integrity_pass_allowed": false,
     "operator_materialization_status": "PENDING_FULL_THESIS_MATERIALIZATION",
-    "seed_event_count": 114,
+    "seed_event_count": 111,
     "status_counts": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 33,
-      "FULL_THESIS_PROMOTED": 3,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 36,
-      "SOURCE_TASK_NOT_EXECUTED": 38,
-      "STAGECOURT_READY_NOT_PROMOTED": 4
+      "ACCEPTED_CLAIM_NOT_CREATED": 68,
+      "FULL_THESIS_PROMOTED": 4,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 30,
+      "STAGECOURT_READY_NOT_PROMOTED": 9
     },
-    "trace_row_count": 114,
+    "trace_row_count": 111,
     "verdict": "FAIL",
     "verdict_scope": "LEDGER_INTEGRITY_ONLY"
   },
@@ -605,13 +605,14 @@
     "goal_completion_minimum_pass": false,
     "pending_gate_ids": [
       "FULL_THESIS_SMOKE_PASS",
+      "FULL_THESIS_PRODUCTION_PASS",
       "BRAIN_WEB_EVIDENCE_PASS",
       "FULL_TEST_ARTIFACT_PASS"
     ],
     "required_goal_completion_count": 22,
     "required_goal_completion_fail_count": 6,
-    "required_goal_completion_pass_count": 13,
-    "required_goal_completion_pending_count": 3
+    "required_goal_completion_pass_count": 12,
+    "required_goal_completion_pending_count": 4
   },
   "known_bad_regression_status": "PASS",
   "meaningful_operational_stage_pass_allowed": false,
@@ -633,11 +634,12 @@
     ],
     "full_thesis_required_source_class_count": 11,
     "full_thesis_task_executable_source_path_pass_allowed": true,
-    "full_thesis_task_with_blocking_source_class_count": 88,
+    "full_thesis_task_with_blocking_source_class_count": 98,
     "missing_connector_source_classes": [
       "BrokerReportPDF",
       "IndustryMedia",
-      "IssuerOfficial"
+      "IssuerOfficial",
+      "ResearchMemory"
     ],
     "placeholder_source_classes": [
       "IssuerIR"

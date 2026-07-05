@@ -4,9 +4,9 @@
     {
       "4b_watch_patterns": [
         "RCASE-0a32fda43db192fb7221",
+        "RCASE-0f5a6b6b8cbd82bb0020",
         "RCASE-168faa742f33fe1a7cac",
         "RCASE-23d9924e050a00e178a2",
-        "RCASE-4496bf97ab6af2d417b5",
         "RCASE-4845618d4adafda73f4d",
         "RCASE-4baa71c983d9ad2b212f",
         "RCASE-5a578d9ae864864989a1",
@@ -30,8 +30,9 @@
         "RCASE-009c5ff6e263d6296c29",
         "RCASE-01eb649bff7f507c013c",
         "RCASE-02316608b1940d41eb5f",
-        "RCASE-035465ea1912c5ae9909",
         "RCASE-04cc5c881d93505ab342",
+        "RCASE-0513473f32786303e7bf",
+        "RCASE-05242891a48bdce9812c",
         "RCASE-05d1c714197cace8436b",
         "RCASE-060f36db01fdb059601d",
         "RCASE-097df3f2203b9490b8f8",
@@ -41,10 +42,9 @@
         "RCASE-0e9c7e5f2d0bf66e089b",
         "RCASE-0f6c0e36b8413b94e018",
         "RCASE-0f962d643419b5ebba37",
+        "RCASE-10353485faa80c7291a0",
         "RCASE-1092d34d783d6ad913de",
-        "RCASE-10fb236c9d09108dfb67",
-        "RCASE-115976445bd872702f4c",
-        "RCASE-1218de20531011e7ea4b"
+        "RCASE-10fb236c9d09108dfb67"
       ],
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "canonical_mechanism": "industrial_backlog_margin_bridge",
@@ -663,7 +663,6 @@
       ],
       "4c_hard_break_patterns": [
         "RCASE-00395feda54d450c4909",
-        "RCASE-00511de9320e8a270ee1",
         "RCASE-005289a21251eb4f665b",
         "RCASE-01802083b5a33c0a8a41",
         "RCASE-0200409f8f3f2aeba213",
@@ -675,13 +674,14 @@
         "RCASE-06062fc6082c37482b3b",
         "RCASE-06e8befbc42e88ecdf53",
         "RCASE-071dd99de8377b8dfc88",
-        "RCASE-07aefab01ecd99f9691c",
         "RCASE-08a62cd7a083033ed5ab",
         "RCASE-08ce0f31788977d7b67a",
         "RCASE-09b15e7f1884eb91600a",
         "RCASE-0aa31c958461ebdbb8f0",
         "RCASE-0b0bfd0310739e09a2a5",
-        "RCASE-0bb546384548261a02bc"
+        "RCASE-0bb546384548261a02bc",
+        "RCASE-0bb5f823decfa55868d5",
+        "RCASE-0ca30bcb540e526324a2"
       ],
       "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
       "canonical_mechanism": "industrial_backlog_margin_bridge",
@@ -2365,13 +2365,13 @@
         "RCASE-147900d5e2d28ebe9a3e",
         "RCASE-19c1360abc6c48af3efd",
         "RCASE-2013038bbda8fbc6fbcb",
-        "RCASE-2a207986971648a9130d",
         "RCASE-3381a9f322b2c15dca50",
         "RCASE-39847c57cf748de3dd4c",
         "RCASE-3bf63aa348d296ad8a9f",
         "RCASE-41e13e0b4d1c4e9bc32a",
         "RCASE-434670d348d7ae4d9d87",
         "RCASE-53c811d3fccccb0ddb5b",
+        "RCASE-60ef21aca1c12c1c959a",
         "RCASE-617781fe6c330d96e38b",
         "RCASE-78719ec2913beb2fb59b",
         "RCASE-7b09af090f2ab2daa1d8",
@@ -2388,7 +2388,6 @@
         "RCASE-05abc06ee2d9bd0f958c",
         "RCASE-06d4670acc7e22c32957",
         "RCASE-075e8d16551f736927b9",
-        "RCASE-079188f6f52fde121a5e",
         "RCASE-07f183f0c3b710194caa",
         "RCASE-080890559ce53eb5ae40",
         "RCASE-0a172b313f2f278a35f0",
@@ -2397,7 +2396,8 @@
         "RCASE-0ea878d3c736b31ec6dc",
         "RCASE-0f23bbe96ea61832d4ef",
         "RCASE-0f47df708291cc6bacec",
-        "RCASE-0f8ff130e44739d87d96"
+        "RCASE-0f8ff130e44739d87d96",
+        "RCASE-1069f0edee984fc41a30"
       ],
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "canonical_mechanism": "industrial_backlog_margin_bridge",
@@ -2944,16 +2944,16 @@
         "RCASE-269596a0b8e4932729cf",
         "RCASE-29489ececbf2bf2a4801",
         "RCASE-2bba6f512c39db971ca8",
-        "RCASE-37ee2b8442394a33f1fb",
         "RCASE-3e01ddf226c0982c822b",
         "RCASE-42c4d84a9637654d9387",
         "RCASE-4fa430ea978af9583875",
         "RCASE-504ee7d94bc84a4fe67b",
         "RCASE-50584e6eeacaa629722f",
         "RCASE-53f56f2e1fe8d8612985",
-        "RCASE-5554044c10b6e4ed1419",
         "RCASE-648d24ec13f22de0cfd1",
-        "RCASE-6503db707e92b4c2090b"
+        "RCASE-6503db707e92b4c2090b",
+        "RCASE-66dd39ae6de4db131888",
+        "RCASE-6beaa0d0de1c5d7ce9c8"
       ],
       "4c_hard_break_patterns": [
         "RCASE-009ff7f6c387db90be1a",
@@ -3602,8 +3602,8 @@
         "RCASE-0107bdd99bc00e14eb08",
         "RCASE-022caf6c1af92315a3bb",
         "RCASE-02775111816e0ed39479",
+        "RCASE-0322e15debcbd82af8f6",
         "RCASE-0440f2c1131a867cb91f",
-        "RCASE-04bdca8a48621cfce25d",
         "RCASE-05a6eeea9f9d3a012d5e",
         "RCASE-070cba83bdaa7cfbf1bb",
         "RCASE-085b23668025edbe0078",
@@ -4213,6 +4213,7 @@
         "RCASE-3021bf589043127410d1",
         "RCASE-3b693d840ea318aab41f",
         "RCASE-3bab334591e05605c35b",
+        "RCASE-4f232fdaab1a5780f8fb",
         "RCASE-596960f8247af478f11f",
         "RCASE-5986068249d63650330f",
         "RCASE-5eac7f96e34e098e1797",
@@ -4223,7 +4224,6 @@
         "RCASE-988e3ed79c790454643f",
         "RCASE-aa913f765e073d43618d",
         "RCASE-b4ffc4215174517f1b70",
-        "RCASE-bad5716795b2d7298bf5",
         "RCASE-c26b80dee7c2fd98e277",
         "RCASE-c957739f7858d8039f42",
         "RCASE-cc5cb48146ffba086cd1",
@@ -4814,8 +4814,8 @@
         "RCASE-0ba5918f0b222ec0dd92",
         "RCASE-0c8999782d241d819965",
         "RCASE-0e486ecc4192416f4c37",
-        "RCASE-0e5a2e9d500a44f427c2",
-        "RCASE-0ea7459448c99fb9971c"
+        "RCASE-0ea7459448c99fb9971c",
+        "RCASE-11558f5717efcec8d9d9"
       ],
       "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
       "canonical_mechanism": "valuation_blowoff_guard_bridge",
@@ -6309,14 +6309,14 @@
         "RCASE-0218c8dcfb28594767e8",
         "RCASE-78039a5812a7a9b66f68",
         "RCASE-8e10610d6989b1da0903",
+        "RCASE-95cc116c199054ef7d2a",
         "RCASE-a2547e6ca91237f2f2d2",
         "RCASE-b4dc9bd5084a53187f60",
         "RCASE-ca67a1c23723cee21a1c",
         "RCASE-dc0b9cfb853f610be138",
         "RCASE-e7bf831c5bb1546b31c3",
         "RCASE-ef12a84bb27fce914ec1",
-        "RCASE-f02b8d6d7b0b0fc9c4cf",
-        "RCASE-fe99d801f3602ceb98b1"
+        "RCASE-f02b8d6d7b0b0fc9c4cf"
       ],
       "4c_hard_break_patterns": [
         "RCASE-0026d7c0097baa6fe28c",
@@ -6324,7 +6324,6 @@
         "RCASE-012fd234901652ad10c6",
         "RCASE-013cdd0d6989f20b5b2e",
         "RCASE-02726fed8425f2473109",
-        "RCASE-04d27f6f59e8abd464ce",
         "RCASE-0562cbb01627bdedd0ff",
         "RCASE-068b1b76c6f0c6a55de0",
         "RCASE-0863fe0174ef3a3cbf1a",
@@ -6338,7 +6337,8 @@
         "RCASE-11c34263bb245ab72bc4",
         "RCASE-133007e59571ee4e062d",
         "RCASE-14055cca0f48c424fcfa",
-        "RCASE-1538784bcd0f660e05ba"
+        "RCASE-1538784bcd0f660e05ba",
+        "RCASE-165078b74f8c3bac2764"
       ],
       "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
       "canonical_mechanism": "battery_mobility_contract_bridge",
@@ -7457,13 +7457,13 @@
         "RCASE-0bb57d4052799e8fa320",
         "RCASE-0c20d619d7db939298bc",
         "RCASE-0cd033bbb5011586c4f8",
-        "RCASE-0d3b356950963e07c669",
         "RCASE-0d67cf8bb496b20f0430",
         "RCASE-0d7962ee512c09484882",
         "RCASE-0da56a5730be3ae7e227",
         "RCASE-0fb2321ebeb7b1a853dc",
         "RCASE-109117ba606a2f776436",
-        "RCASE-114decd31dabec7821e7"
+        "RCASE-114decd31dabec7821e7",
+        "RCASE-12054031f1333c9f4688"
       ],
       "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
       "canonical_mechanism": "battery_mobility_contract_bridge",
@@ -8002,6 +8002,7 @@
         "RCASE-020c0ad9e80152d21299",
         "RCASE-027207b708a4fe0ab5c7",
         "RCASE-03dd4ccb656fa9e285a6",
+        "RCASE-03f58f5ee21b0e863a36",
         "RCASE-04a8ca96dcdb729b3826",
         "RCASE-05f2d6febf9f9db705da",
         "RCASE-0635811a654b228ef272",
@@ -8017,8 +8018,7 @@
         "RCASE-121989ab628f4ff649c9",
         "RCASE-13d2f1fbb333f6d8774e",
         "RCASE-154d464db917ec8a185e",
-        "RCASE-16ce19cd5bb787a7093b",
-        "RCASE-1708783eb9b17d1e7a38"
+        "RCASE-16ce19cd5bb787a7093b"
       ],
       "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
       "canonical_mechanism": "battery_mobility_contract_bridge",
@@ -9699,7 +9699,6 @@
         "RCASE-1e54a14ff2f4ed77dbe0",
         "RCASE-2352b420a7d3edc4d53d",
         "RCASE-2b4b22c5612b6f9f2805",
-        "RCASE-2c00a5ecf839ed226f13",
         "RCASE-343d14d8ab3639a0e987",
         "RCASE-358ec2a18af776dde557",
         "RCASE-38b72fb3d620491e63b7",
@@ -9713,7 +9712,8 @@
         "RCASE-662c31b641d8be23da17",
         "RCASE-6836ff297aa925a8558a",
         "RCASE-6bc052091f3b0bb08b73",
-        "RCASE-6cbcb6e3d0981d29a5d7"
+        "RCASE-6cbcb6e3d0981d29a5d7",
+        "RCASE-70b22fd85d8dd2f38b9a"
       ],
       "4c_hard_break_patterns": [
         "RCASE-0017d0aee7819db5e175",
@@ -10300,7 +10300,7 @@
       "4c_hard_break_patterns": [
         "RCASE-015f59f8df5888a8f701",
         "RCASE-0183cf3a77f97833fbae",
-        "RCASE-0273710643c86da46d2d",
+        "RCASE-031084ac02b51c97a861",
         "RCASE-070b1e1e2c8815f1ee37",
         "RCASE-08b77a88a5a1569b563f",
         "RCASE-090d335eb6450f7d6d1c",
@@ -10317,7 +10317,7 @@
         "RCASE-11390c8710cd8185f2c7",
         "RCASE-11f1ddaf715d2142a3c2",
         "RCASE-122d4dc95362b7e8f6a7",
-        "RCASE-134a74b5db81a8a1e4d2"
+        "RCASE-12ef815926cec9ea95e8"
       ],
       "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
       "canonical_mechanism": "consumer_sellthrough_reorder_bridge",
@@ -10860,10 +10860,10 @@
         "RCASE-2610942c1abba042f41a",
         "RCASE-3c2116ccbe5f9d32efb0",
         "RCASE-42a26850ae11d69d08e1",
-        "RCASE-50f8ab1cf488afc492d9",
         "RCASE-70059a053d6ca6337b00",
         "RCASE-8aa625a21879b4435fbc",
         "RCASE-8b18dc14000e8cb6bef0",
+        "RCASE-986ff9cfa4e75695b1d2",
         "RCASE-a138efa66da5deb301d4",
         "RCASE-b192ddfa0014e2ad748e",
         "RCASE-b5ee8c5cc057b4739d6a",
@@ -11455,6 +11455,7 @@
         "RCASE-01f67c5391ad85c8374f",
         "RCASE-0248f6ca62aababdb6ed",
         "RCASE-036b78cd8cd8c41ae853",
+        "RCASE-03deaf913397934336b5",
         "RCASE-043a97196b2e762d4511",
         "RCASE-043dbb7b72dfe383af88",
         "RCASE-06b885c346961069c232",
@@ -11463,13 +11464,12 @@
         "RCASE-09a385689dc7fc749f6a",
         "RCASE-0a9cb4159c9b0d157b7d",
         "RCASE-0afc15c1e2d94823061a",
+        "RCASE-0e3684d4a7e4aaaabbd4",
         "RCASE-0ebfb2e35b447b4abb26",
         "RCASE-0f2bf4acde146da1bda5",
         "RCASE-0f357a833f796af5b73f",
         "RCASE-111e76215544ea6f7958",
-        "RCASE-123c3b6956d795ac2d59",
-        "RCASE-125ae10d145518531879",
-        "RCASE-12abe9db2ab1bac9b2da"
+        "RCASE-123c3b6956d795ac2d59"
       ],
       "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
       "canonical_mechanism": "consumer_sellthrough_reorder_bridge",
@@ -12026,6 +12026,8 @@
         "RCASE-01d6be729f981240f8c6",
         "RCASE-01ef6a074931a5d621f0",
         "RCASE-02ca1edb2fd36beabf4b",
+        "RCASE-03d933910a25aa74031a",
+        "RCASE-0598f20c6651170cbcf7",
         "RCASE-06312b46a8bb6f378903",
         "RCASE-06e7dcd77dea813006a4",
         "RCASE-0776d3b4377d79cc912b",
@@ -12038,9 +12040,7 @@
         "RCASE-0eb27670f7d84e09c89f",
         "RCASE-1029d63c4e584d3da1b0",
         "RCASE-10f2efe152ad2939c9d6",
-        "RCASE-119f0d53a17209e4d17b",
-        "RCASE-11b7c569c4a661855400",
-        "RCASE-121347409bd7a85c146b"
+        "RCASE-119f0d53a17209e4d17b"
       ],
       "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
       "canonical_mechanism": "financial_capital_return_bridge",
@@ -12602,6 +12602,7 @@
         "RCASE-05d7a4ca50fc1be7bc6c",
         "RCASE-0722a9a288895008768b",
         "RCASE-0baa5c1b18857f3538d1",
+        "RCASE-0bb9aceef42540c3c0b6",
         "RCASE-0caee1476f518d1436fc",
         "RCASE-0d61c5d1cab6c933d67f",
         "RCASE-0ecad16371c3c92f4c4f",
@@ -12612,8 +12613,7 @@
         "RCASE-12df5755b1a9687bc209",
         "RCASE-131bae372922e4e699eb",
         "RCASE-1337db567dc52e060fc3",
-        "RCASE-14f4c7b7f1a697b10224",
-        "RCASE-18bd7a2898a5cdda79a3"
+        "RCASE-13cb7b40d0fe298f2fc6"
       ],
       "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
       "canonical_mechanism": "insurance_reserve_capital_bridge",
@@ -13184,9 +13184,9 @@
         "RCASE-0cfd8d7547e077724d16",
         "RCASE-0da5c6141a8684aa40c5",
         "RCASE-0eb40277527287354f02",
+        "RCASE-13ebb1fead3cb6dcd785",
         "RCASE-14d21170fe469064249d",
-        "RCASE-156286008260e2c9ec3b",
-        "RCASE-1592c701500480c5ae6d"
+        "RCASE-156286008260e2c9ec3b"
       ],
       "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
       "canonical_mechanism": "bio_commercialization_reimbursement_bridge",
@@ -13742,12 +13742,12 @@
         "RCASE-1e281730ecdf0bd26f64",
         "RCASE-2343c0986b7dbfd155cf",
         "RCASE-25b2ea36a0628cf1093a",
+        "RCASE-34f108591489ea9bea62",
         "RCASE-3d8faa9c8fcbed97d461",
         "RCASE-5748a0180745ff7b67cd",
         "RCASE-5b902fceadcb3382d035",
         "RCASE-6481f53e5618ef842c19",
         "RCASE-737ee3fbcf97346f14a8",
-        "RCASE-8d9e41a6d4af4f0d8dd3",
         "RCASE-8e3c3c1e40fdd98b1b67",
         "RCASE-9367bbdcd5e6463e1b46",
         "RCASE-aec88128104d8f6de198",
@@ -14347,11 +14347,11 @@
         "RCASE-155cdc2d4f6c7abe21df",
         "RCASE-157c3e0546c0cdf8272d",
         "RCASE-15b3eb1038bf0df10b50",
-        "RCASE-162f47603e3821b1dca6",
         "RCASE-1663bc113a2811583ed6",
         "RCASE-1a1cfcf399b72206a826",
         "RCASE-1ace643293a6805d1015",
-        "RCASE-1bca4dfba8dab579e495"
+        "RCASE-1bca4dfba8dab579e495",
+        "RCASE-1c16d02b075e3b324d30"
       ],
       "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
       "canonical_mechanism": "bio_commercialization_reimbursement_bridge",
@@ -15498,12 +15498,12 @@
         "RCASE-11319e9d90863511e4c3",
         "RCASE-114764b0e59d78d33b44",
         "RCASE-115646086a32641ca85c",
+        "RCASE-11f1bc514235c83cf0a6",
         "RCASE-11f49c57e78c83ab19bb",
         "RCASE-141351e8b78e4556304f",
         "RCASE-1446bf8b95eec4edab74",
         "RCASE-14894b3239d03fdec8ec",
-        "RCASE-1592b1397a3b9e0703c2",
-        "RCASE-17e477f3328f252d56c0"
+        "RCASE-1592b1397a3b9e0703c2"
       ],
       "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
       "canonical_mechanism": "software_platform_recurring_revenue_bridge",
@@ -16036,6 +16036,7 @@
       "4b_watch_patterns": [
         "RCASE-1ea0c6a94dfb6a773f7d",
         "RCASE-22efb53152fe5b914380",
+        "RCASE-2ab3e29047ca4860e60e",
         "RCASE-2da1edc71f59cb72edfd",
         "RCASE-333b6fd7ca246564dde0",
         "RCASE-4ae981ca0821413fb95c",
@@ -16052,8 +16053,7 @@
         "RCASE-98b7084249e1d0c81686",
         "RCASE-9fe20d0f22100d1530d4",
         "RCASE-adbf069fc70694f20b5b",
-        "RCASE-b4135f12e61b0652f08a",
-        "RCASE-bd97cbd68b5ad1e99ade"
+        "RCASE-b4135f12e61b0652f08a"
       ],
       "4c_hard_break_patterns": [
         "RCASE-0047510e4ad7973a6f24",
@@ -16621,12 +16621,12 @@
         "RCASE-22e2f59b3332a1fc8b4d",
         "RCASE-320f04b66fd8af1e012d",
         "RCASE-34119ef5d0ac5eba8256",
+        "RCASE-4e7ec78f61147946dc5c",
         "RCASE-5c530d378c9f61be5840",
         "RCASE-c7a6b729baafc917d528",
         "RCASE-c8f9b2deade08876bfb8",
         "RCASE-ca9d5a47dfd58462cd52",
         "RCASE-caa96797916b1291bc62",
-        "RCASE-cb989ceccd69f1e1f60d",
         "RCASE-d9d81c91b1e020e81a81",
         "RCASE-e2d0c4e94a83f0fba5db",
         "RCASE-f197a0180e895a7092b6"
@@ -18356,7 +18356,6 @@
         "RCASE-6b42f17123136f98217d"
       ],
       "4c_hard_break_patterns": [
-        "RCASE-0005ad2c9ed508130e48",
         "RCASE-0026dade86e9fd60a9d7",
         "RCASE-011ad9a2e01823225b8e",
         "RCASE-01225bac9719a34f8a4c",
@@ -18375,7 +18374,8 @@
         "RCASE-093dd479b72731c5b493",
         "RCASE-0a59e9fa8e3d717098b5",
         "RCASE-0b7ee5c9184e468f68a4",
-        "RCASE-0d711c0b5e59c023ddec"
+        "RCASE-0d711c0b5e59c023ddec",
+        "RCASE-0e6a4f2a68a006020e44"
       ],
       "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
       "canonical_mechanism": "governance_tender_cash_bridge",
@@ -18403,7 +18403,8 @@
       "green_blockers": [
         "green gap",
         "green_blocker",
-        "green_gate"
+        "green_gate",
+        "required_positive_missing"
       ],
       "green_unlock_primitives": [
         "tender_offer_confirmed",

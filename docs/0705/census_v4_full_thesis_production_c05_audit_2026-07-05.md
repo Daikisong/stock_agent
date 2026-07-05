@@ -5,6 +5,7 @@
 후속 실행 감사:
 
 - `docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md`
+- `docs/0705/goal4_materialized_runtime_attempt_final_audit_2026-07-05.md`
 
 주의:
 
@@ -12,7 +13,9 @@
 이 문서는 "이전 산출물에서 왜 10개 production FULL_THESIS가 전부 C05였는가"를 설명한다.
 후속 patched Census v4 실행에서는 그 10개 C05 PASS가 유지되지 않고,
 production FULL_THESIS row_count=0, production_pass_allowed=false, INVALID_PARTIAL_OUTPUT으로 끝났다.
-따라서 최신 운영 상태는 후속 감사 문서의 NOT_READY/PENDING 판단을 기준으로 본다.
+이후 materialized 실행에서는 seed target_archetype은 C01~C32/R13로 채워졌지만,
+production FULL_THESIS row는 4개뿐이고 INVALID_PARTIAL_OUTPUT / NOT_READY로 끝났다.
+따라서 최신 운영 상태는 goal4_materialized_runtime_attempt_final_audit_2026-07-05.md의 NOT_READY 판단을 기준으로 본다.
 ```
 
 검증 기준 산출물:

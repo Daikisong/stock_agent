@@ -2,7 +2,19 @@
 
 작성 시점: 2026-07-06 KST
 
-이 문서는 2026-07-05 Goal4 작업이 현재 원격 `main`에 어떤 상태로 올라가 있는지 고정한다.
+이 문서는 2026-07-05 Goal4 작업의 이전 push 상태를 고정한 역사 기록이다.
+
+최신 materialized runtime attempt 감사는 아래 문서를 기준으로 본다.
+
+- `docs/0705/goal4_materialized_runtime_attempt_final_audit_2026-07-05.md`
+
+주의:
+
+```text
+이 문서의 commit/working-tree 상태는 작성 당시 스냅샷이다.
+후속 materialized run에서는 seed 111개, planner success 81개, source execution 570개까지 진행됐지만
+최종 verdict는 INVALID_PARTIAL_OUTPUT / NOT_READY였다.
+```
 
 ## 결론
 
@@ -215,4 +227,3 @@ smoke는 리프트 테스트이고, production row는 도로 주행 기록이다
 ```
 
 이 경로가 모든 주요 아키타입에서 재현 가능하게 닫혀야 한다.
-

@@ -10,12 +10,13 @@ class MeaningfulFullThesisProductionAcceptanceTests(unittest.TestCase):
 
     def test_meaningful_acceptance_is_not_ready_for_incomplete_score_path_rows(self) -> None:
         self.assertEqual(self.audit["schema_version"], "e2r_meaningful_full_thesis_production_acceptance_v1")
-        self.assertEqual(self.audit["score_path_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_PASS")
+        self.assertEqual(self.audit["score_path_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_PENDING")
         self.assertEqual(self.audit["meaningful_status"], "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE")
         self.assertFalse(self.audit["meaningful_pass_allowed"])
-        self.assertIn("c05_share_above_50_percent", self.audit["hard_fails"])
+        self.assertNotIn("c05_share_above_50_percent", self.audit["hard_fails"])
         self.assertIn("required_positive_missing_rate_above_30_percent", self.audit["hard_fails"])
         self.assertIn("green_gap_rate_above_30_percent", self.audit["hard_fails"])
+        self.assertIn("balanced_candidate_selection_not_pass", self.audit["hard_fails"])
         self.assertNotIn("planner_bias_audit_not_pass", self.audit["hard_fails"])
 
     def test_replay_does_not_leak_into_production_score(self) -> None:

@@ -6,7 +6,7 @@
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "case_role_counts": {
         "4B": 28,
-        "4C": 410,
+        "4C": 411,
         "guard": 16,
         "positive": 1,
         "profile_cap": 1,
@@ -14,7 +14,7 @@
       },
       "evidence_url_pending_case_count": 3,
       "has_pattern_summary": true,
-      "record_count": 458,
+      "record_count": 459,
       "source_gap": false,
       "source_proxy_only_case_count": 251,
       "source_quality_counts": {
@@ -22,7 +22,7 @@
         "A2_URL_BACKED": 125,
         "EVIDENCE_URL_PENDING": 3,
         "PRICE_PATH_ONLY": 48,
-        "SHADOW_ONLY": 30,
+        "SHADOW_ONLY": 31,
         "SOURCE_PROXY_ONLY": 251
       },
       "top_missing_primitives": [
@@ -84,20 +84,20 @@
       "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "case_role_counts": {
         "4B": 41,
-        "4C": 238,
+        "4C": 239,
         "guard": 6,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 286,
+      "record_count": 287,
       "source_gap": false,
       "source_proxy_only_case_count": 141,
       "source_quality_counts": {
         "A2_URL_BACKED": 46,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 83,
-        "SHADOW_ONLY": 11,
+        "SHADOW_ONLY": 12,
         "SOURCE_PROXY_ONLY": 141
       },
       "top_missing_primitives": [
@@ -189,8 +189,8 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "case_role_counts": {
-        "4B": 52,
-        "4C": 380,
+        "4B": 51,
+        "4C": 381,
         "guard": 41,
         "positive": 3,
         "profile_cap": 1,
@@ -1114,7 +1114,7 @@
       "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
       "case_role_counts": {
         "4B": 41,
-        "4C": 329,
+        "4C": 330,
         "guard": 3,
         "positive": 1,
         "profile_cap": 1,
@@ -1122,28 +1122,28 @@
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 376,
+      "record_count": 377,
       "source_gap": false,
       "source_proxy_only_case_count": 142,
       "source_quality_counts": {
         "A2_URL_BACKED": 114,
         "EVIDENCE_URL_PENDING": 8,
         "PRICE_PATH_ONLY": 105,
-        "SHADOW_ONLY": 7,
+        "SHADOW_ONLY": 8,
         "SOURCE_PROXY_ONLY": 142
       },
       "top_missing_primitives": [
         "policy_or_regulatory_confirmed",
         "direct_company_cash_route",
         "subsidy_capture_visible",
-        "implementation_timeline",
-        "policy_headline_only"
+        "policy_headline_only",
+        "implementation_timeline"
       ],
       "top_positive_primitives": [
         "implementation_timeline",
-        "policy_headline_only",
         "subsidy_capture_visible",
         "direct_company_cash_route",
+        "policy_headline_only",
         "policy_or_regulatory_confirmed"
       ],
       "url_backed_case_count": 114
@@ -1151,7 +1151,7 @@
     {
       "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
       "case_role_counts": {
-        "4B": 41,
+        "4B": 42,
         "4C": 366,
         "guard": 6,
         "positive": 1,
@@ -1160,14 +1160,14 @@
       },
       "evidence_url_pending_case_count": 7,
       "has_pattern_summary": true,
-      "record_count": 416,
+      "record_count": 417,
       "source_gap": false,
       "source_proxy_only_case_count": 182,
       "source_quality_counts": {
         "A2_URL_BACKED": 132,
         "EVIDENCE_URL_PENDING": 7,
         "PRICE_PATH_ONLY": 81,
-        "SHADOW_ONLY": 14,
+        "SHADOW_ONLY": 15,
         "SOURCE_PROXY_ONLY": 182
       },
       "top_missing_primitives": [

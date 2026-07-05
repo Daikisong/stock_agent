@@ -1,19 +1,21 @@
 {
-  "accepted_claim_seed_count": 7,
+  "accepted_claim_seed_count": 13,
   "actual_materialization_pass_allowed": false,
+  "archetype_level_discovery_seed_count": 9,
   "controlled_smoke_full_thesis_final_scope_count": 0,
-  "critical_count": 384,
+  "critical_count": 48,
   "critical_counts": {
     "accepted_claim_without_source_task_count": 0,
     "blocker_follow_up_seed_missing_target_context_count": 0,
-    "event_or_partial_score_operator_use_allowed_count": 96,
-    "event_or_partial_stage_operator_use_allowed_count": 96,
-    "final_operator_score_use_missing_count": 96,
-    "final_operator_stage_use_missing_count": 96,
+    "event_or_partial_score_operator_use_allowed_count": 12,
+    "event_or_partial_stage_operator_use_allowed_count": 12,
+    "final_operator_score_use_missing_count": 12,
+    "final_operator_stage_use_missing_count": 12,
     "full_thesis_promoted_missing_full_e2r_score_count": 0,
     "full_thesis_promoted_missing_stagecourt_count": 0,
     "full_thesis_promoted_operator_score_use_not_full_count": 0,
     "full_thesis_promoted_operator_stage_use_not_full_count": 0,
+    "full_thesis_promoted_without_real_target_symbol_count": 0,
     "full_thesis_scope_without_promoted_status_count": 0,
     "score_evidence_allowed_before_execution_count": 0,
     "seed_trace_count_mismatch_count": 0,
@@ -22,28 +24,28 @@
     "stagecourt_without_accepted_claim_count": 0
   },
   "final_operator_score_use_counts": {
-    "FULL_E2R_SCORE": 3,
-    "NOT_FULL_E2R_SCORE": 15,
-    "UNKNOWN": 96
+    "FULL_E2R_SCORE": 4,
+    "NOT_FULL_E2R_SCORE": 95,
+    "UNKNOWN": 12
   },
   "final_operator_stage_use_counts": {
-    "FULL_THESIS_STAGE": 3,
-    "NOT_FULL_THESIS_STAGE": 15,
-    "UNKNOWN": 96
+    "FULL_THESIS_STAGE": 4,
+    "NOT_FULL_THESIS_STAGE": 95,
+    "UNKNOWN": 12
   },
   "final_score_scale_counts": {
-    "EVENT_WEIGHTED_PARTIAL": 9,
-    "FULL_E2R_100": 3,
-    "NO_SCORE": 6,
-    "UNKNOWN": 96
+    "EVENT_WEIGHTED_PARTIAL": 6,
+    "FULL_E2R_100": 4,
+    "NO_SCORE": 89,
+    "UNKNOWN": 12
   },
   "final_stage_scope_counts": {
-    "CENSUS_EVENT_BOARD": 9,
-    "FULL_THESIS": 3,
-    "NON_REPRESENTATIVE_FULL_THESIS_SEED": 6,
-    "UNKNOWN": 96
+    "CENSUS_EVENT_BOARD": 87,
+    "FULL_THESIS": 4,
+    "NON_REPRESENTATIVE_FULL_THESIS_SEED": 8,
+    "UNKNOWN": 12
   },
-  "full_thesis_promoted_seed_count": 3,
+  "full_thesis_promoted_seed_count": 4,
   "full_thesis_seed_promotion_pass": false,
   "ledger_integrity_pass_allowed": false,
   "next_actions_by_status": {
@@ -58,43 +60,41 @@
   },
   "operator_materialization_status": "PENDING_FULL_THESIS_MATERIALIZATION",
   "operator_rule": "A seed row is only an investigation input until the trace reaches FULL_THESIS_PROMOTED. Earlier statuses must remain pending/source-provider/material-gap states and must not be used as an operator FULL_THESIS Stage. verdict=PASS only means ledger integrity passed; actual_materialization_pass_allowed must be true before claiming a real FULL_THESIS seed closure.",
-  "planner_run_seed_count": 114,
-  "real_provider_success_seed_count": 78,
+  "planner_run_seed_count": 111,
+  "real_provider_success_seed_count": 81,
   "schema_version": "e2r_census_v4_full_thesis_seed_materialization_audit_v1",
-  "seed_event_count": 114,
+  "seed_event_count": 111,
   "seed_source_family_counts": {
-    "AllArchetypeRuntimeParityFollowUp": 114
+    "AllArchetypeRuntimeParityFollowUp": 111
   },
-  "source_task_execution_seed_count": 40,
-  "stagecourt_trace_seed_count": 7,
+  "source_task_execution_seed_count": 81,
+  "stagecourt_trace_seed_count": 13,
   "status_counts": {
-    "ACCEPTED_CLAIM_NOT_CREATED": 33,
-    "FULL_THESIS_PROMOTED": 3,
-    "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 36,
-    "SOURCE_TASK_NOT_EXECUTED": 38,
-    "STAGECOURT_READY_NOT_PROMOTED": 4
+    "ACCEPTED_CLAIM_NOT_CREATED": 68,
+    "FULL_THESIS_PROMOTED": 4,
+    "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 30,
+    "STAGECOURT_READY_NOT_PROMOTED": 9
   },
   "status_counts_by_target_archetype": {
     "C01_ORDER_BACKLOG_MARGIN_BRIDGE": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "FULL_THESIS_PROMOTED": 1,
+      "STAGECOURT_READY_NOT_PROMOTED": 2
     },
     "C02_POWER_GRID_DATACENTER_CAPEX": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
-    },
-    "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": {
       "ACCEPTED_CLAIM_NOT_CREATED": 2,
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+    },
+    "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": {
+      "FULL_THESIS_PROMOTED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1,
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
     },
     "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": {
-      "FULL_THESIS_PROMOTED": 2,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1,
+      "FULL_THESIS_PROMOTED": 1,
       "STAGECOURT_READY_NOT_PROMOTED": 2
     },
     "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
@@ -102,115 +102,98 @@
       "STAGECOURT_READY_NOT_PROMOTED": 2
     },
     "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C11_BATTERY_ORDERBOOK_RERATING": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C14_EV_DEMAND_SLOWDOWN_4B_4C": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C15_MATERIAL_SPREAD_SUPERCYCLE": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C18_CONSUMER_EXPORT_CHANNEL_REORDER": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C19_BRAND_RETAIL_INVENTORY_MARGIN": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": {
       "ACCEPTED_CLAIM_NOT_CREATED": 2,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C22_INSURANCE_RATE_CYCLE_RESERVE": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
-    },
-    "C24_BIO_TRIAL_DATA_EVENT_RISK": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
-    },
-    "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
-    },
-    "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
-    },
-    "C27_CONTENT_IP_GLOBAL_MONETIZATION": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 2,
-      "SOURCE_TASK_NOT_EXECUTED": 1
-    },
-    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
-    },
-    "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 2,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 3
-    },
-    "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
       "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
+    },
+    "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+    },
+    "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
+    },
+    "C27_CONTENT_IP_GLOBAL_MONETIZATION": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
+    },
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
+    },
+    "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 5,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+    },
+    "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+    },
     "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "STAGECOURT_READY_NOT_PROMOTED": 2
     },
     "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
     },
     "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": {
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 3
@@ -222,8 +205,7 @@
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 3
     },
     "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     }
   },
   "status_counts_by_target_primitive_gap": {
@@ -231,65 +213,61 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "ampc_or_subsidy_capture": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "approval_not_confirmed": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "approval_to_revenue_bridge": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "arpu_growth_pct": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "arr_growth_visible": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "auditor_or_disclosure_risk": {
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "balance_sheet_repair": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "binary_event_unresolved": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "brand_customer_diversification": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "call_off_risk": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 2
     },
     "cash_collection_visible": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "contract_amount_to_prior_sales": {
-      "FULL_THESIS_PROMOTED": 1,
       "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "contract_cancelled_or_delayed": {
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "contract_duration_months": {
-      "FULL_THESIS_PROMOTED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "FULL_THESIS_PROMOTED": 1
     },
     "contract_quality": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "FULL_THESIS_PROMOTED": 1
     },
     "control_premium_floor": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "csm_growth_visible": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "customer_capex_decline": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "customer_contract": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 2
     },
     "customer_contract_visible": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
@@ -298,104 +276,101 @@
       "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "cycle_demand_visibility": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
-    },
-    "datacenter_customer": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
-    },
-    "direct_company_cash_route": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
-    },
-    "equipment_order_backlog": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
-    },
-    "ev_demand_slowdown": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
-    },
-    "evidence_source_quality": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
-    },
-    "ex_credit_margin": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
-    "export_contract": {
+    "datacenter_customer": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
+    },
+    "direct_company_cash_route": {
+      "STAGECOURT_READY_NOT_PROMOTED": 1
+    },
+    "equipment_order_backlog": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
+    },
+    "ev_demand_slowdown": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
+    },
+    "evidence_source_quality": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
+    },
+    "ex_credit_margin": {
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
+    "export_contract": {
+      "FULL_THESIS_PROMOTED": 1
+    },
     "export_growth_pct": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "global_launch_conversion": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "government_customer": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "hbm_capacity_constraint": {
       "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "hbm_customer_order": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "high_mae_history": {
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "inventory_cycle": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "inventory_spike": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 2
     },
     "ip_monetization_visible": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "jv_utilization": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "k_ics_ratio": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "lead_time_extended": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "liquidity_or_microcap_risk": {
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "margin_bridge_visible": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
       "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "memory_price_increase_mentioned": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "minority_cash_path": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "mix_improvement": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 2
     },
     "named_customer_quality": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "nrr": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "offtake_contract": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "operating_leverage_visible": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "order_backlog_to_sales": {
       "ACCEPTED_CLAIM_NOT_CREATED": 2,
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "order_to_revenue_bridge": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "pbr_e": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
@@ -407,48 +382,47 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "platform_distribution_scale": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "policy_headline_only": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "policy_or_regulatory_confirmed": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
     },
     "policy_supply_support": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "price_cut_risk": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "price_only_blowoff": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1,
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "pricing_power_confirmed": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "procedure_volume_growth": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "project_award_confirmed": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "qualification_confirmed": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "raw_material_cost_risk": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "regulatory_approval_confirmed": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "reimbursement_confirmed": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "repeat_order_confirmed": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 2
     },
     "repeat_revenue": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
@@ -460,7 +434,7 @@
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "retention_or_renewal": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "revenue_visibility_contract": {
       "FULL_THESIS_PROMOTED": 1
@@ -469,32 +443,32 @@
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "roe": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "royalty_route": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "sell_through_confirmed": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "share_count_drift": {
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "spread_expansion": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 2
     },
     "subsidy_capture_visible": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "supply_discipline_mentioned": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "supply_shortage": {
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "take_rate_improvement": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "tender_offer_confirmed": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
@@ -503,21 +477,21 @@
       "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "treasury_share_cancellation": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "trial_quality_visible": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "utilization_rate": {
-      "SOURCE_TASK_NOT_EXECUTED": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "valuation_overheat": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "volume_growth_visible": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "SOURCE_TASK_NOT_EXECUTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 2
     }
   },
   "target_archetype_counts": {
@@ -525,7 +499,7 @@
     "C02_POWER_GRID_DATACENTER_CAPEX": 3,
     "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 3,
     "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": 3,
-    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 6,
+    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 3,
     "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 3,
     "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": 3,
     "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": 3,
@@ -558,6 +532,11 @@
     "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": 3,
     "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": 3
   },
+  "target_materialization_required_seed_count": 9,
+  "target_materialization_status_counts": {
+    "TARGET_MATERIALIZATION_REQUIRED": 9,
+    "TARGET_SYMBOL_READY": 102
+  },
   "target_primitive_gap_counts": {
     "ad_revenue_growth_pct": 1,
     "ampc_or_subsidy_capture": 1,
@@ -571,9 +550,9 @@
     "brand_customer_diversification": 1,
     "call_off_risk": 2,
     "cash_collection_visible": 1,
-    "contract_amount_to_prior_sales": 2,
+    "contract_amount_to_prior_sales": 1,
     "contract_cancelled_or_delayed": 1,
-    "contract_duration_months": 2,
+    "contract_duration_months": 1,
     "contract_quality": 1,
     "control_premium_floor": 1,
     "csm_growth_visible": 1,
@@ -602,7 +581,7 @@
     "k_ics_ratio": 1,
     "lead_time_extended": 1,
     "liquidity_or_microcap_risk": 1,
-    "margin_bridge_visible": 2,
+    "margin_bridge_visible": 1,
     "memory_price_increase_mentioned": 1,
     "minority_cash_path": 1,
     "mix_improvement": 2,
@@ -652,7 +631,13 @@
     "valuation_overheat": 2,
     "volume_growth_visible": 2
   },
-  "trace_row_count": 114,
+  "target_symbol_mode_counts": {
+    "ARCHETYPE_LEVEL_DISCOVERY": 9,
+    "RESEARCH_MEMORY_TARGET_CANDIDATE": 87,
+    "SYMBOL_SPECIFIC": 15
+  },
+  "target_symbol_placeholder_rejected_count": 0,
+  "trace_row_count": 111,
   "verdict": "FAIL",
   "verdict_scope": "LEDGER_INTEGRITY_ONLY"
 }

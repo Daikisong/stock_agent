@@ -6,6 +6,7 @@
 
 - `docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md`
 - `docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md`
+- `docs/0705/goal4_materialized_runtime_attempt_final_audit_2026-07-05.md`
 
 주의:
 
@@ -17,7 +18,7 @@ patched-v2 run은 planner/source/claim trace를 남겼지만 runtime budget exha
 또한 required_positive_missing_primitives가 있는 production row는 앞으로 FULL_THESIS_PRODUCTION_PASS를 막도록 코드가 패치됐다.
 추가 후속 패치로 placeholder symbol `000000`은 next-attempt plan에서 실제 종목으로 취급하지 않는다.
 따라서 현재 재생성된 다음 실행 입력은 seed/source task 111개, target_symbol_mode는 ARCHETYPE_LEVEL_DISCOVERY 32개와 SYMBOL_SPECIFIC 4개다.
-최신 실행 결과는 patched-v2 후속 감사 문서를 기준으로 본다.
+최신 materialized 실행 결과는 goal4_materialized_runtime_attempt_final_audit_2026-07-05.md를 기준으로 본다.
 ```
 
 짧은 결론:

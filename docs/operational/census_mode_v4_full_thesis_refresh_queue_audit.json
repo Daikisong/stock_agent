@@ -8,12 +8,12 @@
     "unbounded_budget_count": 0
   },
   "event_board_non_stage0_count": 82,
-  "full_thesis_stage_row_count": 3,
+  "full_thesis_stage_row_count": 4,
   "priority_bucket_distribution": {
     "P0_RISK_REVIEW_REFRESH": 1,
-    "P1_MATERIAL_STAGE_REFRESH": 28,
+    "P1_MATERIAL_STAGE_REFRESH": 29,
     "P1_PENDING_MATERIAL_REFRESH": 18,
-    "P2_EVENT_WATCH_REFRESH": 35
+    "P2_EVENT_WATCH_REFRESH": 34
   },
   "queue_candidate_count": 82,
   "queue_status": "REFRESH_QUEUE_PRESENT",
@@ -21,13 +21,13 @@
   "schema_version": "e2r_census_v4_full_thesis_refresh_queue_audit_v1",
   "source_base_stage_distribution": {
     "Red": 1,
-    "Stage1": 53,
-    "Stage2-Watch": 28
+    "Stage1": 52,
+    "Stage2-Watch": 29
   },
   "source_stage_signal_distribution": {
     "EVIDENCE_INSUFFICIENT": 10,
-    "MATERIAL_CLAIM_WATCH": 28,
-    "OFFICIAL_EVENT_WATCH": 35,
+    "MATERIAL_CLAIM_WATCH": 29,
+    "OFFICIAL_EVENT_WATCH": 34,
     "RISK_REVIEW": 1,
     "SOURCE_PENDING": 8
   },

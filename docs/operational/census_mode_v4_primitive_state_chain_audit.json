@@ -1,5 +1,5 @@
 {
-  "accepted_claim_count": 99,
+  "accepted_claim_count": 102,
   "claim_with_multi_accepted_primitive_count": 1,
   "critical_count": 0,
   "critical_counts": {
@@ -22,15 +22,15 @@
     "primitive_state_claim_primitive_mismatch_examples": []
   },
   "mapping_leaf_resolution_supported": true,
-  "primitive_mapping_count": 98,
-  "primitive_state_count": 144,
-  "primitive_state_with_id_count": 144,
-  "representative_score_claim_count": 70,
-  "representative_score_claim_with_primitive_state_count": 70,
-  "representative_score_contribution_count": 74,
-  "representative_stage_row_with_evidence_chain_count": 67,
+  "primitive_mapping_count": 100,
+  "primitive_state_count": 190,
+  "primitive_state_with_id_count": 190,
+  "representative_score_claim_count": 71,
+  "representative_score_claim_with_primitive_state_count": 71,
+  "representative_score_contribution_count": 82,
+  "representative_stage_row_with_evidence_chain_count": 68,
   "rule": "Representative score claims must have primitive_state_ids, those IDs must exist in primitive_states.jsonl, the referenced primitive states must support the representative accepted claims, and the representative stage row must match its AtomicStageDecision primitive_state_ids. Score contribution mapping_ids must resolve to primitive_mappings.jsonl rows.",
   "schema_version": "e2r_census_v4_primitive_state_chain_audit_v1",
-  "score_contribution_count": 104,
+  "score_contribution_count": 117,
   "verdict": "PASS"
 }

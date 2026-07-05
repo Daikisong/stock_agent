@@ -1,5 +1,5 @@
 {
-  "brain_to_claim_trace_count": 26,
+  "brain_to_claim_trace_count": 47,
   "brain_trace_missing_count": 0,
   "schema_version": "e2r_census_v4_brain_to_claim_trace_audit_v1",
   "verdict": "PASS"

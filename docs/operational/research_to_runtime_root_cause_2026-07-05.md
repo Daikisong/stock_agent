@@ -8,12 +8,12 @@
 
 ## Current Facts
 
-- full_thesis_row_count: `3`
-- full_thesis_by_archetype: `{"C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 2, "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 1}`
-- distinct_full_thesis_archetype_count: `2`
-- c05_full_thesis_share: `0.666667`
-- required_positive_missing_full_thesis_row_count: `3`
-- green_gap_full_thesis_row_count: `3`
+- full_thesis_row_count: `4`
+- full_thesis_by_archetype: `{"C01_ORDER_BACKLOG_MARGIN_BRIDGE": 1, "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 1, "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 1, "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 1}`
+- distinct_full_thesis_archetype_count: `4`
+- c05_full_thesis_share: `0.25`
+- required_positive_missing_full_thesis_row_count: `4`
+- green_gap_full_thesis_row_count: `4`
 - target_archetype_unknown_promoted_count: `0`
 - source_primary_context_promoted_count: `0`
 

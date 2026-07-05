@@ -496,6 +496,7 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
                         "base_stage": "Stage1",
                         "canonical_stage": "1",
                         "stage_scope": "CENSUS_EVENT_BOARD",
+                        "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
                         "score_scale": "NO_SCORE",
                         "score_scope": "NO_SCORE",
                         "full_thesis_stage": "FULL_THESIS_NOT_RUN",
@@ -1261,6 +1262,7 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(row["score_scope"], "FULL_E2R_100")
         self.assertEqual(row["operator_stage_use"], "FULL_THESIS_STAGE")
         self.assertEqual(row["operator_score_use"], "FULL_E2R_SCORE")
+        self.assertEqual(row["primary_archetype"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
         self.assertEqual(row["full_thesis_primary_archetype"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
         self.assertEqual(row["full_thesis_production_mode"], "research_brain_v4_production")
         self.assertEqual(row["full_thesis_missing_primitives"], [])

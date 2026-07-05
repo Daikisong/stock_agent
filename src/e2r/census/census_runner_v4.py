@@ -7707,6 +7707,7 @@ def _apply_production_full_thesis_from_brain(
                 "stage_signal": "FULL_THESIS_PRODUCTION_STAGE",
                 "stage_confidence": "FULL_THESIS_CLAIM_BACKED",
                 "stage_decision_status": score_status,
+                "primary_archetype": archetype_id,
                 "score_valid_status": score_status,
                 "score_scale": "FULL_E2R_100",
                 "score_scope": "FULL_E2R_100",
