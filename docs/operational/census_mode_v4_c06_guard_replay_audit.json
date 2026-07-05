@@ -1,8 +1,6 @@
 {
   "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-  "blockers": [
-    "controlled_smoke_claims_are_fixture_mapped_not_contract_blind_extracted"
-  ],
+  "blockers": [],
   "cases": [
     {
       "actual_green_unlock_allowed": false,
@@ -101,9 +99,7 @@
       "symbol": "005930"
     }
   ],
-  "full_thesis_symbols": [
-    "005930"
-  ],
+  "full_thesis_symbols": [],
   "green_unlock_false_positive_count": 0,
   "guard_case_count": 3,
   "guard_case_pass_count": 3,
@@ -116,13 +112,11 @@
   "positive_replay_ready": true,
   "positive_replay_required": true,
   "positive_semantic_replay_ready": true,
-  "positive_wiring_smoke_ready": true,
+  "positive_wiring_smoke_ready": false,
   "rule": "C06 qualification lag or supply delay guard claims may create follow-up/watch context, but they cannot create a current hard break, Green unlock, score contribution, or source-backed replay pass without current direct semantic extraction and lifecycle confirmation.",
   "schema_version": "e2r_census_v4_c06_guard_replay_audit_v1",
   "score_contribution_leak_count": 0,
-  "semantic_blockers": [
-    "controlled_smoke_claims_are_fixture_mapped_not_contract_blind_extracted"
-  ],
+  "semantic_blockers": [],
   "source_backed_positive_replay_ready": true,
   "source_backed_semantic_replay": {
     "accepted_claim_count": 1,
@@ -270,9 +264,7 @@
         "rerouted_accepted_claim_ids": [],
         "satisfaction_type": "DIRECT_ACCEPTED_CLAIM",
         "satisfies_source_task": true,
-        "score_claim_ids": [
-          "CLM-23b9ae0023c4ae107683"
-        ],
+        "score_claim_ids": [],
         "source_class": "BrokerReportPublicPDF",
         "source_origin": "c06_source_backed_semantic_replay",
         "source_task": {

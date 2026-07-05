@@ -87,6 +87,97 @@ class SourceConnectorTests(unittest.TestCase):
         self.assertEqual(fields["contract_duration_months"], 8)
         self.assertEqual(fields["counterparty"], "UPL Limited")
 
+    def test_opendart_parses_joined_sales_ratio_label_from_dart_contract_table(self):
+        raw_text = """
+        삼부토건/단일판매ㆍ공급계약체결/(2026.06.30)
+        단일판매ㆍ공급계약 체결
+        2. 계약내역
+        계약금액(원)
+        96,591,000,000
+        최근매출액(원)
+        280,423,782,241
+        매출액대비(%)
+        34.44
+        5. 계약기간
+        시작일
+        2018-05-09
+        종료일
+        2026-06-30
+        """
+
+        fields = parse_disclosure_text(raw_text, title="[기재정정]단일판매ㆍ공급계약체결")
+
+        self.assertEqual(fields["contract_amount"], 96591000000.0)
+        self.assertAlmostEqual(fields["contract_amount_to_prior_sales"], 0.3444)
+        self.assertEqual(fields["contract_duration_months"], 98)
+
+    def test_opendart_uses_current_contract_body_not_correction_table_numbers(self):
+        raw_text = """
+        대우건설/단일판매ㆍ공급계약체결/(2026.06.25)
+        정정신고(보고)
+        4. 정정사항
+        정정항목
+        정정전
+        정정후
+        2. 계약내역 - 계약금액(원)
+        - 매출액대비(%)
+        240,893,290,000
+        2.77
+        523,270,000,000
+        6.02
+        5. 계약기간
+        - 시작일
+        - 종료일
+        -
+        -
+        2025-04-15
+        2029-04-30
+        단일판매ㆍ공급계약 체결
+        1. 판매ㆍ공급계약 구분
+        공사수주
+        2. 계약내역
+        계약금액(원)
+        523,270,000,000
+        최근매출액(원)
+        8,690,740,000,000
+        매출액대비(%)
+        6.02
+        5. 계약기간
+        시작일
+        2025-04-15
+        종료일
+        2029-04-30
+        """
+
+        fields = parse_disclosure_text(raw_text, title="[기재정정]단일판매ㆍ공급계약체결")
+
+        self.assertEqual(fields["contract_amount"], 523270000000.0)
+        self.assertAlmostEqual(fields["contract_amount_to_prior_sales"], 0.0602)
+        self.assertEqual(fields["contract_start"], "2025-04-15")
+        self.assertEqual(fields["contract_end"], "2029-04-30")
+        self.assertEqual(fields["contract_duration_months"], 49)
+
+    def test_opendart_does_not_score_truncated_correction_table_without_current_body(self):
+        raw_text = """
+        대우건설/단일판매ㆍ공급계약체결/(2026.06.25)
+        정정신고(보고)
+        4. 정정사항
+        정정항목
+        정정전
+        정정후
+        2. 계약내역 - 계약금액(원)
+        - 매출액대비(%)
+        240,893,290,000
+        2.77
+        523,270,000,000
+        6.02
+        """
+
+        fields = parse_disclosure_text(raw_text, title="[기재정정]단일판매ㆍ공급계약체결")
+
+        self.assertNotIn("contract_amount", fields)
+        self.assertNotIn("contract_amount_to_prior_sales", fields)
+
     def test_opendart_parses_corp_code_zip_by_stock_code(self):
         buffer = io.BytesIO()
         with zipfile.ZipFile(buffer, "w") as archive:

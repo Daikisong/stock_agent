@@ -1,5 +1,11 @@
 # 2026-07-03 Goal 진행상황 상세 기록
 
+> 최신 판단 주의: 이 파일의 아래 본문에는 v136/v109/v126 등 과거 진행 로그가 길게 남아 있다. 최신 authoritative 상태는 `docs/0703/goal_followup_status_2026-07-04.md`를 먼저 봐야 한다.
+>
+> 2026-07-05 KST v177/v178 기준으로 production FULL_THESIS, Brain/Web evidence, external controlled smoke requirement, goal matrix, full unittest, operational docs 갱신은 통과했다. 원래 goal의 마지막 조건인 "서브에이전트 5명 비판 검토와 99점 이상 확인"도 Chandrasekhar, Pascal, James, Erdos, Darwin 모두 99점 PASS로 완료됐다. 이 파일 아래의 오래된 중간 실패/완료 표현보다 `docs/0703/goal_followup_status_2026-07-04.md`의 최신 섹션을 우선한다.
+>
+> 최신 authoritative artifact는 v178 전체 unittest 5190개 통과, v162 controlled full-thesis smoke 통과, v177 production full-thesis 통과다. 쉬운 예: 아래 본문은 작업 중간 진료기록이고, 7/4 follow-up 문서는 최신 판정표다.
+
 작성/업데이트 시각: 2026-07-04 11:00 KST
 
 대상 문서:
@@ -8,12 +14,12 @@
 - `docs/core/goal2.md`
 - `docs/core/goal3.md`
 
-현재 결론:
+과거 진행 로그 당시 결론:
 
-**v136 audit refresh 기준으로 goal은 산출물상 완료 상태다.**  
-단, 이것은 새 live 웹/LLM 수집을 다시 90분 돌린 결과가 아니라, v134 live 실행 산출물에 최신 audit/promotion/gate 로직을 재적용한 검증이다. v134 live 실행은 실제 Brain/Web/LLM, bounded source acquisition, claim extraction, production full-thesis row를 만들었고, v135/v136 audit refresh에서 leaf, all-archetype replay, goal matrix, goal completion, 최신 전체 테스트 artifact까지 모두 닫혔다.
+**아래 v136 기준 완료 판단은 최신 기준에서는 최종 완료 선언으로 쓰지 않는다.**
+이 문단은 당시 진행 로그를 보존한 것이다. 이후 v149/v150/v151에서 production FULL_THESIS와 controlled smoke 요구를 분리했고, v160/v163 실패를 거쳐 v164에서 source task budget, web minimum, operational docs까지 다시 확인했다. 최신 authoritative 판단은 `docs/0703/goal_followup_status_2026-07-04.md`에 있다.
 
-최신 완료 근거:
+당시 v136 완료 판단 근거:
 
 ```text
 live base:
@@ -26,7 +32,7 @@ latest full test artifact:
   output/census_v4/2026-07-01-v136-goal-gates-full-test/full_unittest_result_artifact.json
 ```
 
-최신 v136 요약:
+당시 v136 요약:
 
 ```text
 leaf_artifact_audit.verdict:              PASS
@@ -54,23 +60,29 @@ full unittest:                            5154 OK, 0 fail, 0 error
   자료는 모았고 일부 검사도 했지만,
   "정밀검사 결과표"와 "전체 아키타입 재현 검증표"가 아직 도장 찍히지 않았다.
 
-현재 v136 상태:
+당시 v136 상태:
   v134에서 실제 자료 수집과 claim/score/stage 생성이 끝났고,
   v136에서 그 결과표의 장부 연결, 아키타입 재현, 테스트 증빙까지 다시 확인했다.
-  그래서 goal audit 기준으로는 blocker가 0개다.
+  그래서 당시 goal audit 기준으로는 blocker가 0개로 보였다.
 ```
 
-주의:
+당시 주의 문구였지만 최신 기준에서는 수정된 사항:
 
 ```text
-controlled smoke 자체가 실행된 것은 아니다.
-대신 production full-thesis가 실제로 32개 row를 만들었으므로,
-FULL_THESIS_SMOKE_PASS 요구는 더 강한 증거인 production_full_thesis로 대체 충족된다.
+예전 표현:
+  controlled smoke 자체가 실행된 것은 아니다.
+  production full-thesis가 smoke 요구를 대체 충족한다.
+
+최신 v164 표현:
+  production FULL_THESIS와 controlled smoke는 별도 증명 가족이다.
+  v162 controlled smoke artifact가 smoke 요구를 만족했고,
+  v164 production run은 그 artifact를 audit에만 연결했다.
+  controlled smoke row는 production stage rows에 섞이지 않았다.
 ```
 
 과거 진행 맥락:
 
-최신 완료 live 실행인 v109 기준으로는 `BRAIN_WEB_EVIDENCE_PASS`까지 실제 leaf artifact로 통과했다. 이전 v108에서 터진 `claim_id` 충돌도 재현되지 않았다. v110 패치로 follow-up seed에 canonical archetype/gap context를 더 명확히 싣고 bounded web fallback을 허용했고, v111 smoke에서 그 context가 source task까지 전달되는 것도 확인했다. v113/v115/v117 패치로 긴 live provider loop의 진행상태, runtime budget 종료, budget 종료 원인이 artifact에 남게 됐다. v120에서는 `FULL_THESIS` 승격 실패 원인을 primitive 단위로 분해했고, v121에서는 `ALL_ARCHETYPE_SOURCE_BACKED_REPLAY_PASS`의 남은 26개 gap을 점수로 오염시키지 않는 bounded planner-only repair task로 내보내게 했다.
+당시 완료 live 실행인 v109 기준으로는 `BRAIN_WEB_EVIDENCE_PASS`까지 실제 leaf artifact로 통과했다. 이전 v108에서 터진 `claim_id` 충돌도 재현되지 않았다. v110 패치로 follow-up seed에 canonical archetype/gap context를 더 명확히 싣고 bounded web fallback을 허용했고, v111 smoke에서 그 context가 source task까지 전달되는 것도 확인했다. v113/v115/v117 패치로 긴 live provider loop의 진행상태, runtime budget 종료, budget 종료 원인이 artifact에 남게 됐다. v120에서는 `FULL_THESIS` 승격 실패 원인을 primitive 단위로 분해했고, v121에서는 `ALL_ARCHETYPE_SOURCE_BACKED_REPLAY_PASS`의 남은 26개 gap을 점수로 오염시키지 않는 bounded planner-only repair task로 내보내게 했다.
 
 v126 패치에서는 중요한 의미 오류를 하나 고쳤다. 기존 production full-thesis 승격은 사실상 "Green primitive가 모두 닫힌 종목만 FULL_THESIS"로 취급했다. 그래서 StageCourt가 `FINAL` 점수와 Stage2/Stage1 결론을 냈어도, Green gate primitive가 빠져 있으면 "정밀평가 미실행"처럼 막혔다. 이제는 `score_status=FINAL` 또는 `FINAL_WITH_NONMATERIAL_GAPS`이면 production full-thesis 결과로 인정하고, 빠진 Green primitive는 `full_thesis_green_gap_primitives`에 남긴다. 반대로 `PENDING_MATERIAL_GAPS`는 여전히 production full-thesis로 올리지 않는다.
 
@@ -2897,4 +2909,86 @@ v134 live Brain/Web 산출물 + v136 audit refresh + v136 full test artifact로 
 
 다만 canonical baseline output 하나만 보면 과거 pending 문맥이 남을 수 있으므로,
 완료 판단은 output/census_v4/2026-07-01-v136-goal-gates-audit-refresh를 기준으로 해야 한다.
+```
+
+### 26.7 2026-07-05 KST 최신 continuation 기준
+
+위 26.5~26.6의 v136 기록은 이제 historical pass다. 2026-07-05 KST 기준 최신 완료 근거는 v171/v172다.
+
+최신 전체 테스트:
+
+```text
+artifact:
+  output/census_v4/2026-07-01-v171-goal-gates-full-test-after-required-gap-audit-clarification/full_unittest_result_artifact.json
+
+status:        OK
+test_count:    5184
+failed_count:  0
+error_count:   0
+duration:      347.1904s
+log_sha256:    a57f6d5ec227ffab07c840fdc453c1ef239f52cc6a5fbcdb7b9a7bcff8c9e5e4
+```
+
+최신 production run:
+
+```text
+output:
+  output/census_v4/2026-07-01-v172-goal-followup-production-after-required-gap-audit-clarification
+
+goal_completion_ready: true
+goal_completion.blockers: []
+readiness.target_gate_pass: true
+readiness.meaningful_operational_stage_pass: true
+readiness.remaining_operational_gaps: []
+full_thesis_production.verdict: FULL_THESIS_PRODUCTION_PASS
+brain_web_readiness.verdict: READY_FOR_BRAIN_WEB_EVIDENCE_PASS
+runtime_plausibility.verdict: PASS_LIVE_RUNTIME_PLAUSIBILITY
+```
+
+v172에서 닫힌 핵심:
+
+```text
+production_full_thesis_row_count: 3
+source pending required/green final score: 0
+provider failed green gap final score: 0
+blocking required gap primitives: 0
+required-positive-missing primitives exposed: 3 rows
+```
+
+중요한 수정:
+
+```text
+v170은 audit상 pass였지만 `full_thesis_required_gap_primitives`가 숨겨지는 문제가 있었다.
+v171/v172에서 이를 `blocking required gap`과 `required positive missing`으로 분리했다.
+```
+
+쉬운 예:
+
+```text
+계약 금액은 확인됐지만 마진 브리지 반대 증거가 있으면 낮은 Stage FINAL은 가능하다.
+다만 "마진 브리지까지 다 채웠다"고 말하면 안 된다.
+v172는 이 부족 칸을 `required_positive_missing_primitives`로 드러낸다.
+```
+
+최신 production full-thesis row:
+
+```text
+005930 삼성전자: Stage1, 60.0, C06
+  required-positive-missing:
+    hbm_capacity_constraint, hbm_capacity_pre_sold, memory_price_increase_mentioned
+
+034020 두산에너빌리티: Stage1, 42.0, C05
+  required-positive-missing:
+    margin_bridge_visible
+
+034730 SK: Stage0, 27.9998, C05
+  required-positive-missing:
+    contract_duration_months, margin_bridge_visible
+```
+
+최신 판정:
+
+```text
+goal hard gate는 v172 기준 PASS다.
+최종 완료 선언 전에는 서브에이전트 5명 모두 99점 이상 교차검증이 필요하다.
 ```

@@ -105,6 +105,35 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
         self.assertEqual(extractor["verdict"], "FAIL")
         self.assertEqual(extractor["llm_claim_extractor_claimed_but_zero_count"], 1)
 
+    def test_brain_audit_counts_real_planner_attempts_separately_from_successes(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            write_jsonl(
+                root / "planner_runs.jsonl",
+                [
+                    {"provider_mode": "real", "real_provider_success": True},
+                    {"provider_mode": "real", "real_provider_success": True},
+                    {"provider_mode": "real", "real_provider_success": False, "provider_error": "codex_cli_timeout"},
+                    {
+                        "provider_mode": "none",
+                        "real_provider_success": False,
+                        "provider_error": "planner_not_attempted_after_real_planner_limit",
+                    },
+                ],
+            )
+            brain = _brain_audit(
+                CensusV4RunConfig(as_of_date="2026-07-01", brain_web_mode="enabled"),
+                output_root=root,
+            )
+
+        self.assertEqual(brain["planner_run_row_count"], 4)
+        self.assertEqual(brain["llm_planner_call_count"], 3)
+        self.assertEqual(brain["llm_planner_attempt_count"], 3)
+        self.assertEqual(brain["llm_real_provider_success_count"], 2)
+        self.assertEqual(brain["llm_real_provider_failure_count"], 1)
+        self.assertEqual(brain["llm_planner_not_attempted_count"], 1)
+        self.assertEqual(brain["verdict"], "PASS")
+
     def test_brain_triage_run_mode_requires_planner_but_not_web_fetch(self):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -341,6 +370,105 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
         self.assertEqual(readiness["target_gate"], "brain_web")
         self.assertIn("BRAIN_WEB_EVIDENCE_PASS", readiness["labels"])
         self.assertFalse(readiness["meaningful_operational_stage_pass"])
+
+    def test_meaningful_pass_does_not_leave_unresolved_operational_gap_labels(self):
+        with TemporaryDirectory() as tmp:
+            output_root = Path(tmp) / "out"
+            output_root.mkdir(parents=True)
+            (output_root / "all_archetype_replay_matrix.json").write_text(
+                json.dumps({"all_archetype_replay_pass": True}),
+                encoding="utf-8",
+            )
+            readiness = _readiness_verdict(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    output_root=str(output_root),
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_stage_promotion_mode="strict",
+                    target_gate="meaningful",
+                ),
+                leaf_audit={
+                    "verdict": "PASS",
+                    "metrics": {
+                        "evidence_claim_payload_count": 1,
+                        "full_thesis_stage_row_count": 1,
+                        "full_e2r_verified_score_present_count": 1,
+                        "event_board_non_stage0_count": 0,
+                        "full_thesis_refresh_queue_candidate_count": 1,
+                    },
+                },
+                stage_rows=[
+                    {
+                        "symbol": "005930",
+                        "stage_scope": "FULL_THESIS",
+                        "base_stage": "Stage2-Watch",
+                        "score_scale": "FULL_E2R_100",
+                    }
+                ],
+                research_brain_bridge={
+                    "bridge_mode": "imported_operational_report_bundle",
+                    "usable_for_census_cutover": False,
+                },
+                brain_web_attempt={
+                    "attempt_mode": "research_brain_v4_production_shadow_attempt",
+                    "verdict": "ATTEMPTED_WITH_SOURCE_TASKS",
+                    "real_provider_success_count": 1,
+                    "source_task_execution_count": 1,
+                    "accepted_claim_count": 1,
+                    "unique_accepted_claim_count": 1,
+                    "brain_to_census_claim_exported_count": 1,
+                    "brain_to_census_stage_exported_count": 1,
+                    "claim_acceptance_ready": True,
+                    "stagecourt_trace_ready": True,
+                    "cutover_export_ready": True,
+                    "blockers": [],
+                },
+                brain_stage_promotion={
+                    "verdict": "PROMOTION_APPLIED",
+                    "brain_stage_promotion_mode": "strict",
+                    "brain_stage_trace_count": 1,
+                    "brain_promoted_stage_row_count": 1,
+                    "unsafe_promoted_stage_row_count": 0,
+                    "brain_snapshot_document_count": 0,
+                    "blockers": [],
+                },
+                brain_web_readiness_gate={
+                    "verdict": "READY_FOR_BRAIN_WEB_EVIDENCE_PASS",
+                    "minimum_gate_applies": True,
+                    "brain_web_evidence_pass_allowed": True,
+                    "blockers": [],
+                },
+                goal_audits={
+                    "full_thesis_production": {
+                        "verdict": "FULL_THESIS_PRODUCTION_PASS",
+                        "completion_eligible": True,
+                        "production_pass_allowed": True,
+                        "production_full_thesis_row_count": 1,
+                    },
+                    "samsung_hynix_full_thesis_smoke": {
+                        "verdict": "FULL_THESIS_SMOKE_PASS",
+                        "full_thesis_status": "FULL_THESIS_REFRESH_RAN",
+                        "score_allowed_before_execution": False,
+                        "hardcoded_query_count": 0,
+                        "daily_event_and_full_thesis_separated": True,
+                        "per_symbol": [{"smoke_pass_allowed": True}],
+                    },
+                    "source_connector_capability": {"source_connector_capability_pass_allowed": True},
+                    "full_thesis_seed_materialization": {
+                        "verdict": "PASS",
+                        "full_thesis_promoted_seed_count": 1,
+                    },
+                    "controlled_semantic_replay": {"controlled_semantic_replay_pass": True},
+                },
+            )
+
+        self.assertTrue(readiness["meaningful_operational_stage_pass"])
+        self.assertTrue(readiness["brain_web_evidence_pass_allowed"])
+        self.assertTrue(readiness["full_thesis_production_pass_allowed"])
+        self.assertTrue(readiness["full_thesis_smoke_requirement_pass_allowed"])
+        self.assertTrue(readiness["brain_web_promoted_stagecourt_path"])
+        self.assertEqual(readiness["remaining_operational_gaps"], [])
 
     def test_brain_web_requested_records_attempt_but_stays_not_ready_without_real_success(self):
         with TemporaryDirectory() as tmp:

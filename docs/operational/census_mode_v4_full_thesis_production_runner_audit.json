@@ -1,98 +1,1223 @@
 {
-  "blocked_candidate_archetype_counts": {},
-  "blocked_candidate_blocker_counts": {},
-  "blocked_candidate_count": 0,
-  "blocked_candidate_follow_up_primitive_gaps": [],
+  "blocked_candidate_archetype_counts": {
+    "C01_ORDER_BACKLOG_MARGIN_BRIDGE": 1,
+    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 11,
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 1
+  },
+  "blocked_candidate_blocker_counts": {
+    "source_pending_required_or_green_primitives": 13
+  },
+  "blocked_candidate_count": 13,
+  "blocked_candidate_follow_up_primitive_gaps": [
+    "contract_amount_to_prior_sales",
+    "contract_duration_months",
+    "customer_preorder_or_allocation",
+    "delivery_schedule",
+    "hbm_capacity_constraint",
+    "hbm_capacity_pre_sold",
+    "margin_bridge_visible",
+    "named_customer_quality",
+    "opm_expansion_pctp",
+    "order_backlog_to_sales"
+  ],
   "blocked_candidate_follow_up_rule": "A blocked production full-thesis candidate does not receive score or Stage credit. Each missing Green primitive is exported as an official-first bounded SourceTask shell with empty query_intents; a matching planner-input-only seed event is also exported for the next Research Brain run. The planner must generate the actual queries, and source-backed Evidence OS claims must close the unresolved material gap before any FULL_THESIS promotion.",
-  "blocked_candidate_follow_up_seed_event_count": 0,
-  "blocked_candidate_follow_up_seed_event_path": "output/census_v4/2026-07-01-v134-live-brainweb-fullthesis-wide-atomic/full_thesis_blocker_follow_up_seed_events.jsonl",
-  "blocked_candidate_follow_up_source_task_count": 0,
-  "blocked_candidate_follow_up_source_task_path": "output/census_v4/2026-07-01-v134-live-brainweb-fullthesis-wide-atomic/full_thesis_blocker_follow_up_source_tasks.jsonl",
-  "blocked_candidate_missing_green_primitive_counts": {},
-  "blocked_candidate_missing_green_primitive_counts_by_archetype": {},
-  "blocked_candidate_present_primitive_counts": {},
-  "blocked_candidates": [],
+  "blocked_candidate_follow_up_seed_event_count": 34,
+  "blocked_candidate_follow_up_seed_event_path": "output/census_v4/2026-07-01-v177-goal-followup-production-after-expanded-brain-web-width/full_thesis_blocker_follow_up_seed_events.jsonl",
+  "blocked_candidate_follow_up_source_task_count": 34,
+  "blocked_candidate_follow_up_source_task_path": "output/census_v4/2026-07-01-v177-goal-followup-production-after-expanded-brain-web-width/full_thesis_blocker_follow_up_source_tasks.jsonl",
+  "blocked_candidate_missing_green_primitive_counts": {
+    "contract_amount_to_prior_sales": 4,
+    "contract_duration_months": 11,
+    "customer_preorder_or_allocation": 1,
+    "delivery_schedule": 3,
+    "hbm_capacity_constraint": 1,
+    "hbm_capacity_pre_sold": 1,
+    "margin_bridge_visible": 10,
+    "named_customer_quality": 1,
+    "opm_expansion_pctp": 1,
+    "order_backlog_to_sales": 1
+  },
+  "blocked_candidate_missing_green_primitive_counts_by_archetype": {
+    "C01_ORDER_BACKLOG_MARGIN_BRIDGE": {
+      "named_customer_quality": 1,
+      "opm_expansion_pctp": 1,
+      "order_backlog_to_sales": 1
+    },
+    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": {
+      "contract_amount_to_prior_sales": 4,
+      "contract_duration_months": 11,
+      "delivery_schedule": 3,
+      "margin_bridge_visible": 10
+    },
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+      "customer_preorder_or_allocation": 1,
+      "hbm_capacity_constraint": 1,
+      "hbm_capacity_pre_sold": 1
+    }
+  },
+  "blocked_candidate_present_primitive_counts": {
+    "contract_amount_to_prior_sales": 7,
+    "contract_quality": 1,
+    "delivery_schedule": 9,
+    "fcf_quality_score": 1,
+    "margin_bridge_visible": 1,
+    "medium_term_revision_visibility": 1,
+    "revenue_visibility_contract": 1
+  },
+  "blocked_candidate_source_pending_gap_primitive_counts": {
+    "contract_amount_to_prior_sales": 3,
+    "contract_duration_months": 1,
+    "customer_preorder_or_allocation": 1,
+    "delivery_schedule": 1,
+    "hbm_capacity_pre_sold": 1,
+    "margin_bridge_visible": 9,
+    "opm_expansion_pctp": 1
+  },
+  "blocked_candidates": [
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-005930-443618f53c122b15",
+      "candidate_source": "brain_web_partial_stage_row",
+      "company_name": "삼성전자",
+      "missing_green_primitives": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold"
+      ],
+      "missing_required_primitives": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "memory_price_increase_mentioned"
+      ],
+      "present_primitives": [
+        "medium_term_revision_visibility",
+        "revenue_visibility_contract"
+      ],
+      "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-f5415b459db04c5ba204",
+          "candidate_event_id": "CEV4-FTQUEUE-005930-443618f53c122b15",
+          "claim_id": "CLM-cb89284e19a74769442b",
+          "document_id": "DOC-d78e3500c9e0882567b5",
+          "fetched_document_ids": [
+            "DOC-d78e3500c9e0882567b5"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-FTQUEUE-005930-443618f53c122b15-C06-official-hbm",
+            "RSTASKV4DARTSTATUS-fa5c22bbbe1c793c1853e69f"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-1072d2cc55694a0f572a",
+          "candidate_event_id": "CEV4-FTQUEUE-005930-443618f53c122b15",
+          "claim_id": "CLM-b2357d577f4a0e9b2030",
+          "document_id": "DOC-67a518a40328ad867c43",
+          "fetched_document_ids": [
+            "DOC-67a518a40328ad867c43"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-FTQUEUE-005930-443618f53c122b15-C06-external-report"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-06ae00ef03c127a82c8a",
+          "candidate_event_id": "CEV4-FTQUEUE-005930-443618f53c122b15",
+          "claim_id": "CLM-b357152e11944e6750e2",
+          "document_id": "DOC-ed37e716b7e151384377",
+          "fetched_document_ids": [
+            "DOC-ed37e716b7e151384377"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-FTQUEUE-005930-443618f53c122b15-C06-external-report"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-FTQUEUE-005930-443618f53c122b15",
+          "primitive_gap": "hbm_capacity_pre_sold",
+          "primitive_gap_unsatisfied_ids": [
+            "hbm_capacity_pre_sold"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "task_id": "CEV4-FTQUEUE-005930-443618f53c122b15-C06-official-capacity"
+        },
+        {
+          "accepted_claim_ids": [
+            "CLM-1fe660edaf0f1f7c1bd4",
+            "CLM-b2357d577f4a0e9b2030",
+            "CLM-b357152e11944e6750e2",
+            "CLM-b7030135427de2bc68b5"
+          ],
+          "candidate_event_id": "CEV4-FTQUEUE-005930-443618f53c122b15",
+          "primitive_gap": "customer_preorder_or_allocation",
+          "primitive_gap_unsatisfied_ids": [
+            "customer_preorder_or_allocation"
+          ],
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source"
+          ],
+          "status": "EVIDENCE_OS_ACCEPTED",
+          "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
+          "task_id": "CEV4-FTQUEUE-005930-443618f53c122b15-C06-external-report"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold"
+      ],
+      "source_pending_required_primitives": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-418fc30c3d654133ede3",
+      "symbol": "005930"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-052400-6a509af3b7b87b51",
+      "candidate_source": "brain_web_partial_stage_row",
+      "company_name": "코나아이",
+      "missing_green_primitives": [
+        "named_customer_quality",
+        "opm_expansion_pctp",
+        "order_backlog_to_sales"
+      ],
+      "missing_required_primitives": [
+        "named_customer_quality",
+        "opm_expansion_pctp",
+        "order_backlog_to_sales"
+      ],
+      "present_primitives": [
+        "contract_quality",
+        "delivery_schedule",
+        "fcf_quality_score"
+      ],
+      "primary_archetype": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-71abcc0222bf76a7b88d",
+          "candidate_event_id": "CEV4-FTQUEUE-052400-6a509af3b7b87b51",
+          "claim_id": "CLM-0bc6d126ddaa1408b631",
+          "document_id": "DOC-e117deca9800e56723e6",
+          "fetched_document_ids": [
+            "DOC-e117deca9800e56723e6"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "052400-official-contract-quality",
+            "052400-official-cash-fcf-bridge",
+            "RSTASKV4DARTSTATUS-435d2d47f663cf82b2e34a29"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-fc93d3909672ef29b755",
+          "candidate_event_id": "CEV4-FTQUEUE-052400-6a509af3b7b87b51",
+          "claim_id": "CLM-4e6771784887b720911f",
+          "document_id": "DOC-b14a824d662ef08fb230",
+          "fetched_document_ids": [
+            "DOC-b14a824d662ef08fb230"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "052400-bounded-external-volume-margin"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-4cbd780690d87dbca3b0",
+          "candidate_event_id": "CEV4-FTQUEUE-052400-6a509af3b7b87b51",
+          "claim_id": "CLM-5bd8d3ea32b76c0fc077",
+          "document_id": "DOC-5147052c9ccbbc98d48e",
+          "fetched_document_ids": [
+            "DOC-5147052c9ccbbc98d48e"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "052400-bounded-external-volume-margin"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-4cbd780690d87dbca3b0",
+          "candidate_event_id": "CEV4-FTQUEUE-052400-6a509af3b7b87b51",
+          "claim_id": "CLM-0306fcfdc6573aef00ec",
+          "document_id": "DOC-5147052c9ccbbc98d48e",
+          "fetched_document_ids": [
+            "DOC-5147052c9ccbbc98d48e"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "052400-bounded-external-volume-margin"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "opm_expansion_pctp"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [
+            "CLM-4e6771784887b720911f",
+            "CLM-c1cf387484b203eb95f6",
+            "CLM-22c0fd8cba1a5176acf1",
+            "CLM-aebf42e176d4df249638",
+            "CLM-5bd8d3ea32b76c0fc077",
+            "CLM-e6fd30412690c3f7f612",
+            "CLM-9456a7fc4121092adc15",
+            "CLM-4f5225da912a38a70f0b",
+            "CLM-03e827b6db18d9785715",
+            "CLM-8786c0643e22a5f47b5d",
+            "CLM-0306fcfdc6573aef00ec",
+            "CLM-67aabf2b9b9a83e09e51",
+            "CLM-0fdde642b30effeae694",
+            "CLM-7ae4a729930ec7061fb9",
+            "CLM-ccdcfdbfa3536730e476",
+            "CLM-f8e7dd99e0160d3ca5ed"
+          ],
+          "candidate_event_id": "CEV4-FTQUEUE-052400-6a509af3b7b87b51",
+          "primitive_gap": "opm_expansion_pctp",
+          "primitive_gap_unsatisfied_ids": [
+            "opm_expansion_pctp"
+          ],
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source",
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "EVIDENCE_OS_ACCEPTED",
+          "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
+          "task_id": "052400-bounded-external-volume-margin"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "opm_expansion_pctp"
+      ],
+      "source_pending_required_primitives": [
+        "opm_expansion_pctp"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-1aba2135699f09d7a9cd",
+      "symbol": "052400"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-052710-cf4a992ab17942c5",
+      "candidate_source": "brain_web_partial_stage_row",
+      "company_name": "아모텍",
+      "missing_green_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "delivery_schedule"
+      ],
+      "missing_required_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "delivery_schedule"
+      ],
+      "present_primitives": [
+        "margin_bridge_visible"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-1b867fb8725fd96f31c6",
+          "candidate_event_id": "CEV4-FTQUEUE-052710-cf4a992ab17942c5",
+          "claim_id": "CLM-9bb41fc990251177fe0d",
+          "document_id": "DOC-af41f3fc4c9920886896",
+          "fetched_document_ids": [
+            "DOC-af41f3fc4c9920886896"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "052710-C05-independent-report-original"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-cdf00ebf62bf6510c214",
+          "candidate_event_id": "CEV4-FTQUEUE-052710-cf4a992ab17942c5",
+          "claim_id": "CLM-66695ddfb6549039c28c",
+          "document_id": "DOC-14d15f0ac194c133454e",
+          "fetched_document_ids": [
+            "DOC-14d15f0ac194c133454e"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "052710-C05-independent-report-original"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "contract_amount_to_prior_sales"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-FTQUEUE-052710-cf4a992ab17942c5",
+          "primitive_gap": "contract_amount_to_prior_sales",
+          "primitive_gap_unsatisfied_ids": [
+            "contract_amount_to_prior_sales"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "task_id": "052710-C05-contract-official"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "contract_amount_to_prior_sales"
+      ],
+      "source_pending_required_primitives": [
+        "contract_amount_to_prior_sales"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-13cdcace44ea7f6725d3",
+      "symbol": "052710"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-003380-ca84ae22539bef01",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "하림지주",
+      "missing_green_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "missing_required_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "present_primitives": [
+        "delivery_schedule"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-40f1ed9df60a25040870",
+          "candidate_event_id": "CEV4-FTQUEUE-003380-ca84ae22539bef01",
+          "claim_id": "CLM-531b79cc3109d589a129",
+          "document_id": "DOC-3c04276c130d00cad855",
+          "fetched_document_ids": [
+            "DOC-3c04276c130d00cad855"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "003380-official-contract-bridge",
+            "003380-official-cash-revision",
+            "RSTASKV4DARTSTATUS-c9bb2d0839367ffd16c5d33a"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "contract_amount_to_prior_sales",
+        "margin_bridge_visible"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [
+            "CLM-531b79cc3109d589a129",
+            "CLM-36fdd6e7160939269142"
+          ],
+          "candidate_event_id": "CEV4-FTQUEUE-003380-ca84ae22539bef01",
+          "primitive_gap": "contract_amount_to_prior_sales",
+          "primitive_gap_unsatisfied_ids": [
+            "contract_amount_to_prior_sales"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "EVIDENCE_OS_ACCEPTED",
+          "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
+          "task_id": "003380-official-contract-bridge"
+        },
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-FTQUEUE-003380-ca84ae22539bef01",
+          "primitive_gap": "margin_bridge_visible",
+          "primitive_gap_unsatisfied_ids": [],
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source"
+          ],
+          "status": "PROVIDER_FAILED",
+          "stop_reason": "live_official_provider_failed_web_no_evidence_found",
+          "task_id": "003380-bounded-report-margin-bridge"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "contract_amount_to_prior_sales",
+        "margin_bridge_visible"
+      ],
+      "source_pending_required_primitives": [
+        "contract_amount_to_prior_sales",
+        "margin_bridge_visible"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-4c7fb36ace637d6cecbd",
+      "symbol": "003380"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-054930-1e0f4a7676f9f713",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "유신",
+      "missing_green_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "missing_required_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "present_primitives": [
+        "contract_amount_to_prior_sales",
+        "delivery_schedule"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-aae225303889a513d707",
+          "candidate_event_id": "CEV4-FTQUEUE-054930-1e0f4a7676f9f713",
+          "claim_id": "CLM-2a7b6b4b232882ea38b3",
+          "document_id": "DOC-1d7e4d63aeefa2ea8a3d",
+          "fetched_document_ids": [
+            "DOC-1d7e4d63aeefa2ea8a3d"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "054930-C05-contract-official",
+            "054930-C05-cost-cash-official",
+            "RSTASKV4DARTSTATUS-1d3676dfdc0cf65a459ef66d"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-aae225303889a513d707",
+          "candidate_event_id": "CEV4-FTQUEUE-054930-1e0f4a7676f9f713",
+          "claim_id": "CLM-7023d41086431dc7f3a6",
+          "document_id": "DOC-1d7e4d63aeefa2ea8a3d",
+          "fetched_document_ids": [
+            "DOC-1d7e4d63aeefa2ea8a3d"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "054930-C05-contract-official",
+            "054930-C05-cost-cash-official",
+            "RSTASKV4DARTSTATUS-1d3676dfdc0cf65a459ef66d"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-FTQUEUE-054930-1e0f4a7676f9f713",
+          "primitive_gap": "margin_bridge_visible",
+          "primitive_gap_unsatisfied_ids": [],
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source"
+          ],
+          "status": "PROVIDER_FAILED",
+          "stop_reason": "live_official_provider_failed_web_no_evidence_found",
+          "task_id": "054930-C05-independent-report-original"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_required_primitives": [
+        "margin_bridge_visible"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-4d8e70e17c14f9b28a38",
+      "symbol": "054930"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-042370-9151f1483ac27623",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "비츠로테크",
+      "missing_green_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "missing_required_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "present_primitives": [
+        "contract_amount_to_prior_sales",
+        "delivery_schedule"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-900194e03d004243a421",
+          "candidate_event_id": "CEV4-FTQUEUE-042370-9151f1483ac27623",
+          "claim_id": "CLM-f85b443f1934f1fd9c01",
+          "document_id": "DOC-73a1b90addde2692a634",
+          "fetched_document_ids": [
+            "DOC-73a1b90addde2692a634"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "042370-official-contract-detail",
+            "042370-official-cash-revision-bridge",
+            "RSTASKV4DARTSTATUS-ef7a8ff6a98909202c34cd13"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-900194e03d004243a421",
+          "candidate_event_id": "CEV4-FTQUEUE-042370-9151f1483ac27623",
+          "claim_id": "CLM-5e910da3876b33046a18",
+          "document_id": "DOC-73a1b90addde2692a634",
+          "fetched_document_ids": [
+            "DOC-73a1b90addde2692a634"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "042370-official-contract-detail",
+            "042370-official-cash-revision-bridge",
+            "RSTASKV4DARTSTATUS-ef7a8ff6a98909202c34cd13"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-FTQUEUE-042370-9151f1483ac27623",
+          "primitive_gap": "margin_bridge_visible",
+          "primitive_gap_unsatisfied_ids": [
+            "margin_bridge_visible"
+          ],
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source",
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "task_id": "042370-bounded-external-confirmation"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_required_primitives": [
+        "margin_bridge_visible"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-78c4e6ddb22bc3381188",
+      "symbol": "042370"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-086710-6c12dcaa1692bb64",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "선진뷰티사이언스",
+      "missing_green_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "missing_required_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "present_primitives": [
+        "contract_amount_to_prior_sales",
+        "delivery_schedule"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-8d0ed23c20430e4e8e7f",
+          "candidate_event_id": "CEV4-FTQUEUE-086710-6c12dcaa1692bb64",
+          "claim_id": "CLM-0938faaf1c0c1a368efe",
+          "document_id": "DOC-7aaaec1139e7a7534791",
+          "fetched_document_ids": [
+            "DOC-7aaaec1139e7a7534791"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-FTQUEUE-086710-6c12dcaa1692bb64-T1",
+            "RSTASKV4DARTSTATUS-9928e5ebbce9cd4cf836843c"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-8d0ed23c20430e4e8e7f",
+          "candidate_event_id": "CEV4-FTQUEUE-086710-6c12dcaa1692bb64",
+          "claim_id": "CLM-f2b942158f212fc79786",
+          "document_id": "DOC-7aaaec1139e7a7534791",
+          "fetched_document_ids": [
+            "DOC-7aaaec1139e7a7534791"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-FTQUEUE-086710-6c12dcaa1692bb64-T1",
+            "RSTASKV4DARTSTATUS-9928e5ebbce9cd4cf836843c"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-FTQUEUE-086710-6c12dcaa1692bb64",
+          "primitive_gap": "margin_bridge_visible",
+          "primitive_gap_unsatisfied_ids": [
+            "margin_bridge_visible"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "task_id": "CEV4-FTQUEUE-086710-6c12dcaa1692bb64-T2"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_required_primitives": [
+        "margin_bridge_visible"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-7fde74617f5c73c155ad",
+      "symbol": "086710"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-028100-33fdc381168be65a",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "동아지질",
+      "missing_green_primitives": [
+        "contract_duration_months",
+        "delivery_schedule",
+        "margin_bridge_visible"
+      ],
+      "missing_required_primitives": [
+        "contract_duration_months",
+        "delivery_schedule",
+        "margin_bridge_visible"
+      ],
+      "present_primitives": [
+        "contract_amount_to_prior_sales"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-b29112a9a376fffe3c7d",
+          "candidate_event_id": "CEV4-FTQUEUE-028100-33fdc381168be65a",
+          "claim_id": "CLM-504422bb80f2f77d4f2a",
+          "document_id": "DOC-39a35fcbf35d01d72786",
+          "fetched_document_ids": [
+            "DOC-39a35fcbf35d01d72786"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-FTQUEUE-028100-33fdc381168be65a-T1",
+            "CEV4-FTQUEUE-028100-33fdc381168be65a-T2",
+            "RSTASKV4DARTSTATUS-be7a971e3e94e0bf857a7d65"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "delivery_schedule",
+        "margin_bridge_visible"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [
+            "CLM-504422bb80f2f77d4f2a"
+          ],
+          "candidate_event_id": "CEV4-FTQUEUE-028100-33fdc381168be65a",
+          "primitive_gap": "delivery_schedule",
+          "primitive_gap_unsatisfied_ids": [
+            "delivery_schedule"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "EVIDENCE_OS_ACCEPTED",
+          "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
+          "task_id": "CEV4-FTQUEUE-028100-33fdc381168be65a-T2"
+        },
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-FTQUEUE-028100-33fdc381168be65a",
+          "primitive_gap": "margin_bridge_visible",
+          "primitive_gap_unsatisfied_ids": [
+            "margin_bridge_visible"
+          ],
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source"
+          ],
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "task_id": "CEV4-FTQUEUE-028100-33fdc381168be65a-T3"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "delivery_schedule",
+        "margin_bridge_visible"
+      ],
+      "source_pending_required_primitives": [
+        "delivery_schedule",
+        "margin_bridge_visible"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-820915ccd6a2770dd5a5",
+      "symbol": "028100"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-034830-95e8fe37a3d03d68",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "한국토지신탁",
+      "missing_green_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "missing_required_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "present_primitives": [
+        "delivery_schedule"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-5b43def61b4d01863d66",
+          "candidate_event_id": "CEV4-FTQUEUE-034830-95e8fe37a3d03d68",
+          "claim_id": "CLM-5c5c02ef3b9e8e31a685",
+          "document_id": "DOC-2b2e029076f5414472ef",
+          "fetched_document_ids": [
+            "DOC-2b2e029076f5414472ef"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-FTQUEUE-034830-95e8fe37a3d03d68-T2",
+            "RSTASKV4DARTSTATUS-4f6a45f3d3e1a93d4a1951cf"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-FTQUEUE-034830-95e8fe37a3d03d68",
+          "primitive_gap": "margin_bridge_visible",
+          "primitive_gap_unsatisfied_ids": [
+            "margin_bridge_visible"
+          ],
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source"
+          ],
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "task_id": "CEV4-FTQUEUE-034830-95e8fe37a3d03d68-T3"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_required_primitives": [
+        "margin_bridge_visible"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-b12984f7dc40dd7d6e26",
+      "symbol": "034830"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-065710-7b4fd3e394cceb62",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "서호전기",
+      "missing_green_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "missing_required_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "present_primitives": [
+        "contract_amount_to_prior_sales",
+        "delivery_schedule"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-fcc7e0559c842f55cf7c",
+          "candidate_event_id": "CEV4-FTQUEUE-065710-7b4fd3e394cceb62",
+          "claim_id": "CLM-bdda0a863e7ec79184fd",
+          "document_id": "DOC-290d81f80da040e71cfc",
+          "fetched_document_ids": [
+            "DOC-290d81f80da040e71cfc"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "065710-C05-contract-official",
+            "065710-C05-margin-cash-official",
+            "RSTASKV4DARTSTATUS-aeabafae79cd2feb707fa739"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-fcc7e0559c842f55cf7c",
+          "candidate_event_id": "CEV4-FTQUEUE-065710-7b4fd3e394cceb62",
+          "claim_id": "CLM-e85dd8469e5d912a1822",
+          "document_id": "DOC-290d81f80da040e71cfc",
+          "fetched_document_ids": [
+            "DOC-290d81f80da040e71cfc"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "065710-C05-contract-official",
+            "065710-C05-margin-cash-official",
+            "RSTASKV4DARTSTATUS-aeabafae79cd2feb707fa739"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [
+            "CLM-bdda0a863e7ec79184fd",
+            "CLM-e85dd8469e5d912a1822",
+            "CLM-3ea8bb6a4bf6bc34752b"
+          ],
+          "candidate_event_id": "CEV4-FTQUEUE-065710-7b4fd3e394cceb62",
+          "primitive_gap": "margin_bridge_visible",
+          "primitive_gap_unsatisfied_ids": [
+            "margin_bridge_visible"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "EVIDENCE_OS_ACCEPTED",
+          "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
+          "task_id": "065710-C05-margin-cash-official"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_required_primitives": [
+        "margin_bridge_visible"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-b432b54b7cd1042083e9",
+      "symbol": "065710"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-114450-1bb1682a59109553",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "그린생명과학",
+      "missing_green_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "missing_required_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "present_primitives": [
+        "contract_amount_to_prior_sales",
+        "delivery_schedule"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-a7e5ac4e78642075ee0e",
+          "candidate_event_id": "CEV4-FTQUEUE-114450-1bb1682a59109553",
+          "claim_id": "CLM-e017b5e86b1012a7dd8f",
+          "document_id": "DOC-337c7f4d90cc1e30d015",
+          "fetched_document_ids": [
+            "DOC-337c7f4d90cc1e30d015"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-FTQUEUE-114450-1bb1682a59109553-T1",
+            "RSTASKV4DARTSTATUS-220d1bedc2d5714c03e5344b"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-a7e5ac4e78642075ee0e",
+          "candidate_event_id": "CEV4-FTQUEUE-114450-1bb1682a59109553",
+          "claim_id": "CLM-fa342f41408a3098fcf6",
+          "document_id": "DOC-337c7f4d90cc1e30d015",
+          "fetched_document_ids": [
+            "DOC-337c7f4d90cc1e30d015"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-FTQUEUE-114450-1bb1682a59109553-T1",
+            "RSTASKV4DARTSTATUS-220d1bedc2d5714c03e5344b"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-FTQUEUE-114450-1bb1682a59109553",
+          "primitive_gap": "margin_bridge_visible",
+          "primitive_gap_unsatisfied_ids": [
+            "margin_bridge_visible"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "task_id": "CEV4-FTQUEUE-114450-1bb1682a59109553-T2"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "margin_bridge_visible"
+      ],
+      "source_pending_required_primitives": [
+        "margin_bridge_visible"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-dc38f1c47b9775196df2",
+      "symbol": "114450"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-068270-04b0a05058d08511",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "셀트리온",
+      "missing_green_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "missing_required_primitives": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "present_primitives": [
+        "delivery_schedule"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-58e840e38060faa3b0ca",
+          "candidate_event_id": "CEV4-FTQUEUE-068270-04b0a05058d08511",
+          "claim_id": "CLM-acafe994d34808bc0935",
+          "document_id": "DOC-502272c4b4d09a2508bd",
+          "fetched_document_ids": [
+            "DOC-502272c4b4d09a2508bd"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "068270-C05-contract-official",
+            "068270-C05-financial-bridge-official",
+            "RSTASKV4DARTSTATUS-6ab21bc91d73f68e28042c12"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "contract_amount_to_prior_sales"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [
+            "CLM-acafe994d34808bc0935",
+            "CLM-57adca5b55c4f99817da"
+          ],
+          "candidate_event_id": "CEV4-FTQUEUE-068270-04b0a05058d08511",
+          "primitive_gap": "contract_amount_to_prior_sales",
+          "primitive_gap_unsatisfied_ids": [
+            "contract_amount_to_prior_sales"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "EVIDENCE_OS_ACCEPTED",
+          "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
+          "task_id": "068270-C05-contract-official"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "contract_amount_to_prior_sales"
+      ],
+      "source_pending_required_primitives": [
+        "contract_amount_to_prior_sales"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-e52b45277b9e50ad02b7",
+      "symbol": "068270"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-FTQUEUE-002460-6f3b02194e131c94",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "HS화성",
+      "missing_green_primitives": [
+        "contract_duration_months",
+        "delivery_schedule",
+        "margin_bridge_visible"
+      ],
+      "missing_required_primitives": [
+        "contract_duration_months",
+        "delivery_schedule",
+        "margin_bridge_visible"
+      ],
+      "present_primitives": [
+        "contract_amount_to_prior_sales"
+      ],
+      "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-1e34b2e22c3bb3b98b62",
+          "candidate_event_id": "CEV4-FTQUEUE-002460-6f3b02194e131c94",
+          "claim_id": "CLM-de856fb2639f2c0bea9f",
+          "document_id": "DOC-5f09b55503c6abb4f023",
+          "fetched_document_ids": [
+            "DOC-5f09b55503c6abb4f023"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "002460-official-contract-detail",
+            "002460-official-margin-cash-bridge",
+            "RSTASKV4DARTSTATUS-b1f7a100ab8423ad016a5ac2"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [
+            "CLM-de856fb2639f2c0bea9f"
+          ],
+          "candidate_event_id": "CEV4-FTQUEUE-002460-6f3b02194e131c94",
+          "primitive_gap": "contract_duration_months",
+          "primitive_gap_unsatisfied_ids": [
+            "contract_duration_months"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "EVIDENCE_OS_ACCEPTED",
+          "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
+          "task_id": "002460-official-contract-detail"
+        },
+        {
+          "accepted_claim_ids": [
+            "CLM-de856fb2639f2c0bea9f"
+          ],
+          "candidate_event_id": "CEV4-FTQUEUE-002460-6f3b02194e131c94",
+          "primitive_gap": "margin_bridge_visible",
+          "primitive_gap_unsatisfied_ids": [
+            "margin_bridge_visible"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "EVIDENCE_OS_ACCEPTED",
+          "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
+          "task_id": "002460-official-margin-cash-bridge"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "source_pending_required_primitives": [
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-f660a2684bb2da1894d8",
+      "symbol": "002460"
+    }
+  ],
   "blockers": [],
-  "candidate_row_count": 32,
+  "candidate_row_count": 23,
   "candidate_source_counts": {
     "brain_web_partial_stage_row": 5,
-    "stagecourt_trace_direct_scan": 27
+    "stagecourt_trace_direct_scan": 18
   },
-  "full_thesis_refresh_queue_candidate_count": 53,
+  "full_thesis_refresh_queue_candidate_count": 62,
   "production_mode_requested": true,
-  "promoted_full_thesis_row_count": 32,
-  "promoted_full_thesis_trace_count": 32,
+  "promoted_full_thesis_row_count": 10,
+  "promoted_full_thesis_trace_count": 10,
   "promoted_stagecourt_trace_ids": [
-    "SCT-BRAIN-0dbdd9172289ab76c160",
-    "SCT-BRAIN-151f33e0c2e66e4f7c1c",
-    "SCT-BRAIN-1a838a98efec3214b1c4",
     "SCT-BRAIN-29e0ca0cdb1c332ca414",
-    "SCT-BRAIN-2ccb69dfa5868824bd11",
-    "SCT-BRAIN-40706a3cda736d69e659",
-    "SCT-BRAIN-409c252bea60ecd2af38",
-    "SCT-BRAIN-487f2fe058cd882a6be1",
-    "SCT-BRAIN-4c7fb36ace637d6cecbd",
-    "SCT-BRAIN-4f972d40702ffc99ddca",
-    "SCT-BRAIN-56edfc385f1fab2484d1",
-    "SCT-BRAIN-5b17eeea175f6c06373f",
-    "SCT-BRAIN-5f57b55df7d7c8f0c190",
-    "SCT-BRAIN-7ac960fa15fb4145be5c",
-    "SCT-BRAIN-7cfa7267725b24672900",
-    "SCT-BRAIN-8160988da8f8b9875a28",
-    "SCT-BRAIN-85d96c666236cc4ad57b",
-    "SCT-BRAIN-93d99147649079bc8429",
-    "SCT-BRAIN-9fc7b3d11f6e71dc37c3",
-    "SCT-BRAIN-b703ad18096de2efbd6e",
-    "SCT-BRAIN-b74900ddd0ce8ab7b484",
-    "SCT-BRAIN-b76c5c564def8b2be13d",
-    "SCT-BRAIN-bb66f7273304429629ea",
-    "SCT-BRAIN-c1aa31d75ead30f1b6d8",
-    "SCT-BRAIN-cc892c969df264ac5f3c",
-    "SCT-BRAIN-e89512a7bc5e85d815b0",
-    "SCT-BRAIN-efba4aa04715d2679dde",
-    "SCT-BRAIN-f59fb5bb08a5195b873d",
-    "SCT-BRAIN-f6fa4d6dac2883c6071e",
-    "SCT-BRAIN-f882677706c0c4dec4e3",
-    "SCT-BRAIN-f93887da74c22c4fa99d",
-    "SCT-BRAIN-fe6b362c73b474bf83ab"
+    "SCT-BRAIN-3484e46be978172da95e",
+    "SCT-BRAIN-44770b461654d5560cac",
+    "SCT-BRAIN-5c14f7248f4165a861fd",
+    "SCT-BRAIN-64fb92d431c8e0630b75",
+    "SCT-BRAIN-722560a822f24106e40d",
+    "SCT-BRAIN-807be3af31d0bdc91256",
+    "SCT-BRAIN-acdd6548ef4cbfe33497",
+    "SCT-BRAIN-c093a03923d5110482b4",
+    "SCT-BRAIN-cc892c969df264ac5f3c"
   ],
   "promoted_symbols": [
     "001360",
     "001470",
-    "002460",
     "002990",
-    "003090",
-    "003380",
-    "005930",
-    "005960",
-    "006050",
-    "007980",
-    "010130",
-    "010950",
     "010960",
-    "028100",
     "034020",
     "034730",
-    "034830",
-    "042370",
     "043260",
     "047040",
-    "052400",
-    "054930",
     "060900",
-    "065710",
-    "068270",
-    "069620",
-    "082920",
-    "097230",
-    "114450",
-    "299660",
-    "300080",
-    "347700"
+    "097230"
   ],
   "refresh_queue_materialized_candidate_count": 0,
   "refresh_queue_to_candidate_rule": "A full_thesis_refresh_queue row becomes a production candidate only after Research Brain or official-full-thesis execution produces a direct stagecourt_traces row for the same symbol. Queue rows alone never promote Stage.",
-  "refresh_queue_unmaterialized_candidate_count": 53,
+  "refresh_queue_unmaterialized_candidate_count": 62,
   "refresh_queue_unmaterialized_sample": [
     {
       "blocked_reason": "full_thesis_refresh_task_not_run",
@@ -115,6 +1240,17 @@
       "source_stage_decision_status": "SOURCE_PENDING",
       "source_stage_signal": "EVIDENCE_INSUFFICIENT",
       "symbol": "001440"
+    },
+    {
+      "blocked_reason": "full_thesis_refresh_task_not_run",
+      "company_name": "대웅",
+      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
+      "priority_bucket": "P1_PENDING_MATERIAL_REFRESH",
+      "queue_task_id": "FTQUEUE-2026-07-01-003090-0143",
+      "source_base_stage": "Stage1",
+      "source_stage_decision_status": "SOURCE_PENDING",
+      "source_stage_signal": "EVIDENCE_INSUFFICIENT",
+      "symbol": "003090"
     },
     {
       "blocked_reason": "full_thesis_refresh_task_not_run",
@@ -151,6 +1287,28 @@
     },
     {
       "blocked_reason": "full_thesis_refresh_task_not_run",
+      "company_name": "동부건설",
+      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
+      "priority_bucket": "P1_MATERIAL_STAGE_REFRESH",
+      "queue_task_id": "FTQUEUE-2026-07-01-005960-0257",
+      "source_base_stage": "Stage2-Watch",
+      "source_stage_decision_status": "PENDING_MATERIAL_GAPS",
+      "source_stage_signal": "MATERIAL_CLAIM_WATCH",
+      "symbol": "005960"
+    },
+    {
+      "blocked_reason": "full_thesis_refresh_task_not_run",
+      "company_name": "국영지앤엠",
+      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
+      "priority_bucket": "P1_MATERIAL_STAGE_REFRESH",
+      "queue_task_id": "FTQUEUE-2026-07-01-006050-0260",
+      "source_base_stage": "Stage2-Watch",
+      "source_stage_decision_status": "PENDING_MATERIAL_GAPS",
+      "source_stage_signal": "MATERIAL_CLAIM_WATCH",
+      "symbol": "006050"
+    },
+    {
+      "blocked_reason": "full_thesis_refresh_task_not_run",
       "company_name": "에이프로젠",
       "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
       "priority_bucket": "P2_EVENT_WATCH_REFRESH",
@@ -159,6 +1317,39 @@
       "source_stage_decision_status": "FINAL",
       "source_stage_signal": "OFFICIAL_EVENT_WATCH",
       "symbol": "007460"
+    },
+    {
+      "blocked_reason": "full_thesis_refresh_task_not_run",
+      "company_name": "TP",
+      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
+      "priority_bucket": "P2_EVENT_WATCH_REFRESH",
+      "queue_task_id": "FTQUEUE-2026-07-01-007980-0315",
+      "source_base_stage": "Stage1",
+      "source_stage_decision_status": "FINAL",
+      "source_stage_signal": "OFFICIAL_EVENT_WATCH",
+      "symbol": "007980"
+    },
+    {
+      "blocked_reason": "full_thesis_refresh_task_not_run",
+      "company_name": "고려아연",
+      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
+      "priority_bucket": "P1_PENDING_MATERIAL_REFRESH",
+      "queue_task_id": "FTQUEUE-2026-07-01-010130-0369",
+      "source_base_stage": "Stage1",
+      "source_stage_decision_status": "SOURCE_PENDING",
+      "source_stage_signal": "EVIDENCE_INSUFFICIENT",
+      "symbol": "010130"
+    },
+    {
+      "blocked_reason": "full_thesis_refresh_task_not_run",
+      "company_name": "S-Oil",
+      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
+      "priority_bucket": "P1_PENDING_MATERIAL_REFRESH",
+      "queue_task_id": "FTQUEUE-2026-07-01-010950-0383",
+      "source_base_stage": "Stage1",
+      "source_stage_decision_status": "SOURCE_PENDING",
+      "source_stage_signal": "EVIDENCE_INSUFFICIENT",
+      "symbol": "010950"
     },
     {
       "blocked_reason": "full_thesis_refresh_task_not_run",
@@ -239,17 +1430,6 @@
     },
     {
       "blocked_reason": "full_thesis_refresh_task_not_run",
-      "company_name": "아모텍",
-      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
-      "priority_bucket": "P2_EVENT_WATCH_REFRESH",
-      "queue_task_id": "FTQUEUE-2026-07-01-052710-0938",
-      "source_base_stage": "Stage1",
-      "source_stage_decision_status": "FINAL",
-      "source_stage_signal": "OFFICIAL_EVENT_WATCH",
-      "symbol": "052710"
-    },
-    {
-      "blocked_reason": "full_thesis_refresh_task_not_run",
       "company_name": "산일전기",
       "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
       "priority_bucket": "P1_PENDING_MATERIAL_REFRESH",
@@ -258,61 +1438,6 @@
       "source_stage_decision_status": "SOURCE_PENDING",
       "source_stage_signal": "SOURCE_PENDING",
       "symbol": "062040"
-    },
-    {
-      "blocked_reason": "full_thesis_refresh_task_not_run",
-      "company_name": "엑시온그룹",
-      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
-      "priority_bucket": "P2_EVENT_WATCH_REFRESH",
-      "queue_task_id": "FTQUEUE-2026-07-01-069920-1132",
-      "source_base_stage": "Stage1",
-      "source_stage_decision_status": "FINAL",
-      "source_stage_signal": "OFFICIAL_EVENT_WATCH",
-      "symbol": "069920"
-    },
-    {
-      "blocked_reason": "full_thesis_refresh_task_not_run",
-      "company_name": "코디",
-      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
-      "priority_bucket": "P2_EVENT_WATCH_REFRESH",
-      "queue_task_id": "FTQUEUE-2026-07-01-080530-1212",
-      "source_base_stage": "Stage1",
-      "source_stage_decision_status": "FINAL",
-      "source_stage_signal": "OFFICIAL_EVENT_WATCH",
-      "symbol": "080530"
-    },
-    {
-      "blocked_reason": "full_thesis_refresh_task_not_run",
-      "company_name": "CSA 코스믹",
-      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
-      "priority_bucket": "P2_EVENT_WATCH_REFRESH",
-      "queue_task_id": "FTQUEUE-2026-07-01-083660-1236",
-      "source_base_stage": "Stage1",
-      "source_stage_decision_status": "FINAL",
-      "source_stage_signal": "OFFICIAL_EVENT_WATCH",
-      "symbol": "083660"
-    },
-    {
-      "blocked_reason": "full_thesis_refresh_task_not_run",
-      "company_name": "차바이오텍",
-      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
-      "priority_bucket": "P2_EVENT_WATCH_REFRESH",
-      "queue_task_id": "FTQUEUE-2026-07-01-085660-1254",
-      "source_base_stage": "Stage1",
-      "source_stage_decision_status": "FINAL",
-      "source_stage_signal": "OFFICIAL_EVENT_WATCH",
-      "symbol": "085660"
-    },
-    {
-      "blocked_reason": "full_thesis_refresh_task_not_run",
-      "company_name": "선진뷰티사이언스",
-      "materialization_blocker": "full_thesis_refresh_task_has_no_research_brain_stagecourt_trace",
-      "priority_bucket": "P2_EVENT_WATCH_REFRESH",
-      "queue_task_id": "FTQUEUE-2026-07-01-086710-1265",
-      "source_base_stage": "Stage1",
-      "source_stage_decision_status": "FINAL",
-      "source_stage_signal": "OFFICIAL_EVENT_WATCH",
-      "symbol": "086710"
     }
   ],
   "rule": "Research Brain StageCourt traces, including official-only traces that were not BRAIN_WEB_PARTIAL, become production FULL_THESIS only when live source tasks, direct/current score-eligible claims, score contributions, StageCourt trace, and a FINAL or FINAL_WITH_NONMATERIAL_GAPS score interval exist. Missing Green primitives remain Green-gate gaps on the row; they block Green, not production full-thesis classification. This does not satisfy the separate Brain/Web evidence gate.",

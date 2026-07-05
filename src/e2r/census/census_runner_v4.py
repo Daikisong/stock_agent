@@ -2632,7 +2632,20 @@ def _readiness_verdict(
         remaining_operational_gaps.append("full thesis EvidenceClaim -> PrimitiveState -> ScoreContribution -> StageCourt path not run")
     if full_thesis_stage_row_count <= 0 and event_board_non_stage0_count > 0:
         remaining_operational_gaps.append("event-board non-Stage0 rows exist but are not operational full-thesis stages")
-    if full_thesis_refresh_queue_candidate_count > 0:
+    brain_web_requested = _config_requests_brain_web(config)
+    brain_web_pass = brain_web_readiness_gate.get("brain_web_evidence_pass_allowed") is True
+    full_thesis_production_pass = _full_thesis_production_pass_allowed(full_thesis_production)
+    brain_stage_promotion_verdict = str(brain_stage_promotion.get("verdict") or "")
+    brain_to_census_stage_exported_count = int(brain_web_attempt.get("brain_to_census_stage_exported_count") or 0)
+    brain_web_promoted_stagecourt_path = bool(
+        brain_web_pass
+        and (
+            brain_stage_promotion_verdict == "PROMOTION_APPLIED"
+            or brain_to_census_stage_exported_count > 0
+            or full_thesis_stage_row_count > 0
+        )
+    )
+    if full_thesis_refresh_queue_candidate_count > 0 and not full_thesis_production_pass:
         remaining_operational_gaps.append("full-thesis refresh queue exists but production full-thesis StageCourt paths are not closed")
     if (
         int(full_thesis_seed_materialization.get("seed_event_count") or 0) > 0
@@ -2649,14 +2662,17 @@ def _readiness_verdict(
             "full-thesis source connector capability is pending"
             + (f": {', '.join(str(item) for item in blocking_classes)}" if blocking_classes else "")
         )
-    brain_web_requested = _config_requests_brain_web(config)
-    if brain_web_requested:
+    if brain_web_requested and not brain_web_promoted_stagecourt_path:
         remaining_operational_gaps.append("Brain/Web/LLM acquisition was requested but has not produced a Census-promoted StageCourt path")
-    else:
+    elif not brain_web_requested:
         remaining_operational_gaps.append("Brain/Web/LLM acquisition artifacts are not produced in this disabled ledger-refresh run")
     if brain_stage_promotion.get("verdict") not in {"NOT_REQUESTED", "ELIGIBLE_NOT_PROMOTED", "PROMOTION_APPLIED"}:
         remaining_operational_gaps.append("Brain/Web StageCourt traces are blocked from Census representative Stage promotion")
-    if research_brain_bridge.get("bridge_mode") == "imported_operational_report_bundle" and not research_brain_bridge.get("usable_for_census_cutover"):
+    if (
+        research_brain_bridge.get("bridge_mode") == "imported_operational_report_bundle"
+        and not research_brain_bridge.get("usable_for_census_cutover")
+        and not brain_web_pass
+    ):
         remaining_operational_gaps.append("Research Brain v4 imported report bundle is shadow/import-only and not admissible as Census production cutover evidence")
     if leaf_audit.get("verdict") == "PASS":
         labels.extend(["ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS", "ATOMIC_STAGE_DECISION_PASS", "SCORE_SCALE_PASS", "STAGE_SEMANTICS_PASS", "SEMANTIC_PRIMITIVE_GUARD_PASS"])
@@ -2721,8 +2737,6 @@ def _readiness_verdict(
     if research_brain_bridge.get("bridge_mode") == "imported_operational_report_bundle":
         labels.append("RESEARCH_BRAIN_V4_REPORT_BRIDGE_IMPORTED")
     anti_fake_pass = not anti_fake_blockers and leaf_audit.get("verdict") == "PASS"
-    brain_web_pass = brain_web_readiness_gate.get("brain_web_evidence_pass_allowed") is True
-    full_thesis_production_pass = _full_thesis_production_pass_allowed(full_thesis_production)
     meaningful_pass = bool(anti_fake_pass and brain_web_pass and full_thesis_production_pass and all_archetype_replay_pass)
     if brain_web_pass:
         labels.append("BRAIN_WEB_EVIDENCE_PASS")
@@ -2755,9 +2769,13 @@ def _readiness_verdict(
         "event_board_non_stage0_count": event_board_non_stage0_count,
         "event_board_stage_rows_are_operational_full_thesis": False,
         "brain_web_evidence_pass": brain_web_pass,
+        "brain_web_evidence_pass_allowed": brain_web_pass,
         "full_thesis_smoke_pass": full_thesis_execution_pass,
         "full_thesis_smoke_requirement_pass": full_thesis_smoke_requirement_pass,
+        "full_thesis_smoke_requirement_pass_allowed": full_thesis_smoke_requirement_pass,
         "full_thesis_smoke_requirement_satisfied_by": full_thesis_smoke_requirement_satisfied_by,
+        "full_thesis_production_pass_allowed": full_thesis_production_pass,
+        "brain_web_promoted_stagecourt_path": brain_web_promoted_stagecourt_path,
         "full_thesis_production_smoke_substitute_pass": full_thesis_production_smoke_substitute_pass,
         "full_thesis_smoke_honesty_pass": full_thesis_honesty_pass,
         "full_thesis_smoke_execution_pass": full_thesis_execution_pass,
@@ -6065,7 +6083,38 @@ def _full_thesis_production_audit(*, config: CensusV4RunConfig, stage_rows: Sequ
     production_rows_with_missing_primitives = [
         row
         for row in production_rows
-        if row.get("full_thesis_missing_primitives") or row.get("full_thesis_green_gap_primitives")
+        if row.get("full_thesis_missing_primitives")
+    ]
+    production_rows_with_required_gap_primitives = [
+        row
+        for row in production_rows
+        if row.get("full_thesis_required_gap_primitives")
+    ]
+    production_rows_with_required_positive_missing_primitives = [
+        row
+        for row in production_rows
+        if row.get("full_thesis_required_positive_missing_primitives")
+    ]
+    production_rows_with_green_gap_primitives = [
+        row
+        for row in production_rows
+        if row.get("full_thesis_green_gap_primitives")
+    ]
+    production_green_rows_with_green_gap = [
+        row
+        for row in production_rows
+        if row.get("full_thesis_green_gap_primitives")
+        and (_stage_is_green(row.get("full_thesis_stage")) or _stage_is_green(row.get("base_stage")) or row.get("canonical_stage") == "3-Green")
+    ]
+    production_rows_with_source_pending_gap = [
+        row
+        for row in production_rows
+        if row.get("full_thesis_source_pending_gap_primitives")
+    ]
+    production_rows_with_source_pending_green_gap = [
+        row
+        for row in production_rows
+        if row.get("full_thesis_source_pending_green_gap_primitives")
     ]
     production_mode_requested = _config_requests_production_full_thesis(config)
     controlled_smoke_substitution_rejected_count = len(controlled_smoke_rows) if production_mode_requested else 0
@@ -6080,12 +6129,31 @@ def _full_thesis_production_audit(*, config: CensusV4RunConfig, stage_rows: Sequ
         blockers.append("production_full_thesis_rows_missing_claim_score_or_stage_trace")
     if controlled_smoke_substitution_rejected_count:
         blockers.append("controlled_smoke_rows_rejected_as_production_substitute")
+    if production_green_rows_with_green_gap:
+        blockers.append("production_green_stage_rows_with_green_gap")
+    if production_rows_with_source_pending_gap:
+        blockers.append("production_full_thesis_rows_with_source_pending_required_or_green_gap")
     production_pass_allowed = bool(production_rows) and not incomplete_production_rows and not blockers
     production_symbols = [str(row.get("symbol") or "").zfill(6) for row in production_rows]
     production_symbols_without_missing_primitives = [
         str(row.get("symbol") or "").zfill(6)
         for row in production_rows
-        if not (row.get("full_thesis_missing_primitives") or row.get("full_thesis_green_gap_primitives"))
+        if not row.get("full_thesis_missing_primitives")
+    ]
+    production_symbols_without_required_gap_primitives = [
+        str(row.get("symbol") or "").zfill(6)
+        for row in production_rows
+        if not row.get("full_thesis_required_gap_primitives")
+    ]
+    production_symbols_without_required_positive_missing_primitives = [
+        str(row.get("symbol") or "").zfill(6)
+        for row in production_rows
+        if not row.get("full_thesis_required_positive_missing_primitives")
+    ]
+    production_symbols_without_green_gap_primitives = [
+        str(row.get("symbol") or "").zfill(6)
+        for row in production_rows
+        if not row.get("full_thesis_green_gap_primitives")
     ]
     return {
         "schema_version": "e2r_census_v4_full_thesis_production_audit_v1",
@@ -6103,11 +6171,22 @@ def _full_thesis_production_audit(*, config: CensusV4RunConfig, stage_rows: Sequ
         "controlled_smoke_full_thesis_row_count": len(controlled_smoke_rows),
         "production_full_thesis_row_count": len(production_rows),
         "incomplete_production_full_thesis_row_count": len(incomplete_production_rows),
-        "production_full_thesis_row_with_missing_required_primitives_count": len(production_rows_with_missing_primitives),
+        "production_full_thesis_row_with_legacy_missing_primitives_count": len(production_rows_with_missing_primitives),
+        "production_full_thesis_row_with_missing_required_primitives_count": len(production_rows_with_required_gap_primitives),
+        "production_full_thesis_row_with_blocking_required_gap_primitives_count": len(production_rows_with_required_gap_primitives),
+        "production_full_thesis_row_with_required_positive_missing_primitives_count": len(production_rows_with_required_positive_missing_primitives),
+        "production_full_thesis_row_with_green_gap_primitives_count": len(production_rows_with_green_gap_primitives),
+        "production_green_stage_row_with_green_gap_count": len(production_green_rows_with_green_gap),
+        "production_full_thesis_final_with_source_pending_gap_count": len(production_rows_with_source_pending_gap),
+        "provider_failed_green_gap_final_score_count": len(production_rows_with_source_pending_green_gap),
         "controlled_smoke_substitution_rejected_count": controlled_smoke_substitution_rejected_count,
         "controlled_smoke_substitution_allowed": False,
         "production_symbols": production_symbols,
-        "production_symbols_without_missing_required_primitives": production_symbols_without_missing_primitives,
+        "production_symbols_without_legacy_missing_primitives": production_symbols_without_missing_primitives,
+        "production_symbols_without_missing_required_primitives": production_symbols_without_required_gap_primitives,
+        "production_symbols_without_blocking_required_gap_primitives": production_symbols_without_required_gap_primitives,
+        "production_symbols_without_required_positive_missing_primitives": production_symbols_without_required_positive_missing_primitives,
+        "production_symbols_without_green_gap_primitives": production_symbols_without_green_gap_primitives,
         "required_smoke_symbols": list(FULL_THESIS_SMOKE_SYMBOLS),
         "required_smoke_symbols_promoted_without_missing_primitives_count": len(
             set(FULL_THESIS_SMOKE_SYMBOLS) & set(production_symbols_without_missing_primitives)
@@ -6966,14 +7045,20 @@ def _brain_audit(config: CensusV4RunConfig, *, output_root: Path) -> dict[str, A
     claimed = _config_requests_brain_planner(config)
     planner = _read_jsonl(output_root / "planner_runs.jsonl")
     attempt = _read_json(output_root / "brain_web_attempt_audit.json")
+    real_attempts = sum(1 for row in planner if row.get("provider_mode") == "real")
     real_success = sum(1 for row in planner if row.get("provider_mode") == "real" and row.get("real_provider_success") is True)
+    real_failures = max(0, real_attempts - real_success)
+    not_attempted = sum(1 for row in planner if _planner_row_not_attempted(row))
     zero = int(claimed and not planner)
     success_zero = int(claimed and real_success == 0)
     return {
         "schema_version": "e2r_census_v4_brain_planner_audit_v1",
-        "llm_planner_call_count": real_success,
+        "llm_planner_call_count": real_attempts,
+        "llm_planner_attempt_count": real_attempts,
         "planner_run_row_count": len(planner),
         "llm_real_provider_success_count": real_success,
+        "llm_real_provider_failure_count": real_failures,
+        "llm_planner_not_attempted_count": not_attempted,
         "llm_claimed_but_zero_calls_count": zero,
         "llm_claimed_but_zero_success_count": success_zero,
         "requested_by_run_mode": _run_mode_requests_brain_planner(config.run_mode),
@@ -7432,6 +7517,7 @@ def _apply_production_full_thesis_from_brain(
     promoted_trace_ids: list[str] = []
     production_atomic_rows: list[dict[str, Any]] = []
     production_event_rows: list[dict[str, Any]] = []
+    production_claim_to_stage_traces: list[dict[str, Any]] = []
 
     for row in candidates:
         symbol = str(row.get("symbol") or "").zfill(6)
@@ -7457,8 +7543,26 @@ def _apply_production_full_thesis_from_brain(
             for state_id in primitive_state_ids
             if primitive_states.get(state_id, {}).get("primitive_id")
         }
+        guard_contract_primitives = set(contract.guard_modes) if contract is not None else set()
+        required_contract_primitives = (
+            set(contract.required_primitives) - guard_contract_primitives
+            if contract is not None
+            else set()
+        )
         required_green_primitives = set(contract.green_gate.primitive_ids()) if contract is not None else set()
+        missing_required_primitives = sorted(required_contract_primitives - present_primitives)
         missing_green_primitives = sorted(required_green_primitives - present_primitives)
+        source_full_thesis_stage = str(trace.get("base_stage") or row.get("base_stage") or "Stage0")
+        production_full_thesis_stage = _full_thesis_stage_with_green_gap_guard(
+            base_stage=source_full_thesis_stage,
+            missing_green_primitives=missing_green_primitives,
+        )
+        production_canonical_stage = canonical_stage_for_display(production_full_thesis_stage)
+        green_stage_downgraded_by_gap = (
+            production_full_thesis_stage != source_full_thesis_stage
+            and _stage_is_green(source_full_thesis_stage)
+            and bool(missing_green_primitives)
+        )
         lower = _float_or_none((trace.get("score_interval") or {}).get("lower") if isinstance(trace.get("score_interval"), Mapping) else None)
         upper = _float_or_none((trace.get("score_interval") or {}).get("upper") if isinstance(trace.get("score_interval"), Mapping) else None)
         score_status = str(trace.get("score_status") or "")
@@ -7483,6 +7587,17 @@ def _apply_production_full_thesis_from_brain(
             candidate_event_id=candidate_event_id,
         )
         blockers.extend(source_linkage_blockers)
+        source_pending_gap_primitives, source_pending_gap_proof = _production_full_thesis_source_pending_gap_primitives(
+            source_executions=source_executions,
+            symbol=symbol,
+            candidate_event_id=candidate_event_id,
+            archetype_id=archetype_id,
+            missing_primitives=sorted(set(missing_required_primitives) | set(missing_green_primitives)),
+        )
+        source_pending_green_primitives = sorted(set(source_pending_gap_primitives) & set(missing_green_primitives))
+        source_pending_required_primitives = sorted(set(source_pending_gap_primitives) & set(missing_required_primitives))
+        if source_pending_gap_primitives:
+            blockers.append("source_pending_required_or_green_primitives")
 
         if lower is None:
             blockers.append("missing_verified_score_interval_lower")
@@ -7503,7 +7618,12 @@ def _apply_production_full_thesis_from_brain(
                     "candidate_source": row.get("_full_thesis_candidate_source"),
                     "primary_archetype": archetype_id or None,
                     "present_primitives": sorted(present_primitives),
+                    "missing_required_primitives": missing_required_primitives,
                     "missing_green_primitives": missing_green_primitives,
+                    "source_pending_gap_primitives": source_pending_gap_primitives,
+                    "source_pending_required_primitives": source_pending_required_primitives,
+                    "source_pending_green_primitives": source_pending_green_primitives,
+                    "source_pending_gap_proof": source_pending_gap_proof,
                     "source_linkage_proof": source_linkage_proof,
                     "blockers": sorted(dict.fromkeys(blockers)),
                 }
@@ -7515,6 +7635,14 @@ def _apply_production_full_thesis_from_brain(
             candidate_event_id=candidate_event_id,
             stagecourt_trace_id=trace_id,
             accepted_claim_ids=accepted_ids,
+            primitive_state_ids=primitive_state_ids,
+        )
+        claim_to_stage_trace_id = _production_full_thesis_claim_to_stage_trace_id(
+            symbol=symbol,
+            candidate_event_id=candidate_event_id,
+            stagecourt_trace_id=trace_id,
+            accepted_claim_ids=accepted_ids,
+            score_contribution_ids=contribution_ids,
             primitive_state_ids=primitive_state_ids,
         )
         candidate_event_ids = list(row.get("candidate_event_ids") or [])
@@ -7535,6 +7663,8 @@ def _apply_production_full_thesis_from_brain(
                 ),
                 "census_status": "FULL_THESIS_VERIFIED",
                 "assessment_depth": "FULL_THESIS_REFRESH",
+                "base_stage": production_full_thesis_stage,
+                "canonical_stage": production_canonical_stage,
                 "stage_scope": "FULL_THESIS",
                 "stage_source": "research_brain_v4_attempt",
                 "source_origin": "research_brain_v4_attempt",
@@ -7552,6 +7682,7 @@ def _apply_production_full_thesis_from_brain(
                 "score_interval_lower": lower,
                 "score_interval_upper": upper,
                 "atomic_stage_decision_id": atomic_stage_decision_id,
+                "claim_to_stage_trace_id": claim_to_stage_trace_id,
                 "additional_stage_decision_ids": [],
                 "accepted_claim_ids": accepted_ids,
                 "score_contribution_ids": contribution_ids,
@@ -7564,11 +7695,20 @@ def _apply_production_full_thesis_from_brain(
                 "full_thesis_primary_archetype": archetype_id,
                 "full_thesis_verified_score": lower,
                 "full_thesis_score_scale": "FULL_E2R_100",
-                "full_thesis_stage": trace.get("base_stage"),
+                "full_thesis_stage": production_full_thesis_stage,
+                "full_thesis_source_stage": source_full_thesis_stage,
+                "full_thesis_source_canonical_stage": canonical_stage_for_display(source_full_thesis_stage),
+                "full_thesis_green_stage_downgraded_by_gap": green_stage_downgraded_by_gap,
                 "full_thesis_score_valid_status": score_status,
-                "full_thesis_missing_primitives": missing_green_primitives,
+                "full_thesis_missing_primitives": [],
                 "full_thesis_green_gate_complete": not missing_green_primitives,
                 "full_thesis_green_gap_primitives": missing_green_primitives,
+                "full_thesis_required_gap_primitives": source_pending_required_primitives,
+                "full_thesis_required_positive_missing_primitives": missing_required_primitives,
+                "full_thesis_source_pending_gap_primitives": source_pending_gap_primitives,
+                "full_thesis_source_pending_green_gap_primitives": source_pending_green_primitives,
+                "full_thesis_source_pending_required_gap_primitives": source_pending_required_primitives,
+                "full_thesis_source_pending_gap_proof": source_pending_gap_proof,
                 "full_thesis_accepted_claim_ids": accepted_ids,
                 "full_thesis_score_contribution_ids": contribution_ids,
                 "full_thesis_stagecourt_trace_ids": [trace_id],
@@ -7587,6 +7727,15 @@ def _apply_production_full_thesis_from_brain(
         event_row = _production_full_thesis_event_from_stage_row(config=config, row=item)
         if event_row:
             production_event_rows.append(event_row)
+        production_claim_to_stage_traces.append(
+            _production_full_thesis_claim_to_stage_trace_from_stage_row(
+                config=config,
+                row=item,
+                trace=trace,
+                accepted_claims=accepted_claims,
+                trace_id=claim_to_stage_trace_id,
+            )
+        )
         promoted_symbols.add(symbol)
         promoted_trace_ids.append(trace_id)
 
@@ -7595,6 +7744,8 @@ def _apply_production_full_thesis_from_brain(
         _merge_jsonl_by_key(output_root / "census_events.jsonl", production_event_rows, "event_id")
     if production_atomic_rows:
         _merge_jsonl_by_key(output_root / "atomic_stage_decisions.jsonl", production_atomic_rows, "atomic_stage_decision_id")
+    if production_claim_to_stage_traces:
+        _merge_jsonl_by_key(output_root / "claim_to_stage_trace.jsonl", production_claim_to_stage_traces, "trace_id")
     verdict = "PRODUCTION_FULL_THESIS_PROMOTED" if promoted_symbols else "PENDING_PRODUCTION_FULL_THESIS"
     blockers: list[str] = []
     if refresh_queue_count > 0 and not candidates:
@@ -7637,6 +7788,12 @@ def _apply_production_full_thesis_from_brain(
         if str(primitive)
     )
     blocked_candidate_missing_by_archetype: dict[str, Counter[str]] = {}
+    blocked_candidate_source_pending_gap_primitive_counts = Counter(
+        str(primitive)
+        for candidate in blocked_candidates
+        for primitive in candidate.get("source_pending_gap_primitives") or []
+        if str(primitive)
+    )
     for candidate in blocked_candidates:
         archetype_id = str(candidate.get("primary_archetype") or "UNKNOWN")
         bucket = blocked_candidate_missing_by_archetype.setdefault(archetype_id, Counter())
@@ -7657,6 +7814,9 @@ def _apply_production_full_thesis_from_brain(
         "blocked_candidate_blocker_counts": dict(sorted(blocked_candidate_blocker_counts.items())),
         "blocked_candidate_archetype_counts": dict(sorted(blocked_candidate_archetype_counts.items())),
         "blocked_candidate_missing_green_primitive_counts": dict(sorted(blocked_candidate_missing_green_primitive_counts.items())),
+        "blocked_candidate_source_pending_gap_primitive_counts": dict(
+            sorted(blocked_candidate_source_pending_gap_primitive_counts.items())
+        ),
         "blocked_candidate_present_primitive_counts": dict(sorted(blocked_candidate_present_primitive_counts.items())),
         "blocked_candidate_missing_green_primitive_counts_by_archetype": {
             archetype_id: dict(sorted(counter.items()))
@@ -7739,6 +7899,102 @@ def _production_full_thesis_atomic_decision_id(
         )
     )[:24]
     return f"ATOMIC-FTPROD-{digest}"
+
+
+def _production_full_thesis_claim_to_stage_trace_id(
+    *,
+    symbol: str,
+    candidate_event_id: str,
+    stagecourt_trace_id: str,
+    accepted_claim_ids: Sequence[str],
+    score_contribution_ids: Sequence[str],
+    primitive_state_ids: Sequence[str],
+) -> str:
+    digest = stable_hash(
+        (
+            "production_full_thesis_claim_to_stage_trace",
+            symbol,
+            candidate_event_id,
+            stagecourt_trace_id,
+            tuple(accepted_claim_ids),
+            tuple(score_contribution_ids),
+            tuple(primitive_state_ids),
+        )
+    )[:24]
+    return f"CSTTRACE-FTPROD-{digest}"
+
+
+def _stage_is_green(value: object) -> bool:
+    text = str(value or "")
+    return text in {"Stage3-Green", "3-Green"} or canonical_stage_for_display(text) == "3-Green"
+
+
+def _full_thesis_stage_with_green_gap_guard(*, base_stage: str, missing_green_primitives: Sequence[str]) -> str:
+    if missing_green_primitives and _stage_is_green(base_stage):
+        return "Stage3-Yellow"
+    return base_stage
+
+
+def _production_full_thesis_claim_to_stage_trace_from_stage_row(
+    *,
+    config: CensusV4RunConfig,
+    row: Mapping[str, Any],
+    trace: Mapping[str, Any],
+    accepted_claims: Mapping[str, Mapping[str, Any]],
+    trace_id: str,
+) -> dict[str, Any]:
+    accepted_claim_ids = [str(item) for item in row.get("accepted_claim_ids") or [] if str(item)]
+    score_contribution_ids = [str(item) for item in row.get("score_contribution_ids") or [] if str(item)]
+    primitive_state_ids = [str(item) for item in row.get("primitive_state_ids") or [] if str(item)]
+    stagecourt_trace_id = str(row.get("stagecourt_trace_id") or trace.get("stagecourt_trace_id") or trace.get("trace_id") or "")
+    candidate_event_id = str(row.get("full_thesis_candidate_event_id") or row.get("candidate_event_id") or trace.get("candidate_event_id") or "")
+    evidence_document_ids = sorted(
+        {
+            str((accepted_claims.get(claim_id) or {}).get("document_id") or "")
+            for claim_id in accepted_claim_ids
+            if str((accepted_claims.get(claim_id) or {}).get("document_id") or "")
+        }
+    )
+    evidence_anchor_ids = sorted(
+        {
+            str((accepted_claims.get(claim_id) or {}).get("anchor_id") or "")
+            for claim_id in accepted_claim_ids
+            if str((accepted_claims.get(claim_id) or {}).get("anchor_id") or "")
+        }
+    )
+    raw_assertion_ids = sorted(
+        {
+            str((accepted_claims.get(claim_id) or {}).get("raw_assertion_id") or "")
+            for claim_id in accepted_claim_ids
+            if str((accepted_claims.get(claim_id) or {}).get("raw_assertion_id") or "")
+        }
+    )
+    source_task_ids = [str(item) for item in row.get("full_thesis_source_task_ids") or [] if str(item)]
+    atomic_stage_decision_id = str(row.get("atomic_stage_decision_id") or "")
+    return {
+        "schema_version": "e2r_census_v4_claim_to_stage_trace_v1",
+        "trace_id": trace_id,
+        "symbol": str(row.get("symbol") or "").zfill(6),
+        "company_name": row.get("company_name"),
+        "as_of_date": row.get("as_of_date") or config.as_of_date,
+        "candidate_event_id": candidate_event_id or None,
+        "accepted_claim_ids": accepted_claim_ids,
+        "adjudicated_claim_ids": accepted_claim_ids,
+        "score_contribution_ids": score_contribution_ids,
+        "primitive_state_ids": primitive_state_ids,
+        "stagecourt_trace_id": stagecourt_trace_id or None,
+        "stagecourt_trace_ids": [stagecourt_trace_id] if stagecourt_trace_id else [],
+        "atomic_stage_decision_id": atomic_stage_decision_id or None,
+        "evidence_document_ids": evidence_document_ids,
+        "evidence_anchor_ids": evidence_anchor_ids,
+        "raw_assertion_ids": raw_assertion_ids,
+        "source_task_ids": source_task_ids,
+        "source_task_execution_ids": source_task_ids,
+        "stage_scope": "FULL_THESIS",
+        "source_origin": "research_brain_v4_attempt",
+        "trace_status": "PRODUCTION_FULL_THESIS_TRACE_COMPLETE",
+        "trace_missing_reasons": [],
+    }
 
 
 def _production_full_thesis_atomic_decision_from_stage_row(
@@ -8226,6 +8482,93 @@ def _production_full_thesis_source_linkage(
     return sorted(dict.fromkeys(blockers)), proof_rows, linked_task_ids
 
 
+_FULL_THESIS_SOURCE_PENDING_STATUSES = {"PROVIDER_FAILED", "BUDGET_EXHAUSTED"}
+_FULL_THESIS_SOURCE_PENDING_ERROR_TOKENS = (
+    "provider_error",
+    "provider_failed",
+    "not_configured",
+    "timeout",
+    "runtime_budget",
+    "budget_exhausted",
+    "no_matching_real_source_snapshot",
+    "live_full_bounded_provider_has_no_matching_document",
+    "source_task_extraction_stopped",
+    "claim_extractor_provider_error",
+)
+
+
+def _production_full_thesis_source_pending_gap_primitives(
+    *,
+    source_executions: Sequence[Mapping[str, Any]],
+    symbol: str,
+    candidate_event_id: str,
+    archetype_id: str,
+    missing_primitives: Sequence[str],
+) -> tuple[list[str], list[dict[str, Any]]]:
+    missing = {str(primitive) for primitive in missing_primitives if str(primitive)}
+    if not missing:
+        return [], []
+    pending_primitives: list[str] = []
+    proof_rows: list[dict[str, Any]] = []
+    symbol = str(symbol or "").zfill(6)
+    candidate_event_id = str(candidate_event_id or "")
+    archetype_id = str(archetype_id or "")
+    for execution in source_executions:
+        if not _is_brain_origin(execution):
+            continue
+        task = execution.get("source_task") if isinstance(execution.get("source_task"), Mapping) else {}
+        execution_symbol = str(execution.get("symbol") or task.get("symbol") or "").zfill(6)
+        if symbol and execution_symbol and execution_symbol != symbol:
+            continue
+        execution_event_id = _source_task_execution_candidate_event_id(execution)
+        if candidate_event_id and execution_event_id and execution_event_id != candidate_event_id:
+            continue
+        execution_archetype_id = str(execution.get("archetype_id") or task.get("archetype_id") or "")
+        if archetype_id and execution_archetype_id and execution_archetype_id != archetype_id:
+            continue
+        primitive_gap = str(execution.get("primitive_gap") or task.get("primitive_gap") or execution.get("primitive_id") or "")
+        if primitive_gap not in missing:
+            continue
+        if not _source_execution_is_material_gap_failure(execution=execution, primitive_gap=primitive_gap):
+            continue
+        _append_unique(pending_primitives, primitive_gap)
+        proof_rows.append(
+            {
+                "primitive_gap": primitive_gap,
+                "task_id": str(execution.get("task_id") or task.get("task_id") or "") or None,
+                "candidate_event_id": execution_event_id or None,
+                "status": execution.get("status"),
+                "stop_reason": execution.get("stop_reason"),
+                "provider_errors": list(execution.get("provider_errors") or []),
+                "accepted_claim_ids": list(execution.get("accepted_claim_ids") or []),
+                "primitive_gap_unsatisfied_ids": list(execution.get("primitive_gap_unsatisfied_ids") or []),
+            }
+        )
+    return sorted(dict.fromkeys(pending_primitives)), proof_rows
+
+
+def _source_execution_is_material_gap_failure(*, execution: Mapping[str, Any], primitive_gap: str) -> bool:
+    status = str(execution.get("status") or "")
+    if status in _FULL_THESIS_SOURCE_PENDING_STATUSES:
+        return True
+    provider_errors = [str(item) for item in execution.get("provider_errors") or [] if str(item)]
+    stop_reason = str(execution.get("stop_reason") or "")
+    accepted_claim_ids = [str(item) for item in execution.get("accepted_claim_ids") or [] if str(item)]
+    unsatisfied = {str(item) for item in execution.get("primitive_gap_unsatisfied_ids") or [] if str(item)}
+    original_gap_unsatisfied = (
+        str(primitive_gap) in unsatisfied
+        or "original_gap_unsatisfied" in stop_reason
+        or "gap_unsatisfied" in stop_reason
+    )
+    material_text = " ".join([status, stop_reason, *provider_errors]).lower()
+    has_material_failure_text = any(token in material_text for token in _FULL_THESIS_SOURCE_PENDING_ERROR_TOKENS)
+    if status == "NO_EVIDENCE_FOUND" and provider_errors:
+        return True
+    if has_material_failure_text and (not accepted_claim_ids or original_gap_unsatisfied):
+        return True
+    return False
+
+
 def _brain_source_task_ids_for_claims(source_executions: Sequence[Mapping[str, Any]], accepted_ids: Sequence[str]) -> list[str]:
     accepted_set = {str(item) for item in accepted_ids}
     task_ids: list[str] = []
@@ -8700,6 +9043,19 @@ def _brain_web_readiness_gate_audit(
         for row in brain_source_executions
         if str(row.get("status") or "") == "REJECTED_BY_POLICY" and _source_task_budget_is_zero(row)
     )
+    source_task_budget_cap_exceeded_count = sum(
+        1 for row in brain_source_executions if _source_task_execution_budget_cap_exceeded(row)
+    )
+    accepted_source_task_with_provider_error_count = sum(
+        1 for row in brain_source_executions if _source_task_execution_accepted_with_provider_errors(row)
+    )
+    accepted_source_task_with_provider_gap_count = sum(
+        1
+        for row in brain_source_executions
+        if str(row.get("status") or "") == "EVIDENCE_OS_ACCEPTED"
+        and (_ids_from_value(row.get("accepted_claim_ids")) or _ids_from_value(row.get("direct_accepted_claim_ids")))
+        and bool(row.get("provider_errors"))
+    )
     brain_documents = [row for row in documents if _is_brain_origin(row)]
     brain_accepted = [row for row in accepted if row.get("brain_web_claim") is True or _is_brain_origin(row)]
     brain_contributions = [row for row in contributions if _is_brain_origin(row)]
@@ -8735,12 +9091,32 @@ def _brain_web_readiness_gate_audit(
     full_thesis_seed_accepted_claim_count = int(brain_web_attempt.get("full_thesis_seed_accepted_claim_count") or 0)
     full_thesis_seed_stagecourt_trace_count = int(brain_web_attempt.get("full_thesis_seed_stagecourt_trace_count") or 0)
     full_thesis_seed_materialized_to_stagecourt = bool(brain_web_attempt.get("full_thesis_seed_materialized_to_stagecourt") is True)
+    llm_planner_attempt_count = max(
+        int(brain_web_attempt.get("real_provider_attempt_count") or 0),
+        sum(
+            1
+            for row in planner
+            if str(row.get("provider_mode") or "").lower() == "real"
+            or str(row.get("provider_name") or "").lower()
+            not in {"", "none", "not_attempted_after_real_planner_limit", "not_attempted_after_runtime_budget_exhausted"}
+        ),
+    )
     real_provider_success = max(
         int(brain_web_attempt.get("real_provider_success_count") or 0),
         sum(1 for row in planner if row.get("provider_mode") == "real" and row.get("real_provider_success") is True),
     )
+    llm_planner_not_attempted_count = max(
+        int(brain_web_attempt.get("planner_not_attempted_count") or 0),
+        sum(1 for row in planner if _planner_row_not_attempted(row)),
+    )
     source_task_count = len(brain_source_executions)
     accepted_claim_count = len(brain_accepted)
+    official_first_violation_rows = [
+        row for row in brain_source_executions if _source_task_execution_official_first_violation(row)
+    ]
+    official_first_policy_rejected_rows = [
+        row for row in brain_source_executions if _source_task_execution_official_first_policy_rejected(row)
+    ]
     web_document_ids = _row_ids(web_fetched, "document_id") | _row_ids(web_fetched, "fetched_document_id") | _row_ids(web_fetched, "web_document_id")
     web_source_urls = {
         str(row.get("url") or row.get("source_url") or row.get("canonical_url") or "")
@@ -8939,7 +9315,11 @@ def _brain_web_readiness_gate_audit(
             "full_thesis_seed_accepted_claim_count": 0,
             "full_thesis_seed_stagecourt_trace_count": 0,
             "full_thesis_seed_materialized_to_stagecourt": False,
-            "llm_planner_call_count": len(planner),
+            "planner_run_row_count": len(planner),
+            "llm_planner_call_count": llm_planner_attempt_count,
+            "llm_planner_attempt_count": llm_planner_attempt_count,
+            "llm_planner_success_count": real_provider_success,
+            "llm_planner_not_attempted_count": llm_planner_not_attempted_count,
             "llm_real_provider_success_count": real_provider_success,
             "source_task_execution_count": 0,
             "attempt_source_task_execution_count": attempt_source_task_count,
@@ -8947,6 +9327,12 @@ def _brain_web_readiness_gate_audit(
             "attempt_real_document_fetched_count": attempt_real_document_count,
             "policy_rejected_source_task_execution_count": policy_rejected_source_task_execution_count,
             "zero_budget_policy_rejected_source_task_execution_count": zero_budget_policy_rejected_source_task_execution_count,
+            "official_first_violation_count": len(official_first_violation_rows),
+            "official_first_policy_rejected_count": len(official_first_policy_rejected_rows),
+            "official_first_violation_examples": _source_task_violation_examples(official_first_violation_rows),
+            "source_task_budget_cap_exceeded_count": 0,
+            "accepted_source_task_with_provider_error_count": 0,
+            "accepted_source_task_with_provider_gap_count": 0,
             "source_lineage_feedback_retry_execution_count": len(source_lineage_feedback_retry_executions),
             "source_lineage_feedback_retry_accepted_execution_count": source_lineage_retry_accepted_execution_count,
             "source_lineage_feedback_retry_no_evidence_execution_count": source_lineage_retry_no_evidence_execution_count,
@@ -9007,6 +9393,8 @@ def _brain_web_readiness_gate_audit(
         blockers.append("LLM planner run row count is zero")
     if real_provider_success <= 0:
         blockers.append("LLM planner real-provider success count is zero")
+    if official_first_violation_rows:
+        blockers.append(f"Brain/Web official-first violations reached score evidence: {len(official_first_violation_rows)}")
     if source_task_count <= 0:
         blockers.append("Brain/Web source task execution count is zero")
     if full_thesis_seed_planner_run_count > 0 and full_thesis_seed_real_provider_success_count <= 0:
@@ -9086,6 +9474,13 @@ def _brain_web_readiness_gate_audit(
         blockers.append(f"Brain/Web source task rows missing fetched document refs: {source_task_without_document_ref_count}")
     if source_task_unresolved_document_ref_count:
         blockers.append(f"Brain/Web source task rows reference missing evidence_documents rows: {source_task_unresolved_document_ref_count}")
+    if source_task_budget_cap_exceeded_count:
+        blockers.append(f"Brain/Web source task budget caps were exceeded: {source_task_budget_cap_exceeded_count}")
+    if accepted_source_task_with_provider_error_count:
+        blockers.append(
+            "Brain/Web accepted source tasks still contain unresolved provider/runtime errors: "
+            f"{accepted_source_task_with_provider_error_count}"
+        )
     if config.brain_source_acquisition in {"frozen_real_source_snapshot", "test_fake"}:
         blockers.append(f"source acquisition is not production-live: {config.brain_source_acquisition}")
     if config.brain_planner_provider in {"none", "test_fake"}:
@@ -9105,8 +9500,10 @@ def _brain_web_readiness_gate_audit(
     if promotion_verdict != "PROMOTION_APPLIED":
         blockers.append(f"brain stage promotion verdict is not PROMOTION_APPLIED: {promotion_verdict or 'UNKNOWN'}")
     if operational_minimum_gate_applies:
-        if len(planner) < BRAIN_WEB_MIN_PLANNER_CALLS:
-            blockers.append(f"Brain/Web operational minimum planner runs not met: {len(planner)}/{BRAIN_WEB_MIN_PLANNER_CALLS}")
+        if llm_planner_attempt_count < BRAIN_WEB_MIN_PLANNER_CALLS:
+            blockers.append(
+                f"Brain/Web operational minimum planner calls not met: {llm_planner_attempt_count}/{BRAIN_WEB_MIN_PLANNER_CALLS}"
+            )
         if len(web_tasks) < BRAIN_WEB_MIN_WEB_SEARCH_TASKS:
             blockers.append(f"Brain/Web operational minimum web search tasks not met: {len(web_tasks)}/{BRAIN_WEB_MIN_WEB_SEARCH_TASKS}")
         if web_call_counts["web_search_call_count"] < BRAIN_WEB_MIN_WEB_SEARCH_CALLS:
@@ -9153,7 +9550,11 @@ def _brain_web_readiness_gate_audit(
         "full_thesis_seed_accepted_claim_count": full_thesis_seed_accepted_claim_count,
         "full_thesis_seed_stagecourt_trace_count": full_thesis_seed_stagecourt_trace_count,
         "full_thesis_seed_materialized_to_stagecourt": full_thesis_seed_materialized_to_stagecourt,
-        "llm_planner_call_count": len(planner),
+        "planner_run_row_count": len(planner),
+        "llm_planner_call_count": llm_planner_attempt_count,
+        "llm_planner_attempt_count": llm_planner_attempt_count,
+        "llm_planner_success_count": real_provider_success,
+        "llm_planner_not_attempted_count": llm_planner_not_attempted_count,
         "llm_real_provider_success_count": real_provider_success,
         "attempt_source_task_execution_count": attempt_source_task_count,
         "source_task_execution_count": source_task_count,
@@ -9161,6 +9562,12 @@ def _brain_web_readiness_gate_audit(
         "real_document_fetched_count": real_document_count,
         "policy_rejected_source_task_execution_count": policy_rejected_source_task_execution_count,
         "zero_budget_policy_rejected_source_task_execution_count": zero_budget_policy_rejected_source_task_execution_count,
+        "official_first_violation_count": len(official_first_violation_rows),
+        "official_first_policy_rejected_count": len(official_first_policy_rejected_rows),
+        "official_first_violation_examples": _source_task_violation_examples(official_first_violation_rows),
+        "source_task_budget_cap_exceeded_count": source_task_budget_cap_exceeded_count,
+        "accepted_source_task_with_provider_error_count": accepted_source_task_with_provider_error_count,
+        "accepted_source_task_with_provider_gap_count": accepted_source_task_with_provider_gap_count,
         "source_lineage_feedback_retry_execution_count": len(source_lineage_feedback_retry_executions),
         "source_lineage_feedback_retry_accepted_execution_count": source_lineage_retry_accepted_execution_count,
         "source_lineage_feedback_retry_no_evidence_execution_count": source_lineage_retry_no_evidence_execution_count,
@@ -9247,7 +9654,125 @@ def _brain_web_minimum_required_counts() -> dict[str, int]:
         "web_fetched_document_count": BRAIN_WEB_MIN_FETCHED_DOCUMENTS,
         "llm_claim_extractor_attempt_count": BRAIN_WEB_MIN_EXTRACTOR_ATTEMPTS,
         "web_or_llm_accepted_claim_count": BRAIN_WEB_MIN_ACCEPTED_CLAIMS,
+        "official_first_violation_count": 0,
     }
+
+
+def _planner_row_not_attempted(row: Mapping[str, Any]) -> bool:
+    provider_error = str(row.get("provider_error") or "").lower()
+    provider_name = str(row.get("provider_name") or "").lower()
+    provider_mode = str(row.get("provider_mode") or "").lower()
+    return (
+        provider_error.startswith("planner_not_attempted")
+        or provider_name.startswith("not_attempted")
+        or (provider_mode in {"none", "not_attempted"} and bool(provider_error))
+    )
+
+
+def _source_task_execution_official_first_policy_rejected(row: Mapping[str, Any]) -> bool:
+    if str(row.get("status") or "") != "REJECTED_BY_POLICY":
+        return False
+    return _source_task_has_official_first_violation_signal(row) or _source_task_requires_official_before_external(row)
+
+
+def _source_task_execution_official_first_violation(row: Mapping[str, Any]) -> bool:
+    if str(row.get("status") or "") == "REJECTED_BY_POLICY":
+        return False
+    if _source_task_has_official_first_violation_signal(row):
+        return True
+    source_class = _canonical_source_class(row.get("source_class"))
+    if not _source_class_is_external(source_class):
+        return False
+    if not _source_task_requires_official_before_external(row):
+        return False
+    return not _source_task_has_official_attempt_before_external(row)
+
+
+def _source_task_has_official_first_violation_signal(row: Mapping[str, Any]) -> bool:
+    values = [
+        row.get("stop_reason"),
+        row.get("provider_name"),
+        row.get("provider_errors"),
+        (row.get("source_task") or {}).get("stop_reason") if isinstance(row.get("source_task"), Mapping) else None,
+        (row.get("source_task") or {}).get("provider_errors") if isinstance(row.get("source_task"), Mapping) else None,
+    ]
+    text = " ".join(
+        json.dumps(value, ensure_ascii=False, sort_keys=True) if isinstance(value, (list, tuple, dict)) else str(value or "")
+        for value in values
+    ).lower()
+    return "official_solvable_gap_sent_to_general_web" in text
+
+
+def _source_task_requires_official_before_external(row: Mapping[str, Any]) -> bool:
+    task = row.get("source_task") if isinstance(row.get("source_task"), Mapping) else {}
+    if row.get("official_first_required") is True or task.get("official_first_required") is True:
+        return True
+    preferred = {_canonical_source_class(item) for item in _source_class_list(row.get("preferred_source_classes") or task.get("preferred_source_classes"))}
+    fallback = {_canonical_source_class(item) for item in _source_class_list(row.get("fallback_source_classes") or task.get("fallback_source_classes"))}
+    requested = {_canonical_source_class(item) for item in _source_class_list(row.get("requested_source_classes") or task.get("requested_source_classes"))}
+    source_class = _canonical_source_class(row.get("source_class"))
+    if not _source_class_is_external(source_class):
+        return False
+    if any(_source_class_is_official(item) for item in preferred):
+        return True
+    return any(_source_class_is_official(item) for item in requested) and any(_source_class_is_external(item) for item in fallback)
+
+
+def _source_task_has_official_attempt_before_external(row: Mapping[str, Any]) -> bool:
+    values = [
+        row.get("stop_reason"),
+        row.get("provider_name"),
+        row.get("provider_errors"),
+        row.get("source_policy"),
+        (row.get("source_task") or {}).get("stop_reason") if isinstance(row.get("source_task"), Mapping) else None,
+        (row.get("source_task") or {}).get("provider_name") if isinstance(row.get("source_task"), Mapping) else None,
+        (row.get("source_task") or {}).get("provider_errors") if isinstance(row.get("source_task"), Mapping) else None,
+    ]
+    text = " ".join(
+        json.dumps(value, ensure_ascii=False, sort_keys=True) if isinstance(value, (list, tuple, dict)) else str(value or "")
+        for value in values
+    ).lower()
+    return (
+        "official_provider_failed" in text
+        or "official_source_provider_registry" in text
+        or "live_web_parsed_official_provider_failed" in text
+        or "issuer_ir_discovery_not_configured" in text
+        or "official-first" in text
+        or "official_first" in text
+    )
+
+
+def _source_class_is_official(source_class: str) -> bool:
+    return source_class in {"DART", "KIND", "KRX", "CompanyGuide", "IssuerIR", "IssuerOfficial"}
+
+
+def _source_class_is_external(source_class: str) -> bool:
+    return source_class in {
+        "TrustedNews",
+        "NaverSearch",
+        "GeneralWebSearch",
+        "CompanyNewsroom",
+        "ReportPDF",
+        "BrokerReportPublicPDF",
+        "IndustryMedia",
+    }
+
+
+def _source_task_violation_examples(rows: Sequence[Mapping[str, Any]], limit: int = 5) -> list[dict[str, Any]]:
+    examples: list[dict[str, Any]] = []
+    for row in rows[:limit]:
+        examples.append(
+            {
+                "task_id": row.get("task_id") or row.get("source_task_id"),
+                "symbol": row.get("symbol"),
+                "primitive_gap": row.get("primitive_gap"),
+                "source_class": row.get("source_class"),
+                "status": row.get("status"),
+                "stop_reason": row.get("stop_reason"),
+                "provider_errors": row.get("provider_errors") or [],
+            }
+        )
+    return examples
 
 
 def _accepted_claim_is_web_news_source(
@@ -9353,6 +9878,49 @@ def _is_source_lineage_feedback_retry_execution(row: Mapping[str, Any]) -> bool:
 def _source_task_budget_is_zero(row: Mapping[str, Any]) -> bool:
     budget = row.get("budget_used") or {}
     return all(int(budget.get(key) or 0) == 0 for key in ("queries", "candidates", "fetches"))
+
+
+def _source_task_execution_budget_cap_exceeded(row: Mapping[str, Any]) -> bool:
+    budget = row.get("budget_used") or {}
+    source_task = row.get("source_task") or {}
+    checks = (
+        ("queries", "max_queries"),
+        ("candidates", "max_candidates"),
+        ("fetches", "max_fetches"),
+        ("fetch_attempts", "max_fetches"),
+    )
+    for used_key, limit_key in checks:
+        used = budget.get(used_key)
+        limit = source_task.get(limit_key) if isinstance(source_task, Mapping) else None
+        if used is None or limit is None:
+            continue
+        try:
+            if int(used) > int(limit):
+                return True
+        except (TypeError, ValueError):
+            return True
+    return False
+
+
+def _source_task_execution_accepted_with_provider_errors(row: Mapping[str, Any]) -> bool:
+    if str(row.get("status") or "") != "EVIDENCE_OS_ACCEPTED":
+        return False
+    if not (_ids_from_value(row.get("accepted_claim_ids")) or _ids_from_value(row.get("direct_accepted_claim_ids"))):
+        return False
+    return any(_accepted_source_task_provider_error_is_material(error) for error in row.get("provider_errors") or [])
+
+
+def _accepted_source_task_provider_error_is_material(error: object) -> bool:
+    text = str(error or "").lower()
+    material_tokens = (
+        "claim_extractor_provider_error",
+        "extractor_provider_error",
+        "timeout",
+        "runtime_budget",
+        "source_task_extraction_stopped",
+        "provider_failed_after_acceptance",
+    )
+    return any(token in text for token in material_tokens)
 
 
 def _brain_trace_score_deduped_by_source_family(row: Mapping[str, Any]) -> bool:
@@ -11337,37 +11905,16 @@ def _full_thesis_production_satisfies_smoke_requirement(
     full_thesis_production: Mapping[str, Any],
     full_thesis_seed_materialization: Mapping[str, Any],
 ) -> bool:
-    """Treat production full-thesis as a stronger substitute for smoke wiring.
+    """Production full-thesis is never a controlled-smoke substitute.
 
-    A controlled smoke proves the claim->primitive->score->stage wiring with
-    fixed C06 fixtures. If the production audit already proves real FULL_THESIS
-    rows and the seed materialization audit shows those rows came from actual
-    seed materialization, the smoke requirement is satisfied without pretending
-    the controlled smoke ran.
+    Production rows prove live operation. A controlled or externally supplied
+    smoke artifact proves the fixed Samsung/Hynix C06 wiring. They are separate
+    proof families, so this helper is intentionally false even when production
+    rows pass.
     """
 
-    production_pass = _full_thesis_production_pass_allowed(full_thesis_production)
-    seed_integrity_pass = (
-        full_thesis_seed_materialization.get("verdict") == "PASS"
-        and int(full_thesis_seed_materialization.get("critical_count") or 0) == 0
-    )
-    promoted_seed_count = int(full_thesis_seed_materialization.get("full_thesis_promoted_seed_count") or 0)
-    production_row_count = int(full_thesis_production.get("production_full_thesis_row_count") or 0)
-    controlled_smoke_row_count = int(full_thesis_production.get("controlled_smoke_full_thesis_row_count") or 0)
-    production_symbols_without_missing = {
-        str(symbol).zfill(6)
-        for symbol in full_thesis_production.get("production_symbols_without_missing_required_primitives") or []
-        if str(symbol)
-    }
-    required_smoke_symbols_ready = set(FULL_THESIS_SMOKE_SYMBOLS) <= production_symbols_without_missing
-    return bool(
-        production_pass
-        and seed_integrity_pass
-        and promoted_seed_count > 0
-        and production_row_count > 0
-        and controlled_smoke_row_count == 0
-        and required_smoke_symbols_ready
-    )
+    _ = (full_thesis_production, full_thesis_seed_materialization)
+    return False
 
 
 def _full_thesis_smoke_requirement_pass(
@@ -11376,10 +11923,8 @@ def _full_thesis_smoke_requirement_pass(
     full_thesis_production: Mapping[str, Any],
     full_thesis_seed_materialization: Mapping[str, Any],
 ) -> bool:
-    return _full_thesis_smoke_execution_pass(full_thesis) or _full_thesis_production_satisfies_smoke_requirement(
-        full_thesis_production=full_thesis_production,
-        full_thesis_seed_materialization=full_thesis_seed_materialization,
-    )
+    _ = (full_thesis_production, full_thesis_seed_materialization)
+    return _full_thesis_smoke_execution_pass(full_thesis)
 
 
 def _full_thesis_smoke_requirement_satisfied_by(
@@ -11390,11 +11935,7 @@ def _full_thesis_smoke_requirement_satisfied_by(
 ) -> str | None:
     if _full_thesis_smoke_execution_pass(full_thesis):
         return "external_controlled_smoke" if full_thesis.get("external_smoke_artifact_used") is True else "controlled_smoke"
-    if _full_thesis_production_satisfies_smoke_requirement(
-        full_thesis_production=full_thesis_production,
-        full_thesis_seed_materialization=full_thesis_seed_materialization,
-    ):
-        return "production_full_thesis"
+    _ = (full_thesis_production, full_thesis_seed_materialization)
     return None
 
 
@@ -11851,6 +12392,48 @@ def _claim_to_stage_forensic_audit(*, output_root: Path, stage_rows: Sequence[Ma
                 support_missing_date += 1
             if not claim.get("target_scope_status") or not claim.get("temporal_status"):
                 support_missing_adjudication += 1
+    full_thesis_trace_rows = [
+        row
+        for row in scored_rows
+        if row.get("stage_scope") == "FULL_THESIS" or row.get("operator_stage_use") == "FULL_THESIS_STAGE"
+    ]
+    claim_to_stage_claim_set_mismatch = 0
+    claim_to_stage_contribution_set_mismatch = 0
+    claim_to_stage_stagecourt_set_mismatch = 0
+    for row in full_thesis_trace_rows:
+        trace_id = str(row.get("claim_to_stage_trace_id") or "")
+        if not trace_id:
+            continue
+        trace = trace_by_id.get(trace_id)
+        if not trace:
+            continue
+        row_claims = {str(item) for item in row.get("accepted_claim_ids") or [] if str(item)}
+        trace_claims = {str(item) for item in trace.get("accepted_claim_ids") or [] if str(item)}
+        if row_claims != trace_claims:
+            claim_to_stage_claim_set_mismatch += 1
+        row_contributions = {str(item) for item in row.get("score_contribution_ids") or [] if str(item)}
+        trace_contributions = {str(item) for item in trace.get("score_contribution_ids") or [] if str(item)}
+        if row_contributions != trace_contributions:
+            claim_to_stage_contribution_set_mismatch += 1
+        row_stagecourt_ids = {
+            str(item)
+            for item in (
+                row.get("full_thesis_stagecourt_trace_ids")
+                or row.get("stagecourt_trace_ids")
+                or ([row.get("stagecourt_trace_id")] if row.get("stagecourt_trace_id") else [])
+            )
+            if str(item)
+        }
+        trace_stagecourt_ids = {
+            str(item)
+            for item in (
+                trace.get("stagecourt_trace_ids")
+                or ([trace.get("stagecourt_trace_id")] if trace.get("stagecourt_trace_id") else [])
+            )
+            if str(item)
+        }
+        if row_stagecourt_ids != trace_stagecourt_ids:
+            claim_to_stage_stagecourt_set_mismatch += 1
     counts = {
         "scored_row_missing_claim_ids": sum(1 for row in scored_rows if not row.get("accepted_claim_ids")),
         "scored_row_missing_score_contribution_ids": sum(1 for row in scored_rows if not row.get("score_contribution_ids")),
@@ -11880,6 +12463,9 @@ def _claim_to_stage_forensic_audit(*, output_root: Path, stage_rows: Sequence[Ma
             and any(token in str((thesis_by_symbol.get(str(row.get("symbol") or "").zfill(6)) or {}).get("reason") or "").lower() for token in ("recent cutoff", "lookback expired"))
         ),
         "claim_to_stage_trace_missing_count": sum(1 for row in stage_rows if row.get("claim_to_stage_trace_id") and str(row.get("claim_to_stage_trace_id")) not in trace_by_id),
+        "claim_to_stage_claim_set_mismatch_count": claim_to_stage_claim_set_mismatch,
+        "claim_to_stage_score_contribution_set_mismatch_count": claim_to_stage_contribution_set_mismatch,
+        "claim_to_stage_stagecourt_set_mismatch_count": claim_to_stage_stagecourt_set_mismatch,
     }
     return {
         "schema_version": "e2r_census_v4_claim_to_stage_forensic_audit_v1",
@@ -12502,7 +13088,7 @@ def _acceptance_report_md(*, config: CensusV4RunConfig, output_root: Path, leaf_
             f"18. Candidate event scope distribution: {m.get('candidate_event_scope_distribution')}",
             f"19. Candidate event count: {m.get('candidate_event_count')}",
             f"20. Score eligible candidate event count: {m.get('score_eligible_candidate_event_count')}",
-            f"21. LLM planner calls: {m.get('planner_run_count')}",
+            f"21. Planner rows: {m.get('planner_run_count')}; real LLM planner calls={brain_gate.get('llm_planner_call_count')}; real_success={brain_gate.get('llm_real_provider_success_count')}; not_attempted={brain_gate.get('llm_planner_not_attempted_count')}",
             f"22. LLM planner real-provider success: {m.get('planner_real_provider_success_count')}",
             f"23. Brain/Web attempt verdict: {m.get('brain_web_attempt_verdict')}; source_tasks={m.get('brain_web_attempt_source_task_execution_count')}; accepted_claims={m.get('brain_web_attempt_accepted_claim_count')}",
             f"24. Brain Stage promotion verdict: {m.get('brain_stage_promotion_verdict')}; promoted={m.get('brain_stage_promoted_row_count')}; unsafe_promoted={c.get('brain_stage_promotion_unsafe_promoted_count')}; snapshot_docs={m.get('brain_stage_promotion_snapshot_document_count')}",

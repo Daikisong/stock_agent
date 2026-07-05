@@ -1,703 +1,1063 @@
 # Goal follow-up status - 2026-07-04
 
-## 결론
+작성 시각: 2026-07-04 KST
+최신 업데이트: 2026-07-05 KST
 
-아직 `goal.md / goal2.md / goal3.md` 완료가 아니다.
+대상 문서:
 
-이번 작업으로 여러 “거짓 완료” 가능성은 막았고, 전체 테스트는 통과했다. 하지만 실제 운영형 Brain/Web + full-thesis 실행은 아직 `NOT_READY`다. 쉽게 말하면, 채점표와 안전감사 장치는 더 정직해졌지만, 실제 현장 시험에서는 아직 증거 수집/LLM extractor가 최소 운영 조건을 채우지 못했다.
+- `docs/core/goal.md`
+- `docs/core/goal2.md`
+- `docs/core/goal3.md`
 
-예시:
+## 최신 결론
 
-- 나쁜 상태: `source_task_claim_satisfaction_mismatch_count=330`인데 경고로만 두고 완료라고 말함.
-- 지금 패치 후 방향: 이런 mismatch는 hard gate 쪽으로 올리고, score claim이 실제 contribution/stagecourt까지 닫히지 않으면 완료로 못 보게 함.
+v177 기준으로 코드 패치, 전체 unittest artifact, controlled full-thesis smoke, production full-thesis run, operational docs 갱신, goal completion audit는 모두 통과했다.
 
-## 이번에 고친 것
-
-### 1. 런타임 예산이 재현 명령에 빠지는 문제
-
-`--brain-runtime-budget-seconds`는 CLI/config에는 있었지만, 산출물의 reproduction command에 빠질 수 있었다. 이제 재현 명령에도 기록된다.
-
-예시:
+원래 goal 절차에는 "패치 후 서브에이전트 5명에게 goal 문서를 직접 읽게 하고 99점 이상으로 비판 검토받기"가 포함되어 있다. v177/v178 기준으로 이 최종 검토까지 완료됐다.
 
 ```text
-실제 실행: 240초 예산
-재현 명령: 예산 옵션 없음
+코드 패치: 통과
+전체 unittest: 통과
+controlled smoke: 통과
+production full-thesis: 통과
+docs/operational 최신화: 통과
+서브에이전트 5명 최종 비판 검토: 통과
+goal 전체 완료 선언: 가능
 ```
-
-이면 다음 에이전트가 같은 조건으로 재현할 수 없다. 이 문제를 막았다.
-
-관련 파일:
-
-- `src/e2r/census/census_runner_v4.py`
-- `tests/test_census_v4_run_mode_honesty.py`
-
-### 2. source execution 뒤 예산 초과를 놓치는 문제
-
-v139 smoke에서 `runtime_elapsed_seconds=245.5`, `runtime_budget_seconds=240.0`인데 `runtime_budget_exhausted=false`로 끝나는 문제가 잡혔다.
-
-원인은 예산 체크가 source/extractor 큰 작업 덩어리 시작 전에는 있었지만, 그 덩어리 종료 후 최종 판정에는 없었기 때문이다.
-
-패치 후에는 source execution 뒤 예산이 초과되면:
-
-```text
-runtime_budget_exhausted_after_source_execution
-```
-
-이 progress에 남고, 남은 이벤트는:
-
-```text
-not_attempted_after_runtime_budget_exhausted
-```
-
-로 기록된다.
-
-v141에서 확인한 결과:
-
-```text
-runtime_budget_seconds: 120.0
-runtime_elapsed_seconds: 239.202839
-runtime_budget_exhausted: true
-phase: runtime_budget_exhausted_after_source_execution
-```
-
-### 3. source task 사이 runtime budget skip hook
-
-source execution 큰 덩어리가 시작된 뒤에는 각 source task 사이에서도 예산 초과를 확인해야 한다. 이제 `execute_source_tasks_with_evidence_os_v4`가 `runtime_budget_exhausted` callback을 받아 task 시작 전에 예산을 확인한다.
-
-예시:
-
-```text
-첫 번째 source task: 예산 안쪽
-두 번째 source task 시작 전: 예산 초과 확인
-→ 두 번째 task는 fetch/extractor를 실행하지 않고 BUDGET_EXHAUSTED execution으로 남김
-```
-
-이때 산출물에는 다음처럼 남는다.
-
-```text
-status: BUDGET_EXHAUSTED
-provider_name: research_brain_v4_runtime_budget
-provider_errors: source_task_skipped_after_runtime_budget_exhausted
-extraction_audit.runtime_budget_skipped_source_task_count += 1
-```
-
-다만 이것은 "이미 시작한 긴 LLM extractor 호출을 중간에 강제 중단"하는 기능은 아니다. 현재 패치는 task와 task 사이에서 멈추는 안전장치이고, extractor 호출 내부의 문서별 timeout/분할은 다음 작업으로 남아 있다.
-
-v142 이후 추가 패치로, source task가 이미 fetch를 끝낸 뒤에도 document extraction에 들어가기 전에 budget을 한 번 더 확인한다.
-
-예시:
-
-```text
-source task 시작 시점: 예산 안쪽
-source fetch 완료
-document claim extraction 시작 직전: 예산 초과 확인
-→ 해당 task는 BUDGET_EXHAUSTED로 종료
-→ LLM extractor 호출은 시작하지 않음
-```
-
-이 경우 산출물에는 다음이 남는다.
-
-```text
-provider_errors: source_task_document_extraction_stopped_after_runtime_budget_exhausted
-stop_reason: source_task_extraction_stopped_after_runtime_budget_exhausted
-extraction_audit.runtime_budget_stopped_document_extraction_count += 1
-```
-
-단, 이것도 이미 실행 중인 Codex/LLM subprocess를 중간에 죽이는 기능은 아니다. "새 긴 호출을 시작하지 않는 가드"다.
-
-관련 파일:
-
-- `src/e2r/research_brain/v4_evidence_extraction_bridge.py`
-- `src/e2r/research_brain/v4_production_orchestrator.py`
-- `tests/test_research_brain_v4_evidence_extraction_from_real_document.py`
-- `tests/test_research_brain_v4_operational_modes.py`
-
-### 4. real planner attempt cap 초과 문제
-
-v137에서 `--brain-max-distinct-candidate-attempts 50`인데 planner 진행이 55까지 가는 문제가 있었다. 이제 real/fake planner loop 모두 `max_distinct_candidate_attempts`를 넘지 않게 막았다.
-
-예시:
-
-```text
-최대 50명만 면접하라
-→ 55명을 면접하고 나중에 “성공 30명”이라고 말함
-```
-
-이런 상태는 운영에서 안 된다. 이제 면접 자체가 cap 안에서 끝난다.
-
-관련 파일:
-
-- `src/e2r/research_brain/v4_production_orchestrator.py`
-- `tests/test_research_brain_v4_operational_modes.py`
-
-### 5. source task count 분해 기록
-
-v142 progress에는 `source_task_count: 8`이 찍혔다. 명령은 `--brain-max-source-tasks-per-plan 3`이었기 때문에, 겉으로 보면 cap을 어긴 것처럼 보인다.
-
-실제 구조는 다르다.
-
-```text
-planner_generated_source_task_count
-+ event_origin_source_task_count
-+ mandatory_official_source_task_count
-= source_task_count
-```
-
-예를 들어:
-
-```text
-planner가 만든 task 3개
-mandatory official status task 5개
-→ total source_task_count 8개
-```
-
-이제 `source_execution_start` progress event에 세부 count를 같이 남긴다. 따라서 다음 live 산출물에서는 "3개 cap을 어겼다"가 아니라 "planner task 3개 + mandatory task N개"처럼 해석할 수 있다.
-
-관련 파일:
-
-- `src/e2r/research_brain/v4_production_orchestrator.py`
-- `tests/test_research_brain_v4_operational_modes.py`
-
-### 6. LLM claim extractor raw prompt/response 추적
-
-LLM extractor run이 `prompt_hash`, `response_hash`만 있고 실제 raw prompt/response 파일이 없으면 추적이 불가능하다. 이제 성공 run은 raw prompt/response path와 파일을 남기고, audit가 이 파일 누락을 실패로 잡는다.
-
-예시:
-
-```text
-해시만 있음
-원문 prompt/response 없음
-→ 다음 감사자가 “LLM이 뭘 보고 뭘 답했는지” 확인 불가
-```
-
-이제 이런 run은 통과할 수 없다.
-
-관련 파일:
-
-- `src/e2r/production/claim_extraction/extractor_provider.py`
-- `src/e2r/research_brain/v4_evidence_extraction_bridge.py`
-- `src/e2r/census/census_runner_v4.py`
-- `tests/test_census_v4_brain_web_readiness_gate.py`
-
-### 7. accepted claim과 score claim을 분리
-
-기존에는 source task에서 accepted claim을 곧바로 score claim처럼 취급할 수 있었다. 이제 source task execution의 `score_claim_ids`는 실제 score contribution ledger가 만들어진 뒤에만 채운다.
-
-예시:
-
-```text
-문서에서 “회사 언급” claim 추출
-→ accepted claim은 맞을 수 있음
-→ 그러나 점수 기여 claim은 아님
-```
-
-accepted claim 전체를 score chain으로 과대 계산하지 않게 했다.
-
-### 8. source-task satisfaction mismatch hard gate 강화
-
-`source_task_claim_satisfaction_mismatch_count`가 warning으로 남아 있으면, “source task가 claim을 만족했다”는 말과 “실제 score/stage chain이 닫혔다”는 말이 섞인다.
-
-이번 패치에서는 source task의 score claim reference만 엄격히 score contribution/stagecourt까지 닫히는지 검사하고, mismatch를 critical gate에 올렸다.
-
-### 9. full thesis missing primitive 승격 차단
-
-`FULL_E2R_100` 같은 row가 `full_thesis_missing_primitives`를 갖고도 `FINAL/COMPLETE`로 승격되는 문제가 있었다. 이제 missing green primitive가 있으면 production full thesis 승격을 막고 follow-up/pending 쪽으로 남긴다.
-
-예시:
-
-```text
-C06 Green 필수: customer allocation + revenue/cash bridge
-현재: customer allocation만 있음
-→ 점수 일부는 가능
-→ full thesis Green 완료는 불가
-```
-
-### 10. controlled smoke와 production full thesis 대체 통과 분리
-
-controlled smoke 또는 production substitute가 full thesis smoke requirement를 대신 통과시키는 흐름을 제거했다. smoke가 필요하면 smoke execution 자체가 pass해야 하고, production full thesis도 missing primitive 없이 별도로 pass해야 한다.
-
-### 11. semantic guard 보강: 유동성공급계약 차단
-
-`유동성공급계약`은 고객 매출 계약이 아니다. 증권 거래 유동성을 공급하는 계약을 `contract_quality` 점수로 보면 안 된다.
-
-이번에 추가로 막은 예:
-
-```text
-원티드랩 유동성공급계약의 체결
-→ accepted claim으로 기록될 수는 있음
-→ customer revenue contract 점수는 0
-```
-
-이 때문에 cached artifact의 대표 score claim 수가 `79 -> 78`로 줄었다. 이는 의도한 변화다. 테스트도 “숫자 79 고정”이 아니라 “대표 claim chain이 모두 닫혔는가”를 보도록 바꿨다.
-
-## 실행 결과
-
-### 단위/통합 테스트
-
-최종 전체 테스트:
-
-```text
-PYTHONPATH=src python -m unittest discover -s tests -v
-Ran 5163 tests in 251.625s
-OK
-```
-
-중간에 `79 -> 78` 고정 숫자 실패가 있었지만, 원인은 semantic guard가 `유동성공급계약` 점수 누수를 막은 정상 변화였다. 테스트를 구조 감사 방식으로 바꾼 뒤 전체 5163개 테스트가 통과했다.
-
-추가로 source-task runtime budget skip hook을 검증하는 단위 테스트도 포함됐다.
-
-```text
-test_runtime_budget_callback_skips_remaining_source_tasks
-test_runtime_budget_callback_stops_document_extraction_inside_source_task
-test_runtime_budget_exhausted_after_source_execution_marks_remaining_events_pending
-test_missing_external_web_plan_retry_preserves_source_execution_budget
-```
-
-### v137
-
-경로:
-
-```text
-output/census_v4/2026-07-01-v137-goal-followup-hard-gates
-```
-
-상태:
-
-```text
-INVALID_PARTIAL_OUTPUT
-```
-
-의미:
-
-- 사람이 중단한 partial run이다.
-- readiness, score, Stage 증거로 쓰면 안 된다.
-- 이 실행에서 planner attempt cap 초과 문제가 발견됐다.
-
-### v138
-
-경로:
-
-```text
-output/census_v4/2026-07-01-v138-goal-followup-capped
-```
-
-상태:
-
-```text
-INVALID_PARTIAL_OUTPUT
-```
-
-의미:
-
-- cap 패치 후 planner attempt cap은 지켜졌다.
-- 다만 source execution이 길어져 사람이 중단했다.
-- readiness, score, Stage 증거로 쓰면 안 된다.
-
-### v139
-
-경로:
-
-```text
-output/census_v4/2026-07-01-v139-goal-followup-budgeted-smoke
-```
-
-상태:
-
-```text
-NOT_READY
-```
-
-의미:
-
-- 정상 종료했지만, source execution 뒤 budget exhausted 판정 패치 전 산출물이다.
-- `runtime_elapsed_seconds > runtime_budget_seconds`인데 exhausted flag가 false로 남는 문제가 이 실행에서 확인됐다.
-- 완료 증거로 쓰면 안 되고, 버그 발견 증거로만 쓴다.
-
-### v140
-
-경로:
-
-```text
-output/census_v4/2026-07-01-v140-goal-followup-budgeted-smoke
-```
-
-상태:
-
-```text
-NOT_READY
-```
-
-주요 관찰:
-
-```text
-real_provider_success_count: 1
-claim_extractor_run_count: 2
-web_fetched_documents: 2
-web/LLM accepted claim: 1
-runtime_elapsed_seconds: 187.944941
-runtime_budget_seconds: 240.0
-runtime_budget_exhausted: false
-```
-
-의미:
-
-- real planner와 LLM extractor가 실제로 실행됐다.
-- raw prompt/response path audit는 파일 누락 없이 작동했다.
-- 하지만 운영 최소 조건에는 한참 부족하다.
-
-blocker 예:
-
-```text
-planner runs 21/30
-web search tasks 3/20
-fetched documents 2/10
-claim extractor attempts 2/10
-web/LLM accepted claims 1/3
-LLM extractor timeout/provider error 1
-```
-
-### v141
-
-경로:
-
-```text
-output/census_v4/2026-07-01-v141-goal-followup-budget-exhaustion-smoke
-```
-
-상태:
-
-```text
-NOT_READY
-```
-
-주요 관찰:
-
-```text
-runtime_budget_seconds: 120.0
-runtime_elapsed_seconds: 239.202839
-runtime_budget_exhausted: true
-phase includes: runtime_budget_exhausted_after_source_execution
-planner pending rows: not_attempted_after_runtime_budget_exhausted
-```
-
-의미:
-
-- source execution 뒤 예산 초과를 놓치지 않는 패치는 실제 산출물에서도 확인됐다.
-- 다만 LLM extractor 2건이 timeout으로 끝나 accepted Brain/Web claim은 0이다.
-- 따라서 full thesis/Brain-Web readiness는 계속 `NOT_READY`가 맞다.
-
-### v142
-
-경로:
-
-```text
-output/census_v4/2026-07-01-v142-goal-followup-budget-hook-smoke
-```
-
-상태:
-
-```text
-NOT_READY
-```
-
-주요 관찰:
-
-```text
-runtime_budget_seconds: 60.0
-runtime_elapsed_seconds: 156.967248
-runtime_budget_exhausted: true
-phase includes: runtime_budget_exhausted_after_source_execution
-research_brain_v4 source task executions: 8
-NO_EVIDENCE_FOUND: 2
-PROVIDER_FAILED: 1
-BUDGET_EXHAUSTED: 5
-accepted Brain/Web claim: 0
-```
-
-의미:
-
-- 새 source-task runtime budget hook이 실제 산출물에서도 확인됐다.
-- 뒤쪽 mandatory official status task 5개가 `BUDGET_EXHAUSTED`로 남았다.
-- 각 skipped task는 `provider_name=research_brain_v4_runtime_budget`, `provider_errors=source_task_skipped_after_runtime_budget_exhausted`, `budget_used={queries:0,candidates:0,fetches:0}`로 기록됐다.
-- 즉 예산 초과가 "증거 없음으로 점수 0 확정"이 아니라 "예산 때문에 해당 source task를 못 끝냄"으로 남는다.
-- 하지만 60초 runtime budget 실행이 156.9초에 끝났다. 이미 시작한 provider/extractor 호출은 아직 runtime budget으로 즉시 중단되지 않는다는 뜻이다.
 
 쉬운 예:
 
 ```text
-60분짜리 시험
-58분에 긴 면접 하나를 시작함
-면접 자체가 90분짜리라 60분에 바로 종료하지 못함
-끝난 뒤 남은 면접은 budget exceeded로 skip
+내부 품질검사와 실운전 시험은 통과했다.
+외부 심사위원 5명도 모두 99점 PASS를 줬다.
+이제 "최종 납품 완료"라고 말할 수 있다.
 ```
 
-v142는 바로 이 상태다. task 사이 budget skip은 됐지만, "진행 중인 긴 면접"을 더 잘게 쪼개는 작업은 아직 필요하다.
+## 최신 authoritative artifacts
 
-### v143 / v144
-
-경로:
+### 1. 전체 unittest artifact
 
 ```text
-output/census_v4/2026-07-01-v143-goal-followup-source-count-budget-guard-smoke
-output/census_v4/2026-07-01-v144-goal-followup-source-count-budget-guard-smoke
+output/census_v4/2026-07-01-v178-goal-gates-full-test-after-planner-audit-label-fix/full_unittest_result_artifact.json
 ```
 
-상태:
+결과:
 
 ```text
-INVALID_PARTIAL_OUTPUT
+status:       OK
+test_count:   5190
+failed_count: 0
+error_count:  0
+exit_code:    0
+duration:     380.5103s
+log_sha256:   9c0de7fdee29ce7249cebef0a6e05dc16133f6b6a211df993ee3dba8ed5d803a
 ```
 
-의미:
-
-- 두 실행 모두 readiness, score, Stage 증거로 쓰면 안 된다.
-- v143은 `brain_runtime_budget_seconds=45.0`, v144는 `90.0`이었다.
-- 두 실행 모두 real planner는 성공했지만, `missing_external_web_plan_retry`까지 거친 뒤 source execution 시작 전에 budget이 소진됐다.
-- 결과적으로 `source_task_execution_count=0`이고, source task count 분해 필드를 live 산출물에서 확인하지 못했다.
-
-쉽게 말하면:
+### 2. controlled full-thesis smoke
 
 ```text
-목표: source task가 3개인지 8개인지 확인하려고 함
-실제: 면접 계획과 재질문 단계에서 시간 다 씀
-결과: source task 면접장에는 들어가지도 못함
-→ 이 실행으로는 source task count를 판단하면 안 됨
+output/census_v4/2026-07-01-v162-goal-followup-controlled-full-thesis-smoke-after-official-budget-fix
 ```
 
-다음 live 확인은 다음 중 하나가 필요하다.
+결과:
 
 ```text
-1. runtime budget을 planner+retry+source까지 충분히 크게 잡는다.
-2. missing_external_web_plan_retry가 source 예산을 다 먹지 않도록 별도 budget/reserve를 둔다.
-3. source count 분해는 우선 unit test와 다음 정상 NOT_READY run에서 확인한다.
+CLI output: ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ```
 
-v144 이후 코드에는 2번에 해당하는 패치가 들어갔다.
+이 smoke는 production row를 대신하지 않는다. 삼성전자/SK하이닉스 같은 대표 fixture가 claim-backed full-thesis 경로를 통과하는지 보는 별도 시험이다.
+
+### 3. production full-thesis run
 
 ```text
-remaining runtime budget < source_execution_reserved_budget_seconds
-→ missing_external_web_plan_retry skip
-→ phase: missing_external_web_plan_retry_skipped_insufficient_source_budget
-→ source execution으로 넘어감
+output/census_v4/2026-07-01-v177-goal-followup-production-after-expanded-brain-web-width
 ```
 
-단위 테스트는 통과했고, 아래 v145에서 live 산출물도 확인했다.
-
-### v145
-
-경로:
+실행 요지:
 
 ```text
-output/census_v4/2026-07-01-v145-goal-followup-retry-reserve-live-smoke
+run_mode:                  BRAIN_AND_WEB_ACQUISITION_ENABLED
+brain_web_mode:            enabled
+source_acquisition:        live_full_bounded
+brain_universe_limit:      45
+brain_planner_success_limit: 35
+brain_max_source_tasks:    5
+brain_max_fetches_per_task: 3
+target_gate:               full_thesis
+test_result_artifact:      v178 full_unittest_result_artifact.json
+external smoke artifact:   v162 controlled smoke
+write_operational_docs:    true
 ```
 
-상태:
+결과:
 
 ```text
-NOT_READY
+CLI output: ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ```
 
-주요 관찰:
+## v177 핵심 audit 결과
+
+### readiness
 
 ```text
-phase: missing_external_web_plan_retry_skipped_insufficient_source_budget
-runtime_budget_seconds: 90.0
-runtime_budget_remaining_seconds: 36.408267075021286
-source_execution_reserved_budget_seconds: 45.0
-
-source_execution_start:
-  planner_generated_source_task_count: 3
-  event_origin_source_task_count: 0
-  mandatory_official_source_task_count: 5
-  source_task_count: 8
-
-source task executions from Research Brain:
-  NO_EVIDENCE_FOUND: 2
-  PROVIDER_FAILED: 1
-  BUDGET_EXHAUSTED: 5
-  accepted Brain/Web claim: 0
+readiness_verdict.target_gate:                         full_thesis
+readiness_verdict.target_gate_pass:                    true
+readiness_verdict.blockers:                            []
+readiness_verdict.remaining_operational_gaps:          []
+brain_web_evidence_pass_allowed:                       true
+full_thesis_production_pass:                           true
+all_archetype_replay_pass:                             true
+goal_completion_ready:                                 true
 ```
 
-의미:
+### Brain/Web readiness
 
-- retry reserve가 live에서도 동작했다.
-- v143/v144처럼 retry가 source budget을 다 먹고 source execution 0개가 되는 문제는 피했다.
-- `source_task_count=8`의 구성도 live progress에 분해되어 남았다.
-- 그래도 accepted Brain/Web claim은 0이므로 full thesis/Brain-Web readiness는 여전히 `NOT_READY`다.
+```text
+planner_run_row_count:                                 350
+llm_planner_call_count:                                45
+llm_planner_success_count:                             35
+llm_planner_not_attempted_count:                       305
+official_first_violation_count:                        0
+official_first_policy_rejected_count:                  7
+web_search_task_count:                                 31
+web_search_call_count:                                 31
+web_fetched_document_count:                            45
+llm_claim_extractor_attempt_count:                     45
+web_or_llm_accepted_claim_count:                       69
+blockers:                                              []
+```
+
+중요한 정정:
+
+```text
+planner_run_row_count=350은 접수대장 전체 줄 수다.
+llm_planner_call_count=45가 실제 real planner 호출 수다.
+성공한 호출은 llm_planner_success_count=35로 따로 센다.
+```
 
 쉬운 예:
 
 ```text
-재질문을 더 하면 면접 시간이 없어짐
-→ 재질문은 건너뜀
-→ 면접은 진행함
-→ 답안지는 아직 합격 수준으로 안 채워짐
+350명 명단이 있었고,
+그중 실제 상담을 건 사람은 45명,
+상담이 성공한 사람은 35명이다.
+
+따라서 "LLM planner calls=350"이라고 쓰면 잘못이다.
 ```
 
-## 현재 남은 blocker
-
-### 1. Brain/Web evidence pass가 아직 false
-
-v140/v141/v142/v145 모두 real planner와 extractor는 실행됐지만 운영 최소 조건을 못 채웠다.
-
-쉽게 말하면:
+### production full-thesis
 
 ```text
-면접관은 실제로 불렀고
-후보자도 일부 조사했지만
-합격 판정을 내릴 만큼 답안지가 아직 채워지지 않았다.
+full_thesis_production_audit.verdict:                           FULL_THESIS_PRODUCTION_PASS
+production_full_thesis_row_count:                               10
+production_full_thesis_final_with_source_pending_gap_count:      0
+provider_failed_green_gap_final_score_count:                    0
+production_full_thesis_row_with_missing_required_primitives:    0
+production_full_thesis_row_with_blocking_required_gap_primitives: 0
+production_full_thesis_row_with_required_positive_missing_primitives: 10
+production_green_stage_row_with_green_gap_count:                0
 ```
 
-### 2. LLM extractor timeout
-
-SK하이닉스 C06 source execution에서 extractor가 timeout을 냈다. v141은 2건 모두 timeout이었다.
-
-source task와 source task 사이의 budget skip hook은 들어갔다. v142 이후에는 document extraction 시작 직전 budget guard도 들어갔다. 하지만 이미 시작한 긴 extractor 호출 하나를 중간에 강제로 끊지는 못한다. 쉽게 말하면:
+v177 production full-thesis rows:
 
 ```text
-task A 완료 후 예산 초과 확인
-→ task B는 BUDGET_EXHAUSTED로 skip 가능
-
-task A에서 source fetch 후 예산 초과 확인
-→ LLM extractor 호출을 시작하지 않고 BUDGET_EXHAUSTED 가능
-
-task A의 LLM 호출이 이미 120초짜리로 시작됨
-→ 호출 중간에는 아직 runtime budget으로 자르지 못함
+001360 삼성제약        Stage0  27.9998  C05
+001470 삼부토건        Stage0  27.9998  C05
+002990 금호건설        Stage0  27.9998  C05
+010960 삼호개발        Stage0  27.9998  C05
+034020 두산에너빌리티  Stage0  27.9998  C05
+034730 SK              Stage0  27.9998  C05
+043260 성호전자        Stage1  50.0     C05
+047040 대우건설        Stage0  27.9998  C05
+060900 에이전트AI      Stage0  27.9998  C05
+097230 HJ중공업        Stage2  77.9998  C05
 ```
 
-따라서 다음 패치 대상은 extractor 입력을 문서별/청크별로 더 작게 나누고, 이미 실행 중인 subprocess timeout을 더 짧고 명확한 budget과 연결하는 것이다.
-
-### 3. source execution task 수가 planner cap보다 많아 보이는 문제
-
-명령은:
+해석:
 
 ```text
---brain-max-source-tasks-per-plan 3
+v177은 "많이 긁어서 억지 Green"이 아니다.
+claim-backed full-thesis row 10개가 생겼고,
+그중 HJ중공업만 Stage2까지 올라갔다.
+나머지는 증거가 부족하거나 긍정 primitive가 비어 낮은 Stage에 머물렀다.
 ```
 
-인데 C06 source execution progress에는:
+삼성전자와 SK하이닉스 주의:
 
 ```text
-source_task_count: 8
+005930 삼성전자:
+  v177에서는 BRAIN_WEB_PARTIAL row만 있다.
+  operator_score_use=NOT_FULL_E2R_SCORE이므로 운영용 full E2R 점수로 말하면 안 된다.
+
+000660 SK하이닉스:
+  v177에서는 CENSUS_EVENT_BOARD Stage1 / FINAL_WITH_NONMATERIAL_GAPS다.
+  이것도 full-thesis production row가 아니다.
 ```
 
-이 찍혔다.
-
-원인은 planner task 3개 뒤에 mandatory official status tasks가 추가되기 때문이다. 이 자체가 무조건 버그는 아니다. 예를 들어 고객 계약을 보려면 DART/KIND/listing/trading status 같은 기본 확인은 별도 mandatory task일 수 있다.
-
-v142 이후 코드에는 이 구분을 progress event에 남기는 패치가 들어갔다.
+쉬운 예:
 
 ```text
-planner_generated_task_count
-mandatory_official_task_count
-total_source_task_count
+삼성전자/하이닉스는 접수와 일부 검사는 있었지만,
+이번 v177 production full-thesis 최종 진단서 명단에는 없다.
+따라서 "이번 운영 점수로 삼성전자 몇 점"이라고 말하면 안 된다.
 ```
 
-v145에서 이 분해 기록도 live progress에 확인됐다. 그리고 각 task도 계속 개별 budget/stop condition을 가져야 한다.
+## 과거 v164 핵심 audit 결과 (보존용)
 
-### 4. full thesis는 아직 production pass가 아니다
+아래 v164 기록은 당시 중간 pass를 보존한 것이다. 최신 authoritative 판단은 위 v177 섹션이다.
 
-현재 blocker:
+### readiness
 
 ```text
-full_thesis_smoke_pending
-full_thesis_production_pass_false
-full_thesis_seed_promotion_pass_false
-brain_web_evidence_pass_false
+readiness_verdict.target_gate:                         full_thesis
+readiness_verdict.target_gate_pass:                    true
+readiness_verdict.blockers:                            []
+readiness_verdict.remaining_operational_gaps:          []
+brain_web_evidence_pass_allowed:                       true
+full_thesis_production_pass_allowed:                   true
+full_thesis_smoke_requirement_pass:                    true
+full_thesis_smoke_requirement_satisfied_by:            external_controlled_smoke
+full_thesis_production_smoke_substitute_pass:          false
 ```
 
-따라서 “goal 완료”라고 쓰면 안 된다.
-
-### 5. missing_external_web_plan_retry가 source budget을 먹는 문제
-
-v143/v144에서 real planner는 성공했지만, 이후 `missing_external_web_plan_retry`가 runtime budget을 추가로 사용했다. 그 결과 source execution 시작 전에 budget이 소진되어 `source_task_execution_count=0`이 됐다.
-
-이 자체는 "거짓 READY"를 막는 관점에서는 맞다. 하지만 source count 분해나 evidence extraction을 검증하려는 run에서는 비효율적이다.
-
-예시:
+해석:
 
 ```text
-예산 90초
-planner 52초
-missing web plan retry 52초
-→ source execution 시작 전 이미 104초
-→ source task 전부 skip
+production full-thesis는 production 경로로 통과했다.
+controlled smoke는 smoke requirement만 만족한다.
+smoke row가 production row로 섞이지 않았다.
 ```
 
-다음 패치 후보:
+### goal completion
 
 ```text
-missing_external_web_plan_retry_budget_seconds
-source_execution_reserved_budget_seconds
-retry_skipped_insufficient_source_budget
+goal_completion_ready: true
+goal_completion blockers: []
+goal_requirement_matrix blockers: []
 ```
 
-현재 코드에는 우선 `source_execution_reserved_budget_seconds` 계산과 `retry_skipped_insufficient_source_budget` phase가 들어갔다. 즉 retry가 필요하더라도 source execution을 아예 못 하게 만들 정도면, retry를 skip하고 그 이유를 남기는 쪽으로 바꿨다.
-
-v145에서 live 확인도 됐다. 아직 남은 부분:
+### Brain/Web readiness
 
 ```text
-reserve 값을 config/CLI로 노출할지 판단
+brain_web_readiness_gate_audit.blockers:               []
+brain_web_evidence_pass_allowed:                       true
+source_task_budget_cap_exceeded_count:                 0
+accepted_source_task_with_provider_error_count:        0
+accepted_source_task_with_provider_gap_count:          46
+web_search_task_count:                                 22
+web_search_call_count:                                 22
+web_fetched_document_count:                            23
+llm_claim_extractor_attempt_count:                     23
+web_or_llm_accepted_claim_count:                       32
 ```
 
-## 다음 작업 순서
+`accepted_source_task_with_provider_gap_count=46`은 blocker가 아니다. 예를 들어 "issuer IR discovery not configured"처럼 해당 provider가 없는 환경 gap은 기록하되, 이미 accepted claim이 생긴 source task를 무조건 실패로 만들지는 않는다. 반대로 material provider/runtime error는 `accepted_source_task_with_provider_error_count`로 따로 세며, v164에서는 0이다.
 
-1. extractor 호출 내부 budget 제어를 더 촘촘히 한다.
-   - source task 사이 `BUDGET_EXHAUSTED` skip은 unit test와 v142 산출물에서 확인됐다.
-   - document extraction 시작 전 `BUDGET_EXHAUSTED` guard는 unit test로 확인됐다.
-   - 아직 이미 시작한 긴 LLM extractor/provider 호출을 runtime budget으로 즉시 끊지는 못한다.
-   - 다음 패치는 더 작은 prompt 단위와 subprocess timeout/budget 연결이다.
+쉬운 예:
 
-2. LLM extractor timeout을 줄인다.
-   - prompt compaction을 더 공격적으로 한다.
-   - 한 task가 여러 긴 문서를 물고 들어가면 문서별로 쪼개거나 우선순위를 둔다.
-   - 단, rule fallback으로 “성공한 척” 하면 안 된다.
+```text
+비유:
+  어떤 서류는 구청 API로 못 가져왔지만,
+  같은 사실을 회사 공시 원문에서 검증했다.
 
-3. source task count를 분해해서 감사한다.
-   - progress field와 unit test는 추가됐다.
-   - v145에서 `planner_generated_source_task_count`, `event_origin_source_task_count`, `mandatory_official_source_task_count`가 실제 산출물에 남는 것까지 확인됐다.
-   - `max_source_tasks_per_plan`은 planner-generated task cap임을 문서에 계속 명시한다.
+처리:
+  "구청 API 없음"은 gap으로 기록한다.
+  하지만 검증된 원문 claim이 있으면 점수 경로는 막지 않는다.
 
-4. missing web plan retry reserve 값을 운영 config로 노출할지 판단한다.
-   - unit test와 v145 live smoke는 통과했다.
-   - 현재 reserve는 `max(30, min(90, claim_extractor_timeout_seconds * 3))` 계산값이다.
-   - 운영자가 직접 조정해야 할 값이면 CLI/config로 노출한다.
+단, 원문 fetch 자체가 timeout/provider_error로 깨진 claim이면 blocker다.
+```
 
-5. bounded live run을 다시 한다.
-   - 사람이 중단하지 않는다.
-   - runtime budget/attempt cap/source task budget이 모두 산출물에 남아야 한다.
-   - `NOT_READY`면 blocker가 정확히 기록돼야 하고, `READY`면 claim -> contribution -> StageCourt -> representative stage chain이 닫혀야 한다.
+### production full-thesis
 
-6. 그 뒤 subagent 5명에게 다시 교차검증을 맡긴다.
-   - 지금은 아직 subagent final pass를 받을 단계가 아니다.
-   - 이유: full thesis goal이 아직 `NOT_READY`이기 때문이다.
+```text
+full_thesis_production_audit.blockers:                         []
+production_full_thesis_row_count:                              22
+production_full_thesis_row_with_missing_required_primitives:   0
+production_full_thesis_row_with_green_gap_primitives:          22
+production_green_stage_row_with_green_gap_count:               0
+```
 
-## 현재 판단
+해석:
 
-이번 작업은 goal 완료가 아니라 goal 진행 중의 안전장치 보강이다.
+```text
+22개 row가 FULL_THESIS production row로 승격됐다.
+필수 primitive 누락 row는 0개다.
+Green primitive gap은 남을 수 있지만,
+그런 row가 Stage3-Green으로 잘못 승급되지는 않았다.
+```
+
+쉬운 예:
+
+```text
+정밀검사는 끝나서 Stage2/Yellow 같은 결론을 낼 수 있다.
+하지만 Green 승급에 필요한 서류가 하나 부족하면 Green으로 올리지 않는다.
+그 부족 서류는 full_thesis_green_gap_primitives에 따로 남긴다.
+```
+
+### claim-to-stage forensic audit
+
+```text
+claim_to_stage_forensic_audit.verdict:                         PASS
+critical_count:                                                0
+critical_counts.claim_to_stage_claim_set_mismatch_count:       0
+critical_counts.claim_to_stage_score_contribution_set_mismatch_count: 0
+critical_counts.claim_to_stage_stagecourt_set_mismatch_count:  0
+critical_counts.source_proxy_support_claim_count:              0
+critical_counts.provider_failed_final_score_count:             0
+critical_counts.scored_row_missing_claim_ids:                  0
+critical_counts.scored_row_missing_score_contribution_ids:     0
+critical_counts.scored_row_missing_stagecourt_trace:           0
+```
+
+해석:
+
+```text
+FULL_THESIS row가 그냥 trace ID만 가진 것이 아니다.
+row의 accepted claim set, score contribution set, StageCourt trace set이
+claim_to_stage_trace와 일치한다.
+```
+
+### full-thesis seed materialization
+
+```text
+full_thesis_seed_materialization_audit.verdict:                 PASS
+actual_materialization_pass_allowed:                           true
+operator_materialization_status:                               FULL_THESIS_MATERIALIZED
+full_thesis_seed_promotion_pass:                               true
+seed_event_count:                                              85
+real_provider_success_seed_count:                              30
+source_task_execution_seed_count:                              30
+stagecourt_trace_seed_count:                                   22
+full_thesis_promoted_seed_count:                               22
+final_operator_score_use_counts.FULL_E2R_SCORE:                22
+final_operator_stage_use_counts.FULL_THESIS_STAGE:             22
+```
+
+해석:
+
+```text
+full-thesis seed는 조사 입력일 뿐이다.
+실제 source task, accepted claim, StageCourt trace를 거쳐
+FULL_THESIS_PROMOTED가 된 22개만 operator full-thesis stage/score로 쓸 수 있다.
+```
+
+## 이번 추가 패치의 핵심
+
+### 1. readiness gap contradiction 제거
+
+예전 문제:
+
+```text
+target_gate_pass=true
+meaningful_operational_stage_pass=true
+remaining_operational_gaps=[...]
+```
+
+이건 "합격인데 미해결 gap이 남음"이라는 모순이었다.
+
+패치:
+
+```text
+brain_web_evidence_pass_allowed
+full_thesis_production_pass_allowed
+brain_web_promoted_stagecourt_path
+full_thesis_smoke_requirement_pass
+```
+
+를 분리해서 readiness가 실제 pass 가능한 경로를 보고 판단하게 했다.
+
+v164 결과:
+
+```text
+target_gate_pass=true
+remaining_operational_gaps=[]
+blockers=[]
+```
+
+### 2. production FULL_THESIS claim-to-stage trace 재작성
+
+예전 문제:
+
+```text
+production FULL_THESIS row의 claim_to_stage_trace_id가
+old event-board trace를 가리킬 수 있었다.
+forensic audit도 "trace가 존재하는지"만 봤다.
+```
+
+패치:
+
+```text
+production row마다 CSTTRACE-FTPROD-* trace를 새로 작성
+row claim set == trace claim set 검사
+row score contribution set == trace score contribution set 검사
+row StageCourt trace set == trace StageCourt trace set 검사
+```
+
+v164 결과:
+
+```text
+claim_to_stage_*_mismatch_count = 0
+```
+
+### 3. Green gap 방어
+
+예전 위험:
+
+```text
+Stage3-Green source stage
++ Green primitive gap 존재
+-> 그대로 Green 승급 가능
+```
+
+패치:
+
+```text
+Green stage + Green gap이면 production 승격 전에 3-Yellow로 내린다.
+Green gap은 missing_required_primitives가 아니라 full_thesis_green_gap_primitives에 둔다.
+```
+
+v164 결과:
+
+```text
+production_green_stage_row_with_green_gap_count = 0
+```
+
+쉬운 예:
+
+```text
+시험 점수는 좋지만 Green 필수 서류 하나가 없으면
+"Green" 도장을 찍지 않고 "Yellow, Green 서류 부족"으로 남긴다.
+```
+
+### 4. SourceTask task-wide budget 고정
+
+v156 실패:
+
+```text
+source_task_budget_cap_exceeded_count = 37
+원인:
+  official 경로가 budget을 쓴 뒤
+  web fallback이 원래 budget 전체를 다시 사용했다.
+```
+
+패치:
+
+```text
+official이 쓴 queries/candidates/fetches를 차감한 남은 budget만 web fallback에 전달
+```
+
+v160 실패:
+
+```text
+source_task_budget_cap_exceeded_count = 28
+원인:
+  official connector loop가 max_queries를 보지 않고 connector를 4개까지 호출했다.
+```
+
+패치:
+
+```text
+official connector 호출도 max_queries와 max_candidates 중 더 작은 값으로 제한
+```
+
+v164 결과:
+
+```text
+source_task_budget_cap_exceeded_count = 0
+source_task_budget_exceeded_rows = 0
+```
+
+쉬운 예:
+
+```text
+한 SourceTask에 "전화 3번까지"라는 제한이 있다.
+예전:
+  공공기관에 1번 전화하고,
+  뉴스 검색을 또 3번 해서 총 4번 전화했다.
+
+현재:
+  공공기관에 1번 전화했으면,
+  뉴스 검색은 최대 2번만 한다.
+```
+
+### 5. web minimum 미달은 실행 폭으로 해결
+
+v163 실패:
+
+```text
+source_task_budget_cap_exceeded_count = 0
+web_search_task_count = 16 / 20
+web_search_call_count = 16 / 20
+```
+
+원인:
+
+```text
+brain_max_source_tasks_per_plan=3이라
+bounded budget은 지켰지만 production minimum 20 web task/call을 못 채웠다.
+```
+
+해결:
+
+```text
+brain_max_source_tasks_per_plan=5로 v164 재실행
+```
+
+v164 결과:
+
+```text
+web_search_task_count = 22
+web_search_call_count = 22
+web_fetched_document_count = 23
+```
+
+중요:
+
+```text
+source_tasks_per_plan을 5로 늘렸지만
+각 SourceTask의 max_queries/max_candidates/max_fetches는 여전히 bounded다.
+무제한 검색으로 해결한 것이 아니다.
+```
+
+### 6. controlled smoke와 production 분리
+
+패치 원칙:
+
+```text
+controlled smoke는 smoke requirement만 만족한다.
+production FULL_THESIS row를 대신하지 않는다.
+```
+
+v164 결과:
+
+```text
+full_thesis_smoke_requirement_satisfied_by = external_controlled_smoke
+full_thesis_production_smoke_substitute_pass = false
+production_full_thesis_row_count = 22
+```
+
+쉬운 예:
+
+```text
+소방훈련 통과 기록은 훈련 기록이다.
+실제 영업허가증을 대신하지 않는다.
+둘 다 있어야 최종 audit이 닫힌다.
+```
+
+### 7. known-bad bundle 강화
+
+known-bad regression은 최소 개수와 필수 case ID를 요구한다.
+
+필수 예:
+
+```text
+wrong_subject_audit_opinion_not_target_risk
+old_risk_resolved_not_current_hard_break
+non_revenue_contract_not_contract_quality
+source_proxy_score_guard
+snippet_score_guard
+provider_failure_final_score_guard
+samsung_hynix_daily_event_not_full_thesis_or_4c
+```
+
+이 의미:
+
+```text
+월덱스의 정상 감사의견을 삼성전자 hard break로 붙이는 식의 오류가
+다시 들어오면 regression에서 막는다.
+```
+
+## 중간 실패 run 기록
+
+### v156
+
+```text
+output/census_v4/2026-07-01-v156-goal-followup-production-final
+```
+
+실패:
+
+```text
+source_task_budget_cap_exceeded_count = 37
+```
+
+원인:
+
+```text
+official + web fallback budget이 task-wide로 합쳐지지 않았다.
+```
+
+### v160
+
+```text
+output/census_v4/2026-07-01-v160-goal-followup-production-final-after-budget-fix
+```
+
+실패:
+
+```text
+source_task_budget_cap_exceeded_count = 28
+```
+
+원인:
+
+```text
+official connector path가 max_queries를 초과할 수 있었다.
+```
+
+### v163
+
+```text
+output/census_v4/2026-07-01-v163-goal-followup-production-final-after-official-budget-fix
+```
+
+실패:
+
+```text
+source_task_budget_cap_exceeded_count = 0
+web_search_task_count = 16 / 20
+web_search_call_count = 16 / 20
+```
+
+원인:
+
+```text
+per-plan source task cap이 3이라 production operational minimum web path 수가 부족했다.
+```
+
+### v164
+
+```text
+output/census_v4/2026-07-01-v164-goal-followup-production-final-source-task-cap5
+```
+
+통과:
+
+```text
+source_task_budget_cap_exceeded_count = 0
+web_search_task_count = 22 / 20
+web_search_call_count = 22 / 20
+goal_completion_ready = true
+remaining_operational_gaps = []
+```
+
+## 아직 남은 절차
+
+다음 단계는 서브에이전트 5명 재검토다.
+
+검토 요청 조건:
+
+```text
+각 서브에이전트는 docs/core/goal.md, goal2.md, goal3.md를 읽는다.
+최신 코드 diff와 v161/v162/v164 artifact를 확인한다.
+99점 미만이면 FAIL로 간주한다.
+새 blocker가 나오면 다시 패치한다.
+5명 모두 99점 이상이어야 goal 최종 완료라고 말할 수 있다.
+```
+
+쉬운 예:
+
+```text
+지금 상태:
+  엔진 수리와 시험주행은 통과했다.
+
+남은 상태:
+  외부 검사관 5명이 검사표를 보고 도장을 찍어야 한다.
+```
+
+## 2026-07-05 KST 최신 진행 상태
+
+이 문서의 앞쪽 v164 기록은 당시의 중간 pass다. 이후 v168, v170, v172까지 goal을 계속 진행했고, 최신 기준은 아래다.
+
+### v168 실패
+
+```text
+output:
+  output/census_v4/2026-07-01-v168-goal-followup-production-after-source-pending-gap-guard-with-valid-v166-tests
+
+test artifact:
+  output/census_v4/2026-07-01-v166-goal-gates-full-test-after-source-pending-gap-guard/full_unittest_result_artifact.json
+```
+
+결과:
+
+```text
+Brain/Web evidence: PASS
+runtime plausibility: PASS
+source pending required/green final score: 0
+production full-thesis row: 0
+goal_completion_ready: false
+```
+
+의미:
+
+```text
+낮은 점수로 억지 확정하는 문제는 막았지만,
+실제 production full-thesis row가 하나도 올라오지 않았다.
+```
+
+쉬운 예:
+
+```text
+틀린 답안지를 제출하지는 않게 됐지만,
+정식 답안지를 아직 제출하지 못한 상태였다.
+```
+
+### v169 테스트 증거
+
+```text
+artifact:
+  output/census_v4/2026-07-01-v169-goal-gates-full-test-after-dart-contract-parser-guard-required-split/full_unittest_result_artifact.json
+
+status:        OK
+test_count:    5183
+failed_count:  0
+error_count:   0
+log_sha256:    aa97bbb39ba2a50b1ca22f8b8a7848d72698b244beef64564a7830af0d17309c
+```
+
+이때 들어간 핵심 패치:
+
+```text
+1. OpenDART 계약 표의 `매출액대비(%)` 붙임 표기를 파싱한다.
+2. 정정표 숫자를 현재 계약 본문 숫자로 오독하지 않는다.
+3. guard primitive를 positive required primitive로 세지 않는다.
+```
+
+쉬운 예:
+
+```text
+`cost_overrun`은 있으면 막는 빨간불이다.
+`cost_overrun`이 있어야 점수를 받는 초록불이 아니다.
+```
+
+### v170 중간 pass와 audit false-negative 발견
+
+```text
+output:
+  output/census_v4/2026-07-01-v170-goal-followup-production-after-dart-contract-parser-and-guard-required-split
+```
 
 좋아진 점:
 
-- full test 5163개 통과.
-- real planner attempt cap 초과 수정.
-- runtime budget reproduction command 누락 수정.
-- source execution 뒤 budget exhausted 누락 수정.
-- source task 사이 `BUDGET_EXHAUSTED` skip hook 추가.
-- source fetch 후 document extraction 시작 전 `BUDGET_EXHAUSTED` guard 추가.
-- source task count를 planner/event-origin/mandatory official로 분해 기록.
-- missing web plan retry가 source budget을 다 먹지 않게 reserve guard 추가.
-- LLM raw prompt/response 파일 감사 강화.
-- source task score claim chain 과대 계산 방지.
-- full thesis missing primitive 승격 차단.
-- 유동성공급계약의 customer contract 점수 누수 차단.
+```text
+goal_completion_ready: true
+Brain/Web evidence: PASS
+production full-thesis row: 4
+source pending required/green final score: 0
+```
 
-아직 아닌 점:
+하지만 v170은 그대로 완료 처리하면 안 됐다.
 
-- Brain/Web full thesis production pass 아님.
-- Samsung/Hynix full live 운영 판정 완료 아님.
-- LLM extractor timeout이 남아 있음.
-- source task/document extraction 시작 전 budget guard는 생겼지만, 이미 실행 중인 extractor subprocess 제어는 아직 충분하지 않음.
-- missing web plan retry reserve는 단위 테스트와 v145 live smoke 통과, config 노출 여부 미정.
-- subagent 최종 재검증 전.
+이유:
 
-따라서 다음 에이전트는 이 문서를 보고 “완료된 goal”이 아니라 “테스트는 통과했지만 live full-thesis readiness가 아직 blocked인 상태”로 이어받아야 한다.
+```text
+production row 안에는 `full_thesis_required_gap_primitives`가 남아 있었는데,
+production audit은 missing required count를 0으로 세고 있었다.
+```
+
+정확한 해석:
+
+```text
+필수 긍정 primitive가 없거나 반대라서 낮은 Stage FINAL이 되는 것은 가능하다.
+하지만 그 사실을 audit에서 숨기면 안 된다.
+```
+
+쉬운 예:
+
+```text
+계약 금액은 확인됐지만 마진 브리지는 반대 증거가 있다.
+그러면 Stage0/Stage1 낮은 점수 확정은 가능하다.
+하지만 "마진 브리지 칸도 다 채웠다"고 말하면 거짓이다.
+```
+
+그래서 v170 이후 audit 표현을 다시 패치했다.
+
+### v171 테스트 증거
+
+```text
+artifact:
+  output/census_v4/2026-07-01-v171-goal-gates-full-test-after-required-gap-audit-clarification/full_unittest_result_artifact.json
+
+status:        OK
+test_count:    5184
+failed_count:  0
+error_count:   0
+log_sha256:    a57f6d5ec227ffab07c840fdc453c1ef239f52cc6a5fbcdb7b9a7bcff8c9e5e4
+```
+
+추가 패치:
+
+```text
+full_thesis_required_gap_primitives
+  = 아직 source/provider 때문에 못 닫은 blocking required gap
+
+full_thesis_required_positive_missing_primitives
+  = Green/고점수에 필요한 긍정 primitive가 없거나 반대라서 낮은 Stage가 된 칸
+```
+
+### v172 이전 production 결과
+
+```text
+output:
+  output/census_v4/2026-07-01-v172-goal-followup-production-after-required-gap-audit-clarification
+
+test artifact:
+  output/census_v4/2026-07-01-v171-goal-gates-full-test-after-required-gap-audit-clarification/full_unittest_result_artifact.json
+```
+
+핵심 audit:
+
+```text
+goal_completion_ready: true
+goal_completion.blockers: []
+
+readiness.verdict: ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
+target_gate_pass: true
+meaningful_operational_stage_pass: true
+brain_web_evidence_pass: true
+full_thesis_production_pass: true
+remaining_operational_gaps: []
+
+full_thesis_production.verdict: FULL_THESIS_PRODUCTION_PASS
+production_full_thesis_row_count: 3
+production_full_thesis_final_with_source_pending_gap_count: 0
+provider_failed_green_gap_final_score_count: 0
+production_full_thesis_row_with_missing_required_primitives_count: 0
+production_full_thesis_row_with_blocking_required_gap_primitives_count: 0
+production_full_thesis_row_with_required_positive_missing_primitives_count: 3
+
+Brain/Web:
+planner row count, old label `llm_planner_call_count`: 300
+llm_real_provider_success_count: 20
+llm_claim_extractor_attempt_count: 17
+web_search_call_count: 22
+web_fetched_document_count: 17
+```
+
+v172 production full-thesis rows:
+
+```text
+005930 삼성전자
+  archetype: C06_HBM_MEMORY_CUSTOMER_CAPACITY
+  stage: 1
+  verified score: 60.0
+  source-pending required/green gap: []
+  required-positive-missing: hbm_capacity_constraint, hbm_capacity_pre_sold, memory_price_increase_mentioned
+
+034020 두산에너빌리티
+  archetype: C05_EPC_MEGA_CONTRACT_MARGIN_GAP
+  stage: 1
+  verified score: 42.0
+  source-pending required/green gap: []
+  required-positive-missing: margin_bridge_visible
+
+034730 SK
+  archetype: C05_EPC_MEGA_CONTRACT_MARGIN_GAP
+  stage: 0
+  verified score: 27.9998
+  source-pending required/green gap: []
+  required-positive-missing: contract_duration_months, margin_bridge_visible
+```
+
+중요한 해석:
+
+```text
+v172는 "모든 Green 칸이 채워졌다"는 뜻이 아니다.
+v172는 "source pending 때문에 낮은 점수로 억지 확정하지 않았고,
+claim-backed full-thesis StageCourt path가 실제 production row로 닫혔으며,
+남은 긍정 primitive 부족도 audit에 숨기지 않았다"는 뜻이다.
+```
+
+쉬운 예:
+
+```text
+삼성전자:
+  HBM 관련 공식/웹 claim으로 60점 Stage1까지는 확정했다.
+  다만 HBM capacity sold-out 같은 Green unlock 증거는 아직 긍정 claim이 없다고 표시했다.
+  그래서 Green이 아니라 Stage1이다.
+
+이건 "자료가 없는데 낮게 때렸다"가 아니라,
+"현재 찾은 claim으로는 여기까지이고, Green에 필요한 칸은 아직 긍정 미확인"이라고 분리한 것이다.
+```
+
+## 최종 서브에이전트 검토 결과
+
+v177 기준 goal audit은 닫혔고, v178 전체 테스트 증거도 연결됐다.
+
+최종 완료 선언 전 요구됐던 서브에이전트 5명 재검토도 완료됐다.
+
+검토 기준:
+
+```text
+docs/core/goal.md
+docs/core/goal2.md
+docs/core/goal3.md
+최신 diff
+v178 full unittest artifact
+v177 production output/audits
+```
+
+합격 기준과 결과:
+
+```text
+Chandrasekhar: PASS 99/100
+Pascal:        PASS 99/100
+James:         PASS 99/100
+Erdos:         PASS 99/100
+Darwin:        PASS 99/100
+```
+
+공통 residual risk:
+
+```text
+1. production FULL_THESIS 10개 row는 Green 후보 10개가 아니라, 대부분 낮은 Stage FINAL이다.
+2. required-positive-missing은 10개 row 모두에 남아 있지만 숨기지 않고 audit에 노출된다.
+3. accepted_source_task_with_provider_gap_count=47은 nonblocking 운영 부채다.
+4. v177/run_metadata.json의 command는 당시 원 실행 command라 v175 test artifact를 보존한다.
+   authoritative test_result_evidence_audit, goal_requirement_matrix, reproduction command는 v178을 가리킨다.
+```
+
+쉬운 예:
+
+```text
+최종 검사는 통과했다.
+다만 검사 결과가 "좋은 종목이 많이 나왔다"는 뜻은 아니다.
+증거가 부족한 칸은 부족하다고 표시하고, Green 과승격을 막은 상태로 통과했다.
+```
+
+## v173-v177 후속 진행
+
+### v173 / v175 / v178 테스트 증거
+
+```text
+v173:
+  output/census_v4/2026-07-01-v173-goal-gates-full-test-after-brain-web-readiness-count-fix/full_unittest_result_artifact.json
+  status: OK
+  test_count: 5188
+  failed_count: 0
+  error_count: 0
+
+v175:
+  output/census_v4/2026-07-01-v175-goal-gates-full-test-after-cash-revision-report-fallback-policy/full_unittest_result_artifact.json
+  status: OK
+  test_count: 5189
+  failed_count: 0
+  error_count: 0
+
+v178:
+  output/census_v4/2026-07-01-v178-goal-gates-full-test-after-planner-audit-label-fix/full_unittest_result_artifact.json
+  status: OK
+  test_count: 5190
+  failed_count: 0
+  error_count: 0
+```
+
+수정 내용:
+
+```text
+1. Brain/Web readiness에서 planner row 300개를 LLM 호출 300회로 세던 문제를 고쳤다.
+2. 실제 real planner 시도 수, 성공 수, not_attempted 수를 분리했다.
+3. official-first 위반은 policy rejected와 실제 score evidence 위반을 나눠 센다.
+4. cash/revision gap은 공식 소스를 먼저 시도한 뒤 bounded report fallback을 허용한다.
+```
+
+쉬운 예:
+
+```text
+이전:
+  상담 대기표 300장을 전부 "상담 완료"처럼 세었다.
+
+현재:
+  대기표 전체 350장,
+  실제 상담 시도 45번,
+  성공 35번,
+  미시도 305번으로 따로 적는다.
+```
+
+### v174 / v176 실패
+
+```text
+v174:
+  output/census_v4/2026-07-01-v174-goal-followup-production-after-brain-web-readiness-count-fix
+  실패 이유: web_search_task_count 17 / 20
+
+v176:
+  output/census_v4/2026-07-01-v176-goal-followup-production-after-cash-revision-report-fallback-policy
+  실패 이유: web_search_task_count 17 / 20
+```
+
+해석:
+
+```text
+goal2/goal3는 운영형 Brain/Web evidence pass에 web search task 최소 20개를 요구한다.
+따라서 17개로는 "거의 됐다"가 아니라 NOT_READY가 맞다.
+```
+
+### v177 최신 production pass
+
+```text
+output:
+  output/census_v4/2026-07-01-v177-goal-followup-production-after-expanded-brain-web-width
+
+test artifact:
+  output/census_v4/2026-07-01-v178-goal-gates-full-test-after-planner-audit-label-fix/full_unittest_result_artifact.json
+```
+
+핵심 audit:
+
+```text
+readiness.verdict:                  ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
+target_gate_pass:                   true
+brain_web_evidence_pass:            true
+brain_web_evidence_pass_allowed:    true
+full_thesis_production_pass:        true
+all_archetype_replay_pass:          true
+goal_completion_ready:              true
+blockers:                           []
+remaining_operational_gaps:         []
+```
+
+Brain/Web:
+
+```text
+planner_run_row_count:              350
+llm_planner_call_count:             45
+llm_planner_success_count:          35
+llm_planner_not_attempted_count:    305
+official_first_violation_count:     0
+official_first_policy_rejected:     7
+web_search_task_count:              31
+web_search_call_count:              31
+web_fetched_document_count:         45
+llm_claim_extractor_attempt_count:  45
+web_or_llm_accepted_claim_count:    69
+```
+
+Production full-thesis:
+
+```text
+production_full_thesis_row_count:                               10
+production_full_thesis_final_with_source_pending_gap_count:      0
+provider_failed_green_gap_final_score_count:                    0
+production_full_thesis_row_with_missing_required_primitives:    0
+production_full_thesis_row_with_blocking_required_gap_primitives: 0
+production_full_thesis_row_with_required_positive_missing_primitives: 10
+```
+
+중요한 해석:
+
+```text
+v177은 완료 선언 직전 상태다.
+하지만 "아무 종목이나 Green"이 아니라,
+full-thesis row 10개 중 HJ중공업만 Stage2까지 올라갔고,
+나머지는 Stage0/Stage1에 머물렀다.
+```
+
+쉬운 예:
+
+```text
+검사 시스템은 실제로 작동했다.
+다만 검사 결과는 대부분 "증거 부족 또는 낮은 단계"였다.
+이게 정상이다. 증거 없이 Green으로 올리는 것보다 훨씬 안전하다.
+```

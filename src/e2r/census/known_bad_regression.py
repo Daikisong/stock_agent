@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Mapping
+from tempfile import TemporaryDirectory
+from typing import Any, Callable, Mapping
 
 from e2r.agentic.evidence_os import (
     AdjudicatedClaim,
@@ -43,6 +44,20 @@ from .census_v4_auditor import audit_census_v4_leaf_artifacts
 
 
 KNOWN_BAD_SCHEMA = "e2r_census_v4_known_bad_regression_report_v1"
+MIN_KNOWN_BAD_CASE_COUNT = 10
+REQUIRED_KNOWN_BAD_CASE_IDS = (
+    "wrong_subject_audit_opinion_not_target_risk",
+    "old_risk_resolved_not_current_hard_break",
+    "non_revenue_contract_not_contract_quality",
+    "trace_mismatch_guard",
+    "trace_score_interval_guard",
+    "trace_claim_set_guard",
+    "source_proxy_score_guard",
+    "evidence_url_pending_score_guard",
+    "snippet_score_guard",
+    "provider_failure_final_score_guard",
+    "samsung_hynix_daily_event_not_full_thesis_or_4c",
+)
 
 
 def run_known_bad_regression(*, output_root: str | Path, target_gate: str) -> dict[str, Any]:
@@ -53,22 +68,65 @@ def run_known_bad_regression(*, output_root: str | Path, target_gate: str) -> di
         _wrong_subject_audit_opinion_case(),
         _old_risk_resolved_not_current_hard_break_case(),
         _non_revenue_contract_case(),
-        _critical_zero_case("trace_mismatch_guard", critical, "stage_trace_stage_mismatch_count"),
-        _critical_zero_case("trace_score_interval_guard", critical, "stage_trace_score_interval_mismatch_count"),
-        _critical_zero_case("trace_claim_set_guard", critical, "stage_trace_claim_set_mismatch_count"),
-        _critical_zero_case("source_proxy_score_guard", critical, "source_proxy_to_score_count"),
-        _critical_zero_case("evidence_url_pending_score_guard", critical, "evidence_url_pending_to_score_count"),
-        _critical_zero_case("snippet_score_guard", critical, "news_snippet_to_score_count"),
-        _critical_zero_case("provider_failure_final_score_guard", critical, "provider_failed_final_score_count"),
+        _mutated_leaf_critical_case(
+            root,
+            case_id="trace_mismatch_guard",
+            critical_count_key="stage_trace_stage_mismatch_count",
+            mutate=_mutate_stage_trace_stage_mismatch,
+        ),
+        _mutated_leaf_critical_case(
+            root,
+            case_id="trace_score_interval_guard",
+            critical_count_key="stage_trace_score_interval_mismatch_count",
+            mutate=_mutate_stage_trace_score_interval_mismatch,
+        ),
+        _mutated_leaf_critical_case(
+            root,
+            case_id="trace_claim_set_guard",
+            critical_count_key="stage_trace_claim_set_mismatch_count",
+            mutate=_mutate_stage_trace_claim_set_mismatch,
+        ),
+        _mutated_leaf_critical_case(
+            root,
+            case_id="source_proxy_score_guard",
+            critical_count_key="source_proxy_to_score_count",
+            mutate=_mutate_source_proxy_score_contribution,
+        ),
+        _mutated_leaf_critical_case(
+            root,
+            case_id="evidence_url_pending_score_guard",
+            critical_count_key="evidence_url_pending_to_score_count",
+            mutate=_mutate_evidence_url_pending_score_contribution,
+        ),
+        _mutated_leaf_critical_case(
+            root,
+            case_id="snippet_score_guard",
+            critical_count_key="news_snippet_to_score_count",
+            mutate=_mutate_snippet_score_contribution,
+        ),
+        _mutated_leaf_critical_case(
+            root,
+            case_id="provider_failure_final_score_guard",
+            critical_count_key="provider_failed_final_score_count",
+            mutate=_mutate_provider_failed_final_score,
+        ),
         _samsung_hynix_daily_event_not_full_thesis_case(root),
     ]
+    case_ids = {str(case.get("case_id") or "") for case in cases}
+    missing_required_case_ids = sorted(set(REQUIRED_KNOWN_BAD_CASE_IDS) - case_ids)
+    minimum_case_count_pass = len(cases) >= MIN_KNOWN_BAD_CASE_COUNT
     failed = [case for case in cases if case.get("status") != "PASS"]
+    completion_eligible = not failed and not missing_required_case_ids and minimum_case_count_pass
     return {
         "schema_version": KNOWN_BAD_SCHEMA,
-        "status": "PASS" if not failed else "FAIL",
+        "status": "PASS" if completion_eligible else "FAIL",
         "target_gate": target_gate,
-        "completion_eligible": not failed,
+        "completion_eligible": completion_eligible,
         "known_bad_required_before_goal_completion": True,
+        "required_case_ids": list(REQUIRED_KNOWN_BAD_CASE_IDS),
+        "missing_required_case_ids": missing_required_case_ids,
+        "minimum_case_count_required": MIN_KNOWN_BAD_CASE_COUNT,
+        "minimum_case_count_pass": minimum_case_count_pass,
         "case_count": len(cases),
         "passed_case_count": len(cases) - len(failed),
         "failed_case_count": len(failed),
@@ -212,16 +270,6 @@ def _old_risk_resolved_not_current_hard_break_case() -> dict[str, Any]:
     }
 
 
-def _critical_zero_case(case_id: str, critical: Mapping[str, Any], key: str) -> dict[str, Any]:
-    value = int(critical.get(key) or 0)
-    return {
-        "case_id": case_id,
-        "status": "PASS" if value == 0 else "FAIL",
-        "critical_count_key": key,
-        "observed_count": value,
-    }
-
-
 def _samsung_hynix_daily_event_not_full_thesis_case(root: Path) -> dict[str, Any]:
     rows = {str(row.get("symbol") or "").zfill(6): row for row in _read_jsonl(root / "census_stage_status.jsonl")}
     observed = {}
@@ -273,6 +321,114 @@ def _read_jsonl(path: Path) -> list[dict[str, Any]]:
             if text:
                 rows.append(json.loads(text))
     return rows
+
+
+def _mutated_leaf_critical_case(
+    root: Path,
+    *,
+    case_id: str,
+    critical_count_key: str,
+    mutate: Callable[[Path, Path], str],
+) -> dict[str, Any]:
+    with TemporaryDirectory() as tmp:
+        mutated_root = Path(tmp) / case_id
+        mutated_root.mkdir(parents=True, exist_ok=True)
+        mutation_note = mutate(root, mutated_root)
+        audit = audit_census_v4_leaf_artifacts(mutated_root)
+    value = int((audit.get("critical_counts") or {}).get(critical_count_key) or 0)
+    passed = value > 0
+    return {
+        "case_id": case_id,
+        "status": "PASS" if passed else "FAIL",
+        "fixture_type": "mutated_leaf_artifact",
+        "critical_count_key": critical_count_key,
+        "expected": f"mutated fixture must raise {critical_count_key}",
+        "observed_count": value,
+        "mutation_note": mutation_note,
+    }
+
+
+def _mutate_stage_trace_stage_mismatch(source_root: Path, target_root: Path) -> str:
+    stage_rows, atomic_rows = _first_stage_atomic_pair(source_root)
+    stage_rows[0]["base_stage"] = "Stage3-Green" if stage_rows[0].get("base_stage") != "Stage3-Green" else "Stage0"
+    _write_jsonl(target_root / "census_stage_status.jsonl", stage_rows[:1])
+    _write_jsonl(target_root / "atomic_stage_decisions.jsonl", atomic_rows)
+    return "changed stage row base_stage while leaving atomic decision unchanged"
+
+
+def _mutate_stage_trace_score_interval_mismatch(source_root: Path, target_root: Path) -> str:
+    stage_rows, atomic_rows = _first_stage_atomic_pair(source_root)
+    stage_rows[0]["score_interval_lower"] = float(stage_rows[0].get("score_interval_lower") or 0.0) + 7.0
+    _write_jsonl(target_root / "census_stage_status.jsonl", stage_rows[:1])
+    _write_jsonl(target_root / "atomic_stage_decisions.jsonl", atomic_rows)
+    return "changed stage row score interval lower while leaving atomic decision unchanged"
+
+
+def _mutate_stage_trace_claim_set_mismatch(source_root: Path, target_root: Path) -> str:
+    stage_rows, atomic_rows = _first_stage_atomic_pair(source_root)
+    claims = list(stage_rows[0].get("accepted_claim_ids") or [])
+    claims.append("CLM-KNOWN-BAD-MISSING")
+    stage_rows[0]["accepted_claim_ids"] = claims
+    _write_jsonl(target_root / "census_stage_status.jsonl", stage_rows[:1])
+    _write_jsonl(target_root / "atomic_stage_decisions.jsonl", atomic_rows)
+    return "added an extra stage row accepted claim absent from atomic decision"
+
+
+def _mutate_source_proxy_score_contribution(source_root: Path, target_root: Path) -> str:
+    rows = _read_jsonl(source_root / "score_contributions.jsonl")
+    if not rows:
+        raise ValueError("score_contributions.jsonl has no rows for known-bad mutation")
+    rows[0]["source_proxy_only"] = True
+    _write_jsonl(target_root / "score_contributions.jsonl", rows[:1])
+    return "marked a score contribution as source_proxy_only"
+
+
+def _mutate_evidence_url_pending_score_contribution(source_root: Path, target_root: Path) -> str:
+    rows = _read_jsonl(source_root / "score_contributions.jsonl")
+    if not rows:
+        raise ValueError("score_contributions.jsonl has no rows for known-bad mutation")
+    rows[0]["evidence_url_pending"] = True
+    _write_jsonl(target_root / "score_contributions.jsonl", rows[:1])
+    return "marked a score contribution as evidence_url_pending"
+
+
+def _mutate_snippet_score_contribution(source_root: Path, target_root: Path) -> str:
+    rows = _read_jsonl(source_root / "score_contributions.jsonl")
+    if not rows:
+        raise ValueError("score_contributions.jsonl has no rows for known-bad mutation")
+    rows[0]["source_type"] = "snippet"
+    _write_jsonl(target_root / "score_contributions.jsonl", rows[:1])
+    return "changed a score contribution source_type to snippet"
+
+
+def _mutate_provider_failed_final_score(source_root: Path, target_root: Path) -> str:
+    rows = _read_jsonl(source_root / "census_stage_status.jsonl")
+    if not rows:
+        raise ValueError("census_stage_status.jsonl has no rows for known-bad mutation")
+    row = dict(rows[0])
+    row["census_status"] = "PENDING_PROVIDER"
+    row["score_scale"] = "FULL_E2R_100"
+    row["verified_score"] = row.get("verified_score") if row.get("verified_score") is not None else 1.0
+    _write_jsonl(target_root / "census_stage_status.jsonl", [row])
+    return "gave a provider-pending stage row a score scale and verified score"
+
+
+def _first_stage_atomic_pair(source_root: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    stage_rows = _read_jsonl(source_root / "census_stage_status.jsonl")
+    atomic_rows = _read_jsonl(source_root / "atomic_stage_decisions.jsonl")
+    atomic_by_id = {str(row.get("atomic_stage_decision_id") or ""): row for row in atomic_rows}
+    for row in stage_rows:
+        atomic_id = str(row.get("atomic_stage_decision_id") or "")
+        if atomic_id and atomic_id in atomic_by_id:
+            return [dict(row)], [dict(atomic_by_id[atomic_id])]
+    raise ValueError("no stage row with atomic_stage_decision_id found for known-bad mutation")
+
+
+def _write_jsonl(path: Path, rows: list[Mapping[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(dict(row), ensure_ascii=False, sort_keys=True) + "\n")
 
 
 def _date(value: str):

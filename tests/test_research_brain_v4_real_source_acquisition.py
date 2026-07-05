@@ -60,6 +60,7 @@ class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
             c06_source_task("customer_preorder_or_allocation"),
             preferred_source_classes=("IssuerIR", "CompanyGuide"),
             fallback_source_classes=("DART",),
+            max_queries=3,
             max_candidates=3,
             max_fetches=1,
         )
@@ -92,7 +93,7 @@ class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
         )
 
         result = SourceAcquisitionRunnerV4(
-            mode="live_official_first",
+            mode="live_official_only",
             source_provider_registry=registry,
         ).acquire(event=event, task=task, as_of_date=date(2026, 6, 29))
 
@@ -102,6 +103,58 @@ class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
         self.assertEqual(result.source_class, "CompanyGuide")
         self.assertNotIn("OpenDART", calls)
         self.assertEqual(result.budget_used["queries"], 2)
+
+    def test_live_official_respects_task_query_budget_before_connector_count(self):
+        event = sample_v4_event(symbol="000660", company_name="SK하이닉스")
+        calls: list[str] = []
+        task = replace(
+            c06_source_task("customer_preorder_or_allocation"),
+            preferred_source_classes=("DART",),
+            fallback_source_classes=(),
+            max_queries=2,
+            max_candidates=5,
+            max_fetches=1,
+        )
+        registry = SourceProviderRegistry(
+            connectors=(
+                _RecordingLiveConnector(
+                    provider_name="OpenDART-A",
+                    source_class="DART",
+                    url="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=NOISEA",
+                    raw_text="",
+                    calls=calls,
+                    status="PROVIDER_FAILED",
+                    provider_error="dart_a_not_found",
+                ),
+                _RecordingLiveConnector(
+                    provider_name="OpenDART-B",
+                    source_class="DART",
+                    url="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=NOISEB",
+                    raw_text="",
+                    calls=calls,
+                    status="PROVIDER_FAILED",
+                    provider_error="dart_b_not_found",
+                ),
+                _RecordingLiveConnector(
+                    provider_name="OpenDART-C",
+                    source_class="DART",
+                    url="https://dart.fss.or.kr/dsaf001/main.do?rcpNo=SHOULD_NOT_CALL",
+                    raw_text="SK하이닉스(000660) HBM 매출 전망과 EPS 상향",
+                    calls=calls,
+                ),
+            )
+        )
+
+        result = SourceAcquisitionRunnerV4(
+            mode="live_official_only",
+            source_provider_registry=registry,
+        ).acquire(event=event, task=task, as_of_date=date(2026, 6, 29))
+
+        self.assertEqual(calls, ["OpenDART-A", "OpenDART-B"])
+        self.assertEqual(result.status, "PROVIDER_FAILED")
+        self.assertEqual(result.budget_used["queries"], 2)
+        self.assertLessEqual(result.budget_used["queries"], task.max_queries)
+        self.assertEqual(result.fetched_document_ids, ())
 
     def test_live_official_document_counts_as_real_non_snapshot_document(self):
         event = sample_v4_event()
@@ -1518,9 +1571,9 @@ class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
             preferred_source_classes=("CompanyGuide",),
             fallback_source_classes=("NaverSearch",),
             query_intents=(query,),
-            max_queries=1,
+            max_queries=2,
             max_candidates=5,
-            max_fetches=1,
+            max_fetches=2,
         )
         search_provider = FixtureSearchProvider(
             results_by_query={
@@ -1558,6 +1611,8 @@ class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
         self.assertEqual(len(result.web_search_tasks), 1)
         self.assertEqual(len(result.web_fetched_documents), 1)
         self.assertEqual(result.web_search_tasks[0]["status"], "SEARCH_EXECUTED")
+        self.assertLessEqual(result.budget_used["queries"], task.max_queries)
+        self.assertLessEqual(result.budget_used["fetches"], task.max_fetches)
 
     def test_live_full_bounded_rejects_unscoped_llm_query_without_search(self):
         event = sample_v4_event()
@@ -1602,6 +1657,53 @@ class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
 
         self.assertEqual(result.status, "REJECTED_BY_POLICY")
         self.assertIn("official_solvable_gap_sent_to_general_web", result.provider_errors)
+
+    def test_cash_or_revision_gap_allows_bounded_report_fallback_after_official_first(self):
+        event = sample_v4_event(symbol="034020", company_name="두산에너빌리티")
+        query = "두산에너빌리티 034020 2026 영업이익 추정 상향 리포트 PDF"
+        url = "https://research.example.com/doosan-energy-revision.pdf"
+        task = replace(
+            c06_source_task("cash_or_revision_conversion"),
+            preferred_source_classes=("ReportPDF", "BrokerReportPublicPDF"),
+            fallback_source_classes=("CompanyNewsroom",),
+            query_intents=(query,),
+            max_queries=1,
+            max_candidates=5,
+            max_fetches=1,
+        )
+        search_provider = FixtureSearchProvider(
+            results_by_query={
+                query: (
+                    SearchResult(
+                        title="두산에너빌리티 실적 추정 상향 리포트",
+                        url=url,
+                        snippet="두산에너빌리티 034020 영업이익 추정 상향 리포트 원문",
+                        source="BrokerReportPublicPDF",
+                        published_at=datetime(2026, 6, 30, 9, 0),
+                        query=query,
+                        rank=1,
+                        is_news=False,
+                    ),
+                )
+            }
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={
+                url: "두산에너빌리티(034020)의 2026년 영업이익 추정치가 상향 조정됐다는 리포트 원문."
+            }
+        )
+
+        result = SourceAcquisitionRunnerV4(
+            mode="live_full_bounded",
+            source_provider_registry=SourceProviderRegistry(connectors=()),
+            web_search_provider=search_provider,
+            web_page_fetcher=fetcher,
+        ).acquire(event=event, task=task, as_of_date=date(2026, 7, 1))
+
+        self.assertNotEqual(result.status, "REJECTED_BY_POLICY")
+        self.assertNotIn("official_solvable_gap_sent_to_general_web", result.provider_errors)
+        self.assertEqual(len(result.web_search_tasks), 1)
+        self.assertEqual(result.web_search_tasks[0]["status"], "SEARCH_EXECUTED")
 
     def test_contract_visibility_gap_is_not_sent_to_web_fallback(self):
         event = sample_v4_event(symbol="114450", company_name="그린생명과학")

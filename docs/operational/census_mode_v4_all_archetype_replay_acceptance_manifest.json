@@ -1,7 +1,7 @@
 {
   "rows": [
     {
-      "accepted_claim_count": 3,
+      "accepted_claim_count": 0,
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -49,7 +49,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 50,
+      "accepted_claim_count": 20,
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -61,7 +61,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 2,
+      "accepted_claim_count": 1,
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",

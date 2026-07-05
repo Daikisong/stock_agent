@@ -374,17 +374,29 @@ def parse_disclosure_text(raw_text: str, *, title: str = "") -> dict[str, Any]:
     """Extract explicit disclosure fields without fabricating missing values."""
 
     text = raw_text.replace("\r\n", "\n")
+    contract_text = _current_contract_disclosure_text(text)
     parsed: dict[str, Any] = {}
 
-    contract_amount = _amount_after(text, ("계약금액", "계약 금액", "공급계약 금액", "contract amount"))
+    contract_amount = _amount_after(contract_text, ("계약금액", "계약 금액", "공급계약 금액", "contract amount"))
     if contract_amount is not None:
         parsed["contract_amount"] = contract_amount
 
-    ratio = _percent_after(text, ("매출액 대비", "최근매출액 대비", "prior sales"))
+    ratio = _percent_after(
+        contract_text,
+        (
+            "매출액 대비",
+            "매출액대비",
+            "최근매출액 대비",
+            "최근매출액대비",
+            "최근 매출액 대비",
+            "최근 매출액대비",
+            "prior sales",
+        ),
+    )
     if ratio is not None:
         parsed["contract_amount_to_prior_sales"] = ratio / 100.0
 
-    contract_dates = _contract_dates(text)
+    contract_dates = _contract_dates(contract_text)
     if contract_dates is not None:
         start, end = contract_dates
         parsed["contract_start"] = start.isoformat()
@@ -399,28 +411,28 @@ def parse_disclosure_text(raw_text: str, *, title: str = "") -> dict[str, Any]:
         ("product_or_service", ("계약내용", "주요제품", "공급제품", "product", "service")),
         ("region", ("공급지역", "지역", "region")),
     ):
-        value = _contract_counterparty(text) if output_key == "counterparty" else _line_value_after(text, labels)
+        value = _contract_counterparty(contract_text) if output_key == "counterparty" else _line_value_after(contract_text, labels)
         if value:
             parsed[output_key] = value
 
-    if "장기" in text or parsed.get("contract_duration_months", 0) >= 24:
+    if "장기" in contract_text or parsed.get("contract_duration_months", 0) >= 24:
         parsed["is_long_term"] = True
-    if any(token in text for token in ("해지 가능", "취소 가능", "계약 해지")):
+    if any(token in contract_text for token in ("해지 가능", "취소 가능", "계약 해지")):
         parsed["is_cancellable"] = True
-    elif any(token in text for token in ("해지 불가", "취소 불가", "take-or-pay", "Take-or-pay")):
+    elif any(token in contract_text for token in ("해지 불가", "취소 불가", "take-or-pay", "Take-or-pay")):
         parsed["is_cancellable"] = False
-    if "선수금" in text or "선급금" in text or "prepayment" in text.lower():
+    if "선수금" in contract_text or "선급금" in contract_text or "prepayment" in contract_text.lower():
         parsed["prepayment_exists"] = True
-    lowered = text.lower()
-    if any(token in text for token in ("최소 매출 보장", "최소매출 보장", "최소 물량 보장", "최소 구매 보장")) or any(
+    lowered = contract_text.lower()
+    if any(token in contract_text for token in ("최소 매출 보장", "최소매출 보장", "최소 물량 보장", "최소 구매 보장")) or any(
         token in lowered for token in ("minimum revenue guarantee", "minimum sales guarantee", "minimum purchase commitment")
     ):
         parsed["minimum_revenue_guarantee"] = True
         parsed["minimum_sales_guarantee"] = True
         parsed["revenue_visibility_contract"] = True
-    if "RPO" in text or "remaining performance obligation" in text.lower():
+    if "RPO" in contract_text or "remaining performance obligation" in contract_text.lower():
         parsed["rpo_mentioned"] = True
-    if "수주잔고" in text or "backlog" in text.lower():
+    if "수주잔고" in contract_text or "backlog" in contract_text.lower():
         parsed["backlog_mentioned"] = True
 
     facility_amount = _amount_after(text, ("투자금액", "시설투자 금액", "facility investment"))
@@ -699,6 +711,28 @@ def _detail_parser_confidence(parsed: Mapping[str, Any]) -> float:
     if explicit_fields <= 0:
         return 0.45
     return min(1.0, 0.55 + explicit_fields * 0.06)
+
+
+def _current_contract_disclosure_text(text: str) -> str:
+    if not text:
+        return ""
+    if not ("정정전" in text and "정정후" in text):
+        return text
+    correction_pos = max(text.find("정정후"), text.find("정정사항"))
+    markers = (
+        "단일판매ㆍ공급계약 체결",
+        "단일판매·공급계약 체결",
+        "단일판매공급계약체결",
+        "단일판매ㆍ공급계약체결",
+        "단일판매·공급계약체결",
+    )
+    starts: list[int] = []
+    for marker in markers:
+        starts.extend(match.start() for match in re.finditer(re.escape(marker), text))
+    starts_after_correction = [start for start in starts if start > correction_pos + 10]
+    if starts_after_correction:
+        return text[min(starts_after_correction) :]
+    return ""
 
 
 def _amount_after(text: str, labels: tuple[str, ...]) -> float | None:

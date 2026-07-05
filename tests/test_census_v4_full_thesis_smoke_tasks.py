@@ -5,6 +5,8 @@ from tempfile import TemporaryDirectory
 from e2r.census.census_runner_v4 import (
     CensusV4RunConfig,
     _full_thesis_seed_runtime_counts,
+    _full_thesis_smoke_requirement_pass,
+    _full_thesis_smoke_requirement_satisfied_by,
     _write_full_thesis_seed_materialization_trace,
     run_census_mode_v4,
 )
@@ -13,6 +15,35 @@ from tests.census_v4_test_helpers import census_v4_artifacts, read_json, read_js
 
 
 class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
+    def test_production_full_thesis_never_substitutes_controlled_smoke_requirement(self):
+        full_thesis_production = {
+            "verdict": "FULL_THESIS_PRODUCTION_PASS",
+            "completion_eligible": True,
+            "production_full_thesis_row_count": 2,
+            "controlled_smoke_full_thesis_row_count": 0,
+            "production_symbols_without_missing_required_primitives": ["005930", "000660"],
+        }
+        seed_materialization = {
+            "verdict": "PASS",
+            "critical_count": 0,
+            "full_thesis_promoted_seed_count": 2,
+        }
+
+        self.assertFalse(
+            _full_thesis_smoke_requirement_pass(
+                full_thesis={},
+                full_thesis_production=full_thesis_production,
+                full_thesis_seed_materialization=seed_materialization,
+            )
+        )
+        self.assertIsNone(
+            _full_thesis_smoke_requirement_satisfied_by(
+                full_thesis={},
+                full_thesis_production=full_thesis_production,
+                full_thesis_seed_materialization=seed_materialization,
+            )
+        )
+
     def test_controlled_smoke_is_disabled_by_default(self):
         with TemporaryDirectory() as tmp:
             output_root = Path(tmp) / "out"

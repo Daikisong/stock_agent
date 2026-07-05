@@ -1477,6 +1477,7 @@ def build_source_acquisition_report_v4(executions: Sequence[SourceTaskExecutionV
         for execution in executions
         if not execution.budget_used or any(value is None for value in execution.budget_used.values())
     )
+    budget_cap_exceeded = sum(1 for execution in executions if _source_task_execution_budget_cap_exceeded(execution))
     return {
         "schema_version": "research_brain_v4_source_acquisition_report",
         "summary": {
@@ -1495,6 +1496,7 @@ def build_source_acquisition_report_v4(executions: Sequence[SourceTaskExecutionV
             "provider_failure_count": statuses.get("PROVIDER_FAILED", 0),
             "budget_exhausted_count": statuses.get("BUDGET_EXHAUSTED", 0),
             "unbounded_source_task_count": unbounded,
+            "budget_cap_exceeded_count": budget_cap_exceeded,
             "source_task_accepted_without_real_document_count": accepted_without_doc,
             "accepted_claim_count": sum(len(execution.accepted_claim_ids) for execution in executions),
             "unique_accepted_claim_count": len(unique_claim_ids),
@@ -1506,7 +1508,29 @@ def build_source_acquisition_report_v4(executions: Sequence[SourceTaskExecutionV
         },
         "status_counts": dict(statuses),
         "rows": [execution.to_dict() for execution in executions],
-    }
+}
+
+
+def _source_task_execution_budget_cap_exceeded(execution: SourceTaskExecutionV4) -> bool:
+    task = execution.source_task or {}
+    budget = execution.budget_used or {}
+    checks = (
+        ("queries", "max_queries"),
+        ("candidates", "max_candidates"),
+        ("fetches", "max_fetches"),
+        ("fetch_attempts", "max_fetches"),
+    )
+    for used_key, limit_key in checks:
+        used = budget.get(used_key)
+        limit = task.get(limit_key)
+        if used is None or limit is None:
+            continue
+        try:
+            if int(used) > int(limit):
+                return True
+        except (TypeError, ValueError):
+            return True
+    return False
 
 
 def _document_id_url_pairs(execution: SourceTaskExecutionV4) -> tuple[tuple[str, str], ...]:

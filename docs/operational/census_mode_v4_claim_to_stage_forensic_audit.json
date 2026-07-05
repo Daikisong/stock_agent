@@ -2,6 +2,9 @@
   "critical_count": 0,
   "critical_counts": {
     "claim_id_not_found_count": 0,
+    "claim_to_stage_claim_set_mismatch_count": 0,
+    "claim_to_stage_score_contribution_set_mismatch_count": 0,
+    "claim_to_stage_stagecourt_set_mismatch_count": 0,
     "claim_to_stage_trace_missing_count": 0,
     "no_current_thesis_recent_cutoff_reason_count": 0,
     "provider_failed_final_score_count": 0,
@@ -20,7 +23,7 @@
     "support_claim_not_accepted_count": 0
   },
   "schema_version": "e2r_census_v4_claim_to_stage_forensic_audit_v1",
-  "scored_row_count": 73,
-  "stage2plus_or_risk_row_count": 15,
+  "scored_row_count": 68,
+  "stage2plus_or_risk_row_count": 18,
   "verdict": "PASS"
 }

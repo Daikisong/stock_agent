@@ -42,6 +42,39 @@ class CensusV4KnownBadRegressionTests(unittest.TestCase):
         self.assertEqual(case["observed"]["support_claim_ids"], [])
         self.assertEqual(case["observed"]["transition_overlay"], "NONE")
 
+    def test_known_bad_report_requires_named_regression_bundle(self):
+        report = run_known_bad_regression(
+            output_root=census_v4_artifacts()["output_root"],
+            target_gate="anti_fake",
+        )
+
+        self.assertTrue(report["minimum_case_count_pass"])
+        self.assertGreaterEqual(report["case_count"], report["minimum_case_count_required"])
+        self.assertEqual(report["missing_required_case_ids"], [])
+        self.assertTrue(set(report["required_case_ids"]) <= {case["case_id"] for case in report["cases"]})
+
+    def test_known_bad_mutated_leaf_cases_raise_expected_critical_counts(self):
+        report = run_known_bad_regression(
+            output_root=census_v4_artifacts()["output_root"],
+            target_gate="anti_fake",
+        )
+        by_id = {case["case_id"]: case for case in report["cases"]}
+
+        for case_id in (
+            "trace_mismatch_guard",
+            "trace_score_interval_guard",
+            "trace_claim_set_guard",
+            "source_proxy_score_guard",
+            "evidence_url_pending_score_guard",
+            "snippet_score_guard",
+            "provider_failure_final_score_guard",
+        ):
+            with self.subTest(case_id=case_id):
+                case = by_id[case_id]
+                self.assertEqual(case["status"], "PASS")
+                self.assertEqual(case["fixture_type"], "mutated_leaf_artifact")
+                self.assertGreater(case["observed_count"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()

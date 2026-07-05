@@ -9,13 +9,11 @@
       "case_pass": true,
       "expected": "C06 positive path and qualification-lag guard both pass contract-blind semantic replay",
       "observed": {
-        "controlled_wiring_smoke_pass": true,
+        "controlled_wiring_smoke_pass": false,
         "guard_cases_pass": true,
         "guard_replay_pass": true,
         "positive_semantic_replay_ready": true,
-        "semantic_blockers": [
-          "controlled_smoke_claims_are_fixture_mapped_not_contract_blind_extracted"
-        ]
+        "semantic_blockers": []
       },
       "required_before_meaningful_operation": true,
       "status": "PASS"
@@ -141,7 +139,7 @@
       "expected": "provider failure does not finalize low score or Red",
       "observed": {
         "known_bad_case_id": "provider_failure_final_score_guard",
-        "known_bad_expected": null,
+        "known_bad_expected": "mutated fixture must raise provider_failed_final_score_count",
         "known_bad_observed": null,
         "known_bad_status": "PASS"
       },
@@ -165,7 +163,7 @@
   ],
   "controlled_semantic_replay_pass": true,
   "fail_count": 0,
-  "output_root": "output/census_v4/2026-07-01-v136-goal-gates-audit-refresh",
+  "output_root": "output/census_v4/2026-07-01-v177-goal-followup-production-after-expanded-brain-web-width",
   "pass_count": 10,
   "pending_count": 0,
   "required_case_count": 10,

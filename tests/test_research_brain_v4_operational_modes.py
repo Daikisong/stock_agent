@@ -26,6 +26,9 @@ from e2r.agentic.evidence_os import (
     TemporalStatus,
     VerificationStatus,
 )
+from e2r.production.source_connectors.source_provider_registry import SourceFetchResult, SourceProviderRegistry
+from e2r.research.page_fetcher import PageFetcher
+from e2r.research.search_provider import SearchResult
 from e2r.production.claim_extraction import CodexCLIExtractorProvider, RuleFallbackExtractorProvider
 from e2r.research_brain.schemas import SourceTask
 from e2r.research_brain.v2_schemas import ArchetypeMemoryCard, CandidateEventV2, EventMagnitudeV2, LLMPlannerOutputV2
@@ -55,7 +58,14 @@ from e2r.research_brain.v4_planner_runtime import (
     source_tasks_from_planner_output_v4,
     validate_llm_planner_output_v4,
 )
-from e2r.research_brain.v4_schemas import PlannerRunV4, ProductionShadowV4Config, SourceAcquisitionResultV4, SourceTaskExecutionV4
+from e2r.research_brain.v4_schemas import (
+    PlannerRunV4,
+    ProductionShadowV4Config,
+    SourceAcquisitionModeV4,
+    SourceAcquisitionResultV4,
+    SourceTaskExecutionV4,
+)
+from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRunnerV4
 from tests.research_brain_v4_test_helpers import load_v4_cards, load_v4_matrix
 
 
@@ -85,6 +95,52 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertEqual(config.accepted_claim_target, 0)
         self.assertEqual(config.max_distinct_candidate_attempts, 30)
         self.assertEqual(config.claim_extractor_timeout_seconds, 60.0)
+
+    def test_live_full_bounded_web_fallback_uses_remaining_task_budget_after_official(self):
+        event = _planner_event()
+        task = SourceTask(
+            task_id="TASK-UNIT-TASKWIDE-BUDGET",
+            candidate_event_id=event.candidate_event_id,
+            symbol=event.symbol,
+            company_name=event.company_name,
+            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            primitive_gap="customer_preorder_or_allocation",
+            task_type="positive_verify",
+            preferred_source_classes=("DART", "TrustedNews"),
+            fallback_source_classes=("TrustedNews",),
+            query_intents=(
+                "삼성전자 HBM 고객 배정 확인",
+                "삼성전자 HBM CAPA 확인",
+                "삼성전자 HBM 매출 비중 확인",
+            ),
+            max_queries=3,
+            max_candidates=20,
+            max_fetches=5,
+        )
+        search_provider = _BudgetRecordingSearchProvider()
+        fetcher = PageFetcher(
+            fixture_text_by_url={
+                f"https://unit-news.example/samsung-hbm-{index}": "삼성전자는 HBM 고객 배정과 CAPA 관련 내용을 확인했다."
+                for index in range(1, 4)
+            },
+            live_enabled=False,
+        )
+        runner = SourceAcquisitionRunnerV4(
+            mode=SourceAcquisitionModeV4.LIVE_FULL_BOUNDED.value,
+            source_provider_registry=SourceProviderRegistry((_OneLiveOfficialConnector(),)),
+            web_search_provider=search_provider,
+            web_page_fetcher=fetcher,
+        )
+
+        result = runner.acquire(event=event, task=task, as_of_date=date(2026, 6, 29))
+
+        self.assertEqual(len(search_provider.calls), 2)
+        self.assertTrue(all(call["max_results"] <= 19 for call in search_provider.calls))
+        self.assertLessEqual(result.budget_used["queries"], task.max_queries)
+        self.assertLessEqual(result.budget_used["candidates"], task.max_candidates)
+        self.assertLessEqual(result.budget_used["fetches"], task.max_fetches)
+        self.assertLessEqual(result.budget_used["fetch_attempts"], task.max_fetches)
+        self.assertEqual(result.budget_used["queries"], 3)
 
     def test_candidate_event_seed_path_is_prioritized_before_daily_discovery(self):
         discovered = _planner_event_with_id("CE-UNIT-DISCOVERED", symbol="000660", company_name="SK하이닉스")
@@ -2864,6 +2920,49 @@ def _source_task_draft_payload(primitive: str, preferred, fallback, *, max_fetch
         "general_search_allowed": False,
         "reason_from_memory": "unit",
     }
+
+
+class _OneLiveOfficialConnector:
+    provider_name = "OpenDARTUnit"
+    source_class = "DART"
+
+    def fetch(self, *, symbol, company_name, as_of_date, mode):
+        return SourceFetchResult(
+            provider_name=self.provider_name,
+            source_class=self.source_class,
+            mode=mode,
+            request_id=f"REQ-{symbol}",
+            request_params={"symbol": symbol},
+            status="FETCHED",
+            canonical_url=f"https://dart.example/{symbol}/official",
+            official_document_id=f"OFFICIAL-{symbol}",
+            published_at=as_of_date.isoformat(),
+            available_at=as_of_date.isoformat(),
+            fetched_at=as_of_date.isoformat(),
+            content_hash=f"HASH-{symbol}",
+            raw_text=f"{company_name} 공식 보고서 HBM 현재 상태 확인.",
+            structured_payload={"symbol": symbol, "company_name": company_name},
+            provider_request_id=f"REQ-{symbol}",
+        )
+
+
+class _BudgetRecordingSearchProvider:
+    def __init__(self) -> None:
+        self.calls = []
+
+    def search(self, query, as_of_date, max_results=100):
+        call_index = len(self.calls) + 1
+        self.calls.append({"query": query, "max_results": max_results})
+        return (
+            SearchResult(
+                title=f"삼성전자 HBM 고객 배정 보도 {call_index}",
+                url=f"https://unit-news.example/samsung-hbm-{call_index}",
+                snippet="삼성전자 HBM 고객 배정 확인",
+                source="UnitNews",
+                rank=call_index,
+                is_news=True,
+            ),
+        )
 
 
 class _MissingFirstRealPlannerProvider:

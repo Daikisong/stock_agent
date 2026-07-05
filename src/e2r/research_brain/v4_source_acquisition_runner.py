@@ -6,7 +6,7 @@ import csv
 import hashlib
 import json
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
@@ -140,7 +140,10 @@ class SourceAcquisitionRunnerV4:
         }:
             live_result = self._acquire_live_official_sources(event=event, task=task, as_of_date=as_of_date)
             if self.mode == SourceAcquisitionModeV4.LIVE_FULL_BOUNDED and _task_requests_external_web(task):
-                web_result = self._acquire_live_web_sources(event=event, task=task, as_of_date=as_of_date)
+                web_task = _remaining_web_task_after_live_result(task=task, live_result=live_result)
+                if web_task is None:
+                    return live_result
+                web_result = self._acquire_live_web_sources(event=event, task=web_task, as_of_date=as_of_date)
                 return _merge_live_official_and_web_results(live_result=live_result, web_result=web_result)
             if live_result.status == "PARSED" or self.mode == SourceAcquisitionModeV4.LIVE_OFFICIAL_ONLY:
                 return live_result
@@ -232,8 +235,9 @@ class SourceAcquisitionRunnerV4:
         anchors: list[EvidenceAnchor] = []
         text_by_id: dict[str, str] = {}
         attempts = 0
-        for connector in connectors[: task.max_candidates]:
-            if len(documents) >= task.max_fetches:
+        max_official_attempts = min(int(task.max_queries), int(task.max_candidates))
+        for connector in connectors[:max_official_attempts]:
+            if attempts >= int(task.max_queries) or len(documents) >= task.max_fetches:
                 break
             attempts += 1
             result = connector.fetch(
@@ -388,7 +392,12 @@ class SourceAcquisitionRunnerV4:
                 web_rejected_documents=tuple(web_rejected_rows),
             )
 
-        for query in query_plan.accepted[: task.max_queries]:
+        max_queries = max(1, int(task.max_queries))
+        max_candidates = max(1, int(task.max_candidates))
+        max_fetches = max(1, int(task.max_fetches))
+        for query in query_plan.accepted[:max_queries]:
+            if search_result_count >= max_candidates or fetch_attempt_count >= max_fetches or len(documents) >= max_fetches:
+                break
             web_task_id = _web_task_id(task=task, event=event, query=query, provider_name=provider_name)
             task_result_rows: list[dict[str, Any]] = []
             task_rejected_count = 0
@@ -396,7 +405,7 @@ class SourceAcquisitionRunnerV4:
             executed_query_count += 1
             try:
                 results = _rank_web_search_results_for_fetch(
-                    results=provider.search(query, as_of_date=as_of_date, max_results=max(1, int(task.max_candidates))),
+                    results=provider.search(query, as_of_date=as_of_date, max_results=max(1, max_candidates - search_result_count)),
                     event=event,
                 )
             except Exception as exc:  # pragma: no cover - defensive provider boundary
@@ -429,7 +438,9 @@ class SourceAcquisitionRunnerV4:
                 )
                 continue
             provider_errors.extend(_provider_errors(provider))
-            for result in results[: max(1, int(task.max_candidates))]:
+            for result in results:
+                if search_result_count >= max_candidates:
+                    break
                 search_result_count += 1
                 result_row = _web_result_row(
                     web_task_id=web_task_id,
@@ -510,7 +521,7 @@ class SourceAcquisitionRunnerV4:
                     )
                     web_result_rows.append(result_row)
                     continue
-                if len(documents) >= int(task.max_fetches):
+                if len(documents) >= max_fetches or fetch_attempt_count >= max_fetches:
                     result_row["selected_for_fetch"] = False
                     result_row["selection_status"] = "NOT_SELECTED_BUDGET_EXHAUSTED"
                     web_result_rows.append(result_row)
@@ -1118,6 +1129,33 @@ def _merge_live_official_and_web_results(
     )
 
 
+def _remaining_web_task_after_live_result(
+    *,
+    task: SourceTask,
+    live_result: SourceAcquisitionResultV4,
+) -> SourceTask | None:
+    """Return a web fallback task constrained by the original task-wide budget."""
+
+    budget = live_result.budget_used or {}
+
+    def remaining(limit_name: str, *used_names: str) -> int:
+        limit = int(getattr(task, limit_name))
+        used = sum(int(budget.get(name, 0) or 0) for name in used_names)
+        return max(0, limit - used)
+
+    remaining_queries = remaining("max_queries", "queries")
+    remaining_candidates = remaining("max_candidates", "candidates")
+    remaining_fetches = remaining("max_fetches", "fetches", "fetch_attempts")
+    if remaining_queries <= 0 or remaining_candidates <= 0 or remaining_fetches <= 0:
+        return None
+    return replace(
+        task,
+        max_queries=remaining_queries,
+        max_candidates=remaining_candidates,
+        max_fetches=remaining_fetches,
+    )
+
+
 def _anchor_for_snapshot(*, document: EvidenceDocument, snapshot: StoredSourceSnapshot) -> EvidenceAnchor:
     if snapshot.anchor_type != AnchorType.TEXT_SPAN:
         return EvidenceAnchor.structured(
@@ -1140,7 +1178,11 @@ def _policy_rejection(task: SourceTask) -> tuple[str, ...]:
             reasons.append(f"unbounded_or_invalid_{field_name}")
     if "unbounded_general_search" not in tuple(task.forbidden_source_classes):
         reasons.append("missing_unbounded_general_search_guard")
-    if (task.general_search_allowed or _task_requests_external_web(task)) and _is_official_solvable_gap(task.primitive_gap):
+    if _is_official_solvable_gap(task.primitive_gap) and (
+        task.general_search_allowed
+        or _task_requests_general_web_or_news(task)
+        or (_task_requests_external_web(task) and not _allows_bounded_report_fallback_for_official_gap(task.primitive_gap))
+    ):
         reasons.append("official_solvable_gap_sent_to_general_web")
     if _is_fcf_gap(task.primitive_gap):
         source_names = {_normalize_source_class(item).lower() for item in (*task.preferred_source_classes, *task.fallback_source_classes)}
@@ -1290,6 +1332,17 @@ def _task_requests_external_web(task: SourceTask) -> bool:
     }
     requested = {_normalize_source_class(item) for item in (*task.preferred_source_classes, *task.fallback_source_classes)}
     return bool(requested & external)
+
+
+def _task_requests_general_web_or_news(task: SourceTask) -> bool:
+    general_or_news = {"NaverSearch", "GeneralWebSearch", "TrustedNews", "News", "IndustryMedia"}
+    requested = {_normalize_source_class(item) for item in (*task.preferred_source_classes, *task.fallback_source_classes)}
+    return bool(requested & general_or_news)
+
+
+def _allows_bounded_report_fallback_for_official_gap(primitive: str) -> bool:
+    lower = str(primitive or "").lower()
+    return lower == "cash_or_revision_conversion" or "revision" in lower
 
 
 def _target_scoped_web_queries(*, task: SourceTask, event: CandidateEventV2) -> _TargetScopedQueryPlan:

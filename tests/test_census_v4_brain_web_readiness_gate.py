@@ -39,6 +39,154 @@ class CensusV4BrainWebReadinessGateTests(unittest.TestCase):
         self.assertEqual(audit["verdict"], "FAIL")
         self.assertEqual(audit["llm_claim_extractor_missing_raw_prompt_response_path_count"], 1)
 
+    def test_brain_web_readiness_blocks_source_task_budget_cap_exceeded(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for name in [
+                "planner_runs.jsonl",
+                "web_search_tasks.jsonl",
+                "web_search_results.jsonl",
+                "web_fetched_documents.jsonl",
+                "web_rejected_documents.jsonl",
+                "claim_extractor_runs.jsonl",
+                "accepted_claims.jsonl",
+                "evidence_documents.jsonl",
+                "evidence_anchors.jsonl",
+                "score_contributions.jsonl",
+                "stagecourt_traces.jsonl",
+                "brain_to_claim_trace.jsonl",
+            ]:
+                write_jsonl(root / name, [])
+            write_jsonl(
+                root / "source_task_executions.jsonl",
+                [
+                    {
+                        "task_id": "TASK-CAP-OVER",
+                        "source_origin": "research_brain_v4_attempt",
+                        "source_task": {
+                            "max_queries": 1,
+                            "max_candidates": 5,
+                            "max_fetches": 1,
+                        },
+                        "status": "NO_EVIDENCE_FOUND",
+                        "budget_used": {
+                            "queries": 2,
+                            "candidates": 6,
+                            "fetches": 0,
+                        },
+                    }
+                ],
+            )
+
+            audit = _brain_web_readiness_gate_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    run_mode="BRAIN_AND_WEB_ACQUISITION_ENABLED",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={"real_provider_success_count": 1, "source_task_execution_count": 1},
+                brain_stage_promotion={"verdict": "PROMOTION_APPLIED"},
+                stage_rows=[],
+            )
+
+        self.assertEqual(audit["source_task_budget_cap_exceeded_count"], 1)
+        self.assertIn("Brain/Web source task budget caps were exceeded: 1", audit["blockers"])
+        self.assertEqual(audit["verdict"], "BLOCKED")
+
+    def test_brain_web_readiness_blocks_accepted_source_task_with_provider_errors(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_brain_gate_fixture(root, claim_id="CLM-A", contribution_claim_id="CLM-A", stage_claim_id="CLM-A")
+            executions = _read_jsonl(root / "source_task_executions.jsonl")
+            executions[0]["provider_errors"] = ["claim_extractor_provider_error:timeout_after_partial_acceptance"]
+            write_jsonl(root / "source_task_executions.jsonl", executions)
+
+            audit = _brain_web_readiness_gate_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={
+                    "real_provider_success_count": 1,
+                    "source_task_execution_count": 1,
+                    "accepted_claim_count": 1,
+                    "real_document_fetched_count": 1,
+                },
+                brain_stage_promotion={
+                    "verdict": "PROMOTION_APPLIED",
+                    "brain_promoted_stage_row_count": 1,
+                    "unsafe_promoted_stage_row_count": 0,
+                    "brain_snapshot_document_count": 0,
+                    "fake_provider_used_count": 0,
+                },
+                stage_rows=[
+                    {
+                        "stagecourt_trace_id": "SCT-BRAIN-A",
+                        "accepted_claim_ids": ["CLM-A"],
+                        "support_claim_ids": ["CLM-A"],
+                        "score_scale": "EVENT_WEIGHTED_PARTIAL",
+                    }
+                ],
+            )
+
+        self.assertEqual(audit["accepted_source_task_with_provider_error_count"], 1)
+        self.assertEqual(audit["accepted_source_task_with_provider_gap_count"], 1)
+        self.assertIn(
+            "Brain/Web accepted source tasks still contain unresolved provider/runtime errors: 1",
+            audit["blockers"],
+        )
+        self.assertEqual(audit["verdict"], "BLOCKED")
+
+    def test_brain_web_readiness_exposes_nonmaterial_accepted_source_task_provider_gap_without_blocking(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_brain_gate_fixture(root, claim_id="CLM-A", contribution_claim_id="CLM-A", stage_claim_id="CLM-A")
+            executions = _read_jsonl(root / "source_task_executions.jsonl")
+            executions[0]["provider_errors"] = ["issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"]
+            write_jsonl(root / "source_task_executions.jsonl", executions)
+
+            audit = _brain_web_readiness_gate_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={
+                    "real_provider_success_count": 1,
+                    "source_task_execution_count": 1,
+                    "accepted_claim_count": 1,
+                    "real_document_fetched_count": 1,
+                },
+                brain_stage_promotion={
+                    "verdict": "PROMOTION_APPLIED",
+                    "brain_promoted_stage_row_count": 1,
+                    "unsafe_promoted_stage_row_count": 0,
+                    "brain_snapshot_document_count": 0,
+                    "fake_provider_used_count": 0,
+                },
+                stage_rows=[
+                    {
+                        "stagecourt_trace_id": "SCT-BRAIN-A",
+                        "accepted_claim_ids": ["CLM-A"],
+                        "support_claim_ids": ["CLM-A"],
+                        "score_scale": "EVENT_WEIGHTED_PARTIAL",
+                    }
+                ],
+            )
+
+        self.assertEqual(audit["accepted_source_task_with_provider_gap_count"], 1)
+        self.assertEqual(audit["accepted_source_task_with_provider_error_count"], 0)
+        self.assertNotIn("accepted source tasks still contain unresolved", " ".join(audit["blockers"]))
+        self.assertEqual(audit["verdict"], "READY_FOR_BRAIN_WEB_EVIDENCE_PASS")
+
     def test_canonical_disabled_run_records_not_requested_not_pass(self):
         root = census_v4_artifacts()["output_root"]
         gate = read_json(root / "brain_web_readiness_gate_audit.json")
@@ -841,7 +989,7 @@ class CensusV4BrainWebReadinessGateTests(unittest.TestCase):
         self.assertTrue(gate["operational_minimum_count_gate_applies"])
         self.assertFalse(gate["brain_web_evidence_pass_allowed"])
         blockers = " ".join(gate["blockers"])
-        self.assertIn("operational minimum planner runs not met: 1/30", blockers)
+        self.assertIn("operational minimum planner calls not met: 1/30", blockers)
         self.assertIn("operational minimum web search tasks not met: 1/20", blockers)
         self.assertIn("operational minimum web/news search calls not met: 1/20", blockers)
         self.assertIn("operational minimum fetched documents not met: 1/10", blockers)
@@ -887,6 +1035,13 @@ class CensusV4BrainWebReadinessGateTests(unittest.TestCase):
         self.assertTrue(gate["operational_minimum_count_gate_applies"])
         self.assertTrue(gate["brain_web_evidence_pass_allowed"])
         self.assertEqual(gate["minimum_required_counts"]["llm_planner_call_count"], 30)
+        self.assertEqual(gate["minimum_required_counts"]["official_first_violation_count"], 0)
+        self.assertEqual(gate["planner_run_row_count"], 30)
+        self.assertEqual(gate["llm_planner_call_count"], 30)
+        self.assertEqual(gate["llm_planner_attempt_count"], 30)
+        self.assertEqual(gate["llm_planner_success_count"], 30)
+        self.assertEqual(gate["llm_planner_not_attempted_count"], 0)
+        self.assertEqual(gate["official_first_violation_count"], 0)
         self.assertEqual(gate["web_search_task_count"], 20)
         self.assertEqual(gate["web_search_call_count"], 20)
         self.assertEqual(gate["web_fetched_document_count"], 10)
@@ -896,6 +1051,241 @@ class CensusV4BrainWebReadinessGateTests(unittest.TestCase):
         self.assertEqual(gate["llm_extracted_accepted_claim_count"], 3)
         self.assertEqual(gate["web_news_accepted_claim_count"], 3)
         self.assertEqual(gate["official_accepted_claim_count"], 0)
+
+    def test_production_brain_web_counts_real_planner_attempts_not_not_attempted_rows(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_brain_gate_operational_minimum_fixture(root)
+            planner_rows = []
+            for idx in range(1, 21):
+                planner_rows.append(
+                    {
+                        "planner_run_id": f"PLAN-SUCCESS-{idx}",
+                        "provider_mode": "real",
+                        "provider_name": "codex_cli_planner",
+                        "real_provider_success": True,
+                    }
+                )
+            for idx in range(21, 31):
+                planner_rows.append(
+                    {
+                        "planner_run_id": f"PLAN-TIMEOUT-{idx}",
+                        "provider_mode": "real",
+                        "provider_name": "codex_cli_planner",
+                        "provider_error": "codex_cli_timeout",
+                        "real_provider_success": False,
+                    }
+                )
+            for idx in range(31, 301):
+                planner_rows.append(
+                    {
+                        "planner_run_id": f"PLAN-NOT-ATTEMPTED-{idx}",
+                        "provider_mode": "none",
+                        "provider_name": "not_attempted_after_real_planner_limit",
+                        "provider_error": "planner_not_attempted_after_real_planner_limit",
+                        "real_provider_success": False,
+                    }
+                )
+            write_jsonl(root / "planner_runs.jsonl", planner_rows)
+
+            gate = _brain_web_readiness_gate_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    run_mode="BRAIN_AND_WEB_ACQUISITION_ENABLED",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={
+                    "real_provider_attempt_count": 30,
+                    "real_provider_success_count": 20,
+                    "planner_not_attempted_count": 270,
+                    "source_task_execution_count": 3,
+                    "accepted_claim_count": 3,
+                    "real_document_fetched_count": 3,
+                },
+                brain_stage_promotion={
+                    "verdict": "PROMOTION_APPLIED",
+                    "brain_promoted_stage_row_count": 1,
+                    "unsafe_promoted_stage_row_count": 0,
+                    "brain_snapshot_document_count": 0,
+                    "fake_provider_used_count": 0,
+                },
+                stage_rows=[
+                    {
+                        "stagecourt_trace_id": "SCT-BRAIN-A",
+                        "accepted_claim_ids": ["CLM-1", "CLM-2", "CLM-3"],
+                        "score_scale": "EVENT_WEIGHTED_PARTIAL",
+                    }
+                ],
+            )
+
+        self.assertEqual(gate["verdict"], "READY_FOR_BRAIN_WEB_EVIDENCE_PASS")
+        self.assertEqual(gate["planner_run_row_count"], 300)
+        self.assertEqual(gate["llm_planner_call_count"], 30)
+        self.assertEqual(gate["llm_planner_attempt_count"], 30)
+        self.assertEqual(gate["llm_planner_success_count"], 20)
+        self.assertEqual(gate["llm_planner_not_attempted_count"], 270)
+        self.assertNotIn("operational minimum planner calls not met", " ".join(gate["blockers"]))
+
+    def test_production_brain_web_blocks_when_planner_rows_are_only_not_attempted(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_brain_gate_operational_minimum_fixture(root)
+            write_jsonl(
+                root / "planner_runs.jsonl",
+                [
+                    {
+                        "planner_run_id": f"PLAN-NOT-ATTEMPTED-{idx}",
+                        "provider_mode": "none",
+                        "provider_name": "not_attempted_after_real_planner_limit",
+                        "provider_error": "planner_not_attempted_after_real_planner_limit",
+                        "real_provider_success": False,
+                    }
+                    for idx in range(1, 31)
+                ],
+            )
+
+            gate = _brain_web_readiness_gate_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    run_mode="BRAIN_AND_WEB_ACQUISITION_ENABLED",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={
+                    "real_provider_attempt_count": 0,
+                    "real_provider_success_count": 0,
+                    "planner_not_attempted_count": 30,
+                    "source_task_execution_count": 3,
+                    "accepted_claim_count": 3,
+                    "real_document_fetched_count": 3,
+                },
+                brain_stage_promotion={
+                    "verdict": "PROMOTION_APPLIED",
+                    "brain_promoted_stage_row_count": 1,
+                    "unsafe_promoted_stage_row_count": 0,
+                    "brain_snapshot_document_count": 0,
+                    "fake_provider_used_count": 0,
+                },
+                stage_rows=[
+                    {
+                        "stagecourt_trace_id": "SCT-BRAIN-A",
+                        "accepted_claim_ids": ["CLM-1", "CLM-2", "CLM-3"],
+                        "score_scale": "EVENT_WEIGHTED_PARTIAL",
+                    }
+                ],
+            )
+
+        self.assertEqual(gate["verdict"], "BLOCKED")
+        self.assertEqual(gate["planner_run_row_count"], 30)
+        self.assertEqual(gate["llm_planner_call_count"], 0)
+        self.assertEqual(gate["llm_planner_attempt_count"], 0)
+        self.assertEqual(gate["llm_planner_success_count"], 0)
+        self.assertEqual(gate["llm_planner_not_attempted_count"], 30)
+        blockers = " ".join(gate["blockers"])
+        self.assertIn("LLM planner real-provider success count is zero", blockers)
+        self.assertIn("operational minimum planner calls not met: 0/30", blockers)
+
+    def test_official_first_violation_blocks_when_external_web_reaches_score_evidence(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_brain_gate_fixture(root, claim_id="CLM-A", contribution_claim_id="CLM-A", stage_claim_id="CLM-A")
+            executions = _read_jsonl(root / "source_task_executions.jsonl")
+            executions[0].update(
+                {
+                    "source_class": "GeneralWebSearch",
+                    "provider_name": "NaverSearch",
+                    "preferred_source_classes": ["DART"],
+                    "fallback_source_classes": ["GeneralWebSearch"],
+                    "requested_source_classes": ["DART", "GeneralWebSearch"],
+                }
+            )
+            write_jsonl(root / "source_task_executions.jsonl", executions)
+
+            gate = _brain_web_readiness_gate_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={
+                    "real_provider_success_count": 1,
+                    "source_task_execution_count": 1,
+                    "accepted_claim_count": 1,
+                    "real_document_fetched_count": 1,
+                },
+                brain_stage_promotion={
+                    "verdict": "PROMOTION_APPLIED",
+                    "brain_promoted_stage_row_count": 1,
+                    "unsafe_promoted_stage_row_count": 0,
+                    "brain_snapshot_document_count": 0,
+                    "fake_provider_used_count": 0,
+                },
+                stage_rows=[{"stagecourt_trace_id": "SCT-BRAIN-A", "accepted_claim_ids": ["CLM-A"], "score_scale": "EVENT_WEIGHTED_PARTIAL"}],
+            )
+
+        self.assertEqual(gate["verdict"], "BLOCKED")
+        self.assertEqual(gate["official_first_violation_count"], 1)
+        self.assertEqual(gate["official_first_policy_rejected_count"], 0)
+        self.assertIn("Brain/Web official-first violations reached score evidence: 1", gate["blockers"])
+        self.assertEqual(gate["official_first_violation_examples"][0]["task_id"], "TASK-A")
+
+    def test_policy_rejected_official_first_draft_is_not_counted_as_score_violation(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_brain_gate_fixture(root, claim_id="CLM-A", contribution_claim_id="CLM-A", stage_claim_id="CLM-A")
+            executions = _read_jsonl(root / "source_task_executions.jsonl")
+            executions.append(
+                {
+                    "task_id": "TASK-REJECTED",
+                    "source_origin": "research_brain_v4_attempt",
+                    "status": "REJECTED_BY_POLICY",
+                    "source_class": "policy",
+                    "provider_name": "v4_policy_validator",
+                    "provider_errors": ["official_solvable_gap_sent_to_general_web"],
+                    "preferred_source_classes": ["CompanyNewsroom"],
+                    "fallback_source_classes": ["DART"],
+                    "requested_source_classes": ["CompanyNewsroom", "DART"],
+                    "accepted_claim_ids": [],
+                    "fetched_document_ids": [],
+                }
+            )
+            write_jsonl(root / "source_task_executions.jsonl", executions)
+
+            gate = _brain_web_readiness_gate_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={
+                    "real_provider_success_count": 1,
+                    "source_task_execution_count": 2,
+                    "accepted_claim_count": 1,
+                    "real_document_fetched_count": 1,
+                },
+                brain_stage_promotion={
+                    "verdict": "PROMOTION_APPLIED",
+                    "brain_promoted_stage_row_count": 1,
+                    "unsafe_promoted_stage_row_count": 0,
+                    "brain_snapshot_document_count": 0,
+                    "fake_provider_used_count": 0,
+                },
+                stage_rows=[{"stagecourt_trace_id": "SCT-BRAIN-A", "accepted_claim_ids": ["CLM-A"], "score_scale": "EVENT_WEIGHTED_PARTIAL"}],
+            )
+
+        self.assertEqual(gate["verdict"], "READY_FOR_BRAIN_WEB_EVIDENCE_PASS")
+        self.assertEqual(gate["official_first_violation_count"], 0)
+        self.assertEqual(gate["official_first_policy_rejected_count"], 1)
+        self.assertNotIn("official-first violations reached score evidence", " ".join(gate["blockers"]))
 
     def test_official_only_brain_claim_does_not_count_as_web_or_llm_accepted_claim(self):
         with TemporaryDirectory() as tmp:

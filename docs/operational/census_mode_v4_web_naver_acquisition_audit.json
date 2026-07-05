@@ -1,6 +1,6 @@
 {
   "general_web_search_call_count": 0,
-  "naver_search_call_count": 102,
+  "naver_search_call_count": 31,
   "pass_scope": "real_full_source_acquisition",
   "requested_by_brain_web_mode": true,
   "requested_by_run_mode": true,
@@ -9,9 +9,9 @@
   "trusted_news_search_call_count": 0,
   "verdict": "REAL_ACQUISITION_PASS",
   "web_claimed_but_zero_search_count": 0,
-  "web_fetched_document_count": 64,
-  "web_rejected_document_count": 537,
-  "web_search_call_count": 102,
-  "web_search_result_count": 1180,
-  "web_search_task_count": 102
+  "web_fetched_document_count": 45,
+  "web_rejected_document_count": 168,
+  "web_search_call_count": 31,
+  "web_search_result_count": 400,
+  "web_search_task_count": 31
 }

@@ -1,17 +1,17 @@
 {
-  "accepted_claim_count": 264,
+  "accepted_claim_count": 213,
   "critical_count": 0,
   "critical_counts": {
     "non_representative_claim_score_leak_count": 0,
     "non_representative_claim_unreasoned_count": 0,
     "representative_atomic_claim_not_in_stage_row_count": 0
   },
-  "non_representative_claim_count": 169,
+  "non_representative_claim_count": 124,
   "reason_distribution": {
-    "accepted_claim_without_atomic_decision": 125,
-    "non_representative_atomic_decision": 44
+    "accepted_claim_without_atomic_decision": 85,
+    "non_representative_atomic_decision": 39
   },
-  "representative_stage_claim_count": 95,
+  "representative_stage_claim_count": 89,
   "rule": "Accepted claims that are not selected into the representative census_stage_status row must have an explicit reason and must not support the representative score unless they are also listed in that representative row.",
   "sample_non_representative_claims": [
     {
@@ -23,6 +23,20 @@
       "representative_atomic_decision_ids": [],
       "score_eligible": true,
       "symbol": "473980",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "atomic_stage_decision_ids": [
+        "ATOMIC-28374abe0196859b74ff"
+      ],
+      "claim_id": "CLM-628fb78f097a29a65007",
+      "polarity": "MIXED",
+      "primitive_id": "capital_allocation_event",
+      "reason": "non_representative_atomic_decision",
+      "representative_atomic_decision_ids": [],
+      "score_eligible": true,
+      "symbol": "052710",
       "target_scope_status": "DIRECT",
       "temporal_status": "CURRENT"
     },
@@ -93,6 +107,18 @@
       "representative_atomic_decision_ids": [],
       "score_eligible": true,
       "symbol": "000660",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "atomic_stage_decision_ids": [],
+      "claim_id": "CLM-277d6023a853c5665709",
+      "polarity": "POSITIVE",
+      "primitive_id": "contract_quality",
+      "reason": "accepted_claim_without_atomic_decision",
+      "representative_atomic_decision_ids": [],
+      "score_eligible": true,
+      "symbol": "376980",
       "target_scope_status": "DIRECT",
       "temporal_status": "CURRENT"
     },
@@ -222,34 +248,6 @@
     },
     {
       "atomic_stage_decision_ids": [
-        "ATOMIC-1d8134052cb284a8e069"
-      ],
-      "claim_id": "CLM-b2624b03d897ae2777ba",
-      "polarity": "MIXED",
-      "primitive_id": "capital_allocation_event",
-      "reason": "non_representative_atomic_decision",
-      "representative_atomic_decision_ids": [],
-      "score_eligible": true,
-      "symbol": "082920",
-      "target_scope_status": "DIRECT",
-      "temporal_status": "CURRENT"
-    },
-    {
-      "atomic_stage_decision_ids": [
-        "ATOMIC-2e04f86e2e9a95a2ec2c"
-      ],
-      "claim_id": "CLM-9694ca7b6afd0545384b",
-      "polarity": "MIXED",
-      "primitive_id": "information_confidence",
-      "reason": "non_representative_atomic_decision",
-      "representative_atomic_decision_ids": [],
-      "score_eligible": true,
-      "symbol": "299660",
-      "target_scope_status": "DIRECT",
-      "temporal_status": "CURRENT"
-    },
-    {
-      "atomic_stage_decision_ids": [
         "ATOMIC-1997bed7fc9f8a69a261"
       ],
       "claim_id": "CLM-d57c95342ba0cf445d52",
@@ -259,20 +257,6 @@
       "representative_atomic_decision_ids": [],
       "score_eligible": true,
       "symbol": "215090",
-      "target_scope_status": "DIRECT",
-      "temporal_status": "CURRENT"
-    },
-    {
-      "atomic_stage_decision_ids": [
-        "ATOMIC-7e7feec68da5f16f54fd"
-      ],
-      "claim_id": "CLM-0116e84896b3b7f0b357",
-      "polarity": "MIXED",
-      "primitive_id": "capital_allocation_event",
-      "reason": "non_representative_atomic_decision",
-      "representative_atomic_decision_ids": [],
-      "score_eligible": true,
-      "symbol": "007980",
       "target_scope_status": "DIRECT",
       "temporal_status": "CURRENT"
     },
@@ -289,13 +273,25 @@
       "symbol": "440110",
       "target_scope_status": "DIRECT",
       "temporal_status": "CURRENT"
+    },
+    {
+      "atomic_stage_decision_ids": [],
+      "claim_id": "CLM-f7664360a464fd660931",
+      "polarity": "MIXED",
+      "primitive_id": "capacity_expansion",
+      "reason": "accepted_claim_without_atomic_decision",
+      "representative_atomic_decision_ids": [],
+      "score_eligible": true,
+      "symbol": "003380",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
     }
   ],
   "schema_version": "e2r_census_v4_non_representative_claim_audit_v1",
   "unexpected_score_leak_claim_ids": [],
   "verdict": "PASS",
-  "warning_count": 125,
+  "warning_count": 85,
   "warning_counts": {
-    "accepted_claim_without_atomic_decision_count": 125
+    "accepted_claim_without_atomic_decision_count": 85
   }
 }
