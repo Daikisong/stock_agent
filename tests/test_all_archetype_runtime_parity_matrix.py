@@ -56,6 +56,19 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
                 "runtime_planner_attempt_count",
                 "runtime_source_task_count",
                 "runtime_source_task_executed_count",
+                "source_task_execution_log_count",
+                "source_task_no_accepted_claim_execution_count",
+                "source_task_direct_accepted_claim_count",
+                "source_task_rerouted_accepted_claim_count",
+                "source_task_any_accepted_claim_count",
+                "source_task_rejected_claim_count",
+                "source_task_failure_axis_counts",
+                "source_task_top_failure_axes",
+                "source_task_status_counts",
+                "source_task_stop_reason_counts",
+                "source_task_provider_error_counts",
+                "source_task_not_eligible_reason_counts",
+                "source_task_top_unsatisfied_primitives",
                 "runtime_accepted_claim_count",
                 "runtime_score_contribution_count",
                 "runtime_stagecourt_trace_count",
@@ -100,6 +113,9 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         self.assertEqual(c08["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
         self.assertGreater(c08["research_case_count"], 0)
         self.assertGreater(c08["runtime_source_task_count"], 0)
+        self.assertGreater(c08["source_task_execution_log_count"], 0)
+        self.assertIn("NO_ACCEPTED_CLAIM", c08["source_task_failure_axis_counts"])
+        self.assertIn("PRIMITIVE_MAPPING_REJECTED", c08["source_task_failure_axis_counts"])
         self.assertEqual(c08["runtime_full_thesis_row_count"], 0)
 
 

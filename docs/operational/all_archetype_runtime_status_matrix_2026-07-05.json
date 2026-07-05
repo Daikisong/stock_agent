@@ -100,6 +100,103 @@
       "source_route_pattern_count": 60,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 12,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 9,
+        "NO_ACCEPTED_CLAIM": 15,
+        "NO_FETCHED_DOCUMENT": 6,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 9,
+        "POLICY_REJECTED": 2,
+        "PRIMITIVE_GAP_UNSATISFIED": 15,
+        "PRIMITIVE_MAPPING_REJECTED": 9,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 4,
+        "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 6
+      },
+      "source_task_no_accepted_claim_execution_count": 15,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 9,
+        "primitive_mapping_rejected": 14
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 3,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "official_solvable_gap_sent_to_general_web": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 1
+      },
+      "source_task_rejected_claim_count": 14,
+      "source_task_rerouted_accepted_claim_count": 12,
+      "source_task_status_counts": {
+        "EVIDENCE_OS_ACCEPTED": 6,
+        "NO_EVIDENCE_FOUND": 9,
+        "PROVIDER_FAILED": 4,
+        "REJECTED_BY_POLICY": 2
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 9,
+        "rerouted_claim_accepted_original_gap_unsatisfied": 6,
+        "source_task_rejected_by_v4_policy": 2
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 15
+        },
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 15
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 9
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 9
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 9
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "contract_visibility"
+        },
+        {
+          "count": 1,
+          "primitive_id": "order_backlog_to_sales"
+        },
+        {
+          "count": 1,
+          "primitive_id": "named_customer_quality"
+        }
+      ],
       "status_reason_ko": "production 점수 경로는 닫혔지만 required-positive/Green 빈칸이 남아 있어 meaningful pass가 아니다.",
       "symbols_sample": [
         "052400"
@@ -174,6 +271,92 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 5,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 5,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 9,
+        "POLICY_REJECTED": 2,
+        "PRIMITIVE_GAP_UNSATISFIED": 9,
+        "PRIMITIVE_MAPPING_REJECTED": 5,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 3
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 5,
+        "primitive_mapping_rejected": 15
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 1,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "official_solvable_gap_sent_to_general_web": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 1
+      },
+      "source_task_rejected_claim_count": 15,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 9,
+        "PROVIDER_FAILED": 3,
+        "REJECTED_BY_POLICY": 2
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 9,
+        "source_task_rejected_by_v4_policy": 2
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 9
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 9
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        },
+        {
+          "axis": "NO_FETCHED_DOCUMENT",
+          "count": 5
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 5
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "datacenter_customer"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "033100"
@@ -255,6 +438,105 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 12,
+      "source_task_direct_accepted_claim_count": 1,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "ANCHOR_OR_LINEAGE_REJECTED": 1,
+        "DIRECT_ACCEPTED_CLAIM": 1,
+        "MAPPING_NOT_ACCEPTED": 7,
+        "NO_ACCEPTED_CLAIM": 10,
+        "NO_FETCHED_DOCUMENT": 3,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 7,
+        "POLICY_REJECTED": 1,
+        "PRIMITIVE_GAP_UNSATISFIED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 7,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 2,
+        "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 3,
+        "SEMANTIC_OR_TARGET_REJECTED": 1
+      },
+      "source_task_no_accepted_claim_execution_count": 10,
+      "source_task_not_eligible_reason_counts": {
+        "anchor_validation": 1,
+        "mapping_not_accepted": 7,
+        "primitive_mapping_rejected": 13,
+        "semantic_rejected": 1,
+        "source_lineage_unverified_original": 1,
+        "source_provider_document_type_mismatch": 1,
+        "source_task_provider_error_score_block": 1,
+        "target_not_direct": 1,
+        "target_scope_not_allowed": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "official_solvable_gap_sent_to_general_web": 1,
+        "trusted_news_provider_not_configured; general search is not a score source": 1
+      },
+      "source_task_rejected_claim_count": 32,
+      "source_task_rerouted_accepted_claim_count": 11,
+      "source_task_status_counts": {
+        "EVIDENCE_OS_ACCEPTED": 4,
+        "NO_EVIDENCE_FOUND": 7,
+        "PROVIDER_FAILED": 2,
+        "REJECTED_BY_POLICY": 1
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_source_parsed": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 7,
+        "rerouted_claim_accepted_original_gap_unsatisfied": 3,
+        "source_task_rejected_by_v4_policy": 1
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 10
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 10
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 7
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 7
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 7
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "government_customer"
+        }
+      ],
       "status_reason_ko": "production 점수 경로는 닫혔지만 required-positive/Green 빈칸이 남아 있어 meaningful pass가 아니다.",
       "symbols_sample": [
         "047810"
@@ -329,6 +611,88 @@
       "source_route_pattern_count": 51,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 7,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 3,
+        "NO_ACCEPTED_CLAIM": 7,
+        "NO_FETCHED_DOCUMENT": 2,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 5,
+        "PRIMITIVE_GAP_UNSATISFIED": 5,
+        "PRIMITIVE_MAPPING_REJECTED": 3,
+        "PROVIDER_ERROR_RECORDED": 3,
+        "PROVIDER_FAILED": 2
+      },
+      "source_task_no_accepted_claim_execution_count": 7,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 3,
+        "primitive_mapping_rejected": 8
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 1,
+        "live_full_bounded_provider_has_no_matching_document": 1,
+        "trusted_news_provider_not_configured; general search is not a score source": 1
+      },
+      "source_task_rejected_claim_count": 8,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 5,
+        "PROVIDER_FAILED": 2
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 1,
+        "no_score_eligible_real_claim": 5
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 7
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 5
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 5
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 3
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 3
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 3
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 1,
+          "primitive_id": "project_award_confirmed"
+        },
+        {
+          "count": 1,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "listing_trading_status_current"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "011700"
@@ -410,6 +774,97 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 10,
+      "source_task_direct_accepted_claim_count": 1,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "DIRECT_ACCEPTED_CLAIM": 1,
+        "MAPPING_NOT_ACCEPTED": 8,
+        "NO_ACCEPTED_CLAIM": 16,
+        "NO_FETCHED_DOCUMENT": 7,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 9,
+        "POLICY_REJECTED": 3,
+        "PRIMITIVE_GAP_UNSATISFIED": 13,
+        "PRIMITIVE_MAPPING_REJECTED": 8,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 4,
+        "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 4
+      },
+      "source_task_no_accepted_claim_execution_count": 16,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 8,
+        "primitive_mapping_rejected": 16
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "official_solvable_gap_sent_to_general_web": 3,
+        "trusted_news_provider_not_configured; general search is not a score source": 1
+      },
+      "source_task_rejected_claim_count": 16,
+      "source_task_rerouted_accepted_claim_count": 9,
+      "source_task_status_counts": {
+        "EVIDENCE_OS_ACCEPTED": 5,
+        "NO_EVIDENCE_FOUND": 9,
+        "PROVIDER_FAILED": 4,
+        "REJECTED_BY_POLICY": 3
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "live_official_source_parsed": 1,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 9,
+        "rerouted_claim_accepted_original_gap_unsatisfied": 4,
+        "source_task_rejected_by_v4_policy": 3
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 16
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 13
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 9
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 8
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 8
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "margin_bridge_visible"
+        }
+      ],
       "status_reason_ko": "production 점수 경로는 닫혔지만 required-positive/Green 빈칸이 남아 있어 meaningful pass가 아니다.",
       "symbols_sample": [
         "000660",
@@ -510,6 +965,101 @@
       "source_route_pattern_count": 60,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 9,
+      "source_task_direct_accepted_claim_count": 1,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "DIRECT_ACCEPTED_CLAIM": 1,
+        "MAPPING_NOT_ACCEPTED": 9,
+        "NO_ACCEPTED_CLAIM": 12,
+        "NO_FETCHED_DOCUMENT": 6,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 6,
+        "POLICY_REJECTED": 1,
+        "PRIMITIVE_GAP_UNSATISFIED": 14,
+        "PRIMITIVE_MAPPING_REJECTED": 9,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 5,
+        "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 8
+      },
+      "source_task_no_accepted_claim_execution_count": 12,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 9,
+        "primitive_mapping_rejected": 24
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 3,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "no_live_connector_for_requested_source_class": 2,
+        "official_solvable_gap_sent_to_general_web": 1
+      },
+      "source_task_rejected_claim_count": 24,
+      "source_task_rerouted_accepted_claim_count": 8,
+      "source_task_status_counts": {
+        "EVIDENCE_OS_ACCEPTED": 9,
+        "NO_EVIDENCE_FOUND": 6,
+        "PROVIDER_FAILED": 5,
+        "REJECTED_BY_POLICY": 1
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 2,
+        "live_official_source_parsed": 1,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 6,
+        "rerouted_claim_accepted_original_gap_unsatisfied": 8,
+        "source_task_rejected_by_v4_policy": 1
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 14
+        },
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 12
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 9
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 9
+        },
+        {
+          "axis": "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED",
+          "count": 8
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "customer_preorder_or_allocation"
+        },
+        {
+          "count": 1,
+          "primitive_id": "hbm_capacity_constraint"
+        }
+      ],
       "status_reason_ko": "production 점수 경로는 닫혔지만 required-positive/Green 빈칸이 남아 있어 meaningful pass가 아니다.",
       "symbols_sample": [
         "005930"
@@ -584,6 +1134,100 @@
       "source_route_pattern_count": 60,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 8,
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 6,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 15,
+        "POLICY_REJECTED": 2,
+        "PRIMITIVE_GAP_UNSATISFIED": 15,
+        "PRIMITIVE_MAPPING_REJECTED": 8,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 4,
+        "SEMANTIC_OR_TARGET_REJECTED": 1
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 8,
+        "primitive_mapping_rejected": 19,
+        "semantic_rejected": 1,
+        "target_not_direct": 1,
+        "target_scope_not_allowed": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "official_solvable_gap_sent_to_general_web": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 2
+      },
+      "source_task_rejected_claim_count": 55,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 15,
+        "PROVIDER_FAILED": 4,
+        "REJECTED_BY_POLICY": 2
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_no_fetchable_document": 1,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 15,
+        "source_task_rejected_by_v4_policy": 2
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 15
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 15
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 8
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 8
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "hbm_customer_order"
+        },
+        {
+          "count": 1,
+          "primitive_id": "equipment_order_backlog"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "031980"
@@ -659,6 +1303,99 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 7,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 3,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 11,
+        "PRIMITIVE_GAP_UNSATISFIED": 11,
+        "PRIMITIVE_MAPPING_REJECTED": 7,
+        "PROVIDER_ERROR_RECORDED": 5,
+        "PROVIDER_FAILED": 3,
+        "SEMANTIC_OR_TARGET_REJECTED": 1
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 7,
+        "primitive_mapping_rejected": 27,
+        "semantic_rejected": 1,
+        "source_class_document_type_mismatch": 2,
+        "source_provider_document_type_mismatch": 1,
+        "source_task_provider_error_score_block": 1,
+        "target_not_direct": 1,
+        "target_scope_not_allowed": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 1,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 2
+      },
+      "source_task_rejected_claim_count": 29,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 11,
+        "PROVIDER_FAILED": 3
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_no_fetchable_document": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 11
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 11
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 11
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 7
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 7
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 5
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "qualification_confirmed"
+        },
+        {
+          "count": 1,
+          "primitive_id": "repeat_order_confirmed"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "058470"
@@ -733,6 +1470,97 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 6,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 4,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+        "POLICY_REJECTED": 1,
+        "PRIMITIVE_GAP_UNSATISFIED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 6,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 3
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 6,
+        "primitive_mapping_rejected": 18,
+        "source_class_document_type_mismatch": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "official_solvable_gap_sent_to_general_web": 1,
+        "trusted_news_provider_not_configured; general search is not a score source": 1
+      },
+      "source_task_rejected_claim_count": 18,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 10,
+        "PROVIDER_FAILED": 3,
+        "REJECTED_BY_POLICY": 1
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 10,
+        "source_task_rejected_by_v4_policy": 1
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 10
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 6
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "order_to_revenue_bridge"
+        },
+        {
+          "count": 1,
+          "primitive_id": "valuation_overheat"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "039030"
@@ -807,6 +1635,97 @@
       "source_route_pattern_count": 110,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 9,
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 6,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 15,
+        "PRIMITIVE_GAP_UNSATISFIED": 15,
+        "PRIMITIVE_MAPPING_REJECTED": 9,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 6
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 9,
+        "primitive_mapping_rejected": 24,
+        "source_class_document_type_mismatch": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 3,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "trusted_news_provider_not_configured; general search is not a score source": 3
+      },
+      "source_task_rejected_claim_count": 24,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 15,
+        "PROVIDER_FAILED": 6
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 3,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 15
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 15
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 15
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 9
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 9
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "cycle_demand_visibility"
+        },
+        {
+          "count": 1,
+          "primitive_id": "memory_price_increase_mentioned"
+        },
+        {
+          "count": 1,
+          "primitive_id": "supply_discipline_mentioned"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "064760"
@@ -881,6 +1800,110 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "ANCHOR_OR_LINEAGE_REJECTED": 1,
+        "MAPPING_NOT_ACCEPTED": 10,
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 5,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 16,
+        "POLICY_REJECTED": 1,
+        "PRIMITIVE_GAP_UNSATISFIED": 16,
+        "PRIMITIVE_MAPPING_REJECTED": 10,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 4,
+        "SEMANTIC_OR_TARGET_REJECTED": 1
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {
+        "anchor_validation": 1,
+        "mapping_not_accepted": 10,
+        "primitive_mapping_rejected": 31,
+        "semantic_rejected": 1,
+        "source_lineage_unverified_original": 1,
+        "source_provider_document_type_mismatch": 1,
+        "source_task_provider_error_score_block": 1,
+        "target_not_direct": 1,
+        "target_scope_not_allowed": 1,
+        "temporal_not_allowed": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 3,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "official_solvable_gap_sent_to_general_web": 1,
+        "trusted_news_provider_not_configured; general search is not a score source": 2
+      },
+      "source_task_rejected_claim_count": 71,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 16,
+        "PROVIDER_FAILED": 4,
+        "REJECTED_BY_POLICY": 1
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 16,
+        "source_task_rejected_by_v4_policy": 1
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 16
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 16
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 10
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "call_off_risk"
+        },
+        {
+          "count": 1,
+          "primitive_id": "customer_contract"
+        },
+        {
+          "count": 1,
+          "primitive_id": "order_backlog_to_sales"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "003670"
@@ -955,6 +1978,82 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 13,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 8,
+        "PRIMITIVE_GAP_UNSATISFIED": 8,
+        "PROVIDER_ERROR_RECORDED": 15,
+        "PROVIDER_FAILED": 13
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {},
+      "source_task_provider_error_counts": {
+        "RuntimeError: CompanyGuide response body too small to anchor provider fetch": 1,
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 3,
+        "live_full_bounded_provider_has_no_matching_document": 9,
+        "symbol_not_found_in_opendart_corp_code": 3,
+        "trusted_news_provider_not_configured; general search is not a score source": 3
+      },
+      "source_task_rejected_claim_count": 0,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 8,
+        "PROVIDER_FAILED": 13
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_no_fetchable_document": 1,
+        "live_official_provider_failed_web_no_evidence_found": 3,
+        "no_matching_real_source_snapshot": 9,
+        "no_score_eligible_real_claim": 8
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 15
+        },
+        {
+          "axis": "PROVIDER_FAILED",
+          "count": 13
+        },
+        {
+          "axis": "NO_FETCHED_DOCUMENT",
+          "count": 13
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 8
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 8
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "customer_contract"
+        },
+        {
+          "count": 1,
+          "primitive_id": "customer_capex_decline"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "051365"
@@ -1029,6 +2128,98 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 17,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 8,
+        "NO_ACCEPTED_CLAIM": 17,
+        "NO_FETCHED_DOCUMENT": 5,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 12,
+        "PRIMITIVE_GAP_UNSATISFIED": 12,
+        "PRIMITIVE_MAPPING_REJECTED": 8,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 5
+      },
+      "source_task_no_accepted_claim_execution_count": 17,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 8,
+        "primitive_mapping_rejected": 36,
+        "source_class_document_type_mismatch": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 6,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 3
+      },
+      "source_task_rejected_claim_count": 36,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 12,
+        "PROVIDER_FAILED": 5
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_no_fetchable_document": 2,
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 12
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 17
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 12
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 12
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 8
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 8
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "jv_utilization"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "ampc_or_subsidy_capture"
+        },
+        {
+          "count": 1,
+          "primitive_id": "cash_or_revision_conversion"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "020150"
@@ -1103,6 +2294,93 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 3,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 4,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+        "PRIMITIVE_GAP_UNSATISFIED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 3,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 4
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 3,
+        "primitive_mapping_rejected": 6
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 2
+      },
+      "source_task_rejected_claim_count": 6,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 10,
+        "PROVIDER_FAILED": 4
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_no_fetchable_document": 1,
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 10
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 10
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        },
+        {
+          "axis": "PROVIDER_FAILED",
+          "count": 4
+        },
+        {
+          "axis": "NO_FETCHED_DOCUMENT",
+          "count": 4
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "ev_demand_slowdown"
+        },
+        {
+          "count": 1,
+          "primitive_id": "inventory_spike"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "002710"
@@ -1178,6 +2456,92 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 6,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 4,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+        "PRIMITIVE_GAP_UNSATISFIED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 6,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 4
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 6,
+        "primitive_mapping_rejected": 24
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 2
+      },
+      "source_task_rejected_claim_count": 24,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 10,
+        "PROVIDER_FAILED": 4
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 2,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 10
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 10
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 6
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "spread_expansion"
+        },
+        {
+          "count": 1,
+          "primitive_id": "inventory_cycle"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "001390"
@@ -1252,6 +2616,96 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 6,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 4,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+        "POLICY_REJECTED": 1,
+        "PRIMITIVE_GAP_UNSATISFIED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 6,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 3
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 6,
+        "primitive_mapping_rejected": 22
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "official_solvable_gap_sent_to_general_web": 1,
+        "trusted_news_provider_not_configured; general search is not a score source": 1
+      },
+      "source_task_rejected_claim_count": 22,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 10,
+        "PROVIDER_FAILED": 3,
+        "REJECTED_BY_POLICY": 1
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 10,
+        "source_task_rejected_by_v4_policy": 1
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 10
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 6
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "policy_supply_support"
+        },
+        {
+          "count": 1,
+          "primitive_id": "offtake_contract"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "005290"
@@ -1327,6 +2781,104 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "ANCHOR_OR_LINEAGE_REJECTED": 2,
+        "MAPPING_NOT_ACCEPTED": 12,
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 3,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
+        "PRIMITIVE_GAP_UNSATISFIED": 18,
+        "PRIMITIVE_MAPPING_REJECTED": 12,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 3,
+        "SEMANTIC_OR_TARGET_REJECTED": 3
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {
+        "anchor_validation": 1,
+        "mapping_not_accepted": 12,
+        "primitive_mapping_rejected": 46,
+        "semantic_rejected": 3,
+        "source_lineage_unverified_original": 2,
+        "source_provider_document_type_mismatch": 2,
+        "source_task_provider_error_score_block": 2,
+        "target_not_direct": 3,
+        "target_scope_not_allowed": 3
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 3,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "trusted_news_provider_not_configured; general search is not a score source": 3
+      },
+      "source_task_rejected_claim_count": 136,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 18,
+        "PROVIDER_FAILED": 3
+      },
+      "source_task_stop_reason_counts": {
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 18
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 18
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 18
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 12
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 12
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "utilization_rate"
+        },
+        {
+          "count": 2,
+          "primitive_id": "spread_expansion"
+        },
+        {
+          "count": 2,
+          "primitive_id": "raw_material_cost_risk"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "011170"
@@ -1401,6 +2953,98 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "ANCHOR_OR_LINEAGE_REJECTED": 1,
+        "MAPPING_NOT_ACCEPTED": 7,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 3,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 11,
+        "PRIMITIVE_GAP_UNSATISFIED": 11,
+        "PRIMITIVE_MAPPING_REJECTED": 7,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 3,
+        "SEMANTIC_OR_TARGET_REJECTED": 1
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "anchor_validation": 1,
+        "mapping_not_accepted": 7,
+        "primitive_mapping_rejected": 23,
+        "semantic_rejected": 1,
+        "target_not_direct": 1,
+        "target_scope_not_allowed": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 2
+      },
+      "source_task_rejected_claim_count": 33,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 11,
+        "PROVIDER_FAILED": 3
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 11
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 11
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 11
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 7
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 7
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "export_growth_pct"
+        },
+        {
+          "count": 1,
+          "primitive_id": "repeat_order_confirmed"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "278470"
@@ -1475,6 +3119,100 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "ANCHOR_OR_LINEAGE_REJECTED": 1,
+        "MAPPING_NOT_ACCEPTED": 7,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 3,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 11,
+        "PRIMITIVE_GAP_UNSATISFIED": 11,
+        "PRIMITIVE_MAPPING_REJECTED": 7,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 3,
+        "SEMANTIC_OR_TARGET_REJECTED": 1
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 7,
+        "primitive_mapping_rejected": 21,
+        "semantic_rejected": 1,
+        "source_lineage_unverified_original": 1,
+        "source_provider_document_type_mismatch": 1,
+        "source_task_provider_error_score_block": 1,
+        "target_not_direct": 1,
+        "target_scope_not_allowed": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 2
+      },
+      "source_task_rejected_claim_count": 32,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 11,
+        "PROVIDER_FAILED": 3
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 11
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 11
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 11
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 7
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 7
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "sell_through_confirmed"
+        },
+        {
+          "count": 1,
+          "primitive_id": "inventory_spike"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "383220"
@@ -1549,6 +3287,92 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 6,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 4,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+        "PRIMITIVE_GAP_UNSATISFIED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 6,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 4
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 6,
+        "primitive_mapping_rejected": 18
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 2
+      },
+      "source_task_rejected_claim_count": 18,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 10,
+        "PROVIDER_FAILED": 4
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 2,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 10
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 10
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 6
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "brand_customer_diversification"
+        },
+        {
+          "count": 1,
+          "primitive_id": "export_growth_pct"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "257720"
@@ -1623,6 +3447,105 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "ANCHOR_OR_LINEAGE_REJECTED": 1,
+        "MAPPING_NOT_ACCEPTED": 8,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 2,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 12,
+        "PRIMITIVE_GAP_UNSATISFIED": 12,
+        "PRIMITIVE_MAPPING_REJECTED": 8,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 2,
+        "SEMANTIC_OR_TARGET_REJECTED": 2
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 8,
+        "primitive_mapping_rejected": 22,
+        "semantic_rejected": 2,
+        "source_class_document_type_mismatch": 2,
+        "source_lineage_unverified_original": 1,
+        "source_provider_document_type_mismatch": 1,
+        "source_task_provider_error_score_block": 1,
+        "target_not_direct": 2,
+        "target_scope_not_allowed": 2
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "no_live_connector_for_requested_source_class": 1,
+        "trusted_news_provider_not_configured; general search is not a score source": 1
+      },
+      "source_task_rejected_claim_count": 44,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 12,
+        "PROVIDER_FAILED": 2
+      },
+      "source_task_stop_reason_counts": {
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 12
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 12
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 12
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 8
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 8
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "roe"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "pbr_e"
+        },
+        {
+          "count": 1,
+          "primitive_id": "capital_return_execution"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "055550"
@@ -1697,6 +3620,100 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "ANCHOR_OR_LINEAGE_REJECTED": 2,
+        "MAPPING_NOT_ACCEPTED": 8,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 2,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 12,
+        "PRIMITIVE_GAP_UNSATISFIED": 12,
+        "PRIMITIVE_MAPPING_REJECTED": 8,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 2,
+        "SEMANTIC_OR_TARGET_REJECTED": 2
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "anchor_validation": 1,
+        "mapping_not_accepted": 8,
+        "primitive_mapping_rejected": 26,
+        "semantic_rejected": 2,
+        "source_lineage_unverified_original": 1,
+        "source_provider_document_type_mismatch": 1,
+        "source_task_provider_error_score_block": 1,
+        "target_not_direct": 2,
+        "target_scope_not_allowed": 2
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 2
+      },
+      "source_task_rejected_claim_count": 49,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 12,
+        "PROVIDER_FAILED": 2
+      },
+      "source_task_stop_reason_counts": {
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 12
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 12
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 12
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 8
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 8
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "reserve_quality_visible"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "k_ics_ratio"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "000810"
@@ -1771,6 +3788,101 @@
       "source_route_pattern_count": 52,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 10,
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 5,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 16,
+        "PRIMITIVE_GAP_UNSATISFIED": 16,
+        "PRIMITIVE_MAPPING_REJECTED": 10,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 5,
+        "SEMANTIC_OR_TARGET_REJECTED": 1
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 10,
+        "primitive_mapping_rejected": 41,
+        "semantic_rejected": 1,
+        "target_not_direct": 1,
+        "target_scope_not_allowed": 1,
+        "temporal_not_allowed": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 3,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "trusted_news_provider_not_configured; general search is not a score source": 3
+      },
+      "source_task_rejected_claim_count": 85,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 16,
+        "PROVIDER_FAILED": 5
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 2,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 16
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 16
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 16
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 10
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "royalty_route"
+        },
+        {
+          "count": 1,
+          "primitive_id": "approval_to_revenue_bridge"
+        },
+        {
+          "count": 1,
+          "primitive_id": "regulatory_approval_confirmed"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "000100"
@@ -1846,6 +3958,97 @@
       "source_route_pattern_count": 51,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 9,
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 6,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 15,
+        "PRIMITIVE_GAP_UNSATISFIED": 15,
+        "PRIMITIVE_MAPPING_REJECTED": 9,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 6
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 9,
+        "primitive_mapping_rejected": 40
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 4,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "trusted_news_provider_not_configured; general search is not a score source": 3
+      },
+      "source_task_rejected_claim_count": 40,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 15,
+        "PROVIDER_FAILED": 6
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_no_fetchable_document": 1,
+        "live_official_provider_failed_web_no_evidence_found": 2,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 15
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 15
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 15
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 9
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 9
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "trial_quality_visible"
+        },
+        {
+          "count": 1,
+          "primitive_id": "binary_event_unresolved"
+        },
+        {
+          "count": 1,
+          "primitive_id": "approval_not_confirmed"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "000100"
@@ -1920,6 +4123,93 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 6,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 4,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+        "PRIMITIVE_GAP_UNSATISFIED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 6,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 4
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 6,
+        "primitive_mapping_rejected": 22
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "trusted_news_provider_not_configured; general search is not a score source": 2
+      },
+      "source_task_rejected_claim_count": 22,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 10,
+        "PROVIDER_FAILED": 4
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_no_fetchable_document": 1,
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 10
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 10
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 6
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "export_growth_pct"
+        },
+        {
+          "count": 1,
+          "primitive_id": "reimbursement_confirmed"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "043150"
@@ -1994,6 +4284,109 @@
       "source_route_pattern_count": 51,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "ANCHOR_OR_LINEAGE_REJECTED": 1,
+        "MAPPING_NOT_ACCEPTED": 11,
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 4,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
+        "PRIMITIVE_GAP_UNSATISFIED": 17,
+        "PRIMITIVE_MAPPING_REJECTED": 11,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 4,
+        "SEMANTIC_OR_TARGET_REJECTED": 1
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {
+        "anchor_validation": 1,
+        "mapping_not_accepted": 11,
+        "primitive_mapping_rejected": 32,
+        "semantic_rejected": 1,
+        "source_lineage_unverified_original": 1,
+        "source_provider_document_type_mismatch": 1,
+        "source_task_provider_error_score_block": 1,
+        "target_not_direct": 1,
+        "target_scope_not_allowed": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 3,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "trusted_news_provider_not_configured; general search is not a score source": 3
+      },
+      "source_task_rejected_claim_count": 75,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 17,
+        "PROVIDER_FAILED": 4
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 17
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 17
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 17
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 11
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 11
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "arpu_growth_pct"
+        },
+        {
+          "count": 1,
+          "primitive_id": "ad_revenue_growth_pct"
+        },
+        {
+          "count": 1,
+          "primitive_id": "operating_leverage_visible"
+        },
+        {
+          "count": 1,
+          "primitive_id": "take_rate_improvement"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "035420"
@@ -2068,6 +4461,97 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 9,
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 6,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 15,
+        "PRIMITIVE_GAP_UNSATISFIED": 15,
+        "PRIMITIVE_MAPPING_REJECTED": 9,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 6
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 9,
+        "primitive_mapping_rejected": 28
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 3,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "trusted_news_provider_not_configured; general search is not a score source": 3
+      },
+      "source_task_rejected_claim_count": 28,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 15,
+        "PROVIDER_FAILED": 6
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_no_fetchable_document": 1,
+        "live_official_provider_failed_web_no_evidence_found": 2,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 15
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 15
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 15
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 9
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 9
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "global_launch_conversion"
+        },
+        {
+          "count": 1,
+          "primitive_id": "repeat_revenue"
+        },
+        {
+          "count": 1,
+          "primitive_id": "ip_monetization_visible"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "035760"
@@ -2143,6 +4627,96 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 9,
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 6,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 15,
+        "PRIMITIVE_GAP_UNSATISFIED": 15,
+        "PRIMITIVE_MAPPING_REJECTED": 9,
+        "PROVIDER_ERROR_RECORDED": 9,
+        "PROVIDER_FAILED": 6
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 9,
+        "primitive_mapping_rejected": 32
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 3,
+        "live_full_bounded_provider_has_no_matching_document": 3,
+        "trusted_news_provider_not_configured; general search is not a score source": 3
+      },
+      "source_task_rejected_claim_count": 32,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 15,
+        "PROVIDER_FAILED": 6
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 3,
+        "no_matching_real_source_snapshot": 3,
+        "no_score_eligible_real_claim": 15
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 15
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 15
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 9
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 9
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 9
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "arr_growth_visible"
+        },
+        {
+          "count": 1,
+          "primitive_id": "retention_or_renewal"
+        },
+        {
+          "count": 1,
+          "primitive_id": "nrr"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "012510"
@@ -2217,6 +4791,105 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 35,
+      "source_task_failure_axis_counts": {
+        "ANCHOR_OR_LINEAGE_REJECTED": 1,
+        "MAPPING_NOT_ACCEPTED": 16,
+        "NO_ACCEPTED_CLAIM": 35,
+        "NO_FETCHED_DOCUMENT": 9,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 26,
+        "PRIMITIVE_GAP_UNSATISFIED": 26,
+        "PRIMITIVE_MAPPING_REJECTED": 16,
+        "PROVIDER_ERROR_RECORDED": 15,
+        "PROVIDER_FAILED": 9,
+        "SEMANTIC_OR_TARGET_REJECTED": 1
+      },
+      "source_task_no_accepted_claim_execution_count": 35,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 16,
+        "primitive_mapping_rejected": 51,
+        "semantic_rejected": 1,
+        "source_lineage_unverified_original": 1,
+        "source_provider_document_type_mismatch": 1,
+        "source_task_provider_error_score_block": 1,
+        "target_not_direct": 1,
+        "target_scope_not_allowed": 1,
+        "temporal_not_allowed": 1
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 5,
+        "live_full_bounded_provider_has_no_matching_document": 5,
+        "trusted_news_provider_not_configured; general search is not a score source": 5
+      },
+      "source_task_rejected_claim_count": 61,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 26,
+        "PROVIDER_FAILED": 9
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 4,
+        "no_matching_real_source_snapshot": 5,
+        "no_score_eligible_real_claim": 26
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 35
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 26
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 26
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 16
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 16
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 15
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 5,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 5,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 5,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 5,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "volume_growth_visible"
+        },
+        {
+          "count": 2,
+          "primitive_id": "operating_leverage_visible"
+        },
+        {
+          "count": 2,
+          "primitive_id": "mix_improvement"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "017670",
@@ -2292,6 +4965,96 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 6,
+        "NO_ACCEPTED_CLAIM": 14,
+        "NO_FETCHED_DOCUMENT": 4,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+        "POLICY_REJECTED": 1,
+        "PRIMITIVE_GAP_UNSATISFIED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 6,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 3
+      },
+      "source_task_no_accepted_claim_execution_count": 14,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 6,
+        "primitive_mapping_rejected": 34
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "official_solvable_gap_sent_to_general_web": 1,
+        "trusted_news_provider_not_configured; general search is not a score source": 1
+      },
+      "source_task_rejected_claim_count": 34,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 10,
+        "PROVIDER_FAILED": 3,
+        "REJECTED_BY_POLICY": 1
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 10,
+        "source_task_rejected_by_v4_policy": 1
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 14
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 10
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 6
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "cash_collection_visible"
+        },
+        {
+          "count": 1,
+          "primitive_id": "pf_exposure_reduced"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "006360"
@@ -2369,6 +5132,97 @@
       "source_route_pattern_count": 51,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 4,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 14,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 6,
+        "NO_ACCEPTED_CLAIM": 10,
+        "NO_FETCHED_DOCUMENT": 4,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 6,
+        "POLICY_REJECTED": 2,
+        "PRIMITIVE_GAP_UNSATISFIED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 6,
+        "PROVIDER_ERROR_RECORDED": 6,
+        "PROVIDER_FAILED": 2,
+        "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 4
+      },
+      "source_task_no_accepted_claim_execution_count": 10,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 6,
+        "primitive_mapping_rejected": 20
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 2,
+        "live_full_bounded_provider_has_no_matching_document": 2,
+        "official_solvable_gap_sent_to_general_web": 2
+      },
+      "source_task_rejected_claim_count": 20,
+      "source_task_rerouted_accepted_claim_count": 4,
+      "source_task_status_counts": {
+        "EVIDENCE_OS_ACCEPTED": 4,
+        "NO_EVIDENCE_FOUND": 6,
+        "PROVIDER_FAILED": 2,
+        "REJECTED_BY_POLICY": 2
+      },
+      "source_task_stop_reason_counts": {
+        "no_matching_real_source_snapshot": 2,
+        "no_score_eligible_real_claim": 6,
+        "rerouted_claim_accepted_original_gap_unsatisfied": 4,
+        "source_task_rejected_by_v4_policy": 2
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 10
+        },
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 6
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 6
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 6
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 6
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 2,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 2,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "direct_company_cash_route"
+        },
+        {
+          "count": 1,
+          "primitive_id": "subsidy_capture_visible"
+        }
+      ],
       "status_reason_ko": "production 후보까지 갔지만 필수 또는 Green primitive의 source-backed claim이 부족해 full thesis로 승격되지 않았다.",
       "symbols_sample": [
         "051910"
@@ -2443,6 +5297,88 @@
       "source_route_pattern_count": 51,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 7,
+      "source_task_failure_axis_counts": {
+        "MAPPING_NOT_ACCEPTED": 3,
+        "NO_ACCEPTED_CLAIM": 7,
+        "NO_FETCHED_DOCUMENT": 2,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 5,
+        "PRIMITIVE_GAP_UNSATISFIED": 5,
+        "PRIMITIVE_MAPPING_REJECTED": 3,
+        "PROVIDER_ERROR_RECORDED": 3,
+        "PROVIDER_FAILED": 2
+      },
+      "source_task_no_accepted_claim_execution_count": 7,
+      "source_task_not_eligible_reason_counts": {
+        "mapping_not_accepted": 3,
+        "primitive_mapping_rejected": 14
+      },
+      "source_task_provider_error_counts": {
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 1,
+        "live_full_bounded_provider_has_no_matching_document": 1,
+        "trusted_news_provider_not_configured; general search is not a score source": 1
+      },
+      "source_task_rejected_claim_count": 14,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 5,
+        "PROVIDER_FAILED": 2
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_provider_failed_web_no_evidence_found": 1,
+        "no_matching_real_source_snapshot": 1,
+        "no_score_eligible_real_claim": 5
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 7
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 5
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 5
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 3
+        },
+        {
+          "axis": "PRIMITIVE_MAPPING_REJECTED",
+          "count": 3
+        },
+        {
+          "axis": "MAPPING_NOT_ACCEPTED",
+          "count": 3
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 1,
+          "primitive_id": "tender_offer_confirmed"
+        },
+        {
+          "count": 1,
+          "primitive_id": "official_report_snapshot_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "official_disclosure_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "listing_trading_status_current"
+        }
+      ],
       "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
       "symbols_sample": [
         "000670"
@@ -2517,6 +5453,97 @@
       "source_route_pattern_count": 36,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY_WITH_GAPS",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 21,
+      "source_task_failure_axis_counts": {
+        "ANCHOR_OR_LINEAGE_REJECTED": 3,
+        "MAPPING_NOT_ACCEPTED": 4,
+        "NO_ACCEPTED_CLAIM": 21,
+        "NO_FETCHED_DOCUMENT": 11,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+        "POLICY_REJECTED": 2,
+        "PRIMITIVE_GAP_UNSATISFIED": 10,
+        "PRIMITIVE_MAPPING_REJECTED": 4,
+        "PROVIDER_ERROR_RECORDED": 11,
+        "PROVIDER_FAILED": 9,
+        "SEMANTIC_OR_TARGET_REJECTED": 4
+      },
+      "source_task_no_accepted_claim_execution_count": 21,
+      "source_task_not_eligible_reason_counts": {
+        "anchor_validation": 3,
+        "mapping_not_accepted": 4,
+        "primitive_mapping_rejected": 4,
+        "semantic_rejected": 4,
+        "target_not_direct": 4,
+        "target_scope_not_allowed": 4,
+        "temporal_not_allowed": 4
+      },
+      "source_task_provider_error_counts": {
+        "RuntimeError: CompanyGuide response body too small to anchor provider fetch": 1,
+        "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence": 1,
+        "live_full_bounded_provider_has_no_matching_document": 7,
+        "missing_target_scoped_llm_query_intent": 2,
+        "symbol_not_found_in_opendart_corp_code": 1,
+        "trusted_news_provider_not_configured; general search is not a score source": 3
+      },
+      "source_task_rejected_claim_count": 88,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 10,
+        "PROVIDER_FAILED": 9,
+        "REJECTED_BY_POLICY": 2
+      },
+      "source_task_stop_reason_counts": {
+        "live_official_no_fetchable_document": 2,
+        "live_official_provider_failed_web_rejected_by_policy": 2,
+        "no_matching_real_source_snapshot": 7,
+        "no_score_eligible_real_claim": 10
+      },
+      "source_task_top_failure_axes": [
+        {
+          "axis": "NO_ACCEPTED_CLAIM",
+          "count": 21
+        },
+        {
+          "axis": "PROVIDER_ERROR_RECORDED",
+          "count": 11
+        },
+        {
+          "axis": "NO_FETCHED_DOCUMENT",
+          "count": 11
+        },
+        {
+          "axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+          "count": 10
+        },
+        {
+          "axis": "PRIMITIVE_GAP_UNSATISFIED",
+          "count": 10
+        },
+        {
+          "axis": "PROVIDER_FAILED",
+          "count": 9
+        }
+      ],
+      "source_task_top_unsatisfied_primitives": [
+        {
+          "count": 3,
+          "primitive_id": "exchange_risk_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "listing_trading_status_current"
+        },
+        {
+          "count": 3,
+          "primitive_id": "issuer_official_update_current"
+        },
+        {
+          "count": 1,
+          "primitive_id": "missing_cashflow_bridge"
+        }
+      ],
       "status_reason_ko": "아키타입 수준 discovery seed는 실행됐지만 실제 target symbol이 없어 source-backed issuer claim으로 닫힐 수 없다.",
       "symbols_sample": [],
       "target_materialization_required_seed_count": 24,
@@ -2588,6 +5615,19 @@
       "source_route_pattern_count": 37,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY_WITH_GAPS",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 0,
+      "source_task_failure_axis_counts": {},
+      "source_task_no_accepted_claim_execution_count": 0,
+      "source_task_not_eligible_reason_counts": {},
+      "source_task_provider_error_counts": {},
+      "source_task_rejected_claim_count": 0,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {},
+      "source_task_stop_reason_counts": {},
+      "source_task_top_failure_axes": [],
+      "source_task_top_unsatisfied_primitives": [],
       "status_reason_ko": "아키타입 수준 discovery seed는 실행됐지만 실제 target symbol이 없어 source-backed issuer claim으로 닫힐 수 없다.",
       "symbols_sample": [],
       "target_materialization_required_seed_count": 3,
@@ -2659,6 +5699,19 @@
       "source_route_pattern_count": 35,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY_WITH_GAPS",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 0,
+      "source_task_failure_axis_counts": {},
+      "source_task_no_accepted_claim_execution_count": 0,
+      "source_task_not_eligible_reason_counts": {},
+      "source_task_provider_error_counts": {},
+      "source_task_rejected_claim_count": 0,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {},
+      "source_task_stop_reason_counts": {},
+      "source_task_top_failure_axes": [],
+      "source_task_top_unsatisfied_primitives": [],
       "status_reason_ko": "아키타입 수준 discovery seed는 실행됐지만 실제 target symbol이 없어 source-backed issuer claim으로 닫힐 수 없다.",
       "symbols_sample": [],
       "target_materialization_required_seed_count": 3,
@@ -2729,6 +5782,19 @@
       "source_route_pattern_count": 50,
       "source_route_ready": true,
       "source_route_recovery_status": "SOURCE_ROUTE_PATTERN_READY",
+      "source_task_any_accepted_claim_count": 0,
+      "source_task_direct_accepted_claim_count": 0,
+      "source_task_execution_log_count": 0,
+      "source_task_failure_axis_counts": {},
+      "source_task_no_accepted_claim_execution_count": 0,
+      "source_task_not_eligible_reason_counts": {},
+      "source_task_provider_error_counts": {},
+      "source_task_rejected_claim_count": 0,
+      "source_task_rerouted_accepted_claim_count": 0,
+      "source_task_status_counts": {},
+      "source_task_stop_reason_counts": {},
+      "source_task_top_failure_axes": [],
+      "source_task_top_unsatisfied_primitives": [],
       "status_reason_ko": "planner 가설은 있었지만 production source task와 accepted claim으로 닫히지 않았다.",
       "symbols_sample": [
         "010130"
