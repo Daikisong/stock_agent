@@ -956,6 +956,7 @@ def write_research_to_runtime_parity_artifacts(
         memory_cards=research_reverse_bundle["cards"],
         source_routes=source_route_reports["source_route_matrix"],
         candidate_selection=candidate_selection_audit,
+        research_inventory=research_reverse_bundle["inventory"],
         docs_dir=docs_path,
     )
     next_attempt_reports = write_all_archetype_next_runtime_attempt_plan(

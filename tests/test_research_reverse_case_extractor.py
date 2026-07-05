@@ -43,6 +43,8 @@ class ResearchReverseCaseExtractorTests(unittest.TestCase):
         self.assertNotIn("docs/operational/all_archetype_runtime_status_matrix_2026-07-05.md", files)
         self.assertNotIn("docs/operational/all_archetype_runtime_status_matrix_2026-07-05.json", files)
         self.assertNotIn("docs/operational/all_archetype_runtime_status_matrix.json", files)
+        self.assertNotIn("docs/operational/all_archetype_runtime_parity_matrix.json", files)
+        self.assertNotIn("docs/operational/all_archetype_runtime_parity_summary.md", files)
         self.assertNotIn("docs/operational/all_archetype_next_runtime_attempt_plan_2026-07-05.md", files)
         self.assertNotIn("docs/operational/all_archetype_next_runtime_attempt_plan_2026-07-05.json", files)
         self.assertNotIn("docs/operational/all_archetype_next_runtime_attempt_plan.json", files)

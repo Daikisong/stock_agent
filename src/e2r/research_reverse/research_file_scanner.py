@@ -22,6 +22,7 @@ DEFAULT_RESEARCH_GLOBS = (
 GENERATED_GOAL4_PREFIXES = (
     "all_archetype_next_runtime_",
     "all_archetype_runtime_execution_manifest_",
+    "all_archetype_runtime_parity_",
     "all_archetype_runtime_status_matrix_",
     "research_reverse_",
     "research_runtime_memory_",

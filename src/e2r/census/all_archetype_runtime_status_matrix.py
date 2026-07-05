@@ -13,6 +13,14 @@ from pathlib import Path
 from typing import Any, Mapping
 
 
+_POSITIVE_ROLE_MARKERS = ("positive", "success", "green", "yellow", "stage2", "stage3")
+_COUNTEREXAMPLE_ROLE_MARKERS = ("counter", "failed", "4c", "red")
+_GUARD_ROLE_MARKERS = ("guard", "4b", "4c", "profile_cap", "false_positive")
+_URL_BACKED_SOURCE_QUALITIES = {"A2_URL_BACKED"}
+_SOURCE_PROXY_SOURCE_QUALITIES = {"SOURCE_PROXY_ONLY"}
+_EVIDENCE_PENDING_SOURCE_QUALITIES = {"EVIDENCE_URL_PENDING", "A1_URL_PENDING"}
+
+
 def _prefix(archetype_id: str) -> str:
     return archetype_id.split("_", 1)[0]
 
@@ -109,6 +117,151 @@ def _proof_status(row: Mapping[str, Any], full_thesis_status: str) -> str:
     return "NOT_PROVEN_NO_RUNTIME_EVIDENCE"
 
 
+def _inventory_counts_by_archetype(research_inventory: Mapping[str, Any] | None) -> dict[str, Counter[str]]:
+    counts: dict[str, Counter[str]] = defaultdict(Counter)
+    if not research_inventory:
+        return counts
+    for record in research_inventory.get("records", []):
+        if not isinstance(record, Mapping):
+            continue
+        archetype_id = str(record.get("canonical_archetype_id") or "")
+        if not archetype_id:
+            continue
+        bucket = counts[archetype_id]
+        bucket["research_case_count"] += 1
+
+        source_quality = str(record.get("source_quality") or "")
+        if source_quality in _URL_BACKED_SOURCE_QUALITIES:
+            bucket["url_backed_case_count"] += 1
+        if source_quality in _SOURCE_PROXY_SOURCE_QUALITIES or record.get("source_proxy_only") is True:
+            bucket["source_proxy_case_count"] += 1
+        if source_quality in _EVIDENCE_PENDING_SOURCE_QUALITIES or record.get("evidence_url_pending") is True:
+            bucket["evidence_url_pending_count"] += 1
+
+        role = str(record.get("case_role") or "").lower()
+        if any(marker in role for marker in _POSITIVE_ROLE_MARKERS):
+            bucket["positive_case_count"] += 1
+        if any(marker in role for marker in _COUNTEREXAMPLE_ROLE_MARKERS):
+            bucket["counterexample_case_count"] += 1
+        if any(marker in role for marker in _GUARD_ROLE_MARKERS):
+            bucket["guard_case_count"] += 1
+    return counts
+
+
+def _research_counts(archetype_id: str, card: Mapping[str, Any], inventory_counts: Mapping[str, Counter[str]]) -> dict[str, int]:
+    inventory = inventory_counts.get(archetype_id, Counter())
+    url_backed = int(inventory.get("url_backed_case_count") or len(card.get("url_backed_replay_cases") or []))
+    source_proxy = int(inventory.get("source_proxy_case_count") or len(card.get("source_proxy_only_cases") or []))
+    pending = int(inventory.get("evidence_url_pending_count") or len(card.get("evidence_url_pending_cases") or []))
+    total = int(inventory.get("research_case_count") or (url_backed + source_proxy + pending))
+    return {
+        "research_case_count": total,
+        "url_backed_case_count": url_backed,
+        "source_proxy_case_count": source_proxy,
+        "evidence_url_pending_count": pending,
+        "positive_case_count": int(inventory.get("positive_case_count") or 0),
+        "counterexample_case_count": int(inventory.get("counterexample_case_count") or 0),
+        "guard_case_count": int(inventory.get("guard_case_count") or 0),
+    }
+
+
+def _required_positive_missing_rate(row: Mapping[str, Any]) -> float | None:
+    full_rows = int(row.get("runtime_full_thesis_row_count") or 0)
+    if full_rows <= 0:
+        return None
+    return round(int(row.get("runtime_full_thesis_row_with_required_positive_missing_count") or 0) / full_rows, 6)
+
+
+def _green_gap_rate(row: Mapping[str, Any]) -> float | None:
+    full_rows = int(row.get("runtime_full_thesis_row_count") or 0)
+    if full_rows <= 0:
+        return None
+    return round(int(row.get("runtime_full_thesis_row_with_green_gap_count") or 0) / full_rows, 6)
+
+
+def _goal4_runtime_status(
+    *,
+    row: Mapping[str, Any],
+    attempt_status: str,
+    source_execution_status: str,
+    accepted_claim_status: str,
+    full_thesis_status: str,
+    proof_status: str,
+) -> str:
+    if proof_status == "RUNTIME_PARITY_PROVEN":
+        return "MEANINGFUL_FULL_THESIS_READY"
+    if full_thesis_status == "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS":
+        return "SCORE_PATH_CLOSED_WITH_THESIS_GAPS"
+    if full_thesis_status == "FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP":
+        return "SOURCE_REPAIR_REQUIRED"
+    if accepted_claim_status == "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED":
+        return "SCORE_PATH_NOT_CLOSED"
+    if source_execution_status == "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS":
+        return "SOURCE_REPAIR_REQUIRED"
+    if source_execution_status == "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS":
+        return "SCORE_PATH_NOT_CLOSED"
+    if attempt_status == "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED":
+        return "TARGET_MATERIALIZATION_REQUIRED"
+    if attempt_status == "PLANNER_ATTEMPTED_ONLY":
+        return "PLANNING_ONLY"
+    if attempt_status == "REPLAY_READY_NOT_RUNTIME_ATTEMPTED":
+        return "REPLAY_ONLY_NOT_RUNTIME_PROVEN"
+    if int(row.get("source_backed_fixture_count") or 0):
+        return "REPLAY_ONLY_NOT_RUNTIME_PROVEN"
+    return "NOT_ATTEMPTED"
+
+
+def _primary_blocker_class(
+    *,
+    row: Mapping[str, Any],
+    card_ready: bool,
+    route_pattern_count: int,
+    attempt_status: str,
+    source_execution_status: str,
+    accepted_claim_status: str,
+    full_thesis_status: str,
+) -> str:
+    if not card_ready:
+        return "NO_RESEARCH_MEMORY"
+    if int(row.get("runtime_full_thesis_row_with_required_positive_missing_count") or 0):
+        return "REQUIRED_POSITIVE_MISSING"
+    if int(row.get("runtime_full_thesis_row_with_green_gap_count") or 0):
+        return "GREEN_GAP_MISSING"
+    if full_thesis_status == "MEANINGFUL_FULL_THESIS_READY":
+        return "NONE"
+    if full_thesis_status == "FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP":
+        return "REQUIRED_POSITIVE_MISSING"
+    if source_execution_status == "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS":
+        return "ACCEPTED_CLAIM_NOT_CREATED"
+    if accepted_claim_status == "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED":
+        return "SCORE_PATH_NOT_CLOSED"
+    if attempt_status == "ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED":
+        return "CANDIDATE_SELECTOR_DID_NOT_ATTEMPT"
+    if attempt_status == "PLANNER_ATTEMPTED_ONLY":
+        return "SOURCE_TASK_NOT_CREATED"
+    if attempt_status == "REPLAY_READY_NOT_RUNTIME_ATTEMPTED":
+        return "URL_BACKED_CASE_EXISTS_BUT_NOT_REPLAYED"
+    if route_pattern_count == 0:
+        return "SOURCE_ROUTE_NOT_RECOVERED"
+    return "ACCEPTED_CLAIM_NOT_CREATED"
+
+
+def _blocker_detail(primary_blocker_class: str) -> str:
+    details = {
+        "NONE": "meaningful full thesis evidence row로 볼 수 있는 상태다.",
+        "NO_RESEARCH_MEMORY": "이 아키타입은 연구 memory card가 없어 운영 query intent를 만들 근거가 없다.",
+        "SOURCE_ROUTE_NOT_RECOVERED": "연구 판례에서 어떤 source family를 우선 찾아야 하는지 route가 복원되지 않았다.",
+        "URL_BACKED_CASE_EXISTS_BUT_NOT_REPLAYED": "URL-backed 연구 판례는 있지만 이번 production runtime에서 source-backed row로 재실행되지 않았다.",
+        "CANDIDATE_SELECTOR_DID_NOT_ATTEMPT": "아키타입 discovery는 열렸지만 실제 종목 symbol이 materialize되지 않아 issuer claim으로 닫히지 않았다.",
+        "SOURCE_TASK_NOT_CREATED": "planner 가설은 있었지만 bounded source task 생성/실행까지 이어지지 않았다.",
+        "ACCEPTED_CLAIM_NOT_CREATED": "source task는 실행됐지만 운영 원문에서 accepted claim을 만들지 못했다.",
+        "SCORE_PATH_NOT_CLOSED": "accepted claim은 있으나 score contribution, StageCourt, full thesis row까지 이어지지 않았다.",
+        "REQUIRED_POSITIVE_MISSING": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
+        "GREEN_GAP_MISSING": "기본 점수 경로는 있으나 Green 판단에 필요한 source-backed primitive가 남아 있다.",
+    }
+    return details.get(primary_blocker_class, "goal4 blocker class가 row에 기록됐지만 별도 설명이 필요하다.")
+
+
 def _next_action(row: Mapping[str, Any], *, full_thesis_status: str, accepted_claim_status: str) -> str:
     if full_thesis_status == "MEANINGFUL_FULL_THESIS_READY":
         return "KEEP_MONITORING_FOR_LIFECYCLE_SUPERSESSION"
@@ -161,8 +314,10 @@ def build_all_archetype_runtime_status_matrix(
     memory_cards: Mapping[str, Any],
     source_routes: Mapping[str, Any],
     candidate_selection: Mapping[str, Any] | None = None,
+    research_inventory: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     cards_by_id = {card["archetype_id"]: card for card in memory_cards.get("cards", [])}
+    inventory_counts = _inventory_counts_by_archetype(research_inventory)
     route_counts: Counter[str] = Counter()
     official_route_counts: Counter[str] = Counter()
     route_primitives: dict[str, set[str]] = defaultdict(set)
@@ -199,20 +354,62 @@ def build_all_archetype_runtime_status_matrix(
         accepted_claim_status = _accepted_claim_status(row)
         full_thesis_status = _full_thesis_status(row)
         proof_status = _proof_status(row, full_thesis_status)
+        card_ready = archetype_id in cards_by_id
+        research_counts = _research_counts(archetype_id, card, inventory_counts)
+        runtime_source_task_executed_count = int(row.get("runtime_source_task_execution_count") or 0) + int(
+            row.get("targetless_source_task_execution_count") or 0
+        )
+        runtime_source_task_count = (
+            runtime_source_task_executed_count
+            + int(row.get("runtime_follow_up_source_task_count") or 0)
+            + gap_task_counts[archetype_id]
+        )
+        runtime_status = _goal4_runtime_status(
+            row=row,
+            attempt_status=attempt_status,
+            source_execution_status=source_execution_status,
+            accepted_claim_status=accepted_claim_status,
+            full_thesis_status=full_thesis_status,
+            proof_status=proof_status,
+        )
+        primary_blocker_class = _primary_blocker_class(
+            row=row,
+            card_ready=card_ready,
+            route_pattern_count=route_pattern_count,
+            attempt_status=attempt_status,
+            source_execution_status=source_execution_status,
+            accepted_claim_status=accepted_claim_status,
+            full_thesis_status=full_thesis_status,
+        )
+        source_route_gaps: list[str] = []
+        if route_pattern_count == 0:
+            source_route_gaps.append("SOURCE_ROUTE_NOT_RECOVERED")
+        if gap_task_counts[archetype_id]:
+            source_route_gaps.append("SOURCE_ROUTE_GAP_TASKS_PRESENT")
+        if research_counts["source_proxy_case_count"]:
+            source_route_gaps.append("SOURCE_PROXY_CASES_REQUIRE_REPAIR")
+        if research_counts["evidence_url_pending_count"]:
+            source_route_gaps.append("EVIDENCE_URL_PENDING_CASES_REQUIRE_REPAIR")
         status_rows.append(
             {
                 "schema_version": "e2r_all_archetype_runtime_status_row_v1",
                 "archetype_id": archetype_id,
                 "archetype_prefix": _prefix(archetype_id),
+                "large_sector_id": card.get("large_sector_id"),
+                "exists_in_registry": True,
                 "contract_registration_status": "REGISTERED",
                 "registry_scope": "C01_TO_C32" if _prefix(archetype_id).startswith("C") else "R13_CROSS_ARCHETYPE",
-                "research_memory_status": "MEMORY_CARD_READY" if archetype_id in cards_by_id else "MEMORY_CARD_MISSING",
+                "research_memory_status": "MEMORY_CARD_READY" if card_ready else "MEMORY_CARD_MISSING",
+                **research_counts,
                 "source_route_recovery_status": source_route_recovery_status,
                 "runtime_attempt_status": attempt_status,
                 "runtime_source_route_execution_status": source_execution_status,
                 "accepted_claim_status": accepted_claim_status,
                 "full_thesis_status": full_thesis_status,
                 "runtime_parity_proof_status": proof_status,
+                "runtime_status": runtime_status,
+                "primary_blocker_class": primary_blocker_class,
+                "blocker_detail": _blocker_detail(primary_blocker_class),
                 "next_required_action": _next_action(
                     row,
                     full_thesis_status=full_thesis_status,
@@ -228,13 +425,19 @@ def build_all_archetype_runtime_status_matrix(
                 "source_route_pattern_count": route_pattern_count,
                 "official_first_route_pattern_count": official_route_counts[archetype_id],
                 "source_route_gap_task_count": gap_task_counts[archetype_id],
+                "source_route_ready": route_pattern_count > 0,
+                "source_route_gaps": source_route_gaps,
+                "memory_card_ready": card_ready,
                 "memory_required_positive_primitive_count": len(card.get("required_positive_primitives") or []),
                 "memory_url_backed_replay_case_count": len(card.get("url_backed_replay_cases") or []),
                 "memory_source_proxy_only_case_count": len(card.get("source_proxy_only_cases") or []),
                 "source_backed_fixture_count": row.get("source_backed_fixture_count", 0),
                 "replay_accepted_claim_count": row.get("replay_accepted_claim_count", 0),
                 "runtime_planner_top1_count": row.get("runtime_planner_top1_count", 0),
+                "runtime_planner_attempt_count": row.get("runtime_planner_top1_count", 0),
                 "runtime_planner_topk_count": row.get("runtime_planner_topk_count", 0),
+                "runtime_source_task_count": runtime_source_task_count,
+                "runtime_source_task_executed_count": runtime_source_task_executed_count,
                 "runtime_source_task_execution_count": row.get("runtime_source_task_execution_count", 0),
                 "targetless_source_task_execution_count": row.get("targetless_source_task_execution_count", 0),
                 "archetype_level_discovery_seed_count": row.get("archetype_level_discovery_seed_count", 0),
@@ -244,7 +447,9 @@ def build_all_archetype_runtime_status_matrix(
                 "placeholder_symbol_seed_count": row.get("placeholder_symbol_seed_count", 0),
                 "runtime_source_task_accepted_claim_count": row.get("runtime_source_task_accepted_claim_count", 0),
                 "runtime_accepted_claim_count": row.get("runtime_accepted_claim_count", 0),
+                "runtime_score_contribution_count": row.get("runtime_score_contribution_count", 0),
                 "runtime_stagecourt_trace_count": row.get("runtime_stagecourt_trace_count", 0),
+                "runtime_candidate_attempt_count": row.get("runtime_candidate_attempt_count", 0),
                 "runtime_blocked_candidate_count": row.get("runtime_blocked_candidate_count", 0),
                 "runtime_full_thesis_row_count": row.get("runtime_full_thesis_row_count", 0),
                 "runtime_full_thesis_row_with_required_positive_missing_count": row.get(
@@ -253,6 +458,12 @@ def build_all_archetype_runtime_status_matrix(
                 "runtime_full_thesis_row_with_green_gap_count": row.get(
                     "runtime_full_thesis_row_with_green_gap_count", 0
                 ),
+                "required_positive_missing_rate": _required_positive_missing_rate(row),
+                "green_gap_rate": _green_gap_rate(row),
+                "followup_task_count": row.get("runtime_follow_up_source_task_count", 0),
+                "source_repair_task_count": gap_task_counts[archetype_id]
+                + research_counts["source_proxy_case_count"]
+                + research_counts["evidence_url_pending_count"],
                 "blocker_classes": row.get("blocker_classes", []),
                 "symbols_sample": row.get("symbols_sample", []),
                 "full_thesis_symbols": row.get("full_thesis_symbols", []),
@@ -267,6 +478,8 @@ def build_all_archetype_runtime_status_matrix(
     source_execution_counts = Counter(row["runtime_source_route_execution_status"] for row in status_rows)
     full_thesis_counts = Counter(row["full_thesis_status"] for row in status_rows)
     accepted_counts = Counter(row["accepted_claim_status"] for row in status_rows)
+    runtime_status_counts = Counter(row["runtime_status"] for row in status_rows)
+    primary_blocker_counts = Counter(row["primary_blocker_class"] for row in status_rows)
 
     return {
         "schema_version": "e2r_all_archetype_runtime_status_matrix_v1",
@@ -291,6 +504,10 @@ def build_all_archetype_runtime_status_matrix(
         "runtime_source_route_execution_status_counts": dict(sorted(source_execution_counts.items())),
         "accepted_claim_status_counts": dict(sorted(accepted_counts.items())),
         "full_thesis_status_counts": dict(sorted(full_thesis_counts.items())),
+        "runtime_status_counts": dict(sorted(runtime_status_counts.items())),
+        "primary_blocker_class_counts": dict(sorted(primary_blocker_counts.items())),
+        "source_route_ready_count": sum(1 for row in status_rows if row["source_route_ready"]),
+        "memory_card_ready_count": sum(1 for row in status_rows if row["memory_card_ready"]),
         "meaningful_runtime_parity_ready": proof_counts.get("RUNTIME_PARITY_PROVEN", 0) == len(status_rows),
         "rows": status_rows,
     }
@@ -352,12 +569,79 @@ def render_all_archetype_runtime_status_markdown(matrix: Mapping[str, Any]) -> s
     return "\n".join(lines)
 
 
+def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, Any]) -> str:
+    def fmt_rate(value: Any) -> str:
+        return "-" if value is None else str(value)
+
+    lines = [
+        "# All Archetype Runtime Parity Summary - 2026-07-05",
+        "",
+        "이 문서는 goal4가 요구한 안정 파일명용 요약이다. 같은 rows를 `all_archetype_runtime_parity_matrix.json`에 저장한다.",
+        "",
+        "쉬운 예: 연구자료는 진료과별 교과서이고, source route는 어느 검사를 해야 하는지 적은 처방전이다. 하지만 production accepted claim은 실제 검사 결과지다. 처방전이 있어도 검사 결과지가 없으면 점수에 넣을 수 없다.",
+        "",
+        "## Verdict",
+        "",
+        f"- registry_contract_count: `{matrix['registry_contract_count']}`",
+        f"- c01_to_c32_contract_count: `{matrix['c01_to_c32_contract_count']}`",
+        f"- r13_cross_archetype_contract_count: `{matrix['r13_cross_archetype_contract_count']}`",
+        f"- source_route_ready_count: `{matrix['source_route_ready_count']}`",
+        f"- memory_card_ready_count: `{matrix['memory_card_ready_count']}`",
+        f"- meaningful_runtime_parity_ready: `{matrix['meaningful_runtime_parity_ready']}`",
+        "",
+        "## Runtime Status Counts",
+        "",
+        f"- runtime_status_counts: `{json.dumps(matrix['runtime_status_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- primary_blocker_class_counts: `{json.dumps(matrix['primary_blocker_class_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- runtime_parity_proof_status_counts: `{json.dumps(matrix['runtime_parity_proof_status_counts'], ensure_ascii=False, sort_keys=True)}`",
+        "",
+        "## Matrix",
+        "",
+        "| archetype | runtime status | primary blocker | research cases | URL-backed | source tasks | accepted claims | full rows | req gap rate | green gap rate |",
+        "|---|---|---|---:|---:|---:|---:|---:|---:|---:|",
+    ]
+    for row in matrix.get("rows", []):
+        accepted = int(row.get("runtime_accepted_claim_count") or 0) + int(
+            row.get("runtime_source_task_accepted_claim_count") or 0
+        )
+        lines.append(
+            "| {archetype} | {runtime_status} | {blocker} | {research_cases} | {url_backed} | {source_tasks} | {accepted} | {full_rows} | {req_rate} | {green_rate} |".format(
+                archetype=row["archetype_id"],
+                runtime_status=row["runtime_status"],
+                blocker=row["primary_blocker_class"],
+                research_cases=row["research_case_count"],
+                url_backed=row["url_backed_case_count"],
+                source_tasks=row["runtime_source_task_count"],
+                accepted=accepted,
+                full_rows=row["runtime_full_thesis_row_count"],
+                req_rate=fmt_rate(row["required_positive_missing_rate"]),
+                green_rate=fmt_rate(row["green_gap_rate"]),
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "## Operator Reading",
+            "",
+            "- `SCORE_PATH_CLOSED_WITH_THESIS_GAPS`: 점수 계산 경로는 닫혔지만 필수 positive 또는 Green 증거가 남아 있다.",
+            "- `SOURCE_REPAIR_REQUIRED`: 연구 route나 source task는 있지만 current accepted claim이 부족하다.",
+            "- `PLANNING_ONLY`: planner나 discovery는 열렸지만 실제 종목/소스 실행으로 닫히지 않았다.",
+            "- `REPLAY_ONLY_NOT_RUNTIME_PROVEN`: 과거 URL-backed 판례가 있을 뿐, 현재 production run에서 재검증되지 않았다.",
+            "",
+            "즉 이 summary에서 중요한 것은 높은 row count가 아니라 `accepted claims -> score contributions -> full thesis row`가 아키타입별로 닫혔는지다.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def write_all_archetype_runtime_status_matrix(
     *,
     parity_audit: Mapping[str, Any],
     memory_cards: Mapping[str, Any],
     source_routes: Mapping[str, Any],
     candidate_selection: Mapping[str, Any] | None = None,
+    research_inventory: Mapping[str, Any] | None = None,
     docs_dir: str | Path = "docs/operational",
 ) -> dict[str, Any]:
     docs_path = Path(docs_dir)
@@ -367,24 +651,32 @@ def write_all_archetype_runtime_status_matrix(
         memory_cards=memory_cards,
         source_routes=source_routes,
         candidate_selection=candidate_selection,
+        research_inventory=research_inventory,
     )
     json_path = docs_path / "all_archetype_runtime_status_matrix_2026-07-05.json"
     md_path = docs_path / "all_archetype_runtime_status_matrix_2026-07-05.md"
     alias_json_path = docs_path / "all_archetype_runtime_status_matrix.json"
+    parity_json_path = docs_path / "all_archetype_runtime_parity_matrix.json"
+    parity_summary_path = docs_path / "all_archetype_runtime_parity_summary.md"
     json_text = json.dumps(matrix, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     json_path.write_text(json_text, encoding="utf-8")
     alias_json_path.write_text(json_text, encoding="utf-8")
+    parity_json_path.write_text(json_text, encoding="utf-8")
     md_path.write_text(render_all_archetype_runtime_status_markdown(matrix), encoding="utf-8")
+    parity_summary_path.write_text(render_all_archetype_runtime_parity_summary_markdown(matrix), encoding="utf-8")
     return {
         "matrix": matrix,
         "json_path": json_path,
         "alias_json_path": alias_json_path,
         "markdown_path": md_path,
+        "parity_json_path": parity_json_path,
+        "parity_summary_path": parity_summary_path,
     }
 
 
 __all__ = [
     "build_all_archetype_runtime_status_matrix",
+    "render_all_archetype_runtime_parity_summary_markdown",
     "render_all_archetype_runtime_status_markdown",
     "write_all_archetype_runtime_status_matrix",
 ]

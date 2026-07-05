@@ -14,12 +14,14 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         cls.parity = build_research_to_runtime_parity_audit(repo_root=Path(".").resolve(), as_of_date="2026-07-05")
         cls.cards = json.loads((cls.docs / "research_runtime_memory_cards_v2.json").read_text(encoding="utf-8"))
         cls.routes = json.loads((cls.docs / "research_source_route_recovery_matrix.json").read_text(encoding="utf-8"))
+        cls.inventory = json.loads((cls.docs / "research_reverse_case_inventory.json").read_text(encoding="utf-8"))
         cls.selection = build_balanced_full_thesis_candidate_selection_audit(cls.parity)
         cls.matrix = build_all_archetype_runtime_status_matrix(
             parity_audit=cls.parity,
             memory_cards=cls.cards,
             source_routes=cls.routes,
             candidate_selection=cls.selection,
+            research_inventory=cls.inventory,
         )
         cls.by_prefix = {row["archetype_prefix"]: row for row in cls.matrix["rows"]}
 
@@ -40,13 +42,28 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             "accepted_claim_status",
             "full_thesis_status",
             "runtime_parity_proof_status",
+            "runtime_status",
+            "primary_blocker_class",
+            "blocker_detail",
             "next_required_action",
             "status_reason_ko",
+            "research_case_count",
+            "url_backed_case_count",
+            "runtime_source_task_count",
+            "runtime_source_task_executed_count",
+            "runtime_planner_attempt_count",
+            "source_route_ready",
+            "memory_card_ready",
         }
         for row in self.matrix["rows"]:
             self.assertTrue(required.issubset(row), row["archetype_id"])
             for key in required:
-                self.assertTrue(row[key], (row["archetype_id"], key))
+                if key in {"source_route_ready", "memory_card_ready"}:
+                    self.assertIsInstance(row[key], bool, (row["archetype_id"], key))
+                elif key.endswith("_count"):
+                    self.assertIsInstance(row[key], int, (row["archetype_id"], key))
+                else:
+                    self.assertTrue(row[key], (row["archetype_id"], key))
 
     def test_c05_score_path_is_not_meaningful_runtime_parity(self) -> None:
         c05 = self.by_prefix["C05"]
@@ -54,9 +71,15 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(c05["accepted_claim_status"], "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS")
         self.assertEqual(c05["full_thesis_status"], "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS")
         self.assertEqual(c05["runtime_parity_proof_status"], "NOT_PROVEN_SCORE_PATH_ONLY")
+        self.assertEqual(c05["runtime_status"], "SCORE_PATH_CLOSED_WITH_THESIS_GAPS")
+        self.assertEqual(c05["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
         self.assertEqual(c05["runtime_full_thesis_row_count"], 1)
         self.assertEqual(c05["runtime_full_thesis_row_with_required_positive_missing_count"], 1)
         self.assertEqual(c05["runtime_full_thesis_row_with_green_gap_count"], 1)
+        self.assertEqual(c05["required_positive_missing_rate"], 1.0)
+        self.assertEqual(c05["green_gap_rate"], 1.0)
+        self.assertGreater(c05["research_case_count"], 0)
+        self.assertGreater(c05["url_backed_case_count"], 0)
 
     def test_c06_has_runtime_evidence_but_is_blocked_not_smoke_promoted(self) -> None:
         c06 = self.by_prefix["C06"]
@@ -65,6 +88,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(c06["accepted_claim_status"], "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS")
         self.assertEqual(c06["full_thesis_status"], "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS")
         self.assertEqual(c06["runtime_parity_proof_status"], "NOT_PROVEN_SCORE_PATH_ONLY")
+        self.assertEqual(c06["runtime_status"], "SCORE_PATH_CLOSED_WITH_THESIS_GAPS")
+        self.assertEqual(c06["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
         self.assertEqual(c06["runtime_full_thesis_row_count"], 1)
         self.assertEqual(c06["runtime_full_thesis_row_with_required_positive_missing_count"], 1)
         self.assertEqual(c06["runtime_full_thesis_row_with_green_gap_count"], 1)
@@ -79,6 +104,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             self.assertEqual(row["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY", prefix)
             self.assertEqual(row["full_thesis_status"], "NO_PRODUCTION_FULL_THESIS_ROW", prefix)
             self.assertEqual(row["runtime_parity_proof_status"], "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM", prefix)
+            self.assertEqual(row["runtime_status"], "SOURCE_REPAIR_REQUIRED", prefix)
+            self.assertEqual(row["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED", prefix)
             self.assertGreater(row["runtime_source_task_execution_count"], 0, prefix)
             self.assertEqual(row["targetless_source_task_execution_count"], 0, prefix)
             self.assertEqual(
@@ -92,6 +119,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(c17["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY")
         self.assertEqual(c17["full_thesis_status"], "NO_PRODUCTION_FULL_THESIS_ROW")
         self.assertEqual(c17["runtime_parity_proof_status"], "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM")
+        self.assertEqual(c17["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c17["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
         self.assertEqual(
             c17["next_required_action"],
             "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
