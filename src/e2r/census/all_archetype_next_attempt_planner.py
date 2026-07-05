@@ -24,6 +24,7 @@ DEFAULT_FALLBACK_SOURCE_CLASSES = [
     "NaverSearch",
     "GeneralWebSearch",
 ]
+PLACEHOLDER_SYMBOLS = {"", "000000", "0000000", "UNKNOWN", "N/A", "NONE", "NULL"}
 
 
 def _stable_id(prefix: str, *parts: object, length: int = 20) -> str:
@@ -126,8 +127,13 @@ def _symbols_for_attempt(row: Mapping[str, Any]) -> list[str | None]:
     symbols = list(row.get("blocked_symbols") or row.get("full_thesis_symbols") or [])
     if not symbols:
         symbols = list(row.get("symbols_sample") or [])
-    if symbols:
-        return [str(symbol) for symbol in symbols[:2]]
+    clean_symbols = [
+        str(symbol)
+        for symbol in symbols
+        if symbol is not None and str(symbol).strip().upper() not in PLACEHOLDER_SYMBOLS
+    ]
+    if clean_symbols:
+        return clean_symbols[:2]
     return [None]
 
 

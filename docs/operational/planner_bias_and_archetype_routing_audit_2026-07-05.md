@@ -6,24 +6,47 @@
 
 ## Summary
 
-- status: `PLANNER_ARCHETYPE_ROUTING_BIAS_NOT_READY`
-- planner_run_count: `350`
-- hypothesis_run_count: `35`
-- distinct_top1_archetype_count: `4`
-- c05_top1_share: `0.828571`
+- status: `PLANNER_ARCHETYPE_ROUTING_BIAS_PASS`
+- planner_run_count: `808`
+- hypothesis_run_count: `78`
+- distinct_top1_archetype_count: `32`
+- c05_top1_share: `0.064103`
 - planner_output_score_stage_key_count: `0`
 
 ## Top1 Counts
 
 - `C01`: `2`
-- `C05`: `29`
-- `C06`: `2`
-- `C29`: `2`
+- `C02`: `3`
+- `C03`: `2`
+- `C04`: `1`
+- `C05`: `5`
+- `C06`: `3`
+- `C07`: `2`
+- `C08`: `3`
+- `C09`: `2`
+- `C10`: `1`
+- `C11`: `2`
+- `C12`: `2`
+- `C13`: `1`
+- `C14`: `1`
+- `C15`: `2`
+- `C16`: `3`
+- `C17`: `2`
+- `C19`: `2`
+- `C20`: `3`
+- `C21`: `3`
+- `C22`: `3`
+- `C23`: `2`
+- `C24`: `3`
+- `C25`: `2`
+- `C26`: `2`
+- `C27`: `3`
+- `C28`: `2`
+- `C29`: `5`
+- `C30`: `3`
+- `C31`: `2`
+- `C32`: `3`
+- `R13`: `3`
 
 ## Blockers
-
-- `planner_top1_c05_share_over_limit`
-- `planner_top1_distinct_archetype_count_below_minimum`
-- `target_unknown_rows_promoted_after_planner`
-- `source_primary_context_survived_into_promotion`
-- `mandatory_archetypes_not_planner_attempted`
+- 없음

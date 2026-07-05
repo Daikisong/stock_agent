@@ -815,8 +815,12 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
             ],
         )
         self.assertFalse(row["full_thesis_green_gate_complete"])
-        self.assertTrue(production_audit["production_pass_allowed"])
+        self.assertFalse(production_audit["production_pass_allowed"])
         self.assertEqual(production_audit["production_full_thesis_row_count"], 1)
+        self.assertIn(
+            "production_full_thesis_rows_with_required_positive_missing_primitives",
+            production_audit["blockers"],
+        )
 
     def test_provider_failed_green_gap_blocks_production_full_thesis_final_score(self):
         with TemporaryDirectory() as tmp:
@@ -1097,7 +1101,7 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
             production_audit["blockers"],
         )
 
-    def test_production_audit_exposes_nonblocking_required_positive_missing_primitives(self):
+    def test_production_audit_blocks_required_positive_missing_primitives(self):
         config = CensusV4RunConfig(as_of_date="2026-07-01", target_gate="full_thesis")
 
         production_audit = _full_thesis_production_audit(
@@ -1120,7 +1124,11 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
             ],
         )
 
-        self.assertTrue(production_audit["production_pass_allowed"])
+        self.assertFalse(production_audit["production_pass_allowed"])
+        self.assertIn(
+            "production_full_thesis_rows_with_required_positive_missing_primitives",
+            production_audit["blockers"],
+        )
         self.assertEqual(production_audit["production_full_thesis_row_count"], 1)
         self.assertEqual(production_audit["production_full_thesis_row_with_missing_required_primitives_count"], 0)
         self.assertEqual(production_audit["production_full_thesis_row_with_blocking_required_gap_primitives_count"], 0)
@@ -1259,9 +1267,13 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertIn("CE-BRAIN-FULL", row["candidate_event_ids"])
         self.assertIn("CE-BRAIN-FULL", row["score_eligible_candidate_event_ids"])
         self.assertEqual(row["full_e2r_verified_score"], 84.0)
-        self.assertTrue(production_audit["production_pass_allowed"])
+        self.assertFalse(production_audit["production_pass_allowed"])
         self.assertEqual(production_audit["production_full_thesis_row_count"], 1)
         self.assertEqual(production_audit["controlled_smoke_full_thesis_row_count"], 0)
+        self.assertIn(
+            "production_full_thesis_rows_with_required_positive_missing_primitives",
+            production_audit["blockers"],
+        )
         self.assertEqual(row["full_thesis_source_task_ids"], ["TASK-1", "TASK-2", "TASK-3", "TASK-4"])
         self.assertTrue(all(proof["linked"] for proof in row["full_thesis_source_linkage_proof"]))
         self.assertTrue(row["atomic_stage_decision_id"].startswith("ATOMIC-FTPROD-"))
@@ -1489,7 +1501,10 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(stage_rows[0]["full_thesis_missing_primitives"], [])
         self.assertIn("hbm_capacity_constraint", stage_rows[0]["full_thesis_green_gap_primitives"])
         self.assertEqual(production["production_green_stage_row_with_green_gap_count"], 0)
-        self.assertEqual(production["blockers"], [])
+        self.assertEqual(
+            production["blockers"],
+            ["production_full_thesis_rows_with_required_positive_missing_primitives"],
+        )
 
     def test_provider_failed_non_claim_task_does_not_block_brain_stage_promotion(self):
         with TemporaryDirectory() as tmp:

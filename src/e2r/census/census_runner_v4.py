@@ -826,8 +826,8 @@ def _run_brain_web_attempt(
 
     _write_planner_prompt_response_leafs(output_root=output_root, planner_runs=result.get("planner_runs", ()))
     planner_runs = [run.to_dict() for run in result.get("planner_runs", ())]
-    _merge_jsonl_by_key(output_root / "planner_runs.jsonl", planner_runs, "planner_run_id")
-    _merge_jsonl_by_key(output_root / "research_brain_plans.jsonl", _planner_plan_rows(planner_runs), "planner_run_id")
+    write_jsonl(output_root / "planner_runs.jsonl", planner_runs)
+    write_jsonl(output_root / "research_brain_plans.jsonl", _planner_plan_rows(planner_runs))
     exported = _export_brain_web_bundle_leafs(result=result, output_root=output_root)
     seed_runtime = _full_thesis_seed_runtime_counts(result=result, planner_runs=planner_runs)
 
@@ -6132,6 +6132,8 @@ def _full_thesis_production_audit(*, config: CensusV4RunConfig, stage_rows: Sequ
         blockers.append("production_full_thesis_rows_missing_claim_score_or_stage_trace")
     if controlled_smoke_substitution_rejected_count:
         blockers.append("controlled_smoke_rows_rejected_as_production_substitute")
+    if production_rows_with_required_positive_missing_primitives:
+        blockers.append("production_full_thesis_rows_with_required_positive_missing_primitives")
     if production_green_rows_with_green_gap:
         blockers.append("production_green_stage_rows_with_green_gap")
     if production_rows_with_source_pending_gap:

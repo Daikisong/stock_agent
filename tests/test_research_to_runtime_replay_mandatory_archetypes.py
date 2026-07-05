@@ -24,18 +24,26 @@ class ResearchToRuntimeReplayMandatoryArchetypesTests(unittest.TestCase):
             self.assertGreater(len(row["source_proxy_repair_task_ids"]), 0, prefix)
             self.assertIn(
                 row["current_lifecycle_validation_status"],
-                {"CURRENT_PRODUCTION_CANDIDATE_BLOCKED", "LIFECYCLE_NOT_CURRENT"},
+                {
+                    "CURRENT_PRODUCTION_FULL_THESIS_AVAILABLE",
+                    "CURRENT_PRODUCTION_CANDIDATE_BLOCKED",
+                    "LIFECYCLE_NOT_CURRENT",
+                },
                 prefix,
             )
             self.assertFalse(row["production_score_evidence_allowed"], prefix)
-            self.assertEqual(row["runtime_full_thesis_row_count"], 0, prefix)
+            if prefix == "C06":
+                self.assertEqual(row["runtime_full_thesis_row_count"], 1, prefix)
+            else:
+                self.assertEqual(row["runtime_full_thesis_row_count"], 0, prefix)
 
     def test_c06_is_replay_and_blocked_production_not_smoke_substitution(self) -> None:
         c06 = self.by_prefix["C06"]
         self.assertEqual(c06["positive_runtime_replay_status"], "ACCEPTED_CLAIM_CREATED")
-        self.assertEqual(c06["current_lifecycle_validation_status"], "CURRENT_PRODUCTION_CANDIDATE_BLOCKED")
-        self.assertEqual(c06["runtime_parity_status"], "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP")
-        self.assertEqual(c06["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c06["current_lifecycle_validation_status"], "CURRENT_PRODUCTION_FULL_THESIS_AVAILABLE")
+        self.assertEqual(c06["runtime_parity_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_ONLY")
+        self.assertFalse(c06["production_score_evidence_allowed"])
+        self.assertEqual(c06["runtime_full_thesis_row_count"], 1)
 
 
 if __name__ == "__main__":

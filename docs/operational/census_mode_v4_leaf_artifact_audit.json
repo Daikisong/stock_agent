@@ -1,5 +1,5 @@
 {
-  "critical_count": 3,
+  "critical_count": 4,
   "critical_counts": {
     "accepted_claim_without_evidence_claim_payload_count": 0,
     "assessment_event_score_evidence_allowed_count": 0,
@@ -13,7 +13,7 @@
     "brain_official_operator_alias_unscoped_count": 0,
     "brain_stage_promotion_overclaim_count": 0,
     "brain_stage_promotion_trace_promoted_reference_count": 0,
-    "brain_stage_promotion_unsafe_promoted_count": 0,
+    "brain_stage_promotion_unsafe_promoted_count": 3,
     "brain_stage_trace_not_promoted_marker_missing_count": 0,
     "brain_web_operator_alias_unscoped_count": 0,
     "brain_web_readiness_gate_missing_count": 0,
@@ -40,8 +40,8 @@
     "legacy_runner_production_reachable_count": 0,
     "legacy_v3_runner_production_reachable_count": 0,
     "llm_claim_extractor_claimed_but_zero_count": 0,
-    "llm_claimed_but_zero_calls_count": 1,
-    "llm_claimed_but_zero_real_success_count": 1,
+    "llm_claimed_but_zero_calls_count": 0,
+    "llm_claimed_but_zero_real_success_count": 0,
     "market_anomaly_to_score_count": 0,
     "missing_census_assessment_event_id_count": 0,
     "missing_leaf_artifact_count": 0,
@@ -82,7 +82,7 @@
     "scored_row_missing_primitive_state_ids": 0,
     "scored_row_missing_score_contribution_ids": 0,
     "scored_row_missing_stagecourt_trace": 0,
-    "semantic_guard_blocked_score_count": 0,
+    "semantic_guard_blocked_score_count": 1,
     "source_pending_marked_red_count": 0,
     "source_proxy_to_score_count": 0,
     "source_timeline_missing_count": 0,
@@ -100,136 +100,151 @@
     "stage_trace_stage_mismatch_count": 0,
     "stagecourt_trace_id_not_found_count": 0,
     "verified_score_not_full_e2r_count": 0,
-    "web_claimed_but_zero_search_count": 1
+    "web_claimed_but_zero_search_count": 0
   },
   "metrics": {
-    "atomic_stage_decision_count": 92,
+    "atomic_stage_decision_count": 95,
     "base_stage_display_distribution": {
       "EVENT_BOARD_RED": 1,
       "EVENT_BOARD_STAGE0": 3306,
-      "EVENT_BOARD_STAGE1": 55,
-      "EVENT_BOARD_STAGE2_WATCH": 29
+      "EVENT_BOARD_STAGE1": 53,
+      "EVENT_BOARD_STAGE2_WATCH": 28,
+      "FULL_THESIS_0": 2,
+      "FULL_THESIS_1": 1
     },
     "base_stage_distribution": {
+      "0": 2,
+      "1": 1,
       "Red": 1,
       "Stage0": 3306,
-      "Stage1": 55,
-      "Stage2-Watch": 29
+      "Stage1": 53,
+      "Stage2-Watch": 28
     },
-    "brain_stage_promoted_row_count": 0,
-    "brain_stage_promotion_blocker_count": 5,
+    "brain_stage_promoted_row_count": 3,
+    "brain_stage_promotion_blocker_count": 1,
     "brain_stage_promotion_mode": "strict",
-    "brain_stage_promotion_snapshot_document_count": 0,
-    "brain_stage_promotion_unsafe_promoted_count": 0,
-    "brain_stage_promotion_verdict": "BLOCKED",
-    "brain_stage_trace_count": 0,
-    "brain_web_attempt_accepted_claim_count": 0,
+    "brain_stage_promotion_snapshot_document_count": 7,
+    "brain_stage_promotion_unsafe_promoted_count": 3,
+    "brain_stage_promotion_verdict": "FAIL_UNSAFE_PROMOTION",
+    "brain_stage_trace_count": 7,
+    "brain_web_attempt_accepted_claim_count": 26,
     "brain_web_attempt_blocker_count": 1,
-    "brain_web_attempt_source_task_execution_count": 0,
-    "brain_web_attempt_verdict": "ATTEMPT_FAILED",
-    "brain_web_readiness_gate_blocker_count": 18,
+    "brain_web_attempt_source_task_execution_count": 285,
+    "brain_web_attempt_verdict": "ATTEMPTED_NOT_CUTOVER_READY",
+    "brain_web_readiness_gate_blocker_count": 8,
     "brain_web_readiness_gate_minimum_applies": true,
     "brain_web_readiness_gate_pass_allowed": false,
     "brain_web_readiness_gate_verdict": "BLOCKED",
-    "candidate_event_count": 226,
+    "candidate_event_count": 229,
     "candidate_event_scope_distribution": {
       "ASSESSMENT_ONLY": 3306,
       "CANDIDATE_EVENTS_PRESENT": 85
     },
     "canonical_stage_distribution": {
-      "0": 3306,
-      "1": 55,
-      "2": 29,
+      "0": 3308,
+      "1": 54,
+      "2": 28,
       "3-Red": 1
     },
     "census_status_distribution": {
-      "DEEP_VERIFIED": 66,
+      "DEEP_VERIFIED": 64,
+      "FULL_THESIS_VERIFIED": 3,
       "LIGHT_ONLY": 3,
-      "PENDING_SOURCE": 16,
+      "PENDING_SOURCE": 15,
       "SCANNED": 3306
     },
-    "claim_extractor_run_count": 0,
-    "critical_count": 3,
+    "claim_extractor_run_count": 85,
+    "critical_count": 4,
     "eligible_symbol_count": 3391,
-    "event_board_non_stage0_count": 85,
-    "event_board_stage_row_count": 3391,
-    "event_evidence_score_present_count": 66,
-    "evidence_claim_payload_count": 92,
-    "full_e2r_verified_score_present_count": 0,
-    "full_e2r_verified_score_row_count": 0,
-    "full_thesis_refresh_queue_candidate_count": 85,
-    "full_thesis_stage_row_count": 0,
-    "non_representative_claim_count": 26,
+    "event_board_non_stage0_count": 82,
+    "event_board_stage_row_count": 3388,
+    "event_evidence_score_present_count": 64,
+    "evidence_claim_payload_count": 99,
+    "full_e2r_verified_score_present_count": 3,
+    "full_e2r_verified_score_row_count": 3,
+    "full_thesis_refresh_queue_candidate_count": 82,
+    "full_thesis_stage_row_count": 3,
+    "non_representative_claim_count": 29,
     "non_representative_claim_critical_count": 0,
-    "non_representative_claim_warning_count": 8,
+    "non_representative_claim_warning_count": 9,
     "operator_score_use_distribution": {
-      "NOT_FULL_E2R_SCORE": 3391
+      "FULL_E2R_SCORE": 3,
+      "NOT_FULL_E2R_SCORE": 3388
     },
-    "operator_stage_scope_notice": "NO_FULL_THESIS_STAGE_ROWS_EVENT_BOARD_STAGE_ROWS_EXIST",
+    "operator_stage_scope_notice": "FULL_THESIS_STAGE_ROWS_PRESENT_SCOPE_GUARD_REQUIRED",
     "operator_stage_use_distribution": {
-      "NOT_FULL_THESIS_STAGE": 3391
+      "FULL_THESIS_STAGE": 3,
+      "NOT_FULL_THESIS_STAGE": 3388
     },
-    "planner_real_provider_attempt_count": 0,
-    "planner_real_provider_success_count": 0,
-    "planner_run_count": 0,
+    "planner_real_provider_attempt_count": 78,
+    "planner_real_provider_success_count": 78,
+    "planner_run_count": 808,
     "representative_atomic_decision_count": 74,
     "research_brain_bridge_snapshot_url_count": 255,
     "research_brain_bridge_usable_for_census_cutover": false,
     "research_brain_bridge_verdict": "SHADOW_OR_IMPORT_ONLY",
-    "sample_leaf_bundle_count": 66,
-    "score_eligible_candidate_event_count": 92,
+    "sample_leaf_bundle_count": 67,
+    "score_eligible_candidate_event_count": 95,
     "score_scale_distribution": {
-      "EVENT_WEIGHTED_PARTIAL": 66,
-      "NO_SCORE": 3325
+      "EVENT_WEIGHTED_PARTIAL": 64,
+      "FULL_E2R_100": 3,
+      "NO_SCORE": 3324
     },
     "score_scope_distribution": {
-      "EVENT_WEIGHTED_PARTIAL": 66,
-      "NO_SCORE": 3325
+      "EVENT_WEIGHTED_PARTIAL": 64,
+      "FULL_E2R_100": 3,
+      "NO_SCORE": 3324
     },
     "score_source_distribution": {
-      "NONE": 3325,
-      "STAGECOURT_SCORE_INTERVAL": 66
+      "BRAIN_WEB_PRODUCTION_FULL_THESIS_STAGECOURT": 3,
+      "NONE": 3324,
+      "STAGECOURT_SCORE_INTERVAL": 64
     },
     "stage_decision_status_display_distribution": {
-      "EVENT_BOARD_FINAL": 36,
+      "EVENT_BOARD_FINAL": 35,
       "EVENT_BOARD_NO_CURRENT_CATALYST": 3306,
-      "EVENT_BOARD_PENDING_MATERIAL_GAPS": 29,
+      "EVENT_BOARD_PENDING_MATERIAL_GAPS": 28,
       "EVENT_BOARD_RISK_REVIEW": 1,
-      "EVENT_BOARD_SOURCE_PENDING": 19
+      "EVENT_BOARD_SOURCE_PENDING": 18,
+      "FULL_THESIS_FINAL": 3
     },
     "stage_decision_status_distribution": {
-      "FINAL": 36,
+      "FINAL": 38,
       "NO_CURRENT_CATALYST": 3306,
-      "PENDING_MATERIAL_GAPS": 29,
+      "PENDING_MATERIAL_GAPS": 28,
       "RISK_REVIEW": 1,
-      "SOURCE_PENDING": 19
+      "SOURCE_PENDING": 18
     },
     "stage_distribution": {
+      "0": 2,
+      "1": 1,
       "Red": 1,
       "Stage0": 3306,
-      "Stage1": 55,
-      "Stage2-Watch": 29
+      "Stage1": 53,
+      "Stage2-Watch": 28
     },
     "stage_scope_distribution": {
-      "CENSUS_EVENT_BOARD": 3391
+      "CENSUS_EVENT_BOARD": 3388,
+      "FULL_THESIS": 3
     },
     "stage_signal_distribution": {
-      "EVIDENCE_INSUFFICIENT": 11,
-      "MATERIAL_CLAIM_WATCH": 29,
+      "EVIDENCE_INSUFFICIENT": 10,
+      "FULL_THESIS_PRODUCTION_STAGE": 3,
+      "MATERIAL_CLAIM_WATCH": 28,
       "NO_CURRENT_CATALYST": 3306,
-      "OFFICIAL_EVENT_WATCH": 36,
+      "OFFICIAL_EVENT_WATCH": 35,
       "RISK_REVIEW": 1,
       "SOURCE_PENDING": 8
     },
     "stage_status_count": 3391,
     "static_source_audit_repo_root": "/home/eorb915/projects/stock_agent",
-    "web_fetched_document_count": 0,
-    "web_rejected_document_count": 0,
-    "web_search_result_count": 0,
-    "web_search_task_count": 0
+    "web_fetched_document_count": 7,
+    "web_rejected_document_count": 60,
+    "web_search_result_count": 263,
+    "web_search_task_count": 29
   },
   "missing_leaf_artifacts": [],
-  "output_root": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched",
+  "output_root": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched-v2",
   "schema_version": "e2r_census_v4_leaf_artifact_audit_v1",
   "verdict": "FAIL"
 }

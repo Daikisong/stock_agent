@@ -1,27 +1,24 @@
 {
   "archetype_balanced_status": "ARCHETYPE_BALANCED_FULL_THESIS_PASS_FALSE",
-  "c05_full_thesis_share": 1.0,
-  "distinct_full_thesis_archetype_count": 1,
+  "c05_full_thesis_share": 0.666667,
+  "distinct_full_thesis_archetype_count": 2,
   "green_gap_rate": 1.0,
   "hard_fails": [
     "distinct_full_thesis_archetype_count_below_3",
     "c05_share_above_50_percent",
     "required_positive_missing_rate_above_30_percent",
     "green_gap_rate_above_30_percent",
-    "target_archetype_unknown_promoted",
-    "source_primary_context_only_promoted",
-    "planner_bias_audit_not_pass",
     "balanced_candidate_selection_not_pass"
   ],
-  "mandatory_archetype_attempt_count": 1,
-  "mandatory_archetype_full_thesis_count": 0,
+  "mandatory_archetype_attempt_count": 6,
+  "mandatory_archetype_full_thesis_count": 1,
   "meaningful_pass_allowed": false,
   "meaningful_status": "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE",
   "required_positive_missing_rate": 1.0,
   "research_replay_production_score_leak_count": 0,
   "schema_version": "e2r_meaningful_full_thesis_production_acceptance_v1",
   "score_path_status": "PRODUCTION_FULL_E2R_SCORE_PATH_PASS",
-  "source_primary_context_only_promoted_count": 10,
+  "source_primary_context_only_promoted_count": 0,
   "source_proxy_repair_task_count": 18,
-  "target_archetype_unknown_promoted_count": 10
+  "target_archetype_unknown_promoted_count": 0
 }

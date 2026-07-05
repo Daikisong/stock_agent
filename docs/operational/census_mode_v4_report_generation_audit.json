@@ -1,6 +1,6 @@
 {
   "acceptance_report_exists": true,
-  "acceptance_report_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched/acceptance_report.md",
+  "acceptance_report_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched-v2/acceptance_report.md",
   "critical_count": 0,
   "expected_fragments": {
     "brain_web_minimum_required_counts": "minimum_required_counts=",
@@ -9,17 +9,17 @@
     "c06_guard_replay": "5b. C06 guard replay audit:",
     "controlled_semantic_replay": "5c. Controlled semantic replay audit:",
     "eligible_stage_rows": "8. Eligible / Stage rows: 3391 / 3391",
-    "event_evidence_score_rows": "16. Event evidence score rows: 66",
+    "event_evidence_score_rows": "16. Event evidence score rows: 64",
     "final_verdict": "42. Final verdict: NOT_READY",
-    "full_e2r_verified_score_rows": "17. Full E2R verified score rows: 0",
+    "full_e2r_verified_score_rows": "17. Full E2R verified score rows: 3",
     "full_thesis_smoke_gate": "5d. Full thesis smoke gate:",
     "goal_requirement_matrix": "5e. Goal requirement matrix:",
     "leaf_audit_verdict": "7. Leaf artifact audit: FAIL",
-    "operator_stage_warning": "0. Operator stage warning: stage_scope_notice=NO_FULL_THESIS_STAGE_ROWS_EVENT_BOARD_STAGE_ROWS_EXIST; operational_stage_use_allowed=False; full_thesis_rows=0; full_thesis_refresh_queue_candidates=85; full_e2r_verified_score_rows=0; event_board_non_stage0_rows=85",
+    "operator_stage_warning": "0. Operator stage warning: stage_scope_notice=FULL_THESIS_STAGE_ROWS_PRESENT_SCOPE_GUARD_REQUIRED; operational_stage_use_allowed=False; full_thesis_rows=3; full_thesis_refresh_queue_candidates=82; full_e2r_verified_score_rows=3; event_board_non_stage0_rows=82",
     "report_source": "report_generated_from_leaf_audit=true",
-    "sample_leaf_bundle_rows": "39. Sample leaf bundle rows: 66",
-    "score_scale_distribution": "11. Score scale distribution: {'NO_SCORE': 3325, 'EVENT_WEIGHTED_PARTIAL': 66}",
-    "stage_scope_operational_counts": "17a. Full thesis stage rows: 0; refresh queue candidates: 85; event-board non-Stage0 rows: 85; operator_stage_scope_notice=NO_FULL_THESIS_STAGE_ROWS_EVENT_BOARD_STAGE_ROWS_EXIST"
+    "sample_leaf_bundle_rows": "39. Sample leaf bundle rows: 67",
+    "score_scale_distribution": "11. Score scale distribution: {'NO_SCORE': 3324, 'EVENT_WEIGHTED_PARTIAL': 64, 'FULL_E2R_100': 3}",
+    "stage_scope_operational_counts": "17a. Full thesis stage rows: 3; refresh queue candidates: 82; event-board non-Stage0 rows: 82; operator_stage_scope_notice=FULL_THESIS_STAGE_ROWS_PRESENT_SCOPE_GUARD_REQUIRED"
   },
   "in_memory_summary_used_for_acceptance_count": 0,
   "leaf_report_metric_mismatch_count": 0,

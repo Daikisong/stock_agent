@@ -2,6 +2,19 @@
 
 이 문서는 `docs/0705/goal4_research_to_runtime_status_2026-07-05.md`의 "manifest command를 실제 실행해야 한다" 다음 단계 결과를 기록한다.
 
+후속 감사:
+
+- `docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md`
+
+주의:
+
+```text
+이 문서는 첫 patched run 결과다.
+첫 patched run은 planner/source/claim trace가 공식 leaf에 남지 않아 실패했다.
+후속 patched-v2 run에서는 planner/source/claim trace가 남았지만,
+runtime budget exhausted와 readiness BLOCKED로 여전히 Goal4 완료는 아니다.
+```
+
 검증 기준 산출물:
 
 - `output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-patched/`

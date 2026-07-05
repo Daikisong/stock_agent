@@ -1,15 +1,15 @@
 {
-  "attempt_verdict": "ATTEMPT_FAILED",
-  "llm_claimed_but_zero_calls_count": 1,
-  "llm_claimed_but_zero_success_count": 1,
-  "llm_planner_attempt_count": 0,
-  "llm_planner_call_count": 0,
-  "llm_planner_not_attempted_count": 0,
-  "llm_real_provider_failure_count": 0,
-  "llm_real_provider_success_count": 0,
-  "planner_run_row_count": 0,
+  "attempt_verdict": "ATTEMPTED_NOT_CUTOVER_READY",
+  "llm_claimed_but_zero_calls_count": 0,
+  "llm_claimed_but_zero_success_count": 0,
+  "llm_planner_attempt_count": 114,
+  "llm_planner_call_count": 114,
+  "llm_planner_not_attempted_count": 694,
+  "llm_real_provider_failure_count": 36,
+  "llm_real_provider_success_count": 78,
+  "planner_run_row_count": 808,
   "requested_by_brain_web_mode": true,
   "requested_by_run_mode": true,
   "schema_version": "e2r_census_v4_brain_planner_audit_v1",
-  "verdict": "FAIL"
+  "verdict": "PASS"
 }

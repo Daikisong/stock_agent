@@ -1,6 +1,6 @@
 {
   "price_path_rows_runtime_prompt_allowed": false,
-  "record_count": 11388,
+  "record_count": 11438,
   "schema_version": "e2r_research_reverse_source_quality_matrix_v1",
   "source_proxy_rows_runtime_score_allowed": false,
   "source_proxy_score_leak_case_ids": [],
@@ -9,8 +9,8 @@
     "A1_URL_PENDING": 19,
     "A2_URL_BACKED": 3149,
     "EVIDENCE_URL_PENDING": 185,
-    "PRICE_PATH_ONLY": 2204,
-    "SHADOW_ONLY": 517,
+    "PRICE_PATH_ONLY": 2237,
+    "SHADOW_ONLY": 534,
     "SOURCE_PROXY_ONLY": 5314
   },
   "url_backed_replay_candidate_count": 3149,

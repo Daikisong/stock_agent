@@ -54,28 +54,43 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(c05["accepted_claim_status"], "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS")
         self.assertEqual(c05["full_thesis_status"], "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS")
         self.assertEqual(c05["runtime_parity_proof_status"], "NOT_PROVEN_SCORE_PATH_ONLY")
-        self.assertEqual(c05["runtime_full_thesis_row_count"], 10)
+        self.assertEqual(c05["runtime_full_thesis_row_count"], 2)
+        self.assertEqual(c05["runtime_full_thesis_row_with_required_positive_missing_count"], 2)
+        self.assertEqual(c05["runtime_full_thesis_row_with_green_gap_count"], 2)
 
     def test_c06_has_runtime_evidence_but_is_blocked_not_smoke_promoted(self) -> None:
         c06 = self.by_prefix["C06"]
-        self.assertEqual(c06["runtime_attempt_status"], "PRODUCTION_CANDIDATE_BLOCKED")
+        self.assertEqual(c06["runtime_attempt_status"], "PRODUCTION_FULL_THESIS_ATTEMPTED")
         self.assertEqual(c06["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS")
-        self.assertEqual(c06["accepted_claim_status"], "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED")
-        self.assertEqual(c06["full_thesis_status"], "FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP")
-        self.assertEqual(c06["runtime_parity_proof_status"], "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP")
+        self.assertEqual(c06["accepted_claim_status"], "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS")
+        self.assertEqual(c06["full_thesis_status"], "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS")
+        self.assertEqual(c06["runtime_parity_proof_status"], "NOT_PROVEN_SCORE_PATH_ONLY")
+        self.assertEqual(c06["runtime_full_thesis_row_count"], 1)
+        self.assertEqual(c06["runtime_full_thesis_row_with_required_positive_missing_count"], 1)
+        self.assertEqual(c06["runtime_full_thesis_row_with_green_gap_count"], 1)
+        self.assertIn("005930", c06["blocked_symbols"])
 
     def test_c08_and_other_canaries_are_replay_ready_but_not_runtime_attempted(self) -> None:
-        for prefix in ("C08", "C15", "C17", "C24", "C28"):
+        source_attempted_prefixes = ("C08", "C15", "C24", "C28")
+        for prefix in source_attempted_prefixes:
             row = self.by_prefix[prefix]
-            self.assertEqual(row["runtime_attempt_status"], "REPLAY_READY_NOT_RUNTIME_ATTEMPTED", prefix)
+            self.assertEqual(row["runtime_attempt_status"], "SOURCE_TASK_EXECUTED", prefix)
+            self.assertEqual(row["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS", prefix)
             self.assertEqual(row["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY", prefix)
             self.assertEqual(row["full_thesis_status"], "NO_PRODUCTION_FULL_THESIS_ROW", prefix)
-            self.assertEqual(row["runtime_parity_proof_status"], "NOT_PROVEN_REPLAY_ONLY", prefix)
+            self.assertEqual(row["runtime_parity_proof_status"], "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM", prefix)
             self.assertEqual(
                 row["next_required_action"],
-                "CONNECT_SOURCE_BACKED_REPLAY_TO_PRODUCTION_RUNTIME_ATTEMPT",
+                "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
                 prefix,
             )
+        c17 = self.by_prefix["C17"]
+        self.assertEqual(c17["runtime_attempt_status"], "PLANNER_ATTEMPTED_ONLY")
+        self.assertEqual(c17["runtime_source_route_execution_status"], "ROUTE_RECOVERED_NOT_EXECUTED")
+        self.assertEqual(c17["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY")
+        self.assertEqual(c17["full_thesis_status"], "NO_PRODUCTION_FULL_THESIS_ROW")
+        self.assertEqual(c17["runtime_parity_proof_status"], "NOT_PROVEN_PLANNER_ONLY")
+        self.assertEqual(c17["next_required_action"], "TURN_PLANNER_ATTEMPT_INTO_BOUNDED_SOURCE_TASKS")
 
     def test_source_executed_without_accepted_claim_is_not_collapsed_into_planner_only(self) -> None:
         c29 = self.by_prefix["C29"]

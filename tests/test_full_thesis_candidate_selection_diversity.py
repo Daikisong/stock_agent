@@ -8,7 +8,7 @@ class FullThesisCandidateSelectionDiversityTests(unittest.TestCase):
         audit = json.loads(Path("docs/operational/full_thesis_candidate_selection_audit_v2.json").read_text())
         self.assertEqual(audit["status"], "BALANCED_FULL_THESIS_SELECTION_NOT_READY")
         selected_prefixes = [row["archetype_id"].split("_", 1)[0] for row in audit["next_required_archetype_attempts"][:6]]
-        self.assertEqual(selected_prefixes, ["C06", "C08", "C15", "C17", "C24", "C28"])
+        self.assertEqual(selected_prefixes, ["C08", "C15", "C17", "C24", "C28", "C18"])
         self.assertIn("full_thesis_archetype_count_below_meaningful_minimum", audit["blockers"])
 
 

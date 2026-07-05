@@ -1,8 +1,8 @@
 {
   "critical_counts": {
     "contract_quality_semantic_guard_missing_count": 0,
-    "semantic_guard_blocked_score_count": 0
+    "semantic_guard_blocked_score_count": 1
   },
   "schema_version": "e2r_census_v4_semantic_audit_v1",
-  "verdict": "PASS"
+  "verdict": "FAIL"
 }

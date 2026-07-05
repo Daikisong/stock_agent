@@ -57,10 +57,10 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
 
     def test_attempt_types_reflect_current_runtime_failure_modes(self) -> None:
         self.assertEqual(self.by_prefix["C05"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C06"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C06"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
         self.assertEqual(self.by_prefix["C29"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
-        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "REPLAY_TO_PRODUCTION_RUNTIME_ATTEMPT")
-        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "REPLAY_TO_PRODUCTION_RUNTIME_ATTEMPT")
+        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
+        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
 
     def test_replay_only_archetypes_are_archetype_level_discovery_not_fake_symbol_scores(self) -> None:
         for prefix in ("C08", "C15", "C17", "C24", "C28"):

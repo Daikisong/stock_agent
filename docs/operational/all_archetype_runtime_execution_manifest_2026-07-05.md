@@ -8,9 +8,9 @@
 
 - execution_status: `READY_FOR_RESEARCH_BRAIN_INPUT_NOT_EXECUTED_BY_PARITY_CLI`
 - seed_event_path: `docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl`
-- seed_event_count: `114`
+- seed_event_count: `111`
 - source_task_shell_path: `docs/operational/all_archetype_next_runtime_source_tasks_2026-07-05.jsonl`
-- source_task_shell_count: `114`
+- source_task_shell_count: `111`
 - output_root: `output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt`
 - brain_candidate_event_seed_path: `docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl`
 - expected_seed_source_in_census_v4: `external_candidate_event_seed_path`
@@ -18,7 +18,7 @@
 ## Command
 
 ```bash
-PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 114 --brain-planner-success-limit 114 --brain-planner-batch-size 5 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 114 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 7200.0 --brain-candidate-event-seed-path docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true
+PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 111 --brain-planner-success-limit 111 --brain-planner-batch-size 5 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 111 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 7200.0 --brain-candidate-event-seed-path docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true
 ```
 
 ## Safety

@@ -8,14 +8,14 @@
 
 ## Current Facts
 
-- full_thesis_row_count: `10`
-- full_thesis_by_archetype: `{"C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 10}`
-- distinct_full_thesis_archetype_count: `1`
-- c05_full_thesis_share: `1.0`
-- required_positive_missing_full_thesis_row_count: `10`
-- green_gap_full_thesis_row_count: `10`
-- target_archetype_unknown_promoted_count: `10`
-- source_primary_context_promoted_count: `10`
+- full_thesis_row_count: `3`
+- full_thesis_by_archetype: `{"C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 2, "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 1}`
+- distinct_full_thesis_archetype_count: `2`
+- c05_full_thesis_share: `0.666667`
+- required_positive_missing_full_thesis_row_count: `3`
+- green_gap_full_thesis_row_count: `3`
+- target_archetype_unknown_promoted_count: `0`
+- source_primary_context_promoted_count: `0`
 
 ## Six Audit Questions
 

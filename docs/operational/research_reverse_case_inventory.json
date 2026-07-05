@@ -1,7 +1,7 @@
 {
   "archetype_count": 36,
-  "documented_corpus_size": 2658,
-  "record_count": 11388,
+  "documented_corpus_size": 2661,
+  "record_count": 11438,
   "records": [
     {
       "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -59899,7 +59899,7 @@
         "order_backlog_to_sales"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-bbf67130850728046b87",
+      "research_case_id": "RCASE-4496bf97ab6af2d417b5",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -59940,7 +59940,7 @@
         "margin_bridge_visible"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-e2430d4c8e819697ea7c",
+      "research_case_id": "RCASE-2a207986971648a9130d",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -59981,7 +59981,7 @@
         "revenue_visibility_contract"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-499daf6e9a2ad1ada751",
+      "research_case_id": "RCASE-37ee2b8442394a33f1fb",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60022,7 +60022,7 @@
         "named_customer_quality"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-86c61e0b27aff72e76d5",
+      "research_case_id": "RCASE-bad5716795b2d7298bf5",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60063,7 +60063,7 @@
         "order_backlog_to_sales"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-14ed92193c2d635f677d",
+      "research_case_id": "RCASE-fe99d801f3602ceb98b1",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60104,7 +60104,7 @@
         "fcf_quality_score"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-d0be2a17922491d75fe5",
+      "research_case_id": "RCASE-ece5567cb4428bb0de32",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60145,7 +60145,7 @@
         "opm_expansion_pctp"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-dd0c9567d087aa174bd9",
+      "research_case_id": "RCASE-2c00a5ecf839ed226f13",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60185,7 +60185,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-57b10661cac93e75df83",
+      "research_case_id": "RCASE-50f8ab1cf488afc492d9",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60225,7 +60225,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-6105331b32eb8f2433b4",
+      "research_case_id": "RCASE-8d9e41a6d4af4f0d8dd3",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60265,7 +60265,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-de4e932d4d3c2a74d144",
+      "research_case_id": "RCASE-f25f8a09d042e25714d4",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60306,7 +60306,7 @@
         "fcf_quality_score"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-9943dc5ffa68bf9d21d9",
+      "research_case_id": "RCASE-cb989ceccd69f1e1f60d",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -60320,6 +60320,656 @@
         "green gate"
       ],
       "symbol": "001360",
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "order_backlog_to_sales",
+        "named_customer_quality",
+        "contract_quality",
+        "delivery_schedule",
+        "opm_expansion_pctp",
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-22bab87f27ddf1cce63f",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "capacity_or_shortage"
+    },
+    {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible",
+        "cost_overrun",
+        "delivery_schedule"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-c6ae6eb0b669f10e8095",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "capacity_or_shortage"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "revenue_visibility_contract",
+        "hbm_capacity_constraint",
+        "memory_price_increase_mentioned",
+        "medium_term_revision_visibility"
+      ],
+      "primitive_bridge_positive": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_pre_sold"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-c2c5587f5fcdef19aa38",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "capacity_or_shortage"
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "socket_or_test_demand_visible",
+        "margin_bridge_visible"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-8044ba01b5d4a7951109",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "capacity_or_shortage"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "spread_expansion",
+        "utilization_rate",
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-964b75c623fa1c9f8b18",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "capacity_or_shortage"
+    },
+    {
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "spread_expansion",
+        "raw_material_cost_risk",
+        "utilization_rate",
+        "inventory_cycle",
+        "opm_expansion_pctp"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-e3920d05c24c2cf02948",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "capacity_or_shortage"
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "trial_quality_visible",
+        "binary_event_unresolved",
+        "approval_not_confirmed",
+        "safety_signal",
+        "cash_runway_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-53d421c4deb76fbf9cc1",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "capacity_or_shortage"
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-098010ae1a3369ac3580",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "capacity_or_shortage"
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "tender_offer_confirmed",
+        "minority_cash_path",
+        "control_premium_floor",
+        "regulatory_approval_confirmed",
+        "event_spread_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-d817f8cd2438c183b5bf",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "capacity_or_shortage"
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "high_mae_history",
+        "valuation_overheat",
+        "liquidity_or_microcap_risk",
+        "execution_risk_score",
+        "positioning_reversal_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-11d21844570370c4f4cc",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "capacity_or_shortage"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "memory_price_increase_mentioned",
+        "medium_term_revision_visibility"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-7a0a2619caf3d5c4e992",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "392162",
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "socket_or_test_demand_visible",
+        "margin_bridge_visible"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-96f8b7d4e4e0899da6cd",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "392162",
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "spread_expansion",
+        "utilization_rate",
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-49a78df219fa5c4251c1",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "392162",
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "inventory_spike",
+        "sell_through_confirmed",
+        "pricing_power_confirmed",
+        "channel_reorder_confirmed",
+        "raw_material_cost_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-1b1e88579154740d11cd",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "392162",
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "trial_quality_visible",
+        "binary_event_unresolved",
+        "approval_not_confirmed",
+        "safety_signal",
+        "cash_runway_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-265d45a311738124230c",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "392162",
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-a99ace0cb73e28c350b1",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "392162",
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "case_role": "4B",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [
+        "green gap",
+        "required_positive_missing"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "high_mae_history",
+        "valuation_overheat",
+        "liquidity_or_microcap_risk",
+        "execution_risk_score",
+        "positioning_reversal_risk"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-911cdb15ad84e902b673",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [],
+      "symbol": "392162",
       "trigger_date": null,
       "trigger_type": "contract_or_order"
     },
@@ -61883,7 +62533,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-89c711f1af6b6651d5a1",
+      "research_case_id": "RCASE-5554044c10b6e4ed1419",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -61896,7 +62546,7 @@
       "stage_cap_rules": [],
       "symbol": null,
       "trigger_date": null,
-      "trigger_type": "risk_or_accounting"
+      "trigger_type": "contract_or_order"
     },
     {
       "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
@@ -61921,7 +62571,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2a381cbc117b31da7502",
+      "research_case_id": "RCASE-400bf3b06a7fd63b795f",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -61961,7 +62611,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-20107d0323f9ce053d99",
+      "research_case_id": "RCASE-af4f24e59ae7df1eccd9",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62001,7 +62651,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-c43075e9e04c8a2dcb9b",
+      "research_case_id": "RCASE-e334254d2227d80a8537",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62041,7 +62691,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-9af53cf7bfe1aa864b95",
+      "research_case_id": "RCASE-2331ae848501fc5d2ddc",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62081,7 +62731,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-74d43f9c3cd88aa25142",
+      "research_case_id": "RCASE-25f93ad4b57a77ac1af6",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62122,7 +62772,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-025e466d544ff5bc7978",
+      "research_case_id": "RCASE-679882a337293466db02",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62163,7 +62813,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-22d8e62de8b418856faa",
+      "research_case_id": "RCASE-68e20fdcade56ac9af81",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62203,7 +62853,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-33fae69ba276d5409e79",
+      "research_case_id": "RCASE-d5f47fb113d0c4dd04bc",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62243,7 +62893,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-fdeeca852a1b46295fa3",
+      "research_case_id": "RCASE-f05956762ba61c614da9",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62289,7 +62939,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-f1131ddb989dade07e73",
+      "research_case_id": "RCASE-fca1e81876fa762e17d1",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62330,7 +62980,7 @@
         "customer_contract"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-0444680fd2310144cb12",
+      "research_case_id": "RCASE-766f9d46715464d9dbe6",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62371,7 +63021,7 @@
         "customer_contract"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-66586785f78fdc9a228a",
+      "research_case_id": "RCASE-f72744cec46e5e12dd30",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62412,7 +63062,7 @@
         "jv_utilization"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-0810442d85b73917f23d",
+      "research_case_id": "RCASE-f9abcd5ae90fdb94cf94",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62453,7 +63103,7 @@
         "ev_demand_slowdown"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-f547a9855e3d79dcd6d0",
+      "research_case_id": "RCASE-dc73034f5bdd1aad452e",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62493,7 +63143,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-f390f573bc0042814536",
+      "research_case_id": "RCASE-53266758cbc9066e865d",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62533,7 +63183,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-0e2e30e20172cfc319f2",
+      "research_case_id": "RCASE-a55148112f2d0bfbd4e1",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62573,7 +63223,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-d67bca536e41c0b92648",
+      "research_case_id": "RCASE-5aae7ae0aca548e17f50",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62613,7 +63263,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-df6265831b38854e6744",
+      "research_case_id": "RCASE-ba6797fb27291d00ea49",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62653,7 +63303,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-19f9ca94cf47315a7a66",
+      "research_case_id": "RCASE-d390b2bebd23890a932e",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62693,7 +63343,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-ac46cfd0595b29299aee",
+      "research_case_id": "RCASE-c06591a7ca0d0a393fe3",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62734,7 +63384,7 @@
         "roe"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-6c4b475b89d8ac2faaaf",
+      "research_case_id": "RCASE-e84d3635d4c243752e07",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62774,7 +63424,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-4da6d76be7c67ff81970",
+      "research_case_id": "RCASE-df24198ba00e082abcb2",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62814,7 +63464,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2751265933d68db3ee90",
+      "research_case_id": "RCASE-e021504b1e23bbd42c42",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62854,7 +63504,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-6f2c736c151253b03b38",
+      "research_case_id": "RCASE-9be154bd576ecb4e59e9",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62894,7 +63544,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-b148ceea7ee569b0c332",
+      "research_case_id": "RCASE-e65e9bc94286ef33bb67",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62934,7 +63584,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-4d2c2e932d5635d58035",
+      "research_case_id": "RCASE-ef65603f9c763fd2e248",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -62974,7 +63624,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-7d8b96ef2e0488794123",
+      "research_case_id": "RCASE-763d0e1b6097d73a04a5",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -63014,7 +63664,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-4ff5109b61a9a2a0c2d6",
+      "research_case_id": "RCASE-ba0eb846e6d70eb5b251",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -63054,7 +63704,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-1a695fd5c1cf04690294",
+      "research_case_id": "RCASE-7ae181dcaeee61f7cce6",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -63094,7 +63744,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-9b3e2762e9c014e936b3",
+      "research_case_id": "RCASE-9e2db0c49e48093e4b49",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -63134,7 +63784,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-946c9e70b7dab9024119",
+      "research_case_id": "RCASE-e7c45d85ffd03b6205c0",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -63174,7 +63824,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-4afe00ec78eeeecd7a12",
+      "research_case_id": "RCASE-0005ad2c9ed508130e48",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -63799,7 +64449,7 @@
         "customer_preorder_or_allocation"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-4f69a5fdb8f48a50ad14",
+      "research_case_id": "RCASE-16a46e0e37dac39484b9",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "BrokerReportPDF",
@@ -63847,7 +64497,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-303d10b3b5292b558505",
+      "research_case_id": "RCASE-2d30511415843dca45d5",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -63886,7 +64536,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-f7cb9c7741843cbbff4f",
+      "research_case_id": "RCASE-933c3d0cfd24188bb2b0",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -63925,7 +64575,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-3befd28ecbbe8e161901",
+      "research_case_id": "RCASE-a8856ffa59513c7c4c07",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -63964,7 +64614,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-3017d53976608d97f042",
+      "research_case_id": "RCASE-5ce16ff1f15ad93baa46",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64003,7 +64653,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-eb60ea575394a96b6d5c",
+      "research_case_id": "RCASE-c59fed2b6f43258e82dc",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64042,7 +64692,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-754352cdd44af4474370",
+      "research_case_id": "RCASE-7e1a516b5c2d96ba4c0e",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64053,46 +64703,6 @@
       "source_quality": "SHADOW_ONLY",
       "source_urls": [],
       "stage_cap_rules": [
-        "4c"
-      ],
-      "symbol": null,
-      "trigger_date": null,
-      "trigger_type": "contract_or_order"
-    },
-    {
-      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
-      "case_role": "4C",
-      "company_name": null,
-      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
-      "evidence_family": "DART",
-      "evidence_url_pending": false,
-      "false_positive_patterns": [],
-      "green_blockers": [],
-      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
-      "price_path_metrics": {},
-      "primitive_bridge_missing": [],
-      "primitive_bridge_positive": [
-        "contract_quality",
-        "delivery_schedule",
-        "fcf_quality_score",
-        "named_customer_quality",
-        "opm_expansion_pctp",
-        "order_backlog_to_sales"
-      ],
-      "production_scoring_changed": false,
-      "research_case_id": "RCASE-23cbcf9e699215a2c07c",
-      "runtime_score_eligible": false,
-      "runtime_source_route_hints": [
-        "DART",
-        "IssuerIR"
-      ],
-      "shadow_weight_only": true,
-      "source_file": "docs/operational/census_mode_v4_full_thesis_production_runner_audit.json",
-      "source_proxy_only": false,
-      "source_quality": "SHADOW_ONLY",
-      "source_urls": [],
-      "stage_cap_rules": [
-        "4b",
         "4c"
       ],
       "symbol": null,
@@ -64120,7 +64730,7 @@
         "margin_bridge_visible"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-33d0a21aa49cf86938b3",
+      "research_case_id": "RCASE-eca4de0d34cc11e300df",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "DART",
@@ -64160,7 +64770,7 @@
         "revenue_visibility_contract"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-77c9fd624f6e7c1f58ad",
+      "research_case_id": "RCASE-f357ae931d3a15114b6e",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "DART",
@@ -64170,6 +64780,1531 @@
       "source_file": "docs/operational/census_mode_v4_full_thesis_production_runner_audit.json",
       "source_proxy_only": false,
       "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "delivery_schedule",
+        "opm_expansion_pctp",
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [
+        "contract_quality",
+        "named_customer_quality",
+        "order_backlog_to_sales"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-aec1c213cbe3271d8857",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [],
+      "primitive_bridge_positive": [
+        "capacity_constraint",
+        "datacenter_customer",
+        "lead_time_extended",
+        "order_backlog_to_sales",
+        "pricing_power_confirmed"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-7d7c0ea28bf7d3e3ce65",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "delivery_schedule",
+        "cost_overrun"
+      ],
+      "primitive_bridge_positive": [
+        "export_contract",
+        "government_customer",
+        "order_backlog_to_sales"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-1459ca4c630867b78c78",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "cost_overrun"
+      ],
+      "primitive_bridge_positive": [
+        "direct_company_cash_route",
+        "permit_or_legal_delay",
+        "policy_or_regulatory_confirmed",
+        "project_award_confirmed"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-94e69625ebd3cfeaf287",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "cost_overrun",
+        "delivery_schedule"
+      ],
+      "primitive_bridge_positive": [
+        "contract_amount_to_prior_sales",
+        "contract_duration_months",
+        "margin_bridge_visible"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-079188f6f52fde121a5e",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "hbm_capacity_pre_sold",
+        "medium_term_revision_visibility"
+      ],
+      "primitive_bridge_positive": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_constraint",
+        "memory_price_increase_mentioned",
+        "revenue_visibility_contract"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-b6753a5d7128115bad45",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "advanced_packaging_bottleneck",
+        "relative_strength_score"
+      ],
+      "primitive_bridge_positive": [
+        "customer_contract_visible",
+        "equipment_order_backlog",
+        "hbm_customer_order",
+        "order_to_revenue_bridge"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-36eb956645028bdeee96",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "socket_or_test_demand_visible"
+      ],
+      "primitive_bridge_positive": [
+        "margin_bridge_visible",
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-b0c6e8b9c56ff369a98c",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "customer_quality_visible",
+        "capex_cycle_risk"
+      ],
+      "primitive_bridge_positive": [
+        "order_to_revenue_bridge",
+        "price_only_blowoff",
+        "valuation_overheat"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-939beefc0cc99b91a674",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "end_market_demand_visibility",
+        "supply_demand_tightness",
+        "cycle_to_revenue_bridge",
+        "advanced_packaging_bottleneck",
+        "equipment_order_recovery",
+        "inventory_cycle_repair",
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [
+        "cycle_demand_visibility",
+        "memory_price_increase_mentioned",
+        "order_to_revenue_bridge",
+        "supply_discipline_mentioned"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-849483783252d05930c5",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [
+        "call_off_risk",
+        "customer_contract",
+        "ex_credit_margin",
+        "order_backlog_to_sales"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-c519fa01afb94e8abdf9",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "volume_visibility"
+      ],
+      "primitive_bridge_positive": [
+        "call_off_risk",
+        "contract_cancelled_or_delayed",
+        "customer_capex_decline",
+        "customer_contract"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-cf25593b4c459a786647",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "policy_reversal_risk"
+      ],
+      "primitive_bridge_positive": [
+        "ampc_or_subsidy_capture",
+        "customer_contract",
+        "ex_credit_margin",
+        "jv_utilization"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-18e5fd681f43086ebabb",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [],
+      "primitive_bridge_positive": [
+        "customer_capex_decline",
+        "ev_demand_slowdown",
+        "inventory_spike",
+        "price_cut_risk",
+        "thesis_break_confirmed"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-59d00ab08184fec0513a",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "spread_expansion",
+        "utilization_rate"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-28b0c45b3a3898a007b6",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "permit_status"
+      ],
+      "primitive_bridge_positive": [
+        "direct_company_cash_route",
+        "offtake_contract",
+        "policy_supply_support",
+        "supply_shortage"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-54d0657a7db09e400063",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "opm_expansion_pctp"
+      ],
+      "primitive_bridge_positive": [
+        "inventory_cycle",
+        "raw_material_cost_risk",
+        "spread_expansion",
+        "utilization_rate"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-541b14ce1f97d7e040c3",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "channel_reorder_confirmed",
+        "opm_expansion_pctp"
+      ],
+      "primitive_bridge_positive": [
+        "export_growth_pct",
+        "repeat_order_confirmed",
+        "sell_through_confirmed"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-0273710643c86da46d2d",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "channel_reorder_confirmed"
+      ],
+      "primitive_bridge_positive": [
+        "inventory_spike",
+        "pricing_power_confirmed",
+        "raw_material_cost_risk",
+        "sell_through_confirmed"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-9eae88f064811a8f7d7e",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L5_CONSUMER_BRAND_DISTRIBUTION",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "high_margin_mix_improvement"
+      ],
+      "primitive_bridge_positive": [
+        "brand_customer_diversification",
+        "export_growth_pct",
+        "platform_distribution_scale",
+        "repeat_order_confirmed"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-87a97da7686cf8640602",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "capital_return_execution",
+        "credit_cost_quality"
+      ],
+      "primitive_bridge_positive": [
+        "pbr_e",
+        "roe",
+        "treasury_share_cancellation"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-f378d40a2065e511170a",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L6_FINANCIAL_CAPITAL_RETURN_DIGITAL",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "loss_ratio_quality",
+        "capital_return_execution"
+      ],
+      "primitive_bridge_positive": [
+        "csm_growth_visible",
+        "k_ics_ratio",
+        "reserve_quality_visible"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-4db7a3532ba975b709a7",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "partner_economics_visible"
+      ],
+      "primitive_bridge_positive": [
+        "approval_to_revenue_bridge",
+        "regulatory_approval_confirmed",
+        "reimbursement_confirmed",
+        "royalty_route"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-603de969b751ff0c0966",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "safety_signal",
+        "cash_runway_risk"
+      ],
+      "primitive_bridge_positive": [
+        "approval_not_confirmed",
+        "binary_event_unresolved",
+        "trial_quality_visible"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-4414eb5cd0d97077a10b",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L7_BIO_HEALTHCARE_MEDICAL",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "consumable_repeat_revenue",
+        "gross_margin_bridge"
+      ],
+      "primitive_bridge_positive": [
+        "export_growth_pct",
+        "procedure_volume_growth",
+        "reimbursement_confirmed"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-41c060c2dc7edec5c7d5",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "regulatory_risk"
+      ],
+      "primitive_bridge_positive": [
+        "ad_revenue_growth_pct",
+        "arpu_growth_pct",
+        "operating_leverage_visible",
+        "take_rate_improvement"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-c9815628f4cf7e0d32c9",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "user_retention",
+        "token_or_theme_hype_risk"
+      ],
+      "primitive_bridge_positive": [
+        "global_launch_conversion",
+        "ip_monetization_visible",
+        "repeat_revenue"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-2c9e685179ce9986af23",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "primitive_bridge_positive": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-436ac58dec4fadcc93f2",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "fcf_quality_score"
+      ],
+      "primitive_bridge_positive": [
+        "mix_improvement",
+        "operating_leverage_visible",
+        "pricing_power_confirmed",
+        "volume_growth_visible"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-954bd3a21ebf99003baa",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L9_CONSTRUCTION_REALESTATE_HOUSING",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "occupancy_or_presale_visible",
+        "funding_cost_risk"
+      ],
+      "primitive_bridge_positive": [
+        "balance_sheet_repair",
+        "cash_collection_visible",
+        "pf_exposure_reduced"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-b27bffcc62aa537c3b3f",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "implementation_timeline"
+      ],
+      "primitive_bridge_positive": [
+        "direct_company_cash_route",
+        "policy_headline_only",
+        "policy_or_regulatory_confirmed",
+        "subsidy_capture_visible"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-f8ec1c469fbdcca4b9bc",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "event_spread_risk"
+      ],
+      "primitive_bridge_positive": [
+        "control_premium_floor",
+        "minority_cash_path",
+        "regulatory_approval_confirmed",
+        "tender_offer_confirmed"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-488ff7573216072f6669",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [
+        "false_positive"
+      ],
+      "green_blockers": [
+        "green_gate"
+      ],
+      "large_sector_id": "L10_POLICY_EVENT_CROSS_REDTEAM_MISC",
+      "price_path_metrics": {
+        "mae": "mentioned_in_research_only",
+        "return": "mentioned_in_research_only"
+      },
+      "primitive_bridge_missing": [
+        "execution_risk_score",
+        "positioning_reversal_risk"
+      ],
+      "primitive_bridge_positive": [
+        "high_mae_history",
+        "liquidity_or_microcap_risk",
+        "valuation_overheat"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-bba610d71306ea1ef35a",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "PRICE_PATH_ONLY",
       "source_urls": [],
       "stage_cap_rules": [
         "4b",
@@ -64205,7 +66340,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-9b62ce6c2c32e25c7b46",
+      "research_case_id": "RCASE-3f9cf489dd684cb0bd26",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64248,7 +66383,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-0f5bbbed1594e540b25a",
+      "research_case_id": "RCASE-07aefab01ecd99f9691c",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64291,7 +66426,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-3a189504cfd05209b170",
+      "research_case_id": "RCASE-c4b2b0038b31d063514a",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64334,7 +66469,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-e95881fab665cbf0c3b3",
+      "research_case_id": "RCASE-2f5cd9fb4c2aad82be1f",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64377,7 +66512,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-4bc4943ae09161e5424d",
+      "research_case_id": "RCASE-c492bbf56caa05c85343",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64421,7 +66556,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-c1cc479a026ae008fdee",
+      "research_case_id": "RCASE-dcca4e2467d02beef8c1",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64465,7 +66600,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-010fca11769db1d93f58",
+      "research_case_id": "RCASE-04bdca8a48621cfce25d",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64508,7 +66643,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-95b75c0c387bec74e5bb",
+      "research_case_id": "RCASE-16ea3c7da86eb1bc37d7",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64551,7 +66686,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-21815ae66d450dd05649",
+      "research_case_id": "RCASE-0e5a2e9d500a44f427c2",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64600,7 +66735,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-48ba8b66dfad2a29ae81",
+      "research_case_id": "RCASE-e6f394e9d273f7979560",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64644,7 +66779,7 @@
         "customer_contract"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-212e4fdac10ba2e8a24e",
+      "research_case_id": "RCASE-342de3df574caecc4d37",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64688,7 +66823,7 @@
         "customer_contract"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-772056a95649a7e3245b",
+      "research_case_id": "RCASE-55fb0a8bd0e287e01b64",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64732,7 +66867,7 @@
         "jv_utilization"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-18845ee623283d53c988",
+      "research_case_id": "RCASE-0d3b356950963e07c669",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64776,7 +66911,7 @@
         "ev_demand_slowdown"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-26f8957ba24a20f00421",
+      "research_case_id": "RCASE-f09a01a60f460f74fca9",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64819,7 +66954,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-ba4b3aea782f9b99e577",
+      "research_case_id": "RCASE-71af54c030fd36d17571",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64862,7 +66997,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-d0c26ca6e7e2cab4b688",
+      "research_case_id": "RCASE-1cb9ea298a56932a8598",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64905,7 +67040,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-a08f7953711d3e92b8c5",
+      "research_case_id": "RCASE-93add0e4b5fb7add4eae",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64948,7 +67083,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-eb9ada4448f87253fafb",
+      "research_case_id": "RCASE-a560e9d9cfcfc98ce995",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -64991,7 +67126,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-d273865921d2fca4534a",
+      "research_case_id": "RCASE-5e71be019cbfc3c9db43",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65034,7 +67169,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-736759db1978150b6491",
+      "research_case_id": "RCASE-12abe9db2ab1bac9b2da",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65078,7 +67213,7 @@
         "roe"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-ce1f88e3219e2eba9213",
+      "research_case_id": "RCASE-5ac262852f413d0bc221",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65121,7 +67256,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-fc147d5b90cf3cc49d56",
+      "research_case_id": "RCASE-b3bb032e5434dbd03597",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65164,7 +67299,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-3d319a830ef31db6f27a",
+      "research_case_id": "RCASE-18f5e262b4b7d9baded6",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65207,7 +67342,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-855fcf999d17ed008105",
+      "research_case_id": "RCASE-c0b8324126846a7760ee",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65250,7 +67385,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-81c54f0814156b3c87f1",
+      "research_case_id": "RCASE-7512565933d9b242c98b",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65293,7 +67428,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-e464707ee6184d441e18",
+      "research_case_id": "RCASE-86b1995f041a57543a02",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65336,7 +67471,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-a40ecd7ad49463a7c814",
+      "research_case_id": "RCASE-3a29ab45e19f9e1eeca2",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65379,7 +67514,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-76d9a0761d9324c95288",
+      "research_case_id": "RCASE-8a5a1e72a0d6d14aa8e8",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65422,7 +67557,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-291eb28d5c25f0c1779c",
+      "research_case_id": "RCASE-990323c9cd18bcd1a231",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65465,7 +67600,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-a2e5643529db0127ac65",
+      "research_case_id": "RCASE-5382c62d323e6456a746",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65508,7 +67643,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-937745da263997f8cf48",
+      "research_case_id": "RCASE-6ee87bb24cab8f5b30ef",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65551,7 +67686,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-65284e6f534124dcc6a8",
+      "research_case_id": "RCASE-d5d37e514d8e770f349f",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65591,7 +67726,7 @@
         "contract_quality"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-923dbe1b26232ad53f61",
+      "research_case_id": "RCASE-035465ea1912c5ae9909",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR",
@@ -65631,7 +67766,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-8d4a96f273367468dcac",
+      "research_case_id": "RCASE-22588c25c0c8d0df2644",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR",
@@ -65671,7 +67806,47 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-dfc7c42b880510801a40",
+      "research_case_id": "RCASE-a5807e798b612d46d756",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "IssuerIR",
+        "KIND",
+        "NaverSearch"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_goal_requirement_matrix_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "IssuerIR",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [],
+      "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [
+        "policy_or_regulatory_confirmed",
+        "project_award_confirmed",
+        "permit_or_legal_delay",
+        "direct_company_cash_route",
+        "cost_overrun"
+      ],
+      "primitive_bridge_positive": [],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-c665034f30ff126661a0",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR",
@@ -65755,7 +67930,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2ad6e6db0c2c0d188384",
+      "research_case_id": "RCASE-f27182f613041afffa32",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65798,7 +67973,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2ae42a8da08bfeb0a43f",
+      "research_case_id": "RCASE-882a583bfe0237e76a01",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65841,7 +68016,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-c56953c51f34d8b839d5",
+      "research_case_id": "RCASE-8befee85348d2759e7b3",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65884,7 +68059,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-e144f4d25a13375018af",
+      "research_case_id": "RCASE-c3472b9c7384b87f3f9a",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65927,7 +68102,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2075e91f5d0102d41704",
+      "research_case_id": "RCASE-b3371ff20f90bc9dc3da",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -65971,7 +68146,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-33ef78fba00e42b68fec",
+      "research_case_id": "RCASE-d423fab39252fd0325e9",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66015,7 +68190,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-df7e0bd49386326b6ef8",
+      "research_case_id": "RCASE-d10bb49c20646c733141",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66058,7 +68233,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-5cfca5972614211b810d",
+      "research_case_id": "RCASE-1799df9d2e9802698ac0",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66101,7 +68276,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-18be5026cac09ca8d512",
+      "research_case_id": "RCASE-898ceda54ef89ccb23e3",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66150,7 +68325,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2af3cbc36b0fa4256740",
+      "research_case_id": "RCASE-935cd4f319082c426c52",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66194,7 +68369,7 @@
         "customer_contract"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2acacbb8849eaea8ce92",
+      "research_case_id": "RCASE-04d27f6f59e8abd464ce",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66238,7 +68413,7 @@
         "customer_contract"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-905a8443b9dfa9b73f79",
+      "research_case_id": "RCASE-1e4ea125f763724e6fe0",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66282,7 +68457,7 @@
         "jv_utilization"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-08a3932a92623cc6fc48",
+      "research_case_id": "RCASE-a8de3c7a89db8d368b3d",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66326,7 +68501,7 @@
         "ev_demand_slowdown"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-6a375aed2b2d75020fda",
+      "research_case_id": "RCASE-2ce1698452aeecc46a7c",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66369,7 +68544,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-a3b7b2f9bcfcc0a27dbe",
+      "research_case_id": "RCASE-6874452b86ed3699f2cd",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66412,7 +68587,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-02bc5bb3f144bd86d5cb",
+      "research_case_id": "RCASE-5dddf3da8c3db910629e",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66455,7 +68630,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2e470e36bc91d915d31b",
+      "research_case_id": "RCASE-8cad5b271f7cb13b83ad",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66498,7 +68673,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-52d9192c8022ee3cc364",
+      "research_case_id": "RCASE-34aef3de74a8180a42d5",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66541,7 +68716,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-9a28b3f55fff403cad47",
+      "research_case_id": "RCASE-5b8ebb6e35a1a95728db",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66584,7 +68759,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-05816adb088af2182c7a",
+      "research_case_id": "RCASE-fdb9c3f02108d2c622e6",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66628,7 +68803,7 @@
         "roe"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-25a18581ad47f5c3dfbd",
+      "research_case_id": "RCASE-917b32ceac98d9f70f4b",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66671,7 +68846,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-52efc2abbdfa99cbe4ec",
+      "research_case_id": "RCASE-ef46d7316f9b32442c43",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66714,7 +68889,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-316c11a058c927220ba1",
+      "research_case_id": "RCASE-94248b6d6cd433a05357",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66757,7 +68932,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-39fb6d24c57454faf320",
+      "research_case_id": "RCASE-dec278be2fc2d7a0f4fe",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66800,7 +68975,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-0a26281735838324d58d",
+      "research_case_id": "RCASE-162f47603e3821b1dca6",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66843,7 +69018,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2c110af15a4185de52d7",
+      "research_case_id": "RCASE-7ae3075aa901f7835605",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66886,7 +69061,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-170f64dcc8abdf5c2281",
+      "research_case_id": "RCASE-a3f26803b5346784daa1",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66929,7 +69104,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-06d8c4c0bed4f53a8e9e",
+      "research_case_id": "RCASE-b2711a3eee9c3fb06974",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -66972,7 +69147,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-7216f5fb448d052862ff",
+      "research_case_id": "RCASE-e52b58f83fe443bac6fa",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -67015,7 +69190,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-fda9755dfdd484677053",
+      "research_case_id": "RCASE-617b7c8dc25726af79bc",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -67058,7 +69233,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-8c563727b45369cee15b",
+      "research_case_id": "RCASE-d575d07cd799497a2657",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -67101,7 +69276,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-b403e11864853f408df1",
+      "research_case_id": "RCASE-eaa5c48d6ad67ed94b0e",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -67140,7 +69315,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-d2789f95c8b72a272962",
+      "research_case_id": "RCASE-03516ad27660b7ceb4dd",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -67163,7 +69338,10 @@
       "evidence_family": "DART",
       "evidence_url_pending": false,
       "false_positive_patterns": [],
-      "green_blockers": [],
+      "green_blockers": [
+        "green_gate",
+        "required_positive_missing"
+      ],
       "large_sector_id": "L1_INDUSTRIALS_INFRA_DEFENSE_GRID",
       "price_path_metrics": {},
       "primitive_bridge_missing": [
@@ -67175,7 +69353,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-5f7ef5405f7b2c66d2f3",
+      "research_case_id": "RCASE-6f5af9dce2b932d416c3",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "DART",
@@ -67190,7 +69368,7 @@
         "4b",
         "4c"
       ],
-      "symbol": null,
+      "symbol": "000660",
       "trigger_date": null,
       "trigger_type": "contract_or_order"
     },
@@ -67202,20 +69380,24 @@
       "evidence_family": "DART",
       "evidence_url_pending": false,
       "false_positive_patterns": [],
-      "green_blockers": [],
+      "green_blockers": [
+        "green_gate",
+        "required_positive_missing"
+      ],
       "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
       "price_path_metrics": {},
       "primitive_bridge_missing": [
-        "customer_preorder_or_allocation",
         "revenue_visibility_contract",
-        "hbm_capacity_constraint",
-        "hbm_capacity_pre_sold",
-        "memory_price_increase_mentioned",
         "medium_term_revision_visibility"
       ],
-      "primitive_bridge_positive": [],
+      "primitive_bridge_positive": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "memory_price_increase_mentioned"
+      ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-cd1f289e53d89e2376d3",
+      "research_case_id": "RCASE-58de3da702233c30a0b4",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "DART",
@@ -67230,7 +69412,7 @@
         "4b",
         "4c"
       ],
-      "symbol": null,
+      "symbol": "000660",
       "trigger_date": null,
       "trigger_type": "contract_or_order"
     },
@@ -546286,8 +548468,8 @@
     "A1_URL_PENDING": 19,
     "A2_URL_BACKED": 3149,
     "EVIDENCE_URL_PENDING": 185,
-    "PRICE_PATH_ONLY": 2204,
-    "SHADOW_ONLY": 517,
+    "PRICE_PATH_ONLY": 2237,
+    "SHADOW_ONLY": 534,
     "SOURCE_PROXY_ONLY": 5314
   }
 }

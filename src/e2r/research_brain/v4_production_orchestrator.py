@@ -136,6 +136,7 @@ def run_research_brain_v4_production_shadow(
                     existing_evidence_by_event_id=_evidence_context_by_event(events=event_batch, config=config),
                 )
             )
+            _flush_runtime_planner_leafs_v4(config=config, planner_runs=planner_runs)
             next_event_index += len(event_batch)
             _record_runtime_progress_v4(
                 config=config,
@@ -189,6 +190,7 @@ def run_research_brain_v4_production_shadow(
                 existing_evidence_by_event_id=_evidence_context_by_event(events=event_batch, config=config),
             )
             planner_runs.extend(batch_runs)
+            _flush_runtime_planner_leafs_v4(config=config, planner_runs=planner_runs)
             real_success_count += sum(1 for run in batch_runs if run.real_provider_success)
             _record_runtime_progress_v4(
                 config=config,
@@ -235,6 +237,7 @@ def run_research_brain_v4_production_shadow(
                 config=config,
             )
         )
+        _flush_runtime_planner_leafs_v4(config=config, planner_runs=planner_runs)
     _record_runtime_progress_v4(
         config=config,
         progress_events=runtime_progress_events,
@@ -392,6 +395,10 @@ def run_research_brain_v4_production_shadow(
                     break
                 seen_retry_signatures.add(retry_signature)
                 feedback_retry_planner_runs.append(retry_run)
+                _flush_runtime_planner_leafs_v4(
+                    config=config,
+                    planner_runs=tuple((*planner_runs, *feedback_retry_planner_runs)),
+                )
                 if not retry_run.output:
                     break
                 retry_primary = _primary_from_planner(retry_run)
@@ -577,6 +584,7 @@ def run_research_brain_v4_production_shadow(
                 )
                 planner_runs.extend(more_runs)
                 planned_event_ids.update(run.event.candidate_event_id for run in more_runs)
+                _flush_runtime_planner_leafs_v4(config=config, planner_runs=planner_runs)
     if not runtime_budget_exhausted and _runtime_budget_exhausted_v4(config=config, started_at=started_at):
         runtime_budget_exhausted = True
         _record_runtime_progress_v4(
@@ -611,6 +619,7 @@ def run_research_brain_v4_production_shadow(
             provider_error=pending_reason,
         )
         planner_runs.append(pending_run)
+        _flush_runtime_planner_leafs_v4(config=config, planner_runs=planner_runs)
         item = build_claim_backed_watchlist_item_v4(
             event=event,
             planner_run=pending_run,
@@ -642,6 +651,7 @@ def run_research_brain_v4_production_shadow(
         )
     candidate_report = build_candidate_event_report_v4(events=events, routed_rows=routed_rows)
     all_planner_runs = tuple((*planner_runs, *feedback_retry_planner_runs))
+    _flush_runtime_planner_leafs_v4(config=config, planner_runs=all_planner_runs)
     planner_report = build_real_planner_report_v4(all_planner_runs)
     source_report = build_source_acquisition_report_v4(executions)
     extraction_audit = build_evidence_extraction_audit_v4(bundles.values())
@@ -692,6 +702,65 @@ def run_research_brain_v4_production_shadow(
         "executions": tuple(executions),
         "bundles": bundles,
     }
+
+
+def _flush_runtime_planner_leafs_v4(
+    *,
+    config: ProductionShadowV4Config,
+    planner_runs: Sequence[PlannerRunV4],
+) -> None:
+    root = _runtime_output_root_v4(config)
+    if root is None:
+        return
+    root.mkdir(parents=True, exist_ok=True)
+    rows = [run.to_dict() for run in planner_runs]
+    _write_runtime_jsonl_v4(root / "planner_runs.jsonl", rows)
+    prompt_rows: list[dict[str, Any]] = []
+    response_rows: list[dict[str, Any]] = []
+    for run in planner_runs:
+        event = run.event
+        if run.prompt_hash:
+            prompt_rows.append(
+                {
+                    "schema_version": "research_brain_v4_planner_prompt_leaf_v1",
+                    "planner_run_id": run.planner_run_id,
+                    "candidate_event_id": event.candidate_event_id,
+                    "symbol": event.symbol,
+                    "provider_name": run.provider_name,
+                    "model": run.model,
+                    "prompt_hash": run.prompt_hash,
+                    "raw_prompt_path": run.raw_prompt_path,
+                }
+            )
+        if run.response_hash:
+            response_rows.append(
+                {
+                    "schema_version": "research_brain_v4_planner_response_leaf_v1",
+                    "planner_run_id": run.planner_run_id,
+                    "candidate_event_id": event.candidate_event_id,
+                    "symbol": event.symbol,
+                    "provider_name": run.provider_name,
+                    "model": run.model,
+                    "response_hash": run.response_hash,
+                    "raw_response_path": run.raw_response_path,
+                }
+            )
+    _write_runtime_jsonl_v4(root / "llm_prompts.jsonl", prompt_rows)
+    _write_runtime_jsonl_v4(root / "llm_responses.jsonl", response_rows)
+
+
+def _runtime_output_root_v4(config: ProductionShadowV4Config) -> Path | None:
+    if not config.runtime_progress_path:
+        return None
+    return Path(config.runtime_progress_path).parent
+
+
+def _write_runtime_jsonl_v4(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    text = "".join(json.dumps(row, ensure_ascii=False, sort_keys=True, default=str) + "\n" for row in rows)
+    tmp_path = path.with_name(path.name + ".tmp")
+    tmp_path.write_text(text, encoding="utf-8")
+    tmp_path.replace(path)
 
 
 def _record_runtime_progress_v4(

@@ -42,19 +42,35 @@
     },
     {
       "additional_daily_atomic_decision_ids": [],
-      "blocking_reason": "full_thesis_source_tasks_planned_but_not_executed",
+      "blocking_reason": null,
       "company_name": "삼성전자",
       "daily_event_claim_ids": [
-        "CLM-9aaf6a921e683a2ee9b4"
+        "CLM-fd7a6609a992dd420e3d",
+        "CLM-f6e8334905f141c3ce64"
       ],
       "daily_event_score_contribution_ids": [
-        "SCON-02bb56e64083a9cd1389"
+        "SCON-bfd7a3d6631bb56363d3",
+        "SCON-d7019aca95b85d4c2f1d",
+        "SCON-a4e2031c4cd3cfea3aed",
+        "SCON-16f929b96dd4c8288ac2",
+        "SCON-be2c2c174d0496c5bd90",
+        "SCON-f662a81b9edd62c4b24f"
       ],
       "daily_event_stagecourt_trace_ids": [
-        "SCT-00c47e02e1f158d6cd22"
+        "SCT-BRAIN-1e999f3308d1bc0f3d6b"
       ],
-      "full_thesis_claim_ids": [],
-      "full_thesis_score_contribution_ids": [],
+      "full_thesis_claim_ids": [
+        "CLM-fd7a6609a992dd420e3d",
+        "CLM-f6e8334905f141c3ce64"
+      ],
+      "full_thesis_score_contribution_ids": [
+        "SCON-bfd7a3d6631bb56363d3",
+        "SCON-d7019aca95b85d4c2f1d",
+        "SCON-a4e2031c4cd3cfea3aed",
+        "SCON-16f929b96dd4c8288ac2",
+        "SCON-be2c2c174d0496c5bd90",
+        "SCON-f662a81b9edd62c4b24f"
+      ],
       "full_thesis_source_task_ids": [
         "FTSMOKE-e3779b2e978a1f923ae2",
         "FTSMOKE-954d18b35a7eff134922",
@@ -64,11 +80,11 @@
         "FTSMOKE-b914a94fb161d39edc5a",
         "FTSMOKE-52d7621452a6b40cd76f"
       ],
-      "full_thesis_stagecourt_trace_ids": [],
-      "missing_full_thesis_primitives": [
-        "full_thesis_refresh_task_not_run"
+      "full_thesis_stagecourt_trace_ids": [
+        "SCT-BRAIN-1e999f3308d1bc0f3d6b"
       ],
-      "smoke_pass_allowed": false,
+      "missing_full_thesis_primitives": [],
+      "smoke_pass_allowed": true,
       "symbol": "005930"
     }
   ],
@@ -242,55 +258,127 @@
       "verified_score": null
     },
     {
-      "accepted_claim_count": 1,
+      "_full_thesis_candidate_source": "stagecourt_trace_direct_scan",
+      "accepted_claim_count": 2,
       "accepted_claim_ids": [
-        "CLM-9aaf6a921e683a2ee9b4"
+        "CLM-fd7a6609a992dd420e3d",
+        "CLM-f6e8334905f141c3ce64"
       ],
       "accepted_official_claim_count": 1,
       "additional_stage_decision_ids": [],
       "as_of_date": "2026-07-01",
-      "assessment_depth": "VERIFIED_STAGE",
-      "assessment_depth_display": "EVENT_BOARD_VERIFIED_STAGE",
-      "atomic_stage_decision_id": "ATOMIC-5d0fd10e6d77c31a30b8",
-      "base_stage": "Stage1",
-      "base_stage_display": "EVENT_BOARD_STAGE1",
+      "assessment_depth": "FULL_THESIS_REFRESH",
+      "assessment_depth_display": "FULL_THESIS_FULL_THESIS_REFRESH",
+      "atomic_stage_decision_id": "ATOMIC-FTPROD-e2b303bd804c7d33910ece74",
+      "base_stage": "1",
+      "base_stage_display": "FULL_THESIS_1",
       "blocked_claim_ids": [],
       "blocked_primitive_state_ids": [],
       "blocked_score_contribution_ids": [],
-      "candidate_event_count": 4,
+      "candidate_event_count": 5,
+      "candidate_event_id": "CEV4-RTATTEMPT-7f33db04360ffa26109b",
       "candidate_event_ids": [
         "CE-LIVE-DART-005930-20260624801004",
         "CLM-9aaf6a921e683a2ee9b4",
         "REP-5851054b5558c66337",
-        "RMH-CLM-9aaf6a921e683a2ee9b4"
+        "RMH-CLM-9aaf6a921e683a2ee9b4",
+        "CEV4-RTATTEMPT-7f33db04360ffa26109b"
       ],
       "candidate_event_scope": "CANDIDATE_EVENTS_PRESENT",
       "canonical_stage": "1",
-      "canonical_stage_display": "EVENT_BOARD_1",
+      "canonical_stage_display": "FULL_THESIS_1",
       "census_assessment_event_id": "CAE-d3ef5441479cf6f13f68",
       "census_assessment_event_score_evidence_allowed": false,
       "census_assessment_event_type": "CensusAssessmentEvent",
-      "census_status": "DEEP_VERIFIED",
-      "census_status_display": "EVENT_BOARD_DEEP_VERIFIED",
+      "census_status": "FULL_THESIS_VERIFIED",
+      "census_status_display": "FULL_THESIS_FULL_THESIS_VERIFIED",
       "claim_backed_score_ratio": 1.0,
-      "claim_to_stage_trace_id": "CSTTRACE-137909af6dfb2dd19076",
+      "claim_to_stage_trace_id": "CSTTRACE-FTPROD-0c287b8fc6d10cb49d1534cb",
       "company_name": "삼성전자",
       "daily_event_evidence_score": 4.0,
       "daily_event_stage_signal": "OFFICIAL_EVENT_WATCH",
-      "event_evidence_score": 4.0,
-      "failed_stage_gates": [
-        "missing_green_bridge"
+      "event_evidence_score": null,
+      "failed_stage_gates": [],
+      "full_e2r_verified_score": 44.1667,
+      "full_thesis_accepted_claim_ids": [
+        "CLM-fd7a6609a992dd420e3d",
+        "CLM-f6e8334905f141c3ce64"
       ],
-      "full_e2r_verified_score": null,
-      "full_thesis_missing_primitives": [
-        "full_thesis_refresh_task_not_run"
+      "full_thesis_candidate_event_id": "CEV4-RTATTEMPT-7f33db04360ffa26109b",
+      "full_thesis_candidate_event_ids": [
+        "CEV4-RTATTEMPT-7f33db04360ffa26109b"
       ],
-      "full_thesis_not_run": true,
-      "full_thesis_primary_archetype": null,
-      "full_thesis_score_scale": "NO_SCORE",
-      "full_thesis_score_valid_status": "NOT_SCORED",
-      "full_thesis_stage": "FULL_THESIS_NOT_RUN",
-      "full_thesis_verified_score": null,
+      "full_thesis_green_gap_primitives": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold"
+      ],
+      "full_thesis_green_gate_complete": false,
+      "full_thesis_green_stage_downgraded_by_gap": false,
+      "full_thesis_missing_primitives": [],
+      "full_thesis_not_run": false,
+      "full_thesis_primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "full_thesis_production_mode": "research_brain_v4_production",
+      "full_thesis_required_gap_primitives": [],
+      "full_thesis_required_positive_missing_primitives": [
+        "customer_preorder_or_allocation",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "memory_price_increase_mentioned"
+      ],
+      "full_thesis_score_contribution_ids": [
+        "SCON-bfd7a3d6631bb56363d3",
+        "SCON-d7019aca95b85d4c2f1d",
+        "SCON-a4e2031c4cd3cfea3aed",
+        "SCON-16f929b96dd4c8288ac2",
+        "SCON-be2c2c174d0496c5bd90",
+        "SCON-f662a81b9edd62c4b24f"
+      ],
+      "full_thesis_score_scale": "FULL_E2R_100",
+      "full_thesis_score_valid_status": "FINAL",
+      "full_thesis_source_canonical_stage": "1",
+      "full_thesis_source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-f84b16ea2b67b9c28055",
+          "candidate_event_id": "CEV4-RTATTEMPT-7f33db04360ffa26109b",
+          "claim_id": "CLM-fd7a6609a992dd420e3d",
+          "document_id": "DOC-b63cd524e746f3f903ea",
+          "fetched_document_ids": [
+            "DOC-b63cd524e746f3f903ea"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "RSTASKV4CGSTATUS-8bc2d25177cb3bd92f4acc87"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-a6a5c53b32a87cb0c581",
+          "candidate_event_id": "CEV4-RTATTEMPT-7f33db04360ffa26109b",
+          "claim_id": "CLM-f6e8334905f141c3ce64",
+          "document_id": "DOC-d78e3500c9e0882567b5",
+          "fetched_document_ids": [
+            "DOC-d78e3500c9e0882567b5"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87"
+          ]
+        }
+      ],
+      "full_thesis_source_pending_gap_primitives": [],
+      "full_thesis_source_pending_gap_proof": [],
+      "full_thesis_source_pending_green_gap_primitives": [],
+      "full_thesis_source_pending_required_gap_primitives": [],
+      "full_thesis_source_stage": "1",
+      "full_thesis_source_task_ids": [
+        "RSTASKV4CGSTATUS-8bc2d25177cb3bd92f4acc87",
+        "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87"
+      ],
+      "full_thesis_stage": "1",
+      "full_thesis_stagecourt_trace_ids": [
+        "SCT-BRAIN-1e999f3308d1bc0f3d6b"
+      ],
+      "full_thesis_verified_score": 44.1667,
       "investigation_only_candidate_event_count": 3,
       "investigation_only_candidate_event_ids": [
         "CE-LIVE-DART-005930-20260624801004",
@@ -298,25 +386,19 @@
         "RMH-CLM-9aaf6a921e683a2ee9b4"
       ],
       "investigation_status": "COMPLETE",
-      "investigation_status_display": "EVENT_BOARD_COMPLETE",
+      "investigation_status_display": "FULL_THESIS_COMPLETE",
       "is_controlled_smoke_full_thesis_stage": false,
-      "is_full_e2r_score": false,
-      "is_full_thesis_stage": false,
+      "is_full_e2r_score": true,
+      "is_full_thesis_stage": true,
       "large_sector_id": "메모리/HBM",
       "market": "KOSPI",
       "market_anomaly_count": 0,
       "market_anomaly_event_count": 0,
       "market_anomaly_event_ids": [],
-      "material_gap_ids": [
-        "repeat_evidence_family",
-        "cash_or_revision_conversion",
-        "multi_source_confirmation"
-      ],
-      "missing_primitives": [
-        "repeat_evidence_family",
-        "cash_or_revision_conversion"
-      ],
+      "material_gap_ids": [],
+      "missing_primitives": [],
       "next_actions": [
+        "GREEN_GATE_RECHECK",
         "WATCH"
       ],
       "official_candidate_event_count": 1,
@@ -325,13 +407,14 @@
       ],
       "official_evidence_document_count": 1,
       "official_source_task_count": 1,
-      "operator_scope_note": "census_event_board_status_not_full_thesis",
-      "operator_score_use": "NOT_FULL_E2R_SCORE",
-      "operator_stage_use": "NOT_FULL_THESIS_STAGE",
+      "operator_scope_note": "full_thesis_operational_stage",
+      "operator_score_use": "FULL_E2R_SCORE",
+      "operator_stage_use": "FULL_THESIS_STAGE",
       "orphan_score_count": 0,
       "primary_archetype": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "primitive_state_ids": [
-        "PRIM-d4dfb87fc292f7dd8153"
+        "PRIM-BRAIN-444332685d3561a98424",
+        "PRIM-BRAIN-e943f3ba4192f4df0117"
       ],
       "provider_gaps": [],
       "raw_contribution_score": 1.0,
@@ -346,41 +429,49 @@
         "RMH-CLM-9aaf6a921e683a2ee9b4"
       ],
       "risk_stage_signal": "NONE",
-      "score_contribution_count": 1,
+      "score_contribution_count": 6,
       "score_contribution_ids": [
-        "SCON-02bb56e64083a9cd1389"
+        "SCON-bfd7a3d6631bb56363d3",
+        "SCON-d7019aca95b85d4c2f1d",
+        "SCON-a4e2031c4cd3cfea3aed",
+        "SCON-16f929b96dd4c8288ac2",
+        "SCON-be2c2c174d0496c5bd90",
+        "SCON-f662a81b9edd62c4b24f"
       ],
-      "score_eligible_candidate_event_count": 1,
+      "score_eligible_candidate_event_count": 2,
       "score_eligible_candidate_event_ids": [
-        "CLM-9aaf6a921e683a2ee9b4"
+        "CLM-9aaf6a921e683a2ee9b4",
+        "CEV4-RTATTEMPT-7f33db04360ffa26109b"
       ],
-      "score_interval_lower": 4.0,
-      "score_interval_upper": 4.0,
-      "score_scale": "EVENT_WEIGHTED_PARTIAL",
-      "score_scale_display": "EVENT_BOARD_EVENT_WEIGHTED_PARTIAL",
-      "score_scope": "EVENT_WEIGHTED_PARTIAL",
-      "score_scope_display": "EVENT_BOARD_EVENT_WEIGHTED_PARTIAL",
-      "score_semantics": "single_event_or_limited_task_score",
-      "score_source": "STAGECOURT_SCORE_INTERVAL",
-      "score_valid_status": "FINAL_WITH_NONMATERIAL_GAPS",
-      "score_valid_status_display": "EVENT_BOARD_FINAL_WITH_NONMATERIAL_GAPS",
+      "score_interval_lower": 44.1667,
+      "score_interval_upper": 44.1667,
+      "score_scale": "FULL_E2R_100",
+      "score_scale_display": "FULL_THESIS_FULL_E2R_100",
+      "score_scope": "FULL_E2R_100",
+      "score_scope_display": "FULL_THESIS_FULL_E2R_100",
+      "score_semantics": "production_full_thesis_claim_backed_score",
+      "score_source": "BRAIN_WEB_PRODUCTION_FULL_THESIS_STAGECOURT",
+      "score_valid_status": "FINAL",
+      "score_valid_status_display": "FULL_THESIS_FINAL",
       "secondary_archetypes": [],
       "semantic_guard_class": "not_contract_quality",
       "semantic_guard_reasons": [],
       "semantic_guard_status": "PASS",
       "source_gaps": [],
-      "stage_confidence": "HIGH",
-      "stage_confidence_display": "EVENT_BOARD_HIGH",
+      "source_origin": "research_brain_v4_attempt",
+      "stage_confidence": "FULL_THESIS_CLAIM_BACKED",
+      "stage_confidence_display": "FULL_THESIS_FULL_THESIS_CLAIM_BACKED",
       "stage_decision_status": "FINAL",
-      "stage_decision_status_display": "EVENT_BOARD_FINAL",
-      "stage_scope": "CENSUS_EVENT_BOARD",
-      "stage_scope_display": "EVENT_BOARD_CENSUS_EVENT_BOARD",
-      "stage_signal": "OFFICIAL_EVENT_WATCH",
-      "stage_signal_display": "EVENT_BOARD_OFFICIAL_EVENT_WATCH",
-      "stagecourt_trace_id": "SCT-00c47e02e1f158d6cd22",
+      "stage_decision_status_display": "FULL_THESIS_FINAL",
+      "stage_scope": "FULL_THESIS",
+      "stage_scope_display": "FULL_THESIS_FULL_THESIS",
+      "stage_signal": "FULL_THESIS_PRODUCTION_STAGE",
+      "stage_signal_display": "FULL_THESIS_FULL_THESIS_PRODUCTION_STAGE",
+      "stage_source": "research_brain_v4_attempt",
+      "stagecourt_trace_id": "SCT-BRAIN-1e999f3308d1bc0f3d6b",
       "symbol": "005930",
       "transition_overlay": "NONE",
-      "verified_score": null
+      "verified_score": 44.1667
     }
   ],
   "schema_version": "e2r_census_v4_samsung_hynix_full_thesis_smoke_v1",

@@ -1,4 +1,5 @@
 import json
+import subprocess
 import unittest
 from dataclasses import replace
 from datetime import date
@@ -54,7 +55,9 @@ from e2r.research_brain.v4_production_orchestrator import (
     run_research_brain_v4_production_shadow,
 )
 from e2r.research_brain.v4_planner_runtime import (
+    CodexCLIPlannerProviderV4,
     build_v4_planner_prompt_payload,
+    run_planner_provider_v4,
     source_tasks_from_planner_output_v4,
     validate_llm_planner_output_v4,
 )
@@ -965,6 +968,84 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertEqual(planner_runs[0].provider_error, "planner_output_missing_for_candidate")
         self.assertTrue(planner_runs[1].real_provider_success)
         self.assertEqual(result["planner_report"]["summary"]["real_provider_success_count"], 1)
+
+    def test_codex_planner_forbidden_self_check_rejects_row_without_aborting_batch(self):
+        first = _planner_event_with_id("CE-UNIT-FORBIDDEN", symbol="005930", company_name="삼성전자")
+        second = _planner_event_with_id("CE-UNIT-VALID", symbol="000660", company_name="SK하이닉스")
+        invalid = _planner_output(query_intents=("삼성전자 HBM 확인",), fallback_source_classes=("TrustedNews",)).to_dict()
+        invalid["candidate_event_id"] = first.candidate_event_id
+        invalid["planner_self_check"] = {
+            "score_keys_present": True,
+            "stage_keys_present": False,
+            "future_outcome_used": False,
+        }
+        valid = _planner_output(query_intents=("SK하이닉스 HBM 확인",), fallback_source_classes=("TrustedNews",)).to_dict()
+        valid["candidate_event_id"] = second.candidate_event_id
+        valid["must_verify_primitives"] = ["customer_preorder_or_allocation"]
+        valid["source_task_drafts"][0]["primitive_gap"] = "customer_preorder_or_allocation"
+
+        def fake_codex(command, *, prompt, timeout):
+            return subprocess.CompletedProcess(
+                list(command),
+                0,
+                json.dumps({"plans": [invalid, valid]}, ensure_ascii=False),
+                "",
+            )
+
+        provider = CodexCLIPlannerProviderV4(working_directory=".")
+        with patch("e2r.research_brain.v4_planner_runtime._run_codex_command", side_effect=fake_codex):
+            runs = run_planner_provider_v4(
+                provider=provider,
+                events=(first, second),
+                memory_cards=load_v4_cards(),
+                existing_evidence_by_event_id={},
+            )
+
+        self.assertEqual(len(runs), 2)
+        self.assertTrue(runs[0].rejected_by_validator)
+        self.assertIn("forbidden score/stage keys", runs[0].provider_error or "")
+        self.assertFalse(runs[0].real_provider_success)
+        self.assertTrue(runs[1].real_provider_success)
+
+    def test_runtime_planner_leaf_flush_survives_source_execution_exception(self):
+        event = _planner_event_with_id("CE-UNIT-FLUSH", symbol="005930", company_name="삼성전자")
+        provider = _RetryPlannerProvider(
+            _planner_output(
+                query_intents=("삼성전자 HBM 고객 배정",),
+                fallback_source_classes=("TrustedNews",),
+            )
+        )
+
+        with TemporaryDirectory() as tmpdir:
+            output_root = Path(tmpdir) / "out"
+            with patch(
+                "e2r.research_brain.v4_production_orchestrator.discover_daily_candidate_events_v4",
+                return_value=(event,),
+            ), patch(
+                "e2r.research_brain.v4_production_orchestrator.execute_source_tasks_with_evidence_os_v4",
+                side_effect=RuntimeError("unit source boom"),
+            ):
+                with self.assertRaisesRegex(RuntimeError, "unit source boom"):
+                    run_research_brain_v4_production_shadow(
+                        config=ProductionShadowV4Config(
+                            as_of_date="2026-06-29",
+                            planner_provider="real",
+                            source_acquisition="frozen_real_source_snapshot",
+                            universe_limit=1,
+                            planner_success_limit=1,
+                            planner_batch_size=1,
+                            runtime_progress_path=str(output_root / "brain_web_runtime_progress.json"),
+                        ),
+                        v1_archetype_matrix=load_v4_matrix(),
+                        planner_provider=provider,
+                    )
+
+            planner_path = output_root / "planner_runs.jsonl"
+            self.assertTrue(planner_path.exists())
+            rows = [json.loads(line) for line in planner_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+            self.assertEqual(len(rows), 1)
+            self.assertEqual(rows[0]["event"]["candidate_event_id"], event.candidate_event_id)
+            self.assertTrue(rows[0]["real_provider_success"])
 
     def test_real_planner_does_not_exceed_distinct_candidate_attempt_cap_when_failures_repeat(self):
         events = tuple(

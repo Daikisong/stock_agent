@@ -1,7 +1,10 @@
 {
   "classification_distribution": {
     "EXISTING_ACCEPTED_CLAIM_LIFECYCLE_REFRESH": 32,
-    "FRESH_PROVIDER_CACHE": 60
+    "FRESH_PROVIDER_CACHE": 60,
+    "NO_EVIDENCE_FOUND": 129,
+    "PROVIDER_FAILED": 146,
+    "REAL_PROVIDER_FETCH": 10
   },
   "critical_count": 0,
   "critical_counts": {
@@ -14,18 +17,18 @@
     "source_task_execution_missing_source_task_origin_count": 0
   },
   "legacy_boolean_pass": true,
-  "live_source_pass_allowed": false,
+  "live_source_pass_allowed": true,
   "mode_note": "canonical v4 currently replays/imports v3 leaf artifacts; real live fetch count is not claimed in LEDGER_REFRESH_CENSUS",
-  "pass_scope": "ledger_refresh",
+  "pass_scope": "live_source",
   "schema_version": "e2r_census_v4_source_task_realness_audit_v1",
-  "source_task_claim_producing_count": 60,
-  "source_task_execution_count": 92,
+  "source_task_claim_producing_count": 70,
+  "source_task_execution_count": 377,
   "source_task_fresh_provider_cache_count": 60,
   "source_task_lifecycle_refresh_count": 32,
-  "source_task_planned_count": 92,
-  "source_task_real_fetch_count": 0,
+  "source_task_planned_count": 377,
+  "source_task_real_fetch_count": 10,
   "source_task_report_replay_reference_count": 0,
   "source_task_research_memory_reference_count": 0,
-  "verdict": "PASS_LEDGER_REFRESH_REALNESS",
+  "verdict": "LIVE_SOURCE_PASS",
   "verdict_scope": "LEDGER_REFRESH_REALNESS_PASS"
 }

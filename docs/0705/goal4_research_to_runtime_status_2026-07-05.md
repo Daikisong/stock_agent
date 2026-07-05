@@ -5,14 +5,19 @@
 후속 실행 감사:
 
 - `docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md`
+- `docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md`
 
 주의:
 
 ```text
 이 문서의 본문은 manifest 실행 전 상태를 설명한다.
-후속 patched Census v4 실행에서는 전수 seed 114개 투입은 고쳐졌지만,
-run은 INVALID_PARTIAL_OUTPUT으로 끝났고 production FULL_THESIS row는 0개/PENDING으로 바뀌었다.
-최신 실행 결과는 후속 감사 문서를 기준으로 본다.
+첫 patched-v2 Census v4 실행에서는 당시 전수 seed 114개 투입은 고쳐졌지만,
+첫 patched run은 planner/source/claim trace가 공식 leaf에 남지 않아 INVALID_PARTIAL_OUTPUT으로 끝났다.
+patched-v2 run은 planner/source/claim trace를 남겼지만 runtime budget exhausted와 readiness BLOCKED로 끝났다.
+또한 required_positive_missing_primitives가 있는 production row는 앞으로 FULL_THESIS_PRODUCTION_PASS를 막도록 코드가 패치됐다.
+추가 후속 패치로 placeholder symbol `000000`은 next-attempt plan에서 실제 종목으로 취급하지 않는다.
+따라서 현재 재생성된 다음 실행 입력은 seed/source task 111개, target_symbol_mode는 ARCHETYPE_LEVEL_DISCOVERY 32개와 SYMBOL_SPECIFIC 4개다.
+최신 실행 결과는 patched-v2 후속 감사 문서를 기준으로 본다.
 ```
 
 짧은 결론:
@@ -25,9 +30,10 @@ run은 INVALID_PARTIAL_OUTPUT으로 끝났고 production FULL_THESIS row는 0개
 - 기존 FULL_THESIS_PRODUCTION_PASS를 "score path pass"와 "meaningful thesis pass"로 분리했다.
 
 아직 완료가 아닌 것:
-- production full-thesis row는 아직 10개 전부 C05다.
-- mandatory archetype 6개는 production full-thesis row가 0개다.
-- promoted 10개 row 전부 required positive / Green gap이 남아 있다.
+- production full-thesis score-path row는 3개뿐이며 C05 2개, C06 1개다.
+- C06 row도 required-positive / Green gap이 남아 있어 meaningful full thesis가 아니다.
+- C08/C15/C17/C24/C28 mandatory archetype은 production full-thesis row가 0개다.
+- promoted 3개 row 전부 required positive / Green gap이 남아 있다.
 - 따라서 goal4 최종 상태는 MEANINGFUL_RUNTIME_PARITY_NOT_READY다.
 ```
 
@@ -37,8 +43,8 @@ run은 INVALID_PARTIAL_OUTPUT으로 끝났고 production FULL_THESIS row는 0개
 지금은 "계산기가 답을 낼 수 있다"는 것은 확인했다.
 하지만 "모든 과목 시험지가 제대로 채점됐다"는 것은 아니다.
 
-C05 문제지만 10장을 채점했기 때문에 계산기 경로는 열린다.
-하지만 C06, C08, C15, C17, C24, C28 문제지는 아직 production 채점지로 올라오지 않았다.
+C05 2장과 C06 1장은 계산기 경로에 올라왔지만, 셋 다 필수 증빙칸이 비어 있다.
+C08, C15, C17, C24, C28 문제지는 아직 production full-thesis 채점지로 올라오지 않았다.
 ```
 
 ## 1. 이번 작업의 목표

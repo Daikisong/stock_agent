@@ -1,5 +1,5 @@
 {
-  "accepted_claim_seed_count": 0,
+  "accepted_claim_seed_count": 7,
   "actual_materialization_pass_allowed": false,
   "controlled_smoke_full_thesis_final_scope_count": 0,
   "critical_count": 384,
@@ -22,23 +22,28 @@
     "stagecourt_without_accepted_claim_count": 0
   },
   "final_operator_score_use_counts": {
-    "NOT_FULL_E2R_SCORE": 18,
+    "FULL_E2R_SCORE": 3,
+    "NOT_FULL_E2R_SCORE": 15,
     "UNKNOWN": 96
   },
   "final_operator_stage_use_counts": {
-    "NOT_FULL_THESIS_STAGE": 18,
+    "FULL_THESIS_STAGE": 3,
+    "NOT_FULL_THESIS_STAGE": 15,
     "UNKNOWN": 96
   },
   "final_score_scale_counts": {
-    "EVENT_WEIGHTED_PARTIAL": 15,
-    "NO_SCORE": 3,
+    "EVENT_WEIGHTED_PARTIAL": 9,
+    "FULL_E2R_100": 3,
+    "NO_SCORE": 6,
     "UNKNOWN": 96
   },
   "final_stage_scope_counts": {
-    "CENSUS_EVENT_BOARD": 18,
+    "CENSUS_EVENT_BOARD": 9,
+    "FULL_THESIS": 3,
+    "NON_REPRESENTATIVE_FULL_THESIS_SEED": 6,
     "UNKNOWN": 96
   },
-  "full_thesis_promoted_seed_count": 0,
+  "full_thesis_promoted_seed_count": 3,
   "full_thesis_seed_promotion_pass": false,
   "ledger_integrity_pass_allowed": false,
   "next_actions_by_status": {
@@ -53,404 +58,466 @@
   },
   "operator_materialization_status": "PENDING_FULL_THESIS_MATERIALIZATION",
   "operator_rule": "A seed row is only an investigation input until the trace reaches FULL_THESIS_PROMOTED. Earlier statuses must remain pending/source-provider/material-gap states and must not be used as an operator FULL_THESIS Stage. verdict=PASS only means ledger integrity passed; actual_materialization_pass_allowed must be true before claiming a real FULL_THESIS seed closure.",
-  "planner_run_seed_count": 0,
-  "real_provider_success_seed_count": 0,
+  "planner_run_seed_count": 114,
+  "real_provider_success_seed_count": 78,
   "schema_version": "e2r_census_v4_full_thesis_seed_materialization_audit_v1",
   "seed_event_count": 114,
   "seed_source_family_counts": {
     "AllArchetypeRuntimeParityFollowUp": 114
   },
-  "source_task_execution_seed_count": 0,
-  "stagecourt_trace_seed_count": 0,
+  "source_task_execution_seed_count": 40,
+  "stagecourt_trace_seed_count": 7,
   "status_counts": {
-    "PLANNER_NOT_RUN": 114
+    "ACCEPTED_CLAIM_NOT_CREATED": 33,
+    "FULL_THESIS_PROMOTED": 3,
+    "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 36,
+    "SOURCE_TASK_NOT_EXECUTED": 38,
+    "STAGECOURT_READY_NOT_PROMOTED": 4
   },
   "status_counts_by_target_archetype": {
     "C01_ORDER_BACKLOG_MARGIN_BRIDGE": {
-      "PLANNER_NOT_RUN": 3
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "C02_POWER_GRID_DATACENTER_CAPEX": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
     },
     "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": {
-      "PLANNER_NOT_RUN": 6
+      "FULL_THESIS_PROMOTED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1,
+      "STAGECOURT_READY_NOT_PROMOTED": 2
     },
     "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
-      "PLANNER_NOT_RUN": 3
+      "FULL_THESIS_PROMOTED": 1,
+      "STAGECOURT_READY_NOT_PROMOTED": 2
     },
     "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": {
-      "PLANNER_NOT_RUN": 3
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
     },
     "C11_BATTERY_ORDERBOOK_RERATING": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": {
-      "PLANNER_NOT_RUN": 3
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
     },
     "C14_EV_DEMAND_SLOWDOWN_4B_4C": {
-      "PLANNER_NOT_RUN": 3
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C15_MATERIAL_SPREAD_SUPERCYCLE": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
-      "PLANNER_NOT_RUN": 3
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "C18_CONSUMER_EXPORT_CHANNEL_REORDER": {
-      "PLANNER_NOT_RUN": 3
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 3
     },
     "C19_BRAND_RETAIL_INVENTORY_MARGIN": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C22_INSURANCE_RATE_CYCLE_RESERVE": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C24_BIO_TRIAL_DATA_EVENT_RISK": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C27_CONTENT_IP_GLOBAL_MONETIZATION": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": {
-      "PLANNER_NOT_RUN": 6
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 3
     },
     "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": {
-      "PLANNER_NOT_RUN": 3
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 3
     },
     "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": {
-      "PLANNER_NOT_RUN": 3
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 3
     },
     "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": {
-      "PLANNER_NOT_RUN": 3
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 3
     },
     "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     }
   },
   "status_counts_by_target_primitive_gap": {
     "ad_revenue_growth_pct": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "ampc_or_subsidy_capture": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "approval_not_confirmed": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "approval_to_revenue_bridge": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "arpu_growth_pct": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "arr_growth_visible": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "auditor_or_disclosure_risk": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "balance_sheet_repair": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "binary_event_unresolved": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "brand_customer_diversification": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "call_off_risk": {
-      "PLANNER_NOT_RUN": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "cash_collection_visible": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "contract_amount_to_prior_sales": {
-      "PLANNER_NOT_RUN": 2
+      "FULL_THESIS_PROMOTED": 1,
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "contract_cancelled_or_delayed": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "contract_duration_months": {
-      "PLANNER_NOT_RUN": 2
+      "FULL_THESIS_PROMOTED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "contract_quality": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "control_premium_floor": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "csm_growth_visible": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "customer_capex_decline": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "customer_contract": {
-      "PLANNER_NOT_RUN": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "customer_contract_visible": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "customer_preorder_or_allocation": {
-      "PLANNER_NOT_RUN": 1
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "cycle_demand_visibility": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "datacenter_customer": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "direct_company_cash_route": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "equipment_order_backlog": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "ev_demand_slowdown": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "evidence_source_quality": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "ex_credit_margin": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "export_contract": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "export_growth_pct": {
-      "PLANNER_NOT_RUN": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
     },
     "global_launch_conversion": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "government_customer": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "hbm_capacity_constraint": {
-      "PLANNER_NOT_RUN": 1
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "hbm_customer_order": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "high_mae_history": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "inventory_cycle": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "inventory_spike": {
-      "PLANNER_NOT_RUN": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "ip_monetization_visible": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "jv_utilization": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "k_ics_ratio": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "lead_time_extended": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "liquidity_or_microcap_risk": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "margin_bridge_visible": {
-      "PLANNER_NOT_RUN": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "memory_price_increase_mentioned": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "minority_cash_path": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "mix_improvement": {
-      "PLANNER_NOT_RUN": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "named_customer_quality": {
-      "PLANNER_NOT_RUN": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "nrr": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "offtake_contract": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "operating_leverage_visible": {
-      "PLANNER_NOT_RUN": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "order_backlog_to_sales": {
-      "PLANNER_NOT_RUN": 4
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "order_to_revenue_bridge": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "pbr_e": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "permit_or_legal_delay": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "pf_exposure_reduced": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "platform_distribution_scale": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "policy_headline_only": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "policy_or_regulatory_confirmed": {
-      "PLANNER_NOT_RUN": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 2
     },
     "policy_supply_support": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "price_cut_risk": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "price_only_blowoff": {
-      "PLANNER_NOT_RUN": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "pricing_power_confirmed": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "procedure_volume_growth": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "project_award_confirmed": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "qualification_confirmed": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "raw_material_cost_risk": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "regulatory_approval_confirmed": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "reimbursement_confirmed": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "repeat_order_confirmed": {
-      "PLANNER_NOT_RUN": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "repeat_revenue": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "reserve_quality_visible": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "restatement_risk": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "retention_or_renewal": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "revenue_visibility_contract": {
-      "PLANNER_NOT_RUN": 1
+      "FULL_THESIS_PROMOTED": 1
     },
     "revision_slowdown": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "roe": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "royalty_route": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "sell_through_confirmed": {
-      "PLANNER_NOT_RUN": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 2
     },
     "share_count_drift": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "spread_expansion": {
-      "PLANNER_NOT_RUN": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "subsidy_capture_visible": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "supply_discipline_mentioned": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "supply_shortage": {
-      "PLANNER_NOT_RUN": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "take_rate_improvement": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "tender_offer_confirmed": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "thesis_break_confirmed": {
-      "PLANNER_NOT_RUN": 1
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
     },
     "treasury_share_cancellation": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "trial_quality_visible": {
-      "PLANNER_NOT_RUN": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "utilization_rate": {
-      "PLANNER_NOT_RUN": 2
+      "SOURCE_TASK_NOT_EXECUTED": 2
     },
     "valuation_overheat": {
-      "PLANNER_NOT_RUN": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "volume_growth_visible": {
-      "PLANNER_NOT_RUN": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     }
   },
   "target_archetype_counts": {

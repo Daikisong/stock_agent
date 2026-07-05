@@ -351,6 +351,7 @@ class CodexCLIPlannerProviderV4(ResearchBrainPlannerProviderV4):
     ) -> Mapping[str, LLMPlannerOutputV2]:
         if not events:
             return {}
+        self._last_rejection_by_event_id = {}
         payload = build_v4_planner_prompt_payload(
             events=events,
             memory_cards=memory_cards,
@@ -389,12 +390,21 @@ class CodexCLIPlannerProviderV4(ResearchBrainPlannerProviderV4):
             event = by_event.get(event_id)
             if event is None:
                 continue
-            outputs[event_id] = validate_llm_planner_output_v4(
-                row,
-                event=event,
-                memory_cards=memory_cards,
-            )
+            try:
+                outputs[event_id] = validate_llm_planner_output_v4(
+                    row,
+                    event=event,
+                    memory_cards=memory_cards,
+                )
+            except (PlannerProviderRejected, ValueError) as exc:
+                self._last_rejection_by_event_id[event_id] = str(exc)
         if not outputs:
+            if self._last_rejection_by_event_id:
+                sample = "; ".join(
+                    f"{event_id}:{reason}"
+                    for event_id, reason in list(self._last_rejection_by_event_id.items())[:3]
+                )
+                raise PlannerProviderRejected(f"codex planner returned only rejected plans: {sample}")
             raise PlannerProviderRejected("codex planner returned no matching candidate plans")
         return outputs
 
@@ -537,6 +547,8 @@ def run_planner_provider_v4(
     )
     prompt_text = _planner_prompt(prompt_payload)
     prompt_hash = _sha256_text(prompt_text)
+    if provider is not None and hasattr(provider, "_last_rejection_by_event_id"):
+        setattr(provider, "_last_rejection_by_event_id", {})
     try:
         outputs = provider.plan_many(
             events=events,
@@ -569,16 +581,31 @@ def run_planner_provider_v4(
             )
             for event in events
         )
+    except ValueError as exc:
+        return tuple(
+            _failed_run(
+                provider,
+                event,
+                str(exc),
+                rejected=True,
+                prompt_payload=prompt_payload,
+                prompt_text=prompt_text,
+                prompt_hash=prompt_hash,
+            )
+            for event in events
+        )
     rows: list[PlannerRunV4] = []
+    rejected_by_event_id = getattr(provider, "_last_rejection_by_event_id", {}) or {}
     for event in events:
         output = outputs.get(event.candidate_event_id)
         if output is None:
+            rejected_reason = rejected_by_event_id.get(event.candidate_event_id)
             rows.append(
                 _failed_run(
                     provider,
                     event,
-                    "planner_output_missing_for_candidate",
-                    rejected=False,
+                    rejected_reason or "planner_output_missing_for_candidate",
+                    rejected=bool(rejected_reason),
                     prompt_payload=prompt_payload,
                     prompt_text=prompt_text,
                     prompt_hash=prompt_hash,

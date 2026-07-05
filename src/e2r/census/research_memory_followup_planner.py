@@ -27,13 +27,27 @@ def build_research_memory_followup_tasks(
         routes.setdefault((pattern["archetype_id"], pattern["primitive_id"]), []).append(pattern)
 
     tasks: list[dict[str, Any]] = []
+    seen_task_keys: set[tuple[str, str, str]] = set()
     for blocked in runner.get("blocked_candidates", []):
         archetype_id = blocked.get("primary_archetype")
         if not archetype_id:
             continue
         card = cards.get(archetype_id, {})
-        missing = list(blocked.get("source_pending_gap_primitives") or blocked.get("missing_required_primitives") or [])
+        missing: list[str] = []
+        for primitive in (
+            list(blocked.get("source_pending_gap_primitives") or [])
+            + list(blocked.get("missing_required_primitives") or [])
+            + list(blocked.get("green_gap_primitives") or [])
+            + list(blocked.get("required_positive_missing_primitives") or [])
+        ):
+            primitive_id = str(primitive)
+            if primitive_id and primitive_id not in missing:
+                missing.append(primitive_id)
         for primitive in missing:
+            task_key = (str(blocked.get("symbol") or ""), str(archetype_id), str(primitive))
+            if task_key in seen_task_keys:
+                continue
+            seen_task_keys.add(task_key)
             route_priority = [
                 {
                     "source_family": route["source_family"],
