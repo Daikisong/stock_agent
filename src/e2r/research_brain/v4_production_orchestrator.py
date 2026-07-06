@@ -2616,6 +2616,9 @@ def _full_thesis_queue_context_from_structured_payload(structured: Mapping[str, 
         "hardcoded_query_count",
         "hardcoded_queries",
         "query_intents",
+        "success_condition",
+        "expected_claim_schema",
+        "fallback_if_not_found",
         "date_window",
         "max_queries",
         "max_candidates",
@@ -2631,6 +2634,8 @@ def _full_thesis_queue_context_from_structured_payload(structured: Mapping[str, 
         "source_route_repair_actions",
     )
     context = {key: structured.get(key) for key in keys if key in structured}
+    if isinstance(context.get("expected_claim_schema"), Mapping):
+        context["expected_claim_schema"] = _planner_safe_expected_claim_schema(context["expected_claim_schema"])
     planner_failure_feedback = _planner_failure_feedback_context_from_structured_payload(structured)
     if planner_failure_feedback:
         context["planner_failure_feedback"] = planner_failure_feedback
@@ -2643,6 +2648,16 @@ def _full_thesis_queue_context_from_structured_payload(structured: Mapping[str, 
     if "source_failed_stage_gates" in structured:
         context["source_failed_gate_ids"] = structured.get("source_failed_stage_gates")
     return context
+
+
+def _planner_safe_expected_claim_schema(schema: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        str(key): value
+        for key, value in schema.items()
+        if "score" not in str(key).lower()
+        and "stage" not in str(key).lower()
+        and str(key).lower() != "current_score_eligible"
+    }
 
 
 def _planner_failure_feedback_context_from_structured_payload(structured: Mapping[str, Any]) -> dict[str, Any]:

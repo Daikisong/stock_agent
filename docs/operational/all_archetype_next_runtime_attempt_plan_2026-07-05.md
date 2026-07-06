@@ -21,6 +21,9 @@
 - all_tasks_require_llm_query_generation: `True`
 - all_tasks_have_no_hardcoded_queries: `True`
 - all_tasks_have_finite_budget: `True`
+- all_tasks_have_success_condition: `True`
+- all_tasks_have_expected_claim_schema: `True`
+- all_tasks_have_fallback_if_not_found: `True`
 - target_materialization_required_task_count: `9`
 
 ## Plan Rows

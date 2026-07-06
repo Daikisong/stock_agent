@@ -308,6 +308,85 @@ failed_on = REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROWS
 
 이번 패치 후에도 Goal4는 아직 완료가 아니다.
 
+## 추가 패치: next-attempt task 성공조건 고정
+
+registry 기준 상태판은 각 아키타입이 어디서 막혔는지 보여준다. 하지만 그 상태판을 다음 실행 입력으로 바꾸는 `all_archetype_next_runtime_attempt_plan`에는 아직 한 가지 구멍이 있었다.
+
+```text
+기존 next source task:
+  primitive_gap = named_customer_quality
+  LLM query required = true
+  score before execution = false
+
+부족했던 점:
+  어떤 claim이 들어와야 이 task가 성공인지,
+  못 찾으면 어떤 상태로 남겨야 하는지가 task 자체에 없었다.
+```
+
+쉬운 예:
+
+```text
+의사가 "C08 고객 품질을 다시 검사"라고 써 놓았지만,
+검사 통과 기준이 없으면 다음 사람이 또 DART 표지나 회사 개요를 가져와서
+"조사했다"고 말할 수 있다.
+
+이번 패치는 처방전에 "직접 대상 회사, 현재 유효, 검증 anchor, primitive mapping ACCEPTED"
+까지 적어 둔 것이다.
+```
+
+변경된 전수 source task 필드:
+
+```json
+{
+  "success_condition": "Create at least one accepted Evidence OS claim ...",
+  "expected_claim_schema": {
+    "target_scope_status": "DIRECT",
+    "temporal_status": "CURRENT_OR_AS_OF_VALID",
+    "anchor_status": "VERIFIED_SOURCE_ANCHOR",
+    "mapping_status": "ACCEPTED",
+    "required_claim_status": "ACCEPTED_FOR_SCORE",
+    "score_forbidden_until_claim_accepted": true
+  },
+  "fallback_if_not_found": "PENDING_SOURCE|PENDING_MATERIAL_GAP|SOURCE_REPAIR_REQUIRED|TARGET_MATERIALIZATION_REQUIRED"
+}
+```
+
+전수 산출물 현재 값:
+
+```text
+plan_row_count = 36
+source_task_count = 111
+seed_event_count = 111
+all_tasks_have_success_condition = true
+all_tasks_have_expected_claim_schema = true
+all_tasks_have_fallback_if_not_found = true
+```
+
+샘플:
+
+```text
+C08 named_customer_quality:
+  success = 058470에 대한 직접 대상 회사 accepted Evidence OS claim 필요
+  fallback = SOURCE_REPAIR_REQUIRED
+
+C24 approval_not_confirmed:
+  success = 000100에 대한 직접 대상 회사 accepted Evidence OS claim 필요
+  fallback = SOURCE_REPAIR_REQUIRED
+
+R13 contract_cancelled_or_delayed:
+  success = 실제 current target symbol을 먼저 materialize한 뒤 직접 대상 회사 accepted claim 필요
+  fallback = TARGET_MATERIALIZATION_REQUIRED
+```
+
+중요한 점:
+
+```text
+이번 패치는 검색어를 하드코딩하지 않는다.
+LLM이 query를 만들되, 그 query 결과가 운영 점수에 들어가기 위한 claim 합격 기준을 고정한다.
+```
+
+즉 다음 실행에서 generic disclosure, source proxy, snippet, evidence_url_pending이 다시 들어와도 source task 성공으로 인정되지 않는다.
+
 현재 증명된 것:
 
 ```text

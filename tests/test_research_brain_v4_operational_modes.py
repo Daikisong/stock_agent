@@ -784,6 +784,23 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
                 "hardcoded_query_count": 0,
                 "hardcoded_queries": [],
                 "query_intents": [],
+                "success_condition": (
+                    "Create at least one accepted Evidence OS claim for primitive `hbm_capacity_pre_sold` "
+                    "on symbol `000660`."
+                ),
+                "expected_claim_schema": {
+                    "schema_version": "e2r_expected_runtime_parity_claim_v1",
+                    "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    "primitive_id": "hbm_capacity_pre_sold",
+                    "symbol": "000660",
+                    "target_scope_status": "DIRECT",
+                    "temporal_status": "CURRENT_OR_AS_OF_VALID",
+                    "anchor_status": "VERIFIED_SOURCE_ANCHOR",
+                    "mapping_status": "ACCEPTED",
+                    "required_claim_status": "ACCEPTED_FOR_SCORE",
+                    "score_forbidden_until_claim_accepted": True,
+                },
+                "fallback_if_not_found": "PENDING_MATERIAL_GAP",
                 "date_window": {"end": "2026-06-29", "lookback_days": 365},
                 "max_queries": 3,
                 "max_candidates": 20,
@@ -823,6 +840,11 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertTrue(full_thesis_context["general_search_allowed"])
         self.assertEqual(full_thesis_context["hardcoded_query_count"], 0)
         self.assertEqual(full_thesis_context["query_intents"], [])
+        self.assertIn("accepted Evidence OS claim", full_thesis_context["success_condition"])
+        self.assertEqual(full_thesis_context["fallback_if_not_found"], "PENDING_MATERIAL_GAP")
+        self.assertEqual(full_thesis_context["expected_claim_schema"]["primitive_id"], "hbm_capacity_pre_sold")
+        self.assertEqual(full_thesis_context["expected_claim_schema"]["target_scope_status"], "DIRECT")
+        self.assertNotIn("score_forbidden_until_claim_accepted", full_thesis_context["expected_claim_schema"])
         self.assertEqual(full_thesis_context["max_queries"], 3)
         self.assertEqual(full_thesis_context["max_fetches"], 3)
         self.assertNotIn("score_evidence_allowed", full_thesis_context)
@@ -858,6 +880,23 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
                     "Ask the LLM planner for bounded official-first queries that verify current direct evidence.",
                     "Previous runtime attempt failed before accepted claim creation.",
                 ],
+                "success_condition": (
+                    "Create at least one accepted Evidence OS claim for primitive `repeat_order_confirmed` "
+                    "on symbol `058470`."
+                ),
+                "expected_claim_schema": {
+                    "schema_version": "e2r_expected_runtime_parity_claim_v1",
+                    "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+                    "primitive_id": "repeat_order_confirmed",
+                    "symbol": "058470",
+                    "target_scope_status": "DIRECT",
+                    "temporal_status": "CURRENT_OR_AS_OF_VALID",
+                    "anchor_status": "VERIFIED_SOURCE_ANCHOR",
+                    "mapping_status": "ACCEPTED",
+                    "required_claim_status": "ACCEPTED_FOR_SCORE",
+                    "score_forbidden_until_claim_accepted": True,
+                },
+                "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
                 "previous_claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
                 "previous_claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
                 "previous_claim_failure_top_modes": [
@@ -916,6 +955,11 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
             full_thesis_context["planner_failure_feedback"]["primitive_gap"],
             "repeat_order_confirmed",
         )
+        self.assertIn("accepted Evidence OS claim", full_thesis_context["success_condition"])
+        self.assertEqual(full_thesis_context["fallback_if_not_found"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(full_thesis_context["expected_claim_schema"]["primitive_id"], "repeat_order_confirmed")
+        self.assertEqual(full_thesis_context["expected_claim_schema"]["target_scope_status"], "DIRECT")
+        self.assertNotIn("score_forbidden_until_claim_accepted", full_thesis_context["expected_claim_schema"])
         self.assertNotIn(
             "score_evidence_allowed_from_previous_rejected_claims",
             full_thesis_context["planner_failure_feedback"],

@@ -195,6 +195,51 @@ def _planner_failure_feedback(
     }
 
 
+def _success_condition(*, archetype_id: str, primitive: str, symbol: str | None) -> str:
+    target = f"symbol `{symbol}`" if symbol else f"a real current target symbol for `{archetype_id}`"
+    return (
+        f"Create at least one accepted Evidence OS claim for primitive `{primitive}` on {target}. "
+        "The claim must have direct target-company scope, a verified source anchor, current/as-of-valid "
+        "temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only "
+        "score contribution."
+    )
+
+
+def _expected_claim_schema(*, archetype_id: str, primitive: str, symbol: str | None) -> dict[str, Any]:
+    return {
+        "schema_version": "e2r_expected_runtime_parity_claim_v1",
+        "archetype_id": archetype_id,
+        "primitive_id": primitive,
+        "symbol": symbol,
+        "target_scope_status": "DIRECT",
+        "temporal_status": "CURRENT_OR_AS_OF_VALID",
+        "anchor_status": "VERIFIED_SOURCE_ANCHOR",
+        "semantic_status": "PASS",
+        "mapping_status": "ACCEPTED",
+        "required_claim_status": "ACCEPTED_FOR_SCORE",
+        "score_forbidden_until_claim_accepted": True,
+        "forbidden_source_classes": list(FORBIDDEN_SOURCE_CLASSES),
+    }
+
+
+def _fallback_if_not_found(
+    *,
+    row: Mapping[str, Any],
+    symbol: str | None,
+    primary_mode: str | None,
+) -> str:
+    if symbol is None or row.get("runtime_parity_proof_status") == "NOT_PROVEN_TARGET_MATERIALIZATION_REQUIRED":
+        return "TARGET_MATERIALIZATION_REQUIRED"
+    if primary_mode == "PROVIDER_ERROR_SCORE_BLOCK":
+        return "PENDING_SOURCE"
+    if row.get("runtime_parity_proof_status") in {
+        "NOT_PROVEN_SCORE_PATH_ONLY",
+        "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
+    }:
+        return "PENDING_MATERIAL_GAP"
+    return "SOURCE_REPAIR_REQUIRED"
+
+
 def _failure_feedback_intent(
     *,
     primary_mode: str | None,
@@ -498,6 +543,21 @@ def build_all_archetype_next_runtime_attempt_plan(
                     repair_hint=repair_hint,
                     repair_actions=repair_actions,
                 )
+                success_condition = _success_condition(
+                    archetype_id=archetype_id,
+                    primitive=primitive,
+                    symbol=symbol,
+                )
+                expected_claim_schema = _expected_claim_schema(
+                    archetype_id=archetype_id,
+                    primitive=primitive,
+                    symbol=symbol,
+                )
+                fallback_if_not_found = _fallback_if_not_found(
+                    row=row,
+                    symbol=symbol,
+                    primary_mode=primary_failure_mode,
+                )
                 source_task = {
                     "schema_version": "e2r_all_archetype_next_runtime_source_task_v1",
                     "task_id": task_id,
@@ -522,6 +582,9 @@ def build_all_archetype_next_runtime_attempt_plan(
                     "llm_query_required": True,
                     "llm_query_allowed": True,
                     "query_intents": query_intents,
+                    "success_condition": success_condition,
+                    "expected_claim_schema": expected_claim_schema,
+                    "fallback_if_not_found": fallback_if_not_found,
                     "planner_failure_feedback": planner_failure_feedback,
                     "previous_claim_failure_primary_mode": primary_failure_mode,
                     "previous_claim_failure_repair_hint": repair_hint,
@@ -600,6 +663,9 @@ def build_all_archetype_next_runtime_attempt_plan(
                             "official_first_required": True,
                             "llm_query_required": True,
                             "query_intents": source_task["query_intents"],
+                            "success_condition": success_condition,
+                            "expected_claim_schema": expected_claim_schema,
+                            "fallback_if_not_found": fallback_if_not_found,
                             "planner_failure_feedback": planner_failure_feedback,
                             "previous_claim_failure_primary_mode": primary_failure_mode,
                             "previous_claim_failure_repair_hint": repair_hint,
@@ -662,6 +728,15 @@ def build_all_archetype_next_runtime_attempt_plan(
             task["max_queries"] is not None and task["max_candidates"] is not None and task["max_fetches"] is not None
             for task in source_tasks
         ),
+        "all_tasks_have_success_condition": all(bool(task.get("success_condition")) for task in source_tasks),
+        "all_tasks_have_expected_claim_schema": all(
+            bool(task.get("expected_claim_schema", {}).get("primitive_id"))
+            and task.get("expected_claim_schema", {}).get("target_scope_status") == "DIRECT"
+            and task.get("expected_claim_schema", {}).get("mapping_status") == "ACCEPTED"
+            and task.get("expected_claim_schema", {}).get("score_forbidden_until_claim_accepted") is True
+            for task in source_tasks
+        ),
+        "all_tasks_have_fallback_if_not_found": all(bool(task.get("fallback_if_not_found")) for task in source_tasks),
         "target_materialization_required_task_count": sum(
             1 for task in source_tasks if task.get("requires_target_materialization_before_scoring") is True
         ),
@@ -697,6 +772,9 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         f"- all_tasks_require_llm_query_generation: `{plan['all_tasks_require_llm_query_generation']}`",
         f"- all_tasks_have_no_hardcoded_queries: `{plan['all_tasks_have_no_hardcoded_queries']}`",
         f"- all_tasks_have_finite_budget: `{plan['all_tasks_have_finite_budget']}`",
+        f"- all_tasks_have_success_condition: `{plan.get('all_tasks_have_success_condition')}`",
+        f"- all_tasks_have_expected_claim_schema: `{plan.get('all_tasks_have_expected_claim_schema')}`",
+        f"- all_tasks_have_fallback_if_not_found: `{plan.get('all_tasks_have_fallback_if_not_found')}`",
         f"- target_materialization_required_task_count: `{plan['target_materialization_required_task_count']}`",
         "",
         "## Plan Rows",

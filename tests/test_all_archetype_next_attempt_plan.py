@@ -39,6 +39,9 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
         self.assertTrue(self.plan["all_tasks_require_llm_query_generation"])
         self.assertTrue(self.plan["all_tasks_have_no_hardcoded_queries"])
         self.assertTrue(self.plan["all_tasks_have_finite_budget"])
+        self.assertTrue(self.plan["all_tasks_have_success_condition"])
+        self.assertTrue(self.plan["all_tasks_have_expected_claim_schema"])
+        self.assertTrue(self.plan["all_tasks_have_fallback_if_not_found"])
         for task in self.plan["source_tasks"]:
             self.assertFalse(task["score_allowed_before_execution"])
             self.assertFalse(task["stage_promotion_allowed_before_execution"])
@@ -52,6 +55,22 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             self.assertIn("source_proxy_only", task["forbidden_source_classes"])
             self.assertIn("planner_failure_feedback", task)
             self.assertFalse(task["planner_failure_feedback"]["score_evidence_allowed_from_previous_rejected_claims"])
+            self.assertIn("accepted Evidence OS claim", task["success_condition"])
+            self.assertIn(task["primitive_gap"], task["success_condition"])
+            self.assertIn(
+                task["fallback_if_not_found"],
+                {"PENDING_SOURCE", "PENDING_MATERIAL_GAP", "SOURCE_REPAIR_REQUIRED", "TARGET_MATERIALIZATION_REQUIRED"},
+            )
+            schema = task["expected_claim_schema"]
+            self.assertEqual(schema["schema_version"], "e2r_expected_runtime_parity_claim_v1")
+            self.assertEqual(schema["archetype_id"], task["archetype_id"])
+            self.assertEqual(schema["primitive_id"], task["primitive_gap"])
+            self.assertEqual(schema["target_scope_status"], "DIRECT")
+            self.assertEqual(schema["temporal_status"], "CURRENT_OR_AS_OF_VALID")
+            self.assertEqual(schema["anchor_status"], "VERIFIED_SOURCE_ANCHOR")
+            self.assertEqual(schema["mapping_status"], "ACCEPTED")
+            self.assertTrue(schema["score_forbidden_until_claim_accepted"])
+            self.assertIn("source_proxy_only", schema["forbidden_source_classes"])
 
     def test_seed_events_are_visible_to_census_v4_seed_runtime_audit(self) -> None:
         for event in self.plan["seed_events"][:10]:
@@ -59,6 +78,13 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             self.assertEqual(event["structured_payload"]["seed_role"], "planner_input_only")
             self.assertEqual(event["source_family"], "AllArchetypeRuntimeParityFollowUp")
             self.assertEqual(event["event_type"], "all_archetype_runtime_parity_follow_up_seed")
+            self.assertIn("success_condition", event["structured_payload"])
+            self.assertIn("expected_claim_schema", event["structured_payload"])
+            self.assertIn("fallback_if_not_found", event["structured_payload"])
+            self.assertEqual(
+                event["structured_payload"]["expected_claim_schema"]["primitive_id"],
+                event["structured_payload"]["primitive_gap"],
+            )
 
     def test_attempt_types_reflect_current_runtime_failure_modes(self) -> None:
         self.assertEqual(self.by_prefix["C05"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
