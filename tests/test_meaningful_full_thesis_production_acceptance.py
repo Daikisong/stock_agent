@@ -16,8 +16,9 @@ class MeaningfulFullThesisProductionAcceptanceTests(unittest.TestCase):
         self.assertEqual(self.audit["candidate_selection_status"], "BALANCED_FULL_THESIS_SELECTION_NOT_READY")
         self.assertFalse(self.audit["meaningful_pass_allowed"])
         self.assertNotIn("c05_share_above_50_percent", self.audit["hard_fails"])
-        self.assertIn("required_positive_missing_rate_above_30_percent", self.audit["hard_fails"])
-        self.assertIn("green_gap_rate_above_30_percent", self.audit["hard_fails"])
+        self.assertIn("mandatory_archetype_full_thesis_missing", self.audit["hard_fails"])
+        self.assertIn("required_positive_missing_any_promoted_row", self.audit["hard_fails"])
+        self.assertIn("green_gap_any_promoted_row", self.audit["hard_fails"])
         self.assertIn("balanced_candidate_selection_not_pass", self.audit["hard_fails"])
         self.assertNotIn("planner_bias_audit_not_pass", self.audit["hard_fails"])
 

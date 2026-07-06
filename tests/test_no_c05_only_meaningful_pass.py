@@ -11,8 +11,9 @@ class NoC05OnlyMeaningfulPassTests(unittest.TestCase):
         self.assertEqual(audit["archetype_balanced_status"], "ARCHETYPE_BALANCED_FULL_THESIS_PASS")
         self.assertNotIn("distinct_full_thesis_archetype_count_below_3", audit["hard_fails"])
         self.assertNotIn("c05_share_above_50_percent", audit["hard_fails"])
-        self.assertIn("required_positive_missing_rate_above_30_percent", audit["hard_fails"])
-        self.assertIn("green_gap_rate_above_30_percent", audit["hard_fails"])
+        self.assertIn("mandatory_archetype_full_thesis_missing", audit["hard_fails"])
+        self.assertIn("required_positive_missing_any_promoted_row", audit["hard_fails"])
+        self.assertIn("green_gap_any_promoted_row", audit["hard_fails"])
         self.assertIn("balanced_candidate_selection_not_pass", audit["hard_fails"])
 
 

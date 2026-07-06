@@ -335,6 +335,15 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
         self.assertFalse(goal_matrix["meaningful_operational_stage_requirement_pass"])
         self.assertFalse(goal_matrix["brain_web_requirement_pass"])
         self.assertFalse(goal_matrix["production_full_thesis_requirement_pass"])
+        self.assertIn("full_thesis_goal4_semantic_split", goal_matrix)
+        self.assertEqual(
+            goal_matrix["production_full_e2r_score_path_pass"],
+            goal_matrix["full_thesis_goal4_semantic_split"]["production_full_e2r_score_path_pass"],
+        )
+        self.assertEqual(
+            goal_matrix["meaningful_full_thesis_evidence_pass"],
+            goal_matrix["full_thesis_goal4_semantic_split"]["meaningful_full_thesis_evidence_pass"],
+        )
         self.assertGreater(goal_matrix["required_goal_completion_pass_count"], 0)
         self.assertIn("BRAIN_WEB_EVIDENCE_PASS", goal_matrix["pending_gate_ids"])
         self.assertNotIn("SOURCE_CONNECTOR_CAPABILITY_PASS", goal_matrix["pending_gate_ids"])
@@ -364,6 +373,15 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
         self.assertIn("full_thesis_production_pass_false", goal_completion["blockers"])
         self.assertNotIn("source_connector_capability_pending", goal_completion["blockers"])
         self.assertFalse(goal_completion["full_thesis_production_pass_allowed"])
+        self.assertIn("full_thesis_goal4_semantic_split", goal_completion)
+        self.assertEqual(
+            goal_completion["production_full_e2r_score_path_pass_allowed"],
+            goal_completion["full_thesis_goal4_semantic_split"]["production_full_e2r_score_path_pass"],
+        )
+        self.assertEqual(
+            goal_completion["meaningful_full_thesis_evidence_pass_allowed"],
+            goal_completion["full_thesis_goal4_semantic_split"]["meaningful_full_thesis_evidence_pass"],
+        )
         self.assertTrue(goal_completion["source_connector_capability_pass_allowed"])
         self.assertEqual(goal_completion["source_connector_capability_summary"]["blocking_full_thesis_source_class_count"], 0)
         self.assertEqual(goal_completion["source_connector_capability_summary"]["blocking_full_thesis_task_count"], 0)

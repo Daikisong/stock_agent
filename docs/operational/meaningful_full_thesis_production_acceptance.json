@@ -4,16 +4,23 @@
   "candidate_selection_status": "BALANCED_FULL_THESIS_SELECTION_NOT_READY",
   "distinct_full_thesis_archetype_count": 7,
   "green_gap_rate": 1.0,
+  "green_gap_row_count": 7,
   "hard_fails": [
-    "required_positive_missing_rate_above_30_percent",
-    "green_gap_rate_above_30_percent",
+    "mandatory_archetype_full_thesis_missing",
+    "required_positive_missing_any_promoted_row",
+    "green_gap_any_promoted_row",
     "balanced_candidate_selection_not_pass"
   ],
   "mandatory_archetype_attempt_count": 6,
   "mandatory_archetype_full_thesis_count": 4,
+  "mandatory_archetype_full_thesis_missing": [
+    "C15_MATERIAL_SPREAD_SUPERCYCLE",
+    "C24_BIO_TRIAL_DATA_EVENT_RISK"
+  ],
   "meaningful_pass_allowed": false,
   "meaningful_status": "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE",
   "required_positive_missing_rate": 1.0,
+  "required_positive_missing_row_count": 7,
   "research_replay_production_score_leak_count": 0,
   "schema_version": "e2r_meaningful_full_thesis_production_acceptance_v1",
   "score_path_status": "PRODUCTION_FULL_E2R_SCORE_PATH_PASS",

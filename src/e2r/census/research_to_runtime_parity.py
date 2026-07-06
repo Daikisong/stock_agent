@@ -540,8 +540,10 @@ def build_research_to_runtime_parity_audit(
         production_score_path_pass
         and distinct_full_thesis_archetype_count >= 3
         and len(mandatory_attempted) >= len(mandatory_ids)
+        and len(mandatory_full) >= len(mandatory_ids)
         and c05_full_thesis_share <= 0.50
-        and (required_positive_missing_rows / full_thesis_row_count if full_thesis_row_count else 1.0) <= 0.30
+        and required_positive_missing_rows == 0
+        and green_gap_rows == 0
     )
     green_ready_pass = meaningful_pass and green_gap_rows == 0
     archetype_balanced_pass = (
@@ -886,10 +888,12 @@ def build_meaningful_full_thesis_acceptance_audit(
         hard_fails.append("distinct_full_thesis_archetype_count_below_3")
     if parity_audit.get("c05_full_thesis_share", 0) > 0.50:
         hard_fails.append("c05_share_above_50_percent")
-    if parity_audit.get("required_positive_missing_full_thesis_row_rate", 0) > 0.30:
-        hard_fails.append("required_positive_missing_rate_above_30_percent")
-    if parity_audit.get("green_gap_full_thesis_row_rate", 0) > 0.30:
-        hard_fails.append("green_gap_rate_above_30_percent")
+    if parity_audit.get("mandatory_archetype_full_thesis_missing"):
+        hard_fails.append("mandatory_archetype_full_thesis_missing")
+    if parity_audit.get("required_positive_missing_full_thesis_row_count", 0) > 0:
+        hard_fails.append("required_positive_missing_any_promoted_row")
+    if parity_audit.get("green_gap_full_thesis_row_count", 0) > 0:
+        hard_fails.append("green_gap_any_promoted_row")
     if parity_audit.get("target_archetype_unknown_promoted_count", 0):
         hard_fails.append("target_archetype_unknown_promoted")
     if parity_audit.get("source_primary_context_promoted_count", 0):
@@ -922,8 +926,11 @@ def build_meaningful_full_thesis_acceptance_audit(
         "distinct_full_thesis_archetype_count": parity_audit.get("distinct_full_thesis_archetype_count"),
         "mandatory_archetype_attempt_count": parity_audit.get("mandatory_archetype_attempt_count"),
         "mandatory_archetype_full_thesis_count": parity_audit.get("mandatory_archetype_full_thesis_count"),
+        "mandatory_archetype_full_thesis_missing": parity_audit.get("mandatory_archetype_full_thesis_missing", []),
         "c05_full_thesis_share": parity_audit.get("c05_full_thesis_share"),
+        "required_positive_missing_row_count": parity_audit.get("required_positive_missing_full_thesis_row_count"),
         "required_positive_missing_rate": parity_audit.get("required_positive_missing_full_thesis_row_rate"),
+        "green_gap_row_count": parity_audit.get("green_gap_full_thesis_row_count"),
         "green_gap_rate": parity_audit.get("green_gap_full_thesis_row_rate"),
         "source_primary_context_only_promoted_count": parity_audit.get("source_primary_context_promoted_count"),
         "target_archetype_unknown_promoted_count": parity_audit.get("target_archetype_unknown_promoted_count"),

@@ -11236,6 +11236,7 @@ def _self_repair_log_v4(*, config: CensusV4RunConfig, audits: Mapping[str, Mappi
     full_thesis_honesty_pass = _full_thesis_smoke_honesty_pass(full_thesis)
     full_thesis_execution_pass = _full_thesis_smoke_execution_pass(full_thesis)
     full_thesis_production = audits.get("full_thesis_production") or {}
+    full_thesis_semantic_split = _full_thesis_goal4_semantic_split(full_thesis_production)
     full_thesis_seed_materialization = audits.get("full_thesis_seed_materialization") or {}
     full_thesis_seed_event_count = int(full_thesis_seed_materialization.get("seed_event_count") or 0)
     full_thesis_seed_promotion_pass = int(full_thesis_seed_materialization.get("full_thesis_promoted_seed_count") or 0) > 0
@@ -11329,6 +11330,7 @@ def _self_repair_log_v4(*, config: CensusV4RunConfig, audits: Mapping[str, Mappi
         "unresolved_failures": unresolved,
         "deferred_goal_blockers": deferred_goal_blockers,
         "nonrepairable_blockers": nonrepairable_blockers,
+        "full_thesis_goal4_semantic_split": full_thesis_semantic_split,
         "completion_eligible": not unresolved,
         "note": "Self-repair ran as an audit/recheck loop. It does not convert Brain/Web or full-thesis pending capability blockers into passes.",
     }
@@ -11443,6 +11445,7 @@ def _goal_requirement_matrix_audit(
     full_thesis_honesty_pass = _full_thesis_smoke_honesty_pass(full_thesis)
     full_thesis_execution_pass = _full_thesis_smoke_execution_pass(full_thesis)
     full_thesis_production = audits.get("full_thesis_production") or {}
+    full_thesis_semantic_split = _full_thesis_goal4_semantic_split(full_thesis_production)
     full_thesis_seed_materialization = audits.get("full_thesis_seed_materialization") or {}
     full_thesis_seed_promotion_pass = int(full_thesis_seed_materialization.get("full_thesis_promoted_seed_count") or 0) > 0
     full_thesis_production_smoke_substitute_pass = _full_thesis_production_satisfies_smoke_requirement(
@@ -11905,6 +11908,9 @@ def _goal_requirement_matrix_audit(
         "meaningful_operational_stage_requirement_pass": all(row["status"] == "PASS" for row in meaningful_rows),
         "brain_web_requirement_pass": brain_readiness.get("brain_web_evidence_pass_allowed") is True,
         "production_full_thesis_requirement_pass": _full_thesis_production_pass_allowed(full_thesis_production),
+        "production_full_e2r_score_path_pass": full_thesis_semantic_split["production_full_e2r_score_path_pass"],
+        "meaningful_full_thesis_evidence_pass": full_thesis_semantic_split["meaningful_full_thesis_evidence_pass"],
+        "full_thesis_goal4_semantic_split": full_thesis_semantic_split,
         "blockers": blockers,
         "pending_gate_ids": [row["gate_id"] for row in pending_rows],
         "fail_gate_ids": [row["gate_id"] for row in fail_rows],
@@ -11987,6 +11993,7 @@ def _goal_completion_audit(*, config: CensusV4RunConfig, audits: Mapping[str, Ma
     full_thesis_production_pass = _full_thesis_production_pass_allowed(full_thesis_production)
     if not full_thesis_production_pass:
         brain_gate_blockers.append("full_thesis_production_pass_false")
+    full_thesis_semantic_split = _full_thesis_goal4_semantic_split(full_thesis_production)
     source_connector_capability_pass = source_connector_capability.get("source_connector_capability_pass_allowed") is True
     if not source_connector_capability_pass:
         brain_gate_blockers.append("source_connector_capability_pending")
@@ -12040,6 +12047,13 @@ def _goal_completion_audit(*, config: CensusV4RunConfig, audits: Mapping[str, Ma
             "daily_event_and_full_thesis_separated": full_thesis.get("daily_event_and_full_thesis_separated"),
         },
         "full_thesis_production_pass_allowed": full_thesis_production_pass,
+        "production_full_e2r_score_path_pass_allowed": full_thesis_semantic_split[
+            "production_full_e2r_score_path_pass"
+        ],
+        "meaningful_full_thesis_evidence_pass_allowed": full_thesis_semantic_split[
+            "meaningful_full_thesis_evidence_pass"
+        ],
+        "full_thesis_goal4_semantic_split": full_thesis_semantic_split,
         "source_connector_capability_pass_allowed": source_connector_capability_pass,
         "source_connector_capability_summary": {
             "verdict": source_connector_capability.get("verdict"),
@@ -12135,6 +12149,74 @@ def _goal_completion_audit(*, config: CensusV4RunConfig, audits: Mapping[str, Ma
 
 def _full_thesis_production_pass_allowed(audit: Mapping[str, Any]) -> bool:
     return audit.get("completion_eligible") is True or audit.get("verdict") == "FULL_THESIS_PRODUCTION_PASS"
+
+
+def _full_thesis_score_path_pass_allowed(audit: Mapping[str, Any]) -> bool:
+    """Return whether any production FULL_E2R_100 score path actually closed.
+
+    Goal4 separates this from meaningful thesis evidence.  A row can have a
+    closed claim->score->StageCourt path while still missing required-positive
+    or Green primitives.
+    """
+
+    row_count = int(audit.get("production_full_thesis_row_count") or audit.get("full_thesis_row_count") or 0)
+    return row_count > 0 and audit.get("production_mode_requested") is not False
+
+
+def _meaningful_full_thesis_evidence_pass_allowed(audit: Mapping[str, Any]) -> bool:
+    """Return whether production rows are meaningful evidence-complete rows."""
+
+    row_count = int(audit.get("production_full_thesis_row_count") or audit.get("full_thesis_row_count") or 0)
+    if row_count <= 0:
+        return False
+    if int(audit.get("production_full_thesis_row_with_required_positive_missing_primitives_count") or 0) > 0:
+        return False
+    if int(audit.get("production_full_thesis_row_with_green_gap_primitives_count") or 0) > 0:
+        return False
+    if int(audit.get("production_green_stage_row_with_green_gap_count") or 0) > 0:
+        return False
+    return _full_thesis_production_pass_allowed(audit)
+
+
+def _full_thesis_goal4_semantic_split(audit: Mapping[str, Any]) -> dict[str, Any]:
+    score_path_pass = _full_thesis_score_path_pass_allowed(audit)
+    meaningful_pass = _meaningful_full_thesis_evidence_pass_allowed(audit)
+    blockers: list[str] = []
+    if score_path_pass and not meaningful_pass:
+        blockers.append("production_score_path_is_not_meaningful_full_thesis_pass")
+    if int(audit.get("production_full_thesis_row_with_required_positive_missing_primitives_count") or 0) > 0:
+        blockers.append("required_positive_missing_on_promoted_rows")
+    if int(audit.get("production_full_thesis_row_with_green_gap_primitives_count") or 0) > 0:
+        blockers.append("green_gap_on_promoted_rows")
+    if not score_path_pass:
+        blockers.append("production_full_e2r_score_path_not_closed")
+    return {
+        "score_path_label": (
+            "PRODUCTION_FULL_E2R_SCORE_PATH_PASS"
+            if score_path_pass
+            else "PRODUCTION_FULL_E2R_SCORE_PATH_NOT_READY"
+        ),
+        "meaningful_label": (
+            "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS"
+            if meaningful_pass
+            else "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE"
+        ),
+        "production_full_e2r_score_path_pass": score_path_pass,
+        "meaningful_full_thesis_evidence_pass": meaningful_pass,
+        "score_path_only_not_meaningful": score_path_pass and not meaningful_pass,
+        "required_positive_missing_row_count": int(
+            audit.get("production_full_thesis_row_with_required_positive_missing_primitives_count") or 0
+        ),
+        "green_gap_row_count": int(audit.get("production_full_thesis_row_with_green_gap_primitives_count") or 0),
+        "production_full_thesis_row_count": int(
+            audit.get("production_full_thesis_row_count") or audit.get("full_thesis_row_count") or 0
+        ),
+        "blockers": blockers,
+        "operator_note": (
+            "PRODUCTION_FULL_E2R_SCORE_PATH_PASS는 채점 경로가 닫혔다는 뜻이고, "
+            "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS만 필수 증거가 닫힌 운영 thesis를 뜻한다."
+        ),
+    }
 
 
 def _full_thesis_production_satisfies_smoke_requirement(
