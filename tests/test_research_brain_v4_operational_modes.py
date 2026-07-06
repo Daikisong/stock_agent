@@ -232,6 +232,60 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
 
         self.assertEqual(events, ())
 
+    def test_candidate_event_seed_path_resolves_missing_company_name_from_registry_not_archetype(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            universe_dir = root / "data/historical_official/universe"
+            universe_dir.mkdir(parents=True)
+            (universe_dir / "universe.csv").write_text(
+                "symbol,name,market,exchange,sector_custom,listed_date,currency\n"
+                "005930,삼성전자,KR,KRX,반도체,1975-06-11,KRW\n",
+                encoding="utf-8",
+            )
+            seed_path = root / "goal4_seed.jsonl"
+            seed_path.write_text(
+                json.dumps(
+                    {
+                        "candidate_event_id": "CEV4-GOAL4-C06-005930",
+                        "symbol": "005930",
+                        "company_name": None,
+                        "event_date": "2026-06-29",
+                        "detected_at": "2026-06-29",
+                        "source_family": "AllArchetypeRuntimeParityFollowUp",
+                        "source_id": str(seed_path),
+                        "event_type": "all_archetype_runtime_parity_follow_up_seed",
+                        "target_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                        "target_symbol_mode": "SYMBOL_SPECIFIC",
+                        "seed_role": "planner_input_only",
+                        "structured_payload": {
+                            "target_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                            "target_symbol_mode": "SYMBOL_SPECIFIC",
+                            "seed_role": "planner_input_only",
+                        },
+                        "research_brain_eligible": True,
+                        "score_evidence_allowed": False,
+                        "stage_promotion_allowed_before_execution": False,
+                    },
+                    ensure_ascii=False,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            events = _candidate_seed_events_from_config(
+                config=ProductionShadowV4Config(
+                    as_of_date="2026-06-29",
+                    candidate_event_seed_path=str(seed_path),
+                ),
+                as_of_date=date(2026, 6, 29),
+                repo_root=root,
+            )
+
+        self.assertEqual(len(events), 1)
+        self.assertEqual(events[0].symbol, "005930")
+        self.assertEqual(events[0].company_name, "삼성전자")
+        self.assertNotEqual(events[0].company_name, "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+
     def test_candidate_event_seed_path_skips_missing_or_zero_symbol_rows(self):
         with TemporaryDirectory() as tmp:
             seed_path = Path(tmp) / "bad_seed_rows.jsonl"

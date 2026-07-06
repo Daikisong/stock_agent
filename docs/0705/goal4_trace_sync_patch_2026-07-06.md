@@ -631,6 +631,285 @@ target alias/relevance 판정에는 이 seed metadata가 영향을 줄 수 있�
 다음 작업에서 seed event의 company_name/entity identity가 실제 회사명으로 유지되는지 확인해야 한다.
 ```
 
+## 추가 패치: seed company_name 아키타입 오염 차단
+
+위 관찰은 실제 코드 경로의 버그였다.
+
+문제 경로:
+
+```text
+seed row:
+  symbol: 005930
+  company_name: null
+  target_archetype: C06_HBM_MEMORY_CUSTOMER_CAPACITY
+
+기존 fallback:
+  company_name = payload.company_name
+              or structured_payload.target_archetype
+              or payload.target_archetype
+              or symbol
+
+결과:
+  company_name = C06_HBM_MEMORY_CUSTOMER_CAPACITY
+```
+
+쉬운 예:
+
+```text
+삼성전자를 조사해야 하는데,
+접수 장부의 이름 칸에 "삼성전자"가 아니라
+"C06_HBM_MEMORY_CUSTOMER_CAPACITY"라고 적힌 상태였다.
+
+검색어에는 LLM이 Samsung Electronics를 넣을 수 있어도,
+후속 target alias/relevance 판정에서는 회사 정체성이 흐려질 수 있다.
+```
+
+수정:
+
+```text
+src/e2r/research_brain/v4_production_orchestrator.py
+  - _candidate_seed_events_from_config(repo_root)로 instrument registry를 읽는다.
+  - company_name이 비어 있거나 Cxx_/R13_ 아키타입 ID처럼 보이면:
+      1. symbol이 있으면 registry.names_by_symbol[symbol] 사용
+      2. registry에 없으면 symbol 사용
+      3. symbol 없는 archetype-level discovery seed만 target_archetype 사용 허용
+```
+
+즉 종목별 seed에서는 아키타입 ID가 회사명으로 들어가지 못하게 막았다.
+
+예:
+
+```text
+005930 + company_name null + C06 target
+  이전: C06_HBM_MEMORY_CUSTOMER_CAPACITY
+  이후: 삼성전자
+
+031980 + registry name 없음
+  이전: C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH
+  이후: 031980
+```
+
+두 번째 예시는 완전한 회사명 복구는 아니지만, 적어도 아키타입을 회사명으로 오인하지 않는다.
+registry 보강은 별도 데이터 품질 작업이다.
+
+추가 테스트:
+
+```text
+tests/test_research_brain_v4_operational_modes.py
+  test_candidate_event_seed_path_resolves_missing_company_name_from_registry_not_archetype
+```
+
+검증 내용:
+
+```text
+임시 universe registry:
+  005930 -> 삼성전자
+
+seed:
+  symbol=005930
+  company_name=None
+  target_archetype=C06_HBM_MEMORY_CUSTOMER_CAPACITY
+
+기대:
+  CandidateEvent.company_name == 삼성전자
+  CandidateEvent.company_name != C06_HBM_MEMORY_CUSTOMER_CAPACITY
+```
+
+실행:
+
+```bash
+PYTHONPATH=src python -m unittest \
+  tests.test_research_brain_v4_operational_modes \
+  tests.test_research_brain_v4_real_source_acquisition -v
+```
+
+결과:
+
+```text
+Ran 124 tests
+OK
+```
+
+추가 관련 묶음:
+
+```bash
+PYTHONPATH=src python -m unittest \
+  tests.test_census_v4_brain_web_readiness_gate \
+  tests.test_census_v4_goal_required_audits \
+  tests.test_census_v4_brain_stage_promotion_gate -v
+```
+
+결과:
+
+```text
+Ran 63 tests
+OK
+```
+
+seed materialization 확인:
+
+```text
+docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl
+→ _candidate_seed_events_from_config 재해석
+
+events: 111
+symbol-specific row 중 company_name이 Cxx_/R13_ 아키타입 ID인 row: 0
+blank company_name: 0
+```
+
+대표 row:
+
+```text
+052400 -> 코나아이 / C01_ORDER_BACKLOG_MARGIN_BRIDGE
+033100 -> 제룡전기 / C02_POWER_GRID_DATACENTER_CAPEX
+005930 -> 삼성전자 / C06_HBM_MEMORY_CUSTOMER_CAPACITY
+035760 -> CJ ENM / C27_CONTENT_IP_GLOBAL_MONETIZATION
+```
+
+주의:
+
+```text
+"CJ ENM"처럼 회사명이 C로 시작하는 정상 케이스는 있다.
+그래서 단순 startswith("C")가 아니라 ^(C\d{2}|R13)_ 패턴만 아키타입 오염으로 본다.
+```
+
+## 추가 bounded smoke: seed company resolver 확인
+
+패치 후 같은 작은 bounded smoke를 다시 실행했다.
+
+명령 요약:
+
+```text
+output_root:
+output/census_v4/2026-07-06-goal4-seed-company-resolver-bounded-smoke
+
+run_mode: BRAIN_AND_WEB_ACQUISITION_ENABLED
+brain_source_acquisition: live_full_bounded
+brain_universe_limit: 5
+brain_planner_success_limit: 5
+brain_max_distinct_candidate_attempts: 5
+brain_accepted_claim_target: 5
+write_operational_docs: false
+target_gate: full_thesis
+```
+
+결과:
+
+```text
+exit_code: 1
+stdout: NOT_READY
+```
+
+artifact count:
+
+```text
+planner_runs.jsonl: 50
+source_tasks.jsonl: 132
+source_task_executions.jsonl: 132
+web_search_tasks.jsonl: 5
+web_search_results.jsonl: 15
+web_fetched_documents.jsonl: 0
+web_rejected_documents.jsonl: 13
+claim_extractor_runs.jsonl: 0
+accepted_claims.jsonl: 96
+brain_to_claim_trace.jsonl: 18
+stagecourt_traces.jsonl: 96
+```
+
+회사명 오염 확인:
+
+```text
+research_brain_candidate_seed_events_used.jsonl:
+  rows: 111
+  bad_archetype_company_names: 0
+
+web_search_tasks.jsonl:
+  rows: 5
+  bad_archetype_company_names: 0
+
+source_tasks.jsonl:
+  rows: 132
+  bad_archetype_company_names: 0
+```
+
+대표 web task:
+
+```text
+005930 / 삼성전자:
+  삼성전자 005930 HBM 고객 allocation 선주문 물량 배정 리포트 PDF 2025 2026
+  삼성전자 005930 HBM customer allocation preorder capacity sold out broker report PDF 2025 2026
+  삼성전자 005930 HBM 고객사 qualification 물량 배정 공급계약 리포트 2025 2026
+
+033100 / 제룡전기:
+  제룡전기 033100 리포트 변압기 납기 장기화 리드타임 수주잔고 2025
+```
+
+즉 이번 patch의 직접 목표였던 `company_name=아키타입 ID` 문제는 smoke artifact에서도 사라졌다.
+
+하지만 Brain/Web readiness는 여전히 막혔다.
+
+```text
+brain_web_readiness_gate_audit.verdict: BLOCKED
+
+blockers:
+  Brain/Web acquisition mode requires fetched full-source web/news documents
+  web/LLM accepted claim count is zero
+  Brain/Web operational minimum planner calls not met: 5/30
+  Brain/Web operational minimum web search tasks not met: 5/20
+  Brain/Web operational minimum fetched documents not met: 0/10
+  Brain/Web operational minimum claim extractor attempts not met: 0/10
+  Brain/Web operational minimum web/LLM accepted claims not met: 0/3
+```
+
+trace promotion 쪽은 계속 깨지지 않았다.
+
+```text
+brain_stage_promotion_audit.verdict: PROMOTION_APPLIED
+blockers: []
+unsafe_promoted_stage_row_count: 0
+brain_stage_trace_not_promoted_marker_missing_count: 0
+brain_trace_promoted_reference_error_count: 0
+```
+
+이번 smoke의 rejected web document 원인:
+
+```text
+web_result_low_quality_blog_or_social_not_score_source: 7
+live_pdf_text_extraction_failed:pypdf extraction failed: Stream has ended unexpectedly: 3
+web_result_stock_list_or_channel_page_not_source_document: 2
+web_fetch_target_not_in_title_snippet_or_lead: 1
+```
+
+쉬운 예:
+
+```text
+이전:
+  이름표부터 "삼성전자"가 아니라 "C06..."이라 잘못 붙어 있었다.
+
+이번:
+  이름표는 "삼성전자"로 고쳤다.
+  검색도 5번 실행됐다.
+  그런데 가져온 후보는 블로그/목록 페이지이거나,
+  PDF 본문 추출이 실패해서 아직 답안지로 인정된 문서가 0개다.
+```
+
+PDF 추출 상태:
+
+```text
+src/e2r/research/pdf_text_extractor.py는
+PyMuPDF -> pdfplumber -> pypdf 순서로 fallback하도록 되어 있다.
+
+현재 환경:
+  PyMuPDF 없음
+  pdfplumber 없음
+  pypdf 있음
+
+따라서 특이하거나 일부 깨진 증권사 PDF가 pypdf에서 실패하면
+web_fetched_documents로 승격되지 못한다.
+```
+
+이건 이번 seed identity patch와 별개의 다음 source acquisition 문제다.
+
 ## 다음 작업
 
 1. 전체 Goal4 run의 provider stall 원인을 분리한다.

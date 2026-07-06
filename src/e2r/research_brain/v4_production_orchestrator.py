@@ -77,7 +77,7 @@ def run_research_brain_v4_production_shadow(
         as_of_date=as_of_date,
         universe_limit=_discovery_limit_for_config(config),
     )
-    seed_events = _candidate_seed_events_from_config(config=config, as_of_date=as_of_date)
+    seed_events = _candidate_seed_events_from_config(config=config, as_of_date=as_of_date, repo_root=repo_root)
     events = _select_unique_candidate_events(
         (*seed_events, *discovered_events),
         limit=_discovery_limit_for_config(config),
@@ -951,13 +951,19 @@ def discover_daily_candidate_events_v4(
     return _select_unique_candidate_events(rows, limit=universe_limit)
 
 
-def _candidate_seed_events_from_config(*, config: ProductionShadowV4Config, as_of_date: date) -> tuple[CandidateEventV2, ...]:
+def _candidate_seed_events_from_config(
+    *,
+    config: ProductionShadowV4Config,
+    as_of_date: date,
+    repo_root: str | Path = ".",
+) -> tuple[CandidateEventV2, ...]:
     if not config.candidate_event_seed_path:
         return ()
     path = Path(config.candidate_event_seed_path)
     if not path.exists():
         return ()
     rows: list[CandidateEventV2] = []
+    registry = load_instrument_registry(repo_root)
     with path.open(encoding="utf-8") as handle:
         for line in handle:
             text = line.strip()
@@ -984,12 +990,14 @@ def _candidate_seed_events_from_config(*, config: ProductionShadowV4Config, as_o
                 continue
             if raw_symbol and not symbol.strip("0"):
                 continue
-            company_name = str(
-                payload.get("company_name")
-                or structured_payload.get("target_archetype")
-                or payload.get("target_archetype")
-                or symbol
-                or "ARCHETYPE_LEVEL_DISCOVERY"
+            target_archetype = str(structured_payload.get("target_archetype") or payload.get("target_archetype") or "")
+            company_name = _seed_event_company_name(
+                payload=payload,
+                structured_payload=structured_payload,
+                symbol=symbol,
+                registry=registry,
+                target_archetype=target_archetype,
+                is_archetype_level_planner_seed=is_archetype_level_planner_seed,
             )
             rows.append(
                 CandidateEventV2(
@@ -1012,6 +1020,32 @@ def _candidate_seed_events_from_config(*, config: ProductionShadowV4Config, as_o
                 )
             )
     return tuple(rows)
+
+
+def _seed_event_company_name(
+    *,
+    payload: Mapping[str, Any],
+    structured_payload: Mapping[str, Any],
+    symbol: str,
+    registry: Any,
+    target_archetype: str,
+    is_archetype_level_planner_seed: bool,
+) -> str:
+    raw_name = str(payload.get("company_name") or structured_payload.get("company_name") or "").strip()
+    if raw_name and raw_name != target_archetype and not _looks_like_archetype_id(raw_name):
+        return raw_name
+    if symbol:
+        registry_name = str(getattr(registry, "names_by_symbol", {}).get(symbol) or "").strip()
+        if registry_name:
+            return registry_name
+        return symbol
+    if is_archetype_level_planner_seed:
+        return target_archetype or "ARCHETYPE_LEVEL_DISCOVERY"
+    return raw_name or target_archetype or "UNKNOWN_COMPANY"
+
+
+def _looks_like_archetype_id(value: str) -> bool:
+    return bool(re.match(r"^(?:C\d{2}|R13)_", str(value or "").strip()))
 
 
 def _production_cutover_leaf_candidate_events(*, root: Path, as_of_date: date, limit: int) -> list[CandidateEventV2]:
