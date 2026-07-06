@@ -136,23 +136,27 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         self.assertGreater(c05["runtime_stagecourt_trace_count"], 0)
 
         c08 = by_prefix["C08"]
-        self.assertEqual(c08["runtime_status"], "SOURCE_REPAIR_REQUIRED")
-        self.assertEqual(c08["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
+        self.assertEqual(c08["runtime_status"], "SCORE_PATH_CLOSED_WITH_THESIS_GAPS")
+        self.assertEqual(c08["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
         self.assertGreater(c08["research_case_count"], 0)
         self.assertGreater(c08["runtime_source_task_count"], 0)
         self.assertGreater(c08["source_task_execution_log_count"], 0)
-        self.assertIn("NO_ACCEPTED_CLAIM", c08["source_task_failure_axis_counts"])
-        self.assertIn("PRIMITIVE_MAPPING_REJECTED", c08["source_task_failure_axis_counts"])
-        self.assertGreater(c08["claim_mapping_trace_log_count"], 0)
-        self.assertEqual(c08["claim_mapping_accepted_trace_count"], 0)
-        self.assertIn("primitive_mapping_rejected", c08["claim_mapping_rejection_reason_counts"])
-        self.assertIn("ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE", c08["claim_failure_mode_counts"])
+        self.assertEqual(c08["runtime_full_thesis_row_count"], 1)
+        self.assertEqual(c08["runtime_full_thesis_row_with_required_positive_missing_count"], 1)
+        self.assertEqual(c08["runtime_full_thesis_row_with_green_gap_count"], 1)
         self.assertEqual(
-            c08["claim_failure_repair_hint"],
-            "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+            c08["next_required_action"],
+            "CLOSE_REQUIRED_POSITIVE_AND_GREEN_GAPS_BEFORE_MEANINGFUL_PASS",
         )
-        self.assertTrue(c08["claim_mapping_rejected_samples"])
-        self.assertEqual(c08["runtime_full_thesis_row_count"], 0)
+
+        c24 = by_prefix["C24"]
+        self.assertEqual(c24["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c24["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
+        self.assertGreater(c24["runtime_source_task_count"], 0)
+        self.assertGreater(c24["source_task_execution_log_count"], 0)
+        self.assertEqual(c24["runtime_full_thesis_row_count"], 0)
+        self.assertIn("NO_ACCEPTED_CLAIM", c24["source_task_failure_axis_counts"])
+        self.assertIn("PRIMITIVE_MAPPING_REJECTED", c24["source_task_failure_axis_counts"])
 
 
 if __name__ == "__main__":

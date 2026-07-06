@@ -2,13 +2,13 @@
   "bias_rule": "Production full-thesis routing is not balanced if C05 top1 share exceeds 35% or fewer than 6 archetypes receive top1 planner coverage.",
   "blockers": [],
   "c05_top1_count": 3,
-  "c05_top1_share": 0.028571,
+  "c05_top1_share": 0.027273,
   "distinct_top1_archetype_count": 33,
-  "hypothesis_run_count": 105,
+  "hypothesis_run_count": 110,
   "planner_output_score_stage_key_count": 0,
   "planner_run_count": 458,
-  "real_provider_success_count": 105,
-  "real_success_hypothesis_count": 105,
+  "real_provider_success_count": 110,
+  "real_success_hypothesis_count": 110,
   "schema_version": "e2r_research_brain_planner_bias_audit_v1",
   "status": "PLANNER_ARCHETYPE_ROUTING_BIAS_PASS",
   "top1_archetype_counts": {
@@ -44,7 +44,7 @@
     "C30": 3,
     "C31": 3,
     "C32": 3,
-    "R13": 6
+    "R13": 11
   },
   "top1_symbol_samples": {
     "C01": [
@@ -143,41 +143,44 @@
     ],
     "C32": [
       "000670"
+    ],
+    "R13": [
+      "010130"
     ]
   },
   "topk_archetype_counts": {
     "C01": 16,
-    "C02": 4,
+    "C02": 3,
     "C03": 5,
-    "C04": 6,
-    "C05": 22,
+    "C04": 4,
+    "C05": 25,
     "C06": 6,
     "C07": 13,
     "C08": 4,
-    "C09": 5,
-    "C10": 42,
-    "C11": 20,
+    "C09": 6,
+    "C10": 47,
+    "C11": 24,
     "C12": 8,
-    "C13": 6,
+    "C13": 5,
     "C14": 4,
     "C15": 12,
-    "C16": 11,
-    "C17": 6,
-    "C18": 11,
-    "C19": 5,
-    "C20": 7,
+    "C16": 18,
+    "C17": 7,
+    "C18": 12,
+    "C19": 6,
+    "C20": 8,
     "C21": 3,
     "C22": 3,
-    "C23": 7,
-    "C24": 6,
+    "C23": 6,
+    "C24": 4,
     "C25": 12,
     "C26": 3,
     "C27": 3,
     "C28": 3,
-    "C29": 10,
+    "C29": 11,
     "C30": 3,
-    "C31": 29,
-    "C32": 5,
-    "R13": 18
+    "C31": 35,
+    "C32": 4,
+    "R13": 34
   }
 }

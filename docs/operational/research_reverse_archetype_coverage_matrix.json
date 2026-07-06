@@ -156,23 +156,23 @@
         "4B": 32,
         "4C": 352,
         "guard": 8,
-        "positive": 1
+        "positive": 2
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 393,
+      "record_count": 394,
       "source_gap": false,
       "source_proxy_only_case_count": 177,
       "source_quality_counts": {
         "A2_URL_BACKED": 108,
         "EVIDENCE_URL_PENDING": 8,
         "PRICE_PATH_ONLY": 74,
-        "SHADOW_ONLY": 26,
+        "SHADOW_ONLY": 27,
         "SOURCE_PROXY_ONLY": 177
       },
       "top_missing_primitives": [
-        "margin_bridge_visible",
         "contract_amount_to_prior_sales",
+        "margin_bridge_visible",
         "contract_duration_months",
         "cost_overrun",
         "delivery_schedule"
@@ -341,12 +341,12 @@
       "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
       "case_role_counts": {
         "4B": 14,
-        "4C": 354,
+        "4C": 355,
         "guard": 17
       },
       "evidence_url_pending_case_count": 2,
       "has_pattern_summary": true,
-      "record_count": 385,
+      "record_count": 386,
       "source_gap": false,
       "source_proxy_only_case_count": 206,
       "source_quality_counts": {
@@ -354,7 +354,7 @@
         "A2_URL_BACKED": 115,
         "EVIDENCE_URL_PENDING": 2,
         "PRICE_PATH_ONLY": 39,
-        "SHADOW_ONLY": 22,
+        "SHADOW_ONLY": 23,
         "SOURCE_PROXY_ONLY": 206
       },
       "top_missing_primitives": [
@@ -527,21 +527,21 @@
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "case_role_counts": {
         "4B": 47,
-        "4C": 304,
+        "4C": 305,
         "guard": 3,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 356,
+      "record_count": 357,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 98,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 82,
-        "SHADOW_ONLY": 15,
+        "SHADOW_ONLY": 16,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
@@ -599,21 +599,21 @@
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
       "case_role_counts": {
         "4B": 44,
-        "4C": 278,
+        "4C": 279,
         "guard": 3,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 10,
       "has_pattern_summary": true,
-      "record_count": 327,
+      "record_count": 328,
       "source_gap": false,
       "source_proxy_only_case_count": 160,
       "source_quality_counts": {
         "A2_URL_BACKED": 69,
         "EVIDENCE_URL_PENDING": 10,
         "PRICE_PATH_ONLY": 75,
-        "SHADOW_ONLY": 13,
+        "SHADOW_ONLY": 14,
         "SOURCE_PROXY_ONLY": 160
       },
       "top_missing_primitives": [
@@ -636,14 +636,14 @@
       "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
       "case_role_counts": {
         "4B": 35,
-        "4C": 261,
+        "4C": 262,
         "guard": 3,
         "positive": 1,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 301,
+      "record_count": 302,
       "source_gap": false,
       "source_proxy_only_case_count": 126,
       "source_quality_counts": {
@@ -651,7 +651,7 @@
         "A2_URL_BACKED": 89,
         "EVIDENCE_URL_PENDING": 8,
         "PRICE_PATH_ONLY": 67,
-        "SHADOW_ONLY": 10,
+        "SHADOW_ONLY": 11,
         "SOURCE_PROXY_ONLY": 126
       },
       "top_missing_primitives": [

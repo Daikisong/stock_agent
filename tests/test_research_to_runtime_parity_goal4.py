@@ -29,18 +29,35 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         self.assertEqual(self.audit["missing_registry_archetype_ids"], [])
 
     def test_score_path_pass_is_split_from_meaningful_full_thesis_pass(self) -> None:
-        self.assertFalse(self.audit["production_full_e2r_score_path_pass"])
+        self.assertTrue(self.audit["production_full_e2r_score_path_pass"])
         self.assertFalse(self.audit["meaningful_full_thesis_evidence_pass"])
         self.assertFalse(self.audit["green_ready_full_thesis_pass"])
-        self.assertFalse(self.audit["archetype_balanced_full_thesis_pass"])
-        self.assertIn("PRODUCTION_FULL_E2R_SCORE_PATH_PENDING", self.audit["completion_labels"])
+        self.assertTrue(self.audit["archetype_balanced_full_thesis_pass"])
+        self.assertIn("PRODUCTION_FULL_E2R_SCORE_PATH_PASS", self.audit["completion_labels"])
         self.assertIn("MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE", self.audit["completion_labels"])
+        self.assertIn("PRODUCTION_SCORE_PATH_IS_NOT_MEANINGFUL_FULL_THESIS_PASS", self.audit["blockers"])
         self.assertIn("REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROWS", self.audit["blockers"])
         self.assertIn("GREEN_GAP_ON_PROMOTED_ROWS", self.audit["blockers"])
 
     def test_partial_full_thesis_rows_do_not_satisfy_runtime_parity(self) -> None:
-        self.assertEqual(self.audit["full_thesis_row_count"], 4)
-        self.assertEqual(self.audit["distinct_full_thesis_archetype_count"], 4)
+        self.assertEqual(self.audit["full_thesis_row_count"], 7)
+        self.assertEqual(self.audit["distinct_full_thesis_archetype_count"], 7)
+        self.assertEqual(
+            self.audit["full_thesis_candidate_attempts_by_archetype"],
+            {
+                "C01_ORDER_BACKLOG_MARGIN_BRIDGE": 3,
+                "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 2,
+                "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 3,
+                "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 3,
+                "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": 1,
+                "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": 1,
+                "C15_MATERIAL_SPREAD_SUPERCYCLE": 2,
+                "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": 2,
+                "C18_CONSUMER_EXPORT_CHANNEL_REORDER": 1,
+                "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": 1,
+                "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": 3,
+            },
+        )
         self.assertEqual(
             self.audit["full_thesis_by_archetype"],
             {
@@ -48,9 +65,12 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
                 "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 1,
                 "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 1,
                 "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 1,
+                "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": 1,
+                "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": 1,
+                "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": 1,
             },
         )
-        self.assertEqual(self.audit["c05_full_thesis_share"], 0.25)
+        self.assertEqual(self.audit["c05_full_thesis_share"], 0.142857)
         self.assertEqual(self.audit["required_positive_missing_full_thesis_row_rate"], 1.0)
         self.assertEqual(self.audit["green_gap_full_thesis_row_rate"], 1.0)
         self.assertNotIn("C05_FULL_THESIS_MONOCULTURE", self.audit["blockers"])
@@ -65,7 +85,11 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
 
     def test_mandatory_canaries_are_not_misreported_as_production_full_thesis(self) -> None:
         self.assertEqual(self.audit["mandatory_archetype_attempt_count"], 6)
-        self.assertEqual(self.audit["mandatory_archetype_full_thesis_count"], 1)
+        self.assertEqual(self.audit["mandatory_archetype_full_thesis_count"], 4)
+        self.assertEqual(
+            self.audit["mandatory_archetype_full_thesis_missing"],
+            ["C15_MATERIAL_SPREAD_SUPERCYCLE", "C24_BIO_TRIAL_DATA_EVENT_RISK"],
+        )
 
         c06 = self.by_prefix["C06"]
         self.assertEqual(c06["source_route_status"], "FULL_THESIS_SCORE_PATH_CLOSED")
@@ -77,22 +101,31 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         self.assertIn("REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROW", c06["blocker_classes"])
         self.assertIn("GREEN_GAP_ON_PROMOTED_ROW", c06["blocker_classes"])
 
-        for prefix in ("C08", "C15", "C24", "C28"):
+        for prefix in ("C08", "C28"):
             row = self.by_prefix[prefix]
-            self.assertEqual(row["runtime_full_thesis_row_count"], 0, prefix)
-            self.assertEqual(row["runtime_parity_status"], "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM", prefix)
+            self.assertEqual(row["runtime_full_thesis_row_count"], 1, prefix)
+            self.assertEqual(row["runtime_parity_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_ONLY", prefix)
             self.assertGreater(row["runtime_source_task_execution_count"], 0, prefix)
-            self.assertEqual(row["targetless_source_task_execution_count"], 0, prefix)
-            self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", row["blocker_classes"])
-            self.assertIn("PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM", row["blocker_classes"])
-            self.assertNotIn("TARGET_MATERIALIZATION_REQUIRED", row["blocker_classes"])
+            self.assertIn("REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROW", row["blocker_classes"])
+            self.assertIn("GREEN_GAP_ON_PROMOTED_ROW", row["blocker_classes"])
+
+        c15 = self.by_prefix["C15"]
+        self.assertEqual(c15["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c15["runtime_parity_status"], "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP")
+        self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", c15["blocker_classes"])
+        self.assertIn("FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP", c15["blocker_classes"])
+
+        c24 = self.by_prefix["C24"]
+        self.assertEqual(c24["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c24["runtime_parity_status"], "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM")
+        self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", c24["blocker_classes"])
+        self.assertIn("PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM", c24["blocker_classes"])
 
         c17 = self.by_prefix["C17"]
-        self.assertEqual(c17["runtime_full_thesis_row_count"], 0)
-        self.assertEqual(c17["runtime_parity_status"], "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM")
-        self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", c17["blocker_classes"])
-        self.assertIn("PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM", c17["blocker_classes"])
-        self.assertNotIn("TARGET_MATERIALIZATION_REQUIRED", c17["blocker_classes"])
+        self.assertEqual(c17["runtime_full_thesis_row_count"], 1)
+        self.assertEqual(c17["runtime_parity_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_ONLY")
+        self.assertIn("REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROW", c17["blocker_classes"])
+        self.assertIn("GREEN_GAP_ON_PROMOTED_ROW", c17["blocker_classes"])
 
     def test_split_label_v2_audit_is_written_and_matches_matrix(self) -> None:
         matrix = json.loads(
@@ -110,7 +143,7 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         )
 
         self.assertEqual(matrix["final_status"], "MEANINGFUL_RUNTIME_PARITY_NOT_READY")
-        self.assertEqual(v2["score_path_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_PENDING")
+        self.assertEqual(v2["score_path_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_PASS")
         self.assertEqual(v2["meaningful_evidence_status"], "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE")
         self.assertEqual(v2["distinct_full_thesis_archetype_count"], matrix["distinct_full_thesis_archetype_count"])
         self.assertEqual(v2["required_positive_missing_full_thesis_row_count"], matrix["full_thesis_row_count"])
@@ -145,8 +178,8 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
 
         self.assertEqual(audit["status"], "BALANCED_FULL_THESIS_SELECTION_NOT_READY")
         self.assertFalse(audit["meaningful_pass_allowed"])
-        self.assertEqual(selected_prefixes[:5], ["C08", "C15", "C17", "C24", "C28"])
-        self.assertIn(selected_prefixes[5], {"C22", "R13"})
+        self.assertEqual(selected_prefixes[:2], ["C15", "C24"])
+        self.assertTrue({"C02", "C04", "C07"}.issubset(set(selected_prefixes[2:6])))
         self.assertIn("required_positive_missing_promoted_rows", audit["blockers"])
 
     def test_planner_bias_audit_catches_c05_routing_concentration(self) -> None:

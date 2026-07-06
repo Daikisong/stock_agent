@@ -32,7 +32,7 @@ class ResearchToRuntimeReplayMandatoryArchetypesTests(unittest.TestCase):
                 prefix,
             )
             self.assertFalse(row["production_score_evidence_allowed"], prefix)
-            if prefix == "C06":
+            if prefix in {"C06", "C08", "C17", "C28"}:
                 self.assertEqual(row["runtime_full_thesis_row_count"], 1, prefix)
             else:
                 self.assertEqual(row["runtime_full_thesis_row_count"], 0, prefix)

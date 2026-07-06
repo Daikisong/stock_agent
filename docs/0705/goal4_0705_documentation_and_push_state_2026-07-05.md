@@ -4,6 +4,14 @@
 
 이 문서는 2026-07-05 Goal4 작업의 이전 push 상태를 고정한 역사 기록이다.
 
+2026-07-07 추가 최신화:
+
+```text
+이 문서의 아래쪽 과거 스냅샷 수치는 후속 parity 재생성으로 바뀌었다.
+현재 canonical 최신 상태는 docs/0705/goal4_score_path_split_final_handoff_2026-07-05.md와
+docs/operational/research_to_runtime_acceptance_report.md를 기준으로 본다.
+```
+
 최신 materialized runtime attempt 감사는 아래 문서를 기준으로 본다.
 
 - `docs/0705/goal4_materialized_runtime_attempt_final_audit_2026-07-05.md`
@@ -90,31 +98,31 @@ docs/operational/research_memory_followup_task_audit.json
 final_status = MEANINGFUL_RUNTIME_PARITY_NOT_READY
 production_full_e2r_score_path_pass = true
 meaningful_full_thesis_evidence_pass = false
-archetype_balanced_full_thesis_pass = false
+archetype_balanced_full_thesis_pass = true
 green_ready_full_thesis_pass = false
 
-full_thesis_row_count = 3
-full_thesis_by_archetype = C05 2개, C06 1개
-distinct_full_thesis_archetype_count = 2
-c05_full_thesis_share = 66.6667%
+full_thesis_row_count = 7
+full_thesis_by_archetype = C01 1개, C03 1개, C05 1개, C06 1개, C08 1개, C17 1개, C28 1개
+distinct_full_thesis_archetype_count = 7
+c05_full_thesis_share = 14.2857%
 
-required_positive_missing_full_thesis_row_count = 3
-green_gap_full_thesis_row_count = 3
+required_positive_missing_full_thesis_row_count = 7
+green_gap_full_thesis_row_count = 7
 ```
 
 해석:
 
 ```text
 점수 계산 경로가 완전히 막힌 상태는 아니다.
-하지만 full thesis row 3개 전부 required-positive gap과 green gap이 남아 있다.
+하지만 full thesis row 7개 전부 required-positive gap과 green gap이 남아 있다.
 따라서 운영 의미의 Green/Yellow thesis 확정으로 쓰면 안 된다.
 ```
 
 쉬운 예:
 
 ```text
-C05 2개와 C06 1개는 시험 답안지 형식으로는 제출됐다.
-그런데 세 답안지 모두 필수 증빙 서류가 빠져 있다.
+C01/C03/C05/C06/C08/C17/C28 7개는 시험 답안지 형식으로 제출됐다.
+그런데 7개 답안지 모두 필수 증빙 서류가 빠져 있다.
 그래서 "제출함"은 true지만 "합격 답안"은 false다.
 ```
 
@@ -132,19 +140,21 @@ R13 cross-archetype = 4개
 
 ```text
 runtime_attempt_status:
-  SOURCE_TASK_EXECUTED = 25
-  PLANNER_ATTEMPTED_ONLY = 8
-  PRODUCTION_FULL_THESIS_ATTEMPTED = 2
-  REPLAY_READY_NOT_RUNTIME_ATTEMPTED = 1
+  ARCHETYPE_DISCOVERY_TARGET_MATERIALIZATION_REQUIRED = 3
+  PRODUCTION_CANDIDATE_BLOCKED = 4
+  PRODUCTION_FULL_THESIS_ATTEMPTED = 7
+  SOURCE_TASK_EXECUTED = 22
 
 accepted_claim_status:
-  NO_ACCEPTED_CLAIM = 29
-  PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS = 2
-  REPLAY_ACCEPTED_CLAIM_ONLY = 5
+  ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED = 6
+  NO_ACCEPTED_CLAIM = 22
+  PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS = 7
+  REPLAY_ACCEPTED_CLAIM_ONLY = 1
 
 full_thesis_status:
-  NO_PRODUCTION_FULL_THESIS_ROW = 34
-  SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS = 2
+  FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP = 4
+  NO_PRODUCTION_FULL_THESIS_ROW = 25
+  SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS = 7
 ```
 
 해석:
@@ -158,28 +168,30 @@ full_thesis_status:
 쉬운 예:
 
 ```text
-36개 과목 중 25개는 시험장까지는 갔다.
-하지만 29개 과목은 채점 가능한 답안 근거가 아직 없다.
+36개 과목 중 7개는 score path 답안지까지 갔다.
+하지만 7개 모두 필수 증빙칸이 비어 있고 25개는 production full-thesis row가 없다.
 그래서 전체 졸업 심사는 아직 불가다.
 ```
 
 ## 삼성전자와 하이닉스 해석
 
-삼성전자/하이닉스 controlled smoke 결과는 production full-thesis row가 아니다.
+삼성전자/하이닉스는 controlled smoke와 production row를 분리해서 읽어야 한다.
 
 ```text
 controlled smoke = 특정 종목을 손으로 넣고 파이프라인 반응을 보는 진단
 production row = Census/Research Brain 운영 경로에서 source-backed claim과 StageCourt trace로 승격된 row
 ```
 
-따라서 smoke에서 나온 점수나 Stage를 production 결과처럼 말하면 안 된다.
+현재 최신 matrix에서는 삼성전자 005930이 C06 production score-path row로 올라왔다.
+다만 required-positive / Green gap이 남아 있어 meaningful full thesis pass는 아니다.
+하이닉스 controlled smoke 결과는 여전히 production full-thesis row로 취급하지 않는다.
 
 쉬운 예:
 
 ```text
-자동차 정비소에서 리프트 위에 올려 본 테스트 주행과
-실제 도로 주행 검사는 다르다.
-smoke는 리프트 테스트이고, production row는 도로 주행 기록이다.
+삼성전자 production row는 실제 시험장 답안지다.
+하지만 필수 첨부서류가 빠져 있어 합격 답안은 아니다.
+하이닉스 smoke는 모의고사라서 실제 시험장 답안지로 세면 안 된다.
 ```
 
 ## 지금 고쳐진 것
@@ -208,8 +220,8 @@ smoke는 리프트 테스트이고, production row는 도로 주행 기록이다
 다음 Goal4 진행은 아래를 목표로 해야 한다.
 
 ```text
-1. C05 편중을 줄이고 최소 3개 이상 아키타입의 meaningful full thesis row 확보
-2. C06/C08/C15/C17/C24/C28 mandatory canary에서 source-backed claim 또는 명시적 external source blocker 확보
+1. score path가 생긴 7개 아키타입의 required-positive/Green gap을 source-backed claim으로 닫기
+2. mandatory canary 중 아직 full-thesis row가 없는 C15/C24를 source-backed row 또는 명시적 external source blocker로 닫기
 3. required-positive gap과 green gap이 남은 row를 PASS로 부르지 않기
 4. planner/source task는 갔지만 accepted claim이 없는 아키타입을 source route/claim extractor 관점에서 재수리
 5. controlled smoke와 production row를 계속 분리

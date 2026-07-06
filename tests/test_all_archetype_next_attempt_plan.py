@@ -89,8 +89,8 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
     def test_attempt_types_reflect_current_runtime_failure_modes(self) -> None:
         self.assertEqual(self.by_prefix["C05"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
         self.assertEqual(self.by_prefix["C06"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
-        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
+        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE")
         self.assertEqual(self.by_prefix["C24"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
 
     def test_replay_only_archetypes_are_materialized_as_research_memory_target_candidates(self) -> None:
@@ -141,7 +141,7 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
     def test_previous_claim_failure_feedback_is_carried_into_next_source_tasks(self) -> None:
         self.assertGreater(self.plan["source_route_repair_task_count"], 0)
         self.assertIn(
-            "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+            "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
             self.plan["source_route_repair_hint_counts"],
         )
         self.assertIn(
@@ -149,64 +149,72 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             self.plan["source_route_repair_hint_counts"],
         )
 
-        c08_row = self.by_prefix["C08"]
-        self.assertEqual(
-            c08_row["previous_claim_failure_primary_mode"],
-            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+        redteam_row = next(
+            row
+            for row in self.plan["plan_rows"]
+            if row["archetype_id"] == "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM"
         )
         self.assertEqual(
-            c08_row["previous_claim_failure_repair_hint"],
-            "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+            redteam_row["previous_claim_failure_primary_mode"],
+            "TARGET_SCOPE_NOT_DIRECT",
+        )
+        self.assertEqual(
+            redteam_row["previous_claim_failure_repair_hint"],
+            "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
         )
         self.assertIn(
-            "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_OR_SECTION_ROUTE",
-            c08_row["source_route_repair_actions"],
+            "ASK_LLM_FOR_DIRECT_TARGET_COMPANY_SOURCE",
+            redteam_row["source_route_repair_actions"],
         )
 
-        c08_task = next(
-            task for task in self.plan["source_tasks"] if task["archetype_id"].startswith("C08_")
+        redteam_task = next(
+            task
+            for task in self.plan["source_tasks"]
+            if task["archetype_id"] == "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM"
         )
-        self.assertTrue(c08_task["source_route_repair_required"])
+        self.assertTrue(redteam_task["source_route_repair_required"])
         self.assertIn(
-            "generic disclosure cover/profile",
-            " ".join(c08_task["query_intents"]),
+            "direct target-company scope",
+            " ".join(redteam_task["query_intents"]),
         )
         self.assertEqual(
-            c08_task["planner_failure_feedback"]["previous_claim_failure_primary_mode"],
-            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            redteam_task["planner_failure_feedback"]["previous_claim_failure_primary_mode"],
+            "TARGET_SCOPE_NOT_DIRECT",
         )
         self.assertFalse(
-            c08_task["planner_failure_feedback"]["score_evidence_allowed_from_previous_rejected_claims"]
+            redteam_task["planner_failure_feedback"]["score_evidence_allowed_from_previous_rejected_claims"]
         )
 
     def test_signal_family_mismatch_feedback_reaches_seed_payload(self) -> None:
-        c24_task = next(
-            task for task in self.plan["source_tasks"] if task["archetype_id"].startswith("C24_")
+        mismatch_task = next(
+            task
+            for task in self.plan["source_tasks"]
+            if task["archetype_id"] == "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW"
         )
         self.assertEqual(
-            c24_task["previous_claim_failure_primary_mode"],
+            mismatch_task["previous_claim_failure_primary_mode"],
             "ROUTE_SIGNAL_FAMILY_MISMATCH",
         )
         self.assertIn(
             "ASK_LLM_TO_MATCH_SOURCE_FAMILY_TO_PRIMITIVE_FAMILY",
-            c24_task["source_route_repair_actions"],
+            mismatch_task["source_route_repair_actions"],
         )
         self.assertIn(
             "source task must match the primitive family",
-            " ".join(c24_task["query_intents"]),
+            " ".join(mismatch_task["query_intents"]),
         )
 
-        c24_seed = next(
+        mismatch_seed = next(
             event
             for event in self.plan["seed_events"]
-            if event["target_archetype"].startswith("C24_")
+            if event["target_archetype"] == "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW"
         )
-        self.assertIn("ROUTE_SIGNAL_FAMILY_MISMATCH", c24_seed["raw_reason_codes"])
+        self.assertIn("ROUTE_SIGNAL_FAMILY_MISMATCH", mismatch_seed["raw_reason_codes"])
         self.assertEqual(
-            c24_seed["structured_payload"]["previous_claim_failure_repair_hint"],
+            mismatch_seed["structured_payload"]["previous_claim_failure_repair_hint"],
             "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
         )
-        self.assertTrue(c24_seed["structured_payload"]["source_route_repair_required"])
+        self.assertTrue(mismatch_seed["structured_payload"]["source_route_repair_required"])
 
 
 if __name__ == "__main__":

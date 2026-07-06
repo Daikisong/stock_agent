@@ -2,6 +2,22 @@
 
 이 문서는 `docs/core/goal4.md` 진행 상태를 2026-07-05 기준으로 고정한 작업 장부다.
 
+2026-07-07 최신화 안내:
+
+```text
+이 문서 본문에는 중간 스냅샷 수치가 남아 있다.
+최신 canonical 판정은 docs/0705/goal4_score_path_split_final_handoff_2026-07-05.md를 우선한다.
+
+최신 상태:
+  PRODUCTION_FULL_E2R_SCORE_PATH_PASS = true
+  MEANINGFUL_FULL_THESIS_EVIDENCE_PASS = false
+  full_thesis_row_count = 7
+  promoted archetypes = C01, C03, C05, C06, C08, C17, C28
+  required_positive_missing_full_thesis_row_count = 7
+  green_gap_full_thesis_row_count = 7
+  C15/C24 mandatory full-thesis row = missing
+```
+
 후속 실행 감사:
 
 - `docs/0705/goal4_manifest_runtime_attempt_patch_audit_2026-07-05.md`

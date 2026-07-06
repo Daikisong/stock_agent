@@ -515,6 +515,11 @@ def build_research_to_runtime_parity_audit(
         for row in rows
         if row["runtime_full_thesis_row_count"]
     }
+    full_thesis_candidate_attempts_by_arch = {
+        row["archetype_id"]: row["runtime_candidate_attempt_count"]
+        for row in rows
+        if row["runtime_candidate_attempt_count"]
+    }
     distinct_full_thesis_archetype_count = len(full_thesis_by_arch)
     attempted_archetype_ids = [row["archetype_id"] for row in rows if row["source_route_status"] != "RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED" and row["source_route_status"] != "NOT_ATTEMPTED"]
     mandatory_attempted = [row["archetype_id"] for row in rows if row["mandatory_archetype"] and row["source_route_status"] not in {"RESEARCH_REPLAY_ONLY_NOT_RUNTIME_ATTEMPTED", "NOT_ATTEMPTED"}]
@@ -526,7 +531,11 @@ def build_research_to_runtime_parity_audit(
     c05_full_thesis_share = (c05_full_thesis_count / full_thesis_row_count) if full_thesis_row_count else 0.0
 
     production_audit = _read_json(docs_path / "census_mode_v4_full_thesis_production_audit.json")
-    production_score_path_pass = bool(production_audit.get("production_pass_allowed")) and full_thesis_row_count > 0
+    production_score_path_pass = (
+        full_thesis_row_count > 0
+        and target_unknown_promoted_count == 0
+        and source_primary_context_promoted_count == 0
+    )
     meaningful_pass = (
         production_score_path_pass
         and distinct_full_thesis_archetype_count >= 3
@@ -592,7 +601,10 @@ def build_research_to_runtime_parity_audit(
         "distinct_runtime_attempted_archetype_count": len(set(attempted_archetype_ids)),
         "distinct_full_thesis_archetype_count": distinct_full_thesis_archetype_count,
         "full_thesis_row_count": full_thesis_row_count,
+        "full_thesis_candidate_attempts_by_archetype": full_thesis_candidate_attempts_by_arch,
         "full_thesis_by_archetype": full_thesis_by_arch,
+        "full_thesis_production_audit_verdict": production_audit.get("verdict"),
+        "full_thesis_production_audit_pass_allowed": production_audit.get("production_pass_allowed"),
         "c05_full_thesis_row_count": c05_full_thesis_count,
         "c05_full_thesis_share": round(c05_full_thesis_share, 6),
         "required_positive_missing_full_thesis_row_count": required_positive_missing_rows,
@@ -678,9 +690,9 @@ def render_research_to_runtime_parity_markdown(audit: Mapping[str, Any]) -> str:
             "",
             "## Operator Reading",
             "",
-            "`PRODUCTION_FULL_E2R_SCORE_PATH_PASS`는 점수 경로가 닫혔다는 뜻이다. 하지만 현재는 그 행이 전부 C05이고 required-positive/Green gap이 남아 있으므로 `MEANINGFUL_FULL_THESIS_EVIDENCE_PASS`가 아니다.",
+            "`PRODUCTION_FULL_E2R_SCORE_PATH_PASS`는 점수 경로가 닫혔다는 뜻이다. 하지만 현재 promoted 행은 모두 required-positive/Green gap이 남아 있으므로 `MEANINGFUL_FULL_THESIS_EVIDENCE_PASS`가 아니다.",
             "",
-            "삼성전자/하이닉스 같은 C06 사례는 controlled smoke 또는 blocked/source-pending 경로로만 확인됐다. 따라서 smoke 점수를 production 점수처럼 쓰면 안 된다.",
+            "C06 삼성전자 row처럼 production score path까지 올라온 사례도 smoke 점수와 섞으면 안 된다. production row는 production source-backed claim/gap 장부로 읽고, controlled smoke는 별도 진단으로만 읽는다.",
             "",
         ]
     )
@@ -696,7 +708,7 @@ def render_research_to_runtime_root_cause_markdown(audit: Mapping[str, Any]) -> 
         "",
         "`FULL_THESIS_PRODUCTION_PASS`라는 예전 라벨은 너무 넓었다. 현재 정확한 라벨은 `PRODUCTION_FULL_E2R_SCORE_PATH_PASS`이고, `MEANINGFUL_FULL_THESIS_EVIDENCE_PASS=false`다.",
         "",
-        "쉬운 예: 시험지가 100점 만점으로 채점되긴 했지만, 한 과목(C05) 시험지만 10장 채점된 상태다. 전체 과목 시험이 끝난 것이 아니다.",
+        "쉬운 예: 예전에는 한 과목(C05) 시험지만 10장 채점된 상태였고, 현재는 7개 과목의 시험지가 채점대에 올라왔다. 하지만 7개 모두 필수 증빙칸이 비어 있어 전체 과목 합격은 아니다.",
         "",
         "## Current Facts",
         "",
@@ -711,22 +723,22 @@ def render_research_to_runtime_root_cause_markdown(audit: Mapping[str, Any]) -> 
         "",
         "## Six Audit Questions",
         "",
-        "1. 왜 production FULL_THESIS 10개가 전부 C05인가?",
-        "   - seed target은 UNKNOWN이었고, source_primary/planner top1 경로가 C05로 쏠렸다.",
+        "1. 왜 예전 production FULL_THESIS 10개가 전부 C05였고, 현재는 어떻게 바뀌었나?",
+        "   - 예전 seed target은 UNKNOWN이었고 source_primary/planner top1 경로가 C05로 쏠렸다. 현재 promoted row는 C01/C03/C05/C06/C08/C17/C28 7개 아키타입으로 분산됐다.",
         "2. target_archetype_counts가 UNKNOWN인데 왜 C05가 되는가?",
-        "   - target이 아니라 event-board/refresh queue의 source_primary 문맥과 planner top1이 최종 primary가 됐다.",
+        "   - 예전에는 target이 아니라 event-board/refresh queue의 source_primary 문맥과 planner top1이 최종 primary가 됐다. 현재 promoted row의 target_archetype_unknown_promoted_count는 0이다.",
         "3. 27.9998 / 77.9998 점수는 어디서 나오는가?",
         "   - C05 weight profile에 raw component를 clamp 후 재가중한 FULL_E2R_100 score path에서 나온다.",
         "4. C05가 아닌 후보는 왜 0개인가?",
-        "   - C06/C01 일부는 source pending으로 막혔고, C08/C15/C17/C24/C28 등은 이번 production full-thesis 후보 경로에 올라오지 않았다.",
+        "   - 이 질문은 예전 C05-only 산출물에 대한 질문이다. 현재는 C01/C03/C06/C08/C17/C28 non-C05 score-path row가 생겼고, C15/C24는 아직 mandatory full-thesis missing이다.",
         "5. required_positive_missing_primitives가 있는데 왜 pass인가?",
         "   - 기존 pass는 score path closed만 봤기 때문이다. meaningful pass는 required-positive gap을 허용하면 안 된다.",
         "6. 삼성전자/하이닉스는 왜 production row가 아닌가?",
-        "   - 삼성전자는 C06 blocked candidate이고, 하이닉스는 planner C06 시도 후 accepted claim이 만들어지지 않았다. controlled smoke 점수는 production 점수가 아니다.",
+        "   - 현재 삼성전자 005930은 C06 production score-path row가 생겼지만 required-positive/Green gap 때문에 meaningful pass가 아니다. 하이닉스 controlled smoke는 여전히 production full-thesis row와 분리해서 본다.",
         "",
         "## Required Direction",
         "",
-        "C05 하나가 아니라 C01~C36 각 아키타입에 대해 attempt, source route, accepted claim, StageCourt, full-thesis 상태를 계속 이 matrix로 증명해야 한다.",
+        "C05 하나가 아니라 C01~C32와 R13 cross-archetype 4개, 총 36개 contract에 대해 attempt, source route, accepted claim, StageCourt, full-thesis 상태를 계속 이 matrix로 증명해야 한다.",
         "",
     ]
     return "\n".join(lines)
@@ -746,6 +758,28 @@ def render_research_to_runtime_acceptance_report(
     execution_manifest: Mapping[str, Any],
 ) -> str:
     quality = research_inventory.get("source_quality_counts", {})
+    c06_rows = [
+        row
+        for row in parity_audit.get("rows", [])
+        if str(row.get("archetype_id", "")).startswith("C06_")
+    ]
+    c06_full_thesis_symbols = sorted(
+        {
+            symbol
+            for row in c06_rows
+            for symbol in row.get("full_thesis_symbols", [])
+        }
+    )
+    c06_gap_summary = ", ".join(
+        sorted(
+            {
+                blocker
+                for row in c06_rows
+                for blocker in row.get("blocker_classes", [])
+                if blocker
+            }
+        )
+    ) or "none"
     lines = [
         "# Research To Runtime Acceptance Report - 2026-07-05",
         "",
@@ -756,7 +790,7 @@ def render_research_to_runtime_acceptance_report(
         f"- meaningful_full_thesis_evidence_pass: `{parity_audit['meaningful_full_thesis_evidence_pass']}`",
         f"- archetype_balanced_full_thesis_pass: `{parity_audit['archetype_balanced_full_thesis_pass']}`",
         "",
-        "쉬운 예: 지금은 전체 수술이 끝난 게 아니라, C05 과목 시험지만 10장 채점된 상태다. 연구 기억과 source route 장부는 생겼지만 balanced production rerun은 아직 통과하지 않았다.",
+        "쉬운 예: 이제 C05 한 과목만 채점된 상태는 벗어났고 7개 과목의 score path는 닫혔다. 하지만 7개 모두 필수 증빙칸과 Green 증빙칸이 비어 있어 최종 합격증은 아직 아니다.",
         "",
         "## Required Metrics",
         "",
@@ -767,7 +801,7 @@ def render_research_to_runtime_acceptance_report(
         f"- archetype memory card count: `{memory_cards.get('card_count')}`",
         f"- source route pattern count: `{source_routes.get('pattern_count')}`",
         f"- source route gap task count: `{source_routes.get('gap_task_count')}`",
-        f"- full-thesis candidate attempts by archetype: `{json.dumps(parity_audit.get('full_thesis_by_archetype', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- full-thesis candidate attempts by archetype: `{json.dumps(parity_audit.get('full_thesis_candidate_attempts_by_archetype', {}), ensure_ascii=False, sort_keys=True)}`",
         f"- promoted full-thesis rows by archetype: `{json.dumps(parity_audit.get('full_thesis_by_archetype', {}), ensure_ascii=False, sort_keys=True)}`",
         f"- required positive missing rate: `{parity_audit.get('required_positive_missing_full_thesis_row_rate')}`",
         f"- green gap rate: `{parity_audit.get('green_gap_full_thesis_row_rate')}`",
@@ -797,7 +831,12 @@ def render_research_to_runtime_acceptance_report(
         "",
         "## Production Vs Smoke",
         "",
-        "삼성전자/하이닉스 C06 controlled smoke는 production full-thesis row가 아니다. 현재 C06 production 상태는 삼성전자 blocked candidate, 하이닉스 planner attempt/no accepted full-thesis closure로 남아 있다.",
+        f"C06 production score-path symbols: `{', '.join(c06_full_thesis_symbols) if c06_full_thesis_symbols else 'none'}`",
+        f"C06 remaining production blockers: `{c06_gap_summary}`",
+        "",
+        "삼성전자처럼 production score path까지 올라온 row도 controlled smoke와 섞으면 안 된다. production row는 source-backed claim/gap 장부 기준으로 읽고, smoke 점수는 파이프라인 반응을 보는 진단값으로만 본다.",
+        "",
+        "쉬운 예: 삼성전자 production row는 실제 시험장 답안지이고, controlled smoke는 모의고사 답안지다. 실제 답안지가 있어도 필수 첨부서류가 빠졌으면 합격이 아니고, 모의고사 점수로 합격 처리하면 안 된다.",
         "",
         "## Blockers",
         "",
@@ -829,7 +868,7 @@ def render_research_to_runtime_readiness_verdict(
             f"- planner_bias_status: `{planner_bias.get('status')}`",
             f"- meaningful_ready: `{parity_audit.get('meaningful_full_thesis_evidence_pass')}`",
             "",
-            "현재 상태는 implementation/audit progress이지 goal4 complete가 아니다. C05-only production score path는 확인됐지만, C01~C36 runtime parity와 balanced meaningful full thesis는 아직 통과하지 않았다.",
+            "현재 상태는 implementation/audit progress이지 goal4 complete가 아니다. C05-only 편중은 완화됐지만, C01~C36 runtime parity와 meaningful full thesis는 아직 required-positive/Green gap 때문에 통과하지 않았다.",
             "",
         ]
     )
@@ -865,6 +904,7 @@ def build_meaningful_full_thesis_acceptance_audit(
         hard_fails.append("balanced_candidate_selection_not_pass")
 
     meaningful_pass = not hard_fails
+    archetype_balanced_pass = bool(parity_audit.get("archetype_balanced_full_thesis_pass"))
     return {
         "schema_version": "e2r_meaningful_full_thesis_production_acceptance_v1",
         "score_path_status": "PRODUCTION_FULL_E2R_SCORE_PATH_PASS"
@@ -874,8 +914,9 @@ def build_meaningful_full_thesis_acceptance_audit(
         if meaningful_pass
         else "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE",
         "archetype_balanced_status": "ARCHETYPE_BALANCED_FULL_THESIS_PASS"
-        if meaningful_pass
+        if archetype_balanced_pass
         else "ARCHETYPE_BALANCED_FULL_THESIS_PASS_FALSE",
+        "candidate_selection_status": candidate_selection.get("status"),
         "meaningful_pass_allowed": meaningful_pass,
         "hard_fails": hard_fails,
         "distinct_full_thesis_archetype_count": parity_audit.get("distinct_full_thesis_archetype_count"),
