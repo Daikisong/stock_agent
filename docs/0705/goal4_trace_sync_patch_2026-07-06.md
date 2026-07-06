@@ -910,6 +910,573 @@ web_fetched_documents로 승격되지 못한다.
 
 이건 이번 seed identity patch와 별개의 다음 source acquisition 문제다.
 
+## 추가 패치: live PDF body cap 분리
+
+위 smoke에서 남은 핵심 blocker 중 하나는 PDF 원문 fetch가 중간에서 깨지는 문제였다.
+
+관찰:
+
+```text
+web_rejected_documents:
+  live_pdf_text_extraction_failed:pypdf extraction failed: Stream has ended unexpectedly
+```
+
+초기 해석은 "pypdf가 약하다"였지만, 코드를 확인하니 더 앞단 문제가 있었다.
+
+기존 `PageFetcher`:
+
+```text
+모든 live response body를 max_body_bytes=2,000,000 기준으로 읽음
+길면 2MB에서 잘라냄
+PDF도 잘린 bytes를 그대로 PDFTextExtractor에 전달
+```
+
+쉬운 예:
+
+```text
+책을 200쪽까지 읽어야 목차와 끝 인덱스가 맞는데,
+앞 80쪽만 찢어서 PDF 리더에게 넘긴 상태였다.
+그러면 "문서 끝 구조가 없다"는 식의 오류가 날 수 있다.
+```
+
+수정:
+
+```text
+src/e2r/research/page_fetcher.py
+  - max_pdf_body_bytes 기본값 25,000,000 추가
+  - PDF URL 또는 PDF content-type이면 PDF 전용 cap으로 읽음
+  - PDF가 cap을 넘으면 live_fetch_body_too_large:pdf:<cap>로 실패 처리
+  - cap을 넘은 PDF를 잘라서 추출기에 넘기지 않음
+```
+
+중요한 점:
+
+```text
+무제한 fetch가 아니다.
+HTML 일반 cap은 유지한다.
+PDF만 bounded cap을 따로 둔다.
+너무 큰 PDF는 score evidence가 아니라 명시적 source/provider blocker가 된다.
+```
+
+추가 테스트:
+
+```text
+tests/test_web_research_runner.py
+  test_page_fetcher_live_pdf_uses_pdf_body_cap_not_html_body_cap
+  test_page_fetcher_live_pdf_too_large_fails_without_truncated_extraction
+```
+
+검증 내용:
+
+```text
+max_body_bytes=10, max_pdf_body_bytes=200인 경우:
+  90바이트 PDF는 10바이트로 잘리지 않고 전체 payload가 extractor에 전달된다.
+
+max_pdf_body_bytes=20인 경우:
+  90바이트 PDF는 extractor에 전달되지 않고 live_fetch_body_too_large로 실패한다.
+```
+
+실행:
+
+```bash
+PYTHONPATH=src python -m unittest \
+  tests.test_web_research_runner.WebResearchRunnerTests.test_page_fetcher_live_extracts_pdf_text_and_uses_cache \
+  tests.test_web_research_runner.WebResearchRunnerTests.test_page_fetcher_live_pdf_uses_pdf_body_cap_not_html_body_cap \
+  tests.test_web_research_runner.WebResearchRunnerTests.test_page_fetcher_live_pdf_too_large_fails_without_truncated_extraction -v
+```
+
+결과:
+
+```text
+Ran 3 tests
+OK
+```
+
+직접 URL 확인:
+
+```text
+https://stock.pstatic.net/stock-research/industry/2/20250521_industry_331196000.pdf
+  ok=True
+  content_type=application/octet-stream
+  text_len=122295
+
+https://files-scs.pstatic.net/2026/03/06/zTRK9jeXuU/260306(%EA%B8%88)%20Signal%20Report.pdf
+  ok=True
+  content_type=application/pdf
+  text_len=70054
+```
+
+이 두 URL은 이전 smoke에서 `Stream has ended unexpectedly` 계열로 탈락했던 URL과 같은 계열이다.
+
+## 추가 bounded smoke: PDF body cap 확인
+
+패치 후 같은 작은 bounded smoke를 다시 실행했다.
+
+명령 요약:
+
+```text
+output_root:
+output/census_v4/2026-07-06-goal4-pdf-body-cap-bounded-smoke
+
+run_mode: BRAIN_AND_WEB_ACQUISITION_ENABLED
+brain_source_acquisition: live_full_bounded
+brain_universe_limit: 5
+brain_planner_success_limit: 5
+brain_max_distinct_candidate_attempts: 5
+brain_accepted_claim_target: 5
+write_operational_docs: false
+target_gate: full_thesis
+```
+
+결과:
+
+```text
+exit_code: 1
+stdout: NOT_READY
+```
+
+artifact count:
+
+```text
+planner_runs.jsonl: 50
+source_tasks.jsonl: 127
+source_task_executions.jsonl: 127
+web_search_tasks.jsonl: 5
+web_search_results.jsonl: 45
+web_fetched_documents.jsonl: 5
+web_rejected_documents.jsonl: 27
+claim_extractor_runs.jsonl: 5
+accepted_claims.jsonl: 97
+brain_to_claim_trace.jsonl: 14
+stagecourt_traces.jsonl: 96
+```
+
+직전 smoke와 비교:
+
+```text
+이전 seed-company-resolver smoke:
+  web_search_tasks: 5
+  web_fetched_documents: 0
+  claim_extractor_runs: 0
+  web/LLM accepted claims: 0
+
+이번 PDF body cap smoke:
+  web_search_tasks: 5
+  web_fetched_documents: 5
+  claim_extractor_runs: 5
+  web/LLM accepted claims: 1
+```
+
+즉 이전 blocker였던:
+
+```text
+Brain/Web acquisition mode requires fetched full-source web/news documents
+web/LLM accepted claim count is zero
+```
+
+는 작은 smoke 수준에서는 각각 다음 상태까지 전진했다.
+
+```text
+fetched full-source web/news documents: 5
+web/LLM accepted claim count: 1
+```
+
+대표 accepted claim:
+
+```text
+symbol: 005930
+company_name: 삼성전자
+archetype: C06_HBM_MEMORY_CUSTOMER_CAPACITY
+primitive_id: customer_preorder_or_allocation
+source_provider: BrokerReportDomain
+source_url: https://stock.pstatic.net/stock-research/industry/40/20250903_industry_798204000.pdf
+raw_assertion_id: RAWLLM-a1aee2235034cb87a83c
+satisfaction_type: DIRECT_ACCEPTED_CLAIM
+score_eligible: true
+quote:
+  삼성전자는 서버 및 HBM 비중의 점진적 확대로 힘입어 ...
+```
+
+쉬운 예:
+
+```text
+이전:
+  검색은 했지만 PDF를 못 열어서 답안지 작성자가 한 번도 일하지 못함.
+
+이번:
+  PDF 5개를 실제 텍스트로 열었고,
+  LLM extractor도 5번 돌았고,
+  그중 삼성전자 C06 customer/allocation 계열 accepted claim 1건이 생김.
+```
+
+아직 남은 blocker:
+
+```text
+brain_web_readiness_gate_audit.verdict: BLOCKED
+
+blockers:
+  Brain/Web operational minimum planner calls not met: 5/30
+  Brain/Web operational minimum web search tasks not met: 5/20
+  Brain/Web operational minimum web/news search calls not met: 5/20
+  Brain/Web operational minimum fetched documents not met: 5/10
+  Brain/Web operational minimum claim extractor attempts not met: 5/10
+  Brain/Web operational minimum web/LLM accepted claims not met: 1/3
+```
+
+trace promotion 쪽은 여전히 깨지지 않았다.
+
+```text
+brain_stage_promotion_audit.verdict: PROMOTION_APPLIED
+blockers: []
+unsafe_promoted_stage_row_count: 0
+brain_stage_trace_not_promoted_marker_missing_count: 0
+brain_trace_promoted_reference_error_count: 0
+```
+
+현재 상태 해석:
+
+```text
+PDF fetch/extraction 경로는 0에서 5 fetched + 1 accepted claim까지 전진했다.
+하지만 Goal4 완료는 아니다.
+전수 matrix 목표에는 아직 최소 운영 수량과 C01~C32/C36 전체 아키타입 coverage가 부족하다.
+```
+
+## 추가 패치: C06 HBM 비중 문장 과잉 매핑 차단
+
+위 PDF body cap smoke에서 생긴 `web/LLM accepted claim 1건`은 다시 검토해야 했다.
+
+대표 accepted claim은 다음이었다.
+
+```text
+primitive_id:
+  customer_preorder_or_allocation
+
+quote:
+  삼성전자는 서버 및 HBM 비중의 점진적 확대로 힘입어 ...
+```
+
+문제:
+
+```text
+HBM 비중 확대
+  -> 제품/매출 mix 또는 profile 증거일 수 있음
+
+고객 물량 배정 / 선주문 / capacity allocation
+  -> customer_preorder_or_allocation 증거
+```
+
+둘은 같은 말이 아니다.
+
+쉬운 예:
+
+```text
+"가게 매출에서 커피 비중이 늘었다"
+  -> 커피가 잘 팔렸다는 말일 수 있다.
+
+"A 고객이 다음 달 커피 물량 1만 잔을 선주문했다"
+  -> 고객 배정/선주문 증거다.
+
+첫 문장을 두 번째 문장처럼 점수에 넣으면 안 된다.
+```
+
+원인:
+
+```text
+LLM extractor가 predicate를 customer_allocation_or_qualification_claim으로 붙이면
+기존 mapper가 그 predicate만 보고
+customer_preorder_or_allocation / qualification_status / revenue_visibility_contract 중
+첫 허용 primitive로 매핑할 수 있었다.
+```
+
+즉 원문 quote에 고객 배정이나 qualification 표현이 없어도,
+LLM 라벨이 강하면 C06 customer allocation 칸으로 들어갈 여지가 있었다.
+
+수정:
+
+```text
+src/e2r/production/claim_extraction/primitive_mapper.py
+  - customer_allocation_or_qualification_claim 전용 guard 추가
+  - 원문 quote/object에 명시적인 고객 배정/선주문/capacity allocation 표현이 있어야
+    customer_preorder_or_allocation 허용
+  - "고객 allocation"처럼 한국어 고객 + 영어 allocation이 같이 있는 혼합 표현도 허용
+  - 원문 quote/object에 명시적인 고객 qualification/인증/승인/검증 표현이 있어야
+    qualification_status 허용
+  - predicate 문자열 자체는 원문 증거로 사용하지 않음
+  - HBM 비중 확대만 있으면 REJECTED
+```
+
+중요한 점:
+
+```text
+이건 종목 하드코딩이 아니다.
+삼성전자 예외도 아니고, C06을 무조건 낮추는 것도 아니다.
+
+증거 칸의 의미를 지킨 것이다.
+customer_preorder_or_allocation 칸에는 "고객 배정/선주문" 증거가 들어가야 한다.
+HBM 매출 비중 확대는 다른 primitive로 검토할 수 있지만,
+고객 배정 증거로 둔갑하면 안 된다.
+```
+
+추가 테스트:
+
+```text
+tests/test_cutover_contract_blind_extraction.py
+  test_hbm_mix_text_does_not_map_to_customer_allocation_primitive
+  test_explicit_customer_allocation_text_maps_to_customer_allocation_primitive
+
+tests/test_research_brain_v4_evidence_extraction_from_real_document.py
+  test_hbm_mix_quote_does_not_satisfy_customer_allocation_task
+```
+
+검증 내용:
+
+```text
+"삼성전자는 서버 및 HBM 비중의 점진적 확대로 2위를 유지했다."
+  -> customer_preorder_or_allocation REJECTED
+
+"삼성전자는 2026년 HBM 고객 물량 배정이 확정됐다고 밝혔다."
+  -> customer_preorder_or_allocation ACCEPTED
+
+"SK하이닉스는 HBM 수요 증가와 고객 allocation이 확대되고 있다."
+  -> customer_preorder_or_allocation ACCEPTED
+```
+
+실행:
+
+```bash
+PYTHONPATH=src python -m unittest \
+  tests.test_cutover_contract_blind_extraction \
+  tests.test_research_brain_v4_evidence_extraction_from_real_document -v
+```
+
+결과:
+
+```text
+Ran 51 tests
+OK
+```
+
+관련 웹/소스 획득 회귀:
+
+```bash
+PYTHONPATH=src python -m unittest \
+  tests.test_web_research_runner \
+  tests.test_research_brain_v4_real_source_acquisition -v
+```
+
+결과:
+
+```text
+Ran 92 tests
+OK
+```
+
+추가로 전체 테스트에서 C06 source-backed replay가 한 번 깨졌다.
+
+원인:
+
+```text
+fixture quote:
+  SK하이닉스는 HBM 수요 증가와 고객 allocation이 확대되고 있다.
+
+초기 guard:
+  영어 customer + allocation
+  또는 한국어 고객 + 배정
+  만 허용
+
+결과:
+  한국어 고객 + 영어 allocation 혼합 표현을 놓침
+```
+
+이건 HBM 비중 확대를 허용해야 한다는 뜻이 아니다.
+
+쉬운 예:
+
+```text
+"HBM 비중이 늘었다"
+  -> 고객 배정 증거 아님
+
+"고객 allocation이 확대됐다"
+  -> 고객 배정/allocation 증거
+```
+
+보정:
+
+```text
+고객 allocation
+고객사 allocation
+또는 원문에 "고객"과 "allocation"이 같이 있는 경우
+customer_preorder_or_allocation으로 허용
+```
+
+재검증:
+
+```bash
+PYTHONPATH=src python -m unittest \
+  tests.test_cutover_contract_blind_extraction.CutoverContractBlindExtractionTests.test_hbm_mix_text_does_not_map_to_customer_allocation_primitive \
+  tests.test_cutover_contract_blind_extraction.CutoverContractBlindExtractionTests.test_explicit_customer_allocation_text_maps_to_customer_allocation_primitive \
+  tests.test_cutover_contract_blind_extraction.CutoverContractBlindExtractionTests.test_korean_customer_with_english_allocation_maps_to_customer_allocation \
+  tests.test_census_v4_all_archetype_replay_matrix.CensusV4AllArchetypeReplayMatrixTests.test_c06_source_backed_semantic_replay_passes_without_treating_smoke_as_production \
+  tests.test_census_v4_all_archetype_replay_matrix.CensusV4AllArchetypeReplayMatrixTests.test_c06_guard_replay_blocks_qualification_lag_false_positive -v
+```
+
+결과:
+
+```text
+Ran 5 tests
+OK
+```
+
+직접 C06 replay 산출 확인:
+
+```text
+c06_source_backed_semantic_replay.positive_replay_pass: true
+accepted_primitive_ids: [customer_preorder_or_allocation]
+accepted_claim_count: 1
+document_urls:
+  https://ssl.pstatic.net/imgstock/upload/research/company/sk_hynix_memory_20240401.pdf
+
+c06_guard_replay_audit.guard_replay_pass: true
+positive_replay_ready: true
+source_backed_positive_replay_ready: true
+positive_semantic_replay_ready: true
+```
+
+실패했던 Goal4 감사 묶음 재검증:
+
+```bash
+PYTHONPATH=src python -m unittest \
+  tests.test_census_v4_all_archetype_replay_matrix \
+  tests.test_census_v4_full_thesis_smoke_tasks \
+  tests.test_census_v4_goal_required_audits \
+  tests.test_census_v4_run_mode_honesty -v
+```
+
+결과:
+
+```text
+Ran 54 tests
+OK
+```
+
+최종 전체 회귀:
+
+```bash
+PYTHONPATH=src python -m unittest discover -s tests -v
+```
+
+결과:
+
+```text
+Ran 5277 tests in 430.496s
+OK
+```
+
+## 추가 bounded smoke: allocation guard 반영 확인
+
+semantic guard 적용 후 같은 작은 bounded smoke를 다시 실행했다.
+
+명령 요약:
+
+```text
+output_root:
+output/census_v4/2026-07-06-goal4-pdf-cap-allocation-guard-bounded-smoke
+
+run_mode: BRAIN_AND_WEB_ACQUISITION_ENABLED
+brain_source_acquisition: live_full_bounded
+brain_universe_limit: 5
+brain_planner_success_limit: 5
+brain_max_distinct_candidate_attempts: 5
+brain_accepted_claim_target: 5
+write_operational_docs: false
+target_gate: full_thesis
+```
+
+결과:
+
+```text
+exit_code: 1
+stdout: NOT_READY
+runtime_budget_exhausted: false
+latest_phase: completed
+```
+
+artifact count:
+
+```text
+planner_runs.jsonl: 50
+source_tasks.jsonl: 127
+source_task_executions.jsonl: 127
+web_search_tasks.jsonl: 3
+web_search_results.jsonl: 4
+web_fetched_documents.jsonl: 2
+web_rejected_documents.jsonl: 4
+claim_extractor_runs.jsonl: 2
+accepted_claims.jsonl: 96
+brain_to_claim_trace.jsonl: 15
+stagecourt_traces.jsonl: 96
+```
+
+readiness audit:
+
+```text
+brain_web_readiness_gate_audit.verdict: BLOCKED
+
+blockers:
+  web/LLM accepted claim count is zero
+  Brain/Web operational minimum planner calls not met: 5/30
+  Brain/Web operational minimum web search tasks not met: 3/20
+  Brain/Web operational minimum web/news search calls not met: 3/20
+  Brain/Web operational minimum fetched documents not met: 2/10
+  Brain/Web operational minimum claim extractor attempts not met: 2/10
+  Brain/Web operational minimum web/LLM accepted claims not met: 0/3
+```
+
+trace promotion audit:
+
+```text
+brain_stage_promotion_audit.verdict: PROMOTION_APPLIED
+blockers: []
+unsafe_promoted_stage_row_count: 0
+brain_stage_trace_not_promoted_marker_missing_count: 0
+brain_trace_promoted_reference_error_count: 0
+```
+
+해석:
+
+```text
+PDF fetch/extraction 자체는 동작한다.
+LLM extractor도 실제 full-source 문서 2건에서 실행됐다.
+하지만 새 guard 기준에서는 web/LLM accepted claim이 0으로 돌아갔다.
+```
+
+이건 후퇴가 아니라 정확도 보정이다.
+
+쉬운 예:
+
+```text
+이전 채점:
+  "커피 매출 비중 증가"를 "A고객 선주문" 칸에 넣어 1점을 얻음
+
+이번 채점:
+  그 칸에는 못 넣게 막음
+  진짜 선주문 문서가 나오면 그때 점수로 인정
+```
+
+따라서 현재 상태는 다음처럼 봐야 한다.
+
+```text
+PDF body cap 문제:
+  일부 해결. PDF가 잘려서 extractor까지 못 가는 문제는 줄었다.
+
+C06 customer allocation accepted claim:
+  이전 1건은 weak semantic match로 보고 폐기하는 것이 맞다.
+
+Goal4:
+  여전히 미완료.
+  최소 운영 수량과 전체 아키타입 matrix 증명이 남아 있다.
+```
+
 ## 다음 작업
 
 1. 전체 Goal4 run의 provider stall 원인을 분리한다.
@@ -940,3 +1507,5 @@ C05 외 C01~C32/C36 전체에 대해:
 ```
 
 이번 패치는 그중 `promotion trace ledger가 최종 stage row와 불일치하는 문제`를 줄인 것이다.
+
+추가로 `external web route가 실제 fetch/extractor까지 내려가지 못하는 문제`, `PDF body가 잘려 PDF 추출이 깨지는 문제`, `HBM 비중 확대 문장을 고객 배정 claim으로 과잉 인정하는 문제`도 각각 좁혔다.

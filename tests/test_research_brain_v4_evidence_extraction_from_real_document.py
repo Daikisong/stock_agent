@@ -825,6 +825,58 @@ class ResearchBrainV4EvidenceExtractionFromRealDocumentTests(unittest.TestCase):
         }
         self.assertIn("customer_preorder_or_allocation", accepted_primitives)
 
+    def test_hbm_mix_quote_does_not_satisfy_customer_allocation_task(self):
+        contract = load_evidence_contracts_v2(require_all_archetypes=True)["C06_HBM_MEMORY_CUSTOMER_CAPACITY"]
+        event = sample_v4_event()
+        task = c06_source_task("customer_preorder_or_allocation")
+        quote = "삼성전자는 서버 및 HBM 비중의 점진적 확대로 2위를 유지했다."
+        bundle = execute_source_tasks_with_evidence_os_v4(
+            event=event,
+            tasks=(task,),
+            contract=contract,
+            as_of_date=date(2026, 7, 5),
+            source_runner=_SingleDocumentRunner(
+                symbol="005930",
+                company_name="삼성전자",
+                published_at=date(2026, 7, 5),
+                text=quote,
+                anchor_type=AnchorType.TEXT_SPAN,
+                include_structured_row=False,
+                source_class="BrokerReportPublicPDF",
+                source_type=SourceType.RESEARCH_REPORT,
+                canonical_url="https://stock.pstatic.net/stock-research/industry/40/unit.pdf",
+                source_lineage_id=(
+                    "NaverFreeSearchProvider:WEBRESULT-UNIT:"
+                    "verified_report_original:broker_report_domain:stock.pstatic.net"
+                ),
+                provider_errors=("general search is not a score source",),
+                web_fetched_row=True,
+            ),
+            claim_extractor=_StaticRawAssertionExtractor(
+                RawAssertionRecord(
+                    raw_assertion_id="RAW-HBM-MIX-NOT-ALLOCATION",
+                    document_id="",
+                    anchor_id="",
+                    subject="삼성전자",
+                    predicate="customer_allocation_or_qualification_claim",
+                    object_text="서버 및 HBM 비중의 점진적 확대",
+                    polarity_proposal="POSITIVE",
+                    modality="STATED",
+                    event_date="2026-07-05",
+                    exact_quote=quote,
+                    related_entities=("삼성전자",),
+                )
+            ),
+        )
+
+        execution = bundle.executions[0]
+        self.assertFalse(execution.accepted_claim_ids)
+        self.assertEqual(execution.status, "NO_EVIDENCE_FOUND")
+        self.assertIn(
+            "primitive_mapping_rejected:customer_allocation_or_qualification_requires_explicit_customer_allocation_or_qualification",
+            execution.not_eligible_reasons,
+        )
+
     def test_web_title_symbol_alias_maps_english_subject_without_unlocking_general_search_score(self):
         contract = load_evidence_contracts_v2(require_all_archetypes=True)["C06_HBM_MEMORY_CUSTOMER_CAPACITY"]
         event = sample_v4_event(symbol="000660", company_name="SK하이닉스")

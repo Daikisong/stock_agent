@@ -810,6 +810,46 @@ OPM 개선폭 6%
             urlopen.assert_not_called()
             urlopen.assert_not_called()
 
+    def test_page_fetcher_live_pdf_uses_pdf_body_cap_not_html_body_cap(self):
+        extractor = _FakePDFExtractor("삼성전자 HBM 고객 물량 배정")
+        pdf_body = "%PDF-1.4\n" + ("x" * 80)
+        fetcher = PageFetcher(
+            live_enabled=True,
+            max_body_bytes=10,
+            max_pdf_body_bytes=200,
+            pdf_text_extractor=extractor,
+        )
+
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=_FakeHTTPResponse(pdf_body, content_type="application/pdf"),
+        ):
+            result = fetcher.fetch("https://broker.example.com/hbm.pdf", as_of_date=date(2026, 6, 8))
+
+        self.assertTrue(result.ok)
+        self.assertEqual(extractor.payload_count, 1)
+        self.assertEqual(extractor.last_payload_size, len(pdf_body.encode("utf-8")))
+
+    def test_page_fetcher_live_pdf_too_large_fails_without_truncated_extraction(self):
+        extractor = _FakePDFExtractor("이 텍스트는 생성되면 안 된다")
+        pdf_body = "%PDF-1.4\n" + ("x" * 80)
+        fetcher = PageFetcher(
+            live_enabled=True,
+            max_body_bytes=10,
+            max_pdf_body_bytes=20,
+            pdf_text_extractor=extractor,
+        )
+
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=_FakeHTTPResponse(pdf_body, content_type="application/pdf"),
+        ):
+            result = fetcher.fetch("https://broker.example.com/hbm.pdf", as_of_date=date(2026, 6, 8))
+
+        self.assertFalse(result.ok)
+        self.assertEqual(result.reason, "live_fetch_body_too_large:pdf:20")
+        self.assertEqual(extractor.payload_count, 0)
+
     def test_page_fetcher_percent_encodes_non_ascii_live_url(self):
         with patch("e2r.research.page_fetcher.request.urlopen", return_value=_FakeHTTPResponse("본문")) as urlopen:
             result = PageFetcher(live_enabled=True).fetch(
@@ -1581,9 +1621,11 @@ class _FakePDFExtractor:
     def __init__(self, text: str) -> None:
         self.text = text
         self.payload_count = 0
+        self.last_payload_size = 0
 
     def extract_text_from_bytes(self, payload: bytes) -> PDFTextExtractionResult:
         self.payload_count += 1
+        self.last_payload_size = len(payload)
         return PDFTextExtractionResult(ok=True, text=self.text, extractor="fake")
 
 

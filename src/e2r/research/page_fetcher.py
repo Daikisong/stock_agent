@@ -38,6 +38,7 @@ class PageFetcher:
     cache_directory: str | Path | None = None
     pdf_text_extractor: PDFTextExtractor | None = None
     max_body_bytes: int = 2_000_000
+    max_pdf_body_bytes: int = 25_000_000
     max_text_chars: int = 200_000
     user_agent: str = (
         "Mozilla/5.0 (compatible; E2RResearchBot/0.1; +https://example.invalid/e2r)"
@@ -111,8 +112,18 @@ class PageFetcher:
             )
             with request.urlopen(req, timeout=self.timeout_seconds) as response:
                 content_type = _content_type(response)
-                body = response.read(max(1, self.max_body_bytes + 1))
-                if len(body) > self.max_body_bytes:
+                pdf_like = _looks_like_pdf_url(url) or "pdf" in content_type.lower()
+                body_limit = max(1, self.max_pdf_body_bytes if pdf_like else self.max_body_bytes)
+                body = response.read(body_limit + 1)
+                if len(body) > body_limit:
+                    if pdf_like:
+                        return FetchResult(
+                            url=url,
+                            ok=False,
+                            content_type=content_type or "application/pdf",
+                            fetched_at=fetched_at,
+                            reason=f"live_fetch_body_too_large:pdf:{body_limit}",
+                        )
                     body = body[: self.max_body_bytes]
                 charset = _charset(response) or "utf-8"
         except (error.HTTPError, error.URLError, TimeoutError, OSError, UnicodeError, ValueError) as exc:

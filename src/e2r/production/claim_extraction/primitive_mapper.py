@@ -72,6 +72,12 @@ def map_claim_to_primitive(
         guard = _capacity_investment_guard(assertion, adjudication)
         if guard is not None:
             return guard
+    if assertion.predicate == "customer_allocation_or_qualification_claim":
+        return _customer_allocation_or_qualification_mapping(
+            assertion,
+            adjudication,
+            allowed_primitives=allowed_primitives,
+        )
     for primitive in mapping.get(assertion.predicate, ()):
         if primitive in allowed_primitives:
             direction = "COUNTER" if adjudication.polarity == "NEGATIVE" else "SUPPORT"
@@ -121,6 +127,117 @@ def _capacity_investment_guard(
             "negative_facility_investment_not_positive_capacity",
         )
     return None
+
+
+def _customer_allocation_or_qualification_mapping(
+    assertion: RawAssertionRecord,
+    adjudication: AdjudicationResult,
+    *,
+    allowed_primitives: Sequence[str],
+) -> PrimitiveMappingDecision:
+    text = " ".join(
+        str(value)
+        for value in (
+            assertion.exact_quote,
+            assertion.object_text,
+        )
+        if value
+    ).lower()
+    direction = "COUNTER" if adjudication.polarity == "NEGATIVE" else "SUPPORT"
+    if "customer_preorder_or_allocation" in allowed_primitives and _has_customer_allocation_signal(text):
+        return PrimitiveMappingDecision(
+            "customer_preorder_or_allocation",
+            "ACCEPTED",
+            direction,
+            "predicate:customer_allocation_or_qualification_claim:explicit_customer_allocation",
+        )
+    if "qualification_status" in allowed_primitives and _has_customer_qualification_signal(text):
+        return PrimitiveMappingDecision(
+            "qualification_status",
+            "ACCEPTED",
+            direction,
+            "predicate:customer_allocation_or_qualification_claim:explicit_customer_qualification",
+        )
+    if "revenue_visibility_contract" in allowed_primitives and _has_customer_allocation_signal(text):
+        return PrimitiveMappingDecision(
+            "revenue_visibility_contract",
+            "ACCEPTED",
+            direction,
+            "predicate:customer_allocation_or_qualification_claim:allocation_supports_revenue_visibility",
+        )
+    return PrimitiveMappingDecision(
+        None,
+        "REJECTED",
+        "NEUTRAL",
+        "customer_allocation_or_qualification_requires_explicit_customer_allocation_or_qualification",
+    )
+
+
+def _has_customer_allocation_signal(text: str) -> bool:
+    if _has_any(
+        text,
+        (
+            "customer allocation",
+            "customer preorder",
+            "customer pre-order",
+            "preorder",
+            "pre-order",
+            "pre sold",
+            "pre-sold",
+            "allocated capacity",
+            "capacity allocation",
+            "allocation confirmed",
+            "booked capacity",
+            "secured capacity",
+            "고객 물량 배정",
+            "고객사 물량 배정",
+            "고객 배정",
+            "고객사 배정",
+            "고객 allocation",
+            "고객사 allocation",
+            "고객사 확정 물량",
+            "확정 물량",
+            "물량 배정",
+            "선주문",
+            "선수주",
+            "선점",
+        ),
+    ):
+        return True
+    return (
+        ("customer" in text and "allocation" in text)
+        or ("고객" in text and "allocation" in text)
+        or ("고객" in text and "배정" in text)
+    )
+
+
+def _has_customer_qualification_signal(text: str) -> bool:
+    if _has_any(
+        text,
+        (
+            "customer qualification",
+            "customer approval",
+            "customer validation",
+            "nvidia qualification",
+            "nvidia approval",
+            "qualification",
+            "qualified",
+            "approved",
+            "고객 인증",
+            "고객 승인",
+            "고객 검증",
+            "고객사 qualification",
+            "엔비디아 인증",
+            "엔비디아 승인",
+            "퀄",
+            "퀄리피케이션",
+            "인증",
+            "승인",
+            "검증",
+        ),
+    ):
+        return True
+    return ("고객" in text and ("인증" in text or "승인" in text or "검증" in text))
 
 
 def _has_any(text: str, needles: tuple[str, ...]) -> bool:

@@ -8,6 +8,7 @@ from unittest.mock import patch
 from e2r.production.claim_extraction import (
     ContractBlindRawAssertionExtractor,
     ExtractionInput,
+    RawAssertionRecord,
     adjudicate_entity_temporal_scope,
     map_claim_to_primitive,
 )
@@ -180,6 +181,110 @@ class CutoverContractBlindExtractionTests(unittest.TestCase):
         self.assertEqual(mapping.mapping_status, "REJECTED")
         self.assertEqual(mapping.support_direction, "NEUTRAL")
         self.assertEqual(mapping.rationale, "facility_investment_correction_requires_followup_not_positive_capacity")
+
+    def test_hbm_mix_text_does_not_map_to_customer_allocation_primitive(self):
+        assertion = RawAssertionRecord(
+            raw_assertion_id="RAW-HBM-MIX",
+            document_id="DOC1",
+            anchor_id="ANCHOR1",
+            subject="삼성전자",
+            predicate="customer_allocation_or_qualification_claim",
+            object_text="서버 및 HBM 비중의 점진적 확대로 2위를 유지했다.",
+            polarity_proposal="POSITIVE",
+            modality="STATED",
+            event_date="2026-07-05",
+            exact_quote="삼성전자는 서버 및 HBM 비중의 점진적 확대로 2위를 유지했다.",
+            related_entities=("삼성전자",),
+        )
+        adjudication = adjudicate_entity_temporal_scope(
+            assertion,
+            target_aliases=("삼성전자", "005930"),
+            as_of_date=date(2026, 7, 5),
+            source_published_at=date(2026, 7, 5),
+        )
+
+        mapping = map_claim_to_primitive(
+            assertion,
+            adjudication,
+            allowed_primitives=(
+                "customer_preorder_or_allocation",
+                "qualification_status",
+                "revenue_visibility_contract",
+            ),
+        )
+
+        self.assertEqual(mapping.mapping_status, "REJECTED")
+        self.assertEqual(mapping.support_direction, "NEUTRAL")
+        self.assertEqual(
+            mapping.rationale,
+            "customer_allocation_or_qualification_requires_explicit_customer_allocation_or_qualification",
+        )
+
+    def test_explicit_customer_allocation_text_maps_to_customer_allocation_primitive(self):
+        assertion = RawAssertionRecord(
+            raw_assertion_id="RAW-HBM-ALLOC",
+            document_id="DOC1",
+            anchor_id="ANCHOR1",
+            subject="삼성전자",
+            predicate="customer_allocation_or_qualification_claim",
+            object_text="2026년 HBM 고객 물량 배정이 확정됐다.",
+            polarity_proposal="POSITIVE",
+            modality="STATED",
+            event_date="2026-07-05",
+            exact_quote="삼성전자는 2026년 HBM 고객 물량 배정이 확정됐다고 밝혔다.",
+            related_entities=("삼성전자",),
+        )
+        adjudication = adjudicate_entity_temporal_scope(
+            assertion,
+            target_aliases=("삼성전자", "005930"),
+            as_of_date=date(2026, 7, 5),
+            source_published_at=date(2026, 7, 5),
+        )
+
+        mapping = map_claim_to_primitive(
+            assertion,
+            adjudication,
+            allowed_primitives=(
+                "customer_preorder_or_allocation",
+                "qualification_status",
+                "revenue_visibility_contract",
+            ),
+        )
+
+        self.assertEqual(mapping.mapping_status, "ACCEPTED")
+        self.assertEqual(mapping.primitive_id, "customer_preorder_or_allocation")
+        self.assertEqual(mapping.support_direction, "SUPPORT")
+
+    def test_korean_customer_with_english_allocation_maps_to_customer_allocation(self):
+        assertion = RawAssertionRecord(
+            raw_assertion_id="RAW-HBM-KO-EN-ALLOC",
+            document_id="DOC1",
+            anchor_id="ANCHOR1",
+            subject="SK하이닉스",
+            predicate="customer_allocation_or_qualification_claim",
+            object_text="HBM 수요 증가와 고객 allocation이 확대되고 있다.",
+            polarity_proposal="POSITIVE",
+            modality="STATED",
+            event_date="2024-04-01",
+            exact_quote="SK하이닉스는 HBM 수요 증가와 고객 allocation이 확대되고 있다.",
+            related_entities=("SK하이닉스",),
+        )
+        adjudication = adjudicate_entity_temporal_scope(
+            assertion,
+            target_aliases=("SK하이닉스", "000660"),
+            as_of_date=date(2024, 4, 30),
+            source_published_at=date(2024, 4, 1),
+        )
+
+        mapping = map_claim_to_primitive(
+            assertion,
+            adjudication,
+            allowed_primitives=("customer_preorder_or_allocation",),
+        )
+
+        self.assertEqual(mapping.mapping_status, "ACCEPTED")
+        self.assertEqual(mapping.primitive_id, "customer_preorder_or_allocation")
+        self.assertEqual(mapping.support_direction, "SUPPORT")
 
     def test_codex_payload_decoder_accepts_quote_alias_and_dedupes_empty_rows(self):
         request = ExtractionInput(
