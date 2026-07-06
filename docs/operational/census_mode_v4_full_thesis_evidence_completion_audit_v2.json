@@ -1,19 +1,18 @@
 {
   "archetype_balanced_status": "ARCHETYPE_BALANCED_FULL_THESIS_PASS_FALSE",
   "blockers": [
-    "FULL_THESIS_ARCHETYPE_DIVERSITY_BELOW_MINIMUM",
     "GREEN_GAP_ON_PROMOTED_ROWS",
     "MANDATORY_ARCHETYPE_FULL_THESIS_ROW_MISSING",
     "REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROWS"
   ],
-  "c05_full_thesis_share": 0.0,
-  "distinct_full_thesis_archetype_count": 1,
-  "full_thesis_row_count": 1,
-  "green_gap_full_thesis_row_count": 1,
+  "c05_full_thesis_share": 0.25,
+  "distinct_full_thesis_archetype_count": 4,
+  "full_thesis_row_count": 4,
+  "green_gap_full_thesis_row_count": 4,
   "green_ready_status": "GREEN_READY_FULL_THESIS_PASS_FALSE",
   "matrix_path": "docs/operational/research_to_runtime_parity_matrix_2026-07-05.json",
   "meaningful_evidence_status": "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE",
-  "required_positive_missing_full_thesis_row_count": 1,
+  "required_positive_missing_full_thesis_row_count": 4,
   "root_cause_path": "docs/operational/research_to_runtime_root_cause_2026-07-05.md",
   "schema_version": "e2r_census_v4_full_thesis_evidence_completion_audit_v2",
   "score_path_status": "PRODUCTION_FULL_E2R_SCORE_PATH_PENDING"

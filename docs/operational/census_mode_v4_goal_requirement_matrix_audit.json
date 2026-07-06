@@ -50,7 +50,7 @@
     {
       "blocker": "hard_gate_config_not_enabled",
       "evidence": {
-        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-05-goal4-repair-feedback-next-runtime-attempt --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 111 --brain-planner-success-limit 111 --brain-planner-batch-size 5 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 111 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 7200.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",
+        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-06-goal4-all-archetype-runtime-attempt-after-source-task-guard --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 111 --brain-planner-success-limit 111 --brain-planner-batch-size 5 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 111 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 7200.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",
         "fail_on_atomic_mismatch": true,
         "fail_on_critical_audit": true,
         "fail_on_run_mode_overclaim": true,
@@ -64,7 +64,7 @@
     {
       "blocker": "anti_fake_leaf_audit_not_pass",
       "evidence": {
-        "critical_count": 1,
+        "critical_count": 55,
         "eligible_symbol_count": 3391,
         "leaf_verdict": "FAIL",
         "stage_status_count": 3391
@@ -91,14 +91,15 @@
       "blocker": "score_scale_not_pass",
       "evidence": {
         "operator_score_use_distribution": {
-          "FULL_E2R_SCORE": 1,
-          "NOT_FULL_E2R_SCORE": 3390
+          "FULL_E2R_SCORE": 4,
+          "NOT_FULL_E2R_SCORE": 3387
         },
         "raw_contribution_fallback_as_verified_score_count": 0,
         "score_scope_distribution": {
-          "EVENT_WEIGHTED_PARTIAL": 65,
-          "FULL_E2R_100": 1,
-          "NO_SCORE": 3325
+          "BRAIN_OFFICIAL_CLAIM_BACKED_PARTIAL": 1,
+          "EVENT_WEIGHTED_PARTIAL": 64,
+          "FULL_E2R_100": 4,
+          "NO_SCORE": 3322
         },
         "verified_score_not_full_e2r_count": 0
       },
@@ -111,15 +112,16 @@
       "blocker": "stage_semantics_not_pass",
       "evidence": {
         "operator_stage_use_distribution": {
-          "FULL_THESIS_STAGE": 1,
-          "NOT_FULL_THESIS_STAGE": 3390
+          "FULL_THESIS_STAGE": 4,
+          "NOT_FULL_THESIS_STAGE": 3387
         },
         "pending_material_marked_complete_count": 0,
         "red_without_risk_signal_or_trace_count": 0,
         "source_pending_marked_red_count": 0,
         "stage_scope_distribution": {
-          "CENSUS_EVENT_BOARD": 3390,
-          "FULL_THESIS": 1
+          "BRAIN_OFFICIAL_PARTIAL": 1,
+          "CENSUS_EVENT_BOARD": 3386,
+          "FULL_THESIS": 4
         }
       },
       "gate_id": "STAGE_SEMANTICS_PASS",
@@ -143,8 +145,8 @@
       "blocker": "source_task_satisfaction_not_pass",
       "evidence": {
         "primitive_state_chain_verdict": "PASS",
-        "representative_score_claim_count": 67,
-        "source_task_chain_closed_to_representative_stage_count": 73,
+        "representative_score_claim_count": 72,
+        "source_task_chain_closed_to_representative_stage_count": 109,
         "source_task_satisfaction_verdict": "PASS_LEDGER_REFRESH_SOURCE_TASK_SATISFACTION"
       },
       "gate_id": "SOURCE_TASK_SATISFACTION_PASS",
@@ -183,7 +185,7 @@
         ],
         "full_thesis_required_source_class_count": 11,
         "full_thesis_task_executable_source_path_pass_allowed": true,
-        "full_thesis_task_with_blocking_source_class_count": 100,
+        "full_thesis_task_with_blocking_source_class_count": 98,
         "missing_connector_source_classes": [
           "BrokerReportPDF",
           "IndustryMedia",
@@ -226,7 +228,7 @@
       "evidence": {
         "controlled_smoke_execution_pass": false,
         "controlled_smoke_full_thesis_row_count": 0,
-        "full_thesis_promoted_seed_count": 1,
+        "full_thesis_promoted_seed_count": 4,
         "full_thesis_smoke_execution_status": "FULL_THESIS_SMOKE_EXECUTION_PENDING",
         "full_thesis_status": "PENDING_FULL_THESIS_REFRESH",
         "per_symbol": [
@@ -268,8 +270,8 @@
             "blocking_reason": null,
             "company_name": "삼성전자",
             "daily_event_claim_ids": [
-              "CLM-fd7a6609a992dd420e3d",
-              "CLM-f6e8334905f141c3ce64"
+              "CLM-f6e8334905f141c3ce64",
+              "CLM-fd7a6609a992dd420e3d"
             ],
             "daily_event_score_contribution_ids": [
               "SCON-bfd7a3d6631bb56363d3",
@@ -283,8 +285,8 @@
               "SCT-BRAIN-1e999f3308d1bc0f3d6b"
             ],
             "full_thesis_claim_ids": [
-              "CLM-fd7a6609a992dd420e3d",
-              "CLM-f6e8334905f141c3ce64"
+              "CLM-f6e8334905f141c3ce64",
+              "CLM-fd7a6609a992dd420e3d"
             ],
             "full_thesis_score_contribution_ids": [
               "SCON-bfd7a3d6631bb56363d3",
@@ -311,7 +313,7 @@
             "symbol": "005930"
           }
         ],
-        "production_full_thesis_row_count": 1,
+        "production_full_thesis_row_count": 4,
         "production_full_thesis_substitute_diagnostic_pass": false,
         "required_smoke_symbols_promoted_without_missing_primitives_count": 1,
         "required_symbols": [
@@ -330,7 +332,7 @@
       "blocker": "full_thesis_production_pass_false",
       "evidence": {
         "controlled_smoke_full_thesis_row_count": 0,
-        "production_full_thesis_row_count": 1,
+        "production_full_thesis_row_count": 4,
         "production_mode_requested": true,
         "production_pass_allowed": false,
         "verdict": "PENDING_FULL_THESIS_PRODUCTION"
@@ -344,13 +346,13 @@
       "blocker": "full_thesis_seed_materialization_audit_not_pass",
       "evidence": {
         "critical_count": 48,
-        "full_thesis_promoted_seed_count": 1,
+        "full_thesis_promoted_seed_count": 4,
         "seed_event_count": 111,
         "status_counts": {
-          "ACCEPTED_CLAIM_NOT_CREATED": 55,
-          "FULL_THESIS_PROMOTED": 1,
-          "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 47,
-          "STAGECOURT_READY_NOT_PROMOTED": 8
+          "ACCEPTED_CLAIM_NOT_CREATED": 90,
+          "FULL_THESIS_PROMOTED": 4,
+          "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 6,
+          "STAGECOURT_READY_NOT_PROMOTED": 11
         },
         "trace_row_count": 111,
         "verdict": "FAIL"
@@ -364,13 +366,13 @@
       "blocker": "full_thesis_seed_promotion_pass_false",
       "evidence": {
         "critical_count": 48,
-        "full_thesis_promoted_seed_count": 1,
+        "full_thesis_promoted_seed_count": 4,
         "seed_event_count": 111,
         "status_counts": {
-          "ACCEPTED_CLAIM_NOT_CREATED": 55,
-          "FULL_THESIS_PROMOTED": 1,
-          "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 47,
-          "STAGECOURT_READY_NOT_PROMOTED": 8
+          "ACCEPTED_CLAIM_NOT_CREATED": 90,
+          "FULL_THESIS_PROMOTED": 4,
+          "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 6,
+          "STAGECOURT_READY_NOT_PROMOTED": 11
         },
         "verdict": "FAIL"
       },
@@ -383,7 +385,7 @@
       "blocker": "brain_web_evidence_pass_false",
       "evidence": {
         "brain_web_evidence_pass_allowed": false,
-        "llm_claim_extractor_attempt_count": 20,
+        "llm_claim_extractor_attempt_count": 37,
         "llm_planner_call_count": 111,
         "minimum_required_counts": {
           "llm_claim_extractor_attempt_count": 10,
@@ -396,10 +398,10 @@
         },
         "operational_minimum_count_gate_applies": true,
         "verdict": "BLOCKED",
-        "web_fetched_document_count": 15,
+        "web_fetched_document_count": 23,
         "web_or_llm_accepted_claim_count": 0,
-        "web_search_call_count": 44,
-        "web_search_task_count": 45
+        "web_search_call_count": 67,
+        "web_search_task_count": 69
       },
       "gate_id": "BRAIN_WEB_EVIDENCE_PASS",
       "required_for_goal_completion": true,

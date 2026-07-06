@@ -98,19 +98,19 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
                 else:
                     self.assertTrue(row[key], (row["archetype_id"], key))
 
-    def test_c05_blocked_candidate_is_not_meaningful_runtime_parity(self) -> None:
+    def test_c05_score_path_only_is_not_meaningful_runtime_parity(self) -> None:
         c05 = self.by_prefix["C05"]
-        self.assertEqual(c05["runtime_attempt_status"], "PRODUCTION_CANDIDATE_BLOCKED")
-        self.assertEqual(c05["accepted_claim_status"], "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED")
-        self.assertEqual(c05["full_thesis_status"], "FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP")
-        self.assertEqual(c05["runtime_parity_proof_status"], "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP")
-        self.assertEqual(c05["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c05["runtime_attempt_status"], "PRODUCTION_FULL_THESIS_ATTEMPTED")
+        self.assertEqual(c05["accepted_claim_status"], "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS")
+        self.assertEqual(c05["full_thesis_status"], "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS")
+        self.assertEqual(c05["runtime_parity_proof_status"], "NOT_PROVEN_SCORE_PATH_ONLY")
+        self.assertEqual(c05["runtime_status"], "SCORE_PATH_CLOSED_WITH_THESIS_GAPS")
         self.assertEqual(c05["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
-        self.assertEqual(c05["runtime_full_thesis_row_count"], 0)
-        self.assertEqual(c05["runtime_full_thesis_row_with_required_positive_missing_count"], 0)
-        self.assertEqual(c05["runtime_full_thesis_row_with_green_gap_count"], 0)
-        self.assertIsNone(c05["required_positive_missing_rate"])
-        self.assertIsNone(c05["green_gap_rate"])
+        self.assertEqual(c05["runtime_full_thesis_row_count"], 1)
+        self.assertEqual(c05["runtime_full_thesis_row_with_required_positive_missing_count"], 1)
+        self.assertEqual(c05["runtime_full_thesis_row_with_green_gap_count"], 1)
+        self.assertEqual(c05["required_positive_missing_rate"], 1.0)
+        self.assertEqual(c05["green_gap_rate"], 1.0)
         self.assertGreater(c05["runtime_stagecourt_trace_count"], 0)
         self.assertGreater(c05["research_case_count"], 0)
         self.assertGreater(c05["url_backed_case_count"], 0)

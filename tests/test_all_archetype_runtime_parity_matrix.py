@@ -115,9 +115,11 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         by_prefix = {row["archetype_prefix"]: row for row in matrix["rows"]}
 
         c05 = by_prefix["C05"]
-        self.assertEqual(c05["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c05["runtime_status"], "SCORE_PATH_CLOSED_WITH_THESIS_GAPS")
         self.assertEqual(c05["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
-        self.assertEqual(c05["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c05["runtime_full_thesis_row_count"], 1)
+        self.assertEqual(c05["runtime_full_thesis_row_with_required_positive_missing_count"], 1)
+        self.assertEqual(c05["runtime_full_thesis_row_with_green_gap_count"], 1)
         self.assertGreater(c05["runtime_stagecourt_trace_count"], 0)
 
         c08 = by_prefix["C08"]

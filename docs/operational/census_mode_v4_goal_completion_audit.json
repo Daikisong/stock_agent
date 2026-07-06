@@ -1,7 +1,7 @@
 {
   "all_archetype_replay_matrix_summary": {
     "archetype_count": 36,
-    "controlled_wiring_smoke_ready_count": 1,
+    "controlled_wiring_smoke_ready_count": 4,
     "external_global_guard_ready": true,
     "external_replay_acceptance": {
       "adversarial_acceptance_exists": true,
@@ -505,13 +505,13 @@
     "external_source_backed_seed_ready_count": 30,
     "guard_replay_ready_count": 36,
     "missing_required_archetype_count": 0,
-    "replay_acceptance_manifest_path": "output/census_v4/2026-07-05-goal4-repair-feedback-next-runtime-attempt/all_archetype_replay_acceptance_manifest.json",
-    "replay_gap_plan_path": "output/census_v4/2026-07-05-goal4-repair-feedback-next-runtime-attempt/all_archetype_replay_gap_plan.json",
+    "replay_acceptance_manifest_path": "output/census_v4/2026-07-06-goal4-all-archetype-runtime-attempt-after-source-task-guard/all_archetype_replay_acceptance_manifest.json",
+    "replay_gap_plan_path": "output/census_v4/2026-07-06-goal4-all-archetype-runtime-attempt-after-source-task-guard/all_archetype_replay_gap_plan.json",
     "replay_gap_plan_task_count": 0,
     "replay_gap_seed_event_count": 0,
-    "replay_gap_seed_event_path": "output/census_v4/2026-07-05-goal4-repair-feedback-next-runtime-attempt/all_archetype_replay_gap_seed_events.jsonl",
+    "replay_gap_seed_event_path": "output/census_v4/2026-07-06-goal4-all-archetype-runtime-attempt-after-source-task-guard/all_archetype_replay_gap_seed_events.jsonl",
     "replay_gap_source_task_count": 0,
-    "replay_gap_source_task_path": "output/census_v4/2026-07-05-goal4-repair-feedback-next-runtime-attempt/all_archetype_replay_gap_source_tasks.jsonl",
+    "replay_gap_source_task_path": "output/census_v4/2026-07-06-goal4-all-archetype-runtime-attempt-after-source-task-guard/all_archetype_replay_gap_source_tasks.jsonl",
     "required_archetype_count": 32,
     "source_backed_ready_count": 36,
     "status_counts": {
@@ -550,24 +550,24 @@
     "actual_materialization_pass_allowed": false,
     "critical_count": 48,
     "final_operator_score_use_counts": {
-      "FULL_E2R_SCORE": 1,
-      "NOT_FULL_E2R_SCORE": 98,
+      "FULL_E2R_SCORE": 4,
+      "NOT_FULL_E2R_SCORE": 95,
       "UNKNOWN": 12
     },
     "final_operator_stage_use_counts": {
-      "FULL_THESIS_STAGE": 1,
-      "NOT_FULL_THESIS_STAGE": 98,
+      "FULL_THESIS_STAGE": 4,
+      "NOT_FULL_THESIS_STAGE": 95,
       "UNKNOWN": 12
     },
-    "full_thesis_promoted_seed_count": 1,
+    "full_thesis_promoted_seed_count": 4,
     "ledger_integrity_pass_allowed": false,
     "operator_materialization_status": "PENDING_FULL_THESIS_MATERIALIZATION",
     "seed_event_count": 111,
     "status_counts": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 55,
-      "FULL_THESIS_PROMOTED": 1,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 47,
-      "STAGECOURT_READY_NOT_PROMOTED": 8
+      "ACCEPTED_CLAIM_NOT_CREATED": 90,
+      "FULL_THESIS_PROMOTED": 4,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 6,
+      "STAGECOURT_READY_NOT_PROMOTED": 11
     },
     "trace_row_count": 111,
     "verdict": "FAIL",
@@ -634,7 +634,7 @@
     ],
     "full_thesis_required_source_class_count": 11,
     "full_thesis_task_executable_source_path_pass_allowed": true,
-    "full_thesis_task_with_blocking_source_class_count": 100,
+    "full_thesis_task_with_blocking_source_class_count": 98,
     "missing_connector_source_classes": [
       "BrokerReportPDF",
       "IndustryMedia",

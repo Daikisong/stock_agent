@@ -6,12 +6,12 @@
     "non_representative_claim_unreasoned_count": 0,
     "representative_atomic_claim_not_in_stage_row_count": 0
   },
-  "non_representative_claim_count": 35,
+  "non_representative_claim_count": 30,
   "reason_distribution": {
-    "accepted_claim_without_atomic_decision": 16,
-    "non_representative_atomic_decision": 19
+    "accepted_claim_without_atomic_decision": 10,
+    "non_representative_atomic_decision": 20
   },
-  "representative_stage_claim_count": 67,
+  "representative_stage_claim_count": 72,
   "rule": "Accepted claims that are not selected into the representative census_stage_status row must have an explicit reason and must not support the representative score unless they are also listed in that representative row.",
   "sample_non_representative_claims": [
     {
@@ -218,6 +218,20 @@
     },
     {
       "atomic_stage_decision_ids": [
+        "ATOMIC-a4ff54939647940c9091"
+      ],
+      "claim_id": "CLM-7d7b13caa1590ea44eae",
+      "polarity": "MIXED",
+      "primitive_id": "capital_allocation_event",
+      "reason": "non_representative_atomic_decision",
+      "representative_atomic_decision_ids": [],
+      "score_eligible": true,
+      "symbol": "052400",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "atomic_stage_decision_ids": [
         "ATOMIC-e3944d50d642ce53a730"
       ],
       "claim_id": "CLM-ea8e4c83637812887e45",
@@ -271,27 +285,13 @@
       "symbol": "006050",
       "target_scope_status": "DIRECT",
       "temporal_status": "CURRENT"
-    },
-    {
-      "atomic_stage_decision_ids": [
-        "ATOMIC-eccf2e63d99dc4531238"
-      ],
-      "claim_id": "CLM-42a98d620ec33b881263",
-      "polarity": "MIXED",
-      "primitive_id": "capital_allocation_event",
-      "reason": "non_representative_atomic_decision",
-      "representative_atomic_decision_ids": [],
-      "score_eligible": true,
-      "symbol": "377030",
-      "target_scope_status": "DIRECT",
-      "temporal_status": "CURRENT"
     }
   ],
   "schema_version": "e2r_census_v4_non_representative_claim_audit_v1",
   "unexpected_score_leak_claim_ids": [],
   "verdict": "PASS",
-  "warning_count": 16,
+  "warning_count": 10,
   "warning_counts": {
-    "accepted_claim_without_atomic_decision_count": 16
+    "accepted_claim_without_atomic_decision_count": 10
   }
 }

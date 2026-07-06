@@ -196,6 +196,84 @@ class ResearchBrainV4RealPlannerProviderTests(unittest.TestCase):
 
         self.assertEqual(output.top_k_archetype_hypotheses[0]["archetype_id"], "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM")
 
+    def test_r13_cross_archetype_reason_code_is_explicit_primary_signal(self):
+        cases = (
+            (
+                "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+                "auditor_or_disclosure_risk",
+                "DART audit opinion restatement share count current filing",
+            ),
+            (
+                "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+                "valuation_overheat",
+                "KRX valuation overheat current liquidity guardrail",
+            ),
+        )
+
+        for archetype_id, primitive, query in cases:
+            with self.subTest(archetype_id=archetype_id):
+                event = replace(
+                    sample_v4_event(symbol="", company_name=archetype_id),
+                    event_type="all_archetype_runtime_parity_follow_up_seed",
+                    event_summary=(
+                        f"planner input only. archetype_id={archetype_id}; "
+                        f"primitive_gap={primitive}"
+                    ),
+                    raw_reason_codes=(
+                        "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
+                        archetype_id,
+                        "NOT_PROVEN_TARGET_MATERIALIZATION_REQUIRED",
+                        primitive,
+                    ),
+                )
+
+                output = validate_llm_planner_output_v4(
+                    {
+                        "top_k_archetype_hypotheses": [
+                            {
+                                "archetype_id": archetype_id,
+                                "probability_or_score": 0.9,
+                                "reason": "explicit R13 cross-archetype follow-up seed",
+                            }
+                        ],
+                        "positive_thesis": "cross-archetype guard follow-up only",
+                        "counter_thesis": "not a production score finalization",
+                        "must_verify_primitives": [primitive],
+                        "green_blockers_to_close": ["source quorum"],
+                        "red_team_checks": ["wrong subject"],
+                        "source_task_drafts": [
+                            {
+                                "task_id": "TASK-R13-CROSS",
+                                "primitive_gap": primitive,
+                                "task_type": "guard_verify",
+                                "preferred_source_classes": ["DART"],
+                                "fallback_source_classes": ["IssuerOfficial"],
+                                "forbidden_source_classes": ["unbounded_general_search"],
+                                "date_window": {"end": "2026-07-05", "lookback_days": 730},
+                                "max_queries": 1,
+                                "max_candidates": 5,
+                                "max_fetches": 1,
+                                "stop_condition": {"accepted_claim_count": 1},
+                                "query_intents": [query],
+                                "llm_query_allowed": True,
+                                "general_search_allowed": False,
+                                "reason_from_memory": "explicit R13 cross-archetype follow-up",
+                            }
+                        ],
+                        "query_intents": [query],
+                        "do_not_promote_reasons": ["overlay only"],
+                        "planner_self_check": {
+                            "score_keys_present": False,
+                            "stage_keys_present": False,
+                            "future_outcome_used": False,
+                        },
+                    },
+                    event=event,
+                    memory_cards=load_v4_cards(),
+                )
+
+                self.assertEqual(output.top_k_archetype_hypotheses[0]["archetype_id"], archetype_id)
+
     def test_source_task_primitive_outside_primary_contract_is_quarantined(self):
         event = sample_v4_event(symbol="003090", company_name="대웅")
         output = validate_llm_planner_output_v4(
