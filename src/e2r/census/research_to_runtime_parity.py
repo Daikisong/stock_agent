@@ -90,6 +90,19 @@ def _load_contract_ids(repo_root: Path) -> list[str]:
     return [str(value) for value in contract_ids if value]
 
 
+def _contract_scope_counts(contract_ids: Sequence[str]) -> dict[str, int]:
+    counts: Counter[str] = Counter()
+    for archetype_id in contract_ids:
+        prefix = _short_archetype_id(archetype_id) or ""
+        if prefix.startswith("C"):
+            counts["C_CANONICAL_ARCHETYPE"] += 1
+        elif prefix.startswith("R13"):
+            counts["R13_CROSS_ARCHETYPE"] += 1
+        else:
+            counts["OTHER_REGISTERED_ARCHETYPE"] += 1
+    return dict(sorted(counts.items()))
+
+
 def _normalizer(contract_ids: Sequence[str]):
     by_short = {_short_archetype_id(value): value for value in contract_ids if _short_archetype_id(value)}
     full_set = set(contract_ids)
@@ -566,6 +579,8 @@ def build_research_to_runtime_parity_audit(
         "as_of_date": as_of_date or replay_matrix.get("as_of_date"),
         "output_root": str(output_path.relative_to(repo_root) if output_path.is_relative_to(repo_root) else output_path),
         "docs_dir": str(docs_path.relative_to(repo_root) if docs_path.is_relative_to(repo_root) else docs_path),
+        "registry_archetype_ids": contract_ids,
+        "registry_scope_counts": _contract_scope_counts(contract_ids),
         "registry_archetype_count": len(contract_ids),
         "parity_row_count": len(rows),
         "missing_registry_archetype_ids": [archetype_id for archetype_id in contract_ids if archetype_id not in {row["archetype_id"] for row in rows}],
@@ -762,8 +777,13 @@ def render_research_to_runtime_acceptance_report(
         f"- research memory follow-up task count: `{followup_audit.get('task_count')}`",
         f"- research memory follow-up by archetype: `{json.dumps(followup_audit.get('tasks_by_archetype', {}), ensure_ascii=False, sort_keys=True)}`",
         f"- all-archetype runtime status rows: `{all_status_matrix.get('registry_contract_count')}`",
-        f"- C01~C32 contract rows: `{all_status_matrix.get('c01_to_c32_contract_count')}`",
-        f"- R13 cross-archetype rows: `{all_status_matrix.get('r13_cross_archetype_contract_count')}`",
+        f"- canonical C contract rows: `{all_status_matrix.get('canonical_c_archetype_count')}`",
+        f"- cross-archetype rows: `{all_status_matrix.get('cross_archetype_contract_count')}`",
+        f"- registry scope counts: `{json.dumps(all_status_matrix.get('registry_scope_counts', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- exact registry row coverage: `{all_status_matrix.get('all_registered_archetypes_have_exactly_one_runtime_status_row')}`",
+        f"- missing parity source rows: `{all_status_matrix.get('missing_parity_source_row_count')}`",
+        f"- duplicate parity source rows: `{all_status_matrix.get('duplicate_parity_source_row_count')}`",
+        f"- extra parity source rows: `{all_status_matrix.get('extra_parity_source_row_count')}`",
         f"- all contracts have memory card: `{all_status_matrix.get('all_contracts_have_memory_card')}`",
         f"- all contracts have source route patterns: `{all_status_matrix.get('all_contracts_have_source_route_patterns')}`",
         f"- runtime proof counts: `{json.dumps(all_status_matrix.get('runtime_parity_proof_status_counts', {}), ensure_ascii=False, sort_keys=True)}`",

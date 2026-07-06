@@ -7,8 +7,15 @@
 ## Summary
 
 - registry_contract_count: `36`
+- canonical_c_archetype_count: `32`
 - c01_to_c32_contract_count: `32`
+- cross_archetype_contract_count: `4`
 - r13_cross_archetype_contract_count: `4`
+- registry_scope_counts: `{"C_CANONICAL_ARCHETYPE": 32, "R13_CROSS_ARCHETYPE": 4}`
+- all_registered_archetypes_have_exactly_one_runtime_status_row: `True`
+- missing_parity_source_row_count: `0`
+- duplicate_parity_source_row_count: `0`
+- extra_parity_source_row_count: `0`
 - all_contracts_have_runtime_status_axes: `True`
 - all_contracts_have_memory_card: `True`
 - all_contracts_have_source_route_patterns: `True`

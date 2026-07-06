@@ -13,6 +13,12 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         docs = Path("docs/operational")
         cls.parity = build_research_to_runtime_parity_audit(repo_root=Path(".").resolve(), as_of_date="2026-07-05")
+        cls.contract_ids = [
+            row["archetype_id"]
+            for row in json.loads(
+                (Path("configs") / "e2r_agentic_evidence_contracts_v2.json").read_text(encoding="utf-8")
+            )["contracts"]
+        ]
         cls.cards = json.loads((docs / "research_runtime_memory_cards_v2.json").read_text(encoding="utf-8"))
         cls.routes = json.loads((docs / "research_source_route_recovery_matrix.json").read_text(encoding="utf-8"))
         cls.inventory = json.loads((docs / "research_reverse_case_inventory.json").read_text(encoding="utf-8"))
@@ -36,8 +42,14 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
             self.assertEqual(summary_path.name, "all_archetype_runtime_parity_summary.md")
 
             matrix = json.loads(parity_path.read_text(encoding="utf-8"))
-            self.assertEqual(matrix["registry_contract_count"], 36)
-            self.assertEqual(len(matrix["rows"]), 36)
+            self.assertEqual(matrix["registry_contract_count"], len(self.contract_ids))
+            self.assertEqual(len(matrix["rows"]), len(self.contract_ids))
+            self.assertEqual(set(matrix["registry_archetype_ids"]), set(self.contract_ids))
+            self.assertEqual(set(matrix["matrix_row_archetype_ids"]), set(self.contract_ids))
+            self.assertEqual(matrix["missing_parity_source_row_count"], 0)
+            self.assertEqual(matrix["duplicate_parity_source_row_count"], 0)
+            self.assertEqual(matrix["extra_parity_source_row_count"], 0)
+            self.assertTrue(matrix["all_registered_archetypes_have_exactly_one_runtime_status_row"])
             self.assertIn("runtime_status_counts", matrix)
             self.assertIn("primary_blocker_class_counts", matrix)
 
@@ -45,6 +57,7 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
                 "archetype_id",
                 "large_sector_id",
                 "exists_in_registry",
+                "parity_source_row_present",
                 "research_case_count",
                 "url_backed_case_count",
                 "source_proxy_case_count",

@@ -31,7 +31,6 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
         ]
         self.assertEqual(self.plan["schema_version"], "e2r_all_archetype_next_runtime_attempt_plan_v1")
         self.assertEqual(self.plan["plan_row_count"], len(unproven))
-        self.assertEqual(self.plan["plan_row_count"], 36)
         self.assertGreater(self.plan["source_task_count"], self.plan["plan_row_count"])
         self.assertEqual(self.plan["source_task_count"], self.plan["seed_event_count"])
 

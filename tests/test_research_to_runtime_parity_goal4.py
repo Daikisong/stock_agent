@@ -11,19 +11,21 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.repo_root = Path(".").resolve()
         cls.audit = build_research_to_runtime_parity_audit(repo_root=cls.repo_root, as_of_date="2026-07-05")
+        cls.contract_ids = [
+            row["archetype_id"]
+            for row in json.loads(
+                (cls.repo_root / "configs" / "e2r_agentic_evidence_contracts_v2.json").read_text(encoding="utf-8")
+            )["contracts"]
+        ]
         cls.by_id = {row["archetype_id"]: row for row in cls.audit["rows"]}
         cls.by_prefix = {row["archetype_id"].split("_", 1)[0]: row for row in cls.audit["rows"]}
 
     def test_matrix_has_one_runtime_parity_row_for_every_registered_contract(self) -> None:
-        contracts = json.loads(
-            (self.repo_root / "configs" / "e2r_agentic_evidence_contracts_v2.json").read_text(encoding="utf-8")
-        )["contracts"]
-        contract_ids = [row["archetype_id"] for row in contracts]
-
         self.assertEqual(self.audit["schema_version"], "e2r_research_to_runtime_parity_matrix_v1")
-        self.assertEqual(self.audit["registry_archetype_count"], 36)
-        self.assertEqual(self.audit["parity_row_count"], 36)
-        self.assertEqual(set(self.by_id), set(contract_ids))
+        self.assertEqual(self.audit["registry_archetype_count"], len(self.contract_ids))
+        self.assertEqual(self.audit["parity_row_count"], len(self.contract_ids))
+        self.assertEqual(self.audit["registry_archetype_ids"], self.contract_ids)
+        self.assertEqual(set(self.by_id), set(self.contract_ids))
         self.assertEqual(self.audit["missing_registry_archetype_ids"], [])
 
     def test_score_path_pass_is_split_from_meaningful_full_thesis_pass(self) -> None:

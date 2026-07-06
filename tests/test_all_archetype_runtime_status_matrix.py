@@ -1,5 +1,6 @@
 import json
 import unittest
+from copy import deepcopy
 from pathlib import Path
 
 from e2r.census.all_archetype_runtime_status_matrix import build_all_archetype_runtime_status_matrix
@@ -12,6 +13,12 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.docs = Path("docs/operational")
         cls.parity = build_research_to_runtime_parity_audit(repo_root=Path(".").resolve(), as_of_date="2026-07-05")
+        cls.contract_ids = [
+            row["archetype_id"]
+            for row in json.loads(
+                (Path("configs") / "e2r_agentic_evidence_contracts_v2.json").read_text(encoding="utf-8")
+            )["contracts"]
+        ]
         cls.cards = json.loads((cls.docs / "research_runtime_memory_cards_v2.json").read_text(encoding="utf-8"))
         cls.routes = json.loads((cls.docs / "research_source_route_recovery_matrix.json").read_text(encoding="utf-8"))
         cls.inventory = json.loads((cls.docs / "research_reverse_case_inventory.json").read_text(encoding="utf-8"))
@@ -27,9 +34,18 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
 
     def test_matrix_covers_c01_to_c32_plus_four_r13_contracts(self) -> None:
         self.assertEqual(self.matrix["schema_version"], "e2r_all_archetype_runtime_status_matrix_v1")
-        self.assertEqual(self.matrix["registry_contract_count"], 36)
-        self.assertEqual(self.matrix["c01_to_c32_contract_count"], 32)
-        self.assertEqual(self.matrix["r13_cross_archetype_contract_count"], 4)
+        self.assertEqual(self.matrix["registry_contract_count"], len(self.contract_ids))
+        self.assertEqual(set(self.matrix["registry_archetype_ids"]), set(self.contract_ids))
+        self.assertEqual(set(self.matrix["matrix_row_archetype_ids"]), set(self.contract_ids))
+        self.assertEqual(self.matrix["canonical_c_archetype_count"], sum(1 for value in self.contract_ids if value.startswith("C")))
+        self.assertEqual(
+            self.matrix["cross_archetype_contract_count"],
+            sum(1 for value in self.contract_ids if value.startswith("R13")),
+        )
+        self.assertEqual(self.matrix["missing_parity_source_row_count"], 0)
+        self.assertEqual(self.matrix["duplicate_parity_source_row_count"], 0)
+        self.assertEqual(self.matrix["extra_parity_source_row_count"], 0)
+        self.assertTrue(self.matrix["all_registered_archetypes_have_exactly_one_runtime_status_row"])
         self.assertTrue(self.matrix["all_contracts_have_runtime_status_axes"])
         self.assertTrue(self.matrix["all_contracts_have_memory_card"])
         self.assertTrue(self.matrix["all_contracts_have_source_route_patterns"])
@@ -37,6 +53,7 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
     def test_every_row_has_attempt_source_claim_and_full_thesis_status(self) -> None:
         required = {
             "runtime_attempt_status",
+            "parity_source_row_present",
             "source_route_recovery_status",
             "runtime_source_route_execution_status",
             "accepted_claim_status",
@@ -83,6 +100,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             for key in required:
                 if key in {"source_route_ready", "memory_card_ready"}:
                     self.assertIsInstance(row[key], bool, (row["archetype_id"], key))
+                elif key == "parity_source_row_present":
+                    self.assertIs(row[key], True, (row["archetype_id"], key))
                 elif key.endswith("_count"):
                     self.assertIsInstance(row[key], int, (row["archetype_id"], key))
                 elif key.endswith("_counts"):
@@ -209,6 +228,38 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(c29["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS")
         self.assertEqual(c29["accepted_claim_status"], "NO_ACCEPTED_CLAIM")
         self.assertEqual(c29["runtime_parity_proof_status"], "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM")
+
+    def test_registry_source_of_truth_keeps_missing_parity_row_visible(self) -> None:
+        trimmed = deepcopy(self.parity)
+        missing_id = next(value for value in self.contract_ids if value.startswith("C08_"))
+        trimmed["rows"] = [row for row in trimmed["rows"] if row["archetype_id"] != missing_id]
+
+        matrix = build_all_archetype_runtime_status_matrix(
+            parity_audit=trimmed,
+            memory_cards=self.cards,
+            source_routes=self.routes,
+            candidate_selection=self.selection,
+            research_inventory=self.inventory,
+            runtime_source_task_executions=[],
+            claim_mapping_trace_rows=[],
+        )
+        by_id = {row["archetype_id"]: row for row in matrix["rows"]}
+
+        self.assertEqual(matrix["registry_contract_count"], len(self.contract_ids))
+        self.assertEqual(set(matrix["matrix_row_archetype_ids"]), set(self.contract_ids))
+        self.assertEqual(matrix["missing_parity_source_row_ids"], [missing_id])
+        self.assertEqual(matrix["missing_parity_source_row_count"], 1)
+        self.assertFalse(matrix["all_registered_archetypes_have_exactly_one_runtime_status_row"])
+
+        missing_row = by_id[missing_id]
+        self.assertFalse(missing_row["parity_source_row_present"])
+        self.assertEqual(missing_row["runtime_attempt_status"], "NOT_ATTEMPTED")
+        self.assertEqual(missing_row["runtime_status"], "NOT_ATTEMPTED")
+        self.assertEqual(missing_row["primary_blocker_class"], "RUNTIME_PARITY_SOURCE_ROW_MISSING")
+        self.assertEqual(
+            missing_row["next_required_action"],
+            "REBUILD_PARITY_AUDIT_FROM_CURRENT_REGISTRY_BEFORE_RUNTIME_CLAIM",
+        )
 
 
 if __name__ == "__main__":

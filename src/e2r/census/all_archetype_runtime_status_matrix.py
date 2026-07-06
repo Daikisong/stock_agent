@@ -25,7 +25,18 @@ def _prefix(archetype_id: str) -> str:
     return archetype_id.split("_", 1)[0]
 
 
+def _registry_scope(archetype_id: str) -> str:
+    prefix = _prefix(archetype_id)
+    if prefix.startswith("C"):
+        return "C_CANONICAL_ARCHETYPE"
+    if prefix.startswith("R13"):
+        return "R13_CROSS_ARCHETYPE"
+    return "OTHER_REGISTERED_ARCHETYPE"
+
+
 def _runtime_attempt_status(row: Mapping[str, Any]) -> str:
+    if row.get("_parity_source_row_missing") is True:
+        return "NOT_ATTEMPTED"
     if int(row.get("runtime_full_thesis_row_count") or 0):
         return "PRODUCTION_FULL_THESIS_ATTEMPTED"
     if int(row.get("runtime_blocked_candidate_count") or 0):
@@ -613,6 +624,8 @@ def _goal4_runtime_status(
     full_thesis_status: str,
     proof_status: str,
 ) -> str:
+    if row.get("_parity_source_row_missing") is True:
+        return "NOT_ATTEMPTED"
     if proof_status == "RUNTIME_PARITY_PROVEN":
         return "MEANINGFUL_FULL_THESIS_READY"
     if full_thesis_status == "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS":
@@ -646,6 +659,8 @@ def _primary_blocker_class(
     accepted_claim_status: str,
     full_thesis_status: str,
 ) -> str:
+    if row.get("_parity_source_row_missing") is True:
+        return "RUNTIME_PARITY_SOURCE_ROW_MISSING"
     if not card_ready:
         return "NO_RESEARCH_MEMORY"
     if int(row.get("runtime_full_thesis_row_with_required_positive_missing_count") or 0):
@@ -683,11 +698,14 @@ def _blocker_detail(primary_blocker_class: str) -> str:
         "SCORE_PATH_NOT_CLOSED": "accepted claim은 있으나 score contribution, StageCourt, full thesis row까지 이어지지 않았다.",
         "REQUIRED_POSITIVE_MISSING": "점수 경로 또는 후보는 생겼지만 아키타입 필수 positive primitive가 source-backed claim으로 채워지지 않았다.",
         "GREEN_GAP_MISSING": "기본 점수 경로는 있으나 Green 판단에 필요한 source-backed primitive가 남아 있다.",
+        "RUNTIME_PARITY_SOURCE_ROW_MISSING": "registry에는 존재하지만 입력 parity audit에 이 아키타입 row가 없어 runtime 상태를 증명할 수 없다.",
     }
     return details.get(primary_blocker_class, "goal4 blocker class가 row에 기록됐지만 별도 설명이 필요하다.")
 
 
 def _next_action(row: Mapping[str, Any], *, full_thesis_status: str, accepted_claim_status: str) -> str:
+    if row.get("_parity_source_row_missing") is True:
+        return "REBUILD_PARITY_AUDIT_FROM_CURRENT_REGISTRY_BEFORE_RUNTIME_CLAIM"
     if full_thesis_status == "MEANINGFUL_FULL_THESIS_READY":
         return "KEEP_MONITORING_FOR_LIFECYCLE_SUPERSESSION"
     if full_thesis_status == "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS":
@@ -716,6 +734,8 @@ def _reason_ko(
     accepted_claim_status: str,
     full_thesis_status: str,
 ) -> str:
+    if row.get("_parity_source_row_missing") is True:
+        return "registry에는 있는 아키타입인데 parity audit 입력 row가 빠져 있어 시도/소스/claim/full thesis 상태를 증명할 수 없다."
     if full_thesis_status == "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS":
         return "production 점수 경로는 닫혔지만 required-positive/Green 빈칸이 남아 있어 meaningful pass가 아니다."
     if full_thesis_status == "FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP":
@@ -744,6 +764,23 @@ def build_all_archetype_runtime_status_matrix(
     claim_mapping_trace_rows: list[Mapping[str, Any]] | None = None,
 ) -> dict[str, Any]:
     cards_by_id = {card["archetype_id"]: card for card in memory_cards.get("cards", [])}
+    registry_ids = [str(value) for value in (parity_audit.get("registry_archetype_ids") or []) if value]
+    parity_rows = [row for row in parity_audit.get("rows", []) if isinstance(row, Mapping)]
+    if not registry_ids:
+        registry_ids = [str(row["archetype_id"]) for row in parity_rows if row.get("archetype_id")]
+    row_id_counts = Counter(str(row.get("archetype_id")) for row in parity_rows if row.get("archetype_id"))
+    duplicate_parity_source_row_ids = sorted(archetype_id for archetype_id, count in row_id_counts.items() if count > 1)
+    rows_by_id = {
+        str(row["archetype_id"]): row
+        for row in parity_rows
+        if row.get("archetype_id") and str(row["archetype_id"]) in set(registry_ids)
+    }
+    missing_parity_source_row_ids = [archetype_id for archetype_id in registry_ids if archetype_id not in rows_by_id]
+    extra_parity_source_row_ids = sorted(
+        str(row["archetype_id"])
+        for row in parity_rows
+        if row.get("archetype_id") and str(row["archetype_id"]) not in set(registry_ids)
+    )
     inventory_counts = _inventory_counts_by_archetype(research_inventory)
     if runtime_source_task_executions is None:
         runtime_source_task_executions = _load_source_task_execution_rows(parity_audit)
@@ -771,8 +808,8 @@ def build_all_archetype_runtime_status_matrix(
     }
 
     status_rows: list[dict[str, Any]] = []
-    for row in parity_audit.get("rows", []):
-        archetype_id = str(row["archetype_id"])
+    for archetype_id in registry_ids:
+        row = rows_by_id.get(archetype_id, {"archetype_id": archetype_id, "_parity_source_row_missing": True})
         card = cards_by_id.get(archetype_id, {})
         route_pattern_count = route_counts[archetype_id]
         source_route_recovery_status = (
@@ -832,8 +869,9 @@ def build_all_archetype_runtime_status_matrix(
                 "archetype_prefix": _prefix(archetype_id),
                 "large_sector_id": card.get("large_sector_id"),
                 "exists_in_registry": True,
+                "parity_source_row_present": row.get("_parity_source_row_missing") is not True,
                 "contract_registration_status": "REGISTERED",
-                "registry_scope": "C01_TO_C32" if _prefix(archetype_id).startswith("C") else "R13_CROSS_ARCHETYPE",
+                "registry_scope": _registry_scope(archetype_id),
                 "research_memory_status": "MEMORY_CARD_READY" if card_ready else "MEMORY_CARD_MISSING",
                 **research_counts,
                 "source_route_recovery_status": source_route_recovery_status,
@@ -908,8 +946,9 @@ def build_all_archetype_runtime_status_matrix(
             }
         )
 
-    c_rows = [row for row in status_rows if row["registry_scope"] == "C01_TO_C32"]
+    c_rows = [row for row in status_rows if row["registry_scope"] == "C_CANONICAL_ARCHETYPE"]
     r13_rows = [row for row in status_rows if row["registry_scope"] == "R13_CROSS_ARCHETYPE"]
+    scope_counts = Counter(row["registry_scope"] for row in status_rows)
     proof_counts = Counter(row["runtime_parity_proof_status"] for row in status_rows)
     attempt_counts = Counter(row["runtime_attempt_status"] for row in status_rows)
     source_execution_counts = Counter(row["runtime_source_route_execution_status"] for row in status_rows)
@@ -921,10 +960,27 @@ def build_all_archetype_runtime_status_matrix(
     return {
         "schema_version": "e2r_all_archetype_runtime_status_matrix_v1",
         "as_of_date": parity_audit.get("as_of_date"),
+        "registry_archetype_ids": registry_ids,
+        "matrix_row_archetype_ids": [row["archetype_id"] for row in status_rows],
+        "missing_parity_source_row_ids": missing_parity_source_row_ids,
+        "duplicate_parity_source_row_ids": duplicate_parity_source_row_ids,
+        "extra_parity_source_row_ids": extra_parity_source_row_ids,
+        "missing_parity_source_row_count": len(missing_parity_source_row_ids),
+        "duplicate_parity_source_row_count": len(duplicate_parity_source_row_ids),
+        "extra_parity_source_row_count": len(extra_parity_source_row_ids),
+        "all_registered_archetypes_have_exactly_one_runtime_status_row": (
+            len(status_rows) == len(registry_ids)
+            and not missing_parity_source_row_ids
+            and not duplicate_parity_source_row_ids
+            and not extra_parity_source_row_ids
+        ),
         "registry_contract_count": len(status_rows),
+        "canonical_c_archetype_count": len(c_rows),
         "c01_to_c32_contract_count": len(c_rows),
+        "cross_archetype_contract_count": len(r13_rows),
         "r13_cross_archetype_contract_count": len(r13_rows),
-        "registry_scope_note": "레지스트리 기준 36개는 C01~C32 32개와 R13 cross-archetype 4개다.",
+        "registry_scope_counts": dict(sorted(scope_counts.items())),
+        "registry_scope_note": "레지스트리에서 자동 로드한 C canonical archetype과 R13 cross-archetype 전체를 기준으로 한다.",
         "all_contracts_have_runtime_status_axes": all(
             row["runtime_attempt_status"]
             and row["source_route_recovery_status"]
@@ -961,8 +1017,15 @@ def render_all_archetype_runtime_status_markdown(matrix: Mapping[str, Any]) -> s
         "## Summary",
         "",
         f"- registry_contract_count: `{matrix['registry_contract_count']}`",
+        f"- canonical_c_archetype_count: `{matrix['canonical_c_archetype_count']}`",
         f"- c01_to_c32_contract_count: `{matrix['c01_to_c32_contract_count']}`",
+        f"- cross_archetype_contract_count: `{matrix['cross_archetype_contract_count']}`",
         f"- r13_cross_archetype_contract_count: `{matrix['r13_cross_archetype_contract_count']}`",
+        f"- registry_scope_counts: `{json.dumps(matrix['registry_scope_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- all_registered_archetypes_have_exactly_one_runtime_status_row: `{matrix['all_registered_archetypes_have_exactly_one_runtime_status_row']}`",
+        f"- missing_parity_source_row_count: `{matrix['missing_parity_source_row_count']}`",
+        f"- duplicate_parity_source_row_count: `{matrix['duplicate_parity_source_row_count']}`",
+        f"- extra_parity_source_row_count: `{matrix['extra_parity_source_row_count']}`",
         f"- all_contracts_have_runtime_status_axes: `{matrix['all_contracts_have_runtime_status_axes']}`",
         f"- all_contracts_have_memory_card: `{matrix['all_contracts_have_memory_card']}`",
         f"- all_contracts_have_source_route_patterns: `{matrix['all_contracts_have_source_route_patterns']}`",
@@ -1038,8 +1101,15 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
         "## Verdict",
         "",
         f"- registry_contract_count: `{matrix['registry_contract_count']}`",
+        f"- canonical_c_archetype_count: `{matrix['canonical_c_archetype_count']}`",
         f"- c01_to_c32_contract_count: `{matrix['c01_to_c32_contract_count']}`",
+        f"- cross_archetype_contract_count: `{matrix['cross_archetype_contract_count']}`",
         f"- r13_cross_archetype_contract_count: `{matrix['r13_cross_archetype_contract_count']}`",
+        f"- registry_scope_counts: `{json.dumps(matrix['registry_scope_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- all_registered_archetypes_have_exactly_one_runtime_status_row: `{matrix['all_registered_archetypes_have_exactly_one_runtime_status_row']}`",
+        f"- missing_parity_source_row_count: `{matrix['missing_parity_source_row_count']}`",
+        f"- duplicate_parity_source_row_count: `{matrix['duplicate_parity_source_row_count']}`",
+        f"- extra_parity_source_row_count: `{matrix['extra_parity_source_row_count']}`",
         f"- source_route_ready_count: `{matrix['source_route_ready_count']}`",
         f"- memory_card_ready_count: `{matrix['memory_card_ready_count']}`",
         f"- meaningful_runtime_parity_ready: `{matrix['meaningful_runtime_parity_ready']}`",

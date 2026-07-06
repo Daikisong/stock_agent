@@ -28,8 +28,13 @@
 - research memory follow-up task count: `17`
 - research memory follow-up by archetype: `{"C01_ORDER_BACKLOG_MARGIN_BRIDGE": 5, "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 2, "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 3, "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 4, "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": 3}`
 - all-archetype runtime status rows: `36`
-- C01~C32 contract rows: `32`
-- R13 cross-archetype rows: `4`
+- canonical C contract rows: `32`
+- cross-archetype rows: `4`
+- registry scope counts: `{"C_CANONICAL_ARCHETYPE": 32, "R13_CROSS_ARCHETYPE": 4}`
+- exact registry row coverage: `True`
+- missing parity source rows: `0`
+- duplicate parity source rows: `0`
+- extra parity source rows: `0`
 - all contracts have memory card: `True`
 - all contracts have source route patterns: `True`
 - runtime proof counts: `{"NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP": 1, "NOT_PROVEN_PLANNER_ONLY": 1, "NOT_PROVEN_SCORE_PATH_ONLY": 4, "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM": 27, "NOT_PROVEN_TARGET_MATERIALIZATION_REQUIRED": 3}`
