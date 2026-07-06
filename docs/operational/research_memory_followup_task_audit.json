@@ -5,444 +5,6 @@
   "task_count": 17,
   "tasks": [
     {
-      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
-      "company_name": "코나아이",
-      "disallowed_sources": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending"
-      ],
-      "expected_claim_schema": {
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "named_customer_quality",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT"
-      },
-      "fallback_if_not_found": "PENDING_SOURCE",
-      "memory_card_policy": "READY_FOR_ROUTING",
-      "missing_primitive": "named_customer_quality",
-      "query_intents": [
-        "Ask LLM for bounded official-first ways to verify current named_customer_quality; do not create deterministic query strings."
-      ],
-      "schema_version": "e2r_research_memory_followup_task_v1",
-      "source_route_priority": [
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "SECONDARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "SECONDARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
-      "symbol": "052400",
-      "task_id": "RMFOLLOW-052400-C01_ORDER_BACKLOG_MARGIN_BRIDGE-named_customer_quality",
-      "why_this_primitive_matters": "named_customer_quality is required by the archetype memory card before the production thesis can be treated as complete."
-    },
-    {
-      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
-      "company_name": "코나아이",
-      "disallowed_sources": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending"
-      ],
-      "expected_claim_schema": {
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "order_backlog_to_sales",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT"
-      },
-      "fallback_if_not_found": "PENDING_SOURCE",
-      "memory_card_policy": "READY_FOR_ROUTING",
-      "missing_primitive": "order_backlog_to_sales",
-      "query_intents": [
-        "Ask LLM for bounded official-first ways to verify current order_backlog_to_sales; do not create deterministic query strings."
-      ],
-      "schema_version": "e2r_research_memory_followup_task_v1",
-      "source_route_priority": [
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "SECONDARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "SECONDARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
-      "symbol": "052400",
-      "task_id": "RMFOLLOW-052400-C01_ORDER_BACKLOG_MARGIN_BRIDGE-order_backlog_to_sales",
-      "why_this_primitive_matters": "order_backlog_to_sales is required by the archetype memory card before the production thesis can be treated as complete."
-    },
-    {
-      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
-      "company_name": "코나아이",
-      "disallowed_sources": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending"
-      ],
-      "expected_claim_schema": {
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "contract_quality",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT"
-      },
-      "fallback_if_not_found": "PENDING_SOURCE",
-      "memory_card_policy": "READY_FOR_ROUTING",
-      "missing_primitive": "contract_quality",
-      "query_intents": [
-        "Ask LLM for bounded official-first ways to verify current contract_quality; do not create deterministic query strings."
-      ],
-      "schema_version": "e2r_research_memory_followup_task_v1",
-      "source_route_priority": [
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "SECONDARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "SECONDARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
-      "symbol": "052400",
-      "task_id": "RMFOLLOW-052400-C01_ORDER_BACKLOG_MARGIN_BRIDGE-contract_quality",
-      "why_this_primitive_matters": "contract_quality is required by the archetype memory card before the production thesis can be treated as complete."
-    },
-    {
-      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
-      "company_name": "코나아이",
-      "disallowed_sources": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending"
-      ],
-      "expected_claim_schema": {
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "fcf_quality_score",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT"
-      },
-      "fallback_if_not_found": "PENDING_SOURCE",
-      "memory_card_policy": "READY_FOR_ROUTING",
-      "missing_primitive": "fcf_quality_score",
-      "query_intents": [
-        "Ask LLM for bounded official-first ways to verify current fcf_quality_score; do not create deterministic query strings."
-      ],
-      "schema_version": "e2r_research_memory_followup_task_v1",
-      "source_route_priority": [
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "SECONDARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "FALLBACK",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
-      "symbol": "052400",
-      "task_id": "RMFOLLOW-052400-C01_ORDER_BACKLOG_MARGIN_BRIDGE-fcf_quality_score",
-      "why_this_primitive_matters": "fcf_quality_score is required by the archetype memory card before the production thesis can be treated as complete."
-    },
-    {
-      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
-      "company_name": "코나아이",
-      "disallowed_sources": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending"
-      ],
-      "expected_claim_schema": {
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "opm_expansion_pctp",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT"
-      },
-      "fallback_if_not_found": "PENDING_SOURCE",
-      "memory_card_policy": "READY_FOR_ROUTING",
-      "missing_primitive": "opm_expansion_pctp",
-      "query_intents": [
-        "Ask LLM for bounded official-first ways to verify current opm_expansion_pctp; do not create deterministic query strings."
-      ],
-      "schema_version": "e2r_research_memory_followup_task_v1",
-      "source_route_priority": [
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "SECONDARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "FALLBACK",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
-      "symbol": "052400",
-      "task_id": "RMFOLLOW-052400-C01_ORDER_BACKLOG_MARGIN_BRIDGE-opm_expansion_pctp",
-      "why_this_primitive_matters": "opm_expansion_pctp is required by the archetype memory card before the production thesis can be treated as complete."
-    },
-    {
-      "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
-      "company_name": "LG화학",
-      "disallowed_sources": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending"
-      ],
-      "expected_claim_schema": {
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "direct_company_cash_route",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT"
-      },
-      "fallback_if_not_found": "PENDING_SOURCE",
-      "memory_card_policy": "READY_FOR_ROUTING",
-      "missing_primitive": "direct_company_cash_route",
-      "query_intents": [
-        "Ask LLM for bounded official-first ways to verify current direct_company_cash_route; do not create deterministic query strings."
-      ],
-      "schema_version": "e2r_research_memory_followup_task_v1",
-      "source_route_priority": [
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "PRIMARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "SECONDARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": true,
-          "route_role": "FALLBACK",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
-      "symbol": "051910",
-      "task_id": "RMFOLLOW-051910-C31_POLICY_SUBSIDY_LEGISLATION_EVENT-direct_company_cash_route",
-      "why_this_primitive_matters": "direct_company_cash_route is required by the archetype memory card before the production thesis can be treated as complete."
-    },
-    {
       "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
       "company_name": "LG화학",
       "disallowed_sources": [
@@ -519,6 +81,79 @@
       "symbol": "051910",
       "task_id": "RMFOLLOW-051910-C31_POLICY_SUBSIDY_LEGISLATION_EVENT-policy_or_regulatory_confirmed",
       "why_this_primitive_matters": "policy_or_regulatory_confirmed is required by the archetype memory card before the production thesis can be treated as complete."
+    },
+    {
+      "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "company_name": "LG화학",
+      "disallowed_sources": [
+        "snippet_only_score",
+        "source_proxy_only",
+        "evidence_url_pending"
+      ],
+      "expected_claim_schema": {
+        "mapping_status": "ACCEPTED",
+        "primitive_id": "direct_company_cash_route",
+        "target_scope_status": "DIRECT",
+        "temporal_status": "CURRENT"
+      },
+      "fallback_if_not_found": "PENDING_SOURCE",
+      "memory_card_policy": "READY_FOR_ROUTING",
+      "missing_primitive": "direct_company_cash_route",
+      "query_intents": [
+        "Ask LLM for bounded official-first ways to verify current direct_company_cash_route; do not create deterministic query strings."
+      ],
+      "schema_version": "e2r_research_memory_followup_task_v1",
+      "source_route_priority": [
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "DART"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "CompanyGuide"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "SECONDARY",
+          "source_family": "IssuerIR"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "BrokerReportPDF"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "GeneralWebSearch"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "FALLBACK",
+          "source_family": "KIND"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "NaverSearch"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "ResearchMemory"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "TrustedNews"
+        }
+      ],
+      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
+      "symbol": "051910",
+      "task_id": "RMFOLLOW-051910-C31_POLICY_SUBSIDY_LEGISLATION_EVENT-direct_company_cash_route",
+      "why_this_primitive_matters": "direct_company_cash_route is required by the archetype memory card before the production thesis can be treated as complete."
     },
     {
       "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
@@ -822,6 +457,79 @@
       ],
       "expected_claim_schema": {
         "mapping_status": "ACCEPTED",
+        "primitive_id": "order_backlog_to_sales",
+        "target_scope_status": "DIRECT",
+        "temporal_status": "CURRENT"
+      },
+      "fallback_if_not_found": "PENDING_SOURCE",
+      "memory_card_policy": "READY_FOR_ROUTING",
+      "missing_primitive": "order_backlog_to_sales",
+      "query_intents": [
+        "Ask LLM for bounded official-first ways to verify current order_backlog_to_sales; do not create deterministic query strings."
+      ],
+      "schema_version": "e2r_research_memory_followup_task_v1",
+      "source_route_priority": [
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "DART"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "KIND"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "SECONDARY",
+          "source_family": "IssuerIR"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "SECONDARY",
+          "source_family": "CompanyGuide"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "BrokerReportPDF"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "GeneralWebSearch"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "NaverSearch"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "ResearchMemory"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "TrustedNews"
+        }
+      ],
+      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
+      "symbol": "047810",
+      "task_id": "RMFOLLOW-047810-C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG-order_backlog_to_sales",
+      "why_this_primitive_matters": "order_backlog_to_sales is required by the archetype memory card before the production thesis can be treated as complete."
+    },
+    {
+      "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "company_name": "한국항공우주",
+      "disallowed_sources": [
+        "snippet_only_score",
+        "source_proxy_only",
+        "evidence_url_pending"
+      ],
+      "expected_claim_schema": {
+        "mapping_status": "ACCEPTED",
         "primitive_id": "government_customer",
         "target_scope_status": "DIRECT",
         "temporal_status": "CURRENT"
@@ -886,8 +594,300 @@
       "why_this_primitive_matters": "government_customer is required by the archetype memory card before the production thesis can be treated as complete."
     },
     {
-      "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
-      "company_name": "한국항공우주",
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "company_name": "코나아이",
+      "disallowed_sources": [
+        "snippet_only_score",
+        "source_proxy_only",
+        "evidence_url_pending"
+      ],
+      "expected_claim_schema": {
+        "mapping_status": "ACCEPTED",
+        "primitive_id": "named_customer_quality",
+        "target_scope_status": "DIRECT",
+        "temporal_status": "CURRENT"
+      },
+      "fallback_if_not_found": "PENDING_SOURCE",
+      "memory_card_policy": "READY_FOR_ROUTING",
+      "missing_primitive": "named_customer_quality",
+      "query_intents": [
+        "Ask LLM for bounded official-first ways to verify current named_customer_quality; do not create deterministic query strings."
+      ],
+      "schema_version": "e2r_research_memory_followup_task_v1",
+      "source_route_priority": [
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "DART"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "KIND"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "SECONDARY",
+          "source_family": "IssuerIR"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "SECONDARY",
+          "source_family": "CompanyGuide"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "BrokerReportPDF"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "GeneralWebSearch"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "NaverSearch"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "ResearchMemory"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "TrustedNews"
+        }
+      ],
+      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
+      "symbol": "052400",
+      "task_id": "RMFOLLOW-052400-C01_ORDER_BACKLOG_MARGIN_BRIDGE-named_customer_quality",
+      "why_this_primitive_matters": "named_customer_quality is required by the archetype memory card before the production thesis can be treated as complete."
+    },
+    {
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "company_name": "코나아이",
+      "disallowed_sources": [
+        "snippet_only_score",
+        "source_proxy_only",
+        "evidence_url_pending"
+      ],
+      "expected_claim_schema": {
+        "mapping_status": "ACCEPTED",
+        "primitive_id": "contract_quality",
+        "target_scope_status": "DIRECT",
+        "temporal_status": "CURRENT"
+      },
+      "fallback_if_not_found": "PENDING_SOURCE",
+      "memory_card_policy": "READY_FOR_ROUTING",
+      "missing_primitive": "contract_quality",
+      "query_intents": [
+        "Ask LLM for bounded official-first ways to verify current contract_quality; do not create deterministic query strings."
+      ],
+      "schema_version": "e2r_research_memory_followup_task_v1",
+      "source_route_priority": [
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "DART"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "KIND"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "SECONDARY",
+          "source_family": "IssuerIR"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "SECONDARY",
+          "source_family": "CompanyGuide"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "BrokerReportPDF"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "GeneralWebSearch"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "NaverSearch"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "ResearchMemory"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "TrustedNews"
+        }
+      ],
+      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
+      "symbol": "052400",
+      "task_id": "RMFOLLOW-052400-C01_ORDER_BACKLOG_MARGIN_BRIDGE-contract_quality",
+      "why_this_primitive_matters": "contract_quality is required by the archetype memory card before the production thesis can be treated as complete."
+    },
+    {
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "company_name": "코나아이",
+      "disallowed_sources": [
+        "snippet_only_score",
+        "source_proxy_only",
+        "evidence_url_pending"
+      ],
+      "expected_claim_schema": {
+        "mapping_status": "ACCEPTED",
+        "primitive_id": "fcf_quality_score",
+        "target_scope_status": "DIRECT",
+        "temporal_status": "CURRENT"
+      },
+      "fallback_if_not_found": "PENDING_SOURCE",
+      "memory_card_policy": "READY_FOR_ROUTING",
+      "missing_primitive": "fcf_quality_score",
+      "query_intents": [
+        "Ask LLM for bounded official-first ways to verify current fcf_quality_score; do not create deterministic query strings."
+      ],
+      "schema_version": "e2r_research_memory_followup_task_v1",
+      "source_route_priority": [
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "DART"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "CompanyGuide"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "SECONDARY",
+          "source_family": "IssuerIR"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "BrokerReportPDF"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "GeneralWebSearch"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "FALLBACK",
+          "source_family": "KIND"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "NaverSearch"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "ResearchMemory"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "TrustedNews"
+        }
+      ],
+      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
+      "symbol": "052400",
+      "task_id": "RMFOLLOW-052400-C01_ORDER_BACKLOG_MARGIN_BRIDGE-fcf_quality_score",
+      "why_this_primitive_matters": "fcf_quality_score is required by the archetype memory card before the production thesis can be treated as complete."
+    },
+    {
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "company_name": "코나아이",
+      "disallowed_sources": [
+        "snippet_only_score",
+        "source_proxy_only",
+        "evidence_url_pending"
+      ],
+      "expected_claim_schema": {
+        "mapping_status": "ACCEPTED",
+        "primitive_id": "opm_expansion_pctp",
+        "target_scope_status": "DIRECT",
+        "temporal_status": "CURRENT"
+      },
+      "fallback_if_not_found": "PENDING_SOURCE",
+      "memory_card_policy": "READY_FOR_ROUTING",
+      "missing_primitive": "opm_expansion_pctp",
+      "query_intents": [
+        "Ask LLM for bounded official-first ways to verify current opm_expansion_pctp; do not create deterministic query strings."
+      ],
+      "schema_version": "e2r_research_memory_followup_task_v1",
+      "source_route_priority": [
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "DART"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "PRIMARY",
+          "source_family": "CompanyGuide"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "SECONDARY",
+          "source_family": "IssuerIR"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "BrokerReportPDF"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "GeneralWebSearch"
+        },
+        {
+          "official_first_required": true,
+          "route_role": "FALLBACK",
+          "source_family": "KIND"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "NaverSearch"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "DISCOVERY_ONLY",
+          "source_family": "ResearchMemory"
+        },
+        {
+          "official_first_required": false,
+          "route_role": "FALLBACK",
+          "source_family": "TrustedNews"
+        }
+      ],
+      "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
+      "symbol": "052400",
+      "task_id": "RMFOLLOW-052400-C01_ORDER_BACKLOG_MARGIN_BRIDGE-opm_expansion_pctp",
+      "why_this_primitive_matters": "opm_expansion_pctp is required by the archetype memory card before the production thesis can be treated as complete."
+    },
+    {
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "company_name": "코나아이",
       "disallowed_sources": [
         "snippet_only_score",
         "source_proxy_only",
@@ -954,8 +954,8 @@
         }
       ],
       "success_condition": "accepted current direct claim with anchor mapped to missing primitive",
-      "symbol": "047810",
-      "task_id": "RMFOLLOW-047810-C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG-order_backlog_to_sales",
+      "symbol": "052400",
+      "task_id": "RMFOLLOW-052400-C01_ORDER_BACKLOG_MARGIN_BRIDGE-order_backlog_to_sales",
       "why_this_primitive_matters": "order_backlog_to_sales is required by the archetype memory card before the production thesis can be treated as complete."
     },
     {

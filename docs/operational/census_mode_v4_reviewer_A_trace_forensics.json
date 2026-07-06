@@ -1,5 +1,5 @@
 {
-  "critical_count": 5,
+  "critical_count": 1,
   "reviewer": "A_TRACE_FORENSICS",
   "schema_version": "e2r_census_v4_reviewer_v1",
   "verdict": "FAIL"

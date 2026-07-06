@@ -36,6 +36,59 @@ SOURCE_QUALITY_PRIORITY = {
     "SHADOW_ONLY": 1,
 }
 
+CLAIM_FAILURE_REPAIR_ACTIONS = {
+    "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": [
+        "DO_NOT_ACCEPT_GENERIC_DISCLOSURE_PROFILE_AS_PRIMITIVE_EVIDENCE",
+        "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_OR_SECTION_ROUTE",
+        "FETCH_FULL_SOURCE_ANCHOR_BEFORE_MAPPING_RETRY",
+    ],
+    "ROUTE_SIGNAL_FAMILY_MISMATCH": [
+        "ASK_LLM_TO_MATCH_SOURCE_FAMILY_TO_PRIMITIVE_FAMILY",
+        "REJECT_PREVIOUS_MISMATCHED_SOURCE_FAMILY_AS_SCORE_INPUT",
+        "REPLAN_SOURCE_TASK_BEFORE_MAPPING_RETRY",
+    ],
+    "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": [
+        "ASK_LLM_FOR_DOCUMENT_TYPE_COMPATIBLE_WITH_PRIMITIVE",
+        "VALIDATE_SOURCE_CLASS_BEFORE_FETCH_SELECTION",
+    ],
+    "TARGET_SCOPE_NOT_DIRECT": [
+        "ASK_LLM_FOR_DIRECT_TARGET_COMPANY_SOURCE",
+        "RECHECK_ENTITY_RELATION_BEFORE_SCORE_ELIGIBILITY",
+    ],
+    "SEMANTIC_REJECTED": [
+        "ASK_LLM_TO_EXTRACT_ONLY_LITERAL_SOURCE_BACKED_CLAIMS",
+        "RETRY_WITH_REJECTION_REASON_FEEDBACK",
+    ],
+    "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": [
+        "REPAIR_ORIGINAL_SOURCE_ANCHOR",
+        "REQUIRE_CANONICAL_SOURCE_OR_STABLE_DOCUMENT_LOCATOR",
+    ],
+    "PROVIDER_ERROR_SCORE_BLOCK": [
+        "RESOLVE_PROVIDER_OR_RECORD_EXTERNAL_BLOCKER",
+        "DO_NOT_CONVERT_PROVIDER_FAILURE_TO_LOW_SCORE",
+    ],
+    "PRIMITIVE_MAPPING_REJECTED": [
+        "ASK_LLM_FOR_CLAIM_THAT_DIRECTLY_SATISFIES_REQUIRED_PRIMITIVE",
+        "INSPECT_EVIDENCE_CONTRACT_MAPPING_BEFORE_SCORE_RETRY",
+    ],
+    "MAPPING_NOT_ACCEPTED": [
+        "RETRY_MAPPING_ONLY_AFTER_NEW_SOURCE_BACKED_CLAIM",
+        "DO_NOT_PROMOTE_REJECTED_MAPPING_TO_SCORE",
+    ],
+}
+
+CLAIM_FAILURE_REPAIR_HINT_BY_MODE = {
+    "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+    "ROUTE_SIGNAL_FAMILY_MISMATCH": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
+    "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": "FIX_SOURCE_CLASS_OR_DOCUMENT_TYPE_ROUTE",
+    "TARGET_SCOPE_NOT_DIRECT": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
+    "SEMANTIC_REJECTED": "RECHECK_EXTRACTOR_SEMANTICS_OR_QUERY_INTENT",
+    "ANCHOR_OR_SOURCE_LINEAGE_REJECTED": "REPAIR_ORIGINAL_SOURCE_ANCHOR_LINEAGE",
+    "PROVIDER_ERROR_SCORE_BLOCK": "RESOLVE_PROVIDER_OR_MARK_EXTERNAL_BLOCKER",
+    "PRIMITIVE_MAPPING_REJECTED": "INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE",
+    "MAPPING_NOT_ACCEPTED": "INSPECT_MAPPING_DECISION_AND_REQUIRED_PRIMITIVE",
+}
+
 
 def _stable_id(prefix: str, *parts: object, length: int = 20) -> str:
     raw = "|".join(str(part) for part in parts)
@@ -86,6 +139,95 @@ def _fallback_sources(route_priority: Iterable[Mapping[str, Any]]) -> list[str]:
         if family not in fallback:
             fallback.append(family)
     return fallback
+
+
+def _claim_failure_primary_mode(row: Mapping[str, Any]) -> str | None:
+    mode = row.get("claim_failure_primary_mode")
+    return str(mode) if mode else None
+
+
+def _claim_failure_repair_hint(row: Mapping[str, Any], primary_mode: str | None) -> str | None:
+    hint = row.get("claim_failure_repair_hint")
+    if hint:
+        return str(hint)
+    if primary_mode:
+        return CLAIM_FAILURE_REPAIR_HINT_BY_MODE.get(primary_mode)
+    return None
+
+
+def _claim_failure_top_modes(row: Mapping[str, Any]) -> list[dict[str, Any]]:
+    modes = row.get("claim_failure_top_modes") or []
+    if not isinstance(modes, list):
+        return []
+    normalized: list[dict[str, Any]] = []
+    for item in modes:
+        if not isinstance(item, Mapping):
+            continue
+        mode = item.get("mode")
+        if not mode:
+            continue
+        normalized.append({"mode": str(mode), "count": int(item.get("count") or 0)})
+    return normalized
+
+
+def _source_route_repair_actions(primary_mode: str | None) -> list[str]:
+    if not primary_mode:
+        return []
+    return list(CLAIM_FAILURE_REPAIR_ACTIONS.get(primary_mode, ["INSPECT_REJECTED_CLAIM_SAMPLE"]))
+
+
+def _planner_failure_feedback(
+    *,
+    row: Mapping[str, Any],
+    primitive: str,
+    primary_mode: str | None,
+    repair_hint: str | None,
+    repair_actions: list[str],
+) -> dict[str, Any]:
+    return {
+        "previous_claim_failure_primary_mode": primary_mode,
+        "previous_claim_failure_repair_hint": repair_hint,
+        "previous_claim_failure_top_modes": _claim_failure_top_modes(row),
+        "previous_top_claim_rejection_reasons": row.get("claim_mapping_top_rejection_reasons") or [],
+        "source_route_repair_actions": repair_actions,
+        "score_evidence_allowed_from_previous_rejected_claims": False,
+        "primitive_gap": primitive,
+    }
+
+
+def _failure_feedback_intent(
+    *,
+    primary_mode: str | None,
+    repair_hint: str | None,
+    repair_actions: list[str],
+) -> str | None:
+    if not primary_mode and not repair_actions:
+        return None
+    base = (
+        "Previous runtime attempt failed before accepted claim creation. "
+        f"primary_failure_mode={primary_mode or 'UNKNOWN'}; "
+        f"repair_hint={repair_hint or 'INSPECT_REJECTED_CLAIM_SAMPLE'}; "
+        f"required_repair_actions={', '.join(repair_actions) if repair_actions else 'INSPECT_REJECTED_CLAIM_SAMPLE'}."
+    )
+    if primary_mode == "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE":
+        return (
+            base
+            + " Do not reuse generic disclosure cover/profile/company overview text as score evidence; "
+            "ask the LLM planner for a source or document section that directly states the missing primitive."
+        )
+    if primary_mode == "ROUTE_SIGNAL_FAMILY_MISMATCH":
+        return (
+            base
+            + " The next source task must match the primitive family; a contract-style source cannot satisfy "
+            "a clinical/regulatory/retention/spread primitive unless the source text directly states that primitive."
+        )
+    if primary_mode == "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH":
+        return base + " Validate source class and document type before fetch selection."
+    if primary_mode == "TARGET_SCOPE_NOT_DIRECT":
+        return base + " Require direct target-company scope or explicit accepted relation adjudication before score use."
+    if primary_mode == "PROVIDER_ERROR_SCORE_BLOCK":
+        return base + " Provider failure must remain Source Pending or external blocker, not a low score."
+    return base + " Feed the prior rejection reason to the LLM planner and require a new source-backed claim before retry."
 
 
 def _candidate_primitives(row: Mapping[str, Any], card: Mapping[str, Any], *, max_primitives: int) -> list[str]:
@@ -274,6 +416,9 @@ def build_all_archetype_next_runtime_attempt_plan(
                 symbols = [candidate["symbol"] for candidate in target_candidates]
                 target_symbol_mode = "RESEARCH_MEMORY_TARGET_CANDIDATE"
         candidate_by_symbol = {candidate["symbol"]: candidate for candidate in target_candidates}
+        primary_failure_mode = _claim_failure_primary_mode(row)
+        repair_hint = _claim_failure_repair_hint(row, primary_failure_mode)
+        repair_actions = _source_route_repair_actions(primary_failure_mode)
         plan_rows.append(
             {
                 "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
@@ -298,6 +443,11 @@ def build_all_archetype_next_runtime_attempt_plan(
                 "llm_query_required": True,
                 "hardcoded_queries": [],
                 "hardcoded_query_count": 0,
+                "previous_claim_failure_primary_mode": primary_failure_mode,
+                "previous_claim_failure_repair_hint": repair_hint,
+                "previous_claim_failure_top_modes": _claim_failure_top_modes(row),
+                "source_route_repair_required": bool(repair_actions),
+                "source_route_repair_actions": repair_actions,
                 "next_required_action": row.get("next_required_action"),
                 "status_reason_ko": row.get("status_reason_ko"),
             }
@@ -334,6 +484,20 @@ def build_all_archetype_next_runtime_attempt_plan(
                             f"direct target-company evidence for primitive `{primitive}`."
                         )
                     ]
+                failure_feedback_intent = _failure_feedback_intent(
+                    primary_mode=primary_failure_mode,
+                    repair_hint=repair_hint,
+                    repair_actions=repair_actions,
+                )
+                if failure_feedback_intent:
+                    query_intents.append(failure_feedback_intent)
+                planner_failure_feedback = _planner_failure_feedback(
+                    row=row,
+                    primitive=primitive,
+                    primary_mode=primary_failure_mode,
+                    repair_hint=repair_hint,
+                    repair_actions=repair_actions,
+                )
                 source_task = {
                     "schema_version": "e2r_all_archetype_next_runtime_source_task_v1",
                     "task_id": task_id,
@@ -358,6 +522,11 @@ def build_all_archetype_next_runtime_attempt_plan(
                     "llm_query_required": True,
                     "llm_query_allowed": True,
                     "query_intents": query_intents,
+                    "planner_failure_feedback": planner_failure_feedback,
+                    "previous_claim_failure_primary_mode": primary_failure_mode,
+                    "previous_claim_failure_repair_hint": repair_hint,
+                    "source_route_repair_required": bool(repair_actions),
+                    "source_route_repair_actions": repair_actions,
                     "hardcoded_queries": [],
                     "hardcoded_query_count": 0,
                     "max_queries": 3,
@@ -407,10 +576,12 @@ def build_all_archetype_next_runtime_attempt_plan(
                             archetype_id,
                             str(proof_status),
                             primitive,
+                            str(primary_failure_mode or "NO_PREVIOUS_CLAIM_FAILURE_MODE"),
                         ],
                         "event_summary": (
                             f"planner input only. archetype_id={archetype_id}; primitive_gap={primitive}; "
-                            "source-backed Evidence OS claim required before any production score/stage use"
+                            "source-backed Evidence OS claim required before any production score/stage use; "
+                            f"previous_claim_failure_primary_mode={primary_failure_mode or 'NONE'}"
                         ),
                         "structured_payload": {
                             "attempt_id": attempt_id,
@@ -429,6 +600,11 @@ def build_all_archetype_next_runtime_attempt_plan(
                             "official_first_required": True,
                             "llm_query_required": True,
                             "query_intents": source_task["query_intents"],
+                            "planner_failure_feedback": planner_failure_feedback,
+                            "previous_claim_failure_primary_mode": primary_failure_mode,
+                            "previous_claim_failure_repair_hint": repair_hint,
+                            "source_route_repair_required": bool(repair_actions),
+                            "source_route_repair_actions": repair_actions,
                             "hardcoded_queries": [],
                             "hardcoded_query_count": 0,
                             "max_queries": 3,
@@ -445,6 +621,16 @@ def build_all_archetype_next_runtime_attempt_plan(
     seed_events.sort(key=lambda item: (str(item["target_archetype"]), str(item["primitive_gap"]), str(item.get("symbol"))))
     by_attempt_type = Counter(row["attempt_type"] for row in plan_rows)
     by_symbol_mode = Counter(row["target_symbol_mode"] for row in plan_rows)
+    by_repair_hint = Counter(
+        task["previous_claim_failure_repair_hint"]
+        for task in source_tasks
+        if task.get("source_route_repair_required") and task.get("previous_claim_failure_repair_hint")
+    )
+    by_primary_failure_mode = Counter(
+        task["previous_claim_failure_primary_mode"]
+        for task in source_tasks
+        if task.get("source_route_repair_required") and task.get("previous_claim_failure_primary_mode")
+    )
     materialized_candidate_rows = [
         row for row in plan_rows if row.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
     ]
@@ -456,6 +642,9 @@ def build_all_archetype_next_runtime_attempt_plan(
         "seed_event_count": len(seed_events),
         "attempt_type_counts": dict(sorted(by_attempt_type.items())),
         "target_symbol_mode_counts": dict(sorted(by_symbol_mode.items())),
+        "source_route_repair_task_count": sum(1 for task in source_tasks if task.get("source_route_repair_required")),
+        "source_route_repair_hint_counts": dict(sorted(by_repair_hint.items())),
+        "source_route_repair_primary_failure_mode_counts": dict(sorted(by_primary_failure_mode.items())),
         "research_memory_target_materialized_archetype_count": len(materialized_candidate_rows),
         "research_memory_target_materialized_task_count": sum(
             1 for task in source_tasks if task.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
@@ -498,6 +687,9 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         f"- seed_event_count: `{plan['seed_event_count']}`",
         f"- attempt_type_counts: `{json.dumps(plan['attempt_type_counts'], ensure_ascii=False, sort_keys=True)}`",
         f"- target_symbol_mode_counts: `{json.dumps(plan['target_symbol_mode_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- source_route_repair_task_count: `{plan.get('source_route_repair_task_count', 0)}`",
+        f"- source_route_repair_hint_counts: `{json.dumps(plan.get('source_route_repair_hint_counts', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- source_route_repair_primary_failure_mode_counts: `{json.dumps(plan.get('source_route_repair_primary_failure_mode_counts', {}), ensure_ascii=False, sort_keys=True)}`",
         f"- research_memory_target_materialized_archetype_count: `{plan.get('research_memory_target_materialized_archetype_count', 0)}`",
         f"- research_memory_target_materialized_task_count: `{plan.get('research_memory_target_materialized_task_count', 0)}`",
         f"- target_materialization_unresolved_archetype_count: `{plan.get('target_materialization_unresolved_archetype_count', 0)}`",
@@ -509,18 +701,20 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         "",
         "## Plan Rows",
         "",
-        "| archetype | priority | attempt type | symbol mode | primitives | current proof |",
-        "|---|---:|---|---|---|---|",
+        "| archetype | priority | attempt type | symbol mode | primitives | current proof | previous claim failure | repair hint |",
+        "|---|---:|---|---|---|---|---|---|",
     ]
     for row in plan.get("plan_rows", []):
         lines.append(
-            "| {archetype} | {priority} | {attempt_type} | {symbol_mode} | {primitives} | {proof} |".format(
+            "| {archetype} | {priority} | {attempt_type} | {symbol_mode} | {primitives} | {proof} | {failure} | {repair_hint} |".format(
                 archetype=row["archetype_id"],
                 priority=row["priority"],
                 attempt_type=row["attempt_type"],
                 symbol_mode=row["target_symbol_mode"],
                 primitives=", ".join(row["primitive_attempts"]),
                 proof=row["current_runtime_parity_proof_status"],
+                failure=row.get("previous_claim_failure_primary_mode") or "-",
+                repair_hint=row.get("previous_claim_failure_repair_hint") or "-",
             )
         )
     lines.extend(
@@ -529,6 +723,8 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
             "## Safety",
             "",
             "이 plan은 점수를 만들지 않는다. 모든 source task는 LLM query generation과 source-backed Evidence OS claim을 요구하며, 실행 전 score/stage promotion은 금지된다.",
+            "",
+            "이전 rejected claim은 점수 근거가 아니라 planner feedback으로만 쓰인다. 예를 들어 C08이 DART 표지/개요만 읽고 실패했다면 다음 source task에는 generic disclosure를 score evidence로 재사용하지 말고 primitive-specific source/section을 찾으라는 repair hint가 붙는다.",
             "",
         ]
     )

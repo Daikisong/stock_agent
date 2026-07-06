@@ -15,11 +15,12 @@ class FullThesisEvidenceCompletionSplitTests(unittest.TestCase):
         self.assertEqual(self.audit["archetype_balanced_status"], "ARCHETYPE_BALANCED_FULL_THESIS_PASS_FALSE")
 
     def test_required_positive_and_green_gaps_block_meaningful_pass(self) -> None:
-        self.assertEqual(self.audit["full_thesis_row_count"], 4)
-        self.assertEqual(self.audit["required_positive_missing_full_thesis_row_count"], 4)
-        self.assertEqual(self.audit["green_gap_full_thesis_row_count"], 4)
+        self.assertEqual(self.audit["full_thesis_row_count"], 1)
+        self.assertEqual(self.audit["required_positive_missing_full_thesis_row_count"], 1)
+        self.assertEqual(self.audit["green_gap_full_thesis_row_count"], 1)
         self.assertIn("REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROWS", self.audit["blockers"])
         self.assertIn("GREEN_GAP_ON_PROMOTED_ROWS", self.audit["blockers"])
+        self.assertIn("FULL_THESIS_ARCHETYPE_DIVERSITY_BELOW_MINIMUM", self.audit["blockers"])
 
 
 if __name__ == "__main__":

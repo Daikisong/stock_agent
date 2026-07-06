@@ -226,6 +226,513 @@ C28:
   → DART 표지/개요 말고 ARR/RPO/renewal/retention이 있는 IR/실적자료/리포트 route 필요
 ```
 
+## next attempt planner 연결
+
+이번 추가 패치에서는 위 failure mode를 문서에만 남기지 않고 다음 실행 입력에도 실었다.
+
+생성/갱신된 파일:
+
+```text
+docs/operational/all_archetype_next_runtime_attempt_plan_2026-07-05.json
+docs/operational/all_archetype_next_runtime_attempt_plan_2026-07-05.md
+docs/operational/all_archetype_next_runtime_attempt_plan.json
+docs/operational/all_archetype_next_runtime_source_tasks_2026-07-05.jsonl
+docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl
+```
+
+새로 들어간 필드:
+
+```text
+previous_claim_failure_primary_mode
+previous_claim_failure_repair_hint
+previous_claim_failure_top_modes
+source_route_repair_required
+source_route_repair_actions
+planner_failure_feedback
+```
+
+쉬운 예:
+
+```text
+이전 상태:
+  C08 source task
+  → "named_customer_quality를 찾아라"
+
+이번 상태:
+  C08 source task
+  → "named_customer_quality를 찾아라"
+  → "지난번에는 DART 표지/개요 같은 generic disclosure만 잡혀서 실패했다"
+  → "generic disclosure를 점수 근거로 재사용하지 말고 primitive-specific source/section을 LLM이 다시 찾게 하라"
+```
+
+현재 next attempt plan 요약:
+
+```text
+source_task_count: 111
+source_route_repair_task_count: 99
+REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE: 63
+REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY: 12
+TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION: 9
+FIX_SOURCE_CLASS_OR_DOCUMENT_TYPE_ROUTE: 3
+INSPECT_MAPPER_VS_EVIDENCE_CONTRACT_FOR_THIS_PRIMITIVE: 12
+```
+
+대표 행:
+
+```text
+C08:
+  previous_claim_failure_primary_mode: ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE
+  repair_hint: REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE
+  source_route_repair_actions:
+    - DO_NOT_ACCEPT_GENERIC_DISCLOSURE_PROFILE_AS_PRIMITIVE_EVIDENCE
+    - ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_OR_SECTION_ROUTE
+    - FETCH_FULL_SOURCE_ANCHOR_BEFORE_MAPPING_RETRY
+
+C24:
+  previous_claim_failure_primary_mode: ROUTE_SIGNAL_FAMILY_MISMATCH
+  repair_hint: REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY
+  source_route_repair_actions:
+    - ASK_LLM_TO_MATCH_SOURCE_FAMILY_TO_PRIMITIVE_FAMILY
+    - REJECT_PREVIOUS_MISMATCHED_SOURCE_FAMILY_AS_SCORE_INPUT
+    - REPLAN_SOURCE_TASK_BEFORE_MAPPING_RETRY
+```
+
+중요한 점:
+
+```text
+이전 rejected claim은 점수 근거가 아니다.
+이전 rejected claim은 다음 LLM planner가 같은 실패를 반복하지 않도록 주는 feedback이다.
+```
+
+## Research Brain planner context 연결
+
+위 feedback은 seed/source task 파일에만 있는 것이 아니라 실제 Research Brain v4 planner prompt context에도 들어가도록 연결했다.
+
+패치된 경로:
+
+```text
+all_archetype_next_runtime_seed_events_2026-07-05.jsonl
+→ CandidateEventV2.structured_payload
+→ _evidence_context_by_event()
+→ full_thesis_queue_context
+→ build_v4_planner_prompt_payload()
+→ LLM planner prompt
+```
+
+planner context에 노출되는 안전 필드:
+
+```text
+previous_claim_failure_primary_mode
+previous_claim_failure_repair_hint
+previous_claim_failure_top_modes
+source_route_repair_required
+source_route_repair_actions
+planner_failure_feedback
+```
+
+단, `planner_failure_feedback` 안에서도 점수/Stage로 오해될 수 있는 `score_evidence_allowed_from_previous_rejected_claims` 같은 필드는 prompt context에서 제외한다.
+
+쉬운 예:
+
+```text
+C08 seed:
+  previous_claim_failure_primary_mode = ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE
+
+LLM planner가 보게 되는 의미:
+  "지난번에는 DART 표지/회사 개요 같은 일반 문서로 실패했다.
+   이번에는 repeat_order/customer_quality를 직접 말하는 IR/원문/리포트 section을 찾아라."
+```
+
+추가 prompt rule:
+
+```text
+If existing_evidence_summary.full_thesis_queue_context.planner_failure_feedback is non-empty,
+treat it as source-route repair guidance only. It is not score evidence.
+```
+
+## 2026-07-05 next-attempt 실제 실행 결과
+
+위 next attempt seed/source task를 실제 Census/Research Brain 경로에 넣어 한 번 돌렸다.
+
+실행 루트:
+
+```text
+output/census_v4/2026-07-05-goal4-repair-feedback-next-runtime-attempt
+```
+
+실행 조건 요약:
+
+```text
+as_of_date: 2026-07-05
+run_mode: BRAIN_AND_WEB_ACQUISITION_ENABLED
+brain_web_mode: enabled
+planner_provider: real
+source_acquisition: live_full_bounded
+seed_events: docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl
+target_gate: full_thesis
+```
+
+최종 runtime progress:
+
+```text
+status: COMPLETED
+runtime_elapsed_seconds: 4704.916067
+runtime_budget_exhausted: false
+planner_run_count: 458
+real_provider_success_count: 64
+source_task_execution_count: 450
+accepted_claim_count: 28
+watchlist_item_count: 458
+```
+
+중요한 해석:
+
+```text
+이 실행은 "완료"가 아니라 "실패 위치를 실제 runtime에서 더 좁힌 실행"이다.
+```
+
+쉬운 예:
+
+```text
+예전:
+  "C08은 claim이 없다"
+
+이번:
+  "C08은 planner seed 3개가 들어갔고,
+   일부 source task까지 갔지만,
+   named_customer_quality/repeat_order_confirmed claim을 못 만들었다"
+```
+
+## 최신 acceptance verdict
+
+`docs/operational/census_mode_v4_acceptance_report.md` 기준 최종 판정:
+
+```text
+Final verdict: NOT_READY
+target_gate_pass: false
+goal_completion_ready: false
+Brain/Web attempt verdict: ATTEMPTED_NOT_CUTOVER_READY
+Brain/Web readiness gate: BLOCKED
+full_thesis_production_pass_allowed: false
+```
+
+대표 blocker:
+
+```text
+web/LLM accepted claim count is zero
+Brain/Web source task budget caps were exceeded: 2
+Brain/Web evidence documents include snapshot:// sources
+Brain/Web stage row was promoted despite blockers
+brain stage promotion verdict is not PROMOTION_APPLIED: FAIL_UNSAFE_PROMOTION
+Brain/Web operational minimum web/LLM accepted claims not met: 0/3
+```
+
+즉 111개 seed를 실제로 넣고 돌렸지만, 운영 cutover 기준에서는 아직 통과가 아니다.
+
+쉬운 예:
+
+```text
+서류 접수 111건
+→ 64건은 담당자가 실제로 봄
+→ 450개 source task 실행
+→ 일부 claim은 생김
+→ 하지만 "웹/LLM이 직접 찾아낸 운영 admissible claim"은 0
+→ 운영 합격은 차단
+```
+
+## seed materialization 결과
+
+`docs/operational/census_mode_v4_full_thesis_seed_materialization_audit.json` 기준:
+
+```text
+seed_event_count: 111
+planner_run_seed_count: 111
+real_provider_success_seed_count: 64
+source_task_execution_seed_count: 64
+stagecourt_trace_seed_count: 9
+accepted_claim_seed_count: 9
+full_thesis_promoted_seed_count: 1
+actual_materialization_pass_allowed: false
+ledger_integrity_pass_allowed: false
+verdict: FAIL
+```
+
+status 분포:
+
+```text
+ACCEPTED_CLAIM_NOT_CREATED: 55
+PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS: 47
+STAGECOURT_READY_NOT_PROMOTED: 8
+FULL_THESIS_PROMOTED: 1
+```
+
+아키타입별 canary:
+
+```text
+C06:
+  3 seed
+  FULL_THESIS_PROMOTED: 1
+  STAGECOURT_READY_NOT_PROMOTED: 2
+
+C08:
+  3 seed
+  ACCEPTED_CLAIM_NOT_CREATED: 2
+  PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS: 1
+
+C15:
+  3 seed
+  ACCEPTED_CLAIM_NOT_CREATED: 2
+  PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS: 1
+
+C17:
+  3 seed
+  ACCEPTED_CLAIM_NOT_CREATED: 2
+  PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS: 1
+
+C24:
+  3 seed
+  ACCEPTED_CLAIM_NOT_CREATED: 3
+
+C28:
+  3 seed
+  ACCEPTED_CLAIM_NOT_CREATED: 2
+  PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS: 1
+
+C31:
+  3 seed
+  STAGECOURT_READY_NOT_PROMOTED: 3
+```
+
+해석:
+
+```text
+C05만 돌던 문제는 최신 실행에서 그대로 반복되지는 않았다.
+실제로 C06/C08/C15/C17/C24/C28/C31 등 여러 아키타입 seed가 runtime에 들어갔다.
+
+하지만 대부분은 accepted claim을 만들지 못하거나,
+StageCourt까지 가도 production full thesis로 승격되지 못했다.
+```
+
+## production full-thesis row 최신 상태
+
+`docs/operational/census_mode_v4_full_thesis_production_audit.json` 기준:
+
+```text
+production_full_thesis_row_count: 1
+production_symbols: [005930]
+production_pass_allowed: false
+production_full_thesis_row_with_required_positive_missing_primitives_count: 1
+production_full_thesis_row_with_green_gap_primitives_count: 1
+```
+
+실제 production row:
+
+```text
+symbol: 005930
+company: 삼성전자
+primary_archetype: C06_HBM_MEMORY_CUSTOMER_CAPACITY
+stage_scope: FULL_THESIS
+score_scope: FULL_E2R_100
+operator_stage_use: FULL_THESIS_STAGE
+operator_score_use: FULL_E2R_SCORE
+verified_score: 44.1667
+canonical_stage/base_stage: 1
+score_valid_status: FINAL
+score_source: BRAIN_WEB_PRODUCTION_FULL_THESIS_STAGECOURT
+stagecourt_trace_id: SCT-BRAIN-1e999f3308d1bc0f3d6b
+candidate_event_id: CEV4-RTATTEMPT-7f33db04360ffa26109b
+```
+
+하지만 C06 Green primitive는 아직 비어 있다.
+
+```text
+present_green_primitives:
+  revenue_visibility_contract
+
+missing_green_primitives:
+  customer_preorder_or_allocation
+  hbm_capacity_constraint
+  hbm_capacity_pre_sold
+```
+
+쉬운 예:
+
+```text
+"삼성전자 C06 full-thesis row가 하나 생김"
+은 맞다.
+
+하지만
+"삼성전자 C06 thesis가 충분히 검증되어 Yellow/Green 후보가 됨"
+은 아니다.
+
+현재는 한 장의 답안지가 채점대에 올라갔지만,
+핵심 서술형 3문제가 비어 있는 상태다.
+```
+
+## 삼성전자/하이닉스 최신 분리
+
+`docs/operational/census_mode_v4_sample_leaf_bundle.jsonl` 기준:
+
+```text
+삼성전자 005930:
+  stage_scope: FULL_THESIS
+  primary_archetype: C06_HBM_MEMORY_CUSTOMER_CAPACITY
+  verified_score: 44.1667
+  operator_stage_use: FULL_THESIS_STAGE
+
+SK하이닉스 000660:
+  stage_scope: CENSUS_EVENT_BOARD
+  primary_archetype: C05_EPC_MEGA_CONTRACT_MARGIN_GAP
+  verified_score: None
+  score_scope: EVENT_WEIGHTED_PARTIAL
+  operator_stage_use: NOT_FULL_THESIS_STAGE
+```
+
+즉 하이닉스는 최신 실행에서도 production full-thesis row가 아니다. event board row일 뿐이다.
+
+쉬운 예:
+
+```text
+삼성전자:
+  정식 시험지 1장이 생겼지만 점수가 낮고 핵심 문항이 비어 있음
+
+하이닉스:
+  출석부/관찰 기록은 있지만 정식 시험지가 아직 없음
+```
+
+## score formula trace 수동 감사
+
+promoted 삼성전자 full-thesis row는 `verified_score=44.1667`로 표시된다.
+
+해당 trace가 참조하는 score contribution ID:
+
+```text
+SCON-bfd7a3d6631bb56363d3
+SCON-d7019aca95b85d4c2f1d
+SCON-a4e2031c4cd3cfea3aed
+SCON-16f929b96dd4c8288ac2
+SCON-be2c2c174d0496c5bd90
+SCON-f662a81b9edd62c4b24f
+```
+
+persisted `score_contributions.jsonl`에서 확인되는 raw component:
+
+```text
+eps_fcf_explosion: 20.0 / 20.0
+earnings_visibility: 6.6667 / 20.0
+bottleneck_pricing: 5.0 / 20.0
+market_mispricing: 3.75 / 15.0
+valuation_rerating: 3.75 / 15.0
+information_confidence: 1.6667 / 5.0
+raw sum: 40.8334
+```
+
+수동 감사상 주의점:
+
+```text
+stagecourt trace score_interval: 44.1667
+referenced persisted contribution raw sum: 40.8334
+```
+
+따라서 이 row는 production full-thesis row로 materialized 되었더라도, 다음 패치에서 `stagecourt score_interval == referenced score_contribution raw sum 또는 명시적 normalization formula`를 감사해야 한다.
+
+쉬운 예:
+
+```text
+성적표 총점에는 44.1667이라고 적혀 있는데,
+첨부된 과목 점수를 더하면 40.8334가 나온다.
+
+둘 중 하나가 틀렸다고 단정하기 전에,
+"숨은 보정식이 있는지" 또는 "trace가 다른 candidate의 contribution ID를 재사용했는지"를 검사해야 한다.
+```
+
+이 때문에 latest production row도 Goal4 완료 증거로 쓰면 안 된다.
+
+## 이전 C05-only 문제에 대한 최신 답
+
+이전 감사 질문:
+
+```text
+왜 production FULL_THESIS 10개가 전부 C05인가?
+```
+
+최신 실행 기준으로는 이 상태가 그대로 유지되지는 않는다.
+
+```text
+latest production_full_thesis_row_count: 1
+latest production_symbols: [005930]
+latest production primary_archetype: C06_HBM_MEMORY_CUSTOMER_CAPACITY
+```
+
+다만 이것이 문제가 해결됐다는 뜻은 아니다.
+
+정확한 현재 문제:
+
+```text
+예전 문제:
+  full thesis row가 C05에 편중됨
+
+현재 문제:
+  C05 편중은 깨졌지만,
+  production full-thesis row가 1개뿐이고,
+  그 1개도 required-positive/Green primitive가 비어 있으며,
+  score formula trace도 추가 감사가 필요함
+```
+
+주요 아키타입 blocked reason:
+
+```text
+C06:
+  삼성전자 row 1개 promoted.
+  하지만 customer_preorder_or_allocation, hbm_capacity_constraint, hbm_capacity_pre_sold가 UNKNOWN.
+
+C08:
+  named_customer_quality/repeat_order_confirmed가 accepted claim으로 닫히지 않음.
+
+C15:
+  spread_expansion/utilization_rate가 accepted claim으로 닫히지 않음.
+
+C17:
+  raw assertion은 많이 뽑았지만 spread_expansion/utilization_rate accepted claim이 0.
+
+C24:
+  approval_not_confirmed/binary_event_unresolved/trial_quality_visible 모두 accepted claim 0.
+
+C28:
+  nrr/retention_or_renewal accepted claim 0, arr_growth_visible은 planner success 미달.
+
+C31:
+  accepted claim은 일부 있으나 StageCourt_READY_NOT_PROMOTED.
+```
+
+## 성공과 실패를 분리한 결론
+
+성공한 것:
+
+```text
+1. next attempt feedback이 seed/source task/planner prompt까지 실제로 전달됐다.
+2. 111개 seed가 Research Brain에 소비됐다.
+3. real planner call 111개, 성공 64개가 기록됐다.
+4. source task 450개가 실행됐다.
+5. C05 외 C06/C08/C15/C17/C24/C28/C31 등이 runtime에 들어갔다.
+6. production full-thesis row가 하나 materialized 됐다.
+```
+
+실패한 것:
+
+```text
+1. Goal4 target_gate=full_thesis는 여전히 blocked.
+2. web/LLM accepted claim은 0개라 Brain/Web cutover 불가.
+3. full thesis production pass_allowed=false.
+4. 삼성전자 production row도 C06 Green/required-positive primitive가 비어 있다.
+5. 하이닉스는 production full-thesis row가 아니다.
+6. persisted score contribution 합과 stagecourt score_interval이 수동 감사에서 맞지 않는다.
+```
+
+한 줄 결론:
+
+> 최신 실행은 C05-only 편중을 일부 깨고 C06 production row까지 만들었지만, 운영 가능한 full thesis 완성은 아니다. 지금은 "실제 runtime이 어디서 막히는지"가 더 명확해진 상태이며, 다음 패치는 accepted claim 생성과 score trace closure를 동시에 고쳐야 한다.
+
 ## 자기참조 버그 수정
 
 새로 만든 parity matrix/summary가 연구 reverse scanner에 다시 흡수되는 문제가 발견됐다.
@@ -257,16 +764,38 @@ parity matrix가 research inventory source_file로 재흡수되지 않음
 아직 goal4 complete가 아닌 이유:
 
 1. C08/C15/C17/C24/C28 등 대부분 아키타입은 source task는 실행됐지만 accepted claim이 0이다.
-2. C01/C03/C05/C06/C31은 accepted claim이 있거나 score path가 일부 닫혔지만 required-positive primitive가 남아 있다.
+2. C01/C03/C05/C06/C31 일부는 accepted claim이 있거나 StageCourt까지 갔지만 required-positive/Green primitive가 남아 있다.
 3. R13 일부는 실제 target symbol materialization 전 단계에 머물러 있다.
-4. full thesis row가 있는 4개도 Green/required-positive gap rate가 `1.0`이다.
+4. 최신 production full-thesis row는 1개뿐이고, 그 1개도 required-positive/Green gap이 남아 있다.
+5. full thesis refresh queue 후보는 84개지만, queue row는 운영 Stage가 아니다.
+6. blocked production candidate 8개는 follow-up source task/seed로 다시 내려갔고 아직 점수/Stage credit을 받으면 안 된다.
 
 ## 테스트
 
 통과:
 
 ```bash
-PYTHONPATH=src python -m unittest tests.test_research_reverse_case_extractor tests.test_all_archetype_runtime_status_matrix tests.test_all_archetype_runtime_parity_matrix tests.test_research_to_runtime_parity_goal4 -v
+PYTHONPATH=src python -m unittest tests.test_all_archetype_next_attempt_plan tests.test_all_archetype_runtime_execution_manifest tests.test_research_to_runtime_parity_goal4 -v
+```
+
+관련 테스트 결과:
+
+```text
+Ran 21 tests in 20.887s
+OK
+```
+
+planner context 연결 추가 검증:
+
+```bash
+PYTHONPATH=src python -m unittest tests.test_research_brain_v4_operational_modes tests.test_all_archetype_next_attempt_plan tests.test_all_archetype_runtime_execution_manifest tests.test_research_to_runtime_parity_goal4 -v
+```
+
+결과:
+
+```text
+Ran 97 tests in 30.476s
+OK
 ```
 
 이후 전체 테스트도 통과했다.
@@ -278,22 +807,22 @@ PYTHONPATH=src python -m unittest discover -s tests -v
 전체 결과:
 
 ```text
-Ran 5256 tests in 427.232s
+Ran 5260 tests in 437.389s
 OK
 ```
 
 ## 다음 작업 방향
 
-다음 패치는 `claim_failure_primary_mode`별로 실제 source route를 고쳐야 한다. 지금은 단순 mapper 튜닝 문제가 아니라, 상당수 canary에서 **원문 자체가 필수 primitive를 직접 말하지 않는 source route 문제**로 보인다.
+이번 패치에서 `claim_failure_primary_mode`는 next attempt planner와 seed/source task feedback까지 연결됐다. 하지만 아직 다음 실행에서 accepted claim이 실제로 생성된 것은 아니므로 Goal4 완료는 아니다.
 
 우선순위:
 
-1. `ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE` 행은 DART 표지/개요에서 멈추지 말고 primitive-specific section/source로 reroute한다.
-2. `ROUTE_SIGNAL_FAMILY_MISMATCH` 행은 trial gap에 contract 공시가 들어오는 식의 source family mismatch를 planner feedback으로 되돌린다.
-3. `source_class_document_type_mismatch`와 `source_task_provider_error_score_block`을 source family별로 external blocker인지 route 설계 문제인지 분리한다.
-4. C08/C15/C17/C24/C28 canary부터 accepted claim 1개 이상을 만들 수 있는 운영 source route를 닫는다.
-5. 그 다음 required-positive gap이 남은 C01/C03/C05/C06/C31의 missing primitive별 follow-up task를 actual source/claim으로 연결한다.
+1. next attempt seed/source task를 실제 Census/Brain 실행에 넣어 C08/C15/C17/C24/C28 canary부터 accepted claim 1개 이상을 만든다.
+2. `ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE` 행에서 generic DART cover/profile이 다시 들어오면 실행 실패로 audit한다.
+3. `ROUTE_SIGNAL_FAMILY_MISMATCH` 행에서 primitive family와 source family가 계속 어긋나면 planner feedback loop를 더 강하게 만든다.
+4. `source_class_document_type_mismatch`와 `source_task_provider_error_score_block`을 source family별로 external blocker인지 route 설계 문제인지 분리한다.
+5. required-positive gap이 남은 C01/C03/C05/C06/C31의 missing primitive별 follow-up task를 actual source/claim으로 연결한다.
 
 한 줄로 말하면:
 
-> 지금은 전 아키타입에 "어느 단계와 어떤 실패 축에서 막혔는지"뿐 아니라 "어떤 claim/quote가 왜 rejected 됐고 어떤 계층을 고쳐야 하는지"까지 붙었다. 다음은 이 failure mode를 planner/source route feedback으로 연결해 canary부터 실제 accepted claim을 만들어야 한다.
+> 지금은 전 아키타입에 "어느 단계와 어떤 실패 축에서 막혔는지"뿐 아니라 "어떤 claim/quote가 왜 rejected 됐고 어떤 계층을 고쳐야 하는지"가 붙었고, 그 정보가 다음 seed/source task까지 전달된다. 다음은 이 feedback을 실제 실행해서 canary부터 accepted claim을 만들어야 한다.

@@ -189,8 +189,8 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "case_role_counts": {
-        "4B": 51,
-        "4C": 381,
+        "4B": 52,
+        "4C": 380,
         "guard": 41,
         "positive": 3,
         "profile_cap": 1,

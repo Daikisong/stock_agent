@@ -12,15 +12,15 @@
     "stale_cache_used_count": 0,
     "symbol_without_any_census_time_source_attempt_count": 0
   },
-  "cutover_replay_only_symbol_count": 67,
+  "cutover_replay_only_symbol_count": 66,
   "mode_note": "all current scored rows are ledger/leaf-refresh rows; this audit proves coverage honesty, not live full-thesis operation",
   "newly_verified_claim_count": 10,
   "operational_live_source_coverage_pass": false,
-  "provider_cache_used_count": 662,
+  "provider_cache_used_count": 542,
   "provider_gap_attempt_count": 3391,
   "reused_or_imported_claim_count": 92,
   "schema_version": "e2r_census_v4_source_coverage_audit_v1",
-  "scored_row_count": 68,
+  "scored_row_count": 66,
   "source_family_attempt_distribution": {
     "CompanyGuide/ReportRadar": 3391,
     "ExistingEvidenceOSLedger": 3391,

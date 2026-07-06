@@ -775,6 +775,111 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertNotIn("stage_promotion_allowed_before_execution", full_thesis_context)
         self._assert_no_forbidden_planner_context_keys(full_thesis_context)
 
+    def test_goal4_repair_feedback_seed_context_is_visible_to_planner_without_score_context(self):
+        event = replace(
+            _planner_event_with_id("CEV4-RTATTEMPT-C08", symbol="058470", company_name="리노공업"),
+            source_family="AllArchetypeRuntimeParityFollowUp",
+            source_id="docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl",
+            event_type="all_archetype_runtime_parity_follow_up_seed",
+            event_title="C08 runtime parity repair seed",
+            event_summary=(
+                "planner input only. archetype_id=C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY; "
+                "primitive_gap=repeat_order_confirmed; previous_claim_failure_primary_mode="
+                "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE"
+            ),
+            raw_reason_codes=(
+                "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
+                "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+                "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
+                "repeat_order_confirmed",
+                "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+            ),
+            structured_payload={
+                "seed_role": "planner_input_only",
+                "follow_up_task_id": "RTTASK-C08-UNIT",
+                "target_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+                "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
+                "primitive_gap": "repeat_order_confirmed",
+                "query_intents": [
+                    "Ask the LLM planner for bounded official-first queries that verify current direct evidence.",
+                    "Previous runtime attempt failed before accepted claim creation.",
+                ],
+                "previous_claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+                "previous_claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+                "previous_claim_failure_top_modes": [
+                    {"mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE", "count": 40},
+                    {"mode": "PRIMITIVE_MAPPING_REJECTED", "count": 53},
+                ],
+                "source_route_repair_required": True,
+                "source_route_repair_actions": [
+                    "DO_NOT_ACCEPT_GENERIC_DISCLOSURE_PROFILE_AS_PRIMITIVE_EVIDENCE",
+                    "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_OR_SECTION_ROUTE",
+                    "FETCH_FULL_SOURCE_ANCHOR_BEFORE_MAPPING_RETRY",
+                ],
+                "planner_failure_feedback": {
+                    "previous_claim_failure_primary_mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+                    "previous_claim_failure_repair_hint": "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+                    "previous_claim_failure_top_modes": [
+                        {"mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE", "count": 40},
+                    ],
+                    "previous_top_claim_rejection_reasons": [
+                        {"reason": "primitive_mapping_rejected", "count": 263},
+                    ],
+                    "source_route_repair_actions": [
+                        "DO_NOT_ACCEPT_GENERIC_DISCLOSURE_PROFILE_AS_PRIMITIVE_EVIDENCE",
+                        "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_OR_SECTION_ROUTE",
+                    ],
+                    "score_evidence_allowed_from_previous_rejected_claims": False,
+                    "primitive_gap": "repeat_order_confirmed",
+                },
+            },
+        )
+
+        context = _evidence_context_by_event(
+            events=(event,),
+            config=ProductionShadowV4Config(
+                as_of_date="2026-06-29",
+                planner_provider="real",
+                source_acquisition="live_full_bounded",
+            ),
+        )
+
+        full_thesis_context = context[event.candidate_event_id]["full_thesis_queue_context"]
+        self.assertEqual(
+            full_thesis_context["previous_claim_failure_primary_mode"],
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+        )
+        self.assertEqual(
+            full_thesis_context["previous_claim_failure_repair_hint"],
+            "REROUTE_TO_PRIMITIVE_SPECIFIC_SECTION_OR_SOURCE",
+        )
+        self.assertTrue(full_thesis_context["source_route_repair_required"])
+        self.assertIn(
+            "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_OR_SECTION_ROUTE",
+            full_thesis_context["source_route_repair_actions"],
+        )
+        self.assertEqual(
+            full_thesis_context["planner_failure_feedback"]["primitive_gap"],
+            "repeat_order_confirmed",
+        )
+        self.assertNotIn(
+            "score_evidence_allowed_from_previous_rejected_claims",
+            full_thesis_context["planner_failure_feedback"],
+        )
+        self._assert_no_forbidden_planner_context_keys(full_thesis_context)
+
+        payload = build_v4_planner_prompt_payload(
+            events=(event,),
+            memory_cards=load_v4_cards(),
+            existing_evidence_by_event_id=context,
+        )
+        prompt_context = payload["events"][0]["existing_evidence_summary"]["full_thesis_queue_context"]
+        self.assertEqual(
+            prompt_context["planner_failure_feedback"]["previous_claim_failure_primary_mode"],
+            "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
+        )
+        self.assertTrue(any("planner_failure_feedback" in rule for rule in payload["rules"]))
+
     def test_existing_evidence_summary_removes_forbidden_score_stage_keys_recursively(self):
         event = replace(
             _planner_event(),

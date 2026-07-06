@@ -2586,8 +2586,16 @@ def _full_thesis_queue_context_from_structured_payload(structured: Mapping[str, 
         "max_candidates_per_query",
         "max_fetches_per_task",
         "stop_condition",
+        "previous_claim_failure_primary_mode",
+        "previous_claim_failure_repair_hint",
+        "previous_claim_failure_top_modes",
+        "source_route_repair_required",
+        "source_route_repair_actions",
     )
     context = {key: structured.get(key) for key in keys if key in structured}
+    planner_failure_feedback = _planner_failure_feedback_context_from_structured_payload(structured)
+    if planner_failure_feedback:
+        context["planner_failure_feedback"] = planner_failure_feedback
     if "source_stage_scope" in structured:
         context["event_board_scope"] = structured.get("source_stage_scope")
     if "source_stage_signal" in structured:
@@ -2597,6 +2605,21 @@ def _full_thesis_queue_context_from_structured_payload(structured: Mapping[str, 
     if "source_failed_stage_gates" in structured:
         context["source_failed_gate_ids"] = structured.get("source_failed_stage_gates")
     return context
+
+
+def _planner_failure_feedback_context_from_structured_payload(structured: Mapping[str, Any]) -> dict[str, Any]:
+    feedback = structured.get("planner_failure_feedback")
+    if not isinstance(feedback, Mapping):
+        return {}
+    allowed_keys = (
+        "previous_claim_failure_primary_mode",
+        "previous_claim_failure_repair_hint",
+        "previous_claim_failure_top_modes",
+        "previous_top_claim_rejection_reasons",
+        "source_route_repair_actions",
+        "primitive_gap",
+    )
+    return {key: feedback.get(key) for key in allowed_keys if key in feedback}
 
 
 def _retry_planner_for_missing_external_web_plan(

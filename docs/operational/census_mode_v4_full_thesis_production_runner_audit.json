@@ -1,10 +1,10 @@
 {
   "blocked_candidate_archetype_counts": {
-    "C01_ORDER_BACKLOG_MARGIN_BRIDGE": 2,
+    "C01_ORDER_BACKLOG_MARGIN_BRIDGE": 1,
     "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 1,
     "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 1,
     "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 2,
-    "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": 2
+    "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": 3
   },
   "blocked_candidate_blocker_counts": {
     "source_pending_required_or_green_primitives": 8
@@ -29,33 +29,33 @@
   ],
   "blocked_candidate_follow_up_rule": "A blocked production full-thesis candidate does not receive score or Stage credit. Each missing Green primitive is exported as an official-first bounded SourceTask shell with empty query_intents; a matching planner-input-only seed event is also exported for the next Research Brain run. The planner must generate the actual queries, and source-backed Evidence OS claims must close the unresolved material gap before any FULL_THESIS promotion.",
   "blocked_candidate_follow_up_seed_event_count": 16,
-  "blocked_candidate_follow_up_seed_event_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-materialized-v1/full_thesis_blocker_follow_up_seed_events.jsonl",
+  "blocked_candidate_follow_up_seed_event_path": "output/census_v4/2026-07-05-goal4-repair-feedback-next-runtime-attempt/full_thesis_blocker_follow_up_seed_events.jsonl",
   "blocked_candidate_follow_up_source_task_count": 16,
-  "blocked_candidate_follow_up_source_task_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-materialized-v1/full_thesis_blocker_follow_up_source_tasks.jsonl",
+  "blocked_candidate_follow_up_source_task_path": "output/census_v4/2026-07-05-goal4-repair-feedback-next-runtime-attempt/full_thesis_blocker_follow_up_source_tasks.jsonl",
   "blocked_candidate_missing_green_primitive_counts": {
     "contract_amount_to_prior_sales": 1,
     "contract_duration_months": 1,
-    "contract_quality": 2,
+    "contract_quality": 1,
     "customer_preorder_or_allocation": 2,
-    "direct_company_cash_route": 2,
-    "fcf_quality_score": 2,
+    "direct_company_cash_route": 3,
+    "fcf_quality_score": 1,
     "government_customer": 1,
     "hbm_capacity_constraint": 2,
     "hbm_capacity_pre_sold": 2,
     "margin_bridge_visible": 1,
-    "named_customer_quality": 2,
-    "opm_expansion_pctp": 2,
-    "order_backlog_to_sales": 3,
-    "policy_or_regulatory_confirmed": 2,
-    "subsidy_capture_visible": 2
+    "named_customer_quality": 1,
+    "opm_expansion_pctp": 1,
+    "order_backlog_to_sales": 2,
+    "policy_or_regulatory_confirmed": 3,
+    "subsidy_capture_visible": 3
   },
   "blocked_candidate_missing_green_primitive_counts_by_archetype": {
     "C01_ORDER_BACKLOG_MARGIN_BRIDGE": {
-      "contract_quality": 2,
-      "fcf_quality_score": 2,
-      "named_customer_quality": 2,
-      "opm_expansion_pctp": 2,
-      "order_backlog_to_sales": 2
+      "contract_quality": 1,
+      "fcf_quality_score": 1,
+      "named_customer_quality": 1,
+      "opm_expansion_pctp": 1,
+      "order_backlog_to_sales": 1
     },
     "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": {
       "government_customer": 1,
@@ -72,26 +72,26 @@
       "hbm_capacity_pre_sold": 2
     },
     "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": {
-      "direct_company_cash_route": 2,
-      "policy_or_regulatory_confirmed": 2,
-      "subsidy_capture_visible": 2
+      "direct_company_cash_route": 3,
+      "policy_or_regulatory_confirmed": 3,
+      "subsidy_capture_visible": 3
     }
   },
   "blocked_candidate_present_primitive_counts": {
-    "delivery_schedule": 4,
+    "delivery_schedule": 3,
     "export_contract": 1,
-    "implementation_timeline": 2,
+    "implementation_timeline": 3,
     "medium_term_revision_visibility": 2,
     "revenue_visibility_contract": 2
   },
   "blocked_candidate_source_pending_gap_primitive_counts": {
     "customer_preorder_or_allocation": 1,
     "direct_company_cash_route": 1,
-    "government_customer": 1,
     "hbm_capacity_constraint": 1,
     "margin_bridge_visible": 1,
-    "named_customer_quality": 2,
+    "named_customer_quality": 1,
     "order_backlog_to_sales": 1,
+    "policy_or_regulatory_confirmed": 1,
     "subsidy_capture_visible": 1
   },
   "blocked_candidates": [
@@ -99,88 +99,80 @@
       "blockers": [
         "source_pending_required_or_green_primitives"
       ],
-      "candidate_event_id": "CEV4-RTATTEMPT-b15ba430971dcb87d9de",
+      "candidate_event_id": "CEV4-RTATTEMPT-7223994a62eb5c5bd10e",
       "candidate_source": "stagecourt_trace_direct_scan",
-      "company_name": "코나아이",
+      "company_name": "LG화학",
       "missing_green_primitives": [
-        "contract_quality",
-        "fcf_quality_score",
-        "named_customer_quality",
-        "opm_expansion_pctp",
-        "order_backlog_to_sales"
+        "direct_company_cash_route",
+        "policy_or_regulatory_confirmed",
+        "subsidy_capture_visible"
       ],
       "missing_required_primitives": [
-        "contract_quality",
-        "fcf_quality_score",
-        "named_customer_quality",
-        "opm_expansion_pctp",
-        "order_backlog_to_sales"
+        "direct_company_cash_route",
+        "policy_or_regulatory_confirmed",
+        "subsidy_capture_visible"
       ],
       "present_primitives": [
-        "delivery_schedule"
+        "implementation_timeline"
       ],
-      "primary_archetype": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "primary_archetype": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
       "source_linkage_proof": [
         {
-          "anchor_id": "ANCH-1a557fb5d2e8adac448f",
-          "candidate_event_id": "CEV4-RTATTEMPT-b15ba430971dcb87d9de",
-          "claim_id": "CLM-e4021ef4e091b4ba8b5b",
-          "document_id": "DOC-e117deca9800e56723e6",
+          "anchor_id": "ANCH-238dc3b05ed88a12a5d2",
+          "candidate_event_id": "CEV4-RTATTEMPT-7223994a62eb5c5bd10e",
+          "claim_id": "CLM-6bc29e3f2a3f94dad8b4",
+          "document_id": "DOC-f0d1698815a08139df3f",
           "fetched_document_ids": [
-            "DOC-e117deca9800e56723e6"
+            "DOC-f0d1698815a08139df3f"
           ],
           "linked": true,
           "source_task_ids": [
-            "CEV4-RTATTEMPT-b15ba430971dcb87d9de-official-backlog-sales",
-            "RSTASKV4DARTSTATUS-d7621f6df2450be17e528109"
+            "CEV4-RTATTEMPT-7223994a62eb5c5bd10e-official-policy-confirmation",
+            "RSTASKV4DARTSTATUS-3c7cddabd8b2065e78daeda5"
           ]
         }
       ],
       "source_pending_gap_primitives": [
-        "named_customer_quality",
-        "order_backlog_to_sales"
+        "policy_or_regulatory_confirmed"
       ],
       "source_pending_gap_proof": [
         {
           "accepted_claim_ids": [
-            "CLM-e4021ef4e091b4ba8b5b",
-            "CLM-db6c4769f3960ece7162"
+            "CLM-6bc29e3f2a3f94dad8b4"
           ],
-          "candidate_event_id": "CEV4-RTATTEMPT-b15ba430971dcb87d9de",
-          "primitive_gap": "order_backlog_to_sales",
+          "candidate_event_id": "CEV4-RTATTEMPT-7223994a62eb5c5bd10e",
+          "primitive_gap": "policy_or_regulatory_confirmed",
           "primitive_gap_unsatisfied_ids": [
-            "order_backlog_to_sales"
+            "policy_or_regulatory_confirmed"
           ],
           "provider_errors": [
             "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
           ],
           "status": "EVIDENCE_OS_ACCEPTED",
           "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
-          "task_id": "CEV4-RTATTEMPT-b15ba430971dcb87d9de-official-backlog-sales"
+          "task_id": "CEV4-RTATTEMPT-7223994a62eb5c5bd10e-official-policy-confirmation"
         },
         {
           "accepted_claim_ids": [],
-          "candidate_event_id": "CEV4-RTATTEMPT-b15ba430971dcb87d9de",
-          "primitive_gap": "named_customer_quality",
+          "candidate_event_id": "CEV4-RTATTEMPT-7223994a62eb5c5bd10e",
+          "primitive_gap": "policy_or_regulatory_confirmed",
           "primitive_gap_unsatisfied_ids": [],
           "provider_errors": [
             "trusted_news_provider_not_configured; general search is not a score source"
           ],
           "status": "PROVIDER_FAILED",
           "stop_reason": "live_official_provider_failed_web_no_evidence_found",
-          "task_id": "CEV4-RTATTEMPT-b15ba430971dcb87d9de-external-customer-quality"
+          "task_id": "CEV4-RTATTEMPT-7223994a62eb5c5bd10e-original-policy-source-fallback"
         }
       ],
       "source_pending_green_primitives": [
-        "named_customer_quality",
-        "order_backlog_to_sales"
+        "policy_or_regulatory_confirmed"
       ],
       "source_pending_required_primitives": [
-        "named_customer_quality",
-        "order_backlog_to_sales"
+        "policy_or_regulatory_confirmed"
       ],
-      "stagecourt_trace_id": "SCT-BRAIN-39d902764d9b9a85e494",
-      "symbol": "052400"
+      "stagecourt_trace_id": "SCT-BRAIN-2779f0abe828bdc9e060",
+      "symbol": "051910"
     },
     {
       "blockers": [
@@ -214,7 +206,7 @@
           ],
           "linked": true,
           "source_task_ids": [
-            "CEV4-RTATTEMPT-777cd64015fdd246108d-T1",
+            "CEV4-RTATTEMPT-777cd64015fdd246108d-C31-OFFICIAL-CASH-ROUTE",
             "RSTASKV4DARTSTATUS-ab9f2a79496301eba7658fac"
           ]
         }
@@ -237,7 +229,7 @@
           ],
           "status": "EVIDENCE_OS_ACCEPTED",
           "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
-          "task_id": "CEV4-RTATTEMPT-777cd64015fdd246108d-T1"
+          "task_id": "CEV4-RTATTEMPT-777cd64015fdd246108d-C31-OFFICIAL-CASH-ROUTE"
         }
       ],
       "source_pending_green_primitives": [
@@ -317,7 +309,7 @@
           ],
           "status": "PROVIDER_FAILED",
           "stop_reason": "live_official_provider_failed_web_no_evidence_found",
-          "task_id": "RTTASK-6189396797d441d2270a-bounded-report-margin"
+          "task_id": "RTTASK-6189396797d441d2270a-bounded-report-margin-bridge"
         }
       ],
       "source_pending_green_primitives": [
@@ -328,102 +320,6 @@
       ],
       "stagecourt_trace_id": "SCT-BRAIN-4816899e6e492d401370",
       "symbol": "003380"
-    },
-    {
-      "blockers": [
-        "source_pending_required_or_green_primitives"
-      ],
-      "candidate_event_id": "CEV4-RTATTEMPT-ae45306bb30a8d49119a",
-      "candidate_source": "stagecourt_trace_direct_scan",
-      "company_name": "한국항공우주",
-      "missing_green_primitives": [
-        "government_customer",
-        "order_backlog_to_sales"
-      ],
-      "missing_required_primitives": [
-        "government_customer",
-        "order_backlog_to_sales"
-      ],
-      "present_primitives": [
-        "delivery_schedule",
-        "export_contract"
-      ],
-      "primary_archetype": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
-      "source_linkage_proof": [
-        {
-          "anchor_id": "ANCH-8ad4e2f35b1e5b62dcf9",
-          "candidate_event_id": "CEV4-RTATTEMPT-ae45306bb30a8d49119a",
-          "claim_id": "CLM-baaa698f081e5507e425",
-          "document_id": "DOC-7282744619c3f4271ced",
-          "fetched_document_ids": [
-            "DOC-7282744619c3f4271ced"
-          ],
-          "linked": true,
-          "source_task_ids": [
-            "CEV4-RTATTEMPT-ae45306bb30a8d49119a-C03-official-government-customer",
-            "RSTASKV4DARTSTATUS-c9bf57edff08bb407efb7133"
-          ]
-        },
-        {
-          "anchor_id": "ANCH-8ad4e2f35b1e5b62dcf9",
-          "candidate_event_id": "CEV4-RTATTEMPT-ae45306bb30a8d49119a",
-          "claim_id": "CLM-bf8f8e60c5568310ca15",
-          "document_id": "DOC-7282744619c3f4271ced",
-          "fetched_document_ids": [
-            "DOC-7282744619c3f4271ced"
-          ],
-          "linked": true,
-          "source_task_ids": [
-            "CEV4-RTATTEMPT-ae45306bb30a8d49119a-C03-official-government-customer",
-            "RSTASKV4DARTSTATUS-c9bf57edff08bb407efb7133"
-          ]
-        }
-      ],
-      "source_pending_gap_primitives": [
-        "government_customer"
-      ],
-      "source_pending_gap_proof": [
-        {
-          "accepted_claim_ids": [
-            "CLM-baaa698f081e5507e425",
-            "CLM-bf8f8e60c5568310ca15",
-            "CLM-750a4c2cba8ef60341d6"
-          ],
-          "candidate_event_id": "CEV4-RTATTEMPT-ae45306bb30a8d49119a",
-          "primitive_gap": "government_customer",
-          "primitive_gap_unsatisfied_ids": [
-            "government_customer"
-          ],
-          "provider_errors": [
-            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
-          ],
-          "status": "EVIDENCE_OS_ACCEPTED",
-          "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
-          "task_id": "CEV4-RTATTEMPT-ae45306bb30a8d49119a-C03-official-government-customer"
-        },
-        {
-          "accepted_claim_ids": [],
-          "candidate_event_id": "CEV4-RTATTEMPT-ae45306bb30a8d49119a",
-          "primitive_gap": "government_customer",
-          "primitive_gap_unsatisfied_ids": [
-            "government_customer"
-          ],
-          "provider_errors": [
-            "trusted_news_provider_not_configured; general search is not a score source"
-          ],
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
-          "task_id": "CEV4-RTATTEMPT-ae45306bb30a8d49119a-C03-external-government-customer"
-        }
-      ],
-      "source_pending_green_primitives": [
-        "government_customer"
-      ],
-      "source_pending_required_primitives": [
-        "government_customer"
-      ],
-      "stagecourt_trace_id": "SCT-BRAIN-6ce6d25418afd9458003",
-      "symbol": "047810"
     },
     {
       "blockers": [
@@ -457,7 +353,7 @@
           ],
           "linked": true,
           "source_task_ids": [
-            "CEV4-RTATTEMPT-c704deba5226456d22b7-C31-official-subsidy-route",
+            "CEV4-RTATTEMPT-c704deba5226456d22b7-C31-official-subsidy-capture",
             "RSTASKV4DARTSTATUS-f716fd8779f4afc811ad529f"
           ]
         }
@@ -480,7 +376,19 @@
           ],
           "status": "EVIDENCE_OS_ACCEPTED",
           "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
-          "task_id": "CEV4-RTATTEMPT-c704deba5226456d22b7-C31-official-subsidy-route"
+          "task_id": "CEV4-RTATTEMPT-c704deba5226456d22b7-C31-official-subsidy-capture"
+        },
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-RTATTEMPT-c704deba5226456d22b7",
+          "primitive_gap": "subsidy_capture_visible",
+          "primitive_gap_unsatisfied_ids": [],
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source"
+          ],
+          "status": "PROVIDER_FAILED",
+          "stop_reason": "live_official_no_fetchable_document",
+          "task_id": "CEV4-RTATTEMPT-c704deba5226456d22b7-C31-original-newsroom-policy-cash"
         }
       ],
       "source_pending_green_primitives": [
@@ -491,6 +399,88 @@
       ],
       "stagecourt_trace_id": "SCT-BRAIN-890c6b2fe0387dff44ea",
       "symbol": "051910"
+    },
+    {
+      "blockers": [
+        "source_pending_required_or_green_primitives"
+      ],
+      "candidate_event_id": "CEV4-RTATTEMPT-d4fcad8ba6f4d6ad60e0",
+      "candidate_source": "stagecourt_trace_direct_scan",
+      "company_name": "한국항공우주",
+      "missing_green_primitives": [
+        "government_customer",
+        "order_backlog_to_sales"
+      ],
+      "missing_required_primitives": [
+        "government_customer",
+        "order_backlog_to_sales"
+      ],
+      "present_primitives": [
+        "delivery_schedule",
+        "export_contract"
+      ],
+      "primary_archetype": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "source_linkage_proof": [
+        {
+          "anchor_id": "ANCH-8ad4e2f35b1e5b62dcf9",
+          "candidate_event_id": "CEV4-RTATTEMPT-d4fcad8ba6f4d6ad60e0",
+          "claim_id": "CLM-baaa698f081e5507e425",
+          "document_id": "DOC-7282744619c3f4271ced",
+          "fetched_document_ids": [
+            "DOC-7282744619c3f4271ced"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-RTATTEMPT-d4fcad8ba6f4d6ad60e0-official-backlog-to-sales",
+            "RSTASKV4DARTSTATUS-3bd833d4c5f6a374d30b4114"
+          ]
+        },
+        {
+          "anchor_id": "ANCH-8ad4e2f35b1e5b62dcf9",
+          "candidate_event_id": "CEV4-RTATTEMPT-d4fcad8ba6f4d6ad60e0",
+          "claim_id": "CLM-bf8f8e60c5568310ca15",
+          "document_id": "DOC-7282744619c3f4271ced",
+          "fetched_document_ids": [
+            "DOC-7282744619c3f4271ced"
+          ],
+          "linked": true,
+          "source_task_ids": [
+            "CEV4-RTATTEMPT-d4fcad8ba6f4d6ad60e0-official-backlog-to-sales",
+            "RSTASKV4DARTSTATUS-3bd833d4c5f6a374d30b4114"
+          ]
+        }
+      ],
+      "source_pending_gap_primitives": [
+        "order_backlog_to_sales"
+      ],
+      "source_pending_gap_proof": [
+        {
+          "accepted_claim_ids": [
+            "CLM-baaa698f081e5507e425",
+            "CLM-bf8f8e60c5568310ca15",
+            "CLM-750a4c2cba8ef60341d6"
+          ],
+          "candidate_event_id": "CEV4-RTATTEMPT-d4fcad8ba6f4d6ad60e0",
+          "primitive_gap": "order_backlog_to_sales",
+          "primitive_gap_unsatisfied_ids": [
+            "order_backlog_to_sales"
+          ],
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "status": "EVIDENCE_OS_ACCEPTED",
+          "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
+          "task_id": "CEV4-RTATTEMPT-d4fcad8ba6f4d6ad60e0-official-backlog-to-sales"
+        }
+      ],
+      "source_pending_green_primitives": [
+        "order_backlog_to_sales"
+      ],
+      "source_pending_required_primitives": [
+        "order_backlog_to_sales"
+      ],
+      "stagecourt_trace_id": "SCT-BRAIN-932ff48987571721e877",
+      "symbol": "047810"
     },
     {
       "blockers": [
@@ -528,7 +518,7 @@
           ],
           "linked": true,
           "source_task_ids": [
-            "CEV4-RTATTEMPT-d280cbad656403f01e41-C01-official-customer-quality",
+            "CEV4-RTATTEMPT-d280cbad656403f01e41-C01-ir-customer-quality",
             "RSTASKV4DARTSTATUS-8dcecd0cfbde0446452fc458"
           ]
         }
@@ -552,7 +542,19 @@
           ],
           "status": "EVIDENCE_OS_ACCEPTED",
           "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
-          "task_id": "CEV4-RTATTEMPT-d280cbad656403f01e41-C01-official-customer-quality"
+          "task_id": "CEV4-RTATTEMPT-d280cbad656403f01e41-C01-ir-customer-quality"
+        },
+        {
+          "accepted_claim_ids": [],
+          "candidate_event_id": "CEV4-RTATTEMPT-d280cbad656403f01e41",
+          "primitive_gap": "named_customer_quality",
+          "primitive_gap_unsatisfied_ids": [],
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source"
+          ],
+          "status": "PROVIDER_FAILED",
+          "stop_reason": "live_official_no_fetchable_document",
+          "task_id": "CEV4-RTATTEMPT-d280cbad656403f01e41-C01-original-customer-quality-fallback"
         }
       ],
       "source_pending_green_primitives": [
@@ -598,7 +600,7 @@
           ],
           "linked": true,
           "source_task_ids": [
-            "RTTASK-dd31858583100a02119b-01",
+            "RTTASK-dd31858583100a02119b-official-capacity-section",
             "RSTASKV4CGSTATUS-c6eb18b58c173c5665029e3a"
           ]
         },
@@ -634,19 +636,21 @@
           ],
           "status": "EVIDENCE_OS_ACCEPTED",
           "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
-          "task_id": "RTTASK-dd31858583100a02119b-01"
+          "task_id": "RTTASK-dd31858583100a02119b-official-capacity-section"
         },
         {
           "accepted_claim_ids": [],
           "candidate_event_id": "CEV4-RTATTEMPT-dd31858583100a02119b",
           "primitive_gap": "hbm_capacity_constraint",
-          "primitive_gap_unsatisfied_ids": [],
-          "provider_errors": [
-            "no_live_connector_for_requested_source_class"
+          "primitive_gap_unsatisfied_ids": [
+            "hbm_capacity_constraint"
           ],
-          "status": "PROVIDER_FAILED",
-          "stop_reason": "live_official_provider_failed_web_no_evidence_found",
-          "task_id": "RTTASK-dd31858583100a02119b-02"
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source"
+          ],
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "task_id": "RTTASK-dd31858583100a02119b-original-capacity-report-news"
         }
       ],
       "source_pending_green_primitives": [
@@ -692,7 +696,7 @@
           ],
           "linked": true,
           "source_task_ids": [
-            "RTTASK-91c6a0e1b2fb0fbdcaf2-01",
+            "RTTASK-91c6a0e1b2fb0fbdcaf2-official-allocation",
             "RSTASKV4DARTSTATUS-775faf32c9723d4d6270f491"
           ]
         },
@@ -728,19 +732,21 @@
           ],
           "status": "EVIDENCE_OS_ACCEPTED",
           "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
-          "task_id": "RTTASK-91c6a0e1b2fb0fbdcaf2-01"
+          "task_id": "RTTASK-91c6a0e1b2fb0fbdcaf2-official-allocation"
         },
         {
           "accepted_claim_ids": [],
           "candidate_event_id": "CEV4-RTATTEMPT-91c6a0e1b2fb0fbdcaf2",
           "primitive_gap": "customer_preorder_or_allocation",
-          "primitive_gap_unsatisfied_ids": [],
-          "provider_errors": [
-            "no_live_connector_for_requested_source_class"
+          "primitive_gap_unsatisfied_ids": [
+            "customer_preorder_or_allocation"
           ],
-          "status": "PROVIDER_FAILED",
-          "stop_reason": "live_official_provider_failed_web_no_evidence_found",
-          "task_id": "RTTASK-91c6a0e1b2fb0fbdcaf2-02"
+          "provider_errors": [
+            "trusted_news_provider_not_configured; general search is not a score source"
+          ],
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "task_id": "RTTASK-91c6a0e1b2fb0fbdcaf2-original-report-or-news"
         }
       ],
       "source_pending_green_primitives": [
@@ -754,26 +760,19 @@
     }
   ],
   "blockers": [],
-  "candidate_row_count": 13,
+  "candidate_row_count": 9,
   "candidate_source_counts": {
-    "stagecourt_trace_direct_scan": 13
+    "stagecourt_trace_direct_scan": 9
   },
   "full_thesis_refresh_queue_candidate_count": 85,
   "production_mode_requested": true,
-  "promoted_full_thesis_row_count": 4,
-  "promoted_full_thesis_trace_count": 5,
+  "promoted_full_thesis_row_count": 1,
+  "promoted_full_thesis_trace_count": 1,
   "promoted_stagecourt_trace_ids": [
-    "SCT-BRAIN-0710b21533e729f08224",
-    "SCT-BRAIN-1e999f3308d1bc0f3d6b",
-    "SCT-BRAIN-207430ee6ac5863a4247",
-    "SCT-BRAIN-25123f741d2406009ae8",
-    "SCT-BRAIN-54b921940121a0f5c2cd"
+    "SCT-BRAIN-1e999f3308d1bc0f3d6b"
   ],
   "promoted_symbols": [
-    "003380",
-    "005930",
-    "047810",
-    "052400"
+    "005930"
   ],
   "refresh_queue_materialized_candidate_count": 3,
   "refresh_queue_to_candidate_rule": "A full_thesis_refresh_queue row becomes a production candidate only after Research Brain or official-full-thesis execution produces a direct stagecourt_traces row for the same symbol. Queue rows alone never promote Stage.",

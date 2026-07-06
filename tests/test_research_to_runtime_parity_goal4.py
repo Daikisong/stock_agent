@@ -36,29 +36,26 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         self.assertIn("REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROWS", self.audit["blockers"])
         self.assertIn("GREEN_GAP_ON_PROMOTED_ROWS", self.audit["blockers"])
 
-    def test_c05_only_full_thesis_rows_do_not_satisfy_runtime_parity(self) -> None:
-        self.assertEqual(self.audit["full_thesis_row_count"], 4)
-        self.assertEqual(self.audit["distinct_full_thesis_archetype_count"], 4)
+    def test_single_c06_full_thesis_row_does_not_satisfy_runtime_parity(self) -> None:
+        self.assertEqual(self.audit["full_thesis_row_count"], 1)
+        self.assertEqual(self.audit["distinct_full_thesis_archetype_count"], 1)
         self.assertEqual(
             self.audit["full_thesis_by_archetype"],
             {
-                "C01_ORDER_BACKLOG_MARGIN_BRIDGE": 1,
-                "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 1,
-                "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 1,
                 "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 1,
             },
         )
-        self.assertEqual(self.audit["c05_full_thesis_share"], 0.25)
+        self.assertEqual(self.audit["c05_full_thesis_share"], 0.0)
         self.assertEqual(self.audit["required_positive_missing_full_thesis_row_rate"], 1.0)
         self.assertEqual(self.audit["green_gap_full_thesis_row_rate"], 1.0)
         self.assertNotIn("C05_FULL_THESIS_MONOCULTURE", self.audit["blockers"])
         self.assertIn("MANDATORY_ARCHETYPE_FULL_THESIS_ROW_MISSING", self.audit["blockers"])
 
         c05 = self.by_prefix["C05"]
-        self.assertEqual(c05["runtime_parity_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_ONLY")
-        self.assertEqual(c05["runtime_full_thesis_row_count"], 1)
-        self.assertEqual(c05["runtime_full_thesis_row_with_required_positive_missing_count"], 1)
-        self.assertIn("REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROW", c05["blocker_classes"])
+        self.assertEqual(c05["runtime_parity_status"], "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP")
+        self.assertEqual(c05["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c05["runtime_full_thesis_row_with_required_positive_missing_count"], 0)
+        self.assertIn("FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP", c05["blocker_classes"])
 
     def test_mandatory_canaries_are_not_misreported_as_production_full_thesis(self) -> None:
         self.assertEqual(self.audit["mandatory_archetype_attempt_count"], 6)
@@ -110,7 +107,7 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         self.assertEqual(v2["score_path_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_PENDING")
         self.assertEqual(v2["meaningful_evidence_status"], "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE")
         self.assertEqual(v2["distinct_full_thesis_archetype_count"], matrix["distinct_full_thesis_archetype_count"])
-        self.assertEqual(v2["required_positive_missing_full_thesis_row_count"], 4)
+        self.assertEqual(v2["required_positive_missing_full_thesis_row_count"], 1)
 
     def test_cli_fail_flags_return_failure_for_current_c05_monoculture(self) -> None:
         exit_code = parity_cli_main(
@@ -141,7 +138,7 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
 
         self.assertEqual(audit["status"], "BALANCED_FULL_THESIS_SELECTION_NOT_READY")
         self.assertFalse(audit["meaningful_pass_allowed"])
-        self.assertEqual(selected_prefixes, ["C08", "C15", "C17", "C24", "C28", "R13"])
+        self.assertEqual(selected_prefixes, ["C08", "C15", "C17", "C24", "C28", "C22"])
         self.assertIn("required_positive_missing_promoted_rows", audit["blockers"])
 
     def test_planner_bias_audit_catches_c05_routing_concentration(self) -> None:
@@ -155,10 +152,10 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         )
 
         self.assertEqual(audit["status"], "PLANNER_ARCHETYPE_ROUTING_BIAS_PASS")
-        self.assertEqual(audit["top1_archetype_counts"]["C05"], 3)
+        self.assertEqual(audit["top1_archetype_counts"]["C05"], 1)
         self.assertEqual(audit["top1_archetype_counts"]["C29"], 5)
         self.assertEqual(audit["top1_archetype_counts"]["C06"], 3)
-        self.assertEqual(audit["distinct_top1_archetype_count"], 33)
+        self.assertEqual(audit["distinct_top1_archetype_count"], 31)
         self.assertLess(audit["c05_top1_share"], 0.1)
         self.assertEqual(audit["planner_output_score_stage_key_count"], 0)
         self.assertEqual(audit["blockers"], [])
