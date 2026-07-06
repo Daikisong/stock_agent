@@ -413,3 +413,106 @@ LLM이 query를 만들되, 그 query 결과가 운영 점수에 들어가기 위
 ACCEPTED_CLAIM_NOT_CREATED / REQUIRED_POSITIVE_MISSING / CANDIDATE_SELECTOR_DID_NOT_ATTEMPT / SOURCE_TASK_NOT_CREATED
 를 실제 source route와 claim extraction 단계에서 줄여야 한다.
 ```
+
+## 추가 패치: next-runtime planner batch isolation
+
+위 next-attempt plan을 실제 Census v4 Research Brain 입력으로 넣어 보니, 실행 장부에 또 하나의 감사 문제가 보였다.
+
+관찰:
+
+```text
+실행 대상:
+  all_archetype_next_runtime_seed_events_2026-07-05.jsonl
+
+seed_event_count:
+  111
+
+기존 manifest:
+  brain_planner_batch_size = 5
+
+runtime_progress:
+  planner_batch_start에서 오래 머무름
+
+planner_runs:
+  0 rows
+```
+
+쉬운 예:
+
+```text
+5명을 한꺼번에 면접장에 넣었다.
+면접장이 오래 멈추면 밖에서는 "첫 면접 묶음 시작"까지만 보인다.
+실제로는 안에서 5명을 다시 한 명씩 재면접하고 있을 수도 있지만,
+장부에는 어느 후보가 실패했는지 아직 남지 않는다.
+```
+
+코드상 `run_planner_provider_v4`는 batch timeout이 나면 후보별 단일 재시도를 한다. 이 보호장치 자체는 맞다. 문제는 그 내부 재시도 동안 `brain_web_runtime_progress.json`은 계속 같은 `planner_batch_start`로 보인다는 점이다.
+
+따라서 Goal4 next-runtime manifest는 throughput보다 감사성을 우선해야 한다.
+
+변경:
+
+```text
+src/e2r/census/all_archetype_runtime_execution_manifest.py
+
+GOAL4_NEXT_RUNTIME_PLANNER_BATCH_SIZE = 1
+brain_planner_batch_size = 1
+safety_assertions.planner_batch_isolation_required = true
+safety_assertions.planner_batch_size = 1
+```
+
+변경된 실행 명령:
+
+```text
+--brain-planner-batch-size 1
+```
+
+의미:
+
+```text
+이제 특정 후보에서 provider timeout이 나면
+그 후보 단위의 provider failure / planner row로 남고,
+다음 후보로 넘어갈 수 있다.
+```
+
+이건 검색어 하드코딩도 아니고, gate 완화도 아니다.
+
+```text
+점수/Stage/weight 변경 없음
+accepted claim 기준 변경 없음
+source task 성공조건 변경 없음
+실행 감사 단위를 batch에서 후보 단위로 좁힘
+```
+
+쉬운 예:
+
+```text
+기존:
+  "5명 묶음이 아직 면접 중"으로만 보임
+
+변경:
+  "1번 후보 timeout, 2번 후보 진행, 3번 후보 provider failure"처럼
+  Goal4 matrix에 넣을 수 있는 실패 장부가 생김
+```
+
+재생성된 manifest:
+
+```text
+docs/operational/all_archetype_runtime_execution_manifest_2026-07-05.json
+docs/operational/all_archetype_runtime_execution_manifest_2026-07-05.md
+docs/operational/all_archetype_runtime_execution_manifest.json
+```
+
+parity CLI 재실행 결과:
+
+```text
+final_status = MEANINGFUL_RUNTIME_PARITY_NOT_READY
+failed_on = REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROWS
+
+blockers:
+  GREEN_GAP_ON_PROMOTED_ROWS
+  MANDATORY_ARCHETYPE_FULL_THESIS_ROW_MISSING
+  REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROWS
+```
+
+즉 이번 패치 후에도 Goal4는 완료가 아니다. 다만 다음 실제 full runtime attempt가 멈춘 것처럼 보이는 batch 내부 대기를 줄이고, 후보별 provider/source blocker를 더 정직하게 남길 수 있게 됐다.
