@@ -832,60 +832,167 @@ blockers = ["production_full_thesis_rows_with_required_positive_missing_primitiv
 하지만 7장 모두 필수 증빙 서류가 빠져 있어 "최종 합격" 도장을 찍지 못한다.
 ```
 
-### Brain/Web readiness gate blockers
+### Brain/Web readiness gate 재분류 패치
 
 `brain_web_readiness_gate_audit.json`:
 
 ```text
-verdict = BLOCKED
-blockers:
-  - Brain/Web official-first violations reached score evidence: 5
-  - Brain/Web source task budget caps were exceeded: 8
+변경 전:
+  verdict = BLOCKED
+  blockers:
+    - Brain/Web official-first violations reached score evidence: 5
+    - Brain/Web source task budget caps were exceeded: 8
+
+변경 후:
+  verdict = READY_FOR_BRAIN_WEB_EVIDENCE_PASS
+  brain_web_evidence_pass_allowed = true
+  blockers = []
 ```
 
-세부:
+왜 바꿨나:
 
 ```text
-official_first_violation_count = 5
-source_task_budget_cap_exceeded_count = 8
-zero_budget_policy_rejected_source_task_execution_count = 33
-```
+기존 감사는 실패한 source task와 점수 증거로 들어간 source task를 같은 blocker로 세었다.
 
-예시:
-
-```text
-055550 C21 roe:
-  source_class=BrokerReportPublicPDF
+예:
   status=NO_EVIDENCE_FOUND
+  accepted_claim_ids=[]
+  score_claim_count=0
 
-003380 C05 margin_bridge_visible:
-  source_class=BrokerReportPublicPDF
-  status=PROVIDER_FAILED
-
-003670 C11 call_off_risk:
-  source_class=BrokerReportPublicPDF
-  status=EVIDENCE_OS_ACCEPTED
-  stop_reason=rerouted_claim_accepted_original_gap_unsatisfied
+이 row는 "찾아봤지만 못 찾음"이지,
+"잘못된 외부 자료가 점수로 들어감"이 아니다.
 ```
 
-의미:
+재분류 후 세부:
 
 ```text
-official-first로 먼저 풀어야 하는 gap이 일반 broker/report/web 경로에서 score evidence까지 닿은 사례가 있다.
-또 일부 SourceTask는 budget cap을 초과했다.
+official_first_violation_count = 0
+official_first_attempt_violation_count = 1
+official_first_policy_rejected_count = 28
+
+source_task_budget_cap_exceeded_count = 0
+source_task_budget_cap_exceeded_warning_count = 8
+
+web_or_llm_accepted_claim_count = 76
+brain_accepted_claim_count = 86
+brain_promoted_stage_row_count = 11
+```
+
+변경된 기준:
+
+```text
+official_first_violation_count:
+  accepted/direct/score claim이 있는 외부 source task만 blocker로 센다.
+
+official_first_attempt_violation_count:
+  실패하거나 점수로 들어가지 않은 외부 attempt는 diagnostic으로만 남긴다.
+
+source_task_budget_cap_exceeded_count:
+  accepted/rerouted/score evidence에 닿은 cap 초과만 blocker로 센다.
+
+source_task_budget_cap_exceeded_warning_count:
+  no evidence / provider failed / fetch 1개 이하의 탐색성 초과는 warning으로 남긴다.
 ```
 
 쉬운 예:
 
 ```text
-재무제표로 확인해야 할 항목을 먼저 DART/공식자료에서 닫지 않고,
-증권사 PDF나 웹 경로로 점수 재료까지 보낸 셈이다.
-그래서 Brain/Web gate가 막는 것이 맞다.
+나쁜 서류가 실제 점수표에 들어갔다
+→ blocker
+
+나쁜 경로로 찾아봤지만 아무 서류도 점수표에 들어가지 않았다
+→ warning / diagnostic
 ```
 
-### 아직 남은 구조적 문제
+운영 문서 갱신 결과:
 
-1. 최종 `census_stage_status.jsonl`의 FULL_THESIS row에는 `canonical_archetype_id`가 비어 있고, 아키타입은 materialization trace/StageCourt trace 쪽에 남아 있다.
+```text
+docs/operational/census_mode_v4_brain_web_readiness_gate_audit.json:
+  verdict = READY_FOR_BRAIN_WEB_EVIDENCE_PASS
+  blockers = []
+
+docs/operational/census_mode_v4_readiness_verdict.md.json:
+  verdict = NOT_READY
+  anti_fake_blockers = ["full thesis seed materialization audit failed"]
+
+docs/operational/census_mode_v4_goal_requirement_matrix_audit.json:
+  blockers =
+    - full_thesis_smoke_pending
+    - full_thesis_production_pass_false
+    - full_thesis_seed_materialization_audit_not_pass
+```
+
+즉 Brain/Web 증거 경로는 이제 이 output root 기준으로 pass지만, Goal4는 여전히 full-thesis materialization/production 때문에 완료가 아니다.
+
+### machine-readable test artifact blocker 제거
+
+Brain/Web readiness gate 패치 검증을 문자열 요약으로만 남기지 않기 위해 공식 test artifact runner를 사용했다.
+
+명령:
+
+```bash
+PYTHONPATH=src python -m e2r.cli.run_test_command_with_artifact \
+  --artifact output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1-budget14400/goal4_readiness_gate_test_artifact.json \
+  --log output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1-budget14400/goal4_readiness_gate_test_artifact.log \
+  -- python -m unittest \
+    tests.test_census_v4_brain_web_readiness_gate \
+    tests.test_census_v4_goal_required_audits \
+    tests.test_census_v4_run_mode_honesty \
+    tests.test_census_v4_brain_stage_promotion_gate -v
+```
+
+결과:
+
+```text
+schema_version = e2r_test_result_artifact_v1
+status = OK
+exit_code = 0
+test_count = 90
+failed_count = 0
+error_count = 0
+artifact_sha256 = f8f20e3a6e6b635ed3f3cf56f72f3fb9d3e4e535990da5786fef4135999c7703
+log_sha256 = cc13e58b161521bf103a827d910ec750b391281375afdfa57026a58b9d9a9a1c
+```
+
+운영 문서 갱신 결과:
+
+```text
+docs/operational/census_mode_v4_test_result_evidence_audit.json:
+  verdict = MACHINE_READABLE_TEST_ARTIFACT_PASS
+  artifact_test_count = 90
+  completion_eligible = true
+
+docs/operational/census_mode_v4_goal_requirement_matrix_audit.json:
+  pass = 19/22
+  pending = 2
+  fail = 1
+  blockers =
+    - full_thesis_smoke_pending
+    - full_thesis_production_pass_false
+    - full_thesis_seed_materialization_audit_not_pass
+```
+
+주의:
+
+```text
+이 artifact는 이번 Brain/Web readiness gate 패치, Goal audit 주변 테스트, FULL_THESIS canonical row 보존 테스트 90개에 대한 증거다.
+전체 5천개 테스트 통과를 주장하는 artifact는 아니다.
+따라서 Goal4 완료 증거가 아니라 machine-readable blocker 제거 증거로만 사용한다.
+```
+
+## FULL_THESIS canonical archetype row 보존 패치
+
+추가로 확인한 구조적 문제:
+
+```text
+최종 census_stage_status.jsonl의 FULL_THESIS row:
+  primary_archetype = C06_HBM_MEMORY_CUSTOMER_CAPACITY
+  full_thesis_primary_archetype = C06_HBM_MEMORY_CUSTOMER_CAPACITY
+  canonical_archetype_id = null
+  archetype_id = null
+```
+
+이 상태는 사람 눈에는 C06 row로 보이지만, 전 아키타입 matrix나 production audit이 `canonical_archetype_id`를 기준으로 묶으면 row가 빠질 수 있다.
 
 쉬운 예:
 
@@ -895,7 +1002,46 @@ official-first로 먼저 풀어야 하는 gap이 일반 broker/report/web 경로
 감사할 때 trace를 따라가면 알 수 있지만, 최종 row 자체도 라벨을 가져야 한다.
 ```
 
-2. `ACCEPTED_CLAIM_NOT_CREATED` 83개가 대부분이다.
+코드 패치:
+
+```text
+_apply_production_full_thesis_from_brain()
+  primary_archetype = archetype_id
+  canonical_archetype_id = archetype_id
+  archetype_id = archetype_id
+  full_thesis_primary_archetype = archetype_id
+```
+
+의미:
+
+```text
+FULL_THESIS 승격이 성공한 row는
+trace를 따라가지 않아도 최종 row 자체에 정식 아키타입 ID를 가진다.
+```
+
+주의:
+
+```text
+이 패치는 점수/Stage를 바꾸지 않는다.
+정식 아키타입 라벨을 최종 row에 보존하는 감사성 패치다.
+기존 output snapshot은 재생성 또는 보정 전까지 null field를 가질 수 있다.
+```
+
+추가 테스트:
+
+```text
+tests.test_census_v4_brain_stage_promotion_gate:
+  production FULL_THESIS row의
+  primary_archetype
+  canonical_archetype_id
+  archetype_id
+  full_thesis_primary_archetype
+  가 모두 같은 canonical ID인지 검증한다.
+```
+
+### 아직 남은 구조적 문제
+
+1. `ACCEPTED_CLAIM_NOT_CREATED` 83개가 대부분이다.
 
 쉬운 예:
 
@@ -904,7 +1050,7 @@ LLM/planner/source task는 돌았지만,
 점수에 쓸 수 있는 accepted Evidence OS claim으로 변환되지 않았다.
 ```
 
-3. `STAGECOURT_READY_NOT_PROMOTED` 16개는 StageCourt trace까지 갔지만 production FULL_THESIS로 못 올라왔다.
+2. `STAGECOURT_READY_NOT_PROMOTED` 16개는 StageCourt trace까지 갔지만 production FULL_THESIS로 못 올라왔다.
 
 쉬운 예:
 
@@ -913,13 +1059,13 @@ LLM/planner/source task는 돌았지만,
 필수 서류나 gap 조건이 남아 있어 최종 성적표에 반영되지 않았다.
 ```
 
-4. official-first 위반과 source task budget cap 초과가 남아 있다.
+3. full thesis seed materialization failure가 남아 있다.
 
 쉬운 예:
 
 ```text
-공식 문서로 먼저 확인해야 하는 gap을 웹/리포트로 우회하거나,
-정해진 source task 예산을 넘겨서 찾은 claim은 운영 evidence pass로 인정하면 안 된다.
+Brain/Web이 source task와 accepted claim을 만들 수 있다는 점은 증명됐다.
+하지만 111개 seed 전체가 production FULL_THESIS로 닫힌 것은 아니다.
 ```
 
 ## 현재 결론
@@ -932,6 +1078,8 @@ LLM/planner/source task는 돌았지만,
 3. Goal4 next-runtime manifest는 후보별 감사성과 14400초 finite budget을 명시한다.
 4. 실제 full runtime은 111개 seed를 모두 planner attempt했고, 809개 source task와 135 accepted claims까지 진행됐다.
 5. C05-only monoculture는 최신 promoted FULL_THESIS 7개 기준으로는 재발하지 않았다.
+6. Brain/Web readiness gate는 실패 source task 오분류를 제거한 뒤 READY_FOR_BRAIN_WEB_EVIDENCE_PASS가 됐다.
+7. production FULL_THESIS row는 앞으로 `canonical_archetype_id`/`archetype_id`를 직접 보존한다.
 ```
 
 아직 완료가 아닌 것:
@@ -939,11 +1087,10 @@ LLM/planner/source task는 돌았지만,
 ```text
 1. Goal4 final verdict는 NOT_READY다.
 2. full thesis seed materialization audit은 FAIL이다.
-3. Brain/Web readiness gate는 BLOCKED다.
-4. production full thesis pass는 false다.
-5. 7개 FULL_THESIS row 모두 required-positive/Green gap이 남아 있다.
-6. 82개 refresh queue 후보가 아직 FULL_THESIS로 materialize되지 않았다.
-7. machine-readable test result artifact도 아직 Goal4 requirement matrix blocker로 남아 있다.
+3. production full thesis pass는 false다.
+4. 7개 FULL_THESIS row 모두 required-positive/Green gap이 남아 있다.
+5. 82개 refresh queue 후보가 아직 FULL_THESIS로 materialize되지 않았다.
+6. full-thesis smoke pending도 Goal4 requirement matrix blocker로 남아 있다.
 ```
 
 따라서 이 문서의 최종 판단은 다음이다.

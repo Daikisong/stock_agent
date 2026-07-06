@@ -137,10 +137,10 @@
     "brain_web_attempt_blocker_count": 0,
     "brain_web_attempt_source_task_execution_count": 809,
     "brain_web_attempt_verdict": "ATTEMPTED_WITH_SOURCE_TASKS",
-    "brain_web_readiness_gate_blocker_count": 2,
+    "brain_web_readiness_gate_blocker_count": 0,
     "brain_web_readiness_gate_minimum_applies": true,
-    "brain_web_readiness_gate_pass_allowed": false,
-    "brain_web_readiness_gate_verdict": "BLOCKED",
+    "brain_web_readiness_gate_pass_allowed": true,
+    "brain_web_readiness_gate_verdict": "READY_FOR_BRAIN_WEB_EVIDENCE_PASS",
     "candidate_event_count": 249,
     "candidate_event_scope_distribution": {
       "ASSESSMENT_ONLY": 3298,

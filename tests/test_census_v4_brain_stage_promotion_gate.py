@@ -1393,6 +1393,8 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(row["operator_stage_use"], "FULL_THESIS_STAGE")
         self.assertEqual(row["operator_score_use"], "FULL_E2R_SCORE")
         self.assertEqual(row["primary_archetype"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+        self.assertEqual(row["canonical_archetype_id"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+        self.assertEqual(row["archetype_id"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
         self.assertEqual(row["full_thesis_primary_archetype"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
         self.assertEqual(row["full_thesis_production_mode"], "research_brain_v4_production")
         self.assertEqual(row["full_thesis_missing_primitives"], [])
@@ -1542,6 +1544,8 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(stage_rows[0]["stage_scope"], "FULL_THESIS")
         self.assertEqual(stage_rows[0]["operator_stage_use"], "FULL_THESIS_STAGE")
         self.assertEqual(stage_rows[0]["full_thesis_primary_archetype"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+        self.assertEqual(stage_rows[0]["canonical_archetype_id"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
+        self.assertEqual(stage_rows[0]["archetype_id"], "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
         self.assertEqual(audit["blocked_candidates"], [])
         self.assertIn("separate Brain/Web evidence gate", audit["rule"])
 

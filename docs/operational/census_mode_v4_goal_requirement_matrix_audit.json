@@ -3,12 +3,10 @@
   "blockers": [
     "full_thesis_smoke_pending",
     "full_thesis_production_pass_false",
-    "full_thesis_seed_materialization_audit_not_pass",
-    "brain_web_evidence_pass_false",
-    "machine_readable_test_result_artifact_missing"
+    "full_thesis_seed_materialization_audit_not_pass"
   ],
   "brain_web_mode": "enabled",
-  "brain_web_requirement_pass": false,
+  "brain_web_requirement_pass": true,
   "fail_gate_ids": [
     "FULL_THESIS_SEED_MATERIALIZATION_AUDIT_PASS"
   ],
@@ -16,15 +14,13 @@
   "meaningful_operational_stage_requirement_pass": false,
   "pending_gate_ids": [
     "FULL_THESIS_SMOKE_PASS",
-    "FULL_THESIS_PRODUCTION_PASS",
-    "BRAIN_WEB_EVIDENCE_PASS",
-    "FULL_TEST_ARTIFACT_PASS"
+    "FULL_THESIS_PRODUCTION_PASS"
   ],
   "production_full_thesis_requirement_pass": false,
   "required_goal_completion_count": 22,
   "required_goal_completion_fail_count": 1,
-  "required_goal_completion_pass_count": 17,
-  "required_goal_completion_pending_count": 4,
+  "required_goal_completion_pass_count": 19,
+  "required_goal_completion_pending_count": 2,
   "requirements": [
     {
       "blocker": "v3_forensic_review_missing",
@@ -40,7 +36,7 @@
     {
       "blocker": "hard_gate_config_not_enabled",
       "evidence": {
-        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1-budget14400 --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 111 --brain-planner-success-limit 111 --brain-planner-batch-size 1 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 111 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 14400.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",
+        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1-budget14400 --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 111 --brain-planner-success-limit 111 --brain-planner-batch-size 1 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 111 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 14400.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --test-result-artifact output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1-budget14400/goal4_readiness_gate_test_artifact.json --write-operational-docs true",
         "fail_on_atomic_mismatch": true,
         "fail_on_critical_audit": true,
         "fail_on_run_mode_overclaim": true,
@@ -379,7 +375,7 @@
     {
       "blocker": "brain_web_evidence_pass_false",
       "evidence": {
-        "brain_web_evidence_pass_allowed": false,
+        "brain_web_evidence_pass_allowed": true,
         "llm_claim_extractor_attempt_count": 145,
         "llm_planner_call_count": 111,
         "minimum_required_counts": {
@@ -392,7 +388,7 @@
           "web_search_task_count": 20
         },
         "operational_minimum_count_gate_applies": true,
-        "verdict": "BLOCKED",
+        "verdict": "READY_FOR_BRAIN_WEB_EVIDENCE_PASS",
         "web_fetched_document_count": 120,
         "web_or_llm_accepted_claim_count": 76,
         "web_search_call_count": 127,
@@ -400,7 +396,7 @@
       },
       "gate_id": "BRAIN_WEB_EVIDENCE_PASS",
       "required_for_goal_completion": true,
-      "status": "PENDING",
+      "status": "PASS",
       "title": "real planner/web/extractor/claim traces satisfy operational minimums"
     },
     {
@@ -968,7 +964,6 @@
       "evidence": {
         "completion_eligible": true,
         "deferred_goal_blockers": [
-          "brain_web_evidence_pass_false",
           "full_thesis_smoke_pending",
           "full_thesis_smoke_execution_pending",
           "full_thesis_production_pass_false"
@@ -985,15 +980,15 @@
     {
       "blocker": "machine_readable_test_result_artifact_missing",
       "evidence": {
-        "artifact_error_count": null,
-        "artifact_failed_count": null,
-        "artifact_status": null,
-        "artifact_test_count": null,
-        "verdict": "STRING_SUMMARY_ONLY"
+        "artifact_error_count": 0,
+        "artifact_failed_count": 0,
+        "artifact_status": "OK",
+        "artifact_test_count": 90,
+        "verdict": "MACHINE_READABLE_TEST_ARTIFACT_PASS"
       },
       "gate_id": "FULL_TEST_ARTIFACT_PASS",
       "required_for_goal_completion": true,
-      "status": "PENDING",
+      "status": "PASS",
       "title": "machine-readable full test artifact is valid"
     }
   ],

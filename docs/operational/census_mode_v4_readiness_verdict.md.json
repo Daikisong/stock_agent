@@ -521,14 +521,10 @@
   },
   "all_archetype_replay_pass": true,
   "anti_fake_blockers": [
-    "full thesis seed materialization audit failed",
-    "Brain/Web readiness gate blocked: Brain/Web official-first violations reached score evidence: 5",
-    "Brain/Web readiness gate blocked: Brain/Web source task budget caps were exceeded: 8"
+    "full thesis seed materialization audit failed"
   ],
   "blockers": [
-    "full thesis seed materialization audit failed",
-    "Brain/Web readiness gate blocked: Brain/Web official-first violations reached score evidence: 5",
-    "Brain/Web readiness gate blocked: Brain/Web source task budget caps were exceeded: 8"
+    "full thesis seed materialization audit failed"
   ],
   "brain_stage_promotion": {
     "blockers": [],
@@ -571,18 +567,15 @@
     "unique_accepted_claim_count": 86,
     "verdict": "ATTEMPTED_WITH_SOURCE_TASKS"
   },
-  "brain_web_evidence_pass": false,
-  "brain_web_evidence_pass_allowed": false,
+  "brain_web_evidence_pass": true,
+  "brain_web_evidence_pass_allowed": true,
   "brain_web_mode": "enabled",
-  "brain_web_promoted_stagecourt_path": false,
+  "brain_web_promoted_stagecourt_path": true,
   "brain_web_readiness_gate": {
     "attempt_accepted_claim_count": 135,
     "attempt_real_document_fetched_count": 729,
     "attempt_source_task_execution_count": 809,
-    "blockers": [
-      "Brain/Web official-first violations reached score evidence: 5",
-      "Brain/Web source task budget caps were exceeded: 8"
-    ],
+    "blockers": [],
     "brain_accepted_claim_count": 86,
     "brain_claim_unresolved_anchor_ref_count": 0,
     "brain_claim_unresolved_document_ref_count": 0,
@@ -594,7 +587,7 @@
     "brain_trace_missing_score_contribution_ref_count": 0,
     "brain_trace_missing_stagecourt_ref_count": 0,
     "brain_trace_nonrepresentative_missing_stagecourt_ref_count": 33,
-    "brain_web_evidence_pass_allowed": false,
+    "brain_web_evidence_pass_allowed": true,
     "discovery_only_retry_after_unverified_original_count": 0,
     "full_thesis_claim_count": 0,
     "full_thesis_seed_accepted_claim_count": 135,
@@ -635,7 +628,7 @@
     "source_lineage_feedback_retry_execution_count": 0,
     "source_lineage_feedback_retry_no_evidence_execution_count": 0,
     "source_task_execution_count": 809,
-    "verdict": "BLOCKED",
+    "verdict": "READY_FOR_BRAIN_WEB_EVIDENCE_PASS",
     "web_fetched_document_count": 120,
     "web_news_accepted_claim_count": 76,
     "web_or_llm_accepted_claim_count": 76,
@@ -778,15 +771,14 @@
     "OFFICIAL_BASELINE_EVIDENCE_CLAIM_PAYLOAD_PRESENT",
     "KNOWN_BAD_REGRESSION_PASS",
     "SELF_REPAIR_LOOP_PASS",
-    "RESEARCH_BRAIN_V4_REPORT_BRIDGE_IMPORTED"
+    "RESEARCH_BRAIN_V4_REPORT_BRIDGE_IMPORTED",
+    "BRAIN_WEB_EVIDENCE_PASS"
   ],
   "meaningful_operational_stage_pass": false,
   "operational_stage_use_allowed": false,
   "remaining_operational_gaps": [
     "full thesis EvidenceClaim -> PrimitiveState -> ScoreContribution -> StageCourt path not run",
-    "full-thesis refresh queue exists but production full-thesis StageCourt paths are not closed",
-    "Brain/Web StageCourt path is promoted but evidence readiness gate is still blocked",
-    "Research Brain v4 imported report bundle is shadow/import-only and not admissible as Census production cutover evidence"
+    "full-thesis refresh queue exists but production full-thesis StageCourt paths are not closed"
   ],
   "research_brain_bridge": {
     "accepted_claim_count": 56,

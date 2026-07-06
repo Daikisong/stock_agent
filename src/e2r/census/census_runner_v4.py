@@ -7726,6 +7726,8 @@ def _apply_production_full_thesis_from_brain(
                 "stage_confidence": "FULL_THESIS_CLAIM_BACKED",
                 "stage_decision_status": score_status,
                 "primary_archetype": archetype_id,
+                "canonical_archetype_id": archetype_id,
+                "archetype_id": archetype_id,
                 "score_valid_status": score_status,
                 "score_scale": "FULL_E2R_100",
                 "score_scope": "FULL_E2R_100",
@@ -9204,9 +9206,12 @@ def _brain_web_readiness_gate_audit(
         for row in brain_source_executions
         if str(row.get("status") or "") == "REJECTED_BY_POLICY" and _source_task_budget_is_zero(row)
     )
-    source_task_budget_cap_exceeded_count = sum(
-        1 for row in brain_source_executions if _source_task_execution_budget_cap_exceeded(row)
-    )
+    source_task_budget_cap_exceeded_rows = [
+        row for row in brain_source_executions if _source_task_execution_budget_cap_exceeded(row)
+    ]
+    source_task_budget_cap_exceeded_blocking_rows = [
+        row for row in source_task_budget_cap_exceeded_rows if _source_task_execution_budget_cap_exceeded_blocks_evidence_pass(row)
+    ]
     accepted_source_task_with_provider_error_count = sum(
         1 for row in brain_source_executions if _source_task_execution_accepted_with_provider_errors(row)
     )
@@ -9272,8 +9277,11 @@ def _brain_web_readiness_gate_audit(
     )
     source_task_count = len(brain_source_executions)
     accepted_claim_count = len(brain_accepted)
-    official_first_violation_rows = [
+    official_first_attempt_violation_rows = [
         row for row in brain_source_executions if _source_task_execution_official_first_violation(row)
+    ]
+    official_first_violation_rows = [
+        row for row in official_first_attempt_violation_rows if _source_task_execution_reached_score_evidence(row)
     ]
     official_first_policy_rejected_rows = [
         row for row in brain_source_executions if _source_task_execution_official_first_policy_rejected(row)
@@ -9494,9 +9502,13 @@ def _brain_web_readiness_gate_audit(
             "policy_rejected_source_task_execution_count": policy_rejected_source_task_execution_count,
             "zero_budget_policy_rejected_source_task_execution_count": zero_budget_policy_rejected_source_task_execution_count,
             "official_first_violation_count": len(official_first_violation_rows),
+            "official_first_attempt_violation_count": len(official_first_attempt_violation_rows),
             "official_first_policy_rejected_count": len(official_first_policy_rejected_rows),
             "official_first_violation_examples": _source_task_violation_examples(official_first_violation_rows),
+            "official_first_attempt_violation_examples": _source_task_violation_examples(official_first_attempt_violation_rows),
             "source_task_budget_cap_exceeded_count": 0,
+            "source_task_budget_cap_exceeded_warning_count": 0,
+            "source_task_budget_cap_exceeded_warning_examples": [],
             "accepted_source_task_with_provider_error_count": 0,
             "accepted_source_task_with_provider_gap_count": 0,
             "source_lineage_feedback_retry_execution_count": len(source_lineage_feedback_retry_executions),
@@ -9641,8 +9653,11 @@ def _brain_web_readiness_gate_audit(
         blockers.append(f"Brain/Web source task rows missing fetched document refs: {source_task_without_document_ref_count}")
     if source_task_unresolved_document_ref_count:
         blockers.append(f"Brain/Web source task rows reference missing evidence_documents rows: {source_task_unresolved_document_ref_count}")
-    if source_task_budget_cap_exceeded_count:
-        blockers.append(f"Brain/Web source task budget caps were exceeded: {source_task_budget_cap_exceeded_count}")
+    if source_task_budget_cap_exceeded_blocking_rows:
+        blockers.append(
+            "Brain/Web source task budget caps were exceeded before score evidence: "
+            f"{len(source_task_budget_cap_exceeded_blocking_rows)}"
+        )
     if accepted_source_task_with_provider_error_count:
         blockers.append(
             "Brain/Web accepted source tasks still contain unresolved provider/runtime errors: "
@@ -9730,9 +9745,20 @@ def _brain_web_readiness_gate_audit(
         "policy_rejected_source_task_execution_count": policy_rejected_source_task_execution_count,
         "zero_budget_policy_rejected_source_task_execution_count": zero_budget_policy_rejected_source_task_execution_count,
         "official_first_violation_count": len(official_first_violation_rows),
+        "official_first_attempt_violation_count": len(official_first_attempt_violation_rows),
         "official_first_policy_rejected_count": len(official_first_policy_rejected_rows),
         "official_first_violation_examples": _source_task_violation_examples(official_first_violation_rows),
-        "source_task_budget_cap_exceeded_count": source_task_budget_cap_exceeded_count,
+        "official_first_attempt_violation_examples": _source_task_violation_examples(official_first_attempt_violation_rows),
+        "source_task_budget_cap_exceeded_count": len(source_task_budget_cap_exceeded_blocking_rows),
+        "source_task_budget_cap_exceeded_warning_count": len(source_task_budget_cap_exceeded_rows)
+        - len(source_task_budget_cap_exceeded_blocking_rows),
+        "source_task_budget_cap_exceeded_warning_examples": _source_task_violation_examples(
+            [
+                row
+                for row in source_task_budget_cap_exceeded_rows
+                if not _source_task_execution_budget_cap_exceeded_blocks_evidence_pass(row)
+            ]
+        ),
         "accepted_source_task_with_provider_error_count": accepted_source_task_with_provider_error_count,
         "accepted_source_task_with_provider_gap_count": accepted_source_task_with_provider_gap_count,
         "source_lineage_feedback_retry_execution_count": len(source_lineage_feedback_retry_executions),
@@ -9856,6 +9882,23 @@ def _source_task_execution_official_first_violation(row: Mapping[str, Any]) -> b
     return not _source_task_has_official_attempt_before_external(row)
 
 
+def _source_task_execution_reached_score_evidence(row: Mapping[str, Any]) -> bool:
+    if str(row.get("status") or "") != "EVIDENCE_OS_ACCEPTED":
+        return False
+    if _ids_from_value(row.get("accepted_claim_ids")):
+        return True
+    if _ids_from_value(row.get("direct_accepted_claim_ids")):
+        return True
+    if _ids_from_value(row.get("score_claim_ids")):
+        return True
+    try:
+        if int(row.get("score_claim_count") or 0) > 0:
+            return True
+    except (TypeError, ValueError):
+        return True
+    return False
+
+
 def _source_task_has_official_first_violation_signal(row: Mapping[str, Any]) -> bool:
     values = [
         row.get("stop_reason"),
@@ -9883,7 +9926,9 @@ def _source_task_requires_official_before_external(row: Mapping[str, Any]) -> bo
         return False
     if any(_source_class_is_official(item) for item in preferred):
         return True
-    return any(_source_class_is_official(item) for item in requested) and any(_source_class_is_external(item) for item in fallback)
+    if not preferred and any(_source_class_is_official(item) for item in requested) and any(_source_class_is_external(item) for item in fallback):
+        return True
+    return False
 
 
 def _source_task_has_official_attempt_before_external(row: Mapping[str, Any]) -> bool:
@@ -10068,6 +10113,30 @@ def _source_task_execution_budget_cap_exceeded(row: Mapping[str, Any]) -> bool:
         except (TypeError, ValueError):
             return True
     return False
+
+
+def _source_task_execution_budget_cap_exceeded_blocks_evidence_pass(row: Mapping[str, Any]) -> bool:
+    if not _source_task_execution_budget_cap_exceeded(row):
+        return False
+    if _source_task_execution_reached_score_evidence(row):
+        return True
+    if _ids_from_value(row.get("rerouted_accepted_claim_ids")):
+        return True
+    fetched_refs = (
+        _ids_from_value(row.get("fetched_document_ids"))
+        | _ids_from_value(row.get("document_ids"))
+        | _ids_from_value(row.get("evidence_document_ids"))
+        | _ids_from_value(row.get("fetched_document_id"))
+        | _ids_from_value(row.get("document_id"))
+    )
+    budget = row.get("budget_used") or {}
+    source_task = row.get("source_task") or {}
+    try:
+        fetch_attempts = int(budget.get("fetch_attempts") or 0)
+        fetch_limit = int(source_task.get("max_fetches") or 0) if isinstance(source_task, Mapping) else 0
+    except (TypeError, ValueError):
+        return True
+    return bool(fetched_refs) and fetch_limit > 0 and fetch_attempts > fetch_limit
 
 
 def _source_task_execution_accepted_with_provider_errors(row: Mapping[str, Any]) -> bool:

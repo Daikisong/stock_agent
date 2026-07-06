@@ -267,6 +267,7 @@
       "accepted_official_claim_count": 2,
       "accepted_web_llm_claim_count": 0,
       "additional_stage_decision_ids": [],
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "as_of_date": "2026-07-01",
       "assessment_depth": "FULL_THESIS_REFRESH",
       "assessment_depth_display": "FULL_THESIS_FULL_THESIS_REFRESH",
@@ -289,6 +290,7 @@
         "CEV4-RTATTEMPT-7f33db04360ffa26109b"
       ],
       "candidate_event_scope": "CANDIDATE_EVENTS_PRESENT",
+      "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "canonical_stage": "1",
       "canonical_stage_display": "FULL_THESIS_1",
       "census_assessment_event_id": "CAE-d3ef5441479cf6f13f68",

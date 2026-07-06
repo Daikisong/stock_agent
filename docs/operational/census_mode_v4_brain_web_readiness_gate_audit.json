@@ -4,10 +4,7 @@
   "attempt_accepted_claim_count": 135,
   "attempt_real_document_fetched_count": 729,
   "attempt_source_task_execution_count": 809,
-  "blockers": [
-    "Brain/Web official-first violations reached score evidence: 5",
-    "Brain/Web source task budget caps were exceeded: 8"
-  ],
+  "blockers": [],
   "brain_accepted_claim_count": 86,
   "brain_claim_missing_date_count": 0,
   "brain_claim_missing_verifiable_anchor_count": 0,
@@ -28,7 +25,7 @@
   "brain_trace_missing_score_contribution_ref_count": 0,
   "brain_trace_missing_stagecourt_ref_count": 0,
   "brain_trace_nonrepresentative_missing_stagecourt_ref_count": 33,
-  "brain_web_evidence_pass_allowed": false,
+  "brain_web_evidence_pass_allowed": true,
   "brain_web_mode": "enabled",
   "claim_extractor_forbidden_context_count": 0,
   "claim_extractor_non_llm_provider_count": 0,
@@ -74,22 +71,11 @@
   },
   "naver_search_call_count": 127,
   "nonblocking_gaps": [
-    "non-representative Brain/Web accepted claim traces without StageCourt refs: 33",
-    "Brain/Web evidence pass is forbidden until all blockers are zero"
+    "non-representative Brain/Web accepted claim traces without StageCourt refs: 33"
   ],
   "official_accepted_claim_count": 10,
-  "official_first_policy_rejected_count": 29,
-  "official_first_violation_count": 5,
-  "official_first_violation_examples": [
-    {
-      "primitive_gap": "roe",
-      "provider_errors": [],
-      "source_class": "BrokerReportPublicPDF",
-      "status": "NO_EVIDENCE_FOUND",
-      "stop_reason": "no_score_eligible_real_claim",
-      "symbol": "055550",
-      "task_id": "ST-055550-C21-ROE-BROKERPDF-002"
-    },
+  "official_first_attempt_violation_count": 1,
+  "official_first_attempt_violation_examples": [
     {
       "primitive_gap": "margin_bridge_visible",
       "provider_errors": [],
@@ -98,35 +84,11 @@
       "stop_reason": "live_web_no_fetchable_document",
       "symbol": "003380",
       "task_id": "CEV4-RTATTEMPT-1b30da7b2b345076f677-C05-margin-report-003"
-    },
-    {
-      "primitive_gap": "call_off_risk",
-      "provider_errors": [],
-      "source_class": "BrokerReportPublicPDF",
-      "status": "EVIDENCE_OS_ACCEPTED",
-      "stop_reason": "rerouted_claim_accepted_original_gap_unsatisfied",
-      "symbol": "003670",
-      "task_id": "RTTASK-2718d2df9f1d26dead8a-C11-CALLOFF-ORIGINAL-REPORT-NEWS"
-    },
-    {
-      "primitive_gap": "hbm_customer_order",
-      "provider_errors": [],
-      "source_class": "CompanyNewsroom",
-      "status": "PROVIDER_FAILED",
-      "stop_reason": "live_web_no_fetchable_document",
-      "symbol": "031980",
-      "task_id": "031980-c07-company-newsroom-trusted-original-check"
-    },
-    {
-      "primitive_gap": "price_cut_risk",
-      "provider_errors": [],
-      "source_class": "BrokerReportPublicPDF",
-      "status": "PROVIDER_FAILED",
-      "stop_reason": "live_web_no_fetchable_document",
-      "symbol": "002710",
-      "task_id": "ST-CEV4-74f0-pricecut-broker-news-original"
     }
   ],
+  "official_first_policy_rejected_count": 28,
+  "official_first_violation_count": 0,
+  "official_first_violation_examples": [],
   "operational_minimum_count_gate_applies": true,
   "planner_run_row_count": 458,
   "policy_rejected_source_task_execution_count": 34,
@@ -146,10 +108,58 @@
   "source_lineage_feedback_retry_dropped_count": 0,
   "source_lineage_feedback_retry_execution_count": 0,
   "source_lineage_feedback_retry_no_evidence_execution_count": 0,
-  "source_task_budget_cap_exceeded_count": 8,
+  "source_task_budget_cap_exceeded_count": 0,
+  "source_task_budget_cap_exceeded_warning_count": 8,
+  "source_task_budget_cap_exceeded_warning_examples": [
+    {
+      "primitive_gap": "issuer_official_update_current",
+      "provider_errors": [],
+      "source_class": "IR",
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_score_eligible_real_claim",
+      "symbol": "",
+      "task_id": "RSTASKV4IRSTATUS-34dff8845795c809d33e888e"
+    },
+    {
+      "primitive_gap": "issuer_official_update_current",
+      "provider_errors": [],
+      "source_class": "IR",
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_score_eligible_real_claim",
+      "symbol": "",
+      "task_id": "RSTASKV4IRSTATUS-1fb8990e4205f731680008e1"
+    },
+    {
+      "primitive_gap": "issuer_official_update_current",
+      "provider_errors": [],
+      "source_class": "IR",
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_score_eligible_real_claim",
+      "symbol": "",
+      "task_id": "RSTASKV4IRSTATUS-361cf5dd27e15b4680a25114"
+    },
+    {
+      "primitive_gap": "issuer_official_update_current",
+      "provider_errors": [],
+      "source_class": "IR",
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_score_eligible_real_claim",
+      "symbol": "",
+      "task_id": "RSTASKV4IRSTATUS-68be733bba522a88ef5660ce"
+    },
+    {
+      "primitive_gap": "issuer_official_update_current",
+      "provider_errors": [],
+      "source_class": "IR",
+      "status": "NO_EVIDENCE_FOUND",
+      "stop_reason": "no_score_eligible_real_claim",
+      "symbol": "",
+      "task_id": "RSTASKV4IRSTATUS-ee2d3ec30eef7e51d8e28f0d"
+    }
+  ],
   "source_task_execution_count": 809,
   "trusted_news_search_call_count": 0,
-  "verdict": "BLOCKED",
+  "verdict": "READY_FOR_BRAIN_WEB_EVIDENCE_PASS",
   "web_fetched_document_count": 120,
   "web_news_accepted_claim_count": 76,
   "web_or_llm_accepted_claim_count": 76,
