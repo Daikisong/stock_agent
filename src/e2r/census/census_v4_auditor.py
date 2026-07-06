@@ -11,8 +11,13 @@ import ast
 import csv
 import hashlib
 import json
+from datetime import date
 from pathlib import Path
 from typing import Any, Mapping, Sequence
+
+from e2r.agentic import ScoreContributionV2
+from e2r.calibration.taxonomy import large_sector_for_archetype
+from e2r.scoring import CANONICAL_SCORE_COMPONENTS, DeterministicScorer, ScoringPayload
 
 
 REQUIRED_JSONL = (
@@ -131,6 +136,11 @@ def audit_census_v4_leaf_artifacts(output_root: str | Path) -> dict[str, Any]:
     accepted_ids = {str(row.get("claim_id") or "") for row in accepted}
     evidence_claim_ids = {str(row.get("claim_id") or row.get("evidence_claim_id") or "") for row in evidence_claims}
     contribution_ids = {str(row.get("score_contribution_id") or row.get("contribution_id") or "") for row in contributions}
+    contributions_by_id = {
+        str(row.get("score_contribution_id") or row.get("contribution_id") or ""): row
+        for row in contributions
+        if str(row.get("score_contribution_id") or row.get("contribution_id") or "")
+    }
     primitive_mapping_ids = {str(row.get("mapping_id") or "") for row in primitive_mappings}
     primitive_state_ids = {str(row.get("primitive_state_id") or "") for row in primitive_states}
     primitive_ids_by_claim = _primitive_ids_by_claim(primitive_states)
@@ -175,6 +185,12 @@ def audit_census_v4_leaf_artifacts(output_root: str | Path) -> dict[str, Any]:
         "stage_trace_score_status_mismatch_count": _stage_trace_mismatch(stage_rows, atomic_by_id, "score_valid_status"),
         "stage_trace_claim_set_mismatch_count": _stage_trace_set_mismatch(stage_rows, atomic_by_id, "accepted_claim_ids"),
         "stage_trace_contribution_set_mismatch_count": _stage_trace_set_mismatch(stage_rows, atomic_by_id, "score_contribution_ids"),
+        "stagecourt_score_recompute_mismatch_count": _stagecourt_score_recompute_mismatch_count(
+            stagecourt, contributions_by_id
+        ),
+        "stagecourt_score_contribution_ref_missing_count": _stagecourt_score_contribution_ref_missing_count(
+            stagecourt, contributions_by_id
+        ),
         "scored_row_missing_claim_ids": sum(1 for row in nonzero_or_final if row.get("score_scale") != "NO_SCORE" and not row.get("accepted_claim_ids")),
         "scored_row_missing_score_contribution_ids": sum(1 for row in nonzero_or_final if row.get("score_scale") != "NO_SCORE" and not row.get("score_contribution_ids")),
         "scored_row_missing_stagecourt_trace": sum(1 for row in nonzero_or_final if row.get("score_scale") != "NO_SCORE" and not row.get("stagecourt_trace_id")),
@@ -445,6 +461,9 @@ def audit_census_v4_leaf_artifacts(output_root: str | Path) -> dict[str, Any]:
         "sample_leaf_bundle_count": len(sample_bundle),
         "static_source_audit_repo_root": str(repo_root),
         "critical_count": sum(int(value) for value in critical.values()),
+        "stagecourt_score_recompute_mismatch_samples": _stagecourt_score_recompute_mismatch_samples(
+            stagecourt, contributions_by_id
+        ),
     }
     verdict = "PASS" if metrics["critical_count"] == 0 else "FAIL"
     return {
@@ -513,6 +532,218 @@ def _stage_trace_set_mismatch(stage_rows: Sequence[Mapping[str, Any]], atomic_by
         if set(str(item) for item in (row.get(key) or ())) != set(str(item) for item in (decision.get(key) or ())):
             count += 1
     return count
+
+
+def _stagecourt_score_recompute_mismatch_count(
+    stagecourt_rows: Sequence[Mapping[str, Any]],
+    contributions_by_id: Mapping[str, Mapping[str, Any]],
+) -> int:
+    return len(_stagecourt_score_recompute_mismatches(stagecourt_rows, contributions_by_id))
+
+
+def _stagecourt_score_recompute_mismatch_samples(
+    stagecourt_rows: Sequence[Mapping[str, Any]],
+    contributions_by_id: Mapping[str, Mapping[str, Any]],
+    *,
+    limit: int = 20,
+) -> list[dict[str, Any]]:
+    return _stagecourt_score_recompute_mismatches(stagecourt_rows, contributions_by_id)[:limit]
+
+
+def _stagecourt_score_recompute_mismatches(
+    stagecourt_rows: Sequence[Mapping[str, Any]],
+    contributions_by_id: Mapping[str, Mapping[str, Any]],
+) -> list[dict[str, Any]]:
+    mismatches: list[dict[str, Any]] = []
+    for row in stagecourt_rows:
+        contribution_ids = _unique_strings(row.get("score_contribution_ids") or ())
+        if not contribution_ids:
+            continue
+        archetype_id = _trace_archetype_id(row)
+        if not archetype_id:
+            continue
+        if any(contribution_id not in contributions_by_id for contribution_id in contribution_ids):
+            continue
+        score_interval = row.get("score_interval") or {}
+        if not isinstance(score_interval, Mapping):
+            continue
+        lower = _float_or_none(score_interval.get("lower"))
+        if lower is None:
+            continue
+        recomputed = _recompute_stagecourt_verified_score(row, contribution_ids, contributions_by_id, archetype_id)
+        if recomputed is None:
+            continue
+        if abs(lower - recomputed["verified_score"]) <= 0.0001:
+            continue
+        mismatches.append(
+            {
+                "stagecourt_trace_id": row.get("stagecourt_trace_id") or row.get("trace_id"),
+                "symbol": row.get("symbol"),
+                "candidate_event_id": row.get("candidate_event_id"),
+                "primary_archetype": archetype_id,
+                "score_interval_lower": lower,
+                "recomputed_verified_score": recomputed["verified_score"],
+                "referenced_raw_point_sum": recomputed["raw_point_sum"],
+                "weighted_component_sum": recomputed["weighted_component_sum"],
+                "scoring_version": recomputed["scoring_version"],
+                "score_contribution_ids": contribution_ids,
+            }
+        )
+    return mismatches
+
+
+def _stagecourt_score_contribution_ref_missing_count(
+    stagecourt_rows: Sequence[Mapping[str, Any]],
+    contributions_by_id: Mapping[str, Mapping[str, Any]],
+) -> int:
+    count = 0
+    for row in stagecourt_rows:
+        contribution_ids = _unique_strings(row.get("score_contribution_ids") or ())
+        if not contribution_ids:
+            continue
+        if any(contribution_id not in contributions_by_id for contribution_id in contribution_ids):
+            count += 1
+    return count
+
+
+def _trace_archetype_id(row: Mapping[str, Any]) -> str:
+    return str(row.get("primary_archetype") or row.get("canonical_archetype_id") or "").strip()
+
+
+def _recompute_stagecourt_verified_score(
+    row: Mapping[str, Any],
+    contribution_ids: Sequence[str],
+    contributions_by_id: Mapping[str, Mapping[str, Any]],
+    archetype_id: str,
+) -> dict[str, Any] | None:
+    contribution_rows = [contributions_by_id[contribution_id] for contribution_id in contribution_ids]
+    contributions = _score_contribution_v2_rows(contribution_rows)
+    if not contributions:
+        return None
+    as_of = _trace_as_of_date(row)
+    if as_of is None:
+        return None
+    large_sector_id = large_sector_for_archetype(archetype_id)
+    if not large_sector_id:
+        return None
+    payload = ScoringPayload(
+        symbol=str(row.get("symbol") or "UNKNOWN"),
+        as_of_date=as_of,
+        components={component.key: 0.0 for component in CANONICAL_SCORE_COMPONENTS},
+        diagnostic_scores={
+            "require_v2_score_contributions": 100.0,
+            "agentic_evidence_required_for_scoring": 100.0,
+            "claim_backed_claim_count_capped": min(float(len(_support_claim_ids(contribution_rows))), 100.0),
+        },
+        evidence_ids=tuple(_support_claim_ids(contribution_rows)),
+        score_contributions_v2=tuple(contributions),
+        large_sector_id=large_sector_id,
+        canonical_archetype_id=archetype_id,
+        scoring_version="census-v4-audit-recompute",
+    )
+    snapshot = DeterministicScorer().score(payload)
+    weighted_component_sum = _float_or_none(snapshot.diagnostic_scores.get("archetype_weighted_total_before_calibration"))
+    if weighted_component_sum is None or weighted_component_sum <= 0:
+        weighted_component_sum = round(
+            sum(
+                getattr(
+                    snapshot,
+                    {
+                        "eps_fcf_explosion": "eps_fcf_explosion_score",
+                        "earnings_visibility": "earnings_visibility_score",
+                        "bottleneck_pricing": "bottleneck_pricing_score",
+                        "market_mispricing": "market_mispricing_score",
+                        "valuation_rerating": "valuation_rerating_score",
+                        "capital_allocation": "capital_allocation_score",
+                        "information_confidence": "information_confidence_score",
+                    }[component.key],
+                )
+                for component in CANONICAL_SCORE_COMPONENTS
+            ),
+            4,
+        )
+    return {
+        "verified_score": float(snapshot.total_score),
+        "raw_point_sum": round(sum(_float_or_none(row.get("raw_points")) or 0.0 for row in contribution_rows), 4),
+        "weighted_component_sum": weighted_component_sum,
+        "scoring_version": snapshot.scoring_version,
+    }
+
+
+def _score_contribution_v2_rows(rows: Sequence[Mapping[str, Any]]) -> list[ScoreContributionV2]:
+    contributions: list[ScoreContributionV2] = []
+    for row in rows:
+        contribution_id = str(row.get("score_contribution_id") or row.get("contribution_id") or "")
+        component_key = str(row.get("component_key") or "")
+        criterion_id = str(row.get("criterion_id") or component_key)
+        raw_points = _float_or_none(row.get("raw_points"))
+        max_points = _float_or_none(row.get("max_points"))
+        support_claim_ids = tuple(_unique_strings(row.get("support_claim_ids") or ()))
+        if not contribution_id or not component_key or raw_points is None or max_points is None:
+            continue
+        try:
+            contributions.append(
+                ScoreContributionV2(
+                    contribution_id=contribution_id,
+                    component_key=component_key,
+                    criterion_id=criterion_id,
+                    raw_points=raw_points,
+                    max_points=max_points,
+                    support_claim_ids=support_claim_ids,
+                    counter_claim_ids=tuple(_unique_strings(row.get("counter_claim_ids") or ())),
+                    mapping_ids=tuple(_unique_strings(row.get("mapping_ids") or ())),
+                    source_family_ids=tuple(_unique_strings(row.get("source_family_ids") or ())),
+                    cap_reason=str(row.get("cap_reason") or "") or None,
+                    rationale=str(row.get("rationale") or ""),
+                )
+            )
+        except ValueError:
+            continue
+    return contributions
+
+
+def _support_claim_ids(rows: Sequence[Mapping[str, Any]]) -> list[str]:
+    values: list[str] = []
+    for row in rows:
+        for claim_id in _unique_strings(row.get("support_claim_ids") or ()):
+            if claim_id not in values:
+                values.append(claim_id)
+    return values
+
+
+def _trace_as_of_date(row: Mapping[str, Any]) -> date | None:
+    for key in ("source_cutover_date", "as_of_date"):
+        text = str(row.get(key) or "").strip()
+        if not text:
+            continue
+        try:
+            return date.fromisoformat(text)
+        except ValueError:
+            continue
+    return None
+
+
+def _unique_strings(values: Sequence[Any]) -> list[str]:
+    if isinstance(values, str):
+        values = [values]
+    out: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        text = str(value or "")
+        if not text or text in seen:
+            continue
+        out.append(text)
+        seen.add(text)
+    return out
+
+
+def _float_or_none(value: Any) -> float | None:
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
 
 
 def _read_jsonl(path: Path) -> list[dict[str, Any]]:

@@ -32,6 +32,8 @@
     "stage_trace_score_interval_mismatch_count": 0,
     "stage_trace_score_scope_mismatch_count": 0,
     "stage_trace_score_status_mismatch_count": 0,
+    "stagecourt_score_contribution_ref_missing_count": 0,
+    "stagecourt_score_recompute_mismatch_count": 0,
     "verified_score_not_full_e2r_count": 0
   },
   "schema_version": "e2r_census_v4_score_audit_v1",

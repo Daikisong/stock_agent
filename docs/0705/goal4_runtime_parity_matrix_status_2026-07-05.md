@@ -600,7 +600,7 @@ SK하이닉스 000660:
   출석부/관찰 기록은 있지만 정식 시험지가 아직 없음
 ```
 
-## score formula trace 수동 감사
+## score formula trace 재검증
 
 promoted 삼성전자 full-thesis row는 `verified_score=44.1667`로 표시된다.
 
@@ -627,26 +627,34 @@ information_confidence: 1.6667 / 5.0
 raw sum: 40.8334
 ```
 
-수동 감사상 주의점:
+처음 수동 감사에서는 `44.1667 != 40.8334`만 보고 score trace closure 문제처럼 보였다.
+하지만 이는 단순 raw 합계와 총점의 비교라서 정확한 검사가 아니었다.
+C06 아키타입 runtime weight를 적용해 DeterministicScorer로 재채점하면 다음처럼 StageCourt 점수와 일치한다.
 
 ```text
 stagecourt trace score_interval: 44.1667
 referenced persisted contribution raw sum: 40.8334
+deterministic recompute verified_score: 44.1667
+weighted component sum: 44.1667
+scoring_version: census-v4-audit-recompute:e2r_2_2_rolling_calibrated:archetype_weight:C06_HBM_MEMORY_CUSTOMER_CAPACITY
 ```
 
-따라서 이 row는 production full-thesis row로 materialized 되었더라도, 다음 패치에서 `stagecourt score_interval == referenced score_contribution raw sum 또는 명시적 normalization formula`를 감사해야 한다.
+따라서 이 row의 점수 숫자 자체는 `raw component -> C06 runtime weight -> deterministic clamp` 경로로 재현된다.
+이번 패치에서 감사 기준도 `raw sum == total`이 아니라 `referenced score_contributions를 deterministic 재채점한 값 == score_interval.lower`로 바꿨다.
 
 쉬운 예:
 
 ```text
-성적표 총점에는 44.1667이라고 적혀 있는데,
-첨부된 과목 점수를 더하면 40.8334가 나온다.
+과목 원점수 합은 40.8334다.
+그런데 이 시험은 C06 전용 배점표를 쓰기 때문에 weighted 총점은 44.1667이 된다.
 
-둘 중 하나가 틀렸다고 단정하기 전에,
-"숨은 보정식이 있는지" 또는 "trace가 다른 candidate의 contribution ID를 재사용했는지"를 검사해야 한다.
+따라서 과목 원점수 합과 총점이 다르다는 사실만으로 오류라고 보면 안 된다.
+반드시 같은 배점표로 다시 채점했을 때 총점이 재현되는지를 봐야 한다.
 ```
 
-이 때문에 latest production row도 Goal4 완료 증거로 쓰면 안 된다.
+다만 latest production row도 Goal4 완료 증거로 쓰면 안 된다.
+이유는 점수 산식 불일치가 아니라 `brain_stage_promotion_unsafe_promoted_count=1`과 required positive primitive 부족이다.
+즉 계산기는 같은 답을 다시 내지만, 아직 이 답안지를 운영 full thesis로 올리는 승급 조건이 안전하게 닫히지 않았다.
 
 ## 이전 C05-only 문제에 대한 최신 답
 
