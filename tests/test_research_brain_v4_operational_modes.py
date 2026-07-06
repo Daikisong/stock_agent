@@ -1251,6 +1251,74 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertTrue(_planner_output_requests_external_web(runs[0].output))
         self.assertEqual(runs[0].planner_run_role, "initial")
 
+    def test_missing_external_web_plan_retry_does_not_block_executable_official_source_tasks(self):
+        event = _planner_event()
+        official_first_output = LLMPlannerOutputV2(
+            top_k_archetype_hypotheses=(
+                {
+                    "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    "probability_or_score": 0.9,
+                    "reason": "unit",
+                },
+            ),
+            positive_thesis="unit positive",
+            counter_thesis="unit counter",
+            must_verify_primitives=("revenue_visibility_contract",),
+            green_blockers_to_close=("source-backed confirmation",),
+            red_team_checks=("wrong subject",),
+            source_task_drafts=(
+                {
+                    "task_id": "TASK-OFFICIAL",
+                    "primitive_gap": "revenue_visibility_contract",
+                    "task_type": "positive_verify",
+                    "preferred_source_classes": ["DART", "IssuerIR"],
+                    "fallback_source_classes": ["IssuerOfficial"],
+                    "forbidden_source_classes": ["unbounded_general_search"],
+                    "date_window": {"end": "2026-06-29", "lookback_days": 730},
+                    "max_queries": 1,
+                    "max_candidates": 5,
+                    "max_fetches": 1,
+                    "stop_condition": {"accepted_claim_count": 1},
+                    "query_intents": ["삼성전자 HBM 매출 가시성 DART IR"],
+                    "llm_query_allowed": True,
+                    "general_search_allowed": False,
+                    "reason_from_memory": "official-first executable source task",
+                },
+            ),
+            query_intents=("삼성전자 HBM 매출 가시성 DART IR",),
+            do_not_promote_reasons=("unit",),
+            planner_self_check={
+                "score_keys_present": False,
+                "stage_keys_present": False,
+                "future_outcome_used": False,
+            },
+        )
+        provider = _RetryPlannerProvider(_planner_output(query_intents=("retry should not run",), fallback_source_classes=("TrustedNews",)))
+
+        runs = _retry_planner_for_missing_external_web_plan(
+            planner_runs=(
+                PlannerRunV4(
+                    event=event,
+                    provider_name="codex_cli_planner",
+                    provider_mode="real",
+                    real_provider_exercised=True,
+                    real_provider_success=True,
+                    fake_provider_used=False,
+                    output=official_first_output,
+                ),
+            ),
+            provider=provider,
+            memory_cards=(),
+            config=ProductionShadowV4Config(
+                as_of_date="2026-06-29",
+                planner_provider="real",
+                source_acquisition="live_full_bounded",
+            ),
+        )
+
+        self.assertEqual(provider.call_count, 0)
+        self.assertIs(runs[0].output, official_first_output)
+
     def test_missing_external_web_plan_retry_stops_before_starving_source_budget_mid_loop(self):
         first = _planner_event_with_id("CE-UNIT-005930-A", symbol="005930", company_name="삼성전자")
         second = _planner_event_with_id("CE-UNIT-000660-B", symbol="000660", company_name="SK하이닉스")

@@ -3944,7 +3944,7 @@ def _external_web_plan_gaps(run: PlannerRunV4) -> tuple[str, ...]:
     gaps: list[str] = []
     if not tuple(str(item).strip() for item in run.output.query_intents if str(item).strip()):
         gaps.append("query_intents_empty")
-    if not _planner_output_requests_external_web(run.output):
+    if not tuple(run.output.source_task_drafts) and not _planner_output_requests_external_web(run.output):
         gaps.append("no_external_web_source_task")
     return tuple(dict.fromkeys(gaps))
 

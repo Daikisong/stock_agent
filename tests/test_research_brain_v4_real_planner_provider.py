@@ -1,4 +1,5 @@
 import unittest
+from dataclasses import replace
 
 from e2r.research_brain.v4_planner_runtime import (
     PLANNER_BATCH_OUTPUT_SCHEMA,
@@ -133,6 +134,67 @@ class ResearchBrainV4RealPlannerProviderTests(unittest.TestCase):
                 event=event,
                 memory_cards=load_v4_cards(),
             )
+
+    def test_r13_redteam_reason_code_is_explicit_primary_signal(self):
+        event = replace(
+            sample_v4_event(symbol="", company_name=""),
+            event_type="all_archetype_runtime_parity_follow_up_seed",
+            event_summary=(
+                "planner input only. archetype_id=R13_CROSS_ARCHETYPE_4B_4C_REDTEAM; "
+                "primitive_gap=contract_visibility"
+            ),
+            raw_reason_codes=(
+                "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
+                "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+            ),
+        )
+
+        output = validate_llm_planner_output_v4(
+            {
+                "top_k_archetype_hypotheses": [
+                    {
+                        "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+                        "probability_or_score": 0.9,
+                        "reason": "explicit R13 redteam follow-up seed",
+                    }
+                ],
+                "positive_thesis": "redteam overlay follow-up only",
+                "counter_thesis": "not a production score finalization",
+                "must_verify_primitives": ["contract_visibility"],
+                "green_blockers_to_close": ["source quorum"],
+                "red_team_checks": ["wrong subject"],
+                "source_task_drafts": [
+                    {
+                        "task_id": "TASK-R13-REDTEAM",
+                        "primitive_gap": "contract_visibility",
+                        "task_type": "guard_verify",
+                        "preferred_source_classes": ["DART"],
+                        "fallback_source_classes": ["IssuerOfficial"],
+                        "forbidden_source_classes": ["unbounded_general_search"],
+                        "date_window": {"end": "2026-07-05", "lookback_days": 730},
+                        "max_queries": 1,
+                        "max_candidates": 5,
+                        "max_fetches": 1,
+                        "stop_condition": {"accepted_claim_count": 1},
+                        "query_intents": ["R13 redteam current source-backed follow-up"],
+                        "llm_query_allowed": True,
+                        "general_search_allowed": False,
+                        "reason_from_memory": "explicit redteam overlay follow-up",
+                    }
+                ],
+                "query_intents": ["R13 redteam current source-backed follow-up"],
+                "do_not_promote_reasons": ["overlay only"],
+                "planner_self_check": {
+                    "score_keys_present": False,
+                    "stage_keys_present": False,
+                    "future_outcome_used": False,
+                },
+            },
+            event=event,
+            memory_cards=load_v4_cards(),
+        )
+
+        self.assertEqual(output.top_k_archetype_hypotheses[0]["archetype_id"], "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM")
 
     def test_source_task_primitive_outside_primary_contract_is_quarantined(self):
         event = sample_v4_event(symbol="003090", company_name="대웅")

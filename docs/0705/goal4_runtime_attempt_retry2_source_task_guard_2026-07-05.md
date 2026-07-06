@@ -4,11 +4,13 @@
 
 이번 실행은 Goal4 완료가 아니다. `2026-07-05-goal4-all-archetype-next-runtime-attempt-retry2`는 중간에 `INVALID_PARTIAL_OUTPUT`으로 중단했으므로 score/stage 증거로 쓰면 안 된다.
 
-대신 이번 실행에서 중요한 운영 결함 2개를 확인하고 최소 패치했다.
+대신 이번 실행에서 중요한 운영 결함을 확인하고 최소 패치했다.
 
 ```text
 1. Codex planner batch timeout 하나가 batch 전체 후보를 실패로 만들던 문제
 2. missing external web plan retry가 source/claim 실행 예산을 잡아먹을 수 있던 문제
+3. R13 follow-up seed의 `REDTEAM` 표기가 explicit red-team 이벤트로 인식되지 않던 문제
+4. 실행 가능한 official-first `source_task_drafts`가 있는데도 external-web gap retry 대상으로 잡히던 문제
 ```
 
 쉬운 예:
@@ -70,27 +72,50 @@ provider_error:
 
 그 뒤 `missing_external_web_plan_retry_start`로 들어갔다.
 
-문제는 성공한 planner 102개 전부가 다음 상태였다는 점이다.
+정정된 관찰은 다음과 같다.
 
 ```text
-query_intents: 있음
-source_tasks: 없음
-external web plan gap: no_external_web_source_task
+planner success rows: 102
+with query_intents: 102
+with source_task_drafts: 102
+with exported source_tasks leaf in this partial root: 0
+_external_web_plan_gaps 기준 retry target: 15
 ```
 
 쉬운 예:
 
 ```text
-"삼성전자 HBM 고객 배정 검색"이라는 검색어는 적었다.
-하지만 "TrustedNews를 fetch해라" 또는 "report PDF를 가져와라" 같은 실제 source task 신청서는 비어 있었다.
+"삼성전자 HBM 고객 배정 검색"이라는 검색어도 있고,
+"DART/IR/CompanyGuide에서 먼저 찾고 필요하면 리포트 PDF를 보라"는 source_task_draft도 있었다.
+그런데 partial root는 아직 source execution까지 못 갔기 때문에 exported source_tasks leaf가 없었다.
 ```
 
-따라서 retry가 102개 전체를 다시 LLM에게 물어보는 상태가 됐다. 이 자체는 필요할 수 있다. 하지만 기존 코드에는 retry loop 내부 progress와 source 예산 중간 차단이 없었다.
+지난 문서의 `source_tasks: 없음` 표현은 부정확했다. 정확히는 `planner output.source_task_drafts`는 있었고, 아직 source execution 단계로 내려가기 전이라 `source_tasks.jsonl` leaf가 새로 생성되지 않은 상태였다.
+
+그럼에도 retry가 시작된 이유는 일부 planner output에서 `_external_web_plan_gaps`가 `no_external_web_source_task`를 반환했기 때문이다. 이 15개는 대체로 다음 형태였다.
+
+```text
+source_task_drafts: 있음
+primitive_gap: revenue_visibility_contract / contract_visibility / order_backlog_to_sales 등
+route: DART/KIND/IssuerIR/CompanyGuide official-first
+판정: no_external_web_source_task
+```
+
+즉 문제는 "LLM이 source task를 비웠다"가 아니라:
+
+```text
+실행 가능한 official-first source task가 있는데
+external-web 보강 조건이 그것을 gap처럼 보아 retry를 먼저 태움
+```
+
+에 더 가까웠다.
+
+이 자체는 source route를 더 좋게 만들 수도 있지만, 기존 코드에는 retry loop 내부 progress와 source 예산 중간 차단이 없었다.
 
 즉 다음 위험이 있었다.
 
 ```text
-source task 신청서를 고치는 데 시간을 다 씀
+이미 있는 source task를 실행하기 전에 external-web 보강 retry에 시간을 씀
 -> 실제 source fetch / claim extractor / StageCourt까지 못 감
 -> Goal4 검증이 또 partial로 끝남
 ```
@@ -144,9 +169,9 @@ R13 seed는 explicit red-team event type/source_family로 생성하거나
 Goal4 full-thesis primary count에서는 R13을 별도 overlay matrix로 분리해야 한다.
 ```
 
-### 2. planner가 query만 만들고 source task를 비움
+### 2. planner source task 초안은 있었지만 retry 판정이 과했다
 
-102개 성공 planner가 모두 `no_external_web_source_task`였다.
+102개 성공 planner에는 모두 `source_task_drafts`가 있었다. 다만 helper 기준으로 15개가 `no_external_web_source_task` retry 대상으로 잡혔다.
 
 예시:
 
@@ -156,19 +181,26 @@ top_arch: C06_HBM_MEMORY_CUSTOMER_CAPACITY
 query_intents:
   - 005930 삼성전자 HBM revenue visibility customer allocation contract 2026 IR
   - Samsung Electronics 005930 HBM revenue visibility customer allocation broker report PDF 2026
-source_types: []
+source_task_drafts:
+  - preferred: IssuerIR, DART, KIND, CompanyGuide
+    fallback: BrokerReportPDF
+    primitive_gap: revenue_visibility_contract
+  - preferred: BrokerReportPublicPDF, BrokerReportPDF
+    fallback: CompanyNewsroom
+    primitive_gap: revenue_visibility_contract
+helper external-web check: false
 ```
 
-이건 LLM이 "뭘 찾을지"는 말했지만, 운영 schema가 요구하는 `source_task_drafts`를 제대로 채우지 못한 것이다.
+이건 LLM이 source task를 못 만든 문제가 아니다. official-first primitive는 웹 fallback을 함부로 타면 안 된다는 정책과 external-web retry 조건이 충돌한 것이다.
 
-다음 패치 방향:
+패치 방향:
 
 ```text
-planner prompt/schema에서 query_intents만으로는 성공이 아니며,
-각 query intent가 bounded source_task_draft로 materialize되어야 한다는 요구를 강화해야 한다.
+source_task_drafts가 이미 있으면 먼저 source execution으로 내려간다.
+external-web 보강은 source task 자체가 비었거나 query가 비었을 때만 missing plan retry로 처리한다.
 ```
 
-단, deterministic fallback query template을 늘리면 안 된다. AGENTS.md 원칙대로 LLM이 source task를 작성하고, 코드는 검증/실행만 해야 한다.
+단, official-solvable gap을 TrustedNews/GeneralWebSearch로 강제로 보내면 안 된다. AGENTS.md 원칙대로 LLM이 source task를 작성하고, 코드는 검증/실행만 해야 한다.
 
 ### 3. missing external web retry가 너무 비가시적이었다
 
@@ -207,6 +239,7 @@ missing_external_web_plan_retry_stopped_insufficient_source_budget
 
 ```text
 src/e2r/research_brain/v4_planner_runtime.py
+src/e2r/research_brain/v3_llm_planner_provider.py
 ```
 
 변경:
@@ -255,16 +288,76 @@ batch마다:
 source task를 만들기 위한 LLM retry가 운영 실행 전체를 잡아먹지 않게 하는 실행 안전장치다.
 ```
 
+### 3. R13 explicit redteam 판정
+
+파일:
+
+```text
+src/e2r/research_brain/v4_planner_runtime.py
+```
+
+변경:
+
+```text
+event text에 "redteam" 단일 토큰이 있으면 explicit R13 red-team event로 인정
+```
+
+효과:
+
+```text
+R13_CROSS_ARCHETYPE_4B_4C_REDTEAM 같은 seed가
+"red team" 띄어쓰기만 없다는 이유로 validator에서 막히지 않는다.
+```
+
+쉬운 예:
+
+```text
+"REDTEAM"이라고 적힌 재검표를 "red team" 띄어쓰기가 없다고 접수 거부하지 않게 한 것.
+```
+
+### 4. executable official-first draft는 retry 없이 source execution으로 진행
+
+파일:
+
+```text
+src/e2r/research_brain/v4_production_orchestrator.py
+```
+
+변경:
+
+```text
+source_task_drafts가 비어 있지 않으면 no_external_web_source_task gap으로 보지 않음
+```
+
+효과:
+
+```text
+DART/KIND/IssuerIR/CompanyGuide로 바로 검증 가능한 task는
+external-web 보강 retry 전에 source execution으로 내려간다.
+```
+
 ## 검증
 
 통과:
 
 ```text
 PYTHONPATH=src python -m unittest tests.test_research_brain_v4_real_planner_provider -v
-  7 tests OK
+  8 tests OK
 
 PYTHONPATH=src python -m unittest tests.test_research_brain_v4_operational_modes -v
-  77 tests OK
+  78 tests OK
+
+PYTHONPATH=src python -m unittest tests.test_research_brain_v4_real_planner_provider tests.test_research_brain_v4_operational_modes -v
+  86 tests OK
+
+PYTHONPATH=src python -m unittest tests.test_research_to_runtime_parity_goal4 -v
+  8 tests OK
+
+PYTHONPATH=src:tests python -m unittest tests.test_research_brain_v2_r13_overrouting tests.test_research_brain_v3_real_planner_provider -v
+  7 tests OK
+
+PYTHONPATH=src python -m unittest discover -s tests -v
+  5267 tests OK
 
 git diff --check
   OK
@@ -274,7 +367,23 @@ git diff --check
 
 ```text
 test_batch_timeout_retries_each_candidate_instead_of_failing_whole_batch
+test_r13_redteam_reason_code_is_explicit_primary_signal
+test_missing_external_web_plan_retry_does_not_block_executable_official_source_tasks
 test_missing_external_web_plan_retry_stops_before_starving_source_budget_mid_loop
+```
+
+재계산:
+
+```text
+retry2 planner_runs.jsonl을 새 _external_web_plan_gaps 기준으로 재평가
+rows: 111
+gap_counts_after_patch:
+  NO_GAP: 111
+
+retry2 planner_runs.jsonl의 successful planner rows를 source_tasks_from_planner_output_v4로 재평가
+successful planner rows: 102
+materialized source tasks: 208
+no_task_examples: 0
 ```
 
 ## Goal4 현재 상태
@@ -285,9 +394,12 @@ test_missing_external_web_plan_retry_stops_before_starving_source_budget_mid_loo
 
 ```text
 전 아키타입 seed 111개 입력은 planner까지 도달 가능
-planner success는 102/111
-R13 primary policy failure는 9개
-성공 planner 102개도 source_task_drafts가 비어 있어 source/claim/StageCourt로 내려가지 못함
+기존 retry2 planner success는 102/111
+기존 retry2 R13 primary policy failure는 9개
+패치 후 R13 REDTEAM 단일 토큰은 explicit red-team event로 인정됨
+기존 retry2 성공 planner 102개에는 source_task_drafts가 있었음
+패치 후 같은 planner output은 missing external web retry gap 0개로 재평가됨
+패치 후 같은 planner output은 208개 source task로 materialize 가능함
 retry2 output은 INVALID_PARTIAL_OUTPUT이라 score/stage 증거로 폐기
 ```
 
@@ -295,10 +407,10 @@ retry2 output은 INVALID_PARTIAL_OUTPUT이라 score/stage 증거로 폐기
 
 ```text
 1. retry2 같은 실행은 반드시 clean output root에서 시작하게 강제
-2. R13 seed를 red-team overlay로 분리하거나 explicit red-team event로 생성
-3. planner prompt/schema가 query_intents뿐 아니라 source_task_drafts까지 채우도록 강화
-4. source_task_drafts 없는 planner success를 "success"와 "score path executable"로 분리
-5. clean root에서 111개 재실행 후 source task, fetch, accepted claim, StageCourt matrix까지 다시 산출
+2. clean root에서 111개 재실행 후 source task, fetch, accepted claim, StageCourt matrix까지 다시 산출
+3. source execution 이후 accepted claim 0 또는 mapping rejection이 남는 아키타입을 source route/primitive family 단위로 다시 좁힘
+4. R13은 primary production full thesis가 아니라 overlay/readiness matrix로 분리해 해석
+5. `PRODUCTION_FULL_E2R_SCORE_PATH_PASS`와 `MEANINGFUL_FULL_THESIS_PASS`를 계속 분리
 ```
 
 ## 운영 해석
@@ -309,18 +421,19 @@ retry2 output은 INVALID_PARTIAL_OUTPUT이라 score/stage 증거로 폐기
 
 ```text
 query는 생김
-source task가 안 생김
-source task가 없으니 fetch가 안 됨
-fetch가 없으니 accepted claim이 안 생김
-accepted claim이 없으니 full thesis stage가 안 닫힘
+planner source_task_drafts도 생김
+그런데 optional external-web retry가 먼저 끼어 source execution으로 내려가기 전에 partial 중단됨
+이제 같은 planner output은 retry gap 없이 source execution으로 내려갈 수 있음
+다음 병목은 fetch/claim/mapping 단계에서 실제로 accepted claim이 생기는지다
 ```
 
 쉬운 예:
 
 ```text
 연구원이 "삼성전자 HBM 고객 배정을 찾아야 한다"고 말은 했다.
-하지만 "어느 공시/뉴스/IR을 몇 개 가져와라"는 실제 작업 지시서를 안 냈다.
-그러면 Evidence OS는 점수 칸을 채울 수 없다.
+그리고 "DART/IR/CompanyGuide를 먼저 보고, 필요한 경우 bounded report source를 보라"는 작업 지시서도 냈다.
+그런데 접수대에서 "외부웹 신청이 더 필요하다"며 다시 줄을 세워 실제 검사실로 못 내려갔다.
+이번 패치는 그 줄 세우기를 줄여, 다음 실행이 검사실(source fetch/claim extraction)로 내려가게 만든 것이다.
 ```
 
 이번 패치는 그 실패를 덮어 점수를 만들지 않고, 실패 지점을 더 정확히 보이게 만든 것이다.

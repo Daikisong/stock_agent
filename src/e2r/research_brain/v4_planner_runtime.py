@@ -1426,6 +1426,7 @@ def _explicit_r13_event(event: CandidateEventV2) -> bool:
     return (
         event.event_type in {"red_team_review", "cross_archetype_review", "false_positive_review"}
         or "explicit_r13" in text
+        or "redteam" in text
         or ("false" in text and "positive" in text and "review" in text)
         or ("cross" in text and "red" in text and "review" in text)
     )
