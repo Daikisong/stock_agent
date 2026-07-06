@@ -569,6 +569,18 @@ def run_planner_provider_v4(
             for event in events
         )
     except PlannerProviderUnavailable as exc:
+        if _planner_provider_error_is_batch_retryable(str(exc)) and len(events) > 1:
+            split_runs: list[PlannerRunV4] = []
+            for event in events:
+                split_runs.extend(
+                    run_planner_provider_v4(
+                        provider=provider,
+                        events=(event,),
+                        memory_cards=memory_cards,
+                        existing_evidence_by_event_id=existing_evidence_by_event_id or {},
+                    )
+                )
+            return tuple(split_runs)
         return tuple(
             _failed_run(
                 provider,
@@ -648,6 +660,11 @@ def run_planner_provider_v4(
             )
         )
     return tuple(rows)
+
+
+def _planner_provider_error_is_batch_retryable(error: str) -> bool:
+    text = error.lower()
+    return "timeout" in text or "timed out" in text
 
 
 def source_tasks_from_planner_output_v4(

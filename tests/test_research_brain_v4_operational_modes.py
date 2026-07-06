@@ -1251,6 +1251,70 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertTrue(_planner_output_requests_external_web(runs[0].output))
         self.assertEqual(runs[0].planner_run_role, "initial")
 
+    def test_missing_external_web_plan_retry_stops_before_starving_source_budget_mid_loop(self):
+        first = _planner_event_with_id("CE-UNIT-005930-A", symbol="005930", company_name="삼성전자")
+        second = _planner_event_with_id("CE-UNIT-000660-B", symbol="000660", company_name="SK하이닉스")
+        initial = _planner_output(query_intents=(), fallback_source_classes=("KIND",))
+        retry = _planner_output(
+            query_intents=("삼성전자 HBM 고객 배정 qualification",),
+            fallback_source_classes=("TrustedNews",),
+        )
+        provider = _RetryPlannerProvider(retry)
+        progress_events: list[dict] = []
+
+        with TemporaryDirectory() as tmp:
+            progress_path = Path(tmp) / "brain_web_runtime_progress.json"
+            with patch(
+                "e2r.research_brain.v4_production_orchestrator._optional_retry_would_starve_source_execution_v4",
+                side_effect=(False, True),
+            ), patch(
+                "e2r.research_brain.v4_production_orchestrator._runtime_budget_remaining_seconds_v4",
+                return_value=10.0,
+            ):
+                runs = _retry_planner_for_missing_external_web_plan(
+                    planner_runs=(
+                        PlannerRunV4(
+                            event=first,
+                            provider_name="codex_cli_planner",
+                            provider_mode="real",
+                            real_provider_exercised=True,
+                            real_provider_success=True,
+                            fake_provider_used=False,
+                            output=initial,
+                        ),
+                        PlannerRunV4(
+                            event=second,
+                            provider_name="codex_cli_planner",
+                            provider_mode="real",
+                            real_provider_exercised=True,
+                            real_provider_success=True,
+                            fake_provider_used=False,
+                            output=initial,
+                        ),
+                    ),
+                    provider=provider,
+                    memory_cards=(),
+                    config=ProductionShadowV4Config(
+                        as_of_date="2026-06-29",
+                        planner_provider="real",
+                        source_acquisition="live_full_bounded",
+                        planner_batch_size=1,
+                        runtime_budget_seconds=600.0,
+                        claim_extractor_timeout_seconds=15.0,
+                        runtime_progress_path=str(progress_path),
+                    ),
+                    started_at=0.0,
+                    progress_events=progress_events,
+                )
+
+        self.assertEqual(provider.call_count, 1)
+        self.assertTrue(_planner_output_requests_external_web(runs[0].output))
+        self.assertFalse(_planner_output_requests_external_web(runs[1].output))
+        phases = [row["phase"] for row in progress_events]
+        self.assertIn("missing_external_web_plan_retry_batch_start", phases)
+        self.assertIn("missing_external_web_plan_retry_batch_end", phases)
+        self.assertIn("missing_external_web_plan_retry_stopped_insufficient_source_budget", phases)
+
     def test_rejected_claim_feedback_is_added_to_evidence_context(self):
         event = _planner_event()
         feedback = (

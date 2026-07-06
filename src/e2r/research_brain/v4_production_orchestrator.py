@@ -235,6 +235,8 @@ def run_research_brain_v4_production_shadow(
                 provider=planner_provider,
                 memory_cards=cards,
                 config=config,
+                started_at=started_at,
+                progress_events=runtime_progress_events,
             )
         )
         _flush_runtime_planner_leafs_v4(config=config, planner_runs=planner_runs)
@@ -580,6 +582,8 @@ def run_research_brain_v4_production_shadow(
                         provider=planner_provider,
                         memory_cards=cards,
                         config=config,
+                        started_at=started_at,
+                        progress_events=runtime_progress_events,
                     )
                 )
                 planner_runs.extend(more_runs)
@@ -2628,6 +2632,8 @@ def _retry_planner_for_missing_external_web_plan(
     provider: ResearchBrainPlannerProviderV4 | None,
     memory_cards: Sequence[ArchetypeMemoryCard],
     config: ProductionShadowV4Config,
+    started_at: float | None = None,
+    progress_events: list[dict[str, Any]] | None = None,
 ) -> tuple[PlannerRunV4, ...]:
     if provider is None or not _requires_external_web_plan(config):
         return tuple(planner_runs)
@@ -2644,7 +2650,39 @@ def _retry_planner_for_missing_external_web_plan(
     if not retry_events:
         return tuple(planner_runs)
     replacement: dict[str, PlannerRunV4] = {}
-    for event_batch in _chunks(retry_events, config.planner_batch_size):
+    for batch_index, event_batch in enumerate(_chunks(retry_events, config.planner_batch_size), start=1):
+        if started_at is not None and _optional_retry_would_starve_source_execution_v4(
+            config=config,
+            started_at=started_at,
+        ):
+            if progress_events is not None:
+                _record_runtime_progress_v4(
+                    config=config,
+                    progress_events=progress_events,
+                    phase="missing_external_web_plan_retry_stopped_insufficient_source_budget",
+                    retry_candidate_count=len(retry_events),
+                    retry_batch_index=batch_index,
+                    replacement_count=len(replacement),
+                    runtime_budget_seconds=config.runtime_budget_seconds,
+                    runtime_budget_remaining_seconds=_runtime_budget_remaining_seconds_v4(
+                        config=config,
+                        started_at=started_at,
+                    ),
+                    source_execution_reserved_budget_seconds=_source_execution_reserved_budget_seconds_v4(
+                        config=config,
+                    ),
+                )
+            break
+        if progress_events is not None:
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=progress_events,
+                phase="missing_external_web_plan_retry_batch_start",
+                retry_candidate_count=len(retry_events),
+                retry_batch_index=batch_index,
+                retry_batch_size=len(event_batch),
+                replacement_count=len(replacement),
+            )
         retry_runs = run_planner_provider_v4(
             provider=provider,
             events=event_batch,
@@ -2658,6 +2696,17 @@ def _retry_planner_for_missing_external_web_plan(
         for retry_run in retry_runs:
             if retry_run.output and _planner_output_requests_external_web(retry_run.output):
                 replacement[retry_run.event.candidate_event_id] = retry_run
+        if progress_events is not None:
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=progress_events,
+                phase="missing_external_web_plan_retry_batch_end",
+                retry_candidate_count=len(retry_events),
+                retry_batch_index=batch_index,
+                retry_batch_size=len(event_batch),
+                retry_run_count=len(retry_runs),
+                replacement_count=len(replacement),
+            )
     if not replacement:
         return tuple(planner_runs)
     return tuple(replacement.get(run.event.candidate_event_id, run) for run in planner_runs)

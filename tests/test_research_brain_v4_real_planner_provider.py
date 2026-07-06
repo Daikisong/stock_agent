@@ -6,7 +6,23 @@ from e2r.research_brain.v4_planner_runtime import (
     run_planner_provider_v4,
     validate_llm_planner_output_v4,
 )
+from e2r.research_brain.v3_llm_planner_provider import PlannerProviderUnavailable
 from tests.research_brain_v4_test_helpers import RealStubPlannerProviderV4, load_v4_cards, sample_v4_event
+
+
+class BatchTimeoutThenSingleSuccessProvider(RealStubPlannerProviderV4):
+    def __init__(self):
+        self.call_sizes = []
+
+    def plan_many(self, *, events, memory_cards, existing_evidence_by_event_id=None):
+        self.call_sizes.append(len(events))
+        if len(events) > 1:
+            raise PlannerProviderUnavailable("codex_cli_timeout")
+        return super().plan_many(
+            events=events,
+            memory_cards=memory_cards,
+            existing_evidence_by_event_id=existing_evidence_by_event_id,
+        )
 
 
 class ResearchBrainV4RealPlannerProviderTests(unittest.TestCase):
@@ -72,6 +88,24 @@ class ResearchBrainV4RealPlannerProviderTests(unittest.TestCase):
         self.assertIn("response_hash", exported)
         self.assertNotIn("prompt_payload", exported)
         self.assertNotIn("response_payload", exported)
+
+    def test_batch_timeout_retries_each_candidate_instead_of_failing_whole_batch(self):
+        first = sample_v4_event(symbol="005930", company_name="삼성전자")
+        second = sample_v4_event(symbol="000660", company_name="SK하이닉스")
+        provider = BatchTimeoutThenSingleSuccessProvider()
+
+        runs = run_planner_provider_v4(
+            provider=provider,
+            events=(first, second),
+            memory_cards=load_v4_cards(),
+            existing_evidence_by_event_id={},
+        )
+
+        self.assertEqual(provider.call_sizes, [2, 1, 1])
+        self.assertEqual(len(runs), 2)
+        self.assertTrue(all(run.real_provider_success for run in runs))
+        self.assertEqual([run.event.symbol for run in runs], ["005930", "000660"])
+        self.assertTrue(all(run.provider_error is None for run in runs))
 
     def test_score_stage_key_rejected_by_validator(self):
         event = sample_v4_event()
