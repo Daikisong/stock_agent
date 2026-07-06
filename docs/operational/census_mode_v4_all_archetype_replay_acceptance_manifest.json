@@ -85,7 +85,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 4,
+      "accepted_claim_count": 7,
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -193,7 +193,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 10,
+      "accepted_claim_count": 12,
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -325,7 +325,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 7,
+      "accepted_claim_count": 8,
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",

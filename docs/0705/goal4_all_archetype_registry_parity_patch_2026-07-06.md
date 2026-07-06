@@ -516,3 +516,440 @@ blockers:
 ```
 
 즉 이번 패치 후에도 Goal4는 완료가 아니다. 다만 다음 실제 full runtime attempt가 멈춘 것처럼 보이는 batch 내부 대기를 줄이고, 후보별 provider/source blocker를 더 정직하게 남길 수 있게 됐다.
+
+## 추가 런타임 감사: batch=1, finite budget=14400
+
+이 섹션은 `--brain-planner-batch-size 1`로 후보별 감사성을 확보한 뒤 실제 full runtime을 다시 돌린 결과다.
+
+이번 실행도 Goal4 완료가 아니다. 다만 이전처럼 `INVALID_PARTIAL_OUTPUT`으로 폐기되는 결과가 아니라, critical audit은 깨끗하고 남은 blocker가 명확한 `NOT_READY` 결과다.
+
+쉬운 예:
+
+```text
+이전 7200초 실행:
+  시험 도중 답안지 한 장에 "평가 이벤트만 있는데 점수 있음" 같은 형식 오류가 생김
+  → 그 결과 전체가 무효 처리됨
+
+이번 14400초 실행:
+  형식 오류는 사라짐
+  실제 채점도 일부 됨
+  하지만 111개 중 대부분이 아직 증거 claim/full thesis로 닫히지 않음
+  → "불합격 사유가 분명한 NOT_READY"
+```
+
+### 7200초 실행에서 폐기된 이유
+
+output root:
+
+```text
+output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1
+```
+
+결과:
+
+```text
+exit_code = 1
+status = INVALID_PARTIAL_OUTPUT
+leaf critical_count = 2
+```
+
+원인:
+
+```text
+assessment_only_nonzero_score_count = 1
+assessment_event_used_as_score_evidence_count = 1
+```
+
+실제 문제는 Research Brain이 만든 candidate event가 stage row로 승격될 때 `candidate_event_id`가 빠진 것이다.
+
+```text
+064760 티씨케이:
+  Brain/Web accepted claim과 partial score는 있었음
+  그런데 stage row에는 candidate_event_count=0으로 남음
+  그래서 감사기가 "CensusAssessmentEvent만 있는데 점수가 붙었다"고 판단
+```
+
+쉬운 예:
+
+```text
+실제 서류는 있었는데 서류번호가 최종 답안지에 안 적힘
+→ 감사 입장에서는 "서류 없이 점수 준 것"처럼 보임
+```
+
+패치:
+
+```text
+src/e2r/census/census_runner_v4.py
+```
+
+`_promote_brain_stage_rows`가 StageCourt trace의 `candidate_event_id`를 최종 row에 보존하도록 바꿨다.
+
+중요한 점:
+
+```text
+점수/Stage/weight는 바꾸지 않았다.
+CensusAssessmentEvent를 점수 증거로 허용한 것도 아니다.
+Research Brain candidate event를 잃어버리지 않게 장부를 맞춘 패치다.
+```
+
+테스트:
+
+```bash
+PYTHONPATH=src python -m unittest \
+  tests.test_census_v4_brain_stage_promotion_gate \
+  tests.test_all_archetype_runtime_execution_manifest -v
+```
+
+결과:
+
+```text
+Ran 32 tests
+OK
+```
+
+### finite budget 상향
+
+batch size를 1로 줄인 뒤 111개 seed를 전수 시도하면 planner/source/claim extraction이 모두 후보별로 직렬화된다.
+
+기존:
+
+```text
+brain_runtime_budget_seconds = 7200
+```
+
+변경:
+
+```text
+GOAL4_NEXT_RUNTIME_BUDGET_SECONDS = 14400
+brain_runtime_budget_seconds = 14400
+```
+
+주의:
+
+```text
+이건 무제한 설정이 아니다.
+Goal4 next-runtime manifest에만 들어간 finite budget이다.
+Production daily의 unbounded fetch를 허용하는 변경도 아니다.
+```
+
+쉬운 예:
+
+```text
+한 명씩 111명을 면접하면 2시간으로는 부족했다.
+그래서 4시간짜리 회의실을 예약했다.
+면접 기준을 낮춘 것이 아니라 시간을 정확히 배정한 것이다.
+```
+
+갱신된 manifest:
+
+```text
+docs/operational/all_archetype_runtime_execution_manifest.json
+docs/operational/all_archetype_runtime_execution_manifest_2026-07-05.json
+docs/operational/all_archetype_runtime_execution_manifest_2026-07-05.md
+```
+
+### 14400초 실행 결과
+
+output root:
+
+```text
+output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1-budget14400
+```
+
+명령 핵심:
+
+```text
+--brain-planner-batch-size 1
+--brain-runtime-budget-seconds 14400.0
+--brain-universe-limit 111
+--brain-planner-success-limit 111
+--brain-accepted-claim-target 36
+--brain-stage-promotion-mode strict
+--full-thesis-smoke-mode disabled
+--target-gate full_thesis
+```
+
+결과:
+
+```text
+exit_code = 1
+final verdict = NOT_READY
+runtime_budget_exhausted = false
+runtime_elapsed_seconds = 13357.865408
+```
+
+핵심 수치:
+
+```text
+planner_run_count = 458
+full_thesis_seed_planner_attempted_event_count = 111
+full_thesis_seed_real_provider_success_count = 110
+full_thesis_seed_runtime_budget_exhausted_count = 0
+full_thesis_seed_source_task_execution_count = 809
+source_task_execution_count = 809
+accepted_claim_count = 135
+unique_accepted_claim_count = 86
+real_document_fetched_count = 729
+unique_real_document_fetched_count = 142
+```
+
+Leaf artifact audit:
+
+```text
+verdict = PASS
+critical_count = 0
+assessment_event_score_evidence_allowed_count = 0
+assessment_event_used_as_score_evidence_count = 0
+assessment_only_nonzero_score_count = 0
+```
+
+의미:
+
+```text
+CensusAssessmentEvent를 점수 증거로 잘못 쓴 문제는 이번 run에서는 재발하지 않았다.
+```
+
+### 111개 seed materialization 상태
+
+`full_thesis_seed_materialization_audit.json`:
+
+```text
+verdict = FAIL
+critical_count = 48
+```
+
+하지만 실패 원인이 무작위가 아니라 다음처럼 분리됐다.
+
+```text
+FULL_THESIS_PROMOTED = 7
+STAGECOURT_READY_NOT_PROMOTED = 16
+ACCEPTED_CLAIM_NOT_CREATED = 83
+STAGECOURT_TRACE_NOT_CREATED = 4
+PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS = 1
+```
+
+아키타입별 promoted:
+
+```text
+C01_ORDER_BACKLOG_MARGIN_BRIDGE = 1
+C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG = 1
+C05_EPC_MEGA_CONTRACT_MARGIN_GAP = 1
+C06_HBM_MEMORY_CUSTOMER_CAPACITY = 1
+C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY = 1
+C17_CHEMICAL_COMMODITY_MARGIN_SPREAD = 1
+C28_SOFTWARE_SECURITY_CONTRACT_RETENTION = 1
+```
+
+중요:
+
+```text
+예전 문제처럼 C05 10개가 전부 FULL_THESIS로 올라간 상태는 아니다.
+이번에는 promoted 7개가 여러 아키타입으로 분산됐다.
+```
+
+하지만 이것도 완료가 아니다.
+
+```text
+83개는 accepted claim 자체가 생성되지 않았다.
+16개는 StageCourt까지 갔지만 FULL_THESIS로 승격되지 않았다.
+4개는 StageCourt trace도 만들지 못했다.
+1개는 real provider success가 없었다.
+```
+
+쉬운 예:
+
+```text
+111개 과제 중 7개만 답안지 형태로 채점됐다.
+나머지는 "자료 못 찾음", "채점 준비는 됐지만 승격 실패", "채점표 생성 실패"로 남아 있다.
+```
+
+### FULL_THESIS stage rows
+
+최종 FULL_THESIS row 7개:
+
+```text
+052400 코나아이        C01 gap=contract_quality             score=11.9999 stage=0
+047810 한국항공우주    C03 gap=export_contract              score=37.0000 stage=0
+003380 하림지주        C05 gap=contract_duration_months     score=27.9998 stage=0
+005930 삼성전자        C06 gap=revenue_visibility_contract  score=44.1667 stage=1
+058470 리노공업        C08 gap=named_customer_quality       score=65.2000 stage=2
+011170 롯데케미칼      C17 gap=raw_material_cost_risk       score=18.7500 stage=0
+012510 더존비즈온      C28 gap=retention_or_renewal         score=13.2666 stage=0
+```
+
+공통:
+
+```text
+score_scale = FULL_E2R_100
+score_source = BRAIN_WEB_PRODUCTION_FULL_THESIS_STAGECOURT
+```
+
+삼성전자/하이닉스 기준:
+
+```text
+삼성전자 005930:
+  이번 run에서는 production FULL_THESIS row로 올라왔지만 stage=1, score=44.1667이다.
+  예전 90점대 provisional smoke와 비교할 수 없다.
+  이번 점수는 source-backed full thesis 경로의 별도 실행 결과다.
+
+SK하이닉스 000660:
+  refresh queue에는 남아 있지만 production FULL_THESIS row로는 올라오지 않았다.
+  refresh_queue_unmaterialized_sample에 full_thesis_refresh_task_not_run으로 남았다.
+```
+
+쉬운 예:
+
+```text
+삼성전자는 이번 시험지에 들어와 채점은 받았다.
+하이닉스는 이번 시험지 후보 명단에는 있었지만, 최종 채점 답안지로 올라오지 못했다.
+```
+
+### Production pass가 막힌 이유
+
+`full_thesis_production_audit.json`:
+
+```text
+status = PENDING_FULL_THESIS_PRODUCTION
+production_pass_allowed = false
+full_thesis_row_count = 7
+full_thesis_refresh_queue_candidate_count = 82
+production_full_thesis_row_with_required_positive_missing_primitives_count = 7
+production_full_thesis_row_with_green_gap_primitives_count = 7
+blockers = ["production_full_thesis_rows_with_required_positive_missing_primitives"]
+```
+
+의미:
+
+```text
+7개 row는 score path가 열렸지만,
+7개 모두 required-positive 또는 Green gap이 남아 있어 meaningful production pass가 아니다.
+```
+
+쉬운 예:
+
+```text
+답안지를 7장 채점하긴 했다.
+하지만 7장 모두 필수 증빙 서류가 빠져 있어 "최종 합격" 도장을 찍지 못한다.
+```
+
+### Brain/Web readiness gate blockers
+
+`brain_web_readiness_gate_audit.json`:
+
+```text
+verdict = BLOCKED
+blockers:
+  - Brain/Web official-first violations reached score evidence: 5
+  - Brain/Web source task budget caps were exceeded: 8
+```
+
+세부:
+
+```text
+official_first_violation_count = 5
+source_task_budget_cap_exceeded_count = 8
+zero_budget_policy_rejected_source_task_execution_count = 33
+```
+
+예시:
+
+```text
+055550 C21 roe:
+  source_class=BrokerReportPublicPDF
+  status=NO_EVIDENCE_FOUND
+
+003380 C05 margin_bridge_visible:
+  source_class=BrokerReportPublicPDF
+  status=PROVIDER_FAILED
+
+003670 C11 call_off_risk:
+  source_class=BrokerReportPublicPDF
+  status=EVIDENCE_OS_ACCEPTED
+  stop_reason=rerouted_claim_accepted_original_gap_unsatisfied
+```
+
+의미:
+
+```text
+official-first로 먼저 풀어야 하는 gap이 일반 broker/report/web 경로에서 score evidence까지 닿은 사례가 있다.
+또 일부 SourceTask는 budget cap을 초과했다.
+```
+
+쉬운 예:
+
+```text
+재무제표로 확인해야 할 항목을 먼저 DART/공식자료에서 닫지 않고,
+증권사 PDF나 웹 경로로 점수 재료까지 보낸 셈이다.
+그래서 Brain/Web gate가 막는 것이 맞다.
+```
+
+### 아직 남은 구조적 문제
+
+1. 최종 `census_stage_status.jsonl`의 FULL_THESIS row에는 `canonical_archetype_id`가 비어 있고, 아키타입은 materialization trace/StageCourt trace 쪽에 남아 있다.
+
+쉬운 예:
+
+```text
+채점표에는 "삼성전자 44.1667점"이 있는데,
+그 점수가 C06 시험지 점수라는 라벨이 최종 row에 직접 적혀 있지 않은 상태다.
+감사할 때 trace를 따라가면 알 수 있지만, 최종 row 자체도 라벨을 가져야 한다.
+```
+
+2. `ACCEPTED_CLAIM_NOT_CREATED` 83개가 대부분이다.
+
+쉬운 예:
+
+```text
+LLM/planner/source task는 돌았지만,
+점수에 쓸 수 있는 accepted Evidence OS claim으로 변환되지 않았다.
+```
+
+3. `STAGECOURT_READY_NOT_PROMOTED` 16개는 StageCourt trace까지 갔지만 production FULL_THESIS로 못 올라왔다.
+
+쉬운 예:
+
+```text
+채점 준비는 됐는데,
+필수 서류나 gap 조건이 남아 있어 최종 성적표에 반영되지 않았다.
+```
+
+4. official-first 위반과 source task budget cap 초과가 남아 있다.
+
+쉬운 예:
+
+```text
+공식 문서로 먼저 확인해야 하는 gap을 웹/리포트로 우회하거나,
+정해진 source task 예산을 넘겨서 찾은 claim은 운영 evidence pass로 인정하면 안 된다.
+```
+
+## 현재 결론
+
+이번 작업으로 고쳐진 것:
+
+```text
+1. batch=1 실행에서 Research Brain candidate_event_id가 최종 row에 보존된다.
+2. CensusAssessmentEvent만으로 점수가 붙은 것처럼 보이는 critical 오류가 사라졌다.
+3. Goal4 next-runtime manifest는 후보별 감사성과 14400초 finite budget을 명시한다.
+4. 실제 full runtime은 111개 seed를 모두 planner attempt했고, 809개 source task와 135 accepted claims까지 진행됐다.
+5. C05-only monoculture는 최신 promoted FULL_THESIS 7개 기준으로는 재발하지 않았다.
+```
+
+아직 완료가 아닌 것:
+
+```text
+1. Goal4 final verdict는 NOT_READY다.
+2. full thesis seed materialization audit은 FAIL이다.
+3. Brain/Web readiness gate는 BLOCKED다.
+4. production full thesis pass는 false다.
+5. 7개 FULL_THESIS row 모두 required-positive/Green gap이 남아 있다.
+6. 82개 refresh queue 후보가 아직 FULL_THESIS로 materialize되지 않았다.
+7. machine-readable test result artifact도 아직 Goal4 requirement matrix blocker로 남아 있다.
+```
+
+따라서 이 문서의 최종 판단은 다음이다.
+
+```text
+Goal4는 계속 active다.
+이번 실행은 "전보다 정직한 NOT_READY"를 만든 것이지,
+운영 파이프라인 완료나 전 아키타입 meaningful full thesis pass가 아니다.
+```

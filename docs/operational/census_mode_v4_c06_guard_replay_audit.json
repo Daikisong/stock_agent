@@ -149,7 +149,7 @@
             "mapping_id": "MAP-5b1b9c4339d8ebf3c7c7",
             "mapping_status": "ACCEPTED",
             "primitive_id": "customer_preorder_or_allocation",
-            "rationale": "contract_blind_extractor:predicate:customer_allocation_or_qualification_claim",
+            "rationale": "contract_blind_extractor:predicate:customer_allocation_or_qualification_claim:explicit_customer_allocation",
             "support_direction": "SUPPORT"
           }
         ],

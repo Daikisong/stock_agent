@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 
 from e2r.census.all_archetype_runtime_execution_manifest import (
+    GOAL4_NEXT_RUNTIME_BUDGET_SECONDS,
     GOAL4_NEXT_RUNTIME_PLANNER_BATCH_SIZE,
     build_all_archetype_runtime_execution_manifest,
 )
@@ -39,6 +40,8 @@ class AllArchetypeRuntimeExecutionManifestTests(unittest.TestCase):
         self.assertEqual(config["brain_stage_promotion_mode"], "strict")
         self.assertEqual(config["brain_planner_batch_size"], GOAL4_NEXT_RUNTIME_PLANNER_BATCH_SIZE)
         self.assertEqual(config["brain_planner_batch_size"], 1)
+        self.assertEqual(config["brain_runtime_budget_seconds"], GOAL4_NEXT_RUNTIME_BUDGET_SECONDS)
+        self.assertEqual(config["brain_runtime_budget_seconds"], 14400.0)
 
     def test_manifest_config_kwargs_can_construct_census_v4_config(self) -> None:
         config = CensusV4RunConfig(**self.manifest["census_v4_config_kwargs"])
@@ -46,6 +49,7 @@ class AllArchetypeRuntimeExecutionManifestTests(unittest.TestCase):
         self.assertEqual(config.brain_web_mode, "enabled")
         self.assertEqual(config.brain_planner_provider, "real")
         self.assertEqual(config.brain_planner_batch_size, 1)
+        self.assertEqual(config.brain_runtime_budget_seconds, 14400.0)
 
     def test_manifest_command_contains_seed_path_and_safety_flags(self) -> None:
         command = self.manifest["run_command"]
@@ -60,7 +64,9 @@ class AllArchetypeRuntimeExecutionManifestTests(unittest.TestCase):
         self.assertTrue(self.manifest["safety_assertions"]["llm_query_generation_required"])
         self.assertTrue(self.manifest["safety_assertions"]["planner_batch_isolation_required"])
         self.assertEqual(self.manifest["safety_assertions"]["planner_batch_size"], 1)
+        self.assertEqual(self.manifest["safety_assertions"]["runtime_budget_seconds"], 14400.0)
         self.assertIn("--brain-planner-batch-size 1", command)
+        self.assertIn("--brain-runtime-budget-seconds 14400.0", command)
 
     def test_census_v4_seed_runtime_counter_recognizes_goal4_seed_event(self) -> None:
         event = self.plan["seed_events"][0]

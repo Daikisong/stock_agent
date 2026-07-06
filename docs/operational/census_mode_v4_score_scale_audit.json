@@ -1,8 +1,8 @@
 {
   "critical_counts": {
     "assessment_event_score_evidence_allowed_count": 0,
-    "assessment_event_used_as_score_evidence_count": 1,
-    "assessment_only_nonzero_score_count": 1,
+    "assessment_event_used_as_score_evidence_count": 0,
+    "assessment_only_nonzero_score_count": 0,
     "event_board_scope_with_full_e2r_verified_score_count": 0,
     "event_without_accepted_claim_nonzero_score_count": 0,
     "evidence_url_pending_to_score_count": 0,
@@ -37,5 +37,5 @@
     "verified_score_not_full_e2r_count": 0
   },
   "schema_version": "e2r_census_v4_score_audit_v1",
-  "verdict": "FAIL"
+  "verdict": "PASS"
 }

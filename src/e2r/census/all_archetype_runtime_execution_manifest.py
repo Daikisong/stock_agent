@@ -11,6 +11,7 @@ from typing import Any, Mapping
 DEFAULT_OUTPUT_ROOT = "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt"
 DEFAULT_V3_OUTPUT_ROOT = "output/census_v3/2026-07-01"
 GOAL4_NEXT_RUNTIME_PLANNER_BATCH_SIZE = 1
+GOAL4_NEXT_RUNTIME_BUDGET_SECONDS = 14400.0
 
 
 def _rel(path: Path, repo_root: Path) -> str:
@@ -131,7 +132,7 @@ def build_all_archetype_runtime_execution_manifest(
         "brain_retry_max": 1,
         "brain_claim_extractor_provider": "auto",
         "brain_claim_extractor_timeout_seconds": 180.0,
-        "brain_runtime_budget_seconds": 7200.0,
+        "brain_runtime_budget_seconds": GOAL4_NEXT_RUNTIME_BUDGET_SECONDS,
         "brain_candidate_event_seed_path": _rel(seed_path, repo),
         "brain_stage_promotion_mode": "strict",
         "full_thesis_smoke_mode": "disabled",
@@ -169,6 +170,7 @@ def build_all_archetype_runtime_execution_manifest(
             "finite_budget_required": bool(next_attempt_plan.get("all_tasks_have_finite_budget")),
             "planner_batch_isolation_required": True,
             "planner_batch_size": GOAL4_NEXT_RUNTIME_PLANNER_BATCH_SIZE,
+            "runtime_budget_seconds": GOAL4_NEXT_RUNTIME_BUDGET_SECONDS,
         },
         "expected_first_runtime_leaf": "research_brain_candidate_seed_events_used.jsonl",
         "expected_seed_source_in_census_v4": "external_candidate_event_seed_path",
@@ -194,6 +196,7 @@ def render_all_archetype_runtime_execution_manifest_markdown(manifest: Mapping[s
             f"- output_root: `{manifest['census_v4_config_kwargs']['output_root']}`",
             f"- brain_candidate_event_seed_path: `{manifest['census_v4_config_kwargs']['brain_candidate_event_seed_path']}`",
             f"- brain_planner_batch_size: `{manifest['census_v4_config_kwargs']['brain_planner_batch_size']}`",
+            f"- brain_runtime_budget_seconds: `{manifest['census_v4_config_kwargs']['brain_runtime_budget_seconds']}`",
             f"- expected_seed_source_in_census_v4: `{manifest['expected_seed_source_in_census_v4']}`",
             "",
             "## Command",
@@ -208,6 +211,7 @@ def render_all_archetype_runtime_execution_manifest_markdown(manifest: Mapping[s
             "- 실행 전 source-task shell은 점수/Stage 입력이 아니다.",
             "- Research Brain이 source-backed Evidence OS claim을 만든 뒤에만 score/stage promotion을 검토한다.",
             "- Goal4 next-attempt 실행은 planner batch size 1을 사용해 provider timeout을 후보별 failure로 남긴다.",
+            "- Goal4 next-attempt 실행은 111개 후보를 batch size 1로 전수 planner 처리한 뒤 source/claim 단계까지 갈 수 있도록 14400초 finite runtime budget을 사용한다.",
             "",
         ]
     )
@@ -246,6 +250,7 @@ def write_all_archetype_runtime_execution_manifest(
 
 __all__ = [
     "build_all_archetype_runtime_execution_manifest",
+    "GOAL4_NEXT_RUNTIME_BUDGET_SECONDS",
     "GOAL4_NEXT_RUNTIME_PLANNER_BATCH_SIZE",
     "render_all_archetype_runtime_execution_manifest_markdown",
     "write_all_archetype_runtime_execution_manifest",

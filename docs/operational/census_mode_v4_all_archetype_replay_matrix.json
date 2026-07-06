@@ -246,19 +246,21 @@
       "url_backed_wiring_fixture_count": 0
     },
     {
-      "accepted_claim_count": 4,
+      "accepted_claim_count": 7,
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "contract_loaded": true,
       "contract_present": true,
-      "controlled_wiring_smoke_pass": false,
+      "controlled_wiring_smoke_pass": true,
       "external_source_backed_candidate_ids": [
         "RPLAY-387a616a78cbc34119d3",
         "RPLAY-f45a477a486d2f3e01ab",
         "RPLAY-998d8e240a346b248bd7"
       ],
       "external_source_backed_seed_candidate_count": 3,
-      "fixture_count": 0,
-      "full_thesis_symbols": [],
+      "fixture_count": 1,
+      "full_thesis_symbols": [
+        "058470"
+      ],
       "guard_case_count": 1,
       "guard_case_pass_count": 1,
       "guard_replay_basis": "c08_source_backed_semantic_replay",
@@ -270,7 +272,7 @@
       "replay_scope": "source_backed_semantic_replay",
       "replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
       "required_before_goal_completion": true,
-      "score_contribution_count": 0,
+      "score_contribution_count": 6,
       "semantic_blockers": [],
       "source_backed_fixture_count": 4,
       "source_backed_replay_symbols": [
@@ -278,7 +280,7 @@
       ],
       "source_proxy_leak_count": 0,
       "unsupported_reason": null,
-      "url_backed_wiring_fixture_count": 0
+      "url_backed_wiring_fixture_count": 1
     },
     {
       "accepted_claim_count": 0,
@@ -548,19 +550,21 @@
       "url_backed_wiring_fixture_count": 0
     },
     {
-      "accepted_claim_count": 10,
+      "accepted_claim_count": 12,
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
       "contract_loaded": true,
       "contract_present": true,
-      "controlled_wiring_smoke_pass": false,
+      "controlled_wiring_smoke_pass": true,
       "external_source_backed_candidate_ids": [
         "RPLAY-bad3cf3344194166f2fb",
         "RPLAY-a99fc67eb1a94b79e7af",
         "RPLAY-1755b7c0b067d21a8259"
       ],
       "external_source_backed_seed_candidate_count": 3,
-      "fixture_count": 0,
-      "full_thesis_symbols": [],
+      "fixture_count": 1,
+      "full_thesis_symbols": [
+        "011170"
+      ],
       "guard_case_count": 1,
       "guard_case_pass_count": 1,
       "guard_replay_basis": "c17_source_backed_semantic_replay",
@@ -572,7 +576,7 @@
       "replay_scope": "source_backed_semantic_replay",
       "replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
       "required_before_goal_completion": true,
-      "score_contribution_count": 0,
+      "score_contribution_count": 5,
       "semantic_blockers": [],
       "source_backed_fixture_count": 10,
       "source_backed_replay_symbols": [
@@ -580,7 +584,7 @@
       ],
       "source_proxy_leak_count": 0,
       "unsupported_reason": null,
-      "url_backed_wiring_fixture_count": 0
+      "url_backed_wiring_fixture_count": 1
     },
     {
       "accepted_claim_count": 0,
@@ -916,19 +920,21 @@
       "url_backed_wiring_fixture_count": 0
     },
     {
-      "accepted_claim_count": 7,
+      "accepted_claim_count": 8,
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "contract_loaded": true,
       "contract_present": true,
-      "controlled_wiring_smoke_pass": false,
+      "controlled_wiring_smoke_pass": true,
       "external_source_backed_candidate_ids": [
         "RPLAY-3f6d7d7fbea085553d3c",
         "RPLAY-c0622f18b67116111d3f",
         "RPLAY-12fc285d35ecff4d295c"
       ],
       "external_source_backed_seed_candidate_count": 3,
-      "fixture_count": 0,
-      "full_thesis_symbols": [],
+      "fixture_count": 1,
+      "full_thesis_symbols": [
+        "012510"
+      ],
       "guard_case_count": 1,
       "guard_case_pass_count": 1,
       "guard_replay_basis": "c28_source_backed_semantic_replay",
@@ -940,7 +946,7 @@
       "replay_scope": "source_backed_semantic_replay",
       "replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
       "required_before_goal_completion": true,
-      "score_contribution_count": 0,
+      "score_contribution_count": 5,
       "semantic_blockers": [],
       "source_backed_fixture_count": 7,
       "source_backed_replay_symbols": [
@@ -948,7 +954,7 @@
       ],
       "source_proxy_leak_count": 0,
       "unsupported_reason": null,
-      "url_backed_wiring_fixture_count": 0
+      "url_backed_wiring_fixture_count": 1
     },
     {
       "accepted_claim_count": 0,
@@ -1217,7 +1223,7 @@
   ],
   "as_of_date": "2026-07-05",
   "blockers": [],
-  "controlled_wiring_smoke_ready_count": 4,
+  "controlled_wiring_smoke_ready_count": 7,
   "external_global_guard_ready": true,
   "external_replay_acceptance": {
     "adversarial_acceptance_exists": true,
@@ -1723,14 +1729,14 @@
   "missing_required_archetype_count": 0,
   "missing_required_archetype_ids": [],
   "note": "Controlled wiring smoke proves the leaf path can carry URL anchors and ScoreContribution rows. It is not source-backed semantic replay until contract-blind extraction, lifecycle adjudication, and guard replay all pass.",
-  "replay_acceptance_manifest_path": "output/census_v4/2026-07-06-goal4-all-archetype-runtime-attempt-after-source-task-guard/all_archetype_replay_acceptance_manifest.json",
-  "replay_gap_plan_path": "output/census_v4/2026-07-06-goal4-all-archetype-runtime-attempt-after-source-task-guard/all_archetype_replay_gap_plan.json",
+  "replay_acceptance_manifest_path": "output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1-budget14400/all_archetype_replay_acceptance_manifest.json",
+  "replay_gap_plan_path": "output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1-budget14400/all_archetype_replay_gap_plan.json",
   "replay_gap_plan_task_count": 0,
   "replay_gap_rule": "SOURCE_GAP_PENDING archetypes are exported only as planner-input source repair tasks. These rows cannot score or promote Stage; LLM planner must generate bounded queries and source-backed Evidence OS claims before the replay matrix can pass.",
   "replay_gap_seed_event_count": 0,
-  "replay_gap_seed_event_path": "output/census_v4/2026-07-06-goal4-all-archetype-runtime-attempt-after-source-task-guard/all_archetype_replay_gap_seed_events.jsonl",
+  "replay_gap_seed_event_path": "output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1-budget14400/all_archetype_replay_gap_seed_events.jsonl",
   "replay_gap_source_task_count": 0,
-  "replay_gap_source_task_path": "output/census_v4/2026-07-06-goal4-all-archetype-runtime-attempt-after-source-task-guard/all_archetype_replay_gap_source_tasks.jsonl",
+  "replay_gap_source_task_path": "output/census_v4/2026-07-06-goal4-next-runtime-full-attempt-batch1-budget14400/all_archetype_replay_gap_source_tasks.jsonl",
   "required_archetype_count": 32,
   "schema_version": "e2r_census_v4_all_archetype_replay_matrix_v1",
   "source_backed_ready_count": 36,

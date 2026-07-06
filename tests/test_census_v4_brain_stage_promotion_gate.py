@@ -567,6 +567,11 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(stage_rows[0]["operator_scope_note"], "brain_web_claim_backed_partial_not_full_thesis")
         self.assertTrue(stage_rows[0]["base_stage_display"].startswith("BRAIN_WEB_PARTIAL_"))
         self.assertTrue(stage_rows[0]["stage_decision_status_display"].startswith("BRAIN_WEB_PARTIAL_"))
+        self.assertEqual(stage_rows[0]["candidate_event_id"], "CE-BRAIN-A")
+        self.assertIn("CE-BRAIN-A", stage_rows[0]["candidate_event_ids"])
+        self.assertEqual(stage_rows[0]["candidate_event_count"], 1)
+        self.assertIn("CE-BRAIN-A", stage_rows[0]["investigation_only_candidate_event_ids"])
+        self.assertEqual(stage_rows[0]["candidate_event_scope"], "CANDIDATE_EVENTS_PRESENT")
         self.assertEqual(stage_rows[0]["full_thesis_stage"], "FULL_THESIS_NOT_RUN")
         self.assertEqual(stage_rows[0]["accepted_claim_ids"], ["CLM-A"])
         self.assertEqual(stage_rows[0]["score_contribution_ids"], ["SCON-A"])
@@ -1961,6 +1966,7 @@ def _write_live_brain_promotion_fixture(root: Path) -> None:
                 "stagecourt_trace_id": "SCT-BRAIN-A",
                 "trace_id": "SCT-BRAIN-A",
                 "symbol": "005930",
+                "candidate_event_id": "CE-BRAIN-A",
                 "source_origin": "research_brain_v4_attempt",
                 "primary_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
                 "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",

@@ -7399,9 +7399,24 @@ def _promote_brain_stage_rows(
             continue
         census_stage_status_id = "CSS-BRAIN-" + stable_hash((symbol, trace_id, accepted_ids, contribution_ids))[:20]
         row = dict(by_symbol[symbol])
+        candidate_event_id = str(trace.get("candidate_event_id") or "").strip()
+        candidate_event_ids = list(row.get("candidate_event_ids") or [])
+        investigation_only_candidate_event_ids = list(row.get("investigation_only_candidate_event_ids") or [])
+        if candidate_event_id:
+            _append_unique(candidate_event_ids, candidate_event_id)
+            _append_unique(investigation_only_candidate_event_ids, candidate_event_id)
         row.update(
             {
                 "census_stage_status_id": census_stage_status_id,
+                "candidate_event_id": candidate_event_id or row.get("candidate_event_id"),
+                "candidate_event_ids": candidate_event_ids,
+                "candidate_event_count": max(int(row.get("candidate_event_count") or 0), len(candidate_event_ids)),
+                "investigation_only_candidate_event_ids": investigation_only_candidate_event_ids,
+                "investigation_only_candidate_event_count": max(
+                    int(row.get("investigation_only_candidate_event_count") or 0),
+                    len(investigation_only_candidate_event_ids),
+                ),
+                "candidate_event_scope": "CANDIDATE_EVENTS_PRESENT" if candidate_event_ids else row.get("candidate_event_scope"),
                 "stage_source": "research_brain_v4_attempt",
                 "source_origin": "research_brain_v4_attempt",
                 "census_status": "DEEP_VERIFIED",
