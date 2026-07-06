@@ -294,6 +294,72 @@ class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
         self.assertEqual(result.web_fetched_documents[0]["document_id"], result.fetched_document_ids[0])
         self.assertFalse(any(url.startswith("snapshot://") for url in result.document_urls))
 
+    def test_live_full_bounded_external_preferred_preserves_single_query_budget_for_web(self):
+        event = sample_v4_event(symbol="000660", company_name="SK하이닉스")
+        query = "SK하이닉스 000660 HBM customer allocation report"
+        url = "https://securities.example.com/research/sk-hynix-000660"
+        calls: list[str] = []
+        task = replace(
+            c06_source_task("customer_preorder_or_allocation"),
+            candidate_event_id=event.candidate_event_id,
+            symbol=event.symbol,
+            company_name=event.company_name,
+            preferred_source_classes=("BrokerReportPublicPDF",),
+            fallback_source_classes=("IssuerIR", "CompanyGuide"),
+            query_intents=(query,),
+            max_queries=1,
+            max_candidates=5,
+            max_fetches=1,
+        )
+        search_provider = FixtureSearchProvider(
+            results_by_query={
+                query: (
+                    SearchResult(
+                        title="SK Hynix 000660 - HBM customer allocation report",
+                        url=url,
+                        snippet="SK Hynix HBM customer allocation and demand visibility report",
+                        source="NaverSearch",
+                        published_at=datetime(2026, 6, 20, 9, 0),
+                        query=query,
+                        rank=1,
+                        is_report_domain=True,
+                    ),
+                )
+            }
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={
+                url: "SK Hynix 000660 described HBM customer allocation and demand visibility in this report."
+            }
+        )
+        registry = SourceProviderRegistry(
+            connectors=(
+                _RecordingLiveConnector(
+                    provider_name="CompanyGuide",
+                    source_class="CompanyGuide",
+                    url="https://wcomp.fnguide.com/company/000660",
+                    raw_text="SK하이닉스(000660) 공식 fallback 문서",
+                    calls=calls,
+                ),
+            )
+        )
+
+        result = SourceAcquisitionRunnerV4(
+            mode="live_full_bounded",
+            source_provider_registry=registry,
+            web_search_provider=search_provider,
+            web_page_fetcher=fetcher,
+        ).acquire(event=event, task=task, as_of_date=date(2026, 6, 29))
+
+        self.assertEqual(calls, [])
+        self.assertEqual(result.status, "PARSED")
+        self.assertEqual(result.document_urls, (url,))
+        self.assertEqual(result.source_class, "BrokerReportPublicPDF")
+        self.assertEqual(len(result.web_search_tasks), 1)
+        self.assertEqual(len(result.web_fetched_documents), 1)
+        self.assertEqual(result.budget_used["queries"], 1)
+        self.assertEqual(result.budget_used["fetches"], 1)
+
     def test_live_full_bounded_marks_company_homepage_subdomain_as_verified_newsroom_original(self):
         with TemporaryDirectory() as tmp:
             repo_root = Path(tmp)
@@ -695,7 +761,7 @@ class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
 
         self.assertEqual(result.status, "PROVIDER_FAILED")
         self.assertEqual(result.fetched_document_ids, ())
-        self.assertIn("no_live_connector_for_requested_source_class", result.provider_errors)
+        self.assertNotIn("no_live_connector_for_requested_source_class", result.provider_errors)
         self.assertEqual(len(result.web_search_results), 1)
         self.assertEqual(result.web_search_results[0]["selection_status"], "REJECTED_TARGET_RELEVANCE_AFTER_FETCH")
         self.assertEqual(len(result.web_rejected_documents), 1)

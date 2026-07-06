@@ -16,6 +16,7 @@ from e2r.census.census_runner_v4 import (
     _primitive_state_chain_audit,
     _promote_brain_stage_rows,
     _source_connector_capability_audit,
+    _sync_brain_trace_promotion_markers,
     run_census_mode_v4,
 )
 from e2r.production.metadata import write_jsonl
@@ -576,6 +577,79 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(traces[0]["trace_status"], "CLAIM_SCORE_TRACE_PROMOTED_TO_CENSUS_STAGE_STATUS")
         self.assertIs(stagecourt[0]["not_promoted_to_census_stage_status"], False)
         self.assertIs(stagecourt[0]["promoted_to_census_stage_status"], True)
+
+    def test_final_stage_row_sync_clears_stale_brain_promotion_refs(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_live_brain_promotion_fixture(root)
+            stagecourt = _read_jsonl(root / "stagecourt_traces.jsonl")
+            stale_trace = {
+                **stagecourt[0],
+                "stagecourt_trace_id": "SCT-BRAIN-STALE",
+                "trace_id": "SCT-BRAIN-STALE",
+                "not_promoted_to_census_stage_status": False,
+                "promoted_to_census_stage_status": True,
+                "census_stage_status_id": "CSS-BRAIN-STALE",
+            }
+            stagecourt[0]["not_promoted_to_census_stage_status"] = False
+            stagecourt[0]["promoted_to_census_stage_status"] = True
+            stagecourt[0]["census_stage_status_id"] = "CSS-BRAIN-OLD"
+            write_jsonl(root / "stagecourt_traces.jsonl", [stagecourt[0], stale_trace])
+            brain_traces = _read_jsonl(root / "brain_to_claim_trace.jsonl")
+            brain_traces[0]["census_stage_status_id"] = "CSS-BRAIN-OLD"
+            brain_traces[0]["trace_status"] = "CLAIM_SCORE_TRACE_PROMOTED_TO_CENSUS_STAGE_STATUS"
+            brain_traces.append(
+                {
+                    **brain_traces[0],
+                    "stagecourt_trace_id": "SCT-BRAIN-STALE",
+                    "census_stage_status_id": "CSS-BRAIN-STALE",
+                }
+            )
+            write_jsonl(root / "brain_to_claim_trace.jsonl", brain_traces)
+
+            final_stage_rows = [
+                {
+                    "symbol": "005930",
+                    "stagecourt_trace_id": "SCT-BRAIN-A",
+                    "census_stage_status_id": "CSS-BRAIN-FINAL",
+                    "stage_source": "research_brain_v4_attempt",
+                    "accepted_claim_ids": ["CLM-A"],
+                    "score_contribution_ids": ["SCON-A"],
+                    "primitive_state_ids": ["PRIM-A"],
+                }
+            ]
+            _sync_brain_trace_promotion_markers(output_root=root, stage_rows=final_stage_rows)
+            updated_stagecourt = {
+                row["stagecourt_trace_id"]: row
+                for row in _read_jsonl(root / "stagecourt_traces.jsonl")
+            }
+            updated_traces = {
+                row["stagecourt_trace_id"]: row
+                for row in _read_jsonl(root / "brain_to_claim_trace.jsonl")
+            }
+            audit = _brain_stage_promotion_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_source_acquisition="live_official_first",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={"real_provider_success_count": 1, "source_task_execution_count": 1, "accepted_claim_count": 1},
+                stage_rows=final_stage_rows,
+            )
+
+        self.assertEqual(updated_stagecourt["SCT-BRAIN-A"]["census_stage_status_id"], "CSS-BRAIN-FINAL")
+        self.assertIs(updated_stagecourt["SCT-BRAIN-A"]["not_promoted_to_census_stage_status"], False)
+        self.assertIs(updated_stagecourt["SCT-BRAIN-STALE"]["not_promoted_to_census_stage_status"], True)
+        self.assertIsNone(updated_stagecourt["SCT-BRAIN-STALE"]["census_stage_status_id"])
+        self.assertEqual(updated_traces["SCT-BRAIN-A"]["census_stage_status_id"], "CSS-BRAIN-FINAL")
+        self.assertIsNone(updated_traces["SCT-BRAIN-STALE"]["census_stage_status_id"])
+        self.assertEqual(updated_traces["SCT-BRAIN-STALE"]["not_promoted_reason"], "stagecourt_trace_not_in_final_census_stage_status")
+        self.assertEqual(audit["brain_stage_trace_not_promoted_marker_missing_count"], 0)
+        self.assertEqual(audit["brain_trace_promoted_reference_error_count"], 0)
+        self.assertEqual(audit["verdict"], "PROMOTION_APPLIED")
 
     def test_non_score_brain_claim_is_not_promoted_as_representative_stage_claim(self):
         with TemporaryDirectory() as tmp:

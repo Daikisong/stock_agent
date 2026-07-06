@@ -299,6 +299,7 @@ def run_census_mode_v4(config: CensusV4RunConfig) -> CensusV4RunResult:
         atomic_rows=atomic_rows,
         stage_rows=stage_rows,
     )
+    _sync_brain_trace_promotion_markers(output_root=output_root, stage_rows=stage_rows)
     brain_web_attempt = _aggregate_brain_web_attempts(brain_web_attempts)
     brain_promotion_export = _aggregate_brain_promotion_exports(brain_promotion_exports)
     brain_web_attempt = _refresh_brain_web_attempt_after_promotion(
@@ -8651,6 +8652,82 @@ def _mark_brain_to_claim_traces_promoted(
             row["census_stage_status_id"] = promoted_by_trace[trace_id]
             row["trace_status"] = "CLAIM_SCORE_TRACE_PROMOTED_TO_CENSUS_STAGE_STATUS"
     write_jsonl(output_root / "brain_to_claim_trace.jsonl", rows)
+
+
+def _sync_brain_trace_promotion_markers(*, output_root: Path, stage_rows: Sequence[Mapping[str, Any]]) -> None:
+    """Make Brain trace ledgers reflect the final census stage rows only."""
+
+    promoted_by_trace: dict[str, str] = {}
+    promoted_claim_ids_by_trace: dict[str, set[str]] = {}
+    promoted_contribution_ids_by_trace: dict[str, set[str]] = {}
+    promoted_primitive_ids_by_trace: dict[str, set[str]] = {}
+    for row in stage_rows:
+        trace_id = str(row.get("stagecourt_trace_id") or "")
+        if not trace_id.startswith("SCT-BRAIN-"):
+            continue
+        status_id = str(row.get("census_stage_status_id") or "")
+        if not status_id:
+            continue
+        promoted_by_trace[trace_id] = status_id
+        promoted_claim_ids_by_trace[trace_id] = _ids_from_value(row.get("accepted_claim_ids")) | _ids_from_value(row.get("support_claim_ids"))
+        promoted_contribution_ids_by_trace[trace_id] = _ids_from_value(row.get("score_contribution_ids"))
+        promoted_primitive_ids_by_trace[trace_id] = _ids_from_value(row.get("primitive_state_ids"))
+
+    stagecourt_rows = _read_jsonl(output_root / "stagecourt_traces.jsonl")
+    changed_stagecourt = False
+    for row in stagecourt_rows:
+        trace_id = str(row.get("stagecourt_trace_id") or row.get("trace_id") or "")
+        if not (trace_id.startswith("SCT-BRAIN-") or _is_brain_origin(row)):
+            continue
+        if trace_id in promoted_by_trace:
+            row["not_promoted_to_census_stage_status"] = False
+            row["promoted_to_census_stage_status"] = True
+            row["census_stage_status_id"] = promoted_by_trace[trace_id]
+            row.pop("not_promoted_reason", None)
+        else:
+            row["not_promoted_to_census_stage_status"] = True
+            row["promoted_to_census_stage_status"] = False
+            row["census_stage_status_id"] = None
+            row["not_promoted_reason"] = "stagecourt_trace_not_in_final_census_stage_status"
+        changed_stagecourt = True
+    if changed_stagecourt:
+        write_jsonl(output_root / "stagecourt_traces.jsonl", stagecourt_rows)
+
+    trace_rows = _read_jsonl(output_root / "brain_to_claim_trace.jsonl")
+    changed_trace = False
+    for row in trace_rows:
+        trace_id = str(row.get("stagecourt_trace_id") or "")
+        if not trace_id.startswith("SCT-BRAIN-"):
+            continue
+        if trace_id not in promoted_by_trace:
+            row["census_stage_status_id"] = None
+            if row.get("trace_status") == "CLAIM_SCORE_TRACE_PROMOTED_TO_CENSUS_STAGE_STATUS" or not row.get("trace_status"):
+                row["trace_status"] = "CLAIM_SCORE_TRACE_NOT_PROMOTED_TO_CENSUS_STAGE_STATUS"
+            row["not_promoted_reason"] = "stagecourt_trace_not_in_final_census_stage_status"
+            changed_trace = True
+            continue
+        trace_claim_ids = _ids_from_value(row.get("accepted_claim_id")) | _ids_from_value(row.get("accepted_claim_ids"))
+        trace_contribution_ids = _ids_from_value(row.get("score_contribution_id")) | _ids_from_value(row.get("score_contribution_ids"))
+        trace_primitive_ids = _ids_from_value(row.get("primitive_state_id")) | _ids_from_value(row.get("primitive_state_ids"))
+        represented_claim_ids = promoted_claim_ids_by_trace.get(trace_id, set())
+        represented_contribution_ids = promoted_contribution_ids_by_trace.get(trace_id, set())
+        represented_primitive_ids = promoted_primitive_ids_by_trace.get(trace_id, set())
+        if (
+            (trace_claim_ids and not trace_claim_ids <= represented_claim_ids)
+            or (trace_contribution_ids and not trace_contribution_ids <= represented_contribution_ids)
+            or (trace_primitive_ids and not trace_primitive_ids <= represented_primitive_ids)
+        ):
+            row["census_stage_status_id"] = None
+            row["trace_status"] = row.get("trace_status") or "ACCEPTED_NON_REPRESENTATIVE_NOT_SCORE_CONTRIBUTING"
+            row["not_promoted_reason"] = "accepted_claim_not_in_representative_score_claim_ids"
+            changed_trace = True
+            continue
+        row["census_stage_status_id"] = promoted_by_trace[trace_id]
+        row["trace_status"] = "CLAIM_SCORE_TRACE_PROMOTED_TO_CENSUS_STAGE_STATUS"
+        row.pop("not_promoted_reason", None)
+        changed_trace = True
+    if changed_trace:
+        write_jsonl(output_root / "brain_to_claim_trace.jsonl", trace_rows)
 
 
 def _demote_atomic_representatives_replaced_by_brain_stage(

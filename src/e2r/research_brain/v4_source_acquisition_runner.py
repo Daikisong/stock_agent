@@ -138,6 +138,8 @@ class SourceAcquisitionRunnerV4:
             SourceAcquisitionModeV4.LIVE_OFFICIAL_ONLY,
             SourceAcquisitionModeV4.LIVE_FULL_BOUNDED,
         }:
+            if self.mode == SourceAcquisitionModeV4.LIVE_FULL_BOUNDED and _task_prefers_external_web(task):
+                return self._acquire_live_web_sources(event=event, task=task, as_of_date=as_of_date)
             live_result = self._acquire_live_official_sources(event=event, task=task, as_of_date=as_of_date)
             if self.mode == SourceAcquisitionModeV4.LIVE_FULL_BOUNDED and _task_requests_external_web(task):
                 web_task = _remaining_web_task_after_live_result(task=task, live_result=live_result)
@@ -668,7 +670,7 @@ class SourceAcquisitionRunnerV4:
                 )
             )
 
-        status = "PARSED" if documents else ("PROVIDER_FAILED" if provider_errors else "NO_EVIDENCE_FOUND")
+        status = "PARSED" if documents else ("PROVIDER_FAILED" if provider_errors or web_rejected_rows else "NO_EVIDENCE_FOUND")
         stop_reason = "live_web_source_parsed" if documents else "live_web_no_fetchable_document"
         effective_source_class = _effective_source_class_for_documents(task=task, documents=tuple(documents))
         return SourceAcquisitionResultV4(
@@ -1320,7 +1322,11 @@ def _normalize_source_class(value: str) -> str:
 
 
 def _task_requests_external_web(task: SourceTask) -> bool:
-    external = {
+    requested = {_normalize_source_class(item) for item in (*task.preferred_source_classes, *task.fallback_source_classes)}
+    return bool(requested & _EXTERNAL_WEB_SOURCE_CLASSES)
+
+
+_EXTERNAL_WEB_SOURCE_CLASSES = {
         "NaverSearch",
         "GeneralWebSearch",
         "TrustedNews",
@@ -1329,9 +1335,22 @@ def _task_requests_external_web(task: SourceTask) -> bool:
         "CompanyNewsroom",
         "ReportPDF",
         "BrokerReportPublicPDF",
-    }
-    requested = {_normalize_source_class(item) for item in (*task.preferred_source_classes, *task.fallback_source_classes)}
-    return bool(requested & external)
+}
+
+
+def _task_prefers_external_web(task: SourceTask) -> bool:
+    """Return true when the planner explicitly made the task an external-source leaf.
+
+    Mixed official-first tasks such as ``DART -> TrustedNews`` must still spend
+    official budget first. External-original tasks such as
+    ``BrokerReportPublicPDF -> IssuerIR`` should not let fallback official
+    connectors consume the only query before the bounded web search can run.
+    """
+
+    preferred = tuple(_normalize_source_class(item) for item in task.preferred_source_classes)
+    if not preferred:
+        return False
+    return preferred[0] in _EXTERNAL_WEB_SOURCE_CLASSES
 
 
 def _task_requests_general_web_or_news(task: SourceTask) -> bool:
