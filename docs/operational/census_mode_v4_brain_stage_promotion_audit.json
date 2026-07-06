@@ -1,7 +1,5 @@
 {
-  "blockers": [
-    "brain evidence documents include snapshot:// URLs"
-  ],
+  "blockers": [],
   "brain_claim_count": 10,
   "brain_claim_missing_date_count": 0,
   "brain_claim_missing_verifiable_anchor_count": 0,
@@ -11,6 +9,7 @@
   "brain_claim_unresolved_anchor_ref_count": 0,
   "brain_claim_unresolved_document_ref_count": 0,
   "brain_evidence_document_count": 49,
+  "brain_promoted_snapshot_document_count": 0,
   "brain_promoted_stage_row_count": 1,
   "brain_score_contribution_count": 23,
   "brain_snapshot_document_count": 2,
@@ -48,8 +47,8 @@
   "real_provider_success_count": 64,
   "schema_version": "e2r_census_v4_brain_stage_promotion_audit_v1",
   "source_task_execution_count": 450,
-  "unsafe_promoted_stage_row_count": 1,
-  "verdict": "FAIL_UNSAFE_PROMOTION",
+  "unsafe_promoted_stage_row_count": 0,
+  "verdict": "PROMOTION_APPLIED",
   "web_news_accepted_claim_count": 0,
   "web_or_llm_accepted_claim_count": 0
 }

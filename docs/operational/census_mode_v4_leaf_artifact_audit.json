@@ -1,5 +1,5 @@
 {
-  "critical_count": 1,
+  "critical_count": 0,
   "critical_counts": {
     "accepted_claim_without_evidence_claim_payload_count": 0,
     "assessment_event_score_evidence_allowed_count": 0,
@@ -13,7 +13,7 @@
     "brain_official_operator_alias_unscoped_count": 0,
     "brain_stage_promotion_overclaim_count": 0,
     "brain_stage_promotion_trace_promoted_reference_count": 0,
-    "brain_stage_promotion_unsafe_promoted_count": 1,
+    "brain_stage_promotion_unsafe_promoted_count": 0,
     "brain_stage_trace_not_promoted_marker_missing_count": 0,
     "brain_web_operator_alias_unscoped_count": 0,
     "brain_web_readiness_gate_missing_count": 0,
@@ -121,17 +121,17 @@
       "Stage2-Watch": 29
     },
     "brain_stage_promoted_row_count": 1,
-    "brain_stage_promotion_blocker_count": 1,
+    "brain_stage_promotion_blocker_count": 0,
     "brain_stage_promotion_mode": "strict",
     "brain_stage_promotion_snapshot_document_count": 2,
-    "brain_stage_promotion_unsafe_promoted_count": 1,
-    "brain_stage_promotion_verdict": "FAIL_UNSAFE_PROMOTION",
+    "brain_stage_promotion_unsafe_promoted_count": 0,
+    "brain_stage_promotion_verdict": "PROMOTION_APPLIED",
     "brain_stage_trace_count": 9,
     "brain_web_attempt_accepted_claim_count": 28,
-    "brain_web_attempt_blocker_count": 1,
+    "brain_web_attempt_blocker_count": 0,
     "brain_web_attempt_source_task_execution_count": 450,
-    "brain_web_attempt_verdict": "ATTEMPTED_NOT_CUTOVER_READY",
-    "brain_web_readiness_gate_blocker_count": 6,
+    "brain_web_attempt_verdict": "ATTEMPTED_WITH_SOURCE_TASKS",
+    "brain_web_readiness_gate_blocker_count": 3,
     "brain_web_readiness_gate_minimum_applies": true,
     "brain_web_readiness_gate_pass_allowed": false,
     "brain_web_readiness_gate_verdict": "BLOCKED",
@@ -154,7 +154,7 @@
       "SCANNED": 3306
     },
     "claim_extractor_run_count": 20,
-    "critical_count": 1,
+    "critical_count": 0,
     "eligible_symbol_count": 3391,
     "event_board_non_stage0_count": 84,
     "event_board_stage_row_count": 3390,
@@ -246,5 +246,5 @@
   "missing_leaf_artifacts": [],
   "output_root": "output/census_v4/2026-07-05-goal4-repair-feedback-next-runtime-attempt",
   "schema_version": "e2r_census_v4_leaf_artifact_audit_v1",
-  "verdict": "FAIL"
+  "verdict": "PASS"
 }

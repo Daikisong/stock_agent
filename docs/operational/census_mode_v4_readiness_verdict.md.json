@@ -521,48 +521,36 @@
   },
   "all_archetype_replay_pass": true,
   "anti_fake_blockers": [
-    "leaf artifact audit failed",
     "full thesis seed materialization audit failed",
-    "Brain/Web stage traces were promoted despite promotion blockers",
     "Brain/Web readiness gate blocked: web/LLM accepted claim count is zero",
     "Brain/Web readiness gate blocked: Brain/Web source task budget caps were exceeded: 2",
-    "Brain/Web readiness gate blocked: Brain/Web evidence documents include snapshot:// sources",
-    "Brain/Web readiness gate blocked: Brain/Web stage row was promoted despite blockers",
-    "Brain/Web readiness gate blocked: brain stage promotion verdict is not PROMOTION_APPLIED: FAIL_UNSAFE_PROMOTION",
     "Brain/Web readiness gate blocked: Brain/Web operational minimum web/LLM accepted claims not met: 0/3"
   ],
   "blockers": [
-    "leaf artifact audit failed",
     "full thesis seed materialization audit failed",
-    "Brain/Web stage traces were promoted despite promotion blockers",
     "Brain/Web readiness gate blocked: web/LLM accepted claim count is zero",
     "Brain/Web readiness gate blocked: Brain/Web source task budget caps were exceeded: 2",
-    "Brain/Web readiness gate blocked: Brain/Web evidence documents include snapshot:// sources",
-    "Brain/Web readiness gate blocked: Brain/Web stage row was promoted despite blockers",
-    "Brain/Web readiness gate blocked: brain stage promotion verdict is not PROMOTION_APPLIED: FAIL_UNSAFE_PROMOTION",
     "Brain/Web readiness gate blocked: Brain/Web operational minimum web/LLM accepted claims not met: 0/3"
   ],
   "brain_stage_promotion": {
-    "blockers": [
-      "brain evidence documents include snapshot:// URLs"
-    ],
+    "blockers": [],
+    "brain_promoted_snapshot_document_count": 0,
     "brain_promoted_stage_row_count": 1,
     "brain_snapshot_document_count": 2,
     "brain_stage_promotion_mode": "strict",
     "brain_stage_trace_count": 9,
-    "unsafe_promoted_stage_row_count": 1,
-    "verdict": "FAIL_UNSAFE_PROMOTION"
+    "unsafe_promoted_stage_row_count": 0,
+    "verdict": "PROMOTION_APPLIED"
   },
+  "brain_stagecourt_path_produced": true,
   "brain_web_attempt": {
     "accepted_claim_count": 28,
     "attempt_mode": "research_brain_v4_production_shadow_attempt",
-    "blockers": [
-      "Research Brain StageCourt traces are not promoted into census_stage_status rows"
-    ],
+    "blockers": [],
     "brain_stagecourt_trace_exported_count": 9,
-    "brain_to_census_stage_exported_count": 0,
+    "brain_to_census_stage_exported_count": 1,
     "claim_acceptance_ready": true,
-    "cutover_export_ready": false,
+    "cutover_export_ready": true,
     "full_thesis_seed_accepted_claim_count": 28,
     "full_thesis_seed_consumed_by_research_brain": true,
     "full_thesis_seed_event_count": 111,
@@ -583,7 +571,7 @@
     "source_task_execution_count": 450,
     "stagecourt_trace_ready": true,
     "unique_accepted_claim_count": 10,
-    "verdict": "ATTEMPTED_NOT_CUTOVER_READY"
+    "verdict": "ATTEMPTED_WITH_SOURCE_TASKS"
   },
   "brain_web_evidence_pass": false,
   "brain_web_evidence_pass_allowed": false,
@@ -596,9 +584,6 @@
     "blockers": [
       "web/LLM accepted claim count is zero",
       "Brain/Web source task budget caps were exceeded: 2",
-      "Brain/Web evidence documents include snapshot:// sources",
-      "Brain/Web stage row was promoted despite blockers",
-      "brain stage promotion verdict is not PROMOTION_APPLIED: FAIL_UNSAFE_PROMOTION",
       "Brain/Web operational minimum web/LLM accepted claims not met: 0/3"
     ],
     "brain_accepted_claim_count": 10,
@@ -773,6 +758,11 @@
   "labels": [
     "IMPLEMENTATION_MERGED",
     "V3_FORENSIC_REVIEW_COMPLETE",
+    "ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS",
+    "ATOMIC_STAGE_DECISION_PASS",
+    "SCORE_SCALE_PASS",
+    "STAGE_SEMANTICS_PASS",
+    "SEMANTIC_PRIMITIVE_GUARD_PASS",
     "DAILY_EVENT_FULL_THESIS_SEPARATION_PASS",
     "CENSUS_ASSESSMENT_CANDIDATE_EVENT_SEPARATION_PASS",
     "FULL_THESIS_SMOKE_HONESTY_PASS",
@@ -794,8 +784,7 @@
   "remaining_operational_gaps": [
     "full thesis EvidenceClaim -> PrimitiveState -> ScoreContribution -> StageCourt path not run",
     "full-thesis refresh queue exists but production full-thesis StageCourt paths are not closed",
-    "Brain/Web/LLM acquisition was requested but has not produced a Census-promoted StageCourt path",
-    "Brain/Web StageCourt traces are blocked from Census representative Stage promotion",
+    "Brain/Web StageCourt path is promoted but evidence readiness gate is still blocked",
     "Research Brain v4 imported report bundle is shadow/import-only and not admissible as Census production cutover evidence"
   ],
   "research_brain_bridge": {

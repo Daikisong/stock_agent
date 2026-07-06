@@ -421,11 +421,11 @@ full_thesis_production_pass_allowed: false
 ```text
 web/LLM accepted claim count is zero
 Brain/Web source task budget caps were exceeded: 2
-Brain/Web evidence documents include snapshot:// sources
-Brain/Web stage row was promoted despite blockers
-brain stage promotion verdict is not PROMOTION_APPLIED: FAIL_UNSAFE_PROMOTION
 Brain/Web operational minimum web/LLM accepted claims not met: 0/3
 ```
+
+추가 감사 패치 후 promoted row 자체의 snapshot 오귀속 blocker는 제거됐다.
+현재 promoted 삼성전자 row가 참조한 문서는 CompanyGuide와 OpenDART이고, snapshot 문서 2개는 unpromoted 후보 쪽에만 남아 있다.
 
 즉 111개 seed를 실제로 넣고 돌렸지만, 운영 cutover 기준에서는 아직 통과가 아니다.
 
@@ -653,8 +653,8 @@ scoring_version: census-v4-audit-recompute:e2r_2_2_rolling_calibrated:archetype_
 ```
 
 다만 latest production row도 Goal4 완료 증거로 쓰면 안 된다.
-이유는 점수 산식 불일치가 아니라 `brain_stage_promotion_unsafe_promoted_count=1`과 required positive primitive 부족이다.
-즉 계산기는 같은 답을 다시 내지만, 아직 이 답안지를 운영 full thesis로 올리는 승급 조건이 안전하게 닫히지 않았다.
+이유는 점수 산식 불일치나 promoted snapshot 오귀속이 아니라, required positive primitive 부족과 Brain/Web readiness gate 미통과다.
+즉 계산기는 같은 답을 다시 내고 promoted row의 직접 source도 DART/CompanyGuide로 확인됐지만, 아직 전 아키타입 meaningful runtime parity가 증명되지 않았다.
 
 ## 이전 C05-only 문제에 대한 최신 답
 

@@ -1,8 +1,8 @@
 # Census Mode v4 Acceptance Report
 
 0. Operator stage warning: stage_scope_notice=FULL_THESIS_STAGE_ROWS_PRESENT_SCOPE_GUARD_REQUIRED; operational_stage_use_allowed=False; full_thesis_rows=1; full_thesis_refresh_queue_candidates=84; full_e2r_verified_score_rows=1; event_board_non_stage0_rows=84; event_board_stage_rows_are_operational_full_thesis=False
-1. Final status: IMPLEMENTATION_MERGED, V3_FORENSIC_REVIEW_COMPLETE, DAILY_EVENT_FULL_THESIS_SEPARATION_PASS, CENSUS_ASSESSMENT_CANDIDATE_EVENT_SEPARATION_PASS, FULL_THESIS_SMOKE_HONESTY_PASS, FULL_THESIS_SMOKE_EXECUTION_PENDING, FULL_THESIS_SMOKE_PENDING, FULL_THESIS_SMOKE_REQUIREMENT_PENDING, FULL_THESIS_PRODUCTION_CANNOT_SUBSTITUTE_SMOKE, FULL_THESIS_REFRESH_QUEUE_PRESENT, BRAIN_WEB_ATTEMPT_RECORDED, BRAIN_STAGE_PROMOTION_AUDITED, BRAIN_WEB_READINESS_GATE_AUDITED, OFFICIAL_BASELINE_EVIDENCE_CLAIM_PAYLOAD_PRESENT, KNOWN_BAD_REGRESSION_PASS, SELF_REPAIR_LOOP_PASS, RESEARCH_BRAIN_V4_REPORT_BRIDGE_IMPORTED
-2. Commit SHA / message / push status / working tree: report_generation_sha=978899f0332bb0393d8dd9fcdc5afd00490a3fbf; push_status=not_pushed_by_runner
+1. Final status: IMPLEMENTATION_MERGED, V3_FORENSIC_REVIEW_COMPLETE, ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS, ATOMIC_STAGE_DECISION_PASS, SCORE_SCALE_PASS, STAGE_SEMANTICS_PASS, SEMANTIC_PRIMITIVE_GUARD_PASS, DAILY_EVENT_FULL_THESIS_SEPARATION_PASS, CENSUS_ASSESSMENT_CANDIDATE_EVENT_SEPARATION_PASS, FULL_THESIS_SMOKE_HONESTY_PASS, FULL_THESIS_SMOKE_EXECUTION_PENDING, FULL_THESIS_SMOKE_PENDING, FULL_THESIS_SMOKE_REQUIREMENT_PENDING, FULL_THESIS_PRODUCTION_CANNOT_SUBSTITUTE_SMOKE, FULL_THESIS_REFRESH_QUEUE_PRESENT, BRAIN_WEB_ATTEMPT_RECORDED, BRAIN_STAGE_PROMOTION_AUDITED, BRAIN_WEB_READINESS_GATE_AUDITED, OFFICIAL_BASELINE_EVIDENCE_CLAIM_PAYLOAD_PRESENT, KNOWN_BAD_REGRESSION_PASS, SELF_REPAIR_LOOP_PASS, RESEARCH_BRAIN_V4_REPORT_BRIDGE_IMPORTED
+2. Commit SHA / message / push status / working tree: report_generation_sha=b23b02a6bcf7302d1bdba0e619b25dcff95cfb58; push_status=not_pushed_by_runner
 3. Test artifact command: missing
    Test log summary: not_run_by_census_v4_runner
    Test artifact duration_seconds: None
@@ -15,7 +15,7 @@
 5d. Full thesis smoke gate: honesty_pass=True; execution_pass=False; legacy_smoke_pass=False; gate_pass_allowed=False; gate_blockers=['full_thesis_smoke_not_passed', 'full_thesis_smoke_gate_not_requested', 'controlled_smoke_not_allowed_for_production_run_mode', 'controlled_smoke_requires_brain_web_disabled']
 5e. Goal requirement matrix: minimum_pass=False; pass=12/22; pending=4; fail=6; blockers=['anti_fake_leaf_audit_not_pass', 'atomic_stage_decision_not_pass', 'score_scale_not_pass', 'stage_semantics_not_pass', 'semantic_primitive_guard_not_pass', 'full_thesis_smoke_pending', 'full_thesis_production_pass_false', 'full_thesis_seed_materialization_audit_not_pass', 'brain_web_evidence_pass_false', 'machine_readable_test_result_artifact_missing']
 6. Run mode: BRAIN_AND_WEB_ACQUISITION_ENABLED
-7. Leaf artifact audit: FAIL
+7. Leaf artifact audit: PASS
 8. Eligible / Stage rows: 3391 / 3391
 9. Base/display stage distribution: {'Stage0': 3306, 'Stage1': 54, 'Stage2-Watch': 29, '1': 1, 'Red': 1}
 10. Stage signal distribution: {'NO_CURRENT_CATALYST': 3306, 'OFFICIAL_EVENT_WATCH': 35, 'EVIDENCE_INSUFFICIENT': 11, 'MATERIAL_CLAIM_WATCH': 29, 'SOURCE_PENDING': 8, 'FULL_THESIS_PRODUCTION_STAGE': 1, 'RISK_REVIEW': 1}
@@ -32,9 +32,9 @@
 20. Score eligible candidate event count: 93
 21. Planner rows: 458; real LLM planner calls=111; real_success=64; not_attempted=347
 22. LLM planner real-provider success: 64
-23. Brain/Web attempt verdict: ATTEMPTED_NOT_CUTOVER_READY; source_tasks=450; accepted_claims=28
-24. Brain Stage promotion verdict: FAIL_UNSAFE_PROMOTION; promoted=1; unsafe_promoted=1; snapshot_docs=2
-25. Brain/Web readiness gate: BLOCKED; pass_allowed=False; minimum_gate_applies=True; operational_minimum_count_gate_applies=True; minimum_required_counts={'llm_claim_extractor_attempt_count': 10, 'llm_planner_call_count': 30, 'official_first_violation_count': 0, 'web_fetched_document_count': 10, 'web_or_llm_accepted_claim_count': 3, 'web_search_call_count': 20, 'web_search_task_count': 20}; blockers=6; connectivity_missing=0
+23. Brain/Web attempt verdict: ATTEMPTED_WITH_SOURCE_TASKS; source_tasks=450; accepted_claims=28
+24. Brain Stage promotion verdict: PROMOTION_APPLIED; promoted=1; unsafe_promoted=0; snapshot_docs=2
+25. Brain/Web readiness gate: BLOCKED; pass_allowed=False; minimum_gate_applies=True; operational_minimum_count_gate_applies=True; minimum_required_counts={'llm_claim_extractor_attempt_count': 10, 'llm_planner_call_count': 30, 'official_first_violation_count': 0, 'web_fetched_document_count': 10, 'web_or_llm_accepted_claim_count': 3, 'web_search_call_count': 20, 'web_search_task_count': 20}; blockers=3; connectivity_missing=0
 26. Web search tasks: 45
 27. Claim extractor runs: 20
 28. Evidence claim payload rows: 102
@@ -59,6 +59,6 @@
     sample_bundle_missing_scored_row_count=0
 42. Final verdict: NOT_READY
 43. Output root: output/census_v4/2026-07-05-goal4-repair-feedback-next-runtime-attempt
-44. runtime_seconds: 4714.06
+44. runtime_seconds: 0.00
 
 Note: v4 does not claim Meaningful Operational Stage or Brain/Web evidence pass unless the required leaf artifacts exist.

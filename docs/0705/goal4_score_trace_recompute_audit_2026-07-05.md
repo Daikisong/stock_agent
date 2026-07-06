@@ -61,23 +61,24 @@ stagecourt_score_recompute_mismatch_count: 0
 stagecourt_score_contribution_ref_missing_count: 0
 ```
 
-하지만 전체 leaf audit은 아직 FAIL이다.
+추가 패치 후 전체 leaf audit도 PASS로 내려왔다.
 
 ```text
 docs/operational/census_mode_v4_leaf_artifact_audit.json
-verdict: FAIL
-critical_count: 1
-nonzero critical: brain_stage_promotion_unsafe_promoted_count = 1
+verdict: PASS
+critical_count: 0
+nonzero critical: {}
 ```
 
-즉 현재 문제는 "점수가 수학적으로 안 맞는다"가 아니라 "아직 안전하게 production full thesis로 승급시키면 안 되는 trace가 있다"이다.
+즉 현재 문제는 "점수가 수학적으로 안 맞는다"도 아니고 "promoted row가 snapshot 문서를 점수 근거로 썼다"도 아니다.
+promoted 삼성전자 row의 문서는 CompanyGuide/OpenDART이고, snapshot 문서 2개는 unpromoted 후보 쪽에 남아 있다.
 
 쉬운 예:
 
 ```text
 계산기 검산은 맞는다.
-하지만 이 답안지를 정식 성적표로 올리는 승인 도장이 하나 빠져 있다.
-그래서 score audit은 PASS이고, 전체 Goal4 readiness는 NOT_READY다.
+정식 성적표에 첨부된 서류도 DART/CompanyGuide다.
+다만 다른 후보 파일함에 snapshot 서류가 남아 있었고, 이전 audit은 그것까지 삼성 row의 문제처럼 막았다.
 ```
 
 ## Goal4 판단
@@ -89,14 +90,14 @@ nonzero critical: brain_stage_promotion_unsafe_promoted_count = 1
 ```text
 1. 전 아키타입 runtime parity가 아직 증명되지 않았다.
 2. latest runtime attempt는 C06 row를 만들었지만 required positive primitive가 부족하다.
-3. brain_stage_promotion_unsafe_promoted_count=1이 남아 있다.
+3. Brain/Web readiness gate는 web/LLM accepted claim 0개와 source task budget cap 초과로 아직 BLOCKED다.
 4. 하이닉스 controlled smoke와 production row는 여전히 분리되어 있다.
 ```
 
 다음 패치 우선순위:
 
 ```text
-1. unsafe promoted trace의 promotion blocker를 claim/source/task 단위로 분해한다.
+1. web/LLM accepted claim 0개가 왜 발생했는지 claim extractor/source task 단위로 분해한다.
 2. C05/C06 외 아키타입이 왜 production full-thesis로 승급하지 못했는지 matrix를 갱신한다.
 3. score formula trace에는 raw component, weighted component, scorer version을 operator-facing으로 남긴다.
 4. 삼성/하이닉스는 smoke 결과와 production 결과를 계속 분리해서 보고한다.

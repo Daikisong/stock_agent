@@ -2641,14 +2641,12 @@ def _readiness_verdict(
     full_thesis_production_pass = _full_thesis_production_pass_allowed(full_thesis_production)
     brain_stage_promotion_verdict = str(brain_stage_promotion.get("verdict") or "")
     brain_to_census_stage_exported_count = int(brain_web_attempt.get("brain_to_census_stage_exported_count") or 0)
-    brain_web_promoted_stagecourt_path = bool(
-        brain_web_pass
-        and (
-            brain_stage_promotion_verdict == "PROMOTION_APPLIED"
-            or brain_to_census_stage_exported_count > 0
-            or full_thesis_stage_row_count > 0
-        )
+    brain_stagecourt_path_produced = bool(
+        brain_stage_promotion_verdict == "PROMOTION_APPLIED"
+        or brain_to_census_stage_exported_count > 0
+        or full_thesis_stage_row_count > 0
     )
+    brain_web_promoted_stagecourt_path = bool(brain_web_pass and brain_stagecourt_path_produced)
     if full_thesis_refresh_queue_candidate_count > 0 and not full_thesis_production_pass:
         remaining_operational_gaps.append("full-thesis refresh queue exists but production full-thesis StageCourt paths are not closed")
     if (
@@ -2666,7 +2664,9 @@ def _readiness_verdict(
             "full-thesis source connector capability is pending"
             + (f": {', '.join(str(item) for item in blocking_classes)}" if blocking_classes else "")
         )
-    if brain_web_requested and not brain_web_promoted_stagecourt_path:
+    if brain_web_requested and not brain_web_promoted_stagecourt_path and brain_stagecourt_path_produced:
+        remaining_operational_gaps.append("Brain/Web StageCourt path is promoted but evidence readiness gate is still blocked")
+    elif brain_web_requested and not brain_web_promoted_stagecourt_path:
         remaining_operational_gaps.append("Brain/Web/LLM acquisition was requested but has not produced a Census-promoted StageCourt path")
     elif not brain_web_requested:
         remaining_operational_gaps.append("Brain/Web/LLM acquisition artifacts are not produced in this disabled ledger-refresh run")
@@ -2779,6 +2779,7 @@ def _readiness_verdict(
         "full_thesis_smoke_requirement_pass_allowed": full_thesis_smoke_requirement_pass,
         "full_thesis_smoke_requirement_satisfied_by": full_thesis_smoke_requirement_satisfied_by,
         "full_thesis_production_pass_allowed": full_thesis_production_pass,
+        "brain_stagecourt_path_produced": brain_stagecourt_path_produced,
         "brain_web_promoted_stagecourt_path": brain_web_promoted_stagecourt_path,
         "full_thesis_production_smoke_substitute_pass": full_thesis_production_smoke_substitute_pass,
         "full_thesis_smoke_honesty_pass": full_thesis_honesty_pass,
@@ -2979,6 +2980,7 @@ def _readiness_verdict(
             "brain_promoted_stage_row_count": brain_stage_promotion.get("brain_promoted_stage_row_count"),
             "unsafe_promoted_stage_row_count": brain_stage_promotion.get("unsafe_promoted_stage_row_count"),
             "brain_snapshot_document_count": brain_stage_promotion.get("brain_snapshot_document_count"),
+            "brain_promoted_snapshot_document_count": brain_stage_promotion.get("brain_promoted_snapshot_document_count"),
             "blockers": brain_stage_promotion.get("blockers") or [],
         },
         "research_brain_bridge": {
@@ -8693,6 +8695,26 @@ def _refresh_brain_web_attempt_after_promotion(brain_web_attempt: Mapping[str, A
     return refreshed
 
 
+def _promoted_brain_claim_ids(
+    *,
+    promoted_rows: Sequence[Mapping[str, Any]],
+    stagecourt_rows: Sequence[Mapping[str, Any]],
+) -> set[str]:
+    promoted_trace_ids = {str(row.get("stagecourt_trace_id") or "") for row in promoted_rows if row.get("stagecourt_trace_id")}
+    claim_ids: set[str] = set()
+    for row in promoted_rows:
+        claim_ids.update(_ids_from_value(row.get("accepted_claim_ids")))
+        claim_ids.update(_ids_from_value(row.get("support_claim_ids")))
+    for row in stagecourt_rows:
+        trace_id = str(row.get("stagecourt_trace_id") or row.get("trace_id") or "")
+        if trace_id not in promoted_trace_ids:
+            continue
+        claim_ids.update(_ids_from_value(row.get("accepted_claim_ids")))
+        claim_ids.update(_ids_from_value(row.get("support_claim_ids")))
+        claim_ids.update(_ids_from_value(row.get("score_support_claim_ids")))
+    return {claim_id for claim_id in claim_ids if claim_id}
+
+
 def _brain_stage_promotion_audit(
     *,
     config: CensusV4RunConfig,
@@ -8731,6 +8753,14 @@ def _brain_stage_promotion_audit(
     brain_source_executions = [row for row in source_executions if _is_brain_origin(row)]
     snapshot_docs = [row for row in brain_docs if str(row.get("canonical_url") or row.get("source_url") or "").startswith("snapshot://")]
     brain_claims = [row for row in accepted if row.get("brain_web_claim") is True or _is_brain_origin(row)]
+    promoted_claim_ids = _promoted_brain_claim_ids(promoted_rows=promoted_rows, stagecourt_rows=stagecourt)
+    promoted_document_ids = {
+        document_id
+        for row in brain_claims
+        if str(row.get("claim_id") or "") in promoted_claim_ids
+        for document_id in _ids_from_value(row.get("document_id"))
+    }
+    promoted_snapshot_docs = [row for row in snapshot_docs if str(row.get("document_id") or "") in promoted_document_ids]
     source_split = _brain_claim_source_split(output_root=output_root, brain_claims=brain_claims)
     web_or_llm_accepted_claim_ids = set(source_split["web_or_llm_accepted_claim_ids"])
     official_accepted_claim_ids = _row_ids(source_split["official_accepted_claims"], "claim_id")
@@ -8839,6 +8869,7 @@ def _brain_stage_promotion_audit(
             "brain_evidence_document_count": len(brain_docs),
             "brain_source_task_execution_row_count": len(brain_source_executions),
             "brain_snapshot_document_count": len(snapshot_docs),
+            "brain_promoted_snapshot_document_count": len(promoted_snapshot_docs),
             "brain_claim_unresolved_document_ref_count": unresolved_claim_document_ref_count,
             "brain_claim_unresolved_anchor_ref_count": unresolved_claim_anchor_ref_count,
             "brain_source_task_without_document_ref_count": source_task_without_document_ref_count,
@@ -8903,8 +8934,8 @@ def _brain_stage_promotion_audit(
         blockers.append("brain score contribution count is zero")
     if not brain_stage_ids:
         blockers.append("brain StageCourt trace count is zero")
-    if snapshot_docs:
-        blockers.append("brain evidence documents include snapshot:// URLs")
+    if promoted_snapshot_docs:
+        blockers.append("promoted brain evidence documents include snapshot:// URLs")
     if fake_provider_used:
         blockers.append("fake planner/provider rows are present")
     if marker_missing:
@@ -8949,6 +8980,7 @@ def _brain_stage_promotion_audit(
         "brain_evidence_document_count": len(brain_docs),
         "brain_source_task_execution_row_count": len(brain_source_executions),
         "brain_snapshot_document_count": len(snapshot_docs),
+        "brain_promoted_snapshot_document_count": len(promoted_snapshot_docs),
         "brain_claim_missing_verifiable_anchor_count": brain_claim_quality_counts["missing_verifiable_anchor_count"],
         "brain_claim_unresolved_document_ref_count": unresolved_claim_document_ref_count,
         "brain_claim_unresolved_anchor_ref_count": unresolved_claim_anchor_ref_count,
@@ -9178,9 +9210,14 @@ def _brain_web_readiness_gate_audit(
     full_thesis_accepted_claim_count = sum(1 for row in brain_accepted if row.get("full_thesis_claim") is True)
     web_or_llm_accepted_claim_count = len(web_or_llm_accepted_ids)
     real_document_count = sum(1 for row in brain_documents if not str(row.get("canonical_url") or row.get("source_url") or "").startswith("snapshot://"))
-    snapshot_document_count = int(brain_stage_promotion.get("brain_snapshot_document_count") or 0) + sum(
+    scanned_snapshot_document_count = sum(
         1 for row in brain_documents if str(row.get("canonical_url") or row.get("source_url") or "").startswith("snapshot://")
     )
+    snapshot_document_count = max(
+        int(brain_stage_promotion.get("brain_snapshot_document_count") or 0),
+        scanned_snapshot_document_count,
+    )
+    promoted_snapshot_document_count = int(brain_stage_promotion.get("brain_promoted_snapshot_document_count") or 0)
     snippet_to_score_count = sum(1 for row in contributions if row.get("source_type") == "snippet")
     provider_failure_final_score_count = sum(1 for row in stage_rows if row.get("census_status") == "PENDING_PROVIDER" and row.get("score_scale") != "NO_SCORE")
     fake_provider_used_count = int(brain_stage_promotion.get("fake_provider_used_count") or brain_web_attempt.get("fake_provider_used_count") or 0)
@@ -9416,6 +9453,7 @@ def _brain_web_readiness_gate_audit(
             "brain_source_task_without_document_ref_count": 0,
             "brain_source_task_unresolved_document_ref_count": 0,
             "snapshot_document_count": snapshot_document_count,
+            "promoted_snapshot_document_count": 0,
             "fake_provider_used_count": fake_provider_used_count,
             "snippet_to_score_count": snippet_to_score_count,
             "provider_failure_final_score_count": provider_failure_final_score_count,
@@ -9522,8 +9560,8 @@ def _brain_web_readiness_gate_audit(
         blockers.append(f"source acquisition is not production-live: {config.brain_source_acquisition}")
     if config.brain_planner_provider in {"none", "test_fake"}:
         blockers.append(f"planner provider is not a real evidence provider: {config.brain_planner_provider}")
-    if snapshot_document_count:
-        blockers.append("Brain/Web evidence documents include snapshot:// sources")
+    if promoted_snapshot_document_count:
+        blockers.append("promoted Brain/Web evidence documents include snapshot:// sources")
     if fake_provider_used_count:
         blockers.append("fake planner/provider rows are present")
     if snippet_to_score_count:
@@ -9657,6 +9695,7 @@ def _brain_web_readiness_gate_audit(
         "brain_source_task_without_document_ref_count": source_task_without_document_ref_count,
         "brain_source_task_unresolved_document_ref_count": source_task_unresolved_document_ref_count,
         "snapshot_document_count": snapshot_document_count,
+        "promoted_snapshot_document_count": promoted_snapshot_document_count,
         "fake_provider_used_count": fake_provider_used_count,
         "snippet_to_score_count": snippet_to_score_count,
         "provider_failure_final_score_count": provider_failure_final_score_count,

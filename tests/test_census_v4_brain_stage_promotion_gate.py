@@ -277,6 +277,57 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(stage_rows[0]["official_source_task_ids"], ["TASK-A"])
         self.assertEqual(stage_rows[0]["official_evidence_document_ids"], ["DOC-A"])
 
+    def test_unpromoted_snapshot_document_does_not_make_live_promoted_row_unsafe(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_live_brain_promotion_fixture(root)
+            docs = _read_jsonl(root / "evidence_documents.jsonl")
+            docs.append(
+                {
+                    "document_id": "DOC-SNAP",
+                    "source_origin": "research_brain_v4_attempt",
+                    "canonical_url": "snapshot://issuer_official/unpromoted_report.txt",
+                }
+            )
+            write_jsonl(root / "evidence_documents.jsonl", docs)
+            source_tasks = _read_jsonl(root / "source_task_executions.jsonl")
+            source_tasks.append(
+                {
+                    "task_id": "TASK-SNAP",
+                    "source_origin": "research_brain_v4_attempt",
+                    "fetched_document_ids": ["DOC-SNAP"],
+                    "accepted_claim_ids": [],
+                }
+            )
+            write_jsonl(root / "source_task_executions.jsonl", source_tasks)
+
+            audit = _brain_stage_promotion_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_source_acquisition="live_official_first",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={"real_provider_success_count": 1, "source_task_execution_count": 2, "accepted_claim_count": 1},
+                stage_rows=[
+                    {
+                        "symbol": "005930",
+                        "stagecourt_trace_id": "SCT-BRAIN-A",
+                        "accepted_claim_ids": ["CLM-A"],
+                        "score_contribution_ids": ["SCON-A"],
+                        "primitive_state_ids": ["PRIM-A"],
+                    }
+                ],
+            )
+
+        self.assertEqual(audit["brain_snapshot_document_count"], 1)
+        self.assertEqual(audit["brain_promoted_snapshot_document_count"], 0)
+        self.assertEqual(audit["unsafe_promoted_stage_row_count"], 0)
+        self.assertEqual(audit["verdict"], "PROMOTION_APPLIED")
+        self.assertNotIn("promoted brain evidence documents include snapshot:// URLs", audit["blockers"])
+
     def test_mixed_web_and_official_brain_traces_promote_per_trace_without_global_blocker(self):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)
