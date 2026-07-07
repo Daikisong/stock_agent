@@ -1,19 +1,19 @@
 {
   "price_path_rows_runtime_prompt_allowed": false,
-  "record_count": 11433,
+  "record_count": 11401,
   "schema_version": "e2r_research_reverse_source_quality_matrix_v1",
   "source_proxy_rows_runtime_score_allowed": false,
   "source_proxy_score_leak_case_ids": [],
   "source_proxy_score_leak_count": 0,
   "source_quality_counts": {
     "A1_URL_PENDING": 19,
-    "A2_URL_BACKED": 3149,
+    "A2_URL_BACKED": 3150,
     "EVIDENCE_URL_PENDING": 185,
-    "PRICE_PATH_ONLY": 2237,
+    "PRICE_PATH_ONLY": 2204,
     "SHADOW_ONLY": 529,
     "SOURCE_PROXY_ONLY": 5314
   },
-  "url_backed_replay_candidate_count": 3149,
+  "url_backed_replay_candidate_count": 3150,
   "url_backed_replay_candidate_ids_sample": [
     "RCASE-f83375fd14475d15a906",
     "RCASE-a28c39e98e3de4c291b8",
@@ -71,6 +71,7 @@
     "RCASE-729039884de2038428ef",
     "RCASE-7207e241f3c513c892a2",
     "RCASE-8568d354e19c8ddd7031",
+    "RCASE-93384aaafdc34ebcb0b9",
     "RCASE-41375095e074221eca0a",
     "RCASE-cc3a1ba187447616d093",
     "RCASE-7c62bc28dab0725c8428",
@@ -113,7 +114,6 @@
     "RCASE-2efcc25cdc4acb9f6436",
     "RCASE-8e365208e75b5ccb7840",
     "RCASE-75758c6482e4cd613244",
-    "RCASE-ff1b435bc36da7be9c94",
-    "RCASE-7cb074ae8d3debd4af44"
+    "RCASE-ff1b435bc36da7be9c94"
   ]
 }

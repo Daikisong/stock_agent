@@ -903,6 +903,20 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
                     {"mode": "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE", "count": 40},
                     {"mode": "PRIMITIVE_MAPPING_REJECTED", "count": 53},
                 ],
+                "previous_seed_materialization_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
+                "previous_seed_materialization_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
+                "previous_seed_materialization_top_failure_axes": [
+                    {"axis": "PRIMITIVE_GAP_UNSATISFIED", "count": 17},
+                    {"axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM", "count": 16},
+                ],
+                "previous_seed_materialization_status_counts": {
+                    "ACCEPTED_CLAIM_NOT_CREATED": 3,
+                },
+                "seed_materialization_repair_required": True,
+                "seed_materialization_repair_actions": [
+                    "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_SECTION",
+                    "DO_NOT_REUSE_GENERIC_CONTEXT_AS_GAP_CLOSURE",
+                ],
                 "source_route_repair_required": True,
                 "source_route_repair_actions": [
                     "DO_NOT_ACCEPT_GENERIC_DISCLOSURE_PROFILE_AS_PRIMITIVE_EVIDENCE",
@@ -918,11 +932,31 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
                     "previous_top_claim_rejection_reasons": [
                         {"reason": "primitive_mapping_rejected", "count": 263},
                     ],
+                    "previous_seed_materialization_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
+                    "previous_seed_materialization_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
+                    "previous_seed_materialization_top_failure_axes": [
+                        {"axis": "PRIMITIVE_GAP_UNSATISFIED", "count": 17},
+                    ],
+                    "previous_seed_materialization_status_counts": {
+                        "ACCEPTED_CLAIM_NOT_CREATED": 3,
+                    },
+                    "previous_seed_materialization_failure_sample_refs": [
+                        {
+                            "candidate_event_id": "CEV4-RTATTEMPT-UNIT",
+                            "target_primitive_gap": "repeat_order_confirmed",
+                            "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
+                        }
+                    ],
                     "source_route_repair_actions": [
                         "DO_NOT_ACCEPT_GENERIC_DISCLOSURE_PROFILE_AS_PRIMITIVE_EVIDENCE",
                         "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_OR_SECTION_ROUTE",
                     ],
+                    "seed_materialization_repair_actions": [
+                        "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_SECTION",
+                        "DO_NOT_REUSE_GENERIC_CONTEXT_AS_GAP_CLOSURE",
+                    ],
                     "score_evidence_allowed_from_previous_rejected_claims": False,
+                    "score_evidence_allowed_from_previous_seed_failures": False,
                     "primitive_gap": "repeat_order_confirmed",
                 },
             },
@@ -952,8 +986,25 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
             full_thesis_context["source_route_repair_actions"],
         )
         self.assertEqual(
+            full_thesis_context["previous_seed_materialization_primary_failure_axis"],
+            "PRIMITIVE_GAP_UNSATISFIED",
+        )
+        self.assertEqual(
+            full_thesis_context["previous_seed_materialization_repair_hint"],
+            "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
+        )
+        self.assertTrue(full_thesis_context["seed_materialization_repair_required"])
+        self.assertIn(
+            "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_SECTION",
+            full_thesis_context["seed_materialization_repair_actions"],
+        )
+        self.assertEqual(
             full_thesis_context["planner_failure_feedback"]["primitive_gap"],
             "repeat_order_confirmed",
+        )
+        self.assertEqual(
+            full_thesis_context["planner_failure_feedback"]["previous_seed_materialization_primary_failure_axis"],
+            "PRIMITIVE_GAP_UNSATISFIED",
         )
         self.assertIn("accepted Evidence OS claim", full_thesis_context["success_condition"])
         self.assertEqual(full_thesis_context["fallback_if_not_found"], "SOURCE_REPAIR_REQUIRED")
@@ -962,6 +1013,10 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertNotIn("score_forbidden_until_claim_accepted", full_thesis_context["expected_claim_schema"])
         self.assertNotIn(
             "score_evidence_allowed_from_previous_rejected_claims",
+            full_thesis_context["planner_failure_feedback"],
+        )
+        self.assertNotIn(
+            "score_evidence_allowed_from_previous_seed_failures",
             full_thesis_context["planner_failure_feedback"],
         )
         self._assert_no_forbidden_planner_context_keys(full_thesis_context)
@@ -976,7 +1031,12 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
             prompt_context["planner_failure_feedback"]["previous_claim_failure_primary_mode"],
             "ROUTE_GENERIC_DISCLOSURE_NOT_PRIMITIVE_EVIDENCE",
         )
+        self.assertEqual(
+            prompt_context["planner_failure_feedback"]["previous_seed_materialization_primary_failure_axis"],
+            "PRIMITIVE_GAP_UNSATISFIED",
+        )
         self.assertTrue(any("planner_failure_feedback" in rule for rule in payload["rules"]))
+        self.assertTrue(any("previous_seed_materialization_primary_failure_axis" in rule for rule in payload["rules"]))
 
     def test_existing_evidence_summary_removes_forbidden_score_stage_keys_recursively(self):
         event = replace(

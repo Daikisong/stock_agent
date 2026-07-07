@@ -6,7 +6,7 @@
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "case_role_counts": {
         "4B": 28,
-        "4C": 411,
+        "4C": 410,
         "guard": 16,
         "positive": 1,
         "profile_cap": 1,
@@ -14,14 +14,14 @@
       },
       "evidence_url_pending_case_count": 3,
       "has_pattern_summary": true,
-      "record_count": 459,
+      "record_count": 458,
       "source_gap": false,
       "source_proxy_only_case_count": 251,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 125,
         "EVIDENCE_URL_PENDING": 3,
-        "PRICE_PATH_ONLY": 48,
+        "PRICE_PATH_ONLY": 47,
         "SHADOW_ONLY": 31,
         "SOURCE_PROXY_ONLY": 251
       },
@@ -58,15 +58,15 @@
       "source_proxy_only_case_count": 199,
       "source_quality_counts": {
         "A1_URL_PENDING": 2,
-        "A2_URL_BACKED": 90,
+        "A2_URL_BACKED": 91,
         "EVIDENCE_URL_PENDING": 7,
-        "PRICE_PATH_ONLY": 51,
+        "PRICE_PATH_ONLY": 50,
         "SHADOW_ONLY": 15,
         "SOURCE_PROXY_ONLY": 199
       },
       "top_missing_primitives": [
-        "lead_time_extended",
         "pricing_power_confirmed",
+        "lead_time_extended",
         "datacenter_customer",
         "capacity_constraint",
         "order_backlog_to_sales"
@@ -78,25 +78,25 @@
         "lead_time_extended",
         "pricing_power_confirmed"
       ],
-      "url_backed_case_count": 90
+      "url_backed_case_count": 91
     },
     {
       "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "case_role_counts": {
         "4B": 41,
-        "4C": 240,
+        "4C": 239,
         "guard": 6,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 288,
+      "record_count": 287,
       "source_gap": false,
       "source_proxy_only_case_count": 141,
       "source_quality_counts": {
         "A2_URL_BACKED": 46,
         "EVIDENCE_URL_PENDING": 5,
-        "PRICE_PATH_ONLY": 83,
+        "PRICE_PATH_ONLY": 82,
         "SHADOW_ONLY": 13,
         "SOURCE_PROXY_ONLY": 141
       },
@@ -120,17 +120,17 @@
       "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
       "case_role_counts": {
         "4B": 26,
-        "4C": 208
+        "4C": 207
       },
       "evidence_url_pending_case_count": 4,
       "has_pattern_summary": true,
-      "record_count": 234,
+      "record_count": 233,
       "source_gap": false,
       "source_proxy_only_case_count": 102,
       "source_quality_counts": {
         "A2_URL_BACKED": 56,
         "EVIDENCE_URL_PENDING": 4,
-        "PRICE_PATH_ONLY": 65,
+        "PRICE_PATH_ONLY": 64,
         "SHADOW_ONLY": 7,
         "SOURCE_PROXY_ONLY": 102
       },
@@ -154,19 +154,19 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "case_role_counts": {
         "4B": 32,
-        "4C": 353,
+        "4C": 352,
         "guard": 8,
         "positive": 1
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 394,
+      "record_count": 393,
       "source_gap": false,
       "source_proxy_only_case_count": 177,
       "source_quality_counts": {
         "A2_URL_BACKED": 108,
         "EVIDENCE_URL_PENDING": 8,
-        "PRICE_PATH_ONLY": 74,
+        "PRICE_PATH_ONLY": 73,
         "SHADOW_ONLY": 27,
         "SOURCE_PROXY_ONLY": 177
       },
@@ -190,7 +190,7 @@
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "case_role_counts": {
         "4B": 52,
-        "4C": 380,
+        "4C": 379,
         "guard": 41,
         "positive": 3,
         "profile_cap": 1,
@@ -198,14 +198,14 @@
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 482,
+      "record_count": 481,
       "source_gap": false,
       "source_proxy_only_case_count": 221,
       "source_quality_counts": {
         "A1_URL_PENDING": 4,
         "A2_URL_BACKED": 103,
         "EVIDENCE_URL_PENDING": 5,
-        "PRICE_PATH_ONLY": 54,
+        "PRICE_PATH_ONLY": 53,
         "SHADOW_ONLY": 95,
         "SOURCE_PROXY_ONLY": 221
       },
@@ -231,18 +231,18 @@
       "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
       "case_role_counts": {
         "4B": 19,
-        "4C": 305,
+        "4C": 304,
         "guard": 2
       },
       "evidence_url_pending_case_count": 3,
       "has_pattern_summary": true,
-      "record_count": 326,
+      "record_count": 325,
       "source_gap": false,
       "source_proxy_only_case_count": 199,
       "source_quality_counts": {
         "A2_URL_BACKED": 78,
         "EVIDENCE_URL_PENDING": 3,
-        "PRICE_PATH_ONLY": 38,
+        "PRICE_PATH_ONLY": 37,
         "SHADOW_ONLY": 8,
         "SOURCE_PROXY_ONLY": 199
       },
@@ -257,8 +257,8 @@
       "top_positive_primitives": [
         "relative_strength_score",
         "hbm_customer_order",
-        "order_to_revenue_bridge",
         "advanced_packaging_bottleneck",
+        "order_to_revenue_bridge",
         "equipment_order_backlog",
         "customer_contract_visible"
       ],
@@ -268,20 +268,20 @@
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "case_role_counts": {
         "4B": 21,
-        "4C": 273,
+        "4C": 272,
         "guard": 6,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 2,
       "has_pattern_summary": true,
-      "record_count": 301,
+      "record_count": 300,
       "source_gap": false,
       "source_proxy_only_case_count": 177,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 61,
         "EVIDENCE_URL_PENDING": 2,
-        "PRICE_PATH_ONLY": 44,
+        "PRICE_PATH_ONLY": 43,
         "SHADOW_ONLY": 16,
         "SOURCE_PROXY_ONLY": 177
       },
@@ -305,19 +305,19 @@
       "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
       "case_role_counts": {
         "4B": 17,
-        "4C": 298,
+        "4C": 297,
         "guard": 1,
         "positive": 1
       },
       "evidence_url_pending_case_count": 1,
       "has_pattern_summary": true,
-      "record_count": 317,
+      "record_count": 316,
       "source_gap": false,
       "source_proxy_only_case_count": 194,
       "source_quality_counts": {
         "A2_URL_BACKED": 81,
         "EVIDENCE_URL_PENDING": 1,
-        "PRICE_PATH_ONLY": 34,
+        "PRICE_PATH_ONLY": 33,
         "SHADOW_ONLY": 7,
         "SOURCE_PROXY_ONLY": 194
       },
@@ -341,31 +341,31 @@
       "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
       "case_role_counts": {
         "4B": 14,
-        "4C": 355,
+        "4C": 354,
         "guard": 17
       },
       "evidence_url_pending_case_count": 2,
       "has_pattern_summary": true,
-      "record_count": 386,
+      "record_count": 385,
       "source_gap": false,
       "source_proxy_only_case_count": 206,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 115,
         "EVIDENCE_URL_PENDING": 2,
-        "PRICE_PATH_ONLY": 39,
+        "PRICE_PATH_ONLY": 38,
         "SHADOW_ONLY": 23,
         "SOURCE_PROXY_ONLY": 206
       },
       "top_missing_primitives": [
         "cycle_to_revenue_bridge",
         "inventory_cycle_repair",
+        "cycle_demand_visibility",
         "end_market_demand_visibility",
         "supply_demand_tightness",
-        "cycle_demand_visibility",
-        "equipment_order_recovery",
         "memory_price_increase_mentioned",
         "supply_discipline_mentioned",
+        "equipment_order_recovery",
         "order_to_revenue_bridge",
         "fcf_quality_score"
       ],
@@ -375,8 +375,8 @@
         "memory_price_increase_mentioned",
         "supply_discipline_mentioned",
         "order_to_revenue_bridge",
-        "cycle_demand_visibility",
         "equipment_order_recovery",
+        "cycle_demand_visibility",
         "end_market_demand_visibility",
         "supply_demand_tightness",
         "cycle_to_revenue_bridge"
@@ -387,18 +387,18 @@
       "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
       "case_role_counts": {
         "4B": 11,
-        "4C": 281,
+        "4C": 280,
         "guard": 4
       },
       "evidence_url_pending_case_count": 3,
       "has_pattern_summary": true,
-      "record_count": 296,
+      "record_count": 295,
       "source_gap": false,
       "source_proxy_only_case_count": 153,
       "source_quality_counts": {
         "A2_URL_BACKED": 84,
         "EVIDENCE_URL_PENDING": 3,
-        "PRICE_PATH_ONLY": 47,
+        "PRICE_PATH_ONLY": 46,
         "SHADOW_ONLY": 9,
         "SOURCE_PROXY_ONLY": 153
       },
@@ -422,18 +422,18 @@
       "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
       "case_role_counts": {
         "4B": 14,
-        "4C": 281,
+        "4C": 280,
         "guard": 4
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 299,
+      "record_count": 298,
       "source_gap": false,
       "source_proxy_only_case_count": 163,
       "source_quality_counts": {
         "A2_URL_BACKED": 75,
         "EVIDENCE_URL_PENDING": 5,
-        "PRICE_PATH_ONLY": 48,
+        "PRICE_PATH_ONLY": 47,
         "SHADOW_ONLY": 8,
         "SOURCE_PROXY_ONLY": 163
       },
@@ -457,24 +457,24 @@
       "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
       "case_role_counts": {
         "4B": 18,
-        "4C": 297,
+        "4C": 296,
         "guard": 2
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 317,
+      "record_count": 316,
       "source_gap": false,
       "source_proxy_only_case_count": 183,
       "source_quality_counts": {
         "A2_URL_BACKED": 77,
         "EVIDENCE_URL_PENDING": 6,
-        "PRICE_PATH_ONLY": 46,
+        "PRICE_PATH_ONLY": 45,
         "SHADOW_ONLY": 5,
         "SOURCE_PROXY_ONLY": 183
       },
       "top_missing_primitives": [
-        "policy_reversal_risk",
         "ampc_or_subsidy_capture",
+        "policy_reversal_risk",
         "ex_credit_margin",
         "customer_contract",
         "jv_utilization"
@@ -492,18 +492,18 @@
       "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
       "case_role_counts": {
         "4B": 4,
-        "4C": 304,
+        "4C": 303,
         "guard": 1
       },
       "evidence_url_pending_case_count": 4,
       "has_pattern_summary": true,
-      "record_count": 309,
+      "record_count": 308,
       "source_gap": false,
       "source_proxy_only_case_count": 171,
       "source_quality_counts": {
         "A2_URL_BACKED": 97,
         "EVIDENCE_URL_PENDING": 4,
-        "PRICE_PATH_ONLY": 33,
+        "PRICE_PATH_ONLY": 32,
         "SHADOW_ONLY": 4,
         "SOURCE_PROXY_ONLY": 171
       },
@@ -527,20 +527,20 @@
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "case_role_counts": {
         "4B": 47,
-        "4C": 305,
+        "4C": 304,
         "guard": 3,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 357,
+      "record_count": 356,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 98,
         "EVIDENCE_URL_PENDING": 5,
-        "PRICE_PATH_ONLY": 82,
+        "PRICE_PATH_ONLY": 81,
         "SHADOW_ONLY": 16,
         "SOURCE_PROXY_ONLY": 156
       },
@@ -564,18 +564,18 @@
       "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
       "case_role_counts": {
         "4B": 38,
-        "4C": 245,
+        "4C": 244,
         "guard": 4
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 287,
+      "record_count": 286,
       "source_gap": false,
       "source_proxy_only_case_count": 140,
       "source_quality_counts": {
         "A2_URL_BACKED": 55,
         "EVIDENCE_URL_PENDING": 8,
-        "PRICE_PATH_ONLY": 77,
+        "PRICE_PATH_ONLY": 76,
         "SHADOW_ONLY": 7,
         "SOURCE_PROXY_ONLY": 140
       },
@@ -599,20 +599,20 @@
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
       "case_role_counts": {
         "4B": 44,
-        "4C": 278,
+        "4C": 277,
         "guard": 3,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 10,
       "has_pattern_summary": true,
-      "record_count": 327,
+      "record_count": 326,
       "source_gap": false,
       "source_proxy_only_case_count": 160,
       "source_quality_counts": {
         "A2_URL_BACKED": 69,
         "EVIDENCE_URL_PENDING": 10,
-        "PRICE_PATH_ONLY": 75,
+        "PRICE_PATH_ONLY": 74,
         "SHADOW_ONLY": 13,
         "SOURCE_PROXY_ONLY": 160
       },
@@ -636,27 +636,27 @@
       "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
       "case_role_counts": {
         "4B": 35,
-        "4C": 261,
+        "4C": 260,
         "guard": 3,
         "positive": 1,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 301,
+      "record_count": 300,
       "source_gap": false,
       "source_proxy_only_case_count": 126,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 89,
         "EVIDENCE_URL_PENDING": 8,
-        "PRICE_PATH_ONLY": 67,
+        "PRICE_PATH_ONLY": 66,
         "SHADOW_ONLY": 10,
         "SOURCE_PROXY_ONLY": 126
       },
       "top_missing_primitives": [
-        "channel_reorder_confirmed",
         "repeat_order_confirmed",
+        "channel_reorder_confirmed",
         "export_growth_pct",
         "sell_through_confirmed",
         "opm_expansion_pctp"
@@ -665,8 +665,8 @@
         "opm_expansion_pctp",
         "export_growth_pct",
         "sell_through_confirmed",
-        "repeat_order_confirmed",
-        "channel_reorder_confirmed"
+        "channel_reorder_confirmed",
+        "repeat_order_confirmed"
       ],
       "url_backed_case_count": 89
     },
@@ -674,18 +674,18 @@
       "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
       "case_role_counts": {
         "4B": 20,
-        "4C": 233,
+        "4C": 232,
         "guard": 5
       },
       "evidence_url_pending_case_count": 7,
       "has_pattern_summary": true,
-      "record_count": 258,
+      "record_count": 257,
       "source_gap": false,
       "source_proxy_only_case_count": 130,
       "source_quality_counts": {
         "A2_URL_BACKED": 63,
         "EVIDENCE_URL_PENDING": 7,
-        "PRICE_PATH_ONLY": 49,
+        "PRICE_PATH_ONLY": 48,
         "SHADOW_ONLY": 9,
         "SOURCE_PROXY_ONLY": 130
       },
@@ -700,8 +700,8 @@
         "inventory_spike",
         "pricing_power_confirmed",
         "sell_through_confirmed",
-        "raw_material_cost_risk",
-        "channel_reorder_confirmed"
+        "channel_reorder_confirmed",
+        "raw_material_cost_risk"
       ],
       "url_backed_case_count": 63
     },
@@ -709,20 +709,20 @@
       "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
       "case_role_counts": {
         "4B": 30,
-        "4C": 268,
+        "4C": 267,
         "guard": 9,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 308,
+      "record_count": 307,
       "source_gap": false,
       "source_proxy_only_case_count": 112,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 102,
         "EVIDENCE_URL_PENDING": 5,
-        "PRICE_PATH_ONLY": 75,
+        "PRICE_PATH_ONLY": 74,
         "SHADOW_ONLY": 13,
         "SOURCE_PROXY_ONLY": 112
       },
@@ -746,28 +746,28 @@
       "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
       "case_role_counts": {
         "4B": 49,
-        "4C": 293,
+        "4C": 292,
         "guard": 14,
         "positive": 1,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 358,
+      "record_count": 357,
       "source_gap": false,
       "source_proxy_only_case_count": 118,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 111,
         "EVIDENCE_URL_PENDING": 6,
-        "PRICE_PATH_ONLY": 103,
+        "PRICE_PATH_ONLY": 102,
         "SHADOW_ONLY": 19,
         "SOURCE_PROXY_ONLY": 118
       },
       "top_missing_primitives": [
-        "credit_cost_quality",
         "pbr_e",
         "treasury_share_cancellation",
+        "credit_cost_quality",
         "capital_return_execution",
         "roe"
       ],
@@ -775,8 +775,8 @@
         "roe",
         "capital_return_execution",
         "pbr_e",
-        "treasury_share_cancellation",
-        "credit_cost_quality"
+        "credit_cost_quality",
+        "treasury_share_cancellation"
       ],
       "url_backed_case_count": 111
     },
@@ -784,20 +784,20 @@
       "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
       "case_role_counts": {
         "4B": 41,
-        "4C": 256,
+        "4C": 255,
         "guard": 8,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 306,
+      "record_count": 305,
       "source_gap": false,
       "source_proxy_only_case_count": 114,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 84,
         "EVIDENCE_URL_PENDING": 6,
-        "PRICE_PATH_ONLY": 88,
+        "PRICE_PATH_ONLY": 87,
         "SHADOW_ONLY": 13,
         "SOURCE_PROXY_ONLY": 114
       },
@@ -821,20 +821,20 @@
       "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
       "case_role_counts": {
         "4B": 28,
-        "4C": 268,
+        "4C": 267,
         "guard": 13,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 310,
+      "record_count": 309,
       "source_gap": false,
       "source_proxy_only_case_count": 120,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 92,
         "EVIDENCE_URL_PENDING": 8,
-        "PRICE_PATH_ONLY": 72,
+        "PRICE_PATH_ONLY": 71,
         "SHADOW_ONLY": 17,
         "SOURCE_PROXY_ONLY": 120
       },
@@ -858,20 +858,20 @@
       "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "case_role_counts": {
         "4B": 24,
-        "4C": 244,
+        "4C": 243,
         "guard": 7,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 7,
       "has_pattern_summary": true,
-      "record_count": 277,
+      "record_count": 276,
       "source_gap": false,
       "source_proxy_only_case_count": 143,
       "source_quality_counts": {
         "A2_URL_BACKED": 60,
         "EVIDENCE_URL_PENDING": 7,
-        "PRICE_PATH_ONLY": 58,
+        "PRICE_PATH_ONLY": 57,
         "SHADOW_ONLY": 9,
         "SOURCE_PROXY_ONLY": 143
       },
@@ -884,9 +884,9 @@
       ],
       "top_positive_primitives": [
         "binary_event_unresolved",
-        "approval_not_confirmed",
         "cash_runway_risk",
         "safety_signal",
+        "approval_not_confirmed",
         "trial_quality_visible"
       ],
       "url_backed_case_count": 60
@@ -895,20 +895,20 @@
       "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
       "case_role_counts": {
         "4B": 23,
-        "4C": 227,
+        "4C": 226,
         "guard": 3,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 254,
+      "record_count": 253,
       "source_gap": false,
       "source_proxy_only_case_count": 122,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 56,
         "EVIDENCE_URL_PENDING": 6,
-        "PRICE_PATH_ONLY": 62,
+        "PRICE_PATH_ONLY": 61,
         "SHADOW_ONLY": 7,
         "SOURCE_PROXY_ONLY": 122
       },
@@ -932,35 +932,35 @@
       "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
       "case_role_counts": {
         "4B": 28,
-        "4C": 245,
+        "4C": 244,
         "guard": 7
       },
       "evidence_url_pending_case_count": 7,
       "has_pattern_summary": true,
-      "record_count": 280,
+      "record_count": 279,
       "source_gap": false,
       "source_proxy_only_case_count": 122,
       "source_quality_counts": {
         "A1_URL_PENDING": 2,
         "A2_URL_BACKED": 70,
         "EVIDENCE_URL_PENDING": 7,
-        "PRICE_PATH_ONLY": 71,
+        "PRICE_PATH_ONLY": 70,
         "SHADOW_ONLY": 8,
         "SOURCE_PROXY_ONLY": 122
       },
       "top_missing_primitives": [
-        "regulatory_risk",
         "arpu_growth_pct",
         "ad_revenue_growth_pct",
         "take_rate_improvement",
+        "regulatory_risk",
         "operating_leverage_visible"
       ],
       "top_positive_primitives": [
         "operating_leverage_visible",
         "ad_revenue_growth_pct",
         "arpu_growth_pct",
-        "take_rate_improvement",
-        "regulatory_risk"
+        "regulatory_risk",
+        "take_rate_improvement"
       ],
       "url_backed_case_count": 70
     },
@@ -968,24 +968,24 @@
       "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
       "case_role_counts": {
         "4B": 19,
-        "4C": 256,
+        "4C": 255,
         "guard": 2
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 277,
+      "record_count": 276,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 66,
         "EVIDENCE_URL_PENDING": 6,
-        "PRICE_PATH_ONLY": 46,
+        "PRICE_PATH_ONLY": 45,
         "SHADOW_ONLY": 3,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
-        "token_or_theme_hype_risk",
         "global_launch_conversion",
+        "token_or_theme_hype_risk",
         "ip_monetization_visible",
         "user_retention",
         "repeat_revenue"
@@ -1003,21 +1003,21 @@
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "case_role_counts": {
         "4B": 27,
-        "4C": 311,
+        "4C": 310,
         "guard": 13,
         "profile_cap": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 7,
       "has_pattern_summary": true,
-      "record_count": 353,
+      "record_count": 352,
       "source_gap": false,
       "source_proxy_only_case_count": 187,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 83,
         "EVIDENCE_URL_PENDING": 7,
-        "PRICE_PATH_ONLY": 55,
+        "PRICE_PATH_ONLY": 54,
         "SHADOW_ONLY": 20,
         "SOURCE_PROXY_ONLY": 187
       },
@@ -1041,19 +1041,19 @@
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "case_role_counts": {
         "4B": 19,
-        "4C": 249,
+        "4C": 248,
         "guard": 1,
         "positive": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 270,
+      "record_count": 269,
       "source_gap": false,
       "source_proxy_only_case_count": 114,
       "source_quality_counts": {
         "A2_URL_BACKED": 71,
         "EVIDENCE_URL_PENDING": 5,
-        "PRICE_PATH_ONLY": 68,
+        "PRICE_PATH_ONLY": 67,
         "SHADOW_ONLY": 12,
         "SOURCE_PROXY_ONLY": 114
       },
@@ -1077,36 +1077,36 @@
       "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
       "case_role_counts": {
         "4B": 28,
-        "4C": 309,
+        "4C": 308,
         "guard": 5,
         "positive": 1,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 344,
+      "record_count": 343,
       "source_gap": false,
       "source_proxy_only_case_count": 147,
       "source_quality_counts": {
         "A2_URL_BACKED": 88,
         "EVIDENCE_URL_PENDING": 5,
-        "PRICE_PATH_ONLY": 97,
+        "PRICE_PATH_ONLY": 96,
         "SHADOW_ONLY": 7,
         "SOURCE_PROXY_ONLY": 147
       },
       "top_missing_primitives": [
-        "occupancy_or_presale_visible",
         "pf_exposure_reduced",
-        "funding_cost_risk",
+        "occupancy_or_presale_visible",
         "cash_collection_visible",
+        "funding_cost_risk",
         "balance_sheet_repair"
       ],
       "top_positive_primitives": [
         "balance_sheet_repair",
         "cash_collection_visible",
         "funding_cost_risk",
-        "pf_exposure_reduced",
-        "occupancy_or_presale_visible"
+        "occupancy_or_presale_visible",
+        "pf_exposure_reduced"
       ],
       "url_backed_case_count": 88
     },
@@ -1114,7 +1114,7 @@
       "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
       "case_role_counts": {
         "4B": 41,
-        "4C": 331,
+        "4C": 330,
         "guard": 3,
         "positive": 1,
         "profile_cap": 1,
@@ -1122,13 +1122,13 @@
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 378,
+      "record_count": 377,
       "source_gap": false,
       "source_proxy_only_case_count": 142,
       "source_quality_counts": {
         "A2_URL_BACKED": 114,
         "EVIDENCE_URL_PENDING": 8,
-        "PRICE_PATH_ONLY": 105,
+        "PRICE_PATH_ONLY": 104,
         "SHADOW_ONLY": 9,
         "SOURCE_PROXY_ONLY": 142
       },
@@ -1152,7 +1152,7 @@
       "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
       "case_role_counts": {
         "4B": 42,
-        "4C": 366,
+        "4C": 365,
         "guard": 6,
         "positive": 1,
         "profile_cap": 1,
@@ -1160,20 +1160,20 @@
       },
       "evidence_url_pending_case_count": 7,
       "has_pattern_summary": true,
-      "record_count": 417,
+      "record_count": 416,
       "source_gap": false,
       "source_proxy_only_case_count": 182,
       "source_quality_counts": {
         "A2_URL_BACKED": 132,
         "EVIDENCE_URL_PENDING": 7,
-        "PRICE_PATH_ONLY": 81,
+        "PRICE_PATH_ONLY": 80,
         "SHADOW_ONLY": 15,
         "SOURCE_PROXY_ONLY": 182
       },
       "top_missing_primitives": [
-        "event_spread_risk",
         "tender_offer_confirmed",
         "control_premium_floor",
+        "event_spread_risk",
         "regulatory_approval_confirmed",
         "minority_cash_path"
       ],
@@ -1181,8 +1181,8 @@
         "minority_cash_path",
         "regulatory_approval_confirmed",
         "control_premium_floor",
-        "tender_offer_confirmed",
-        "event_spread_risk"
+        "event_spread_risk",
+        "tender_offer_confirmed"
       ],
       "url_backed_case_count": 132
     },
@@ -1229,21 +1229,21 @@
       "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
       "case_role_counts": {
         "4B": 77,
-        "4C": 908,
+        "4C": 907,
         "guard": 12,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 999,
+      "record_count": 998,
       "source_gap": false,
       "source_proxy_only_case_count": 286,
       "source_quality_counts": {
         "A1_URL_PENDING": 1,
         "A2_URL_BACKED": 450,
         "EVIDENCE_URL_PENDING": 6,
-        "PRICE_PATH_ONLY": 202,
+        "PRICE_PATH_ONLY": 201,
         "SHADOW_ONLY": 54,
         "SOURCE_PROXY_ONLY": 286
       },

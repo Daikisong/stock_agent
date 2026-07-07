@@ -89,6 +89,54 @@ CLAIM_FAILURE_REPAIR_HINT_BY_MODE = {
     "MAPPING_NOT_ACCEPTED": "INSPECT_MAPPING_DECISION_AND_REQUIRED_PRIMITIVE",
 }
 
+SEED_FAILURE_REPAIR_ACTIONS = {
+    "PRIMITIVE_GAP_UNSATISFIED": [
+        "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_SECTION",
+        "DO_NOT_REUSE_GENERIC_CONTEXT_AS_GAP_CLOSURE",
+        "REQUIRE_ACCEPTED_CLAIM_TO_SATISFY_ORIGINAL_PRIMITIVE_GAP",
+    ],
+    "PRIMITIVE_MAPPING_REJECTED": [
+        "ASK_LLM_FOR_CLAIM_THAT_MATCHES_EVIDENCE_CONTRACT_PRIMITIVE",
+        "RETRY_WITH_MAPPER_REJECTION_REASON_FEEDBACK",
+    ],
+    "MAPPING_NOT_ACCEPTED": [
+        "RETRY_ONLY_AFTER_NEW_SOURCE_BACKED_CLAIM",
+        "DO_NOT_PROMOTE_REJECTED_MAPPING_TO_SCORE",
+    ],
+    "SEMANTIC_OR_TARGET_REJECTED": [
+        "TIGHTEN_TARGET_ENTITY_AND_DOCUMENT_SECTION",
+        "REQUIRE_DIRECT_TARGET_COMPANY_SCOPE",
+    ],
+    "TEMPORAL_NOT_CURRENT": [
+        "FIND_CURRENT_OR_SUPERSEDING_SOURCE",
+        "DO_NOT_SCORE_HISTORICAL_ONLY_CLAIMS",
+    ],
+    "ANCHOR_OR_LINEAGE_REJECTED": [
+        "REPAIR_ORIGINAL_SOURCE_ANCHOR_LINEAGE",
+        "REQUIRE_FETCHED_DOCUMENT_ANCHOR_BEFORE_SCORE",
+    ],
+    "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": [
+        "MATCH_SOURCE_CLASS_TO_DOCUMENT_TYPE_BEFORE_FETCH",
+        "ASK_LLM_FOR_COMPATIBLE_SOURCE_FAMILY",
+    ],
+    "NO_FETCHED_DOCUMENT": [
+        "FIND_FETCHABLE_ORIGINAL_SOURCE_OR_NARROW_SOURCE_CLASS",
+        "DO_NOT_TREAT_SEARCH_HIT_AS_FETCHED_EVIDENCE",
+    ],
+    "NO_SCORE_ELIGIBLE_REAL_CLAIM": [
+        "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+        "KEEP_RESULT_PENDING_IF_ONLY_NON_ELIGIBLE_CLAIMS_EXIST",
+    ],
+    "PROVIDER_ERROR_RECORDED": [
+        "FIX_PROVIDER_OR_MARK_EXTERNAL_SOURCE_BLOCKER",
+        "DO_NOT_CONVERT_PROVIDER_FAILURE_TO_LOW_SCORE",
+    ],
+    "PROVIDER_FAILED": [
+        "FIX_PROVIDER_OR_MARK_EXTERNAL_SOURCE_BLOCKER",
+        "DO_NOT_CONVERT_PROVIDER_FAILURE_TO_LOW_SCORE",
+    ],
+}
+
 
 def _stable_id(prefix: str, *parts: object, length: int = 20) -> str:
     raw = "|".join(str(part) for part in parts)
@@ -170,10 +218,86 @@ def _claim_failure_top_modes(row: Mapping[str, Any]) -> list[dict[str, Any]]:
     return normalized
 
 
+def _seed_failure_primary_axis(row: Mapping[str, Any]) -> str | None:
+    axis = row.get("seed_materialization_primary_failure_axis")
+    return str(axis) if axis else None
+
+
+def _seed_failure_repair_hint(row: Mapping[str, Any], primary_axis: str | None) -> str | None:
+    hint = row.get("seed_materialization_primary_repair_hint")
+    if hint:
+        return str(hint)
+    if not primary_axis:
+        return None
+    hint_counts = row.get("seed_materialization_repair_hint_counts") or {}
+    if isinstance(hint_counts, Mapping) and hint_counts:
+        return sorted(hint_counts, key=lambda value: (-int(hint_counts[value] or 0), str(value)))[0]
+    return None
+
+
+def _seed_failure_top_axes(row: Mapping[str, Any]) -> list[dict[str, Any]]:
+    axes = row.get("seed_materialization_top_failure_axes") or []
+    if not isinstance(axes, list):
+        return []
+    normalized: list[dict[str, Any]] = []
+    for item in axes:
+        if not isinstance(item, Mapping):
+            continue
+        axis = item.get("axis")
+        if not axis:
+            continue
+        normalized.append({"axis": str(axis), "count": int(item.get("count") or 0)})
+    return normalized
+
+
+def _seed_failure_sample_refs(row: Mapping[str, Any], *, max_samples: int = 1) -> list[dict[str, Any]]:
+    samples = row.get("seed_materialization_failure_samples") or []
+    if not isinstance(samples, list):
+        return []
+    refs: list[dict[str, Any]] = []
+    for sample in samples[:max_samples]:
+        if not isinstance(sample, Mapping):
+            continue
+        source_samples = sample.get("source_task_failure_samples") or []
+        first_source_sample = source_samples[0] if isinstance(source_samples, list) and source_samples else {}
+        if not isinstance(first_source_sample, Mapping):
+            first_source_sample = {}
+        refs.append(
+            {
+                "candidate_event_id": sample.get("candidate_event_id"),
+                "symbol": sample.get("symbol"),
+                "target_primitive_gap": sample.get("target_primitive_gap"),
+                "materialization_status": sample.get("materialization_status"),
+                "source_task_primary_failure_axis": sample.get("source_task_primary_failure_axis"),
+                "source_task_failure_repair_hint": sample.get("source_task_failure_repair_hint"),
+                "sample_source_task_id": first_source_sample.get("task_id"),
+                "sample_source_class": first_source_sample.get("source_class"),
+                "sample_status": first_source_sample.get("status"),
+                "sample_stop_reason": first_source_sample.get("stop_reason"),
+            }
+        )
+    return refs
+
+
 def _source_route_repair_actions(primary_mode: str | None) -> list[str]:
     if not primary_mode:
         return []
     return list(CLAIM_FAILURE_REPAIR_ACTIONS.get(primary_mode, ["INSPECT_REJECTED_CLAIM_SAMPLE"]))
+
+
+def _seed_materialization_repair_actions(primary_axis: str | None) -> list[str]:
+    if not primary_axis:
+        return []
+    return list(SEED_FAILURE_REPAIR_ACTIONS.get(primary_axis, ["INSPECT_SEED_MATERIALIZATION_FAILURE_SAMPLE"]))
+
+
+def _unique_actions(*groups: Iterable[str]) -> list[str]:
+    actions: list[str] = []
+    for group in groups:
+        for action in group:
+            if action not in actions:
+                actions.append(action)
+    return actions
 
 
 def _planner_failure_feedback(
@@ -183,14 +307,24 @@ def _planner_failure_feedback(
     primary_mode: str | None,
     repair_hint: str | None,
     repair_actions: list[str],
+    seed_primary_axis: str | None,
+    seed_repair_hint: str | None,
+    seed_repair_actions: list[str],
 ) -> dict[str, Any]:
     return {
         "previous_claim_failure_primary_mode": primary_mode,
         "previous_claim_failure_repair_hint": repair_hint,
         "previous_claim_failure_top_modes": _claim_failure_top_modes(row),
         "previous_top_claim_rejection_reasons": row.get("claim_mapping_top_rejection_reasons") or [],
+        "previous_seed_materialization_primary_failure_axis": seed_primary_axis,
+        "previous_seed_materialization_repair_hint": seed_repair_hint,
+        "previous_seed_materialization_top_failure_axes": _seed_failure_top_axes(row),
+        "previous_seed_materialization_status_counts": row.get("seed_materialization_status_counts") or {},
+        "previous_seed_materialization_failure_sample_refs": _seed_failure_sample_refs(row),
         "source_route_repair_actions": repair_actions,
+        "seed_materialization_repair_actions": seed_repair_actions,
         "score_evidence_allowed_from_previous_rejected_claims": False,
+        "score_evidence_allowed_from_previous_seed_failures": False,
         "primitive_gap": primitive,
     }
 
@@ -273,6 +407,35 @@ def _failure_feedback_intent(
     if primary_mode == "PROVIDER_ERROR_SCORE_BLOCK":
         return base + " Provider failure must remain Source Pending or external blocker, not a low score."
     return base + " Feed the prior rejection reason to the LLM planner and require a new source-backed claim before retry."
+
+
+def _seed_materialization_feedback_intent(
+    *,
+    primary_axis: str | None,
+    repair_hint: str | None,
+    repair_actions: list[str],
+) -> str | None:
+    if not primary_axis and not repair_actions:
+        return None
+    base = (
+        "Previous full-thesis seed materialization did not close the runtime parity gap. "
+        f"seed_primary_failure_axis={primary_axis or 'UNKNOWN'}; "
+        f"seed_repair_hint={repair_hint or 'INSPECT_SEED_MATERIALIZATION_FAILURE_SAMPLE'}; "
+        f"required_seed_repair_actions={', '.join(repair_actions) if repair_actions else 'INSPECT_SEED_MATERIALIZATION_FAILURE_SAMPLE'}."
+    )
+    if primary_axis == "PRIMITIVE_GAP_UNSATISFIED":
+        return (
+            base
+            + " The next source route must find text that directly satisfies the original primitive gap; "
+            "generic disclosure, status check, or adjacent business context is not enough."
+        )
+    if primary_axis == "NO_FETCHED_DOCUMENT":
+        return base + " First obtain a fetchable original source before any claim extraction or score retry."
+    if primary_axis == "TEMPORAL_NOT_CURRENT":
+        return base + " Find a current or superseding source; historical-only claims remain planner feedback."
+    if primary_axis in {"PROVIDER_ERROR_RECORDED", "PROVIDER_FAILED"}:
+        return base + " Keep provider failure as Source Pending or external blocker, never as a low score."
+    return base + " Feed seed failure samples back to the LLM planner and require a new source-backed claim."
 
 
 def _candidate_primitives(row: Mapping[str, Any], card: Mapping[str, Any], *, max_primitives: int) -> list[str]:
@@ -464,6 +627,10 @@ def build_all_archetype_next_runtime_attempt_plan(
         primary_failure_mode = _claim_failure_primary_mode(row)
         repair_hint = _claim_failure_repair_hint(row, primary_failure_mode)
         repair_actions = _source_route_repair_actions(primary_failure_mode)
+        seed_primary_axis = _seed_failure_primary_axis(row)
+        seed_repair_hint = _seed_failure_repair_hint(row, seed_primary_axis)
+        seed_repair_actions = _seed_materialization_repair_actions(seed_primary_axis)
+        combined_repair_actions = _unique_actions(repair_actions, seed_repair_actions)
         plan_rows.append(
             {
                 "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
@@ -491,8 +658,14 @@ def build_all_archetype_next_runtime_attempt_plan(
                 "previous_claim_failure_primary_mode": primary_failure_mode,
                 "previous_claim_failure_repair_hint": repair_hint,
                 "previous_claim_failure_top_modes": _claim_failure_top_modes(row),
-                "source_route_repair_required": bool(repair_actions),
-                "source_route_repair_actions": repair_actions,
+                "previous_seed_materialization_primary_failure_axis": seed_primary_axis,
+                "previous_seed_materialization_repair_hint": seed_repair_hint,
+                "previous_seed_materialization_top_failure_axes": _seed_failure_top_axes(row),
+                "previous_seed_materialization_status_counts": row.get("seed_materialization_status_counts") or {},
+                "seed_materialization_repair_required": bool(seed_repair_actions),
+                "seed_materialization_repair_actions": seed_repair_actions,
+                "source_route_repair_required": bool(combined_repair_actions),
+                "source_route_repair_actions": combined_repair_actions,
                 "next_required_action": row.get("next_required_action"),
                 "status_reason_ko": row.get("status_reason_ko"),
             }
@@ -536,12 +709,22 @@ def build_all_archetype_next_runtime_attempt_plan(
                 )
                 if failure_feedback_intent:
                     query_intents.append(failure_feedback_intent)
+                seed_failure_feedback_intent = _seed_materialization_feedback_intent(
+                    primary_axis=seed_primary_axis,
+                    repair_hint=seed_repair_hint,
+                    repair_actions=seed_repair_actions,
+                )
+                if seed_failure_feedback_intent:
+                    query_intents.append(seed_failure_feedback_intent)
                 planner_failure_feedback = _planner_failure_feedback(
                     row=row,
                     primitive=primitive,
                     primary_mode=primary_failure_mode,
                     repair_hint=repair_hint,
                     repair_actions=repair_actions,
+                    seed_primary_axis=seed_primary_axis,
+                    seed_repair_hint=seed_repair_hint,
+                    seed_repair_actions=seed_repair_actions,
                 )
                 success_condition = _success_condition(
                     archetype_id=archetype_id,
@@ -588,8 +771,12 @@ def build_all_archetype_next_runtime_attempt_plan(
                     "planner_failure_feedback": planner_failure_feedback,
                     "previous_claim_failure_primary_mode": primary_failure_mode,
                     "previous_claim_failure_repair_hint": repair_hint,
-                    "source_route_repair_required": bool(repair_actions),
-                    "source_route_repair_actions": repair_actions,
+                    "previous_seed_materialization_primary_failure_axis": seed_primary_axis,
+                    "previous_seed_materialization_repair_hint": seed_repair_hint,
+                    "seed_materialization_repair_required": bool(seed_repair_actions),
+                    "seed_materialization_repair_actions": seed_repair_actions,
+                    "source_route_repair_required": bool(combined_repair_actions),
+                    "source_route_repair_actions": combined_repair_actions,
                     "hardcoded_queries": [],
                     "hardcoded_query_count": 0,
                     "max_queries": 3,
@@ -640,11 +827,13 @@ def build_all_archetype_next_runtime_attempt_plan(
                             str(proof_status),
                             primitive,
                             str(primary_failure_mode or "NO_PREVIOUS_CLAIM_FAILURE_MODE"),
+                            str(seed_primary_axis or "NO_PREVIOUS_SEED_FAILURE_AXIS"),
                         ],
                         "event_summary": (
                             f"planner input only. archetype_id={archetype_id}; primitive_gap={primitive}; "
                             "source-backed Evidence OS claim required before any production score/stage use; "
-                            f"previous_claim_failure_primary_mode={primary_failure_mode or 'NONE'}"
+                            f"previous_claim_failure_primary_mode={primary_failure_mode or 'NONE'}; "
+                            f"previous_seed_materialization_primary_failure_axis={seed_primary_axis or 'NONE'}"
                         ),
                         "structured_payload": {
                             "attempt_id": attempt_id,
@@ -669,8 +858,12 @@ def build_all_archetype_next_runtime_attempt_plan(
                             "planner_failure_feedback": planner_failure_feedback,
                             "previous_claim_failure_primary_mode": primary_failure_mode,
                             "previous_claim_failure_repair_hint": repair_hint,
-                            "source_route_repair_required": bool(repair_actions),
-                            "source_route_repair_actions": repair_actions,
+                            "previous_seed_materialization_primary_failure_axis": seed_primary_axis,
+                            "previous_seed_materialization_repair_hint": seed_repair_hint,
+                            "seed_materialization_repair_required": bool(seed_repair_actions),
+                            "seed_materialization_repair_actions": seed_repair_actions,
+                            "source_route_repair_required": bool(combined_repair_actions),
+                            "source_route_repair_actions": combined_repair_actions,
                             "hardcoded_queries": [],
                             "hardcoded_query_count": 0,
                             "max_queries": 3,
@@ -697,6 +890,17 @@ def build_all_archetype_next_runtime_attempt_plan(
         for task in source_tasks
         if task.get("source_route_repair_required") and task.get("previous_claim_failure_primary_mode")
     )
+    by_seed_repair_hint = Counter(
+        task["previous_seed_materialization_repair_hint"]
+        for task in source_tasks
+        if task.get("seed_materialization_repair_required") and task.get("previous_seed_materialization_repair_hint")
+    )
+    by_seed_primary_failure_axis = Counter(
+        task["previous_seed_materialization_primary_failure_axis"]
+        for task in source_tasks
+        if task.get("seed_materialization_repair_required")
+        and task.get("previous_seed_materialization_primary_failure_axis")
+    )
     materialized_candidate_rows = [
         row for row in plan_rows if row.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
     ]
@@ -711,6 +915,11 @@ def build_all_archetype_next_runtime_attempt_plan(
         "source_route_repair_task_count": sum(1 for task in source_tasks if task.get("source_route_repair_required")),
         "source_route_repair_hint_counts": dict(sorted(by_repair_hint.items())),
         "source_route_repair_primary_failure_mode_counts": dict(sorted(by_primary_failure_mode.items())),
+        "seed_materialization_repair_task_count": sum(
+            1 for task in source_tasks if task.get("seed_materialization_repair_required")
+        ),
+        "seed_materialization_repair_hint_counts": dict(sorted(by_seed_repair_hint.items())),
+        "seed_materialization_primary_failure_axis_counts": dict(sorted(by_seed_primary_failure_axis.items())),
         "research_memory_target_materialized_archetype_count": len(materialized_candidate_rows),
         "research_memory_target_materialized_task_count": sum(
             1 for task in source_tasks if task.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
@@ -765,6 +974,9 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         f"- source_route_repair_task_count: `{plan.get('source_route_repair_task_count', 0)}`",
         f"- source_route_repair_hint_counts: `{json.dumps(plan.get('source_route_repair_hint_counts', {}), ensure_ascii=False, sort_keys=True)}`",
         f"- source_route_repair_primary_failure_mode_counts: `{json.dumps(plan.get('source_route_repair_primary_failure_mode_counts', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- seed_materialization_repair_task_count: `{plan.get('seed_materialization_repair_task_count', 0)}`",
+        f"- seed_materialization_repair_hint_counts: `{json.dumps(plan.get('seed_materialization_repair_hint_counts', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- seed_materialization_primary_failure_axis_counts: `{json.dumps(plan.get('seed_materialization_primary_failure_axis_counts', {}), ensure_ascii=False, sort_keys=True)}`",
         f"- research_memory_target_materialized_archetype_count: `{plan.get('research_memory_target_materialized_archetype_count', 0)}`",
         f"- research_memory_target_materialized_task_count: `{plan.get('research_memory_target_materialized_task_count', 0)}`",
         f"- target_materialization_unresolved_archetype_count: `{plan.get('target_materialization_unresolved_archetype_count', 0)}`",
@@ -779,12 +991,12 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         "",
         "## Plan Rows",
         "",
-        "| archetype | priority | attempt type | symbol mode | primitives | current proof | previous claim failure | repair hint |",
-        "|---|---:|---|---|---|---|---|---|",
+        "| archetype | priority | attempt type | symbol mode | primitives | current proof | previous claim failure | claim repair hint | previous seed failure | seed repair hint |",
+        "|---|---:|---|---|---|---|---|---|---|---|",
     ]
     for row in plan.get("plan_rows", []):
         lines.append(
-            "| {archetype} | {priority} | {attempt_type} | {symbol_mode} | {primitives} | {proof} | {failure} | {repair_hint} |".format(
+            "| {archetype} | {priority} | {attempt_type} | {symbol_mode} | {primitives} | {proof} | {failure} | {repair_hint} | {seed_failure} | {seed_repair_hint} |".format(
                 archetype=row["archetype_id"],
                 priority=row["priority"],
                 attempt_type=row["attempt_type"],
@@ -793,6 +1005,8 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
                 proof=row["current_runtime_parity_proof_status"],
                 failure=row.get("previous_claim_failure_primary_mode") or "-",
                 repair_hint=row.get("previous_claim_failure_repair_hint") or "-",
+                seed_failure=row.get("previous_seed_materialization_primary_failure_axis") or "-",
+                seed_repair_hint=row.get("previous_seed_materialization_repair_hint") or "-",
             )
         )
     lines.extend(
@@ -803,6 +1017,8 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
             "이 plan은 점수를 만들지 않는다. 모든 source task는 LLM query generation과 source-backed Evidence OS claim을 요구하며, 실행 전 score/stage promotion은 금지된다.",
             "",
             "이전 rejected claim은 점수 근거가 아니라 planner feedback으로만 쓰인다. 예를 들어 C08이 DART 표지/개요만 읽고 실패했다면 다음 source task에는 generic disclosure를 score evidence로 재사용하지 말고 primitive-specific source/section을 찾으라는 repair hint가 붙는다.",
+            "",
+            "이전 seed materialization failure도 점수 근거가 아니라 planner feedback이다. 예를 들어 `PRIMITIVE_GAP_UNSATISFIED`는 이미 가져온 일반 문서를 재사용하라는 뜻이 아니라, 원래 primitive 빈칸을 직접 채우는 새 source-backed claim을 찾으라는 뜻이다.",
             "",
         ]
     )

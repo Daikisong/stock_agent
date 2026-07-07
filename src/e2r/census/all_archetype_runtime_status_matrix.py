@@ -223,6 +223,20 @@ def _load_claim_mapping_trace_rows(parity_audit: Mapping[str, Any]) -> list[dict
     return []
 
 
+def _load_seed_materialization_trace_rows(parity_audit: Mapping[str, Any]) -> list[dict[str, Any]]:
+    output_root = _resolve_output_root(parity_audit)
+    candidates: list[Path] = []
+    if output_root is not None:
+        candidates.append(output_root / "full_thesis_seed_materialization_trace.jsonl")
+    repo_root = Path(__file__).resolve().parents[3]
+    candidates.append(repo_root / "docs" / "operational" / "census_mode_v4_full_thesis_seed_materialization_trace.jsonl")
+    for path in candidates:
+        rows = _read_jsonl(path)
+        if rows:
+            return rows
+    return []
+
+
 def _short_text(value: Any, *, max_chars: int = 260) -> str:
     text = " ".join(str(value or "").split())
     if len(text) <= max_chars:
@@ -601,6 +615,148 @@ def _empty_source_task_execution_audit() -> dict[str, Any]:
     }
 
 
+def _seed_failure_repair_hint(axis: str | None) -> str | None:
+    if not axis:
+        return None
+    hints = {
+        "PROVIDER_FAILED": "FIX_PROVIDER_OR_MARK_EXTERNAL_SOURCE_BLOCKER",
+        "PROVIDER_ERROR_RECORDED": "FIX_PROVIDER_OR_MARK_EXTERNAL_SOURCE_BLOCKER",
+        "NO_FETCHED_DOCUMENT": "FIND_FETCHABLE_ORIGINAL_SOURCE_OR_NARROW_SOURCE_CLASS",
+        "POLICY_REJECTED": "REPLAN_WITH_ALLOWED_OFFICIAL_FIRST_SOURCE_ROUTE",
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": "MATCH_SOURCE_CLASS_TO_DOCUMENT_TYPE_BEFORE_FETCH",
+        "ANCHOR_OR_LINEAGE_REJECTED": "REPAIR_ORIGINAL_SOURCE_ANCHOR_LINEAGE",
+        "TEMPORAL_NOT_CURRENT": "FIND_CURRENT_OR_SUPERSEDING_SOURCE",
+        "SEMANTIC_OR_TARGET_REJECTED": "TIGHTEN_TARGET_ENTITY_AND_DOCUMENT_SECTION",
+        "PRIMITIVE_MAPPING_REJECTED": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
+        "MAPPING_NOT_ACCEPTED": "RECHECK_MAPPER_CONTRACT_AND_PRIMITIVE_REQUIREMENT",
+        "PRIMITIVE_GAP_UNSATISFIED": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
+        "CLAIM_REJECTED_BEFORE_SCORE": "INSPECT_REJECTED_CLAIM_AND_ADJUST_QUERY_INTENT",
+        "NO_CLAIM_EXTRACTED": "FETCH_DOCUMENT_WITH_DIRECT_OPERATING_TEXT",
+        "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": "USE_REROUTE_FEEDBACK_AND_SEARCH_ORIGINAL_GAP",
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+        "NO_ACCEPTED_CLAIM": "FETCH_ANCHOR_AND_EXTRACT_SCORE_ELIGIBLE_CLAIM",
+    }
+    return hints.get(axis, "INSPECT_SOURCE_TASK_FAILURE_SAMPLE")
+
+
+def _primary_seed_failure_axis(primary_axis_counts: Counter[str], failure_axis_counts: Counter[str]) -> str | None:
+    candidates = primary_axis_counts or Counter(
+        {axis: count for axis, count in failure_axis_counts.items() if axis != "NO_ACCEPTED_CLAIM"}
+    )
+    if not candidates:
+        return None
+    priority = (
+        "PRIMITIVE_GAP_UNSATISFIED",
+        "PRIMITIVE_MAPPING_REJECTED",
+        "MAPPING_NOT_ACCEPTED",
+        "SEMANTIC_OR_TARGET_REJECTED",
+        "TEMPORAL_NOT_CURRENT",
+        "ANCHOR_OR_LINEAGE_REJECTED",
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH",
+        "NO_FETCHED_DOCUMENT",
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+        "PROVIDER_ERROR_RECORDED",
+        "PROVIDER_FAILED",
+    )
+    priority_index = {axis: index for index, axis in enumerate(priority)}
+    return sorted(candidates, key=lambda axis: (-int(candidates[axis]), priority_index.get(axis, len(priority))))[0]
+
+
+def _seed_materialization_sample(row: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        "candidate_event_id": row.get("candidate_event_id"),
+        "symbol": row.get("symbol"),
+        "target_archetype": row.get("target_archetype"),
+        "target_primitive_gap": row.get("target_primitive_gap"),
+        "materialization_status": row.get("materialization_status"),
+        "source_task_primary_failure_axis": row.get("source_task_primary_failure_axis"),
+        "source_task_failure_repair_hint": row.get("source_task_failure_repair_hint"),
+        "source_task_failure_axis_counts": row.get("source_task_failure_axis_counts") or {},
+        "source_task_failure_samples": list(row.get("source_task_failure_samples") or [])[:3],
+    }
+
+
+def _seed_materialization_trace_audit_by_archetype(
+    seed_materialization_trace_rows: list[Mapping[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    audit: dict[str, dict[str, Any]] = {}
+    for trace in seed_materialization_trace_rows:
+        archetype_id = str(trace.get("target_archetype") or "").strip()
+        if not archetype_id:
+            continue
+        row = audit.setdefault(
+            archetype_id,
+            {
+                "seed_materialization_trace_count": 0,
+                "seed_materialization_accepted_claim_not_created_count": 0,
+                "seed_materialization_status_counts": Counter(),
+                "seed_materialization_failure_axis_counts": Counter(),
+                "seed_materialization_primary_failure_axis_counts": Counter(),
+                "seed_materialization_repair_hint_counts": Counter(),
+                "seed_materialization_failure_samples": [],
+            },
+        )
+        row["seed_materialization_trace_count"] += 1
+        status = str(trace.get("materialization_status") or "UNKNOWN")
+        row["seed_materialization_status_counts"][status] += 1
+        if status == "ACCEPTED_CLAIM_NOT_CREATED":
+            row["seed_materialization_accepted_claim_not_created_count"] += 1
+        failure_axis_counts = trace.get("source_task_failure_axis_counts")
+        if isinstance(failure_axis_counts, Mapping):
+            for axis, count in failure_axis_counts.items():
+                row["seed_materialization_failure_axis_counts"][str(axis)] += int(count or 0)
+        primary_axis = str(trace.get("source_task_primary_failure_axis") or "").strip()
+        if primary_axis:
+            row["seed_materialization_primary_failure_axis_counts"][primary_axis] += 1
+        repair_hint = str(trace.get("source_task_failure_repair_hint") or "").strip()
+        if repair_hint:
+            row["seed_materialization_repair_hint_counts"][repair_hint] += 1
+        if primary_axis and len(row["seed_materialization_failure_samples"]) < 3:
+            row["seed_materialization_failure_samples"].append(_seed_materialization_sample(trace))
+
+    normalized: dict[str, dict[str, Any]] = {}
+    for archetype_id, row in audit.items():
+        failure_axis_counts = row["seed_materialization_failure_axis_counts"]
+        primary_axis_counts = row["seed_materialization_primary_failure_axis_counts"]
+        primary_axis = _primary_seed_failure_axis(primary_axis_counts, failure_axis_counts)
+        repair_hint_counts = row["seed_materialization_repair_hint_counts"]
+        primary_repair_hint = (
+            repair_hint_counts.most_common(1)[0][0] if repair_hint_counts else _seed_failure_repair_hint(primary_axis)
+        )
+        normalized[archetype_id] = {
+            "seed_materialization_trace_count": row["seed_materialization_trace_count"],
+            "seed_materialization_accepted_claim_not_created_count": row[
+                "seed_materialization_accepted_claim_not_created_count"
+            ],
+            "seed_materialization_status_counts": dict(sorted(row["seed_materialization_status_counts"].items())),
+            "seed_materialization_failure_axis_counts": dict(sorted(failure_axis_counts.items())),
+            "seed_materialization_top_failure_axes": [
+                {"axis": axis, "count": count} for axis, count in failure_axis_counts.most_common(6)
+            ],
+            "seed_materialization_primary_failure_axis_counts": dict(sorted(primary_axis_counts.items())),
+            "seed_materialization_primary_failure_axis": primary_axis,
+            "seed_materialization_repair_hint_counts": dict(sorted(repair_hint_counts.items())),
+            "seed_materialization_primary_repair_hint": primary_repair_hint,
+            "seed_materialization_failure_samples": row["seed_materialization_failure_samples"],
+        }
+    return normalized
+
+
+def _empty_seed_materialization_trace_audit() -> dict[str, Any]:
+    return {
+        "seed_materialization_trace_count": 0,
+        "seed_materialization_accepted_claim_not_created_count": 0,
+        "seed_materialization_status_counts": {},
+        "seed_materialization_failure_axis_counts": {},
+        "seed_materialization_top_failure_axes": [],
+        "seed_materialization_primary_failure_axis_counts": {},
+        "seed_materialization_primary_failure_axis": None,
+        "seed_materialization_repair_hint_counts": {},
+        "seed_materialization_primary_repair_hint": None,
+        "seed_materialization_failure_samples": [],
+    }
+
+
 def _required_positive_missing_rate(row: Mapping[str, Any]) -> float | None:
     full_rows = int(row.get("runtime_full_thesis_row_count") or 0)
     if full_rows <= 0:
@@ -762,6 +918,7 @@ def build_all_archetype_runtime_status_matrix(
     research_inventory: Mapping[str, Any] | None = None,
     runtime_source_task_executions: list[Mapping[str, Any]] | None = None,
     claim_mapping_trace_rows: list[Mapping[str, Any]] | None = None,
+    seed_materialization_trace_rows: list[Mapping[str, Any]] | None = None,
 ) -> dict[str, Any]:
     cards_by_id = {card["archetype_id"]: card for card in memory_cards.get("cards", [])}
     registry_ids = [str(value) for value in (parity_audit.get("registry_archetype_ids") or []) if value]
@@ -786,8 +943,13 @@ def build_all_archetype_runtime_status_matrix(
         runtime_source_task_executions = _load_source_task_execution_rows(parity_audit)
     if claim_mapping_trace_rows is None:
         claim_mapping_trace_rows = _load_claim_mapping_trace_rows(parity_audit)
+    if seed_materialization_trace_rows is None:
+        seed_materialization_trace_rows = _load_seed_materialization_trace_rows(parity_audit)
     source_task_execution_audit = _source_task_execution_audit_by_archetype(runtime_source_task_executions)
     claim_mapping_trace_audit = _claim_mapping_trace_audit_by_archetype(claim_mapping_trace_rows)
+    seed_materialization_trace_audit = _seed_materialization_trace_audit_by_archetype(
+        seed_materialization_trace_rows
+    )
     route_counts: Counter[str] = Counter()
     official_route_counts: Counter[str] = Counter()
     route_primitives: dict[str, set[str]] = defaultdict(set)
@@ -853,6 +1015,10 @@ def build_all_archetype_runtime_status_matrix(
         )
         source_task_audit = source_task_execution_audit.get(archetype_id, _empty_source_task_execution_audit())
         claim_mapping_audit = claim_mapping_trace_audit.get(archetype_id, _empty_claim_mapping_trace_audit())
+        seed_materialization_audit = seed_materialization_trace_audit.get(
+            archetype_id,
+            _empty_seed_materialization_trace_audit(),
+        )
         source_route_gaps: list[str] = []
         if route_pattern_count == 0:
             source_route_gaps.append("SOURCE_ROUTE_NOT_RECOVERED")
@@ -913,6 +1079,7 @@ def build_all_archetype_runtime_status_matrix(
                 "runtime_source_task_executed_count": runtime_source_task_executed_count,
                 **source_task_audit,
                 **claim_mapping_audit,
+                **seed_materialization_audit,
                 "runtime_source_task_execution_count": row.get("runtime_source_task_execution_count", 0),
                 "targetless_source_task_execution_count": row.get("targetless_source_task_execution_count", 0),
                 "archetype_level_discovery_seed_count": row.get("archetype_level_discovery_seed_count", 0),
@@ -956,6 +1123,11 @@ def build_all_archetype_runtime_status_matrix(
     accepted_counts = Counter(row["accepted_claim_status"] for row in status_rows)
     runtime_status_counts = Counter(row["runtime_status"] for row in status_rows)
     primary_blocker_counts = Counter(row["primary_blocker_class"] for row in status_rows)
+    seed_primary_failure_axis_counts = Counter(
+        row["seed_materialization_primary_failure_axis"]
+        for row in status_rows
+        if row.get("seed_materialization_primary_failure_axis")
+    )
 
     return {
         "schema_version": "e2r_all_archetype_runtime_status_matrix_v1",
@@ -999,6 +1171,13 @@ def build_all_archetype_runtime_status_matrix(
         "full_thesis_status_counts": dict(sorted(full_thesis_counts.items())),
         "runtime_status_counts": dict(sorted(runtime_status_counts.items())),
         "primary_blocker_class_counts": dict(sorted(primary_blocker_counts.items())),
+        "seed_materialization_trace_count": sum(
+            int(row.get("seed_materialization_trace_count") or 0) for row in status_rows
+        ),
+        "seed_materialization_accepted_claim_not_created_count": sum(
+            int(row.get("seed_materialization_accepted_claim_not_created_count") or 0) for row in status_rows
+        ),
+        "seed_materialization_primary_failure_axis_counts": dict(sorted(seed_primary_failure_axis_counts.items())),
         "source_route_ready_count": sum(1 for row in status_rows if row["source_route_ready"]),
         "memory_card_ready_count": sum(1 for row in status_rows if row["memory_card_ready"]),
         "meaningful_runtime_parity_ready": proof_counts.get("RUNTIME_PARITY_PROVEN", 0) == len(status_rows),
@@ -1038,6 +1217,9 @@ def render_all_archetype_runtime_status_markdown(matrix: Mapping[str, Any]) -> s
         f"- accepted_claim_status_counts: `{json.dumps(matrix['accepted_claim_status_counts'], ensure_ascii=False, sort_keys=True)}`",
         f"- full_thesis_status_counts: `{json.dumps(matrix['full_thesis_status_counts'], ensure_ascii=False, sort_keys=True)}`",
         f"- runtime_parity_proof_status_counts: `{json.dumps(matrix['runtime_parity_proof_status_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- seed_materialization_trace_count: `{matrix.get('seed_materialization_trace_count', 0)}`",
+        f"- seed_materialization_accepted_claim_not_created_count: `{matrix.get('seed_materialization_accepted_claim_not_created_count', 0)}`",
+        f"- seed_materialization_primary_failure_axis_counts: `{json.dumps(matrix.get('seed_materialization_primary_failure_axis_counts', {}), ensure_ascii=False, sort_keys=True)}`",
         "",
         "## Matrix",
         "",
@@ -1091,6 +1273,12 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
             return "-"
         return ", ".join(f"{item['mode']}:{item['count']}" for item in modes[:3])
 
+    def fmt_seed_failure_axes(row: Mapping[str, Any]) -> str:
+        axes = row.get("seed_materialization_top_failure_axes") or []
+        if not axes:
+            return "-"
+        return ", ".join(f"{item['axis']}:{item['count']}" for item in axes[:3])
+
     lines = [
         "# All Archetype Runtime Parity Summary - 2026-07-05",
         "",
@@ -1119,18 +1307,21 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
         f"- runtime_status_counts: `{json.dumps(matrix['runtime_status_counts'], ensure_ascii=False, sort_keys=True)}`",
         f"- primary_blocker_class_counts: `{json.dumps(matrix['primary_blocker_class_counts'], ensure_ascii=False, sort_keys=True)}`",
         f"- runtime_parity_proof_status_counts: `{json.dumps(matrix['runtime_parity_proof_status_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- seed_materialization_trace_count: `{matrix.get('seed_materialization_trace_count', 0)}`",
+        f"- seed_materialization_accepted_claim_not_created_count: `{matrix.get('seed_materialization_accepted_claim_not_created_count', 0)}`",
+        f"- seed_materialization_primary_failure_axis_counts: `{json.dumps(matrix.get('seed_materialization_primary_failure_axis_counts', {}), ensure_ascii=False, sort_keys=True)}`",
         "",
         "## Matrix",
         "",
-        "| archetype | runtime status | primary blocker | research cases | URL-backed | source tasks | execution logs | claim traces | accepted claims | full rows | top source-task failure axes | top claim failure modes | top claim rejection reasons | req gap rate | green gap rate |",
-        "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|---|---:|---:|",
+        "| archetype | runtime status | primary blocker | research cases | URL-backed | source tasks | execution logs | seed traces | claim traces | accepted claims | full rows | top seed failure axes | top source-task failure axes | top claim failure modes | top claim rejection reasons | req gap rate | green gap rate |",
+        "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---:|---:|",
     ]
     for row in matrix.get("rows", []):
         accepted = int(row.get("runtime_accepted_claim_count") or 0) + int(
             row.get("runtime_source_task_accepted_claim_count") or 0
         )
         lines.append(
-            "| {archetype} | {runtime_status} | {blocker} | {research_cases} | {url_backed} | {source_tasks} | {execution_logs} | {claim_traces} | {accepted} | {full_rows} | {failure_axes} | {claim_failure_modes} | {claim_rejections} | {req_rate} | {green_rate} |".format(
+            "| {archetype} | {runtime_status} | {blocker} | {research_cases} | {url_backed} | {source_tasks} | {execution_logs} | {seed_traces} | {claim_traces} | {accepted} | {full_rows} | {seed_failure_axes} | {failure_axes} | {claim_failure_modes} | {claim_rejections} | {req_rate} | {green_rate} |".format(
                 archetype=row["archetype_id"],
                 runtime_status=row["runtime_status"],
                 blocker=row["primary_blocker_class"],
@@ -1138,9 +1329,11 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
                 url_backed=row["url_backed_case_count"],
                 source_tasks=row["runtime_source_task_count"],
                 execution_logs=row["source_task_execution_log_count"],
+                seed_traces=row.get("seed_materialization_trace_count", 0),
                 claim_traces=row["claim_mapping_trace_log_count"],
                 accepted=accepted,
                 full_rows=row["runtime_full_thesis_row_count"],
+                seed_failure_axes=fmt_seed_failure_axes(row),
                 failure_axes=fmt_failure_axes(row),
                 claim_failure_modes=fmt_claim_failure_modes(row),
                 claim_rejections=fmt_claim_rejections(row),
@@ -1157,6 +1350,7 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
             "- `SOURCE_REPAIR_REQUIRED`: 연구 route나 source task는 있지만 current accepted claim이 부족하다.",
             "- `PLANNING_ONLY`: planner나 discovery는 열렸지만 실제 종목/소스 실행으로 닫히지 않았다.",
             "- `REPLAY_ONLY_NOT_RUNTIME_PROVEN`: 과거 URL-backed 판례가 있을 뿐, 현재 production run에서 재검증되지 않았다.",
+            "- `top seed failure axes`: full-thesis follow-up seed가 왜 materialize되지 않았는지의 seed 단위 요약이다.",
             "- `top source-task failure axes`: source task가 왜 accepted claim으로 닫히지 않았는지의 실행 로그 기반 요약이다.",
             "- `top claim failure modes`: rejected claim을 route, source class, target/semantic, mapper 계층으로 나눈 원인 분류다.",
             "- `top claim rejection reasons`: 실제 원문 claim 매핑 trace에서 왜 score-eligible claim이 되지 못했는지의 상위 원인이다.",
@@ -1187,6 +1381,7 @@ def write_all_archetype_runtime_status_matrix(
         research_inventory=research_inventory,
         runtime_source_task_executions=_load_source_task_execution_rows(parity_audit),
         claim_mapping_trace_rows=_load_claim_mapping_trace_rows(parity_audit),
+        seed_materialization_trace_rows=_load_seed_materialization_trace_rows(parity_audit),
     )
     json_path = docs_path / "all_archetype_runtime_status_matrix_2026-07-05.json"
     md_path = docs_path / "all_archetype_runtime_status_matrix_2026-07-05.md"

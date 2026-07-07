@@ -767,6 +767,7 @@
         "RCASE-4557be33f2275d4ae18f"
       ],
       "source_family_success_examples": [
+        "RCASE-93384aaafdc34ebcb0b9",
         "RCASE-c0e312721f7010421dd9",
         "RCASE-b00a9d7b29be38d25575",
         "RCASE-b9a0c49419de5e0e7bc1",
@@ -785,8 +786,7 @@
         "RCASE-fd4d132acb2f52db05b0",
         "RCASE-ba755c10524e5c3294f0",
         "RCASE-7a531c7d9503f6ff7fa6",
-        "RCASE-40b9bc49fc9be81c7218",
-        "RCASE-8f66c71afe4ae153409d"
+        "RCASE-40b9bc49fc9be81c7218"
       ],
       "source_gap_repair_tasks": [],
       "source_proxy_only_cases": [
@@ -1158,6 +1158,7 @@
         "order_backlog_to_sales"
       ],
       "url_backed_replay_cases": [
+        "RCASE-93384aaafdc34ebcb0b9",
         "RCASE-c0e312721f7010421dd9",
         "RCASE-b00a9d7b29be38d25575",
         "RCASE-b9a0c49419de5e0e7bc1",
@@ -1206,8 +1207,7 @@
         "RCASE-c26a5c950830a5d4ff49",
         "RCASE-edee89ab0f9c1ae8c735",
         "RCASE-26834340a79262e6d089",
-        "RCASE-378ef128463fe6f91abe",
-        "RCASE-dc25b2472e94787607f0"
+        "RCASE-378ef128463fe6f91abe"
       ],
       "yellow_unlock_primitives": [
         "datacenter_customer",
@@ -1251,14 +1251,14 @@
         "RCASE-08255fb0ca2ce43ab12d",
         "RCASE-09f50d457c51baa4672a",
         "RCASE-0d1127dabd4370a367b8",
-        "RCASE-0d747c772ea836936a72",
         "RCASE-0d8f1f9b19c498de6050",
         "RCASE-0e27f07757a35d511561",
         "RCASE-0ecc8f6e4de19ba2a126",
         "RCASE-0f59f27cff4f8fd04184",
         "RCASE-0f9d47bbdb1f28fe3898",
         "RCASE-1012a7920b3e3781f4fa",
-        "RCASE-104c782354d4dbea3645"
+        "RCASE-104c782354d4dbea3645",
+        "RCASE-105b75f586bd6128ed80"
       ],
       "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "canonical_mechanism": "industrial_backlog_margin_bridge",
@@ -2381,7 +2381,6 @@
       ],
       "4c_hard_break_patterns": [
         "RCASE-00021fb7358d3012973a",
-        "RCASE-02d0134df2a18e2d25e5",
         "RCASE-02dc4bffaa14d0203c1b",
         "RCASE-03a20b23c839878c3c1a",
         "RCASE-03d1c058d803ab4cbb94",
@@ -2399,7 +2398,8 @@
         "RCASE-0ea878d3c736b31ec6dc",
         "RCASE-0f23bbe96ea61832d4ef",
         "RCASE-0f47df708291cc6bacec",
-        "RCASE-0f8ff130e44739d87d96"
+        "RCASE-0f8ff130e44739d87d96",
+        "RCASE-1069f0edee984fc41a30"
       ],
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "canonical_mechanism": "industrial_backlog_margin_bridge",
@@ -4245,7 +4245,6 @@
         "RCASE-089be888bdfa20310112",
         "RCASE-08b994b09647d123c12c",
         "RCASE-09e1a99214513e18d2ef",
-        "RCASE-0bb8808a5bfe49e517da",
         "RCASE-0bfb2f8cd384bd711768",
         "RCASE-0cdf9c0f8078b04a05b9",
         "RCASE-0d6fff0ee507821ddb10",
@@ -4253,7 +4252,8 @@
         "RCASE-104e2284b9f5239623e5",
         "RCASE-1117883150f77cb7c887",
         "RCASE-1138e343729be538a55b",
-        "RCASE-13066fcd2388ab43c27e"
+        "RCASE-13066fcd2388ab43c27e",
+        "RCASE-1434b7c4c644bb6acc42"
       ],
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "canonical_mechanism": "semiconductor_customer_capacity_bridge",
@@ -6887,7 +6887,6 @@
         "RCASE-034b7e33f9e396b47377",
         "RCASE-03eabdc76625ed2f47fa",
         "RCASE-03f5276383697ac7f62a",
-        "RCASE-046a5f9e11fdb766dc9e",
         "RCASE-047623ed5b3b3e0d9816",
         "RCASE-04886be2460440df11df",
         "RCASE-0488bfd41c596f18a0ba",
@@ -6901,7 +6900,8 @@
         "RCASE-09478b7bc797ab76fed4",
         "RCASE-09be65c9058f2a71fb80",
         "RCASE-0aba157d80165872072b",
-        "RCASE-0b6858f3d2f16cfd2590"
+        "RCASE-0b6858f3d2f16cfd2590",
+        "RCASE-0cbf29a85c97955a890b"
       ],
       "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
       "canonical_mechanism": "battery_mobility_contract_bridge",
@@ -10302,7 +10302,6 @@
       "4c_hard_break_patterns": [
         "RCASE-015f59f8df5888a8f701",
         "RCASE-0183cf3a77f97833fbae",
-        "RCASE-020cf893f3f289614dcb",
         "RCASE-070b1e1e2c8815f1ee37",
         "RCASE-08b77a88a5a1569b563f",
         "RCASE-090d335eb6450f7d6d1c",
@@ -10319,7 +10318,8 @@
         "RCASE-11390c8710cd8185f2c7",
         "RCASE-11f1ddaf715d2142a3c2",
         "RCASE-122d4dc95362b7e8f6a7",
-        "RCASE-134a74b5db81a8a1e4d2"
+        "RCASE-134a74b5db81a8a1e4d2",
+        "RCASE-15ac47765ce61157ac93"
       ],
       "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
       "canonical_mechanism": "consumer_sellthrough_reorder_bridge",
@@ -10896,7 +10896,7 @@
         "RCASE-1a9b98a38badbedc9784",
         "RCASE-1c04736dcd39d586b230",
         "RCASE-1fde5508b704dcca22e3",
-        "RCASE-2014bbae6d388f351b37"
+        "RCASE-210db27ffc3f693a13fc"
       ],
       "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
       "canonical_mechanism": "consumer_sellthrough_reorder_bridge",

@@ -11,9 +11,9 @@
 
 ## Required Metrics
 
-- research case count: `11433`
-- source quality breakdown: `{"A1_URL_PENDING": 19, "A2_URL_BACKED": 3149, "EVIDENCE_URL_PENDING": 185, "PRICE_PATH_ONLY": 2237, "SHADOW_ONLY": 529, "SOURCE_PROXY_ONLY": 5314}`
-- URL-backed replay count: `3149`
+- research case count: `11401`
+- source quality breakdown: `{"A1_URL_PENDING": 19, "A2_URL_BACKED": 3150, "EVIDENCE_URL_PENDING": 185, "PRICE_PATH_ONLY": 2204, "SHADOW_ONLY": 529, "SOURCE_PROXY_ONLY": 5314}`
+- URL-backed replay count: `3150`
 - source-proxy-only repair count: `5314`
 - archetype memory card count: `36`
 - source route pattern count: `1855`

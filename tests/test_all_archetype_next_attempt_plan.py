@@ -55,6 +55,9 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             self.assertIn("source_proxy_only", task["forbidden_source_classes"])
             self.assertIn("planner_failure_feedback", task)
             self.assertFalse(task["planner_failure_feedback"]["score_evidence_allowed_from_previous_rejected_claims"])
+            self.assertFalse(task["planner_failure_feedback"]["score_evidence_allowed_from_previous_seed_failures"])
+            self.assertIn("previous_seed_materialization_primary_failure_axis", task["planner_failure_feedback"])
+            self.assertIn("previous_seed_materialization_top_failure_axes", task["planner_failure_feedback"])
             self.assertIn("accepted Evidence OS claim", task["success_condition"])
             self.assertIn(task["primitive_gap"], task["success_condition"])
             self.assertIn(
@@ -182,6 +185,45 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
         )
         self.assertFalse(
             redteam_task["planner_failure_feedback"]["score_evidence_allowed_from_previous_rejected_claims"]
+        )
+
+    def test_seed_materialization_failure_feedback_is_carried_into_next_source_tasks(self) -> None:
+        self.assertGreater(self.plan["seed_materialization_repair_task_count"], 0)
+        self.assertIn(
+            "PRIMITIVE_GAP_UNSATISFIED",
+            self.plan["seed_materialization_primary_failure_axis_counts"],
+        )
+        self.assertIn(
+            "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
+            self.plan["seed_materialization_repair_hint_counts"],
+        )
+
+        c02_row = self.by_prefix["C02"]
+        self.assertEqual(
+            c02_row["previous_seed_materialization_primary_failure_axis"],
+            "PRIMITIVE_GAP_UNSATISFIED",
+        )
+        self.assertEqual(
+            c02_row["previous_seed_materialization_repair_hint"],
+            "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
+        )
+        self.assertTrue(c02_row["seed_materialization_repair_required"])
+        self.assertIn(
+            "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_SECTION",
+            c02_row["seed_materialization_repair_actions"],
+        )
+
+        c02_task = next(task for task in self.plan["source_tasks"] if task["archetype_id"] == c02_row["archetype_id"])
+        self.assertIn(
+            "generic disclosure, status check, or adjacent business context is not enough",
+            " ".join(c02_task["query_intents"]),
+        )
+        self.assertEqual(
+            c02_task["planner_failure_feedback"]["previous_seed_materialization_primary_failure_axis"],
+            "PRIMITIVE_GAP_UNSATISFIED",
+        )
+        self.assertFalse(
+            c02_task["planner_failure_feedback"]["score_evidence_allowed_from_previous_seed_failures"]
         )
 
     def test_signal_family_mismatch_feedback_reaches_seed_payload(self) -> None:

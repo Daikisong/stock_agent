@@ -91,6 +91,16 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             "claim_failure_primary_mode",
             "claim_failure_repair_hint",
             "claim_mapping_rejected_samples",
+            "seed_materialization_trace_count",
+            "seed_materialization_accepted_claim_not_created_count",
+            "seed_materialization_status_counts",
+            "seed_materialization_failure_axis_counts",
+            "seed_materialization_top_failure_axes",
+            "seed_materialization_primary_failure_axis_counts",
+            "seed_materialization_primary_failure_axis",
+            "seed_materialization_repair_hint_counts",
+            "seed_materialization_primary_repair_hint",
+            "seed_materialization_failure_samples",
             "runtime_planner_attempt_count",
             "source_route_ready",
             "memory_card_ready",
@@ -106,13 +116,22 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
                     self.assertIsInstance(row[key], int, (row["archetype_id"], key))
                 elif key.endswith("_counts"):
                     self.assertIsInstance(row[key], dict, (row["archetype_id"], key))
-                elif key.startswith("source_task_top_"):
+                elif key.startswith("source_task_top_") or key == "seed_materialization_top_failure_axes":
                     self.assertIsInstance(row[key], list, (row["archetype_id"], key))
-                elif key.startswith("claim_mapping_top_") or key == "claim_mapping_rejected_samples":
+                elif (
+                    key.startswith("claim_mapping_top_")
+                    or key == "claim_mapping_rejected_samples"
+                    or key == "seed_materialization_failure_samples"
+                ):
                     self.assertIsInstance(row[key], list, (row["archetype_id"], key))
                 elif key == "claim_failure_top_modes":
                     self.assertIsInstance(row[key], list, (row["archetype_id"], key))
-                elif key in {"claim_failure_primary_mode", "claim_failure_repair_hint"}:
+                elif key in {
+                    "claim_failure_primary_mode",
+                    "claim_failure_repair_hint",
+                    "seed_materialization_primary_failure_axis",
+                    "seed_materialization_primary_repair_hint",
+                }:
                     self.assertTrue(row[key] is None or isinstance(row[key], str), (row["archetype_id"], key))
                 else:
                     self.assertTrue(row[key], (row["archetype_id"], key))
@@ -237,6 +256,22 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertIn("source_task_failure_repair_hint", sample)
         self.assertIn("source_task_failure_samples", sample)
         self.assertTrue(sample["source_task_failure_samples"])
+
+    def test_seed_materialization_failure_axes_are_carried_into_status_matrix_rows(self) -> None:
+        self.assertEqual(self.matrix["seed_materialization_trace_count"], 111)
+        self.assertEqual(self.matrix["seed_materialization_accepted_claim_not_created_count"], 88)
+        self.assertIn("PRIMITIVE_GAP_UNSATISFIED", self.matrix["seed_materialization_primary_failure_axis_counts"])
+
+        c02 = self.by_prefix["C02"]
+        self.assertGreater(c02["seed_materialization_trace_count"], 0)
+        self.assertEqual(c02["seed_materialization_primary_failure_axis"], "PRIMITIVE_GAP_UNSATISFIED")
+        self.assertEqual(
+            c02["seed_materialization_primary_repair_hint"],
+            "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
+        )
+        self.assertIn("ACCEPTED_CLAIM_NOT_CREATED", c02["seed_materialization_status_counts"])
+        self.assertGreater(c02["seed_materialization_accepted_claim_not_created_count"], 0)
+        self.assertTrue(c02["seed_materialization_failure_samples"])
 
     def test_source_executed_without_accepted_claim_is_not_collapsed_into_planner_only(self) -> None:
         c29 = self.by_prefix["C29"]

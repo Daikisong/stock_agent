@@ -441,6 +441,78 @@ C02 datacenter_customer를 찾으라고 했는데
 
 따라서 다음 병목은 단순 provider 장애가 아니다. 가장 큰 병목은 **source task가 primitive-specific 원문 claim을 찾아오지 못하는 것**이다.
 
+### 문제 1-2. seed 실패축을 다음 runtime attempt 입력으로 연결
+
+추가 패치 후 seed materialization 실패축은 단순 감사 문서에만 남지 않는다.
+
+연결된 경로:
+
+```text
+full_thesis_seed_materialization_trace.jsonl
+→ all_archetype_runtime_status_matrix_2026-07-05.json
+→ all_archetype_next_runtime_attempt_plan_2026-07-05.json
+→ all_archetype_next_runtime_source_tasks_2026-07-05.jsonl
+→ all_archetype_next_runtime_seed_events_2026-07-05.jsonl
+→ Research Brain v4 planner prompt payload
+```
+
+현재 matrix 요약:
+
+```text
+seed_materialization_trace_count = 111
+seed_materialization_accepted_claim_not_created_count = 88
+seed_materialization_primary_failure_axis_counts =
+  NO_FETCHED_DOCUMENT: 3
+  PRIMITIVE_GAP_UNSATISFIED: 33
+```
+
+현재 next attempt plan 요약:
+
+```text
+plan_row_count = 35
+source_task_count = 105
+seed_event_count = 105
+seed_materialization_repair_task_count = 105
+seed_materialization_primary_failure_axis_counts =
+  NO_FETCHED_DOCUMENT: 9
+  PRIMITIVE_GAP_UNSATISFIED: 96
+```
+
+쉬운 예:
+
+```text
+C02 datacenter_customer seed가 실패함
+→ matrix row에 previous seed failure = PRIMITIVE_GAP_UNSATISFIED 기록
+→ next source task planner_failure_feedback에 같은 값과 repair hint 기록
+→ LLM planner는 다음 질의에서 generic 사업보고서/상태확인 문서가 아니라
+   datacenter_customer를 직접 말하는 current/direct/source-backed 문장을 찾아야 함
+```
+
+중요한 안전장치:
+
+```text
+score_evidence_allowed_from_previous_seed_failures = false
+```
+
+즉 seed 실패 sample은 점수 근거가 아니다. 다음 LLM query/source route를 고치는 피드백일 뿐이다.
+
+runtime prompt 연결도 확인했다.
+
+```text
+structured_payload.planner_failure_feedback.previous_seed_materialization_primary_failure_axis
+→ _planner_failure_feedback_context_from_structured_payload
+→ existing_evidence_summary.full_thesis_queue_context.planner_failure_feedback
+→ build_v4_planner_prompt_payload rules
+```
+
+planner rule에는 다음 의미가 들어간다.
+
+```text
+PRIMITIVE_GAP_UNSATISFIED면
+이전 일반 문서/인접 문맥을 다시 점수 근거로 쓰지 말고
+원래 primitive_gap을 직접 말하는 source route/query_intent를 새로 만들어라.
+```
+
 ### 문제 2. StageCourt trace와 production row의 분리
 
 15개는 `STAGECOURT_READY_NOT_PROMOTED`다.
@@ -468,10 +540,10 @@ SK하이닉스가 큐에 있다는 뜻은 "다음 조사 대상"이라는 뜻이
 
 ## 다음 패치 방향
 
-1. `ACCEPTED_CLAIM_NOT_CREATED` 88개 중 `PRIMITIVE_GAP_UNSATISFIED` primary 78개부터 source route를 고쳐야 한다.
+1. `ACCEPTED_CLAIM_NOT_CREATED` 88개 중 `PRIMITIVE_GAP_UNSATISFIED` primary 78개 병목은 matrix/next plan 피드백으로 연결됐다.
    - generic DART/KIND/CompanyGuide status check가 primitive claim으로 둔갑하지 않게 유지한다.
-   - LLM planner에는 `source_task_primary_failure_axis`, `source_task_failure_repair_hint`, sample rejected task를 되돌려야 한다.
-   - 다음 source task는 공시/리포트 전체가 아니라 primitive-specific 원문 구간을 찾도록 유도해야 한다.
+   - next source task에는 `previous_seed_materialization_primary_failure_axis`, `previous_seed_materialization_repair_hint`, compact sample ref가 들어간다.
+   - 다음 실제 실행에서는 LLM planner가 이 피드백을 받아 primitive-specific 원문 구간을 찾아오는지 검증해야 한다.
 
 2. C02/C04/C07/C09/C11~C14/C16/C18~C23/C25~C28/C30/C32/R13처럼 accepted claim이 0인 아키타입부터 source task 실행 결과를 역추적해야 한다.
 
