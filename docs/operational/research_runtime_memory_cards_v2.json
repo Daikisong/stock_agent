@@ -31,6 +31,7 @@
         "RCASE-01eb649bff7f507c013c",
         "RCASE-02316608b1940d41eb5f",
         "RCASE-04cc5c881d93505ab342",
+        "RCASE-0513473f32786303e7bf",
         "RCASE-05d1c714197cace8436b",
         "RCASE-060f36db01fdb059601d",
         "RCASE-097df3f2203b9490b8f8",
@@ -43,8 +44,7 @@
         "RCASE-1092d34d783d6ad913de",
         "RCASE-10fb236c9d09108dfb67",
         "RCASE-115976445bd872702f4c",
-        "RCASE-1218de20531011e7ea4b",
-        "RCASE-121bd02c8a0646b62310"
+        "RCASE-1218de20531011e7ea4b"
       ],
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "canonical_mechanism": "industrial_backlog_margin_bridge",
@@ -767,7 +767,7 @@
         "RCASE-4557be33f2275d4ae18f"
       ],
       "source_family_success_examples": [
-        "RCASE-93384aaafdc34ebcb0b9",
+        "RCASE-3c7c534ff7fc2a3ce9dc",
         "RCASE-c0e312721f7010421dd9",
         "RCASE-b00a9d7b29be38d25575",
         "RCASE-b9a0c49419de5e0e7bc1",
@@ -1158,7 +1158,7 @@
         "order_backlog_to_sales"
       ],
       "url_backed_replay_cases": [
-        "RCASE-93384aaafdc34ebcb0b9",
+        "RCASE-3c7c534ff7fc2a3ce9dc",
         "RCASE-c0e312721f7010421dd9",
         "RCASE-b00a9d7b29be38d25575",
         "RCASE-b9a0c49419de5e0e7bc1",
@@ -2942,13 +2942,13 @@
         "RCASE-1898f27c61241bac5bdc",
         "RCASE-191ca6311ef0a46344bc",
         "RCASE-19d839d4bff18218e915",
-        "RCASE-1d5bf116f17df421cecd",
         "RCASE-24133509b6436fffbcdc",
         "RCASE-269596a0b8e4932729cf",
         "RCASE-29489ececbf2bf2a4801",
         "RCASE-2bba6f512c39db971ca8",
         "RCASE-3e01ddf226c0982c822b",
         "RCASE-42c4d84a9637654d9387",
+        "RCASE-4b62ea43a17999a3389b",
         "RCASE-4fa430ea978af9583875",
         "RCASE-504ee7d94bc84a4fe67b",
         "RCASE-50584e6eeacaa629722f",
@@ -4807,7 +4807,6 @@
         "RCASE-033e4cc12505b4e5890e",
         "RCASE-0357e588c849fdcc7d51",
         "RCASE-04a39f2c8451ee514181",
-        "RCASE-04c31f9bbf0e1fadadc9",
         "RCASE-0762c33c0184d7f8703b",
         "RCASE-07dcad1ecfa10b5984ec",
         "RCASE-082499fa6830cc11c059",
@@ -4817,7 +4816,8 @@
         "RCASE-0ba5918f0b222ec0dd92",
         "RCASE-0c8999782d241d819965",
         "RCASE-0e486ecc4192416f4c37",
-        "RCASE-0ea7459448c99fb9971c"
+        "RCASE-0ea7459448c99fb9971c",
+        "RCASE-11558f5717efcec8d9d9"
       ],
       "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
       "canonical_mechanism": "valuation_blowoff_guard_bridge",
@@ -6326,7 +6326,6 @@
         "RCASE-012fd234901652ad10c6",
         "RCASE-013cdd0d6989f20b5b2e",
         "RCASE-02726fed8425f2473109",
-        "RCASE-048043c02b673111603e",
         "RCASE-0562cbb01627bdedd0ff",
         "RCASE-068b1b76c6f0c6a55de0",
         "RCASE-0863fe0174ef3a3cbf1a",
@@ -6340,7 +6339,8 @@
         "RCASE-11c34263bb245ab72bc4",
         "RCASE-133007e59571ee4e062d",
         "RCASE-14055cca0f48c424fcfa",
-        "RCASE-1538784bcd0f660e05ba"
+        "RCASE-1538784bcd0f660e05ba",
+        "RCASE-165078b74f8c3bac2764"
       ],
       "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
       "canonical_mechanism": "battery_mobility_contract_bridge",
@@ -12614,8 +12614,8 @@
         "RCASE-12df5755b1a9687bc209",
         "RCASE-131bae372922e4e699eb",
         "RCASE-1337db567dc52e060fc3",
-        "RCASE-14f4c7b7f1a697b10224",
-        "RCASE-18bd7a2898a5cdda79a3"
+        "RCASE-13cb7b40d0fe298f2fc6",
+        "RCASE-14f4c7b7f1a697b10224"
       ],
       "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
       "canonical_mechanism": "insurance_reserve_capital_bridge",
@@ -16653,7 +16653,7 @@
         "RCASE-13e5de8a81c8f7d1b9c7",
         "RCASE-14ef7d7fec7dc50b4ed7",
         "RCASE-19d63b37d6a7307c717c",
-        "RCASE-1a41503b0c32aa4cacaa"
+        "RCASE-1b6d5488310d99071cc9"
       ],
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "canonical_mechanism": "battery_mobility_contract_bridge",

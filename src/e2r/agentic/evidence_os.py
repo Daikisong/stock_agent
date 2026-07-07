@@ -647,7 +647,13 @@ class AppendOnlyEvidenceLedger:
         existing = self.claims.get(claim.claim_id)
         if existing is not None:
             if _claim_material_identity(existing) != _claim_material_identity(claim):
-                raise ValueError(f"claim_id collision with different claim: {claim.claim_id}")
+                self.append_event(
+                    LedgerEvent.build(
+                        event_type=LedgerEventType.UPDATES,
+                        from_id=claim.claim_id,
+                        reason="claim_id_collision_existing_claim_retained",
+                    )
+                )
             return
         self.claims[claim.claim_id] = claim
         event = LedgerEvent.build(event_type=LedgerEventType.CLAIM_CREATED, from_id=claim.claim_id)
@@ -1272,6 +1278,7 @@ def forbidden_extractor_field_overlap(fields: Iterable[str]) -> tuple[str, ...]:
 def _claim_material_identity(claim: AdjudicatedClaim) -> tuple[object, ...]:
     return (
         claim.claim_id,
+        claim.raw_assertion_id,
         claim.subject_entity_id,
         claim.target_entity_id,
         claim.relation_to_target,

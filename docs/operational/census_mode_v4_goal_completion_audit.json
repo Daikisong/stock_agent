@@ -505,13 +505,13 @@
     "external_source_backed_seed_ready_count": 30,
     "guard_replay_ready_count": 36,
     "missing_required_archetype_count": 0,
-    "replay_acceptance_manifest_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-retry-mapping-status/all_archetype_replay_acceptance_manifest.json",
-    "replay_gap_plan_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-retry-mapping-status/all_archetype_replay_gap_plan.json",
+    "replay_acceptance_manifest_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_acceptance_manifest.json",
+    "replay_gap_plan_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_gap_plan.json",
     "replay_gap_plan_task_count": 0,
     "replay_gap_seed_event_count": 0,
-    "replay_gap_seed_event_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-retry-mapping-status/all_archetype_replay_gap_seed_events.jsonl",
+    "replay_gap_seed_event_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_gap_seed_events.jsonl",
     "replay_gap_source_task_count": 0,
-    "replay_gap_source_task_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-retry-mapping-status/all_archetype_replay_gap_source_tasks.jsonl",
+    "replay_gap_source_task_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_gap_source_tasks.jsonl",
     "required_archetype_count": 32,
     "source_backed_ready_count": 36,
     "status_counts": {
@@ -545,13 +545,13 @@
       "required_positive_missing_on_promoted_rows",
       "green_gap_on_promoted_rows"
     ],
-    "green_gap_row_count": 5,
+    "green_gap_row_count": 6,
     "meaningful_full_thesis_evidence_pass": false,
     "meaningful_label": "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE",
     "operator_note": "PRODUCTION_FULL_E2R_SCORE_PATH_PASS는 채점 경로가 닫혔다는 뜻이고, MEANINGFUL_FULL_THESIS_EVIDENCE_PASS만 필수 증거가 닫힌 운영 thesis를 뜻한다.",
     "production_full_e2r_score_path_pass": true,
     "production_full_thesis_row_count": 6,
-    "required_positive_missing_row_count": 5,
+    "required_positive_missing_row_count": 6,
     "score_path_label": "PRODUCTION_FULL_E2R_SCORE_PATH_PASS",
     "score_path_only_not_meaningful": true
   },
@@ -566,25 +566,25 @@
     "critical_count": 48,
     "final_operator_score_use_counts": {
       "FULL_E2R_SCORE": 6,
-      "NOT_FULL_E2R_SCORE": 93,
+      "NOT_FULL_E2R_SCORE": 87,
       "UNKNOWN": 12
     },
     "final_operator_stage_use_counts": {
       "FULL_THESIS_STAGE": 6,
-      "NOT_FULL_THESIS_STAGE": 93,
+      "NOT_FULL_THESIS_STAGE": 87,
       "UNKNOWN": 12
     },
     "full_thesis_promoted_seed_count": 6,
     "ledger_integrity_pass_allowed": false,
     "operator_materialization_status": "PENDING_FULL_THESIS_MATERIALIZATION",
-    "seed_event_count": 111,
+    "seed_event_count": 105,
     "status_counts": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 88,
+      "ACCEPTED_CLAIM_NOT_CREATED": 83,
       "FULL_THESIS_PROMOTED": 6,
-      "STAGECOURT_READY_NOT_PROMOTED": 15,
-      "STAGECOURT_TRACE_NOT_CREATED": 2
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "STAGECOURT_READY_NOT_PROMOTED": 15
     },
-    "trace_row_count": 111,
+    "trace_row_count": 105,
     "verdict": "FAIL",
     "verdict_scope": "LEDGER_INTEGRITY_ONLY"
   },
@@ -643,15 +643,13 @@
       "ReportPDF",
       "TrustedNews"
     ],
-    "full_thesis_required_source_class_count": 13,
+    "full_thesis_required_source_class_count": 11,
     "full_thesis_task_executable_source_path_pass_allowed": true,
-    "full_thesis_task_with_blocking_source_class_count": 128,
+    "full_thesis_task_with_blocking_source_class_count": 107,
     "missing_connector_source_classes": [
       "BrokerReportPDF",
-      "CompanyFiling",
       "IndustryMedia",
-      "IssuerOfficial",
-      "ResearchMemory"
+      "IssuerOfficial"
     ],
     "placeholder_source_classes": [
       "IssuerIR"

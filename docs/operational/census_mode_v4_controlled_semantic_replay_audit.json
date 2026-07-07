@@ -165,7 +165,7 @@
   ],
   "controlled_semantic_replay_pass": true,
   "fail_count": 0,
-  "output_root": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-retry-mapping-status",
+  "output_root": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3",
   "pass_count": 10,
   "pending_count": 0,
   "required_case_count": 10,

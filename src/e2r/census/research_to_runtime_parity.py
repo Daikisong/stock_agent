@@ -703,6 +703,16 @@ def render_research_to_runtime_parity_markdown(audit: Mapping[str, Any]) -> str:
 
 def render_research_to_runtime_root_cause_markdown(audit: Mapping[str, Any]) -> str:
     c05_rows = audit.get("full_thesis_by_archetype", {})
+    promoted_arches = sorted(c05_rows)
+    promoted_arch_display = "/".join(promoted_arches) if promoted_arches else "none"
+    non_c05_promoted_arches = [arch for arch in promoted_arches if not str(arch).startswith("C05_")]
+    non_c05_display = "/".join(non_c05_promoted_arches) if non_c05_promoted_arches else "none"
+    mandatory_missing = [
+        prefix
+        for prefix in DEFAULT_MANDATORY_ARCHETYPE_PREFIXES
+        if not any(str(arch).startswith(f"{prefix}_") for arch in promoted_arches)
+    ]
+    mandatory_missing_display = "/".join(mandatory_missing) if mandatory_missing else "none"
     lines = [
         "# Research To Runtime Root Cause - 2026-07-05",
         "",
@@ -710,7 +720,11 @@ def render_research_to_runtime_root_cause_markdown(audit: Mapping[str, Any]) -> 
         "",
         "`FULL_THESIS_PRODUCTION_PASS`라는 예전 라벨은 너무 넓었다. 현재 정확한 라벨은 `PRODUCTION_FULL_E2R_SCORE_PATH_PASS`이고, `MEANINGFUL_FULL_THESIS_EVIDENCE_PASS=false`다.",
         "",
-        "쉬운 예: 예전에는 한 과목(C05) 시험지만 10장 채점된 상태였고, 현재는 7개 과목의 시험지가 채점대에 올라왔다. 하지만 7개 모두 필수 증빙칸이 비어 있어 전체 과목 합격은 아니다.",
+        (
+            "쉬운 예: 예전에는 한 과목(C05) 시험지만 10장 채점된 상태였고, "
+            f"현재는 {audit['distinct_full_thesis_archetype_count']}개 과목의 시험지가 채점대에 올라왔다. "
+            "하지만 필수 증빙칸이 비어 있으면 전체 과목 합격은 아니다."
+        ),
         "",
         "## Current Facts",
         "",
@@ -726,13 +740,13 @@ def render_research_to_runtime_root_cause_markdown(audit: Mapping[str, Any]) -> 
         "## Six Audit Questions",
         "",
         "1. 왜 예전 production FULL_THESIS 10개가 전부 C05였고, 현재는 어떻게 바뀌었나?",
-        "   - 예전 seed target은 UNKNOWN이었고 source_primary/planner top1 경로가 C05로 쏠렸다. 현재 promoted row는 C01/C03/C05/C06/C08/C17/C28 7개 아키타입으로 분산됐다.",
+        f"   - 예전 seed target은 UNKNOWN이었고 source_primary/planner top1 경로가 C05로 쏠렸다. 현재 promoted row는 {promoted_arch_display} 경로로 분산됐다.",
         "2. target_archetype_counts가 UNKNOWN인데 왜 C05가 되는가?",
         "   - 예전에는 target이 아니라 event-board/refresh queue의 source_primary 문맥과 planner top1이 최종 primary가 됐다. 현재 promoted row의 target_archetype_unknown_promoted_count는 0이다.",
         "3. 27.9998 / 77.9998 점수는 어디서 나오는가?",
         "   - C05 weight profile에 raw component를 clamp 후 재가중한 FULL_E2R_100 score path에서 나온다.",
         "4. C05가 아닌 후보는 왜 0개인가?",
-        "   - 이 질문은 예전 C05-only 산출물에 대한 질문이다. 현재는 C01/C03/C06/C08/C17/C28 non-C05 score-path row가 생겼고, C15/C24는 아직 mandatory full-thesis missing이다.",
+        f"   - 이 질문은 예전 C05-only 산출물에 대한 질문이다. 현재 non-C05 score-path row는 {non_c05_display}이고, mandatory missing prefix는 {mandatory_missing_display}다.",
         "5. required_positive_missing_primitives가 있는데 왜 pass인가?",
         "   - 기존 pass는 score path closed만 봤기 때문이다. meaningful pass는 required-positive gap을 허용하면 안 된다.",
         "6. 삼성전자/하이닉스는 왜 production row가 아닌가?",
@@ -792,7 +806,11 @@ def render_research_to_runtime_acceptance_report(
         f"- meaningful_full_thesis_evidence_pass: `{parity_audit['meaningful_full_thesis_evidence_pass']}`",
         f"- archetype_balanced_full_thesis_pass: `{parity_audit['archetype_balanced_full_thesis_pass']}`",
         "",
-        "쉬운 예: 이제 C05 한 과목만 채점된 상태는 벗어났고 7개 과목의 score path는 닫혔다. 하지만 7개 모두 필수 증빙칸과 Green 증빙칸이 비어 있어 최종 합격증은 아직 아니다.",
+        (
+            "쉬운 예: 이제 C05 한 과목만 채점된 상태는 벗어났고 "
+            f"{parity_audit.get('distinct_full_thesis_archetype_count')}개 아키타입의 score path는 닫혔다. "
+            "하지만 promoted row에 필수 증빙칸과 Green 증빙칸이 비어 있으면 최종 합격증은 아직 아니다."
+        ),
         "",
         "## Required Metrics",
         "",

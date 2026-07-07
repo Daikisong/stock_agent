@@ -3333,7 +3333,7 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
             any(
                 event.event_type.value == "UPDATES"
                 and event.from_id == original_claim.claim_id
-                and event.reason == "merge_retry_claim_id_collision_existing_claim_retained"
+                and event.reason == "claim_id_collision_existing_claim_retained"
                 for event in merged.ledger.events
             )
         )

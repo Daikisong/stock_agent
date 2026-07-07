@@ -17817,6 +17817,57 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertTrue(ledger.claim_is_invalidated(claim.claim_id))
         self.assertEqual(ledger.claims[claim.claim_id], claim)
 
+    def test_append_only_ledger_records_claim_id_collision_without_crashing(self):
+        document, anchor, raw = _audit_fixture()
+        claim = AdjudicatedClaim.from_raw(
+            raw=raw,
+            document=document,
+            anchor=anchor,
+            subject_entity_id="CORP_SUPPLIER",
+            target_entity_id="CORP_TARGET",
+            relation_to_target=RelationToTarget.SUPPLIER,
+            directness=Directness.INDIRECT,
+            verification_status=VerificationStatus.SEMANTIC_VERIFIED,
+            target_scope_status=TargetScopeStatus.SUPPLIER,
+            polarity=Polarity.NORMAL,
+            temporal_status=TemporalStatus.HISTORICAL,
+            semantic_status=SemanticStatus.PASS_,
+            investigation_status=InvestigationStatus.COMPLETE,
+            event_date=date(2020, 3, 18),
+        )
+        conflicting_read = AdjudicatedClaim.from_raw(
+            raw=raw,
+            document=document,
+            anchor=anchor,
+            subject_entity_id="CORP_SUPPLIER",
+            target_entity_id="CORP_TARGET",
+            relation_to_target=RelationToTarget.SUPPLIER,
+            directness=Directness.INDIRECT,
+            verification_status=VerificationStatus.SEMANTIC_VERIFIED,
+            target_scope_status=TargetScopeStatus.SUPPLIER,
+            polarity=Polarity.POSITIVE,
+            temporal_status=TemporalStatus.HISTORICAL,
+            semantic_status=SemanticStatus.PASS_,
+            investigation_status=InvestigationStatus.COMPLETE,
+            event_date=date(2020, 3, 18),
+        )
+        ledger = AppendOnlyEvidenceLedger()
+
+        ledger.append_claim(claim)
+        ledger.append_claim(conflicting_read)
+
+        self.assertEqual(claim.claim_id, conflicting_read.claim_id)
+        self.assertEqual(len(ledger.claims), 1)
+        self.assertEqual(ledger.claims[claim.claim_id], claim)
+        self.assertTrue(
+            any(
+                event.event_type == LedgerEventType.UPDATES
+                and event.from_id == claim.claim_id
+                and event.reason == "claim_id_collision_existing_claim_retained"
+                for event in ledger.events
+            )
+        )
+
     def test_nonzero_score_contribution_requires_support_claim(self):
         with self.assertRaisesRegex(ValueError, "support_claim_ids"):
             ScoreContributionV2.build(

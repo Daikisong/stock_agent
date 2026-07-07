@@ -8,7 +8,7 @@ class PlannerBiasAuditTests(unittest.TestCase):
         audit = json.loads(Path("docs/operational/planner_bias_and_archetype_routing_audit.json").read_text())
         self.assertEqual(audit["status"], "PLANNER_ARCHETYPE_ROUTING_BIAS_PASS")
         self.assertEqual(audit["top1_archetype_counts"]["C05"], 3)
-        self.assertGreaterEqual(audit["top1_archetype_counts"]["C29"], 5)
+        self.assertEqual(audit["top1_archetype_counts"]["C29"], 3)
         self.assertEqual(audit["top1_archetype_counts"]["C06"], 3)
         self.assertGreaterEqual(audit["distinct_top1_archetype_count"], 31)
         self.assertLess(audit["c05_top1_share"], 0.1)

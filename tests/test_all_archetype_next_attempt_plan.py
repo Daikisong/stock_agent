@@ -92,9 +92,9 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
     def test_attempt_types_reflect_current_runtime_failure_modes(self) -> None:
         self.assertEqual(self.by_prefix["C05"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
         self.assertEqual(self.by_prefix["C06"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
-        self.assertNotIn("C24", self.by_prefix)
+        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "PLANNER_TO_SOURCE_TASK_MATERIALIZATION")
+        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
 
     def test_replay_only_archetypes_are_materialized_as_research_memory_target_candidates(self) -> None:
         expected_symbols = {

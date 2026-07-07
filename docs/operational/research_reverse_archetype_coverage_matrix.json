@@ -84,20 +84,20 @@
       "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "case_role_counts": {
         "4B": 41,
-        "4C": 239,
+        "4C": 238,
         "guard": 6,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 287,
+      "record_count": 286,
       "source_gap": false,
       "source_proxy_only_case_count": 141,
       "source_quality_counts": {
         "A2_URL_BACKED": 46,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 82,
-        "SHADOW_ONLY": 13,
+        "SHADOW_ONLY": 12,
         "SOURCE_PROXY_ONLY": 141
       },
       "top_missing_primitives": [
@@ -154,20 +154,20 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "case_role_counts": {
         "4B": 32,
-        "4C": 352,
+        "4C": 351,
         "guard": 8,
         "positive": 1
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 393,
+      "record_count": 392,
       "source_gap": false,
       "source_proxy_only_case_count": 177,
       "source_quality_counts": {
         "A2_URL_BACKED": 108,
         "EVIDENCE_URL_PENDING": 8,
         "PRICE_PATH_ONLY": 73,
-        "SHADOW_ONLY": 27,
+        "SHADOW_ONLY": 26,
         "SOURCE_PROXY_ONLY": 177
       },
       "top_missing_primitives": [
@@ -268,13 +268,13 @@
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "case_role_counts": {
         "4B": 21,
-        "4C": 272,
+        "4C": 271,
         "guard": 6,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 2,
       "has_pattern_summary": true,
-      "record_count": 300,
+      "record_count": 299,
       "source_gap": false,
       "source_proxy_only_case_count": 177,
       "source_quality_counts": {
@@ -282,7 +282,7 @@
         "A2_URL_BACKED": 61,
         "EVIDENCE_URL_PENDING": 2,
         "PRICE_PATH_ONLY": 43,
-        "SHADOW_ONLY": 16,
+        "SHADOW_ONLY": 15,
         "SOURCE_PROXY_ONLY": 177
       },
       "top_missing_primitives": [
@@ -305,20 +305,20 @@
       "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
       "case_role_counts": {
         "4B": 17,
-        "4C": 297,
+        "4C": 296,
         "guard": 1,
         "positive": 1
       },
       "evidence_url_pending_case_count": 1,
       "has_pattern_summary": true,
-      "record_count": 316,
+      "record_count": 315,
       "source_gap": false,
       "source_proxy_only_case_count": 194,
       "source_quality_counts": {
         "A2_URL_BACKED": 81,
         "EVIDENCE_URL_PENDING": 1,
         "PRICE_PATH_ONLY": 33,
-        "SHADOW_ONLY": 7,
+        "SHADOW_ONLY": 6,
         "SOURCE_PROXY_ONLY": 194
       },
       "top_missing_primitives": [
@@ -527,21 +527,21 @@
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "case_role_counts": {
         "4B": 47,
-        "4C": 304,
+        "4C": 303,
         "guard": 3,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 356,
+      "record_count": 355,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 98,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 81,
-        "SHADOW_ONLY": 16,
+        "SHADOW_ONLY": 15,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
@@ -969,32 +969,33 @@
       "case_role_counts": {
         "4B": 19,
         "4C": 255,
-        "guard": 2
+        "guard": 2,
+        "positive": 1
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 276,
+      "record_count": 277,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 66,
         "EVIDENCE_URL_PENDING": 6,
         "PRICE_PATH_ONLY": 45,
-        "SHADOW_ONLY": 3,
+        "SHADOW_ONLY": 4,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
-        "global_launch_conversion",
         "token_or_theme_hype_risk",
         "ip_monetization_visible",
+        "global_launch_conversion",
         "user_retention",
         "repeat_revenue"
       ],
       "top_positive_primitives": [
         "repeat_revenue",
         "user_retention",
-        "ip_monetization_visible",
         "global_launch_conversion",
+        "ip_monetization_visible",
         "token_or_theme_hype_risk"
       ],
       "url_backed_case_count": 66
@@ -1041,20 +1042,20 @@
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "case_role_counts": {
         "4B": 19,
-        "4C": 248,
+        "4C": 246,
         "guard": 1,
         "positive": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 269,
+      "record_count": 267,
       "source_gap": false,
       "source_proxy_only_case_count": 114,
       "source_quality_counts": {
         "A2_URL_BACKED": 71,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 67,
-        "SHADOW_ONLY": 12,
+        "SHADOW_ONLY": 10,
         "SOURCE_PROXY_ONLY": 114
       },
       "top_missing_primitives": [
@@ -1114,7 +1115,7 @@
       "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
       "case_role_counts": {
         "4B": 41,
-        "4C": 330,
+        "4C": 329,
         "guard": 3,
         "positive": 1,
         "profile_cap": 1,
@@ -1122,14 +1123,14 @@
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 377,
+      "record_count": 376,
       "source_gap": false,
       "source_proxy_only_case_count": 142,
       "source_quality_counts": {
         "A2_URL_BACKED": 114,
         "EVIDENCE_URL_PENDING": 8,
         "PRICE_PATH_ONLY": 104,
-        "SHADOW_ONLY": 9,
+        "SHADOW_ONLY": 8,
         "SOURCE_PROXY_ONLY": 142
       },
       "top_missing_primitives": [

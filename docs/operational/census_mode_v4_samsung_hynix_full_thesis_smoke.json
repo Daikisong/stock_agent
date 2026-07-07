@@ -352,8 +352,7 @@
           ],
           "linked": true,
           "source_task_ids": [
-            "CEV4-RTATTEMPT-7f33db04360ffa26109b-T1",
-            "CEV4-RTATTEMPT-7f33db04360ffa26109b-T3",
+            "RTTASK-7f33db04360ffa26109b-official-ir-revenue-visibility-contract",
             "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87"
           ]
         }
@@ -364,8 +363,7 @@
       "full_thesis_source_pending_required_gap_primitives": [],
       "full_thesis_source_stage": "0",
       "full_thesis_source_task_ids": [
-        "CEV4-RTATTEMPT-7f33db04360ffa26109b-T1",
-        "CEV4-RTATTEMPT-7f33db04360ffa26109b-T3",
+        "RTTASK-7f33db04360ffa26109b-official-ir-revenue-visibility-contract",
         "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87"
       ],
       "full_thesis_stage": "0",
@@ -408,10 +406,10 @@
       ],
       "official_source_task_count": 6,
       "official_source_task_ids": [
-        "CEV4-RTATTEMPT-7f33db04360ffa26109b-T1",
-        "CEV4-RTATTEMPT-7f33db04360ffa26109b-T3",
+        "RTTASK-7f33db04360ffa26109b-official-ir-revenue-visibility-contract",
         "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87",
-        "RTTASK-91c6a0e1b2fb0fbdcaf2-official-ir-hbm-allocation",
+        "RTTASK-91c6a0e1b2fb0fbdcaf2-official-ir-hbm-customer-allocation",
+        "RTTASK-91c6a0e1b2fb0fbdcaf2-counterclaim-hbm-allocation-risk",
         "RSTASKV4DARTSTATUS-775faf32c9723d4d6270f491",
         "RSTASKV4DARTSTATUS-c6eb18b58c173c5665029e3a"
       ],
