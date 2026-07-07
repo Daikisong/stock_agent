@@ -268,6 +268,7 @@ def run_research_brain_v4_production_shadow(
         tasks = ()
         bundle = None
         skip_source_due_runtime_budget = runtime_budget_exhausted or _runtime_budget_exhausted_v4(config=config, started_at=started_at)
+        skip_source_due_target_materialization = not str(event.symbol or "").strip()
         if skip_source_due_runtime_budget:
             runtime_budget_exhausted = True
             _record_runtime_progress_v4(
@@ -293,7 +294,27 @@ def run_research_brain_v4_production_shadow(
             primary_archetype=primary,
             planner_provider_failed=run.provider_failed,
         )
-        if not skip_source_due_runtime_budget and run.output and primary and card and contract:
+        if skip_source_due_target_materialization:
+            _record_runtime_progress_v4(
+                config=config,
+                progress_events=runtime_progress_events,
+                phase="source_execution_skipped_target_materialization_required",
+                candidate_event_id=event.candidate_event_id,
+                symbol=event.symbol,
+                company_name=event.company_name,
+                run_index=run_index,
+                planner_run_count=len(planner_runs),
+                primary_archetype=primary,
+                reason="real target symbol is required before source routing or score/stage use",
+            )
+        if (
+            not skip_source_due_runtime_budget
+            and not skip_source_due_target_materialization
+            and run.output
+            and primary
+            and card
+            and contract
+        ):
             planner_tasks = source_tasks_from_planner_output_v4(
                 event=event,
                 planner_output=run.output,

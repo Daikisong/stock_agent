@@ -148,7 +148,7 @@ def build_all_archetype_runtime_execution_manifest(
     argv = _argv_from_config(config)
     return {
         "schema_version": "e2r_all_archetype_runtime_execution_manifest_v1",
-        "execution_status": "READY_FOR_RESEARCH_BRAIN_INPUT_NOT_EXECUTED_BY_PARITY_CLI",
+        "execution_status": "READY_FOR_RESEARCH_BRAIN_INPUT_PARITY_SELF_REPAIR_EXECUTABLE",
         "as_of_date": as_of_date,
         "seed_event_path": _rel(seed_path, repo),
         "seed_event_count": seed_count,
@@ -207,7 +207,7 @@ def render_all_archetype_runtime_execution_manifest_markdown(manifest: Mapping[s
             "",
             "## Safety",
             "",
-            "- 이 manifest는 parity CLI에서 실행하지 않는다.",
+            "- 이 manifest는 `run_research_to_runtime_parity_until_pass --max-iterations 2+` self-repair 루프가 실행할 수 있다.",
             "- 실행 전 source-task shell은 점수/Stage 입력이 아니다.",
             "- Research Brain이 source-backed Evidence OS claim을 만든 뒤에만 score/stage promotion을 검토한다.",
             "- Goal4 next-attempt 실행은 planner batch size 1을 사용해 provider timeout을 후보별 failure로 남긴다.",

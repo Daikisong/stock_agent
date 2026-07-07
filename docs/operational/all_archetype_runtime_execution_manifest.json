@@ -34,7 +34,7 @@
     "v3_output_root": "output/census_v3/2026-07-01",
     "write_operational_docs": true
   },
-  "execution_status": "READY_FOR_RESEARCH_BRAIN_INPUT_NOT_EXECUTED_BY_PARITY_CLI",
+  "execution_status": "READY_FOR_RESEARCH_BRAIN_INPUT_PARITY_SELF_REPAIR_EXECUTABLE",
   "expected_first_runtime_leaf": "research_brain_candidate_seed_events_used.jsonl",
   "expected_seed_source_in_census_v4": "external_candidate_event_seed_path",
   "next_attempt_attempt_type_counts": {

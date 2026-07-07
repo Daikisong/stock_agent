@@ -360,6 +360,69 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertEqual(events[1].company_name, "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY")
         self.assertEqual(events[1].issuer_directness, "INDUSTRY")
 
+    def test_targetless_archetype_seed_does_not_execute_source_tasks(self):
+        with TemporaryDirectory() as tmp:
+            seed_path = Path(tmp) / "targetless_goal4_seed.jsonl"
+            progress_path = Path(tmp) / "brain_web_runtime_progress.json"
+            seed_path.write_text(
+                json.dumps(
+                    {
+                        "candidate_event_id": "CEV4-GOAL4-ARCHETYPE-R13",
+                        "symbol": None,
+                        "event_date": "2026-06-29",
+                        "detected_at": "2026-06-29",
+                        "source_family": "AllArchetypeRuntimeParityFollowUp",
+                        "source_id": str(seed_path),
+                        "event_type": "all_archetype_runtime_parity_follow_up_seed",
+                        "target_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+                        "target_symbol_mode": "ARCHETYPE_LEVEL_DISCOVERY",
+                        "seed_role": "planner_input_only",
+                        "structured_payload": {
+                            "target_archetype": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+                            "target_symbol_mode": "ARCHETYPE_LEVEL_DISCOVERY",
+                            "seed_role": "planner_input_only",
+                        },
+                        "research_brain_eligible": True,
+                        "score_evidence_allowed": False,
+                        "stage_promotion_allowed_before_execution": False,
+                    },
+                    ensure_ascii=False,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            with patch(
+                "e2r.research_brain.v4_production_orchestrator.discover_daily_candidate_events_v4",
+                return_value=(),
+            ):
+                result = run_research_brain_v4_production_shadow(
+                    config=ProductionShadowV4Config(
+                        as_of_date="2026-06-29",
+                        planner_provider="fake",
+                        source_acquisition="test_fake",
+                        candidate_event_seed_path=str(seed_path),
+                        universe_limit=1,
+                        planner_success_limit=1,
+                        planner_batch_size=1,
+                        max_distinct_candidate_attempts=1,
+                        retry_max=1,
+                        runtime_progress_path=str(progress_path),
+                        fake_provider_allowed=True,
+                    ),
+                    v1_archetype_matrix=load_v4_matrix(),
+                )
+            progress = json.loads(progress_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(result["planner_report"]["summary"]["planner_run_count"], 1)
+        self.assertEqual(result["source_acquisition_report"]["summary"]["source_task_executed_count"], 0)
+        row = result["watchlist_report"]["rows"][0]
+        self.assertEqual(row["symbol"], "")
+        self.assertEqual(row["score_valid_status"], "PENDING_EVIDENCE_OS_CLAIMS")
+        self.assertIsNone(row["verified_score"])
+        phases = [event["phase"] for event in progress["recent_events"]]
+        self.assertIn("source_execution_skipped_target_materialization_required", phases)
+
     def test_runtime_progress_file_records_research_brain_phases(self):
         discovered = _planner_event_with_id("CE-UNIT-DISCOVERED", symbol="000660", company_name="SK하이닉스")
         with TemporaryDirectory() as tmp:

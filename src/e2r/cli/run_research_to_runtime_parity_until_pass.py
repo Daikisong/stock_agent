@@ -3,9 +3,13 @@
 from __future__ import annotations
 
 import argparse
+import os
 import json
+import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 from e2r.census.research_to_runtime_parity import write_research_to_runtime_parity_artifacts
 
@@ -39,18 +43,54 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    repo_root = Path(args.repo_root).resolve()
     mandatory = tuple(part.strip() for part in args.mandatory_archetypes.split(",") if part.strip())
-    paths = write_research_to_runtime_parity_artifacts(
-        repo_root=Path(args.repo_root),
-        output_root=args.output_root,
-        docs_dir=Path(args.docs_dir),
-        as_of_date=args.as_of_date,
-        mandatory_archetype_prefixes=mandatory,
-    )
+    current_output_root = args.output_root
+    paths: dict[str, Any] | None = None
+    audit: dict[str, Any] | None = None
+    self_repair_history: list[dict[str, Any]] = []
+    self_repair_enabled = args.max_iterations > 1
+
+    def _audit_current_output() -> dict[str, Any]:
+        return write_research_to_runtime_parity_artifacts(
+            repo_root=repo_root,
+            output_root=current_output_root,
+            docs_dir=Path(args.docs_dir),
+            as_of_date=args.as_of_date,
+            mandatory_archetype_prefixes=mandatory,
+        )
+
+    paths = _audit_current_output()
     audit = paths["audit"]
+    self_repair_history.append(_history_audit_snapshot(audit=audit, output_root=current_output_root))
+
+    if self_repair_enabled:
+        for iteration in range(1, args.max_iterations + 1):
+            if audit["meaningful_full_thesis_evidence_pass"]:
+                break
+            execution = _run_next_runtime_attempt(
+                repo_root=repo_root,
+                manifest=paths["execution_manifest_reports"]["manifest"],
+                as_of_date=args.as_of_date or audit.get("as_of_date") or "2026-07-05",
+                iteration=iteration,
+            )
+            self_repair_history[-1]["next_runtime_execution"] = execution
+            current_output_root = execution["output_root"]
+            paths = _audit_current_output()
+            audit = paths["audit"]
+            self_repair_history.append(_history_audit_snapshot(audit=audit, output_root=current_output_root))
+            if execution["returncode"] == 130:
+                break
+
+    assert paths is not None and audit is not None
     result = {
         "mode": args.mode,
         "max_iterations_requested": args.max_iterations,
+        "self_repair_enabled": self_repair_enabled,
+        "self_repair_iteration_count": sum(
+            1 for row in self_repair_history if row.get("next_runtime_execution") is not None
+        ),
+        "self_repair_history": self_repair_history,
         "final_status": audit["final_status"],
         "completion_labels": audit["completion_labels"],
         "blockers": audit["blockers"],
@@ -104,6 +144,78 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"failed_on": sorted(set(failure_reasons))}, ensure_ascii=False, sort_keys=True))
         return 2
     return 0 if audit["meaningful_full_thesis_evidence_pass"] else 1
+
+
+def _history_audit_snapshot(*, audit: dict[str, Any], output_root: str | Path | None) -> dict[str, Any]:
+    return {
+        "output_root": str(output_root or audit.get("output_root") or ""),
+        "final_status": audit.get("final_status"),
+        "meaningful_full_thesis_evidence_pass": bool(audit.get("meaningful_full_thesis_evidence_pass")),
+        "archetype_balanced_full_thesis_pass": bool(audit.get("archetype_balanced_full_thesis_pass")),
+        "full_thesis_row_count": int(audit.get("full_thesis_row_count") or 0),
+        "distinct_full_thesis_archetype_count": int(audit.get("distinct_full_thesis_archetype_count") or 0),
+        "mandatory_archetype_full_thesis_missing": list(audit.get("mandatory_archetype_full_thesis_missing") or []),
+        "required_positive_missing_rate": audit.get("required_positive_missing_full_thesis_row_rate"),
+        "green_gap_rate": audit.get("green_gap_full_thesis_row_rate"),
+        "blockers": list(audit.get("blockers") or []),
+    }
+
+
+def _run_next_runtime_attempt(
+    *,
+    repo_root: Path,
+    manifest: dict[str, Any],
+    as_of_date: str,
+    iteration: int,
+) -> dict[str, Any]:
+    output_root = _self_repair_output_root(as_of_date=as_of_date, iteration=iteration)
+    argv = _manifest_argv_for_self_repair(manifest=manifest, output_root=output_root)
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(repo_root / "src")
+    completed = subprocess.run(
+        argv,
+        cwd=repo_root,
+        env=env,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    return {
+        "iteration": iteration,
+        "output_root": output_root,
+        "returncode": int(completed.returncode),
+        "argv": argv,
+        "stdout_tail": _tail(completed.stdout),
+        "stderr_tail": _tail(completed.stderr),
+    }
+
+
+def _self_repair_output_root(*, as_of_date: str, iteration: int) -> str:
+    safe_date = "".join(ch if ch.isdigit() or ch == "-" else "-" for ch in str(as_of_date))
+    created_at = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return f"output/census_v4/{safe_date}-research-to-runtime-parity-self-repair-{iteration:02d}-{created_at}"
+
+
+def _manifest_argv_for_self_repair(*, manifest: dict[str, Any], output_root: str) -> list[str]:
+    argv = list(manifest.get("run_command_argv") or [])
+    if not argv:
+        raise ValueError("execution manifest does not contain run_command_argv")
+    argv[0] = sys.executable
+    if "--output-root" in argv:
+        index = argv.index("--output-root")
+        if index + 1 >= len(argv):
+            raise ValueError("execution manifest has --output-root without value")
+        argv[index + 1] = output_root
+    else:
+        argv.extend(["--output-root", output_root])
+    return argv
+
+
+def _tail(value: str, *, max_chars: int = 4000) -> str:
+    text = value or ""
+    if len(text) <= max_chars:
+        return text
+    return text[-max_chars:]
 
 
 if __name__ == "__main__":

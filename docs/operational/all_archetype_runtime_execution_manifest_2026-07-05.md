@@ -6,7 +6,7 @@
 
 ## Summary
 
-- execution_status: `READY_FOR_RESEARCH_BRAIN_INPUT_NOT_EXECUTED_BY_PARITY_CLI`
+- execution_status: `READY_FOR_RESEARCH_BRAIN_INPUT_PARITY_SELF_REPAIR_EXECUTABLE`
 - seed_event_path: `docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl`
 - seed_event_count: `108`
 - source_task_shell_path: `docs/operational/all_archetype_next_runtime_source_tasks_2026-07-05.jsonl`
@@ -25,7 +25,7 @@ PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-
 
 ## Safety
 
-- 이 manifest는 parity CLI에서 실행하지 않는다.
+- 이 manifest는 `run_research_to_runtime_parity_until_pass --max-iterations 2+` self-repair 루프가 실행할 수 있다.
 - 실행 전 source-task shell은 점수/Stage 입력이 아니다.
 - Research Brain이 source-backed Evidence OS claim을 만든 뒤에만 score/stage promotion을 검토한다.
 - Goal4 next-attempt 실행은 planner batch size 1을 사용해 provider timeout을 후보별 failure로 남긴다.

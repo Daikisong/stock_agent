@@ -1,6 +1,7 @@
 import json
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from e2r.census.research_to_runtime_parity import build_research_to_runtime_parity_audit
 from e2r.cli.run_research_to_runtime_parity_until_pass import main as parity_cli_main
@@ -167,6 +168,101 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
             ]
         )
         self.assertEqual(exit_code, 2)
+
+    def test_cli_max_iterations_above_one_executes_next_runtime_manifest(self) -> None:
+        def fake_paths(*, ready: bool) -> dict:
+            audit = {
+                "final_status": "MEANINGFUL_RUNTIME_PARITY_READY" if ready else "MEANINGFUL_RUNTIME_PARITY_NOT_READY",
+                "completion_labels": ["MEANINGFUL_FULL_THESIS_EVIDENCE_PASS"]
+                if ready
+                else ["MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE"],
+                "blockers": [] if ready else ["REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROWS"],
+                "rows": [],
+                "meaningful_full_thesis_evidence_pass": ready,
+                "archetype_balanced_full_thesis_pass": ready,
+                "full_thesis_row_count": 7 if ready else 6,
+                "distinct_full_thesis_archetype_count": 7 if ready else 6,
+                "mandatory_archetype_full_thesis_missing": [] if ready else ["C15_MATERIAL_SPREAD_SUPERCYCLE"],
+                "required_positive_missing_full_thesis_row_rate": 0.0 if ready else 1.0,
+                "green_gap_full_thesis_row_rate": 0.0 if ready else 1.0,
+                "as_of_date": "2026-07-05",
+                "output_root": "output/current",
+            }
+            return {
+                "audit": audit,
+                "matrix_path": Path("docs/operational/fake_matrix.json"),
+                "summary_path": Path("docs/operational/fake_summary.md"),
+                "root_cause_path": Path("docs/operational/fake_root.md"),
+                "v2_audit_path": Path("docs/operational/fake_v2.json"),
+                "candidate_selection_audit": {"status": "PASS"},
+                "planner_bias_audit": {"status": "PASS"},
+                "research_reverse_bundle": {
+                    "inventory": {"record_count": 1001},
+                    "cards": {"card_count": 36},
+                },
+                "source_route_reports": {"source_route_matrix": {"pattern_count": 36}},
+                "all_status_reports": {
+                    "json_path": Path("docs/operational/fake_status.json"),
+                    "matrix": {"registry_contract_count": 36},
+                },
+                "next_attempt_reports": {
+                    "json_path": Path("docs/operational/fake_next.json"),
+                    "plan": {"plan_row_count": 36, "source_task_count": 108},
+                },
+                "execution_manifest_reports": {
+                    "json_path": Path("docs/operational/fake_manifest.json"),
+                    "manifest": {
+                        "seed_event_count": 108,
+                        "run_command_argv": [
+                            "python",
+                            "-m",
+                            "e2r.cli.run_e2r_census_v4_until_pass",
+                            "--as-of-date",
+                            "2026-07-05",
+                            "--output-root",
+                            "output/old",
+                        ],
+                        "census_v4_config_kwargs": {
+                            "as_of_date": "2026-07-05",
+                            "brain_runtime_budget_seconds": 1.0,
+                        },
+                    },
+                },
+                "followup_audit": {"task_count": 28},
+                "replay_reports": {
+                    "replay_matrix": {
+                        "accepted_claim_replay_count": 3,
+                        "source_proxy_repair_task_count": 18,
+                    }
+                },
+                "meaningful_acceptance": {
+                    "meaningful_status": "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS"
+                    if ready
+                    else "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE"
+                },
+                "acceptance_report_path": Path("docs/operational/fake_acceptance.md"),
+                "readiness_verdict_path": Path("docs/operational/fake_verdict.md"),
+            }
+
+        with patch(
+            "e2r.cli.run_research_to_runtime_parity_until_pass.write_research_to_runtime_parity_artifacts",
+            side_effect=[fake_paths(ready=False), fake_paths(ready=True)],
+        ) as write_mock, patch(
+            "e2r.cli.run_research_to_runtime_parity_until_pass._run_next_runtime_attempt",
+            return_value={
+                "iteration": 1,
+                "output_root": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01",
+                "returncode": 1,
+                "argv": ["python", "-m", "e2r.cli.run_e2r_census_v4_until_pass"],
+                "stdout_tail": "NOT_READY",
+                "stderr_tail": "",
+            },
+        ) as run_mock:
+            exit_code = parity_cli_main(["--as-of-date", "2026-07-05", "--max-iterations", "2"])
+
+        self.assertEqual(exit_code, 0)
+        self.assertEqual(write_mock.call_count, 2)
+        run_mock.assert_called_once()
 
     def test_balanced_candidate_selection_audit_prioritizes_missing_canaries(self) -> None:
         audit = json.loads(
