@@ -52,6 +52,19 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
             self.assertTrue(matrix["all_registered_archetypes_have_exactly_one_runtime_status_row"])
             self.assertIn("runtime_status_counts", matrix)
             self.assertIn("primary_blocker_class_counts", matrix)
+            self.assertIn("goal4_hard_failure_counts", matrix)
+            self.assertFalse(matrix["goal4_hard_failures_clear"])
+            self.assertEqual(matrix["source_proxy_to_score_count"], 0)
+            self.assertEqual(matrix["not_attempted_without_reason_count"], 0)
+            self.assertEqual(matrix["url_backed_case_exists_without_runtime_execution_count"], 1)
+            self.assertEqual(
+                matrix["url_backed_case_exists_without_runtime_execution_archetype_ids"],
+                ["C24_BIO_TRIAL_DATA_EVENT_RISK"],
+            )
+            self.assertIn(
+                "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED",
+                matrix["url_backed_replay_obligation_status_counts"],
+            )
 
             required_row_fields = {
                 "archetype_id",
@@ -92,6 +105,9 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
                 "claim_failure_primary_mode",
                 "claim_failure_repair_hint",
                 "claim_mapping_rejected_samples",
+                "url_backed_replay_obligation_status",
+                "url_backed_replay_obligation_unmet",
+                "source_proxy_to_score_count",
                 "runtime_accepted_claim_count",
                 "runtime_score_contribution_count",
                 "runtime_stagecourt_trace_count",
@@ -153,6 +169,8 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         c24 = by_prefix["C24"]
         self.assertEqual(c24["runtime_status"], "PLANNING_ONLY")
         self.assertEqual(c24["primary_blocker_class"], "SOURCE_TASK_NOT_CREATED")
+        self.assertEqual(c24["url_backed_replay_obligation_status"], "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED")
+        self.assertTrue(c24["url_backed_replay_obligation_unmet"])
         self.assertEqual(c24["runtime_source_task_count"], 0)
         self.assertEqual(c24["source_task_execution_log_count"], 0)
         self.assertEqual(c24["runtime_full_thesis_row_count"], 0)

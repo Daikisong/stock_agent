@@ -45,6 +45,25 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(self.matrix["missing_parity_source_row_count"], 0)
         self.assertEqual(self.matrix["duplicate_parity_source_row_count"], 0)
         self.assertEqual(self.matrix["extra_parity_source_row_count"], 0)
+        self.assertEqual(self.matrix["source_proxy_to_score_count"], 0)
+        self.assertEqual(self.matrix["not_attempted_without_reason_count"], 0)
+        self.assertEqual(self.matrix["url_backed_case_exists_without_runtime_execution_count"], 1)
+        self.assertEqual(
+            self.matrix["url_backed_case_exists_without_runtime_execution_archetype_ids"],
+            ["C24_BIO_TRIAL_DATA_EVENT_RISK"],
+        )
+        self.assertFalse(self.matrix["goal4_hard_failures_clear"])
+        self.assertEqual(
+            self.matrix["goal4_hard_failure_counts"]["url_backed_case_exists_without_runtime_execution_count"],
+            1,
+        )
+        self.assertEqual(self.matrix["goal4_hard_failure_counts"]["source_proxy_to_score_count"], 0)
+        self.assertEqual(self.matrix["goal4_hard_failure_counts"]["not_attempted_without_reason_count"], 0)
+        self.assertEqual(self.matrix["goal4_hard_failure_counts"]["runtime_parity_not_proven_count"], 36)
+        self.assertIn(
+            "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED",
+            self.matrix["url_backed_replay_obligation_status_counts"],
+        )
         self.assertTrue(self.matrix["all_registered_archetypes_have_exactly_one_runtime_status_row"])
         self.assertTrue(self.matrix["all_contracts_have_runtime_status_axes"])
         self.assertTrue(self.matrix["all_contracts_have_memory_card"])
@@ -59,6 +78,9 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             "accepted_claim_status",
             "full_thesis_status",
             "runtime_parity_proof_status",
+            "url_backed_replay_obligation_status",
+            "url_backed_replay_obligation_unmet",
+            "source_proxy_to_score_count",
             "runtime_status",
             "primary_blocker_class",
             "blocker_detail",
@@ -110,6 +132,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             for key in required:
                 if key in {"source_route_ready", "memory_card_ready"}:
                     self.assertIsInstance(row[key], bool, (row["archetype_id"], key))
+                elif key == "url_backed_replay_obligation_unmet":
+                    self.assertIsInstance(row[key], bool, (row["archetype_id"], key))
                 elif key == "parity_source_row_present":
                     self.assertIs(row[key], True, (row["archetype_id"], key))
                 elif key.endswith("_count"):
@@ -158,6 +182,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(c06["runtime_attempt_status"], "PRODUCTION_FULL_THESIS_ATTEMPTED")
         self.assertEqual(c06["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS")
         self.assertEqual(c06["accepted_claim_status"], "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS")
+        self.assertEqual(c06["url_backed_replay_obligation_status"], "PRODUCTION_FULL_THESIS_ATTEMPTED")
+        self.assertFalse(c06["url_backed_replay_obligation_unmet"])
         self.assertEqual(c06["full_thesis_status"], "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS")
         self.assertEqual(c06["runtime_parity_proof_status"], "NOT_PROVEN_SCORE_PATH_ONLY")
         self.assertEqual(c06["runtime_status"], "SCORE_PATH_CLOSED_WITH_THESIS_GAPS")
@@ -226,6 +252,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(c24["runtime_attempt_status"], "PLANNER_ATTEMPTED_ONLY")
         self.assertEqual(c24["runtime_source_route_execution_status"], "ROUTE_RECOVERED_NOT_EXECUTED")
         self.assertEqual(c24["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY")
+        self.assertEqual(c24["url_backed_replay_obligation_status"], "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED")
+        self.assertTrue(c24["url_backed_replay_obligation_unmet"])
         self.assertEqual(c24["full_thesis_status"], "NO_PRODUCTION_FULL_THESIS_ROW")
         self.assertEqual(c24["runtime_parity_proof_status"], "NOT_PROVEN_PLANNER_ONLY")
         self.assertEqual(c24["runtime_status"], "PLANNING_ONLY")

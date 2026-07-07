@@ -11,6 +11,7 @@
   "all_registered_archetypes_have_exactly_one_runtime_status_row": true,
   "as_of_date": "2026-07-05",
   "c01_to_c32_contract_count": 32,
+  "c05_only_meaningful_runtime_parity_hard_fail": false,
   "canonical_c_archetype_count": 32,
   "cross_archetype_contract_count": 4,
   "duplicate_parity_source_row_count": 0,
@@ -22,6 +23,17 @@
     "NO_PRODUCTION_FULL_THESIS_ROW": 27,
     "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS": 6
   },
+  "goal4_hard_failure_counts": {
+    "c05_only_meaningful_runtime_parity_count": 0,
+    "duplicate_parity_source_row_count": 0,
+    "extra_parity_source_row_count": 0,
+    "missing_parity_source_row_count": 0,
+    "not_attempted_without_reason_count": 0,
+    "runtime_parity_not_proven_count": 36,
+    "source_proxy_to_score_count": 0,
+    "url_backed_case_exists_without_runtime_execution_count": 1
+  },
+  "goal4_hard_failures_clear": false,
   "matrix_row_archetype_ids": [
     "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
     "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -64,6 +76,8 @@
   "memory_card_ready_count": 36,
   "missing_parity_source_row_count": 0,
   "missing_parity_source_row_ids": [],
+  "not_attempted_without_reason_archetype_ids": [],
+  "not_attempted_without_reason_count": 0,
   "primary_blocker_class_counts": {
     "ACCEPTED_CLAIM_NOT_CREATED": 22,
     "CANDIDATE_SELECTOR_DID_NOT_ATTEMPT": 3,
@@ -579,6 +593,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 251,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 255,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -703,7 +718,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 125
+      "url_backed_case_count": 125,
+      "url_backed_replay_obligation_status": "PRODUCTION_FULL_THESIS_ATTEMPTED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -1172,6 +1189,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 199,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 208,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -1292,7 +1310,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 91
+      "url_backed_case_count": 91,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS",
@@ -1764,6 +1784,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 141,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 146,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -1885,7 +1906,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 46
+      "url_backed_case_count": 46,
+      "url_backed_replay_obligation_status": "PRODUCTION_FULL_THESIS_ATTEMPTED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -2346,6 +2369,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 102,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 106,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -2462,7 +2486,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 56
+      "url_backed_case_count": 56,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS",
@@ -2913,6 +2939,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 177,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 185,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -3046,7 +3073,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 108
+      "url_backed_case_count": 108,
+      "url_backed_replay_obligation_status": "PRODUCTION_FULL_THESIS_ATTEMPTED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS",
@@ -3516,6 +3545,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 1,
       "source_proxy_case_count": 221,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 230,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -3642,7 +3672,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 103
+      "url_backed_case_count": 103,
+      "url_backed_replay_obligation_status": "PRODUCTION_FULL_THESIS_ATTEMPTED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -4089,6 +4121,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 199,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 202,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -4212,7 +4245,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 78
+      "url_backed_case_count": 78,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS",
@@ -4704,6 +4739,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 4,
       "source_proxy_case_count": 177,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 180,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -4824,7 +4860,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 61
+      "url_backed_case_count": 61,
+      "url_backed_replay_obligation_status": "PRODUCTION_FULL_THESIS_ATTEMPTED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -5300,6 +5338,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 194,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 195,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -5423,7 +5462,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 81
+      "url_backed_case_count": 81,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED",
@@ -5875,6 +5916,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 206,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 209,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -5991,7 +6033,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 115
+      "url_backed_case_count": 115,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -6435,6 +6479,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 153,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 156,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -6548,7 +6593,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 84
+      "url_backed_case_count": 84,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -6925,6 +6972,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 163,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 168,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -7020,7 +7068,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 75
+      "url_backed_case_count": 75,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -7472,6 +7522,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 183,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 189,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -7595,7 +7646,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 77
+      "url_backed_case_count": 77,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -8021,6 +8074,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 171,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 175,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -8141,7 +8195,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 97
+      "url_backed_case_count": 97,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS",
@@ -8609,6 +8665,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 6,
       "source_proxy_case_count": 156,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 161,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -8731,7 +8788,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 98
+      "url_backed_case_count": 98,
+      "url_backed_replay_obligation_status": "PRODUCTION_FULL_THESIS_ATTEMPTED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -9172,6 +9231,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 140,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 148,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -9290,7 +9350,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 55
+      "url_backed_case_count": 55,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED",
@@ -9783,6 +9845,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 10,
       "source_proxy_case_count": 160,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 170,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -9908,7 +9971,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 69
+      "url_backed_case_count": 69,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -10384,6 +10449,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 126,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 135,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -10502,7 +10568,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 89
+      "url_backed_case_count": 89,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -10964,6 +11032,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 130,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 137,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -11080,7 +11149,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 63
+      "url_backed_case_count": 63,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -11543,6 +11614,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 112,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 118,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -11658,7 +11730,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 102
+      "url_backed_case_count": 102,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -12135,6 +12209,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 118,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 125,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -12250,7 +12325,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 111
+      "url_backed_case_count": 111,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -12728,6 +12805,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 114,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 121,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -12844,7 +12922,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 84
+      "url_backed_case_count": 84,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -13327,6 +13407,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 120,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 129,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -13444,7 +13525,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 92
+      "url_backed_case_count": 92,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "REPLAY_ACCEPTED_CLAIM_ONLY",
@@ -13525,6 +13608,7 @@
       "seed_materialization_trace_count": 0,
       "source_backed_fixture_count": 5,
       "source_proxy_case_count": 143,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 150,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -13551,7 +13635,9 @@
       "symbols_sample": [],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 60
+      "url_backed_case_count": 60,
+      "url_backed_replay_obligation_status": "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED",
+      "url_backed_replay_obligation_unmet": true
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -14003,6 +14089,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 122,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 129,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -14120,7 +14207,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 56
+      "url_backed_case_count": 56,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -14596,6 +14685,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 122,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 131,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -14719,7 +14809,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 70
+      "url_backed_case_count": 70,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -15188,6 +15280,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 156,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 162,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -15312,7 +15405,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 66
+      "url_backed_case_count": 66,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "REPLAY_ACCEPTED_CLAIM_ONLY",
@@ -15770,6 +15865,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 7,
       "source_proxy_case_count": 187,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 195,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -15891,7 +15987,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 83
+      "url_backed_case_count": 83,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED",
@@ -16356,6 +16454,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 114,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 119,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -16476,7 +16575,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 71
+      "url_backed_case_count": 71,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -16963,6 +17064,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 147,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 152,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -17090,7 +17192,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 88
+      "url_backed_case_count": 88,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED",
@@ -17546,6 +17650,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 142,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 150,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -17673,7 +17778,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 114
+      "url_backed_case_count": 114,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -18123,6 +18230,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 182,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 189,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -18248,7 +18356,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 132
+      "url_backed_case_count": 132,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -18331,6 +18441,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 0,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 5,
       "source_route_gap_task_count": 5,
       "source_route_gaps": [
@@ -18356,7 +18467,9 @@
       "symbols_sample": [],
       "target_materialization_required_seed_count": 3,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 0
+      "url_backed_case_count": 0,
+      "url_backed_replay_obligation_status": "NO_URL_BACKED_RESEARCH_CASES",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -18439,6 +18552,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 0,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 5,
       "source_route_gap_task_count": 5,
       "source_route_gaps": [
@@ -18464,7 +18578,9 @@
       "symbols_sample": [],
       "target_materialization_required_seed_count": 3,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 0
+      "url_backed_case_count": 0,
+      "url_backed_replay_obligation_status": "NO_URL_BACKED_RESEARCH_CASES",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -18547,6 +18663,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 0,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 5,
       "source_route_gap_task_count": 5,
       "source_route_gaps": [
@@ -18572,7 +18689,9 @@
       "symbols_sample": [],
       "target_materialization_required_seed_count": 3,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 0
+      "url_backed_case_count": 0,
+      "url_backed_replay_obligation_status": "NO_URL_BACKED_RESEARCH_CASES",
+      "url_backed_replay_obligation_unmet": false
     },
     {
       "accepted_claim_status": "NO_ACCEPTED_CLAIM",
@@ -19013,6 +19132,7 @@
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
       "source_proxy_case_count": 286,
+      "source_proxy_to_score_count": 0,
       "source_repair_task_count": 293,
       "source_route_gap_task_count": 0,
       "source_route_gaps": [
@@ -19133,7 +19253,9 @@
       ],
       "target_materialization_required_seed_count": 0,
       "targetless_source_task_execution_count": 0,
-      "url_backed_case_count": 450
+      "url_backed_case_count": 450,
+      "url_backed_replay_obligation_status": "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
+      "url_backed_replay_obligation_unmet": false
     }
   ],
   "runtime_attempt_status_counts": {
@@ -19171,5 +19293,17 @@
     "PRIMITIVE_GAP_UNSATISFIED": 31
   },
   "seed_materialization_trace_count": 105,
-  "source_route_ready_count": 36
+  "source_proxy_to_score_archetype_ids": [],
+  "source_proxy_to_score_count": 0,
+  "source_route_ready_count": 36,
+  "url_backed_case_exists_without_runtime_execution_archetype_ids": [
+    "C24_BIO_TRIAL_DATA_EVENT_RISK"
+  ],
+  "url_backed_case_exists_without_runtime_execution_count": 1,
+  "url_backed_replay_obligation_status_counts": {
+    "NO_URL_BACKED_RESEARCH_CASES": 3,
+    "PRODUCTION_FULL_THESIS_ATTEMPTED": 6,
+    "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED": 26,
+    "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED": 1
+  }
 }

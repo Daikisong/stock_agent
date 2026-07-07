@@ -771,6 +771,41 @@ def _green_gap_rate(row: Mapping[str, Any]) -> float | None:
     return round(int(row.get("runtime_full_thesis_row_with_green_gap_count") or 0) / full_rows, 6)
 
 
+def _url_backed_replay_obligation_status(
+    row: Mapping[str, Any],
+    *,
+    url_backed_case_count: int,
+    runtime_source_task_executed_count: int,
+) -> str:
+    if row.get("_parity_source_row_missing") is True:
+        return "UNKNOWN_PARITY_SOURCE_ROW_MISSING"
+    if url_backed_case_count <= 0:
+        return "NO_URL_BACKED_RESEARCH_CASES"
+    if int(row.get("runtime_full_thesis_row_count") or 0):
+        return "PRODUCTION_FULL_THESIS_ATTEMPTED"
+    if runtime_source_task_executed_count:
+        return "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED"
+    if int(row.get("replay_accepted_claim_count") or 0) or int(row.get("source_backed_fixture_count") or 0):
+        return "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED"
+    if int(row.get("runtime_planner_top1_count") or 0) or int(row.get("runtime_planner_topk_count") or 0):
+        return "URL_BACKED_CASE_EXISTS_BUT_PLANNER_ONLY"
+    return "URL_BACKED_CASE_EXISTS_NOT_RUNTIME_ATTEMPTED"
+
+
+def _url_backed_replay_obligation_unmet(status: str) -> bool:
+    return status in {
+        "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED",
+        "URL_BACKED_CASE_EXISTS_BUT_PLANNER_ONLY",
+        "URL_BACKED_CASE_EXISTS_NOT_RUNTIME_ATTEMPTED",
+    }
+
+
+def _not_attempted_without_reason(row: Mapping[str, Any]) -> bool:
+    if row.get("runtime_attempt_status") != "NOT_ATTEMPTED":
+        return False
+    return not (row.get("primary_blocker_class") and row.get("next_required_action") and row.get("status_reason_ko"))
+
+
 def _goal4_runtime_status(
     *,
     row: Mapping[str, Any],
@@ -996,6 +1031,11 @@ def build_all_archetype_runtime_status_matrix(
             + int(row.get("runtime_follow_up_source_task_count") or 0)
             + gap_task_counts[archetype_id]
         )
+        url_replay_obligation_status = _url_backed_replay_obligation_status(
+            row,
+            url_backed_case_count=research_counts["url_backed_case_count"],
+            runtime_source_task_executed_count=runtime_source_task_executed_count,
+        )
         runtime_status = _goal4_runtime_status(
             row=row,
             attempt_status=attempt_status,
@@ -1072,6 +1112,11 @@ def build_all_archetype_runtime_status_matrix(
                 "memory_source_proxy_only_case_count": len(card.get("source_proxy_only_cases") or []),
                 "source_backed_fixture_count": row.get("source_backed_fixture_count", 0),
                 "replay_accepted_claim_count": row.get("replay_accepted_claim_count", 0),
+                "source_proxy_to_score_count": int(row.get("source_proxy_leak_count") or 0),
+                "url_backed_replay_obligation_status": url_replay_obligation_status,
+                "url_backed_replay_obligation_unmet": _url_backed_replay_obligation_unmet(
+                    url_replay_obligation_status
+                ),
                 "runtime_planner_top1_count": row.get("runtime_planner_top1_count", 0),
                 "runtime_planner_attempt_count": row.get("runtime_planner_top1_count", 0),
                 "runtime_planner_topk_count": row.get("runtime_planner_topk_count", 0),
@@ -1123,11 +1168,39 @@ def build_all_archetype_runtime_status_matrix(
     accepted_counts = Counter(row["accepted_claim_status"] for row in status_rows)
     runtime_status_counts = Counter(row["runtime_status"] for row in status_rows)
     primary_blocker_counts = Counter(row["primary_blocker_class"] for row in status_rows)
+    url_backed_obligation_counts = Counter(row["url_backed_replay_obligation_status"] for row in status_rows)
     seed_primary_failure_axis_counts = Counter(
         row["seed_materialization_primary_failure_axis"]
         for row in status_rows
         if row.get("seed_materialization_primary_failure_axis")
     )
+    url_backed_unmet_ids = [
+        row["archetype_id"] for row in status_rows if row.get("url_backed_replay_obligation_unmet") is True
+    ]
+    source_proxy_to_score_ids = [
+        row["archetype_id"] for row in status_rows if int(row.get("source_proxy_to_score_count") or 0) > 0
+    ]
+    not_attempted_without_reason_ids = [
+        row["archetype_id"] for row in status_rows if _not_attempted_without_reason(row)
+    ]
+    proven_prefixes = {
+        row["archetype_prefix"]
+        for row in status_rows
+        if row.get("runtime_parity_proof_status") == "RUNTIME_PARITY_PROVEN"
+    }
+    c05_only_meaningful_hard_fail = bool(proven_prefixes == {"C05"})
+    goal4_hard_failure_counts = {
+        "missing_parity_source_row_count": len(missing_parity_source_row_ids),
+        "duplicate_parity_source_row_count": len(duplicate_parity_source_row_ids),
+        "extra_parity_source_row_count": len(extra_parity_source_row_ids),
+        "not_attempted_without_reason_count": len(not_attempted_without_reason_ids),
+        "url_backed_case_exists_without_runtime_execution_count": len(url_backed_unmet_ids),
+        "source_proxy_to_score_count": sum(int(row.get("source_proxy_to_score_count") or 0) for row in status_rows),
+        "c05_only_meaningful_runtime_parity_count": 1 if c05_only_meaningful_hard_fail else 0,
+        "runtime_parity_not_proven_count": sum(
+            1 for row in status_rows if row.get("runtime_parity_proof_status") != "RUNTIME_PARITY_PROVEN"
+        ),
+    }
 
     return {
         "schema_version": "e2r_all_archetype_runtime_status_matrix_v1",
@@ -1171,6 +1244,16 @@ def build_all_archetype_runtime_status_matrix(
         "full_thesis_status_counts": dict(sorted(full_thesis_counts.items())),
         "runtime_status_counts": dict(sorted(runtime_status_counts.items())),
         "primary_blocker_class_counts": dict(sorted(primary_blocker_counts.items())),
+        "url_backed_replay_obligation_status_counts": dict(sorted(url_backed_obligation_counts.items())),
+        "url_backed_case_exists_without_runtime_execution_archetype_ids": url_backed_unmet_ids,
+        "url_backed_case_exists_without_runtime_execution_count": len(url_backed_unmet_ids),
+        "source_proxy_to_score_archetype_ids": source_proxy_to_score_ids,
+        "source_proxy_to_score_count": goal4_hard_failure_counts["source_proxy_to_score_count"],
+        "not_attempted_without_reason_archetype_ids": not_attempted_without_reason_ids,
+        "not_attempted_without_reason_count": len(not_attempted_without_reason_ids),
+        "c05_only_meaningful_runtime_parity_hard_fail": c05_only_meaningful_hard_fail,
+        "goal4_hard_failure_counts": goal4_hard_failure_counts,
+        "goal4_hard_failures_clear": all(count == 0 for count in goal4_hard_failure_counts.values()),
         "seed_materialization_trace_count": sum(
             int(row.get("seed_materialization_trace_count") or 0) for row in status_rows
         ),
@@ -1209,6 +1292,12 @@ def render_all_archetype_runtime_status_markdown(matrix: Mapping[str, Any]) -> s
         f"- all_contracts_have_memory_card: `{matrix['all_contracts_have_memory_card']}`",
         f"- all_contracts_have_source_route_patterns: `{matrix['all_contracts_have_source_route_patterns']}`",
         f"- meaningful_runtime_parity_ready: `{matrix['meaningful_runtime_parity_ready']}`",
+        f"- goal4_hard_failures_clear: `{matrix['goal4_hard_failures_clear']}`",
+        f"- goal4_hard_failure_counts: `{json.dumps(matrix['goal4_hard_failure_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- url_backed_replay_obligation_status_counts: `{json.dumps(matrix['url_backed_replay_obligation_status_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- url_backed_case_exists_without_runtime_execution_count: `{matrix['url_backed_case_exists_without_runtime_execution_count']}`",
+        f"- source_proxy_to_score_count: `{matrix['source_proxy_to_score_count']}`",
+        f"- not_attempted_without_reason_count: `{matrix['not_attempted_without_reason_count']}`",
         "",
         "## Status Counts",
         "",
@@ -1223,14 +1312,15 @@ def render_all_archetype_runtime_status_markdown(matrix: Mapping[str, Any]) -> s
         "",
         "## Matrix",
         "",
-        "| archetype | attempt | source route | source execution | accepted claim | full thesis | proof | next action |",
-        "|---|---|---|---|---|---|---|---|",
+        "| archetype | attempt | URL-backed obligation | source route | source execution | accepted claim | full thesis | proof | next action |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
     for row in matrix.get("rows", []):
         lines.append(
-            "| {archetype} | {attempt} | {route} | {execution} | {claim} | {full} | {proof} | {next_action} |".format(
+            "| {archetype} | {attempt} | {url_obligation} | {route} | {execution} | {claim} | {full} | {proof} | {next_action} |".format(
                 archetype=row["archetype_id"],
                 attempt=row["runtime_attempt_status"],
+                url_obligation=row["url_backed_replay_obligation_status"],
                 route=row["source_route_recovery_status"],
                 execution=row["runtime_source_route_execution_status"],
                 claim=row["accepted_claim_status"],
@@ -1245,6 +1335,7 @@ def render_all_archetype_runtime_status_markdown(matrix: Mapping[str, Any]) -> s
             "## Operator Reading",
             "",
             "`RUNTIME_PARITY_PROVEN`이 아닌 행은 goal4 완료 증거가 아니다. `REPLAY_ACCEPTED_CLAIM_ONLY`는 연구 판례 재생성이지 production 점수가 아니다.",
+            "`URL_BACKED_CASE_EXISTS_BUT_PLANNER_ONLY`나 `REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED`는 URL-backed 연구자료가 있어도 production source execution까지 가지 못했다는 뜻이다.",
             "",
         ]
     )
@@ -1301,6 +1392,12 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
         f"- source_route_ready_count: `{matrix['source_route_ready_count']}`",
         f"- memory_card_ready_count: `{matrix['memory_card_ready_count']}`",
         f"- meaningful_runtime_parity_ready: `{matrix['meaningful_runtime_parity_ready']}`",
+        f"- goal4_hard_failures_clear: `{matrix['goal4_hard_failures_clear']}`",
+        f"- goal4_hard_failure_counts: `{json.dumps(matrix['goal4_hard_failure_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- url_backed_replay_obligation_status_counts: `{json.dumps(matrix['url_backed_replay_obligation_status_counts'], ensure_ascii=False, sort_keys=True)}`",
+        f"- url_backed_case_exists_without_runtime_execution_count: `{matrix['url_backed_case_exists_without_runtime_execution_count']}`",
+        f"- source_proxy_to_score_count: `{matrix['source_proxy_to_score_count']}`",
+        f"- not_attempted_without_reason_count: `{matrix['not_attempted_without_reason_count']}`",
         "",
         "## Runtime Status Counts",
         "",
@@ -1313,18 +1410,19 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
         "",
         "## Matrix",
         "",
-        "| archetype | runtime status | primary blocker | research cases | URL-backed | source tasks | execution logs | seed traces | claim traces | accepted claims | full rows | top seed failure axes | top source-task failure axes | top claim failure modes | top claim rejection reasons | req gap rate | green gap rate |",
-        "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---:|---:|",
+        "| archetype | runtime status | primary blocker | URL obligation | research cases | URL-backed | source tasks | execution logs | seed traces | claim traces | accepted claims | full rows | top seed failure axes | top source-task failure axes | top claim failure modes | top claim rejection reasons | req gap rate | green gap rate |",
+        "|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---:|---:|",
     ]
     for row in matrix.get("rows", []):
         accepted = int(row.get("runtime_accepted_claim_count") or 0) + int(
             row.get("runtime_source_task_accepted_claim_count") or 0
         )
         lines.append(
-            "| {archetype} | {runtime_status} | {blocker} | {research_cases} | {url_backed} | {source_tasks} | {execution_logs} | {seed_traces} | {claim_traces} | {accepted} | {full_rows} | {seed_failure_axes} | {failure_axes} | {claim_failure_modes} | {claim_rejections} | {req_rate} | {green_rate} |".format(
+            "| {archetype} | {runtime_status} | {blocker} | {url_obligation} | {research_cases} | {url_backed} | {source_tasks} | {execution_logs} | {seed_traces} | {claim_traces} | {accepted} | {full_rows} | {seed_failure_axes} | {failure_axes} | {claim_failure_modes} | {claim_rejections} | {req_rate} | {green_rate} |".format(
                 archetype=row["archetype_id"],
                 runtime_status=row["runtime_status"],
                 blocker=row["primary_blocker_class"],
+                url_obligation=row["url_backed_replay_obligation_status"],
                 research_cases=row["research_case_count"],
                 url_backed=row["url_backed_case_count"],
                 source_tasks=row["runtime_source_task_count"],
@@ -1350,6 +1448,7 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
             "- `SOURCE_REPAIR_REQUIRED`: 연구 route나 source task는 있지만 current accepted claim이 부족하다.",
             "- `PLANNING_ONLY`: planner나 discovery는 열렸지만 실제 종목/소스 실행으로 닫히지 않았다.",
             "- `REPLAY_ONLY_NOT_RUNTIME_PROVEN`: 과거 URL-backed 판례가 있을 뿐, 현재 production run에서 재검증되지 않았다.",
+            "- `URL obligation`: URL-backed 연구자료가 production source execution/full-thesis 시도로 이어졌는지 보여준다.",
             "- `top seed failure axes`: full-thesis follow-up seed가 왜 materialize되지 않았는지의 seed 단위 요약이다.",
             "- `top source-task failure axes`: source task가 왜 accepted claim으로 닫히지 않았는지의 실행 로그 기반 요약이다.",
             "- `top claim failure modes`: rejected claim을 route, source class, target/semantic, mapper 계층으로 나눈 원인 분류다.",
