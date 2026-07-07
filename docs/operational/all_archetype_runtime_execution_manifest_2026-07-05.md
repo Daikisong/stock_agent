@@ -26,6 +26,8 @@ PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-
 ## Safety
 
 - 이 manifest는 `run_research_to_runtime_parity_until_pass --max-iterations 2+` self-repair 루프가 실행할 수 있다.
+- 단 parent self-repair CLI는 기본적으로 child runtime 1회 뒤에도 같은 blocker가 남으면 반복 실행을 멈춘다.
+- 같은 실패를 다시 돌리려면 코드/source-route 수리나 `--allow-repeated-runtime-attempts true` 같은 명시적 운영 판단이 필요하다.
 - 실행 전 source-task shell은 점수/Stage 입력이 아니다.
 - Research Brain이 source-backed Evidence OS claim을 만든 뒤에만 score/stage promotion을 검토한다.
 - Goal4 next-attempt 실행은 planner batch size 1을 사용해 provider timeout을 후보별 failure로 남긴다.

@@ -13,6 +13,21 @@ from typing import Any
 
 from e2r.census.research_to_runtime_parity import write_research_to_runtime_parity_artifacts
 
+PARTIAL_OUTPUT_SUMMARY_FILES = (
+    "brain_web_runtime_progress.json",
+    "planner_runs.jsonl",
+    "llm_prompts.jsonl",
+    "llm_responses.jsonl",
+    "source_tasks.jsonl",
+    "source_task_executions.jsonl",
+    "accepted_claims.jsonl",
+    "claim_extractor_runs.jsonl",
+    "raw_assertions.jsonl",
+    "adjudicated_claims.jsonl",
+    "stagecourt_traces.jsonl",
+    "readiness_verdict.json",
+)
+
 
 def _parse_bool(value: str | bool) -> bool:
     if isinstance(value, bool):
@@ -38,6 +53,15 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--fail-on-unknown-target-promoted", type=_parse_bool, default=False)
     parser.add_argument("--fail-on-required-positive-missing-over-threshold", type=_parse_bool, default=False)
     parser.add_argument("--fail-on-research-proxy-score", type=_parse_bool, default=False)
+    parser.add_argument(
+        "--allow-repeated-runtime-attempts",
+        type=_parse_bool,
+        default=False,
+        help=(
+            "Allow more than one child Census runtime attempt in one parent invocation. "
+            "The default is false because unchanged blockers require code/source-route repair before another long run."
+        ),
+    )
     return parser
 
 
@@ -63,10 +87,15 @@ def main(argv: list[str] | None = None) -> int:
     paths = _audit_current_output()
     audit = paths["audit"]
     self_repair_history.append(_history_audit_snapshot(audit=audit, output_root=current_output_root))
+    self_repair_stop_reason: str | None = None
 
     if self_repair_enabled:
         for iteration in range(1, args.max_iterations + 1):
             if audit["meaningful_full_thesis_evidence_pass"]:
+                break
+            if iteration > 1 and not args.allow_repeated_runtime_attempts:
+                self_repair_stop_reason = "SELF_REPAIR_REQUIRES_CODE_OR_SOURCE_ROUTE_REPAIR_AFTER_RUNTIME_ATTEMPT"
+                self_repair_history[-1]["self_repair_stop_reason"] = self_repair_stop_reason
                 break
             execution = _run_next_runtime_attempt(
                 repo_root=repo_root,
@@ -75,11 +104,16 @@ def main(argv: list[str] | None = None) -> int:
                 iteration=iteration,
             )
             self_repair_history[-1]["next_runtime_execution"] = execution
+            if execution.get("partial_run_invalid"):
+                self_repair_stop_reason = "RUNTIME_ATTEMPT_PARTIAL_OUTPUT_INVALID"
+                self_repair_history[-1]["self_repair_stop_reason"] = self_repair_stop_reason
+                break
             current_output_root = execution["output_root"]
             paths = _audit_current_output()
             audit = paths["audit"]
             self_repair_history.append(_history_audit_snapshot(audit=audit, output_root=current_output_root))
             if execution["returncode"] == 130:
+                self_repair_stop_reason = "RUNTIME_ATTEMPT_INTERRUPTED"
                 break
 
     assert paths is not None and audit is not None
@@ -87,6 +121,7 @@ def main(argv: list[str] | None = None) -> int:
         "mode": args.mode,
         "max_iterations_requested": args.max_iterations,
         "self_repair_enabled": self_repair_enabled,
+        "self_repair_stop_reason": self_repair_stop_reason,
         "self_repair_iteration_count": sum(
             1 for row in self_repair_history if row.get("next_runtime_execution") is not None
         ),
@@ -120,6 +155,9 @@ def main(argv: list[str] | None = None) -> int:
         "readiness_verdict_path": str(paths["readiness_verdict_path"]),
     }
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+
+    if _history_has_interrupted_runtime(self_repair_history):
+        return 130
 
     failure_reasons: list[str] = []
     if args.fail_on_c05_monoculture and "C05_FULL_THESIS_MONOCULTURE" in audit["blockers"]:
@@ -172,14 +210,43 @@ def _run_next_runtime_attempt(
     argv = _manifest_argv_for_self_repair(manifest=manifest, output_root=output_root)
     env = os.environ.copy()
     env["PYTHONPATH"] = str(repo_root / "src")
-    completed = subprocess.run(
-        argv,
-        cwd=repo_root,
-        env=env,
-        text=True,
-        capture_output=True,
-        check=False,
-    )
+    try:
+        completed = subprocess.run(
+            argv,
+            cwd=repo_root,
+            env=env,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+    except KeyboardInterrupt as exc:
+        _write_invalid_partial_run_marker(
+            output_root=Path(output_root),
+            status="INTERRUPTED",
+            reason="keyboard_interrupt",
+            exc=exc,
+            argv=argv,
+        )
+        return {
+            "iteration": iteration,
+            "output_root": output_root,
+            "returncode": 130,
+            "argv": argv,
+            "stdout_tail": "",
+            "stderr_tail": "keyboard_interrupt",
+            "partial_run_invalid": True,
+            "partial_run_invalid_path": str(Path(output_root) / "partial_run_invalid.json"),
+        }
+    partial_run_invalid = (Path(output_root) / "partial_run_invalid.json").exists()
+    if completed.returncode == 130 and not partial_run_invalid:
+        _write_invalid_partial_run_marker(
+            output_root=Path(output_root),
+            status="INTERRUPTED",
+            reason="child_returned_130_without_marker",
+            exc=None,
+            argv=argv,
+        )
+        partial_run_invalid = True
     return {
         "iteration": iteration,
         "output_root": output_root,
@@ -187,6 +254,8 @@ def _run_next_runtime_attempt(
         "argv": argv,
         "stdout_tail": _tail(completed.stdout),
         "stderr_tail": _tail(completed.stderr),
+        "partial_run_invalid": partial_run_invalid,
+        "partial_run_invalid_path": str(Path(output_root) / "partial_run_invalid.json") if partial_run_invalid else "",
     }
 
 
@@ -216,6 +285,97 @@ def _tail(value: str, *, max_chars: int = 4000) -> str:
     if len(text) <= max_chars:
         return text
     return text[-max_chars:]
+
+
+def _history_has_interrupted_runtime(history: list[dict[str, Any]]) -> bool:
+    for row in history:
+        execution = row.get("next_runtime_execution")
+        if isinstance(execution, dict) and int(execution.get("returncode") or 0) == 130:
+            return True
+    return False
+
+
+def _write_invalid_partial_run_marker(
+    *,
+    output_root: Path,
+    status: str,
+    reason: str,
+    exc: BaseException | None,
+    argv: list[str],
+) -> None:
+    output_root.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "schema_version": "e2r_research_to_runtime_invalid_partial_run_v1",
+        "status": status,
+        "verdict": "INVALID_PARTIAL_OUTPUT",
+        "reason": reason,
+        "exception_type": type(exc).__name__ if exc is not None else None,
+        "exception_message": str(exc) if exc is not None else "",
+        "created_at_utc": datetime.now(timezone.utc).isoformat(),
+        "output_root": str(output_root),
+        "argv": argv,
+        "partial_output_summary": _partial_output_summary(output_root),
+        "readiness_evidence_allowed": False,
+        "score_or_stage_evidence_allowed": False,
+        "full_thesis_promotion_allowed": False,
+        "operator_rule": (
+            "This directory may contain partial runtime files, but it is not a completed research-to-runtime parity run. "
+            "Do not use it as readiness, score, Stage, or Goal4 evidence."
+        ),
+        "next_action": "repair the code/source-route blocker or rerun from a clean output root after confirming the manifest changed",
+    }
+    (output_root / "partial_run_invalid.json").write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    (output_root / "PARTIAL_RUN_INVALID.md").write_text(
+        "\n".join(
+            [
+                "# INVALID_PARTIAL_OUTPUT",
+                "",
+                f"status: {status}",
+                f"reason: {reason}",
+                f"exception_type: {payload['exception_type']}",
+                "",
+                "This output directory is not readiness, score, Stage, or Goal4 evidence.",
+                "Use the previous completed attempt or rerun after repairing the blocker.",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+
+def _partial_output_summary(output_root: Path) -> dict[str, Any]:
+    files: dict[str, dict[str, Any]] = {}
+    for name in PARTIAL_OUTPUT_SUMMARY_FILES:
+        path = output_root / name
+        if not path.exists():
+            files[name] = {"exists": False}
+            continue
+        stat = path.stat()
+        row_count = None
+        if path.suffix == ".jsonl":
+            row_count = _line_count(path)
+        files[name] = {
+            "exists": True,
+            "size_bytes": stat.st_size,
+            "row_count": row_count,
+            "modified_at_utc": datetime.fromtimestamp(stat.st_mtime, timezone.utc).isoformat(),
+        }
+    existing = [item for item in files.values() if item.get("exists")]
+    nonempty = [item for item in existing if int(item.get("size_bytes") or 0) > 0]
+    return {
+        "schema_version": "e2r_research_to_runtime_partial_output_summary_v1",
+        "existing_file_count": len(existing),
+        "nonempty_file_count": len(nonempty),
+        "files": files,
+    }
+
+
+def _line_count(path: Path) -> int:
+    with path.open("r", encoding="utf-8") as handle:
+        return sum(1 for _ in handle)
 
 
 if __name__ == "__main__":

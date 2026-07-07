@@ -27,8 +27,8 @@ class AllArchetypeRuntimeExecutionManifestTests(unittest.TestCase):
     def test_manifest_points_census_v4_at_next_runtime_seed_events(self) -> None:
         config = self.manifest["census_v4_config_kwargs"]
         self.assertEqual(self.manifest["schema_version"], "e2r_all_archetype_runtime_execution_manifest_v1")
-        self.assertEqual(self.manifest["seed_event_count"], 108)
-        self.assertEqual(self.manifest["source_task_shell_count"], 108)
+        self.assertEqual(self.manifest["seed_event_count"], 105)
+        self.assertEqual(self.manifest["source_task_shell_count"], 105)
         self.assertEqual(
             config["brain_candidate_event_seed_path"],
             "docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl",

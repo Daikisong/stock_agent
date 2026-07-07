@@ -92,9 +92,10 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
     def test_attempt_types_reflect_current_runtime_failure_modes(self) -> None:
         self.assertEqual(self.by_prefix["C05"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
         self.assertEqual(self.by_prefix["C06"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "PLANNER_TO_SOURCE_TASK_MATERIALIZATION")
-        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
+        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
+        self.assertEqual(self.by_prefix["C15"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
+        self.assertNotIn("C24", self.by_prefix)
+        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
 
     def test_replay_only_archetypes_are_materialized_as_research_memory_target_candidates(self) -> None:
         expected_symbols = {
@@ -142,31 +143,18 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
 
     def test_previous_claim_failure_feedback_is_carried_into_next_source_tasks(self) -> None:
         self.assertGreater(self.plan["source_route_repair_task_count"], 0)
-        self.assertIn(
-            "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
-            self.plan["source_route_repair_hint_counts"],
-        )
-        self.assertIn(
-            "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
-            self.plan["source_route_repair_hint_counts"],
-        )
+        self.assertEqual(self.plan["source_route_repair_hint_counts"], {})
 
         redteam_row = next(
             row
             for row in self.plan["plan_rows"]
             if row["archetype_id"] == "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM"
         )
-        self.assertEqual(
-            redteam_row["previous_claim_failure_primary_mode"],
-            "TARGET_SCOPE_NOT_DIRECT",
-        )
-        self.assertEqual(
-            redteam_row["previous_claim_failure_repair_hint"],
-            "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
-        )
+        self.assertIsNone(redteam_row["previous_claim_failure_primary_mode"])
+        self.assertIsNone(redteam_row["previous_claim_failure_repair_hint"])
         self.assertIn(
-            "ASK_LLM_FOR_DIRECT_TARGET_COMPANY_SOURCE",
-            redteam_row["source_route_repair_actions"],
+            "TARGET_MATERIALIZATION",
+            redteam_row["attempt_type"],
         )
 
         redteam_task = next(
@@ -174,15 +162,12 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             for task in self.plan["source_tasks"]
             if task["archetype_id"] == "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM"
         )
-        self.assertTrue(redteam_task["source_route_repair_required"])
+        self.assertFalse(redteam_task["source_route_repair_required"])
         self.assertIn(
-            "direct target-company scope",
+            "materialize real current target companies",
             " ".join(redteam_task["query_intents"]),
         )
-        self.assertEqual(
-            redteam_task["planner_failure_feedback"]["previous_claim_failure_primary_mode"],
-            "TARGET_SCOPE_NOT_DIRECT",
-        )
+        self.assertIsNone(redteam_task["planner_failure_feedback"]["previous_claim_failure_primary_mode"])
         self.assertFalse(
             redteam_task["planner_failure_feedback"]["score_evidence_allowed_from_previous_rejected_claims"]
         )
@@ -232,16 +217,10 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             for task in self.plan["source_tasks"]
             if task["archetype_id"] == "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW"
         )
-        self.assertEqual(
-            mismatch_task["previous_claim_failure_primary_mode"],
-            "ROUTE_SIGNAL_FAMILY_MISMATCH",
-        )
+        self.assertIsNone(mismatch_task["previous_claim_failure_primary_mode"])
+        self.assertEqual(mismatch_task["source_route_repair_actions"], [])
         self.assertIn(
-            "ASK_LLM_TO_MATCH_SOURCE_FAMILY_TO_PRIMITIVE_FAMILY",
-            mismatch_task["source_route_repair_actions"],
-        )
-        self.assertIn(
-            "source task must match the primitive family",
+            "materialize real current target companies",
             " ".join(mismatch_task["query_intents"]),
         )
 
@@ -250,12 +229,9 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             for event in self.plan["seed_events"]
             if event["target_archetype"] == "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW"
         )
-        self.assertIn("ROUTE_SIGNAL_FAMILY_MISMATCH", mismatch_seed["raw_reason_codes"])
-        self.assertEqual(
-            mismatch_seed["structured_payload"]["previous_claim_failure_repair_hint"],
-            "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
-        )
-        self.assertTrue(mismatch_seed["structured_payload"]["source_route_repair_required"])
+        self.assertIn("NO_PREVIOUS_CLAIM_FAILURE_MODE", mismatch_seed["raw_reason_codes"])
+        self.assertIsNone(mismatch_seed["structured_payload"]["previous_claim_failure_repair_hint"])
+        self.assertFalse(mismatch_seed["structured_payload"]["source_route_repair_required"])
 
 
 if __name__ == "__main__":

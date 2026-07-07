@@ -1,10 +1,15 @@
 import json
+import io
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
 from e2r.census.research_to_runtime_parity import build_research_to_runtime_parity_audit
-from e2r.cli.run_research_to_runtime_parity_until_pass import main as parity_cli_main
+from e2r.cli.run_research_to_runtime_parity_until_pass import (
+    _run_next_runtime_attempt,
+    main as parity_cli_main,
+)
 
 
 class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
@@ -47,13 +52,14 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         self.assertEqual(
             self.audit["full_thesis_candidate_attempts_by_archetype"],
             {
-                "C01_ORDER_BACKLOG_MARGIN_BRIDGE": 3,
+                "C01_ORDER_BACKLOG_MARGIN_BRIDGE": 2,
                 "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 3,
                 "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 3,
                 "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 3,
-                "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": 1,
-                "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": 2,
+                "C15_MATERIAL_SPREAD_SUPERCYCLE": 1,
                 "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": 1,
+                "C24_BIO_TRIAL_DATA_EVENT_RISK": 1,
+                "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": 2,
                 "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": 3,
             },
         )
@@ -64,13 +70,13 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
                 "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 1,
                 "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 1,
                 "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 1,
-                "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": 1,
                 "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": 1,
+                "C24_BIO_TRIAL_DATA_EVENT_RISK": 1,
             },
         )
         self.assertEqual(self.audit["c05_full_thesis_share"], 0.166667)
-        self.assertEqual(self.audit["required_positive_missing_full_thesis_row_rate"], 1.0)
-        self.assertEqual(self.audit["green_gap_full_thesis_row_rate"], 1.0)
+        self.assertEqual(self.audit["required_positive_missing_full_thesis_row_rate"], 0.833333)
+        self.assertEqual(self.audit["green_gap_full_thesis_row_rate"], 0.833333)
         self.assertNotIn("C05_FULL_THESIS_MONOCULTURE", self.audit["blockers"])
         self.assertIn("MANDATORY_ARCHETYPE_FULL_THESIS_ROW_MISSING", self.audit["blockers"])
 
@@ -87,8 +93,8 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         self.assertEqual(
             self.audit["mandatory_archetype_full_thesis_missing"],
             [
+                "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
                 "C15_MATERIAL_SPREAD_SUPERCYCLE",
-                "C24_BIO_TRIAL_DATA_EVENT_RISK",
                 "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
             ],
         )
@@ -104,24 +110,34 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         self.assertIn("GREEN_GAP_ON_PROMOTED_ROW", c06["blocker_classes"])
 
         c08 = self.by_prefix["C08"]
-        self.assertEqual(c08["runtime_full_thesis_row_count"], 1)
-        self.assertEqual(c08["runtime_parity_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_ONLY")
-        self.assertIn("REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROW", c08["blocker_classes"])
-        self.assertIn("GREEN_GAP_ON_PROMOTED_ROW", c08["blocker_classes"])
+        self.assertEqual(c08["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c08["runtime_parity_status"], "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM")
+        self.assertGreater(c08["runtime_source_task_execution_count"], 0)
+        self.assertEqual(c08["runtime_accepted_claim_count"], 0)
+        self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", c08["blocker_classes"])
+        self.assertIn("PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM", c08["blocker_classes"])
 
-        for prefix in ("C15", "C28"):
-            row = self.by_prefix[prefix]
-            self.assertEqual(row["runtime_full_thesis_row_count"], 0, prefix)
-            self.assertEqual(row["runtime_parity_status"], "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM", prefix)
-            self.assertGreater(row["runtime_source_task_execution_count"], 0, prefix)
-            self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", row["blocker_classes"], prefix)
-            self.assertIn("PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM", row["blocker_classes"], prefix)
+        c15 = self.by_prefix["C15"]
+        self.assertEqual(c15["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c15["runtime_parity_status"], "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP")
+        self.assertGreater(c15["runtime_accepted_claim_count"], 0)
+        self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", c15["blocker_classes"])
+        self.assertIn("SOURCE_PENDING_REQUIRED_OR_GREEN_PRIMITIVES", c15["blocker_classes"])
 
         c24 = self.by_prefix["C24"]
-        self.assertEqual(c24["runtime_full_thesis_row_count"], 0)
-        self.assertEqual(c24["runtime_parity_status"], "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE")
-        self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", c24["blocker_classes"])
-        self.assertIn("SOURCE_BACKED_REPLAY_NOT_CONNECTED_TO_RUNTIME", c24["blocker_classes"])
+        self.assertEqual(c24["runtime_full_thesis_row_count"], 1)
+        self.assertEqual(c24["runtime_parity_status"], "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS")
+        self.assertEqual(c24["runtime_full_thesis_row_with_required_positive_missing_count"], 0)
+        self.assertEqual(c24["runtime_full_thesis_row_with_green_gap_count"], 0)
+        self.assertEqual(c24["blocker_classes"], [])
+
+        c28 = self.by_prefix["C28"]
+        self.assertEqual(c28["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c28["runtime_parity_status"], "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM")
+        self.assertGreater(c28["runtime_source_task_execution_count"], 0)
+        self.assertEqual(c28["runtime_accepted_claim_count"], 0)
+        self.assertIn("MANDATORY_ARCHETYPE_NO_PRODUCTION_FULL_THESIS_ROW", c28["blocker_classes"])
+        self.assertIn("PLANNER_ATTEMPT_NO_ACCEPTED_CLAIM", c28["blocker_classes"])
 
         c17 = self.by_prefix["C17"]
         self.assertEqual(c17["runtime_full_thesis_row_count"], 1)
@@ -256,6 +272,8 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
                 "argv": ["python", "-m", "e2r.cli.run_e2r_census_v4_until_pass"],
                 "stdout_tail": "NOT_READY",
                 "stderr_tail": "",
+                "partial_run_invalid": False,
+                "partial_run_invalid_path": "",
             },
         ) as run_mock:
             exit_code = parity_cli_main(["--as-of-date", "2026-07-05", "--max-iterations", "2"])
@@ -263,6 +281,110 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         self.assertEqual(exit_code, 0)
         self.assertEqual(write_mock.call_count, 2)
         run_mock.assert_called_once()
+
+    def test_cli_stops_after_one_unready_runtime_without_repeated_attempt_flag(self) -> None:
+        def fake_paths() -> dict:
+            audit = {
+                "final_status": "MEANINGFUL_RUNTIME_PARITY_NOT_READY",
+                "completion_labels": ["MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE"],
+                "blockers": ["REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROWS"],
+                "rows": [],
+                "meaningful_full_thesis_evidence_pass": False,
+                "archetype_balanced_full_thesis_pass": False,
+                "full_thesis_row_count": 6,
+                "distinct_full_thesis_archetype_count": 6,
+                "mandatory_archetype_full_thesis_missing": ["C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY"],
+                "required_positive_missing_full_thesis_row_rate": 0.833333,
+                "green_gap_full_thesis_row_rate": 0.833333,
+                "as_of_date": "2026-07-05",
+                "output_root": "output/current",
+            }
+            return {
+                "audit": audit,
+                "matrix_path": Path("docs/operational/fake_matrix.json"),
+                "summary_path": Path("docs/operational/fake_summary.md"),
+                "root_cause_path": Path("docs/operational/fake_root.md"),
+                "v2_audit_path": Path("docs/operational/fake_v2.json"),
+                "candidate_selection_audit": {"status": "NOT_READY"},
+                "planner_bias_audit": {"status": "PASS"},
+                "research_reverse_bundle": {"inventory": {"record_count": 1001}, "cards": {"card_count": 36}},
+                "source_route_reports": {"source_route_matrix": {"pattern_count": 36}},
+                "all_status_reports": {
+                    "json_path": Path("docs/operational/fake_status.json"),
+                    "matrix": {"registry_contract_count": 36},
+                },
+                "next_attempt_reports": {
+                    "json_path": Path("docs/operational/fake_next.json"),
+                    "plan": {"plan_row_count": 36, "source_task_count": 108},
+                },
+                "execution_manifest_reports": {
+                    "json_path": Path("docs/operational/fake_manifest.json"),
+                    "manifest": {
+                        "seed_event_count": 108,
+                        "run_command_argv": ["python", "-m", "e2r.cli.run_e2r_census_v4_until_pass"],
+                    },
+                },
+                "followup_audit": {"task_count": 28},
+                "replay_reports": {
+                    "replay_matrix": {"accepted_claim_replay_count": 3, "source_proxy_repair_task_count": 18}
+                },
+                "meaningful_acceptance": {"meaningful_status": "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE"},
+                "acceptance_report_path": Path("docs/operational/fake_acceptance.md"),
+                "readiness_verdict_path": Path("docs/operational/fake_verdict.md"),
+            }
+
+        with patch(
+            "e2r.cli.run_research_to_runtime_parity_until_pass.write_research_to_runtime_parity_artifacts",
+            side_effect=[fake_paths(), fake_paths(), fake_paths()],
+        ) as write_mock, patch(
+            "e2r.cli.run_research_to_runtime_parity_until_pass._run_next_runtime_attempt",
+            return_value={
+                "iteration": 1,
+                "output_root": "output/census_v4/attempt-01",
+                "returncode": 1,
+                "argv": ["python", "-m", "e2r.cli.run_e2r_census_v4_until_pass"],
+                "stdout_tail": "NOT_READY",
+                "stderr_tail": "",
+                "partial_run_invalid": False,
+                "partial_run_invalid_path": "",
+            },
+        ) as run_mock, patch("sys.stdout", new_callable=io.StringIO) as stdout:
+            exit_code = parity_cli_main(["--as-of-date", "2026-07-05", "--max-iterations", "3"])
+
+        payload = json.loads(stdout.getvalue())
+        self.assertEqual(exit_code, 1)
+        self.assertEqual(write_mock.call_count, 2)
+        run_mock.assert_called_once()
+        self.assertEqual(payload["self_repair_iteration_count"], 1)
+        self.assertEqual(
+            payload["self_repair_stop_reason"],
+            "SELF_REPAIR_REQUIRES_CODE_OR_SOURCE_ROUTE_REPAIR_AFTER_RUNTIME_ATTEMPT",
+        )
+
+    def test_runtime_attempt_keyboard_interrupt_marks_partial_output_invalid(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir, patch(
+            "e2r.cli.run_research_to_runtime_parity_until_pass._self_repair_output_root",
+            return_value=str(Path(tmpdir) / "attempt"),
+        ), patch(
+            "e2r.cli.run_research_to_runtime_parity_until_pass.subprocess.run",
+            side_effect=KeyboardInterrupt(),
+        ):
+            execution = _run_next_runtime_attempt(
+                repo_root=self.repo_root,
+                manifest={"run_command_argv": ["python", "-m", "e2r.cli.run_e2r_census_v4_until_pass"]},
+                as_of_date="2026-07-05",
+                iteration=1,
+            )
+
+            marker_path = Path(execution["partial_run_invalid_path"])
+            marker = json.loads(marker_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(execution["returncode"], 130)
+        self.assertTrue(execution["partial_run_invalid"])
+        self.assertEqual(marker["verdict"], "INVALID_PARTIAL_OUTPUT")
+        self.assertFalse(marker["readiness_evidence_allowed"])
+        self.assertFalse(marker["score_or_stage_evidence_allowed"])
+        self.assertFalse(marker["full_thesis_promotion_allowed"])
 
     def test_balanced_candidate_selection_audit_prioritizes_missing_canaries(self) -> None:
         audit = json.loads(
@@ -278,7 +400,7 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
 
         self.assertEqual(audit["status"], "BALANCED_FULL_THESIS_SELECTION_NOT_READY")
         self.assertFalse(audit["meaningful_pass_allowed"])
-        self.assertEqual(selected_prefixes[:3], ["C15", "C24", "C28"])
+        self.assertEqual(selected_prefixes[:3], ["C08", "C15", "C28"])
         self.assertTrue({"C02", "C04", "C07"}.issubset(set(selected_prefixes[3:7])))
         self.assertIn("required_positive_missing_promoted_rows", audit["blockers"])
 

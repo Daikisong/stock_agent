@@ -136,30 +136,30 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         self.assertGreater(c05["runtime_stagecourt_trace_count"], 0)
 
         c08 = by_prefix["C08"]
-        self.assertEqual(c08["runtime_status"], "SCORE_PATH_CLOSED_WITH_THESIS_GAPS")
-        self.assertEqual(c08["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
+        self.assertEqual(c08["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c08["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
         self.assertGreater(c08["research_case_count"], 0)
         self.assertGreater(c08["runtime_source_task_count"], 0)
         self.assertGreater(c08["source_task_execution_log_count"], 0)
-        self.assertGreater(c08["source_task_any_accepted_claim_count"], 0)
-        self.assertEqual(c08["runtime_full_thesis_row_count"], 1)
-        self.assertEqual(c08["runtime_full_thesis_row_with_required_positive_missing_count"], 1)
-        self.assertEqual(c08["runtime_full_thesis_row_with_green_gap_count"], 1)
+        self.assertEqual(c08["source_task_any_accepted_claim_count"], 0)
+        self.assertEqual(c08["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c08["runtime_full_thesis_row_with_required_positive_missing_count"], 0)
+        self.assertEqual(c08["runtime_full_thesis_row_with_green_gap_count"], 0)
         self.assertEqual(
             c08["next_required_action"],
-            "CLOSE_REQUIRED_POSITIVE_AND_GREEN_GAPS_BEFORE_MEANINGFUL_PASS",
+            "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
         )
 
         c24 = by_prefix["C24"]
-        self.assertEqual(c24["runtime_status"], "PLANNING_ONLY")
-        self.assertEqual(c24["primary_blocker_class"], "SOURCE_TASK_NOT_CREATED")
-        self.assertEqual(c24["runtime_source_task_count"], 0)
-        self.assertEqual(c24["source_task_execution_log_count"], 0)
-        self.assertEqual(c24["runtime_full_thesis_row_count"], 0)
-        self.assertEqual(c24["source_task_any_accepted_claim_count"], 0)
+        self.assertEqual(c24["runtime_status"], "MEANINGFUL_FULL_THESIS_READY")
+        self.assertEqual(c24["primary_blocker_class"], "NONE")
+        self.assertGreater(c24["runtime_source_task_count"], 0)
+        self.assertGreater(c24["source_task_execution_log_count"], 0)
+        self.assertEqual(c24["runtime_full_thesis_row_count"], 1)
+        self.assertGreater(c24["source_task_any_accepted_claim_count"], 0)
         self.assertEqual(
             c24["next_required_action"],
-            "TURN_PLANNER_ATTEMPT_INTO_BOUNDED_SOURCE_TASKS",
+            "KEEP_MONITORING_FOR_LIFECYCLE_SUPERSESSION",
         )
 
 

@@ -86,6 +86,20 @@ event_count = 5
 
 운영적으로는 이것도 다음 패치 대상이다. 같은 blocker가 남아 있는데 manifest나 repair plan이 바뀌지 않은 상태로 다음 attempt를 자동 재실행하면, 실제 수리가 아니라 같은 시험을 다시 보는 일이 된다.
 
+2026-07-08 보정:
+
+```text
+src/e2r/cli/run_research_to_runtime_parity_until_pass.py
+```
+
+에 safety patch를 추가했다. 이제 parent self-repair CLI는 기본값에서 child runtime 1회 뒤에도 같은 material blocker가 남으면 다음 장시간 runtime을 자동으로 시작하지 않는다. 중단된 child runtime에는 `partial_run_invalid.json`을 남겨 Goal4 증거로 못 쓰게 한다.
+
+상세 문서:
+
+```text
+docs/0705/goal4_self_repair_loop_safety_patch_2026-07-08.md
+```
+
 ## Planner 감사
 
 기준 파일:
