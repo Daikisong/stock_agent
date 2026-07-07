@@ -184,7 +184,7 @@ def is_verified_report_original_url(
     title: str | None = None,
     content_type: str | None = None,
 ) -> bool:
-    """Return true only for report-original PDF routes, not any broker-domain PDF."""
+    """Return true only for broker report-original routes, not any broker-domain URL."""
 
     if not is_recognized_report_domain(url):
         return False
@@ -196,6 +196,18 @@ def is_verified_report_original_url(
     path_query = " ".join((path, query))
     if any(hint in path_query for hint in NON_REPORT_URL_HINTS):
         return False
+    if host == "bbn.kiwoom.com":
+        return path.startswith("/rfcr") and len(path) > len("/rfcr")
+    if host == "securities.miraeasset.com":
+        query_values_by_key = {
+            str(key).lower(): tuple(str(value).lower() for value in values)
+            for key, values in parse_qs(parsed.query).items()
+        }
+        return (
+            path == "/bbs/board/message/view.do"
+            and "1521" in query_values_by_key.get("categoryid", ())
+            and any(value.strip() for value in query_values_by_key.get("messageid", ()))
+        )
     if not _looks_like_pdf(parsed, content_type=content_type_text):
         return False
     if host == "stock.pstatic.net":
@@ -204,6 +216,8 @@ def is_verified_report_original_url(
         return path.startswith("/imgstock/upload/research/")
     if host == "file.alphasquare.co.kr":
         return path.startswith("/media/pdfs/")
+    if host == "eugenefn.com" or host.endswith(".eugenefn.com"):
+        return path.startswith("/common/files/amail/") and _looks_like_pdf(parsed, content_type=content_type_text)
     if host == "hanaw.com" or host.endswith(".hanaw.com"):
         return path.startswith("/download/research/")
     if host == "samsungpop.com" or host.endswith(".samsungpop.com"):

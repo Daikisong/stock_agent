@@ -135,6 +135,15 @@ All-archetype linked tests: 35 passed
 
 다음 패치는 runtime을 다시 오래 돌리는 것이 아니라, source/claim 실패 원인을 먼저 쪼개야 한다.
 
+2026-07-08 후속 source-route 수리:
+
+```text
+docs/0705/goal4_broker_report_source_route_patch_2026-07-08.md
+```
+
+이 후속 패치는 C28에서 확인된 broker report original lineage 병목을 줄인다.
+단, Goal4 완료 패치가 아니라 다음 runtime attempt를 더 의미 있게 만들기 위한 부분 수리다.
+
 우선순위:
 
 ```text

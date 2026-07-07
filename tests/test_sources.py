@@ -270,9 +270,33 @@ class SourceConnectorTests(unittest.TestCase):
                 title="SK Hynix customer allocation report",
             )
         )
+        self.assertTrue(
+            is_verified_report_original_url(
+                "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+                title="2H25 OUTLOOK 반도체 소부장",
+            )
+        )
+        self.assertTrue(
+            is_verified_report_original_url(
+                "https://bbn.kiwoom.com/rfCR10848",
+                title="더존비즈온 (012510) AI 시대를 앞당길 주역",
+            )
+        )
+        self.assertTrue(
+            is_verified_report_original_url(
+                "https://securities.miraeasset.com/bbs/board/message/view.do?categoryId=1521&messageId=2332084",
+                title="더존비즈온 (012510/매수) 이익 먼저 잡고, 성장은 곧 따라올 것",
+            )
+        )
         self.assertFalse(is_verified_report_original_url("https://www.samsungpop.com/customer/event_terms.pdf"))
         self.assertFalse(is_verified_report_original_url("https://www.samsungpop.com/privacy.pdf"))
         self.assertFalse(is_verified_report_original_url("https://www.samsungpop.com/support/report-center/fake.pdf"))
+        self.assertFalse(
+            is_verified_report_original_url(
+                "https://securities.miraeasset.com/bbs/board/message/view.do?categoryId=9999&messageId=2332084",
+                title="일반 게시판",
+            )
+        )
         self.assertFalse(
             is_verified_report_original_url(
                 "https://www.samsungpop.com/support/download?"

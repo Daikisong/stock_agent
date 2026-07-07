@@ -1265,6 +1265,84 @@ class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
         self.assertEqual(fetched["verified_report_original_resolver"], "recognized_broker_report_domain")
         self.assertEqual(fetched["verified_report_result_host"], "stock.pstatic.net")
 
+    def test_live_full_bounded_marks_broker_research_routes_from_goal4_artifacts_as_verified_original(self):
+        event = sample_v4_event(symbol="012510", company_name="더존비즈온")
+        cases = (
+            (
+                "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+                "eugenefn.com",
+                True,
+                "2H25 OUTLOOK 반도체 소부장",
+            ),
+            (
+                "https://bbn.kiwoom.com/rfCR10848",
+                "bbn.kiwoom.com",
+                False,
+                "더존비즈온 (012510) AI 시대를 앞당길 주역",
+            ),
+            (
+                "https://securities.miraeasset.com/bbs/board/message/view.do?categoryId=1521&messageId=2332084",
+                "securities.miraeasset.com",
+                False,
+                "더존비즈온 (012510/매수) 이익 먼저 잡고, 성장은 곧 따라올 것",
+            ),
+        )
+        for url, host, is_pdf, title in cases:
+            with self.subTest(url=url):
+                query = f"{event.company_name} {event.symbol} 리포트 ARR 성장 원문"
+                task = replace(
+                    c06_source_task("medium_term_revision_visibility"),
+                    candidate_event_id=event.candidate_event_id,
+                    symbol=event.symbol,
+                    company_name=event.company_name,
+                    preferred_source_classes=("BrokerReportPublicPDF",),
+                    fallback_source_classes=("ReportPDF",),
+                    query_intents=(query,),
+                    max_queries=1,
+                    max_candidates=5,
+                    max_fetches=1,
+                )
+                search_provider = FixtureSearchProvider(
+                    results_by_query={
+                        query: (
+                            SearchResult(
+                                title=title,
+                                url=url,
+                                snippet=f"{event.company_name} {event.symbol} recurring revenue report",
+                                source="NaverSearch",
+                                published_at=datetime(2026, 6, 30, 9, 0),
+                                query=query,
+                                rank=1,
+                                is_pdf=is_pdf,
+                                is_report_domain=True,
+                            ),
+                        )
+                    }
+                )
+                fetcher = PageFetcher(
+                    fixture_text_by_url={
+                        url: f"{event.company_name} recurring revenue and ARR growth are discussed in this broker report."
+                    }
+                )
+
+                result = SourceAcquisitionRunnerV4(
+                    mode="live_full_bounded",
+                    source_provider_registry=SourceProviderRegistry(connectors=()),
+                    web_search_provider=search_provider,
+                    web_page_fetcher=fetcher,
+                ).acquire(event=event, task=task, as_of_date=date(2026, 7, 1))
+
+                self.assertEqual(result.status, "PARSED")
+                self.assertEqual(result.source_class, "BrokerReportPublicPDF")
+                self.assertEqual(result.documents[0].source_name, "BrokerReportDomain")
+                self.assertIn(
+                    f"verified_report_original:broker_report_domain:{host}",
+                    result.documents[0].source_lineage_id,
+                )
+                fetched = result.web_fetched_documents[0]
+                self.assertEqual(fetched["verified_report_original"], True)
+                self.assertEqual(fetched["verified_report_result_host"], host)
+
     def test_live_full_bounded_does_not_mark_broker_domain_non_report_pdf_as_verified_original(self):
         event = sample_v4_event(symbol="000660", company_name="SK하이닉스")
         query = "SK하이닉스 000660 HBM customer allocation report PDF"

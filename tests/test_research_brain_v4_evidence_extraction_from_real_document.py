@@ -1029,6 +1029,85 @@ class ResearchBrainV4EvidenceExtractionFromRealDocumentTests(unittest.TestCase):
             execution.not_eligible_reasons,
         )
 
+    def test_verified_kiwoom_report_route_can_score_c28_arr_claim(self):
+        contract = load_evidence_contracts_v2(require_all_archetypes=True)["C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"]
+        event = sample_v4_event(symbol="012510", company_name="더존비즈온")
+        quote = "더존비즈온 cloud ARR growth remains visible with recurring revenue expansion."
+        task = SourceTask(
+            task_id="recognized-kiwoom-c28-arr-report",
+            candidate_event_id=event.candidate_event_id,
+            symbol=event.symbol,
+            company_name=event.company_name,
+            archetype_id="C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+            primitive_gap="arr_growth_visible",
+            task_type=SourceTaskType.POSITIVE_VERIFY.value,
+            preferred_source_classes=("BrokerReportPublicPDF",),
+            fallback_source_classes=("ReportPDF",),
+            forbidden_source_classes=("unbounded_general_search",),
+            date_window={"end": "2026-07-01", "lookback_days": 90},
+            max_queries=1,
+            max_candidates=5,
+            max_fetches=1,
+            stop_condition={"accepted_claim_count": 1},
+            general_search_allowed=False,
+        )
+        bundle = execute_source_tasks_with_evidence_os_v4(
+            event=event,
+            tasks=(task,),
+            contract=contract,
+            as_of_date=date(2026, 7, 1),
+            source_runner=_SingleDocumentRunner(
+                symbol="012510",
+                company_name="더존비즈온",
+                published_at=date(2026, 6, 30),
+                text=f"{quote} The report discusses AI software demand.",
+                anchor_type=AnchorType.TEXT_SPAN,
+                include_structured_row=False,
+                canonical_url="https://bbn.kiwoom.com/rfCR10848",
+                source_name="NaverFreeSearchProvider",
+                source_class="BrokerReportPublicPDF",
+                source_type=SourceType.RESEARCH_REPORT,
+                source_lineage_id=(
+                    "NaverFreeSearchProvider:WEBRESULT-UNIT:"
+                    "verified_report_original:broker_report_domain:bbn.kiwoom.com"
+                ),
+                provider_errors=("trusted_report_provider_not_configured; general search is not a score source",),
+                web_fetched_row=True,
+                web_title="더존비즈온 (012510) AI 시대를 앞당길 주역",
+            ),
+            claim_extractor=_StaticRawAssertionExtractor(
+                RawAssertionRecord(
+                    raw_assertion_id="RAW-DUZON-C28-ARR-KIWOOM",
+                    document_id="",
+                    anchor_id="",
+                    subject="더존비즈온",
+                    predicate="software_arr_growth_claim",
+                    object_text=quote,
+                    polarity_proposal="POSITIVE",
+                    modality="STATED",
+                    event_date="2026-06-30",
+                    exact_quote=quote,
+                    related_entities=("Duzon Bizon", "더존비즈온"),
+                )
+            ),
+        )
+
+        execution = bundle.executions[0]
+        self.assertEqual(execution.status, "EVIDENCE_OS_ACCEPTED")
+        self.assertTrue(execution.accepted_claim_ids)
+        self.assertNotIn(
+            "source_task_provider_error_score_block:general_search_not_score_source",
+            execution.not_eligible_reasons,
+        )
+        self.assertNotIn(
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            execution.not_eligible_reasons,
+        )
+        self.assertNotIn(
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider",
+            execution.not_eligible_reasons,
+        )
+
     def test_broker_domain_non_report_pdf_with_forged_lineage_marker_does_not_score(self):
         contract = load_evidence_contracts_v2(require_all_archetypes=True)["C06_HBM_MEMORY_CUSTOMER_CAPACITY"]
         event = sample_v4_event(symbol="000660", company_name="SK하이닉스")
