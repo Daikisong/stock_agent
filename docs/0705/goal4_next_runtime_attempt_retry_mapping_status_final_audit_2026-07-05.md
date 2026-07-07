@@ -406,6 +406,41 @@ delivery_schedule claim 하나로 점수는 계산됨.
 
 - 실제 운영에 필요한 primitive를 닫을 만큼 source acquisition/extraction이 아직 강하지 않다.
 
+### 문제 1-1. accepted claim 미생성 원인 분해
+
+이번 패치 후 `full_thesis_seed_materialization_trace.jsonl`와 `full_thesis_seed_materialization_audit.json`은 `ACCEPTED_CLAIM_NOT_CREATED`를 한 덩어리로 두지 않고 seed별 source task 실패축을 기록한다.
+
+현재 88개 accepted-claim 미생성 seed의 primary failure axis:
+
+| primary failure axis | seed count | 쉬운 의미 |
+|---|---:|---|
+| `PRIMITIVE_GAP_UNSATISFIED` | 78 | 문서는 찾았지만 그 문장이 해당 primitive 빈칸을 직접 채우지 못함 |
+| `NO_FETCHED_DOCUMENT` | 7 | fetch 가능한 원문을 충분히 잡지 못함 |
+| `NO_SCORE_ELIGIBLE_REAL_CLAIM` | 2 | claim 후보는 있었지만 current/direct/anchor 조건을 통과하지 못함 |
+| `PROVIDER_ERROR_RECORDED` | 1 | provider 문제를 먼저 해결해야 함 |
+
+전체 failure axis 누적에는 다음도 같이 보인다.
+
+```text
+PRIMITIVE_GAP_UNSATISFIED = 482
+NO_SCORE_ELIGIBLE_REAL_CLAIM = 485
+PRIMITIVE_MAPPING_REJECTED = 299
+MAPPING_NOT_ACCEPTED = 299
+TEMPORAL_NOT_CURRENT = 174
+NO_FETCHED_DOCUMENT = 157
+```
+
+쉬운 예:
+
+```text
+C02 datacenter_customer를 찾으라고 했는데
+가져온 DART/KIND/리포트 문서가 회사 일반 공시, 과거 리포트, 다른 primitive 문장에 가까움
+→ source task는 실행됐지만 datacenter_customer accepted claim은 0
+→ 다음에는 "공시 아무거나"가 아니라 datacenter customer를 직접 말하는 원문 구간을 찾아야 함
+```
+
+따라서 다음 병목은 단순 provider 장애가 아니다. 가장 큰 병목은 **source task가 primitive-specific 원문 claim을 찾아오지 못하는 것**이다.
+
 ### 문제 2. StageCourt trace와 production row의 분리
 
 15개는 `STAGECOURT_READY_NOT_PROMOTED`다.
@@ -433,11 +468,10 @@ SK하이닉스가 큐에 있다는 뜻은 "다음 조사 대상"이라는 뜻이
 
 ## 다음 패치 방향
 
-1. `ACCEPTED_CLAIM_NOT_CREATED` 88개를 원인별로 쪼개야 한다.
-   - source fetch 실패
-   - fetch는 됐지만 claim extractor가 놓침
-   - claim은 있었지만 target/direct/current adjudication에서 탈락
-   - primitive mapping이 REJECTED됨
+1. `ACCEPTED_CLAIM_NOT_CREATED` 88개 중 `PRIMITIVE_GAP_UNSATISFIED` primary 78개부터 source route를 고쳐야 한다.
+   - generic DART/KIND/CompanyGuide status check가 primitive claim으로 둔갑하지 않게 유지한다.
+   - LLM planner에는 `source_task_primary_failure_axis`, `source_task_failure_repair_hint`, sample rejected task를 되돌려야 한다.
+   - 다음 source task는 공시/리포트 전체가 아니라 primitive-specific 원문 구간을 찾도록 유도해야 한다.
 
 2. C02/C04/C07/C09/C11~C14/C16/C18~C23/C25~C28/C30/C32/R13처럼 accepted claim이 0인 아키타입부터 source task 실행 결과를 역추적해야 한다.
 

@@ -619,6 +619,22 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
         self.assertEqual(audit["full_thesis_promoted_seed_count"], 1)
         self.assertEqual(audit["stagecourt_trace_seed_count"], 2)
         self.assertEqual(audit["accepted_claim_seed_count"], 3)
+        no_claim_row = next(row for row in trace if row["materialization_status"] == "ACCEPTED_CLAIM_NOT_CREATED")
+        self.assertEqual(no_claim_row["source_task_primary_failure_axis"], "NO_FETCHED_DOCUMENT")
+        self.assertEqual(
+            no_claim_row["source_task_failure_repair_hint"],
+            "FIND_FETCHABLE_ORIGINAL_SOURCE_OR_NARROW_SOURCE_CLASS",
+        )
+        self.assertIn("NO_ACCEPTED_CLAIM", no_claim_row["source_task_failure_axis_counts"])
+        self.assertEqual(
+            audit["accepted_claim_not_created_primary_failure_axis_counts"],
+            {"NO_FETCHED_DOCUMENT": 1},
+        )
+        self.assertEqual(
+            audit["accepted_claim_not_created_failure_axis_counts"],
+            {"NO_ACCEPTED_CLAIM": 1, "NO_CLAIM_EXTRACTED": 1, "NO_FETCHED_DOCUMENT": 1},
+        )
+        self.assertEqual(len(audit["accepted_claim_not_created_samples"]), 1)
         self.assertIn("SOURCE_TASK_NOT_EXECUTED", audit["next_actions_by_status"])
 
     def test_samsung_hynix_smoke_tasks_execute_with_claim_backed_full_thesis_evidence(self):

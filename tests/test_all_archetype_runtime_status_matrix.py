@@ -217,6 +217,27 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
         )
 
+    def test_seed_materialization_audit_splits_accepted_claim_not_created_causes(self) -> None:
+        audit = json.loads(
+            (self.docs / "census_mode_v4_full_thesis_seed_materialization_audit.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(audit["status_counts"]["ACCEPTED_CLAIM_NOT_CREATED"], 88)
+        self.assertIn("accepted_claim_not_created_failure_axis_counts", audit)
+        self.assertIn("accepted_claim_not_created_primary_failure_axis_counts", audit)
+        self.assertIn("accepted_claim_not_created_samples", audit)
+        self.assertGreater(
+            audit["accepted_claim_not_created_primary_failure_axis_counts"]["PRIMITIVE_GAP_UNSATISFIED"],
+            audit["accepted_claim_not_created_primary_failure_axis_counts"].get("PROVIDER_ERROR_RECORDED", 0),
+        )
+        self.assertGreater(audit["accepted_claim_not_created_failure_axis_counts"]["PRIMITIVE_MAPPING_REJECTED"], 0)
+        self.assertGreater(audit["accepted_claim_not_created_failure_axis_counts"]["TEMPORAL_NOT_CURRENT"], 0)
+        self.assertGreater(len(audit["accepted_claim_not_created_samples"]), 0)
+        sample = audit["accepted_claim_not_created_samples"][0]
+        self.assertIn("source_task_primary_failure_axis", sample)
+        self.assertIn("source_task_failure_repair_hint", sample)
+        self.assertIn("source_task_failure_samples", sample)
+        self.assertTrue(sample["source_task_failure_samples"])
+
     def test_source_executed_without_accepted_claim_is_not_collapsed_into_planner_only(self) -> None:
         c29 = self.by_prefix["C29"]
         self.assertEqual(c29["runtime_attempt_status"], "PRODUCTION_CANDIDATE_BLOCKED")

@@ -6654,6 +6654,7 @@ def _write_full_thesis_seed_materialization_trace(
             for row in source_rows
             if str(row.get("task_id") or (row.get("source_task") or {}).get("task_id") or "").strip()
         ]
+        source_failure_summary = _full_thesis_seed_source_failure_summary(source_rows)
         stagecourt_trace_ids = [
             str(row.get("stagecourt_trace_id") or row.get("trace_id") or "")
             for row in stage_traces
@@ -6735,6 +6736,15 @@ def _write_full_thesis_seed_materialization_trace(
                 "planner_provider_error_counts": dict(sorted(planner_provider_error_counts.items())),
                 "source_task_ids": source_task_ids,
                 "source_task_execution_count": len(source_rows),
+                "source_task_status_counts": source_failure_summary["status_counts"],
+                "source_task_stop_reason_counts": source_failure_summary["stop_reason_counts"],
+                "source_task_provider_error_counts": source_failure_summary["provider_error_counts"],
+                "source_task_not_eligible_reason_counts": source_failure_summary["not_eligible_reason_counts"],
+                "source_task_unsatisfied_primitive_counts": source_failure_summary["unsatisfied_primitive_counts"],
+                "source_task_failure_axis_counts": source_failure_summary["failure_axis_counts"],
+                "source_task_primary_failure_axis": source_failure_summary["primary_failure_axis"],
+                "source_task_failure_repair_hint": source_failure_summary["repair_hint"],
+                "source_task_failure_samples": source_failure_summary["failure_samples"],
                 "accepted_claim_ids": accepted_claim_ids,
                 "accepted_claim_count": len(accepted_claim_ids),
                 "score_contribution_ids": score_contribution_ids,
@@ -6761,6 +6771,182 @@ def _write_full_thesis_seed_materialization_trace(
         output_root / "full_thesis_seed_materialization_audit.json",
         _full_thesis_seed_materialization_audit(seed_rows=seed_rows, trace_rows=trace_rows),
     )
+
+
+def _full_thesis_seed_source_failure_summary(source_rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    """Summarize why a seed's source tasks did or did not create accepted claims."""
+
+    status_counts: Counter[str] = Counter()
+    stop_reason_counts: Counter[str] = Counter()
+    provider_error_counts: Counter[str] = Counter()
+    not_eligible_reason_counts: Counter[str] = Counter()
+    unsatisfied_primitive_counts: Counter[str] = Counter()
+    failure_axis_counts: Counter[str] = Counter()
+    failure_samples: list[dict[str, Any]] = []
+
+    for row in source_rows:
+        status_counts[str(row.get("status") or "UNKNOWN")] += 1
+        stop_reason_counts[str(row.get("stop_reason") or "UNKNOWN")] += 1
+        for error in row.get("provider_errors") or []:
+            provider_error_counts[_full_thesis_seed_reason_key(error)] += 1
+        for reason in row.get("not_eligible_reasons") or []:
+            not_eligible_reason_counts[_full_thesis_seed_reason_key(reason)] += 1
+        for primitive_id in row.get("primitive_gap_unsatisfied_ids") or []:
+            unsatisfied_primitive_counts[str(primitive_id)] += 1
+        axes = _full_thesis_seed_source_failure_axes(row)
+        for axis in axes:
+            failure_axis_counts[axis] += 1
+        if axes and len(failure_samples) < 5:
+            failure_samples.append(_full_thesis_seed_source_failure_sample(row, axes))
+
+    primary_axis = _full_thesis_seed_primary_failure_axis(failure_axis_counts)
+    return {
+        "status_counts": dict(sorted(status_counts.items())),
+        "stop_reason_counts": dict(sorted(stop_reason_counts.items())),
+        "provider_error_counts": dict(sorted(provider_error_counts.items())),
+        "not_eligible_reason_counts": dict(sorted(not_eligible_reason_counts.items())),
+        "unsatisfied_primitive_counts": dict(sorted(unsatisfied_primitive_counts.items())),
+        "failure_axis_counts": dict(sorted(failure_axis_counts.items())),
+        "primary_failure_axis": primary_axis,
+        "repair_hint": _full_thesis_seed_repair_hint(primary_axis),
+        "failure_samples": failure_samples,
+    }
+
+
+def _full_thesis_seed_reason_key(value: Any) -> str:
+    return str(value or "UNKNOWN").split(":", 1)[0]
+
+
+def _full_thesis_seed_source_failure_axes(row: Mapping[str, Any]) -> list[str]:
+    axes: list[str] = []
+    accepted_claim_ids = _ids_from_value(row.get("accepted_claim_ids"))
+    direct_accepted_claim_ids = _ids_from_value(row.get("direct_accepted_claim_ids"))
+    rerouted_accepted_claim_ids = _ids_from_value(row.get("rerouted_accepted_claim_ids"))
+    rejected_claim_ids = _ids_from_value(row.get("rejected_claim_ids"))
+    adjudicated_claim_ids = _ids_from_value(row.get("adjudicated_claim_ids"))
+    raw_assertion_ids = _ids_from_value(row.get("raw_assertion_ids"))
+    fetched_document_ids = _ids_from_value(row.get("fetched_document_ids"))
+    provider_errors = [str(value) for value in row.get("provider_errors") or [] if str(value).strip()]
+    not_eligible = [str(value) for value in row.get("not_eligible_reasons") or [] if str(value).strip()]
+    status = str(row.get("status") or "")
+    stop_reason = str(row.get("stop_reason") or "")
+
+    if direct_accepted_claim_ids or (accepted_claim_ids and row.get("satisfies_source_task") is True):
+        axes.append("DIRECT_ACCEPTED_CLAIM")
+    elif rerouted_accepted_claim_ids:
+        axes.append("REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED")
+    elif accepted_claim_ids:
+        axes.append("ACCEPTED_CLAIM_NOT_TASK_SATISFYING")
+    else:
+        axes.append("NO_ACCEPTED_CLAIM")
+
+    if status == "PROVIDER_FAILED":
+        axes.append("PROVIDER_FAILED")
+    if provider_errors:
+        axes.append("PROVIDER_ERROR_RECORDED")
+    if status == "REJECTED_BY_POLICY" or stop_reason == "source_task_rejected_by_v4_policy":
+        axes.append("POLICY_REJECTED")
+    if not fetched_document_ids:
+        axes.append("NO_FETCHED_DOCUMENT")
+    if not raw_assertion_ids and not adjudicated_claim_ids and not rejected_claim_ids and status != "PROVIDER_FAILED":
+        axes.append("NO_CLAIM_EXTRACTED")
+    if rejected_claim_ids or adjudicated_claim_ids:
+        axes.append("CLAIM_REJECTED_BEFORE_SCORE")
+    if status == "NO_EVIDENCE_FOUND" or stop_reason == "no_score_eligible_real_claim":
+        axes.append("NO_SCORE_ELIGIBLE_REAL_CLAIM")
+    if stop_reason == "accepted_baseline_claim_without_task_primitive":
+        axes.append("BASELINE_CLAIM_NOT_TASK_PRIMITIVE")
+    if row.get("primitive_gap_unsatisfied_ids"):
+        axes.append("PRIMITIVE_GAP_UNSATISFIED")
+    if any(reason.startswith("primitive_mapping_rejected") for reason in not_eligible):
+        axes.append("PRIMITIVE_MAPPING_REJECTED")
+    if any(reason.startswith("mapping_not_accepted") for reason in not_eligible):
+        axes.append("MAPPING_NOT_ACCEPTED")
+    if any(reason.startswith(("semantic_rejected", "target_scope_not_allowed", "target_not_direct")) for reason in not_eligible):
+        axes.append("SEMANTIC_OR_TARGET_REJECTED")
+    if any(reason.startswith("temporal_not_allowed") for reason in not_eligible):
+        axes.append("TEMPORAL_NOT_CURRENT")
+    if any(reason.startswith(("anchor_validation", "source_lineage_unverified_original")) for reason in not_eligible):
+        axes.append("ANCHOR_OR_LINEAGE_REJECTED")
+    if any(reason.startswith(("source_provider_document_type_mismatch", "source_class_document_type_mismatch")) for reason in not_eligible):
+        axes.append("SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH")
+    return list(dict.fromkeys(axes))
+
+
+def _full_thesis_seed_primary_failure_axis(failure_axis_counts: Counter[str]) -> str | None:
+    if not failure_axis_counts:
+        return None
+    priority = (
+        "NO_FETCHED_DOCUMENT",
+        "POLICY_REJECTED",
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH",
+        "ANCHOR_OR_LINEAGE_REJECTED",
+        "TEMPORAL_NOT_CURRENT",
+        "SEMANTIC_OR_TARGET_REJECTED",
+        "PRIMITIVE_MAPPING_REJECTED",
+        "MAPPING_NOT_ACCEPTED",
+        "PRIMITIVE_GAP_UNSATISFIED",
+        "CLAIM_REJECTED_BEFORE_SCORE",
+        "NO_CLAIM_EXTRACTED",
+        "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED",
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+        "PROVIDER_FAILED",
+        "PROVIDER_ERROR_RECORDED",
+        "NO_ACCEPTED_CLAIM",
+        "DIRECT_ACCEPTED_CLAIM",
+        "ACCEPTED_CLAIM_NOT_TASK_SATISFYING",
+        "BASELINE_CLAIM_NOT_TASK_PRIMITIVE",
+    )
+    priority_index = {axis: index for index, axis in enumerate(priority)}
+    actionable_counts = Counter(
+        {axis: count for axis, count in failure_axis_counts.items() if axis != "NO_ACCEPTED_CLAIM"}
+    )
+    candidates = actionable_counts or failure_axis_counts
+    return sorted(
+        candidates,
+        key=lambda axis: (-int(candidates[axis]), priority_index.get(axis, len(priority_index))),
+    )[0]
+
+
+def _full_thesis_seed_repair_hint(axis: str | None) -> str | None:
+    if not axis:
+        return None
+    hints = {
+        "PROVIDER_FAILED": "FIX_PROVIDER_OR_MARK_EXTERNAL_SOURCE_BLOCKER",
+        "PROVIDER_ERROR_RECORDED": "FIX_PROVIDER_OR_MARK_EXTERNAL_SOURCE_BLOCKER",
+        "NO_FETCHED_DOCUMENT": "FIND_FETCHABLE_ORIGINAL_SOURCE_OR_NARROW_SOURCE_CLASS",
+        "POLICY_REJECTED": "REPLAN_WITH_ALLOWED_OFFICIAL_FIRST_SOURCE_ROUTE",
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": "MATCH_SOURCE_CLASS_TO_DOCUMENT_TYPE_BEFORE_FETCH",
+        "ANCHOR_OR_LINEAGE_REJECTED": "REPAIR_ORIGINAL_SOURCE_ANCHOR_LINEAGE",
+        "TEMPORAL_NOT_CURRENT": "FIND_CURRENT_OR_SUPERSEDING_SOURCE",
+        "SEMANTIC_OR_TARGET_REJECTED": "TIGHTEN_TARGET_ENTITY_AND_DOCUMENT_SECTION",
+        "PRIMITIVE_MAPPING_REJECTED": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
+        "MAPPING_NOT_ACCEPTED": "RECHECK_MAPPER_CONTRACT_AND_PRIMITIVE_REQUIREMENT",
+        "PRIMITIVE_GAP_UNSATISFIED": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
+        "CLAIM_REJECTED_BEFORE_SCORE": "INSPECT_REJECTED_CLAIM_AND_ADJUST_QUERY_INTENT",
+        "NO_CLAIM_EXTRACTED": "FETCH_DOCUMENT_WITH_DIRECT_OPERATING_TEXT",
+        "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": "USE_REROUTE_FEEDBACK_AND_SEARCH_ORIGINAL_GAP",
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+        "NO_ACCEPTED_CLAIM": "FETCH_ANCHOR_AND_EXTRACT_SCORE_ELIGIBLE_CLAIM",
+    }
+    return hints.get(axis, "INSPECT_SOURCE_TASK_FAILURE_SAMPLE")
+
+
+def _full_thesis_seed_source_failure_sample(row: Mapping[str, Any], axes: Sequence[str]) -> dict[str, Any]:
+    return {
+        "task_id": row.get("task_id") or (row.get("source_task") or {}).get("task_id"),
+        "symbol": row.get("symbol"),
+        "archetype_id": row.get("archetype_id"),
+        "primitive_gap": row.get("primitive_gap"),
+        "status": row.get("status"),
+        "stop_reason": row.get("stop_reason"),
+        "source_class": row.get("source_class"),
+        "provider_name": row.get("provider_name"),
+        "failure_axes": list(axes)[:6],
+        "provider_errors": list(row.get("provider_errors") or [])[:3],
+        "not_eligible_reasons": list(row.get("not_eligible_reasons") or [])[:5],
+        "document_urls": list(row.get("document_urls") or [])[:3],
+    }
 
 
 def _full_thesis_stage_row_matches_seed_event(*, stage_row: Mapping[str, Any], seed_event_id: str) -> bool:
@@ -6815,6 +7001,43 @@ def _full_thesis_seed_materialization_audit(
     final_score_scale_counts = Counter(str(row.get("final_score_scale") or "UNKNOWN") for row in trace_rows)
     final_operator_stage_use_counts = Counter(str(row.get("final_operator_stage_use") or "UNKNOWN") for row in trace_rows)
     final_operator_score_use_counts = Counter(str(row.get("final_operator_score_use") or "UNKNOWN") for row in trace_rows)
+    source_failure_axis_counts: Counter[str] = Counter()
+    source_primary_failure_axis_counts: Counter[str] = Counter()
+    source_repair_hint_counts: Counter[str] = Counter()
+    accepted_claim_not_created_failure_axis_counts: Counter[str] = Counter()
+    accepted_claim_not_created_primary_axis_counts: Counter[str] = Counter()
+    source_failure_axis_by_target_archetype: dict[str, Counter[str]] = {}
+    accepted_claim_not_created_samples: list[dict[str, Any]] = []
+    for row in trace_rows:
+        archetype = str(row.get("target_archetype") or "UNKNOWN")
+        failure_axis_counts = row.get("source_task_failure_axis_counts") if isinstance(row.get("source_task_failure_axis_counts"), Mapping) else {}
+        for axis, count in failure_axis_counts.items():
+            source_failure_axis_counts[str(axis)] += int(count or 0)
+            source_failure_axis_by_target_archetype.setdefault(archetype, Counter())[str(axis)] += int(count or 0)
+            if row.get("materialization_status") == "ACCEPTED_CLAIM_NOT_CREATED":
+                accepted_claim_not_created_failure_axis_counts[str(axis)] += int(count or 0)
+        primary_axis = str(row.get("source_task_primary_failure_axis") or "")
+        if primary_axis:
+            source_primary_failure_axis_counts[primary_axis] += 1
+            if row.get("materialization_status") == "ACCEPTED_CLAIM_NOT_CREATED":
+                accepted_claim_not_created_primary_axis_counts[primary_axis] += 1
+        repair_hint = str(row.get("source_task_failure_repair_hint") or "")
+        if repair_hint:
+            source_repair_hint_counts[repair_hint] += 1
+        if row.get("materialization_status") == "ACCEPTED_CLAIM_NOT_CREATED" and len(accepted_claim_not_created_samples) < 12:
+            accepted_claim_not_created_samples.append(
+                {
+                    "candidate_event_id": row.get("candidate_event_id"),
+                    "symbol": row.get("symbol"),
+                    "target_archetype": row.get("target_archetype"),
+                    "target_primitive_gap": row.get("target_primitive_gap"),
+                    "source_task_primary_failure_axis": row.get("source_task_primary_failure_axis"),
+                    "source_task_failure_repair_hint": row.get("source_task_failure_repair_hint"),
+                    "source_task_status_counts": row.get("source_task_status_counts") or {},
+                    "source_task_failure_axis_counts": row.get("source_task_failure_axis_counts") or {},
+                    "source_task_failure_samples": row.get("source_task_failure_samples") or [],
+                }
+            )
     critical_counts = {
         "seed_trace_count_mismatch_count": int(len(seed_rows) != len(trace_rows)),
         "score_evidence_allowed_before_execution_count": sum(1 for row in trace_rows if row.get("score_evidence_allowed") is True),
@@ -6935,6 +7158,20 @@ def _full_thesis_seed_materialization_audit(
         "final_score_scale_counts": dict(sorted(final_score_scale_counts.items())),
         "final_operator_stage_use_counts": dict(sorted(final_operator_stage_use_counts.items())),
         "final_operator_score_use_counts": dict(sorted(final_operator_score_use_counts.items())),
+        "source_task_failure_axis_counts": dict(sorted(source_failure_axis_counts.items())),
+        "source_task_primary_failure_axis_counts": dict(sorted(source_primary_failure_axis_counts.items())),
+        "source_task_repair_hint_counts": dict(sorted(source_repair_hint_counts.items())),
+        "accepted_claim_not_created_failure_axis_counts": dict(
+            sorted(accepted_claim_not_created_failure_axis_counts.items())
+        ),
+        "accepted_claim_not_created_primary_failure_axis_counts": dict(
+            sorted(accepted_claim_not_created_primary_axis_counts.items())
+        ),
+        "source_task_failure_axis_counts_by_target_archetype": {
+            key: dict(sorted(counter.items()))
+            for key, counter in sorted(source_failure_axis_by_target_archetype.items())
+        },
+        "accepted_claim_not_created_samples": accepted_claim_not_created_samples,
         "planner_run_seed_count": sum(1 for row in trace_rows if int(row.get("planner_run_count") or 0) > 0),
         "real_provider_success_seed_count": sum(1 for row in trace_rows if int(row.get("planner_real_provider_success_count") or 0) > 0),
         "source_task_execution_seed_count": sum(1 for row in trace_rows if int(row.get("source_task_execution_count") or 0) > 0),
