@@ -39,8 +39,8 @@
 - all contracts have source route patterns: `True`
 - runtime proof counts: `{"NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED": 1, "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP": 3, "NOT_PROVEN_PLANNER_ONLY": 1, "NOT_PROVEN_SCORE_PATH_ONLY": 6, "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM": 22, "NOT_PROVEN_TARGET_MATERIALIZATION_REQUIRED": 3}`
 - next runtime attempt plan rows: `36`
-- next runtime source task shells: `108`
-- next runtime seed events: `108`
+- next runtime source task shells: `111`
+- next runtime seed events: `111`
 - next runtime attempt types: `{"ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE": 1, "ARCHETYPE_TARGET_MATERIALIZATION": 3, "BLOCKED_CANDIDATE_GAP_CLOSURE": 3, "PLANNER_TO_SOURCE_TASK_MATERIALIZATION": 1, "PROMOTED_SCORE_PATH_GAP_CLOSURE": 6, "SOURCE_EXECUTION_REPAIR": 22}`
 - runtime execution manifest status: `READY_FOR_RESEARCH_BRAIN_INPUT_PARITY_SELF_REPAIR_EXECUTABLE`
 - runtime execution seed path: `docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl`

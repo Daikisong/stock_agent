@@ -81,6 +81,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
             "url_backed_replay_obligation_status",
             "url_backed_replay_obligation_unmet",
             "source_proxy_to_score_count",
+            "source_backed_replay_symbols",
+            "source_backed_replay_candidate_ids",
             "runtime_status",
             "primary_blocker_class",
             "blocker_detail",
@@ -141,6 +143,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
                 elif key.endswith("_counts"):
                     self.assertIsInstance(row[key], dict, (row["archetype_id"], key))
                 elif key.startswith("source_task_top_") or key == "seed_materialization_top_failure_axes":
+                    self.assertIsInstance(row[key], list, (row["archetype_id"], key))
+                elif key in {"source_backed_replay_symbols", "source_backed_replay_candidate_ids"}:
                     self.assertIsInstance(row[key], list, (row["archetype_id"], key))
                 elif (
                     key.startswith("claim_mapping_top_")
@@ -254,6 +258,7 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(c24["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY")
         self.assertEqual(c24["url_backed_replay_obligation_status"], "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED")
         self.assertTrue(c24["url_backed_replay_obligation_unmet"])
+        self.assertEqual(c24["source_backed_replay_symbols"], ["009420", "215600"])
         self.assertEqual(c24["full_thesis_status"], "NO_PRODUCTION_FULL_THESIS_ROW")
         self.assertEqual(c24["runtime_parity_proof_status"], "NOT_PROVEN_PLANNER_ONLY")
         self.assertEqual(c24["runtime_status"], "PLANNING_ONLY")

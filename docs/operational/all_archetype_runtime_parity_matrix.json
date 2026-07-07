@@ -592,6 +592,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-3e94b90f76864a0f3922",
+        "RPLAY-4e1abf1ebc4c0bc87077",
+        "RPLAY-9986eb3d4637be17666d"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 251,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 255,
@@ -1188,6 +1194,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-6cdd3be69c0984259f50",
+        "RPLAY-a79055c0be3a125d5e5f",
+        "RPLAY-b61a24a4c75e4266724a"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 199,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 208,
@@ -1783,6 +1795,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-667893ab59fc32ff38ee",
+        "RPLAY-b97351b7ce804a1d0147",
+        "RPLAY-ec681764774b59f400e4"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 141,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 146,
@@ -2368,6 +2386,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-7287c58034032c2a08a6",
+        "RPLAY-780de42c6f18f7b0c830",
+        "RPLAY-e578585df57f42930076"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 102,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 106,
@@ -2938,6 +2962,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-834ffaa49b9652b10136",
+        "RPLAY-92b7a9b277cf87d3d02b",
+        "RPLAY-af9ebd70e058ce02ce67"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 177,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 185,
@@ -3544,6 +3574,14 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 1,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-11b4c83595df335e55da",
+        "RPLAY-d2e3b07390f0441ebee2",
+        "RPLAY-fdfeb935320fa48e1979"
+      ],
+      "source_backed_replay_symbols": [
+        "000660"
+      ],
       "source_proxy_case_count": 221,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 230,
@@ -4120,6 +4158,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-13b01c28d11568db6055",
+        "RPLAY-72971c72d2d98940f2e6",
+        "RPLAY-7929d1d93be62fe2e72e"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 199,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 202,
@@ -4738,6 +4782,14 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 4,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-387a616a78cbc34119d3",
+        "RPLAY-998d8e240a346b248bd7",
+        "RPLAY-f45a477a486d2f3e01ab"
+      ],
+      "source_backed_replay_symbols": [
+        "405100"
+      ],
       "source_proxy_case_count": 177,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 180,
@@ -5337,6 +5389,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-a405b94350e40e2c8970",
+        "RPLAY-f6b6a9e10f2425b69ac3",
+        "RPLAY-ff952ada6ba26963afe7"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 194,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 195,
@@ -5915,6 +5973,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-2018d512f0ef2833b40b",
+        "RPLAY-92c19548691bb762e265",
+        "RPLAY-d2194bc7fad76313a157"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 206,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 209,
@@ -6478,6 +6542,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-3c57fec5ecd9f464b411",
+        "RPLAY-6bc1a0fc5921f72f25b6",
+        "RPLAY-cbeb4833f5c2e9a7487d"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 153,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 156,
@@ -6971,6 +7041,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-4e31515eda1f66a8f5b1",
+        "RPLAY-ba71944cd69f27d8d3a8",
+        "RPLAY-cfc5d583d42e073be8ab"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 163,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 168,
@@ -7521,6 +7597,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-010c0cb6cb8dd4f26171",
+        "RPLAY-63182dee7415fe9f5c7d",
+        "RPLAY-b75cf91b8ab6cd5785fa"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 183,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 189,
@@ -8073,6 +8155,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-1bff6e1a4c56a62a60ff",
+        "RPLAY-33a344617a980f67cb5c",
+        "RPLAY-a6ef714cdb0a2933569d"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 171,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 175,
@@ -8664,6 +8752,15 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 6,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-174dba6025aa9c1fc1df",
+        "RPLAY-d9991207affa4ea15444",
+        "RPLAY-e4b3d400da9db357c7c6"
+      ],
+      "source_backed_replay_symbols": [
+        "004020",
+        "005490"
+      ],
       "source_proxy_case_count": 156,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 161,
@@ -9230,6 +9327,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-0b7b1d2cc982f7f23e73",
+        "RPLAY-246f8134fcdda401fd65",
+        "RPLAY-943b9a429a8ace7d9c42"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 140,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 148,
@@ -9844,6 +9947,14 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 10,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-1755b7c0b067d21a8259",
+        "RPLAY-a99fc67eb1a94b79e7af",
+        "RPLAY-bad3cf3344194166f2fb"
+      ],
+      "source_backed_replay_symbols": [
+        "010950"
+      ],
       "source_proxy_case_count": 160,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 170,
@@ -10448,6 +10559,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-58cfa336c4b53be52827",
+        "RPLAY-705f3659c984e7a5bcd9",
+        "RPLAY-9140bb3552875d8565c8"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 126,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 135,
@@ -11031,6 +11148,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-73d52f2606b85d32da29",
+        "RPLAY-dea515f8a05100a7f027",
+        "RPLAY-dea6c3563621eb94d909"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 130,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 137,
@@ -11613,6 +11736,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-4a8d430c60db1ba3c604",
+        "RPLAY-8f8cf4130cea3d2645ed",
+        "RPLAY-d07fe3eaac82c32ef144"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 112,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 118,
@@ -12208,6 +12337,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-6a722c5b4de98cd3340f",
+        "RPLAY-bb95c4c3bc5af82d9440",
+        "RPLAY-f642460557c3c266863c"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 118,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 125,
@@ -12804,6 +12939,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-4e80aa185ea7f3b2cbb3",
+        "RPLAY-bacda1cd544d30579a1e",
+        "RPLAY-c6e0b9ff36812ac78b6b"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 114,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 121,
@@ -13406,6 +13547,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-1923e983a5710604414f",
+        "RPLAY-3d41625bc8dcf7fedaf2",
+        "RPLAY-e3e3a92d48fbf166783a"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 120,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 129,
@@ -13607,6 +13754,15 @@
       "seed_materialization_top_failure_axes": [],
       "seed_materialization_trace_count": 0,
       "source_backed_fixture_count": 5,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-db4d394cff34a673dc59",
+        "RPLAY-df585429523a163e5ba6",
+        "RPLAY-e8c3226596e8da7f3db8"
+      ],
+      "source_backed_replay_symbols": [
+        "009420",
+        "215600"
+      ],
       "source_proxy_case_count": 143,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 150,
@@ -14088,6 +14244,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-7a19cd25bf24346c7317",
+        "RPLAY-7b3955aee1ab2386d64e",
+        "RPLAY-a99cfa08428ab0fe4b81"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 122,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 129,
@@ -14684,6 +14846,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-406dbae80b0f9527d86a",
+        "RPLAY-6be141038ac19341fb6f",
+        "RPLAY-c1798005e4c9a5af30f2"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 122,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 131,
@@ -15279,6 +15447,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-36807fe438e468f7d56b",
+        "RPLAY-85bd04d19cb02aebc3f8",
+        "RPLAY-f260497bb902eed0de3c"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 156,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 162,
@@ -15864,6 +16038,14 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 7,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-12fc285d35ecff4d295c",
+        "RPLAY-3f6d7d7fbea085553d3c",
+        "RPLAY-c0622f18b67116111d3f"
+      ],
+      "source_backed_replay_symbols": [
+        "00CRWD"
+      ],
       "source_proxy_case_count": 187,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 195,
@@ -16453,6 +16635,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-0f1479c6f3a1d1e29327",
+        "RPLAY-141e7ffa952b25415314",
+        "RPLAY-253ff8b2b45111e88ceb"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 114,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 119,
@@ -17063,6 +17251,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-6e874565891d9a9cdf1b",
+        "RPLAY-b8dd7cc90ba853be7643",
+        "RPLAY-f14065d90371bbc6733c"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 147,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 152,
@@ -17649,6 +17843,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-21a9bfe71e086359dccf",
+        "RPLAY-aa182dc74a7c9a183225",
+        "RPLAY-f7490efe1323f3a3940c"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 142,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 150,
@@ -18229,6 +18429,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-51b077361737f6208147",
+        "RPLAY-98ee741784f897704f53",
+        "RPLAY-c638e8f9f6285fbeac53"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 182,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 189,
@@ -18440,6 +18646,12 @@
       "seed_materialization_top_failure_axes": [],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-7be8ddb3923e2332b11f",
+        "RPLAY-88357aeaebe261462d2e",
+        "RPLAY-fadd80c0d0010b290561"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 0,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 5,
@@ -18551,6 +18763,12 @@
       "seed_materialization_top_failure_axes": [],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-006b3fa595430bbadae3",
+        "RPLAY-ce8dd13066f2ec12309c",
+        "RPLAY-e2e0e55ecc9371aeff20"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 0,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 5,
@@ -18662,6 +18880,12 @@
       "seed_materialization_top_failure_axes": [],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-092bdb423e6ac718937c",
+        "RPLAY-21147ccbea3120b84f90",
+        "RPLAY-beed87343498d5638537"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 0,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 5,
@@ -19131,6 +19355,12 @@
       ],
       "seed_materialization_trace_count": 3,
       "source_backed_fixture_count": 3,
+      "source_backed_replay_candidate_ids": [
+        "RPLAY-8ea644540931f9fc2096",
+        "RPLAY-c6d0ee22b4fc6574dcd7",
+        "RPLAY-fa9db06bdfc9bc9983b4"
+      ],
+      "source_backed_replay_symbols": [],
       "source_proxy_case_count": 286,
       "source_proxy_to_score_count": 0,
       "source_repair_task_count": 293,

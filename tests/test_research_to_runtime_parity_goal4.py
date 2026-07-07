@@ -224,12 +224,12 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
                 },
                 "next_attempt_reports": {
                     "json_path": Path("docs/operational/fake_next.json"),
-                    "plan": {"plan_row_count": 36, "source_task_count": 108},
+                    "plan": {"plan_row_count": 36, "source_task_count": 111},
                 },
                 "execution_manifest_reports": {
                     "json_path": Path("docs/operational/fake_manifest.json"),
                     "manifest": {
-                        "seed_event_count": 108,
+                        "seed_event_count": 111,
                         "run_command_argv": [
                             "python",
                             "-m",
@@ -316,12 +316,12 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
                 },
                 "next_attempt_reports": {
                     "json_path": Path("docs/operational/fake_next.json"),
-                    "plan": {"plan_row_count": 36, "source_task_count": 108},
+                    "plan": {"plan_row_count": 36, "source_task_count": 111},
                 },
                 "execution_manifest_reports": {
                     "json_path": Path("docs/operational/fake_manifest.json"),
                     "manifest": {
-                        "seed_event_count": 108,
+                        "seed_event_count": 111,
                         "run_command_argv": ["python", "-m", "e2r.cli.run_e2r_census_v4_until_pass"],
                     },
                 },

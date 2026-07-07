@@ -131,21 +131,34 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
                 prefix,
             )
 
-        self.assertEqual(self.plan["target_symbol_mode_counts"]["SYMBOL_SPECIFIC"], 32)
+        self.assertEqual(self.plan["target_symbol_mode_counts"]["SYMBOL_SPECIFIC"], 33)
         self.assertEqual(self.plan["target_symbol_mode_counts"]["ARCHETYPE_LEVEL_DISCOVERY"], 3)
-        self.assertEqual(self.plan["target_symbol_mode_counts"]["RESEARCH_MEMORY_TARGET_CANDIDATE"], 1)
+        self.assertNotIn("RESEARCH_MEMORY_TARGET_CANDIDATE", self.plan["target_symbol_mode_counts"])
         self.assertEqual(self.plan["research_memory_supported_symbol_specific_archetype_count"], 29)
         self.assertEqual(self.plan["research_memory_supported_symbol_specific_task_count"], 87)
-        self.assertEqual(self.plan["research_memory_target_materialized_archetype_count"], 30)
-        self.assertEqual(self.plan["research_memory_target_materialized_task_count"], 90)
-        self.assertEqual(self.plan["research_memory_target_candidate_task_count"], 3)
+        self.assertEqual(self.plan["research_memory_target_materialized_archetype_count"], 29)
+        self.assertEqual(self.plan["research_memory_target_materialized_task_count"], 87)
+        self.assertEqual(self.plan["research_memory_target_candidate_task_count"], 0)
+        self.assertEqual(self.plan["source_backed_replay_symbol_target_archetype_count"], 1)
+        self.assertEqual(self.plan["source_backed_replay_symbol_target_task_count"], 6)
+        self.assertEqual(self.plan["url_backed_replay_obligation_unmet_task_count"], 6)
         self.assertEqual(self.plan["target_materialization_required_task_count"], 9)
 
         c24 = self.by_prefix["C24"]
-        self.assertEqual(c24["target_symbol_mode"], "RESEARCH_MEMORY_TARGET_CANDIDATE")
-        self.assertEqual(c24["target_symbols"], ["000100"])
-        self.assertEqual(c24["target_materialization_candidates"][0]["symbol"], "000100")
-        self.assertFalse(c24["target_materialization_candidates"][0]["score_evidence_allowed_from_research"])
+        self.assertEqual(c24["target_symbol_mode"], "SYMBOL_SPECIFIC")
+        self.assertEqual(c24["target_symbols"], ["009420", "215600"])
+        self.assertEqual(c24["target_materialization_candidates"], [])
+        self.assertEqual(c24["target_symbol_source_backed_replay_support_count"], 2)
+        self.assertEqual(
+            [row["symbol"] for row in c24["target_symbol_source_backed_replay_support"]],
+            ["009420", "215600"],
+        )
+        for support in c24["target_symbol_source_backed_replay_support"]:
+            self.assertFalse(support["score_evidence_allowed_from_replay"])
+            self.assertEqual(
+                support["target_materialization_source"],
+                "CENSUS_V4_ALL_ARCHETYPE_REPLAY_MATRIX",
+            )
 
     def test_c01_to_c32_all_have_symbol_specific_next_attempts(self) -> None:
         unresolved_c_rows = [
@@ -162,7 +175,7 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             for task in self.plan["source_tasks"]
             if task["target_symbol_mode"] == "SYMBOL_SPECIFIC"
         ]
-        self.assertEqual(len(symbol_specific_tasks), 96)
+        self.assertEqual(len(symbol_specific_tasks), 102)
         supported_tasks = [
             task for task in symbol_specific_tasks if task.get("target_symbol_research_memory_support")
         ]
@@ -176,6 +189,18 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             self.assertFalse(task["score_allowed_before_execution"])
             self.assertIn("Research memory supports", task["query_intents"][0])
             self.assertIn("verify current, direct target-company evidence", task["query_intents"][0])
+
+        replay_tasks = [
+            task for task in symbol_specific_tasks if task.get("target_symbol_source_backed_replay_support")
+        ]
+        self.assertEqual(len(replay_tasks), 6)
+        self.assertEqual({task["symbol"] for task in replay_tasks}, {"009420", "215600"})
+        for task in replay_tasks:
+            self.assertIsNotNone(task["target_materialization_candidate"])
+            self.assertFalse(task["target_materialization_candidate"]["score_evidence_allowed_from_replay"])
+            self.assertIsNone(task["target_symbol_research_memory_support"])
+            self.assertIn("Source-backed replay matrix identifies", task["query_intents"][0])
+            self.assertIn("re-verify current, direct target-company evidence", task["query_intents"][0])
 
     def test_previous_claim_failure_feedback_is_carried_into_next_source_tasks(self) -> None:
         self.assertGreater(self.plan["source_route_repair_task_count"], 0)

@@ -108,6 +108,8 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
                 "url_backed_replay_obligation_status",
                 "url_backed_replay_obligation_unmet",
                 "source_proxy_to_score_count",
+                "source_backed_replay_symbols",
+                "source_backed_replay_candidate_ids",
                 "runtime_accepted_claim_count",
                 "runtime_score_contribution_count",
                 "runtime_stagecourt_trace_count",
@@ -171,6 +173,7 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         self.assertEqual(c24["primary_blocker_class"], "SOURCE_TASK_NOT_CREATED")
         self.assertEqual(c24["url_backed_replay_obligation_status"], "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED")
         self.assertTrue(c24["url_backed_replay_obligation_unmet"])
+        self.assertEqual(c24["source_backed_replay_symbols"], ["009420", "215600"])
         self.assertEqual(c24["runtime_source_task_count"], 0)
         self.assertEqual(c24["source_task_execution_log_count"], 0)
         self.assertEqual(c24["runtime_full_thesis_row_count"], 0)

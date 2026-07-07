@@ -1111,6 +1111,8 @@ def build_all_archetype_runtime_status_matrix(
                 "memory_url_backed_replay_case_count": len(card.get("url_backed_replay_cases") or []),
                 "memory_source_proxy_only_case_count": len(card.get("source_proxy_only_cases") or []),
                 "source_backed_fixture_count": row.get("source_backed_fixture_count", 0),
+                "source_backed_replay_symbols": list(row.get("source_backed_replay_symbols") or []),
+                "source_backed_replay_candidate_ids": list(row.get("source_backed_replay_candidate_ids") or []),
                 "replay_accepted_claim_count": row.get("replay_accepted_claim_count", 0),
                 "source_proxy_to_score_count": int(row.get("source_proxy_leak_count") or 0),
                 "url_backed_replay_obligation_status": url_replay_obligation_status,

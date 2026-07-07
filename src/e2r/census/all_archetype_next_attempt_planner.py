@@ -570,6 +570,8 @@ def _attempt_type(row: Mapping[str, Any]) -> str:
 
 def _symbols_for_attempt(row: Mapping[str, Any]) -> list[str | None]:
     symbols = list(row.get("blocked_symbols") or row.get("full_thesis_symbols") or [])
+    if not symbols and row.get("url_backed_replay_obligation_unmet") is True:
+        symbols = list(row.get("source_backed_replay_symbols") or [])
     if not symbols:
         symbols = list(row.get("symbols_sample") or [])
     clean_symbols = [
@@ -580,6 +582,37 @@ def _symbols_for_attempt(row: Mapping[str, Any]) -> list[str | None]:
     if clean_symbols:
         return clean_symbols[:2]
     return [None]
+
+
+def _source_backed_replay_support_for_symbols(
+    *,
+    row: Mapping[str, Any],
+    symbols: Iterable[str | None],
+) -> list[dict[str, Any]]:
+    replay_symbols = {
+        str(symbol)
+        for symbol in row.get("source_backed_replay_symbols") or []
+        if symbol and not is_placeholder_symbol(symbol)
+    }
+    if not replay_symbols:
+        return []
+    candidate_ids = list(row.get("source_backed_replay_candidate_ids") or [])
+    support: list[dict[str, Any]] = []
+    for symbol in symbols:
+        if not symbol or is_placeholder_symbol(symbol) or str(symbol) not in replay_symbols:
+            continue
+        support.append(
+            {
+                "symbol": str(symbol),
+                "target_materialization_source": "CENSUS_V4_ALL_ARCHETYPE_REPLAY_MATRIX",
+                "target_materialization_status": "SOURCE_BACKED_REPLAY_SYMBOL_RECHECK_REQUIRED",
+                "support_candidate_ids": candidate_ids,
+                "source_backed_fixture_count": int(row.get("source_backed_fixture_count") or 0),
+                "replay_accepted_claim_count": int(row.get("replay_accepted_claim_count") or 0),
+                "score_evidence_allowed_from_replay": False,
+            }
+        )
+    return support
 
 
 def _case_records(case_inventory: Mapping[str, Any] | None) -> list[Mapping[str, Any]]:
@@ -724,6 +757,7 @@ def build_all_archetype_next_runtime_attempt_plan(
         symbols = _symbols_for_attempt(row)
         target_candidates: list[dict[str, Any]] = []
         target_symbol_research_memory_support: list[dict[str, Any]] = []
+        target_symbol_source_backed_replay_support: list[dict[str, Any]] = []
         target_symbol_mode = "SYMBOL_SPECIFIC" if symbols != [None] else "ARCHETYPE_LEVEL_DISCOVERY"
         if symbols == [None]:
             target_candidates = _research_memory_target_candidates(
@@ -742,8 +776,15 @@ def build_all_archetype_next_runtime_attempt_plan(
                 case_inventory=case_inventory,
                 symbols=symbols,
             )
+            target_symbol_source_backed_replay_support = _source_backed_replay_support_for_symbols(
+                row=row,
+                symbols=symbols,
+            )
         research_support_by_symbol = {
             candidate["symbol"]: candidate for candidate in target_symbol_research_memory_support
+        }
+        replay_support_by_symbol = {
+            candidate["symbol"]: candidate for candidate in target_symbol_source_backed_replay_support
         }
         candidate_by_symbol = {candidate["symbol"]: candidate for candidate in target_candidates}
         primary_failure_mode = _claim_failure_primary_mode(row)
@@ -784,6 +825,12 @@ def build_all_archetype_next_runtime_attempt_plan(
                 "target_materialization_candidates": target_candidates,
                 "target_symbol_research_memory_support": target_symbol_research_memory_support,
                 "target_symbol_research_memory_support_count": len(target_symbol_research_memory_support),
+                "target_symbol_source_backed_replay_support": target_symbol_source_backed_replay_support,
+                "target_symbol_source_backed_replay_support_count": len(target_symbol_source_backed_replay_support),
+                "source_backed_replay_symbols": list(row.get("source_backed_replay_symbols") or []),
+                "source_backed_replay_candidate_ids": list(row.get("source_backed_replay_candidate_ids") or []),
+                "url_backed_replay_obligation_status": row.get("url_backed_replay_obligation_status"),
+                "url_backed_replay_obligation_unmet": row.get("url_backed_replay_obligation_unmet") is True,
                 "requires_target_materialization_before_scoring": symbols == [None],
                 "requires_current_source_confirmation_before_scoring": True,
                 "primitive_attempts": primitives,
@@ -814,12 +861,25 @@ def build_all_archetype_next_runtime_attempt_plan(
             for symbol in symbols:
                 task_id = _stable_id("RTTASK", as_of_date, archetype_id, primitive, symbol or "DISCOVERY")
                 task_target_symbol_mode = target_symbol_mode if symbol else "ARCHETYPE_LEVEL_DISCOVERY"
+                research_memory_support = research_support_by_symbol.get(str(symbol)) if symbol else None
+                replay_symbol_support = replay_support_by_symbol.get(str(symbol)) if symbol else None
                 materialization_candidate = (
-                    candidate_by_symbol.get(str(symbol)) or research_support_by_symbol.get(str(symbol))
+                    candidate_by_symbol.get(str(symbol)) or research_memory_support or replay_symbol_support
                     if symbol
                     else None
                 )
-                if materialization_candidate:
+                if replay_symbol_support:
+                    query_intents = [
+                        (
+                            f"Source-backed replay matrix identifies `{symbol}` as a prior replay target for "
+                            f"`{archetype_id}` from candidate ids "
+                            f"{replay_symbol_support.get('support_candidate_ids') or []}. Treat this only as a "
+                            "target candidate and replay obligation. Ask the LLM planner for bounded official-first "
+                            f"queries that re-verify current, direct target-company evidence for primitive "
+                            f"`{primitive}` before any score/stage use."
+                        )
+                    ]
+                elif materialization_candidate:
                     query_intents = [
                         (
                             f"Research memory supports `{symbol}` as a candidate target for "
@@ -901,7 +961,8 @@ def build_all_archetype_next_runtime_attempt_plan(
                     "requires_target_materialization_before_scoring": symbol is None,
                     "requires_current_source_confirmation_before_scoring": True,
                     "target_materialization_candidate": materialization_candidate,
-                    "target_symbol_research_memory_support": materialization_candidate,
+                    "target_symbol_research_memory_support": research_memory_support,
+                    "target_symbol_source_backed_replay_support": replay_symbol_support,
                     "archetype_id": archetype_id,
                     "primitive_gap": primitive,
                     "current_runtime_parity_proof_status": proof_status,
@@ -962,7 +1023,8 @@ def build_all_archetype_next_runtime_attempt_plan(
                         "symbol": symbol,
                         "target_symbol_mode": task_target_symbol_mode,
                         "target_materialization_candidate": materialization_candidate,
-                        "target_symbol_research_memory_support": materialization_candidate,
+                        "target_symbol_research_memory_support": research_memory_support,
+                        "target_symbol_source_backed_replay_support": replay_symbol_support,
                         "target_archetype": archetype_id,
                         "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
                         "primitive_gap": primitive,
@@ -994,7 +1056,8 @@ def build_all_archetype_next_runtime_attempt_plan(
                             "primitive_gap": primitive,
                             "target_symbol_mode": task_target_symbol_mode,
                             "target_materialization_candidate": materialization_candidate,
-                            "target_symbol_research_memory_support": materialization_candidate,
+                            "target_symbol_research_memory_support": research_memory_support,
+                            "target_symbol_source_backed_replay_support": replay_symbol_support,
                             "requires_current_source_confirmation_before_scoring": True,
                             "seed_role": "planner_input_only",
                             "follow_up_origin": "all_archetype_runtime_status_matrix",
@@ -1068,6 +1131,15 @@ def build_all_archetype_next_runtime_attempt_plan(
         for task in source_tasks
         if task.get("target_symbol_mode") == "SYMBOL_SPECIFIC" and task.get("target_symbol_research_memory_support")
     ]
+    source_backed_replay_symbol_rows = [
+        row for row in plan_rows if row.get("target_symbol_source_backed_replay_support_count", 0) > 0
+    ]
+    source_backed_replay_symbol_tasks = [
+        task
+        for task in source_tasks
+        if task.get("target_symbol_mode") == "SYMBOL_SPECIFIC"
+        and task.get("target_symbol_source_backed_replay_support")
+    ]
     research_memory_target_candidate_tasks = [
         task
         for task in source_tasks
@@ -1109,6 +1181,11 @@ def build_all_archetype_next_runtime_attempt_plan(
         )
         + len(research_memory_supported_symbol_tasks),
         "research_memory_target_candidate_task_count": len(research_memory_target_candidate_tasks),
+        "source_backed_replay_symbol_target_archetype_count": len(source_backed_replay_symbol_rows),
+        "source_backed_replay_symbol_target_task_count": len(source_backed_replay_symbol_tasks),
+        "url_backed_replay_obligation_unmet_task_count": sum(
+            1 for task in source_tasks if task.get("target_symbol_source_backed_replay_support")
+        ),
         "target_materialization_unresolved_archetype_count": sum(
             1 for row in plan_rows if row.get("requires_target_materialization_before_scoring") is True
         ),
@@ -1171,6 +1248,9 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         f"- research_memory_target_materialized_archetype_count: `{plan.get('research_memory_target_materialized_archetype_count', 0)}`",
         f"- research_memory_target_materialized_task_count: `{plan.get('research_memory_target_materialized_task_count', 0)}`",
         f"- research_memory_target_candidate_task_count: `{plan.get('research_memory_target_candidate_task_count', 0)}`",
+        f"- source_backed_replay_symbol_target_archetype_count: `{plan.get('source_backed_replay_symbol_target_archetype_count', 0)}`",
+        f"- source_backed_replay_symbol_target_task_count: `{plan.get('source_backed_replay_symbol_target_task_count', 0)}`",
+        f"- url_backed_replay_obligation_unmet_task_count: `{plan.get('url_backed_replay_obligation_unmet_task_count', 0)}`",
         f"- target_materialization_unresolved_archetype_count: `{plan.get('target_materialization_unresolved_archetype_count', 0)}`",
         f"- all_tasks_score_blocked_before_execution: `{plan['all_tasks_score_blocked_before_execution']}`",
         f"- all_tasks_require_llm_query_generation: `{plan['all_tasks_require_llm_query_generation']}`",
@@ -1183,16 +1263,17 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         "",
         "## Plan Rows",
         "",
-        "| archetype | priority | attempt type | symbol mode | primitives | current proof | previous claim failure | claim repair hint | previous seed failure | seed repair hint |",
-        "|---|---:|---|---|---|---|---|---|---|---|",
+        "| archetype | priority | attempt type | symbol mode | replay obligation | primitives | current proof | previous claim failure | claim repair hint | previous seed failure | seed repair hint |",
+        "|---|---:|---|---|---|---|---|---|---|---|---|",
     ]
     for row in plan.get("plan_rows", []):
         lines.append(
-            "| {archetype} | {priority} | {attempt_type} | {symbol_mode} | {primitives} | {proof} | {failure} | {repair_hint} | {seed_failure} | {seed_repair_hint} |".format(
+            "| {archetype} | {priority} | {attempt_type} | {symbol_mode} | {replay_obligation} | {primitives} | {proof} | {failure} | {repair_hint} | {seed_failure} | {seed_repair_hint} |".format(
                 archetype=row["archetype_id"],
                 priority=row["priority"],
                 attempt_type=row["attempt_type"],
                 symbol_mode=row["target_symbol_mode"],
+                replay_obligation=row.get("url_backed_replay_obligation_status") or "-",
                 primitives=", ".join(row["primitive_attempts"]),
                 proof=row["current_runtime_parity_proof_status"],
                 failure=row.get("previous_claim_failure_primary_mode") or "-",

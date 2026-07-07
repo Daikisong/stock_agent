@@ -139,6 +139,8 @@ class ArchetypeRuntimeAccumulator:
     replay_status: str | None = None
     replay_scope: str | None = None
     source_backed_fixture_count: int = 0
+    source_backed_replay_symbols: set[str] = field(default_factory=set)
+    source_backed_replay_candidate_ids: set[str] = field(default_factory=set)
     replay_accepted_claim_count: int = 0
     replay_score_contribution_count: int = 0
     source_proxy_leak_count: int = 0
@@ -268,6 +270,8 @@ class ArchetypeRuntimeAccumulator:
             "replay_status": self.replay_status,
             "replay_scope": self.replay_scope,
             "source_backed_fixture_count": self.source_backed_fixture_count,
+            "source_backed_replay_symbols": sorted(self.source_backed_replay_symbols),
+            "source_backed_replay_candidate_ids": sorted(self.source_backed_replay_candidate_ids),
             "replay_accepted_claim_count": self.replay_accepted_claim_count,
             "replay_score_contribution_count": self.replay_score_contribution_count,
             "source_proxy_leak_count": self.source_proxy_leak_count,
@@ -335,6 +339,12 @@ def build_research_to_runtime_parity_audit(
         row.replay_status = replay_row.get("replay_status")
         row.replay_scope = replay_row.get("replay_scope")
         row.source_backed_fixture_count = int(replay_row.get("source_backed_fixture_count") or 0)
+        for symbol in replay_row.get("source_backed_replay_symbols") or []:
+            if symbol and not is_placeholder_symbol(symbol):
+                row.source_backed_replay_symbols.add(str(symbol))
+        for candidate_id in replay_row.get("external_source_backed_candidate_ids") or []:
+            if candidate_id:
+                row.source_backed_replay_candidate_ids.add(str(candidate_id))
         row.replay_accepted_claim_count = int(replay_row.get("accepted_claim_count") or 0)
         row.replay_score_contribution_count = int(replay_row.get("score_contribution_count") or 0)
         row.source_proxy_leak_count = int(replay_row.get("source_proxy_leak_count") or 0)
