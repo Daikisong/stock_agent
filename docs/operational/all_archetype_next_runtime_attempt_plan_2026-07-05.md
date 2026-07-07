@@ -17,6 +17,10 @@
 - seed_materialization_repair_task_count: `96`
 - seed_materialization_repair_hint_counts: `{"FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM": 3, "FIND_FETCHABLE_ORIGINAL_SOURCE_OR_NARROW_SOURCE_CLASS": 3, "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT": 90}`
 - seed_materialization_primary_failure_axis_counts: `{"NO_FETCHED_DOCUMENT": 3, "NO_SCORE_ELIGIBLE_REAL_CLAIM": 3, "PRIMITIVE_GAP_UNSATISFIED": 90}`
+- source_lineage_repair_archetype_count: `6`
+- source_lineage_retry_task_count: `18`
+- source_lineage_current_code_verified_retry_candidate_count: `50`
+- source_lineage_route_only_candidate_count: `28`
 - research_memory_target_materialized_archetype_count: `0`
 - research_memory_target_materialized_task_count: `0`
 - target_materialization_unresolved_archetype_count: `3`

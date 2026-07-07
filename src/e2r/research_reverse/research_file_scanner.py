@@ -34,6 +34,7 @@ GENERATED_GOAL4_PREFIXES = (
     "research_to_runtime_readiness_verdict",
     "research_to_runtime_root_cause_",
     "research_to_runtime_source_repair_queue_",
+    "source_lineage_repair_audit",
     "planner_bias_and_archetype_routing_audit_",
     "balanced_full_thesis_candidate_selection_audit_",
 )

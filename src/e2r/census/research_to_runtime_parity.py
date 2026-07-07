@@ -971,6 +971,7 @@ def write_research_to_runtime_parity_artifacts(
     from e2r.census.full_thesis_candidate_selector import write_balanced_full_thesis_candidate_selection_audit
     from e2r.census.research_memory_followup_planner import write_research_memory_followup_task_audit
     from e2r.census.research_to_runtime_replay import write_research_to_runtime_replay_reports
+    from e2r.census.source_lineage_repair_audit import write_source_lineage_repair_audit
     from e2r.research_reverse.reports import write_research_reverse_bundle
     from e2r.research_brain.planner_bias_audit import write_planner_bias_audit
     from e2r.source_routing.research_source_route_recovery import write_source_route_recovery_reports
@@ -1043,6 +1044,10 @@ def write_research_to_runtime_parity_artifacts(
         source_routes=source_route_reports["source_route_matrix"],
         candidate_selection=candidate_selection_audit,
         research_inventory=research_reverse_bundle["inventory"],
+        docs_dir=docs_path,
+    )
+    source_lineage_repair_reports = write_source_lineage_repair_audit(
+        output_root=audit["output_root"],
         docs_dir=docs_path,
     )
     next_attempt_reports = write_all_archetype_next_runtime_attempt_plan(
@@ -1129,6 +1134,7 @@ def write_research_to_runtime_parity_artifacts(
         "next_attempt_reports": next_attempt_reports,
         "execution_manifest_reports": execution_manifest_reports,
         "planner_bias_audit": planner_bias_audit,
+        "source_lineage_repair_reports": source_lineage_repair_reports,
         "meaningful_acceptance": meaningful_acceptance,
         "meaningful_acceptance_path": meaningful_acceptance_path,
         "acceptance_report_path": acceptance_report_path,

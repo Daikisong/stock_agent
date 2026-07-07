@@ -310,7 +310,9 @@ def _planner_failure_feedback(
     seed_primary_axis: str | None,
     seed_repair_hint: str | None,
     seed_repair_actions: list[str],
+    source_lineage_repair_row: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
+    source_lineage_repair_row = source_lineage_repair_row or {}
     return {
         "previous_claim_failure_primary_mode": primary_mode,
         "previous_claim_failure_repair_hint": repair_hint,
@@ -323,8 +325,10 @@ def _planner_failure_feedback(
         "previous_seed_materialization_failure_sample_refs": _seed_failure_sample_refs(row),
         "source_route_repair_actions": repair_actions,
         "seed_materialization_repair_actions": seed_repair_actions,
+        "source_lineage_repair_summary": _source_lineage_repair_feedback(source_lineage_repair_row),
         "score_evidence_allowed_from_previous_rejected_claims": False,
         "score_evidence_allowed_from_previous_seed_failures": False,
+        "score_evidence_allowed_from_source_lineage_repair_candidates": False,
         "primitive_gap": primitive,
     }
 
@@ -436,6 +440,83 @@ def _seed_materialization_feedback_intent(
     if primary_axis in {"PROVIDER_ERROR_RECORDED", "PROVIDER_FAILED"}:
         return base + " Keep provider failure as Source Pending or external blocker, never as a low score."
     return base + " Feed seed failure samples back to the LLM planner and require a new source-backed claim."
+
+
+def _source_lineage_rows_by_archetype(
+    source_lineage_repair_audit: Mapping[str, Any] | None,
+) -> dict[str, Mapping[str, Any]]:
+    if not source_lineage_repair_audit:
+        return {}
+    rows = source_lineage_repair_audit.get("archetypes") or []
+    if not isinstance(rows, list):
+        return {}
+    return {
+        str(row.get("archetype_id")): row
+        for row in rows
+        if isinstance(row, Mapping) and row.get("archetype_id")
+    }
+
+
+def _source_lineage_top_domains(row: Mapping[str, Any], *, max_domains: int = 4) -> list[str]:
+    counts = row.get("source_domain_counts") or {}
+    if not isinstance(counts, Mapping):
+        return []
+    return [
+        str(domain)
+        for domain, _count in sorted(counts.items(), key=lambda item: (-int(item[1] or 0), str(item[0])))[:max_domains]
+    ]
+
+
+def _source_lineage_repair_feedback(row: Mapping[str, Any]) -> dict[str, Any]:
+    if not row:
+        return {
+            "lineage_rejection_count": 0,
+            "route_only_candidate_count": 0,
+            "current_code_verified_retry_candidate_count": 0,
+            "top_domains": [],
+            "score_evidence_allowed_from_repair_candidates": False,
+        }
+    return {
+        "lineage_rejection_count": int(row.get("lineage_rejection_count") or 0),
+        "route_only_candidate_count": int(row.get("route_only_candidate_count") or 0),
+        "current_code_verified_retry_candidate_count": int(
+            row.get("current_code_verified_retry_candidate_count") or 0
+        ),
+        "reason_counts": row.get("reason_counts") or {},
+        "source_class_counts": row.get("source_class_counts") or {},
+        "top_domains": _source_lineage_top_domains(row),
+        "sample_refs": [
+            {
+                "source_url": sample.get("source_url"),
+                "source_class": sample.get("source_class"),
+                "source_domain": sample.get("source_domain"),
+                "current_route_patch_status": sample.get("current_route_patch_status"),
+                "lineage_reasons": sample.get("lineage_reasons") or [],
+                "non_route_reasons": sample.get("non_route_reasons") or [],
+            }
+            for sample in list(row.get("samples") or [])[:2]
+            if isinstance(sample, Mapping)
+        ],
+        "score_evidence_allowed_from_repair_candidates": False,
+    }
+
+
+def _source_lineage_feedback_intent(row: Mapping[str, Any]) -> str | None:
+    if not row:
+        return None
+    retry_count = int(row.get("current_code_verified_retry_candidate_count") or 0)
+    route_only_count = int(row.get("route_only_candidate_count") or 0)
+    if retry_count <= 0 and route_only_count <= 0:
+        return None
+    domains = ", ".join(_source_lineage_top_domains(row)) or "UNKNOWN_DOMAIN"
+    return (
+        "Previous runtime had source-lineage rejected candidates. "
+        f"route_only_candidate_count={route_only_count}; "
+        f"current_code_verified_retry_candidate_count={retry_count}; "
+        f"top_domains={domains}. Treat those rejected rows only as planner feedback. "
+        "Retry with a bounded source task that fetches a verified original source route and creates a fresh "
+        "accepted Evidence OS claim before score/stage use."
+    )
 
 
 def _candidate_primitives(row: Mapping[str, Any], card: Mapping[str, Any], *, max_primitives: int) -> list[str]:
@@ -591,10 +672,12 @@ def build_all_archetype_next_runtime_attempt_plan(
     status_matrix: Mapping[str, Any],
     memory_cards: Mapping[str, Any],
     case_inventory: Mapping[str, Any] | None = None,
+    source_lineage_repair_audit: Mapping[str, Any] | None = None,
     max_primitives_per_archetype: int = 3,
     max_materialized_symbols_per_archetype: int = 1,
 ) -> dict[str, Any]:
     cards_by_id = {card["archetype_id"]: card for card in memory_cards.get("cards", [])}
+    source_lineage_by_archetype = _source_lineage_rows_by_archetype(source_lineage_repair_audit)
     plan_rows: list[dict[str, Any]] = []
     source_tasks: list[dict[str, Any]] = []
     seed_events: list[dict[str, Any]] = []
@@ -630,7 +713,20 @@ def build_all_archetype_next_runtime_attempt_plan(
         seed_primary_axis = _seed_failure_primary_axis(row)
         seed_repair_hint = _seed_failure_repair_hint(row, seed_primary_axis)
         seed_repair_actions = _seed_materialization_repair_actions(seed_primary_axis)
-        combined_repair_actions = _unique_actions(repair_actions, seed_repair_actions)
+        source_lineage_repair_row = source_lineage_by_archetype.get(archetype_id, {})
+        source_lineage_repair_required = bool(
+            int(source_lineage_repair_row.get("route_only_candidate_count") or 0)
+            or int(source_lineage_repair_row.get("current_code_verified_retry_candidate_count") or 0)
+        )
+        source_lineage_actions = (
+            [
+                "RETRY_CURRENT_CODE_VERIFIED_ORIGINAL_SOURCE_ROUTES",
+                "KEEP_REJECTED_SOURCE_LINEAGE_ROWS_AS_PLANNER_FEEDBACK_ONLY",
+            ]
+            if source_lineage_repair_required
+            else []
+        )
+        combined_repair_actions = _unique_actions(repair_actions, seed_repair_actions, source_lineage_actions)
         plan_rows.append(
             {
                 "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
@@ -664,6 +760,8 @@ def build_all_archetype_next_runtime_attempt_plan(
                 "previous_seed_materialization_status_counts": row.get("seed_materialization_status_counts") or {},
                 "seed_materialization_repair_required": bool(seed_repair_actions),
                 "seed_materialization_repair_actions": seed_repair_actions,
+                "source_lineage_repair_required": source_lineage_repair_required,
+                "source_lineage_repair_summary": _source_lineage_repair_feedback(source_lineage_repair_row),
                 "source_route_repair_required": bool(combined_repair_actions),
                 "source_route_repair_actions": combined_repair_actions,
                 "next_required_action": row.get("next_required_action"),
@@ -716,6 +814,9 @@ def build_all_archetype_next_runtime_attempt_plan(
                 )
                 if seed_failure_feedback_intent:
                     query_intents.append(seed_failure_feedback_intent)
+                source_lineage_feedback_intent = _source_lineage_feedback_intent(source_lineage_repair_row)
+                if source_lineage_feedback_intent:
+                    query_intents.append(source_lineage_feedback_intent)
                 planner_failure_feedback = _planner_failure_feedback(
                     row=row,
                     primitive=primitive,
@@ -725,6 +826,7 @@ def build_all_archetype_next_runtime_attempt_plan(
                     seed_primary_axis=seed_primary_axis,
                     seed_repair_hint=seed_repair_hint,
                     seed_repair_actions=seed_repair_actions,
+                    source_lineage_repair_row=source_lineage_repair_row,
                 )
                 success_condition = _success_condition(
                     archetype_id=archetype_id,
@@ -775,6 +877,8 @@ def build_all_archetype_next_runtime_attempt_plan(
                     "previous_seed_materialization_repair_hint": seed_repair_hint,
                     "seed_materialization_repair_required": bool(seed_repair_actions),
                     "seed_materialization_repair_actions": seed_repair_actions,
+                    "source_lineage_repair_required": source_lineage_repair_required,
+                    "source_lineage_repair_summary": _source_lineage_repair_feedback(source_lineage_repair_row),
                     "source_route_repair_required": bool(combined_repair_actions),
                     "source_route_repair_actions": combined_repair_actions,
                     "hardcoded_queries": [],
@@ -862,6 +966,8 @@ def build_all_archetype_next_runtime_attempt_plan(
                             "previous_seed_materialization_repair_hint": seed_repair_hint,
                             "seed_materialization_repair_required": bool(seed_repair_actions),
                             "seed_materialization_repair_actions": seed_repair_actions,
+                            "source_lineage_repair_required": source_lineage_repair_required,
+                            "source_lineage_repair_summary": _source_lineage_repair_feedback(source_lineage_repair_row),
                             "source_route_repair_required": bool(combined_repair_actions),
                             "source_route_repair_actions": combined_repair_actions,
                             "hardcoded_queries": [],
@@ -901,6 +1007,8 @@ def build_all_archetype_next_runtime_attempt_plan(
         if task.get("seed_materialization_repair_required")
         and task.get("previous_seed_materialization_primary_failure_axis")
     )
+    source_lineage_repair_rows = [row for row in plan_rows if row.get("source_lineage_repair_required")]
+    source_lineage_retry_task_count = sum(1 for task in source_tasks if task.get("source_lineage_repair_required"))
     materialized_candidate_rows = [
         row for row in plan_rows if row.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
     ]
@@ -920,6 +1028,16 @@ def build_all_archetype_next_runtime_attempt_plan(
         ),
         "seed_materialization_repair_hint_counts": dict(sorted(by_seed_repair_hint.items())),
         "seed_materialization_primary_failure_axis_counts": dict(sorted(by_seed_primary_failure_axis.items())),
+        "source_lineage_repair_archetype_count": len(source_lineage_repair_rows),
+        "source_lineage_retry_task_count": source_lineage_retry_task_count,
+        "source_lineage_current_code_verified_retry_candidate_count": sum(
+            int((row.get("source_lineage_repair_summary") or {}).get("current_code_verified_retry_candidate_count") or 0)
+            for row in plan_rows
+        ),
+        "source_lineage_route_only_candidate_count": sum(
+            int((row.get("source_lineage_repair_summary") or {}).get("route_only_candidate_count") or 0)
+            for row in plan_rows
+        ),
         "research_memory_target_materialized_archetype_count": len(materialized_candidate_rows),
         "research_memory_target_materialized_task_count": sum(
             1 for task in source_tasks if task.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
@@ -977,6 +1095,10 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         f"- seed_materialization_repair_task_count: `{plan.get('seed_materialization_repair_task_count', 0)}`",
         f"- seed_materialization_repair_hint_counts: `{json.dumps(plan.get('seed_materialization_repair_hint_counts', {}), ensure_ascii=False, sort_keys=True)}`",
         f"- seed_materialization_primary_failure_axis_counts: `{json.dumps(plan.get('seed_materialization_primary_failure_axis_counts', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- source_lineage_repair_archetype_count: `{plan.get('source_lineage_repair_archetype_count', 0)}`",
+        f"- source_lineage_retry_task_count: `{plan.get('source_lineage_retry_task_count', 0)}`",
+        f"- source_lineage_current_code_verified_retry_candidate_count: `{plan.get('source_lineage_current_code_verified_retry_candidate_count', 0)}`",
+        f"- source_lineage_route_only_candidate_count: `{plan.get('source_lineage_route_only_candidate_count', 0)}`",
         f"- research_memory_target_materialized_archetype_count: `{plan.get('research_memory_target_materialized_archetype_count', 0)}`",
         f"- research_memory_target_materialized_task_count: `{plan.get('research_memory_target_materialized_task_count', 0)}`",
         f"- target_materialization_unresolved_archetype_count: `{plan.get('target_materialization_unresolved_archetype_count', 0)}`",
@@ -1053,6 +1175,7 @@ def write_all_archetype_next_runtime_attempt_plan(
         status_matrix=status_matrix,
         memory_cards=memory_cards,
         case_inventory=_load_optional_json(docs_path / "research_reverse_case_inventory.json"),
+        source_lineage_repair_audit=_load_optional_json(docs_path / "source_lineage_repair_audit.json"),
     )
     json_path = docs_path / "all_archetype_next_runtime_attempt_plan_2026-07-05.json"
     alias_json_path = docs_path / "all_archetype_next_runtime_attempt_plan.json"

@@ -1,0 +1,3848 @@
+{
+  "archetype_count": 22,
+  "archetypes": [
+    {
+      "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 8,
+      "reason_counts": {
+        "source_lineage_unverified_original": 8,
+        "source_provider_document_type_mismatch": 8
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+          "company_name": "제룡전기",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "lead_time_extended",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "lead_time_extended",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "genians.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-1af52fa80efac11ed266-issuer-newsroom-report-lead-time-repair",
+          "source_url": "https://www.genians.co.kr/hubfs/00genian/IR/20240328_Yuanta_Genians.pdf?hsLang=ko",
+          "symbol": "033100",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "HISTORICAL"
+        },
+        {
+          "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+          "company_name": "제룡전기",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "lead_time_extended",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "lead_time_extended",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "genians.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-1af52fa80efac11ed266-issuer-newsroom-report-lead-time-repair",
+          "source_url": "https://www.genians.co.kr/hubfs/00genian/IR/20240328_Yuanta_Genians.pdf?hsLang=ko",
+          "symbol": "033100",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+          "company_name": "제룡전기",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "lead_time_extended",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "lead_time_extended",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "genians.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-1af52fa80efac11ed266-issuer-newsroom-report-lead-time-repair",
+          "source_url": "https://www.genians.co.kr/hubfs/00genian/IR/20240328_Yuanta_Genians.pdf?hsLang=ko",
+          "symbol": "033100",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+          "company_name": "제룡전기",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "lead_time_extended",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "lead_time_extended",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "genians.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-1af52fa80efac11ed266-issuer-newsroom-report-lead-time-repair",
+          "source_url": "https://www.genians.co.kr/hubfs/00genian/IR/20240328_Yuanta_Genians.pdf?hsLang=ko",
+          "symbol": "033100",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+          "company_name": "제룡전기",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "lead_time_extended",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "lead_time_extended",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "genians.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-1af52fa80efac11ed266-issuer-newsroom-report-lead-time-repair",
+          "source_url": "https://www.genians.co.kr/hubfs/00genian/IR/20240328_Yuanta_Genians.pdf?hsLang=ko",
+          "symbol": "033100",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 8
+      },
+      "source_domain_counts": {
+        "genians.co.kr": 8
+      }
+    },
+    {
+      "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 36,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 36
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+          "company_name": "한신기계",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyNewsroom:OTHER"
+          ],
+          "mapped_primitive_id": "permit_or_legal_delay",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "permit_or_legal_delay",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "CompanyNewsroom",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T2-original-report-newsroom-permit-delay",
+          "source_url": "https://www.paxnet.co.kr/tbbs/view?id=011700&seq=150357585477699",
+          "symbol": "011700",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+          "company_name": "한신기계",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyNewsroom:OTHER"
+          ],
+          "mapped_primitive_id": "permit_or_legal_delay",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "permit_or_legal_delay",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "CompanyNewsroom",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T2-original-report-newsroom-permit-delay",
+          "source_url": "https://www.paxnet.co.kr/tbbs/view?id=011700&seq=150357585477699",
+          "symbol": "011700",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+          "company_name": "한신기계",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyNewsroom:OTHER"
+          ],
+          "mapped_primitive_id": "permit_or_legal_delay",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "permit_or_legal_delay",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "CompanyNewsroom",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T2-original-report-newsroom-permit-delay",
+          "source_url": "https://www.paxnet.co.kr/tbbs/view?id=011700&seq=150357585477699",
+          "symbol": "011700",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+          "company_name": "한신기계",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyNewsroom:OTHER"
+          ],
+          "mapped_primitive_id": "permit_or_legal_delay",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "permit_or_legal_delay",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "CompanyNewsroom",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T2-original-report-newsroom-permit-delay",
+          "source_url": "https://www.paxnet.co.kr/tbbs/view?id=011700&seq=150357585477699",
+          "symbol": "011700",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+          "company_name": "한신기계",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyNewsroom:OTHER"
+          ],
+          "mapped_primitive_id": "permit_or_legal_delay",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "permit_or_legal_delay",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "CompanyNewsroom",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T2-original-report-newsroom-permit-delay",
+          "source_url": "https://www.paxnet.co.kr/tbbs/view?id=011700&seq=150357585477699",
+          "symbol": "011700",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "CompanyNewsroom": 8,
+        "TrustedNews": 28
+      },
+      "source_domain_counts": {
+        "paxnet.co.kr": 8,
+        "redhorseblog.co.kr": 13,
+        "rindir.co.kr": 15
+      }
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 5,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 5
+      },
+      "route_only_candidate_count": 1,
+      "samples": [
+        {
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "company_name": "삼성전자",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "revenue_visibility_contract",
+          "mapping_status": "ACCEPTED",
+          "non_route_reasons": [],
+          "primitive_gap": "hbm_capacity_constraint",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-dd31858583100a02119b-official-ir-hbm-capacity-constraint",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002181",
+          "symbol": "005930",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "company_name": "삼성전자",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "hbm_capacity_constraint",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule"
+          ],
+          "primitive_gap": "hbm_capacity_constraint",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-dd31858583100a02119b-official-ir-hbm-capacity-constraint",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002181",
+          "symbol": "005930",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "company_name": "삼성전자",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "hbm_capacity_constraint",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality"
+          ],
+          "primitive_gap": "hbm_capacity_constraint",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-dd31858583100a02119b-official-ir-hbm-capacity-constraint",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002181",
+          "symbol": "005930",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "company_name": "삼성전자",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "revenue_visibility_contract",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "primitive_gap": "hbm_capacity_constraint",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-dd31858583100a02119b-official-ir-hbm-capacity-constraint",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002181",
+          "symbol": "005930",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+          "company_name": "삼성전자",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "hbm_capacity_constraint",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "primitive_gap": "hbm_capacity_constraint",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-dd31858583100a02119b-official-ir-hbm-capacity-constraint",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002181",
+          "symbol": "005930",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "CompanyGuide": 5
+      },
+      "source_domain_counts": {
+        "dart.fss.or.kr": 5
+      }
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "current_code_verified_retry_candidate_count": 14,
+      "lineage_rejection_count": 23,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 9,
+        "source_lineage_unverified_original": 14,
+        "source_provider_document_type_mismatch": 18
+      },
+      "route_only_candidate_count": 1,
+      "samples": [
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "company_name": "리노공업",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "named_customer_quality",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "named_customer_quality",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "eugenefn.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+          "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+          "symbol": "058470",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "company_name": "리노공업",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "named_customer_quality",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "named_customer_quality",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "eugenefn.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+          "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+          "symbol": "058470",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "company_name": "리노공업",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "named_customer_quality",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "named_customer_quality",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "eugenefn.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+          "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+          "symbol": "058470",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "company_name": "리노공업",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "named_customer_quality",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "named_customer_quality",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "eugenefn.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+          "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+          "symbol": "058470",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "company_name": "리노공업",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "named_customer_quality",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "named_customer_quality",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "eugenefn.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+          "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+          "symbol": "058470",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 18,
+        "CompanyGuide": 5
+      },
+      "source_domain_counts": {
+        "dart.fss.or.kr": 5,
+        "eugenefn.com": 14,
+        "valueline.co.kr": 4
+      }
+    },
+    {
+      "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 55,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 2,
+        "source_lineage_unverified_original": 53,
+        "source_provider_document_type_mismatch": 53
+      },
+      "route_only_candidate_count": 16,
+      "samples": [
+        {
+          "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+          "company_name": "티씨케이",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "memory_price_increase_mentioned",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract"
+          ],
+          "primitive_gap": "memory_price_increase_mentioned",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-3518594c23e0946866d1-OFFICIAL-IR-CG-MEMORY-PRICE",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260626900949",
+          "symbol": "064760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+          "company_name": "티씨케이",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "memory_price_increase_mentioned",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "primitive_gap": "memory_price_increase_mentioned",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-3518594c23e0946866d1-OFFICIAL-IR-CG-MEMORY-PRICE",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260626900949",
+          "symbol": "064760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+          "company_name": "티씨케이",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "memory_price_increase_mentioned",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "memory_price_increase_mentioned",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-3518594c23e0946866d1-BOUNDED-REPORT-NEWS-MEMORY-PRICE",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20240423130702239.pdf",
+          "symbol": "064760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "HISTORICAL"
+        },
+        {
+          "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+          "company_name": "티씨케이",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "fcf_quality_score",
+          "mapping_status": "ACCEPTED",
+          "non_route_reasons": [],
+          "primitive_gap": "memory_price_increase_mentioned",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-3518594c23e0946866d1-BOUNDED-REPORT-NEWS-MEMORY-PRICE",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20240423130702239.pdf",
+          "symbol": "064760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+          "company_name": "티씨케이",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "memory_price_increase_mentioned",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "memory_price_increase_mentioned",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-3518594c23e0946866d1-BOUNDED-REPORT-NEWS-MEMORY-PRICE",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20240423130702239.pdf",
+          "symbol": "064760",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 53,
+        "CompanyGuide": 2
+      },
+      "source_domain_counts": {
+        "dart.fss.or.kr": 2,
+        "imgstock.naver.com": 9,
+        "invest.kiwoom.com": 15,
+        "paxnet.co.kr": 29
+      }
+    },
+    {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 5,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 5,
+        "source_provider_document_type_mismatch": 1
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+          "company_name": "KG케미칼",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "cash_or_revision_conversion",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-001390-C15-CASH-REVISION-BRIDGE-003",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515003040",
+          "symbol": "001390",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+          "company_name": "KG케미칼",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "cash_or_revision_conversion",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-001390-C15-CASH-REVISION-BRIDGE-003",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515003040",
+          "symbol": "001390",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+          "company_name": "KG케미칼",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "cash_or_revision_conversion",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-001390-C15-CASH-REVISION-BRIDGE-003",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515003040",
+          "symbol": "001390",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+          "company_name": "KG케미칼",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "pricing_power_confirmed",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_pricing_power_confirmed_spread_expansion"
+          ],
+          "primitive_gap": "cash_or_revision_conversion",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-001390-C15-CASH-REVISION-BRIDGE-003",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515003040",
+          "symbol": "001390",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+          "company_name": "KG케미칼",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:BrokerReportPublicPDF:OTHER",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "utilization_rate",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "utilization_rate",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "deepsearch.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-001390-C15-UTIL-REPORTPDF-002",
+          "source_url": "https://www.deepsearch.com/analytics/company-analysis/KRX%3A001390/details?c-name=KG%25EC%25BC%2580%25EB%25AF%25B8%25EC%25B9%25BC&c-symbol=KRX%253A001390",
+          "symbol": "001390",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 1,
+        "CompanyGuide": 4
+      },
+      "source_domain_counts": {
+        "dart.fss.or.kr": 4,
+        "deepsearch.com": 1
+      }
+    },
+    {
+      "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 25,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 25
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+          "company_name": "동진쎄미켐",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "policy_supply_support",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_contract_amount_to_prior_sales_revenue_visibility_contract"
+          ],
+          "primitive_gap": "policy_supply_support",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-49ef6fb2f350ade01199-C16-POLICY-ISSUER-OFFICIAL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001804",
+          "symbol": "005290",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+          "company_name": "동진쎄미켐",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "policy_supply_support",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule"
+          ],
+          "primitive_gap": "policy_supply_support",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-49ef6fb2f350ade01199-C16-POLICY-ISSUER-OFFICIAL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001804",
+          "symbol": "005290",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+          "company_name": "동진쎄미켐",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "policy_supply_support",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality"
+          ],
+          "primitive_gap": "policy_supply_support",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-49ef6fb2f350ade01199-C16-POLICY-ISSUER-OFFICIAL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001804",
+          "symbol": "005290",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+          "company_name": "동진쎄미켐",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "policy_supply_support",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "primitive_gap": "policy_supply_support",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-49ef6fb2f350ade01199-C16-POLICY-ISSUER-OFFICIAL",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001804",
+          "symbol": "005290",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+          "company_name": "동진쎄미켐",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:TrustedNews:OTHER"
+          ],
+          "mapped_primitive_id": "policy_supply_support",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "policy_supply_support",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "TrustedNews",
+          "source_domain": "thinkpool.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-49ef6fb2f350ade01199-C16-POLICY-TRUSTED-ORIGINAL",
+          "source_url": "https://www.thinkpool.com/compDiscuss/cont/1020731",
+          "symbol": "005290",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "CompanyGuide": 4,
+        "TrustedNews": 21
+      },
+      "source_domain_counts": {
+        "dart.fss.or.kr": 4,
+        "thinkpool.com": 21
+      }
+    },
+    {
+      "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 4,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 4
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+          "company_name": "에이피알",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "repeat_order_confirmed",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule"
+          ],
+          "primitive_gap": "repeat_order_confirmed",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-CEV4-7ebe590e9253e7d39142-C18-repeat-ir-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001577",
+          "symbol": "278470",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+          "company_name": "에이피알",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "repeat_order_confirmed",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality"
+          ],
+          "primitive_gap": "repeat_order_confirmed",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-CEV4-7ebe590e9253e7d39142-C18-repeat-ir-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001577",
+          "symbol": "278470",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+          "company_name": "에이피알",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "repeat_order_confirmed",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "primitive_gap": "repeat_order_confirmed",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-CEV4-7ebe590e9253e7d39142-C18-repeat-ir-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001577",
+          "symbol": "278470",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+          "company_name": "에이피알",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "repeat_order_confirmed",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "primitive_gap": "repeat_order_confirmed",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "ST-CEV4-7ebe590e9253e7d39142-C18-repeat-ir-001",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001577",
+          "symbol": "278470",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "CompanyGuide": 4
+      },
+      "source_domain_counts": {
+        "dart.fss.or.kr": 4
+      }
+    },
+    {
+      "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 39,
+      "reason_counts": {
+        "source_lineage_unverified_original": 39,
+        "source_provider_document_type_mismatch": 39
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+          "company_name": "F&F",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "inventory_spike",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "inventory_spike",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-60e2345cfc3433903903-C19-inventory-original-report-002",
+          "source_url": "https://securities.miraeasset.com/bbs/download/2134497.pdf?attachmentId=2134497",
+          "symbol": "383220",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+          "company_name": "F&F",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "inventory_spike",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "inventory_spike",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-60e2345cfc3433903903-C19-inventory-original-report-002",
+          "source_url": "https://securities.miraeasset.com/bbs/download/2134497.pdf?attachmentId=2134497",
+          "symbol": "383220",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+          "company_name": "F&F",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "inventory_spike",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "inventory_spike",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-60e2345cfc3433903903-C19-inventory-original-report-002",
+          "source_url": "https://securities.miraeasset.com/bbs/download/2134497.pdf?attachmentId=2134497",
+          "symbol": "383220",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+          "company_name": "F&F",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "inventory_spike",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "inventory_spike",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-60e2345cfc3433903903-C19-inventory-original-report-002",
+          "source_url": "https://securities.miraeasset.com/bbs/download/2134497.pdf?attachmentId=2134497",
+          "symbol": "383220",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+          "company_name": "F&F",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "inventory_spike",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "inventory_spike",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-60e2345cfc3433903903-C19-inventory-original-report-002",
+          "source_url": "https://securities.miraeasset.com/bbs/download/2134497.pdf?attachmentId=2134497",
+          "symbol": "383220",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 39
+      },
+      "source_domain_counts": {
+        "securities.miraeasset.com": 39
+      }
+    },
+    {
+      "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 32,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 3,
+        "source_lineage_unverified_original": 29,
+        "source_provider_document_type_mismatch": 29
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+          "company_name": "실리콘투",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "brand_customer_diversification",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "brand_customer_diversification",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-80ca650d01f63cb0a1e6-ORIGINAL-PDF-NEWSROOM-BRAND-CUSTOMER-DIVERSIFICATION",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20250428103804769.pdf",
+          "symbol": "257720",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+          "company_name": "실리콘투",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "brand_customer_diversification",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "brand_customer_diversification",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-80ca650d01f63cb0a1e6-ORIGINAL-PDF-NEWSROOM-BRAND-CUSTOMER-DIVERSIFICATION",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20250428103804769.pdf",
+          "symbol": "257720",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+          "company_name": "실리콘투",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "brand_customer_diversification",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "brand_customer_diversification",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-80ca650d01f63cb0a1e6-ORIGINAL-PDF-NEWSROOM-BRAND-CUSTOMER-DIVERSIFICATION",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20250428103804769.pdf",
+          "symbol": "257720",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+          "company_name": "실리콘투",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "brand_customer_diversification",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "brand_customer_diversification",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-80ca650d01f63cb0a1e6-ORIGINAL-PDF-NEWSROOM-BRAND-CUSTOMER-DIVERSIFICATION",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20250428103804769.pdf",
+          "symbol": "257720",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+          "company_name": "실리콘투",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "brand_customer_diversification",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "brand_customer_diversification",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-80ca650d01f63cb0a1e6-ORIGINAL-PDF-NEWSROOM-BRAND-CUSTOMER-DIVERSIFICATION",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20250428103804769.pdf",
+          "symbol": "257720",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 29,
+        "CompanyGuide": 3
+      },
+      "source_domain_counts": {
+        "dart.fss.or.kr": 3,
+        "paxnet.co.kr": 29
+      }
+    },
+    {
+      "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 14,
+      "reason_counts": {
+        "source_lineage_unverified_original": 14,
+        "source_provider_document_type_mismatch": 14,
+        "source_task_provider_error_score_block": 6
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+          "company_name": "신한지주",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "roe",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "roe",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-ROE-BROKER-PUBLIC-2",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20200427104932817.pdf",
+          "symbol": "055550",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "HISTORICAL"
+        },
+        {
+          "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+          "company_name": "신한지주",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "roe",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "roe",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-ROE-BROKER-PUBLIC-2",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20200427104932817.pdf",
+          "symbol": "055550",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "HISTORICAL"
+        },
+        {
+          "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+          "company_name": "신한지주",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "roe",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "roe",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-ROE-BROKER-PUBLIC-2",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20200427104932817.pdf",
+          "symbol": "055550",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+          "company_name": "신한지주",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "roe",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "roe",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-ROE-BROKER-PUBLIC-2",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20200427104932817.pdf",
+          "symbol": "055550",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+          "company_name": "신한지주",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "roe",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "roe",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "paxnet.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-039d7a0ef6dadaf9ce84-ROE-BROKER-PUBLIC-2",
+          "source_url": "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20200427104932817.pdf",
+          "symbol": "055550",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 14
+      },
+      "source_domain_counts": {
+        "imgstock.naver.com": 6,
+        "paxnet.co.kr": 8
+      }
+    },
+    {
+      "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 8,
+      "reason_counts": {
+        "source_lineage_unverified_original": 8,
+        "source_provider_document_type_mismatch": 8
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+          "company_name": "삼성화재",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "reserve_quality_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "reserve_quality_visible",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "file.myasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-C22-RESERVE-BROKER-TRUSTED-000810-20260705",
+          "source_url": "http://file.myasset.com/sitemanager/upload/2021/0401/000432/20210401000432040_0.pdf",
+          "symbol": "000810",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+          "company_name": "삼성화재",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "reserve_quality_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "reserve_quality_visible",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "file.myasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-C22-RESERVE-BROKER-TRUSTED-000810-20260705",
+          "source_url": "http://file.myasset.com/sitemanager/upload/2021/0401/000432/20210401000432040_0.pdf",
+          "symbol": "000810",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+          "company_name": "삼성화재",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "reserve_quality_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "reserve_quality_visible",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "file.myasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-C22-RESERVE-BROKER-TRUSTED-000810-20260705",
+          "source_url": "http://file.myasset.com/sitemanager/upload/2021/0401/000432/20210401000432040_0.pdf",
+          "symbol": "000810",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+          "company_name": "삼성화재",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "reserve_quality_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "reserve_quality_visible",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "file.myasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-C22-RESERVE-BROKER-TRUSTED-000810-20260705",
+          "source_url": "http://file.myasset.com/sitemanager/upload/2021/0401/000432/20210401000432040_0.pdf",
+          "symbol": "000810",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+          "company_name": "삼성화재",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "reserve_quality_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "reserve_quality_visible",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "file.myasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-C22-RESERVE-BROKER-TRUSTED-000810-20260705",
+          "source_url": "http://file.myasset.com/sitemanager/upload/2021/0401/000432/20210401000432040_0.pdf",
+          "symbol": "000810",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 8
+      },
+      "source_domain_counts": {
+        "file.myasset.com": 8
+      }
+    },
+    {
+      "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 24,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 5,
+        "source_lineage_unverified_original": 24,
+        "source_provider_document_type_mismatch": 24
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+          "company_name": "유한양행",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "approval_to_revenue_bridge",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "approval_to_revenue_bridge",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "home.imeritz.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-2944cc830470835ef29c-c23-original-report-commercialization-bridge",
+          "source_url": "https://home.imeritz.com/include/resource/research/WorkFlow/20240710163445859K_02.pdf",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "HISTORICAL"
+        },
+        {
+          "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+          "company_name": "유한양행",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "approval_to_revenue_bridge",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "approval_to_revenue_bridge",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "home.imeritz.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-2944cc830470835ef29c-c23-original-report-commercialization-bridge",
+          "source_url": "https://home.imeritz.com/include/resource/research/WorkFlow/20240710163445859K_02.pdf",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "HISTORICAL"
+        },
+        {
+          "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+          "company_name": "유한양행",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "approval_to_revenue_bridge",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "approval_to_revenue_bridge",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "home.imeritz.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-2944cc830470835ef29c-c23-original-report-commercialization-bridge",
+          "source_url": "https://home.imeritz.com/include/resource/research/WorkFlow/20240710163445859K_02.pdf",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+          "company_name": "유한양행",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "approval_to_revenue_bridge",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "approval_to_revenue_bridge",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "home.imeritz.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-2944cc830470835ef29c-c23-original-report-commercialization-bridge",
+          "source_url": "https://home.imeritz.com/include/resource/research/WorkFlow/20240710163445859K_02.pdf",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+          "company_name": "유한양행",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "approval_to_revenue_bridge",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "approval_to_revenue_bridge",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "home.imeritz.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-2944cc830470835ef29c-c23-original-report-commercialization-bridge",
+          "source_url": "https://home.imeritz.com/include/resource/research/WorkFlow/20240710163445859K_02.pdf",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 24
+      },
+      "source_domain_counts": {
+        "home.imeritz.com": 19,
+        "medicaltimes.com": 5
+      }
+    },
+    {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 1,
+      "reason_counts": {
+        "source_lineage_unverified_original": 1,
+        "source_provider_document_type_mismatch": 1
+      },
+      "route_only_candidate_count": 1,
+      "samples": [
+        {
+          "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+          "company_name": "유한양행",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "approval_not_confirmed",
+          "mapping_status": "ACCEPTED",
+          "non_route_reasons": [],
+          "primitive_gap": "binary_event_unresolved",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "file.myasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "RTTASK-714d0299599db8f0b838-REPORT-NEWS-ORIGINAL-BINARY",
+          "source_url": "http://file.myasset.com/sitemanager/upload/2021/0401/000432/20210401000432040_0.pdf",
+          "symbol": "000100",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 1
+      },
+      "source_domain_counts": {
+        "file.myasset.com": 1
+      }
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "current_code_verified_retry_candidate_count": 10,
+      "lineage_rejection_count": 23,
+      "reason_counts": {
+        "source_lineage_unverified_original": 23,
+        "source_provider_document_type_mismatch": 23
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+          "company_name": "바텍",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "export_growth_pct",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "export_growth_pct",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+          "symbol": "043150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "HISTORICAL"
+        },
+        {
+          "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+          "company_name": "바텍",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "export_growth_pct",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "export_growth_pct",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+          "symbol": "043150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "HISTORICAL"
+        },
+        {
+          "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+          "company_name": "바텍",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "export_growth_pct",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "export_growth_pct",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+          "symbol": "043150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+          "company_name": "바텍",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "export_growth_pct",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "export_growth_pct",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+          "symbol": "043150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+          "company_name": "바텍",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "export_growth_pct",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "export_growth_pct",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+          "symbol": "043150",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 23
+      },
+      "source_domain_counts": {
+        "securities.miraeasset.com": 23
+      }
+    },
+    {
+      "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 77,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 2,
+        "source_lineage_unverified_original": 75,
+        "source_provider_document_type_mismatch": 77
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+          "company_name": "NAVER",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "arpu_growth_pct",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "arpu_growth_pct",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "imgstock.naver.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-100b6f180bd27741c338-T3",
+          "source_url": "http://imgstock.naver.com/upload/research/company/1493358158413.pdf",
+          "symbol": "035420",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "HISTORICAL"
+        },
+        {
+          "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+          "company_name": "NAVER",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "arpu_growth_pct",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "arpu_growth_pct",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "imgstock.naver.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-100b6f180bd27741c338-T3",
+          "source_url": "http://imgstock.naver.com/upload/research/company/1493358158413.pdf",
+          "symbol": "035420",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+          "company_name": "NAVER",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "arpu_growth_pct",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "arpu_growth_pct",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "imgstock.naver.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-100b6f180bd27741c338-T3",
+          "source_url": "http://imgstock.naver.com/upload/research/company/1493358158413.pdf",
+          "symbol": "035420",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+          "company_name": "NAVER",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "arpu_growth_pct",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "arpu_growth_pct",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "imgstock.naver.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-100b6f180bd27741c338-T3",
+          "source_url": "http://imgstock.naver.com/upload/research/company/1493358158413.pdf",
+          "symbol": "035420",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+          "company_name": "NAVER",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "arpu_growth_pct",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "arpu_growth_pct",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "imgstock.naver.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-100b6f180bd27741c338-T3",
+          "source_url": "http://imgstock.naver.com/upload/research/company/1493358158413.pdf",
+          "symbol": "035420",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 77
+      },
+      "source_domain_counts": {
+        "imgstock.naver.com": 40,
+        "money2.daishin.com": 11,
+        "securities.miraeasset.com": 24,
+        "statista.com": 2
+      }
+    },
+    {
+      "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 22,
+      "reason_counts": {
+        "source_lineage_unverified_original": 22,
+        "source_provider_document_type_mismatch": 22
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+          "company_name": "CJ ENM",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "global_launch_conversion",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "global_launch_conversion",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-CJENM-C27-GLC-REPORT-002",
+          "source_url": "https://securities.miraeasset.com/bbs/download/2138359.pdf?attachmentId=2138359",
+          "symbol": "035760",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+          "company_name": "CJ ENM",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "global_launch_conversion",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "global_launch_conversion",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-CJENM-C27-GLC-REPORT-002",
+          "source_url": "https://securities.miraeasset.com/bbs/download/2138359.pdf?attachmentId=2138359",
+          "symbol": "035760",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+          "company_name": "CJ ENM",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "global_launch_conversion",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "global_launch_conversion",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-CJENM-C27-GLC-REPORT-002",
+          "source_url": "https://securities.miraeasset.com/bbs/download/2138359.pdf?attachmentId=2138359",
+          "symbol": "035760",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+          "company_name": "CJ ENM",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "global_launch_conversion",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "global_launch_conversion",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-CJENM-C27-GLC-REPORT-002",
+          "source_url": "https://securities.miraeasset.com/bbs/download/2138359.pdf?attachmentId=2138359",
+          "symbol": "035760",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+          "company_name": "CJ ENM",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "global_launch_conversion",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "global_launch_conversion",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-CJENM-C27-GLC-REPORT-002",
+          "source_url": "https://securities.miraeasset.com/bbs/download/2138359.pdf?attachmentId=2138359",
+          "symbol": "035760",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 22
+      },
+      "source_domain_counts": {
+        "securities.miraeasset.com": 22
+      }
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "current_code_verified_retry_candidate_count": 26,
+      "lineage_rejection_count": 26,
+      "reason_counts": {
+        "source_lineage_unverified_original": 26,
+        "source_provider_document_type_mismatch": 26,
+        "source_task_provider_error_score_block": 26
+      },
+      "route_only_candidate_count": 4,
+      "samples": [
+        {
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "company_name": "더존비즈온",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_task_provider_error_score_block:general_search_not_score_source",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "arr_growth_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "arr_growth_visible",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-bc089183ac06be44b76d-C28-arr-original-report-newsroom",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?categoryId=1521&messageId=2332084",
+          "symbol": "012510",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "company_name": "더존비즈온",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_task_provider_error_score_block:general_search_not_score_source",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "arr_growth_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "arr_growth_visible",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-bc089183ac06be44b76d-C28-arr-original-report-newsroom",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?categoryId=1521&messageId=2332084",
+          "symbol": "012510",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "company_name": "더존비즈온",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_task_provider_error_score_block:general_search_not_score_source",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "arr_growth_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "arr_growth_visible",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-bc089183ac06be44b76d-C28-arr-original-report-newsroom",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?categoryId=1521&messageId=2332084",
+          "symbol": "012510",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "company_name": "더존비즈온",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_task_provider_error_score_block:general_search_not_score_source",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "arr_growth_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "arr_growth_visible",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-bc089183ac06be44b76d-C28-arr-original-report-newsroom",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?categoryId=1521&messageId=2332084",
+          "symbol": "012510",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+          "company_name": "더존비즈온",
+          "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+          "lineage_reasons": [
+            "source_task_provider_error_score_block:general_search_not_score_source",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "arr_growth_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "arr_growth_visible",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-bc089183ac06be44b76d-C28-arr-original-report-newsroom",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?categoryId=1521&messageId=2332084",
+          "symbol": "012510",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 26
+      },
+      "source_domain_counts": {
+        "bbn.kiwoom.com": 12,
+        "securities.miraeasset.com": 14
+      }
+    },
+    {
+      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 61,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 19,
+        "source_lineage_unverified_original": 61,
+        "source_provider_document_type_mismatch": 42
+      },
+      "route_only_candidate_count": 6,
+      "samples": [
+        {
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "company_name": "SK텔레콤",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "volume_growth_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "volume_growth_visible",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-C29-017670-VOLUME-ORIGINAL-REPORT-NEWS-002",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2335471&categoryId=1800",
+          "symbol": "017670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "company_name": "SK텔레콤",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "fcf_quality_score",
+          "mapping_status": "ACCEPTED",
+          "non_route_reasons": [],
+          "primitive_gap": "volume_growth_visible",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-C29-017670-VOLUME-ORIGINAL-REPORT-NEWS-002",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2335471&categoryId=1800",
+          "symbol": "017670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "company_name": "SK텔레콤",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "volume_growth_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "volume_growth_visible",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-C29-017670-VOLUME-ORIGINAL-REPORT-NEWS-002",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2335471&categoryId=1800",
+          "symbol": "017670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "company_name": "SK텔레콤",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "fcf_quality_score",
+          "mapping_status": "ACCEPTED",
+          "non_route_reasons": [],
+          "primitive_gap": "volume_growth_visible",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-C29-017670-VOLUME-ORIGINAL-REPORT-NEWS-002",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2335471&categoryId=1800",
+          "symbol": "017670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+          "company_name": "SK텔레콤",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "volume_growth_visible",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+          ],
+          "primitive_gap": "volume_growth_visible",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "securities.miraeasset.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "ST-C29-017670-VOLUME-ORIGINAL-REPORT-NEWS-002",
+          "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2335471&categoryId=1800",
+          "symbol": "017670",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 20,
+        "CompanyNewsroom": 41
+      },
+      "source_domain_counts": {
+        "emoderntimes.com": 22,
+        "equity.co.kr": 19,
+        "securities.miraeasset.com": 20
+      }
+    },
+    {
+      "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 16,
+      "reason_counts": {
+        "source_lineage_unverified_original": 16,
+        "source_provider_document_type_mismatch": 16
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+          "company_name": "GS건설",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "balance_sheet_repair",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "balance_sheet_repair",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "imgstock.naver.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-16f44978740692ee7f6a-C30-BSR-REPORT-003",
+          "source_url": "http://imgstock.naver.com/upload/research/invest/1497936451192.pdf",
+          "symbol": "006360",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+          "company_name": "GS건설",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "balance_sheet_repair",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "balance_sheet_repair",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "imgstock.naver.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-16f44978740692ee7f6a-C30-BSR-REPORT-003",
+          "source_url": "http://imgstock.naver.com/upload/research/invest/1497936451192.pdf",
+          "symbol": "006360",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+          "company_name": "GS건설",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "balance_sheet_repair",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "balance_sheet_repair",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "imgstock.naver.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-16f44978740692ee7f6a-C30-BSR-REPORT-003",
+          "source_url": "http://imgstock.naver.com/upload/research/invest/1497936451192.pdf",
+          "symbol": "006360",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+          "company_name": "GS건설",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "balance_sheet_repair",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "balance_sheet_repair",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "imgstock.naver.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-16f44978740692ee7f6a-C30-BSR-REPORT-003",
+          "source_url": "http://imgstock.naver.com/upload/research/invest/1497936451192.pdf",
+          "symbol": "006360",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+          "company_name": "GS건설",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "balance_sheet_repair",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "balance_sheet_repair",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "imgstock.naver.com",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "CEV4-RTATTEMPT-16f44978740692ee7f6a-C30-BSR-REPORT-003",
+          "source_url": "http://imgstock.naver.com/upload/research/invest/1497936451192.pdf",
+          "symbol": "006360",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 16
+      },
+      "source_domain_counts": {
+        "imgstock.naver.com": 16
+      }
+    },
+    {
+      "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 16,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 16,
+        "source_provider_document_type_mismatch": 16
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+          "company_name": "영풍",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:BrokerReportPublicPDF:OTHER",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "tender_offer_confirmed",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "tender_offer_confirmed",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "businesspost.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "C32-tender-offer-confirmed-original-report-newsroom-000670",
+          "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=398730",
+          "symbol": "000670",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+          "company_name": "영풍",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:BrokerReportPublicPDF:OTHER",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "tender_offer_confirmed",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "tender_offer_confirmed",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "businesspost.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "C32-tender-offer-confirmed-original-report-newsroom-000670",
+          "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=398730",
+          "symbol": "000670",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+          "company_name": "영풍",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:BrokerReportPublicPDF:OTHER",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "tender_offer_confirmed",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "tender_offer_confirmed",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "businesspost.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "C32-tender-offer-confirmed-original-report-newsroom-000670",
+          "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=398730",
+          "symbol": "000670",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+          "company_name": "영풍",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:BrokerReportPublicPDF:OTHER",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "tender_offer_confirmed",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "tender_offer_confirmed",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "businesspost.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "C32-tender-offer-confirmed-original-report-newsroom-000670",
+          "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=398730",
+          "symbol": "000670",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+          "company_name": "영풍",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:BrokerReportPublicPDF:OTHER",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "mapped_primitive_id": "tender_offer_confirmed",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:adjudication_not_passed"
+          ],
+          "primitive_gap": "tender_offer_confirmed",
+          "quote_excerpt": "",
+          "semantic_status": "REJECTED",
+          "source_class": "BrokerReportPublicPDF",
+          "source_domain": "businesspost.co.kr",
+          "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+          "source_task_id": "C32-tender-offer-confirmed-original-report-newsroom-000670",
+          "source_url": "https://www.businesspost.co.kr/BP?command=article_view&num=398730",
+          "symbol": "000670",
+          "target_scope_status": "UNRELATED",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "BrokerReportPublicPDF": 16
+      },
+      "source_domain_counts": {
+        "businesspost.co.kr": 16
+      }
+    },
+    {
+      "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "current_code_verified_retry_candidate_count": 0,
+      "lineage_rejection_count": 4,
+      "reason_counts": {
+        "source_class_document_type_mismatch": 4
+      },
+      "route_only_candidate_count": 0,
+      "samples": [
+        {
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "company_name": "고려아연",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "liquidity_or_microcap_risk",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract"
+          ],
+          "primitive_gap": "liquidity_or_microcap_risk",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-5c05990124beb143ac68-IR-LIQ-02",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260630801556",
+          "symbol": "010130",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "company_name": "고려아연",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "liquidity_or_microcap_risk",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "primitive_gap": "liquidity_or_microcap_risk",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-5c05990124beb143ac68-IR-LIQ-02",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260630801556",
+          "symbol": "010130",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "company_name": "고려아연",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "valuation_overheat",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract_export_contract"
+          ],
+          "primitive_gap": "valuation_overheat",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-9dc87eec940d6029f083-VAL-OFFICIAL-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260630801556",
+          "symbol": "010130",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        },
+        {
+          "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+          "company_name": "고려아연",
+          "current_route_patch_status": "ROUTE_RECOVERY_STILL_REQUIRED",
+          "lineage_reasons": [
+            "source_class_document_type_mismatch:CompanyGuide:FILING"
+          ],
+          "mapped_primitive_id": "valuation_overheat",
+          "mapping_status": "REJECTED",
+          "non_route_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "primitive_gap": "valuation_overheat",
+          "quote_excerpt": "",
+          "semantic_status": "PASS",
+          "source_class": "CompanyGuide",
+          "source_domain": "dart.fss.or.kr",
+          "source_provider": "OpenDART",
+          "source_task_id": "RTTASK-9dc87eec940d6029f083-VAL-OFFICIAL-01",
+          "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260630801556",
+          "symbol": "010130",
+          "target_scope_status": "DIRECT",
+          "temporal_status": "CURRENT"
+        }
+      ],
+      "source_class_counts": {
+        "CompanyGuide": 4
+      },
+      "source_domain_counts": {
+        "dart.fss.or.kr": 4
+      }
+    }
+  ],
+  "current_code_verified_retry_candidate_count": 50,
+  "lineage_rejection_count": 524,
+  "operator_rule": "Rows in this audit are repair candidates only. They become score evidence only after a fresh bounded runtime attempt creates accepted Evidence OS claims with verified anchors.",
+  "output_root": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z",
+  "raw_assertion_rejection_count": 2502,
+  "reason_counts": {
+    "source_class_document_type_mismatch": 135,
+    "source_lineage_unverified_original": 413,
+    "source_provider_document_type_mismatch": 417,
+    "source_task_provider_error_score_block": 32
+  },
+  "route_only_candidate_count": 29,
+  "schema_version": "e2r_source_lineage_repair_audit_v1",
+  "score_evidence_allowed_from_rejected_rows": false,
+  "source_class_counts": {
+    "BrokerReportPublicPDF": 395,
+    "CompanyGuide": 31,
+    "CompanyNewsroom": 49,
+    "TrustedNews": 49
+  },
+  "source_domain_counts": {
+    "bbn.kiwoom.com": 12,
+    "businesspost.co.kr": 16,
+    "dart.fss.or.kr": 31,
+    "deepsearch.com": 1,
+    "emoderntimes.com": 22,
+    "equity.co.kr": 19,
+    "eugenefn.com": 14,
+    "file.myasset.com": 9,
+    "genians.co.kr": 8,
+    "home.imeritz.com": 19,
+    "imgstock.naver.com": 71,
+    "invest.kiwoom.com": 15,
+    "medicaltimes.com": 5,
+    "money2.daishin.com": 11,
+    "paxnet.co.kr": 74,
+    "redhorseblog.co.kr": 13,
+    "rindir.co.kr": 15,
+    "securities.miraeasset.com": 142,
+    "statista.com": 2,
+    "thinkpool.com": 21,
+    "valueline.co.kr": 4
+  },
+  "source_lineage_feedback_retry_execution_count": 0,
+  "source_task_execution_count": 827,
+  "top_retry_candidates": [
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "company_name": "바텍",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "export_growth_pct",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "export_growth_pct",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "securities.miraeasset.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+      "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+      "symbol": "043150",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "HISTORICAL"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "company_name": "바텍",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "export_growth_pct",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "export_growth_pct",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "securities.miraeasset.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+      "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+      "symbol": "043150",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "HISTORICAL"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "company_name": "바텍",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "export_growth_pct",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+      ],
+      "primitive_gap": "export_growth_pct",
+      "quote_excerpt": "",
+      "semantic_status": "PASS",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "securities.miraeasset.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+      "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+      "symbol": "043150",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "company_name": "바텍",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "export_growth_pct",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+      ],
+      "primitive_gap": "export_growth_pct",
+      "quote_excerpt": "",
+      "semantic_status": "PASS",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "securities.miraeasset.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+      "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+      "symbol": "043150",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "company_name": "바텍",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "export_growth_pct",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+      ],
+      "primitive_gap": "export_growth_pct",
+      "quote_excerpt": "",
+      "semantic_status": "PASS",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "securities.miraeasset.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+      "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+      "symbol": "043150",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "company_name": "바텍",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "export_growth_pct",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+      ],
+      "primitive_gap": "export_growth_pct",
+      "quote_excerpt": "",
+      "semantic_status": "PASS",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "securities.miraeasset.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+      "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+      "symbol": "043150",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "company_name": "바텍",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "export_growth_pct",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+      ],
+      "primitive_gap": "export_growth_pct",
+      "quote_excerpt": "",
+      "semantic_status": "PASS",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "securities.miraeasset.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+      "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+      "symbol": "043150",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "company_name": "바텍",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "export_growth_pct",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+      ],
+      "primitive_gap": "export_growth_pct",
+      "quote_excerpt": "",
+      "semantic_status": "PASS",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "securities.miraeasset.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+      "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+      "symbol": "043150",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "company_name": "바텍",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "export_growth_pct",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+      ],
+      "primitive_gap": "export_growth_pct",
+      "quote_excerpt": "",
+      "semantic_status": "PASS",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "securities.miraeasset.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+      "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+      "symbol": "043150",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "company_name": "바텍",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "export_growth_pct",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+      ],
+      "primitive_gap": "export_growth_pct",
+      "quote_excerpt": "",
+      "semantic_status": "PASS",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "securities.miraeasset.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a-T2-original-report-or-trusted-export-growth",
+      "source_url": "https://securities.miraeasset.com/bbs/board/message/view.do?messageId=2312789&categoryId=1521",
+      "symbol": "043150",
+      "target_scope_status": "DIRECT",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "company_name": "리노공업",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "named_customer_quality",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "target_scope_not_allowed:UNRELATED",
+        "target_not_direct:NOT_TARGET_SCOPED",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "named_customer_quality",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "eugenefn.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+      "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+      "symbol": "058470",
+      "target_scope_status": "UNRELATED",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "company_name": "리노공업",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "named_customer_quality",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "target_scope_not_allowed:UNRELATED",
+        "target_not_direct:NOT_TARGET_SCOPED",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "named_customer_quality",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "eugenefn.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+      "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+      "symbol": "058470",
+      "target_scope_status": "UNRELATED",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "company_name": "리노공업",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "named_customer_quality",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "target_scope_not_allowed:UNRELATED",
+        "target_not_direct:NOT_TARGET_SCOPED",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "named_customer_quality",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "eugenefn.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+      "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+      "symbol": "058470",
+      "target_scope_status": "UNRELATED",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "company_name": "리노공업",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "named_customer_quality",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "target_scope_not_allowed:UNRELATED",
+        "target_not_direct:NOT_TARGET_SCOPED",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "named_customer_quality",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "eugenefn.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+      "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+      "symbol": "058470",
+      "target_scope_status": "UNRELATED",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "company_name": "리노공업",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "named_customer_quality",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "target_scope_not_allowed:UNRELATED",
+        "target_not_direct:NOT_TARGET_SCOPED",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "named_customer_quality",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "eugenefn.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+      "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+      "symbol": "058470",
+      "target_scope_status": "UNRELATED",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "company_name": "리노공업",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "named_customer_quality",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "target_scope_not_allowed:UNRELATED",
+        "target_not_direct:NOT_TARGET_SCOPED",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "named_customer_quality",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "eugenefn.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+      "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+      "symbol": "058470",
+      "target_scope_status": "UNRELATED",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "company_name": "리노공업",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "named_customer_quality",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "target_scope_not_allowed:UNRELATED",
+        "target_not_direct:NOT_TARGET_SCOPED",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "named_customer_quality",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "eugenefn.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+      "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+      "symbol": "058470",
+      "target_scope_status": "UNRELATED",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "company_name": "리노공업",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "named_customer_quality",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "target_scope_not_allowed:UNRELATED",
+        "target_not_direct:NOT_TARGET_SCOPED",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "named_customer_quality",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "eugenefn.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+      "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+      "symbol": "058470",
+      "target_scope_status": "UNRELATED",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "company_name": "리노공업",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "named_customer_quality",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "target_scope_not_allowed:UNRELATED",
+        "target_not_direct:NOT_TARGET_SCOPED",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "named_customer_quality",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "eugenefn.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+      "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+      "symbol": "058470",
+      "target_scope_status": "UNRELATED",
+      "temporal_status": "CURRENT"
+    },
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "company_name": "리노공업",
+      "current_route_patch_status": "CURRENT_CODE_VERIFIES_BROKER_REPORT_ORIGINAL_RETRY_REQUIRED",
+      "lineage_reasons": [
+        "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
+        "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+      ],
+      "mapped_primitive_id": "named_customer_quality",
+      "mapping_status": "REJECTED",
+      "non_route_reasons": [
+        "semantic_rejected",
+        "target_scope_not_allowed:UNRELATED",
+        "target_not_direct:NOT_TARGET_SCOPED",
+        "mapping_not_accepted:REJECTED",
+        "primitive_mapping_rejected:adjudication_not_passed"
+      ],
+      "primitive_gap": "named_customer_quality",
+      "quote_excerpt": "",
+      "semantic_status": "REJECTED",
+      "source_class": "BrokerReportPublicPDF",
+      "source_domain": "eugenefn.com",
+      "source_provider": "https://openapi.naver.com/v1/search/webkr.json",
+      "source_task_id": "C08_named_customer_quality_broker_pdf_original_058470",
+      "source_url": "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf",
+      "symbol": "058470",
+      "target_scope_status": "UNRELATED",
+      "temporal_status": "CURRENT"
+    }
+  ]
+}

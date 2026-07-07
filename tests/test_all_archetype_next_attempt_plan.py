@@ -16,12 +16,24 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
         cls.case_inventory = json.loads(
             (cls.docs / "research_reverse_case_inventory.json").read_text(encoding="utf-8")
         )
+        cls.source_lineage = json.loads(
+            (cls.docs / "source_lineage_repair_audit.json").read_text(encoding="utf-8")
+        )
         cls.plan = build_all_archetype_next_runtime_attempt_plan(
             status_matrix=cls.status,
             memory_cards=cls.cards,
             case_inventory=cls.case_inventory,
         )
+        cls.plan_with_lineage = build_all_archetype_next_runtime_attempt_plan(
+            status_matrix=cls.status,
+            memory_cards=cls.cards,
+            case_inventory=cls.case_inventory,
+            source_lineage_repair_audit=cls.source_lineage,
+        )
         cls.by_prefix = {row["archetype_prefix"]: row for row in cls.plan["plan_rows"]}
+        cls.with_lineage_by_prefix = {
+            row["archetype_prefix"]: row for row in cls.plan_with_lineage["plan_rows"]
+        }
 
     def test_every_unproven_archetype_has_next_attempt_row(self) -> None:
         unproven = [
@@ -232,6 +244,40 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
         self.assertIn("NO_PREVIOUS_CLAIM_FAILURE_MODE", mismatch_seed["raw_reason_codes"])
         self.assertIsNone(mismatch_seed["structured_payload"]["previous_claim_failure_repair_hint"])
         self.assertFalse(mismatch_seed["structured_payload"]["source_route_repair_required"])
+
+    def test_source_lineage_repair_audit_reaches_next_attempt_feedback(self) -> None:
+        self.assertGreater(self.plan_with_lineage["source_lineage_repair_archetype_count"], 0)
+        self.assertGreater(self.plan_with_lineage["source_lineage_retry_task_count"], 0)
+        self.assertGreater(
+            self.plan_with_lineage["source_lineage_current_code_verified_retry_candidate_count"],
+            0,
+        )
+        c28_row = self.with_lineage_by_prefix["C28"]
+        summary = c28_row["source_lineage_repair_summary"]
+        self.assertTrue(c28_row["source_lineage_repair_required"])
+        self.assertGreater(summary["current_code_verified_retry_candidate_count"], 0)
+        self.assertGreater(summary["route_only_candidate_count"], 0)
+        self.assertIn("bbn.kiwoom.com", summary["top_domains"])
+        self.assertIn(
+            "RETRY_CURRENT_CODE_VERIFIED_ORIGINAL_SOURCE_ROUTES",
+            c28_row["source_route_repair_actions"],
+        )
+
+        c28_task = next(
+            task
+            for task in self.plan_with_lineage["source_tasks"]
+            if task["archetype_id"] == c28_row["archetype_id"]
+        )
+        self.assertTrue(c28_task["source_lineage_repair_required"])
+        self.assertFalse(
+            c28_task["planner_failure_feedback"][
+                "score_evidence_allowed_from_source_lineage_repair_candidates"
+            ]
+        )
+        self.assertIn(
+            "Previous runtime had source-lineage rejected candidates",
+            " ".join(c28_task["query_intents"]),
+        )
 
 
 if __name__ == "__main__":

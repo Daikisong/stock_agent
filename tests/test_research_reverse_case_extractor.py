@@ -53,9 +53,13 @@ class ResearchReverseCaseExtractorTests(unittest.TestCase):
         self.assertNotIn("docs/operational/all_archetype_runtime_execution_manifest_2026-07-05.md", files)
         self.assertNotIn("docs/operational/all_archetype_runtime_execution_manifest_2026-07-05.json", files)
         self.assertNotIn("docs/operational/all_archetype_runtime_execution_manifest.json", files)
+        self.assertNotIn("docs/operational/source_lineage_repair_audit.json", files)
+        self.assertNotIn("docs/operational/source_lineage_repair_audit_2026-07-05.json", files)
+        self.assertNotIn("docs/operational/source_lineage_repair_audit_2026-07-05.md", files)
         self.assertNotIn("docs/0705/goal4_research_to_runtime_status_2026-07-05.md", files)
         self.assertNotIn("docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md", files)
         self.assertNotIn("docs/0705/goal4_research_memory_target_materialization_plan_2026-07-05.md", files)
+        self.assertNotIn("docs/0705/goal4_source_lineage_repair_audit_2026-07-08.md", files)
 
 
 if __name__ == "__main__":
