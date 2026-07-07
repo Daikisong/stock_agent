@@ -7605,6 +7605,51 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertEqual(len(ledger.mappings), 1)
         self.assertEqual(ledger.mappings[first.mapping_id], first)
 
+    def test_mapping_id_separates_accepted_and_rejected_status(self):
+        document, anchor, raw = _current_target_risk_fixture()
+        claim = AdjudicatedClaim.from_raw(
+            raw=raw,
+            document=document,
+            anchor=anchor,
+            subject_entity_id="CORP_TARGET",
+            target_entity_id="CORP_TARGET",
+            relation_to_target=RelationToTarget.SELF,
+            directness=Directness.DIRECT,
+            verification_status=VerificationStatus.SEMANTIC_VERIFIED,
+            target_scope_status=TargetScopeStatus.DIRECT,
+            polarity=Polarity.NEGATIVE,
+            temporal_status=TemporalStatus.CURRENT,
+            semantic_status=SemanticStatus.PASS_,
+            investigation_status=InvestigationStatus.COMPLETE,
+            event_date=date(2026, 6, 1),
+        )
+        accepted = PrimitiveMappingProposal.build(
+            claim_id=claim.claim_id,
+            archetype_id="R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+            primitive_id="accounting_trust_break",
+            support_direction=SupportDirection.COUNTER,
+            mapping_status=MappingStatus.ACCEPTED,
+            rationale="Current direct hard-break risk accepted.",
+        )
+        rejected = PrimitiveMappingProposal.build(
+            claim_id=claim.claim_id,
+            archetype_id="R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+            primitive_id="accounting_trust_break",
+            support_direction=SupportDirection.COUNTER,
+            mapping_status=MappingStatus.REJECTED,
+            rationale="Retry rejected the same primitive pending quorum.",
+        )
+        ledger = AppendOnlyEvidenceLedger()
+
+        ledger.append_claim(claim)
+        ledger.append_mapping(accepted)
+        ledger.append_mapping(rejected)
+
+        self.assertNotEqual(accepted.mapping_id, rejected.mapping_id)
+        self.assertEqual(len(ledger.mappings), 2)
+        self.assertEqual(ledger.mappings[accepted.mapping_id], accepted)
+        self.assertEqual(ledger.mappings[rejected.mapping_id], rejected)
+
     def test_current_direct_hard_break_requires_source_quorum(self):
         document, anchor, raw = _current_target_risk_fixture()
         claim = AdjudicatedClaim.from_raw(

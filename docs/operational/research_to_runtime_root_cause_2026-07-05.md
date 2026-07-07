@@ -8,12 +8,12 @@
 
 ## Current Facts
 
-- full_thesis_row_count: `7`
-- full_thesis_by_archetype: `{"C01_ORDER_BACKLOG_MARGIN_BRIDGE": 1, "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 1, "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 1, "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 1, "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": 1, "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": 1, "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": 1}`
-- distinct_full_thesis_archetype_count: `7`
-- c05_full_thesis_share: `0.142857`
-- required_positive_missing_full_thesis_row_count: `7`
-- green_gap_full_thesis_row_count: `7`
+- full_thesis_row_count: `6`
+- full_thesis_by_archetype: `{"C01_ORDER_BACKLOG_MARGIN_BRIDGE": 1, "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 1, "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 1, "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 1, "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": 1, "C24_BIO_TRIAL_DATA_EVENT_RISK": 1}`
+- distinct_full_thesis_archetype_count: `6`
+- c05_full_thesis_share: `0.166667`
+- required_positive_missing_full_thesis_row_count: `5`
+- green_gap_full_thesis_row_count: `5`
 - target_archetype_unknown_promoted_count: `0`
 - source_primary_context_promoted_count: `0`
 

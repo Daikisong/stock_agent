@@ -1,7 +1,7 @@
 {
   "rows": [
     {
-      "accepted_claim_count": 1,
+      "accepted_claim_count": 3,
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -49,7 +49,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 2,
+      "accepted_claim_count": 1,
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -61,7 +61,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 3,
+      "accepted_claim_count": 2,
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -85,7 +85,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 7,
+      "accepted_claim_count": 4,
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -193,7 +193,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 12,
+      "accepted_claim_count": 11,
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -277,7 +277,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 5,
+      "accepted_claim_count": 6,
       "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -325,7 +325,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 8,
+      "accepted_claim_count": 7,
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",

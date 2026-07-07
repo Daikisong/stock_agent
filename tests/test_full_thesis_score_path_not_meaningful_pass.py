@@ -12,7 +12,7 @@ class FullThesisScorePathNotMeaningfulPassTests(unittest.TestCase):
         self.assertEqual(old["status"], "PENDING_FULL_THESIS_PRODUCTION")
         self.assertEqual(new["score_path_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_PASS")
         self.assertEqual(new["meaningful_evidence_status"], "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE")
-        self.assertEqual(new["archetype_balanced_status"], "ARCHETYPE_BALANCED_FULL_THESIS_PASS")
+        self.assertEqual(new["archetype_balanced_status"], "ARCHETYPE_BALANCED_FULL_THESIS_PASS_FALSE")
 
     def test_goal4_semantic_split_separates_score_path_from_meaningful_evidence(self) -> None:
         split = _full_thesis_goal4_semantic_split(

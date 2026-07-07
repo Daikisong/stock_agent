@@ -84,20 +84,20 @@
       "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "case_role_counts": {
         "4B": 41,
-        "4C": 239,
+        "4C": 240,
         "guard": 6,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 287,
+      "record_count": 288,
       "source_gap": false,
       "source_proxy_only_case_count": 141,
       "source_quality_counts": {
         "A2_URL_BACKED": 46,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 83,
-        "SHADOW_ONLY": 12,
+        "SHADOW_ONLY": 13,
         "SOURCE_PROXY_ONLY": 141
       },
       "top_missing_primitives": [
@@ -120,18 +120,18 @@
       "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
       "case_role_counts": {
         "4B": 26,
-        "4C": 209
+        "4C": 208
       },
       "evidence_url_pending_case_count": 4,
       "has_pattern_summary": true,
-      "record_count": 235,
+      "record_count": 234,
       "source_gap": false,
       "source_proxy_only_case_count": 102,
       "source_quality_counts": {
         "A2_URL_BACKED": 56,
         "EVIDENCE_URL_PENDING": 4,
         "PRICE_PATH_ONLY": 65,
-        "SHADOW_ONLY": 8,
+        "SHADOW_ONLY": 7,
         "SOURCE_PROXY_ONLY": 102
       },
       "top_missing_primitives": [
@@ -154,9 +154,9 @@
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "case_role_counts": {
         "4B": 32,
-        "4C": 352,
+        "4C": 353,
         "guard": 8,
-        "positive": 2
+        "positive": 1
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
@@ -171,8 +171,8 @@
         "SOURCE_PROXY_ONLY": 177
       },
       "top_missing_primitives": [
-        "contract_amount_to_prior_sales",
         "margin_bridge_visible",
+        "contract_amount_to_prior_sales",
         "contract_duration_months",
         "cost_overrun",
         "delivery_schedule"
@@ -268,13 +268,13 @@
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "case_role_counts": {
         "4B": 21,
-        "4C": 272,
+        "4C": 273,
         "guard": 6,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 2,
       "has_pattern_summary": true,
-      "record_count": 300,
+      "record_count": 301,
       "source_gap": false,
       "source_proxy_only_case_count": 177,
       "source_quality_counts": {
@@ -282,7 +282,7 @@
         "A2_URL_BACKED": 61,
         "EVIDENCE_URL_PENDING": 2,
         "PRICE_PATH_ONLY": 44,
-        "SHADOW_ONLY": 15,
+        "SHADOW_ONLY": 16,
         "SOURCE_PROXY_ONLY": 177
       },
       "top_missing_primitives": [
@@ -305,20 +305,20 @@
       "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
       "case_role_counts": {
         "4B": 17,
-        "4C": 297,
+        "4C": 298,
         "guard": 1,
         "positive": 1
       },
       "evidence_url_pending_case_count": 1,
       "has_pattern_summary": true,
-      "record_count": 316,
+      "record_count": 317,
       "source_gap": false,
       "source_proxy_only_case_count": 194,
       "source_quality_counts": {
         "A2_URL_BACKED": 81,
         "EVIDENCE_URL_PENDING": 1,
         "PRICE_PATH_ONLY": 34,
-        "SHADOW_ONLY": 6,
+        "SHADOW_ONLY": 7,
         "SOURCE_PROXY_ONLY": 194
       },
       "top_missing_primitives": [
@@ -599,21 +599,21 @@
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
       "case_role_counts": {
         "4B": 44,
-        "4C": 279,
+        "4C": 278,
         "guard": 3,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 10,
       "has_pattern_summary": true,
-      "record_count": 328,
+      "record_count": 327,
       "source_gap": false,
       "source_proxy_only_case_count": 160,
       "source_quality_counts": {
         "A2_URL_BACKED": 69,
         "EVIDENCE_URL_PENDING": 10,
         "PRICE_PATH_ONLY": 75,
-        "SHADOW_ONLY": 14,
+        "SHADOW_ONLY": 13,
         "SOURCE_PROXY_ONLY": 160
       },
       "top_missing_primitives": [
@@ -636,14 +636,14 @@
       "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
       "case_role_counts": {
         "4B": 35,
-        "4C": 262,
+        "4C": 261,
         "guard": 3,
         "positive": 1,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 302,
+      "record_count": 301,
       "source_gap": false,
       "source_proxy_only_case_count": 126,
       "source_quality_counts": {
@@ -651,7 +651,7 @@
         "A2_URL_BACKED": 89,
         "EVIDENCE_URL_PENDING": 8,
         "PRICE_PATH_ONLY": 67,
-        "SHADOW_ONLY": 11,
+        "SHADOW_ONLY": 10,
         "SOURCE_PROXY_ONLY": 126
       },
       "top_missing_primitives": [
@@ -1041,20 +1041,20 @@
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "case_role_counts": {
         "4B": 19,
-        "4C": 247,
+        "4C": 249,
         "guard": 1,
         "positive": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 268,
+      "record_count": 270,
       "source_gap": false,
       "source_proxy_only_case_count": 114,
       "source_quality_counts": {
         "A2_URL_BACKED": 71,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 68,
-        "SHADOW_ONLY": 10,
+        "SHADOW_ONLY": 12,
         "SOURCE_PROXY_ONLY": 114
       },
       "top_missing_primitives": [
@@ -1114,7 +1114,7 @@
       "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
       "case_role_counts": {
         "4B": 41,
-        "4C": 330,
+        "4C": 331,
         "guard": 3,
         "positive": 1,
         "profile_cap": 1,
@@ -1122,14 +1122,14 @@
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 377,
+      "record_count": 378,
       "source_gap": false,
       "source_proxy_only_case_count": 142,
       "source_quality_counts": {
         "A2_URL_BACKED": 114,
         "EVIDENCE_URL_PENDING": 8,
         "PRICE_PATH_ONLY": 105,
-        "SHADOW_ONLY": 8,
+        "SHADOW_ONLY": 9,
         "SOURCE_PROXY_ONLY": 142
       },
       "top_missing_primitives": [

@@ -7,18 +7,18 @@
     "zero_llm_but_llm_claimed_count": 0
   },
   "eligible_count": 3940,
-  "evidence_extraction_count": 145,
+  "evidence_extraction_count": 141,
   "legacy_boolean_pass": true,
-  "llm_call_count": 110,
+  "llm_call_count": 111,
   "pass_scope": "live_runtime",
   "provider_cache_count": 60,
-  "provider_call_count": 32,
+  "provider_call_count": 27,
   "run_mode": "BRAIN_AND_WEB_ACQUISITION_ENABLED",
   "runtime_mode": "BRAIN_AND_WEB_ACQUISITION_ENABLED",
-  "runtime_seconds": 13357.8654,
+  "runtime_seconds": 12764.9034,
   "schema_version": "e2r_census_v4_runtime_plausibility_audit_v1",
-  "source_task_real_fetch_count": 32,
+  "source_task_real_fetch_count": 27,
   "verdict": "PASS_LIVE_RUNTIME_PLAUSIBILITY",
   "web_fetched_document_count": 120,
-  "web_search_task_count": 133
+  "web_search_task_count": 140
 }

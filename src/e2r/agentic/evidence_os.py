@@ -592,6 +592,7 @@ class PrimitiveMappingProposal:
             archetype_id,
             primitive_id,
             support_direction.value,
+            mapping_status.value,
         )
         return cls(
             mapping_id=mapping_id,

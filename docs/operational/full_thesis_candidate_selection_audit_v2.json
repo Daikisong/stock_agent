@@ -2,17 +2,29 @@
   "blockers": [
     "required_positive_missing_promoted_rows"
   ],
-  "current_c05_full_thesis_share": 0.142857,
-  "current_distinct_full_thesis_archetype_count": 7,
-  "current_full_thesis_row_count": 7,
+  "current_c05_full_thesis_share": 0.166667,
+  "current_distinct_full_thesis_archetype_count": 6,
+  "current_full_thesis_row_count": 6,
   "mandatory_archetype_attempt_missing": [],
   "mandatory_archetype_full_thesis_missing": [
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
     "C15_MATERIAL_SPREAD_SUPERCYCLE",
-    "C24_BIO_TRIAL_DATA_EVENT_RISK"
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
   ],
   "meaningful_pass_allowed": false,
   "next_required_archetype_attempt_count": 12,
   "next_required_archetype_attempts": [
+    {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "current_runtime_parity_status": "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP",
+      "current_source_route_status": "BLOCKED_FULL_THESIS_CANDIDATE",
+      "priority": 10,
+      "reason": "mandatory_archetype_missing_production_full_thesis",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 3,
+      "runtime_source_task_execution_count": 44,
+      "source_backed_fixture_count": 4
+    },
     {
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "current_runtime_parity_status": "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP",
@@ -25,15 +37,15 @@
       "source_backed_fixture_count": 6
     },
     {
-      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "current_runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
       "current_source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
       "priority": 10,
       "reason": "mandatory_archetype_missing_production_full_thesis",
       "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 44,
-      "source_backed_fixture_count": 5
+      "runtime_source_task_execution_count": 42,
+      "source_backed_fixture_count": 7
     },
     {
       "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -54,7 +66,7 @@
       "reason": "attempted_but_not_promoted_to_full_thesis",
       "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 44,
+      "runtime_source_task_execution_count": 42,
       "source_backed_fixture_count": 3
     },
     {
@@ -92,13 +104,13 @@
     },
     {
       "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
-      "current_runtime_parity_status": "ACCEPTED_CLAIM_PRESENT_BUT_FULL_THESIS_NOT_CLOSED",
-      "current_source_route_status": "ACCEPTED_CLAIM_NO_FULL_THESIS",
+      "current_runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "current_source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
       "priority": 30,
       "reason": "attempted_but_not_promoted_to_full_thesis",
       "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 46,
+      "runtime_source_task_execution_count": 44,
       "source_backed_fixture_count": 3
     },
     {
@@ -109,7 +121,7 @@
       "reason": "attempted_but_not_promoted_to_full_thesis",
       "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 46,
+      "runtime_source_task_execution_count": 44,
       "source_backed_fixture_count": 3
     },
     {
@@ -120,22 +132,11 @@
       "reason": "attempted_but_not_promoted_to_full_thesis",
       "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 46,
+      "runtime_source_task_execution_count": 44,
       "source_backed_fixture_count": 3
     },
     {
       "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
-      "current_runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
-      "current_source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
-      "priority": 30,
-      "reason": "attempted_but_not_promoted_to_full_thesis",
-      "runtime_full_thesis_row_count": 0,
-      "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 48,
-      "source_backed_fixture_count": 3
-    },
-    {
-      "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
       "current_runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
       "current_source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
       "priority": 30,

@@ -114,15 +114,15 @@
           "verified_score": null
         },
         "005930": {
-          "base_stage": "1",
-          "canonical_stage": "1",
+          "base_stage": "0",
+          "canonical_stage": "0",
           "daily_event_evidence_score": 4.0,
           "event_evidence_score": null,
-          "full_e2r_verified_score": 44.1667,
-          "full_thesis_stage": "1",
+          "full_e2r_verified_score": 39.8333,
+          "full_thesis_stage": "0",
           "score_scale": "FULL_E2R_100",
           "stage_scope": "FULL_THESIS",
-          "verified_score": 44.1667
+          "verified_score": 39.8333
         }
       },
       "status": "PASS"

@@ -8,13 +8,12 @@
   "all_tasks_score_blocked_before_execution": true,
   "as_of_date": "2026-07-05",
   "attempt_type_counts": {
-    "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE": 2,
     "ARCHETYPE_TARGET_MATERIALIZATION": 3,
-    "BLOCKED_CANDIDATE_GAP_CLOSURE": 4,
-    "PROMOTED_SCORE_PATH_GAP_CLOSURE": 7,
-    "SOURCE_EXECUTION_REPAIR": 20
+    "BLOCKED_CANDIDATE_GAP_CLOSURE": 5,
+    "PROMOTED_SCORE_PATH_GAP_CLOSURE": 5,
+    "SOURCE_EXECUTION_REPAIR": 22
   },
-  "plan_row_count": 36,
+  "plan_row_count": 35,
   "plan_rows": [
     {
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
@@ -165,43 +164,6 @@
       ]
     },
     {
-      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
-      "archetype_prefix": "C08",
-      "attempt_id": "RTATTEMPT-78b0c47cf2868a0d975b",
-      "attempt_type": "PROMOTED_SCORE_PATH_GAP_CLOSURE",
-      "current_accepted_claim_status": "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS",
-      "current_full_thesis_status": "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS",
-      "current_runtime_attempt_status": "PRODUCTION_FULL_THESIS_ATTEMPTED",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SCORE_PATH_ONLY",
-      "current_source_execution_status": "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS",
-      "hardcoded_queries": [],
-      "hardcoded_query_count": 0,
-      "llm_query_required": true,
-      "next_required_action": "CLOSE_REQUIRED_POSITIVE_AND_GREEN_GAPS_BEFORE_MEANINGFUL_PASS",
-      "previous_claim_failure_primary_mode": null,
-      "previous_claim_failure_repair_hint": null,
-      "previous_claim_failure_top_modes": [],
-      "primitive_attempts": [
-        "named_customer_quality",
-        "qualification_confirmed",
-        "repeat_order_confirmed"
-      ],
-      "priority": 10,
-      "requires_current_source_confirmation_before_scoring": true,
-      "requires_target_materialization_before_scoring": false,
-      "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
-      "score_allowed_before_execution": false,
-      "source_route_repair_actions": [],
-      "source_route_repair_required": false,
-      "stage_promotion_allowed_before_execution": false,
-      "status_reason_ko": "production 점수 경로는 닫혔지만 required-positive/Green 빈칸이 남아 있어 meaningful pass가 아니다.",
-      "target_materialization_candidates": [],
-      "target_symbol_mode": "SYMBOL_SPECIFIC",
-      "target_symbols": [
-        "058470"
-      ]
-    },
-    {
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
       "archetype_prefix": "C17",
       "attempt_id": "RTATTEMPT-fd9512a2667964c6c768",
@@ -239,28 +201,28 @@
       ]
     },
     {
-      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
-      "archetype_prefix": "C28",
-      "attempt_id": "RTATTEMPT-6dff33c8e9604174b9a2",
-      "attempt_type": "PROMOTED_SCORE_PATH_GAP_CLOSURE",
-      "current_accepted_claim_status": "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS",
-      "current_full_thesis_status": "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS",
-      "current_runtime_attempt_status": "PRODUCTION_FULL_THESIS_ATTEMPTED",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SCORE_PATH_ONLY",
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "archetype_prefix": "C08",
+      "attempt_id": "RTATTEMPT-9bd7f4f9ade6847d8b3e",
+      "attempt_type": "BLOCKED_CANDIDATE_GAP_CLOSURE",
+      "current_accepted_claim_status": "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED",
+      "current_full_thesis_status": "FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP",
+      "current_runtime_attempt_status": "PRODUCTION_CANDIDATE_BLOCKED",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
       "current_source_execution_status": "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS",
       "hardcoded_queries": [],
       "hardcoded_query_count": 0,
       "llm_query_required": true,
-      "next_required_action": "CLOSE_REQUIRED_POSITIVE_AND_GREEN_GAPS_BEFORE_MEANINGFUL_PASS",
+      "next_required_action": "EXECUTE_OFFICIAL_FIRST_FOLLOWUP_TASKS_FOR_BLOCKED_PRIMITIVES",
       "previous_claim_failure_primary_mode": null,
       "previous_claim_failure_repair_hint": null,
       "previous_claim_failure_top_modes": [],
       "primitive_attempts": [
-        "arr_growth_visible",
-        "nrr",
-        "retention_or_renewal"
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed"
       ],
-      "priority": 10,
+      "priority": 20,
       "requires_current_source_confirmation_before_scoring": true,
       "requires_target_materialization_before_scoring": false,
       "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
@@ -268,11 +230,11 @@
       "source_route_repair_actions": [],
       "source_route_repair_required": false,
       "stage_promotion_allowed_before_execution": false,
-      "status_reason_ko": "production 점수 경로는 닫혔지만 required-positive/Green 빈칸이 남아 있어 meaningful pass가 아니다.",
+      "status_reason_ko": "production 후보까지 갔지만 필수 또는 Green primitive의 source-backed claim이 부족해 full thesis로 승격되지 않았다.",
       "target_materialization_candidates": [],
       "target_symbol_mode": "SYMBOL_SPECIFIC",
       "target_symbols": [
-        "012510"
+        "058470"
       ]
     },
     {
@@ -350,9 +312,9 @@
       ]
     },
     {
-      "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
-      "archetype_prefix": "C18",
-      "attempt_id": "RTATTEMPT-7f6c66c2ff88a5d898dc",
+      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "archetype_prefix": "C29",
+      "attempt_id": "RTATTEMPT-f106fa60c0ab01c66157",
       "attempt_type": "BLOCKED_CANDIDATE_GAP_CLOSURE",
       "current_accepted_claim_status": "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED",
       "current_full_thesis_status": "FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP",
@@ -367,9 +329,9 @@
       "previous_claim_failure_repair_hint": null,
       "previous_claim_failure_top_modes": [],
       "primitive_attempts": [
-        "export_growth_pct",
-        "sell_through_confirmed",
-        "repeat_order_confirmed"
+        "volume_growth_visible",
+        "mix_improvement",
+        "operating_leverage_visible"
       ],
       "priority": 20,
       "requires_current_source_confirmation_before_scoring": true,
@@ -383,7 +345,7 @@
       "target_materialization_candidates": [],
       "target_symbol_mode": "SYMBOL_SPECIFIC",
       "target_symbols": [
-        "278470"
+        "017670"
       ]
     },
     {
@@ -441,23 +403,23 @@
       "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
       "previous_claim_failure_top_modes": [
         {
-          "count": 51,
+          "count": 65,
           "mode": "TARGET_SCOPE_NOT_DIRECT"
         },
         {
-          "count": 51,
+          "count": 65,
           "mode": "SEMANTIC_REJECTED"
         },
         {
-          "count": 51,
+          "count": 65,
           "mode": "PRIMITIVE_MAPPING_REJECTED"
         },
         {
-          "count": 51,
+          "count": 65,
           "mode": "MAPPING_NOT_ACCEPTED"
         },
         {
-          "count": 19,
+          "count": 36,
           "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
         }
       ],
@@ -500,24 +462,24 @@
       "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
       "previous_claim_failure_top_modes": [
         {
-          "count": 96,
+          "count": 130,
           "mode": "TARGET_SCOPE_NOT_DIRECT"
         },
         {
-          "count": 96,
+          "count": 130,
           "mode": "SEMANTIC_REJECTED"
         },
         {
-          "count": 96,
+          "count": 130,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        },
+        {
+          "count": 130,
           "mode": "PRIMITIVE_MAPPING_REJECTED"
         },
         {
-          "count": 96,
+          "count": 130,
           "mode": "MAPPING_NOT_ACCEPTED"
-        },
-        {
-          "count": 59,
-          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
         }
       ],
       "primitive_attempts": [
@@ -559,27 +521,27 @@
       "previous_claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
       "previous_claim_failure_top_modes": [
         {
-          "count": 276,
+          "count": 126,
           "mode": "TARGET_SCOPE_NOT_DIRECT"
         },
         {
-          "count": 276,
+          "count": 126,
           "mode": "SEMANTIC_REJECTED"
         },
         {
-          "count": 276,
-          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
-        },
-        {
-          "count": 276,
+          "count": 126,
           "mode": "PRIMITIVE_MAPPING_REJECTED"
         },
         {
-          "count": 276,
+          "count": 126,
           "mode": "MAPPING_NOT_ACCEPTED"
         },
         {
-          "count": 178,
+          "count": 101,
+          "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+        },
+        {
+          "count": 33,
           "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
         },
         {
@@ -758,6 +720,43 @@
       ]
     },
     {
+      "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "archetype_prefix": "C11",
+      "attempt_id": "RTATTEMPT-92ce99965b5c545740e7",
+      "attempt_type": "SOURCE_EXECUTION_REPAIR",
+      "current_accepted_claim_status": "NO_ACCEPTED_CLAIM",
+      "current_full_thesis_status": "NO_PRODUCTION_FULL_THESIS_ROW",
+      "current_runtime_attempt_status": "SOURCE_TASK_EXECUTED",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
+      "current_source_execution_status": "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS",
+      "hardcoded_queries": [],
+      "hardcoded_query_count": 0,
+      "llm_query_required": true,
+      "next_required_action": "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
+      "previous_claim_failure_primary_mode": null,
+      "previous_claim_failure_repair_hint": null,
+      "previous_claim_failure_top_modes": [],
+      "primitive_attempts": [
+        "order_backlog_to_sales",
+        "customer_contract",
+        "call_off_risk"
+      ],
+      "priority": 30,
+      "requires_current_source_confirmation_before_scoring": true,
+      "requires_target_materialization_before_scoring": false,
+      "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
+      "score_allowed_before_execution": false,
+      "source_route_repair_actions": [],
+      "source_route_repair_required": false,
+      "stage_promotion_allowed_before_execution": false,
+      "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
+      "target_materialization_candidates": [],
+      "target_symbol_mode": "SYMBOL_SPECIFIC",
+      "target_symbols": [
+        "003670"
+      ]
+    },
+    {
       "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
       "archetype_prefix": "C12",
       "attempt_id": "RTATTEMPT-d4a1936a20ad3e8ac7ec",
@@ -903,6 +902,43 @@
       "target_symbol_mode": "SYMBOL_SPECIFIC",
       "target_symbols": [
         "005290"
+      ]
+    },
+    {
+      "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "archetype_prefix": "C18",
+      "attempt_id": "RTATTEMPT-dc765ff9f81072b18f73",
+      "attempt_type": "SOURCE_EXECUTION_REPAIR",
+      "current_accepted_claim_status": "NO_ACCEPTED_CLAIM",
+      "current_full_thesis_status": "NO_PRODUCTION_FULL_THESIS_ROW",
+      "current_runtime_attempt_status": "SOURCE_TASK_EXECUTED",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
+      "current_source_execution_status": "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS",
+      "hardcoded_queries": [],
+      "hardcoded_query_count": 0,
+      "llm_query_required": true,
+      "next_required_action": "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
+      "previous_claim_failure_primary_mode": null,
+      "previous_claim_failure_repair_hint": null,
+      "previous_claim_failure_top_modes": [],
+      "primitive_attempts": [
+        "export_growth_pct",
+        "sell_through_confirmed",
+        "repeat_order_confirmed"
+      ],
+      "priority": 30,
+      "requires_current_source_confirmation_before_scoring": true,
+      "requires_target_materialization_before_scoring": false,
+      "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
+      "score_allowed_before_execution": false,
+      "source_route_repair_actions": [],
+      "source_route_repair_required": false,
+      "stage_promotion_allowed_before_execution": false,
+      "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
+      "target_materialization_candidates": [],
+      "target_symbol_mode": "SYMBOL_SPECIFIC",
+      "target_symbols": [
+        "278470"
       ]
     },
     {
@@ -1091,43 +1127,6 @@
       ]
     },
     {
-      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-      "archetype_prefix": "C24",
-      "attempt_id": "RTATTEMPT-afc9e04d990b79ff9417",
-      "attempt_type": "SOURCE_EXECUTION_REPAIR",
-      "current_accepted_claim_status": "REPLAY_ACCEPTED_CLAIM_ONLY",
-      "current_full_thesis_status": "NO_PRODUCTION_FULL_THESIS_ROW",
-      "current_runtime_attempt_status": "SOURCE_TASK_EXECUTED",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
-      "current_source_execution_status": "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS",
-      "hardcoded_queries": [],
-      "hardcoded_query_count": 0,
-      "llm_query_required": true,
-      "next_required_action": "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
-      "previous_claim_failure_primary_mode": null,
-      "previous_claim_failure_repair_hint": null,
-      "previous_claim_failure_top_modes": [],
-      "primitive_attempts": [
-        "trial_quality_visible",
-        "binary_event_unresolved",
-        "approval_not_confirmed"
-      ],
-      "priority": 30,
-      "requires_current_source_confirmation_before_scoring": true,
-      "requires_target_materialization_before_scoring": false,
-      "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
-      "score_allowed_before_execution": false,
-      "source_route_repair_actions": [],
-      "source_route_repair_required": false,
-      "stage_promotion_allowed_before_execution": false,
-      "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
-      "target_materialization_candidates": [],
-      "target_symbol_mode": "SYMBOL_SPECIFIC",
-      "target_symbols": [
-        "000100"
-      ]
-    },
-    {
       "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
       "archetype_prefix": "C25",
       "attempt_id": "RTATTEMPT-a490c5088516ab37384d",
@@ -1236,6 +1235,43 @@
       "target_symbol_mode": "SYMBOL_SPECIFIC",
       "target_symbols": [
         "035760"
+      ]
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "archetype_prefix": "C28",
+      "attempt_id": "RTATTEMPT-83d18ad6df7d987616f6",
+      "attempt_type": "SOURCE_EXECUTION_REPAIR",
+      "current_accepted_claim_status": "REPLAY_ACCEPTED_CLAIM_ONLY",
+      "current_full_thesis_status": "NO_PRODUCTION_FULL_THESIS_ROW",
+      "current_runtime_attempt_status": "SOURCE_TASK_EXECUTED",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
+      "current_source_execution_status": "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS",
+      "hardcoded_queries": [],
+      "hardcoded_query_count": 0,
+      "llm_query_required": true,
+      "next_required_action": "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
+      "previous_claim_failure_primary_mode": null,
+      "previous_claim_failure_repair_hint": null,
+      "previous_claim_failure_top_modes": [],
+      "primitive_attempts": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal"
+      ],
+      "priority": 30,
+      "requires_current_source_confirmation_before_scoring": true,
+      "requires_target_materialization_before_scoring": false,
+      "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
+      "score_allowed_before_execution": false,
+      "source_route_repair_actions": [],
+      "source_route_repair_required": false,
+      "stage_promotion_allowed_before_execution": false,
+      "status_reason_ko": "source-backed 연구 판례는 있으나 current production 증거로 재실행되지 않았다.",
+      "target_materialization_candidates": [],
+      "target_symbol_mode": "SYMBOL_SPECIFIC",
+      "target_symbols": [
+        "012510"
       ]
     },
     {
@@ -1348,88 +1384,13 @@
       "target_symbols": [
         "010130"
       ]
-    },
-    {
-      "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
-      "archetype_prefix": "C11",
-      "attempt_id": "RTATTEMPT-e02e6d70fad4199babf6",
-      "attempt_type": "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE",
-      "current_accepted_claim_status": "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED",
-      "current_full_thesis_status": "NO_PRODUCTION_FULL_THESIS_ROW",
-      "current_runtime_attempt_status": "SOURCE_TASK_EXECUTED",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
-      "current_source_execution_status": "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS",
-      "hardcoded_queries": [],
-      "hardcoded_query_count": 0,
-      "llm_query_required": true,
-      "next_required_action": "MAP_ACCEPTED_CLAIMS_TO_SCORE_CONTRIBUTIONS_OR_EXPLAIN_REMAINING_GAPS",
-      "previous_claim_failure_primary_mode": null,
-      "previous_claim_failure_repair_hint": null,
-      "previous_claim_failure_top_modes": [],
-      "primitive_attempts": [
-        "order_backlog_to_sales",
-        "customer_contract",
-        "call_off_risk"
-      ],
-      "priority": 40,
-      "requires_current_source_confirmation_before_scoring": true,
-      "requires_target_materialization_before_scoring": false,
-      "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
-      "score_allowed_before_execution": false,
-      "source_route_repair_actions": [],
-      "source_route_repair_required": false,
-      "stage_promotion_allowed_before_execution": false,
-      "status_reason_ko": "source-backed accepted claim은 있지만 score contribution/full thesis closure까지 이어지지 않았다.",
-      "target_materialization_candidates": [],
-      "target_symbol_mode": "SYMBOL_SPECIFIC",
-      "target_symbols": [
-        "003670"
-      ]
-    },
-    {
-      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-      "archetype_prefix": "C29",
-      "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
-      "attempt_type": "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE",
-      "current_accepted_claim_status": "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED",
-      "current_full_thesis_status": "NO_PRODUCTION_FULL_THESIS_ROW",
-      "current_runtime_attempt_status": "SOURCE_TASK_EXECUTED",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
-      "current_source_execution_status": "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS",
-      "hardcoded_queries": [],
-      "hardcoded_query_count": 0,
-      "llm_query_required": true,
-      "next_required_action": "MAP_ACCEPTED_CLAIMS_TO_SCORE_CONTRIBUTIONS_OR_EXPLAIN_REMAINING_GAPS",
-      "previous_claim_failure_primary_mode": null,
-      "previous_claim_failure_repair_hint": null,
-      "previous_claim_failure_top_modes": [],
-      "primitive_attempts": [
-        "volume_growth_visible",
-        "mix_improvement",
-        "operating_leverage_visible"
-      ],
-      "priority": 40,
-      "requires_current_source_confirmation_before_scoring": true,
-      "requires_target_materialization_before_scoring": false,
-      "schema_version": "e2r_all_archetype_next_runtime_attempt_row_v1",
-      "score_allowed_before_execution": false,
-      "source_route_repair_actions": [],
-      "source_route_repair_required": false,
-      "stage_promotion_allowed_before_execution": false,
-      "status_reason_ko": "source-backed accepted claim은 있지만 score contribution/full thesis closure까지 이어지지 않았다.",
-      "target_materialization_candidates": [],
-      "target_symbol_mode": "SYMBOL_SPECIFIC",
-      "target_symbols": [
-        "017670",
-        "024110"
-      ]
     }
   ],
   "production_score_ready": false,
   "research_memory_target_materialized_archetype_count": 0,
   "research_memory_target_materialized_task_count": 0,
   "schema_version": "e2r_all_archetype_next_runtime_attempt_plan_v1",
-  "seed_event_count": 111,
+  "seed_event_count": 105,
   "seed_events": [
     {
       "candidate_event_id": "CEV4-RTATTEMPT-4f00c3226607672652c7",
@@ -3837,7 +3798,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
-        "NOT_PROVEN_SCORE_PATH_ONLY",
+        "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
         "named_customer_quality",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -3848,7 +3809,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-78b0c47cf2868a0d975b",
+        "attempt_id": "RTATTEMPT-9bd7f4f9ade6847d8b3e",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -3951,7 +3912,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
-        "NOT_PROVEN_SCORE_PATH_ONLY",
+        "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
         "qualification_confirmed",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -3962,7 +3923,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-78b0c47cf2868a0d975b",
+        "attempt_id": "RTATTEMPT-9bd7f4f9ade6847d8b3e",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -4065,7 +4026,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
-        "NOT_PROVEN_SCORE_PATH_ONLY",
+        "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
         "repeat_order_confirmed",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -4076,7 +4037,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-78b0c47cf2868a0d975b",
+        "attempt_id": "RTATTEMPT-9bd7f4f9ade6847d8b3e",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -4863,7 +4824,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C11_BATTERY_ORDERBOOK_RERATING",
-        "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
         "call_off_risk",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -4874,7 +4835,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-e02e6d70fad4199babf6",
+        "attempt_id": "RTATTEMPT-92ce99965b5c545740e7",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -4977,7 +4938,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C11_BATTERY_ORDERBOOK_RERATING",
-        "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
         "customer_contract",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -4988,7 +4949,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-e02e6d70fad4199babf6",
+        "attempt_id": "RTATTEMPT-92ce99965b5c545740e7",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -5091,7 +5052,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C11_BATTERY_ORDERBOOK_RERATING",
-        "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
         "order_backlog_to_sales",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -5102,7 +5063,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-e02e6d70fad4199babf6",
+        "attempt_id": "RTATTEMPT-92ce99965b5c545740e7",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -7257,7 +7218,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
-        "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
+        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
         "export_growth_pct",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -7268,7 +7229,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-7f6c66c2ff88a5d898dc",
+        "attempt_id": "RTATTEMPT-dc765ff9f81072b18f73",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -7292,7 +7253,7 @@
           "target_scope_status": "DIRECT",
           "temporal_status": "CURRENT_OR_AS_OF_VALID"
         },
-        "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
         "fallback_source_classes": [
           "BrokerReportPDF",
           "GeneralWebSearch",
@@ -7371,7 +7332,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
-        "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
+        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
         "repeat_order_confirmed",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -7382,7 +7343,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-7f6c66c2ff88a5d898dc",
+        "attempt_id": "RTATTEMPT-dc765ff9f81072b18f73",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -7406,7 +7367,7 @@
           "target_scope_status": "DIRECT",
           "temporal_status": "CURRENT_OR_AS_OF_VALID"
         },
-        "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
         "fallback_source_classes": [
           "BrokerReportPDF",
           "GeneralWebSearch",
@@ -7485,7 +7446,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
-        "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
+        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
         "sell_through_confirmed",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -7496,7 +7457,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-7f6c66c2ff88a5d898dc",
+        "attempt_id": "RTATTEMPT-dc765ff9f81072b18f73",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -7520,7 +7481,7 @@
           "target_scope_status": "DIRECT",
           "temporal_status": "CURRENT_OR_AS_OF_VALID"
         },
-        "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
         "fallback_source_classes": [
           "BrokerReportPDF",
           "GeneralWebSearch",
@@ -9300,349 +9261,6 @@
       "target_symbol_mode": "SYMBOL_SPECIFIC"
     },
     {
-      "candidate_event_id": "CEV4-RTATTEMPT-f4e7e889e0d184c6685e",
-      "detected_at": "2026-07-05",
-      "event_date": "2026-07-05",
-      "event_summary": "planner input only. archetype_id=C24_BIO_TRIAL_DATA_EVENT_RISK; primitive_gap=approval_not_confirmed; source-backed Evidence OS claim required before any production score/stage use; previous_claim_failure_primary_mode=NONE",
-      "event_type": "all_archetype_runtime_parity_follow_up_seed",
-      "follow_up_task_id": "RTTASK-f4e7e889e0d184c6685e",
-      "primitive_gap": "approval_not_confirmed",
-      "raw_reason_codes": [
-        "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
-        "C24_BIO_TRIAL_DATA_EVENT_RISK",
-        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
-        "approval_not_confirmed",
-        "NO_PREVIOUS_CLAIM_FAILURE_MODE"
-      ],
-      "research_brain_eligible": true,
-      "schema_version": "e2r_all_archetype_next_runtime_seed_event_v1",
-      "score_evidence_allowed": false,
-      "seed_role": "planner_input_only",
-      "source_family": "AllArchetypeRuntimeParityFollowUp",
-      "stage_promotion_allowed_before_execution": false,
-      "structured_payload": {
-        "attempt_id": "RTATTEMPT-afc9e04d990b79ff9417",
-        "date_window": {
-          "end": "2026-07-05",
-          "lookback_days": 730
-        },
-        "expected_claim_schema": {
-          "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-          "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-          "forbidden_source_classes": [
-            "snippet_only_score",
-            "source_proxy_only",
-            "evidence_url_pending",
-            "unbounded_general_search"
-          ],
-          "mapping_status": "ACCEPTED",
-          "primitive_id": "approval_not_confirmed",
-          "required_claim_status": "ACCEPTED_FOR_SCORE",
-          "schema_version": "e2r_expected_runtime_parity_claim_v1",
-          "score_forbidden_until_claim_accepted": true,
-          "semantic_status": "PASS",
-          "symbol": "000100",
-          "target_scope_status": "DIRECT",
-          "temporal_status": "CURRENT_OR_AS_OF_VALID"
-        },
-        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-        "fallback_source_classes": [
-          "BrokerReportPDF",
-          "GeneralWebSearch",
-          "KIND",
-          "NaverSearch",
-          "ResearchMemory",
-          "TrustedNews",
-          "ReportPDF",
-          "BrokerReportPublicPDF",
-          "CompanyNewsroom"
-        ],
-        "follow_up_origin": "all_archetype_runtime_status_matrix",
-        "follow_up_task_id": "RTTASK-f4e7e889e0d184c6685e",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "hardcoded_queries": [],
-        "hardcoded_query_count": 0,
-        "llm_query_required": true,
-        "max_candidates": 20,
-        "max_fetches": 3,
-        "max_queries": 3,
-        "official_first_required": true,
-        "planner_failure_feedback": {
-          "previous_claim_failure_primary_mode": null,
-          "previous_claim_failure_repair_hint": null,
-          "previous_claim_failure_top_modes": [],
-          "previous_top_claim_rejection_reasons": [],
-          "primitive_gap": "approval_not_confirmed",
-          "score_evidence_allowed_from_previous_rejected_claims": false,
-          "source_route_repair_actions": []
-        },
-        "preferred_source_classes": [
-          "DART",
-          "IssuerIR",
-          "CompanyGuide"
-        ],
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "primitive_gap": "approval_not_confirmed",
-        "query_intents": [
-          "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `approval_not_confirmed`."
-        ],
-        "requires_current_source_confirmation_before_scoring": true,
-        "seed_role": "planner_input_only",
-        "source_route_repair_actions": [],
-        "source_route_repair_required": false,
-        "stop_condition": {
-          "accepted_claim_count": 1,
-          "counter_claim_check_done": true,
-          "source_budget_exhausted_status": "SOURCE_PENDING"
-        },
-        "success_condition": "Create at least one accepted Evidence OS claim for primitive `approval_not_confirmed` on symbol `000100`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-        "target_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-        "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-        "target_materialization_candidate": null,
-        "target_symbol_mode": "SYMBOL_SPECIFIC"
-      },
-      "symbol": "000100",
-      "target_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-      "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC"
-    },
-    {
-      "candidate_event_id": "CEV4-RTATTEMPT-714d0299599db8f0b838",
-      "detected_at": "2026-07-05",
-      "event_date": "2026-07-05",
-      "event_summary": "planner input only. archetype_id=C24_BIO_TRIAL_DATA_EVENT_RISK; primitive_gap=binary_event_unresolved; source-backed Evidence OS claim required before any production score/stage use; previous_claim_failure_primary_mode=NONE",
-      "event_type": "all_archetype_runtime_parity_follow_up_seed",
-      "follow_up_task_id": "RTTASK-714d0299599db8f0b838",
-      "primitive_gap": "binary_event_unresolved",
-      "raw_reason_codes": [
-        "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
-        "C24_BIO_TRIAL_DATA_EVENT_RISK",
-        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
-        "binary_event_unresolved",
-        "NO_PREVIOUS_CLAIM_FAILURE_MODE"
-      ],
-      "research_brain_eligible": true,
-      "schema_version": "e2r_all_archetype_next_runtime_seed_event_v1",
-      "score_evidence_allowed": false,
-      "seed_role": "planner_input_only",
-      "source_family": "AllArchetypeRuntimeParityFollowUp",
-      "stage_promotion_allowed_before_execution": false,
-      "structured_payload": {
-        "attempt_id": "RTATTEMPT-afc9e04d990b79ff9417",
-        "date_window": {
-          "end": "2026-07-05",
-          "lookback_days": 730
-        },
-        "expected_claim_schema": {
-          "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-          "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-          "forbidden_source_classes": [
-            "snippet_only_score",
-            "source_proxy_only",
-            "evidence_url_pending",
-            "unbounded_general_search"
-          ],
-          "mapping_status": "ACCEPTED",
-          "primitive_id": "binary_event_unresolved",
-          "required_claim_status": "ACCEPTED_FOR_SCORE",
-          "schema_version": "e2r_expected_runtime_parity_claim_v1",
-          "score_forbidden_until_claim_accepted": true,
-          "semantic_status": "PASS",
-          "symbol": "000100",
-          "target_scope_status": "DIRECT",
-          "temporal_status": "CURRENT_OR_AS_OF_VALID"
-        },
-        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-        "fallback_source_classes": [
-          "BrokerReportPDF",
-          "GeneralWebSearch",
-          "KIND",
-          "NaverSearch",
-          "ResearchMemory",
-          "TrustedNews",
-          "ReportPDF",
-          "BrokerReportPublicPDF",
-          "CompanyNewsroom"
-        ],
-        "follow_up_origin": "all_archetype_runtime_status_matrix",
-        "follow_up_task_id": "RTTASK-714d0299599db8f0b838",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "hardcoded_queries": [],
-        "hardcoded_query_count": 0,
-        "llm_query_required": true,
-        "max_candidates": 20,
-        "max_fetches": 3,
-        "max_queries": 3,
-        "official_first_required": true,
-        "planner_failure_feedback": {
-          "previous_claim_failure_primary_mode": null,
-          "previous_claim_failure_repair_hint": null,
-          "previous_claim_failure_top_modes": [],
-          "previous_top_claim_rejection_reasons": [],
-          "primitive_gap": "binary_event_unresolved",
-          "score_evidence_allowed_from_previous_rejected_claims": false,
-          "source_route_repair_actions": []
-        },
-        "preferred_source_classes": [
-          "DART",
-          "IssuerIR",
-          "CompanyGuide"
-        ],
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "primitive_gap": "binary_event_unresolved",
-        "query_intents": [
-          "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `binary_event_unresolved`."
-        ],
-        "requires_current_source_confirmation_before_scoring": true,
-        "seed_role": "planner_input_only",
-        "source_route_repair_actions": [],
-        "source_route_repair_required": false,
-        "stop_condition": {
-          "accepted_claim_count": 1,
-          "counter_claim_check_done": true,
-          "source_budget_exhausted_status": "SOURCE_PENDING"
-        },
-        "success_condition": "Create at least one accepted Evidence OS claim for primitive `binary_event_unresolved` on symbol `000100`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-        "target_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-        "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-        "target_materialization_candidate": null,
-        "target_symbol_mode": "SYMBOL_SPECIFIC"
-      },
-      "symbol": "000100",
-      "target_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-      "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC"
-    },
-    {
-      "candidate_event_id": "CEV4-RTATTEMPT-688a7c76eb7acc93475d",
-      "detected_at": "2026-07-05",
-      "event_date": "2026-07-05",
-      "event_summary": "planner input only. archetype_id=C24_BIO_TRIAL_DATA_EVENT_RISK; primitive_gap=trial_quality_visible; source-backed Evidence OS claim required before any production score/stage use; previous_claim_failure_primary_mode=NONE",
-      "event_type": "all_archetype_runtime_parity_follow_up_seed",
-      "follow_up_task_id": "RTTASK-688a7c76eb7acc93475d",
-      "primitive_gap": "trial_quality_visible",
-      "raw_reason_codes": [
-        "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
-        "C24_BIO_TRIAL_DATA_EVENT_RISK",
-        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
-        "trial_quality_visible",
-        "NO_PREVIOUS_CLAIM_FAILURE_MODE"
-      ],
-      "research_brain_eligible": true,
-      "schema_version": "e2r_all_archetype_next_runtime_seed_event_v1",
-      "score_evidence_allowed": false,
-      "seed_role": "planner_input_only",
-      "source_family": "AllArchetypeRuntimeParityFollowUp",
-      "stage_promotion_allowed_before_execution": false,
-      "structured_payload": {
-        "attempt_id": "RTATTEMPT-afc9e04d990b79ff9417",
-        "date_window": {
-          "end": "2026-07-05",
-          "lookback_days": 730
-        },
-        "expected_claim_schema": {
-          "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-          "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-          "forbidden_source_classes": [
-            "snippet_only_score",
-            "source_proxy_only",
-            "evidence_url_pending",
-            "unbounded_general_search"
-          ],
-          "mapping_status": "ACCEPTED",
-          "primitive_id": "trial_quality_visible",
-          "required_claim_status": "ACCEPTED_FOR_SCORE",
-          "schema_version": "e2r_expected_runtime_parity_claim_v1",
-          "score_forbidden_until_claim_accepted": true,
-          "semantic_status": "PASS",
-          "symbol": "000100",
-          "target_scope_status": "DIRECT",
-          "temporal_status": "CURRENT_OR_AS_OF_VALID"
-        },
-        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-        "fallback_source_classes": [
-          "TrustedNews",
-          "IndustryMedia",
-          "BrokerReportPDF",
-          "CompanyGuide",
-          "GeneralWebSearch",
-          "KIND",
-          "NaverSearch",
-          "ResearchMemory",
-          "ReportPDF",
-          "BrokerReportPublicPDF",
-          "CompanyNewsroom"
-        ],
-        "follow_up_origin": "all_archetype_runtime_status_matrix",
-        "follow_up_task_id": "RTTASK-688a7c76eb7acc93475d",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "hardcoded_queries": [],
-        "hardcoded_query_count": 0,
-        "llm_query_required": true,
-        "max_candidates": 20,
-        "max_fetches": 3,
-        "max_queries": 3,
-        "official_first_required": true,
-        "planner_failure_feedback": {
-          "previous_claim_failure_primary_mode": null,
-          "previous_claim_failure_repair_hint": null,
-          "previous_claim_failure_top_modes": [],
-          "previous_top_claim_rejection_reasons": [],
-          "primitive_gap": "trial_quality_visible",
-          "score_evidence_allowed_from_previous_rejected_claims": false,
-          "source_route_repair_actions": []
-        },
-        "preferred_source_classes": [
-          "DART",
-          "IssuerIR"
-        ],
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "primitive_gap": "trial_quality_visible",
-        "query_intents": [
-          "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `trial_quality_visible`."
-        ],
-        "requires_current_source_confirmation_before_scoring": true,
-        "seed_role": "planner_input_only",
-        "source_route_repair_actions": [],
-        "source_route_repair_required": false,
-        "stop_condition": {
-          "accepted_claim_count": 1,
-          "counter_claim_check_done": true,
-          "source_budget_exhausted_status": "SOURCE_PENDING"
-        },
-        "success_condition": "Create at least one accepted Evidence OS claim for primitive `trial_quality_visible` on symbol `000100`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-        "target_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-        "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-        "target_materialization_candidate": null,
-        "target_symbol_mode": "SYMBOL_SPECIFIC"
-      },
-      "symbol": "000100",
-      "target_archetype": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-      "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC"
-    },
-    {
       "candidate_event_id": "CEV4-RTATTEMPT-6645c0062d7e5173f10a",
       "detected_at": "2026-07-05",
       "event_date": "2026-07-05",
@@ -10679,7 +10297,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
-        "NOT_PROVEN_SCORE_PATH_ONLY",
+        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
         "arr_growth_visible",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -10690,7 +10308,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-6dff33c8e9604174b9a2",
+        "attempt_id": "RTATTEMPT-83d18ad6df7d987616f6",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -10714,7 +10332,7 @@
           "target_scope_status": "DIRECT",
           "temporal_status": "CURRENT_OR_AS_OF_VALID"
         },
-        "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
         "fallback_source_classes": [
           "BrokerReportPDF",
           "GeneralWebSearch",
@@ -10793,7 +10411,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
-        "NOT_PROVEN_SCORE_PATH_ONLY",
+        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
         "nrr",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -10804,7 +10422,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-6dff33c8e9604174b9a2",
+        "attempt_id": "RTATTEMPT-83d18ad6df7d987616f6",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -10828,7 +10446,7 @@
           "target_scope_status": "DIRECT",
           "temporal_status": "CURRENT_OR_AS_OF_VALID"
         },
-        "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
         "fallback_source_classes": [
           "BrokerReportPDF",
           "GeneralWebSearch",
@@ -10907,7 +10525,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
-        "NOT_PROVEN_SCORE_PATH_ONLY",
+        "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
         "retention_or_renewal",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -10918,7 +10536,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-6dff33c8e9604174b9a2",
+        "attempt_id": "RTATTEMPT-83d18ad6df7d987616f6",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -10942,7 +10560,7 @@
           "target_scope_status": "DIRECT",
           "temporal_status": "CURRENT_OR_AS_OF_VALID"
         },
-        "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
         "fallback_source_classes": [
           "BrokerReportPDF",
           "GeneralWebSearch",
@@ -11021,7 +10639,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+        "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
         "mix_improvement",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -11032,7 +10650,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
+        "attempt_id": "RTATTEMPT-f106fa60c0ab01c66157",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -11056,7 +10674,7 @@
           "target_scope_status": "DIRECT",
           "temporal_status": "CURRENT_OR_AS_OF_VALID"
         },
-        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
+        "fallback_if_not_found": "PENDING_MATERIAL_GAP",
         "fallback_source_classes": [
           "BrokerReportPDF",
           "GeneralWebSearch",
@@ -11125,120 +10743,6 @@
       "target_symbol_mode": "SYMBOL_SPECIFIC"
     },
     {
-      "candidate_event_id": "CEV4-RTATTEMPT-ac0a7662f4fc11f34ed6",
-      "detected_at": "2026-07-05",
-      "event_date": "2026-07-05",
-      "event_summary": "planner input only. archetype_id=C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE; primitive_gap=mix_improvement; source-backed Evidence OS claim required before any production score/stage use; previous_claim_failure_primary_mode=NONE",
-      "event_type": "all_archetype_runtime_parity_follow_up_seed",
-      "follow_up_task_id": "RTTASK-ac0a7662f4fc11f34ed6",
-      "primitive_gap": "mix_improvement",
-      "raw_reason_codes": [
-        "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
-        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
-        "mix_improvement",
-        "NO_PREVIOUS_CLAIM_FAILURE_MODE"
-      ],
-      "research_brain_eligible": true,
-      "schema_version": "e2r_all_archetype_next_runtime_seed_event_v1",
-      "score_evidence_allowed": false,
-      "seed_role": "planner_input_only",
-      "source_family": "AllArchetypeRuntimeParityFollowUp",
-      "stage_promotion_allowed_before_execution": false,
-      "structured_payload": {
-        "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
-        "date_window": {
-          "end": "2026-07-05",
-          "lookback_days": 730
-        },
-        "expected_claim_schema": {
-          "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-          "forbidden_source_classes": [
-            "snippet_only_score",
-            "source_proxy_only",
-            "evidence_url_pending",
-            "unbounded_general_search"
-          ],
-          "mapping_status": "ACCEPTED",
-          "primitive_id": "mix_improvement",
-          "required_claim_status": "ACCEPTED_FOR_SCORE",
-          "schema_version": "e2r_expected_runtime_parity_claim_v1",
-          "score_forbidden_until_claim_accepted": true,
-          "semantic_status": "PASS",
-          "symbol": "024110",
-          "target_scope_status": "DIRECT",
-          "temporal_status": "CURRENT_OR_AS_OF_VALID"
-        },
-        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-        "fallback_source_classes": [
-          "BrokerReportPDF",
-          "GeneralWebSearch",
-          "KIND",
-          "NaverSearch",
-          "ResearchMemory",
-          "TrustedNews",
-          "ReportPDF",
-          "BrokerReportPublicPDF",
-          "CompanyNewsroom"
-        ],
-        "follow_up_origin": "all_archetype_runtime_status_matrix",
-        "follow_up_task_id": "RTTASK-ac0a7662f4fc11f34ed6",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "hardcoded_queries": [],
-        "hardcoded_query_count": 0,
-        "llm_query_required": true,
-        "max_candidates": 20,
-        "max_fetches": 3,
-        "max_queries": 3,
-        "official_first_required": true,
-        "planner_failure_feedback": {
-          "previous_claim_failure_primary_mode": null,
-          "previous_claim_failure_repair_hint": null,
-          "previous_claim_failure_top_modes": [],
-          "previous_top_claim_rejection_reasons": [],
-          "primitive_gap": "mix_improvement",
-          "score_evidence_allowed_from_previous_rejected_claims": false,
-          "source_route_repair_actions": []
-        },
-        "preferred_source_classes": [
-          "DART",
-          "IssuerIR",
-          "CompanyGuide"
-        ],
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "primitive_gap": "mix_improvement",
-        "query_intents": [
-          "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `mix_improvement`."
-        ],
-        "requires_current_source_confirmation_before_scoring": true,
-        "seed_role": "planner_input_only",
-        "source_route_repair_actions": [],
-        "source_route_repair_required": false,
-        "stop_condition": {
-          "accepted_claim_count": 1,
-          "counter_claim_check_done": true,
-          "source_budget_exhausted_status": "SOURCE_PENDING"
-        },
-        "success_condition": "Create at least one accepted Evidence OS claim for primitive `mix_improvement` on symbol `024110`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-        "target_archetype": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-        "target_materialization_candidate": null,
-        "target_symbol_mode": "SYMBOL_SPECIFIC"
-      },
-      "symbol": "024110",
-      "target_archetype": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-      "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC"
-    },
-    {
       "candidate_event_id": "CEV4-RTATTEMPT-6300b6cb3f340cf7a4d4",
       "detected_at": "2026-07-05",
       "event_date": "2026-07-05",
@@ -11249,7 +10753,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+        "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
         "operating_leverage_visible",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -11260,7 +10764,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
+        "attempt_id": "RTATTEMPT-f106fa60c0ab01c66157",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -11284,7 +10788,7 @@
           "target_scope_status": "DIRECT",
           "temporal_status": "CURRENT_OR_AS_OF_VALID"
         },
-        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
+        "fallback_if_not_found": "PENDING_MATERIAL_GAP",
         "fallback_source_classes": [
           "BrokerReportPDF",
           "GeneralWebSearch",
@@ -11353,120 +10857,6 @@
       "target_symbol_mode": "SYMBOL_SPECIFIC"
     },
     {
-      "candidate_event_id": "CEV4-RTATTEMPT-942bd1d6eddfa388f33b",
-      "detected_at": "2026-07-05",
-      "event_date": "2026-07-05",
-      "event_summary": "planner input only. archetype_id=C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE; primitive_gap=operating_leverage_visible; source-backed Evidence OS claim required before any production score/stage use; previous_claim_failure_primary_mode=NONE",
-      "event_type": "all_archetype_runtime_parity_follow_up_seed",
-      "follow_up_task_id": "RTTASK-942bd1d6eddfa388f33b",
-      "primitive_gap": "operating_leverage_visible",
-      "raw_reason_codes": [
-        "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
-        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
-        "operating_leverage_visible",
-        "NO_PREVIOUS_CLAIM_FAILURE_MODE"
-      ],
-      "research_brain_eligible": true,
-      "schema_version": "e2r_all_archetype_next_runtime_seed_event_v1",
-      "score_evidence_allowed": false,
-      "seed_role": "planner_input_only",
-      "source_family": "AllArchetypeRuntimeParityFollowUp",
-      "stage_promotion_allowed_before_execution": false,
-      "structured_payload": {
-        "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
-        "date_window": {
-          "end": "2026-07-05",
-          "lookback_days": 730
-        },
-        "expected_claim_schema": {
-          "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-          "forbidden_source_classes": [
-            "snippet_only_score",
-            "source_proxy_only",
-            "evidence_url_pending",
-            "unbounded_general_search"
-          ],
-          "mapping_status": "ACCEPTED",
-          "primitive_id": "operating_leverage_visible",
-          "required_claim_status": "ACCEPTED_FOR_SCORE",
-          "schema_version": "e2r_expected_runtime_parity_claim_v1",
-          "score_forbidden_until_claim_accepted": true,
-          "semantic_status": "PASS",
-          "symbol": "024110",
-          "target_scope_status": "DIRECT",
-          "temporal_status": "CURRENT_OR_AS_OF_VALID"
-        },
-        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-        "fallback_source_classes": [
-          "BrokerReportPDF",
-          "GeneralWebSearch",
-          "KIND",
-          "NaverSearch",
-          "ResearchMemory",
-          "TrustedNews",
-          "ReportPDF",
-          "BrokerReportPublicPDF",
-          "CompanyNewsroom"
-        ],
-        "follow_up_origin": "all_archetype_runtime_status_matrix",
-        "follow_up_task_id": "RTTASK-942bd1d6eddfa388f33b",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "hardcoded_queries": [],
-        "hardcoded_query_count": 0,
-        "llm_query_required": true,
-        "max_candidates": 20,
-        "max_fetches": 3,
-        "max_queries": 3,
-        "official_first_required": true,
-        "planner_failure_feedback": {
-          "previous_claim_failure_primary_mode": null,
-          "previous_claim_failure_repair_hint": null,
-          "previous_claim_failure_top_modes": [],
-          "previous_top_claim_rejection_reasons": [],
-          "primitive_gap": "operating_leverage_visible",
-          "score_evidence_allowed_from_previous_rejected_claims": false,
-          "source_route_repair_actions": []
-        },
-        "preferred_source_classes": [
-          "DART",
-          "IssuerIR",
-          "CompanyGuide"
-        ],
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "primitive_gap": "operating_leverage_visible",
-        "query_intents": [
-          "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `operating_leverage_visible`."
-        ],
-        "requires_current_source_confirmation_before_scoring": true,
-        "seed_role": "planner_input_only",
-        "source_route_repair_actions": [],
-        "source_route_repair_required": false,
-        "stop_condition": {
-          "accepted_claim_count": 1,
-          "counter_claim_check_done": true,
-          "source_budget_exhausted_status": "SOURCE_PENDING"
-        },
-        "success_condition": "Create at least one accepted Evidence OS claim for primitive `operating_leverage_visible` on symbol `024110`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-        "target_archetype": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-        "target_materialization_candidate": null,
-        "target_symbol_mode": "SYMBOL_SPECIFIC"
-      },
-      "symbol": "024110",
-      "target_archetype": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-      "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC"
-    },
-    {
       "candidate_event_id": "CEV4-RTATTEMPT-5ae149e196c67999b43a",
       "detected_at": "2026-07-05",
       "event_date": "2026-07-05",
@@ -11477,7 +10867,7 @@
       "raw_reason_codes": [
         "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
         "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+        "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
         "volume_growth_visible",
         "NO_PREVIOUS_CLAIM_FAILURE_MODE"
       ],
@@ -11488,7 +10878,7 @@
       "source_family": "AllArchetypeRuntimeParityFollowUp",
       "stage_promotion_allowed_before_execution": false,
       "structured_payload": {
-        "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
+        "attempt_id": "RTATTEMPT-f106fa60c0ab01c66157",
         "date_window": {
           "end": "2026-07-05",
           "lookback_days": 730
@@ -11512,7 +10902,7 @@
           "target_scope_status": "DIRECT",
           "temporal_status": "CURRENT_OR_AS_OF_VALID"
         },
-        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
+        "fallback_if_not_found": "PENDING_MATERIAL_GAP",
         "fallback_source_classes": [
           "BrokerReportPDF",
           "GeneralWebSearch",
@@ -11575,120 +10965,6 @@
         "target_symbol_mode": "SYMBOL_SPECIFIC"
       },
       "symbol": "017670",
-      "target_archetype": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-      "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC"
-    },
-    {
-      "candidate_event_id": "CEV4-RTATTEMPT-d09e41704fa8073fce61",
-      "detected_at": "2026-07-05",
-      "event_date": "2026-07-05",
-      "event_summary": "planner input only. archetype_id=C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE; primitive_gap=volume_growth_visible; source-backed Evidence OS claim required before any production score/stage use; previous_claim_failure_primary_mode=NONE",
-      "event_type": "all_archetype_runtime_parity_follow_up_seed",
-      "follow_up_task_id": "RTTASK-d09e41704fa8073fce61",
-      "primitive_gap": "volume_growth_visible",
-      "raw_reason_codes": [
-        "GOAL4_RUNTIME_PARITY_FOLLOW_UP",
-        "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
-        "volume_growth_visible",
-        "NO_PREVIOUS_CLAIM_FAILURE_MODE"
-      ],
-      "research_brain_eligible": true,
-      "schema_version": "e2r_all_archetype_next_runtime_seed_event_v1",
-      "score_evidence_allowed": false,
-      "seed_role": "planner_input_only",
-      "source_family": "AllArchetypeRuntimeParityFollowUp",
-      "stage_promotion_allowed_before_execution": false,
-      "structured_payload": {
-        "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
-        "date_window": {
-          "end": "2026-07-05",
-          "lookback_days": 730
-        },
-        "expected_claim_schema": {
-          "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-          "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-          "forbidden_source_classes": [
-            "snippet_only_score",
-            "source_proxy_only",
-            "evidence_url_pending",
-            "unbounded_general_search"
-          ],
-          "mapping_status": "ACCEPTED",
-          "primitive_id": "volume_growth_visible",
-          "required_claim_status": "ACCEPTED_FOR_SCORE",
-          "schema_version": "e2r_expected_runtime_parity_claim_v1",
-          "score_forbidden_until_claim_accepted": true,
-          "semantic_status": "PASS",
-          "symbol": "024110",
-          "target_scope_status": "DIRECT",
-          "temporal_status": "CURRENT_OR_AS_OF_VALID"
-        },
-        "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-        "fallback_source_classes": [
-          "BrokerReportPDF",
-          "GeneralWebSearch",
-          "KIND",
-          "NaverSearch",
-          "ResearchMemory",
-          "TrustedNews",
-          "ReportPDF",
-          "BrokerReportPublicPDF",
-          "CompanyNewsroom"
-        ],
-        "follow_up_origin": "all_archetype_runtime_status_matrix",
-        "follow_up_task_id": "RTTASK-d09e41704fa8073fce61",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "hardcoded_queries": [],
-        "hardcoded_query_count": 0,
-        "llm_query_required": true,
-        "max_candidates": 20,
-        "max_fetches": 3,
-        "max_queries": 3,
-        "official_first_required": true,
-        "planner_failure_feedback": {
-          "previous_claim_failure_primary_mode": null,
-          "previous_claim_failure_repair_hint": null,
-          "previous_claim_failure_top_modes": [],
-          "previous_top_claim_rejection_reasons": [],
-          "primitive_gap": "volume_growth_visible",
-          "score_evidence_allowed_from_previous_rejected_claims": false,
-          "source_route_repair_actions": []
-        },
-        "preferred_source_classes": [
-          "DART",
-          "IssuerIR",
-          "CompanyGuide"
-        ],
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "primitive_gap": "volume_growth_visible",
-        "query_intents": [
-          "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `volume_growth_visible`."
-        ],
-        "requires_current_source_confirmation_before_scoring": true,
-        "seed_role": "planner_input_only",
-        "source_route_repair_actions": [],
-        "source_route_repair_required": false,
-        "stop_condition": {
-          "accepted_claim_count": 1,
-          "counter_claim_check_done": true,
-          "source_budget_exhausted_status": "SOURCE_PENDING"
-        },
-        "success_condition": "Create at least one accepted Evidence OS claim for primitive `volume_growth_visible` on symbol `024110`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-        "target_archetype": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
-        "target_materialization_candidate": null,
-        "target_symbol_mode": "SYMBOL_SPECIFIC"
-      },
-      "symbol": "024110",
       "target_archetype": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
       "target_materialization_candidate": null,
@@ -12797,57 +12073,57 @@
           "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
           "previous_claim_failure_top_modes": [
             {
-              "count": 51,
+              "count": 65,
               "mode": "TARGET_SCOPE_NOT_DIRECT"
             },
             {
-              "count": 51,
+              "count": 65,
               "mode": "SEMANTIC_REJECTED"
             },
             {
-              "count": 51,
+              "count": 65,
               "mode": "PRIMITIVE_MAPPING_REJECTED"
             },
             {
-              "count": 51,
+              "count": 65,
               "mode": "MAPPING_NOT_ACCEPTED"
             },
             {
-              "count": 19,
+              "count": 36,
               "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
             }
           ],
           "previous_top_claim_rejection_reasons": [
             {
-              "count": 51,
+              "count": 65,
               "reason": "target_scope_not_direct"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "mapping_not_accepted"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "snapshot_source_not_score_eligible"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "semantic_rejected"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "target_scope_not_allowed"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "target_not_direct"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "temporal_not_allowed"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "primitive_mapping_rejected"
             }
           ],
@@ -12972,57 +12248,57 @@
           "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
           "previous_claim_failure_top_modes": [
             {
-              "count": 51,
+              "count": 65,
               "mode": "TARGET_SCOPE_NOT_DIRECT"
             },
             {
-              "count": 51,
+              "count": 65,
               "mode": "SEMANTIC_REJECTED"
             },
             {
-              "count": 51,
+              "count": 65,
               "mode": "PRIMITIVE_MAPPING_REJECTED"
             },
             {
-              "count": 51,
+              "count": 65,
               "mode": "MAPPING_NOT_ACCEPTED"
             },
             {
-              "count": 19,
+              "count": 36,
               "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
             }
           ],
           "previous_top_claim_rejection_reasons": [
             {
-              "count": 51,
+              "count": 65,
               "reason": "target_scope_not_direct"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "mapping_not_accepted"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "snapshot_source_not_score_eligible"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "semantic_rejected"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "target_scope_not_allowed"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "target_not_direct"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "temporal_not_allowed"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "primitive_mapping_rejected"
             }
           ],
@@ -13145,57 +12421,57 @@
           "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
           "previous_claim_failure_top_modes": [
             {
-              "count": 51,
+              "count": 65,
               "mode": "TARGET_SCOPE_NOT_DIRECT"
             },
             {
-              "count": 51,
+              "count": 65,
               "mode": "SEMANTIC_REJECTED"
             },
             {
-              "count": 51,
+              "count": 65,
               "mode": "PRIMITIVE_MAPPING_REJECTED"
             },
             {
-              "count": 51,
+              "count": 65,
               "mode": "MAPPING_NOT_ACCEPTED"
             },
             {
-              "count": 19,
+              "count": 36,
               "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
             }
           ],
           "previous_top_claim_rejection_reasons": [
             {
-              "count": 51,
+              "count": 65,
               "reason": "target_scope_not_direct"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "mapping_not_accepted"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "snapshot_source_not_score_eligible"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "semantic_rejected"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "target_scope_not_allowed"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "target_not_direct"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "temporal_not_allowed"
             },
             {
-              "count": 51,
+              "count": 65,
               "reason": "primitive_mapping_rejected"
             }
           ],
@@ -13318,58 +12594,58 @@
           "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
           "previous_claim_failure_top_modes": [
             {
-              "count": 96,
+              "count": 130,
               "mode": "TARGET_SCOPE_NOT_DIRECT"
             },
             {
-              "count": 96,
+              "count": 130,
               "mode": "SEMANTIC_REJECTED"
             },
             {
-              "count": 96,
+              "count": 130,
+              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+            },
+            {
+              "count": 130,
               "mode": "PRIMITIVE_MAPPING_REJECTED"
             },
             {
-              "count": 96,
+              "count": 130,
               "mode": "MAPPING_NOT_ACCEPTED"
-            },
-            {
-              "count": 59,
-              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
             }
           ],
           "previous_top_claim_rejection_reasons": [
             {
-              "count": 96,
+              "count": 130,
               "reason": "target_scope_not_direct"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "mapping_not_accepted"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "snapshot_source_not_score_eligible"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "semantic_rejected"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "target_scope_not_allowed"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "target_not_direct"
             },
             {
-              "count": 96,
-              "reason": "temporal_not_allowed"
+              "count": 130,
+              "reason": "primitive_mapping_rejected"
             },
             {
-              "count": 96,
-              "reason": "primitive_mapping_rejected"
+              "count": 130,
+              "reason": "temporal_not_allowed"
             }
           ],
           "primitive_gap": "auditor_or_disclosure_risk",
@@ -13491,58 +12767,58 @@
           "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
           "previous_claim_failure_top_modes": [
             {
-              "count": 96,
+              "count": 130,
               "mode": "TARGET_SCOPE_NOT_DIRECT"
             },
             {
-              "count": 96,
+              "count": 130,
               "mode": "SEMANTIC_REJECTED"
             },
             {
-              "count": 96,
+              "count": 130,
+              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+            },
+            {
+              "count": 130,
               "mode": "PRIMITIVE_MAPPING_REJECTED"
             },
             {
-              "count": 96,
+              "count": 130,
               "mode": "MAPPING_NOT_ACCEPTED"
-            },
-            {
-              "count": 59,
-              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
             }
           ],
           "previous_top_claim_rejection_reasons": [
             {
-              "count": 96,
+              "count": 130,
               "reason": "target_scope_not_direct"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "mapping_not_accepted"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "snapshot_source_not_score_eligible"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "semantic_rejected"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "target_scope_not_allowed"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "target_not_direct"
             },
             {
-              "count": 96,
-              "reason": "temporal_not_allowed"
+              "count": 130,
+              "reason": "primitive_mapping_rejected"
             },
             {
-              "count": 96,
-              "reason": "primitive_mapping_rejected"
+              "count": 130,
+              "reason": "temporal_not_allowed"
             }
           ],
           "primitive_gap": "restatement_risk",
@@ -13664,58 +12940,58 @@
           "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
           "previous_claim_failure_top_modes": [
             {
-              "count": 96,
+              "count": 130,
               "mode": "TARGET_SCOPE_NOT_DIRECT"
             },
             {
-              "count": 96,
+              "count": 130,
               "mode": "SEMANTIC_REJECTED"
             },
             {
-              "count": 96,
+              "count": 130,
+              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+            },
+            {
+              "count": 130,
               "mode": "PRIMITIVE_MAPPING_REJECTED"
             },
             {
-              "count": 96,
+              "count": 130,
               "mode": "MAPPING_NOT_ACCEPTED"
-            },
-            {
-              "count": 59,
-              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
             }
           ],
           "previous_top_claim_rejection_reasons": [
             {
-              "count": 96,
+              "count": 130,
               "reason": "target_scope_not_direct"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "mapping_not_accepted"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "snapshot_source_not_score_eligible"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "semantic_rejected"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "target_scope_not_allowed"
             },
             {
-              "count": 96,
+              "count": 130,
               "reason": "target_not_direct"
             },
             {
-              "count": 96,
-              "reason": "temporal_not_allowed"
+              "count": 130,
+              "reason": "primitive_mapping_rejected"
             },
             {
-              "count": 96,
-              "reason": "primitive_mapping_rejected"
+              "count": 130,
+              "reason": "temporal_not_allowed"
             }
           ],
           "primitive_gap": "share_count_drift",
@@ -14179,27 +13455,27 @@
           "previous_claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "previous_claim_failure_top_modes": [
             {
-              "count": 276,
+              "count": 126,
               "mode": "TARGET_SCOPE_NOT_DIRECT"
             },
             {
-              "count": 276,
+              "count": 126,
               "mode": "SEMANTIC_REJECTED"
             },
             {
-              "count": 276,
-              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
-            },
-            {
-              "count": 276,
+              "count": 126,
               "mode": "PRIMITIVE_MAPPING_REJECTED"
             },
             {
-              "count": 276,
+              "count": 126,
               "mode": "MAPPING_NOT_ACCEPTED"
             },
             {
-              "count": 178,
+              "count": 101,
+              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+            },
+            {
+              "count": 33,
               "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
             },
             {
@@ -14209,35 +13485,35 @@
           ],
           "previous_top_claim_rejection_reasons": [
             {
-              "count": 276,
+              "count": 126,
               "reason": "target_scope_not_direct"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "mapping_not_accepted"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "snapshot_source_not_score_eligible"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "semantic_rejected"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "target_scope_not_allowed"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "target_not_direct"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "temporal_not_allowed"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "primitive_mapping_rejected"
             }
           ],
@@ -14362,27 +13638,27 @@
           "previous_claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "previous_claim_failure_top_modes": [
             {
-              "count": 276,
+              "count": 126,
               "mode": "TARGET_SCOPE_NOT_DIRECT"
             },
             {
-              "count": 276,
+              "count": 126,
               "mode": "SEMANTIC_REJECTED"
             },
             {
-              "count": 276,
-              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
-            },
-            {
-              "count": 276,
+              "count": 126,
               "mode": "PRIMITIVE_MAPPING_REJECTED"
             },
             {
-              "count": 276,
+              "count": 126,
               "mode": "MAPPING_NOT_ACCEPTED"
             },
             {
-              "count": 178,
+              "count": 101,
+              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+            },
+            {
+              "count": 33,
               "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
             },
             {
@@ -14392,35 +13668,35 @@
           ],
           "previous_top_claim_rejection_reasons": [
             {
-              "count": 276,
+              "count": 126,
               "reason": "target_scope_not_direct"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "mapping_not_accepted"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "snapshot_source_not_score_eligible"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "semantic_rejected"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "target_scope_not_allowed"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "target_not_direct"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "temporal_not_allowed"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "primitive_mapping_rejected"
             }
           ],
@@ -14545,27 +13821,27 @@
           "previous_claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
           "previous_claim_failure_top_modes": [
             {
-              "count": 276,
+              "count": 126,
               "mode": "TARGET_SCOPE_NOT_DIRECT"
             },
             {
-              "count": 276,
+              "count": 126,
               "mode": "SEMANTIC_REJECTED"
             },
             {
-              "count": 276,
-              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
-            },
-            {
-              "count": 276,
+              "count": 126,
               "mode": "PRIMITIVE_MAPPING_REJECTED"
             },
             {
-              "count": 276,
+              "count": 126,
               "mode": "MAPPING_NOT_ACCEPTED"
             },
             {
-              "count": 178,
+              "count": 101,
+              "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+            },
+            {
+              "count": 33,
               "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
             },
             {
@@ -14575,35 +13851,35 @@
           ],
           "previous_top_claim_rejection_reasons": [
             {
-              "count": 276,
+              "count": 126,
               "reason": "target_scope_not_direct"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "mapping_not_accepted"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "snapshot_source_not_score_eligible"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "semantic_rejected"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "target_scope_not_allowed"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "target_not_direct"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "temporal_not_allowed"
             },
             {
-              "count": 276,
+              "count": 126,
               "reason": "primitive_mapping_rejected"
             }
           ],
@@ -14662,7 +13938,7 @@
     "TARGET_SCOPE_NOT_DIRECT": 6
   },
   "source_route_repair_task_count": 9,
-  "source_task_count": 111,
+  "source_task_count": 105,
   "source_tasks": [
     {
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
@@ -18055,8 +17331,8 @@
     {
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-78b0c47cf2868a0d975b",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SCORE_PATH_ONLY",
+      "attempt_id": "RTATTEMPT-9bd7f4f9ade6847d8b3e",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -18216,8 +17492,8 @@
     {
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-78b0c47cf2868a0d975b",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SCORE_PATH_ONLY",
+      "attempt_id": "RTATTEMPT-9bd7f4f9ade6847d8b3e",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -18377,8 +17653,8 @@
     {
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-78b0c47cf2868a0d975b",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SCORE_PATH_ONLY",
+      "attempt_id": "RTATTEMPT-9bd7f4f9ade6847d8b3e",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -19504,8 +18780,8 @@
     {
       "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-e02e6d70fad4199babf6",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+      "attempt_id": "RTATTEMPT-92ce99965b5c545740e7",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -19665,8 +18941,8 @@
     {
       "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-e02e6d70fad4199babf6",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+      "attempt_id": "RTATTEMPT-92ce99965b5c545740e7",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -19826,8 +19102,8 @@
     {
       "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-e02e6d70fad4199babf6",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+      "attempt_id": "RTATTEMPT-92ce99965b5c545740e7",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -22885,8 +22161,8 @@
     {
       "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-7f6c66c2ff88a5d898dc",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
+      "attempt_id": "RTATTEMPT-dc765ff9f81072b18f73",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -22910,7 +22186,7 @@
         "target_scope_status": "DIRECT",
         "temporal_status": "CURRENT_OR_AS_OF_VALID"
       },
-      "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
       "fallback_source_classes": [
         "BrokerReportPDF",
         "GeneralWebSearch",
@@ -23046,8 +22322,8 @@
     {
       "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-7f6c66c2ff88a5d898dc",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
+      "attempt_id": "RTATTEMPT-dc765ff9f81072b18f73",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -23071,7 +22347,7 @@
         "target_scope_status": "DIRECT",
         "temporal_status": "CURRENT_OR_AS_OF_VALID"
       },
-      "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
       "fallback_source_classes": [
         "BrokerReportPDF",
         "GeneralWebSearch",
@@ -23207,8 +22483,8 @@
     {
       "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-7f6c66c2ff88a5d898dc",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
+      "attempt_id": "RTATTEMPT-dc765ff9f81072b18f73",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -23232,7 +22508,7 @@
         "target_scope_status": "DIRECT",
         "temporal_status": "CURRENT_OR_AS_OF_VALID"
       },
-      "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
       "fallback_source_classes": [
         "BrokerReportPDF",
         "GeneralWebSearch",
@@ -25788,496 +25064,6 @@
       "task_type": "runtime_parity_gap_closure"
     },
     {
-      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-      "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-afc9e04d990b79ff9417",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
-      "date_window": {
-        "end": "2026-07-05",
-        "lookback_days": 730
-      },
-      "expected_claim_schema": {
-        "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-        "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "approval_not_confirmed",
-        "required_claim_status": "ACCEPTED_FOR_SCORE",
-        "schema_version": "e2r_expected_runtime_parity_claim_v1",
-        "score_forbidden_until_claim_accepted": true,
-        "semantic_status": "PASS",
-        "symbol": "000100",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT_OR_AS_OF_VALID"
-      },
-      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-      "fallback_source_classes": [
-        "BrokerReportPDF",
-        "GeneralWebSearch",
-        "KIND",
-        "NaverSearch",
-        "ResearchMemory",
-        "TrustedNews",
-        "ReportPDF",
-        "BrokerReportPublicPDF",
-        "CompanyNewsroom"
-      ],
-      "forbidden_source_classes": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending",
-        "unbounded_general_search"
-      ],
-      "general_search_allowed": true,
-      "hardcoded_queries": [],
-      "hardcoded_query_count": 0,
-      "llm_query_allowed": true,
-      "llm_query_required": true,
-      "max_candidates": 20,
-      "max_candidates_per_query": 20,
-      "max_fetches": 3,
-      "max_fetches_per_task": 3,
-      "max_queries": 3,
-      "max_queries_per_task": 3,
-      "next_actions": [
-        "ASK_LLM_PLANNER_FOR_MISSING_PRIMITIVE_QUERY",
-        "RUN_BOUNDED_OFFICIAL_FIRST_SOURCE_TASK",
-        "EXTRACT_EVIDENCE_OS_CLAIM",
-        "RETRY_FULL_THESIS_STAGECOURT_IF_MATERIAL"
-      ],
-      "official_first_required": true,
-      "planner_failure_feedback": {
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "previous_claim_failure_top_modes": [],
-        "previous_top_claim_rejection_reasons": [],
-        "primitive_gap": "approval_not_confirmed",
-        "score_evidence_allowed_from_previous_rejected_claims": false,
-        "source_route_repair_actions": []
-      },
-      "preferred_source_classes": [
-        "DART",
-        "IssuerIR",
-        "CompanyGuide"
-      ],
-      "previous_claim_failure_primary_mode": null,
-      "previous_claim_failure_repair_hint": null,
-      "primitive_gap": "approval_not_confirmed",
-      "query_intents": [
-        "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `approval_not_confirmed`."
-      ],
-      "requires_current_source_confirmation_before_scoring": true,
-      "requires_target_materialization_before_scoring": false,
-      "route_priority": [
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "SECONDARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "schema_version": "e2r_all_archetype_next_runtime_source_task_v1",
-      "score_allowed_before_execution": false,
-      "source_route_repair_actions": [],
-      "source_route_repair_required": false,
-      "source_task_origin": "all_archetype_runtime_status_matrix",
-      "stage_promotion_allowed_before_execution": false,
-      "stop_condition": {
-        "accepted_claim_count": 1,
-        "counter_claim_check_done": true,
-        "source_budget_exhausted_status": "SOURCE_PENDING"
-      },
-      "success_condition": "Create at least one accepted Evidence OS claim for primitive `approval_not_confirmed` on symbol `000100`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-      "symbol": "000100",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC",
-      "task_id": "RTTASK-f4e7e889e0d184c6685e",
-      "task_status": "PLANNING_REQUIRED",
-      "task_type": "runtime_parity_gap_closure"
-    },
-    {
-      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-      "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-afc9e04d990b79ff9417",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
-      "date_window": {
-        "end": "2026-07-05",
-        "lookback_days": 730
-      },
-      "expected_claim_schema": {
-        "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-        "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "binary_event_unresolved",
-        "required_claim_status": "ACCEPTED_FOR_SCORE",
-        "schema_version": "e2r_expected_runtime_parity_claim_v1",
-        "score_forbidden_until_claim_accepted": true,
-        "semantic_status": "PASS",
-        "symbol": "000100",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT_OR_AS_OF_VALID"
-      },
-      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-      "fallback_source_classes": [
-        "BrokerReportPDF",
-        "GeneralWebSearch",
-        "KIND",
-        "NaverSearch",
-        "ResearchMemory",
-        "TrustedNews",
-        "ReportPDF",
-        "BrokerReportPublicPDF",
-        "CompanyNewsroom"
-      ],
-      "forbidden_source_classes": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending",
-        "unbounded_general_search"
-      ],
-      "general_search_allowed": true,
-      "hardcoded_queries": [],
-      "hardcoded_query_count": 0,
-      "llm_query_allowed": true,
-      "llm_query_required": true,
-      "max_candidates": 20,
-      "max_candidates_per_query": 20,
-      "max_fetches": 3,
-      "max_fetches_per_task": 3,
-      "max_queries": 3,
-      "max_queries_per_task": 3,
-      "next_actions": [
-        "ASK_LLM_PLANNER_FOR_MISSING_PRIMITIVE_QUERY",
-        "RUN_BOUNDED_OFFICIAL_FIRST_SOURCE_TASK",
-        "EXTRACT_EVIDENCE_OS_CLAIM",
-        "RETRY_FULL_THESIS_STAGECOURT_IF_MATERIAL"
-      ],
-      "official_first_required": true,
-      "planner_failure_feedback": {
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "previous_claim_failure_top_modes": [],
-        "previous_top_claim_rejection_reasons": [],
-        "primitive_gap": "binary_event_unresolved",
-        "score_evidence_allowed_from_previous_rejected_claims": false,
-        "source_route_repair_actions": []
-      },
-      "preferred_source_classes": [
-        "DART",
-        "IssuerIR",
-        "CompanyGuide"
-      ],
-      "previous_claim_failure_primary_mode": null,
-      "previous_claim_failure_repair_hint": null,
-      "primitive_gap": "binary_event_unresolved",
-      "query_intents": [
-        "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `binary_event_unresolved`."
-      ],
-      "requires_current_source_confirmation_before_scoring": true,
-      "requires_target_materialization_before_scoring": false,
-      "route_priority": [
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "SECONDARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "schema_version": "e2r_all_archetype_next_runtime_source_task_v1",
-      "score_allowed_before_execution": false,
-      "source_route_repair_actions": [],
-      "source_route_repair_required": false,
-      "source_task_origin": "all_archetype_runtime_status_matrix",
-      "stage_promotion_allowed_before_execution": false,
-      "stop_condition": {
-        "accepted_claim_count": 1,
-        "counter_claim_check_done": true,
-        "source_budget_exhausted_status": "SOURCE_PENDING"
-      },
-      "success_condition": "Create at least one accepted Evidence OS claim for primitive `binary_event_unresolved` on symbol `000100`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-      "symbol": "000100",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC",
-      "task_id": "RTTASK-714d0299599db8f0b838",
-      "task_status": "PLANNING_REQUIRED",
-      "task_type": "runtime_parity_gap_closure"
-    },
-    {
-      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-      "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-afc9e04d990b79ff9417",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
-      "date_window": {
-        "end": "2026-07-05",
-        "lookback_days": 730
-      },
-      "expected_claim_schema": {
-        "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-        "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "trial_quality_visible",
-        "required_claim_status": "ACCEPTED_FOR_SCORE",
-        "schema_version": "e2r_expected_runtime_parity_claim_v1",
-        "score_forbidden_until_claim_accepted": true,
-        "semantic_status": "PASS",
-        "symbol": "000100",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT_OR_AS_OF_VALID"
-      },
-      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-      "fallback_source_classes": [
-        "TrustedNews",
-        "IndustryMedia",
-        "BrokerReportPDF",
-        "CompanyGuide",
-        "GeneralWebSearch",
-        "KIND",
-        "NaverSearch",
-        "ResearchMemory",
-        "ReportPDF",
-        "BrokerReportPublicPDF",
-        "CompanyNewsroom"
-      ],
-      "forbidden_source_classes": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending",
-        "unbounded_general_search"
-      ],
-      "general_search_allowed": true,
-      "hardcoded_queries": [],
-      "hardcoded_query_count": 0,
-      "llm_query_allowed": true,
-      "llm_query_required": true,
-      "max_candidates": 20,
-      "max_candidates_per_query": 20,
-      "max_fetches": 3,
-      "max_fetches_per_task": 3,
-      "max_queries": 3,
-      "max_queries_per_task": 3,
-      "next_actions": [
-        "ASK_LLM_PLANNER_FOR_MISSING_PRIMITIVE_QUERY",
-        "RUN_BOUNDED_OFFICIAL_FIRST_SOURCE_TASK",
-        "EXTRACT_EVIDENCE_OS_CLAIM",
-        "RETRY_FULL_THESIS_STAGECOURT_IF_MATERIAL"
-      ],
-      "official_first_required": true,
-      "planner_failure_feedback": {
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "previous_claim_failure_top_modes": [],
-        "previous_top_claim_rejection_reasons": [],
-        "primitive_gap": "trial_quality_visible",
-        "score_evidence_allowed_from_previous_rejected_claims": false,
-        "source_route_repair_actions": []
-      },
-      "preferred_source_classes": [
-        "DART",
-        "IssuerIR"
-      ],
-      "previous_claim_failure_primary_mode": null,
-      "previous_claim_failure_repair_hint": null,
-      "primitive_gap": "trial_quality_visible",
-      "query_intents": [
-        "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `trial_quality_visible`."
-      ],
-      "requires_current_source_confirmation_before_scoring": true,
-      "requires_target_materialization_before_scoring": false,
-      "route_priority": [
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "IndustryMedia"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        }
-      ],
-      "schema_version": "e2r_all_archetype_next_runtime_source_task_v1",
-      "score_allowed_before_execution": false,
-      "source_route_repair_actions": [],
-      "source_route_repair_required": false,
-      "source_task_origin": "all_archetype_runtime_status_matrix",
-      "stage_promotion_allowed_before_execution": false,
-      "stop_condition": {
-        "accepted_claim_count": 1,
-        "counter_claim_check_done": true,
-        "source_budget_exhausted_status": "SOURCE_PENDING"
-      },
-      "success_condition": "Create at least one accepted Evidence OS claim for primitive `trial_quality_visible` on symbol `000100`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-      "symbol": "000100",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC",
-      "task_id": "RTTASK-688a7c76eb7acc93475d",
-      "task_status": "PLANNING_REQUIRED",
-      "task_type": "runtime_parity_gap_closure"
-    },
-    {
       "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
       "as_of_date": "2026-07-05",
       "attempt_id": "RTATTEMPT-a490c5088516ab37384d",
@@ -27729,8 +26515,8 @@
     {
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-6dff33c8e9604174b9a2",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SCORE_PATH_ONLY",
+      "attempt_id": "RTATTEMPT-83d18ad6df7d987616f6",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -27754,7 +26540,7 @@
         "target_scope_status": "DIRECT",
         "temporal_status": "CURRENT_OR_AS_OF_VALID"
       },
-      "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
       "fallback_source_classes": [
         "BrokerReportPDF",
         "GeneralWebSearch",
@@ -27890,8 +26676,8 @@
     {
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-6dff33c8e9604174b9a2",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SCORE_PATH_ONLY",
+      "attempt_id": "RTATTEMPT-83d18ad6df7d987616f6",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -27915,7 +26701,7 @@
         "target_scope_status": "DIRECT",
         "temporal_status": "CURRENT_OR_AS_OF_VALID"
       },
-      "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
       "fallback_source_classes": [
         "BrokerReportPDF",
         "GeneralWebSearch",
@@ -28051,8 +26837,8 @@
     {
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-6dff33c8e9604174b9a2",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_SCORE_PATH_ONLY",
+      "attempt_id": "RTATTEMPT-83d18ad6df7d987616f6",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -28076,7 +26862,7 @@
         "target_scope_status": "DIRECT",
         "temporal_status": "CURRENT_OR_AS_OF_VALID"
       },
-      "fallback_if_not_found": "PENDING_MATERIAL_GAP",
+      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
       "fallback_source_classes": [
         "BrokerReportPDF",
         "GeneralWebSearch",
@@ -28212,8 +26998,8 @@
     {
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+      "attempt_id": "RTATTEMPT-f106fa60c0ab01c66157",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -28237,7 +27023,7 @@
         "target_scope_status": "DIRECT",
         "temporal_status": "CURRENT_OR_AS_OF_VALID"
       },
-      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
+      "fallback_if_not_found": "PENDING_MATERIAL_GAP",
       "fallback_source_classes": [
         "BrokerReportPDF",
         "GeneralWebSearch",
@@ -28373,169 +27159,8 @@
     {
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
-      "date_window": {
-        "end": "2026-07-05",
-        "lookback_days": 730
-      },
-      "expected_claim_schema": {
-        "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-        "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "mix_improvement",
-        "required_claim_status": "ACCEPTED_FOR_SCORE",
-        "schema_version": "e2r_expected_runtime_parity_claim_v1",
-        "score_forbidden_until_claim_accepted": true,
-        "semantic_status": "PASS",
-        "symbol": "024110",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT_OR_AS_OF_VALID"
-      },
-      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-      "fallback_source_classes": [
-        "BrokerReportPDF",
-        "GeneralWebSearch",
-        "KIND",
-        "NaverSearch",
-        "ResearchMemory",
-        "TrustedNews",
-        "ReportPDF",
-        "BrokerReportPublicPDF",
-        "CompanyNewsroom"
-      ],
-      "forbidden_source_classes": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending",
-        "unbounded_general_search"
-      ],
-      "general_search_allowed": true,
-      "hardcoded_queries": [],
-      "hardcoded_query_count": 0,
-      "llm_query_allowed": true,
-      "llm_query_required": true,
-      "max_candidates": 20,
-      "max_candidates_per_query": 20,
-      "max_fetches": 3,
-      "max_fetches_per_task": 3,
-      "max_queries": 3,
-      "max_queries_per_task": 3,
-      "next_actions": [
-        "ASK_LLM_PLANNER_FOR_MISSING_PRIMITIVE_QUERY",
-        "RUN_BOUNDED_OFFICIAL_FIRST_SOURCE_TASK",
-        "EXTRACT_EVIDENCE_OS_CLAIM",
-        "RETRY_FULL_THESIS_STAGECOURT_IF_MATERIAL"
-      ],
-      "official_first_required": true,
-      "planner_failure_feedback": {
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "previous_claim_failure_top_modes": [],
-        "previous_top_claim_rejection_reasons": [],
-        "primitive_gap": "mix_improvement",
-        "score_evidence_allowed_from_previous_rejected_claims": false,
-        "source_route_repair_actions": []
-      },
-      "preferred_source_classes": [
-        "DART",
-        "IssuerIR",
-        "CompanyGuide"
-      ],
-      "previous_claim_failure_primary_mode": null,
-      "previous_claim_failure_repair_hint": null,
-      "primitive_gap": "mix_improvement",
-      "query_intents": [
-        "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `mix_improvement`."
-      ],
-      "requires_current_source_confirmation_before_scoring": true,
-      "requires_target_materialization_before_scoring": false,
-      "route_priority": [
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "SECONDARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "schema_version": "e2r_all_archetype_next_runtime_source_task_v1",
-      "score_allowed_before_execution": false,
-      "source_route_repair_actions": [],
-      "source_route_repair_required": false,
-      "source_task_origin": "all_archetype_runtime_status_matrix",
-      "stage_promotion_allowed_before_execution": false,
-      "stop_condition": {
-        "accepted_claim_count": 1,
-        "counter_claim_check_done": true,
-        "source_budget_exhausted_status": "SOURCE_PENDING"
-      },
-      "success_condition": "Create at least one accepted Evidence OS claim for primitive `mix_improvement` on symbol `024110`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-      "symbol": "024110",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC",
-      "task_id": "RTTASK-ac0a7662f4fc11f34ed6",
-      "task_status": "PLANNING_REQUIRED",
-      "task_type": "runtime_parity_gap_closure"
-    },
-    {
-      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-      "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+      "attempt_id": "RTATTEMPT-f106fa60c0ab01c66157",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -28559,7 +27184,7 @@
         "target_scope_status": "DIRECT",
         "temporal_status": "CURRENT_OR_AS_OF_VALID"
       },
-      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
+      "fallback_if_not_found": "PENDING_MATERIAL_GAP",
       "fallback_source_classes": [
         "BrokerReportPDF",
         "GeneralWebSearch",
@@ -28695,169 +27320,8 @@
     {
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
-      "date_window": {
-        "end": "2026-07-05",
-        "lookback_days": 730
-      },
-      "expected_claim_schema": {
-        "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-        "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "operating_leverage_visible",
-        "required_claim_status": "ACCEPTED_FOR_SCORE",
-        "schema_version": "e2r_expected_runtime_parity_claim_v1",
-        "score_forbidden_until_claim_accepted": true,
-        "semantic_status": "PASS",
-        "symbol": "024110",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT_OR_AS_OF_VALID"
-      },
-      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-      "fallback_source_classes": [
-        "BrokerReportPDF",
-        "GeneralWebSearch",
-        "KIND",
-        "NaverSearch",
-        "ResearchMemory",
-        "TrustedNews",
-        "ReportPDF",
-        "BrokerReportPublicPDF",
-        "CompanyNewsroom"
-      ],
-      "forbidden_source_classes": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending",
-        "unbounded_general_search"
-      ],
-      "general_search_allowed": true,
-      "hardcoded_queries": [],
-      "hardcoded_query_count": 0,
-      "llm_query_allowed": true,
-      "llm_query_required": true,
-      "max_candidates": 20,
-      "max_candidates_per_query": 20,
-      "max_fetches": 3,
-      "max_fetches_per_task": 3,
-      "max_queries": 3,
-      "max_queries_per_task": 3,
-      "next_actions": [
-        "ASK_LLM_PLANNER_FOR_MISSING_PRIMITIVE_QUERY",
-        "RUN_BOUNDED_OFFICIAL_FIRST_SOURCE_TASK",
-        "EXTRACT_EVIDENCE_OS_CLAIM",
-        "RETRY_FULL_THESIS_STAGECOURT_IF_MATERIAL"
-      ],
-      "official_first_required": true,
-      "planner_failure_feedback": {
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "previous_claim_failure_top_modes": [],
-        "previous_top_claim_rejection_reasons": [],
-        "primitive_gap": "operating_leverage_visible",
-        "score_evidence_allowed_from_previous_rejected_claims": false,
-        "source_route_repair_actions": []
-      },
-      "preferred_source_classes": [
-        "DART",
-        "IssuerIR",
-        "CompanyGuide"
-      ],
-      "previous_claim_failure_primary_mode": null,
-      "previous_claim_failure_repair_hint": null,
-      "primitive_gap": "operating_leverage_visible",
-      "query_intents": [
-        "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `operating_leverage_visible`."
-      ],
-      "requires_current_source_confirmation_before_scoring": true,
-      "requires_target_materialization_before_scoring": false,
-      "route_priority": [
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "SECONDARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "schema_version": "e2r_all_archetype_next_runtime_source_task_v1",
-      "score_allowed_before_execution": false,
-      "source_route_repair_actions": [],
-      "source_route_repair_required": false,
-      "source_task_origin": "all_archetype_runtime_status_matrix",
-      "stage_promotion_allowed_before_execution": false,
-      "stop_condition": {
-        "accepted_claim_count": 1,
-        "counter_claim_check_done": true,
-        "source_budget_exhausted_status": "SOURCE_PENDING"
-      },
-      "success_condition": "Create at least one accepted Evidence OS claim for primitive `operating_leverage_visible` on symbol `024110`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-      "symbol": "024110",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC",
-      "task_id": "RTTASK-942bd1d6eddfa388f33b",
-      "task_status": "PLANNING_REQUIRED",
-      "task_type": "runtime_parity_gap_closure"
-    },
-    {
-      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-      "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
+      "attempt_id": "RTATTEMPT-f106fa60c0ab01c66157",
+      "current_runtime_parity_proof_status": "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP",
       "date_window": {
         "end": "2026-07-05",
         "lookback_days": 730
@@ -28881,7 +27345,7 @@
         "target_scope_status": "DIRECT",
         "temporal_status": "CURRENT_OR_AS_OF_VALID"
       },
-      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
+      "fallback_if_not_found": "PENDING_MATERIAL_GAP",
       "fallback_source_classes": [
         "BrokerReportPDF",
         "GeneralWebSearch",
@@ -29011,167 +27475,6 @@
       "target_materialization_candidate": null,
       "target_symbol_mode": "SYMBOL_SPECIFIC",
       "task_id": "RTTASK-5ae149e196c67999b43a",
-      "task_status": "PLANNING_REQUIRED",
-      "task_type": "runtime_parity_gap_closure"
-    },
-    {
-      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-      "as_of_date": "2026-07-05",
-      "attempt_id": "RTATTEMPT-39ab5b34cddfc2e52baf",
-      "current_runtime_parity_proof_status": "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED",
-      "date_window": {
-        "end": "2026-07-05",
-        "lookback_days": 730
-      },
-      "expected_claim_schema": {
-        "anchor_status": "VERIFIED_SOURCE_ANCHOR",
-        "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
-        "forbidden_source_classes": [
-          "snippet_only_score",
-          "source_proxy_only",
-          "evidence_url_pending",
-          "unbounded_general_search"
-        ],
-        "mapping_status": "ACCEPTED",
-        "primitive_id": "volume_growth_visible",
-        "required_claim_status": "ACCEPTED_FOR_SCORE",
-        "schema_version": "e2r_expected_runtime_parity_claim_v1",
-        "score_forbidden_until_claim_accepted": true,
-        "semantic_status": "PASS",
-        "symbol": "024110",
-        "target_scope_status": "DIRECT",
-        "temporal_status": "CURRENT_OR_AS_OF_VALID"
-      },
-      "fallback_if_not_found": "SOURCE_REPAIR_REQUIRED",
-      "fallback_source_classes": [
-        "BrokerReportPDF",
-        "GeneralWebSearch",
-        "KIND",
-        "NaverSearch",
-        "ResearchMemory",
-        "TrustedNews",
-        "ReportPDF",
-        "BrokerReportPublicPDF",
-        "CompanyNewsroom"
-      ],
-      "forbidden_source_classes": [
-        "snippet_only_score",
-        "source_proxy_only",
-        "evidence_url_pending",
-        "unbounded_general_search"
-      ],
-      "general_search_allowed": true,
-      "hardcoded_queries": [],
-      "hardcoded_query_count": 0,
-      "llm_query_allowed": true,
-      "llm_query_required": true,
-      "max_candidates": 20,
-      "max_candidates_per_query": 20,
-      "max_fetches": 3,
-      "max_fetches_per_task": 3,
-      "max_queries": 3,
-      "max_queries_per_task": 3,
-      "next_actions": [
-        "ASK_LLM_PLANNER_FOR_MISSING_PRIMITIVE_QUERY",
-        "RUN_BOUNDED_OFFICIAL_FIRST_SOURCE_TASK",
-        "EXTRACT_EVIDENCE_OS_CLAIM",
-        "RETRY_FULL_THESIS_STAGECOURT_IF_MATERIAL"
-      ],
-      "official_first_required": true,
-      "planner_failure_feedback": {
-        "previous_claim_failure_primary_mode": null,
-        "previous_claim_failure_repair_hint": null,
-        "previous_claim_failure_top_modes": [],
-        "previous_top_claim_rejection_reasons": [],
-        "primitive_gap": "volume_growth_visible",
-        "score_evidence_allowed_from_previous_rejected_claims": false,
-        "source_route_repair_actions": []
-      },
-      "preferred_source_classes": [
-        "DART",
-        "IssuerIR",
-        "CompanyGuide"
-      ],
-      "previous_claim_failure_primary_mode": null,
-      "previous_claim_failure_repair_hint": null,
-      "primitive_gap": "volume_growth_visible",
-      "query_intents": [
-        "Ask the LLM planner for bounded official-first queries that verify current, direct target-company evidence for primitive `volume_growth_visible`."
-      ],
-      "requires_current_source_confirmation_before_scoring": true,
-      "requires_target_materialization_before_scoring": false,
-      "route_priority": [
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "DART"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "PRIMARY",
-          "source_family": "IssuerIR"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "SECONDARY",
-          "source_family": "CompanyGuide"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "BrokerReportPDF"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "GeneralWebSearch"
-        },
-        {
-          "official_first_required": true,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "KIND"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "NaverSearch"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": false,
-          "route_role": "DISCOVERY_ONLY",
-          "source_family": "ResearchMemory"
-        },
-        {
-          "official_first_required": false,
-          "requires_full_source": true,
-          "route_role": "FALLBACK",
-          "source_family": "TrustedNews"
-        }
-      ],
-      "schema_version": "e2r_all_archetype_next_runtime_source_task_v1",
-      "score_allowed_before_execution": false,
-      "source_route_repair_actions": [],
-      "source_route_repair_required": false,
-      "source_task_origin": "all_archetype_runtime_status_matrix",
-      "stage_promotion_allowed_before_execution": false,
-      "stop_condition": {
-        "accepted_claim_count": 1,
-        "counter_claim_check_done": true,
-        "source_budget_exhausted_status": "SOURCE_PENDING"
-      },
-      "success_condition": "Create at least one accepted Evidence OS claim for primitive `volume_growth_visible` on symbol `024110`. The claim must have direct target-company scope, a verified source anchor, current/as-of-valid temporal status, accepted primitive mapping, and no source_proxy_only/evidence_url_pending/snippet-only score contribution.",
-      "symbol": "024110",
-      "target_materialization_candidate": null,
-      "target_symbol_mode": "SYMBOL_SPECIFIC",
-      "task_id": "RTTASK-d09e41704fa8073fce61",
       "task_status": "PLANNING_REQUIRED",
       "task_type": "runtime_parity_gap_closure"
     },
@@ -30698,57 +29001,57 @@
         "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
         "previous_claim_failure_top_modes": [
           {
-            "count": 51,
+            "count": 65,
             "mode": "TARGET_SCOPE_NOT_DIRECT"
           },
           {
-            "count": 51,
+            "count": 65,
             "mode": "SEMANTIC_REJECTED"
           },
           {
-            "count": 51,
+            "count": 65,
             "mode": "PRIMITIVE_MAPPING_REJECTED"
           },
           {
-            "count": 51,
+            "count": 65,
             "mode": "MAPPING_NOT_ACCEPTED"
           },
           {
-            "count": 19,
+            "count": 36,
             "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
           }
         ],
         "previous_top_claim_rejection_reasons": [
           {
-            "count": 51,
+            "count": 65,
             "reason": "target_scope_not_direct"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "mapping_not_accepted"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "snapshot_source_not_score_eligible"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "semantic_rejected"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "target_scope_not_allowed"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "target_not_direct"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "temporal_not_allowed"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "primitive_mapping_rejected"
           }
         ],
@@ -30908,57 +29211,57 @@
         "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
         "previous_claim_failure_top_modes": [
           {
-            "count": 51,
+            "count": 65,
             "mode": "TARGET_SCOPE_NOT_DIRECT"
           },
           {
-            "count": 51,
+            "count": 65,
             "mode": "SEMANTIC_REJECTED"
           },
           {
-            "count": 51,
+            "count": 65,
             "mode": "PRIMITIVE_MAPPING_REJECTED"
           },
           {
-            "count": 51,
+            "count": 65,
             "mode": "MAPPING_NOT_ACCEPTED"
           },
           {
-            "count": 19,
+            "count": 36,
             "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
           }
         ],
         "previous_top_claim_rejection_reasons": [
           {
-            "count": 51,
+            "count": 65,
             "reason": "target_scope_not_direct"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "mapping_not_accepted"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "snapshot_source_not_score_eligible"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "semantic_rejected"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "target_scope_not_allowed"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "target_not_direct"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "temporal_not_allowed"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "primitive_mapping_rejected"
           }
         ],
@@ -31116,57 +29419,57 @@
         "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
         "previous_claim_failure_top_modes": [
           {
-            "count": 51,
+            "count": 65,
             "mode": "TARGET_SCOPE_NOT_DIRECT"
           },
           {
-            "count": 51,
+            "count": 65,
             "mode": "SEMANTIC_REJECTED"
           },
           {
-            "count": 51,
+            "count": 65,
             "mode": "PRIMITIVE_MAPPING_REJECTED"
           },
           {
-            "count": 51,
+            "count": 65,
             "mode": "MAPPING_NOT_ACCEPTED"
           },
           {
-            "count": 19,
+            "count": 36,
             "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
           }
         ],
         "previous_top_claim_rejection_reasons": [
           {
-            "count": 51,
+            "count": 65,
             "reason": "target_scope_not_direct"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "mapping_not_accepted"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "snapshot_source_not_score_eligible"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "semantic_rejected"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "target_scope_not_allowed"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "target_not_direct"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "temporal_not_allowed"
           },
           {
-            "count": 51,
+            "count": 65,
             "reason": "primitive_mapping_rejected"
           }
         ],
@@ -31318,58 +29621,58 @@
         "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
         "previous_claim_failure_top_modes": [
           {
-            "count": 96,
+            "count": 130,
             "mode": "TARGET_SCOPE_NOT_DIRECT"
           },
           {
-            "count": 96,
+            "count": 130,
             "mode": "SEMANTIC_REJECTED"
           },
           {
-            "count": 96,
+            "count": 130,
+            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+          },
+          {
+            "count": 130,
             "mode": "PRIMITIVE_MAPPING_REJECTED"
           },
           {
-            "count": 96,
+            "count": 130,
             "mode": "MAPPING_NOT_ACCEPTED"
-          },
-          {
-            "count": 59,
-            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
           }
         ],
         "previous_top_claim_rejection_reasons": [
           {
-            "count": 96,
+            "count": 130,
             "reason": "target_scope_not_direct"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "mapping_not_accepted"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "snapshot_source_not_score_eligible"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "semantic_rejected"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "target_scope_not_allowed"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "target_not_direct"
           },
           {
-            "count": 96,
-            "reason": "temporal_not_allowed"
+            "count": 130,
+            "reason": "primitive_mapping_rejected"
           },
           {
-            "count": 96,
-            "reason": "primitive_mapping_rejected"
+            "count": 130,
+            "reason": "temporal_not_allowed"
           }
         ],
         "primitive_gap": "auditor_or_disclosure_risk",
@@ -31520,58 +29823,58 @@
         "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
         "previous_claim_failure_top_modes": [
           {
-            "count": 96,
+            "count": 130,
             "mode": "TARGET_SCOPE_NOT_DIRECT"
           },
           {
-            "count": 96,
+            "count": 130,
             "mode": "SEMANTIC_REJECTED"
           },
           {
-            "count": 96,
+            "count": 130,
+            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+          },
+          {
+            "count": 130,
             "mode": "PRIMITIVE_MAPPING_REJECTED"
           },
           {
-            "count": 96,
+            "count": 130,
             "mode": "MAPPING_NOT_ACCEPTED"
-          },
-          {
-            "count": 59,
-            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
           }
         ],
         "previous_top_claim_rejection_reasons": [
           {
-            "count": 96,
+            "count": 130,
             "reason": "target_scope_not_direct"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "mapping_not_accepted"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "snapshot_source_not_score_eligible"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "semantic_rejected"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "target_scope_not_allowed"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "target_not_direct"
           },
           {
-            "count": 96,
-            "reason": "temporal_not_allowed"
+            "count": 130,
+            "reason": "primitive_mapping_rejected"
           },
           {
-            "count": 96,
-            "reason": "primitive_mapping_rejected"
+            "count": 130,
+            "reason": "temporal_not_allowed"
           }
         ],
         "primitive_gap": "restatement_risk",
@@ -31722,58 +30025,58 @@
         "previous_claim_failure_repair_hint": "TIGHTEN_TARGET_ENTITY_FILTER_OR_RELATION_ADJUDICATION",
         "previous_claim_failure_top_modes": [
           {
-            "count": 96,
+            "count": 130,
             "mode": "TARGET_SCOPE_NOT_DIRECT"
           },
           {
-            "count": 96,
+            "count": 130,
             "mode": "SEMANTIC_REJECTED"
           },
           {
-            "count": 96,
+            "count": 130,
+            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+          },
+          {
+            "count": 130,
             "mode": "PRIMITIVE_MAPPING_REJECTED"
           },
           {
-            "count": 96,
+            "count": 130,
             "mode": "MAPPING_NOT_ACCEPTED"
-          },
-          {
-            "count": 59,
-            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
           }
         ],
         "previous_top_claim_rejection_reasons": [
           {
-            "count": 96,
+            "count": 130,
             "reason": "target_scope_not_direct"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "mapping_not_accepted"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "snapshot_source_not_score_eligible"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "semantic_rejected"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "target_scope_not_allowed"
           },
           {
-            "count": 96,
+            "count": 130,
             "reason": "target_not_direct"
           },
           {
-            "count": 96,
-            "reason": "temporal_not_allowed"
+            "count": 130,
+            "reason": "primitive_mapping_rejected"
           },
           {
-            "count": 96,
-            "reason": "primitive_mapping_rejected"
+            "count": 130,
+            "reason": "temporal_not_allowed"
           }
         ],
         "primitive_gap": "share_count_drift",
@@ -32407,27 +30710,27 @@
         "previous_claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
         "previous_claim_failure_top_modes": [
           {
-            "count": 276,
+            "count": 126,
             "mode": "TARGET_SCOPE_NOT_DIRECT"
           },
           {
-            "count": 276,
+            "count": 126,
             "mode": "SEMANTIC_REJECTED"
           },
           {
-            "count": 276,
-            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
-          },
-          {
-            "count": 276,
+            "count": 126,
             "mode": "PRIMITIVE_MAPPING_REJECTED"
           },
           {
-            "count": 276,
+            "count": 126,
             "mode": "MAPPING_NOT_ACCEPTED"
           },
           {
-            "count": 178,
+            "count": 101,
+            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+          },
+          {
+            "count": 33,
             "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
           },
           {
@@ -32437,35 +30740,35 @@
         ],
         "previous_top_claim_rejection_reasons": [
           {
-            "count": 276,
+            "count": 126,
             "reason": "target_scope_not_direct"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "mapping_not_accepted"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "snapshot_source_not_score_eligible"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "semantic_rejected"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "target_scope_not_allowed"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "target_not_direct"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "temporal_not_allowed"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "primitive_mapping_rejected"
           }
         ],
@@ -32619,27 +30922,27 @@
         "previous_claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
         "previous_claim_failure_top_modes": [
           {
-            "count": 276,
+            "count": 126,
             "mode": "TARGET_SCOPE_NOT_DIRECT"
           },
           {
-            "count": 276,
+            "count": 126,
             "mode": "SEMANTIC_REJECTED"
           },
           {
-            "count": 276,
-            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
-          },
-          {
-            "count": 276,
+            "count": 126,
             "mode": "PRIMITIVE_MAPPING_REJECTED"
           },
           {
-            "count": 276,
+            "count": 126,
             "mode": "MAPPING_NOT_ACCEPTED"
           },
           {
-            "count": 178,
+            "count": 101,
+            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+          },
+          {
+            "count": 33,
             "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
           },
           {
@@ -32649,35 +30952,35 @@
         ],
         "previous_top_claim_rejection_reasons": [
           {
-            "count": 276,
+            "count": 126,
             "reason": "target_scope_not_direct"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "mapping_not_accepted"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "snapshot_source_not_score_eligible"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "semantic_rejected"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "target_scope_not_allowed"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "target_not_direct"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "temporal_not_allowed"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "primitive_mapping_rejected"
           }
         ],
@@ -32831,27 +31134,27 @@
         "previous_claim_failure_repair_hint": "REPLAN_SOURCE_TASK_TO_MATCH_PRIMITIVE_FAMILY",
         "previous_claim_failure_top_modes": [
           {
-            "count": 276,
+            "count": 126,
             "mode": "TARGET_SCOPE_NOT_DIRECT"
           },
           {
-            "count": 276,
+            "count": 126,
             "mode": "SEMANTIC_REJECTED"
           },
           {
-            "count": 276,
-            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
-          },
-          {
-            "count": 276,
+            "count": 126,
             "mode": "PRIMITIVE_MAPPING_REJECTED"
           },
           {
-            "count": 276,
+            "count": 126,
             "mode": "MAPPING_NOT_ACCEPTED"
           },
           {
-            "count": 178,
+            "count": 101,
+            "mode": "ANCHOR_OR_SOURCE_LINEAGE_REJECTED"
+          },
+          {
+            "count": 33,
             "mode": "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH"
           },
           {
@@ -32861,35 +31164,35 @@
         ],
         "previous_top_claim_rejection_reasons": [
           {
-            "count": 276,
+            "count": 126,
             "reason": "target_scope_not_direct"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "mapping_not_accepted"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "snapshot_source_not_score_eligible"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "semantic_rejected"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "target_scope_not_allowed"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "target_not_direct"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "temporal_not_allowed"
           },
           {
-            "count": 276,
+            "count": 126,
             "reason": "primitive_mapping_rejected"
           }
         ],
@@ -32981,6 +31284,6 @@
   "target_materialization_unresolved_archetype_count": 3,
   "target_symbol_mode_counts": {
     "ARCHETYPE_LEVEL_DISCOVERY": 3,
-    "SYMBOL_SPECIFIC": 33
+    "SYMBOL_SPECIFIC": 32
   }
 }

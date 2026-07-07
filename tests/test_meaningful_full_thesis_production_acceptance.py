@@ -12,7 +12,7 @@ class MeaningfulFullThesisProductionAcceptanceTests(unittest.TestCase):
         self.assertEqual(self.audit["schema_version"], "e2r_meaningful_full_thesis_production_acceptance_v1")
         self.assertEqual(self.audit["score_path_status"], "PRODUCTION_FULL_E2R_SCORE_PATH_PASS")
         self.assertEqual(self.audit["meaningful_status"], "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE")
-        self.assertEqual(self.audit["archetype_balanced_status"], "ARCHETYPE_BALANCED_FULL_THESIS_PASS")
+        self.assertEqual(self.audit["archetype_balanced_status"], "ARCHETYPE_BALANCED_FULL_THESIS_PASS_FALSE")
         self.assertEqual(self.audit["candidate_selection_status"], "BALANCED_FULL_THESIS_SELECTION_NOT_READY")
         self.assertFalse(self.audit["meaningful_pass_allowed"])
         self.assertNotIn("c05_share_above_50_percent", self.audit["hard_fails"])

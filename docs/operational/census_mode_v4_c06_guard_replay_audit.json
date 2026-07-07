@@ -146,7 +146,7 @@
             "claim_id": "CLM-23b9ae0023c4ae107683",
             "contract_rule_id": "customer_preorder_or_allocation",
             "counter_primitive_ids": [],
-            "mapping_id": "MAP-5b1b9c4339d8ebf3c7c7",
+            "mapping_id": "MAP-02b455c24a253356bf6e",
             "mapping_status": "ACCEPTED",
             "primitive_id": "customer_preorder_or_allocation",
             "rationale": "contract_blind_extractor:predicate:customer_allocation_or_qualification_claim:explicit_customer_allocation",
