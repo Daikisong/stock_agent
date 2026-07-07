@@ -232,18 +232,19 @@
       "case_role_counts": {
         "4B": 19,
         "4C": 304,
-        "guard": 2
+        "guard": 2,
+        "positive": 1
       },
       "evidence_url_pending_case_count": 3,
       "has_pattern_summary": true,
-      "record_count": 325,
+      "record_count": 326,
       "source_gap": false,
       "source_proxy_only_case_count": 199,
       "source_quality_counts": {
         "A2_URL_BACKED": 78,
         "EVIDENCE_URL_PENDING": 3,
         "PRICE_PATH_ONLY": 37,
-        "SHADOW_ONLY": 8,
+        "SHADOW_ONLY": 9,
         "SOURCE_PROXY_ONLY": 199
       },
       "top_missing_primitives": [
@@ -341,12 +342,12 @@
       "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
       "case_role_counts": {
         "4B": 14,
-        "4C": 354,
+        "4C": 353,
         "guard": 17
       },
       "evidence_url_pending_case_count": 2,
       "has_pattern_summary": true,
-      "record_count": 385,
+      "record_count": 384,
       "source_gap": false,
       "source_proxy_only_case_count": 206,
       "source_quality_counts": {
@@ -354,7 +355,7 @@
         "A2_URL_BACKED": 115,
         "EVIDENCE_URL_PENDING": 2,
         "PRICE_PATH_ONLY": 38,
-        "SHADOW_ONLY": 23,
+        "SHADOW_ONLY": 22,
         "SOURCE_PROXY_ONLY": 206
       },
       "top_missing_primitives": [
@@ -527,21 +528,21 @@
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "case_role_counts": {
         "4B": 47,
-        "4C": 303,
+        "4C": 304,
         "guard": 3,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 355,
+      "record_count": 356,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 98,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 81,
-        "SHADOW_ONLY": 15,
+        "SHADOW_ONLY": 16,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
@@ -969,33 +970,32 @@
       "case_role_counts": {
         "4B": 19,
         "4C": 255,
-        "guard": 2,
-        "positive": 1
+        "guard": 2
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 277,
+      "record_count": 276,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 66,
         "EVIDENCE_URL_PENDING": 6,
         "PRICE_PATH_ONLY": 45,
-        "SHADOW_ONLY": 4,
+        "SHADOW_ONLY": 3,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
+        "global_launch_conversion",
         "token_or_theme_hype_risk",
         "ip_monetization_visible",
-        "global_launch_conversion",
         "user_retention",
         "repeat_revenue"
       ],
       "top_positive_primitives": [
         "repeat_revenue",
         "user_retention",
-        "global_launch_conversion",
         "ip_monetization_visible",
+        "global_launch_conversion",
         "token_or_theme_hype_risk"
       ],
       "url_backed_case_count": 66
@@ -1042,20 +1042,20 @@
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "case_role_counts": {
         "4B": 19,
-        "4C": 246,
+        "4C": 247,
         "guard": 1,
         "positive": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 267,
+      "record_count": 268,
       "source_gap": false,
       "source_proxy_only_case_count": 114,
       "source_quality_counts": {
         "A2_URL_BACKED": 71,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 67,
-        "SHADOW_ONLY": 10,
+        "SHADOW_ONLY": 11,
         "SOURCE_PROXY_ONLY": 114
       },
       "top_missing_primitives": [

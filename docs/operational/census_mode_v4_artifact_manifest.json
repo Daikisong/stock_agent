@@ -1,811 +1,811 @@
 {
   "artifacts": [
     {
-      "byte_size": 7862,
+      "byte_size": 7878,
       "name": "acceptance_report.md",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/acceptance_report.md",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/acceptance_report.md",
       "row_count": null,
-      "sha256": "d529beb584780fd59e680487cbdc6d1a279cc890667be582560ea8d8a91a8203"
+      "sha256": "2997b91d0908c3e361e5501a31199334142efba69f52dba4661750d01d4de933"
     },
     {
-      "byte_size": 216902,
+      "byte_size": 241177,
       "name": "accepted_claims.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/accepted_claims.jsonl",
-      "row_count": 144,
-      "sha256": "143b95fdce44a4e9a338a9a0cdabbdae35d624280ded5882621e94de310c747a"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/accepted_claims.jsonl",
+      "row_count": 158,
+      "sha256": "0118c74ef69532d13147718526343d1c04d760df236b16c885b8c30bd906d158"
     },
     {
-      "byte_size": 3354864,
+      "byte_size": 2737959,
       "name": "adjudicated_claims.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/adjudicated_claims.jsonl",
-      "row_count": 2239,
-      "sha256": "e0f90ab983ffcd3b9e062f6ccf0a3627e55c77cf4e6025ca2d0b53501c381699"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/adjudicated_claims.jsonl",
+      "row_count": 1781,
+      "sha256": "35c142a3c47ade1ce60559edfaedc6c61b3cff6f5fda6c82787bf1ed6e82f1aa"
     },
     {
       "byte_size": 15111,
       "name": "all_archetype_replay_acceptance_manifest.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_acceptance_manifest.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/all_archetype_replay_acceptance_manifest.json",
       "row_count": null,
-      "sha256": "0c7fbf633fae50e874dbe4af44120e8709e87424eaa8ce531f4ca7a2031a3c2a"
+      "sha256": "5710c7c979088995e75a5c811926169ae00aa6bff1195b1e6136980a7b9d5661"
     },
     {
       "byte_size": 1199,
       "name": "all_archetype_replay_gap_plan.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_gap_plan.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/all_archetype_replay_gap_plan.json",
       "row_count": null,
       "sha256": "58f8b87514b1258af0274788473d017f53a1e303c03a6e73ac06f54aaf471f68"
     },
     {
       "byte_size": 0,
       "name": "all_archetype_replay_gap_seed_events.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_gap_seed_events.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/all_archetype_replay_gap_seed_events.jsonl",
       "row_count": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "byte_size": 0,
       "name": "all_archetype_replay_gap_source_tasks.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_gap_source_tasks.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/all_archetype_replay_gap_source_tasks.jsonl",
       "row_count": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "byte_size": 70462,
+      "byte_size": 70466,
       "name": "all_archetype_replay_matrix.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_matrix.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/all_archetype_replay_matrix.json",
       "row_count": null,
-      "sha256": "906bd43712db390bdc8d02132a4e16494cdc94e973b1fdd6b52747b2e951f835"
+      "sha256": "0fc137d5a8e65b0453bb0a3436b993c1bbf0fea01365c46a0638f117c1851290"
     },
     {
-      "byte_size": 181901,
+      "byte_size": 181876,
       "name": "atomic_stage_decisions.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/atomic_stage_decisions.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/atomic_stage_decisions.jsonl",
       "row_count": 98,
-      "sha256": "d98dcbae87adaf7621950910ff41861ca5dc1b05141d3b76ddb51467fb69091a"
+      "sha256": "d03fe335b196b7465c32225cbec251eec6c7953ba4cde6467ea25a8fd1ab8cb0"
     },
     {
-      "byte_size": 49043,
+      "byte_size": 49144,
       "name": "audit_summary.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/audit_summary.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/audit_summary.json",
       "row_count": null,
-      "sha256": "6f36877343bb3568275a13be603215a9827f1466d39eb16d011fe67502ada35b"
+      "sha256": "c3aec4557bb708aee576e79824af8be9e1d05d7f4329b6b2d7ddbad49215aedd"
     },
     {
       "byte_size": 1078,
       "name": "baseline_inputs_summary.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/baseline_inputs_summary.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/baseline_inputs_summary.json",
       "row_count": null,
       "sha256": "26b4c78820a5b5c7d585753784daa1546a973bc0740c47dfea4e8e2c3c786e33"
     },
     {
       "byte_size": 1975182,
       "name": "baseline_scan_results.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/baseline_scan_results.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/baseline_scan_results.jsonl",
       "row_count": 3391,
       "sha256": "aba336c44d5185831d6f74e115e545e5c768c26c2714de49a70c99f3d068d048"
     },
     {
-      "byte_size": 17775780,
+      "byte_size": 16580642,
       "name": "brain_claim_mapping_trace.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/brain_claim_mapping_trace.jsonl",
-      "row_count": 4088,
-      "sha256": "b72fbb4743d5f0c8663bcf4c3c44520e34c3879a904cb632c7e54b82550b2465"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/brain_claim_mapping_trace.jsonl",
+      "row_count": 3681,
+      "sha256": "6128bde47243ed96484040aebde6629aa457c10f63c4caf508dbe7af4420a792"
     },
     {
       "byte_size": 517,
       "name": "brain_planner_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/brain_planner_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/brain_planner_audit.json",
       "row_count": null,
-      "sha256": "69a44376f2f5872e0fc9e0bc808caeed37f1e25d060e1ee1aa6018c0526364b8"
+      "sha256": "6e02ea7a7a677f4ba583b6c55a581f9825212e8b8b09662f5235659c8c6dd3e4"
     },
     {
-      "byte_size": 2387,
+      "byte_size": 2389,
       "name": "brain_stage_promotion_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/brain_stage_promotion_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/brain_stage_promotion_audit.json",
       "row_count": null,
-      "sha256": "3786403585f5051d093a9ebf937f155d349bc646cc429e6cea340a0534c5957d"
+      "sha256": "ef643f3bbf062e903df4d71862c98b4a4fbc6a417112913d30c8768956980b9b"
     },
     {
-      "byte_size": 142945,
+      "byte_size": 167045,
       "name": "brain_to_claim_trace.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/brain_to_claim_trace.jsonl",
-      "row_count": 93,
-      "sha256": "33bc5d24600d62987358768c597866749da647e699363a81f62c447ab224b216"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/brain_to_claim_trace.jsonl",
+      "row_count": 111,
+      "sha256": "5dfe8c31b892fed5a6c0fdc9157960db515f088e57f24f3db4dd8a30d2baf597"
     },
     {
-      "byte_size": 161,
+      "byte_size": 162,
       "name": "brain_to_claim_trace_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/brain_to_claim_trace_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/brain_to_claim_trace_audit.json",
       "row_count": null,
-      "sha256": "ddeae8d4526dc32272869c170283d861a8b9ff2ecb147fff9b9ecd54203def24"
+      "sha256": "2cea9fbd80e186b7a43453588d8b2a2f34f8e4b0b0303be9a38ed3e29ef9be22"
     },
     {
-      "byte_size": 2231,
+      "byte_size": 2233,
       "name": "brain_web_attempt_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/brain_web_attempt_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/brain_web_attempt_audit.json",
       "row_count": null,
-      "sha256": "a29975384632738a31f60956d572a34a4d9618d505b72e134c748f428a9cdae1"
+      "sha256": "f1909734f09671280d43421a5349962334af6c18bc998603e005fcb4b8a1099f"
     },
     {
-      "byte_size": 8532,
+      "byte_size": 5691,
       "name": "brain_web_readiness_gate_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/brain_web_readiness_gate_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/brain_web_readiness_gate_audit.json",
       "row_count": null,
-      "sha256": "ecb2a865e71118a35dc9bcac1ecddea2f9a3828cdf452cf0e7be60d41b555c31"
+      "sha256": "b5a432afe44b17a0923b42049dd6ab85c2d6c964296b7fe5c27e2a99a13e7e93"
     },
     {
-      "byte_size": 105999,
+      "byte_size": 105054,
       "name": "brain_web_runtime_progress.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/brain_web_runtime_progress.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/brain_web_runtime_progress.json",
       "row_count": null,
-      "sha256": "032668d886f23b237c93bb31ba32942e588014c3c4b771211124680e4ad07b2c"
+      "sha256": "7adda073ea84107f43de1bb8a0cd831330cab3be12e7c384cb93fb842b432fc5"
     },
     {
       "byte_size": 14214,
       "name": "c06_guard_replay_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/c06_guard_replay_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/c06_guard_replay_audit.json",
       "row_count": null,
       "sha256": "d537d78f25b892315edb443798d5c79471e6c0a3b1606c74721c22bd9ce6b8ed"
     },
     {
       "byte_size": 7730,
       "name": "c06_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/c06_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/c06_source_backed_semantic_replay.json",
       "row_count": null,
       "sha256": "f6736b37957690220b27dae89e624cbe4629b3c0b586da5f15ad31d864414d00"
     },
     {
       "byte_size": 22055,
       "name": "c08_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/c08_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/c08_source_backed_semantic_replay.json",
       "row_count": null,
       "sha256": "7f82428cf3f3d9657557c26e5ffced44e110eca33f38c147e7b667fe75386e36"
     },
     {
       "byte_size": 31116,
       "name": "c15_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/c15_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/c15_source_backed_semantic_replay.json",
       "row_count": null,
       "sha256": "317c3348a48298cfab38fd7cade0f9a89ca98591bab275626d6e008b8d3b67b9"
     },
     {
       "byte_size": 42448,
       "name": "c17_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/c17_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/c17_source_backed_semantic_replay.json",
       "row_count": null,
       "sha256": "b5b528dd642841195d15fe255b93c01ce15ecbe42becadd111b6c83be97c3940"
     },
     {
       "byte_size": 21539,
       "name": "c24_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/c24_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/c24_source_backed_semantic_replay.json",
       "row_count": null,
       "sha256": "4a21d4a28a605ac170de5d9800c143366426cfa26c5910974dedfeb8371f27e3"
     },
     {
       "byte_size": 26045,
       "name": "c28_source_backed_semantic_replay.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/c28_source_backed_semantic_replay.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/c28_source_backed_semantic_replay.json",
       "row_count": null,
       "sha256": "7cc6295e3f8e350547420dd11f0cc0cb62078203991a1ce3bee6a930ac24933d"
     },
     {
       "byte_size": 2002128,
       "name": "census_assessment_events.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/census_assessment_events.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/census_assessment_events.jsonl",
       "row_count": 3391,
       "sha256": "1200e9ce61bcc6827836edf56b5d7009a0bbe0c41285ca376b3354bc6cd5d422"
     },
     {
-      "byte_size": 2317906,
+      "byte_size": 2318982,
       "name": "census_events.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/census_events.jsonl",
-      "row_count": 3625,
-      "sha256": "632602b274ce707700029de00caf9dafce08d2cd299ed259d68d7281ebacdd6d"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/census_events.jsonl",
+      "row_count": 3626,
+      "sha256": "65f6e29c753c33739eb21b6cce327fa5245207646f20c42b98e576ef9b39a191"
     },
     {
-      "byte_size": 3178109,
+      "byte_size": 3177769,
       "name": "census_stage_map.csv",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/census_stage_map.csv",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/census_stage_map.csv",
       "row_count": 3391,
-      "sha256": "135792aba33a568cce5f633579385a2768d966fbf58c90930600bac2a4bcabf6"
+      "sha256": "f385cba72e1d2cb18896b710b75fa8d1ca1925172dac9c71b7bcf30d8f215071"
     },
     {
-      "byte_size": 12730786,
+      "byte_size": 12730653,
       "name": "census_stage_map.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/census_stage_map.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/census_stage_map.jsonl",
       "row_count": 3391,
-      "sha256": "c6e78ba76b7519dd3a06b6fd47fad2267122c89aeec188d90f026efc7bad3f70"
+      "sha256": "623830111d73aa29097b6b79429911464b9f6659bda8f1fbc2b04b13b9907d59"
     },
     {
-      "byte_size": 12730786,
+      "byte_size": 12730653,
       "name": "census_stage_status.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/census_stage_status.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/census_stage_status.jsonl",
       "row_count": 3391,
-      "sha256": "c6e78ba76b7519dd3a06b6fd47fad2267122c89aeec188d90f026efc7bad3f70"
+      "sha256": "623830111d73aa29097b6b79429911464b9f6659bda8f1fbc2b04b13b9907d59"
     },
     {
-      "byte_size": 3015,
+      "byte_size": 3111,
       "name": "census_stage_summary.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/census_stage_summary.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/census_stage_summary.json",
       "row_count": null,
-      "sha256": "69cd366a6301b338dd636a6dee0e828c8ccca51f3c451e78589aeb28e633fe7f"
+      "sha256": "0eb7a4ab62243afc1ad4b2b04b960a8fa08c507dcbc9ce41da36575d5c3e1d78"
     },
     {
-      "byte_size": 238169,
+      "byte_size": 191758,
       "name": "claim_extractor_runs.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/claim_extractor_runs.jsonl",
-      "row_count": 134,
-      "sha256": "2deb82272a291540d73eec3c31fb8362f65aa6e066a011f2595bb11474c06aaf"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/claim_extractor_runs.jsonl",
+      "row_count": 112,
+      "sha256": "310eb77211cb75d459a26aa0623218b98a31d245d1322bcbe949bd076faaac7b"
     },
     {
       "byte_size": 1192,
       "name": "claim_to_stage_forensic_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/claim_to_stage_forensic_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/claim_to_stage_forensic_audit.json",
       "row_count": null,
       "sha256": "7c07e9ce7955cec3295145f346adc57d7dbe24ef2b71e2990041ebb210f7f716"
     },
     {
-      "byte_size": 3000291,
+      "byte_size": 3001810,
       "name": "claim_to_stage_trace.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/claim_to_stage_trace.jsonl",
-      "row_count": 3399,
-      "sha256": "9a96dcd8eea2b7791e99fd9ba4baa2c3e216a8d2b6ea03a6b2c72633748ad1fc"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/claim_to_stage_trace.jsonl",
+      "row_count": 3400,
+      "sha256": "c46c94434ec1a337087ce721f5dccd5b7466dfc86e4e3708dd1bfc9eaf5579f6"
     },
     {
-      "byte_size": 6821,
+      "byte_size": 6822,
       "name": "controlled_semantic_replay_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/controlled_semantic_replay_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/controlled_semantic_replay_audit.json",
       "row_count": null,
-      "sha256": "024e70c8f2532e8fbc1dccff217fb53c8d9cb5b873d073f32473fd26ce2d1df9"
+      "sha256": "cf1136a21d8ce26545ef6c456d92186eee06c01791a3f833674d80609f19c119"
     },
     {
       "byte_size": 764,
       "name": "deep_backfill_plan.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/deep_backfill_plan.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/deep_backfill_plan.json",
       "row_count": null,
       "sha256": "bc0989f633c2bfa6f2dc5cdc34a49c06115e11139e934080584412ea46d487c1"
     },
     {
       "byte_size": 1065504,
       "name": "depth_decisions.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/depth_decisions.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/depth_decisions.jsonl",
       "row_count": 3391,
       "sha256": "9ec9ba713b088c640e7f81c927a5bf41d31ddadf8da6e1c1751701f95e71f523"
     },
     {
-      "byte_size": 634807,
+      "byte_size": 623059,
       "name": "evidence_anchors.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/evidence_anchors.jsonl",
-      "row_count": 328,
-      "sha256": "6c12dcde9dcdbc3cfdc9dfdcae97430020af3ba84979623b021ab7c4a288bff8"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/evidence_anchors.jsonl",
+      "row_count": 320,
+      "sha256": "1daacacd31cbeba82a047fd35030fa9b96679865f7d42af88ea4890398baaf0c"
     },
     {
-      "byte_size": 167871,
+      "byte_size": 183676,
       "name": "evidence_claims.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/evidence_claims.jsonl",
-      "row_count": 144,
-      "sha256": "639e475a819b49bd46b295aab258f9ca44de173e927a5c8c65b03b92d4d2a0ea"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/evidence_claims.jsonl",
+      "row_count": 158,
+      "sha256": "4e3a58064f0219270097ebb9bcea2d421048b85317a1f88a2b6a2b1670d3a3ae"
     },
     {
-      "byte_size": 200460,
+      "byte_size": 200250,
       "name": "evidence_documents.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/evidence_documents.jsonl",
-      "row_count": 230,
-      "sha256": "c795746966402bac89b79157f772ff87634c2d12d1b740f61a76a7d986838232"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/evidence_documents.jsonl",
+      "row_count": 228,
+      "sha256": "bd33198e5c67aad7c4fa27e457b8bfd6c5ab0dcf7ac708cb6092a85c3c4c503b"
     },
     {
       "byte_size": 780,
       "name": "existing_ledger_reuse_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/existing_ledger_reuse_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/existing_ledger_reuse_audit.json",
       "row_count": null,
-      "sha256": "0d3175da187567a7058f97d34cf841ffaee605f58d44e1bb0cd6f570d8ec1980"
+      "sha256": "162384d9ed2c72c0719bfd972b332189443f44caf052f56328f9ca6ffae21d97"
     },
     {
-      "byte_size": 76440,
+      "byte_size": 65785,
       "name": "full_thesis_blocker_follow_up_seed_events.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/full_thesis_blocker_follow_up_seed_events.jsonl",
-      "row_count": 25,
-      "sha256": "4d7795fec9f414ea6ae156ed166224c3525845a97c5c01867c2ab3d159e2992e"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/full_thesis_blocker_follow_up_seed_events.jsonl",
+      "row_count": 22,
+      "sha256": "989798a2d9ae98f343ade97dd2ebd66df69aa0e58ff1e68c59caa64d3a6a0c18"
     },
     {
-      "byte_size": 70724,
+      "byte_size": 62819,
       "name": "full_thesis_blocker_follow_up_source_tasks.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/full_thesis_blocker_follow_up_source_tasks.jsonl",
-      "row_count": 25,
-      "sha256": "29621943e0dc60ef6bed6dae3cb1d80dba4d65c72fb389e2756bceeff83af01f"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/full_thesis_blocker_follow_up_source_tasks.jsonl",
+      "row_count": 22,
+      "sha256": "4f2eaec77354e2a02669899a2d70368c2ae918f7477d7d659b2b8895fd4a746b"
     },
     {
-      "byte_size": 1690,
+      "byte_size": 1693,
       "name": "full_thesis_follow_up_iterations_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/full_thesis_follow_up_iterations_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/full_thesis_follow_up_iterations_audit.json",
       "row_count": null,
-      "sha256": "250354d216828bff76f787c7e85c598c6fc57825a2e68f8b541a185d53ac0b68"
+      "sha256": "2c3fc077c3035e07d48c5352419022e8bddcb64618d735e3a9a0120bd93e62f1"
     },
     {
-      "byte_size": 2450,
+      "byte_size": 2482,
       "name": "full_thesis_production_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/full_thesis_production_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/full_thesis_production_audit.json",
       "row_count": null,
-      "sha256": "3defd2d59a773a3b0b1d80699f710ea5c5a1d4d6b60b05c661669202da064a44"
+      "sha256": "767eed1ab6d42f7921775e12038e61928bb105a0895ea157884a6a325a08ca81"
     },
     {
-      "byte_size": 55378,
+      "byte_size": 52564,
       "name": "full_thesis_production_runner_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/full_thesis_production_runner_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/full_thesis_production_runner_audit.json",
       "row_count": null,
-      "sha256": "f8f9693d0279c36c36ea3d5a3b2dc0d806ce33f93668bc3c9f8d1cd6f2357204"
+      "sha256": "357c41face17321152efe1023c55fe2d425e35929249b89459d1c19dd55894ed"
     },
     {
-      "byte_size": 264544,
+      "byte_size": 261305,
       "name": "full_thesis_refresh_queue.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/full_thesis_refresh_queue.jsonl",
-      "row_count": 82,
-      "sha256": "83442b3440162bf8aa4c6ee19908f2d4c91b6943ea75c83dc19881d70cacb833"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/full_thesis_refresh_queue.jsonl",
+      "row_count": 81,
+      "sha256": "601320375fdb845442234398e1c50a087edb6930b333da2ea90933efae59c549"
     },
     {
       "byte_size": 1191,
       "name": "full_thesis_refresh_queue_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/full_thesis_refresh_queue_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/full_thesis_refresh_queue_audit.json",
       "row_count": null,
-      "sha256": "d06c637b879b4f52fb16c538e27d7b6894d687838c6844148c1fcd71521cdeff"
+      "sha256": "22902709618cff076e957e7cf2e9c87ccfce17f27d7351e1a2ed950a9a53db9e"
     },
     {
-      "byte_size": 125305,
+      "byte_size": 123366,
       "name": "full_thesis_seed_materialization_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/full_thesis_seed_materialization_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/full_thesis_seed_materialization_audit.json",
       "row_count": null,
-      "sha256": "d06b48e472a733ce815950912599b03e13c4501168abd640c91f28057238b418"
+      "sha256": "0cbf55e75d1869eac3002c17a9f754962c29e5478918064d7c6660abbf4a64f4"
     },
     {
-      "byte_size": 928183,
+      "byte_size": 913373,
       "name": "full_thesis_seed_materialization_trace.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/full_thesis_seed_materialization_trace.jsonl",
-      "row_count": 105,
-      "sha256": "97dc2015e9c28ac8ff755cdf7d1afbad35f9eb7a059f1c994333b26ec99a7f81"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/full_thesis_seed_materialization_trace.jsonl",
+      "row_count": 108,
+      "sha256": "8076f46b886d46cadb7add50d199922f9be695a87777d2d6dbd3debfc42214bc"
     },
     {
       "byte_size": 15704,
       "name": "full_thesis_smoke_tasks.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/full_thesis_smoke_tasks.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/full_thesis_smoke_tasks.jsonl",
       "row_count": 14,
       "sha256": "9f685f553ff8687f9e788baceb2f6b9f3278b59759c57181bcd363209784734a"
     },
     {
-      "byte_size": 28818,
+      "byte_size": 28806,
       "name": "goal_completion_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/goal_completion_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/goal_completion_audit.json",
       "row_count": null,
-      "sha256": "008557b837cce9a48808b2fc6ca0a9d76e1746f8a5ed81b58b49bb20b60de496"
+      "sha256": "741b11f6cc89b4e6618179c5f29828f9960eac6d432b06abb0d941680029d043"
     },
     {
-      "byte_size": 44313,
+      "byte_size": 44282,
       "name": "goal_requirement_matrix_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/goal_requirement_matrix_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/goal_requirement_matrix_audit.json",
       "row_count": null,
-      "sha256": "f68528ed9b99b4d98393717a9edd98fd9a452a06139820172a7202afd15a46cd"
+      "sha256": "40f28bdc3751f0fa73bd0bde3b70dbff84a22ff46d64ad861804f62e50d76927"
     },
     {
       "byte_size": 6034,
       "name": "known_bad_regression_report.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/known_bad_regression_report.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/known_bad_regression_report.json",
       "row_count": null,
       "sha256": "54f3b18d21e965f960f5aa96f2d8fe8dbfb6546547491307838142abcf39e57b"
     },
     {
       "byte_size": 6034,
       "name": "known_bad_regression_report_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/known_bad_regression_report_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/known_bad_regression_report_audit.json",
       "row_count": null,
       "sha256": "54f3b18d21e965f960f5aa96f2d8fe8dbfb6546547491307838142abcf39e57b"
     },
     {
       "byte_size": 713,
       "name": "last_effective_thesis_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/last_effective_thesis_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/last_effective_thesis_audit.json",
       "row_count": null,
       "sha256": "59a0a292b2269f749f20c82fb51d06e64e81ff99f7e4f07957783b3bc0690fa1"
     },
     {
       "byte_size": 1932286,
       "name": "last_effective_thesis_states.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/last_effective_thesis_states.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/last_effective_thesis_states.jsonl",
       "row_count": 3391,
       "sha256": "347e88862bd395565a5ae62c6daf87b46c630ae4e6f5801207514475e25057cb"
     },
     {
-      "byte_size": 10608,
+      "byte_size": 10708,
       "name": "leaf_artifact_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/leaf_artifact_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/leaf_artifact_audit.json",
       "row_count": null,
-      "sha256": "307251a816663dbf025e7c4fd039a727287f7ab48ed23744fa81ffa5bbd745d3"
+      "sha256": "f1742cc0b5499f242c28b0095289aa6b479c9885248366208fdbf537de3f2614"
     },
     {
       "byte_size": 670,
       "name": "llm_claim_extraction_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/llm_claim_extraction_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/llm_claim_extraction_audit.json",
       "row_count": null,
-      "sha256": "80692d282c4a5327a8dcbd70f8ee2f640af792fbdd6aa755c82704a825c062a9"
+      "sha256": "b1d453c2fe841d7e40532368b49881c71e361978ca101a270bde81f3ca90c459"
     },
     {
-      "byte_size": 44781,
+      "byte_size": 46062,
       "name": "llm_prompts.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/llm_prompts.jsonl",
-      "row_count": 105,
-      "sha256": "a59123a14f0d3183749e6bdd97a403ea0c43b2546ad33a7f2925429b7ca67ac3"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/llm_prompts.jsonl",
+      "row_count": 108,
+      "sha256": "1fb114ca579d152eda1960dc269a04977272ddde7c022101df87d13428eefa92"
     },
     {
-      "byte_size": 45621,
+      "byte_size": 46926,
       "name": "llm_responses.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/llm_responses.jsonl",
-      "row_count": 105,
-      "sha256": "1361940ceb0630eed791473d53ac851ef7f399382b1b097413b801317cb6e3ed"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/llm_responses.jsonl",
+      "row_count": 108,
+      "sha256": "61136075bb5c583beeee809266c9d01405e14b978655c0ce26f3592b5890ca1a"
     },
     {
-      "byte_size": 9796,
+      "byte_size": 9799,
       "name": "non_representative_claim_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/non_representative_claim_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/non_representative_claim_audit.json",
       "row_count": null,
-      "sha256": "c32947c047bd3e96032a26a5b1ba01a29f68cf4814fc435fa0c9807192bee7b9"
+      "sha256": "a567c6484db27b060e7ff3d8e4ace3163ff111e17dc101b9a70b6a661d31c507"
     },
     {
       "byte_size": 153,
       "name": "official_event_counter_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/official_event_counter_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/official_event_counter_audit.json",
       "row_count": null,
       "sha256": "5945abe2c42dddce97c5ca43258dc5b2d07bda887c43643dc0e40f984c4d669d"
     },
     {
-      "byte_size": 1171,
+      "byte_size": 1185,
       "name": "operator_digest.md",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/operator_digest.md",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/operator_digest.md",
       "row_count": null,
-      "sha256": "1ca566046e73ab06417ff3eefc61fd4a8451e9f8800e35a48157ccc8106dbcef"
+      "sha256": "1abdd5fa62e8d8bb39bb1dac064d139095a45b090dd7f6de23e4b921a84f2fd4"
     },
     {
-      "byte_size": 2198041,
+      "byte_size": 2223955,
       "name": "planner_runs.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/planner_runs.jsonl",
-      "row_count": 452,
-      "sha256": "c9318e7a9163d16451a03bfcfd560a060d2efcc7caaf1d07ce6705acd9f99d43"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/planner_runs.jsonl",
+      "row_count": 455,
+      "sha256": "bd8d9d83959c4c15d8700470ab5110a319370fb0be870d287257aa12be832387"
     },
     {
-      "byte_size": 83226,
+      "byte_size": 85350,
       "name": "primitive_mappings.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/primitive_mappings.jsonl",
-      "row_count": 117,
-      "sha256": "c06ed8703cc51d20dcc0cc30654ec3bdd614ad64e3682a673112dbeaa7da47a0"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/primitive_mappings.jsonl",
+      "row_count": 119,
+      "sha256": "3005ab42fbe25e1a853cd7d360abdc7e3958dfbed3608b598844518d18c579e7"
     },
     {
       "byte_size": 1889,
       "name": "primitive_state_chain_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/primitive_state_chain_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/primitive_state_chain_audit.json",
       "row_count": null,
-      "sha256": "4dd1adcf2af2aac25ce94d0fe493ca2f9e908f6744ebf6c43adc758fe68e6b42"
+      "sha256": "e7b97ab593c3bd345d2db87a2c49c2087c004a36d3e1a41b95438d68e06c69eb"
     },
     {
-      "byte_size": 117502,
+      "byte_size": 115631,
       "name": "primitive_states.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/primitive_states.jsonl",
-      "row_count": 258,
-      "sha256": "f6e4bc967d3db1767d7aac10b46e99819a43f73bb9353b5d8b822fdedbfbbdb6"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/primitive_states.jsonl",
+      "row_count": 254,
+      "sha256": "a59fa069596c8904f0773a0867f769b38e6a162fd40de732434e15c85a91bbd5"
     },
     {
       "byte_size": 281,
       "name": "provider_gap_report.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/provider_gap_report.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/provider_gap_report.json",
       "row_count": null,
       "sha256": "0223234b0cc7c6279633ed05fa3232fead6b7ab6133e9899fe2f885d8a816474"
     },
     {
-      "byte_size": 5973547,
+      "byte_size": 4912982,
       "name": "raw_assertion_rejections.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/raw_assertion_rejections.jsonl",
-      "row_count": 3044,
-      "sha256": "45d4638072aec016b0f44e5a0f8deeca59d696d00b8a3427393a5306e28f6de1"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/raw_assertion_rejections.jsonl",
+      "row_count": 2502,
+      "sha256": "81cc21489a151b37c1fa9f86678e5bbf45d02a466e3fae0d3ab8003e02defab3"
     },
     {
-      "byte_size": 2810991,
+      "byte_size": 2537866,
       "name": "raw_assertions.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/raw_assertions.jsonl",
-      "row_count": 1946,
-      "sha256": "ffca5c02ac64eb01fe1dab072608439cf2cf98db3fea02e31d8034af335ae50f"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/raw_assertions.jsonl",
+      "row_count": 1710,
+      "sha256": "15b6deb3b986371ce9455eee690301a84a68c25cc5463ec442a1cbf7931692fd"
     },
     {
-      "byte_size": 36141,
+      "byte_size": 36134,
       "name": "readiness_verdict.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/readiness_verdict.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/readiness_verdict.json",
       "row_count": null,
-      "sha256": "a216d7ed0ae296a2303ff5e94d7540e3b7cb9b6db43fd4294557e721e69742df"
+      "sha256": "dcde00d127cad673878ef51421cfbd98fd5afe4039a1e424098b769d93afad71"
     },
     {
-      "byte_size": 2210,
+      "byte_size": 2211,
       "name": "report_generation_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/report_generation_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/report_generation_audit.json",
       "row_count": null,
-      "sha256": "7a70b222a1ca3df8a53e0a50403e82e37782be48bddc8c80eb0ad038c628c874"
+      "sha256": "93a9b6e7dcdc97b816fb3b346eb548503ba7d5de8daafbe020c366b7aef45522"
     },
     {
-      "byte_size": 734910,
+      "byte_size": 754019,
       "name": "research_brain_candidate_seed_events_used.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/research_brain_candidate_seed_events_used.jsonl",
-      "row_count": 105,
-      "sha256": "4226e36d705528121aec19c0be209ed9e28aba0bcc93a572e4b78056803002d5"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/research_brain_candidate_seed_events_used.jsonl",
+      "row_count": 108,
+      "sha256": "7d66498c167548cb0b53f49c04375c24eac17f9c78a6422b8ed65c9aba105f25"
     },
     {
-      "byte_size": 241561,
+      "byte_size": 241646,
       "name": "research_brain_full_thesis_seed_events.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/research_brain_full_thesis_seed_events.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/research_brain_full_thesis_seed_events.jsonl",
       "row_count": 85,
-      "sha256": "46b2cf99d937cf488ed80286fdf5c05fd966b9dace042c3da6e4e9ba67f6bfdb"
+      "sha256": "cab96b8ab7526bdb7aee5a372b2a14966911a64bdbcb7f97d251ab68f41379bc"
     },
     {
-      "byte_size": 644700,
+      "byte_size": 646635,
       "name": "research_brain_plans.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/research_brain_plans.jsonl",
-      "row_count": 452,
-      "sha256": "fdf1c60a2510a2531209dc76a91a4f5eba21bfe5ba4baf08e9bb5946397a1a18"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/research_brain_plans.jsonl",
+      "row_count": 455,
+      "sha256": "c8fe0c3f3ec6cbde3039372dfadb423073ec15371ab9f7c23feb87fc002778f6"
     },
     {
       "byte_size": 1031,
       "name": "research_brain_v4_bridge_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/research_brain_v4_bridge_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/research_brain_v4_bridge_audit.json",
       "row_count": null,
       "sha256": "c6c26f3c67c5cbdb9cfbb51d7647c753956edd10bec9ef362117374f50a283f4"
     },
     {
       "byte_size": 131,
       "name": "reviewer_A_trace_atomicity.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/reviewer_A_trace_atomicity.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/reviewer_A_trace_atomicity.json",
       "row_count": null,
       "sha256": "1fc821aa9cc8076b23e3557e5f4b78a77beafa2975d695d0d119f0a7b5f4f4e5"
     },
     {
       "byte_size": 747,
       "name": "reviewer_A_trace_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/reviewer_A_trace_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/reviewer_A_trace_audit.json",
       "row_count": null,
       "sha256": "3b74356bc8593e3d3b6454701fa7f5b01f4a58f6bd06650e3fee03c347b6ae32"
     },
     {
       "byte_size": 131,
       "name": "reviewer_A_trace_forensics.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/reviewer_A_trace_forensics.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/reviewer_A_trace_forensics.json",
       "row_count": null,
       "sha256": "52e90b359b3c0f30f251ae0f4807ecf9e5013a78deb63f3f92461cb10f96d781"
     },
     {
       "byte_size": 859,
       "name": "reviewer_B_source_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/reviewer_B_source_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/reviewer_B_source_audit.json",
       "row_count": null,
       "sha256": "5a5b1e92dd9582664b8769ab2e4d1f036e91312171c18c6a09e18bd8830822b7"
     },
     {
       "byte_size": 131,
       "name": "reviewer_B_source_realness.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/reviewer_B_source_realness.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/reviewer_B_source_realness.json",
       "row_count": null,
       "sha256": "3b66f3071ad9cf56634aa06fd39e737e8d90a8171389117544d6a192e143cd2f"
     },
     {
       "byte_size": 885,
       "name": "reviewer_C_stage_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/reviewer_C_stage_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/reviewer_C_stage_audit.json",
       "row_count": null,
       "sha256": "c3591d477e16e216a3795b230aba4b7b6185357b45ba1097de670427b6eebd5a"
     },
     {
       "byte_size": 131,
       "name": "reviewer_C_stage_semantics.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/reviewer_C_stage_semantics.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/reviewer_C_stage_semantics.json",
       "row_count": null,
       "sha256": "08e6530c804bc9ec8705abb224d44f89c78f632eaf9ad539787d837f522d212d"
     },
     {
       "byte_size": 141,
       "name": "reviewer_D_runtime_brain_web_honesty.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/reviewer_D_runtime_brain_web_honesty.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/reviewer_D_runtime_brain_web_honesty.json",
       "row_count": null,
       "sha256": "ca26da76a6e730ac26bd7fa7becbdd5c5f174b27948cfc3ea86921bf8842c8df"
     },
     {
       "byte_size": 136,
       "name": "reviewer_D_runtime_plausibility.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/reviewer_D_runtime_plausibility.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/reviewer_D_runtime_plausibility.json",
       "row_count": null,
       "sha256": "a772afd50d65ad39f1e42f7c6887bbf6ebc46b303082526a1ad8058713b04754"
     },
     {
       "byte_size": 130,
       "name": "reviewer_E_semantic_guard.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/reviewer_E_semantic_guard.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/reviewer_E_semantic_guard.json",
       "row_count": null,
       "sha256": "1176166c0f672b13e7207f127e053d08216c257b6dcf5a3322f102a0a7841b85"
     },
     {
-      "byte_size": 2070,
+      "byte_size": 2072,
       "name": "run_metadata.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/run_metadata.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/run_metadata.json",
       "row_count": null,
-      "sha256": "4681b459b8935187b72023e18be074ed5a822852b972b6bfce81344c3c86d7d4"
+      "sha256": "c3e717cf50baf52e18d89659bec1b22327cbcd19e27c06b1abd969c205a02399"
     },
     {
       "byte_size": 834,
       "name": "runtime_plausibility_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/runtime_plausibility_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/runtime_plausibility_audit.json",
       "row_count": null,
-      "sha256": "0167db4f400f365d7fdccdcfde07aa49e40b4a3f8f3a53c51a074c0285a761ec"
+      "sha256": "86e5b0ee2c86d40ee9f994bf840b90b9b8c0ef85e7cbe36514e40c0ab504dc71"
     },
     {
-      "byte_size": 344214,
+      "byte_size": 344078,
       "name": "sample_leaf_bundle.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/sample_leaf_bundle.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/sample_leaf_bundle.jsonl",
       "row_count": 72,
-      "sha256": "339d496646ef82721681bf21e6e19ae6117aeafdafadb19f131b39e36f23cd03"
+      "sha256": "d93f31e7ff51602642c2ea8b4697f771bcae6bb008a2d6fc928264ffd47fda72"
     },
     {
-      "byte_size": 18751,
+      "byte_size": 18660,
       "name": "samsung_hynix_full_thesis_smoke.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/samsung_hynix_full_thesis_smoke.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/samsung_hynix_full_thesis_smoke.json",
       "row_count": null,
-      "sha256": "aa95a86a4b048dc0f995161c82a377c4d4c7c2f6713a2b628aee798481f787aa"
+      "sha256": "246947cfbee9ca24d81ceef50e32a060dae458eba77ef09ff64567cb09d35c41"
     },
     {
-      "byte_size": 18751,
+      "byte_size": 18660,
       "name": "samsung_hynix_full_thesis_smoke_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/samsung_hynix_full_thesis_smoke_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/samsung_hynix_full_thesis_smoke_audit.json",
       "row_count": null,
-      "sha256": "aa95a86a4b048dc0f995161c82a377c4d4c7c2f6713a2b628aee798481f787aa"
+      "sha256": "246947cfbee9ca24d81ceef50e32a060dae458eba77ef09ff64567cb09d35c41"
     },
     {
-      "byte_size": 107899,
+      "byte_size": 115615,
       "name": "score_contributions.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/score_contributions.jsonl",
-      "row_count": 157,
-      "sha256": "bd769d2b1936fdc35f20c1877ca1d3edd4c6796df7cc1e14c52f03f5433e29f5"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/score_contributions.jsonl",
+      "row_count": 166,
+      "sha256": "a10fcb67d0101efbe863fa76b7e3ea72a72ceaaaed26c636a71d701cea34b805"
     },
     {
       "byte_size": 1505,
       "name": "sector_stage_distribution.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/sector_stage_distribution.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/sector_stage_distribution.json",
       "row_count": null,
       "sha256": "d3cc040461f0a85b4f33025c1ef8ee5666fb60c1a6d17446297751f9d9a86738"
     },
     {
-      "byte_size": 4716,
+      "byte_size": 4717,
       "name": "self_repair_log.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/self_repair_log.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/self_repair_log.json",
       "row_count": null,
-      "sha256": "1bfa8e27308d7fc4273f14e1e7b4af2c54c7643f99110c48d8bb6b2b301f9dbb"
+      "sha256": "69843a7dd6dff7c0555000baadedc9657f569c2854533b1d80730a3209828180"
     },
     {
       "byte_size": 677,
       "name": "self_repair_summary.md",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/self_repair_summary.md",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/self_repair_summary.md",
       "row_count": null,
       "sha256": "6290fa0400267ef87d2bef061f214b8fe10d2fc35009942213cecb0d79711609"
     },
     {
       "byte_size": 24846,
       "name": "source_connector_capability_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/source_connector_capability_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/source_connector_capability_audit.json",
       "row_count": null,
-      "sha256": "e1f41b1724550fd5934a843df5be929752dac6b3ffa81cafa9ff3a5dabd91a69"
+      "sha256": "6040146a68c59eb2bce0907a99248c77ff8e1965c3d28a0804ef80ac83ad684d"
     },
     {
       "byte_size": 1282,
       "name": "source_coverage_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/source_coverage_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/source_coverage_audit.json",
       "row_count": null,
-      "sha256": "405d06182cf57961c347f10ef01a5eb616f4b3c2f799266f2c9cc14ef4f9b358"
+      "sha256": "4b6f3551297ee6de7baa6d02645355e4f0d5ef6b315411efa581f258cc468ee2"
     },
     {
       "byte_size": 210,
       "name": "source_gap_report.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/source_gap_report.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/source_gap_report.json",
       "row_count": null,
       "sha256": "a9567a0735c70b500df20523df7652878fa100e2a25092e8fd80773b711e81b0"
     },
     {
-      "byte_size": 2789155,
+      "byte_size": 2598717,
       "name": "source_task_executions.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/source_task_executions.jsonl",
-      "row_count": 879,
-      "sha256": "0c6e196cc2754ec8c702004ec13f51918a6133340a2e6f38236c6ec212a8cb3a"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/source_task_executions.jsonl",
+      "row_count": 827,
+      "sha256": "c1906fccaa159265864a9836780e3a60e3dc593fa7af587bc1079ef8da5e4beb"
     },
     {
       "byte_size": 1405,
       "name": "source_task_realness_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/source_task_realness_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/source_task_realness_audit.json",
       "row_count": null,
-      "sha256": "adb361852e16ddc5735e66826e8e43b8aedd482773c767771a6fd316d429ffde"
+      "sha256": "f95dd3080a95e1c3f74b9e7285da01019ac1b6f54792d404af6d2cb1353ac985"
     },
     {
       "byte_size": 2901,
       "name": "source_task_satisfaction_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/source_task_satisfaction_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/source_task_satisfaction_audit.json",
       "row_count": null,
-      "sha256": "2c5210e83504000bdf2cbcc3b331d28e7e8a52acb259d5fb5eb60cd578de664a"
+      "sha256": "a0741068c242761fbf83899a4688dde6dbc13ec0b83ee765e9cd638cc442c401"
     },
     {
-      "byte_size": 936051,
+      "byte_size": 870597,
       "name": "source_tasks.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/source_tasks.jsonl",
-      "row_count": 879,
-      "sha256": "d20e4bcff7f0dcbd5e70d8adec14baf3bf551730793bcb6c173c8784b2f33f93"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/source_tasks.jsonl",
+      "row_count": 827,
+      "sha256": "91facbb3812aba9577e106b3cc706f553aac84d7f869c7586bf8bb76a3b05a05"
     },
     {
       "byte_size": 5573147,
       "name": "source_timelines.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/source_timelines.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/source_timelines.jsonl",
       "row_count": 3391,
       "sha256": "c10b8530d69db6135b66b7bd4ada9742b0fb5ae0f895e4d4ebb8ac7bd3f694a4"
     },
     {
-      "byte_size": 102014,
+      "byte_size": 103661,
       "name": "stagecourt_traces.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/stagecourt_traces.jsonl",
-      "row_count": 113,
-      "sha256": "9a306f18c4ebd02b30408546060f71d0f5fafe04297e6df104b3dc175a4c390f"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/stagecourt_traces.jsonl",
+      "row_count": 114,
+      "sha256": "9d3e0da4e1b70289c2ddeedf0a71b5f5c6f382189735c347160a657076ba5d90"
     },
     {
       "byte_size": 946,
       "name": "test_result_evidence_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/test_result_evidence_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/test_result_evidence_audit.json",
       "row_count": null,
       "sha256": "8bb478da23d98a5ffd35436a260963ed12552645b32e64cd45c20c63a86f6c1f"
     },
     {
       "byte_size": 1039689,
       "name": "universe.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/universe.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/universe.jsonl",
       "row_count": 3940,
       "sha256": "4d75654fe29b34ac6f47251fa41a177a51f594bcb28b45d7fca679afe9700b2d"
     },
     {
       "byte_size": 163463,
       "name": "watchlist_seed_candidates.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/watchlist_seed_candidates.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/watchlist_seed_candidates.json",
       "row_count": null,
       "sha256": "c09e6d00cadfc2ebf12ea256121aed3273430fe49bba67c1ac8120521ff829f3"
     },
     {
-      "byte_size": 279549,
+      "byte_size": 281970,
       "name": "web_fetched_documents.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/web_fetched_documents.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/web_fetched_documents.jsonl",
       "row_count": 112,
-      "sha256": "bbaef94f48bfc24995cc6cfa7e72e29abd862fcc812fb839b255a4887494eb24"
+      "sha256": "30cfc6b9e1271e3682f4898e23d38333b71c319f7eacf6c06e1e0a589bd942f6"
     },
     {
       "byte_size": 607,
       "name": "web_naver_acquisition_audit.json",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/web_naver_acquisition_audit.json",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/web_naver_acquisition_audit.json",
       "row_count": null,
-      "sha256": "824270f1b2d2454638482695ec62fbe0a8c4a972fb084d4e58d31d01a1d36ddb"
+      "sha256": "61bd26d4aff82826450b1d723b9f4dbc6d097064b3f1640827a7e5c68670b51a"
     },
     {
-      "byte_size": 720035,
+      "byte_size": 713561,
       "name": "web_rejected_documents.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/web_rejected_documents.jsonl",
-      "row_count": 426,
-      "sha256": "1bd27a79de8b422823420fe111063ed269c58050b289225d9e31643b9c18e377"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/web_rejected_documents.jsonl",
+      "row_count": 427,
+      "sha256": "efb481e5a866b1a8e1bf8e0ac6d7172de13a28503adddc288aef0cfd9f08a604"
     },
     {
-      "byte_size": 2570568,
+      "byte_size": 2460821,
       "name": "web_search_results.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/web_search_results.jsonl",
-      "row_count": 959,
-      "sha256": "9f403f93fd6b94cd9a7b59143c59cb3d822f2a74471ee235325a836cd9daa605"
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/web_search_results.jsonl",
+      "row_count": 930,
+      "sha256": "134aaac7dfd35bd4e260a9890e69cb5b07e384a9d7ffab1d86092572c9ef1ec4"
     },
     {
-      "byte_size": 153897,
+      "byte_size": 156252,
       "name": "web_search_tasks.jsonl",
-      "path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/web_search_tasks.jsonl",
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/web_search_tasks.jsonl",
       "row_count": 128,
-      "sha256": "00e3e91da562c67bbfef084e0801e0acbc671e91097759a64615569e4c8aeb64"
+      "sha256": "089881b32c2d393e5d26c47069b3b2c0fa7570aae523caa0b38adaf78a46bfd3"
     }
   ],
-  "output_root": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3",
+  "output_root": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z",
   "schema_version": "e2r_census_v4_artifact_manifest_v1"
 }

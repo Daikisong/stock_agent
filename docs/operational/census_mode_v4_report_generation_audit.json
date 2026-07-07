@@ -1,6 +1,6 @@
 {
   "acceptance_report_exists": true,
-  "acceptance_report_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/acceptance_report.md",
+  "acceptance_report_path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/acceptance_report.md",
   "critical_count": 0,
   "expected_fragments": {
     "brain_web_minimum_required_counts": "minimum_required_counts=",
@@ -15,11 +15,11 @@
     "full_thesis_smoke_gate": "5d. Full thesis smoke gate:",
     "goal_requirement_matrix": "5e. Goal requirement matrix:",
     "leaf_audit_verdict": "7. Leaf artifact audit: PASS",
-    "operator_stage_warning": "0. Operator stage warning: stage_scope_notice=FULL_THESIS_STAGE_ROWS_PRESENT_SCOPE_GUARD_REQUIRED; operational_stage_use_allowed=False; full_thesis_rows=6; full_thesis_refresh_queue_candidates=82; full_e2r_verified_score_rows=6; event_board_non_stage0_rows=82",
+    "operator_stage_warning": "0. Operator stage warning: stage_scope_notice=FULL_THESIS_STAGE_ROWS_PRESENT_SCOPE_GUARD_REQUIRED; operational_stage_use_allowed=False; full_thesis_rows=6; full_thesis_refresh_queue_candidates=81; full_e2r_verified_score_rows=6; event_board_non_stage0_rows=81",
     "report_source": "report_generated_from_leaf_audit=true",
     "sample_leaf_bundle_rows": "39. Sample leaf bundle rows: 72",
-    "score_scale_distribution": "11. Score scale distribution: {'NO_SCORE': 3319, 'EVENT_WEIGHTED_PARTIAL': 66, 'FULL_E2R_100': 6}",
-    "stage_scope_operational_counts": "17a. Full thesis stage rows: 6; refresh queue candidates: 82; event-board non-Stage0 rows: 82; operator_stage_scope_notice=FULL_THESIS_STAGE_ROWS_PRESENT_SCOPE_GUARD_REQUIRED"
+    "score_scale_distribution": "11. Score scale distribution: {'NO_SCORE': 3319, 'FULL_E2R_100': 6, 'EVENT_WEIGHTED_PARTIAL': 66}",
+    "stage_scope_operational_counts": "17a. Full thesis stage rows: 6; refresh queue candidates: 81; event-board non-Stage0 rows: 81; operator_stage_scope_notice=FULL_THESIS_STAGE_ROWS_PRESENT_SCOPE_GUARD_REQUIRED"
   },
   "in_memory_summary_used_for_acceptance_count": 0,
   "leaf_report_metric_mismatch_count": 0,

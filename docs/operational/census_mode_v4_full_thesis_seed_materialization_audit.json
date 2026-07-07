@@ -1,26 +1,26 @@
 {
   "accepted_claim_not_created_failure_axis_counts": {
-    "ANCHOR_OR_LINEAGE_REJECTED": 43,
-    "CLAIM_REJECTED_BEFORE_SCORE": 295,
-    "MAPPING_NOT_ACCEPTED": 295,
-    "NO_ACCEPTED_CLAIM": 631,
-    "NO_CLAIM_EXTRACTED": 207,
-    "NO_FETCHED_DOCUMENT": 159,
-    "NO_SCORE_ELIGIBLE_REAL_CLAIM": 480,
-    "POLICY_REJECTED": 22,
-    "PRIMITIVE_GAP_UNSATISFIED": 472,
-    "PRIMITIVE_MAPPING_REJECTED": 295,
-    "PROVIDER_ERROR_RECORDED": 234,
-    "PROVIDER_FAILED": 129,
-    "SEMANTIC_OR_TARGET_REJECTED": 57,
-    "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 36,
-    "TEMPORAL_NOT_CURRENT": 153
+    "ANCHOR_OR_LINEAGE_REJECTED": 29,
+    "CLAIM_REJECTED_BEFORE_SCORE": 276,
+    "MAPPING_NOT_ACCEPTED": 276,
+    "NO_ACCEPTED_CLAIM": 573,
+    "NO_CLAIM_EXTRACTED": 185,
+    "NO_FETCHED_DOCUMENT": 132,
+    "NO_SCORE_ELIGIBLE_REAL_CLAIM": 447,
+    "POLICY_REJECTED": 14,
+    "PRIMITIVE_GAP_UNSATISFIED": 441,
+    "PRIMITIVE_MAPPING_REJECTED": 276,
+    "PROVIDER_ERROR_RECORDED": 199,
+    "PROVIDER_FAILED": 112,
+    "SEMANTIC_OR_TARGET_REJECTED": 41,
+    "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 37,
+    "TEMPORAL_NOT_CURRENT": 145
   },
   "accepted_claim_not_created_primary_failure_axis_counts": {
-    "NO_FETCHED_DOCUMENT": 7,
-    "NO_SCORE_ELIGIBLE_REAL_CLAIM": 7,
-    "PRIMITIVE_GAP_UNSATISFIED": 67,
-    "PROVIDER_ERROR_RECORDED": 2
+    "NO_FETCHED_DOCUMENT": 3,
+    "NO_SCORE_ELIGIBLE_REAL_CLAIM": 5,
+    "PRIMITIVE_GAP_UNSATISFIED": 68,
+    "PROVIDER_ERROR_RECORDED": 1
   },
   "accepted_claim_not_created_samples": [
     {
@@ -38,7 +38,6 @@
         "PROVIDER_ERROR_RECORDED": 2,
         "PROVIDER_FAILED": 1,
         "SEMANTIC_OR_TARGET_REJECTED": 1,
-        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
         "TEMPORAL_NOT_CURRENT": 2
       },
       "source_task_failure_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
@@ -46,8 +45,7 @@
         {
           "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
           "document_urls": [
-            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260602000220",
-            "https://kind.krx.co.kr/main.do"
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260602000220"
           ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
@@ -72,13 +70,12 @@
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "033100",
-          "task_id": "RTTASK-b94f7e250f3d9e9b6abb-official-ir-datacenter-customer-repair"
+          "task_id": "CEV4-RTATTEMPT-b94f7e250f3d9e9b6abb-ir-datacenter-customer-direct"
         },
         {
           "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
           "document_urls": [
-            "http://www.snkpress.kr/news/articleView.html?idxno=1922",
-            "https://www.thinkpool.com/compDiscuss/cont/1011404"
+            "https://stock.pstatic.net/stock-research/industry/40/20241128_industry_454441000.pdf"
           ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
@@ -93,16 +90,16 @@
             "target_scope_not_allowed:UNRELATED",
             "target_not_direct:NOT_TARGET_SCOPED",
             "mapping_not_accepted:REJECTED",
-            "source_provider_document_type_mismatch:CompanyNewsroom:general_web_search_provider"
+            "primitive_mapping_rejected:adjudication_not_passed"
           ],
           "primitive_gap": "datacenter_customer",
           "provider_errors": [],
           "provider_name": "NaverFreeSearchProvider",
-          "source_class": "CompanyNewsroom",
+          "source_class": "BrokerReportPublicPDF",
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "033100",
-          "task_id": "RTTASK-b94f7e250f3d9e9b6abb-original-report-newsroom-datacenter-customer"
+          "task_id": "CEV4-RTATTEMPT-b94f7e250f3d9e9b6abb-original-report-newsroom-datacenter"
         },
         {
           "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -242,7 +239,7 @@
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "033100",
-          "task_id": "RTTASK-1af52fa80efac11ed266-official-lead-time"
+          "task_id": "RTTASK-1af52fa80efac11ed266-official-ir-lead-time-repair"
         },
         {
           "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -272,7 +269,7 @@
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "033100",
-          "task_id": "RTTASK-1af52fa80efac11ed266-original-report-lead-time"
+          "task_id": "RTTASK-1af52fa80efac11ed266-issuer-newsroom-report-lead-time-repair"
         },
         {
           "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -365,20 +362,17 @@
     {
       "candidate_event_id": "CEV4-RTATTEMPT-3192a68e65a855902566",
       "source_task_failure_axis_counts": {
-        "ANCHOR_OR_LINEAGE_REJECTED": 1,
-        "CLAIM_REJECTED_BEFORE_SCORE": 4,
-        "MAPPING_NOT_ACCEPTED": 4,
+        "CLAIM_REJECTED_BEFORE_SCORE": 3,
+        "MAPPING_NOT_ACCEPTED": 3,
         "NO_ACCEPTED_CLAIM": 8,
-        "NO_CLAIM_EXTRACTED": 3,
-        "NO_FETCHED_DOCUMENT": 2,
-        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 6,
-        "POLICY_REJECTED": 1,
-        "PRIMITIVE_GAP_UNSATISFIED": 6,
-        "PRIMITIVE_MAPPING_REJECTED": 4,
-        "PROVIDER_ERROR_RECORDED": 3,
+        "NO_CLAIM_EXTRACTED": 4,
+        "NO_FETCHED_DOCUMENT": 3,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 5,
+        "POLICY_REJECTED": 2,
+        "PRIMITIVE_GAP_UNSATISFIED": 5,
+        "PRIMITIVE_MAPPING_REJECTED": 3,
+        "PROVIDER_ERROR_RECORDED": 4,
         "PROVIDER_FAILED": 1,
-        "SEMANTIC_OR_TARGET_REJECTED": 1,
-        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
         "TEMPORAL_NOT_CURRENT": 2
       },
       "source_task_failure_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
@@ -387,7 +381,7 @@
           "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
           "document_urls": [
             "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260602000220",
-            "https://kind.krx.co.kr/main.do"
+            "https://wcomp.fnguide.com"
           ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
@@ -401,7 +395,8 @@
             "mapping_not_accepted:REJECTED",
             "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
             "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
-            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "document_score_block:companyguide_consensus_after_as_of_date_not_score_evidence"
           ],
           "primitive_gap": "order_backlog_to_sales",
           "provider_errors": [
@@ -412,7 +407,7 @@
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "033100",
-          "task_id": "RTTASK-3192a68e65a855902566-official-order-backlog-sales"
+          "task_id": "RTTASK-3192a68e65a855902566-official-order-backlog-to-sales"
         },
         {
           "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -434,36 +429,29 @@
           "status": "REJECTED_BY_POLICY",
           "stop_reason": "source_task_rejected_by_v4_policy",
           "symbol": "033100",
-          "task_id": "RTTASK-3192a68e65a855902566-report-original-order-backlog-sales"
+          "task_id": "RTTASK-3192a68e65a855902566-original-report-pdf-order-backlog-bridge"
         },
         {
           "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
-          "document_urls": [
-            "http://www.snkpress.kr/news/articleView.html?idxno=1922"
-          ],
+          "document_urls": [],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED",
-            "MAPPING_NOT_ACCEPTED"
+            "PROVIDER_ERROR_RECORDED",
+            "POLICY_REJECTED",
+            "NO_FETCHED_DOCUMENT",
+            "NO_CLAIM_EXTRACTED"
           ],
-          "not_eligible_reasons": [
-            "semantic_rejected",
-            "target_scope_not_allowed:UNRELATED",
-            "target_not_direct:NOT_TARGET_SCOPED",
-            "mapping_not_accepted:REJECTED",
-            "source_provider_document_type_mismatch:IndustryMedia:general_web_search_provider"
+          "not_eligible_reasons": [],
+          "primitive_gap": "order_backlog_to_sales",
+          "provider_errors": [
+            "official_solvable_gap_sent_to_general_web"
           ],
-          "primitive_gap": "datacenter_customer",
-          "provider_errors": [],
-          "provider_name": "NaverFreeSearchProvider",
-          "source_class": "IndustryMedia",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
+          "provider_name": "v4_policy_validator",
+          "source_class": "policy",
+          "status": "REJECTED_BY_POLICY",
+          "stop_reason": "source_task_rejected_by_v4_policy",
           "symbol": "033100",
-          "task_id": "RTTASK-3192a68e65a855902566-bounded-newsroom-countercheck"
+          "task_id": "RTTASK-3192a68e65a855902566-issuer-newsroom-order-backlog-delivery"
         },
         {
           "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -525,9 +513,9 @@
       ],
       "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
       "source_task_status_counts": {
-        "NO_EVIDENCE_FOUND": 6,
+        "NO_EVIDENCE_FOUND": 5,
         "PROVIDER_FAILED": 1,
-        "REJECTED_BY_POLICY": 1
+        "REJECTED_BY_POLICY": 2
       },
       "symbol": "033100",
       "target_archetype": "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -536,16 +524,18 @@
     {
       "candidate_event_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7",
       "source_task_failure_axis_counts": {
-        "CLAIM_REJECTED_BEFORE_SCORE": 3,
-        "MAPPING_NOT_ACCEPTED": 3,
+        "CLAIM_REJECTED_BEFORE_SCORE": 5,
+        "MAPPING_NOT_ACCEPTED": 5,
         "NO_ACCEPTED_CLAIM": 8,
-        "NO_CLAIM_EXTRACTED": 3,
-        "NO_FETCHED_DOCUMENT": 2,
-        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 6,
-        "PRIMITIVE_GAP_UNSATISFIED": 6,
-        "PRIMITIVE_MAPPING_REJECTED": 3,
-        "PROVIDER_ERROR_RECORDED": 3,
-        "PROVIDER_FAILED": 2,
+        "NO_CLAIM_EXTRACTED": 2,
+        "NO_FETCHED_DOCUMENT": 1,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 7,
+        "PRIMITIVE_GAP_UNSATISFIED": 7,
+        "PRIMITIVE_MAPPING_REJECTED": 5,
+        "PROVIDER_ERROR_RECORDED": 2,
+        "PROVIDER_FAILED": 1,
+        "SEMANTIC_OR_TARGET_REJECTED": 1,
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
         "TEMPORAL_NOT_CURRENT": 1
       },
       "source_task_failure_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
@@ -579,49 +569,65 @@
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "011700",
-          "task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T1-kind-ir-permit-delay"
-        },
-        {
-          "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
-          "document_urls": [],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "PROVIDER_FAILED",
-            "NO_FETCHED_DOCUMENT"
-          ],
-          "not_eligible_reasons": [],
-          "primitive_gap": "permit_or_legal_delay",
-          "provider_errors": [],
-          "provider_name": "NaverFreeSearchProvider",
-          "source_class": "TrustedNews",
-          "status": "PROVIDER_FAILED",
-          "stop_reason": "live_web_no_fetchable_document",
-          "symbol": "011700",
-          "task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T2-trusted-original-permit-delay"
+          "task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T1-kind-dart-ir-permit-delay"
         },
         {
           "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
           "document_urls": [
-            "https://kind.krx.co.kr/main.do"
+            "https://www.paxnet.co.kr/tbbs/view?id=011700&seq=150357585477699"
           ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
-            "PROVIDER_ERROR_RECORDED",
-            "NO_CLAIM_EXTRACTED",
+            "CLAIM_REJECTED_BEFORE_SCORE",
             "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED"
+            "PRIMITIVE_GAP_UNSATISFIED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
           ],
-          "not_eligible_reasons": [],
+          "not_eligible_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "source_class_document_type_mismatch:CompanyNewsroom:OTHER"
+          ],
+          "primitive_gap": "permit_or_legal_delay",
+          "provider_errors": [],
+          "provider_name": "NaverFreeSearchProvider",
+          "source_class": "CompanyNewsroom",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "011700",
+          "task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T2-original-report-newsroom-permit-delay"
+        },
+        {
+          "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+          "document_urls": [
+            "https://kind.krx.co.kr/main.do",
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000837"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "CLAIM_REJECTED_BEFORE_SCORE",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
+          "not_eligible_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
           "primitive_gap": "policy_or_regulatory_confirmed",
-          "provider_errors": [
-            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
-          ],
+          "provider_errors": [],
           "provider_name": "live_official_source_provider_registry",
           "source_class": "KIND",
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "011700",
-          "task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T3-counter-policy-delay-resolution"
+          "task_id": "CEV4-RTATTEMPT-a771f0c86afc78c8eaf7-T3-policy-delay-countercheck"
         },
         {
           "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
@@ -683,8 +689,8 @@
       ],
       "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
       "source_task_status_counts": {
-        "NO_EVIDENCE_FOUND": 6,
-        "PROVIDER_FAILED": 2
+        "NO_EVIDENCE_FOUND": 7,
+        "PROVIDER_FAILED": 1
       },
       "symbol": "011700",
       "target_archetype": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
@@ -703,15 +709,17 @@
         "PRIMITIVE_MAPPING_REJECTED": 4,
         "PROVIDER_ERROR_RECORDED": 2,
         "PROVIDER_FAILED": 1,
+        "SEMANTIC_OR_TARGET_REJECTED": 1,
         "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-        "TEMPORAL_NOT_CURRENT": 1
+        "TEMPORAL_NOT_CURRENT": 2
       },
       "source_task_failure_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
       "source_task_failure_samples": [
         {
           "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
           "document_urls": [
-            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000837"
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000837",
+            "https://kind.krx.co.kr/main.do"
           ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
@@ -736,7 +744,7 @@
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "011700",
-          "task_id": "CEV4-RTATTEMPT-da79dd0ff999103bf14e-T1-official-dart-ir-policy-confirmation"
+          "task_id": "CEV4-RTATTEMPT-da79dd0ff999103bf14e-T1-dart-ir-policy-confirmation"
         },
         {
           "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
@@ -752,9 +760,11 @@
             "MAPPING_NOT_ACCEPTED"
           ],
           "not_eligible_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
             "mapping_not_accepted:REJECTED",
-            "source_class_document_type_mismatch:TrustedNews:OTHER",
-            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
+            "source_class_document_type_mismatch:TrustedNews:OTHER"
           ],
           "primitive_gap": "policy_or_regulatory_confirmed",
           "provider_errors": [],
@@ -763,7 +773,7 @@
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "011700",
-          "task_id": "CEV4-RTATTEMPT-da79dd0ff999103bf14e-T2-trusted-original-policy-confirmation"
+          "task_id": "CEV4-RTATTEMPT-da79dd0ff999103bf14e-T2-trusted-original-policy-article"
         },
         {
           "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
@@ -856,33 +866,35 @@
     {
       "candidate_event_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b",
       "source_task_failure_axis_counts": {
-        "CLAIM_REJECTED_BEFORE_SCORE": 3,
-        "MAPPING_NOT_ACCEPTED": 3,
+        "CLAIM_REJECTED_BEFORE_SCORE": 4,
+        "MAPPING_NOT_ACCEPTED": 4,
         "NO_ACCEPTED_CLAIM": 8,
         "NO_CLAIM_EXTRACTED": 2,
-        "NO_FETCHED_DOCUMENT": 3,
-        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 5,
-        "PRIMITIVE_GAP_UNSATISFIED": 5,
-        "PRIMITIVE_MAPPING_REJECTED": 3,
+        "NO_FETCHED_DOCUMENT": 2,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 6,
+        "PRIMITIVE_GAP_UNSATISFIED": 6,
+        "PRIMITIVE_MAPPING_REJECTED": 4,
         "PROVIDER_ERROR_RECORDED": 2,
-        "PROVIDER_FAILED": 3,
-        "TEMPORAL_NOT_CURRENT": 1
+        "PROVIDER_FAILED": 2,
+        "SEMANTIC_OR_TARGET_REJECTED": 1,
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
+        "TEMPORAL_NOT_CURRENT": 2
       },
       "source_task_failure_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
       "source_task_failure_samples": [
         {
           "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
           "document_urls": [
-            "https://kind.krx.co.kr/main.do",
-            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000837"
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000837",
+            "https://kind.krx.co.kr/main.do"
           ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
-            "PROVIDER_ERROR_RECORDED",
             "CLAIM_REJECTED_BEFORE_SCORE",
             "NO_SCORE_ELIGIBLE_REAL_CLAIM",
             "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED"
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
           ],
           "not_eligible_reasons": [
             "mapping_not_accepted:REJECTED",
@@ -891,15 +903,13 @@
             "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
           ],
           "primitive_gap": "project_award_confirmed",
-          "provider_errors": [
-            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
-          ],
+          "provider_errors": [],
           "provider_name": "live_official_source_provider_registry",
-          "source_class": "KIND",
+          "source_class": "DART",
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "011700",
-          "task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-T1-kind-dart-project-award"
+          "task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-T1-dart-kind-project-award"
         },
         {
           "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
@@ -907,35 +917,49 @@
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
             "PROVIDER_FAILED",
+            "PROVIDER_ERROR_RECORDED",
             "NO_FETCHED_DOCUMENT"
           ],
           "not_eligible_reasons": [],
           "primitive_gap": "project_award_confirmed",
-          "provider_errors": [],
-          "provider_name": "NaverFreeSearchProvider",
-          "source_class": "CompanyNewsroom",
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "provider_name": "live_official_source_provider_registry+NaverFreeSearchProvider",
+          "source_class": "IssuerIR",
           "status": "PROVIDER_FAILED",
-          "stop_reason": "live_web_no_fetchable_document",
+          "stop_reason": "live_official_provider_failed_web_provider_failed",
           "symbol": "011700",
-          "task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-T2-issuer-newsroom-ir-project-award"
+          "task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-T2-issuer-ir-newsroom-project-award"
         },
         {
           "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
-          "document_urls": [],
+          "document_urls": [
+            "https://redhorseblog.co.kr/%EC%9B%90%EC%A0%84-%EA%B4%80%EB%A0%A8%EC%A3%BC-%EC%9B%90%EC%9E%90%EB%A0%A5-%EB%8C%80%EC%9E%A5%EC%A3%BC-%ED%85%8C%EB%A7%88%EC%A3%BC-%EC%88%98%ED%98%9C%EC%A3%BC/"
+          ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
-            "PROVIDER_FAILED",
-            "NO_FETCHED_DOCUMENT"
+            "CLAIM_REJECTED_BEFORE_SCORE",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
           ],
-          "not_eligible_reasons": [],
+          "not_eligible_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "source_class_document_type_mismatch:TrustedNews:OTHER"
+          ],
           "primitive_gap": "project_award_confirmed",
           "provider_errors": [],
           "provider_name": "NaverFreeSearchProvider",
           "source_class": "TrustedNews",
-          "status": "PROVIDER_FAILED",
-          "stop_reason": "live_web_no_fetchable_document",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
           "symbol": "011700",
-          "task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-T3-trusted-original-award-crosscheck"
+          "task_id": "CEV4-RTATTEMPT-cf86ac83bf3ccca3581b-T3-trusted-original-article-award"
         },
         {
           "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
@@ -997,8 +1021,8 @@
       ],
       "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
       "source_task_status_counts": {
-        "NO_EVIDENCE_FOUND": 5,
-        "PROVIDER_FAILED": 3
+        "NO_EVIDENCE_FOUND": 6,
+        "PROVIDER_FAILED": 2
       },
       "symbol": "011700",
       "target_archetype": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
@@ -1007,15 +1031,15 @@
     {
       "candidate_event_id": "CEV4-RTATTEMPT-1db81f2f72df8d73b523",
       "source_task_failure_axis_counts": {
-        "CLAIM_REJECTED_BEFORE_SCORE": 4,
-        "MAPPING_NOT_ACCEPTED": 4,
-        "NO_ACCEPTED_CLAIM": 9,
+        "CLAIM_REJECTED_BEFORE_SCORE": 3,
+        "MAPPING_NOT_ACCEPTED": 3,
+        "NO_ACCEPTED_CLAIM": 8,
         "NO_CLAIM_EXTRACTED": 4,
         "NO_FETCHED_DOCUMENT": 3,
-        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 6,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 5,
         "POLICY_REJECTED": 2,
-        "PRIMITIVE_GAP_UNSATISFIED": 6,
-        "PRIMITIVE_MAPPING_REJECTED": 4,
+        "PRIMITIVE_GAP_UNSATISFIED": 5,
+        "PRIMITIVE_MAPPING_REJECTED": 3,
         "PROVIDER_ERROR_RECORDED": 4,
         "PROVIDER_FAILED": 1,
         "TEMPORAL_NOT_CURRENT": 1
@@ -1025,8 +1049,8 @@
         {
           "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
           "document_urls": [
-            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001546",
-            "https://kind.krx.co.kr/main.do"
+            "https://kind.krx.co.kr/main.do",
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001546"
           ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
@@ -1047,11 +1071,11 @@
             "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
           ],
           "provider_name": "live_official_source_provider_registry",
-          "source_class": "DART",
+          "source_class": "KIND",
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "031980",
-          "task_id": "ST-C07-031980-OFFICIAL-CUSTOMER-CONTRACT-VISIBLE-REPAIR"
+          "task_id": "ST-C07-031980-OFFICIAL-CUSTOMER-CONTRACT-VISIBLE-IR-KIND"
         },
         {
           "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
@@ -1073,7 +1097,7 @@
           "status": "REJECTED_BY_POLICY",
           "stop_reason": "source_task_rejected_by_v4_policy",
           "symbol": "031980",
-          "task_id": "ST-C07-031980-IR-PDF-CUSTOMER-ORDER-BACKLOG"
+          "task_id": "ST-C07-031980-REPORTPDF-CUSTOMER-CONTRACT-VISIBLE"
         },
         {
           "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
@@ -1095,36 +1119,7 @@
           "status": "REJECTED_BY_POLICY",
           "stop_reason": "source_task_rejected_by_v4_policy",
           "symbol": "031980",
-          "task_id": "ST-C07-031980-TRUSTED-ORIGINAL-CUSTOMER-CONTRACT-CHECK"
-        },
-        {
-          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
-          "document_urls": [
-            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001546",
-            "https://kind.krx.co.kr/main.do"
-          ],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED",
-            "MAPPING_NOT_ACCEPTED"
-          ],
-          "not_eligible_reasons": [
-            "mapping_not_accepted:REJECTED",
-            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
-            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
-            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
-          ],
-          "primitive_gap": "customer_contract_visible",
-          "provider_errors": [],
-          "provider_name": "live_official_source_provider_registry",
-          "source_class": "DART",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
-          "symbol": "031980",
-          "task_id": "ST-C07-031980-COUNTER-CLAIM-CUSTOMER-VISIBILITY-RISK"
+          "task_id": "ST-C07-031980-TRUSTEDNEWS-COMPANYNEWSROOM-CUSTOMER-CONTRACT"
         },
         {
           "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
@@ -1154,11 +1149,39 @@
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "031980",
           "task_id": "RSTASKV4CGSTATUS-91078a1970165da46bf7dfa7"
+        },
+        {
+          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+          "document_urls": [
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001546"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "CLAIM_REJECTED_BEFORE_SCORE",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
+          "not_eligible_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "primitive_gap": "official_disclosure_status_current",
+          "provider_errors": [],
+          "provider_name": "live_official_source_provider_registry",
+          "source_class": "DART",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "031980",
+          "task_id": "RSTASKV4DARTSTATUS-91078a1970165da46bf7dfa7"
         }
       ],
       "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
       "source_task_status_counts": {
-        "NO_EVIDENCE_FOUND": 6,
+        "NO_EVIDENCE_FOUND": 5,
         "PROVIDER_FAILED": 1,
         "REJECTED_BY_POLICY": 2
       },
@@ -1169,16 +1192,16 @@
     {
       "candidate_event_id": "CEV4-RTATTEMPT-ba0262a4e2ebbc9b47d2",
       "source_task_failure_axis_counts": {
-        "CLAIM_REJECTED_BEFORE_SCORE": 4,
-        "MAPPING_NOT_ACCEPTED": 4,
-        "NO_ACCEPTED_CLAIM": 8,
+        "CLAIM_REJECTED_BEFORE_SCORE": 3,
+        "MAPPING_NOT_ACCEPTED": 3,
+        "NO_ACCEPTED_CLAIM": 7,
         "NO_CLAIM_EXTRACTED": 3,
         "NO_FETCHED_DOCUMENT": 2,
-        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 6,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 5,
         "POLICY_REJECTED": 1,
-        "PRIMITIVE_GAP_UNSATISFIED": 6,
-        "PRIMITIVE_MAPPING_REJECTED": 4,
-        "PROVIDER_ERROR_RECORDED": 4,
+        "PRIMITIVE_GAP_UNSATISFIED": 5,
+        "PRIMITIVE_MAPPING_REJECTED": 3,
+        "PROVIDER_ERROR_RECORDED": 3,
         "PROVIDER_FAILED": 1,
         "TEMPORAL_NOT_CURRENT": 1
       },
@@ -1213,7 +1236,7 @@
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "031980",
-          "task_id": "ST-C07-031980-OFFICIAL-BACKLOG-IR-DART-KIND"
+          "task_id": "ST-C07-031980-OFFICIAL-EQUIPMENT-ORDER-BACKLOG-REPAIR"
         },
         {
           "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
@@ -1235,37 +1258,7 @@
           "status": "REJECTED_BY_POLICY",
           "stop_reason": "source_task_rejected_by_v4_policy",
           "symbol": "031980",
-          "task_id": "ST-C07-031980-REPORTPDF-BACKLOG-REPAIR"
-        },
-        {
-          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
-          "document_urls": [
-            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001546"
-          ],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "PROVIDER_ERROR_RECORDED",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED"
-          ],
-          "not_eligible_reasons": [
-            "mapping_not_accepted:REJECTED",
-            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
-            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
-            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
-          ],
-          "primitive_gap": "order_to_revenue_bridge",
-          "provider_errors": [
-            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
-          ],
-          "provider_name": "live_official_source_provider_registry",
-          "source_class": "DART",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
-          "symbol": "031980",
-          "task_id": "ST-C07-031980-OFFICIAL-ORDER-REVENUE-BRIDGE"
+          "task_id": "ST-C07-031980-REPORT-EQUIPMENT-ORDER-BACKLOG-REPAIR"
         },
         {
           "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
@@ -1323,11 +1316,32 @@
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "031980",
           "task_id": "RSTASKV4DARTSTATUS-16b91cec0a25a6928c880e1e"
+        },
+        {
+          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+          "document_urls": [
+            "https://kind.krx.co.kr/main.do"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "NO_CLAIM_EXTRACTED",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED"
+          ],
+          "not_eligible_reasons": [],
+          "primitive_gap": "exchange_risk_status_current",
+          "provider_errors": [],
+          "provider_name": "live_official_source_provider_registry",
+          "source_class": "KIND",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "031980",
+          "task_id": "RSTASKV4KIND-16b91cec0a25a6928c880e1e"
         }
       ],
       "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
       "source_task_status_counts": {
-        "NO_EVIDENCE_FOUND": 6,
+        "NO_EVIDENCE_FOUND": 5,
         "PROVIDER_FAILED": 1,
         "REJECTED_BY_POLICY": 1
       },
@@ -1338,90 +1352,24 @@
     {
       "candidate_event_id": "CEV4-RTATTEMPT-5bb7dd4be0622e338d6f",
       "source_task_failure_axis_counts": {
-        "ANCHOR_OR_LINEAGE_REJECTED": 1,
-        "CLAIM_REJECTED_BEFORE_SCORE": 6,
-        "MAPPING_NOT_ACCEPTED": 6,
-        "NO_ACCEPTED_CLAIM": 9,
-        "NO_CLAIM_EXTRACTED": 2,
-        "NO_FETCHED_DOCUMENT": 1,
-        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 8,
-        "PRIMITIVE_GAP_UNSATISFIED": 8,
-        "PRIMITIVE_MAPPING_REJECTED": 6,
-        "PROVIDER_ERROR_RECORDED": 4,
+        "CLAIM_REJECTED_BEFORE_SCORE": 4,
+        "MAPPING_NOT_ACCEPTED": 4,
+        "NO_ACCEPTED_CLAIM": 8,
+        "NO_CLAIM_EXTRACTED": 3,
+        "NO_FETCHED_DOCUMENT": 2,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 7,
+        "PRIMITIVE_GAP_UNSATISFIED": 6,
+        "PRIMITIVE_MAPPING_REJECTED": 4,
+        "PROVIDER_ERROR_RECORDED": 1,
         "PROVIDER_FAILED": 1,
-        "SEMANTIC_OR_TARGET_REJECTED": 2,
-        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-        "TEMPORAL_NOT_CURRENT": 3
+        "TEMPORAL_NOT_CURRENT": 1
       },
-      "source_task_failure_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
+      "source_task_failure_repair_hint": "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
       "source_task_failure_samples": [
         {
           "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
           "document_urls": [
-            "https://kind.krx.co.kr/main.do",
-            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001546"
-          ],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "PROVIDER_ERROR_RECORDED",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED"
-          ],
-          "not_eligible_reasons": [
-            "mapping_not_accepted:REJECTED",
-            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
-            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
-            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
-          ],
-          "primitive_gap": "hbm_customer_order",
-          "provider_errors": [
-            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
-          ],
-          "provider_name": "live_official_source_provider_registry",
-          "source_class": "KIND",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
-          "symbol": "031980",
-          "task_id": "ST-C07-031980-ISSUER-IR-KIND-HBM-CUSTOMER-ORDER"
-        },
-        {
-          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
-          "document_urls": [
-            "https://wcomp.fnguide.com",
-            "https://stock.pstatic.net/stock-research/industry/66/20260316_industry_126945000.pdf"
-          ],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "PROVIDER_ERROR_RECORDED",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED"
-          ],
-          "not_eligible_reasons": [
-            "document_score_block:companyguide_consensus_after_as_of_date_not_score_evidence",
-            "future_source",
-            "future_available_at",
-            "future_event",
-            "temporal_not_allowed:UNKNOWN"
-          ],
-          "primitive_gap": "hbm_customer_order",
-          "provider_errors": [
-            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
-          ],
-          "provider_name": "live_official_source_provider_registry+NaverFreeSearchProvider",
-          "source_class": "CompanyGuide",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
-          "symbol": "031980",
-          "task_id": "ST-C07-031980-BROKER-REPORT-HBM-CUSTOMER-ORDER"
-        },
-        {
-          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
-          "document_urls": [
-            "https://www.hanaw.com/download/research/FileServer/WEB/info/small_cap/2026/01/30/260202_DI_F.pdf"
+            "snapshot://company_guide/2026-06-12/031980/recent_reports#1078994"
           ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
@@ -1432,51 +1380,65 @@
             "MAPPING_NOT_ACCEPTED"
           ],
           "not_eligible_reasons": [
-            "semantic_rejected",
-            "target_scope_not_allowed:UNRELATED",
-            "target_not_direct:NOT_TARGET_SCOPED",
             "mapping_not_accepted:REJECTED",
-            "primitive_mapping_rejected:adjudication_not_passed"
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility",
+            "primitive_mapping_rejected:v4_signal:structured_field_medium_term_revision_visibility_cycle_to_revenue_bridge_order_to_revenue_bridge"
           ],
+          "primitive_gap": "hbm_customer_order",
+          "provider_errors": [],
+          "provider_name": "stored_real_source_snapshot_provider",
+          "source_class": "IssuerIR",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "031980",
+          "task_id": "ST-C07-031980-IR-HBM-CUSTOMER-ORDER-01"
+        },
+        {
+          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+          "document_urls": [
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001546"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "CLAIM_REJECTED_BEFORE_SCORE",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
+          "not_eligible_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "primitive_gap": "hbm_customer_order",
+          "provider_errors": [],
+          "provider_name": "live_official_source_provider_registry",
+          "source_class": "DART",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "031980",
+          "task_id": "ST-C07-031980-DART-KIND-HBM-ORDER-DETAIL-02"
+        },
+        {
+          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+          "document_urls": [],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "NO_FETCHED_DOCUMENT",
+            "NO_CLAIM_EXTRACTED",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM"
+          ],
+          "not_eligible_reasons": [],
           "primitive_gap": "hbm_customer_order",
           "provider_errors": [],
           "provider_name": "NaverFreeSearchProvider",
           "source_class": "BrokerReportPublicPDF",
           "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
+          "stop_reason": "live_web_no_fetchable_document",
           "symbol": "031980",
-          "task_id": "ST-C07-031980-TRUSTED-ORIGINAL-HBM-CUSTOMER-ORDER"
-        },
-        {
-          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
-          "document_urls": [
-            "https://wcomp.fnguide.com"
-          ],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "PROVIDER_ERROR_RECORDED",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED"
-          ],
-          "not_eligible_reasons": [
-            "document_score_block:companyguide_consensus_after_as_of_date_not_score_evidence",
-            "future_source",
-            "future_available_at",
-            "future_event",
-            "temporal_not_allowed:UNKNOWN"
-          ],
-          "primitive_gap": "order_to_revenue_bridge",
-          "provider_errors": [
-            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
-          ],
-          "provider_name": "live_official_source_provider_registry",
-          "source_class": "CompanyGuide",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
-          "symbol": "031980",
-          "task_id": "ST-C07-031980-ORDER-TO-REVENUE-CROSSCHECK"
+          "task_id": "ST-C07-031980-REPORT-ORIGINAL-HBM-CUSTOMER-ORDER-03"
         },
         {
           "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
@@ -1506,11 +1468,39 @@
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "031980",
           "task_id": "RSTASKV4CGSTATUS-100dfaa277ff04c90722aa3b"
+        },
+        {
+          "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+          "document_urls": [
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001546"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "CLAIM_REJECTED_BEFORE_SCORE",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
+          "not_eligible_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
+          ],
+          "primitive_gap": "official_disclosure_status_current",
+          "provider_errors": [],
+          "provider_name": "live_official_source_provider_registry",
+          "source_class": "DART",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "031980",
+          "task_id": "RSTASKV4DARTSTATUS-100dfaa277ff04c90722aa3b"
         }
       ],
-      "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
+      "source_task_primary_failure_axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
       "source_task_status_counts": {
-        "NO_EVIDENCE_FOUND": 8,
+        "NO_EVIDENCE_FOUND": 7,
         "PROVIDER_FAILED": 1
       },
       "symbol": "031980",
@@ -1518,22 +1508,190 @@
       "target_primitive_gap": "hbm_customer_order"
     },
     {
-      "candidate_event_id": "CEV4-RTATTEMPT-e8d3e73ddbd17e9c629a",
+      "candidate_event_id": "CEV4-RTATTEMPT-9ade8b4663b7871667d5",
       "source_task_failure_axis_counts": {
         "ANCHOR_OR_LINEAGE_REJECTED": 1,
-        "CLAIM_REJECTED_BEFORE_SCORE": 5,
-        "MAPPING_NOT_ACCEPTED": 5,
-        "NO_ACCEPTED_CLAIM": 8,
+        "CLAIM_REJECTED_BEFORE_SCORE": 4,
+        "MAPPING_NOT_ACCEPTED": 4,
+        "NO_ACCEPTED_CLAIM": 7,
         "NO_CLAIM_EXTRACTED": 2,
         "NO_FETCHED_DOCUMENT": 1,
-        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 7,
-        "PRIMITIVE_GAP_UNSATISFIED": 7,
-        "PRIMITIVE_MAPPING_REJECTED": 5,
-        "PROVIDER_ERROR_RECORDED": 3,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 6,
+        "PRIMITIVE_GAP_UNSATISFIED": 6,
+        "PRIMITIVE_MAPPING_REJECTED": 4,
+        "PROVIDER_ERROR_RECORDED": 2,
         "PROVIDER_FAILED": 1,
         "SEMANTIC_OR_TARGET_REJECTED": 1,
         "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-        "TEMPORAL_NOT_CURRENT": 4
+        "TEMPORAL_NOT_CURRENT": 1
+      },
+      "source_task_failure_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
+      "source_task_failure_samples": [
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "document_urls": [
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000391",
+            "https://kind.krx.co.kr/main.do"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "PROVIDER_ERROR_RECORDED",
+            "CLAIM_REJECTED_BEFORE_SCORE",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED",
+            "PRIMITIVE_MAPPING_REJECTED"
+          ],
+          "not_eligible_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "primitive_gap": "named_customer_quality",
+          "provider_errors": [
+            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
+          ],
+          "provider_name": "live_official_source_provider_registry",
+          "source_class": "DART",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "058470",
+          "task_id": "C08_named_customer_quality_issuer_ir_direct_058470"
+        },
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "document_urls": [
+            "https://www.eugenefn.com/common/files/amail/20250609_B45_sophie.yim_79.pdf"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "CLAIM_REJECTED_BEFORE_SCORE",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
+          "not_eligible_reasons": [
+            "semantic_rejected",
+            "target_scope_not_allowed:UNRELATED",
+            "target_not_direct:NOT_TARGET_SCOPED",
+            "mapping_not_accepted:REJECTED",
+            "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider"
+          ],
+          "primitive_gap": "named_customer_quality",
+          "provider_errors": [],
+          "provider_name": "NaverFreeSearchProvider",
+          "source_class": "BrokerReportPublicPDF",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "058470",
+          "task_id": "C08_named_customer_quality_broker_pdf_original_058470"
+        },
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "document_urls": [
+            "https://wcomp.fnguide.com"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "CLAIM_REJECTED_BEFORE_SCORE",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
+          "not_eligible_reasons": [
+            "document_score_block:companyguide_consensus_after_as_of_date_not_score_evidence",
+            "future_source",
+            "future_available_at",
+            "future_event",
+            "temporal_not_allowed:UNKNOWN"
+          ],
+          "primitive_gap": "official_report_snapshot_current",
+          "provider_errors": [],
+          "provider_name": "live_official_source_provider_registry",
+          "source_class": "CompanyGuide",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "058470",
+          "task_id": "RSTASKV4CGSTATUS-2ab14808ad518d3b1c3b8568"
+        },
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "document_urls": [
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000391"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "CLAIM_REJECTED_BEFORE_SCORE",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED",
+            "PRIMITIVE_MAPPING_REJECTED",
+            "MAPPING_NOT_ACCEPTED"
+          ],
+          "not_eligible_reasons": [
+            "mapping_not_accepted:REJECTED",
+            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
+            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
+            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
+            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+          ],
+          "primitive_gap": "official_disclosure_status_current",
+          "provider_errors": [],
+          "provider_name": "live_official_source_provider_registry",
+          "source_class": "DART",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "058470",
+          "task_id": "RSTASKV4DARTSTATUS-2ab14808ad518d3b1c3b8568"
+        },
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "document_urls": [
+            "https://kind.krx.co.kr/main.do"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "NO_CLAIM_EXTRACTED",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED"
+          ],
+          "not_eligible_reasons": [],
+          "primitive_gap": "exchange_risk_status_current",
+          "provider_errors": [],
+          "provider_name": "live_official_source_provider_registry",
+          "source_class": "KIND",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "058470",
+          "task_id": "RSTASKV4KIND-2ab14808ad518d3b1c3b8568"
+        }
+      ],
+      "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
+      "source_task_status_counts": {
+        "NO_EVIDENCE_FOUND": 6,
+        "PROVIDER_FAILED": 1
+      },
+      "symbol": "058470",
+      "target_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "target_primitive_gap": "named_customer_quality"
+    },
+    {
+      "candidate_event_id": "CEV4-RTATTEMPT-e8d3e73ddbd17e9c629a",
+      "source_task_failure_axis_counts": {
+        "CLAIM_REJECTED_BEFORE_SCORE": 4,
+        "MAPPING_NOT_ACCEPTED": 4,
+        "NO_ACCEPTED_CLAIM": 7,
+        "NO_CLAIM_EXTRACTED": 2,
+        "NO_FETCHED_DOCUMENT": 1,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 6,
+        "PRIMITIVE_GAP_UNSATISFIED": 6,
+        "PRIMITIVE_MAPPING_REJECTED": 4,
+        "PROVIDER_ERROR_RECORDED": 2,
+        "PROVIDER_FAILED": 1,
+        "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
+        "TEMPORAL_NOT_CURRENT": 2
       },
       "source_task_failure_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
       "source_task_failure_samples": [
@@ -1566,13 +1724,12 @@
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "058470",
-          "task_id": "C08_qualification_confirmed_issuer_ir_058470"
+          "task_id": "C08_qualification_confirmed_issuer_ir_companyguide_058470"
         },
         {
           "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
           "document_urls": [
-            "http://www.paxnet.co.kr/WWW/data/researchCenter/attach/20200702095547856.pdf",
-            "https://moneyrecipe.blog/company-exports/leeno/"
+            "https://www.valueline.co.kr/finance/summary/058470"
           ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
@@ -1583,11 +1740,10 @@
             "MAPPING_NOT_ACCEPTED"
           ],
           "not_eligible_reasons": [
-            "semantic_rejected",
-            "temporal_not_allowed:HISTORICAL",
             "mapping_not_accepted:REJECTED",
+            "source_class_document_type_mismatch:BrokerReportPublicPDF:OTHER",
             "source_provider_document_type_mismatch:BrokerReportPublicPDF:general_web_search_provider",
-            "source_lineage_unverified_original:BrokerReportPublicPDF:general_web_search_provider"
+            "primitive_mapping_rejected:no_allowed_primitive_for_predicate"
           ],
           "primitive_gap": "qualification_confirmed",
           "provider_errors": [],
@@ -1596,38 +1752,7 @@
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "058470",
-          "task_id": "C08_qualification_confirmed_broker_pdf_058470"
-        },
-        {
-          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
-          "document_urls": [
-            "https://wcomp.fnguide.com"
-          ],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "PROVIDER_ERROR_RECORDED",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED"
-          ],
-          "not_eligible_reasons": [
-            "document_score_block:companyguide_consensus_after_as_of_date_not_score_evidence",
-            "future_source",
-            "future_available_at",
-            "future_event",
-            "temporal_not_allowed:UNKNOWN"
-          ],
-          "primitive_gap": "named_customer_quality",
-          "provider_errors": [
-            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
-          ],
-          "provider_name": "live_official_source_provider_registry",
-          "source_class": "CompanyGuide",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
-          "symbol": "058470",
-          "task_id": "C08_repeat_order_or_customer_quality_crosscheck_058470"
+          "task_id": "C08_qualification_confirmed_broker_original_pdf_058470"
         },
         {
           "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
@@ -1686,11 +1811,32 @@
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "058470",
           "task_id": "RSTASKV4DARTSTATUS-6fb1a2556ba7ce2c1505ac33"
+        },
+        {
+          "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+          "document_urls": [
+            "https://kind.krx.co.kr/main.do"
+          ],
+          "failure_axes": [
+            "NO_ACCEPTED_CLAIM",
+            "NO_CLAIM_EXTRACTED",
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            "PRIMITIVE_GAP_UNSATISFIED"
+          ],
+          "not_eligible_reasons": [],
+          "primitive_gap": "exchange_risk_status_current",
+          "provider_errors": [],
+          "provider_name": "live_official_source_provider_registry",
+          "source_class": "KIND",
+          "status": "NO_EVIDENCE_FOUND",
+          "stop_reason": "no_score_eligible_real_claim",
+          "symbol": "058470",
+          "task_id": "RSTASKV4KIND-6fb1a2556ba7ce2c1505ac33"
         }
       ],
       "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
       "source_task_status_counts": {
-        "NO_EVIDENCE_FOUND": 7,
+        "NO_EVIDENCE_FOUND": 6,
         "PROVIDER_FAILED": 1
       },
       "symbol": "058470",
@@ -1700,28 +1846,26 @@
     {
       "candidate_event_id": "CEV4-RTATTEMPT-b11e4a32ddf8d0ae9f2f",
       "source_task_failure_axis_counts": {
-        "ANCHOR_OR_LINEAGE_REJECTED": 1,
-        "CLAIM_REJECTED_BEFORE_SCORE": 4,
-        "MAPPING_NOT_ACCEPTED": 4,
+        "CLAIM_REJECTED_BEFORE_SCORE": 3,
+        "MAPPING_NOT_ACCEPTED": 3,
         "NO_ACCEPTED_CLAIM": 7,
         "NO_CLAIM_EXTRACTED": 2,
-        "NO_FETCHED_DOCUMENT": 1,
-        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 6,
-        "PRIMITIVE_GAP_UNSATISFIED": 6,
-        "PRIMITIVE_MAPPING_REJECTED": 4,
+        "NO_FETCHED_DOCUMENT": 2,
+        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 5,
+        "PRIMITIVE_GAP_UNSATISFIED": 5,
+        "PRIMITIVE_MAPPING_REJECTED": 3,
         "PROVIDER_ERROR_RECORDED": 2,
-        "PROVIDER_FAILED": 1,
-        "SEMANTIC_OR_TARGET_REJECTED": 1,
+        "PROVIDER_FAILED": 2,
         "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-        "TEMPORAL_NOT_CURRENT": 1
+        "TEMPORAL_NOT_CURRENT": 2
       },
       "source_task_failure_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
       "source_task_failure_samples": [
         {
           "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
           "document_urls": [
-            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000391",
-            "https://kind.krx.co.kr/main.do"
+            "https://wcomp.fnguide.com",
+            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000391"
           ],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
@@ -1732,51 +1876,40 @@
             "PRIMITIVE_MAPPING_REJECTED"
           ],
           "not_eligible_reasons": [
-            "mapping_not_accepted:REJECTED",
-            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
-            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
-            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract",
-            "primitive_mapping_rejected:v4_signal:structured_field_capacity_expansion_implementation_timeline"
+            "document_score_block:companyguide_consensus_after_as_of_date_not_score_evidence",
+            "future_source",
+            "future_available_at",
+            "future_event",
+            "temporal_not_allowed:UNKNOWN"
           ],
           "primitive_gap": "repeat_order_confirmed",
           "provider_errors": [
             "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
           ],
           "provider_name": "live_official_source_provider_registry",
-          "source_class": "DART",
+          "source_class": "CompanyGuide",
           "status": "NO_EVIDENCE_FOUND",
           "stop_reason": "no_score_eligible_real_claim",
           "symbol": "058470",
-          "task_id": "C08_repeat_order_confirmed_official_ir_058470"
+          "task_id": "C08_repeat_order_confirmed_issuer_ir_companyguide_058470"
         },
         {
           "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
-          "document_urls": [
-            "https://comp.wisereport.co.kr/wiseReport/summary/ReportSummary.aspx?ee=2025-05-22&sortcol=ANL_NM_KOR&sorttyp=desc"
-          ],
+          "document_urls": [],
           "failure_axes": [
             "NO_ACCEPTED_CLAIM",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED",
-            "MAPPING_NOT_ACCEPTED"
+            "PROVIDER_FAILED",
+            "NO_FETCHED_DOCUMENT"
           ],
-          "not_eligible_reasons": [
-            "anchor_validation:quote_not_found_in_document_text",
-            "semantic_rejected",
-            "target_scope_not_allowed:UNRELATED",
-            "target_not_direct:NOT_TARGET_SCOPED",
-            "mapping_not_accepted:REJECTED"
-          ],
+          "not_eligible_reasons": [],
           "primitive_gap": "repeat_order_confirmed",
           "provider_errors": [],
           "provider_name": "NaverFreeSearchProvider",
           "source_class": "BrokerReportPublicPDF",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
+          "status": "PROVIDER_FAILED",
+          "stop_reason": "live_web_no_fetchable_document",
           "symbol": "058470",
-          "task_id": "C08_repeat_order_confirmed_broker_original_pdf_058470"
+          "task_id": "C08_repeat_order_confirmed_original_report_or_newsroom_058470"
         },
         {
           "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
@@ -1860,176 +1993,15 @@
       ],
       "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
       "source_task_status_counts": {
-        "NO_EVIDENCE_FOUND": 6,
-        "PROVIDER_FAILED": 1
+        "NO_EVIDENCE_FOUND": 5,
+        "PROVIDER_FAILED": 2
       },
       "symbol": "058470",
       "target_archetype": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "target_primitive_gap": "repeat_order_confirmed"
-    },
-    {
-      "candidate_event_id": "CEV4-RTATTEMPT-7ec6a3c031d33382c18e",
-      "source_task_failure_axis_counts": {
-        "CLAIM_REJECTED_BEFORE_SCORE": 3,
-        "MAPPING_NOT_ACCEPTED": 3,
-        "NO_ACCEPTED_CLAIM": 8,
-        "NO_CLAIM_EXTRACTED": 4,
-        "NO_FETCHED_DOCUMENT": 3,
-        "NO_SCORE_ELIGIBLE_REAL_CLAIM": 5,
-        "POLICY_REJECTED": 2,
-        "PRIMITIVE_GAP_UNSATISFIED": 5,
-        "PRIMITIVE_MAPPING_REJECTED": 3,
-        "PROVIDER_ERROR_RECORDED": 4,
-        "PROVIDER_FAILED": 1,
-        "TEMPORAL_NOT_CURRENT": 1
-      },
-      "source_task_failure_repair_hint": "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
-      "source_task_failure_samples": [
-        {
-          "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
-          "document_urls": [
-            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001105",
-            "https://kind.krx.co.kr/main.do"
-          ],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "PROVIDER_ERROR_RECORDED",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED"
-          ],
-          "not_eligible_reasons": [
-            "mapping_not_accepted:REJECTED",
-            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
-            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
-            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
-          ],
-          "primitive_gap": "order_to_revenue_bridge",
-          "provider_errors": [
-            "issuer_ir_discovery_not_configured; do not treat missing IR as no evidence"
-          ],
-          "provider_name": "live_official_source_provider_registry",
-          "source_class": "DART",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
-          "symbol": "039030",
-          "task_id": "RTTASK-7ec6a3c031d33382c18e-OFFICIAL-IR-ORDER-REVENUE-BRIDGE"
-        },
-        {
-          "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
-          "document_urls": [],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "PROVIDER_ERROR_RECORDED",
-            "POLICY_REJECTED",
-            "NO_FETCHED_DOCUMENT",
-            "NO_CLAIM_EXTRACTED"
-          ],
-          "not_eligible_reasons": [],
-          "primitive_gap": "order_to_revenue_bridge",
-          "provider_errors": [
-            "official_solvable_gap_sent_to_general_web"
-          ],
-          "provider_name": "v4_policy_validator",
-          "source_class": "policy",
-          "status": "REJECTED_BY_POLICY",
-          "stop_reason": "source_task_rejected_by_v4_policy",
-          "symbol": "039030",
-          "task_id": "RTTASK-7ec6a3c031d33382c18e-BROKERPDF-ORDER-REVENUE-BRIDGE"
-        },
-        {
-          "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
-          "document_urls": [],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "PROVIDER_ERROR_RECORDED",
-            "POLICY_REJECTED",
-            "NO_FETCHED_DOCUMENT",
-            "NO_CLAIM_EXTRACTED"
-          ],
-          "not_eligible_reasons": [],
-          "primitive_gap": "order_to_revenue_bridge",
-          "provider_errors": [
-            "official_solvable_gap_sent_to_general_web"
-          ],
-          "provider_name": "v4_policy_validator",
-          "source_class": "policy",
-          "status": "REJECTED_BY_POLICY",
-          "stop_reason": "source_task_rejected_by_v4_policy",
-          "symbol": "039030",
-          "task_id": "RTTASK-7ec6a3c031d33382c18e-ISSUER-NEWSROOM-ORDER-REVENUE-BRIDGE"
-        },
-        {
-          "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
-          "document_urls": [
-            "https://wcomp.fnguide.com"
-          ],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED",
-            "MAPPING_NOT_ACCEPTED"
-          ],
-          "not_eligible_reasons": [
-            "document_score_block:companyguide_consensus_after_as_of_date_not_score_evidence",
-            "future_source",
-            "future_available_at",
-            "future_event",
-            "temporal_not_allowed:UNKNOWN"
-          ],
-          "primitive_gap": "official_report_snapshot_current",
-          "provider_errors": [],
-          "provider_name": "live_official_source_provider_registry",
-          "source_class": "CompanyGuide",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
-          "symbol": "039030",
-          "task_id": "RSTASKV4CGSTATUS-55d712f4f9bcc7ff9eed2386"
-        },
-        {
-          "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
-          "document_urls": [
-            "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515001105"
-          ],
-          "failure_axes": [
-            "NO_ACCEPTED_CLAIM",
-            "CLAIM_REJECTED_BEFORE_SCORE",
-            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
-            "PRIMITIVE_GAP_UNSATISFIED",
-            "PRIMITIVE_MAPPING_REJECTED",
-            "MAPPING_NOT_ACCEPTED"
-          ],
-          "not_eligible_reasons": [
-            "mapping_not_accepted:REJECTED",
-            "primitive_mapping_rejected:v4_signal:structured_field_implementation_timeline_delivery_schedule",
-            "primitive_mapping_rejected:v4_signal:structured_field_delivery_schedule_contract_duration_months_contract_quality",
-            "primitive_mapping_rejected:v4_signal:structured_field_contract_quality_revenue_visibility_contract"
-          ],
-          "primitive_gap": "official_disclosure_status_current",
-          "provider_errors": [],
-          "provider_name": "live_official_source_provider_registry",
-          "source_class": "DART",
-          "status": "NO_EVIDENCE_FOUND",
-          "stop_reason": "no_score_eligible_real_claim",
-          "symbol": "039030",
-          "task_id": "RSTASKV4DARTSTATUS-55d712f4f9bcc7ff9eed2386"
-        }
-      ],
-      "source_task_primary_failure_axis": "PRIMITIVE_GAP_UNSATISFIED",
-      "source_task_status_counts": {
-        "NO_EVIDENCE_FOUND": 5,
-        "PROVIDER_FAILED": 1,
-        "REJECTED_BY_POLICY": 2
-      },
-      "symbol": "039030",
-      "target_archetype": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
-      "target_primitive_gap": "order_to_revenue_bridge"
     }
   ],
-  "accepted_claim_seed_count": 21,
+  "accepted_claim_seed_count": 22,
   "actual_materialization_pass_allowed": false,
   "archetype_level_discovery_seed_count": 9,
   "controlled_smoke_full_thesis_final_scope_count": 0,
@@ -2055,26 +2027,26 @@
   },
   "final_operator_score_use_counts": {
     "FULL_E2R_SCORE": 6,
-    "NOT_FULL_E2R_SCORE": 87,
+    "NOT_FULL_E2R_SCORE": 90,
     "UNKNOWN": 12
   },
   "final_operator_stage_use_counts": {
     "FULL_THESIS_STAGE": 6,
-    "NOT_FULL_THESIS_STAGE": 87,
+    "NOT_FULL_THESIS_STAGE": 90,
     "UNKNOWN": 12
   },
   "final_score_scale_counts": {
     "EVENT_WEIGHTED_PARTIAL": 9,
     "FULL_E2R_100": 6,
-    "NO_SCORE": 78,
+    "NO_SCORE": 81,
     "UNKNOWN": 12
   },
   "final_stage_scope_counts": {
     "BRAIN_OFFICIAL_PARTIAL": 3,
-    "BRAIN_WEB_PARTIAL": 3,
-    "CENSUS_EVENT_BOARD": 69,
+    "BRAIN_WEB_PARTIAL": 6,
+    "CENSUS_EVENT_BOARD": 66,
     "FULL_THESIS": 6,
-    "NON_REPRESENTATIVE_FULL_THESIS_SEED": 12,
+    "NON_REPRESENTATIVE_FULL_THESIS_SEED": 15,
     "UNKNOWN": 12
   },
   "full_thesis_promoted_seed_count": 6,
@@ -2092,32 +2064,32 @@
   },
   "operator_materialization_status": "PENDING_FULL_THESIS_MATERIALIZATION",
   "operator_rule": "A seed row is only an investigation input until the trace reaches FULL_THESIS_PROMOTED. Earlier statuses must remain pending/source-provider/material-gap states and must not be used as an operator FULL_THESIS Stage. verdict=PASS only means ledger integrity passed; actual_materialization_pass_allowed must be true before claiming a real FULL_THESIS seed closure.",
-  "planner_run_seed_count": 105,
-  "real_provider_success_seed_count": 104,
+  "planner_run_seed_count": 108,
+  "real_provider_success_seed_count": 108,
   "schema_version": "e2r_census_v4_full_thesis_seed_materialization_audit_v1",
-  "seed_event_count": 105,
+  "seed_event_count": 108,
   "seed_source_family_counts": {
-    "AllArchetypeRuntimeParityFollowUp": 105
+    "AllArchetypeRuntimeParityFollowUp": 108
   },
-  "source_task_execution_seed_count": 104,
+  "source_task_execution_seed_count": 99,
   "source_task_failure_axis_counts": {
-    "ANCHOR_OR_LINEAGE_REJECTED": 51,
-    "CLAIM_REJECTED_BEFORE_SCORE": 374,
-    "DIRECT_ACCEPTED_CLAIM": 6,
-    "MAPPING_NOT_ACCEPTED": 374,
-    "NO_ACCEPTED_CLAIM": 751,
-    "NO_CLAIM_EXTRACTED": 259,
-    "NO_FETCHED_DOCUMENT": 194,
-    "NO_SCORE_ELIGIBLE_REAL_CLAIM": 565,
-    "POLICY_REJECTED": 32,
-    "PRIMITIVE_GAP_UNSATISFIED": 587,
-    "PRIMITIVE_MAPPING_REJECTED": 374,
-    "PROVIDER_ERROR_RECORDED": 293,
-    "PROVIDER_FAILED": 154,
-    "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 30,
-    "SEMANTIC_OR_TARGET_REJECTED": 69,
-    "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 45,
-    "TEMPORAL_NOT_CURRENT": 188
+    "ANCHOR_OR_LINEAGE_REJECTED": 32,
+    "CLAIM_REJECTED_BEFORE_SCORE": 359,
+    "DIRECT_ACCEPTED_CLAIM": 7,
+    "MAPPING_NOT_ACCEPTED": 359,
+    "NO_ACCEPTED_CLAIM": 696,
+    "NO_CLAIM_EXTRACTED": 240,
+    "NO_FETCHED_DOCUMENT": 167,
+    "NO_SCORE_ELIGIBLE_REAL_CLAIM": 535,
+    "POLICY_REJECTED": 25,
+    "PRIMITIVE_GAP_UNSATISFIED": 561,
+    "PRIMITIVE_MAPPING_REJECTED": 359,
+    "PROVIDER_ERROR_RECORDED": 259,
+    "PROVIDER_FAILED": 136,
+    "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 32,
+    "SEMANTIC_OR_TARGET_REJECTED": 54,
+    "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 39,
+    "TEMPORAL_NOT_CURRENT": 184
   },
   "source_task_failure_axis_counts_by_target_archetype": {
     "C01_ORDER_BACKLOG_MARGIN_BRIDGE": {
@@ -2125,354 +2097,346 @@
       "CLAIM_REJECTED_BEFORE_SCORE": 10,
       "DIRECT_ACCEPTED_CLAIM": 1,
       "MAPPING_NOT_ACCEPTED": 10,
-      "NO_ACCEPTED_CLAIM": 15,
+      "NO_ACCEPTED_CLAIM": 14,
       "NO_CLAIM_EXTRACTED": 8,
       "NO_FETCHED_DOCUMENT": 5,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 9,
       "POLICY_REJECTED": 2,
       "PRIMITIVE_GAP_UNSATISFIED": 15,
       "PRIMITIVE_MAPPING_REJECTED": 10,
       "PROVIDER_ERROR_RECORDED": 8,
       "PROVIDER_FAILED": 3,
-      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 5,
+      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 6,
       "SEMANTIC_OR_TARGET_REJECTED": 1,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 5
+      "TEMPORAL_NOT_CURRENT": 4
     },
     "C02_POWER_GRID_DATACENTER_CAPEX": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 3,
-      "CLAIM_REJECTED_BEFORE_SCORE": 12,
-      "MAPPING_NOT_ACCEPTED": 12,
+      "ANCHOR_OR_LINEAGE_REJECTED": 2,
+      "CLAIM_REJECTED_BEFORE_SCORE": 11,
+      "MAPPING_NOT_ACCEPTED": 11,
       "NO_ACCEPTED_CLAIM": 22,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 4,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
-      "POLICY_REJECTED": 1,
-      "PRIMITIVE_GAP_UNSATISFIED": 18,
-      "PRIMITIVE_MAPPING_REJECTED": 12,
-      "PROVIDER_ERROR_RECORDED": 7,
+      "NO_CLAIM_EXTRACTED": 8,
+      "NO_FETCHED_DOCUMENT": 5,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
+      "POLICY_REJECTED": 2,
+      "PRIMITIVE_GAP_UNSATISFIED": 17,
+      "PRIMITIVE_MAPPING_REJECTED": 11,
+      "PROVIDER_ERROR_RECORDED": 8,
       "PROVIDER_FAILED": 3,
-      "SEMANTIC_OR_TARGET_REJECTED": 3,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 3,
+      "SEMANTIC_OR_TARGET_REJECTED": 2,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
       "TEMPORAL_NOT_CURRENT": 7
     },
     "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 1,
-      "CLAIM_REJECTED_BEFORE_SCORE": 9,
-      "MAPPING_NOT_ACCEPTED": 9,
-      "NO_ACCEPTED_CLAIM": 18,
+      "CLAIM_REJECTED_BEFORE_SCORE": 10,
+      "DIRECT_ACCEPTED_CLAIM": 1,
+      "MAPPING_NOT_ACCEPTED": 10,
+      "NO_ACCEPTED_CLAIM": 17,
       "NO_CLAIM_EXTRACTED": 10,
-      "NO_FETCHED_DOCUMENT": 8,
+      "NO_FETCHED_DOCUMENT": 7,
       "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
       "POLICY_REJECTED": 4,
       "PRIMITIVE_GAP_UNSATISFIED": 15,
-      "PRIMITIVE_MAPPING_REJECTED": 9,
-      "PROVIDER_ERROR_RECORDED": 9,
-      "PROVIDER_FAILED": 4,
+      "PRIMITIVE_MAPPING_REJECTED": 10,
+      "PROVIDER_ERROR_RECORDED": 10,
+      "PROVIDER_FAILED": 3,
       "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 5,
       "SEMANTIC_OR_TARGET_REJECTED": 1,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
       "TEMPORAL_NOT_CURRENT": 4
     },
     "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": {
+      "CLAIM_REJECTED_BEFORE_SCORE": 13,
+      "MAPPING_NOT_ACCEPTED": 13,
+      "NO_ACCEPTED_CLAIM": 23,
+      "NO_CLAIM_EXTRACTED": 6,
+      "NO_FETCHED_DOCUMENT": 4,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 19,
+      "PRIMITIVE_GAP_UNSATISFIED": 19,
+      "PRIMITIVE_MAPPING_REJECTED": 13,
+      "PROVIDER_ERROR_RECORDED": 6,
+      "PROVIDER_FAILED": 4,
+      "SEMANTIC_OR_TARGET_REJECTED": 3,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 3,
+      "TEMPORAL_NOT_CURRENT": 5
+    },
+    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": {
+      "CLAIM_REJECTED_BEFORE_SCORE": 10,
+      "DIRECT_ACCEPTED_CLAIM": 1,
+      "MAPPING_NOT_ACCEPTED": 10,
+      "NO_ACCEPTED_CLAIM": 16,
+      "NO_CLAIM_EXTRACTED": 8,
+      "NO_FETCHED_DOCUMENT": 6,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+      "POLICY_REJECTED": 2,
+      "PRIMITIVE_GAP_UNSATISFIED": 15,
+      "PRIMITIVE_MAPPING_REJECTED": 10,
+      "PROVIDER_ERROR_RECORDED": 9,
+      "PROVIDER_FAILED": 4,
+      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 5,
+      "TEMPORAL_NOT_CURRENT": 4
+    },
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 1,
+      "CLAIM_REJECTED_BEFORE_SCORE": 13,
+      "DIRECT_ACCEPTED_CLAIM": 1,
+      "MAPPING_NOT_ACCEPTED": 13,
+      "NO_ACCEPTED_CLAIM": 18,
+      "NO_CLAIM_EXTRACTED": 8,
+      "NO_FETCHED_DOCUMENT": 5,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 13,
+      "POLICY_REJECTED": 2,
+      "PRIMITIVE_GAP_UNSATISFIED": 18,
+      "PRIMITIVE_MAPPING_REJECTED": 13,
+      "PROVIDER_ERROR_RECORDED": 10,
+      "PROVIDER_FAILED": 3,
+      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 5,
+      "SEMANTIC_OR_TARGET_REJECTED": 2,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
+      "TEMPORAL_NOT_CURRENT": 7
+    },
+    "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": {
       "CLAIM_REJECTED_BEFORE_SCORE": 10,
       "MAPPING_NOT_ACCEPTED": 10,
       "NO_ACCEPTED_CLAIM": 23,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 6,
+      "NO_CLAIM_EXTRACTED": 10,
+      "NO_FETCHED_DOCUMENT": 7,
       "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
-      "PRIMITIVE_GAP_UNSATISFIED": 17,
-      "PRIMITIVE_MAPPING_REJECTED": 10,
-      "PROVIDER_ERROR_RECORDED": 7,
-      "PROVIDER_FAILED": 6,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 3
-    },
-    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": {
-      "CLAIM_REJECTED_BEFORE_SCORE": 9,
-      "DIRECT_ACCEPTED_CLAIM": 1,
-      "MAPPING_NOT_ACCEPTED": 9,
-      "NO_ACCEPTED_CLAIM": 15,
-      "NO_CLAIM_EXTRACTED": 8,
-      "NO_FETCHED_DOCUMENT": 6,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 9,
-      "POLICY_REJECTED": 2,
-      "PRIMITIVE_GAP_UNSATISFIED": 14,
-      "PRIMITIVE_MAPPING_REJECTED": 9,
-      "PROVIDER_ERROR_RECORDED": 8,
-      "PROVIDER_FAILED": 4,
-      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 5,
-      "TEMPORAL_NOT_CURRENT": 3
-    },
-    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
-      "CLAIM_REJECTED_BEFORE_SCORE": 13,
-      "DIRECT_ACCEPTED_CLAIM": 1,
-      "MAPPING_NOT_ACCEPTED": 13,
-      "NO_ACCEPTED_CLAIM": 17,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 4,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 13,
-      "POLICY_REJECTED": 1,
-      "PRIMITIVE_GAP_UNSATISFIED": 18,
-      "PRIMITIVE_MAPPING_REJECTED": 13,
-      "PROVIDER_ERROR_RECORDED": 9,
-      "PROVIDER_FAILED": 3,
-      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 5,
-      "SEMANTIC_OR_TARGET_REJECTED": 2,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 6
-    },
-    "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 1,
-      "CLAIM_REJECTED_BEFORE_SCORE": 14,
-      "MAPPING_NOT_ACCEPTED": 14,
-      "NO_ACCEPTED_CLAIM": 26,
-      "NO_CLAIM_EXTRACTED": 9,
-      "NO_FETCHED_DOCUMENT": 6,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 20,
       "POLICY_REJECTED": 3,
-      "PRIMITIVE_GAP_UNSATISFIED": 20,
-      "PRIMITIVE_MAPPING_REJECTED": 14,
-      "PROVIDER_ERROR_RECORDED": 12,
+      "PRIMITIVE_GAP_UNSATISFIED": 16,
+      "PRIMITIVE_MAPPING_REJECTED": 10,
+      "PROVIDER_ERROR_RECORDED": 8,
       "PROVIDER_FAILED": 3,
-      "SEMANTIC_OR_TARGET_REJECTED": 2,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 5
+      "TEMPORAL_NOT_CURRENT": 3
     },
     "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 3,
-      "CLAIM_REJECTED_BEFORE_SCORE": 13,
-      "DIRECT_ACCEPTED_CLAIM": 1,
-      "MAPPING_NOT_ACCEPTED": 13,
+      "ANCHOR_OR_LINEAGE_REJECTED": 1,
+      "CLAIM_REJECTED_BEFORE_SCORE": 11,
+      "MAPPING_NOT_ACCEPTED": 11,
       "NO_ACCEPTED_CLAIM": 21,
       "NO_CLAIM_EXTRACTED": 6,
-      "NO_FETCHED_DOCUMENT": 3,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
-      "PRIMITIVE_GAP_UNSATISFIED": 18,
-      "PRIMITIVE_MAPPING_REJECTED": 13,
-      "PROVIDER_ERROR_RECORDED": 8,
-      "PROVIDER_FAILED": 3,
-      "SEMANTIC_OR_TARGET_REJECTED": 3,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 4,
-      "TEMPORAL_NOT_CURRENT": 7
+      "NO_FETCHED_DOCUMENT": 4,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
+      "PRIMITIVE_GAP_UNSATISFIED": 17,
+      "PRIMITIVE_MAPPING_REJECTED": 11,
+      "PROVIDER_ERROR_RECORDED": 6,
+      "PROVIDER_FAILED": 4,
+      "SEMANTIC_OR_TARGET_REJECTED": 1,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 3,
+      "TEMPORAL_NOT_CURRENT": 5
     },
     "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 1,
-      "CLAIM_REJECTED_BEFORE_SCORE": 13,
-      "MAPPING_NOT_ACCEPTED": 13,
-      "NO_ACCEPTED_CLAIM": 24,
+      "CLAIM_REJECTED_BEFORE_SCORE": 9,
+      "MAPPING_NOT_ACCEPTED": 9,
+      "NO_ACCEPTED_CLAIM": 22,
       "NO_CLAIM_EXTRACTED": 8,
-      "NO_FETCHED_DOCUMENT": 5,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 19,
+      "NO_FETCHED_DOCUMENT": 7,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 15,
       "POLICY_REJECTED": 2,
-      "PRIMITIVE_GAP_UNSATISFIED": 19,
-      "PRIMITIVE_MAPPING_REJECTED": 13,
-      "PROVIDER_ERROR_RECORDED": 11,
-      "PROVIDER_FAILED": 3,
+      "PRIMITIVE_GAP_UNSATISFIED": 15,
+      "PRIMITIVE_MAPPING_REJECTED": 9,
+      "PROVIDER_ERROR_RECORDED": 8,
+      "PROVIDER_FAILED": 5,
+      "SEMANTIC_OR_TARGET_REJECTED": 1,
+      "TEMPORAL_NOT_CURRENT": 6
+    },
+    "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 2,
+      "CLAIM_REJECTED_BEFORE_SCORE": 11,
+      "MAPPING_NOT_ACCEPTED": 11,
+      "NO_ACCEPTED_CLAIM": 21,
+      "NO_CLAIM_EXTRACTED": 6,
+      "NO_FETCHED_DOCUMENT": 4,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
+      "PRIMITIVE_GAP_UNSATISFIED": 17,
+      "PRIMITIVE_MAPPING_REJECTED": 11,
+      "PROVIDER_ERROR_RECORDED": 6,
+      "PROVIDER_FAILED": 4,
       "SEMANTIC_OR_TARGET_REJECTED": 2,
       "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 3,
       "TEMPORAL_NOT_CURRENT": 8
     },
-    "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 2,
-      "CLAIM_REJECTED_BEFORE_SCORE": 12,
-      "MAPPING_NOT_ACCEPTED": 12,
-      "NO_ACCEPTED_CLAIM": 21,
-      "NO_CLAIM_EXTRACTED": 6,
-      "NO_FETCHED_DOCUMENT": 5,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 16,
-      "PRIMITIVE_GAP_UNSATISFIED": 18,
-      "PRIMITIVE_MAPPING_REJECTED": 12,
-      "PROVIDER_ERROR_RECORDED": 7,
-      "PROVIDER_FAILED": 5,
-      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 2,
-      "SEMANTIC_OR_TARGET_REJECTED": 2,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
-      "TEMPORAL_NOT_CURRENT": 7
-    },
     "C11_BATTERY_ORDERBOOK_RERATING": {
+      "CLAIM_REJECTED_BEFORE_SCORE": 10,
+      "MAPPING_NOT_ACCEPTED": 10,
+      "NO_ACCEPTED_CLAIM": 23,
+      "NO_CLAIM_EXTRACTED": 9,
+      "NO_FETCHED_DOCUMENT": 7,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 16,
+      "POLICY_REJECTED": 3,
+      "PRIMITIVE_GAP_UNSATISFIED": 16,
+      "PRIMITIVE_MAPPING_REJECTED": 10,
+      "PROVIDER_ERROR_RECORDED": 8,
+      "PROVIDER_FAILED": 4,
+      "SEMANTIC_OR_TARGET_REJECTED": 1,
+      "TEMPORAL_NOT_CURRENT": 6
+    },
+    "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": {
+      "NO_ACCEPTED_CLAIM": 23,
+      "NO_CLAIM_EXTRACTED": 11,
+      "NO_FETCHED_DOCUMENT": 14,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+      "POLICY_REJECTED": 1,
+      "PRIMITIVE_GAP_UNSATISFIED": 9,
+      "PROVIDER_ERROR_RECORDED": 15,
+      "PROVIDER_FAILED": 12
+    },
+    "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": {
       "ANCHOR_OR_LINEAGE_REJECTED": 1,
       "CLAIM_REJECTED_BEFORE_SCORE": 12,
       "MAPPING_NOT_ACCEPTED": 12,
       "NO_ACCEPTED_CLAIM": 23,
-      "NO_CLAIM_EXTRACTED": 8,
-      "NO_FETCHED_DOCUMENT": 5,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
-      "POLICY_REJECTED": 2,
-      "PRIMITIVE_GAP_UNSATISFIED": 18,
-      "PRIMITIVE_MAPPING_REJECTED": 12,
-      "PROVIDER_ERROR_RECORDED": 10,
-      "PROVIDER_FAILED": 3,
-      "SEMANTIC_OR_TARGET_REJECTED": 1,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 3
-    },
-    "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": {
-      "NO_ACCEPTED_CLAIM": 24,
-      "NO_CLAIM_EXTRACTED": 11,
-      "NO_FETCHED_DOCUMENT": 15,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
-      "POLICY_REJECTED": 1,
-      "PRIMITIVE_GAP_UNSATISFIED": 9,
-      "PROVIDER_ERROR_RECORDED": 17,
-      "PROVIDER_FAILED": 13
-    },
-    "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": {
-      "CLAIM_REJECTED_BEFORE_SCORE": 13,
-      "MAPPING_NOT_ACCEPTED": 13,
-      "NO_ACCEPTED_CLAIM": 24,
       "NO_CLAIM_EXTRACTED": 6,
       "NO_FETCHED_DOCUMENT": 5,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 19,
-      "PRIMITIVE_GAP_UNSATISFIED": 19,
-      "PRIMITIVE_MAPPING_REJECTED": 13,
-      "PROVIDER_ERROR_RECORDED": 9,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
+      "PRIMITIVE_GAP_UNSATISFIED": 18,
+      "PRIMITIVE_MAPPING_REJECTED": 12,
+      "PROVIDER_ERROR_RECORDED": 8,
       "PROVIDER_FAILED": 5,
       "SEMANTIC_OR_TARGET_REJECTED": 1,
       "TEMPORAL_NOT_CURRENT": 6
     },
     "C14_EV_DEMAND_SLOWDOWN_4B_4C": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 1,
-      "CLAIM_REJECTED_BEFORE_SCORE": 7,
-      "MAPPING_NOT_ACCEPTED": 7,
-      "NO_ACCEPTED_CLAIM": 23,
-      "NO_CLAIM_EXTRACTED": 11,
-      "NO_FETCHED_DOCUMENT": 5,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
-      "PRIMITIVE_GAP_UNSATISFIED": 18,
-      "PRIMITIVE_MAPPING_REJECTED": 7,
-      "PROVIDER_ERROR_RECORDED": 8,
-      "PROVIDER_FAILED": 5,
-      "SEMANTIC_OR_TARGET_REJECTED": 1,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 5
+      "CLAIM_REJECTED_BEFORE_SCORE": 4,
+      "MAPPING_NOT_ACCEPTED": 4,
+      "NO_ACCEPTED_CLAIM": 25,
+      "NO_CLAIM_EXTRACTED": 13,
+      "NO_FETCHED_DOCUMENT": 8,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
+      "PRIMITIVE_GAP_UNSATISFIED": 17,
+      "PRIMITIVE_MAPPING_REJECTED": 4,
+      "PROVIDER_ERROR_RECORDED": 9,
+      "PROVIDER_FAILED": 8,
+      "TEMPORAL_NOT_CURRENT": 4
     },
     "C15_MATERIAL_SPREAD_SUPERCYCLE": {
+      "CLAIM_REJECTED_BEFORE_SCORE": 13,
+      "MAPPING_NOT_ACCEPTED": 13,
+      "NO_ACCEPTED_CLAIM": 22,
+      "NO_CLAIM_EXTRACTED": 6,
+      "NO_FETCHED_DOCUMENT": 4,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
+      "PRIMITIVE_GAP_UNSATISFIED": 19,
+      "PRIMITIVE_MAPPING_REJECTED": 13,
+      "PROVIDER_ERROR_RECORDED": 7,
+      "PROVIDER_FAILED": 4,
+      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 1,
+      "SEMANTIC_OR_TARGET_REJECTED": 2,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
+      "TEMPORAL_NOT_CURRENT": 8
+    },
+    "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": {
       "CLAIM_REJECTED_BEFORE_SCORE": 11,
       "MAPPING_NOT_ACCEPTED": 11,
-      "NO_ACCEPTED_CLAIM": 23,
+      "NO_ACCEPTED_CLAIM": 22,
       "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 6,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
+      "NO_FETCHED_DOCUMENT": 5,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
+      "POLICY_REJECTED": 1,
       "PRIMITIVE_GAP_UNSATISFIED": 17,
       "PRIMITIVE_MAPPING_REJECTED": 11,
       "PROVIDER_ERROR_RECORDED": 7,
-      "PROVIDER_FAILED": 5,
+      "PROVIDER_FAILED": 4,
       "SEMANTIC_OR_TARGET_REJECTED": 1,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 6
-    },
-    "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": {
-      "CLAIM_REJECTED_BEFORE_SCORE": 10,
-      "MAPPING_NOT_ACCEPTED": 10,
-      "NO_ACCEPTED_CLAIM": 22,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 6,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 16,
-      "POLICY_REJECTED": 1,
-      "PRIMITIVE_GAP_UNSATISFIED": 16,
-      "PRIMITIVE_MAPPING_REJECTED": 10,
-      "PROVIDER_ERROR_RECORDED": 8,
-      "PROVIDER_FAILED": 5,
-      "TEMPORAL_NOT_CURRENT": 6
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
+      "TEMPORAL_NOT_CURRENT": 5
     },
     "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 2,
-      "CLAIM_REJECTED_BEFORE_SCORE": 14,
+      "CLAIM_REJECTED_BEFORE_SCORE": 12,
       "DIRECT_ACCEPTED_CLAIM": 2,
-      "MAPPING_NOT_ACCEPTED": 14,
-      "NO_ACCEPTED_CLAIM": 20,
+      "MAPPING_NOT_ACCEPTED": 12,
+      "NO_ACCEPTED_CLAIM": 18,
       "NO_CLAIM_EXTRACTED": 6,
       "NO_FETCHED_DOCUMENT": 3,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
-      "PRIMITIVE_GAP_UNSATISFIED": 18,
-      "PRIMITIVE_MAPPING_REJECTED": 14,
-      "PROVIDER_ERROR_RECORDED": 8,
-      "PROVIDER_FAILED": 3,
-      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 1,
-      "SEMANTIC_OR_TARGET_REJECTED": 3,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
-      "TEMPORAL_NOT_CURRENT": 6
-    },
-    "C18_CONSUMER_EXPORT_CHANNEL_REORDER": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 1,
-      "CLAIM_REJECTED_BEFORE_SCORE": 12,
-      "MAPPING_NOT_ACCEPTED": 12,
-      "NO_ACCEPTED_CLAIM": 22,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 4,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 19,
-      "PRIMITIVE_GAP_UNSATISFIED": 18,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 15,
+      "PRIMITIVE_GAP_UNSATISFIED": 16,
       "PRIMITIVE_MAPPING_REJECTED": 12,
       "PROVIDER_ERROR_RECORDED": 6,
       "PROVIDER_FAILED": 3,
+      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 1,
       "SEMANTIC_OR_TARGET_REJECTED": 3,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
-      "TEMPORAL_NOT_CURRENT": 7
-    },
-    "C19_BRAND_RETAIL_INVENTORY_MARGIN": {
-      "CLAIM_REJECTED_BEFORE_SCORE": 13,
-      "MAPPING_NOT_ACCEPTED": 13,
-      "NO_ACCEPTED_CLAIM": 23,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 4,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 20,
-      "PRIMITIVE_GAP_UNSATISFIED": 19,
-      "PRIMITIVE_MAPPING_REJECTED": 13,
-      "PROVIDER_ERROR_RECORDED": 8,
-      "PROVIDER_FAILED": 3,
-      "SEMANTIC_OR_TARGET_REJECTED": 2,
       "TEMPORAL_NOT_CURRENT": 5
     },
-    "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 1,
-      "CLAIM_REJECTED_BEFORE_SCORE": 11,
-      "MAPPING_NOT_ACCEPTED": 11,
+    "C18_CONSUMER_EXPORT_CHANNEL_REORDER": {
+      "CLAIM_REJECTED_BEFORE_SCORE": 12,
+      "MAPPING_NOT_ACCEPTED": 12,
       "NO_ACCEPTED_CLAIM": 21,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 4,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
-      "PRIMITIVE_GAP_UNSATISFIED": 17,
-      "PRIMITIVE_MAPPING_REJECTED": 11,
-      "PROVIDER_ERROR_RECORDED": 6,
-      "PROVIDER_FAILED": 3,
-      "SEMANTIC_OR_TARGET_REJECTED": 2,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 6
-    },
-    "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 2,
-      "CLAIM_REJECTED_BEFORE_SCORE": 13,
-      "MAPPING_NOT_ACCEPTED": 13,
-      "NO_ACCEPTED_CLAIM": 22,
       "NO_CLAIM_EXTRACTED": 6,
       "NO_FETCHED_DOCUMENT": 3,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 19,
-      "PRIMITIVE_GAP_UNSATISFIED": 19,
-      "PRIMITIVE_MAPPING_REJECTED": 13,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
+      "PRIMITIVE_GAP_UNSATISFIED": 18,
+      "PRIMITIVE_MAPPING_REJECTED": 12,
       "PROVIDER_ERROR_RECORDED": 7,
       "PROVIDER_FAILED": 3,
       "SEMANTIC_OR_TARGET_REJECTED": 3,
       "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
       "TEMPORAL_NOT_CURRENT": 8
     },
-    "C22_INSURANCE_RATE_CYCLE_RESERVE": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 3,
-      "CLAIM_REJECTED_BEFORE_SCORE": 14,
-      "MAPPING_NOT_ACCEPTED": 14,
+    "C19_BRAND_RETAIL_INVENTORY_MARGIN": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 2,
+      "CLAIM_REJECTED_BEFORE_SCORE": 13,
+      "MAPPING_NOT_ACCEPTED": 13,
       "NO_ACCEPTED_CLAIM": 23,
       "NO_CLAIM_EXTRACTED": 6,
+      "NO_FETCHED_DOCUMENT": 4,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 19,
+      "PRIMITIVE_GAP_UNSATISFIED": 19,
+      "PRIMITIVE_MAPPING_REJECTED": 13,
+      "PROVIDER_ERROR_RECORDED": 8,
+      "PROVIDER_FAILED": 4,
+      "SEMANTIC_OR_TARGET_REJECTED": 2,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
+      "TEMPORAL_NOT_CURRENT": 4
+    },
+    "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 2,
+      "CLAIM_REJECTED_BEFORE_SCORE": 12,
+      "MAPPING_NOT_ACCEPTED": 12,
+      "NO_ACCEPTED_CLAIM": 21,
+      "NO_CLAIM_EXTRACTED": 6,
       "NO_FETCHED_DOCUMENT": 3,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 20,
-      "PRIMITIVE_GAP_UNSATISFIED": 20,
-      "PRIMITIVE_MAPPING_REJECTED": 14,
-      "PROVIDER_ERROR_RECORDED": 9,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
+      "PRIMITIVE_GAP_UNSATISFIED": 18,
+      "PRIMITIVE_MAPPING_REJECTED": 12,
+      "PROVIDER_ERROR_RECORDED": 7,
       "PROVIDER_FAILED": 3,
-      "SEMANTIC_OR_TARGET_REJECTED": 1,
-      "TEMPORAL_NOT_CURRENT": 6
+      "SEMANTIC_OR_TARGET_REJECTED": 3,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 3,
+      "TEMPORAL_NOT_CURRENT": 7
+    },
+    "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 3,
+      "CLAIM_REJECTED_BEFORE_SCORE": 12,
+      "MAPPING_NOT_ACCEPTED": 12,
+      "NO_ACCEPTED_CLAIM": 21,
+      "NO_CLAIM_EXTRACTED": 6,
+      "NO_FETCHED_DOCUMENT": 3,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
+      "PRIMITIVE_GAP_UNSATISFIED": 18,
+      "PRIMITIVE_MAPPING_REJECTED": 12,
+      "PROVIDER_ERROR_RECORDED": 7,
+      "PROVIDER_FAILED": 3,
+      "SEMANTIC_OR_TARGET_REJECTED": 3,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
+      "TEMPORAL_NOT_CURRENT": 7
+    },
+    "C22_INSURANCE_RATE_CYCLE_RESERVE": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 3,
+      "CLAIM_REJECTED_BEFORE_SCORE": 12,
+      "MAPPING_NOT_ACCEPTED": 12,
+      "NO_ACCEPTED_CLAIM": 21,
+      "NO_CLAIM_EXTRACTED": 6,
+      "NO_FETCHED_DOCUMENT": 3,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
+      "PRIMITIVE_GAP_UNSATISFIED": 18,
+      "PRIMITIVE_MAPPING_REJECTED": 12,
+      "PROVIDER_ERROR_RECORDED": 6,
+      "PROVIDER_FAILED": 3,
+      "SEMANTIC_OR_TARGET_REJECTED": 2,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
+      "TEMPORAL_NOT_CURRENT": 8
     },
     "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 2,
+      "ANCHOR_OR_LINEAGE_REJECTED": 3,
       "CLAIM_REJECTED_BEFORE_SCORE": 13,
       "MAPPING_NOT_ACCEPTED": 13,
       "NO_ACCEPTED_CLAIM": 22,
@@ -2484,23 +2448,40 @@
       "PROVIDER_ERROR_RECORDED": 7,
       "PROVIDER_FAILED": 3,
       "SEMANTIC_OR_TARGET_REJECTED": 3,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
+      "TEMPORAL_NOT_CURRENT": 8
+    },
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 1,
+      "CLAIM_REJECTED_BEFORE_SCORE": 13,
+      "DIRECT_ACCEPTED_CLAIM": 1,
+      "MAPPING_NOT_ACCEPTED": 13,
+      "NO_ACCEPTED_CLAIM": 22,
+      "NO_CLAIM_EXTRACTED": 6,
+      "NO_FETCHED_DOCUMENT": 4,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
+      "PRIMITIVE_GAP_UNSATISFIED": 18,
+      "PRIMITIVE_MAPPING_REJECTED": 13,
+      "PROVIDER_ERROR_RECORDED": 8,
+      "PROVIDER_FAILED": 4,
+      "SEMANTIC_OR_TARGET_REJECTED": 2,
       "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 7
+      "TEMPORAL_NOT_CURRENT": 5
     },
     "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 2,
+      "ANCHOR_OR_LINEAGE_REJECTED": 1,
       "CLAIM_REJECTED_BEFORE_SCORE": 11,
       "MAPPING_NOT_ACCEPTED": 11,
-      "NO_ACCEPTED_CLAIM": 24,
+      "NO_ACCEPTED_CLAIM": 22,
       "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 7,
+      "NO_FETCHED_DOCUMENT": 5,
       "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
       "PRIMITIVE_GAP_UNSATISFIED": 17,
       "PRIMITIVE_MAPPING_REJECTED": 11,
       "PROVIDER_ERROR_RECORDED": 8,
-      "PROVIDER_FAILED": 6,
-      "SEMANTIC_OR_TARGET_REJECTED": 2,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
+      "PROVIDER_FAILED": 4,
+      "SEMANTIC_OR_TARGET_REJECTED": 1,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
       "TEMPORAL_NOT_CURRENT": 6
     },
     "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": {
@@ -2513,145 +2494,112 @@
       "NO_SCORE_ELIGIBLE_REAL_CLAIM": 19,
       "PRIMITIVE_GAP_UNSATISFIED": 19,
       "PRIMITIVE_MAPPING_REJECTED": 13,
-      "PROVIDER_ERROR_RECORDED": 6,
+      "PROVIDER_ERROR_RECORDED": 7,
       "PROVIDER_FAILED": 3,
       "SEMANTIC_OR_TARGET_REJECTED": 3,
       "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 3,
-      "TEMPORAL_NOT_CURRENT": 7
+      "TEMPORAL_NOT_CURRENT": 6
     },
     "C27_CONTENT_IP_GLOBAL_MONETIZATION": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 1,
+      "CLAIM_REJECTED_BEFORE_SCORE": 10,
+      "MAPPING_NOT_ACCEPTED": 10,
+      "NO_ACCEPTED_CLAIM": 23,
+      "NO_CLAIM_EXTRACTED": 8,
+      "NO_FETCHED_DOCUMENT": 7,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
+      "PRIMITIVE_GAP_UNSATISFIED": 16,
+      "PRIMITIVE_MAPPING_REJECTED": 10,
+      "PROVIDER_ERROR_RECORDED": 8,
+      "PROVIDER_FAILED": 5,
+      "SEMANTIC_OR_TARGET_REJECTED": 1,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
+      "TEMPORAL_NOT_CURRENT": 3
+    },
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 1,
+      "CLAIM_REJECTED_BEFORE_SCORE": 8,
+      "MAPPING_NOT_ACCEPTED": 8,
+      "NO_ACCEPTED_CLAIM": 22,
+      "NO_CLAIM_EXTRACTED": 7,
+      "NO_FETCHED_DOCUMENT": 7,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 15,
+      "PRIMITIVE_GAP_UNSATISFIED": 15,
+      "PRIMITIVE_MAPPING_REJECTED": 8,
+      "PROVIDER_ERROR_RECORDED": 8,
+      "PROVIDER_FAILED": 7,
+      "SEMANTIC_OR_TARGET_REJECTED": 1,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
+      "TEMPORAL_NOT_CURRENT": 4
+    },
+    "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": {
       "ANCHOR_OR_LINEAGE_REJECTED": 2,
+      "CLAIM_REJECTED_BEFORE_SCORE": 13,
+      "MAPPING_NOT_ACCEPTED": 13,
+      "NO_ACCEPTED_CLAIM": 20,
+      "NO_CLAIM_EXTRACTED": 6,
+      "NO_FETCHED_DOCUMENT": 3,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
+      "PRIMITIVE_GAP_UNSATISFIED": 19,
+      "PRIMITIVE_MAPPING_REJECTED": 13,
+      "PROVIDER_ERROR_RECORDED": 7,
+      "PROVIDER_FAILED": 3,
+      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 2,
+      "SEMANTIC_OR_TARGET_REJECTED": 3,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
+      "TEMPORAL_NOT_CURRENT": 8
+    },
+    "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 1,
+      "CLAIM_REJECTED_BEFORE_SCORE": 13,
+      "MAPPING_NOT_ACCEPTED": 13,
+      "NO_ACCEPTED_CLAIM": 23,
+      "NO_CLAIM_EXTRACTED": 7,
+      "NO_FETCHED_DOCUMENT": 4,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 19,
+      "POLICY_REJECTED": 1,
+      "PRIMITIVE_GAP_UNSATISFIED": 19,
+      "PRIMITIVE_MAPPING_REJECTED": 13,
+      "PROVIDER_ERROR_RECORDED": 9,
+      "PROVIDER_FAILED": 3,
+      "SEMANTIC_OR_TARGET_REJECTED": 2,
+      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
+      "TEMPORAL_NOT_CURRENT": 7
+    },
+    "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": {
       "CLAIM_REJECTED_BEFORE_SCORE": 11,
       "MAPPING_NOT_ACCEPTED": 11,
+      "NO_ACCEPTED_CLAIM": 15,
+      "NO_CLAIM_EXTRACTED": 7,
+      "NO_FETCHED_DOCUMENT": 5,
+      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
+      "POLICY_REJECTED": 1,
+      "PRIMITIVE_GAP_UNSATISFIED": 17,
+      "PRIMITIVE_MAPPING_REJECTED": 11,
+      "PROVIDER_ERROR_RECORDED": 8,
+      "PROVIDER_FAILED": 4,
+      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 7,
+      "SEMANTIC_OR_TARGET_REJECTED": 2,
+      "TEMPORAL_NOT_CURRENT": 6
+    },
+    "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": {
+      "ANCHOR_OR_LINEAGE_REJECTED": 1,
+      "CLAIM_REJECTED_BEFORE_SCORE": 12,
+      "MAPPING_NOT_ACCEPTED": 12,
       "NO_ACCEPTED_CLAIM": 23,
       "NO_CLAIM_EXTRACTED": 8,
       "NO_FETCHED_DOCUMENT": 5,
       "NO_SCORE_ELIGIBLE_REAL_CLAIM": 19,
+      "POLICY_REJECTED": 1,
       "PRIMITIVE_GAP_UNSATISFIED": 18,
-      "PRIMITIVE_MAPPING_REJECTED": 11,
+      "PRIMITIVE_MAPPING_REJECTED": 12,
       "PROVIDER_ERROR_RECORDED": 7,
-      "PROVIDER_FAILED": 4,
-      "SEMANTIC_OR_TARGET_REJECTED": 3,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
-      "TEMPORAL_NOT_CURRENT": 4
-    },
-    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 1,
-      "CLAIM_REJECTED_BEFORE_SCORE": 10,
-      "MAPPING_NOT_ACCEPTED": 10,
-      "NO_ACCEPTED_CLAIM": 21,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 5,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
-      "PRIMITIVE_GAP_UNSATISFIED": 16,
-      "PRIMITIVE_MAPPING_REJECTED": 10,
-      "PROVIDER_ERROR_RECORDED": 6,
-      "PROVIDER_FAILED": 4,
+      "PROVIDER_FAILED": 3,
       "SEMANTIC_OR_TARGET_REJECTED": 1,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 5
-    },
-    "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 3,
-      "CLAIM_REJECTED_BEFORE_SCORE": 13,
-      "MAPPING_NOT_ACCEPTED": 13,
-      "NO_ACCEPTED_CLAIM": 22,
-      "NO_CLAIM_EXTRACTED": 6,
-      "NO_FETCHED_DOCUMENT": 3,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 19,
-      "PRIMITIVE_GAP_UNSATISFIED": 19,
-      "PRIMITIVE_MAPPING_REJECTED": 13,
-      "PROVIDER_ERROR_RECORDED": 6,
-      "PROVIDER_FAILED": 3,
-      "SEMANTIC_OR_TARGET_REJECTED": 3,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 4,
-      "TEMPORAL_NOT_CURRENT": 7
-    },
-    "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 1,
-      "CLAIM_REJECTED_BEFORE_SCORE": 12,
-      "MAPPING_NOT_ACCEPTED": 12,
-      "NO_ACCEPTED_CLAIM": 22,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 4,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 18,
-      "POLICY_REJECTED": 1,
-      "PRIMITIVE_GAP_UNSATISFIED": 18,
-      "PRIMITIVE_MAPPING_REJECTED": 12,
-      "PROVIDER_ERROR_RECORDED": 7,
-      "PROVIDER_FAILED": 3,
-      "SEMANTIC_OR_TARGET_REJECTED": 2,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 6
-    },
-    "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 1,
-      "CLAIM_REJECTED_BEFORE_SCORE": 12,
-      "MAPPING_NOT_ACCEPTED": 12,
-      "NO_ACCEPTED_CLAIM": 16,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 5,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 11,
-      "POLICY_REJECTED": 1,
-      "PRIMITIVE_GAP_UNSATISFIED": 18,
-      "PRIMITIVE_MAPPING_REJECTED": 12,
-      "PROVIDER_ERROR_RECORDED": 9,
-      "PROVIDER_FAILED": 4,
-      "REROUTED_ACCEPTED_CLAIM_ORIGINAL_GAP_UNSATISFIED": 7,
-      "SEMANTIC_OR_TARGET_REJECTED": 2,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 5
-    },
-    "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": {
-      "CLAIM_REJECTED_BEFORE_SCORE": 10,
-      "MAPPING_NOT_ACCEPTED": 10,
-      "NO_ACCEPTED_CLAIM": 21,
-      "NO_CLAIM_EXTRACTED": 7,
-      "NO_FETCHED_DOCUMENT": 5,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 16,
-      "POLICY_REJECTED": 1,
-      "PRIMITIVE_GAP_UNSATISFIED": 16,
-      "PRIMITIVE_MAPPING_REJECTED": 10,
-      "PROVIDER_ERROR_RECORDED": 6,
-      "PROVIDER_FAILED": 4,
-      "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
-      "TEMPORAL_NOT_CURRENT": 3
-    },
-    "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 4,
-      "CLAIM_REJECTED_BEFORE_SCORE": 4,
-      "MAPPING_NOT_ACCEPTED": 4,
-      "NO_ACCEPTED_CLAIM": 24,
-      "NO_CLAIM_EXTRACTED": 11,
-      "NO_FETCHED_DOCUMENT": 14,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 10,
-      "POLICY_REJECTED": 5,
-      "PRIMITIVE_GAP_UNSATISFIED": 10,
-      "PRIMITIVE_MAPPING_REJECTED": 4,
-      "PROVIDER_ERROR_RECORDED": 14,
-      "PROVIDER_FAILED": 9,
-      "SEMANTIC_OR_TARGET_REJECTED": 4,
-      "TEMPORAL_NOT_CURRENT": 4
-    },
-    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 2,
-      "CLAIM_REJECTED_BEFORE_SCORE": 3,
-      "MAPPING_NOT_ACCEPTED": 3,
-      "NO_ACCEPTED_CLAIM": 16,
-      "NO_CLAIM_EXTRACTED": 6,
-      "NO_FETCHED_DOCUMENT": 9,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 7,
-      "POLICY_REJECTED": 2,
-      "PRIMITIVE_GAP_UNSATISFIED": 7,
-      "PRIMITIVE_MAPPING_REJECTED": 3,
-      "PROVIDER_ERROR_RECORDED": 9,
-      "PROVIDER_FAILED": 7,
-      "SEMANTIC_OR_TARGET_REJECTED": 3,
       "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 1,
       "TEMPORAL_NOT_CURRENT": 3
     },
     "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 3,
       "CLAIM_REJECTED_BEFORE_SCORE": 11,
       "MAPPING_NOT_ACCEPTED": 11,
       "NO_ACCEPTED_CLAIM": 22,
@@ -2660,49 +2608,31 @@
       "NO_SCORE_ELIGIBLE_REAL_CLAIM": 17,
       "PRIMITIVE_GAP_UNSATISFIED": 17,
       "PRIMITIVE_MAPPING_REJECTED": 11,
-      "PROVIDER_ERROR_RECORDED": 7,
+      "PROVIDER_ERROR_RECORDED": 8,
       "PROVIDER_FAILED": 5,
-      "SEMANTIC_OR_TARGET_REJECTED": 3,
+      "SEMANTIC_OR_TARGET_REJECTED": 1,
       "SOURCE_CLASS_DOCUMENT_TYPE_MISMATCH": 2,
-      "TEMPORAL_NOT_CURRENT": 6
-    },
-    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": {
-      "ANCHOR_OR_LINEAGE_REJECTED": 4,
-      "CLAIM_REJECTED_BEFORE_SCORE": 6,
-      "MAPPING_NOT_ACCEPTED": 6,
-      "NO_ACCEPTED_CLAIM": 24,
-      "NO_CLAIM_EXTRACTED": 10,
-      "NO_FETCHED_DOCUMENT": 11,
-      "NO_SCORE_ELIGIBLE_REAL_CLAIM": 13,
-      "POLICY_REJECTED": 3,
-      "PRIMITIVE_GAP_UNSATISFIED": 13,
-      "PRIMITIVE_MAPPING_REJECTED": 6,
-      "PROVIDER_ERROR_RECORDED": 12,
-      "PROVIDER_FAILED": 8,
-      "SEMANTIC_OR_TARGET_REJECTED": 6,
-      "TEMPORAL_NOT_CURRENT": 6
+      "TEMPORAL_NOT_CURRENT": 7
     }
   },
   "source_task_primary_failure_axis_counts": {
-    "NO_CLAIM_EXTRACTED": 1,
-    "NO_FETCHED_DOCUMENT": 7,
-    "NO_SCORE_ELIGIBLE_REAL_CLAIM": 7,
-    "PRIMITIVE_GAP_UNSATISFIED": 87,
-    "PROVIDER_ERROR_RECORDED": 2
+    "NO_FETCHED_DOCUMENT": 3,
+    "NO_SCORE_ELIGIBLE_REAL_CLAIM": 5,
+    "PRIMITIVE_GAP_UNSATISFIED": 90,
+    "PROVIDER_ERROR_RECORDED": 1
   },
   "source_task_repair_hint_counts": {
-    "FETCH_DOCUMENT_WITH_DIRECT_OPERATING_TEXT": 1,
-    "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM": 7,
-    "FIND_FETCHABLE_ORIGINAL_SOURCE_OR_NARROW_SOURCE_CLASS": 7,
-    "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT": 87,
-    "FIX_PROVIDER_OR_MARK_EXTERNAL_SOURCE_BLOCKER": 2
+    "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM": 5,
+    "FIND_FETCHABLE_ORIGINAL_SOURCE_OR_NARROW_SOURCE_CLASS": 3,
+    "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT": 90,
+    "FIX_PROVIDER_OR_MARK_EXTERNAL_SOURCE_BLOCKER": 1
   },
-  "stagecourt_trace_seed_count": 21,
+  "stagecourt_trace_seed_count": 22,
   "status_counts": {
-    "ACCEPTED_CLAIM_NOT_CREATED": 83,
+    "ACCEPTED_CLAIM_NOT_CREATED": 77,
     "FULL_THESIS_PROMOTED": 6,
-    "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-    "STAGECOURT_READY_NOT_PROMOTED": 15
+    "SOURCE_TASK_NOT_EXECUTED": 9,
+    "STAGECOURT_READY_NOT_PROMOTED": 16
   },
   "status_counts_by_target_archetype": {
     "C01_ORDER_BACKLOG_MARGIN_BRIDGE": {
@@ -2731,15 +2661,13 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 2,
-      "FULL_THESIS_PROMOTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": {
       "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1,
-      "STAGECOURT_READY_NOT_PROMOTED": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C11_BATTERY_ORDERBOOK_RERATING": {
       "ACCEPTED_CLAIM_NOT_CREATED": 3
@@ -2754,7 +2682,8 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C15_MATERIAL_SPREAD_SUPERCYCLE": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": {
       "ACCEPTED_CLAIM_NOT_CREATED": 3
@@ -2781,6 +2710,10 @@
     "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": {
       "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 2,
+      "FULL_THESIS_PROMOTED": 1
+    },
     "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": {
       "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
@@ -2794,7 +2727,8 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 3
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "STAGECOURT_READY_NOT_PROMOTED": 2
     },
     "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
       "ACCEPTED_CLAIM_NOT_CREATED": 3
@@ -2806,17 +2740,16 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 3
+      "SOURCE_TASK_NOT_EXECUTED": 3
     },
     "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 2,
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "SOURCE_TASK_NOT_EXECUTED": 3
     },
     "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": {
       "ACCEPTED_CLAIM_NOT_CREATED": 3
     },
     "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 3
+      "SOURCE_TASK_NOT_EXECUTED": 3
     }
   },
   "status_counts_by_target_primitive_gap": {
@@ -2824,6 +2757,9 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "ampc_or_subsidy_capture": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
+    },
+    "approval_not_confirmed": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "approval_to_revenue_bridge": {
@@ -2836,9 +2772,12 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "auditor_or_disclosure_risk": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "balance_sheet_repair": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
+    },
+    "binary_event_unresolved": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "brand_customer_diversification": {
@@ -2854,7 +2793,7 @@
       "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "contract_cancelled_or_delayed": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "contract_duration_months": {
       "FULL_THESIS_PROMOTED": 1
@@ -2896,7 +2835,7 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "evidence_source_quality": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "ex_credit_margin": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
@@ -2923,7 +2862,7 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "inventory_cycle": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "inventory_spike": {
       "ACCEPTED_CLAIM_NOT_CREATED": 2
@@ -2947,7 +2886,7 @@
       "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "memory_price_increase_mentioned": {
-      "STAGECOURT_READY_NOT_PROMOTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "minority_cash_path": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
@@ -2956,7 +2895,7 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "named_customer_quality": {
-      "FULL_THESIS_PROMOTED": 1,
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
       "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "nrr": {
@@ -2966,7 +2905,7 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "operating_leverage_visible": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "order_backlog_to_sales": {
       "ACCEPTED_CLAIM_NOT_CREATED": 2,
@@ -2988,7 +2927,7 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "policy_headline_only": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "policy_or_regulatory_confirmed": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1,
@@ -3001,7 +2940,8 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "price_only_blowoff": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 2
+      "ACCEPTED_CLAIM_NOT_CREATED": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "pricing_power_confirmed": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
@@ -3034,7 +2974,7 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "restatement_risk": {
-      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "retention_or_renewal": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
@@ -3043,7 +2983,7 @@
       "FULL_THESIS_PROMOTED": 1
     },
     "revision_slowdown": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "roe": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
@@ -3055,7 +2995,7 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 2
     },
     "share_count_drift": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "spread_expansion": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1,
@@ -3065,7 +3005,7 @@
       "STAGECOURT_READY_NOT_PROMOTED": 1
     },
     "supply_discipline_mentioned": {
-      "STAGECOURT_READY_NOT_PROMOTED": 1
+      "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "supply_shortage": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
@@ -3077,10 +3017,13 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 1
     },
     "thesis_break_confirmed": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "SOURCE_TASK_NOT_EXECUTED": 1
     },
     "treasury_share_cancellation": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1
+    },
+    "trial_quality_visible": {
+      "FULL_THESIS_PROMOTED": 1
     },
     "utilization_rate": {
       "ACCEPTED_CLAIM_NOT_CREATED": 1,
@@ -3090,7 +3033,7 @@
       "ACCEPTED_CLAIM_NOT_CREATED": 2
     },
     "volume_growth_visible": {
-      "ACCEPTED_CLAIM_NOT_CREATED": 1
+      "STAGECOURT_READY_NOT_PROMOTED": 1
     }
   },
   "target_archetype_counts": {
@@ -3117,6 +3060,7 @@
     "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": 3,
     "C22_INSURANCE_RATE_CYCLE_RESERVE": 3,
     "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": 3,
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": 3,
     "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": 3,
     "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": 3,
     "C27_CONTENT_IP_GLOBAL_MONETIZATION": 3,
@@ -3133,16 +3077,18 @@
   "target_materialization_required_seed_count": 9,
   "target_materialization_status_counts": {
     "TARGET_MATERIALIZATION_REQUIRED": 9,
-    "TARGET_SYMBOL_READY": 96
+    "TARGET_SYMBOL_READY": 99
   },
   "target_primitive_gap_counts": {
     "ad_revenue_growth_pct": 1,
     "ampc_or_subsidy_capture": 1,
+    "approval_not_confirmed": 1,
     "approval_to_revenue_bridge": 1,
     "arpu_growth_pct": 1,
     "arr_growth_visible": 1,
     "auditor_or_disclosure_risk": 1,
     "balance_sheet_repair": 1,
+    "binary_event_unresolved": 1,
     "brand_customer_diversification": 1,
     "call_off_risk": 2,
     "cash_collection_visible": 1,
@@ -3222,16 +3168,18 @@
     "tender_offer_confirmed": 1,
     "thesis_break_confirmed": 1,
     "treasury_share_cancellation": 1,
+    "trial_quality_visible": 1,
     "utilization_rate": 2,
     "valuation_overheat": 2,
     "volume_growth_visible": 1
   },
   "target_symbol_mode_counts": {
     "ARCHETYPE_LEVEL_DISCOVERY": 9,
+    "RESEARCH_MEMORY_TARGET_CANDIDATE": 3,
     "SYMBOL_SPECIFIC": 96
   },
   "target_symbol_placeholder_rejected_count": 0,
-  "trace_row_count": 105,
+  "trace_row_count": 108,
   "verdict": "FAIL",
   "verdict_scope": "LEDGER_INTEGRITY_ONLY"
 }

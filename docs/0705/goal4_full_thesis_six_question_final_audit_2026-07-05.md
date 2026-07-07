@@ -4,6 +4,36 @@
 
 이 문서는 사용자가 요청한 6개 질문을 기준으로, 예전 `C05 10개` 산출물과 최신 `main` 산출물을 분리해서 정리한다.
 
+## 2026-07-07 최신 보정
+
+이 문서의 본문 중 `7개 full-thesis row` 숫자는 이전 runtime 산출물 기준이다.
+
+현재 기준으로는 아래 문서를 우선 봐야 한다.
+
+```text
+docs/0705/goal4_self_repair_attempt01_runtime_parity_audit_2026-07-07.md
+docs/operational/research_to_runtime_parity_matrix_2026-07-05.json
+```
+
+최신 self-repair 01 기준 핵심 숫자는 다음이다.
+
+```text
+final_status = MEANINGFUL_RUNTIME_PARITY_NOT_READY
+production_full_e2r_score_path_pass = true
+meaningful_full_thesis_evidence_pass = false
+archetype_balanced_full_thesis_pass = false
+
+full_thesis_row_count = 6
+distinct_full_thesis_archetype_count = 6
+c05_full_thesis_share = 0.166667
+
+required_positive_missing_full_thesis_row_count = 5
+green_gap_full_thesis_row_count = 5
+mandatory_archetype_full_thesis_missing = C08, C15, C28
+```
+
+즉 C05-only 문제는 해소됐지만, Goal4 완료는 아니다.
+
 핵심 결론:
 
 ```text

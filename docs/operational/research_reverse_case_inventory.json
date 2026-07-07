@@ -1,7 +1,7 @@
 {
   "archetype_count": 36,
   "documented_corpus_size": 2660,
-  "record_count": 11394,
+  "record_count": 11395,
   "records": [
     {
       "canonical_archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
@@ -61925,7 +61925,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-4b62ea43a17999a3389b",
+      "research_case_id": "RCASE-486cef2f0ecbd8c20e05",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -63818,7 +63818,7 @@
       "trigger_type": "contract_or_order"
     },
     {
-      "canonical_archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "canonical_archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
       "case_role": "positive",
       "company_name": null,
       "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
@@ -63826,19 +63826,20 @@
       "evidence_url_pending": false,
       "false_positive_patterns": [],
       "green_blockers": [],
-      "large_sector_id": "L8_PLATFORM_CONTENT_SW_SECURITY",
+      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
       "price_path_metrics": {},
       "primitive_bridge_missing": [
-        "ip_monetization_visible",
-        "repeat_revenue",
-        "user_retention",
-        "token_or_theme_hype_risk"
+        "customer_contract_visible",
+        "equipment_order_backlog",
+        "advanced_packaging_bottleneck",
+        "relative_strength_score",
+        "order_to_revenue_bridge"
       ],
       "primitive_bridge_positive": [
-        "global_launch_conversion"
+        "hbm_customer_order"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-0f60961359955ed63ae4",
+      "research_case_id": "RCASE-154615213daeee31a8c1",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR",
@@ -63852,7 +63853,7 @@
       "stage_cap_rules": [],
       "symbol": null,
       "trigger_date": null,
-      "trigger_type": "risk_or_accounting"
+      "trigger_type": "capacity_or_shortage"
     },
     {
       "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
@@ -64159,7 +64160,7 @@
         "order_backlog_to_sales"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2bcf4071f26d9fa6f311",
+      "research_case_id": "RCASE-0d026c0aa1c51c5f6b57",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "DART",
@@ -64199,7 +64200,7 @@
         "order_backlog_to_sales"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-3cf628c11fa78a09b531",
+      "research_case_id": "RCASE-826de14b37ab9dff8020",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "DART",
@@ -64239,7 +64240,7 @@
         "margin_bridge_visible"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-570a6004761dd4bd736d",
+      "research_case_id": "RCASE-38b24f278a61330a2ff4",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "DART",
@@ -64279,7 +64280,7 @@
         "revenue_visibility_contract"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-ad848feb59b5841a8c82",
+      "research_case_id": "RCASE-4a20610b464b17eb41e6",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "DART",
@@ -64299,7 +64300,7 @@
       "trigger_type": "contract_or_order"
     },
     {
-      "canonical_archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "canonical_archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "case_role": "4C",
       "company_name": null,
       "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
@@ -64307,24 +64308,57 @@
       "evidence_url_pending": false,
       "false_positive_patterns": [],
       "green_blockers": [],
-      "large_sector_id": "L2_AI_SEMICONDUCTOR_ELECTRONICS",
+      "large_sector_id": "L4_MATERIALS_SPREAD_RESOURCE",
       "price_path_metrics": {},
       "primitive_bridge_missing": [],
       "primitive_bridge_positive": [
-        "advanced_packaging_bottleneck",
-        "cycle_demand_visibility",
-        "cycle_to_revenue_bridge",
-        "end_market_demand_visibility",
-        "equipment_order_recovery",
         "fcf_quality_score",
-        "inventory_cycle_repair",
-        "memory_price_increase_mentioned",
-        "order_to_revenue_bridge",
-        "supply_demand_tightness",
-        "supply_discipline_mentioned"
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "spread_expansion",
+        "utilization_rate"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-460537220312afba6783",
+      "research_case_id": "RCASE-64712799cec96c8c68c8",
+      "runtime_score_eligible": false,
+      "runtime_source_route_hints": [
+        "DART",
+        "IssuerIR"
+      ],
+      "shadow_weight_only": true,
+      "source_file": "docs/operational/census_mode_v4_full_thesis_production_runner_audit.json",
+      "source_proxy_only": false,
+      "source_quality": "SHADOW_ONLY",
+      "source_urls": [],
+      "stage_cap_rules": [
+        "4b",
+        "4c"
+      ],
+      "symbol": null,
+      "trigger_date": null,
+      "trigger_type": "contract_or_order"
+    },
+    {
+      "canonical_archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "case_role": "4C",
+      "company_name": null,
+      "do_not_promote_reason": "price_path_outcome_not_runtime_prompt",
+      "evidence_family": "DART",
+      "evidence_url_pending": false,
+      "false_positive_patterns": [],
+      "green_blockers": [],
+      "large_sector_id": "L3_BATTERY_EV_GREEN_MOBILITY",
+      "price_path_metrics": {},
+      "primitive_bridge_missing": [],
+      "primitive_bridge_positive": [
+        "fcf_quality_score",
+        "mix_improvement",
+        "operating_leverage_visible",
+        "pricing_power_confirmed",
+        "volume_growth_visible"
+      ],
+      "production_scoring_changed": false,
+      "research_case_id": "RCASE-7f0ab52cf8713d09340f",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "DART",
@@ -64364,7 +64398,7 @@
         "subsidy_capture_visible"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2f7861b4b51b0fba3776",
+      "research_case_id": "RCASE-f1d257ffe73abe7924a3",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "DART",
@@ -64404,7 +64438,7 @@
         "order_backlog_to_sales"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-3c7c534ff7fc2a3ce9dc",
+      "research_case_id": "RCASE-c5e0e0d903c30cde6e36",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "BrokerReportPDF",
@@ -64420,12 +64454,10 @@
       "source_quality": "A2_URL_BACKED",
       "source_urls": [
         "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260602000220",
-        "https://kind.krx.co.kr/main.do",
-        "http://www.snkpress.kr/news/articleView.html?idxno=1922",
-        "https://www.thinkpool.com/compDiscuss/cont/1011404",
-        "https://wcomp.fnguide.com",
-        "https://www.genians.co.kr/hubfs/00genian/IR/20240328_Yuanta_Genians.pdf?hsLang=ko",
         "https://stock.pstatic.net/stock-research/industry/40/20241128_industry_454441000.pdf",
+        "https://wcomp.fnguide.com",
+        "https://kind.krx.co.kr/main.do",
+        "https://www.genians.co.kr/hubfs/00genian/IR/20240328_Yuanta_Genians.pdf?hsLang=ko",
         "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260514000837"
       ],
       "stage_cap_rules": [
@@ -65849,7 +65881,7 @@
         "contract_quality"
       ],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-a0a44c242ee045e083f4",
+      "research_case_id": "RCASE-191c0ec5cfcd116c9c23",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR",
@@ -65891,7 +65923,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-87f8a4ec29b70ed31033",
+      "research_case_id": "RCASE-e9ebd74dd8aaea3c108a",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR",
@@ -65933,7 +65965,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2618ffe1bd4c98b2f2cf",
+      "research_case_id": "RCASE-a4c68808045fd824db5a",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR",
@@ -67402,7 +67434,7 @@
       ],
       "primitive_bridge_positive": [],
       "production_scoring_changed": false,
-      "research_case_id": "RCASE-2bdfe09e97954130ae56",
+      "research_case_id": "RCASE-e0f8303754c9316bad90",
       "runtime_score_eligible": false,
       "runtime_source_route_hints": [
         "IssuerIR"
@@ -546556,7 +546588,7 @@
     "A2_URL_BACKED": 3150,
     "EVIDENCE_URL_PENDING": 185,
     "PRICE_PATH_ONLY": 2204,
-    "SHADOW_ONLY": 522,
+    "SHADOW_ONLY": 523,
     "SOURCE_PROXY_ONLY": 5314
   }
 }

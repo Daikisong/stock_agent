@@ -37,14 +37,14 @@
         "RCASE-097df3f2203b9490b8f8",
         "RCASE-0a7dceaec216528c83bb",
         "RCASE-0b280b4a965ff91fe7bd",
+        "RCASE-0d026c0aa1c51c5f6b57",
         "RCASE-0dafcbeb471c14838f71",
         "RCASE-0e9c7e5f2d0bf66e089b",
         "RCASE-0f6c0e36b8413b94e018",
         "RCASE-0f962d643419b5ebba37",
         "RCASE-1092d34d783d6ad913de",
         "RCASE-10fb236c9d09108dfb67",
-        "RCASE-115976445bd872702f4c",
-        "RCASE-1218de20531011e7ea4b"
+        "RCASE-115976445bd872702f4c"
       ],
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "canonical_mechanism": "industrial_backlog_margin_bridge",
@@ -767,7 +767,7 @@
         "RCASE-4557be33f2275d4ae18f"
       ],
       "source_family_success_examples": [
-        "RCASE-3c7c534ff7fc2a3ce9dc",
+        "RCASE-c5e0e0d903c30cde6e36",
         "RCASE-c0e312721f7010421dd9",
         "RCASE-b00a9d7b29be38d25575",
         "RCASE-b9a0c49419de5e0e7bc1",
@@ -1158,7 +1158,7 @@
         "order_backlog_to_sales"
       ],
       "url_backed_replay_cases": [
-        "RCASE-3c7c534ff7fc2a3ce9dc",
+        "RCASE-c5e0e0d903c30cde6e36",
         "RCASE-c0e312721f7010421dd9",
         "RCASE-b00a9d7b29be38d25575",
         "RCASE-b9a0c49419de5e0e7bc1",
@@ -2948,7 +2948,7 @@
         "RCASE-2bba6f512c39db971ca8",
         "RCASE-3e01ddf226c0982c822b",
         "RCASE-42c4d84a9637654d9387",
-        "RCASE-4b62ea43a17999a3389b",
+        "RCASE-486cef2f0ecbd8c20e05",
         "RCASE-4fa430ea978af9583875",
         "RCASE-504ee7d94bc84a4fe67b",
         "RCASE-50584e6eeacaa629722f",

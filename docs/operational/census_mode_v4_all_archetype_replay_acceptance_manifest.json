@@ -85,7 +85,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 6,
+      "accepted_claim_count": 4,
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",
@@ -277,7 +277,7 @@
       "source_replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY"
     },
     {
-      "accepted_claim_count": 5,
+      "accepted_claim_count": 6,
       "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "contract_present": true,
       "coverage_status": "stage_preview_ready",

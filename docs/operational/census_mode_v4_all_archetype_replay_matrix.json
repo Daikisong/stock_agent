@@ -246,21 +246,19 @@
       "url_backed_wiring_fixture_count": 0
     },
     {
-      "accepted_claim_count": 6,
+      "accepted_claim_count": 4,
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "contract_loaded": true,
       "contract_present": true,
-      "controlled_wiring_smoke_pass": true,
+      "controlled_wiring_smoke_pass": false,
       "external_source_backed_candidate_ids": [
         "RPLAY-387a616a78cbc34119d3",
         "RPLAY-f45a477a486d2f3e01ab",
         "RPLAY-998d8e240a346b248bd7"
       ],
       "external_source_backed_seed_candidate_count": 3,
-      "fixture_count": 1,
-      "full_thesis_symbols": [
-        "058470"
-      ],
+      "fixture_count": 0,
+      "full_thesis_symbols": [],
       "guard_case_count": 1,
       "guard_case_pass_count": 1,
       "guard_replay_basis": "c08_source_backed_semantic_replay",
@@ -272,7 +270,7 @@
       "replay_scope": "source_backed_semantic_replay",
       "replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
       "required_before_goal_completion": true,
-      "score_contribution_count": 6,
+      "score_contribution_count": 0,
       "semantic_blockers": [],
       "source_backed_fixture_count": 4,
       "source_backed_replay_symbols": [
@@ -280,7 +278,7 @@
       ],
       "source_proxy_leak_count": 0,
       "unsupported_reason": null,
-      "url_backed_wiring_fixture_count": 1
+      "url_backed_wiring_fixture_count": 0
     },
     {
       "accepted_claim_count": 0,
@@ -785,19 +783,21 @@
       "url_backed_wiring_fixture_count": 0
     },
     {
-      "accepted_claim_count": 5,
+      "accepted_claim_count": 6,
       "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "contract_loaded": true,
       "contract_present": true,
-      "controlled_wiring_smoke_pass": false,
+      "controlled_wiring_smoke_pass": true,
       "external_source_backed_candidate_ids": [
         "RPLAY-e8c3226596e8da7f3db8",
         "RPLAY-db4d394cff34a673dc59",
         "RPLAY-df585429523a163e5ba6"
       ],
       "external_source_backed_seed_candidate_count": 3,
-      "fixture_count": 0,
-      "full_thesis_symbols": [],
+      "fixture_count": 1,
+      "full_thesis_symbols": [
+        "000100"
+      ],
       "guard_case_count": 1,
       "guard_case_pass_count": 1,
       "guard_replay_basis": "c24_source_backed_semantic_replay",
@@ -809,7 +809,7 @@
       "replay_scope": "source_backed_semantic_replay",
       "replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
       "required_before_goal_completion": true,
-      "score_contribution_count": 0,
+      "score_contribution_count": 5,
       "semantic_blockers": [],
       "source_backed_fixture_count": 5,
       "source_backed_replay_symbols": [
@@ -818,7 +818,7 @@
       ],
       "source_proxy_leak_count": 0,
       "unsupported_reason": null,
-      "url_backed_wiring_fixture_count": 0
+      "url_backed_wiring_fixture_count": 1
     },
     {
       "accepted_claim_count": 0,
@@ -1727,14 +1727,14 @@
   "missing_required_archetype_count": 0,
   "missing_required_archetype_ids": [],
   "note": "Controlled wiring smoke proves the leaf path can carry URL anchors and ScoreContribution rows. It is not source-backed semantic replay until contract-blind extraction, lifecycle adjudication, and guard replay all pass.",
-  "replay_acceptance_manifest_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_acceptance_manifest.json",
-  "replay_gap_plan_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_gap_plan.json",
+  "replay_acceptance_manifest_path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/all_archetype_replay_acceptance_manifest.json",
+  "replay_gap_plan_path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/all_archetype_replay_gap_plan.json",
   "replay_gap_plan_task_count": 0,
   "replay_gap_rule": "SOURCE_GAP_PENDING archetypes are exported only as planner-input source repair tasks. These rows cannot score or promote Stage; LLM planner must generate bounded queries and source-backed Evidence OS claims before the replay matrix can pass.",
   "replay_gap_seed_event_count": 0,
-  "replay_gap_seed_event_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_gap_seed_events.jsonl",
+  "replay_gap_seed_event_path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/all_archetype_replay_gap_seed_events.jsonl",
   "replay_gap_source_task_count": 0,
-  "replay_gap_source_task_path": "output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3/all_archetype_replay_gap_source_tasks.jsonl",
+  "replay_gap_source_task_path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z/all_archetype_replay_gap_source_tasks.jsonl",
   "required_archetype_count": 32,
   "schema_version": "e2r_census_v4_all_archetype_replay_matrix_v1",
   "source_backed_ready_count": 36,

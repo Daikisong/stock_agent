@@ -17,13 +17,13 @@
       "required_positive_missing_on_promoted_rows",
       "green_gap_on_promoted_rows"
     ],
-    "green_gap_row_count": 6,
+    "green_gap_row_count": 5,
     "meaningful_full_thesis_evidence_pass": false,
     "meaningful_label": "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE",
     "operator_note": "PRODUCTION_FULL_E2R_SCORE_PATH_PASS는 채점 경로가 닫혔다는 뜻이고, MEANINGFUL_FULL_THESIS_EVIDENCE_PASS만 필수 증거가 닫힌 운영 thesis를 뜻한다.",
     "production_full_e2r_score_path_pass": true,
     "production_full_thesis_row_count": 6,
-    "required_positive_missing_row_count": 6,
+    "required_positive_missing_row_count": 5,
     "score_path_label": "PRODUCTION_FULL_E2R_SCORE_PATH_PASS",
     "score_path_only_not_meaningful": true
   },
@@ -56,7 +56,7 @@
     {
       "blocker": "hard_gate_config_not_enabled",
       "evidence": {
-        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-07-goal4-all-archetype-next-runtime-attempt-seed-feedback-v3 --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 105 --brain-planner-success-limit 105 --brain-planner-batch-size 1 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 35 --brain-max-distinct-candidate-attempts 105 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 14400.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",
+        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 108 --brain-planner-success-limit 108 --brain-planner-batch-size 1 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 108 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 14400.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",
         "fail_on_atomic_mismatch": true,
         "fail_on_critical_audit": true,
         "fail_on_run_mode_overclaim": true,
@@ -103,8 +103,8 @@
         "raw_contribution_fallback_as_verified_score_count": 0,
         "score_scope_distribution": {
           "BRAIN_OFFICIAL_CLAIM_BACKED_PARTIAL": 1,
-          "BRAIN_WEB_CLAIM_BACKED_PARTIAL": 1,
-          "EVENT_WEIGHTED_PARTIAL": 64,
+          "BRAIN_WEB_CLAIM_BACKED_PARTIAL": 2,
+          "EVENT_WEIGHTED_PARTIAL": 63,
           "FULL_E2R_100": 6,
           "NO_SCORE": 3319
         },
@@ -127,8 +127,8 @@
         "source_pending_marked_red_count": 0,
         "stage_scope_distribution": {
           "BRAIN_OFFICIAL_PARTIAL": 1,
-          "BRAIN_WEB_PARTIAL": 1,
-          "CENSUS_EVENT_BOARD": 3383,
+          "BRAIN_WEB_PARTIAL": 2,
+          "CENSUS_EVENT_BOARD": 3382,
           "FULL_THESIS": 6
         }
       },
@@ -153,8 +153,8 @@
       "blocker": "source_task_satisfaction_not_pass",
       "evidence": {
         "primitive_state_chain_verdict": "PASS",
-        "representative_score_claim_count": 77,
-        "source_task_chain_closed_to_representative_stage_count": 110,
+        "representative_score_claim_count": 79,
+        "source_task_chain_closed_to_representative_stage_count": 114,
         "source_task_satisfaction_verdict": "PASS_LEDGER_REFRESH_SOURCE_TASK_SATISFACTION"
       },
       "gate_id": "SOURCE_TASK_SATISFACTION_PASS",
@@ -193,7 +193,7 @@
         ],
         "full_thesis_required_source_class_count": 11,
         "full_thesis_task_executable_source_path_pass_allowed": true,
-        "full_thesis_task_with_blocking_source_class_count": 107,
+        "full_thesis_task_with_blocking_source_class_count": 103,
         "missing_connector_source_classes": [
           "BrokerReportPDF",
           "IndustryMedia",
@@ -353,14 +353,14 @@
       "evidence": {
         "critical_count": 48,
         "full_thesis_promoted_seed_count": 6,
-        "seed_event_count": 105,
+        "seed_event_count": 108,
         "status_counts": {
-          "ACCEPTED_CLAIM_NOT_CREATED": 83,
+          "ACCEPTED_CLAIM_NOT_CREATED": 77,
           "FULL_THESIS_PROMOTED": 6,
-          "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-          "STAGECOURT_READY_NOT_PROMOTED": 15
+          "SOURCE_TASK_NOT_EXECUTED": 9,
+          "STAGECOURT_READY_NOT_PROMOTED": 16
         },
-        "trace_row_count": 105,
+        "trace_row_count": 108,
         "verdict": "FAIL"
       },
       "gate_id": "FULL_THESIS_SEED_MATERIALIZATION_AUDIT_PASS",
@@ -373,12 +373,12 @@
       "evidence": {
         "critical_count": 48,
         "full_thesis_promoted_seed_count": 6,
-        "seed_event_count": 105,
+        "seed_event_count": 108,
         "status_counts": {
-          "ACCEPTED_CLAIM_NOT_CREATED": 83,
+          "ACCEPTED_CLAIM_NOT_CREATED": 77,
           "FULL_THESIS_PROMOTED": 6,
-          "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
-          "STAGECOURT_READY_NOT_PROMOTED": 15
+          "SOURCE_TASK_NOT_EXECUTED": 9,
+          "STAGECOURT_READY_NOT_PROMOTED": 16
         },
         "verdict": "FAIL"
       },
@@ -391,8 +391,8 @@
       "blocker": "brain_web_evidence_pass_false",
       "evidence": {
         "brain_web_evidence_pass_allowed": true,
-        "llm_claim_extractor_attempt_count": 134,
-        "llm_planner_call_count": 105,
+        "llm_claim_extractor_attempt_count": 112,
+        "llm_planner_call_count": 108,
         "minimum_required_counts": {
           "llm_claim_extractor_attempt_count": 10,
           "llm_planner_call_count": 30,
@@ -405,8 +405,8 @@
         "operational_minimum_count_gate_applies": true,
         "verdict": "READY_FOR_BRAIN_WEB_EVIDENCE_PASS",
         "web_fetched_document_count": 112,
-        "web_or_llm_accepted_claim_count": 43,
-        "web_search_call_count": 121,
+        "web_or_llm_accepted_claim_count": 57,
+        "web_search_call_count": 128,
         "web_search_task_count": 128
       },
       "gate_id": "BRAIN_WEB_EVIDENCE_PASS",
