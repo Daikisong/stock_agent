@@ -147,9 +147,9 @@
     "ReportPDF",
     "TrustedNews"
   ],
-  "full_thesis_requirement_row_count": 1133,
+  "full_thesis_requirement_row_count": 1265,
   "full_thesis_task_executable_source_path_pass_allowed": true,
-  "full_thesis_task_with_blocking_source_class_count": 103,
+  "full_thesis_task_with_blocking_source_class_count": 115,
   "full_thesis_task_with_blocking_source_class_ids": [
     "000660",
     "001360",
@@ -170,6 +170,7 @@
     "010960",
     "011200",
     "012450",
+    "017670",
     "024110",
     "026910",
     "028100",
@@ -199,10 +200,9 @@
     "103590",
     "104040",
     "114450",
-    "126720",
-    "137940"
+    "126720"
   ],
-  "full_thesis_task_with_nonexecutable_source_class_count": 103,
+  "full_thesis_task_with_nonexecutable_source_class_count": 115,
   "full_thesis_task_with_nonexecutable_source_class_ids": [
     "000660",
     "001360",
@@ -223,6 +223,7 @@
     "010960",
     "011200",
     "012450",
+    "017670",
     "024110",
     "026910",
     "028100",
@@ -252,11 +253,11 @@
     "103590",
     "104040",
     "114450",
-    "126720",
-    "137940"
+    "126720"
   ],
   "missing_connector_source_classes": [
     "BrokerReportPDF",
+    "CompanyFiling",
     "IndustryMedia",
     "IssuerOfficial"
   ],
@@ -277,11 +278,11 @@
     "NaverSearch",
     "ReportPDF"
   ],
-  "requirement_row_count": 6910,
+  "requirement_row_count": 7284,
   "rule": "This audit is static and does not call external providers. It prevents full-thesis readiness from passing when a source class required by the full-thesis refresh queue is only a placeholder, snapshot-only connector, has no registered production connector, and is not covered by the bounded live SourceAcquisitionRunnerV4 path. A live fetch still needs separate SourceTaskExecution evidence. blocking_full_thesis_task_count means no executable source class path exists for that task; full_thesis_task_with_blocking_source_class_count means the task mentions at least one non-executable source class but may still have executable alternatives.",
   "run_mode": "BRAIN_AND_WEB_ACQUISITION_ENABLED",
   "schema_version": "e2r_census_v4_source_connector_capability_audit_v1",
-  "source_class_count": 14,
+  "source_class_count": 15,
   "source_classes": [
     {
       "acquisition_capability_scope": null,
@@ -296,7 +297,7 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 141,
+      "required_by_any_task_count": 101,
       "required_by_full_thesis_task_count": 0
     },
     {
@@ -327,14 +328,30 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": false,
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 526,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 554,
+      "required_by_full_thesis_task_count": 115
+    },
+    {
+      "acquisition_capability_scope": null,
+      "acquisition_capability_status": null,
+      "acquisition_score_evidence_rule": null,
+      "blocking_full_thesis": false,
+      "canonical_source_class": "CompanyFiling",
+      "capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
+      "connector_classes": [],
+      "full_thesis_task_ids": [],
+      "non_executable_full_thesis_source_class": false,
+      "provider_names": [],
+      "registered_connector_count": 0,
+      "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
+      "required_by_any_task_count": 3,
+      "required_by_full_thesis_task_count": 0
     },
     {
       "acquisition_capability_scope": null,
@@ -366,7 +383,7 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": false,
       "provider_names": [
@@ -374,8 +391,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "LIVE_FETCH_IMPLEMENTED",
-      "required_by_any_task_count": 796,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 805,
+      "required_by_full_thesis_task_count": 115
     },
     {
       "acquisition_capability_scope": "issuer homepage/domain authority from CompanyGuide snapshot or as-of-safe issuer official domain registry",
@@ -405,14 +422,14 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": false,
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 460,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 493,
+      "required_by_full_thesis_task_count": 115
     },
     {
       "acquisition_capability_scope": null,
@@ -444,7 +461,7 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": false,
       "provider_names": [
@@ -452,8 +469,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "LIVE_FETCH_IMPLEMENTED",
-      "required_by_any_task_count": 1080,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 1117,
+      "required_by_full_thesis_task_count": 115
     },
     {
       "acquisition_capability_scope": "generic web query intent executed through bounded search provider and PageFetcher",
@@ -483,14 +500,14 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": false,
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 103,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 115,
+      "required_by_full_thesis_task_count": 115
     },
     {
       "acquisition_capability_scope": null,
@@ -505,7 +522,7 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 41,
+      "required_by_any_task_count": 48,
       "required_by_full_thesis_task_count": 0
     },
     {
@@ -538,7 +555,7 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": true,
       "provider_names": [
@@ -546,8 +563,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "PLACEHOLDER_PROVIDER_FAILED",
-      "required_by_any_task_count": 1001,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 1087,
+      "required_by_full_thesis_task_count": 115
     },
     {
       "acquisition_capability_scope": null,
@@ -562,7 +579,7 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 469,
+      "required_by_any_task_count": 546,
       "required_by_full_thesis_task_count": 0
     },
     {
@@ -595,7 +612,7 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": false,
       "provider_names": [
@@ -603,8 +620,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "LIVE_FETCH_IMPLEMENTED",
-      "required_by_any_task_count": 855,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 916,
+      "required_by_full_thesis_task_count": 115
     },
     {
       "acquisition_capability_scope": null,
@@ -636,7 +653,7 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": false,
       "provider_names": [
@@ -644,8 +661,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "LIVE_FETCH_IMPLEMENTED",
-      "required_by_any_task_count": 445,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 451,
+      "required_by_full_thesis_task_count": 115
     },
     {
       "acquisition_capability_scope": "NaverFreeSearchProvider plus PageFetcher with task max_queries/max_candidates/max_fetches",
@@ -675,14 +692,14 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": false,
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 142,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 151,
+      "required_by_full_thesis_task_count": 115
     },
     {
       "acquisition_capability_scope": "ReportPDF requests can be satisfied by verified BrokerReportPublicPDF original documents",
@@ -712,14 +729,14 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": false,
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 421,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 436,
+      "required_by_full_thesis_task_count": 115
     },
     {
       "acquisition_capability_scope": "trusted/news source tasks can be executed through bounded search provider and PageFetcher",
@@ -751,7 +768,7 @@
         "010960",
         "011200",
         "012450",
-        "024110"
+        "017670"
       ],
       "non_executable_full_thesis_source_class": false,
       "provider_names": [
@@ -759,8 +776,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "PLACEHOLDER_PROVIDER_FAILED",
-      "required_by_any_task_count": 430,
-      "required_by_full_thesis_task_count": 103
+      "required_by_any_task_count": 461,
+      "required_by_full_thesis_task_count": 115
     }
   ],
   "source_connector_capability_pass_allowed": true,

@@ -262,7 +262,7 @@
         "CLM-9d0e270b5c0ab656cdf4"
       ],
       "accepted_official_claim_count": 1,
-      "accepted_web_llm_claim_count": 1,
+      "accepted_web_llm_claim_count": 0,
       "additional_stage_decision_ids": [],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "as_of_date": "2026-07-01",
@@ -274,7 +274,7 @@
       "blocked_claim_ids": [],
       "blocked_primitive_state_ids": [],
       "blocked_score_contribution_ids": [],
-      "brain_partial_evidence_lane": "web_llm",
+      "brain_partial_evidence_lane": "official",
       "candidate_event_count": 7,
       "candidate_event_id": "CEV4-RTATTEMPT-7f33db04360ffa26109b",
       "candidate_event_ids": [
@@ -283,8 +283,8 @@
         "REP-5851054b5558c66337",
         "RMH-CLM-9aaf6a921e683a2ee9b4",
         "CEV4-RTATTEMPT-91c6a0e1b2fb0fbdcaf2",
-        "CEV4-RTATTEMPT-7f33db04360ffa26109b",
-        "CEV4-RTATTEMPT-dd31858583100a02119b"
+        "CEV4-RTATTEMPT-dd31858583100a02119b",
+        "CEV4-RTATTEMPT-7f33db04360ffa26109b"
       ],
       "candidate_event_scope": "CANDIDATE_EVENTS_PRESENT",
       "canonical_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
@@ -293,7 +293,7 @@
       "census_assessment_event_id": "CAE-d3ef5441479cf6f13f68",
       "census_assessment_event_score_evidence_allowed": false,
       "census_assessment_event_type": "CensusAssessmentEvent",
-      "census_stage_status_id": "CSS-BRAIN-9d41f2b062fca0ac6c73",
+      "census_stage_status_id": "CSS-BRAIN-517805c924c9b6cb2363",
       "census_status": "FULL_THESIS_VERIFIED",
       "census_status_display": "FULL_THESIS_FULL_THESIS_VERIFIED",
       "claim_backed_score_ratio": 1.0,
@@ -352,7 +352,8 @@
           ],
           "linked": true,
           "source_task_ids": [
-            "RTTASK-7f33db04360ffa26109b-official-ir-revenue-visibility-contract",
+            "RTTASK-7f33db04360ffa26109b-ir-revenue-visibility-contract",
+            "RTTASK-7f33db04360ffa26109b-counter-claim-contract-not-secured",
             "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87"
           ]
         }
@@ -363,7 +364,8 @@
       "full_thesis_source_pending_required_gap_primitives": [],
       "full_thesis_source_stage": "0",
       "full_thesis_source_task_ids": [
-        "RTTASK-7f33db04360ffa26109b-official-ir-revenue-visibility-contract",
+        "RTTASK-7f33db04360ffa26109b-ir-revenue-visibility-contract",
+        "RTTASK-7f33db04360ffa26109b-counter-claim-contract-not-secured",
         "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87"
       ],
       "full_thesis_stage": "0",
@@ -377,8 +379,8 @@
         "REP-5851054b5558c66337",
         "RMH-CLM-9aaf6a921e683a2ee9b4",
         "CEV4-RTATTEMPT-91c6a0e1b2fb0fbdcaf2",
-        "CEV4-RTATTEMPT-7f33db04360ffa26109b",
-        "CEV4-RTATTEMPT-dd31858583100a02119b"
+        "CEV4-RTATTEMPT-dd31858583100a02119b",
+        "CEV4-RTATTEMPT-7f33db04360ffa26109b"
       ],
       "investigation_status": "COMPLETE",
       "investigation_status_display": "FULL_THESIS_COMPLETE",
@@ -404,12 +406,14 @@
       "official_evidence_document_ids": [
         "DOC-d78e3500c9e0882567b5"
       ],
-      "official_source_task_count": 5,
+      "official_source_task_count": 7,
       "official_source_task_ids": [
-        "RTTASK-7f33db04360ffa26109b-official-ir-revenue-visibility-contract",
+        "RTTASK-7f33db04360ffa26109b-ir-revenue-visibility-contract",
+        "RTTASK-7f33db04360ffa26109b-counter-claim-contract-not-secured",
         "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87",
-        "RTTASK-91c6a0e1b2fb0fbdcaf2-ir-customer-allocation",
+        "RTTASK-91c6a0e1b2fb0fbdcaf2-c06-ir-customer-allocation",
         "RSTASKV4DARTSTATUS-775faf32c9723d4d6270f491",
+        "RTTASK-dd31858583100a02119b-official-ir-hbm-capacity",
         "RSTASKV4DARTSTATUS-c6eb18b58c173c5665029e3a"
       ],
       "operator_scope_note": "full_thesis_operational_stage",
@@ -458,7 +462,7 @@
       "score_valid_status": "FINAL",
       "score_valid_status_display": "FULL_THESIS_FINAL",
       "secondary_archetypes": [],
-      "semantic_guard_class": "brain_web_claim_backed_partial",
+      "semantic_guard_class": "brain_official_claim_backed_partial",
       "semantic_guard_reasons": [],
       "semantic_guard_status": "PASS",
       "source_gaps": [],

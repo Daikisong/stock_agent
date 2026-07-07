@@ -16,8 +16,8 @@ class FullThesisEvidenceCompletionSplitTests(unittest.TestCase):
 
     def test_required_positive_and_green_gaps_block_meaningful_pass(self) -> None:
         self.assertEqual(self.audit["full_thesis_row_count"], 6)
-        self.assertEqual(self.audit["required_positive_missing_full_thesis_row_count"], 5)
-        self.assertEqual(self.audit["green_gap_full_thesis_row_count"], 5)
+        self.assertEqual(self.audit["required_positive_missing_full_thesis_row_count"], 6)
+        self.assertEqual(self.audit["green_gap_full_thesis_row_count"], 6)
         self.assertIn("REQUIRED_POSITIVE_MISSING_ON_PROMOTED_ROWS", self.audit["blockers"])
         self.assertIn("GREEN_GAP_ON_PROMOTED_ROWS", self.audit["blockers"])
         self.assertIn("MANDATORY_ARCHETYPE_FULL_THESIS_ROW_MISSING", self.audit["blockers"])

@@ -7,59 +7,55 @@
   "controlled_smoke_substitution_allowed": false,
   "controlled_smoke_substitution_rejected_count": 0,
   "controlled_smoke_symbols": [],
-  "full_thesis_refresh_queue_candidate_count": 81,
+  "full_thesis_refresh_queue_candidate_count": 82,
   "full_thesis_row_count": 6,
   "full_thesis_smoke_mode": "disabled",
   "incomplete_production_full_thesis_row_count": 0,
   "production_full_thesis_final_with_source_pending_gap_count": 0,
   "production_full_thesis_row_count": 6,
   "production_full_thesis_row_with_blocking_required_gap_primitives_count": 0,
-  "production_full_thesis_row_with_green_gap_primitives_count": 5,
+  "production_full_thesis_row_with_green_gap_primitives_count": 6,
   "production_full_thesis_row_with_legacy_missing_primitives_count": 0,
   "production_full_thesis_row_with_missing_required_primitives_count": 0,
-  "production_full_thesis_row_with_required_positive_missing_primitives_count": 5,
+  "production_full_thesis_row_with_required_positive_missing_primitives_count": 6,
   "production_green_stage_row_with_green_gap_count": 0,
   "production_mode_requested": true,
   "production_pass_allowed": false,
   "production_runner_implemented": true,
   "production_symbols": [
-    "000100",
+    "001390",
     "003380",
     "005930",
-    "011170",
     "047810",
-    "052400"
+    "052400",
+    "058470"
   ],
   "production_symbols_without_blocking_required_gap_primitives": [
-    "000100",
+    "001390",
     "003380",
     "005930",
-    "011170",
     "047810",
-    "052400"
+    "052400",
+    "058470"
   ],
-  "production_symbols_without_green_gap_primitives": [
-    "000100"
-  ],
+  "production_symbols_without_green_gap_primitives": [],
   "production_symbols_without_legacy_missing_primitives": [
-    "000100",
+    "001390",
     "003380",
     "005930",
-    "011170",
     "047810",
-    "052400"
+    "052400",
+    "058470"
   ],
   "production_symbols_without_missing_required_primitives": [
-    "000100",
+    "001390",
     "003380",
     "005930",
-    "011170",
     "047810",
-    "052400"
+    "052400",
+    "058470"
   ],
-  "production_symbols_without_required_positive_missing_primitives": [
-    "000100"
-  ],
+  "production_symbols_without_required_positive_missing_primitives": [],
   "provider_failed_green_gap_final_score_count": 0,
   "required_smoke_symbols": [
     "005930",

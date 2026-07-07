@@ -60,6 +60,7 @@ class ResearchReverseCaseExtractorTests(unittest.TestCase):
         self.assertNotIn("docs/0705/goal4_manifest_runtime_attempt_patched_v2_final_audit_2026-07-05.md", files)
         self.assertNotIn("docs/0705/goal4_research_memory_target_materialization_plan_2026-07-05.md", files)
         self.assertNotIn("docs/0705/goal4_source_lineage_repair_audit_2026-07-08.md", files)
+        self.assertNotIn("docs/0705/goal4_research_memory_symbol_support_provenance_2026-07-08.md", files)
 
 
 if __name__ == "__main__":

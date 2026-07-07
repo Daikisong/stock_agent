@@ -667,6 +667,34 @@ def _research_memory_target_candidates(
     return candidates[:max_symbols]
 
 
+def _research_memory_support_for_symbols(
+    *,
+    archetype_id: str,
+    card: Mapping[str, Any],
+    case_inventory: Mapping[str, Any] | None,
+    symbols: Iterable[str | None],
+) -> list[dict[str, Any]]:
+    """Attach research-memory provenance to already materialized symbols.
+
+    The status matrix may already contain a real symbol because an earlier
+    next-attempt plan materialized it.  Keep that row SYMBOL_SPECIFIC, but
+    retain the research-memory support so later runs can audit why that symbol
+    was selected.  This still does not make the research case score evidence.
+    """
+
+    real_symbols = [str(symbol) for symbol in symbols if symbol and not is_placeholder_symbol(symbol)]
+    if not real_symbols:
+        return []
+    candidates = _research_memory_target_candidates(
+        archetype_id=archetype_id,
+        card=card,
+        case_inventory=case_inventory,
+        max_symbols=max(10, len(real_symbols) * 3),
+    )
+    by_symbol = {str(candidate["symbol"]): candidate for candidate in candidates}
+    return [by_symbol[symbol] for symbol in real_symbols if symbol in by_symbol]
+
+
 def build_all_archetype_next_runtime_attempt_plan(
     *,
     status_matrix: Mapping[str, Any],
@@ -695,6 +723,7 @@ def build_all_archetype_next_runtime_attempt_plan(
         attempt_id = _stable_id("RTATTEMPT", as_of_date, archetype_id, proof_status)
         symbols = _symbols_for_attempt(row)
         target_candidates: list[dict[str, Any]] = []
+        target_symbol_research_memory_support: list[dict[str, Any]] = []
         target_symbol_mode = "SYMBOL_SPECIFIC" if symbols != [None] else "ARCHETYPE_LEVEL_DISCOVERY"
         if symbols == [None]:
             target_candidates = _research_memory_target_candidates(
@@ -706,6 +735,16 @@ def build_all_archetype_next_runtime_attempt_plan(
             if target_candidates:
                 symbols = [candidate["symbol"] for candidate in target_candidates]
                 target_symbol_mode = "RESEARCH_MEMORY_TARGET_CANDIDATE"
+        else:
+            target_symbol_research_memory_support = _research_memory_support_for_symbols(
+                archetype_id=archetype_id,
+                card=card,
+                case_inventory=case_inventory,
+                symbols=symbols,
+            )
+        research_support_by_symbol = {
+            candidate["symbol"]: candidate for candidate in target_symbol_research_memory_support
+        }
         candidate_by_symbol = {candidate["symbol"]: candidate for candidate in target_candidates}
         primary_failure_mode = _claim_failure_primary_mode(row)
         repair_hint = _claim_failure_repair_hint(row, primary_failure_mode)
@@ -743,6 +782,8 @@ def build_all_archetype_next_runtime_attempt_plan(
                 "target_symbol_mode": target_symbol_mode,
                 "target_symbols": [symbol for symbol in symbols if symbol],
                 "target_materialization_candidates": target_candidates,
+                "target_symbol_research_memory_support": target_symbol_research_memory_support,
+                "target_symbol_research_memory_support_count": len(target_symbol_research_memory_support),
                 "requires_target_materialization_before_scoring": symbols == [None],
                 "requires_current_source_confirmation_before_scoring": True,
                 "primitive_attempts": primitives,
@@ -773,11 +814,15 @@ def build_all_archetype_next_runtime_attempt_plan(
             for symbol in symbols:
                 task_id = _stable_id("RTTASK", as_of_date, archetype_id, primitive, symbol or "DISCOVERY")
                 task_target_symbol_mode = target_symbol_mode if symbol else "ARCHETYPE_LEVEL_DISCOVERY"
-                materialization_candidate = candidate_by_symbol.get(str(symbol)) if symbol else None
+                materialization_candidate = (
+                    candidate_by_symbol.get(str(symbol)) or research_support_by_symbol.get(str(symbol))
+                    if symbol
+                    else None
+                )
                 if materialization_candidate:
                     query_intents = [
                         (
-                            f"Research memory materialized `{symbol}` as a candidate target for "
+                            f"Research memory supports `{symbol}` as a candidate target for "
                             f"`{archetype_id}` from case ids {materialization_candidate['support_case_ids']}. "
                             "Treat this only as a target candidate. Ask the LLM planner for bounded "
                             f"official-first queries that verify current, direct target-company evidence "
@@ -856,6 +901,7 @@ def build_all_archetype_next_runtime_attempt_plan(
                     "requires_target_materialization_before_scoring": symbol is None,
                     "requires_current_source_confirmation_before_scoring": True,
                     "target_materialization_candidate": materialization_candidate,
+                    "target_symbol_research_memory_support": materialization_candidate,
                     "archetype_id": archetype_id,
                     "primitive_gap": primitive,
                     "current_runtime_parity_proof_status": proof_status,
@@ -916,6 +962,7 @@ def build_all_archetype_next_runtime_attempt_plan(
                         "symbol": symbol,
                         "target_symbol_mode": task_target_symbol_mode,
                         "target_materialization_candidate": materialization_candidate,
+                        "target_symbol_research_memory_support": materialization_candidate,
                         "target_archetype": archetype_id,
                         "target_archetype_status": "RUNTIME_PARITY_FOLLOW_UP_REQUIRED",
                         "primitive_gap": primitive,
@@ -947,6 +994,7 @@ def build_all_archetype_next_runtime_attempt_plan(
                             "primitive_gap": primitive,
                             "target_symbol_mode": task_target_symbol_mode,
                             "target_materialization_candidate": materialization_candidate,
+                            "target_symbol_research_memory_support": materialization_candidate,
                             "requires_current_source_confirmation_before_scoring": True,
                             "seed_role": "planner_input_only",
                             "follow_up_origin": "all_archetype_runtime_status_matrix",
@@ -1012,6 +1060,20 @@ def build_all_archetype_next_runtime_attempt_plan(
     materialized_candidate_rows = [
         row for row in plan_rows if row.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
     ]
+    research_memory_supported_symbol_rows = [
+        row for row in plan_rows if row.get("target_symbol_research_memory_support_count", 0) > 0
+    ]
+    research_memory_supported_symbol_tasks = [
+        task
+        for task in source_tasks
+        if task.get("target_symbol_mode") == "SYMBOL_SPECIFIC" and task.get("target_symbol_research_memory_support")
+    ]
+    research_memory_target_candidate_tasks = [
+        task
+        for task in source_tasks
+        if task.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
+        and task.get("target_materialization_candidate")
+    ]
     return {
         "schema_version": "e2r_all_archetype_next_runtime_attempt_plan_v1",
         "as_of_date": as_of_date,
@@ -1038,10 +1100,15 @@ def build_all_archetype_next_runtime_attempt_plan(
             int((row.get("source_lineage_repair_summary") or {}).get("route_only_candidate_count") or 0)
             for row in plan_rows
         ),
-        "research_memory_target_materialized_archetype_count": len(materialized_candidate_rows),
+        "research_memory_supported_symbol_specific_archetype_count": len(research_memory_supported_symbol_rows),
+        "research_memory_supported_symbol_specific_task_count": len(research_memory_supported_symbol_tasks),
+        "research_memory_target_materialized_archetype_count": len(materialized_candidate_rows)
+        + len(research_memory_supported_symbol_rows),
         "research_memory_target_materialized_task_count": sum(
             1 for task in source_tasks if task.get("target_symbol_mode") == "RESEARCH_MEMORY_TARGET_CANDIDATE"
-        ),
+        )
+        + len(research_memory_supported_symbol_tasks),
+        "research_memory_target_candidate_task_count": len(research_memory_target_candidate_tasks),
         "target_materialization_unresolved_archetype_count": sum(
             1 for row in plan_rows if row.get("requires_target_materialization_before_scoring") is True
         ),
@@ -1099,8 +1166,11 @@ def render_all_archetype_next_runtime_attempt_plan_markdown(plan: Mapping[str, A
         f"- source_lineage_retry_task_count: `{plan.get('source_lineage_retry_task_count', 0)}`",
         f"- source_lineage_current_code_verified_retry_candidate_count: `{plan.get('source_lineage_current_code_verified_retry_candidate_count', 0)}`",
         f"- source_lineage_route_only_candidate_count: `{plan.get('source_lineage_route_only_candidate_count', 0)}`",
+        f"- research_memory_supported_symbol_specific_archetype_count: `{plan.get('research_memory_supported_symbol_specific_archetype_count', 0)}`",
+        f"- research_memory_supported_symbol_specific_task_count: `{plan.get('research_memory_supported_symbol_specific_task_count', 0)}`",
         f"- research_memory_target_materialized_archetype_count: `{plan.get('research_memory_target_materialized_archetype_count', 0)}`",
         f"- research_memory_target_materialized_task_count: `{plan.get('research_memory_target_materialized_task_count', 0)}`",
+        f"- research_memory_target_candidate_task_count: `{plan.get('research_memory_target_candidate_task_count', 0)}`",
         f"- target_materialization_unresolved_archetype_count: `{plan.get('target_materialization_unresolved_archetype_count', 0)}`",
         f"- all_tasks_score_blocked_before_execution: `{plan['all_tasks_score_blocked_before_execution']}`",
         f"- all_tasks_require_llm_query_generation: `{plan['all_tasks_require_llm_query_generation']}`",

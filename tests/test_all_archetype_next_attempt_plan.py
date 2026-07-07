@@ -104,10 +104,10 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
     def test_attempt_types_reflect_current_runtime_failure_modes(self) -> None:
         self.assertEqual(self.by_prefix["C05"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
         self.assertEqual(self.by_prefix["C06"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
-        self.assertEqual(self.by_prefix["C15"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
-        self.assertNotIn("C24", self.by_prefix)
-        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C15"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "PLANNER_TO_SOURCE_TASK_MATERIALIZATION")
+        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE")
 
     def test_replay_only_archetypes_are_materialized_as_research_memory_target_candidates(self) -> None:
         expected_symbols = {
@@ -124,10 +124,28 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             self.assertTrue(row["requires_current_source_confirmation_before_scoring"], prefix)
             self.assertFalse(row["score_allowed_before_execution"], prefix)
             self.assertEqual(row["target_materialization_candidates"], [], prefix)
+            self.assertEqual(row["target_symbol_research_memory_support_count"], 1, prefix)
+            self.assertEqual(row["target_symbol_research_memory_support"][0]["symbol"], expected_symbol, prefix)
+            self.assertFalse(
+                row["target_symbol_research_memory_support"][0]["score_evidence_allowed_from_research"],
+                prefix,
+            )
 
         self.assertEqual(self.plan["target_symbol_mode_counts"]["SYMBOL_SPECIFIC"], 32)
         self.assertEqual(self.plan["target_symbol_mode_counts"]["ARCHETYPE_LEVEL_DISCOVERY"], 3)
+        self.assertEqual(self.plan["target_symbol_mode_counts"]["RESEARCH_MEMORY_TARGET_CANDIDATE"], 1)
+        self.assertEqual(self.plan["research_memory_supported_symbol_specific_archetype_count"], 29)
+        self.assertEqual(self.plan["research_memory_supported_symbol_specific_task_count"], 87)
+        self.assertEqual(self.plan["research_memory_target_materialized_archetype_count"], 30)
+        self.assertEqual(self.plan["research_memory_target_materialized_task_count"], 90)
+        self.assertEqual(self.plan["research_memory_target_candidate_task_count"], 3)
         self.assertEqual(self.plan["target_materialization_required_task_count"], 9)
+
+        c24 = self.by_prefix["C24"]
+        self.assertEqual(c24["target_symbol_mode"], "RESEARCH_MEMORY_TARGET_CANDIDATE")
+        self.assertEqual(c24["target_symbols"], ["000100"])
+        self.assertEqual(c24["target_materialization_candidates"][0]["symbol"], "000100")
+        self.assertFalse(c24["target_materialization_candidates"][0]["score_evidence_allowed_from_research"])
 
     def test_c01_to_c32_all_have_symbol_specific_next_attempts(self) -> None:
         unresolved_c_rows = [
@@ -145,12 +163,18 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             if task["target_symbol_mode"] == "SYMBOL_SPECIFIC"
         ]
         self.assertEqual(len(symbol_specific_tasks), 96)
-        for task in symbol_specific_tasks[:20]:
-            self.assertIsNone(task["target_materialization_candidate"])
+        supported_tasks = [
+            task for task in symbol_specific_tasks if task.get("target_symbol_research_memory_support")
+        ]
+        self.assertEqual(len(supported_tasks), 87)
+        for task in supported_tasks[:20]:
+            self.assertIsNotNone(task["target_materialization_candidate"])
+            self.assertFalse(task["target_materialization_candidate"]["score_evidence_allowed_from_research"])
             self.assertTrue(task["symbol"])
             self.assertTrue(task["requires_current_source_confirmation_before_scoring"])
             self.assertFalse(task["requires_target_materialization_before_scoring"])
             self.assertFalse(task["score_allowed_before_execution"])
+            self.assertIn("Research memory supports", task["query_intents"][0])
             self.assertIn("verify current, direct target-company evidence", task["query_intents"][0])
 
     def test_previous_claim_failure_feedback_is_carried_into_next_source_tasks(self) -> None:
@@ -248,35 +272,36 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
     def test_source_lineage_repair_audit_reaches_next_attempt_feedback(self) -> None:
         self.assertGreater(self.plan_with_lineage["source_lineage_repair_archetype_count"], 0)
         self.assertGreater(self.plan_with_lineage["source_lineage_retry_task_count"], 0)
-        self.assertGreater(
+        self.assertGreater(self.plan_with_lineage["source_lineage_route_only_candidate_count"], 0)
+        self.assertEqual(
             self.plan_with_lineage["source_lineage_current_code_verified_retry_candidate_count"],
             0,
         )
-        c28_row = self.with_lineage_by_prefix["C28"]
-        summary = c28_row["source_lineage_repair_summary"]
-        self.assertTrue(c28_row["source_lineage_repair_required"])
-        self.assertGreater(summary["current_code_verified_retry_candidate_count"], 0)
+        c17_row = self.with_lineage_by_prefix["C17"]
+        summary = c17_row["source_lineage_repair_summary"]
+        self.assertTrue(c17_row["source_lineage_repair_required"])
+        self.assertEqual(summary["current_code_verified_retry_candidate_count"], 0)
         self.assertGreater(summary["route_only_candidate_count"], 0)
-        self.assertIn("bbn.kiwoom.com", summary["top_domains"])
+        self.assertIn("securities.miraeasset.com", summary["top_domains"])
         self.assertIn(
-            "RETRY_CURRENT_CODE_VERIFIED_ORIGINAL_SOURCE_ROUTES",
-            c28_row["source_route_repair_actions"],
+            "KEEP_REJECTED_SOURCE_LINEAGE_ROWS_AS_PLANNER_FEEDBACK_ONLY",
+            c17_row["source_route_repair_actions"],
         )
 
-        c28_task = next(
+        c17_task = next(
             task
             for task in self.plan_with_lineage["source_tasks"]
-            if task["archetype_id"] == c28_row["archetype_id"]
+            if task["archetype_id"] == c17_row["archetype_id"]
         )
-        self.assertTrue(c28_task["source_lineage_repair_required"])
+        self.assertTrue(c17_task["source_lineage_repair_required"])
         self.assertFalse(
-            c28_task["planner_failure_feedback"][
+            c17_task["planner_failure_feedback"][
                 "score_evidence_allowed_from_source_lineage_repair_candidates"
             ]
         )
         self.assertIn(
             "Previous runtime had source-lineage rejected candidates",
-            " ".join(c28_task["query_intents"]),
+            " ".join(c17_task["query_intents"]),
         )
 
 

@@ -232,19 +232,18 @@
       "case_role_counts": {
         "4B": 19,
         "4C": 304,
-        "guard": 2,
-        "positive": 1
+        "guard": 2
       },
       "evidence_url_pending_case_count": 3,
       "has_pattern_summary": true,
-      "record_count": 326,
+      "record_count": 325,
       "source_gap": false,
       "source_proxy_only_case_count": 199,
       "source_quality_counts": {
         "A2_URL_BACKED": 78,
         "EVIDENCE_URL_PENDING": 3,
         "PRICE_PATH_ONLY": 37,
-        "SHADOW_ONLY": 9,
+        "SHADOW_ONLY": 8,
         "SOURCE_PROXY_ONLY": 199
       },
       "top_missing_primitives": [
@@ -269,13 +268,13 @@
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "case_role_counts": {
         "4B": 21,
-        "4C": 271,
+        "4C": 272,
         "guard": 6,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 2,
       "has_pattern_summary": true,
-      "record_count": 299,
+      "record_count": 300,
       "source_gap": false,
       "source_proxy_only_case_count": 177,
       "source_quality_counts": {
@@ -283,7 +282,7 @@
         "A2_URL_BACKED": 61,
         "EVIDENCE_URL_PENDING": 2,
         "PRICE_PATH_ONLY": 43,
-        "SHADOW_ONLY": 15,
+        "SHADOW_ONLY": 16,
         "SOURCE_PROXY_ONLY": 177
       },
       "top_missing_primitives": [
@@ -342,12 +341,12 @@
       "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
       "case_role_counts": {
         "4B": 14,
-        "4C": 353,
+        "4C": 354,
         "guard": 17
       },
       "evidence_url_pending_case_count": 2,
       "has_pattern_summary": true,
-      "record_count": 384,
+      "record_count": 385,
       "source_gap": false,
       "source_proxy_only_case_count": 206,
       "source_quality_counts": {
@@ -355,7 +354,7 @@
         "A2_URL_BACKED": 115,
         "EVIDENCE_URL_PENDING": 2,
         "PRICE_PATH_ONLY": 38,
-        "SHADOW_ONLY": 22,
+        "SHADOW_ONLY": 23,
         "SOURCE_PROXY_ONLY": 206
       },
       "top_missing_primitives": [
@@ -528,21 +527,21 @@
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "case_role_counts": {
         "4B": 47,
-        "4C": 304,
+        "4C": 303,
         "guard": 3,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 356,
+      "record_count": 355,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 98,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 81,
-        "SHADOW_ONLY": 16,
+        "SHADOW_ONLY": 15,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
@@ -600,21 +599,21 @@
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
       "case_role_counts": {
         "4B": 44,
-        "4C": 277,
+        "4C": 278,
         "guard": 3,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 10,
       "has_pattern_summary": true,
-      "record_count": 326,
+      "record_count": 327,
       "source_gap": false,
       "source_proxy_only_case_count": 160,
       "source_quality_counts": {
         "A2_URL_BACKED": 69,
         "EVIDENCE_URL_PENDING": 10,
         "PRICE_PATH_ONLY": 74,
-        "SHADOW_ONLY": 13,
+        "SHADOW_ONLY": 14,
         "SOURCE_PROXY_ONLY": 160
       },
       "top_missing_primitives": [
@@ -1042,20 +1041,20 @@
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "case_role_counts": {
         "4B": 19,
-        "4C": 247,
+        "4C": 246,
         "guard": 1,
         "positive": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 268,
+      "record_count": 267,
       "source_gap": false,
       "source_proxy_only_case_count": 114,
       "source_quality_counts": {
         "A2_URL_BACKED": 71,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 67,
-        "SHADOW_ONLY": 11,
+        "SHADOW_ONLY": 10,
         "SOURCE_PROXY_ONLY": 114
       },
       "top_missing_primitives": [
