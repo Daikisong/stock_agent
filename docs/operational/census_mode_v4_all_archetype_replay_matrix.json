@@ -3,21 +3,19 @@
   "archetype_count": 36,
   "archetypes": [
     {
-      "accepted_claim_count": 1,
+      "accepted_claim_count": 0,
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "contract_loaded": true,
       "contract_present": true,
-      "controlled_wiring_smoke_pass": true,
+      "controlled_wiring_smoke_pass": false,
       "external_source_backed_candidate_ids": [
         "RPLAY-4e1abf1ebc4c0bc87077",
         "RPLAY-9986eb3d4637be17666d",
         "RPLAY-3e94b90f76864a0f3922"
       ],
       "external_source_backed_seed_candidate_count": 3,
-      "fixture_count": 1,
-      "full_thesis_symbols": [
-        "052400"
-      ],
+      "fixture_count": 0,
+      "full_thesis_symbols": [],
       "guard_case_count": 0,
       "guard_case_pass_count": 0,
       "guard_replay_basis": "0621_global_adversarial_acceptance",
@@ -29,13 +27,13 @@
       "replay_scope": "source_backed_semantic_replay",
       "replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
       "required_before_goal_completion": true,
-      "score_contribution_count": 5,
+      "score_contribution_count": 0,
       "semantic_blockers": [],
       "source_backed_fixture_count": 3,
       "source_backed_replay_symbols": [],
       "source_proxy_leak_count": 0,
       "unsupported_reason": null,
-      "url_backed_wiring_fixture_count": 1
+      "url_backed_wiring_fixture_count": 0
     },
     {
       "accepted_claim_count": 0,
@@ -71,21 +69,19 @@
       "url_backed_wiring_fixture_count": 0
     },
     {
-      "accepted_claim_count": 2,
+      "accepted_claim_count": 0,
       "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "contract_loaded": true,
       "contract_present": true,
-      "controlled_wiring_smoke_pass": true,
+      "controlled_wiring_smoke_pass": false,
       "external_source_backed_candidate_ids": [
         "RPLAY-667893ab59fc32ff38ee",
         "RPLAY-ec681764774b59f400e4",
         "RPLAY-b97351b7ce804a1d0147"
       ],
       "external_source_backed_seed_candidate_count": 3,
-      "fixture_count": 1,
-      "full_thesis_symbols": [
-        "047810"
-      ],
+      "fixture_count": 0,
+      "full_thesis_symbols": [],
       "guard_case_count": 0,
       "guard_case_pass_count": 0,
       "guard_replay_basis": "0621_global_adversarial_acceptance",
@@ -97,13 +93,13 @@
       "replay_scope": "source_backed_semantic_replay",
       "replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
       "required_before_goal_completion": true,
-      "score_contribution_count": 5,
+      "score_contribution_count": 0,
       "semantic_blockers": [],
       "source_backed_fixture_count": 3,
       "source_backed_replay_symbols": [],
       "source_proxy_leak_count": 0,
       "unsupported_reason": null,
-      "url_backed_wiring_fixture_count": 1
+      "url_backed_wiring_fixture_count": 0
     },
     {
       "accepted_claim_count": 0,
@@ -139,21 +135,19 @@
       "url_backed_wiring_fixture_count": 0
     },
     {
-      "accepted_claim_count": 2,
+      "accepted_claim_count": 0,
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "contract_loaded": true,
       "contract_present": true,
-      "controlled_wiring_smoke_pass": true,
+      "controlled_wiring_smoke_pass": false,
       "external_source_backed_candidate_ids": [
         "RPLAY-af9ebd70e058ce02ce67",
         "RPLAY-834ffaa49b9652b10136",
         "RPLAY-92b7a9b277cf87d3d02b"
       ],
       "external_source_backed_seed_candidate_count": 3,
-      "fixture_count": 1,
-      "full_thesis_symbols": [
-        "003380"
-      ],
+      "fixture_count": 0,
+      "full_thesis_symbols": [],
       "guard_case_count": 0,
       "guard_case_pass_count": 0,
       "guard_replay_basis": "0621_global_adversarial_acceptance",
@@ -165,30 +159,28 @@
       "replay_scope": "source_backed_semantic_replay",
       "replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
       "required_before_goal_completion": true,
-      "score_contribution_count": 2,
+      "score_contribution_count": 0,
       "semantic_blockers": [],
       "source_backed_fixture_count": 3,
       "source_backed_replay_symbols": [],
       "source_proxy_leak_count": 0,
       "unsupported_reason": null,
-      "url_backed_wiring_fixture_count": 1
+      "url_backed_wiring_fixture_count": 0
     },
     {
-      "accepted_claim_count": 2,
+      "accepted_claim_count": 1,
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "contract_loaded": true,
       "contract_present": true,
-      "controlled_wiring_smoke_pass": true,
+      "controlled_wiring_smoke_pass": false,
       "external_source_backed_candidate_ids": [
         "RPLAY-fdfeb935320fa48e1979",
         "RPLAY-d2e3b07390f0441ebee2",
         "RPLAY-11b4c83595df335e55da"
       ],
       "external_source_backed_seed_candidate_count": 3,
-      "fixture_count": 1,
-      "full_thesis_symbols": [
-        "005930"
-      ],
+      "fixture_count": 0,
+      "full_thesis_symbols": [],
       "guard_case_count": 3,
       "guard_case_pass_count": 3,
       "guard_replay_basis": "c06_guard_replay",
@@ -200,17 +192,15 @@
       "replay_scope": "source_backed_semantic_replay",
       "replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
       "required_before_goal_completion": true,
-      "score_contribution_count": 6,
-      "semantic_blockers": [
-        "controlled_smoke_claims_are_fixture_mapped_not_contract_blind_extracted"
-      ],
+      "score_contribution_count": 0,
+      "semantic_blockers": [],
       "source_backed_fixture_count": 1,
       "source_backed_replay_symbols": [
         "000660"
       ],
       "source_proxy_leak_count": 0,
       "unsupported_reason": null,
-      "url_backed_wiring_fixture_count": 1
+      "url_backed_wiring_fixture_count": 0
     },
     {
       "accepted_claim_count": 0,
@@ -246,21 +236,19 @@
       "url_backed_wiring_fixture_count": 0
     },
     {
-      "accepted_claim_count": 6,
+      "accepted_claim_count": 4,
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "contract_loaded": true,
       "contract_present": true,
-      "controlled_wiring_smoke_pass": true,
+      "controlled_wiring_smoke_pass": false,
       "external_source_backed_candidate_ids": [
         "RPLAY-387a616a78cbc34119d3",
         "RPLAY-f45a477a486d2f3e01ab",
         "RPLAY-998d8e240a346b248bd7"
       ],
       "external_source_backed_seed_candidate_count": 3,
-      "fixture_count": 1,
-      "full_thesis_symbols": [
-        "058470"
-      ],
+      "fixture_count": 0,
+      "full_thesis_symbols": [],
       "guard_case_count": 1,
       "guard_case_pass_count": 1,
       "guard_replay_basis": "c08_source_backed_semantic_replay",
@@ -272,7 +260,7 @@
       "replay_scope": "source_backed_semantic_replay",
       "replay_status": "SOURCE_BACKED_POSITIVE_AND_GUARD_REPLAY_READY",
       "required_before_goal_completion": true,
-      "score_contribution_count": 6,
+      "score_contribution_count": 0,
       "semantic_blockers": [],
       "source_backed_fixture_count": 4,
       "source_backed_replay_symbols": [
@@ -280,7 +268,7 @@
       ],
       "source_proxy_leak_count": 0,
       "unsupported_reason": null,
-      "url_backed_wiring_fixture_count": 1
+      "url_backed_wiring_fixture_count": 0
     },
     {
       "accepted_claim_count": 0,
@@ -550,7 +538,7 @@
       "url_backed_wiring_fixture_count": 0
     },
     {
-      "accepted_claim_count": 12,
+      "accepted_claim_count": 11,
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
       "contract_loaded": true,
       "contract_present": true,
@@ -1221,7 +1209,7 @@
   ],
   "as_of_date": "2026-07-05",
   "blockers": [],
-  "controlled_wiring_smoke_ready_count": 6,
+  "controlled_wiring_smoke_ready_count": 1,
   "external_global_guard_ready": true,
   "external_replay_acceptance": {
     "adversarial_acceptance_exists": true,
@@ -1727,14 +1715,14 @@
   "missing_required_archetype_count": 0,
   "missing_required_archetype_ids": [],
   "note": "Controlled wiring smoke proves the leaf path can carry URL anchors and ScoreContribution rows. It is not source-backed semantic replay until contract-blind extraction, lifecycle adjudication, and guard replay all pass.",
-  "replay_acceptance_manifest_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-e0e9399/all_archetype_replay_acceptance_manifest.json",
-  "replay_gap_plan_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-e0e9399/all_archetype_replay_gap_plan.json",
+  "replay_acceptance_manifest_path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260708T082837Z/all_archetype_replay_acceptance_manifest.json",
+  "replay_gap_plan_path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260708T082837Z/all_archetype_replay_gap_plan.json",
   "replay_gap_plan_task_count": 0,
   "replay_gap_rule": "SOURCE_GAP_PENDING archetypes are exported only as planner-input source repair tasks. These rows cannot score or promote Stage; LLM planner must generate bounded queries and source-backed Evidence OS claims before the replay matrix can pass.",
   "replay_gap_seed_event_count": 0,
-  "replay_gap_seed_event_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-e0e9399/all_archetype_replay_gap_seed_events.jsonl",
+  "replay_gap_seed_event_path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260708T082837Z/all_archetype_replay_gap_seed_events.jsonl",
   "replay_gap_source_task_count": 0,
-  "replay_gap_source_task_path": "output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-e0e9399/all_archetype_replay_gap_source_tasks.jsonl",
+  "replay_gap_source_task_path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260708T082837Z/all_archetype_replay_gap_source_tasks.jsonl",
   "required_archetype_count": 32,
   "schema_version": "e2r_census_v4_all_archetype_replay_matrix_v1",
   "source_backed_ready_count": 36,

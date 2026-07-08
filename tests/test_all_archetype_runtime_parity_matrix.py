@@ -156,31 +156,31 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         by_prefix = {row["archetype_prefix"]: row for row in matrix["rows"]}
 
         c05 = by_prefix["C05"]
-        self.assertEqual(c05["runtime_status"], "SCORE_PATH_CLOSED_WITH_THESIS_GAPS")
+        self.assertEqual(c05["runtime_status"], "SOURCE_REPAIR_REQUIRED")
         self.assertEqual(c05["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
-        self.assertEqual(c05["runtime_full_thesis_row_count"], 1)
-        self.assertEqual(c05["runtime_full_thesis_row_with_required_positive_missing_count"], 1)
-        self.assertEqual(c05["runtime_full_thesis_row_with_green_gap_count"], 1)
+        self.assertEqual(c05["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c05["runtime_full_thesis_row_with_required_positive_missing_count"], 0)
+        self.assertEqual(c05["runtime_full_thesis_row_with_green_gap_count"], 0)
         self.assertGreater(c05["runtime_stagecourt_trace_count"], 0)
 
         c08 = by_prefix["C08"]
-        self.assertEqual(c08["runtime_status"], "SCORE_PATH_CLOSED_WITH_THESIS_GAPS")
-        self.assertEqual(c08["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
+        self.assertEqual(c08["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c08["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
         self.assertGreater(c08["research_case_count"], 0)
         self.assertGreater(c08["runtime_source_task_count"], 0)
         self.assertGreater(c08["source_task_execution_log_count"], 0)
-        self.assertGreater(c08["source_task_any_accepted_claim_count"], 0)
-        self.assertEqual(c08["runtime_full_thesis_row_count"], 1)
-        self.assertEqual(c08["runtime_full_thesis_row_with_required_positive_missing_count"], 1)
-        self.assertEqual(c08["runtime_full_thesis_row_with_green_gap_count"], 1)
+        self.assertEqual(c08["source_task_any_accepted_claim_count"], 0)
+        self.assertEqual(c08["runtime_full_thesis_row_count"], 0)
+        self.assertEqual(c08["runtime_full_thesis_row_with_required_positive_missing_count"], 0)
+        self.assertEqual(c08["runtime_full_thesis_row_with_green_gap_count"], 0)
         self.assertEqual(
             c08["next_required_action"],
-            "CLOSE_REQUIRED_POSITIVE_AND_GREEN_GAPS_BEFORE_MEANINGFUL_PASS",
+            "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
         )
 
         c24 = by_prefix["C24"]
-        self.assertEqual(c24["runtime_status"], "SOURCE_REPAIR_REQUIRED")
-        self.assertEqual(c24["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
+        self.assertEqual(c24["runtime_status"], "SCORE_PATH_NOT_CLOSED")
+        self.assertEqual(c24["primary_blocker_class"], "SCORE_PATH_NOT_CLOSED")
         self.assertEqual(c24["url_backed_replay_obligation_status"], "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED")
         self.assertFalse(c24["url_backed_replay_obligation_unmet"])
         self.assertEqual(c24["source_backed_replay_symbols"], ["009420", "215600"])
@@ -189,16 +189,16 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         self.assertTrue(c24["source_task_top_source_classes"])
         self.assertTrue(c24["source_task_top_primitive_gaps"])
         self.assertTrue(c24["source_task_failure_samples"])
-        self.assertEqual(c24["source_task_primary_failure_axis"], "NO_SCORE_ELIGIBLE_REAL_CLAIM")
+        self.assertEqual(c24["source_task_primary_failure_axis"], "PRIMITIVE_GAP_UNSATISFIED")
         self.assertEqual(
             c24["source_task_primary_repair_hint"],
-            "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+            "FIND_PRIMITIVE_SPECIFIC_CLAIM_NOT_GENERIC_CONTEXT",
         )
         self.assertEqual(c24["runtime_full_thesis_row_count"], 0)
-        self.assertEqual(c24["source_task_any_accepted_claim_count"], 0)
+        self.assertGreater(c24["source_task_any_accepted_claim_count"], 0)
         self.assertEqual(
             c24["next_required_action"],
-            "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
+            "MAP_ACCEPTED_CLAIMS_TO_SCORE_CONTRIBUTIONS_OR_EXPLAIN_REMAINING_GAPS",
         )
 
 

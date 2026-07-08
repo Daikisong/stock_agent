@@ -102,14 +102,14 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             )
 
     def test_attempt_types_reflect_current_runtime_failure_modes(self) -> None:
-        self.assertEqual(self.by_prefix["C05"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C06"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C15"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C05"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C06"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C08"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
+        self.assertEqual(self.by_prefix["C15"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
         self.assertEqual(self.by_prefix["C17"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
-        self.assertEqual(self.by_prefix["C28"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE")
+        self.assertEqual(self.by_prefix["C28"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
+        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE")
 
     def test_replay_only_archetypes_are_materialized_as_research_memory_target_candidates(self) -> None:
         expected_symbols = {
@@ -285,48 +285,48 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             self.plan["source_task_repair_hint_counts"],
         )
 
-        c24_row = self.by_prefix["C24"]
+        c28_row = self.by_prefix["C28"]
         self.assertEqual(
-            c24_row["previous_source_task_primary_failure_axis"],
+            c28_row["previous_source_task_primary_failure_axis"],
             "NO_SCORE_ELIGIBLE_REAL_CLAIM",
         )
         self.assertEqual(
-            c24_row["previous_source_task_repair_hint"],
+            c28_row["previous_source_task_repair_hint"],
             "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
         )
-        self.assertTrue(c24_row["previous_source_task_top_source_classes"])
-        self.assertTrue(c24_row["previous_source_task_top_primitive_gaps"])
-        self.assertTrue(c24_row["previous_source_task_failure_sample_refs"])
-        self.assertTrue(c24_row["source_task_repair_required"])
+        self.assertTrue(c28_row["previous_source_task_top_source_classes"])
+        self.assertTrue(c28_row["previous_source_task_top_primitive_gaps"])
+        self.assertTrue(c28_row["previous_source_task_failure_sample_refs"])
+        self.assertTrue(c28_row["source_task_repair_required"])
         self.assertIn(
             "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
-            c24_row["source_task_repair_actions"],
+            c28_row["source_task_repair_actions"],
         )
 
-        c24_task = next(task for task in self.plan["source_tasks"] if task["archetype_id"] == c24_row["archetype_id"])
+        c28_task = next(task for task in self.plan["source_tasks"] if task["archetype_id"] == c28_row["archetype_id"])
         self.assertEqual(
-            c24_task["planner_failure_feedback"]["previous_source_task_primary_failure_axis"],
+            c28_task["planner_failure_feedback"]["previous_source_task_primary_failure_axis"],
             "NO_SCORE_ELIGIBLE_REAL_CLAIM",
         )
         self.assertFalse(
-            c24_task["planner_failure_feedback"]["score_evidence_allowed_from_previous_source_task_failures"]
+            c28_task["planner_failure_feedback"]["score_evidence_allowed_from_previous_source_task_failures"]
         )
         self.assertIn(
             "Previous source-task executions did not close score-eligible accepted claims",
-            " ".join(c24_task["query_intents"]),
+            " ".join(c28_task["query_intents"]),
         )
-        self.assertTrue(c24_task["previous_source_task_failure_sample_refs"])
+        self.assertTrue(c28_task["previous_source_task_failure_sample_refs"])
 
-        c24_seed = next(
+        c28_seed = next(
             event
             for event in self.plan["seed_events"]
-            if event["target_archetype"] == c24_row["archetype_id"]
+            if event["target_archetype"] == c28_row["archetype_id"]
         )
         self.assertEqual(
-            c24_seed["structured_payload"]["previous_source_task_primary_failure_axis"],
+            c28_seed["structured_payload"]["previous_source_task_primary_failure_axis"],
             "NO_SCORE_ELIGIBLE_REAL_CLAIM",
         )
-        self.assertFalse(c24_seed["structured_payload"].get("score_evidence_allowed", True))
+        self.assertFalse(c28_seed["structured_payload"].get("score_evidence_allowed", True))
 
     def test_signal_family_mismatch_feedback_reaches_seed_payload(self) -> None:
         mismatch_task = next(
@@ -358,31 +358,31 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             self.plan_with_lineage["source_lineage_current_code_verified_retry_candidate_count"],
             0,
         )
-        c15_row = self.with_lineage_by_prefix["C15"]
-        summary = c15_row["source_lineage_repair_summary"]
-        self.assertTrue(c15_row["source_lineage_repair_required"])
+        c28_row = self.with_lineage_by_prefix["C28"]
+        summary = c28_row["source_lineage_repair_summary"]
+        self.assertTrue(c28_row["source_lineage_repair_required"])
         self.assertEqual(summary["current_code_verified_retry_candidate_count"], 0)
         self.assertGreater(summary["route_only_candidate_count"], 0)
-        self.assertIn("namu.wiki", summary["top_domains"])
+        self.assertIn("shinyoung.com", summary["top_domains"])
         self.assertIn(
             "KEEP_REJECTED_SOURCE_LINEAGE_ROWS_AS_PLANNER_FEEDBACK_ONLY",
-            c15_row["source_route_repair_actions"],
+            c28_row["source_route_repair_actions"],
         )
 
-        c15_task = next(
+        c28_task = next(
             task
             for task in self.plan_with_lineage["source_tasks"]
-            if task["archetype_id"] == c15_row["archetype_id"]
+            if task["archetype_id"] == c28_row["archetype_id"]
         )
-        self.assertTrue(c15_task["source_lineage_repair_required"])
+        self.assertTrue(c28_task["source_lineage_repair_required"])
         self.assertFalse(
-            c15_task["planner_failure_feedback"][
+            c28_task["planner_failure_feedback"][
                 "score_evidence_allowed_from_source_lineage_repair_candidates"
             ]
         )
         self.assertIn(
             "Previous runtime had source-lineage rejected candidates",
-            " ".join(c15_task["query_intents"]),
+            " ".join(c28_task["query_intents"]),
         )
 
 

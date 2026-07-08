@@ -1169,7 +1169,9 @@ def _planner_candidate_order(
         return tuple(events)
     registry = load_instrument_registry(repo_root)
 
-    def sort_key(event: CandidateEventV2) -> tuple[int, int, int, int, int, int, str]:
+    input_order = {id(event): index for index, event in enumerate(events)}
+
+    def sort_key(event: CandidateEventV2) -> tuple[int, int, int, int, int, int, int, int, str]:
         eligibility = evaluate_candidate_event_production_eligibility(
             event,
             registry=registry,
@@ -1177,16 +1179,30 @@ def _planner_candidate_order(
             repo_root=repo_root,
             as_of_date=as_of_date.isoformat(),
         )
+        if _is_all_archetype_runtime_parity_follow_up_seed_event(event):
+            return (
+                0,
+                0,
+                0,
+                input_order.get(id(event), 0),
+                0,
+                0,
+                0,
+                0,
+                event.candidate_event_id,
+            )
         queue_seed_priority = 0 if _is_full_thesis_refresh_seed_event(event) else 1
         fixture_penalty = 1 if eligibility.fixture_like_symbol else 0
         source_penalty = 1 if eligibility.source_id_cached_or_fixture or eligibility.source_id_snapshot_uri else 0
         return (
             queue_seed_priority,
+            1,
             0 if eligibility.eligible else 1,
             fixture_penalty,
             source_penalty,
             _candidate_evidence_likelihood_rank(event),
             max(0, int(event.event_freshness_days or 0)),
+            input_order.get(id(event), 0),
             event.candidate_event_id,
         )
 
@@ -1201,6 +1217,16 @@ def _is_full_thesis_refresh_seed_event(event: CandidateEventV2) -> bool:
         or str(event.event_type or "") == "full_thesis_refresh_seed"
         or str(event.event_type or "") == "all_archetype_runtime_parity_follow_up_seed"
         or str(structured.get("seed_role") or "") == "planner_input_only"
+    )
+
+
+def _is_all_archetype_runtime_parity_follow_up_seed_event(event: CandidateEventV2) -> bool:
+    structured = event.structured_payload if isinstance(event.structured_payload, Mapping) else {}
+    return (
+        str(event.source_family or "") == "AllArchetypeRuntimeParityFollowUp"
+        or str(event.event_type or "") == "all_archetype_runtime_parity_follow_up_seed"
+        or str(structured.get("follow_up_origin") or "") == "all_archetype_runtime_status_matrix"
+        or str(structured.get("source_task_origin") or "") == "all_archetype_runtime_status_matrix"
     )
 
 

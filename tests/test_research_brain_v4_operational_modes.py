@@ -300,7 +300,7 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         event = next(
             item
             for item in events
-            if item.structured_payload.get("target_archetype") == "C24_BIO_TRIAL_DATA_EVENT_RISK"
+            if item.structured_payload.get("target_archetype") == "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
         )
 
         context = _evidence_context_by_event(
@@ -349,6 +349,43 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
             "NO_SCORE_ELIGIBLE_REAL_CLAIM",
         )
         self.assertTrue(any("previous_source_task_primary_failure_axis" in rule for rule in payload["rules"]))
+
+    def test_goal4_all_archetype_followup_seed_order_is_preserved_in_live_planner_order(self):
+        seed_path = Path("docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl")
+        events = _candidate_seed_events_from_config(
+            config=ProductionShadowV4Config(
+                as_of_date="2026-07-05",
+                candidate_event_seed_path=str(seed_path),
+                planner_provider="real",
+                source_acquisition="live_full_bounded",
+            ),
+            as_of_date=date(2026, 7, 5),
+        )
+
+        ordered = _planner_candidate_order(
+            events=events,
+            config=ProductionShadowV4Config(
+                as_of_date="2026-07-05",
+                candidate_event_seed_path=str(seed_path),
+                planner_provider="real",
+                source_acquisition="live_full_bounded",
+            ),
+            repo_root=".",
+            as_of_date=date(2026, 7, 5),
+        )
+
+        self.assertEqual(
+            [event.candidate_event_id for event in ordered[:30]],
+            [event.candidate_event_id for event in events[:30]],
+        )
+        self.assertEqual(
+            ordered[15].structured_payload.get("target_archetype"),
+            "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        )
+        self.assertEqual(
+            ordered[21].structured_payload.get("target_archetype"),
+            "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+        )
 
     def test_candidate_event_seed_path_skips_missing_or_zero_symbol_rows(self):
         with TemporaryDirectory() as tmp:

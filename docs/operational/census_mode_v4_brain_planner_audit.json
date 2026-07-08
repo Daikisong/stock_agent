@@ -1,5 +1,5 @@
 {
-  "attempt_verdict": "ATTEMPTED_WITH_SOURCE_TASKS",
+  "attempt_verdict": "ATTEMPTED_NOT_CUTOVER_READY",
   "llm_claimed_but_zero_calls_count": 0,
   "llm_claimed_but_zero_success_count": 0,
   "llm_planner_attempt_count": 111,

@@ -23,7 +23,7 @@
     "support_claim_not_accepted_count": 0
   },
   "schema_version": "e2r_census_v4_claim_to_stage_forensic_audit_v1",
-  "scored_row_count": 74,
+  "scored_row_count": 67,
   "stage2plus_or_risk_row_count": 30,
   "verdict": "PASS"
 }

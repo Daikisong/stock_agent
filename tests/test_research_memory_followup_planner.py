@@ -10,21 +10,14 @@ class ResearchMemoryFollowupPlannerTests(unittest.TestCase):
 
     def test_every_blocked_candidate_has_memory_followup_task(self) -> None:
         self.assertEqual(self.audit["schema_version"], "e2r_research_memory_followup_task_audit_v1")
-        self.assertEqual(self.audit["blocked_candidate_count"], 16)
-        self.assertEqual(self.audit["task_count"], 43)
+        self.assertEqual(self.audit["blocked_candidate_count"], 5)
+        self.assertEqual(self.audit["task_count"], 11)
         self.assertEqual(
             self.audit["tasks_by_archetype"],
             {
-                "C01_ORDER_BACKLOG_MARGIN_BRIDGE": 5,
-                "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 2,
-                "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 3,
+                "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 4,
+                "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 2,
                 "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 5,
-                "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": 10,
-                "C15_MATERIAL_SPREAD_SUPERCYCLE": 4,
-                "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": 3,
-                "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": 4,
-                "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": 4,
-                "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": 3,
             },
         )
         self.assertTrue(self.audit["all_tasks_use_memory_card_or_route"])

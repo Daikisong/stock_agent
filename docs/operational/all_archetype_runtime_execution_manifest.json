@@ -38,10 +38,11 @@
   "expected_first_runtime_leaf": "research_brain_candidate_seed_events_used.jsonl",
   "expected_seed_source_in_census_v4": "external_candidate_event_seed_path",
   "next_attempt_attempt_type_counts": {
+    "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE": 6,
     "ARCHETYPE_TARGET_MATERIALIZATION": 3,
-    "BLOCKED_CANDIDATE_GAP_CLOSURE": 5,
-    "PROMOTED_SCORE_PATH_GAP_CLOSURE": 6,
-    "SOURCE_EXECUTION_REPAIR": 22
+    "BLOCKED_CANDIDATE_GAP_CLOSURE": 3,
+    "PROMOTED_SCORE_PATH_GAP_CLOSURE": 1,
+    "SOURCE_EXECUTION_REPAIR": 23
   },
   "next_attempt_plan_row_count": 36,
   "run_command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 111 --brain-planner-success-limit 111 --brain-planner-batch-size 1 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 111 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 14400.0 --brain-candidate-event-seed-path docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",

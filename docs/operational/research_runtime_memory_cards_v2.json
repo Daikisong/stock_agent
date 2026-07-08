@@ -31,7 +31,6 @@
         "RCASE-01eb649bff7f507c013c",
         "RCASE-02316608b1940d41eb5f",
         "RCASE-04cc5c881d93505ab342",
-        "RCASE-0513473f32786303e7bf",
         "RCASE-05d1c714197cace8436b",
         "RCASE-060f36db01fdb059601d",
         "RCASE-097df3f2203b9490b8f8",
@@ -44,7 +43,8 @@
         "RCASE-1092d34d783d6ad913de",
         "RCASE-10fb236c9d09108dfb67",
         "RCASE-115976445bd872702f4c",
-        "RCASE-1218de20531011e7ea4b"
+        "RCASE-1218de20531011e7ea4b",
+        "RCASE-121bd02c8a0646b62310"
       ],
       "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
       "canonical_mechanism": "industrial_backlog_margin_bridge",
@@ -663,6 +663,7 @@
       ],
       "4c_hard_break_patterns": [
         "RCASE-00395feda54d450c4909",
+        "RCASE-00511de9320e8a270ee1",
         "RCASE-005289a21251eb4f665b",
         "RCASE-01802083b5a33c0a8a41",
         "RCASE-0200409f8f3f2aeba213",
@@ -680,8 +681,7 @@
         "RCASE-0aa31c958461ebdbb8f0",
         "RCASE-0b0bfd0310739e09a2a5",
         "RCASE-0bb546384548261a02bc",
-        "RCASE-0bb5f823decfa55868d5",
-        "RCASE-0ca30bcb540e526324a2"
+        "RCASE-0bb5f823decfa55868d5"
       ],
       "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
       "canonical_mechanism": "industrial_backlog_margin_bridge",
@@ -767,7 +767,7 @@
         "RCASE-4557be33f2275d4ae18f"
       ],
       "source_family_success_examples": [
-        "RCASE-be00c661949664c05f63",
+        "RCASE-7515726066396a3877bd",
         "RCASE-c0e312721f7010421dd9",
         "RCASE-b00a9d7b29be38d25575",
         "RCASE-b9a0c49419de5e0e7bc1",
@@ -1158,7 +1158,7 @@
         "order_backlog_to_sales"
       ],
       "url_backed_replay_cases": [
-        "RCASE-be00c661949664c05f63",
+        "RCASE-7515726066396a3877bd",
         "RCASE-c0e312721f7010421dd9",
         "RCASE-b00a9d7b29be38d25575",
         "RCASE-b9a0c49419de5e0e7bc1",
@@ -1249,6 +1249,7 @@
         "RCASE-0584f9c8987e14fbfcce",
         "RCASE-07ab7a51c6a946c34150",
         "RCASE-08255fb0ca2ce43ab12d",
+        "RCASE-0937d671c14b35850d1c",
         "RCASE-09f50d457c51baa4672a",
         "RCASE-0d1127dabd4370a367b8",
         "RCASE-0d8f1f9b19c498de6050",
@@ -1257,8 +1258,7 @@
         "RCASE-0f59f27cff4f8fd04184",
         "RCASE-0f9d47bbdb1f28fe3898",
         "RCASE-1012a7920b3e3781f4fa",
-        "RCASE-104c782354d4dbea3645",
-        "RCASE-105b75f586bd6128ed80"
+        "RCASE-104c782354d4dbea3645"
       ],
       "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "canonical_mechanism": "industrial_backlog_margin_bridge",
@@ -2943,6 +2943,7 @@
         "RCASE-191ca6311ef0a46344bc",
         "RCASE-19d839d4bff18218e915",
         "RCASE-24133509b6436fffbcdc",
+        "RCASE-254f085063858d9c38cb",
         "RCASE-269596a0b8e4932729cf",
         "RCASE-29489ececbf2bf2a4801",
         "RCASE-2bba6f512c39db971ca8",
@@ -2954,8 +2955,7 @@
         "RCASE-53f56f2e1fe8d8612985",
         "RCASE-648d24ec13f22de0cfd1",
         "RCASE-6503db707e92b4c2090b",
-        "RCASE-66dd39ae6de4db131888",
-        "RCASE-6beaa0d0de1c5d7ce9c8"
+        "RCASE-66dd39ae6de4db131888"
       ],
       "4c_hard_break_patterns": [
         "RCASE-009ff7f6c387db90be1a",
@@ -3135,7 +3135,7 @@
         "RCASE-97ca84d9192c9a90d1bb",
         "RCASE-ce11732bd83d5db86c42",
         "RCASE-6220db73023e2bf8eccc",
-        "RCASE-16a46e0e37dac39484b9",
+        "RCASE-4f69a5fdb8f48a50ad14",
         "RCASE-0d58348ddfccc99d553d",
         "RCASE-ad173d66d55ce764d610",
         "RCASE-2d1d1e59c3c02f699c2f"
@@ -3602,6 +3602,7 @@
         "RCASE-001d092328b7c01d70b0",
         "RCASE-002f0c21946c651e7ecb",
         "RCASE-0107bdd99bc00e14eb08",
+        "RCASE-010fca11769db1d93f58",
         "RCASE-022caf6c1af92315a3bb",
         "RCASE-02775111816e0ed39479",
         "RCASE-0440f2c1131a867cb91f",
@@ -3617,8 +3618,7 @@
         "RCASE-104f103f99f0d45665dd",
         "RCASE-1293460bda21cf83ba94",
         "RCASE-136a3fde46569c0e7670",
-        "RCASE-1420dde7eabf1afaeed0",
-        "RCASE-1495146b0bce6a901fa6"
+        "RCASE-1420dde7eabf1afaeed0"
       ],
       "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
       "canonical_mechanism": "semiconductor_customer_capacity_bridge",
@@ -7455,6 +7455,7 @@
         "RCASE-0616186303c2a8191d61",
         "RCASE-071e27c76c6a8fb90a4b",
         "RCASE-0826524a69930a109dd0",
+        "RCASE-08a3932a92623cc6fc48",
         "RCASE-090292617efd05d6bd17",
         "RCASE-0bb57d4052799e8fa320",
         "RCASE-0c20d619d7db939298bc",
@@ -7464,8 +7465,7 @@
         "RCASE-0da56a5730be3ae7e227",
         "RCASE-0fb2321ebeb7b1a853dc",
         "RCASE-109117ba606a2f776436",
-        "RCASE-114decd31dabec7821e7",
-        "RCASE-12054031f1333c9f4688"
+        "RCASE-114decd31dabec7821e7"
       ],
       "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
       "canonical_mechanism": "battery_mobility_contract_bridge",
@@ -8585,10 +8585,10 @@
         "RCASE-0914bc43f3cf468fe78c",
         "RCASE-0c042104ba776b733fc6",
         "RCASE-0d903f2b74d0771a4f75",
+        "RCASE-0e1c2831c375d8c89b6c",
         "RCASE-0f6313924356cdce42d2",
         "RCASE-103c9927f18d063d0f47",
-        "RCASE-10e10ebe0a9730abc6d0",
-        "RCASE-116634ca0f7c46ec2376"
+        "RCASE-10e10ebe0a9730abc6d0"
       ],
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "canonical_mechanism": "materials_spread_supply_bridge",
@@ -9143,6 +9143,7 @@
       ],
       "4c_hard_break_patterns": [
         "RCASE-0274257a5d06cd302891",
+        "RCASE-02bc5bb3f144bd86d5cb",
         "RCASE-0304c666b65d59bf2a1a",
         "RCASE-03edcd51ea34407f38a6",
         "RCASE-051e65d2f7d96b9f3937",
@@ -9152,6 +9153,7 @@
         "RCASE-094855eb0b8b3dbb253d",
         "RCASE-09e5cc7c652f6befeaa0",
         "RCASE-0ad1fbde013eefbe08a0",
+        "RCASE-0b333e4c93a81c8d5fdd",
         "RCASE-0c6d0381f886020cea35",
         "RCASE-0c96d7868588b974a445",
         "RCASE-0d14c9c7a78432420c6d",
@@ -9159,9 +9161,7 @@
         "RCASE-0e53b13d1fcb80147aec",
         "RCASE-0f6309ee6baf2808b816",
         "RCASE-0f91aa4d94785cdf8095",
-        "RCASE-1003d566e0bef7d4fa6c",
-        "RCASE-16269b4053df5a3d97d6",
-        "RCASE-16cf82b95e553cf8d6fd"
+        "RCASE-1003d566e0bef7d4fa6c"
       ],
       "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
       "canonical_mechanism": "materials_spread_supply_bridge",
@@ -11459,6 +11459,7 @@
         "RCASE-036b78cd8cd8c41ae853",
         "RCASE-043a97196b2e762d4511",
         "RCASE-043dbb7b72dfe383af88",
+        "RCASE-05816adb088af2182c7a",
         "RCASE-06b885c346961069c232",
         "RCASE-085e48d24508e25ca3c6",
         "RCASE-099cf2087db4e1c98854",
@@ -11470,8 +11471,7 @@
         "RCASE-0f357a833f796af5b73f",
         "RCASE-111e76215544ea6f7958",
         "RCASE-123c3b6956d795ac2d59",
-        "RCASE-125ae10d145518531879",
-        "RCASE-13b4810ec77abcfde70d"
+        "RCASE-125ae10d145518531879"
       ],
       "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
       "canonical_mechanism": "consumer_sellthrough_reorder_bridge",
@@ -12608,13 +12608,13 @@
         "RCASE-0d61c5d1cab6c933d67f",
         "RCASE-0ecad16371c3c92f4c4f",
         "RCASE-0f36e7e8bd9a71e6b44d",
+        "RCASE-0f755fb94809a27c005c",
         "RCASE-107e7d6c2a770ed26f9f",
         "RCASE-10b07a2e570de004da7c",
         "RCASE-122c569e7beb40535576",
         "RCASE-12df5755b1a9687bc209",
         "RCASE-131bae372922e4e699eb",
         "RCASE-1337db567dc52e060fc3",
-        "RCASE-13cb7b40d0fe298f2fc6",
         "RCASE-14f4c7b7f1a697b10224"
       ],
       "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
@@ -13775,11 +13775,11 @@
         "RCASE-072803c082cd544f83b4",
         "RCASE-07f12aa4dfb86d2e22ae",
         "RCASE-089f548bfe2d5bb869de",
-        "RCASE-097b35498bbf56add7ec",
         "RCASE-0b76ac9256876fd338a8",
         "RCASE-0c4d7f8e408103c30064",
         "RCASE-0c8fefcd27ce4a67ffc5",
-        "RCASE-0cfefd27c9c8d3f7cf38"
+        "RCASE-0cfefd27c9c8d3f7cf38",
+        "RCASE-0d11a905fbd1051f1d3c"
       ],
       "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
       "canonical_mechanism": "bio_commercialization_reimbursement_bridge",
@@ -14338,6 +14338,7 @@
         "RCASE-06ad8cc65492840865bf",
         "RCASE-0974416937f5ef2a1293",
         "RCASE-09d0f07bbc2182ea7d38",
+        "RCASE-0a26281735838324d58d",
         "RCASE-0a74f82c3fb5d5562aa3",
         "RCASE-0c91ac8a4c44f8b2497d",
         "RCASE-0d74649263dfbad6d864",
@@ -14350,7 +14351,6 @@
         "RCASE-157c3e0546c0cdf8272d",
         "RCASE-15b3eb1038bf0df10b50",
         "RCASE-1663bc113a2811583ed6",
-        "RCASE-196a53d4f3bd8cf974fe",
         "RCASE-1a1cfcf399b72206a826",
         "RCASE-1ace643293a6805d1015",
         "RCASE-1bca4dfba8dab579e495"
@@ -15505,7 +15505,7 @@
         "RCASE-1446bf8b95eec4edab74",
         "RCASE-14894b3239d03fdec8ec",
         "RCASE-1592b1397a3b9e0703c2",
-        "RCASE-17e477f3328f252d56c0"
+        "RCASE-170f64dcc8abdf5c2281"
       ],
       "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
       "canonical_mechanism": "software_platform_recurring_revenue_bridge",
@@ -16062,6 +16062,7 @@
         "RCASE-026298373dc26477af36",
         "RCASE-02c59c5a8de99ec11a0c",
         "RCASE-04a6dde077909b333bf7",
+        "RCASE-06d8c4c0bed4f53a8e9e",
         "RCASE-06fb98df3d53bab9dc8c",
         "RCASE-0808fdb5684eb610c957",
         "RCASE-08a82ba9b370a0f58e0a",
@@ -16076,8 +16077,7 @@
         "RCASE-104fd61e19376b988cc7",
         "RCASE-10c8d79fc435cecb475e",
         "RCASE-1172a142f1507b412a67",
-        "RCASE-11a5fbf9e730ab827184",
-        "RCASE-11bf9efb4aac5a5895c6"
+        "RCASE-11a5fbf9e730ab827184"
       ],
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "canonical_mechanism": "software_platform_recurring_revenue_bridge",
@@ -17790,12 +17790,12 @@
         "RCASE-0afcdad2bb1d0af218f9",
         "RCASE-0b64c78f1e51537f6b4e",
         "RCASE-0bcae0a5faff7b474750",
-        "RCASE-0c34ba1eeb7e368d34c3",
         "RCASE-0c5481e68cb9df0233c2",
         "RCASE-0c709cf8c2937a186d70",
         "RCASE-0e3a812abafd1b040554",
         "RCASE-0f0c671efd039ad8c73d",
-        "RCASE-109b72730d5700aeca57"
+        "RCASE-109b72730d5700aeca57",
+        "RCASE-1137c48b803043116df4"
       ],
       "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
       "canonical_mechanism": "policy_project_cash_bridge",
