@@ -78,7 +78,7 @@
     },
     {
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
-      "current_lifecycle_validation_status": "CURRENT_PRODUCTION_FULL_THESIS_AVAILABLE",
+      "current_lifecycle_validation_status": "CURRENT_PRODUCTION_CANDIDATE_BLOCKED",
       "evidence_url_pending_case_count": 5,
       "guard_accepted_claim_ids": [
         "CLM-981242dee4a7213fa9b1",
@@ -109,8 +109,8 @@
       "positive_replay_file": "c15_source_backed_semantic_replay.json",
       "positive_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
       "production_score_evidence_allowed": false,
-      "runtime_full_thesis_row_count": 1,
-      "runtime_parity_status": "PRODUCTION_FULL_E2R_SCORE_PATH_ONLY",
+      "runtime_full_thesis_row_count": 0,
+      "runtime_parity_status": "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP",
       "schema_version": "e2r_research_to_runtime_replay_row_v1",
       "score_contribution_ids": [],
       "source_proxy_only_case_count": 50,
@@ -125,7 +125,7 @@
     },
     {
       "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
-      "current_lifecycle_validation_status": "CURRENT_PRODUCTION_CANDIDATE_BLOCKED",
+      "current_lifecycle_validation_status": "CURRENT_PRODUCTION_FULL_THESIS_AVAILABLE",
       "evidence_url_pending_case_count": 10,
       "guard_accepted_claim_ids": [
         "CLM-bdb8d682f0cf4e645978",
@@ -154,8 +154,8 @@
       "positive_replay_file": "c17_source_backed_semantic_replay.json",
       "positive_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
       "production_score_evidence_allowed": false,
-      "runtime_full_thesis_row_count": 0,
-      "runtime_parity_status": "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP",
+      "runtime_full_thesis_row_count": 1,
+      "runtime_parity_status": "PRODUCTION_FULL_E2R_SCORE_PATH_ONLY",
       "schema_version": "e2r_research_to_runtime_replay_row_v1",
       "score_contribution_ids": [],
       "source_proxy_only_case_count": 50,
@@ -193,7 +193,7 @@
       "positive_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
       "production_score_evidence_allowed": false,
       "runtime_full_thesis_row_count": 0,
-      "runtime_parity_status": "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE",
+      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
       "schema_version": "e2r_research_to_runtime_replay_row_v1",
       "score_contribution_ids": [],
       "source_proxy_only_case_count": 50,
@@ -208,7 +208,7 @@
     },
     {
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
-      "current_lifecycle_validation_status": "LIFECYCLE_NOT_CURRENT",
+      "current_lifecycle_validation_status": "CURRENT_PRODUCTION_CANDIDATE_BLOCKED",
       "evidence_url_pending_case_count": 7,
       "guard_accepted_claim_ids": [
         "CLM-a0fe8ac7cf3f483692ef",
@@ -244,7 +244,7 @@
       "positive_runtime_replay_status": "ACCEPTED_CLAIM_CREATED",
       "production_score_evidence_allowed": false,
       "runtime_full_thesis_row_count": 0,
-      "runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
+      "runtime_parity_status": "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP",
       "schema_version": "e2r_research_to_runtime_replay_row_v1",
       "score_contribution_ids": [],
       "source_proxy_only_case_count": 50,

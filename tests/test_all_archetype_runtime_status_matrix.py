@@ -47,21 +47,21 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertEqual(self.matrix["extra_parity_source_row_count"], 0)
         self.assertEqual(self.matrix["source_proxy_to_score_count"], 0)
         self.assertEqual(self.matrix["not_attempted_without_reason_count"], 0)
-        self.assertEqual(self.matrix["url_backed_case_exists_without_runtime_execution_count"], 1)
+        self.assertEqual(self.matrix["url_backed_case_exists_without_runtime_execution_count"], 0)
         self.assertEqual(
             self.matrix["url_backed_case_exists_without_runtime_execution_archetype_ids"],
-            ["C24_BIO_TRIAL_DATA_EVENT_RISK"],
+            [],
         )
         self.assertFalse(self.matrix["goal4_hard_failures_clear"])
         self.assertEqual(
             self.matrix["goal4_hard_failure_counts"]["url_backed_case_exists_without_runtime_execution_count"],
-            1,
+            0,
         )
         self.assertEqual(self.matrix["goal4_hard_failure_counts"]["source_proxy_to_score_count"], 0)
         self.assertEqual(self.matrix["goal4_hard_failure_counts"]["not_attempted_without_reason_count"], 0)
         self.assertEqual(self.matrix["goal4_hard_failure_counts"]["runtime_parity_not_proven_count"], 36)
         self.assertIn(
-            "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED",
+            "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
             self.matrix["url_backed_replay_obligation_status_counts"],
         )
         self.assertTrue(self.matrix["all_registered_archetypes_have_exactly_one_runtime_status_row"])
@@ -198,7 +198,7 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertIn("005930", c06["blocked_symbols"])
 
     def test_canaries_split_score_path_blocked_and_source_repair_states(self) -> None:
-        score_path_gap_prefixes = ("C08", "C15")
+        score_path_gap_prefixes = ("C08", "C17")
         for prefix in score_path_gap_prefixes:
             row = self.by_prefix[prefix]
             self.assertEqual(row["runtime_attempt_status"], "PRODUCTION_FULL_THESIS_ATTEMPTED", prefix)
@@ -220,54 +220,56 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
                 prefix,
             )
 
-        c17 = self.by_prefix["C17"]
-        self.assertEqual(c17["runtime_attempt_status"], "PRODUCTION_CANDIDATE_BLOCKED")
-        self.assertEqual(c17["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS")
-        self.assertEqual(c17["accepted_claim_status"], "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED")
-        self.assertEqual(c17["full_thesis_status"], "FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP")
-        self.assertEqual(c17["runtime_parity_proof_status"], "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP")
-        self.assertEqual(c17["runtime_status"], "SOURCE_REPAIR_REQUIRED")
-        self.assertEqual(c17["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
-        self.assertEqual(c17["runtime_full_thesis_row_count"], 0)
-        self.assertGreater(c17["source_task_any_accepted_claim_count"], 0)
+        c15 = self.by_prefix["C15"]
+        self.assertEqual(c15["runtime_attempt_status"], "PRODUCTION_CANDIDATE_BLOCKED")
+        self.assertEqual(c15["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS")
+        self.assertEqual(c15["accepted_claim_status"], "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED")
+        self.assertEqual(c15["full_thesis_status"], "FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP")
+        self.assertEqual(c15["runtime_parity_proof_status"], "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP")
+        self.assertEqual(c15["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c15["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
+        self.assertEqual(c15["runtime_full_thesis_row_count"], 0)
+        self.assertGreater(c15["source_task_any_accepted_claim_count"], 0)
         self.assertEqual(
-            c17["next_required_action"],
+            c15["next_required_action"],
             "EXECUTE_OFFICIAL_FIRST_FOLLOWUP_TASKS_FOR_BLOCKED_PRIMITIVES",
         )
 
         for prefix in ("C28",):
             row = self.by_prefix[prefix]
-            self.assertEqual(row["runtime_attempt_status"], "SOURCE_TASK_EXECUTED", prefix)
-            self.assertEqual(row["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS", prefix)
-            self.assertEqual(row["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY", prefix)
-            self.assertEqual(row["full_thesis_status"], "NO_PRODUCTION_FULL_THESIS_ROW", prefix)
-            self.assertEqual(row["runtime_parity_proof_status"], "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM", prefix)
+            self.assertEqual(row["runtime_attempt_status"], "PRODUCTION_CANDIDATE_BLOCKED", prefix)
+            self.assertEqual(row["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS", prefix)
+            self.assertEqual(row["accepted_claim_status"], "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED", prefix)
+            self.assertEqual(row["full_thesis_status"], "FULL_THESIS_BLOCKED_REQUIRED_OR_GREEN_GAP", prefix)
+            self.assertEqual(row["runtime_parity_proof_status"], "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP", prefix)
             self.assertEqual(row["runtime_status"], "SOURCE_REPAIR_REQUIRED", prefix)
-            self.assertEqual(row["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED", prefix)
+            self.assertEqual(row["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING", prefix)
             self.assertEqual(row["runtime_full_thesis_row_count"], 0, prefix)
-            self.assertEqual(row["source_task_any_accepted_claim_count"], 0, prefix)
+            self.assertGreater(row["source_task_any_accepted_claim_count"], 0, prefix)
             self.assertEqual(
                 row["next_required_action"],
-                "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
+                "EXECUTE_OFFICIAL_FIRST_FOLLOWUP_TASKS_FOR_BLOCKED_PRIMITIVES",
                 prefix,
             )
 
         c24 = self.by_prefix["C24"]
-        self.assertEqual(c24["runtime_attempt_status"], "PLANNER_ATTEMPTED_ONLY")
-        self.assertEqual(c24["runtime_source_route_execution_status"], "ROUTE_RECOVERED_NOT_EXECUTED")
+        self.assertEqual(c24["runtime_attempt_status"], "SOURCE_TASK_EXECUTED")
+        self.assertEqual(c24["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS")
         self.assertEqual(c24["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY")
-        self.assertEqual(c24["url_backed_replay_obligation_status"], "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED")
-        self.assertTrue(c24["url_backed_replay_obligation_unmet"])
+        self.assertEqual(c24["url_backed_replay_obligation_status"], "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED")
+        self.assertFalse(c24["url_backed_replay_obligation_unmet"])
         self.assertEqual(c24["source_backed_replay_symbols"], ["009420", "215600"])
         self.assertEqual(c24["full_thesis_status"], "NO_PRODUCTION_FULL_THESIS_ROW")
-        self.assertEqual(c24["runtime_parity_proof_status"], "NOT_PROVEN_PLANNER_ONLY")
-        self.assertEqual(c24["runtime_status"], "PLANNING_ONLY")
-        self.assertEqual(c24["primary_blocker_class"], "SOURCE_TASK_NOT_CREATED")
+        self.assertEqual(c24["runtime_parity_proof_status"], "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM")
+        self.assertEqual(c24["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c24["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
+        self.assertGreater(c24["runtime_source_task_count"], 0)
+        self.assertGreater(c24["source_task_execution_log_count"], 0)
         self.assertEqual(c24["runtime_full_thesis_row_count"], 0)
         self.assertEqual(c24["source_task_any_accepted_claim_count"], 0)
         self.assertEqual(
             c24["next_required_action"],
-            "TURN_PLANNER_ATTEMPT_INTO_BOUNDED_SOURCE_TASKS",
+            "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
         )
 
     def test_canary_failure_modes_split_route_family_and_mapper_causes(self) -> None:
@@ -278,14 +280,14 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertIn("NO_SCORE_ELIGIBLE_REAL_CLAIM", c28["source_task_failure_axis_counts"])
         self.assertEqual(
             c28["next_required_action"],
-            "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
+            "EXECUTE_OFFICIAL_FIRST_FOLLOWUP_TASKS_FOR_BLOCKED_PRIMITIVES",
         )
 
     def test_seed_materialization_audit_splits_accepted_claim_not_created_causes(self) -> None:
         audit = json.loads(
             (self.docs / "census_mode_v4_full_thesis_seed_materialization_audit.json").read_text(encoding="utf-8")
         )
-        self.assertEqual(audit["status_counts"]["ACCEPTED_CLAIM_NOT_CREATED"], 75)
+        self.assertEqual(audit["status_counts"]["ACCEPTED_CLAIM_NOT_CREATED"], 77)
         self.assertIn("accepted_claim_not_created_failure_axis_counts", audit)
         self.assertIn("accepted_claim_not_created_primary_failure_axis_counts", audit)
         self.assertIn("accepted_claim_not_created_samples", audit)
@@ -303,8 +305,8 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertTrue(sample["source_task_failure_samples"])
 
     def test_seed_materialization_failure_axes_are_carried_into_status_matrix_rows(self) -> None:
-        self.assertEqual(self.matrix["seed_materialization_trace_count"], 105)
-        self.assertEqual(self.matrix["seed_materialization_accepted_claim_not_created_count"], 75)
+        self.assertEqual(self.matrix["seed_materialization_trace_count"], 111)
+        self.assertEqual(self.matrix["seed_materialization_accepted_claim_not_created_count"], 77)
         self.assertIn("PRIMITIVE_GAP_UNSATISFIED", self.matrix["seed_materialization_primary_failure_axis_counts"])
 
         c02 = self.by_prefix["C02"]
@@ -319,25 +321,25 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertTrue(c02["seed_materialization_failure_samples"])
 
     def test_source_executed_without_accepted_claim_is_not_collapsed_into_planner_only(self) -> None:
-        c28 = self.by_prefix["C28"]
-        self.assertEqual(c28["runtime_attempt_status"], "SOURCE_TASK_EXECUTED")
-        self.assertEqual(c28["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS")
-        self.assertEqual(c28["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY")
-        self.assertEqual(c28["runtime_parity_proof_status"], "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM")
-        self.assertEqual(c28["runtime_status"], "SOURCE_REPAIR_REQUIRED")
-        self.assertEqual(c28["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
-        self.assertEqual(c28["next_required_action"], "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS")
+        c24 = self.by_prefix["C24"]
+        self.assertEqual(c24["runtime_attempt_status"], "SOURCE_TASK_EXECUTED")
+        self.assertEqual(c24["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS")
+        self.assertEqual(c24["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY")
+        self.assertEqual(c24["runtime_parity_proof_status"], "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM")
+        self.assertEqual(c24["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c24["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
+        self.assertEqual(c24["next_required_action"], "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS")
 
         c29 = self.by_prefix["C29"]
-        self.assertEqual(c29["runtime_attempt_status"], "SOURCE_TASK_EXECUTED")
+        self.assertEqual(c29["runtime_attempt_status"], "PRODUCTION_CANDIDATE_BLOCKED")
         self.assertEqual(c29["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS")
         self.assertEqual(c29["accepted_claim_status"], "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED")
-        self.assertEqual(c29["runtime_parity_proof_status"], "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED")
-        self.assertEqual(c29["runtime_status"], "SCORE_PATH_NOT_CLOSED")
-        self.assertEqual(c29["primary_blocker_class"], "SCORE_PATH_NOT_CLOSED")
+        self.assertEqual(c29["runtime_parity_proof_status"], "NOT_PROVEN_BLOCKED_BY_MATERIAL_GAP")
+        self.assertEqual(c29["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c29["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING")
         self.assertEqual(
             c29["next_required_action"],
-            "MAP_ACCEPTED_CLAIMS_TO_SCORE_CONTRIBUTIONS_OR_EXPLAIN_REMAINING_GAPS",
+            "EXECUTE_OFFICIAL_FIRST_FOLLOWUP_TASKS_FOR_BLOCKED_PRIMITIVES",
         )
 
     def test_registry_source_of_truth_keeps_missing_parity_row_visible(self) -> None:

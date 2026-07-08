@@ -1,6 +1,6 @@
 {
   "price_path_rows_runtime_prompt_allowed": false,
-  "record_count": 11395,
+  "record_count": 11400,
   "schema_version": "e2r_research_reverse_source_quality_matrix_v1",
   "source_proxy_rows_runtime_score_allowed": false,
   "source_proxy_score_leak_case_ids": [],
@@ -10,7 +10,7 @@
     "A2_URL_BACKED": 3150,
     "EVIDENCE_URL_PENDING": 185,
     "PRICE_PATH_ONLY": 2204,
-    "SHADOW_ONLY": 523,
+    "SHADOW_ONLY": 528,
     "SOURCE_PROXY_ONLY": 5314
   },
   "url_backed_replay_candidate_count": 3150,
@@ -71,7 +71,7 @@
     "RCASE-729039884de2038428ef",
     "RCASE-7207e241f3c513c892a2",
     "RCASE-8568d354e19c8ddd7031",
-    "RCASE-8481a69884c291194f4a",
+    "RCASE-be00c661949664c05f63",
     "RCASE-41375095e074221eca0a",
     "RCASE-cc3a1ba187447616d093",
     "RCASE-7c62bc28dab0725c8428",

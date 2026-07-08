@@ -7,10 +7,10 @@
 ## Summary
 
 - status: `PLANNER_ARCHETYPE_ROUTING_BIAS_PASS`
-- planner_run_count: `452`
-- hypothesis_run_count: `105`
-- distinct_top1_archetype_count: `32`
-- c05_top1_share: `0.028571`
+- planner_run_count: `458`
+- hypothesis_run_count: `111`
+- distinct_top1_archetype_count: `33`
+- c05_top1_share: `0.027027`
 - planner_output_score_stage_key_count: `0`
 
 ## Top1 Counts
@@ -38,6 +38,7 @@
 - `C21`: `3`
 - `C22`: `3`
 - `C23`: `3`
+- `C24`: `6`
 - `C25`: `3`
 - `C26`: `3`
 - `C27`: `3`

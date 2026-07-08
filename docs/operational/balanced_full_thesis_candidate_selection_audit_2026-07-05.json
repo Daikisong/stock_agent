@@ -7,7 +7,7 @@
   "current_full_thesis_row_count": 6,
   "mandatory_archetype_attempt_missing": [],
   "mandatory_archetype_full_thesis_missing": [
-    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+    "C15_MATERIAL_SPREAD_SUPERCYCLE",
     "C24_BIO_TRIAL_DATA_EVENT_RISK",
     "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
   ],
@@ -15,7 +15,7 @@
   "next_required_archetype_attempt_count": 12,
   "next_required_archetype_attempts": [
     {
-      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "current_runtime_parity_status": "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP",
       "current_source_route_status": "BLOCKED_FULL_THESIS_CANDIDATE",
       "priority": 10,
@@ -23,28 +23,28 @@
       "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
       "runtime_source_task_execution_count": 46,
-      "source_backed_fixture_count": 10
+      "source_backed_fixture_count": 6
     },
     {
       "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
-      "current_runtime_parity_status": "PLANNER_ATTEMPTED_BUT_NO_RUNTIME_SOURCE_CLOSURE",
-      "current_source_route_status": "PLANNER_ATTEMPTED_NO_SOURCE_CLOSURE",
-      "priority": 10,
-      "reason": "mandatory_archetype_missing_production_full_thesis",
-      "runtime_full_thesis_row_count": 0,
-      "runtime_planner_top1_count": 0,
-      "runtime_source_task_execution_count": 0,
-      "source_backed_fixture_count": 5
-    },
-    {
-      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "current_runtime_parity_status": "SOURCE_ROUTE_ATTEMPTED_BUT_NO_ACCEPTED_FULL_THESIS_CLAIM",
       "current_source_route_status": "SOURCE_ROUTE_ATTEMPTED_NO_ACCEPTED_CLAIM",
       "priority": 10,
       "reason": "mandatory_archetype_missing_production_full_thesis",
       "runtime_full_thesis_row_count": 0,
+      "runtime_planner_top1_count": 6,
+      "runtime_source_task_execution_count": 96,
+      "source_backed_fixture_count": 5
+    },
+    {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "current_runtime_parity_status": "FULL_THESIS_BLOCKED_BY_REQUIRED_OR_GREEN_GAP",
+      "current_source_route_status": "BLOCKED_FULL_THESIS_CANDIDATE",
+      "priority": 10,
+      "reason": "mandatory_archetype_missing_production_full_thesis",
+      "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 48,
+      "runtime_source_task_execution_count": 46,
       "source_backed_fixture_count": 7
     },
     {
@@ -55,7 +55,7 @@
       "reason": "attempted_but_not_promoted_to_full_thesis",
       "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 42,
+      "runtime_source_task_execution_count": 44,
       "source_backed_fixture_count": 3
     },
     {
@@ -66,7 +66,7 @@
       "reason": "attempted_but_not_promoted_to_full_thesis",
       "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 48,
+      "runtime_source_task_execution_count": 44,
       "source_backed_fixture_count": 3
     },
     {
@@ -77,7 +77,7 @@
       "reason": "attempted_but_not_promoted_to_full_thesis",
       "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 50,
+      "runtime_source_task_execution_count": 48,
       "source_backed_fixture_count": 3
     },
     {
@@ -132,7 +132,7 @@
       "reason": "attempted_but_not_promoted_to_full_thesis",
       "runtime_full_thesis_row_count": 0,
       "runtime_planner_top1_count": 3,
-      "runtime_source_task_execution_count": 50,
+      "runtime_source_task_execution_count": 48,
       "source_backed_fixture_count": 3
     },
     {

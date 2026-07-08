@@ -105,9 +105,11 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
         self.assertEqual(self.by_prefix["C05"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
         self.assertEqual(self.by_prefix["C06"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
         self.assertEqual(self.by_prefix["C08"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C15"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
-        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "PLANNER_TO_SOURCE_TASK_MATERIALIZATION")
-        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE")
+        self.assertEqual(self.by_prefix["C15"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C17"]["attempt_type"], "PROMOTED_SCORE_PATH_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C24"]["attempt_type"], "SOURCE_EXECUTION_REPAIR")
+        self.assertEqual(self.by_prefix["C28"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
+        self.assertEqual(self.by_prefix["C29"]["attempt_type"], "BLOCKED_CANDIDATE_GAP_CLOSURE")
 
     def test_replay_only_archetypes_are_materialized_as_research_memory_target_candidates(self) -> None:
         expected_symbols = {
@@ -302,31 +304,31 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             self.plan_with_lineage["source_lineage_current_code_verified_retry_candidate_count"],
             0,
         )
-        c17_row = self.with_lineage_by_prefix["C17"]
-        summary = c17_row["source_lineage_repair_summary"]
-        self.assertTrue(c17_row["source_lineage_repair_required"])
+        c15_row = self.with_lineage_by_prefix["C15"]
+        summary = c15_row["source_lineage_repair_summary"]
+        self.assertTrue(c15_row["source_lineage_repair_required"])
         self.assertEqual(summary["current_code_verified_retry_candidate_count"], 0)
         self.assertGreater(summary["route_only_candidate_count"], 0)
-        self.assertIn("securities.miraeasset.com", summary["top_domains"])
+        self.assertIn("namu.wiki", summary["top_domains"])
         self.assertIn(
             "KEEP_REJECTED_SOURCE_LINEAGE_ROWS_AS_PLANNER_FEEDBACK_ONLY",
-            c17_row["source_route_repair_actions"],
+            c15_row["source_route_repair_actions"],
         )
 
-        c17_task = next(
+        c15_task = next(
             task
             for task in self.plan_with_lineage["source_tasks"]
-            if task["archetype_id"] == c17_row["archetype_id"]
+            if task["archetype_id"] == c15_row["archetype_id"]
         )
-        self.assertTrue(c17_task["source_lineage_repair_required"])
+        self.assertTrue(c15_task["source_lineage_repair_required"])
         self.assertFalse(
-            c17_task["planner_failure_feedback"][
+            c15_task["planner_failure_feedback"][
                 "score_evidence_allowed_from_source_lineage_repair_candidates"
             ]
         )
         self.assertIn(
             "Previous runtime had source-lineage rejected candidates",
-            " ".join(c17_task["query_intents"]),
+            " ".join(c15_task["query_intents"]),
         )
 
 

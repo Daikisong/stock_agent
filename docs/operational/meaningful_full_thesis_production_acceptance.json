@@ -14,7 +14,7 @@
   "mandatory_archetype_attempt_count": 6,
   "mandatory_archetype_full_thesis_count": 3,
   "mandatory_archetype_full_thesis_missing": [
-    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+    "C15_MATERIAL_SPREAD_SUPERCYCLE",
     "C24_BIO_TRIAL_DATA_EVENT_RISK",
     "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
   ],

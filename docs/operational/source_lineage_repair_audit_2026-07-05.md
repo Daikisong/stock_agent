@@ -6,43 +6,43 @@
 
 ## Summary
 
-- raw_assertion_rejection_count: `2478`
-- lineage_rejection_count: `664`
-- route_only_candidate_count: `10`
+- raw_assertion_rejection_count: `2529`
+- lineage_rejection_count: `657`
+- route_only_candidate_count: `27`
 - current_code_verified_retry_candidate_count: `0`
 - source_lineage_feedback_retry_execution_count: `0`
-- reason_counts: `{"source_class_document_type_mismatch": 194, "source_lineage_unverified_original": 485, "source_provider_document_type_mismatch": 531, "source_task_provider_error_score_block": 61}`
-- source_class_counts: `{"BrokerReportPublicPDF": 482, "CompanyGuide": 70, "CompanyNewsroom": 29, "IndustryMedia": 20, "KIND": 14, "TrustedNews": 49}`
+- reason_counts: `{"source_class_document_type_mismatch": 238, "source_lineage_unverified_original": 450, "source_provider_document_type_mismatch": 461, "source_task_provider_error_score_block": 50}`
+- source_class_counts: `{"BrokerReportPublicPDF": 421, "CompanyGuide": 72, "CompanyNewsroom": 60, "IndustryMedia": 46, "TrustedNews": 48, "UNKNOWN": 10}`
 
 ## Archetypes
 
 | archetype | lineage rejected | route-only candidates | current-code retry candidates | top domains |
 |---|---:|---:|---:|---|
-| C02_POWER_GRID_DATACENTER_CAPEX | 33 | 1 | 0 | genians.co.kr:13, snkpress.kr:20 |
-| C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG | 28 | 0 | 0 | securities.miraeasset.com:13, snumidas.com:15 |
-| C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 29 | 0 | 0 | redhorseblog.co.kr:13, rindir.co.kr:16 |
-| C06_HBM_MEMORY_CUSTOMER_CAPACITY | 17 | 0 | 0 | contents.premium.naver.com:3, securities.miraeasset.com:14 |
-| C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH | 3 | 0 | 0 | dart.fss.or.kr:3 |
-| C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 5 | 0 | 0 | dart.fss.or.kr:5 |
-| C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 27 | 5 | 0 | dart.fss.or.kr:3, paxnet.co.kr:24 |
-| C13_BATTERY_JV_UTILIZATION_AMPC_IRA | 40 | 0 | 0 | money2.daishin.com:40 |
-| C14_EV_DEMAND_SLOWDOWN_4B_4C | 17 | 0 | 0 | deepsearch.com:1, paxnet.co.kr:16 |
-| C15_MATERIAL_SPREAD_SUPERCYCLE | 29 | 0 | 0 | hohostock.co.kr:29 |
-| C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 20 | 0 | 0 | stockhandbook.blog:20 |
-| C17_CHEMICAL_COMMODITY_MARGIN_SPREAD | 19 | 4 | 0 | bnkfn.co.kr:11, securities.miraeasset.com:8 |
-| C18_CONSUMER_EXPORT_CHANNEL_REORDER | 34 | 0 | 0 | dart.fss.or.kr:4, securities.miraeasset.com:7, stock.pstatic.net:23 |
-| C19_BRAND_RETAIL_INVENTORY_MARGIN | 45 | 0 | 0 | securities.miraeasset.com:45 |
-| C22_INSURANCE_RATE_CYCLE_RESERVE | 19 | 0 | 0 | imgstock.naver.com:14, securities.miraeasset.com:5 |
-| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 56 | 0 | 0 | alphabiz.co.kr:15, home.imeritz.com:22, mt.co.kr:14, news1.kr:5 |
-| C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 9 | 0 | 0 | imgstock.naver.com:9 |
-| C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 103 | 0 | 0 | dart.fss.or.kr:3, money2.daishin.com:10, paxnet.co.kr:10, securities.miraeasset.com:77 |
-| C27_CONTENT_IP_GLOBAL_MONETIZATION | 25 | 0 | 0 | cjnews.cj.net:10, securities.miraeasset.com:15 |
-| C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 14 | 0 | 0 | shinyoung.com:14 |
-| C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE | 9 | 0 | 0 | securities.miraeasset.com:9 |
-| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 30 | 0 | 0 | imgstock.naver.com:16, stock.pstatic.net:14 |
-| C31_POLICY_SUBSIDY_LEGISLATION_EVENT | 18 | 0 | 0 | money2.daishin.com:18 |
-| C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 22 | 0 | 0 | jusikai.com:10, paxnet.co.kr:12 |
-| R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | 13 | 0 | 0 | dart.fss.or.kr:2, imgstock.naver.com:11 |
+| C01_ORDER_BACKLOG_MARGIN_BRIDGE | 3 | 2 | 0 | dart.fss.or.kr:3 |
+| C02_POWER_GRID_DATACENTER_CAPEX | 52 | 0 | 0 | dart.fss.or.kr:3, genians.co.kr:12, newspim.com:5, paxnet.co.kr:20 |
+| C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY | 13 | 0 | 0 | redhorseblog.co.kr:13 |
+| C06_HBM_MEMORY_CUSTOMER_CAPACITY | 13 | 2 | 0 | contents.premium.naver.com:2, dart.fss.or.kr:5, investpension.miraeasset.com:6 |
+| C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY | 19 | 0 | 0 | imgstock.naver.com:19 |
+| C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF | 28 | 7 | 0 | paxnet.co.kr:19, topstarnews.net:9 |
+| C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE | 35 | 9 | 0 | dart.fss.or.kr:4, paxnet.co.kr:14, thinkpool.com:17 |
+| C11_BATTERY_ORDERBOOK_RERATING | 18 | 0 | 0 | hankyung.com:18 |
+| C14_EV_DEMAND_SLOWDOWN_4B_4C | 17 | 0 | 0 | comp.wisereport.co.kr:17 |
+| C15_MATERIAL_SPREAD_SUPERCYCLE | 39 | 7 | 0 | contents.premium.naver.com:10, dart.fss.or.kr:4, namu.wiki:25 |
+| C16_STRATEGIC_RESOURCE_POLICY_SUPPLY | 51 | 0 | 0 | dart.fss.or.kr:4, paxnet.co.kr:47 |
+| C18_CONSUMER_EXPORT_CHANNEL_REORDER | 4 | 0 | 0 | dart.fss.or.kr:4 |
+| C19_BRAND_RETAIL_INVENTORY_MARGIN | 49 | 0 | 0 | securities.miraeasset.com:49 |
+| C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION | 18 | 0 | 0 | dart.fss.or.kr:3, paxnet.co.kr:15 |
+| C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN | 8 | 0 | 0 | apnews.kr:8 |
+| C22_INSURANCE_RATE_CYCLE_RESERVE | 7 | 0 | 0 | fetv.co.kr:7 |
+| C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION | 53 | 0 | 0 | home.imeritz.com:53 |
+| C24_BIO_TRIAL_DATA_EVENT_RISK | 1 | 0 | 0 | imgstock.naver.com:1 |
+| C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT | 44 | 0 | 0 | dart.fss.or.kr:4, imgstock.naver.com:18, paxnet.co.kr:22 |
+| C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE | 84 | 0 | 0 | dart.fss.or.kr:3, money2.daishin.com:11, securities.miraeasset.com:70 |
+| C27_CONTENT_IP_GLOBAL_MONETIZATION | 40 | 0 | 0 | deadline.com:13, newsroom.cj.net:6, securities.miraeasset.com:21 |
+| C28_SOFTWARE_SECURITY_CONTRACT_RETENTION | 25 | 0 | 0 | shinyoung.com:25 |
+| C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK | 14 | 0 | 0 | dart.fss.or.kr:14 |
+| C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP | 20 | 0 | 0 | businesspost.co.kr:20 |
+| R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL | 2 | 0 | 0 | dart.fss.or.kr:2 |
 
 ## Safety
 

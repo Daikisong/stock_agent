@@ -268,13 +268,13 @@
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "case_role_counts": {
         "4B": 21,
-        "4C": 272,
+        "4C": 271,
         "guard": 6,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 2,
       "has_pattern_summary": true,
-      "record_count": 300,
+      "record_count": 299,
       "source_gap": false,
       "source_proxy_only_case_count": 177,
       "source_quality_counts": {
@@ -282,7 +282,7 @@
         "A2_URL_BACKED": 61,
         "EVIDENCE_URL_PENDING": 2,
         "PRICE_PATH_ONLY": 43,
-        "SHADOW_ONLY": 16,
+        "SHADOW_ONLY": 15,
         "SOURCE_PROXY_ONLY": 177
       },
       "top_missing_primitives": [
@@ -527,21 +527,21 @@
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "case_role_counts": {
         "4B": 47,
-        "4C": 303,
+        "4C": 304,
         "guard": 3,
-        "positive": 1,
+        "positive": 2,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 355,
+      "record_count": 357,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 98,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 81,
-        "SHADOW_ONLY": 15,
+        "SHADOW_ONLY": 17,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
@@ -969,32 +969,33 @@
       "case_role_counts": {
         "4B": 19,
         "4C": 255,
-        "guard": 2
+        "guard": 2,
+        "positive": 1
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 276,
+      "record_count": 277,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 66,
         "EVIDENCE_URL_PENDING": 6,
         "PRICE_PATH_ONLY": 45,
-        "SHADOW_ONLY": 3,
+        "SHADOW_ONLY": 4,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
-        "global_launch_conversion",
         "token_or_theme_hype_risk",
         "ip_monetization_visible",
+        "global_launch_conversion",
         "user_retention",
         "repeat_revenue"
       ],
       "top_positive_primitives": [
         "repeat_revenue",
         "user_retention",
-        "ip_monetization_visible",
         "global_launch_conversion",
+        "ip_monetization_visible",
         "token_or_theme_hype_risk"
       ],
       "url_backed_case_count": 66
@@ -1003,14 +1004,14 @@
       "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
       "case_role_counts": {
         "4B": 27,
-        "4C": 310,
+        "4C": 311,
         "guard": 13,
         "profile_cap": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 7,
       "has_pattern_summary": true,
-      "record_count": 352,
+      "record_count": 353,
       "source_gap": false,
       "source_proxy_only_case_count": 187,
       "source_quality_counts": {
@@ -1018,7 +1019,7 @@
         "A2_URL_BACKED": 83,
         "EVIDENCE_URL_PENDING": 7,
         "PRICE_PATH_ONLY": 54,
-        "SHADOW_ONLY": 20,
+        "SHADOW_ONLY": 21,
         "SOURCE_PROXY_ONLY": 187
       },
       "top_missing_primitives": [
@@ -1041,20 +1042,20 @@
       "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
       "case_role_counts": {
         "4B": 19,
-        "4C": 246,
+        "4C": 247,
         "guard": 1,
         "positive": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 267,
+      "record_count": 268,
       "source_gap": false,
       "source_proxy_only_case_count": 114,
       "source_quality_counts": {
         "A2_URL_BACKED": 71,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 67,
-        "SHADOW_ONLY": 10,
+        "SHADOW_ONLY": 11,
         "SOURCE_PROXY_ONLY": 114
       },
       "top_missing_primitives": [
@@ -1116,27 +1117,27 @@
         "4B": 41,
         "4C": 329,
         "guard": 3,
-        "positive": 1,
+        "positive": 2,
         "profile_cap": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 8,
       "has_pattern_summary": true,
-      "record_count": 376,
+      "record_count": 377,
       "source_gap": false,
       "source_proxy_only_case_count": 142,
       "source_quality_counts": {
         "A2_URL_BACKED": 114,
         "EVIDENCE_URL_PENDING": 8,
         "PRICE_PATH_ONLY": 104,
-        "SHADOW_ONLY": 8,
+        "SHADOW_ONLY": 9,
         "SOURCE_PROXY_ONLY": 142
       },
       "top_missing_primitives": [
         "policy_or_regulatory_confirmed",
         "direct_company_cash_route",
-        "subsidy_capture_visible",
         "policy_headline_only",
+        "subsidy_capture_visible",
         "implementation_timeline"
       ],
       "top_positive_primitives": [

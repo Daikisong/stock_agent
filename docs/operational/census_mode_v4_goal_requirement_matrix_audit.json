@@ -4,10 +4,11 @@
     "full_thesis_smoke_pending",
     "full_thesis_production_pass_false",
     "full_thesis_seed_materialization_audit_not_pass",
+    "brain_web_evidence_pass_false",
     "machine_readable_test_result_artifact_missing"
   ],
   "brain_web_mode": "enabled",
-  "brain_web_requirement_pass": true,
+  "brain_web_requirement_pass": false,
   "fail_gate_ids": [
     "FULL_THESIS_SEED_MATERIALIZATION_AUDIT_PASS"
   ],
@@ -33,14 +34,15 @@
   "pending_gate_ids": [
     "FULL_THESIS_SMOKE_PASS",
     "FULL_THESIS_PRODUCTION_PASS",
+    "BRAIN_WEB_EVIDENCE_PASS",
     "FULL_TEST_ARTIFACT_PASS"
   ],
   "production_full_e2r_score_path_pass": true,
   "production_full_thesis_requirement_pass": false,
   "required_goal_completion_count": 22,
   "required_goal_completion_fail_count": 1,
-  "required_goal_completion_pass_count": 18,
-  "required_goal_completion_pending_count": 3,
+  "required_goal_completion_pass_count": 17,
+  "required_goal_completion_pending_count": 4,
   "requirements": [
     {
       "blocker": "v3_forensic_review_missing",
@@ -56,7 +58,7 @@
     {
       "blocker": "hard_gate_config_not_enabled",
       "evidence": {
-        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T173522Z --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 105 --brain-planner-success-limit 105 --brain-planner-batch-size 1 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 35 --brain-max-distinct-candidate-attempts 105 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 14400.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",
+        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-05-goal4-all-archetype-next-runtime-attempt-e0e9399 --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 111 --brain-planner-success-limit 111 --brain-planner-batch-size 1 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 111 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 14400.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",
         "fail_on_atomic_mismatch": true,
         "fail_on_critical_audit": true,
         "fail_on_run_mode_overclaim": true,
@@ -103,10 +105,10 @@
         "raw_contribution_fallback_as_verified_score_count": 0,
         "score_scope_distribution": {
           "BRAIN_OFFICIAL_CLAIM_BACKED_PARTIAL": 1,
-          "BRAIN_WEB_CLAIM_BACKED_PARTIAL": 2,
-          "EVENT_WEIGHTED_PARTIAL": 64,
+          "BRAIN_WEB_CLAIM_BACKED_PARTIAL": 4,
+          "EVENT_WEIGHTED_PARTIAL": 63,
           "FULL_E2R_100": 6,
-          "NO_SCORE": 3318
+          "NO_SCORE": 3317
         },
         "verified_score_not_full_e2r_count": 0
       },
@@ -127,8 +129,8 @@
         "source_pending_marked_red_count": 0,
         "stage_scope_distribution": {
           "BRAIN_OFFICIAL_PARTIAL": 1,
-          "BRAIN_WEB_PARTIAL": 2,
-          "CENSUS_EVENT_BOARD": 3382,
+          "BRAIN_WEB_PARTIAL": 4,
+          "CENSUS_EVENT_BOARD": 3380,
           "FULL_THESIS": 6
         }
       },
@@ -153,8 +155,8 @@
       "blocker": "source_task_satisfaction_not_pass",
       "evidence": {
         "primitive_state_chain_verdict": "PASS",
-        "representative_score_claim_count": 83,
-        "source_task_chain_closed_to_representative_stage_count": 124,
+        "representative_score_claim_count": 79,
+        "source_task_chain_closed_to_representative_stage_count": 121,
         "source_task_satisfaction_verdict": "PASS_LEDGER_REFRESH_SOURCE_TASK_SATISFACTION"
       },
       "gate_id": "SOURCE_TASK_SATISFACTION_PASS",
@@ -193,11 +195,12 @@
         ],
         "full_thesis_required_source_class_count": 11,
         "full_thesis_task_executable_source_path_pass_allowed": true,
-        "full_thesis_task_with_blocking_source_class_count": 115,
+        "full_thesis_task_with_blocking_source_class_count": 122,
         "missing_connector_source_classes": [
           "BrokerReportPDF",
-          "CompanyFiling",
+          "ClinicalTrialRegistry",
           "IndustryMedia",
+          "IssuerIRArchive",
           "IssuerOfficial"
         ],
         "placeholder_source_classes": [
@@ -354,15 +357,15 @@
       "evidence": {
         "critical_count": 48,
         "full_thesis_promoted_seed_count": 6,
-        "seed_event_count": 105,
+        "seed_event_count": 111,
         "status_counts": {
-          "ACCEPTED_CLAIM_NOT_CREATED": 75,
+          "ACCEPTED_CLAIM_NOT_CREATED": 77,
           "FULL_THESIS_PROMOTED": 6,
           "SOURCE_TASK_NOT_EXECUTED": 9,
-          "STAGECOURT_READY_NOT_PROMOTED": 14,
+          "STAGECOURT_READY_NOT_PROMOTED": 18,
           "STAGECOURT_TRACE_NOT_CREATED": 1
         },
-        "trace_row_count": 105,
+        "trace_row_count": 111,
         "verdict": "FAIL"
       },
       "gate_id": "FULL_THESIS_SEED_MATERIALIZATION_AUDIT_PASS",
@@ -375,12 +378,12 @@
       "evidence": {
         "critical_count": 48,
         "full_thesis_promoted_seed_count": 6,
-        "seed_event_count": 105,
+        "seed_event_count": 111,
         "status_counts": {
-          "ACCEPTED_CLAIM_NOT_CREATED": 75,
+          "ACCEPTED_CLAIM_NOT_CREATED": 77,
           "FULL_THESIS_PROMOTED": 6,
           "SOURCE_TASK_NOT_EXECUTED": 9,
-          "STAGECOURT_READY_NOT_PROMOTED": 14,
+          "STAGECOURT_READY_NOT_PROMOTED": 18,
           "STAGECOURT_TRACE_NOT_CREATED": 1
         },
         "verdict": "FAIL"
@@ -393,9 +396,9 @@
     {
       "blocker": "brain_web_evidence_pass_false",
       "evidence": {
-        "brain_web_evidence_pass_allowed": true,
-        "llm_claim_extractor_attempt_count": 107,
-        "llm_planner_call_count": 105,
+        "brain_web_evidence_pass_allowed": false,
+        "llm_claim_extractor_attempt_count": 113,
+        "llm_planner_call_count": 111,
         "minimum_required_counts": {
           "llm_claim_extractor_attempt_count": 10,
           "llm_planner_call_count": 30,
@@ -406,15 +409,15 @@
           "web_search_task_count": 20
         },
         "operational_minimum_count_gate_applies": true,
-        "verdict": "READY_FOR_BRAIN_WEB_EVIDENCE_PASS",
-        "web_fetched_document_count": 107,
-        "web_or_llm_accepted_claim_count": 63,
-        "web_search_call_count": 132,
-        "web_search_task_count": 132
+        "verdict": "BLOCKED",
+        "web_fetched_document_count": 113,
+        "web_or_llm_accepted_claim_count": 38,
+        "web_search_call_count": 158,
+        "web_search_task_count": 158
       },
       "gate_id": "BRAIN_WEB_EVIDENCE_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "PENDING",
       "title": "real planner/web/extractor/claim traces satisfy operational minimums"
     },
     {
@@ -982,6 +985,7 @@
       "evidence": {
         "completion_eligible": true,
         "deferred_goal_blockers": [
+          "brain_web_evidence_pass_false",
           "full_thesis_smoke_pending",
           "full_thesis_smoke_execution_pending",
           "full_thesis_production_pass_false"

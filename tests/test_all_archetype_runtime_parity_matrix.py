@@ -56,13 +56,13 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
             self.assertFalse(matrix["goal4_hard_failures_clear"])
             self.assertEqual(matrix["source_proxy_to_score_count"], 0)
             self.assertEqual(matrix["not_attempted_without_reason_count"], 0)
-            self.assertEqual(matrix["url_backed_case_exists_without_runtime_execution_count"], 1)
+            self.assertEqual(matrix["url_backed_case_exists_without_runtime_execution_count"], 0)
             self.assertEqual(
                 matrix["url_backed_case_exists_without_runtime_execution_archetype_ids"],
-                ["C24_BIO_TRIAL_DATA_EVENT_RISK"],
+                [],
             )
             self.assertIn(
-                "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED",
+                "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED",
                 matrix["url_backed_replay_obligation_status_counts"],
             )
 
@@ -169,18 +169,18 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         )
 
         c24 = by_prefix["C24"]
-        self.assertEqual(c24["runtime_status"], "PLANNING_ONLY")
-        self.assertEqual(c24["primary_blocker_class"], "SOURCE_TASK_NOT_CREATED")
-        self.assertEqual(c24["url_backed_replay_obligation_status"], "REPLAY_ACCEPTED_CLAIM_ONLY_NOT_PRODUCTION_EXECUTED")
-        self.assertTrue(c24["url_backed_replay_obligation_unmet"])
+        self.assertEqual(c24["runtime_status"], "SOURCE_REPAIR_REQUIRED")
+        self.assertEqual(c24["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
+        self.assertEqual(c24["url_backed_replay_obligation_status"], "PRODUCTION_SOURCE_EXECUTED_NOT_FULL_THESIS_CLOSED")
+        self.assertFalse(c24["url_backed_replay_obligation_unmet"])
         self.assertEqual(c24["source_backed_replay_symbols"], ["009420", "215600"])
-        self.assertEqual(c24["runtime_source_task_count"], 0)
-        self.assertEqual(c24["source_task_execution_log_count"], 0)
+        self.assertGreater(c24["runtime_source_task_count"], 0)
+        self.assertGreater(c24["source_task_execution_log_count"], 0)
         self.assertEqual(c24["runtime_full_thesis_row_count"], 0)
         self.assertEqual(c24["source_task_any_accepted_claim_count"], 0)
         self.assertEqual(
             c24["next_required_action"],
-            "TURN_PLANNER_ATTEMPT_INTO_BOUNDED_SOURCE_TASKS",
+            "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
         )
 
 

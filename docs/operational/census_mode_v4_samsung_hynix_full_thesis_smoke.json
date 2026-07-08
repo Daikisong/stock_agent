@@ -352,8 +352,6 @@
           ],
           "linked": true,
           "source_task_ids": [
-            "RTTASK-7f33db04360ffa26109b-ir-revenue-visibility-contract",
-            "RTTASK-7f33db04360ffa26109b-counter-claim-contract-not-secured",
             "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87"
           ]
         }
@@ -364,8 +362,6 @@
       "full_thesis_source_pending_required_gap_primitives": [],
       "full_thesis_source_stage": "0",
       "full_thesis_source_task_ids": [
-        "RTTASK-7f33db04360ffa26109b-ir-revenue-visibility-contract",
-        "RTTASK-7f33db04360ffa26109b-counter-claim-contract-not-secured",
         "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87"
       ],
       "full_thesis_stage": "0",
@@ -406,14 +402,12 @@
       "official_evidence_document_ids": [
         "DOC-d78e3500c9e0882567b5"
       ],
-      "official_source_task_count": 7,
+      "official_source_task_count": 5,
       "official_source_task_ids": [
-        "RTTASK-7f33db04360ffa26109b-ir-revenue-visibility-contract",
-        "RTTASK-7f33db04360ffa26109b-counter-claim-contract-not-secured",
         "RSTASKV4DARTSTATUS-8bc2d25177cb3bd92f4acc87",
-        "RTTASK-91c6a0e1b2fb0fbdcaf2-c06-ir-customer-allocation",
+        "RTTASK-91c6a0e1b2fb0fbdcaf2-c06-ir-customer-allocation-direct",
+        "RTTASK-91c6a0e1b2fb0fbdcaf2-c06-qualification-vs-allocation-countercheck",
         "RSTASKV4DARTSTATUS-775faf32c9723d4d6270f491",
-        "RTTASK-dd31858583100a02119b-official-ir-hbm-capacity",
         "RSTASKV4DARTSTATUS-c6eb18b58c173c5665029e3a"
       ],
       "operator_scope_note": "full_thesis_operational_stage",
