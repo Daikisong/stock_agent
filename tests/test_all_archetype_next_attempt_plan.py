@@ -274,6 +274,60 @@ class AllArchetypeNextAttemptPlanTests(unittest.TestCase):
             c02_task["planner_failure_feedback"]["score_evidence_allowed_from_previous_seed_failures"]
         )
 
+    def test_source_task_failure_feedback_is_carried_into_next_source_tasks(self) -> None:
+        self.assertGreater(self.plan["source_task_repair_task_count"], 0)
+        self.assertIn(
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+            self.plan["source_task_primary_failure_axis_counts"],
+        )
+        self.assertIn(
+            "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+            self.plan["source_task_repair_hint_counts"],
+        )
+
+        c24_row = self.by_prefix["C24"]
+        self.assertEqual(
+            c24_row["previous_source_task_primary_failure_axis"],
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+        )
+        self.assertEqual(
+            c24_row["previous_source_task_repair_hint"],
+            "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+        )
+        self.assertTrue(c24_row["previous_source_task_top_source_classes"])
+        self.assertTrue(c24_row["previous_source_task_top_primitive_gaps"])
+        self.assertTrue(c24_row["previous_source_task_failure_sample_refs"])
+        self.assertTrue(c24_row["source_task_repair_required"])
+        self.assertIn(
+            "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+            c24_row["source_task_repair_actions"],
+        )
+
+        c24_task = next(task for task in self.plan["source_tasks"] if task["archetype_id"] == c24_row["archetype_id"])
+        self.assertEqual(
+            c24_task["planner_failure_feedback"]["previous_source_task_primary_failure_axis"],
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+        )
+        self.assertFalse(
+            c24_task["planner_failure_feedback"]["score_evidence_allowed_from_previous_source_task_failures"]
+        )
+        self.assertIn(
+            "Previous source-task executions did not close score-eligible accepted claims",
+            " ".join(c24_task["query_intents"]),
+        )
+        self.assertTrue(c24_task["previous_source_task_failure_sample_refs"])
+
+        c24_seed = next(
+            event
+            for event in self.plan["seed_events"]
+            if event["target_archetype"] == c24_row["archetype_id"]
+        )
+        self.assertEqual(
+            c24_seed["structured_payload"]["previous_source_task_primary_failure_axis"],
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+        )
+        self.assertFalse(c24_seed["structured_payload"].get("score_evidence_allowed", True))
+
     def test_signal_family_mismatch_feedback_reaches_seed_payload(self) -> None:
         mismatch_task = next(
             task

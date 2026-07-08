@@ -92,9 +92,19 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
                 "source_task_top_failure_axes",
                 "source_task_status_counts",
                 "source_task_stop_reason_counts",
+                "source_task_source_class_counts",
+                "source_task_top_source_classes",
+                "source_task_provider_name_counts",
+                "source_task_top_provider_names",
+                "source_task_primitive_gap_counts",
+                "source_task_top_primitive_gaps",
                 "source_task_provider_error_counts",
                 "source_task_not_eligible_reason_counts",
                 "source_task_top_unsatisfied_primitives",
+                "source_task_primary_failure_axis",
+                "source_task_primary_repair_hint",
+                "source_task_failure_samples",
+                "source_task_accepted_samples",
                 "claim_mapping_trace_log_count",
                 "claim_mapping_accepted_trace_count",
                 "claim_mapping_rejected_trace_count",
@@ -176,6 +186,14 @@ class AllArchetypeRuntimeParityMatrixArtifactTests(unittest.TestCase):
         self.assertEqual(c24["source_backed_replay_symbols"], ["009420", "215600"])
         self.assertGreater(c24["runtime_source_task_count"], 0)
         self.assertGreater(c24["source_task_execution_log_count"], 0)
+        self.assertTrue(c24["source_task_top_source_classes"])
+        self.assertTrue(c24["source_task_top_primitive_gaps"])
+        self.assertTrue(c24["source_task_failure_samples"])
+        self.assertEqual(c24["source_task_primary_failure_axis"], "NO_SCORE_ELIGIBLE_REAL_CLAIM")
+        self.assertEqual(
+            c24["source_task_primary_repair_hint"],
+            "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+        )
         self.assertEqual(c24["runtime_full_thesis_row_count"], 0)
         self.assertEqual(c24["source_task_any_accepted_claim_count"], 0)
         self.assertEqual(

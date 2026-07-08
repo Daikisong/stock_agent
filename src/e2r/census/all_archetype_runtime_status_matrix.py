@@ -524,6 +524,29 @@ def _source_task_failure_axes(execution: Mapping[str, Any]) -> list[str]:
     return axes
 
 
+def _source_task_execution_sample(execution: Mapping[str, Any], axes: list[str]) -> dict[str, Any]:
+    return {
+        "task_id": execution.get("task_id"),
+        "symbol": execution.get("symbol"),
+        "company_name": execution.get("company_name"),
+        "status": execution.get("status"),
+        "stop_reason": execution.get("stop_reason"),
+        "source_class": execution.get("source_class"),
+        "provider_name": execution.get("provider_name"),
+        "primitive_gap": execution.get("primitive_gap"),
+        "satisfies_source_task": execution.get("satisfies_source_task"),
+        "satisfaction_type": execution.get("satisfaction_type"),
+        "accepted_claim_count": len(execution.get("accepted_claim_ids") or []),
+        "direct_accepted_claim_count": len(execution.get("direct_accepted_claim_ids") or []),
+        "rerouted_accepted_claim_count": len(execution.get("rerouted_accepted_claim_ids") or []),
+        "primitive_gap_unsatisfied_ids": list(execution.get("primitive_gap_unsatisfied_ids") or [])[:6],
+        "failure_axes": axes,
+        "not_eligible_reasons": list(execution.get("not_eligible_reasons") or [])[:8],
+        "provider_errors": list(execution.get("provider_errors") or [])[:4],
+        "document_urls": list(execution.get("document_urls") or [])[:4],
+    }
+
+
 def _source_task_execution_audit_by_archetype(
     runtime_source_task_executions: list[Mapping[str, Any]],
 ) -> dict[str, dict[str, Any]]:
@@ -544,9 +567,14 @@ def _source_task_execution_audit_by_archetype(
                 "failure_axis_counts": Counter(),
                 "status_counts": Counter(),
                 "stop_reason_counts": Counter(),
+                "source_class_counts": Counter(),
+                "provider_name_counts": Counter(),
+                "primitive_gap_counts": Counter(),
                 "provider_error_counts": Counter(),
                 "not_eligible_reason_counts": Counter(),
                 "unsatisfied_primitive_counts": Counter(),
+                "source_task_failure_samples": [],
+                "source_task_accepted_samples": [],
             },
         )
         row["source_task_execution_log_count"] += 1
@@ -562,18 +590,28 @@ def _source_task_execution_audit_by_archetype(
 
         row["status_counts"][str(execution.get("status") or "UNKNOWN")] += 1
         row["stop_reason_counts"][str(execution.get("stop_reason") or "UNKNOWN")] += 1
+        row["source_class_counts"][str(execution.get("source_class") or "UNKNOWN")] += 1
+        row["provider_name_counts"][str(execution.get("provider_name") or "UNKNOWN")] += 1
+        row["primitive_gap_counts"][str(execution.get("primitive_gap") or "UNKNOWN")] += 1
         for error in execution.get("provider_errors") or []:
             row["provider_error_counts"][str(error)] += 1
         for reason in execution.get("not_eligible_reasons") or []:
             row["not_eligible_reason_counts"][str(reason).split(":", 1)[0]] += 1
         for primitive_id in execution.get("primitive_gap_unsatisfied_ids") or []:
             row["unsatisfied_primitive_counts"][str(primitive_id)] += 1
-        for axis in _source_task_failure_axes(execution):
+        axes = _source_task_failure_axes(execution)
+        for axis in axes:
             row["failure_axis_counts"][axis] += 1
+        if direct_accepted_claim_ids or (accepted_claim_ids and execution.get("satisfies_source_task") is True):
+            if len(row["source_task_accepted_samples"]) < 3:
+                row["source_task_accepted_samples"].append(_source_task_execution_sample(execution, axes))
+        elif len(row["source_task_failure_samples"]) < 3:
+            row["source_task_failure_samples"].append(_source_task_execution_sample(execution, axes))
 
     normalized: dict[str, dict[str, Any]] = {}
     for archetype_id, row in audit.items():
         failure_axis_counts = row["failure_axis_counts"]
+        primary_axis = _primary_seed_failure_axis(Counter(), failure_axis_counts)
         normalized[archetype_id] = {
             "source_task_execution_log_count": row["source_task_execution_log_count"],
             "source_task_no_accepted_claim_execution_count": row["source_task_no_accepted_claim_execution_count"],
@@ -587,12 +625,31 @@ def _source_task_execution_audit_by_archetype(
             ],
             "source_task_status_counts": dict(sorted(row["status_counts"].items())),
             "source_task_stop_reason_counts": dict(sorted(row["stop_reason_counts"].items())),
+            "source_task_source_class_counts": dict(sorted(row["source_class_counts"].items())),
+            "source_task_top_source_classes": [
+                {"source_class": source_class, "count": count}
+                for source_class, count in row["source_class_counts"].most_common(8)
+            ],
+            "source_task_provider_name_counts": dict(sorted(row["provider_name_counts"].items())),
+            "source_task_top_provider_names": [
+                {"provider_name": provider_name, "count": count}
+                for provider_name, count in row["provider_name_counts"].most_common(8)
+            ],
+            "source_task_primitive_gap_counts": dict(sorted(row["primitive_gap_counts"].items())),
+            "source_task_top_primitive_gaps": [
+                {"primitive_gap": primitive_gap, "count": count}
+                for primitive_gap, count in row["primitive_gap_counts"].most_common(10)
+            ],
             "source_task_provider_error_counts": dict(sorted(row["provider_error_counts"].items())),
             "source_task_not_eligible_reason_counts": dict(sorted(row["not_eligible_reason_counts"].items())),
             "source_task_top_unsatisfied_primitives": [
                 {"primitive_id": primitive_id, "count": count}
                 for primitive_id, count in row["unsatisfied_primitive_counts"].most_common(8)
             ],
+            "source_task_primary_failure_axis": primary_axis,
+            "source_task_primary_repair_hint": _seed_failure_repair_hint(primary_axis),
+            "source_task_failure_samples": row["source_task_failure_samples"],
+            "source_task_accepted_samples": row["source_task_accepted_samples"],
         }
     return normalized
 
@@ -609,9 +666,19 @@ def _empty_source_task_execution_audit() -> dict[str, Any]:
         "source_task_top_failure_axes": [],
         "source_task_status_counts": {},
         "source_task_stop_reason_counts": {},
+        "source_task_source_class_counts": {},
+        "source_task_top_source_classes": [],
+        "source_task_provider_name_counts": {},
+        "source_task_top_provider_names": [],
+        "source_task_primitive_gap_counts": {},
+        "source_task_top_primitive_gaps": [],
         "source_task_provider_error_counts": {},
         "source_task_not_eligible_reason_counts": {},
         "source_task_top_unsatisfied_primitives": [],
+        "source_task_primary_failure_axis": None,
+        "source_task_primary_repair_hint": None,
+        "source_task_failure_samples": [],
+        "source_task_accepted_samples": [],
     }
 
 
@@ -1176,6 +1243,9 @@ def build_all_archetype_runtime_status_matrix(
         for row in status_rows
         if row.get("seed_materialization_primary_failure_axis")
     )
+    source_task_primary_failure_axis_counts = Counter(
+        row["source_task_primary_failure_axis"] for row in status_rows if row.get("source_task_primary_failure_axis")
+    )
     url_backed_unmet_ids = [
         row["archetype_id"] for row in status_rows if row.get("url_backed_replay_obligation_unmet") is True
     ]
@@ -1263,6 +1333,7 @@ def build_all_archetype_runtime_status_matrix(
             int(row.get("seed_materialization_accepted_claim_not_created_count") or 0) for row in status_rows
         ),
         "seed_materialization_primary_failure_axis_counts": dict(sorted(seed_primary_failure_axis_counts.items())),
+        "source_task_primary_failure_axis_counts": dict(sorted(source_task_primary_failure_axis_counts.items())),
         "source_route_ready_count": sum(1 for row in status_rows if row["source_route_ready"]),
         "memory_card_ready_count": sum(1 for row in status_rows if row["memory_card_ready"]),
         "meaningful_runtime_parity_ready": proof_counts.get("RUNTIME_PARITY_PROVEN", 0) == len(status_rows),
@@ -1311,6 +1382,7 @@ def render_all_archetype_runtime_status_markdown(matrix: Mapping[str, Any]) -> s
         f"- seed_materialization_trace_count: `{matrix.get('seed_materialization_trace_count', 0)}`",
         f"- seed_materialization_accepted_claim_not_created_count: `{matrix.get('seed_materialization_accepted_claim_not_created_count', 0)}`",
         f"- seed_materialization_primary_failure_axis_counts: `{json.dumps(matrix.get('seed_materialization_primary_failure_axis_counts', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- source_task_primary_failure_axis_counts: `{json.dumps(matrix.get('source_task_primary_failure_axis_counts', {}), ensure_ascii=False, sort_keys=True)}`",
         "",
         "## Matrix",
         "",
@@ -1353,6 +1425,18 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
         if not axes:
             return "-"
         return ", ".join(f"{item['axis']}:{item['count']}" for item in axes[:3])
+
+    def fmt_source_classes(row: Mapping[str, Any]) -> str:
+        classes = row.get("source_task_top_source_classes") or []
+        if not classes:
+            return "-"
+        return ", ".join(f"{item['source_class']}:{item['count']}" for item in classes[:3])
+
+    def fmt_primitive_gaps(row: Mapping[str, Any]) -> str:
+        gaps = row.get("source_task_top_primitive_gaps") or []
+        if not gaps:
+            return "-"
+        return ", ".join(f"{item['primitive_gap']}:{item['count']}" for item in gaps[:3])
 
     def fmt_claim_rejections(row: Mapping[str, Any]) -> str:
         reasons = row.get("claim_mapping_top_rejection_reasons") or []
@@ -1409,18 +1493,19 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
         f"- seed_materialization_trace_count: `{matrix.get('seed_materialization_trace_count', 0)}`",
         f"- seed_materialization_accepted_claim_not_created_count: `{matrix.get('seed_materialization_accepted_claim_not_created_count', 0)}`",
         f"- seed_materialization_primary_failure_axis_counts: `{json.dumps(matrix.get('seed_materialization_primary_failure_axis_counts', {}), ensure_ascii=False, sort_keys=True)}`",
+        f"- source_task_primary_failure_axis_counts: `{json.dumps(matrix.get('source_task_primary_failure_axis_counts', {}), ensure_ascii=False, sort_keys=True)}`",
         "",
         "## Matrix",
         "",
-        "| archetype | runtime status | primary blocker | URL obligation | research cases | URL-backed | source tasks | execution logs | seed traces | claim traces | accepted claims | full rows | top seed failure axes | top source-task failure axes | top claim failure modes | top claim rejection reasons | req gap rate | green gap rate |",
-        "|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---|---|---|---|---:|---:|",
+        "| archetype | runtime status | primary blocker | URL obligation | research cases | URL-backed | source tasks | execution logs | top source classes | top primitive gaps | seed traces | claim traces | accepted claims | full rows | top seed failure axes | top source-task failure axes | top claim failure modes | top claim rejection reasons | req gap rate | green gap rate |",
+        "|---|---|---|---|---:|---:|---:|---:|---|---|---:|---:|---:|---:|---|---|---|---|---:|---:|",
     ]
     for row in matrix.get("rows", []):
         accepted = int(row.get("runtime_accepted_claim_count") or 0) + int(
             row.get("runtime_source_task_accepted_claim_count") or 0
         )
         lines.append(
-            "| {archetype} | {runtime_status} | {blocker} | {url_obligation} | {research_cases} | {url_backed} | {source_tasks} | {execution_logs} | {seed_traces} | {claim_traces} | {accepted} | {full_rows} | {seed_failure_axes} | {failure_axes} | {claim_failure_modes} | {claim_rejections} | {req_rate} | {green_rate} |".format(
+            "| {archetype} | {runtime_status} | {blocker} | {url_obligation} | {research_cases} | {url_backed} | {source_tasks} | {execution_logs} | {source_classes} | {primitive_gaps} | {seed_traces} | {claim_traces} | {accepted} | {full_rows} | {seed_failure_axes} | {failure_axes} | {claim_failure_modes} | {claim_rejections} | {req_rate} | {green_rate} |".format(
                 archetype=row["archetype_id"],
                 runtime_status=row["runtime_status"],
                 blocker=row["primary_blocker_class"],
@@ -1429,6 +1514,8 @@ def render_all_archetype_runtime_parity_summary_markdown(matrix: Mapping[str, An
                 url_backed=row["url_backed_case_count"],
                 source_tasks=row["runtime_source_task_count"],
                 execution_logs=row["source_task_execution_log_count"],
+                source_classes=fmt_source_classes(row),
+                primitive_gaps=fmt_primitive_gaps(row),
                 seed_traces=row.get("seed_materialization_trace_count", 0),
                 claim_traces=row["claim_mapping_trace_log_count"],
                 accepted=accepted,

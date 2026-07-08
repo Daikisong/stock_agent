@@ -37,6 +37,7 @@
 - seed_materialization_trace_count: `111`
 - seed_materialization_accepted_claim_not_created_count: `77`
 - seed_materialization_primary_failure_axis_counts: `{"NO_FETCHED_DOCUMENT": 1, "NO_SCORE_ELIGIBLE_REAL_CLAIM": 1, "PRIMITIVE_GAP_UNSATISFIED": 31}`
+- source_task_primary_failure_axis_counts: `{"NO_SCORE_ELIGIBLE_REAL_CLAIM": 5, "PRIMITIVE_GAP_UNSATISFIED": 27, "PROVIDER_ERROR_RECORDED": 1}`
 
 ## Matrix
 
