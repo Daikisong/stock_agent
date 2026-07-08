@@ -286,6 +286,70 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         self.assertEqual(events[0].company_name, "삼성전자")
         self.assertNotEqual(events[0].company_name, "C06_HBM_MEMORY_CUSTOMER_CAPACITY")
 
+    def test_goal4_operational_seed_file_carries_source_task_failure_feedback_to_planner(self):
+        seed_path = Path("docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl")
+        events = _candidate_seed_events_from_config(
+            config=ProductionShadowV4Config(
+                as_of_date="2026-07-05",
+                candidate_event_seed_path=str(seed_path),
+                planner_provider="real",
+                source_acquisition="live_full_bounded",
+            ),
+            as_of_date=date(2026, 7, 5),
+        )
+        event = next(
+            item
+            for item in events
+            if item.structured_payload.get("target_archetype") == "C24_BIO_TRIAL_DATA_EVENT_RISK"
+        )
+
+        context = _evidence_context_by_event(
+            events=(event,),
+            config=ProductionShadowV4Config(
+                as_of_date="2026-07-05",
+                planner_provider="real",
+                source_acquisition="live_full_bounded",
+            ),
+        )
+        full_thesis_context = context[event.candidate_event_id]["full_thesis_queue_context"]
+
+        self.assertEqual(
+            full_thesis_context["previous_source_task_primary_failure_axis"],
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+        )
+        self.assertEqual(
+            full_thesis_context["previous_source_task_repair_hint"],
+            "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+        )
+        self.assertTrue(full_thesis_context["previous_source_task_top_source_classes"])
+        self.assertTrue(full_thesis_context["previous_source_task_top_primitive_gaps"])
+        self.assertTrue(full_thesis_context["source_task_repair_required"])
+        self.assertIn(
+            "KEEP_RESULT_PENDING_IF_ONLY_NON_ELIGIBLE_CLAIMS_EXIST",
+            full_thesis_context["source_task_repair_actions"],
+        )
+        self.assertEqual(
+            full_thesis_context["planner_failure_feedback"]["previous_source_task_primary_failure_axis"],
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+        )
+        self.assertNotIn(
+            "score_evidence_allowed_from_previous_source_task_failures",
+            full_thesis_context["planner_failure_feedback"],
+        )
+        self._assert_no_forbidden_planner_context_keys(full_thesis_context)
+
+        payload = build_v4_planner_prompt_payload(
+            events=(event,),
+            memory_cards=load_v4_cards(),
+            existing_evidence_by_event_id=context,
+        )
+        prompt_context = payload["events"][0]["existing_evidence_summary"]["full_thesis_queue_context"]
+        self.assertEqual(
+            prompt_context["planner_failure_feedback"]["previous_source_task_primary_failure_axis"],
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+        )
+        self.assertTrue(any("previous_source_task_primary_failure_axis" in rule for rule in payload["rules"]))
+
     def test_candidate_event_seed_path_skips_missing_or_zero_symbol_rows(self):
         with TemporaryDirectory() as tmp:
             seed_path = Path(tmp) / "bad_seed_rows.jsonl"
@@ -980,6 +1044,30 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
                     "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_SECTION",
                     "DO_NOT_REUSE_GENERIC_CONTEXT_AS_GAP_CLOSURE",
                 ],
+                "previous_source_task_primary_failure_axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+                "previous_source_task_repair_hint": "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+                "previous_source_task_top_source_classes": [
+                    {"source_class": "BrokerReportPDF", "count": 4},
+                    {"source_class": "CompanyNewsroom", "count": 2},
+                ],
+                "previous_source_task_top_primitive_gaps": [
+                    {"primitive_gap": "repeat_order_confirmed", "count": 5},
+                    {"primitive_gap": "customer_quality", "count": 1},
+                ],
+                "previous_source_task_failure_sample_refs": [
+                    {
+                        "task_id": "RSTASK-C08-UNIT",
+                        "source_class": "BrokerReportPDF",
+                        "primitive_gap": "repeat_order_confirmed",
+                        "failure_axes": ["NO_SCORE_ELIGIBLE_REAL_CLAIM"],
+                        "not_eligible_reasons": ["no_direct_target_claim"],
+                    }
+                ],
+                "source_task_repair_required": True,
+                "source_task_repair_actions": [
+                    "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+                    "KEEP_RESULT_PENDING_IF_ONLY_NON_ELIGIBLE_CLAIMS_EXIST",
+                ],
                 "source_route_repair_required": True,
                 "source_route_repair_actions": [
                     "DO_NOT_ACCEPT_GENERIC_DISCLOSURE_PROFILE_AS_PRIMITIVE_EVIDENCE",
@@ -1018,8 +1106,29 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
                         "ASK_LLM_FOR_PRIMITIVE_SPECIFIC_SOURCE_SECTION",
                         "DO_NOT_REUSE_GENERIC_CONTEXT_AS_GAP_CLOSURE",
                     ],
+                    "previous_source_task_primary_failure_axis": "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+                    "previous_source_task_repair_hint": "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+                    "previous_source_task_top_source_classes": [
+                        {"source_class": "BrokerReportPDF", "count": 4},
+                    ],
+                    "previous_source_task_top_primitive_gaps": [
+                        {"primitive_gap": "repeat_order_confirmed", "count": 5},
+                    ],
+                    "previous_source_task_failure_sample_refs": [
+                        {
+                            "task_id": "RSTASK-C08-UNIT",
+                            "source_class": "BrokerReportPDF",
+                            "primitive_gap": "repeat_order_confirmed",
+                            "failure_axes": ["NO_SCORE_ELIGIBLE_REAL_CLAIM"],
+                        }
+                    ],
+                    "source_task_repair_actions": [
+                        "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+                        "KEEP_RESULT_PENDING_IF_ONLY_NON_ELIGIBLE_CLAIMS_EXIST",
+                    ],
                     "score_evidence_allowed_from_previous_rejected_claims": False,
                     "score_evidence_allowed_from_previous_seed_failures": False,
+                    "score_evidence_allowed_from_previous_source_task_failures": False,
                     "primitive_gap": "repeat_order_confirmed",
                 },
             },
@@ -1062,12 +1171,29 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
             full_thesis_context["seed_materialization_repair_actions"],
         )
         self.assertEqual(
+            full_thesis_context["previous_source_task_primary_failure_axis"],
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+        )
+        self.assertEqual(
+            full_thesis_context["previous_source_task_repair_hint"],
+            "FETCH_SOURCE_WITH_CURRENT_DIRECT_ANCHORED_CLAIM",
+        )
+        self.assertTrue(full_thesis_context["source_task_repair_required"])
+        self.assertIn(
+            "KEEP_RESULT_PENDING_IF_ONLY_NON_ELIGIBLE_CLAIMS_EXIST",
+            full_thesis_context["source_task_repair_actions"],
+        )
+        self.assertEqual(
             full_thesis_context["planner_failure_feedback"]["primitive_gap"],
             "repeat_order_confirmed",
         )
         self.assertEqual(
             full_thesis_context["planner_failure_feedback"]["previous_seed_materialization_primary_failure_axis"],
             "PRIMITIVE_GAP_UNSATISFIED",
+        )
+        self.assertEqual(
+            full_thesis_context["planner_failure_feedback"]["previous_source_task_primary_failure_axis"],
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
         )
         self.assertIn("accepted Evidence OS claim", full_thesis_context["success_condition"])
         self.assertEqual(full_thesis_context["fallback_if_not_found"], "SOURCE_REPAIR_REQUIRED")
@@ -1080,6 +1206,10 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
         )
         self.assertNotIn(
             "score_evidence_allowed_from_previous_seed_failures",
+            full_thesis_context["planner_failure_feedback"],
+        )
+        self.assertNotIn(
+            "score_evidence_allowed_from_previous_source_task_failures",
             full_thesis_context["planner_failure_feedback"],
         )
         self._assert_no_forbidden_planner_context_keys(full_thesis_context)
@@ -1098,8 +1228,13 @@ class ResearchBrainV4OperationalModesTests(unittest.TestCase):
             prompt_context["planner_failure_feedback"]["previous_seed_materialization_primary_failure_axis"],
             "PRIMITIVE_GAP_UNSATISFIED",
         )
+        self.assertEqual(
+            prompt_context["planner_failure_feedback"]["previous_source_task_primary_failure_axis"],
+            "NO_SCORE_ELIGIBLE_REAL_CLAIM",
+        )
         self.assertTrue(any("planner_failure_feedback" in rule for rule in payload["rules"]))
         self.assertTrue(any("previous_seed_materialization_primary_failure_axis" in rule for rule in payload["rules"]))
+        self.assertTrue(any("previous_source_task_primary_failure_axis" in rule for rule in payload["rules"]))
 
     def test_existing_evidence_summary_removes_forbidden_score_stage_keys_recursively(self):
         event = replace(
