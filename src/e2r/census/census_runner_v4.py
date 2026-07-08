@@ -7677,8 +7677,13 @@ def _promote_brain_stage_rows(
         primitive_state_ids = list(trace.get("primitive_state_ids") or ())
         missing = list(trace.get("missing_green_primitives") or ()) + list(trace.get("missing_yellow_primitives") or ())
         trace_claim_ids = _ids_from_value(accepted_ids) | _ids_from_value(trace.get("support_claim_ids"))
-        web_llm_claim_ids = trace_claim_ids & web_or_llm_accepted_claim_ids
-        official_claim_ids = trace_claim_ids & official_accepted_claim_ids
+        score_eligible_trace_claim_ids = {
+            claim_id
+            for claim_id in trace_claim_ids
+            if accepted_by_id.get(claim_id, {}).get("score_eligible") is True
+        }
+        web_llm_claim_ids = score_eligible_trace_claim_ids & web_or_llm_accepted_claim_ids
+        official_claim_ids = score_eligible_trace_claim_ids & official_accepted_claim_ids
         official_source_task_ids = _brain_source_task_ids_for_claims(source_executions, sorted(official_claim_ids))
         official_document_ids = sorted(
             {
@@ -7712,7 +7717,8 @@ def _promote_brain_stage_rows(
         else:
             skipped_unsupported_trace_count += 1
             continue
-        census_stage_status_id = "CSS-BRAIN-" + stable_hash((symbol, trace_id, accepted_ids, contribution_ids))[:20]
+        represented_claim_ids = sorted(web_llm_claim_ids | official_claim_ids)
+        census_stage_status_id = "CSS-BRAIN-" + stable_hash((symbol, trace_id, represented_claim_ids, contribution_ids))[:20]
         row = dict(by_symbol[symbol])
         candidate_event_id = str(trace.get("candidate_event_id") or "").strip()
         candidate_event_ids = list(row.get("candidate_event_ids") or [])
@@ -7759,11 +7765,11 @@ def _promote_brain_stage_rows(
                 "score_interval_upper": upper,
                 "atomic_stage_decision_id": None,
                 "additional_stage_decision_ids": [],
-                "accepted_claim_ids": accepted_ids,
+                "accepted_claim_ids": represented_claim_ids,
                 "score_contribution_ids": contribution_ids,
                 "primitive_state_ids": primitive_state_ids,
                 "stagecourt_trace_id": trace_id,
-                "accepted_claim_count": len(accepted_ids),
+                "accepted_claim_count": len(represented_claim_ids),
                 "score_contribution_count": len(contribution_ids),
                 "accepted_official_claim_count": len(official_claim_ids),
                 "accepted_web_llm_claim_count": len(web_llm_claim_ids),
@@ -7790,7 +7796,7 @@ def _promote_brain_stage_rows(
         )
         by_symbol[symbol] = row
         promoted_by_trace[trace_id] = census_stage_status_id
-        promoted_claim_ids_by_trace[trace_id] = accepted_ids
+        promoted_claim_ids_by_trace[trace_id] = represented_claim_ids
         promoted_count += 1
         if partial_lane == "web_llm":
             promoted_web_llm_count += 1
@@ -9178,12 +9184,30 @@ def _brain_stage_promotion_audit(
     official_accepted_claims = list(source_split["official_accepted_claims"])
     brain_contributions = [row for row in contributions if _is_brain_origin(row)]
     brain_claim_quality_counts = _brain_claim_quality_counts(brain_claims)
+    promoted_claims = [
+        row
+        for row in brain_claims
+        if str(row.get("claim_id") or "") in promoted_claim_ids
+    ]
+    promoted_claim_quality_counts = _brain_claim_quality_counts(promoted_claims)
     unresolved_claim_document_ref_count = sum(
         1 for row in brain_claims if not _ids_from_value(row.get("document_id")) or not _ids_from_value(row.get("document_id")) <= brain_document_ids
     )
     unresolved_claim_anchor_ref_count = sum(
         1
         for row in brain_claims
+        if not (_ids_from_value(row.get("anchor_id")) or _ids_from_value(row.get("source_anchor_id")))
+        or not ((_ids_from_value(row.get("anchor_id")) or _ids_from_value(row.get("source_anchor_id"))) <= anchor_ids)
+    )
+    promoted_unresolved_claim_document_ref_count = sum(
+        1
+        for row in promoted_claims
+        if not _ids_from_value(row.get("document_id"))
+        or not _ids_from_value(row.get("document_id")) <= brain_document_ids
+    )
+    promoted_unresolved_claim_anchor_ref_count = sum(
+        1
+        for row in promoted_claims
         if not (_ids_from_value(row.get("anchor_id")) or _ids_from_value(row.get("source_anchor_id")))
         or not ((_ids_from_value(row.get("anchor_id")) or _ids_from_value(row.get("source_anchor_id"))) <= anchor_ids)
     )
@@ -9279,8 +9303,22 @@ def _brain_stage_promotion_audit(
             "brain_source_task_execution_row_count": len(brain_source_executions),
             "brain_snapshot_document_count": len(snapshot_docs),
             "brain_promoted_snapshot_document_count": len(promoted_snapshot_docs),
+            "brain_claim_missing_verifiable_anchor_count": 0,
+            "promoted_brain_claim_count": 0,
+            "promoted_brain_claim_missing_verifiable_anchor_count": 0,
+            "promoted_brain_claim_unresolved_document_ref_count": 0,
+            "promoted_brain_claim_unresolved_anchor_ref_count": 0,
+            "promoted_brain_claim_missing_date_count": 0,
+            "promoted_brain_claim_not_direct_target_count": 0,
+            "promoted_brain_claim_not_current_count": 0,
+            "promoted_brain_claim_score_ineligible_count": 0,
+            "diagnostic_brain_claim_score_ineligible_count": 0,
             "brain_claim_unresolved_document_ref_count": unresolved_claim_document_ref_count,
             "brain_claim_unresolved_anchor_ref_count": unresolved_claim_anchor_ref_count,
+            "brain_claim_missing_date_count": 0,
+            "brain_claim_not_direct_target_count": 0,
+            "brain_claim_not_current_count": 0,
+            "brain_claim_score_ineligible_count": 0,
             "brain_source_task_without_document_ref_count": source_task_without_document_ref_count,
             "brain_source_task_unresolved_document_ref_count": source_task_unresolved_document_ref_count,
             "brain_stage_trace_not_promoted_marker_missing_count": marker_missing,
@@ -9321,20 +9359,41 @@ def _brain_stage_promotion_audit(
         blockers.append("accepted brain claim count is zero")
     if brain_stage_trace_without_supported_claim_count:
         blockers.append(f"brain StageCourt traces have no supported accepted claim for partial promotion: {brain_stage_trace_without_supported_claim_count}")
-    if brain_claim_quality_counts["missing_verifiable_anchor_count"]:
-        blockers.append(f"accepted brain claims missing document/anchor IDs: {brain_claim_quality_counts['missing_verifiable_anchor_count']}")
-    if brain_claim_quality_counts["missing_date_count"]:
-        blockers.append(f"accepted brain claims missing event/as-of/source date: {brain_claim_quality_counts['missing_date_count']}")
-    if brain_claim_quality_counts["not_direct_target_count"]:
-        blockers.append(f"accepted brain claims are not direct target claims: {brain_claim_quality_counts['not_direct_target_count']}")
-    if brain_claim_quality_counts["not_current_count"]:
-        blockers.append(f"accepted brain claims are not current/open: {brain_claim_quality_counts['not_current_count']}")
-    if brain_claim_quality_counts["score_ineligible_count"]:
-        blockers.append(f"accepted brain claims are not score eligible by deterministic guard: {brain_claim_quality_counts['score_ineligible_count']}")
-    if unresolved_claim_document_ref_count:
-        blockers.append(f"accepted brain claims reference missing evidence_documents rows: {unresolved_claim_document_ref_count}")
-    if unresolved_claim_anchor_ref_count:
-        blockers.append(f"accepted brain claims reference missing evidence_anchors rows: {unresolved_claim_anchor_ref_count}")
+    if promoted_claim_quality_counts["missing_verifiable_anchor_count"]:
+        blockers.append(
+            "promoted accepted brain claims missing document/anchor IDs: "
+            f"{promoted_claim_quality_counts['missing_verifiable_anchor_count']}"
+        )
+    if promoted_claim_quality_counts["missing_date_count"]:
+        blockers.append(
+            "promoted accepted brain claims missing event/as-of/source date: "
+            f"{promoted_claim_quality_counts['missing_date_count']}"
+        )
+    if promoted_claim_quality_counts["not_direct_target_count"]:
+        blockers.append(
+            "promoted accepted brain claims are not direct target claims: "
+            f"{promoted_claim_quality_counts['not_direct_target_count']}"
+        )
+    if promoted_claim_quality_counts["not_current_count"]:
+        blockers.append(
+            "promoted accepted brain claims are not current/open: "
+            f"{promoted_claim_quality_counts['not_current_count']}"
+        )
+    if promoted_claim_quality_counts["score_ineligible_count"]:
+        blockers.append(
+            "promoted accepted brain claims are not score eligible by deterministic guard: "
+            f"{promoted_claim_quality_counts['score_ineligible_count']}"
+        )
+    if promoted_unresolved_claim_document_ref_count:
+        blockers.append(
+            "promoted accepted brain claims reference missing evidence_documents rows: "
+            f"{promoted_unresolved_claim_document_ref_count}"
+        )
+    if promoted_unresolved_claim_anchor_ref_count:
+        blockers.append(
+            "promoted accepted brain claims reference missing evidence_anchors rows: "
+            f"{promoted_unresolved_claim_anchor_ref_count}"
+        )
     if source_task_without_document_ref_count:
         blockers.append(f"Brain source task rows missing fetched document refs: {source_task_without_document_ref_count}")
     if source_task_unresolved_document_ref_count:
@@ -9391,6 +9450,21 @@ def _brain_stage_promotion_audit(
         "brain_snapshot_document_count": len(snapshot_docs),
         "brain_promoted_snapshot_document_count": len(promoted_snapshot_docs),
         "brain_claim_missing_verifiable_anchor_count": brain_claim_quality_counts["missing_verifiable_anchor_count"],
+        "promoted_brain_claim_count": len(promoted_claims),
+        "promoted_brain_claim_missing_verifiable_anchor_count": promoted_claim_quality_counts[
+            "missing_verifiable_anchor_count"
+        ],
+        "promoted_brain_claim_unresolved_document_ref_count": promoted_unresolved_claim_document_ref_count,
+        "promoted_brain_claim_unresolved_anchor_ref_count": promoted_unresolved_claim_anchor_ref_count,
+        "promoted_brain_claim_missing_date_count": promoted_claim_quality_counts["missing_date_count"],
+        "promoted_brain_claim_not_direct_target_count": promoted_claim_quality_counts["not_direct_target_count"],
+        "promoted_brain_claim_not_current_count": promoted_claim_quality_counts["not_current_count"],
+        "promoted_brain_claim_score_ineligible_count": promoted_claim_quality_counts["score_ineligible_count"],
+        "diagnostic_brain_claim_score_ineligible_count": max(
+            0,
+            brain_claim_quality_counts["score_ineligible_count"]
+            - promoted_claim_quality_counts["score_ineligible_count"],
+        ),
         "brain_claim_unresolved_document_ref_count": unresolved_claim_document_ref_count,
         "brain_claim_unresolved_anchor_ref_count": unresolved_claim_anchor_ref_count,
         "brain_claim_missing_date_count": brain_claim_quality_counts["missing_date_count"],

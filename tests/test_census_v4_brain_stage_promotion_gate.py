@@ -217,6 +217,93 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
         self.assertEqual(audit["llm_extracted_accepted_claim_count"], 1)
         self.assertEqual(audit["blockers"], [])
 
+    def test_nonrepresentative_score_ineligible_claim_does_not_make_clean_promotion_unsafe(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_live_brain_promotion_fixture(root)
+            accepted = _read_jsonl(root / "accepted_claims.jsonl")
+            accepted.append(
+                {
+                    "claim_id": "CLM-DIAG",
+                    "brain_web_claim": True,
+                    "source_origin": "research_brain_v4_attempt",
+                    "document_id": "DOC-A",
+                    "anchor_id": "ANCH-A",
+                    "event_date": "2026-06-30",
+                    "target_scope_status": "DIRECT",
+                    "temporal_status": "CURRENT",
+                    "score_eligible": False,
+                    "eligibility_reasons": ["source_task_not_satisfied_rerouted_claim"],
+                    "primitive_id": "adjacent_context_only",
+                    "mapping_status": "REJECTED",
+                    "raw_assertion_id": "RAWLLM-A",
+                }
+            )
+            write_jsonl(root / "accepted_claims.jsonl", accepted)
+
+            audit = _brain_stage_promotion_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_source_acquisition="live_official_first",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={"real_provider_success_count": 1, "source_task_execution_count": 1, "accepted_claim_count": 2},
+                stage_rows=[
+                    {
+                        "symbol": "005930",
+                        "stagecourt_trace_id": "SCT-BRAIN-A",
+                        "stage_source": "research_brain_v4_attempt",
+                        "accepted_claim_ids": ["CLM-A"],
+                        "score_contribution_ids": ["SCON-A"],
+                        "primitive_state_ids": ["PRIM-A"],
+                    }
+                ],
+            )
+
+        self.assertEqual(audit["verdict"], "PROMOTION_APPLIED")
+        self.assertEqual(audit["unsafe_promoted_stage_row_count"], 0)
+        self.assertEqual(audit["brain_claim_score_ineligible_count"], 1)
+        self.assertEqual(audit["promoted_brain_claim_score_ineligible_count"], 0)
+        self.assertEqual(audit["diagnostic_brain_claim_score_ineligible_count"], 1)
+        self.assertEqual(audit["blockers"], [])
+
+    def test_score_ineligible_trace_claim_is_not_promoted_as_representative_stage(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_live_brain_promotion_fixture(root)
+            accepted = _read_jsonl(root / "accepted_claims.jsonl")
+            accepted[0]["score_eligible"] = False
+            accepted[0]["eligibility_reasons"] = ["source_task_not_satisfied_rerouted_claim"]
+            write_jsonl(root / "accepted_claims.jsonl", accepted)
+
+            stage_rows, export = _promote_brain_stage_rows(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_source_acquisition="live_official_first",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                stage_rows=[
+                    {
+                        "symbol": "005930",
+                        "census_stage_status_id": "CSS-BASE",
+                        "stage_scope": "CENSUS_EVENT_BOARD",
+                        "stage_source": "event_board",
+                    }
+                ],
+                brain_web_attempt={"real_provider_success_count": 1, "source_task_execution_count": 1, "accepted_claim_count": 1},
+            )
+
+        self.assertEqual(export["promoted_stage_row_count"], 0)
+        self.assertEqual(export["skipped_unsupported_trace_count"], 1)
+        self.assertEqual(stage_rows[0]["stage_scope"], "CENSUS_EVENT_BOARD")
+        self.assertEqual(stage_rows[0]["stage_source"], "event_board")
+
     def test_official_only_brain_claim_promotes_as_official_partial_not_brain_web(self):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)
