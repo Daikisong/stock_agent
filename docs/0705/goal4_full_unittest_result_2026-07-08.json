@@ -1,0 +1,15 @@
+{
+  "schema_version": "e2r_test_result_artifact_v1",
+  "command": "PYTHONPATH=src python -m unittest discover -s tests -v",
+  "exit_code": 0,
+  "status": "OK",
+  "test_count": 5300,
+  "failed_count": 0,
+  "error_count": 0,
+  "started_at": "2026-07-08T01:47:05.478374+00:00",
+  "finished_at": "2026-07-08T01:54:25.522860+00:00",
+  "duration_seconds": 440.044,
+  "reported_duration_seconds": 437.709,
+  "log_path": "output/test_results/goal4_full_unittest_2026-07-08.log",
+  "log_sha256": "e8080d26d8639f4c47f3466cb41c8e54ae9d8979597a922d7690e7aedafb89b8"
+}

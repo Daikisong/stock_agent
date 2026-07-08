@@ -1770,6 +1770,17 @@ def _brain_claim_mapping_trace_rows(
             primitive_id = getattr(mapping, "primitive_id", None) if mapping is not None else None
             target_scope_status = _enum_value(getattr(claim, "target_scope_status", None))
             temporal_status = _enum_value(getattr(claim, "temporal_status", None))
+            direct_accepted_ids = {str(item) for item in execution_row.get("direct_accepted_claim_ids") or []}
+            rerouted_accepted_ids = {str(item) for item in execution_row.get("rerouted_accepted_claim_ids") or []}
+            has_satisfaction_split = bool(direct_accepted_ids or rerouted_accepted_ids or execution_row.get("satisfaction_type"))
+            satisfies_source_task = claim_id in direct_accepted_ids if has_satisfaction_split else bool(execution_row.get("satisfies_source_task", True))
+            satisfaction_type = (
+                "DIRECT_ACCEPTED_CLAIM"
+                if claim_id in direct_accepted_ids
+                else "REROUTED_ACCEPTED_CLAIM"
+                if claim_id in rerouted_accepted_ids
+                else execution_row.get("satisfaction_type")
+            )
             eligibility_reasons = _brain_claim_score_eligibility_reasons(
                 document_id=document_id,
                 anchor_id=anchor_id,
@@ -1782,14 +1793,17 @@ def _brain_claim_mapping_trace_rows(
                 mapping_status=mapping_status,
                 primitive_id=primitive_id,
                 source_url=getattr(document, "canonical_url", None) if document is not None else None,
+                satisfies_source_task=satisfies_source_task,
+                satisfaction_type=satisfaction_type,
             )
             accepted = claim_id in accepted_ids
             source_task_not_eligible = [] if accepted else list(execution_row.get("not_eligible_reasons") or [])
             if source_task_not_eligible:
                 eligibility_reasons = list(dict.fromkeys((*eligibility_reasons, *source_task_not_eligible)))
-            trace_status = "ACCEPTED_FOR_SCORE" if accepted else "REJECTED_BEFORE_SCORE"
+            score_eligible = accepted and not eligibility_reasons
+            trace_status = "ACCEPTED_FOR_SCORE" if score_eligible else "ACCEPTED_NOT_SCORE_ELIGIBLE" if accepted else "REJECTED_BEFORE_SCORE"
             rejection_reason = None
-            if not accepted:
+            if not accepted or (accepted and eligibility_reasons):
                 rejection_reason = ";".join(eligibility_reasons or source_task_not_eligible or [getattr(mapping, "rationale", None) or "not_accepted"])
             mapping_id = getattr(mapping, "mapping_id", None) if mapping is not None else None
             trace_id = f"BRAINMAP-{stable_hash((event_id, task_id, claim_id, mapping_id or 'unmapped'))[:20]}"
@@ -1834,9 +1848,9 @@ def _brain_claim_mapping_trace_rows(
                     "source_task_not_eligible_reasons": source_task_not_eligible,
                     "rejection_reason": rejection_reason,
                     "accepted": accepted,
-                    "score_eligible": accepted and not eligibility_reasons,
-                    "satisfies_source_task": bool(execution_row.get("satisfies_source_task")),
-                    "satisfaction_type": execution_row.get("satisfaction_type"),
+                    "score_eligible": score_eligible,
+                    "satisfies_source_task": satisfies_source_task,
+                    "satisfaction_type": satisfaction_type,
                     "direct_accepted_claim_ids": list(execution_row.get("direct_accepted_claim_ids") or []),
                     "rerouted_accepted_claim_ids": list(execution_row.get("rerouted_accepted_claim_ids") or []),
                     "accepted_primitive_ids": list(execution_row.get("accepted_primitive_ids") or []),
@@ -1911,6 +1925,8 @@ def _accepted_claim_payload_from_brain(
         mapping_status=mapping_status,
         primitive_id=primitive_id,
         source_url=source_url,
+        satisfies_source_task=satisfies_source_task,
+        satisfaction_type=satisfaction_type,
     )
     score_eligible = not eligibility_reasons
     return {
@@ -1969,6 +1985,8 @@ def _brain_claim_score_eligibility_reasons(
     mapping_status: str | None,
     primitive_id: Any,
     source_url: Any,
+    satisfies_source_task: bool | None = None,
+    satisfaction_type: str | None = None,
 ) -> list[str]:
     reasons: list[str] = []
     if not document_id or document is None:
@@ -1987,7 +2005,59 @@ def _brain_claim_score_eligibility_reasons(
         reasons.append("missing_primitive_id")
     if str(source_url or "").startswith("snapshot://"):
         reasons.append("snapshot_source_not_score_eligible")
+    if satisfies_source_task is False or str(satisfaction_type or "") == "REROUTED_ACCEPTED_CLAIM":
+        reasons.append("source_task_not_satisfied_rerouted_claim")
     return reasons
+
+
+def _brain_score_admissible_claim_ids_from_bundle(bundle: Any) -> tuple[set[str], set[str]]:
+    """Split Brain/Web accepted claims into score-admissible and diagnostic-only.
+
+    A rerouted claim is still a useful fact for the next planner turn, but it
+    did not close the source task that produced it. Treating it as score
+    evidence recreates the old "unrelated/current-looking text moves score"
+    failure mode.
+    """
+
+    all_accepted: set[str] = set()
+    direct: set[str] = set()
+    rerouted: set[str] = set()
+    policy_seen = False
+    for execution in getattr(bundle, "executions", ()) or ():
+        row = execution.to_dict() if hasattr(execution, "to_dict") else _jsonable(execution)
+        accepted_ids = _ids_from_value(row.get("accepted_claim_ids"))
+        direct_ids = _ids_from_value(row.get("direct_accepted_claim_ids"))
+        rerouted_ids = _ids_from_value(row.get("rerouted_accepted_claim_ids"))
+        all_accepted.update(accepted_ids)
+        direct.update(direct_ids)
+        rerouted.update(rerouted_ids)
+        if direct_ids or rerouted_ids or row.get("satisfies_source_task") is not None or row.get("satisfaction_type"):
+            policy_seen = True
+        if row.get("satisfies_source_task") is True and not direct_ids and not rerouted_ids:
+            direct.update(accepted_ids)
+        if row.get("satisfies_source_task") is False:
+            rerouted.update(accepted_ids - direct_ids)
+    if not policy_seen:
+        return set(all_accepted), set()
+    admissible = set(direct)
+    for claim_id in all_accepted:
+        if claim_id not in direct and claim_id not in rerouted:
+            admissible.add(claim_id)
+    return admissible, all_accepted - admissible
+
+
+def _brain_score_filtered_ledger(ledger: Any, *, allowed_claim_ids: set[str]) -> Any:
+    from e2r.agentic.evidence_os import AppendOnlyEvidenceLedger
+
+    filtered = AppendOnlyEvidenceLedger(
+        claims=dict(getattr(ledger, "claims", {}) or {}),
+        mappings=dict(getattr(ledger, "mappings", {}) or {}),
+        events=list(getattr(ledger, "events", ()) or ()),
+    )
+    for claim_id in list(filtered.claims):
+        if claim_id not in allowed_claim_ids and not filtered.claim_is_invalidated(claim_id):
+            filtered.invalidate_claim(claim_id, reason="brain_web_claim_not_score_admissible_for_source_task")
+    return filtered
 
 
 def _brain_score_stage_export_rows(*, result: Mapping[str, Any], bundles: Mapping[str, Any]) -> dict[str, Any]:
@@ -2020,12 +2090,20 @@ def _brain_score_stage_export_rows(*, result: Mapping[str, Any], bundles: Mappin
         raw_assertions = getattr(bundle, "raw_assertions", {}) or {}
         ledger = getattr(bundle, "ledger", None)
         claims_by_id = getattr(ledger, "claims", {}) if ledger is not None else {}
-        accepted_claim_ids = tuple(str(claim_id) for claim_id in item_row.get("accepted_claim_ids") or ())
+        raw_accepted_claim_ids = tuple(str(claim_id) for claim_id in item_row.get("accepted_claim_ids") or ())
+        admissible_claim_ids, _ineligible_claim_ids = _brain_score_admissible_claim_ids_from_bundle(bundle)
+        has_source_task_satisfaction_policy = bool(admissible_claim_ids or _ineligible_claim_ids)
+        accepted_claim_ids = tuple(
+            claim_id
+            for claim_id in raw_accepted_claim_ids
+            if not has_source_task_satisfaction_policy or claim_id in admissible_claim_ids
+        )
         primary = str(item_row.get("primary_archetype") or "")
         contract = contracts.get(primary)
-        if not accepted_claim_ids or contract is None:
+        if not accepted_claim_ids or contract is None or ledger is None:
             continue
-        primitive_states = aggregate_primitive_states(ledger=bundle.ledger, contract=contract, as_of_date=as_of)
+        score_ledger = _brain_score_filtered_ledger(ledger, allowed_claim_ids=set(accepted_claim_ids))
+        primitive_states = aggregate_primitive_states(ledger=score_ledger, contract=contract, as_of_date=as_of)
         contributions = build_component_score_contributions_from_rubric(
             components={component.key: component.max_points for component in CANONICAL_SCORE_COMPONENTS},
             primitive_states=primitive_states,
@@ -2063,7 +2141,7 @@ def _brain_score_stage_export_rows(*, result: Mapping[str, Any], bundles: Mappin
         for contribution in positive_contributions:
             for claim_id in contribution.support_claim_ids:
                 _append_unique(score_support_claim_ids, str(claim_id))
-        non_score_accepted_claim_ids = [claim_id for claim_id in accepted_claim_ids if claim_id not in set(score_support_claim_ids)]
+        non_score_accepted_claim_ids = [claim_id for claim_id in raw_accepted_claim_ids if claim_id not in set(score_support_claim_ids)]
         payload = ScoringPayload(
             symbol=str(item_row.get("symbol") or ""),
             as_of_date=as_of,
@@ -2140,7 +2218,7 @@ def _brain_score_stage_export_rows(*, result: Mapping[str, Any], bundles: Mappin
                 "source_cutover_date": as_of.isoformat(),
                 "accepted_claim_ids": list(score_support_claim_ids),
                 "score_support_claim_ids": list(score_support_claim_ids),
-                "all_accepted_claim_ids": list(accepted_claim_ids),
+                "all_accepted_claim_ids": list(raw_accepted_claim_ids),
                 "non_score_accepted_claim_ids": non_score_accepted_claim_ids,
                 "score_contribution_ids": [item.contribution_id for item in positive_contributions],
                 "primitive_state_ids": trace_primitive_state_ids,
@@ -10122,9 +10200,15 @@ def _source_task_execution_official_first_violation(row: Mapping[str, Any]) -> b
 def _source_task_execution_reached_score_evidence(row: Mapping[str, Any]) -> bool:
     if str(row.get("status") or "") != "EVIDENCE_OS_ACCEPTED":
         return False
-    if _ids_from_value(row.get("accepted_claim_ids")):
-        return True
     if _ids_from_value(row.get("direct_accepted_claim_ids")):
+        return True
+    if (
+        _ids_from_value(row.get("rerouted_accepted_claim_ids"))
+        or row.get("satisfies_source_task") is False
+        or str(row.get("satisfaction_type") or "") == "REROUTED_ACCEPTED_CLAIM"
+    ):
+        return False
+    if _ids_from_value(row.get("accepted_claim_ids")):
         return True
     if _ids_from_value(row.get("score_claim_ids")):
         return True

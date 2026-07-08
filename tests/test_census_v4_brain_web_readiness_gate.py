@@ -1283,6 +1283,55 @@ class CensusV4BrainWebReadinessGateTests(unittest.TestCase):
         self.assertIn("Brain/Web official-first violations reached score evidence: 1", gate["blockers"])
         self.assertEqual(gate["official_first_violation_examples"][0]["task_id"], "TASK-A")
 
+    def test_official_first_rerouted_claim_is_not_score_evidence(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write_brain_gate_fixture(root, claim_id="CLM-A", contribution_claim_id="CLM-A", stage_claim_id="CLM-A")
+            executions = _read_jsonl(root / "source_task_executions.jsonl")
+            executions[0].update(
+                {
+                    "source_class": "GeneralWebSearch",
+                    "provider_name": "NaverSearch",
+                    "preferred_source_classes": ["DART"],
+                    "fallback_source_classes": ["GeneralWebSearch"],
+                    "requested_source_classes": ["DART", "GeneralWebSearch"],
+                    "satisfies_source_task": False,
+                    "satisfaction_type": "REROUTED_ACCEPTED_CLAIM",
+                    "direct_accepted_claim_ids": [],
+                    "rerouted_accepted_claim_ids": ["CLM-A"],
+                    "score_claim_ids": ["CLM-A"],
+                    "score_claim_count": 1,
+                }
+            )
+            write_jsonl(root / "source_task_executions.jsonl", executions)
+
+            gate = _brain_web_readiness_gate_audit(
+                config=CensusV4RunConfig(
+                    as_of_date="2026-07-01",
+                    brain_web_mode="enabled",
+                    brain_planner_provider="real",
+                    brain_stage_promotion_mode="strict",
+                ),
+                output_root=root,
+                brain_web_attempt={
+                    "real_provider_success_count": 1,
+                    "source_task_execution_count": 1,
+                    "accepted_claim_count": 1,
+                    "real_document_fetched_count": 1,
+                },
+                brain_stage_promotion={
+                    "verdict": "PROMOTION_APPLIED",
+                    "brain_promoted_stage_row_count": 1,
+                    "unsafe_promoted_stage_row_count": 0,
+                    "brain_snapshot_document_count": 0,
+                    "fake_provider_used_count": 0,
+                },
+                stage_rows=[{"stagecourt_trace_id": "SCT-BRAIN-A", "accepted_claim_ids": ["CLM-A"], "score_scale": "EVENT_WEIGHTED_PARTIAL"}],
+            )
+
+        self.assertEqual(gate["official_first_violation_count"], 0)
+        self.assertNotIn("Brain/Web official-first violations reached score evidence", " ".join(gate["blockers"]))
+
     def test_official_first_attempt_without_score_evidence_is_diagnostic_not_blocker(self):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)

@@ -6,7 +6,25 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from e2r.agentic.evidence_contract_v2 import load_evidence_contracts_v2
-from e2r.agentic.evidence_os import AppendOnlyEvidenceLedger, EvidenceAnchor, EvidenceDocument, SourceType
+from e2r.agentic.evidence_os import (
+    AdjudicatedClaim,
+    AppendOnlyEvidenceLedger,
+    Directness,
+    EvidenceAnchor,
+    EvidenceDocument,
+    InvestigationStatus,
+    MappingStatus,
+    Polarity,
+    PrimitiveMappingProposal,
+    RawAssertion,
+    RelationToTarget,
+    SemanticStatus,
+    SourceType,
+    SupportDirection,
+    TargetScopeStatus,
+    TemporalStatus,
+    VerificationStatus,
+)
 from e2r.census.census_runner_v4 import (
     _export_brain_web_bundle_leafs,
     _merge_jsonl_by_key,
@@ -158,6 +176,149 @@ class CensusV4BrainBundleExportTests(unittest.TestCase):
         self.assertTrue(all(row["source_document_id"] for row in mapping_trace))
         self.assertTrue(all(row["source_anchor_id"] for row in mapping_trace))
 
+    def test_rerouted_claim_is_planner_feedback_not_score_export(self):
+        event = sample_v4_event()
+        task = c06_source_task("medium_term_revision_visibility")
+        text = "삼성전자는 HBM 고객 배정과 qualification 진행 상황을 설명했다."
+        document = EvidenceDocument.from_text(
+            text=text,
+            canonical_url="https://unit.example.com/rerouted",
+            source_type=SourceType.NEWS,
+            source_name="unit",
+            published_at=date(2026, 6, 20),
+            available_at=date(2026, 6, 20),
+            fetched_at=date(2026, 6, 29),
+            parser_version="unit",
+            source_proxy_only=False,
+        )
+        anchor = EvidenceAnchor.text_span(document=document, document_text=text, exact_text=text)
+        raw = RawAssertion(
+            raw_assertion_id="RAW-REROUTED",
+            anchor_id=anchor.anchor_id,
+            subject_text="삼성전자",
+            predicate="customer_allocation_or_qualification_claim",
+            object_text=anchor.exact_text or "",
+            value=anchor.exact_text or "",
+            polarity_proposal=Polarity.POSITIVE,
+            exact_quote=anchor.exact_text or "",
+        )
+        claim = AdjudicatedClaim(
+            claim_id="CLM-REROUTED",
+            raw_assertion_id=raw.raw_assertion_id,
+            subject_entity_id="TICKER:005930",
+            target_entity_id="TICKER:005930",
+            relation_to_target=RelationToTarget.SELF,
+            directness=Directness.DIRECT,
+            verification_status=VerificationStatus.SEMANTIC_VERIFIED,
+            target_scope_status=TargetScopeStatus.DIRECT,
+            polarity=Polarity.POSITIVE,
+            temporal_status=TemporalStatus.CURRENT,
+            semantic_status=SemanticStatus.PASS_,
+            investigation_status=InvestigationStatus.COMPLETE,
+            event_date=date(2026, 6, 20),
+            adjudication_rationale="unit valid claim for a different primitive",
+            source_document_id=document.document_id,
+            source_anchor_id=anchor.anchor_id,
+            source_assertion_id="SRCASSERT-REROUTED",
+        )
+        mapping = PrimitiveMappingProposal.build(
+            claim_id=claim.claim_id,
+            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            primitive_id="customer_preorder_or_allocation",
+            support_direction=SupportDirection.SUPPORT,
+            mapping_status=MappingStatus.ACCEPTED,
+            rationale="unit valid rerouted claim",
+            contract_rule_id="customer_preorder_or_allocation",
+        )
+        ledger = AppendOnlyEvidenceLedger()
+        ledger.append_claim(claim)
+        ledger.append_mapping(mapping)
+        execution = SourceTaskExecutionV4(
+            task_id="TASK-REROUTED",
+            source_task=task.to_dict(),
+            status="EVIDENCE_OS_ACCEPTED",
+            candidate_event_id=event.candidate_event_id,
+            symbol=event.symbol,
+            company_name=event.company_name,
+            archetype_id=task.archetype_id,
+            primitive_gap=task.primitive_gap,
+            source_class="TrustedNews",
+            provider_name="unit",
+            fetched_document_ids=(document.document_id,),
+            document_urls=(document.canonical_url or "",),
+            document_hashes=(document.content_hash,),
+            evidence_anchor_ids=(anchor.anchor_id,),
+            raw_assertion_ids=(raw.raw_assertion_id,),
+            adjudicated_claim_ids=(claim.claim_id,),
+            accepted_claim_ids=(claim.claim_id,),
+            direct_accepted_claim_ids=(),
+            rerouted_accepted_claim_ids=(claim.claim_id,),
+            accepted_primitive_ids=(mapping.primitive_id,),
+            primitive_gap_unsatisfied_ids=(task.primitive_gap,),
+            satisfies_source_task=False,
+            satisfaction_type="REROUTED_ACCEPTED_CLAIM",
+            stop_reason="rerouted_claim_accepted_original_gap_unsatisfied",
+        )
+        bundle = EvidenceOSExecutionBundleV4(
+            ledger=ledger,
+            executions=(execution,),
+            documents={document.document_id: document},
+            anchors={anchor.anchor_id: anchor},
+            document_text_by_id={document.document_id: text},
+            extraction_audit={},
+            raw_assertions={raw.raw_assertion_id: raw},
+        )
+        execution = bundle.executions[0]
+        self.assertEqual(execution.status, "EVIDENCE_OS_ACCEPTED")
+        self.assertFalse(execution.satisfies_source_task)
+        self.assertEqual(execution.satisfaction_type, "REROUTED_ACCEPTED_CLAIM")
+
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            watchlist_item = DailyWatchlistItemV4(
+                symbol=event.symbol,
+                company_name=event.company_name,
+                candidate_event_id=event.candidate_event_id,
+                event_type=event.event_type,
+                event_summary=event.event_summary,
+                event_source=event.source_id,
+                primary_archetype="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                accepted_claim_ids=tuple(execution.accepted_claim_ids),
+            )
+            counts = _export_brain_web_bundle_leafs(
+                result={
+                    "config": {"as_of_date": "2026-06-29"},
+                    "bundles": {event.candidate_event_id: bundle},
+                    "planner_runs": (),
+                    "watchlist_items": (watchlist_item,),
+                },
+                output_root=root,
+            )
+            accepted = _read_jsonl(root / "accepted_claims.jsonl")
+            contributions = _read_jsonl(root / "score_contributions.jsonl")
+            stagecourt = _read_jsonl(root / "stagecourt_traces.jsonl")
+            source_executions = _read_jsonl(root / "source_task_executions.jsonl")
+            traces = _read_jsonl(root / "brain_to_claim_trace.jsonl")
+            mapping_trace = _read_jsonl(root / "brain_claim_mapping_trace.jsonl")
+
+        self.assertGreater(counts["accepted_claim_exported_count"], 0)
+        self.assertEqual(counts["score_contribution_exported_count"], 0)
+        self.assertEqual(counts["stagecourt_trace_exported_count"], 0)
+        self.assertTrue(accepted)
+        self.assertTrue(all(row["score_eligible"] is False for row in accepted))
+        self.assertTrue(all(row["satisfies_source_task"] is False for row in accepted))
+        self.assertTrue(all("source_task_not_satisfied_rerouted_claim" in row["eligibility_reasons"] for row in accepted))
+        self.assertFalse(contributions)
+        self.assertFalse(stagecourt)
+        self.assertEqual(source_executions[0]["score_claim_ids"], [])
+        self.assertEqual(source_executions[0]["score_claim_count"], 0)
+        self.assertEqual(traces[0]["score_support_status"], "NO_SCORE_CONTRIBUTION")
+        accepted_mapping_rows = [row for row in mapping_trace if row.get("accepted") is True]
+        self.assertTrue(accepted_mapping_rows)
+        self.assertTrue(all(row["score_eligible"] is False for row in accepted_mapping_rows))
+        self.assertTrue(all(row["trace_status"] == "ACCEPTED_NOT_SCORE_ELIGIBLE" for row in accepted_mapping_rows))
+        self.assertTrue(all("source_task_not_satisfied_rerouted_claim" in row["eligibility_reasons"] for row in accepted_mapping_rows))
+
     def test_brain_bundle_exports_web_search_leafs(self):
         event = sample_v4_event()
         query = "삼성전자 HBM 고객 배정 qualification"
@@ -260,7 +421,7 @@ class CensusV4BrainBundleExportTests(unittest.TestCase):
         self.assertEqual(mapping_trace[0]["quote_text"], raw_rows[0]["exact_quote"])
         self.assertEqual(mapping_trace[0]["source_task_id"], task.task_id)
         self.assertEqual(mapping_trace[0]["primitive_gap"], task.primitive_gap)
-        self.assertIn(mapping_trace[0]["trace_status"], {"ACCEPTED_FOR_SCORE", "REJECTED_BEFORE_SCORE"})
+        self.assertIn(mapping_trace[0]["trace_status"], {"ACCEPTED_FOR_SCORE", "ACCEPTED_NOT_SCORE_ELIGIBLE", "REJECTED_BEFORE_SCORE"})
         if mapping_trace[0]["accepted"] is False:
             self.assertTrue(mapping_trace[0]["rejection_reason"])
 
