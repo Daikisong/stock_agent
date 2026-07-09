@@ -982,9 +982,9 @@ def write_research_to_runtime_parity_artifacts(
     from e2r.census.research_memory_followup_planner import write_research_memory_followup_task_audit
     from e2r.census.research_to_runtime_replay import write_research_to_runtime_replay_reports
     from e2r.census.source_lineage_repair_audit import write_source_lineage_repair_audit
-    from e2r.research_reverse.reports import write_research_reverse_bundle
+    from e2r.research_brain.compiler.legacy_compatibility_reports import write_research_reverse_bundle
     from e2r.research_brain.planner_bias_audit import write_planner_bias_audit
-    from e2r.source_routing.research_source_route_recovery import write_source_route_recovery_reports
+    from e2r.research_brain.recipes.legacy_route_recovery import write_source_route_recovery_reports
 
     repo_root = Path(repo_root).resolve()
     docs_path = Path(docs_dir)

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 
 from e2r.census.census_runner_v3 import CensusV3RunConfig, run_census_mode_v3
+from e2r.research_brain.legacy_cli import print_legacy_cli_block
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -22,9 +23,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--allow-legacy-v3", action="store_true")
     args = parser.parse_args(argv)
     if not args.allow_legacy_v3:
-        print(
-            "run_e2r_census_v3_until_pass is legacy v3 and cannot claim production Census pass. "
-            "Use python -m e2r.cli.run_e2r_census_v4_until_pass, or pass --allow-legacy-v3 for explicit fixture-only runs."
+        print_legacy_cli_block(
+            command="run_e2r_census_v3_until_pass",
+            replacement="python -m e2r.cli.run_e2r_current_operation",
         )
         return 2
     result = run_census_mode_v3(

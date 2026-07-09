@@ -9,6 +9,7 @@ from typing import Any, Mapping, Sequence
 
 from e2r.research_brain.v2_production_orchestrator import DEFAULT_CANDIDATES_PATH, run_research_brain_v2_shadow
 from e2r.research_brain.v2_reports import write_research_brain_v2_report_bundle
+from e2r.research_brain.legacy_cli import print_legacy_cli_block
 
 
 DEFAULT_V1_INVENTORY = "docs/operational/research_brain_v1_inventory.json"
@@ -31,11 +32,18 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--test-pass-count", type=int, default=0)
     parser.add_argument("--test-fail-count", type=int, default=0)
     parser.add_argument("--test-skip-count", type=int, default=0)
+    parser.add_argument("--allow-legacy-v2", action="store_true")
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_arg_parser().parse_args(argv)
+    if not args.allow_legacy_v2:
+        print_legacy_cli_block(
+            command="research_brain_v2_report",
+            replacement="python -m e2r.cli.compile_e2r_research_intelligence",
+        )
+        return 2
     v1_inventory = _read_json_mapping(Path(args.v1_inventory))
     v1_matrix = _read_json_mapping(Path(args.v1_archetype_matrix))
     evidence_os_replay = _read_json_mapping(Path(args.evidence_os_replay))

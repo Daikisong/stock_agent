@@ -172,6 +172,7 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
             [
                 "--as-of-date",
                 "2026-07-05",
+                "--allow-legacy-diagnostic",
                 "--fail-on-c05-monoculture",
                 "true",
                 "--fail-on-unknown-target-promoted",
@@ -273,7 +274,15 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
                 "partial_run_invalid_path": "",
             },
         ) as run_mock:
-            exit_code = parity_cli_main(["--as-of-date", "2026-07-05", "--max-iterations", "2"])
+            exit_code = parity_cli_main(
+                [
+                    "--as-of-date",
+                    "2026-07-05",
+                    "--max-iterations",
+                    "2",
+                    "--allow-legacy-diagnostic",
+                ]
+            )
 
         self.assertEqual(exit_code, 0)
         self.assertEqual(write_mock.call_count, 2)
@@ -346,7 +355,15 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
                 "partial_run_invalid_path": "",
             },
         ) as run_mock, patch("sys.stdout", new_callable=io.StringIO) as stdout:
-            exit_code = parity_cli_main(["--as-of-date", "2026-07-05", "--max-iterations", "3"])
+            exit_code = parity_cli_main(
+                [
+                    "--as-of-date",
+                    "2026-07-05",
+                    "--max-iterations",
+                    "3",
+                    "--allow-legacy-diagnostic",
+                ]
+            )
 
         payload = json.loads(stdout.getvalue())
         self.assertEqual(exit_code, 1)

@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from e2r.census.research_to_runtime_parity import write_research_to_runtime_parity_artifacts
+from e2r.research_brain.legacy_cli import print_legacy_cli_block
 
 PARTIAL_OUTPUT_SUMMARY_FILES = (
     "brain_web_runtime_progress.json",
@@ -49,6 +50,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--mode", default="full_thesis_balanced")
     parser.add_argument("--mandatory-archetypes", default="C06,C08,C15,C17,C24,C28")
     parser.add_argument("--max-iterations", type=int, default=1)
+    parser.add_argument("--allow-legacy-diagnostic", action="store_true")
     parser.add_argument("--fail-on-c05-monoculture", type=_parse_bool, default=False)
     parser.add_argument("--fail-on-unknown-target-promoted", type=_parse_bool, default=False)
     parser.add_argument("--fail-on-required-positive-missing-over-threshold", type=_parse_bool, default=False)
@@ -67,6 +69,12 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if not args.allow_legacy_diagnostic:
+        print_legacy_cli_block(
+            command="run_research_to_runtime_parity_until_pass",
+            replacement="python -m e2r.cli.audit_e2r_evidence_intelligence",
+        )
+        return 2
     repo_root = Path(args.repo_root).resolve()
     mandatory = tuple(part.strip() for part in args.mandatory_archetypes.split(",") if part.strip())
     current_output_root = args.output_root
@@ -119,15 +127,17 @@ def main(argv: list[str] | None = None) -> int:
     assert paths is not None and audit is not None
     result = {
         "mode": args.mode,
+        "status": "LEGACY_DIAGNOSTIC_ONLY",
+        "canonical_readiness_eligible": False,
+        "canonical_ready_label_allowed": False,
         "max_iterations_requested": args.max_iterations,
         "self_repair_enabled": self_repair_enabled,
         "self_repair_stop_reason": self_repair_stop_reason,
         "self_repair_iteration_count": sum(
             1 for row in self_repair_history if row.get("next_runtime_execution") is not None
         ),
-        "self_repair_history": self_repair_history,
-        "final_status": audit["final_status"],
-        "completion_labels": audit["completion_labels"],
+        "self_repair_history": [_legacy_safe_history_row(row) for row in self_repair_history],
+        "legacy_internal_meaningful_pass": bool(audit["meaningful_full_thesis_evidence_pass"]),
         "blockers": audit["blockers"],
         "matrix_path": str(paths["matrix_path"]),
         "summary_path": str(paths["summary_path"]),
@@ -150,7 +160,9 @@ def main(argv: list[str] | None = None) -> int:
         "mandatory_replay_source_proxy_repair_task_count": paths["replay_reports"]["replay_matrix"][
             "source_proxy_repair_task_count"
         ],
-        "meaningful_acceptance_status": paths["meaningful_acceptance"]["meaningful_status"],
+        "legacy_internal_meaningful_acceptance_pass": bool(
+            audit["meaningful_full_thesis_evidence_pass"]
+        ),
         "acceptance_report_path": str(paths["acceptance_report_path"]),
         "readiness_verdict_path": str(paths["readiness_verdict_path"]),
     }
@@ -182,6 +194,15 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"failed_on": sorted(set(failure_reasons))}, ensure_ascii=False, sort_keys=True))
         return 2
     return 0 if audit["meaningful_full_thesis_evidence_pass"] else 1
+
+
+def _legacy_safe_history_row(row: dict[str, Any]) -> dict[str, Any]:
+    safe = dict(row)
+    safe["legacy_internal_meaningful_pass"] = bool(
+        safe.pop("meaningful_full_thesis_evidence_pass", False)
+    )
+    safe.pop("final_status", None)
+    return safe
 
 
 def _history_audit_snapshot(*, audit: dict[str, Any], output_root: str | Path | None) -> dict[str, Any]:

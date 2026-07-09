@@ -281,6 +281,9 @@ def build_v3_readiness_verdict(
         blockers.append("R13 overroute detected")
     daily_shadow_pass = not blockers
     production_blockers = list(blockers)
+    production_blockers.append(
+        "legacy Research Brain v3 cannot issue canonical production readiness"
+    )
     if p["fake_provider_used_count"]:
         production_blockers.append("fake planner provider used")
     if p["real_provider_exercised_count"] == 0:

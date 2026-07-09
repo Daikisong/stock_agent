@@ -1,8 +1,8 @@
-"""Research Brain v4 production-shadow schemas.
+"""Legacy Research Brain v4 production-shadow schemas.
 
-v4 is the first path that may be called production-ready, but only when the
-reports prove real planner, real source acquisition, real extraction, and real
-deterministic scoring all ran without critical audit findings.
+V4 remains available for frozen compatibility and migration tests. It cannot
+issue canonical reconstruction readiness; the unversioned Research Brain
+packages own that decision.
 """
 
 from __future__ import annotations

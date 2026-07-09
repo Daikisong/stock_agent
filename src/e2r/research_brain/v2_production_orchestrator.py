@@ -202,6 +202,9 @@ def build_readiness_verdict(
         blockers.append("daily watchlist sample missing")
     shadow_ready = not blockers and source_summary["source_task_execution_audit_pass"]
     production_blockers = list(blockers)
+    production_blockers.append(
+        "legacy Research Brain v2 cannot issue canonical production readiness"
+    )
     if frozen_daily_run_count < 5:
         production_blockers.append("PRODUCTION_READY requires at least 5 frozen daily runs")
     if provider_status.get("fake_provider_used"):

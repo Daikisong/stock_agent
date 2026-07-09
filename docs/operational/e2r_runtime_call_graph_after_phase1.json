@@ -1,0 +1,122 @@
+{
+  "schema_version": "e2r_runtime_call_graph_after_phase1_v1",
+  "snapshot_date": "2026-07-10",
+  "canonical_namespace": "e2r.research_brain",
+  "canonical_schema_source_count": 1,
+  "canonical_capabilities": [
+    "corpus",
+    "compiler",
+    "recipes",
+    "retrieval",
+    "planning",
+    "replay",
+    "runtime"
+  ],
+  "canonical_cli_surface": [
+    {
+      "module": "e2r.cli.compile_e2r_research_intelligence",
+      "phase1_status": "RECONSTRUCTION_COMPONENT_NOT_READY",
+      "legacy_import_count": 0
+    },
+    {
+      "module": "e2r.cli.run_e2r_historical_replay",
+      "phase1_status": "RECONSTRUCTION_COMPONENT_NOT_READY",
+      "legacy_import_count": 0
+    },
+    {
+      "module": "e2r.cli.run_e2r_current_operation",
+      "phase1_status": "RECONSTRUCTION_COMPONENT_NOT_READY",
+      "legacy_import_count": 0
+    },
+    {
+      "module": "e2r.cli.audit_e2r_evidence_intelligence",
+      "phase1_status": "RECONSTRUCTION_COMPONENT_NOT_READY",
+      "legacy_import_count": 0
+    }
+  ],
+  "migrated_implementations": [
+    {
+      "old": "e2r.research_reverse.research_file_scanner",
+      "canonical": "e2r.research_brain.corpus.legacy_file_scanner",
+      "old_status": "DEPRECATION_ADAPTER"
+    },
+    {
+      "old": "e2r.research_reverse.research_case_extractor",
+      "canonical": "e2r.research_brain.compiler.legacy_case_inventory",
+      "old_status": "DEPRECATION_ADAPTER"
+    },
+    {
+      "old": "e2r.research_reverse.source_quality_inferencer",
+      "canonical": "e2r.research_brain.compiler.legacy_source_quality",
+      "old_status": "DEPRECATION_ADAPTER"
+    },
+    {
+      "old": "e2r.research_reverse.archetype_pattern_extractor",
+      "canonical": "e2r.research_brain.compiler.legacy_pattern_aggregator",
+      "old_status": "DEPRECATION_ADAPTER"
+    },
+    {
+      "old": "e2r.research_reverse.research_to_runtime_memory",
+      "canonical": "e2r.research_brain.retrieval.legacy_runtime_memory",
+      "old_status": "DEPRECATION_ADAPTER"
+    },
+    {
+      "old": "e2r.research_reverse.reports",
+      "canonical": "e2r.research_brain.compiler.legacy_compatibility_reports",
+      "old_status": "DEPRECATION_ADAPTER"
+    },
+    {
+      "old": "e2r.source_routing.research_source_route_recovery",
+      "canonical": "e2r.research_brain.recipes.legacy_route_recovery",
+      "old_status": "DEPRECATION_ADAPTER"
+    }
+  ],
+  "production_imports": [
+    {
+      "module": "e2r.census.research_to_runtime_parity",
+      "imports": [
+        "e2r.research_brain.compiler.legacy_compatibility_reports",
+        "e2r.research_brain.recipes.legacy_route_recovery"
+      ],
+      "research_reverse_import_count": 0,
+      "source_routing_import_count": 0
+    }
+  ],
+  "primitive_name_route_guessing": {
+    "production_reachable_count": 0,
+    "replacement": "neutral official-first compatibility projection until EvidenceRecipe compilation in Phase 4",
+    "primitive_identifier_inspected": false
+  },
+  "legacy_cli_policy": {
+    "default_status": "LEGACY_DIAGNOSTIC_ONLY",
+    "canonical_readiness_eligible": false,
+    "explicit_opt_in_required": [
+      "run_e2r_census_v2",
+      "run_e2r_census_v3_until_pass",
+      "research_brain_v2_report",
+      "run_research_brain_v3_daily_shadow",
+      "run_research_to_runtime_parity_until_pass"
+    ],
+    "legacy_brain_production_ready_allowed": false,
+    "legacy_versions": [
+      "v2",
+      "v3",
+      "v4"
+    ]
+  },
+  "compatibility_notes": [
+    "Legacy-shaped inventory and route artifacts remain readable during migration.",
+    "Compatibility projection is not an EvidenceRecipe and cannot be counted as recovered research intelligence.",
+    "V4 direct functions remain for frozen tests, but their readiness builder has an unconditional legacy blocker.",
+    "Canonical CLI returns pending until the responsible implementation Phase lands."
+  ],
+  "acceptance": {
+    "duplicate_brain_schema_source_of_truth_count": 1,
+    "production_reachable_legacy_research_reverse_count": 0,
+    "production_reachable_primitive_name_route_guesser_count": 0,
+    "old_cli_canonical_ready_label_capability_count": 0,
+    "focused_test_count": 30,
+    "focused_test_failures": 0,
+    "status": "UNIFIED_RESEARCH_BRAIN_ARCHITECTURE_PASS"
+  }
+}

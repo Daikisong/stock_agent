@@ -2071,6 +2071,9 @@ def build_v4_readiness_verdict(
         blockers.append("static critical audit findings exist")
     daily_watchlist_pass = not blockers
     production_blockers = list(blockers)
+    production_blockers.append(
+        "legacy Research Brain v4 cannot issue canonical production readiness"
+    )
     if m.get("five_day_run_count", 0) < 5:
         production_blockers.append("PRODUCTION_READY requires five day real shadow")
     if m.get("fake_provider_used_total", 0):

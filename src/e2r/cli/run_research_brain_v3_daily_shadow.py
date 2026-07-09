@@ -27,6 +27,7 @@ from e2r.research_brain.v3_source_quality import (
     build_url_repair_failures_v3,
 )
 from e2r.research_brain.v3_static_audit import build_static_logic_audit_v3
+from e2r.research_brain.legacy_cli import print_legacy_cli_block
 
 
 def build_arg_parser() -> argparse.ArgumentParser:
@@ -41,11 +42,18 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--frozen-mode", action="store_true", default=True)
     parser.add_argument("--planner-provider", choices=("real", "fake", "none"), default="none")
     parser.add_argument("--source-acquisition", choices=("live", "snapshot", "frozen"), default="snapshot")
+    parser.add_argument("--allow-legacy-v3", action="store_true")
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_arg_parser().parse_args(argv)
+    if not args.allow_legacy_v3:
+        print_legacy_cli_block(
+            command="run_research_brain_v3_daily_shadow",
+            replacement="python -m e2r.cli.run_e2r_current_operation",
+        )
+        return 2
     as_of = date.fromisoformat(args.as_of_date)
     matrix = load_v1_archetype_matrix()
     provider = select_planner_provider(args.planner_provider)
