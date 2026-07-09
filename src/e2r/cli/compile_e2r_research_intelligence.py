@@ -7,8 +7,12 @@ import json
 from pathlib import Path
 
 from e2r.research_brain.compiler import (
+    compile_case_level_source_verification,
     compile_research_intelligence,
     discover_historical_research_paths,
+    load_historical_case_source_links,
+    load_historical_provider_snapshots,
+    write_case_level_source_verification,
     write_research_intelligence,
 )
 
@@ -62,12 +66,44 @@ def main(argv: list[str] | None = None) -> int:
         help="research file or directory; repeatable (default: canonical V12 registry)",
     )
     parser.add_argument("--strict", type=_parse_bool, default=True)
+    parser.add_argument(
+        "--snapshot-registry",
+        help="canonical historical provider snapshot JSONL",
+    )
+    parser.add_argument(
+        "--case-source-links",
+        help="verified historical case/source link JSONL",
+    )
     args = parser.parse_args(argv)
     repo_root = Path(args.repo_root).resolve()
     try:
         inputs = _resolve_inputs(args.input, repo_root=repo_root)
         result = compile_research_intelligence(inputs, repo_root=repo_root)
         output_paths = write_research_intelligence(result, output_root=args.output_root)
+        snapshots = (
+            load_historical_provider_snapshots(
+                _resolve_optional_path(args.snapshot_registry, repo_root=repo_root)
+            )
+            if args.snapshot_registry
+            else ()
+        )
+        case_source_links = (
+            load_historical_case_source_links(
+                _resolve_optional_path(args.case_source_links, repo_root=repo_root)
+            )
+            if args.case_source_links
+            else ()
+        )
+        source_result = compile_case_level_source_verification(
+            result.cases,
+            snapshots=snapshots,
+            case_source_links=case_source_links,
+            repo_root=repo_root,
+        )
+        source_output_paths = write_case_level_source_verification(
+            source_result,
+            output_root=args.output_root,
+        )
     except (FileNotFoundError, OSError, ValueError) as exc:
         print(
             json.dumps(
@@ -93,10 +129,33 @@ def main(argv: list[str] | None = None) -> int:
         "linkage_error_count": len(result.linkage_errors),
         "critical_count_sum": result.manifest["critical_count_sum"],
         "output_paths": {key: str(path) for key, path in output_paths.items()},
+        "source_verification_status": source_result.manifest["status"],
+        "historical_replay_ready_count": source_result.manifest[
+            "historical_replay_ready_count"
+        ],
+        "source_repair_task_count": source_result.manifest["repair_task_count"],
+        "source_verification_critical_count_sum": source_result.manifest[
+            "critical_count_sum"
+        ],
+        "source_verification_output_paths": {
+            key: str(path) for key, path in source_output_paths.items()
+        },
     }
     print(json.dumps(payload, ensure_ascii=False, sort_keys=True))
-    passed = result.manifest["status"] == "RESEARCH_CORPUS_SEMANTIC_COMPILER_PASS"
+    passed = (
+        result.manifest["status"] == "RESEARCH_CORPUS_SEMANTIC_COMPILER_PASS"
+        and source_result.manifest["status"]
+        == "CASE_LEVEL_SOURCE_VERIFICATION_COMPILER_PASS"
+    )
     return 0 if passed or not args.strict else 2
+
+
+def _resolve_optional_path(value: str, *, repo_root: Path) -> Path:
+    path = Path(value)
+    path = path if path.is_absolute() else repo_root / path
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    return path
 
 
 if __name__ == "__main__":

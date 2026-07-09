@@ -1,0 +1,61 @@
+{
+  "schema_version": "e2r_reconstruction_phase3_acceptance_v1",
+  "phase": 3,
+  "status": "CASE_LEVEL_SOURCE_VERIFICATION_COMPILER_PASS",
+  "verified_on": "2026-07-10",
+  "scope": "historical case-level source verification compiler and safety boundaries",
+  "production_runtime_ready": false,
+  "full_registry_without_registered_snapshots": {
+    "case_count": 10920,
+    "verification_count": 14201,
+    "historical_replay_ready_count": 0,
+    "repair_task_count": 10920,
+    "source_state_counts": {
+      "EVIDENCE_URL_PENDING": 112,
+      "SOURCE_PROXY_ONLY": 5044,
+      "URL_PRESENT_UNVERIFIED": 9045
+    },
+    "verification_hash": "711245b89af47ef93578b4004199e7f3e950ef3ec12a601b3006e696ed63aae7",
+    "interpretation": "No provider snapshot registry was supplied, so no URL string was promoted. Every case remains repair/planning material."
+  },
+  "controlled_historical_snapshot_golden": {
+    "case_count": 6,
+    "snapshot_count": 1,
+    "case_source_link_count": 3,
+    "historical_replay_ready_count": 1,
+    "repair_task_count": 5,
+    "ready_case_id": "PHASE3_C15_HYUNDAI_READY",
+    "content_sha256": "93021bbf3942eb46673eef23497ac0469c188f1dfd273145cb19e2da874b96db",
+    "source_state_counts": {
+      "EVIDENCE_URL_PENDING": 1,
+      "HISTORICAL_REPLAY_READY": 1,
+      "SOURCE_PROXY_ONLY": 1,
+      "URL_FETCHED_DATE_INVALID": 1,
+      "URL_FETCHED_WRONG_SUBJECT": 1,
+      "URL_PRESENT_UNVERIFIED": 1
+    },
+    "verification_hash": "28816b22ee23ff4cfdd399c20613f104fa72d194cd3b5e7087054257bed56d92",
+    "current_score_eligible": false
+  },
+  "mandatory_phase2_golden": {
+    "url_backed_case_count": 3,
+    "url_backed_ready_or_exact_blocker_count": 3,
+    "source_proxy_case_count": 3,
+    "source_proxy_planning_only_count": 3,
+    "historical_replay_ready_count": 0,
+    "repair_task_count": 6
+  },
+  "hard_acceptance": {
+    "case_level_url_association_missing_a2_count": 0,
+    "url_string_only_a2_count": 0,
+    "wrong_subject_replay_ready_count": 0,
+    "source_proxy_replay_ready_count": 0,
+    "ready_missing_required_check_count": 0,
+    "historical_current_score_leak_count": 0,
+    "url_backed_golden_without_ready_or_exact_blocker_count": 0,
+    "source_proxy_not_planning_only_count": 0,
+    "critical_count_sum": 0
+  },
+  "official_controlled_command": "PYTHONPATH=src python -m e2r.cli.compile_e2r_research_intelligence --repo-root . --input tests/fixtures/e2r_reconstruction/source_verification/golden_source_cases.jsonl --snapshot-registry tests/fixtures/e2r_reconstruction/source_verification/provider_snapshots.jsonl --case-source-links tests/fixtures/e2r_reconstruction/source_verification/case_source_links.jsonl --output-root output/research_intelligence/phase3-golden --strict true",
+  "next_required_phase": "Phase 4 executable EvidenceRecipe OS; source verification alone does not define runtime search or scoring routes"
+}

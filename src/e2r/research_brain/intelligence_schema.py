@@ -40,6 +40,26 @@ class QuarantineReason(str, Enum):
     UNLINKED_ROW = "UNLINKED_ROW"
 
 
+class HistoricalSourceState(str, Enum):
+    SOURCE_PROXY_ONLY = "SOURCE_PROXY_ONLY"
+    EVIDENCE_URL_PENDING = "EVIDENCE_URL_PENDING"
+    URL_PRESENT_UNVERIFIED = "URL_PRESENT_UNVERIFIED"
+    URL_FETCH_FAILED = "URL_FETCH_FAILED"
+    URL_FETCHED_NO_ANCHOR = "URL_FETCHED_NO_ANCHOR"
+    URL_FETCHED_WRONG_SUBJECT = "URL_FETCHED_WRONG_SUBJECT"
+    URL_FETCHED_DATE_INVALID = "URL_FETCHED_DATE_INVALID"
+    URL_FETCHED_ANCHORED = "URL_FETCHED_ANCHORED"
+    URL_FETCHED_ANCHORED_CASE_MATCH = "URL_FETCHED_ANCHORED_CASE_MATCH"
+    HISTORICAL_REPLAY_READY = "HISTORICAL_REPLAY_READY"
+
+
+class HistoricalCaseSourceRelationship(str, Enum):
+    CASE_MATCH = "CASE_MATCH"
+    COUNTER_CASE_MATCH = "COUNTER_CASE_MATCH"
+    UNRELATED = "UNRELATED"
+    CONTRADICTS_CASE_SUMMARY = "CONTRADICTS_CASE_SUMMARY"
+
+
 def stable_intelligence_id(prefix: str, payload: Mapping[str, Any]) -> str:
     encoded = json.dumps(_json_safe(payload), ensure_ascii=False, sort_keys=True).encode("utf-8")
     return f"{prefix}-{hashlib.sha256(encoded).hexdigest()[:24]}"
@@ -237,6 +257,172 @@ class NarrativeCaseCandidate:
 
 
 @dataclass(frozen=True)
+class HistoricalSnapshotAnchor:
+    anchor_id: str
+    locator: str
+    exact_text: str
+    anchor_type: str = "TEXT_SPAN"
+
+    def __post_init__(self) -> None:
+        if not self.anchor_id or not self.locator or not self.exact_text.strip():
+            raise ValueError("historical snapshot anchors require id, locator, and exact text")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class HistoricalProviderSnapshot:
+    snapshot_id: str
+    canonical_url: str | None
+    official_document_id: str | None
+    provider_name: str
+    provider_record_id: str
+    fetch_status: str
+    content_path: str | None
+    content_sha256: str | None
+    published_date: str | None
+    available_date: str | None
+    captured_at: str | None
+    title: str | None
+    source_type: str
+    subject_symbols: tuple[str, ...]
+    subject_names: tuple[str, ...]
+    anchors: tuple[HistoricalSnapshotAnchor, ...]
+    valid_provider_snapshot: bool
+    replay_only: bool = True
+    production_score_evidence_allowed: bool = False
+    metadata: Mapping[str, Any] = field(default_factory=dict)
+    schema_version: str = INTELLIGENCE_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        if not self.snapshot_id or not self.provider_name or not self.provider_record_id:
+            raise ValueError("provider snapshot identity is required")
+        if not self.canonical_url and not self.official_document_id:
+            raise ValueError("provider snapshot requires URL or official document id")
+        if self.production_score_evidence_allowed:
+            raise ValueError("historical provider snapshots cannot be current score evidence")
+        if self.valid_provider_snapshot and self.fetch_status != "FETCHED":
+            raise ValueError("valid provider snapshots must be fetched")
+        if self.valid_provider_snapshot and (
+            not self.content_path
+            or not self.content_sha256
+            or not self.published_date
+            or not self.available_date
+            or not self.captured_at
+        ):
+            raise ValueError("valid provider snapshots require content and temporal provenance")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class HistoricalCaseSourceLink:
+    link_id: str
+    case_id: str
+    snapshot_id: str
+    anchor_ids: tuple[str, ...]
+    relationship: str
+    target_directness: str
+    summary_consistent: bool
+    rationale: str
+    verifier_origin: str
+    verifier_prompt_hash: str
+    verifier_response_hash: str
+    verified: bool = True
+    current_score_evidence_allowed: bool = False
+    schema_version: str = INTELLIGENCE_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        HistoricalCaseSourceRelationship(self.relationship)
+        if not self.case_id or not self.snapshot_id or not self.anchor_ids:
+            raise ValueError("case/source link requires case, snapshot, and anchor ids")
+        if not self.rationale or not self.verifier_origin:
+            raise ValueError("case/source link requires verification provenance")
+        if self.current_score_evidence_allowed:
+            raise ValueError("historical case/source links cannot enter current score")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class HistoricalSourceVerification:
+    verification_id: str
+    case_id: str
+    artifact_id: str
+    source_state: str
+    source_url: str | None
+    official_document_id: str | None
+    snapshot_id: str | None
+    content_sha256: str | None
+    published_date: str | None
+    historical_as_of_date: str | None
+    anchor_ids: tuple[str, ...]
+    anchor_locators: tuple[str, ...]
+    exact_quotes: tuple[str, ...]
+    target_directness: str
+    case_relationship: str | None
+    summary_consistent: bool | None
+    blocker_code: str | None
+    blocker_detail: str | None
+    checks: Mapping[str, bool]
+    state_trace: tuple[str, ...]
+    historical_replay_ready: bool
+    a2_historical_evidence_eligible: bool
+    evaluator_only: bool = True
+    current_score_eligible: bool = False
+    schema_version: str = INTELLIGENCE_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        HistoricalSourceState(self.source_state)
+        if self.current_score_eligible or not self.evaluator_only:
+            raise ValueError("historical source verification must be evaluator-only")
+        if self.historical_replay_ready != (
+            self.source_state == HistoricalSourceState.HISTORICAL_REPLAY_READY.value
+        ):
+            raise ValueError("historical replay readiness must match source state")
+        if self.historical_replay_ready:
+            if not self.a2_historical_evidence_eligible:
+                raise ValueError("replay-ready source must be historical A2 eligible")
+            if self.blocker_code:
+                raise ValueError("replay-ready source cannot carry a blocker")
+            if not self.checks or not all(self.checks.values()):
+                raise ValueError("replay-ready source requires every verification check")
+        elif self.a2_historical_evidence_eligible:
+            raise ValueError("non-ready source cannot be historical A2 eligible")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class HistoricalSourceRepairTask:
+    repair_task_id: str
+    case_id: str
+    source_state: str
+    source_url: str | None
+    official_document_id: str | None
+    blocker_code: str
+    blocker_detail: str
+    required_resolution: tuple[str, ...]
+    planning_only: bool = True
+    current_score_eligible: bool = False
+    schema_version: str = INTELLIGENCE_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        HistoricalSourceState(self.source_state)
+        if not self.blocker_code or not self.required_resolution:
+            raise ValueError("source repair task requires an exact blocker and resolution")
+        if not self.planning_only or self.current_score_eligible:
+            raise ValueError("historical source repair tasks are planning-only")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
 class QuarantineRecord:
     quarantine_id: str
     artifact_id: str
@@ -284,10 +470,17 @@ def _json_safe(value: Any) -> Any:
 __all__ = [
     "INTELLIGENCE_SCHEMA_VERSION",
     "HistoricalEvidenceReference",
+    "HistoricalCaseSourceLink",
+    "HistoricalCaseSourceRelationship",
     "HistoricalOutcome",
+    "HistoricalProviderSnapshot",
     "HistoricalResearchArtifact",
     "HistoricalResearchCase",
     "HistoricalRuleCandidate",
+    "HistoricalSnapshotAnchor",
+    "HistoricalSourceRepairTask",
+    "HistoricalSourceState",
+    "HistoricalSourceVerification",
     "LinkageError",
     "NarrativeCaseCandidate",
     "ParsedResearchArtifact",
