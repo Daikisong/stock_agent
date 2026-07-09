@@ -1,0 +1,53 @@
+{
+  "schema_version": "e2r_reconstruction_phase2_acceptance_v1",
+  "phase": 2,
+  "status": "RESEARCH_CORPUS_SEMANTIC_COMPILER_PASS",
+  "verified_on": "2026-07-10",
+  "scope": "historical research corpus semantic compilation only",
+  "production_runtime_ready": false,
+  "source_registry": {
+    "path": "data/e2r/calibration/v12/v12_md_registry.jsonl",
+    "registry_row_count": 2260,
+    "compiled_artifact_count": 2260
+  },
+  "full_corpus_result": {
+    "structured_row_count": 100282,
+    "structured_jsonl_row_count": 38873,
+    "historical_case_count": 10920,
+    "historical_outcome_count": 19031,
+    "historical_rule_count": 6255,
+    "quarantine_count": 5549,
+    "linkage_error_count": 1036,
+    "corpus_hash": "d783a9a5410fe1c32e2a59e32c8a532bd6a2280765ae2a85e9e17376ddd3a4d6",
+    "case_hash": "762b3545997fa17d3a62216759cfab43b601a681cc5b64778e4cd7899a1d5df4",
+    "outcome_hash": "ec003ca0a2307426dd550af22eb3a288ff81cf9d486037d9413bdd921b4e0dba"
+  },
+  "hard_acceptance": {
+    "valid_structured_jsonl_row_preservation_rate": 1.0,
+    "present_company_name_loss_count": 0,
+    "present_trigger_date_loss_count": 0,
+    "first_symbol_collapse_count": 0,
+    "source_text_truncation_limit": null,
+    "handoff_prompt_parsed_as_case_count": 0,
+    "silent_duplicate_overwrite_count": 0,
+    "historical_case_runtime_score_leak_count": 0,
+    "historical_outcome_runtime_prompt_leak_count": 0,
+    "critical_count_sum": 0
+  },
+  "golden_corpus": {
+    "mandatory_case_count": 6,
+    "mandatory_archetypes": [
+      "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
+    ],
+    "registry_sample_case_count": 36,
+    "canonical_archetype_coverage": "36/36"
+  },
+  "official_command": "PYTHONPATH=src python -m e2r.cli.compile_e2r_research_intelligence --repo-root . --output-root output/research_intelligence/phase2-full --strict true",
+  "output_root": "output/research_intelligence/phase2-full",
+  "next_required_phase": "Phase 3 case-level source verification; URL presence is not replay readiness"
+}

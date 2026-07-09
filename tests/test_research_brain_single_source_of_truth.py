@@ -34,8 +34,12 @@ class ResearchBrainSingleSourceOfTruthTests(unittest.TestCase):
             "src/e2r/research_brain/runtime/command_status.py"
         ).read_text(encoding="utf-8")
         self.assertIn("RECONSTRUCTION_COMPONENT_NOT_READY", status_text)
+        compile_text = (cli_root / "compile_e2r_research_intelligence.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("compile_research_intelligence", compile_text)
+        self.assertNotIn("MEANINGFUL_E2R_RUNTIME_READY", compile_text)
         for name in (
-            "compile_e2r_research_intelligence.py",
             "run_e2r_historical_replay.py",
             "run_e2r_current_operation.py",
             "audit_e2r_evidence_intelligence.py",

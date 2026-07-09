@@ -12,6 +12,7 @@ from enum import Enum
 
 
 CANONICAL_INTELLIGENCE_NAMESPACE = "e2r.research_brain"
+CANONICAL_SCHEMA_MODULE = "e2r.research_brain.intelligence_schema"
 CANONICAL_SCHEMA_SOURCE_COUNT = 1
 
 
@@ -28,6 +29,7 @@ class CanonicalCapability(str, Enum):
 @dataclass(frozen=True)
 class CanonicalResearchBrainArchitecture:
     namespace: str = CANONICAL_INTELLIGENCE_NAMESPACE
+    schema_module: str = CANONICAL_SCHEMA_MODULE
     schema_source_count: int = CANONICAL_SCHEMA_SOURCE_COUNT
     capabilities: tuple[str, ...] = tuple(item.value for item in CanonicalCapability)
     legacy_imports_allowed: bool = False
@@ -42,6 +44,7 @@ def canonical_architecture() -> CanonicalResearchBrainArchitecture:
 
 __all__ = [
     "CANONICAL_INTELLIGENCE_NAMESPACE",
+    "CANONICAL_SCHEMA_MODULE",
     "CANONICAL_SCHEMA_SOURCE_COUNT",
     "CanonicalCapability",
     "CanonicalResearchBrainArchitecture",
