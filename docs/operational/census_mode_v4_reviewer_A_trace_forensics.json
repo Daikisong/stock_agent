@@ -1,6 +1,6 @@
 {
-  "critical_count": 1,
+  "critical_count": 0,
   "reviewer": "A_TRACE_FORENSICS",
   "schema_version": "e2r_census_v4_reviewer_v1",
-  "verdict": "FAIL"
+  "verdict": "PASS"
 }

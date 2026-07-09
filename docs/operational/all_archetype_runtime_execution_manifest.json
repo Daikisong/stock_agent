@@ -38,10 +38,9 @@
   "expected_first_runtime_leaf": "research_brain_candidate_seed_events_used.jsonl",
   "expected_seed_source_in_census_v4": "external_candidate_event_seed_path",
   "next_attempt_attempt_type_counts": {
-    "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE": 6,
+    "ACCEPTED_CLAIM_TO_FULL_THESIS_CLOSURE": 7,
     "ARCHETYPE_TARGET_MATERIALIZATION": 3,
     "BLOCKED_CANDIDATE_GAP_CLOSURE": 3,
-    "PROMOTED_SCORE_PATH_GAP_CLOSURE": 1,
     "SOURCE_EXECUTION_REPAIR": 23
   },
   "next_attempt_plan_row_count": 36,

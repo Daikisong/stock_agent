@@ -8,7 +8,7 @@
     "unbounded_budget_count": 0
   },
   "event_board_non_stage0_count": 85,
-  "full_thesis_stage_row_count": 1,
+  "full_thesis_stage_row_count": 0,
   "priority_bucket_distribution": {
     "P0_RISK_REVIEW_REFRESH": 1,
     "P1_MATERIAL_STAGE_REFRESH": 29,

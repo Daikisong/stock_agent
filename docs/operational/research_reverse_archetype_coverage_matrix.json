@@ -83,35 +83,35 @@
     {
       "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
       "case_role_counts": {
-        "4B": 41,
-        "4C": 238,
-        "guard": 6,
+        "4B": 42,
+        "4C": 237,
+        "guard": 7,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 286,
+      "record_count": 287,
       "source_gap": false,
       "source_proxy_only_case_count": 141,
       "source_quality_counts": {
         "A2_URL_BACKED": 46,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 82,
-        "SHADOW_ONLY": 12,
+        "SHADOW_ONLY": 13,
         "SOURCE_PROXY_ONLY": 141
       },
       "top_missing_primitives": [
         "cost_overrun",
-        "government_customer",
         "order_backlog_to_sales",
+        "government_customer",
         "export_contract",
         "delivery_schedule"
       ],
       "top_positive_primitives": [
         "delivery_schedule",
         "export_contract",
-        "order_backlog_to_sales",
         "government_customer",
+        "order_backlog_to_sales",
         "cost_overrun"
       ],
       "url_backed_case_count": 46
@@ -120,18 +120,18 @@
       "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
       "case_role_counts": {
         "4B": 26,
-        "4C": 207
+        "4C": 208
       },
       "evidence_url_pending_case_count": 4,
       "has_pattern_summary": true,
-      "record_count": 233,
+      "record_count": 234,
       "source_gap": false,
       "source_proxy_only_case_count": 102,
       "source_quality_counts": {
         "A2_URL_BACKED": 56,
         "EVIDENCE_URL_PENDING": 4,
         "PRICE_PATH_ONLY": 64,
-        "SHADOW_ONLY": 7,
+        "SHADOW_ONLY": 8,
         "SOURCE_PROXY_ONLY": 102
       },
       "top_missing_primitives": [
@@ -153,8 +153,8 @@
     {
       "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
       "case_role_counts": {
-        "4B": 32,
-        "4C": 351,
+        "4B": 33,
+        "4C": 350,
         "guard": 8,
         "positive": 1
       },
@@ -189,8 +189,8 @@
     {
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "case_role_counts": {
-        "4B": 52,
-        "4C": 379,
+        "4B": 53,
+        "4C": 378,
         "guard": 41,
         "positive": 3,
         "profile_cap": 1,
@@ -305,20 +305,20 @@
       "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
       "case_role_counts": {
         "4B": 17,
-        "4C": 297,
+        "4C": 296,
         "guard": 1,
         "positive": 1
       },
       "evidence_url_pending_case_count": 1,
       "has_pattern_summary": true,
-      "record_count": 316,
+      "record_count": 315,
       "source_gap": false,
       "source_proxy_only_case_count": 194,
       "source_quality_counts": {
         "A2_URL_BACKED": 81,
         "EVIDENCE_URL_PENDING": 1,
         "PRICE_PATH_ONLY": 33,
-        "SHADOW_ONLY": 7,
+        "SHADOW_ONLY": 6,
         "SOURCE_PROXY_ONLY": 194
       },
       "top_missing_primitives": [
@@ -527,21 +527,21 @@
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
       "case_role_counts": {
         "4B": 47,
-        "4C": 304,
+        "4C": 303,
         "guard": 3,
         "positive": 1,
         "stage3_green": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 356,
+      "record_count": 355,
       "source_gap": false,
       "source_proxy_only_case_count": 156,
       "source_quality_counts": {
         "A2_URL_BACKED": 98,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 81,
-        "SHADOW_ONLY": 16,
+        "SHADOW_ONLY": 15,
         "SOURCE_PROXY_ONLY": 156
       },
       "top_missing_primitives": [
@@ -784,13 +784,13 @@
       "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
       "case_role_counts": {
         "4B": 41,
-        "4C": 256,
+        "4C": 255,
         "guard": 8,
         "profile_cap": 1
       },
       "evidence_url_pending_case_count": 6,
       "has_pattern_summary": true,
-      "record_count": 306,
+      "record_count": 305,
       "source_gap": false,
       "source_proxy_only_case_count": 114,
       "source_quality_counts": {
@@ -798,12 +798,12 @@
         "A2_URL_BACKED": 84,
         "EVIDENCE_URL_PENDING": 6,
         "PRICE_PATH_ONLY": 87,
-        "SHADOW_ONLY": 14,
+        "SHADOW_ONLY": 13,
         "SOURCE_PROXY_ONLY": 114
       },
       "top_missing_primitives": [
-        "reserve_quality_visible",
         "csm_growth_visible",
+        "reserve_quality_visible",
         "k_ics_ratio",
         "loss_ratio_quality",
         "capital_return_execution"
@@ -1042,19 +1042,19 @@
       "case_role_counts": {
         "4B": 19,
         "4C": 246,
-        "guard": 1,
+        "guard": 2,
         "positive": 1
       },
       "evidence_url_pending_case_count": 5,
       "has_pattern_summary": true,
-      "record_count": 267,
+      "record_count": 268,
       "source_gap": false,
       "source_proxy_only_case_count": 114,
       "source_quality_counts": {
         "A2_URL_BACKED": 71,
         "EVIDENCE_URL_PENDING": 5,
         "PRICE_PATH_ONLY": 67,
-        "SHADOW_ONLY": 10,
+        "SHADOW_ONLY": 11,
         "SOURCE_PROXY_ONLY": 114
       },
       "top_missing_primitives": [

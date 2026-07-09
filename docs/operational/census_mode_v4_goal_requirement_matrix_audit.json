@@ -1,42 +1,31 @@
 {
   "as_of_date": "2026-07-05",
   "blockers": [
-    "anti_fake_leaf_audit_not_pass",
-    "atomic_stage_decision_not_pass",
-    "score_scale_not_pass",
-    "stage_semantics_not_pass",
-    "semantic_primitive_guard_not_pass",
     "full_thesis_smoke_pending",
     "full_thesis_production_pass_false",
     "full_thesis_seed_materialization_audit_not_pass",
+    "full_thesis_seed_promotion_pass_false",
     "brain_web_evidence_pass_false",
     "machine_readable_test_result_artifact_missing"
   ],
   "brain_web_mode": "enabled",
   "brain_web_requirement_pass": false,
   "fail_gate_ids": [
-    "ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS",
-    "ATOMIC_STAGE_DECISION_PASS",
-    "SCORE_SCALE_PASS",
-    "STAGE_SEMANTICS_PASS",
-    "SEMANTIC_PRIMITIVE_GUARD_PASS",
     "FULL_THESIS_SEED_MATERIALIZATION_AUDIT_PASS"
   ],
   "full_thesis_goal4_semantic_split": {
     "blockers": [
-      "production_score_path_is_not_meaningful_full_thesis_pass",
-      "required_positive_missing_on_promoted_rows",
-      "green_gap_on_promoted_rows"
+      "production_full_e2r_score_path_not_closed"
     ],
-    "green_gap_row_count": 1,
+    "green_gap_row_count": 0,
     "meaningful_full_thesis_evidence_pass": false,
     "meaningful_label": "MEANINGFUL_FULL_THESIS_EVIDENCE_PASS_FALSE",
     "operator_note": "PRODUCTION_FULL_E2R_SCORE_PATH_PASS는 채점 경로가 닫혔다는 뜻이고, MEANINGFUL_FULL_THESIS_EVIDENCE_PASS만 필수 증거가 닫힌 운영 thesis를 뜻한다.",
-    "production_full_e2r_score_path_pass": true,
-    "production_full_thesis_row_count": 1,
-    "required_positive_missing_row_count": 1,
-    "score_path_label": "PRODUCTION_FULL_E2R_SCORE_PATH_PASS",
-    "score_path_only_not_meaningful": true
+    "production_full_e2r_score_path_pass": false,
+    "production_full_thesis_row_count": 0,
+    "required_positive_missing_row_count": 0,
+    "score_path_label": "PRODUCTION_FULL_E2R_SCORE_PATH_NOT_READY",
+    "score_path_only_not_meaningful": false
   },
   "goal_completion_minimum_pass": false,
   "meaningful_full_thesis_evidence_pass": false,
@@ -44,15 +33,16 @@
   "pending_gate_ids": [
     "FULL_THESIS_SMOKE_PASS",
     "FULL_THESIS_PRODUCTION_PASS",
+    "FULL_THESIS_SEED_PROMOTION_PASS",
     "BRAIN_WEB_EVIDENCE_PASS",
     "FULL_TEST_ARTIFACT_PASS"
   ],
-  "production_full_e2r_score_path_pass": true,
+  "production_full_e2r_score_path_pass": false,
   "production_full_thesis_requirement_pass": false,
   "required_goal_completion_count": 22,
-  "required_goal_completion_fail_count": 6,
-  "required_goal_completion_pass_count": 12,
-  "required_goal_completion_pending_count": 4,
+  "required_goal_completion_fail_count": 1,
+  "required_goal_completion_pass_count": 16,
+  "required_goal_completion_pending_count": 5,
   "requirements": [
     {
       "blocker": "v3_forensic_review_missing",
@@ -68,7 +58,7 @@
     {
       "blocker": "hard_gate_config_not_enabled",
       "evidence": {
-        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260708T082837Z --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 111 --brain-planner-success-limit 111 --brain-planner-batch-size 1 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 111 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 14400.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",
+        "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_v4_until_pass --as-of-date 2026-07-05 --universe krx --output-root output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260708T131257Z --v3-output-root output/census_v3/2026-07-01 --run-mode BRAIN_AND_WEB_ACQUISITION_ENABLED --brain-web-mode enabled --research-brain-report-dir docs/operational --brain-planner-provider real --brain-source-acquisition live_full_bounded --brain-universe-limit 111 --brain-planner-success-limit 111 --brain-planner-batch-size 1 --brain-max-source-tasks-per-plan 5 --brain-max-fetches-per-task 3 --brain-accepted-claim-target 36 --brain-max-distinct-candidate-attempts 111 --brain-retry-max 1 --brain-claim-extractor-provider auto --brain-claim-extractor-timeout-seconds 180.0 --brain-runtime-budget-seconds 14400.0 --brain-stage-promotion-mode strict --full-thesis-smoke-mode disabled --target-gate full_thesis --max-iterations 1 --fail-on-run-mode-overclaim true --fail-on-atomic-mismatch true --fail-on-semantic-guard true --fail-on-critical-audit true --write-operational-docs true",
         "fail_on_atomic_mismatch": true,
         "fail_on_critical_audit": true,
         "fail_on_run_mode_overclaim": true,
@@ -82,14 +72,14 @@
     {
       "blocker": "anti_fake_leaf_audit_not_pass",
       "evidence": {
-        "critical_count": 1,
+        "critical_count": 0,
         "eligible_symbol_count": 3391,
-        "leaf_verdict": "FAIL",
+        "leaf_verdict": "PASS",
         "stage_status_count": 3391
       },
       "gate_id": "ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS",
       "required_for_goal_completion": true,
-      "status": "FAIL",
+      "status": "PASS",
       "title": "full universe status board is leaf-audited and anti-fake"
     },
     {
@@ -102,47 +92,43 @@
       },
       "gate_id": "ATOMIC_STAGE_DECISION_PASS",
       "required_for_goal_completion": true,
-      "status": "FAIL",
+      "status": "PASS",
       "title": "stage/score/status/trace come from atomic representative decisions"
     },
     {
       "blocker": "score_scale_not_pass",
       "evidence": {
         "operator_score_use_distribution": {
-          "FULL_E2R_SCORE": 1,
-          "NOT_FULL_E2R_SCORE": 3390
+          "NOT_FULL_E2R_SCORE": 3391
         },
         "raw_contribution_fallback_as_verified_score_count": 0,
         "score_scope_distribution": {
           "EVENT_WEIGHTED_PARTIAL": 66,
-          "FULL_E2R_100": 1,
-          "NO_SCORE": 3324
+          "NO_SCORE": 3325
         },
         "verified_score_not_full_e2r_count": 0
       },
       "gate_id": "SCORE_SCALE_PASS",
       "required_for_goal_completion": true,
-      "status": "FAIL",
+      "status": "PASS",
       "title": "event scores and full E2R scores are not mixed"
     },
     {
       "blocker": "stage_semantics_not_pass",
       "evidence": {
         "operator_stage_use_distribution": {
-          "FULL_THESIS_STAGE": 1,
-          "NOT_FULL_THESIS_STAGE": 3390
+          "NOT_FULL_THESIS_STAGE": 3391
         },
         "pending_material_marked_complete_count": 0,
         "red_without_risk_signal_or_trace_count": 0,
         "source_pending_marked_red_count": 0,
         "stage_scope_distribution": {
-          "CENSUS_EVENT_BOARD": 3390,
-          "FULL_THESIS": 1
+          "CENSUS_EVENT_BOARD": 3391
         }
       },
       "gate_id": "STAGE_SEMANTICS_PASS",
       "required_for_goal_completion": true,
-      "status": "FAIL",
+      "status": "PASS",
       "title": "Stage0/Stage2/Red/pending labels are semantically separated"
     },
     {
@@ -154,15 +140,15 @@
       },
       "gate_id": "SEMANTIC_PRIMITIVE_GUARD_PASS",
       "required_for_goal_completion": true,
-      "status": "FAIL",
+      "status": "PASS",
       "title": "non-revenue contract wording cannot unlock contract/revision primitives"
     },
     {
       "blocker": "source_task_satisfaction_not_pass",
       "evidence": {
         "primitive_state_chain_verdict": "PASS",
-        "representative_score_claim_count": 67,
-        "source_task_chain_closed_to_representative_stage_count": 67,
+        "representative_score_claim_count": 66,
+        "source_task_chain_closed_to_representative_stage_count": 66,
         "source_task_satisfaction_verdict": "PASS_LEDGER_REFRESH_SOURCE_TASK_SATISFACTION"
       },
       "gate_id": "SOURCE_TASK_SATISFACTION_PASS",
@@ -201,9 +187,10 @@
         ],
         "full_thesis_required_source_class_count": 11,
         "full_thesis_task_executable_source_path_pass_allowed": true,
-        "full_thesis_task_with_blocking_source_class_count": 94,
+        "full_thesis_task_with_blocking_source_class_count": 93,
         "missing_connector_source_classes": [
           "BrokerReportPDF",
+          "CompanyOfficial",
           "IndustryMedia",
           "IssuerOfficial"
         ],
@@ -244,7 +231,7 @@
       "evidence": {
         "controlled_smoke_execution_pass": false,
         "controlled_smoke_full_thesis_row_count": 0,
-        "full_thesis_promoted_seed_count": 1,
+        "full_thesis_promoted_seed_count": 0,
         "full_thesis_smoke_execution_status": "FULL_THESIS_SMOKE_EXECUTION_PENDING",
         "full_thesis_status": "PENDING_FULL_THESIS_REFRESH",
         "per_symbol": [
@@ -313,7 +300,7 @@
             "symbol": "005930"
           }
         ],
-        "production_full_thesis_row_count": 1,
+        "production_full_thesis_row_count": 0,
         "production_full_thesis_substitute_diagnostic_pass": false,
         "required_smoke_symbols_promoted_without_missing_primitives_count": 0,
         "required_symbols": [
@@ -332,7 +319,7 @@
       "blocker": "full_thesis_production_pass_false",
       "evidence": {
         "controlled_smoke_full_thesis_row_count": 0,
-        "production_full_thesis_row_count": 1,
+        "production_full_thesis_row_count": 0,
         "production_mode_requested": true,
         "production_pass_allowed": false,
         "verdict": "PENDING_FULL_THESIS_PRODUCTION"
@@ -346,14 +333,14 @@
       "blocker": "full_thesis_seed_materialization_audit_not_pass",
       "evidence": {
         "critical_count": 48,
-        "full_thesis_promoted_seed_count": 1,
+        "full_thesis_promoted_seed_count": 0,
         "seed_event_count": 111,
         "status_counts": {
           "ACCEPTED_CLAIM_NOT_CREATED": 79,
-          "FULL_THESIS_PROMOTED": 1,
-          "SOURCE_TASK_NOT_EXECUTED": 9,
-          "STAGECOURT_READY_NOT_PROMOTED": 5,
-          "STAGECOURT_TRACE_NOT_CREATED": 17
+          "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+          "SOURCE_TASK_NOT_EXECUTED": 8,
+          "STAGECOURT_READY_NOT_PROMOTED": 3,
+          "STAGECOURT_TRACE_NOT_CREATED": 20
         },
         "trace_row_count": 111,
         "verdict": "FAIL"
@@ -367,27 +354,27 @@
       "blocker": "full_thesis_seed_promotion_pass_false",
       "evidence": {
         "critical_count": 48,
-        "full_thesis_promoted_seed_count": 1,
+        "full_thesis_promoted_seed_count": 0,
         "seed_event_count": 111,
         "status_counts": {
           "ACCEPTED_CLAIM_NOT_CREATED": 79,
-          "FULL_THESIS_PROMOTED": 1,
-          "SOURCE_TASK_NOT_EXECUTED": 9,
-          "STAGECOURT_READY_NOT_PROMOTED": 5,
-          "STAGECOURT_TRACE_NOT_CREATED": 17
+          "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+          "SOURCE_TASK_NOT_EXECUTED": 8,
+          "STAGECOURT_READY_NOT_PROMOTED": 3,
+          "STAGECOURT_TRACE_NOT_CREATED": 20
         },
         "verdict": "FAIL"
       },
       "gate_id": "FULL_THESIS_SEED_PROMOTION_PASS",
       "required_for_goal_completion": true,
-      "status": "PASS",
+      "status": "PENDING",
       "title": "at least one full thesis seed has materialized into production FULL_THESIS"
     },
     {
       "blocker": "brain_web_evidence_pass_false",
       "evidence": {
         "brain_web_evidence_pass_allowed": false,
-        "llm_claim_extractor_attempt_count": 118,
+        "llm_claim_extractor_attempt_count": 123,
         "llm_planner_call_count": 111,
         "minimum_required_counts": {
           "llm_claim_extractor_attempt_count": 10,
@@ -400,8 +387,8 @@
         },
         "operational_minimum_count_gate_applies": true,
         "verdict": "BLOCKED",
-        "web_fetched_document_count": 118,
-        "web_or_llm_accepted_claim_count": 78,
+        "web_fetched_document_count": 123,
+        "web_or_llm_accepted_claim_count": 60,
         "web_search_call_count": 153,
         "web_search_task_count": 153
       },
@@ -976,7 +963,8 @@
           "brain_web_evidence_pass_false",
           "full_thesis_smoke_pending",
           "full_thesis_smoke_execution_pending",
-          "full_thesis_production_pass_false"
+          "full_thesis_production_pass_false",
+          "full_thesis_seed_materialization_not_promoted"
         ],
         "loop_executed": true,
         "status": "RUN_COMPLETE",

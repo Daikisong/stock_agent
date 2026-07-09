@@ -8,9 +8,9 @@
 
 - status: `PLANNER_ARCHETYPE_ROUTING_BIAS_PASS`
 - planner_run_count: `458`
-- hypothesis_run_count: `111`
+- hypothesis_run_count: `110`
 - distinct_top1_archetype_count: `33`
-- c05_top1_share: `0.027027`
+- c05_top1_share: `0.027273`
 - planner_output_score_stage_key_count: `0`
 
 ## Top1 Counts
@@ -47,6 +47,6 @@
 - `C30`: `3`
 - `C31`: `3`
 - `C32`: `3`
-- `R13`: `12`
+- `R13`: `11`
 
 ## Blockers

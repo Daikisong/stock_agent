@@ -1,17 +1,17 @@
 {
-  "accepted_claim_count": 179,
+  "accepted_claim_count": 161,
   "critical_count": 0,
   "critical_counts": {
     "non_representative_claim_score_leak_count": 0,
     "non_representative_claim_unreasoned_count": 0,
     "representative_atomic_claim_not_in_stage_row_count": 0
   },
-  "non_representative_claim_count": 112,
+  "non_representative_claim_count": 95,
   "reason_distribution": {
-    "accepted_claim_without_atomic_decision": 94,
+    "accepted_claim_without_atomic_decision": 77,
     "non_representative_atomic_decision": 18
   },
-  "representative_stage_claim_count": 67,
+  "representative_stage_claim_count": 66,
   "rule": "Accepted claims that are not selected into the representative census_stage_status row must have an explicit reason and must not support the representative score unless they are also listed in that representative row.",
   "sample_non_representative_claims": [
     {
@@ -290,8 +290,8 @@
   "schema_version": "e2r_census_v4_non_representative_claim_audit_v1",
   "unexpected_score_leak_claim_ids": [],
   "verdict": "PASS",
-  "warning_count": 94,
+  "warning_count": 77,
   "warning_counts": {
-    "accepted_claim_without_atomic_decision_count": 94
+    "accepted_claim_without_atomic_decision_count": 77
   }
 }

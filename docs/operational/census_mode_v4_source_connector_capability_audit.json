@@ -147,9 +147,9 @@
     "ReportPDF",
     "TrustedNews"
   ],
-  "full_thesis_requirement_row_count": 1034,
+  "full_thesis_requirement_row_count": 1023,
   "full_thesis_task_executable_source_path_pass_allowed": true,
-  "full_thesis_task_with_blocking_source_class_count": 94,
+  "full_thesis_task_with_blocking_source_class_count": 93,
   "full_thesis_task_with_blocking_source_class_ids": [
     "000660",
     "001360",
@@ -202,7 +202,7 @@
     "097230",
     "103590"
   ],
-  "full_thesis_task_with_nonexecutable_source_class_count": 94,
+  "full_thesis_task_with_nonexecutable_source_class_count": 93,
   "full_thesis_task_with_nonexecutable_source_class_ids": [
     "000660",
     "001360",
@@ -257,6 +257,7 @@
   ],
   "missing_connector_source_classes": [
     "BrokerReportPDF",
+    "CompanyOfficial",
     "IndustryMedia",
     "IssuerOfficial"
   ],
@@ -277,11 +278,11 @@
     "NaverSearch",
     "ReportPDF"
   ],
-  "requirement_row_count": 7675,
+  "requirement_row_count": 7418,
   "rule": "This audit is static and does not call external providers. It prevents full-thesis readiness from passing when a source class required by the full-thesis refresh queue is only a placeholder, snapshot-only connector, has no registered production connector, and is not covered by the bounded live SourceAcquisitionRunnerV4 path. A live fetch still needs separate SourceTaskExecution evidence. blocking_full_thesis_task_count means no executable source class path exists for that task; full_thesis_task_with_blocking_source_class_count means the task mentions at least one non-executable source class but may still have executable alternatives.",
   "run_mode": "BRAIN_AND_WEB_ACQUISITION_ENABLED",
   "schema_version": "e2r_census_v4_source_connector_capability_audit_v1",
-  "source_class_count": 14,
+  "source_class_count": 15,
   "source_classes": [
     {
       "acquisition_capability_scope": null,
@@ -296,7 +297,7 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 75,
+      "required_by_any_task_count": 60,
       "required_by_full_thesis_task_count": 0
     },
     {
@@ -333,8 +334,8 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 541,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 548,
+      "required_by_full_thesis_task_count": 93
     },
     {
       "acquisition_capability_scope": null,
@@ -374,8 +375,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "LIVE_FETCH_IMPLEMENTED",
-      "required_by_any_task_count": 798,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 820,
+      "required_by_full_thesis_task_count": 93
     },
     {
       "acquisition_capability_scope": "issuer homepage/domain authority from CompanyGuide snapshot or as-of-safe issuer official domain registry",
@@ -411,8 +412,24 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 535,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 482,
+      "required_by_full_thesis_task_count": 93
+    },
+    {
+      "acquisition_capability_scope": null,
+      "acquisition_capability_status": null,
+      "acquisition_score_evidence_rule": null,
+      "blocking_full_thesis": false,
+      "canonical_source_class": "CompanyOfficial",
+      "capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
+      "connector_classes": [],
+      "full_thesis_task_ids": [],
+      "non_executable_full_thesis_source_class": false,
+      "provider_names": [],
+      "registered_connector_count": 0,
+      "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
+      "required_by_any_task_count": 3,
+      "required_by_full_thesis_task_count": 0
     },
     {
       "acquisition_capability_scope": null,
@@ -452,8 +469,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "LIVE_FETCH_IMPLEMENTED",
-      "required_by_any_task_count": 1167,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 1136,
+      "required_by_full_thesis_task_count": 93
     },
     {
       "acquisition_capability_scope": "generic web query intent executed through bounded search provider and PageFetcher",
@@ -489,8 +506,8 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 94,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 93,
+      "required_by_full_thesis_task_count": 93
     },
     {
       "acquisition_capability_scope": null,
@@ -505,7 +522,7 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 63,
+      "required_by_any_task_count": 59,
       "required_by_full_thesis_task_count": 0
     },
     {
@@ -546,8 +563,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "PLACEHOLDER_PROVIDER_FAILED",
-      "required_by_any_task_count": 1416,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 1291,
+      "required_by_full_thesis_task_count": 93
     },
     {
       "acquisition_capability_scope": null,
@@ -562,7 +579,7 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 590,
+      "required_by_any_task_count": 560,
       "required_by_full_thesis_task_count": 0
     },
     {
@@ -603,8 +620,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "LIVE_FETCH_IMPLEMENTED",
-      "required_by_any_task_count": 940,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 906,
+      "required_by_full_thesis_task_count": 93
     },
     {
       "acquisition_capability_scope": null,
@@ -644,8 +661,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "LIVE_FETCH_IMPLEMENTED",
-      "required_by_any_task_count": 448,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 456,
+      "required_by_full_thesis_task_count": 93
     },
     {
       "acquisition_capability_scope": "NaverFreeSearchProvider plus PageFetcher with task max_queries/max_candidates/max_fetches",
@@ -681,8 +698,8 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 163,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 147,
+      "required_by_full_thesis_task_count": 93
     },
     {
       "acquisition_capability_scope": "ReportPDF requests can be satisfied by verified BrokerReportPublicPDF original documents",
@@ -718,8 +735,8 @@
       "provider_names": [],
       "registered_connector_count": 0,
       "registry_capability_status": "NO_PRODUCTION_CONNECTOR_REGISTERED",
-      "required_by_any_task_count": 412,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 408,
+      "required_by_full_thesis_task_count": 93
     },
     {
       "acquisition_capability_scope": "trusted/news source tasks can be executed through bounded search provider and PageFetcher",
@@ -759,8 +776,8 @@
       ],
       "registered_connector_count": 1,
       "registry_capability_status": "PLACEHOLDER_PROVIDER_FAILED",
-      "required_by_any_task_count": 433,
-      "required_by_full_thesis_task_count": 94
+      "required_by_any_task_count": 449,
+      "required_by_full_thesis_task_count": 93
     }
   ],
   "source_connector_capability_pass_allowed": true,

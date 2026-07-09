@@ -9,9 +9,9 @@
   "trusted_news_search_call_count": 0,
   "verdict": "REAL_ACQUISITION_PASS",
   "web_claimed_but_zero_search_count": 0,
-  "web_fetched_document_count": 118,
-  "web_rejected_document_count": 443,
+  "web_fetched_document_count": 123,
+  "web_rejected_document_count": 441,
   "web_search_call_count": 153,
-  "web_search_result_count": 983,
+  "web_search_result_count": 956,
   "web_search_task_count": 153
 }

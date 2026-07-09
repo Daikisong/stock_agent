@@ -1,5 +1,5 @@
 {
-  "accepted_claim_count": 179,
+  "accepted_claim_count": 161,
   "census_time_companyguide_attempt_count": 3391,
   "census_time_existing_ledger_attempt_count": 3391,
   "census_time_kind_krx_attempt_count": 3391,
@@ -14,13 +14,13 @@
   },
   "cutover_replay_only_symbol_count": 66,
   "mode_note": "all current scored rows are ledger/leaf-refresh rows; this audit proves coverage honesty, not live full-thesis operation",
-  "newly_verified_claim_count": 87,
+  "newly_verified_claim_count": 69,
   "operational_live_source_coverage_pass": false,
-  "provider_cache_used_count": 916,
+  "provider_cache_used_count": 901,
   "provider_gap_attempt_count": 3391,
   "reused_or_imported_claim_count": 92,
   "schema_version": "e2r_census_v4_source_coverage_audit_v1",
-  "scored_row_count": 67,
+  "scored_row_count": 66,
   "source_family_attempt_distribution": {
     "CompanyGuide/ReportRadar": 3391,
     "ExistingEvidenceOSLedger": 3391,

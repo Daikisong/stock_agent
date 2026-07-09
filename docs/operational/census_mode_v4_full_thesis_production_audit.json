@@ -1,6 +1,6 @@
 {
   "blockers": [
-    "production_full_thesis_rows_with_required_positive_missing_primitives"
+    "production_full_thesis_runner_no_eligible_rows"
   ],
   "completion_eligible": false,
   "controlled_smoke_full_thesis_row_count": 0,
@@ -8,33 +8,25 @@
   "controlled_smoke_substitution_rejected_count": 0,
   "controlled_smoke_symbols": [],
   "full_thesis_refresh_queue_candidate_count": 85,
-  "full_thesis_row_count": 1,
+  "full_thesis_row_count": 0,
   "full_thesis_smoke_mode": "disabled",
   "incomplete_production_full_thesis_row_count": 0,
   "production_full_thesis_final_with_source_pending_gap_count": 0,
-  "production_full_thesis_row_count": 1,
+  "production_full_thesis_row_count": 0,
   "production_full_thesis_row_with_blocking_required_gap_primitives_count": 0,
-  "production_full_thesis_row_with_green_gap_primitives_count": 1,
+  "production_full_thesis_row_with_green_gap_primitives_count": 0,
   "production_full_thesis_row_with_legacy_missing_primitives_count": 0,
   "production_full_thesis_row_with_missing_required_primitives_count": 0,
-  "production_full_thesis_row_with_required_positive_missing_primitives_count": 1,
+  "production_full_thesis_row_with_required_positive_missing_primitives_count": 0,
   "production_green_stage_row_with_green_gap_count": 0,
   "production_mode_requested": true,
   "production_pass_allowed": false,
   "production_runner_implemented": true,
-  "production_symbols": [
-    "011170"
-  ],
-  "production_symbols_without_blocking_required_gap_primitives": [
-    "011170"
-  ],
+  "production_symbols": [],
+  "production_symbols_without_blocking_required_gap_primitives": [],
   "production_symbols_without_green_gap_primitives": [],
-  "production_symbols_without_legacy_missing_primitives": [
-    "011170"
-  ],
-  "production_symbols_without_missing_required_primitives": [
-    "011170"
-  ],
+  "production_symbols_without_legacy_missing_primitives": [],
+  "production_symbols_without_missing_required_primitives": [],
   "production_symbols_without_required_positive_missing_primitives": [],
   "provider_failed_green_gap_final_score_count": 0,
   "required_smoke_symbols": [
