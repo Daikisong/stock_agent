@@ -1,0 +1,290 @@
+{
+  "schema_version": "e2r_runtime_call_graph_before_v1",
+  "snapshot_date": "2026-07-10",
+  "git_head": "3e126efee61faf0c62a18c1d19d59d0a2ad7f2a8",
+  "goal_sha256": "3e64d7f5c2c0a56b237adf1ff04dcbd7871525286212cb4a05d36c26c36d223e",
+  "official_verdict": "MEANINGFUL_RUNTIME_PARITY_NOT_READY",
+  "evidence_precedence": [
+    "current leaf artifacts",
+    "leaf-derived audits",
+    "generated summaries",
+    "historical handoff reports"
+  ],
+  "entrypoints": [
+    {
+      "id": "census_v4_until_pass",
+      "path": "src/e2r/cli/run_e2r_census_v4_until_pass.py",
+      "baseline_status": "CURRENT_OFFICIAL_ENTRYPOINT",
+      "production_reachable": true,
+      "call_chain": [
+        "e2r.census.census_runner_v4.run_census_mode_v4",
+        "e2r.research_brain.v4_production_orchestrator.run_research_brain_v4_production_shadow",
+        "e2r.research_brain.v2_memory_cards.build_memory_cards_from_v1_matrix",
+        "e2r.research_brain.v4_planner_runtime",
+        "e2r.research_brain.v4_source_acquisition_runner.SourceAcquisitionRunnerV4",
+        "e2r.research_brain.v4_evidence_extraction_bridge.execute_source_tasks_with_evidence_os_v4",
+        "e2r.research_brain.v4_scoring_stage",
+        "e2r.agentic.stage_court.decide_stage_court"
+      ],
+      "notes": "V4 is layered on V3 leaf artifacts and also emits replay, smoke, promotion, audit, and report artifacts from one large runner."
+    },
+    {
+      "id": "research_brain_v4_shadow",
+      "path": "src/e2r/cli/run_research_brain_v4_production_shadow.py",
+      "baseline_status": "PRODUCTION_SHADOW_ENTRYPOINT",
+      "production_reachable": true,
+      "call_chain": [
+        "e2r.research_brain.v4_production_orchestrator.run_research_brain_v4_production_shadow",
+        "e2r.research_brain.v2_memory_cards.build_memory_cards_from_v1_matrix",
+        "e2r.research_brain.v2_archetype_router",
+        "e2r.research_brain.v4_source_acquisition_runner",
+        "e2r.research_brain.v4_evidence_extraction_bridge",
+        "e2r.research_brain.v4_scoring_stage"
+      ],
+      "notes": "V4 orchestration still depends on V2 memory and routing semantics."
+    },
+    {
+      "id": "research_to_runtime_parity",
+      "path": "src/e2r/cli/run_research_to_runtime_parity_until_pass.py",
+      "baseline_status": "OPERATIONAL_AUDIT_ENTRYPOINT",
+      "production_reachable": true,
+      "call_chain": [
+        "e2r.census.research_to_runtime_parity.write_research_to_runtime_parity_artifacts",
+        "e2r.research_reverse.reports.write_research_reverse_bundle",
+        "e2r.source_routing.research_source_route_recovery.write_source_route_recovery_reports",
+        "e2r.census.all_archetype_next_attempt_planner",
+        "e2r.census.all_archetype_runtime_execution_manifest"
+      ],
+      "notes": "This is the direct production-reachable legacy bridge that keeps research_reverse and primitive-name source routing alive."
+    },
+    {
+      "id": "legacy_census",
+      "path": "src/e2r/cli/run_e2r_census_mode.py",
+      "baseline_status": "LEGACY_ENTRYPOINT",
+      "production_reachable": true,
+      "call_chain": [
+        "e2r.census.census_runner.run_census_mode",
+        "legacy baseline scanner",
+        "legacy scoring and stage path"
+      ],
+      "notes": "The name is unversioned but it does not invoke the intended canonical reconstruction pipeline."
+    },
+    {
+      "id": "production_cutover_v3",
+      "path": "src/e2r/cli/run_e2r_production_cutover_v3.py",
+      "baseline_status": "PARALLEL_PRODUCTION_PATH",
+      "production_reachable": true,
+      "call_chain": [
+        "e2r.production.cutover_v3",
+        "e2r.production.cutover_v2",
+        "e2r.production.claim_extraction",
+        "e2r.production.source_connectors"
+      ],
+      "notes": "Contains useful contract-blind extraction and official source infrastructure but is not unified with the Research Brain runtime."
+    },
+    {
+      "id": "v2_v3_brain_clis",
+      "path": "src/e2r/cli/run_research_brain_v3_daily_shadow.py",
+      "baseline_status": "LEGACY_OR_TEST_COMPATIBILITY",
+      "production_reachable": false,
+      "call_chain": [
+        "e2r.research_brain.v2_*",
+        "e2r.research_brain.v3_*"
+      ],
+      "notes": "Kept for compatibility and tests; must not issue a canonical READY label."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "historical_v12_corpus",
+      "path": "docs/round plus data/e2r/calibration/v12",
+      "role": "historical calibration corpus",
+      "reachability": "INPUT"
+    },
+    {
+      "id": "research_brain_parser",
+      "path": "src/e2r/research_brain/research_artifact_parser.py",
+      "role": "existing structured artifact parser",
+      "reachability": "PRODUCTION_REACHABLE"
+    },
+    {
+      "id": "research_reverse_parser",
+      "path": "src/e2r/research_reverse/research_case_extractor.py",
+      "role": "file-level heuristic case extractor",
+      "reachability": "PRODUCTION_REACHABLE_VIA_PARITY"
+    },
+    {
+      "id": "source_route_guesser",
+      "path": "src/e2r/source_routing/research_source_route_recovery.py",
+      "role": "primitive-substring route guesser",
+      "reachability": "PRODUCTION_REACHABLE_VIA_PARITY"
+    },
+    {
+      "id": "v2_memory_cards",
+      "path": "src/e2r/research_brain/v2_memory_cards.py",
+      "role": "contract-derived memory cards",
+      "reachability": "PRODUCTION_REACHABLE"
+    },
+    {
+      "id": "v2_router",
+      "path": "src/e2r/research_brain/v2_archetype_router.py",
+      "role": "token-overlap archetype routing",
+      "reachability": "PRODUCTION_REACHABLE"
+    },
+    {
+      "id": "v4_planner",
+      "path": "src/e2r/research_brain/v4_planner_runtime.py",
+      "role": "LLM planning and feedback retry",
+      "reachability": "PRODUCTION_REACHABLE"
+    },
+    {
+      "id": "v4_acquisition",
+      "path": "src/e2r/research_brain/v4_source_acquisition_runner.py",
+      "role": "bounded official-first and web acquisition",
+      "reachability": "PRODUCTION_REACHABLE"
+    },
+    {
+      "id": "v4_claim_bridge",
+      "path": "src/e2r/research_brain/v4_evidence_extraction_bridge.py",
+      "role": "document to Evidence OS claim bridge",
+      "reachability": "PRODUCTION_REACHABLE"
+    },
+    {
+      "id": "evidence_workflow",
+      "path": "src/e2r/agentic/evidence_workflow.py",
+      "role": "anchor, adjudication, mapping separation",
+      "reachability": "PRODUCTION_REACHABLE"
+    },
+    {
+      "id": "v4_scoring_stage",
+      "path": "src/e2r/research_brain/v4_scoring_stage.py",
+      "role": "claim-backed preliminary watchlist score and stage",
+      "reachability": "PRODUCTION_REACHABLE"
+    },
+    {
+      "id": "deterministic_scorer",
+      "path": "src/e2r/scoring.py",
+      "role": "deterministic E2R component score",
+      "reachability": "PRODUCTION_REACHABLE_PARALLEL"
+    },
+    {
+      "id": "legacy_stage_classifier",
+      "path": "src/e2r/staging.py",
+      "role": "canonical Stage classifier using active scoring profile",
+      "reachability": "PRODUCTION_REACHABLE_PARALLEL"
+    },
+    {
+      "id": "stage_court",
+      "path": "src/e2r/agentic/stage_court.py",
+      "role": "Evidence OS score interval and stage decision",
+      "reachability": "PRODUCTION_REACHABLE"
+    },
+    {
+      "id": "census_v4",
+      "path": "src/e2r/census/census_runner_v4.py",
+      "role": "V3 leaf import, Brain execution, promotion, replay, smoke, audits, reports",
+      "reachability": "CURRENT_OFFICIAL"
+    },
+    {
+      "id": "summary_readback",
+      "path": "docs/operational/census_mode_v4_artifact_manifest.json",
+      "role": "resolves the runtime output root later consumed by parity reports and tests",
+      "reachability": "PRODUCTION_REACHABLE"
+    }
+  ],
+  "edges": [
+    {
+      "from": "historical_v12_corpus",
+      "to": "research_reverse_parser",
+      "kind": "HEURISTIC_FILE_COMPRESSION"
+    },
+    {
+      "from": "historical_v12_corpus",
+      "to": "research_brain_parser",
+      "kind": "PARALLEL_STRUCTURED_PARSE"
+    },
+    {
+      "from": "research_reverse_parser",
+      "to": "v2_memory_cards",
+      "kind": "PARALLEL_MEMORY_BUILD"
+    },
+    {
+      "from": "research_reverse_parser",
+      "to": "source_route_guesser",
+      "kind": "PRIMITIVE_NAME_ROUTE_RECOVERY"
+    },
+    {
+      "from": "v2_memory_cards",
+      "to": "v2_router",
+      "kind": "MEMORY_CONTEXT"
+    },
+    {
+      "from": "v2_router",
+      "to": "v4_planner",
+      "kind": "TOP_K_HYPOTHESIS_SEED"
+    },
+    {
+      "from": "v4_planner",
+      "to": "v4_acquisition",
+      "kind": "SOURCE_TASK"
+    },
+    {
+      "from": "v4_acquisition",
+      "to": "v4_claim_bridge",
+      "kind": "FETCHED_DOCUMENT"
+    },
+    {
+      "from": "v4_claim_bridge",
+      "to": "evidence_workflow",
+      "kind": "RAW_ASSERTION_ADJUDICATION_MAPPING"
+    },
+    {
+      "from": "evidence_workflow",
+      "to": "v4_scoring_stage",
+      "kind": "ACCEPTED_CLAIM_LEDGER"
+    },
+    {
+      "from": "v4_scoring_stage",
+      "to": "stage_court",
+      "kind": "SCORE_INTERVAL"
+    },
+    {
+      "from": "stage_court",
+      "to": "census_v4",
+      "kind": "STAGECOURT_TRACE_AND_PROMOTION_ATTEMPT"
+    },
+    {
+      "from": "census_v4",
+      "to": "summary_readback",
+      "kind": "WRITE_MANIFEST_AND_SUMMARIES"
+    },
+    {
+      "from": "summary_readback",
+      "to": "research_reverse_parser",
+      "kind": "PARITY_REGENERATION_READBACK"
+    }
+  ],
+  "summary_artifact_readback": [
+    {
+      "consumer": "e2r.census.research_to_runtime_parity._resolve_output_root",
+      "artifact": "docs/operational/census_mode_v4_artifact_manifest.json",
+      "risk": "Tests and later reports follow whichever output_root the mutable summary manifest currently points to."
+    },
+    {
+      "consumer": "tests/test_research_to_runtime_parity_goal4.py",
+      "artifact": "generated parity audit plus docs/operational fixed snapshots",
+      "risk": "Current leaf state and fixed expected snapshot have drifted, producing 18 baseline failures."
+    }
+  ],
+  "source_to_stage_join": {
+    "source_task": "source_tasks.jsonl and source_task_executions.jsonl",
+    "document": "evidence_documents.jsonl",
+    "anchor": "evidence_anchors.jsonl",
+    "claim": "accepted_claims.jsonl",
+    "primitive": "primitive_mappings.jsonl and primitive_states.jsonl",
+    "score": "score_contributions.jsonl",
+    "stage": "stagecourt_traces.jsonl",
+    "production_promotion": "census_stage_status.jsonl plus brain_stage_promotion_audit.json",
+    "baseline_result": "StageCourt traces exist, but no production FULL_THESIS row is promoted."
+  }
+}

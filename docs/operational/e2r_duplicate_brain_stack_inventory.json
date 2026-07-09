@@ -1,0 +1,133 @@
+{
+  "schema_version": "e2r_duplicate_brain_stack_inventory_v1",
+  "snapshot_date": "2026-07-10",
+  "canonical_target": "src/e2r/research_brain",
+  "duplicate_schema_source_of_truth_count": 4,
+  "production_reachable_legacy_research_reverse_count": 2,
+  "production_reachable_primitive_name_route_guesser_count": 1,
+  "groups": [
+    {
+      "capability": "historical corpus parsing",
+      "implementations": [
+        "src/e2r/research_brain/research_artifact_parser.py",
+        "src/e2r/research_brain/research_row_normalizer.py",
+        "src/e2r/research_reverse/research_file_scanner.py",
+        "src/e2r/research_reverse/research_case_extractor.py"
+      ],
+      "production_reachable": [
+        "src/e2r/research_brain/research_artifact_parser.py",
+        "src/e2r/research_reverse/research_case_extractor.py"
+      ],
+      "root_problem": "Structured row parsing and shallow file-level extraction produce incompatible case identities and quality labels.",
+      "phase1_action": "Move canonical parsing under research_brain/corpus and turn research_reverse into a warning adapter."
+    },
+    {
+      "capability": "research memory",
+      "implementations": [
+        "src/e2r/research_brain/memory_compiler.py",
+        "src/e2r/research_brain/memory_graph.py",
+        "src/e2r/research_brain/v2_memory_cards.py",
+        "src/e2r/research_brain/v3_memory_cards.py",
+        "src/e2r/research_reverse/research_to_runtime_memory.py"
+      ],
+      "production_reachable": [
+        "src/e2r/research_brain/v2_memory_cards.py",
+        "src/e2r/research_reverse/research_to_runtime_memory.py"
+      ],
+      "root_problem": "Runtime cards are largely contract repackaging while the separate reverse stack emits another card schema.",
+      "phase1_action": "Define one RuntimeIntelligencePack and compatibility projections only."
+    },
+    {
+      "capability": "archetype hypothesis routing",
+      "implementations": [
+        "src/e2r/archetype_classifier.py",
+        "src/e2r/research_brain/runtime_planner.py",
+        "src/e2r/research_brain/v2_archetype_router.py",
+        "src/e2r/research_brain/v2_llm_planner.py",
+        "src/e2r/research_brain/v3_raw_event_routing.py",
+        "src/e2r/research_brain/v4_planner_runtime.py"
+      ],
+      "production_reachable": [
+        "src/e2r/archetype_classifier.py",
+        "src/e2r/research_brain/v2_archetype_router.py",
+        "src/e2r/research_brain/v4_planner_runtime.py"
+      ],
+      "root_problem": "Token matching, deterministic C-specific keyword branches, and LLM hypotheses coexist without a single blind-pass contract.",
+      "phase1_action": "Use two-pass planning as canonical; deterministic code validates but does not synthesize the hypothesis."
+    },
+    {
+      "capability": "source routing",
+      "implementations": [
+        "src/e2r/research_brain/source_route_memory.py",
+        "src/e2r/research_brain/query_pattern_memory.py",
+        "src/e2r/research_reverse/source_route_recoverer.py",
+        "src/e2r/source_routing/research_source_route_recovery.py",
+        "src/e2r/research_brain/v4_source_acquisition_runner.py"
+      ],
+      "production_reachable": [
+        "src/e2r/source_routing/research_source_route_recovery.py",
+        "src/e2r/research_brain/v4_source_acquisition_runner.py"
+      ],
+      "root_problem": "A primitive-substring route matrix is presented as recovered research intelligence, while actual acquisition follows a separate runner.",
+      "phase1_action": "Compile question-specific EvidenceRecipe routes and remove the guesser from canonical imports."
+    },
+    {
+      "capability": "claim extraction and mapping",
+      "implementations": [
+        "src/e2r/production/claim_extraction",
+        "src/e2r/agentic/evidence_workflow.py",
+        "src/e2r/research_brain/v3_evidence_os_execution_bridge.py",
+        "src/e2r/research_brain/v4_evidence_extraction_bridge.py"
+      ],
+      "production_reachable": [
+        "src/e2r/production/claim_extraction",
+        "src/e2r/research_brain/v4_evidence_extraction_bridge.py"
+      ],
+      "root_problem": "Useful contract-blind extraction exists, but satisfaction, reroute, and final promotion guards are applied at different layers.",
+      "phase1_action": "Create one claim compiler API with explicit task satisfaction status."
+    },
+    {
+      "capability": "score and stage",
+      "implementations": [
+        "src/e2r/scoring.py",
+        "src/e2r/staging.py",
+        "src/e2r/agentic/stage_court.py",
+        "src/e2r/research_brain/v3_scoring_stage.py",
+        "src/e2r/research_brain/v4_scoring_stage.py",
+        "src/e2r/census/atomic_stage_decision.py"
+      ],
+      "production_reachable": [
+        "src/e2r/scoring.py",
+        "src/e2r/staging.py",
+        "src/e2r/agentic/stage_court.py",
+        "src/e2r/research_brain/v4_scoring_stage.py",
+        "src/e2r/census/atomic_stage_decision.py"
+      ],
+      "root_problem": "Multiple score-stage wrappers can apply different thresholds, ledgers, and promotion semantics.",
+      "phase1_action": "Preserve weights and thresholds, but make AtomicStageDecision the single runtime output assembled from one accepted-claim ledger."
+    },
+    {
+      "capability": "Census orchestration",
+      "implementations": [
+        "src/e2r/census/census_runner.py",
+        "src/e2r/census/census_runner_v2.py",
+        "src/e2r/census/census_runner_v3.py",
+        "src/e2r/census/census_runner_v4.py",
+        "src/e2r/production/cutover_v3.py"
+      ],
+      "production_reachable": [
+        "src/e2r/census/census_runner.py",
+        "src/e2r/census/census_runner_v4.py",
+        "src/e2r/production/cutover_v3.py"
+      ],
+      "root_problem": "Unversioned legacy, V4-over-V3, and production cutover paths all remain callable.",
+      "phase1_action": "Introduce canonical current operation and make older CLIs incapable of canonical readiness labels."
+    }
+  ],
+  "baseline_acceptance": {
+    "duplicate_brain_schema_source_of_truth_count": 4,
+    "production_reachable_legacy_count": 3,
+    "production_reachable_primitive_name_route_guesser_count": 1,
+    "status": "FAIL_EXPECTED_BEFORE_RECONSTRUCTION"
+  }
+}

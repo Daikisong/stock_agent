@@ -1,0 +1,100 @@
+{
+  "schema_version": "e2r_current_conversion_funnel_baseline_v1",
+  "snapshot_date": "2026-07-10",
+  "as_of_date": "2026-07-05",
+  "git_head": "3e126efee61faf0c62a18c1d19d59d0a2ad7f2a8",
+  "runtime_output_root": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260708T131257Z",
+  "official_verdict": "MEANINGFUL_RUNTIME_PARITY_NOT_READY",
+  "historical_corpus": {
+    "v12_result_documents": 2263,
+    "raw_trigger_rows": 18760,
+    "validated_trigger_rows": 13738,
+    "representative_trigger_rows": 12471,
+    "unique_case_count_from_calibration_index": 9161,
+    "research_reverse_record_count": 11394,
+    "source_proxy_only_count_from_calibration_index": 3723,
+    "evidence_url_pending_count_from_calibration_index": 3906,
+    "semantic_case_count": null,
+    "historical_replay_ready_case_count": null,
+    "interpretation": "Existing row and reverse counts are inventory counts, not proof of case-level semantic preservation or source verification."
+  },
+  "provisional_runtime_intelligence": {
+    "memory_card_count": 36,
+    "source_route_pattern_count": 1855,
+    "source_route_gap_task_count": 15,
+    "executable_evidence_recipe_count": 0,
+    "interpretation": "Cards and route patterns are provisional because they are contract-derived or primitive-substring-derived."
+  },
+  "current_leaf_counts": {
+    "planner_run_rows": 458,
+    "source_task_rows": 901,
+    "source_task_execution_rows": 901,
+    "evidence_document_rows": 238,
+    "accepted_claim_rows": 161,
+    "primitive_mapping_rows": 96,
+    "primitive_state_rows": 114,
+    "score_contribution_rows": 105,
+    "stagecourt_trace_rows": 95,
+    "production_full_thesis_rows": 0,
+    "full_e2r_verified_score_rows": 0
+  },
+  "latest_brain_attempt": {
+    "seed_event_count": 111,
+    "planner_calls": 111,
+    "real_provider_success_count": 110,
+    "source_task_execution_count": 809,
+    "real_document_fetched_count": 146,
+    "web_fetched_document_count": 123,
+    "attempt_accepted_claim_count": 118,
+    "unique_accepted_claim_count": 69,
+    "stagecourt_trace_exported_count": 3,
+    "census_promoted_stage_count": 0,
+    "verdict": "ATTEMPTED_NOT_CUTOVER_READY"
+  },
+  "direct_closure": {
+    "direct_original_gap_closure_count": null,
+    "rerouted_claim_count": null,
+    "mapping_rejection_count": null,
+    "reason": "The baseline leaf schema does not expose a single independently recomputable question-to-direct-closure ledger. Aggregate accepted-claim counts cannot substitute for this metric."
+  },
+  "failure_funnel": {
+    "seed_materialization_status_counts": {
+      "ACCEPTED_CLAIM_NOT_CREATED": 79,
+      "PLANNER_PENDING_NO_REAL_PROVIDER_SUCCESS": 1,
+      "SOURCE_TASK_NOT_EXECUTED": 8,
+      "STAGECOURT_READY_NOT_PROMOTED": 3,
+      "STAGECOURT_TRACE_NOT_CREATED": 20
+    },
+    "brain_web_readiness_blockers": [
+      "accepted Brain/Web claims are not score eligible by deterministic guard: 64",
+      "Brain/Web trace rows missing stagecourt_trace_id: 12",
+      "Brain/Web StageCourt traces are not promoted into census_stage_status",
+      "brain stage promotion verdict is not PROMOTION_APPLIED: ELIGIBLE_NOT_PROMOTED"
+    ],
+    "production_full_thesis_blockers": [
+      "production_full_thesis_runner_no_eligible_rows",
+      "full thesis seed materialization audit failed"
+    ],
+    "research_to_runtime_blockers": [
+      "FULL_THESIS_ARCHETYPE_DIVERSITY_BELOW_MINIMUM",
+      "MANDATORY_ARCHETYPE_FULL_THESIS_ROW_MISSING"
+    ]
+  },
+  "baseline_test_result": {
+    "command": "PYTHONPATH=src python -m unittest discover -s tests -v",
+    "test_count": 5305,
+    "passed_count": 5287,
+    "failure_count": 18,
+    "error_count": 0,
+    "duration_seconds": 517.308,
+    "failure_cluster": "Fixed Goal4 runtime-parity expectations assume one C17 full-thesis row and score-path PASS, while the current manifest points to a leaf run with zero full-thesis rows and score-path PENDING."
+  },
+  "hard_truths": {
+    "task_shells_are_evidence": false,
+    "accepted_claim_total_proves_original_gap_closure": false,
+    "research_reverse_records_are_meaningful_cases": false,
+    "source_route_patterns_are_recovered_routes": false,
+    "historical_replay_is_current_production": false,
+    "current_promoted_full_thesis_count": 0
+  }
+}

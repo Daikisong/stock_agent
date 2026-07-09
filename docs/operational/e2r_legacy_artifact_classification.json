@@ -1,0 +1,126 @@
+{
+  "schema_version": "e2r_legacy_artifact_classification_v1",
+  "snapshot_date": "2026-07-10",
+  "official_status": "MEANINGFUL_RUNTIME_PARITY_NOT_READY",
+  "allowed_classes": [
+    "VALID_SAFETY_INFRASTRUCTURE",
+    "VALID_DETERMINISTIC_SCORING_INFRASTRUCTURE",
+    "PROVISIONAL_RESEARCH_MEMORY",
+    "HEURISTIC_RESEARCH_REVERSE",
+    "HEURISTIC_SOURCE_ROUTE",
+    "REPORT_OR_PLAN_ONLY",
+    "RUNTIME_PROOF",
+    "DEPRECATED",
+    "TEST_ONLY"
+  ],
+  "artifacts": [
+    {
+      "path": "src/e2r/agentic/evidence_os.py",
+      "classification": "VALID_SAFETY_INFRASTRUCTURE",
+      "reason": "Defines document, anchor, claim, primitive, score eligibility, and append-only evidence semantics."
+    },
+    {
+      "path": "src/e2r/agentic/evidence_workflow.py",
+      "classification": "VALID_SAFETY_INFRASTRUCTURE",
+      "reason": "Separates extraction, adjudication, and mapping."
+    },
+    {
+      "path": "src/e2r/production/claim_extraction",
+      "classification": "VALID_SAFETY_INFRASTRUCTURE",
+      "reason": "Contains contract-blind extraction, anchor validation, and entity-temporal adjudication that can be reused by the canonical runtime."
+    },
+    {
+      "path": "src/e2r/scoring.py",
+      "classification": "VALID_DETERMINISTIC_SCORING_INFRASTRUCTURE",
+      "reason": "Deterministic component scoring is retained; weights are not changed by reconstruction."
+    },
+    {
+      "path": "src/e2r/staging.py",
+      "classification": "VALID_DETERMINISTIC_SCORING_INFRASTRUCTURE",
+      "reason": "Canonical Stage enum path is retained but must be unified with StageCourt thresholds and AtomicStageDecision."
+    },
+    {
+      "path": "src/e2r/agentic/stage_court.py",
+      "classification": "VALID_DETERMINISTIC_SCORING_INFRASTRUCTURE",
+      "reason": "Pending material gaps and provider failures are correctly separated from final low scores."
+    },
+    {
+      "path": "docs/operational/research_runtime_memory_cards_v2.json",
+      "classification": "PROVISIONAL_RESEARCH_MEMORY",
+      "reason": "Thirty-six cards exist, but they mostly repackage Evidence Contract fields rather than verified historical semantics."
+    },
+    {
+      "path": "src/e2r/research_reverse",
+      "classification": "HEURISTIC_RESEARCH_REVERSE",
+      "reason": "File-level extraction truncates and compresses cases, loses identity/date fields, and infers quality from file-level text."
+    },
+    {
+      "path": "docs/operational/research_reverse_case_inventory.json",
+      "classification": "HEURISTIC_RESEARCH_REVERSE",
+      "reason": "The 11,394 records are inventory records, not verified meaningful case records."
+    },
+    {
+      "path": "src/e2r/source_routing/research_source_route_recovery.py",
+      "classification": "HEURISTIC_SOURCE_ROUTE",
+      "reason": "Source routes are guessed from primitive substrings rather than recovered from case-linked source success."
+    },
+    {
+      "path": "docs/operational/research_source_route_recovery_matrix.json",
+      "classification": "HEURISTIC_SOURCE_ROUTE",
+      "reason": "The 1,855 patterns are not counted as executable recovered recipes."
+    },
+    {
+      "path": "docs/0703",
+      "classification": "REPORT_OR_PLAN_ONLY",
+      "reason": "Historical PASS statements were later contradicted by newer leaf runs and cannot override current evidence."
+    },
+    {
+      "path": "docs/0705",
+      "classification": "REPORT_OR_PLAN_ONLY",
+      "reason": "Useful forensic and patch history, but readiness statements are evidence only when linked to immutable leaf artifacts."
+    },
+    {
+      "path": "docs/operational/all_archetype_next_runtime_seed_events_2026-07-05.jsonl",
+      "classification": "REPORT_OR_PLAN_ONLY",
+      "reason": "One hundred eleven task shells are plans, not evidence."
+    },
+    {
+      "path": "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260708T131257Z",
+      "classification": "RUNTIME_PROOF",
+      "reason": "Contains real planner, source, document, claim, primitive, score, and StageCourt leafs; proves NOT_READY and zero promoted full-thesis rows."
+    },
+    {
+      "path": "src/e2r/research_brain/v2_*",
+      "classification": "DEPRECATED",
+      "reason": "Compatibility only after canonical migration; must not be imported by the new production entrypoint."
+    },
+    {
+      "path": "src/e2r/research_brain/v3_*",
+      "classification": "DEPRECATED",
+      "reason": "Compatibility only after canonical migration; must not produce canonical readiness."
+    },
+    {
+      "path": "src/e2r/cli/run_e2r_census_v3_until_pass.py",
+      "classification": "DEPRECATED",
+      "reason": "Explicit legacy CLI."
+    },
+    {
+      "path": "controlled semantic replay and controlled full-thesis smoke artifacts",
+      "classification": "TEST_ONLY",
+      "reason": "Valid wiring evidence but never current production score or Stage evidence."
+    },
+    {
+      "path": "output/0621_agentic_replay",
+      "classification": "TEST_ONLY",
+      "reason": "Frozen replay seed and guard evidence; not a current score fixture."
+    }
+  ],
+  "hard_acceptance": {
+    "research_case_count_11394_counted_as_meaningful": false,
+    "source_route_pattern_count_1855_counted_as_recovered": false,
+    "task_shell_count_111_counted_as_evidence": false,
+    "current_promoted_full_thesis_count": 0,
+    "report_label_raised": false,
+    "status": "PASS"
+  }
+}
