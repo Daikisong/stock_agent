@@ -60,6 +60,12 @@ class HistoricalCaseSourceRelationship(str, Enum):
     CONTRADICTS_CASE_SUMMARY = "CONTRADICTS_CASE_SUMMARY"
 
 
+class EvidenceRecipeRole(str, Enum):
+    POSITIVE = "POSITIVE"
+    GUARD = "GUARD"
+    HARD_BREAK = "HARD_BREAK"
+
+
 def stable_intelligence_id(prefix: str, payload: Mapping[str, Any]) -> str:
     encoded = json.dumps(_json_safe(payload), ensure_ascii=False, sort_keys=True).encode("utf-8")
     return f"{prefix}-{hashlib.sha256(encoded).hexdigest()[:24]}"
@@ -423,6 +429,159 @@ class HistoricalSourceRepairTask:
 
 
 @dataclass(frozen=True)
+class AcceptedClaimPredicate:
+    predicate_id: str
+    semantic_test: str
+    required_subject_relation: str
+    required_fields: tuple[str, ...]
+    allowed_polarities: tuple[str, ...]
+    temporal_test: str
+    lifecycle_test: str
+
+    def __post_init__(self) -> None:
+        if not all(
+            (
+                self.predicate_id.strip(),
+                self.semantic_test.strip(),
+                self.required_subject_relation.strip(),
+                self.temporal_test.strip(),
+                self.lifecycle_test.strip(),
+            )
+        ):
+            raise ValueError("accepted claim predicate fields must be non-empty")
+        if not self.required_fields or not self.allowed_polarities:
+            raise ValueError("accepted claim predicate requires fields and polarity")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class EvidenceRecipe:
+    recipe_id: str
+    archetype_id: str
+    primitive_id: str
+    role: str
+    economic_mechanism: str
+    question_to_answer: str
+    accepted_claim_predicates: tuple[AcceptedClaimPredicate, ...]
+    required_entities: tuple[str, ...]
+    required_values: tuple[str, ...]
+    required_units: tuple[str, ...]
+    required_time_scope: tuple[str, ...]
+    required_target_directness: tuple[str, ...]
+    required_current_lifecycle: tuple[str, ...]
+    preferred_source_families: tuple[str, ...]
+    preferred_document_types: tuple[str, ...]
+    preferred_sections: tuple[str, ...]
+    discovery_sources: tuple[str, ...]
+    forbidden_score_sources: tuple[str, ...]
+    positive_examples: tuple[str, ...]
+    counterexamples: tuple[str, ...]
+    wrong_subject_examples: tuple[str, ...]
+    source_success_examples: tuple[str, ...]
+    source_failure_examples: tuple[str, ...]
+    rejection_conditions: tuple[str, ...]
+    counter_questions: tuple[str, ...]
+    supersession_questions: tuple[str, ...]
+    query_intent_constraints: tuple[str, ...]
+    stop_conditions: tuple[str, ...]
+    source_exhaustion_conditions: tuple[str, ...]
+    supporting_case_ids: tuple[str, ...]
+    supporting_source_verification_ids: tuple[str, ...]
+    supporting_source_failure_verification_ids: tuple[str, ...]
+    planning_only_source_proxy_case_ids: tuple[str, ...]
+    freshness_max_age_days: int | None
+    freshness_supersession_rule: str | None
+    literal_queries: tuple[str, ...] = ()
+    executable: bool = True
+    runtime_score_eligible: bool = False
+    compiler_origin: str = "EXPLICIT_SEMANTIC_DEFINITION"
+    schema_version: str = INTELLIGENCE_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        EvidenceRecipeRole(self.role)
+        required_text = (
+            self.recipe_id,
+            self.archetype_id,
+            self.primitive_id,
+            self.economic_mechanism,
+            self.question_to_answer,
+        )
+        if not all(item.strip() for item in required_text):
+            raise ValueError("evidence recipe identity and semantic question are required")
+        required_collections = {
+            "accepted_claim_predicates": self.accepted_claim_predicates,
+            "required_entities": self.required_entities,
+            "required_values": self.required_values,
+            "required_units": self.required_units,
+            "required_time_scope": self.required_time_scope,
+            "required_target_directness": self.required_target_directness,
+            "required_current_lifecycle": self.required_current_lifecycle,
+            "preferred_source_families": self.preferred_source_families,
+            "preferred_document_types": self.preferred_document_types,
+            "preferred_sections": self.preferred_sections,
+            "discovery_sources": self.discovery_sources,
+            "forbidden_score_sources": self.forbidden_score_sources,
+            "positive_examples": self.positive_examples,
+            "counterexamples": self.counterexamples,
+            "wrong_subject_examples": self.wrong_subject_examples,
+            "source_success_examples": self.source_success_examples,
+            "source_failure_examples": self.source_failure_examples,
+            "rejection_conditions": self.rejection_conditions,
+            "counter_questions": self.counter_questions,
+            "supersession_questions": self.supersession_questions,
+            "query_intent_constraints": self.query_intent_constraints,
+            "stop_conditions": self.stop_conditions,
+            "source_exhaustion_conditions": self.source_exhaustion_conditions,
+            "supporting_case_ids": self.supporting_case_ids,
+        }
+        missing = [name for name, values in required_collections.items() if not values]
+        if missing:
+            raise ValueError(f"evidence recipe fields must be non-empty: {missing}")
+        if self.literal_queries:
+            raise ValueError("evidence recipes must not contain deterministic literal queries")
+        if not self.executable or self.runtime_score_eligible:
+            raise ValueError("recipes must be executable but cannot directly score")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class UnsupportedEvidenceRecipe:
+    unsupported_id: str
+    archetype_id: str
+    primitive_id: str
+    reason_code: str
+    reason_detail: str
+    required_next_input: tuple[str, ...]
+    planning_only: bool = True
+    runtime_route_available: bool = False
+    schema_version: str = INTELLIGENCE_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        if not all(
+            item.strip()
+            for item in (
+                self.unsupported_id,
+                self.archetype_id,
+                self.primitive_id,
+                self.reason_code,
+                self.reason_detail,
+            )
+        ):
+            raise ValueError("unsupported recipe requires exact identity and reason")
+        if not self.required_next_input:
+            raise ValueError("unsupported recipe requires next input")
+        if not self.planning_only or self.runtime_route_available:
+            raise ValueError("unsupported recipe cannot become a runtime route")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
 class QuarantineRecord:
     quarantine_id: str
     artifact_id: str
@@ -468,6 +627,9 @@ def _json_safe(value: Any) -> Any:
 
 
 __all__ = [
+    "AcceptedClaimPredicate",
+    "EvidenceRecipe",
+    "EvidenceRecipeRole",
     "INTELLIGENCE_SCHEMA_VERSION",
     "HistoricalEvidenceReference",
     "HistoricalCaseSourceLink",
@@ -489,5 +651,6 @@ __all__ = [
     "QuarantineReason",
     "QuarantineRecord",
     "SourceLineRange",
+    "UnsupportedEvidenceRecipe",
     "stable_intelligence_id",
 ]

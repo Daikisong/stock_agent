@@ -1,0 +1,54 @@
+{
+  "schema_version": "e2r_reconstruction_phase4_acceptance_v1",
+  "phase": 4,
+  "status": "EVIDENCE_RECIPE_OS_COMPILER_PASS",
+  "verified_on": "2026-07-10",
+  "scope": "executable EvidenceRecipe schema, semantic registry, compiler, and unsupported boundary",
+  "production_runtime_ready": false,
+  "contract_registry": {
+    "contract_count": 36,
+    "required_primitive_pair_count": 189,
+    "covered_pair_count": 189,
+    "pair_coverage_rate": 1.0
+  },
+  "executable_semantic_recipes": {
+    "recipe_count": 31,
+    "coverage_rate": 0.164021,
+    "supported_archetype_count": 6,
+    "recipe_count_by_archetype": {
+      "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 6,
+      "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": 5,
+      "C15_MATERIAL_SPREAD_SUPERCYCLE": 5,
+      "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": 5,
+      "C24_BIO_TRIAL_DATA_EVENT_RISK": 5,
+      "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": 5
+    },
+    "mandatory_golden_recipe_hash": "8f0fc7a1e3f578713b8e6ce3c625eb541fb755492046e88ada7014a580a7ce22",
+    "full_registry_recipe_hash": "2614178443213e78dca383f8e3d80d887ff69ab7c362c48f9816c222c6c59072"
+  },
+  "explicit_unsupported": {
+    "count": 158,
+    "reason_code": "UNSUPPORTED_PENDING_SEMANTIC_RECIPE",
+    "planning_only": true,
+    "runtime_route_available": false,
+    "unsupported_hash": "720cc3534e7daba483495bf70daf735202d3deaf46d21d0dfc984d1e9ced268a"
+  },
+  "hard_acceptance": {
+    "required_pair_without_recipe_or_unsupported_reason_count": 0,
+    "url_backed_case_recipe_example_missing_count": 0,
+    "source_proxy_example_not_planning_only_count": 0,
+    "generic_query_only_recipe_count": 0,
+    "primitive_substring_production_routing_count": 0,
+    "acceptance_or_rejection_missing_count": 0,
+    "counter_question_or_example_missing_count": 0,
+    "lifecycle_or_supersession_missing_count": 0,
+    "literal_query_in_recipe_count": 0,
+    "recipe_runtime_score_eligible_count": 0,
+    "unsupported_runtime_route_available_count": 0,
+    "critical_count_sum": 0
+  },
+  "routing_strategy": "EXACT_ARCHETYPE_PRIMITIVE_SEMANTIC_DEFINITION_LOOKUP",
+  "literal_query_generation_owner": "LLM planner in a later phase; recipe stores constraints, not query strings",
+  "official_command": "PYTHONPATH=src python -m e2r.cli.compile_e2r_research_intelligence --repo-root . --output-root output/research_intelligence/phase4-full --strict true",
+  "next_required_phase": "Phase 5 semantic memory graph and balanced retrieval; explicit unsupported recipes remain unavailable until reviewed semantics are added"
+}

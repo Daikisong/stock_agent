@@ -15,6 +15,10 @@ from e2r.research_brain.compiler import (
     write_case_level_source_verification,
     write_research_intelligence,
 )
+from e2r.research_brain.recipes import (
+    compile_evidence_recipe_os,
+    write_evidence_recipe_os,
+)
 
 
 _SUPPORTED_SUFFIXES = {".md", ".json", ".jsonl", ".csv"}
@@ -74,6 +78,10 @@ def main(argv: list[str] | None = None) -> int:
         "--case-source-links",
         help="verified historical case/source link JSONL",
     )
+    parser.add_argument(
+        "--recipe-semantics",
+        help="reviewed EvidenceRecipe semantic definition JSON (default: canonical config)",
+    )
     args = parser.parse_args(argv)
     repo_root = Path(args.repo_root).resolve()
     try:
@@ -102,6 +110,20 @@ def main(argv: list[str] | None = None) -> int:
         )
         source_output_paths = write_case_level_source_verification(
             source_result,
+            output_root=args.output_root,
+        )
+        recipe_result = compile_evidence_recipe_os(
+            result.cases,
+            source_verifications=source_result.verifications,
+            semantics_path=(
+                _resolve_optional_path(args.recipe_semantics, repo_root=repo_root)
+                if args.recipe_semantics
+                else None
+            )
+            or _default_recipe_semantics_path(),
+        )
+        recipe_output_paths = write_evidence_recipe_os(
+            recipe_result,
             output_root=args.output_root,
         )
     except (FileNotFoundError, OSError, ValueError) as exc:
@@ -140,12 +162,24 @@ def main(argv: list[str] | None = None) -> int:
         "source_verification_output_paths": {
             key: str(path) for key, path in source_output_paths.items()
         },
+        "evidence_recipe_status": recipe_result.manifest["status"],
+        "executable_recipe_count": recipe_result.manifest["executable_recipe_count"],
+        "explicit_unsupported_recipe_count": recipe_result.manifest[
+            "explicit_unsupported_count"
+        ],
+        "evidence_recipe_critical_count_sum": recipe_result.manifest[
+            "critical_count_sum"
+        ],
+        "evidence_recipe_output_paths": {
+            key: str(path) for key, path in recipe_output_paths.items()
+        },
     }
     print(json.dumps(payload, ensure_ascii=False, sort_keys=True))
     passed = (
         result.manifest["status"] == "RESEARCH_CORPUS_SEMANTIC_COMPILER_PASS"
         and source_result.manifest["status"]
         == "CASE_LEVEL_SOURCE_VERIFICATION_COMPILER_PASS"
+        and recipe_result.manifest["status"] == "EVIDENCE_RECIPE_OS_COMPILER_PASS"
     )
     return 0 if passed or not args.strict else 2
 
@@ -156,6 +190,10 @@ def _resolve_optional_path(value: str, *, repo_root: Path) -> Path:
     if not path.is_file():
         raise FileNotFoundError(path)
     return path
+
+
+def _default_recipe_semantics_path() -> Path:
+    return Path(__file__).resolve().parents[3] / "configs" / "e2r_evidence_recipe_semantics_v1.json"
 
 
 if __name__ == "__main__":
