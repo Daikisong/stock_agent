@@ -153,7 +153,7 @@
     "phase0_through_phase16_targeted_test_count": 93,
     "phase16_runtime_contract_test_count": 9,
     "phase16_acceptance_test_count": 6,
-    "full_suite_test_count": 5584,
+    "full_suite_test_count": 5585,
     "full_suite_failure_count": 0,
     "phase0_baseline_known_failure_count": 18,
     "resolved_phase0_baseline_failure_count": 18,
