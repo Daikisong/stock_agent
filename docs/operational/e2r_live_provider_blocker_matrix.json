@@ -1,0 +1,80 @@
+{
+  "schema_version": "e2r_live_provider_blocker_matrix_v1",
+  "audited_at_kst": "2026-07-11",
+  "internal_blocker_count": 9,
+  "external_blocker_count": 0,
+  "external_blocker_claim_allowed": false,
+  "rows": [
+    {
+      "provider_name": "OpenDART",
+      "credential_state": "PRESENT",
+      "internal_blockers": ["BULK_CURRENT_MATERIALIZER_NOT_CONNECTED", "CHECKPOINT_NOT_CONNECTED"],
+      "external_blockers": [],
+      "next_proof": "execute bounded corp-code and disclosure request"
+    },
+    {
+      "provider_name": "KRX",
+      "credential_state": "PRESENT",
+      "internal_blockers": ["OPENAPI_EXECUTOR_NOT_CONNECTED", "GENERIC_PORTAL_HEALTH_ONLY"],
+      "external_blockers": [],
+      "next_proof": "execute KOSPI/KOSDAQ issue-base-info bulk requests"
+    },
+    {
+      "provider_name": "KIND",
+      "credential_state": "NOT_REQUIRED",
+      "internal_blockers": ["SYMBOL_RISK_STATUS_ADAPTER_NOT_CONNECTED", "GENERIC_PORTAL_HEALTH_ONLY"],
+      "external_blockers": [],
+      "next_proof": "fetch symbol-specific official risk/listing status"
+    },
+    {
+      "provider_name": "CompanyGuide",
+      "credential_state": "NOT_REQUIRED",
+      "internal_blockers": ["CURRENT_CONSENSUS_CLAIM_ADAPTER_NOT_CONNECTED"],
+      "external_blockers": [],
+      "next_proof": "fetch symbol page and validate dated consensus provenance"
+    },
+    {
+      "provider_name": "IssuerIR",
+      "credential_state": "NOT_REQUIRED",
+      "internal_blockers": ["ISSUER_IR_DISCOVERY_PLACEHOLDER"],
+      "external_blockers": [],
+      "next_proof": "bounded issuer newsroom discovery and original document fetch"
+    },
+    {
+      "provider_name": "TrustedNews",
+      "credential_state": "NOT_REQUIRED",
+      "internal_blockers": ["TRUSTED_NEWS_CONNECTOR_PLACEHOLDER"],
+      "external_blockers": [],
+      "next_proof": "bounded trusted-source discovery with full article provenance"
+    },
+    {
+      "provider_name": "NaverSearch",
+      "credential_state": "PRESENT",
+      "internal_blockers": ["LIVE_QUESTION_TASK_TRANSPORT_BRIDGE_NOT_CONNECTED"],
+      "external_blockers": [],
+      "next_proof": "execute validated LLM literal query after official gap"
+    },
+    {
+      "provider_name": "GeneralWebFetcher",
+      "credential_state": "NOT_REQUIRED",
+      "internal_blockers": ["OFFICIAL_GAP_POLICY_BRIDGE_NOT_CONNECTED"],
+      "external_blockers": [],
+      "next_proof": "fetch original full source selected from validated query"
+    },
+    {
+      "provider_name": "ExistingLedger",
+      "credential_state": "NOT_REQUIRED",
+      "internal_blockers": ["VERSIONED_CURRENT_STATE_STORE_NOT_IMPLEMENTED"],
+      "external_blockers": [],
+      "next_proof": "load append-only current claim ledger by as-of date"
+    },
+    {
+      "provider_name": "ResearchMemory",
+      "credential_state": "NOT_REQUIRED",
+      "internal_blockers": [],
+      "external_blockers": [],
+      "next_proof": "connect balanced memory to live two-pass planner"
+    }
+  ],
+  "operator_rule": "Credential PRESENT is not AUTH success. External blocker requires an actual bounded request leaf with error category and affected scope."
+}

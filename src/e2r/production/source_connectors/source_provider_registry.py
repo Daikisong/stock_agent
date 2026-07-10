@@ -46,6 +46,14 @@ class SourceFetchResult:
             return False
         return self.mode == "live" and self.status == "FETCHED" and self.has_content_anchor
 
+    @property
+    def counts_as_symbol_evidence(self) -> bool:
+        from e2r.research_brain.runtime.live_materialization.provider_capabilities import (
+            counts_as_symbol_evidence,
+        )
+
+        return counts_as_symbol_evidence(self)
+
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
@@ -168,8 +176,19 @@ class SourceProviderRegistry:
                 "issuer_ir_call_count": provider_call_counts.get("IssuerIR", 0),
                 "trusted_news_call_count": provider_call_counts.get("TrustedNews", 0),
                 "fetched_document_count": sum(result.status == "FETCHED" for result in results),
-                "real_document_fetched_count": sum(result.counts_as_live for result in results),
-                "live_or_fresh_provider_document_count": sum(result.counts_as_live for result in results),
+                "real_document_fetched_count": sum(result.counts_as_symbol_evidence for result in results),
+                "live_or_fresh_provider_document_count": sum(
+                    result.counts_as_symbol_evidence for result in results
+                ),
+                "provider_health_only_document_count": sum(
+                    result.counts_as_live and not result.counts_as_symbol_evidence
+                    for result in results
+                ),
+                "generic_portal_counted_as_symbol_evidence": sum(
+                    result.provider_name in {"KRX", "KIND"}
+                    and result.counts_as_symbol_evidence
+                    for result in results
+                ),
                 "snapshot_only_document_count": sum(
                     result.status == "FETCHED" and result.mode in {"snapshot", "frozen"} for result in results
                 ),
