@@ -1,0 +1,43 @@
+{
+  "schema_version": "e2r_live_run_profile_v1",
+  "profile_id": "production_daily_v1",
+  "run_mode": "LIVE_DAILY_INCREMENTAL",
+  "live_authorization_required": true,
+  "allowed_providers": [
+    "KRX",
+    "KIND",
+    "OpenDART",
+    "CompanyGuide",
+    "IssuerIR",
+    "TrustedNews",
+    "NaverSearch",
+    "GeneralWebFetcher",
+    "ExistingLedger",
+    "ResearchMemory"
+  ],
+  "universe_policy": {
+    "scope": "KRX_FULL_ELIGIBLE_COMMON_STOCK",
+    "bulk_first": true,
+    "reuse_bootstrap_snapshot": true
+  },
+  "baseline_policy": {
+    "required_lanes": ["OFFICIAL", "PRICE", "RISK", "EXISTING_LEDGER"],
+    "provider_failure_is_pending": true
+  },
+  "budgets": {
+    "max_official_light_targets": 500,
+    "max_deep_candidates": 60,
+    "max_brain_candidates": 40,
+    "max_acquisition_candidates": 40,
+    "max_llm_calls_per_candidate": 3,
+    "max_source_tasks_per_candidate": 6,
+    "max_fetches_per_candidate": 10,
+    "max_retries_per_candidate": 2,
+    "max_general_web_fetches_per_candidate": 3,
+    "max_runtime_seconds": 7200
+  },
+  "checkpoint_resume": true,
+  "official_first": true,
+  "general_web_requires_official_gap": true,
+  "final_label_ceiling": "MEANINGFUL_E2R_RUNTIME_READY"
+}

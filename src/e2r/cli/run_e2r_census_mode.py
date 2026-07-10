@@ -8,6 +8,7 @@ from typing import Any
 
 from e2r.census.census_runner import CensusRunConfig, run_census_mode
 from e2r.cli.run_e2r_current_operation import main as run_current_operation_main
+from e2r.research_brain.runtime.live_materialization import LiveRunMode
 
 
 def _parse_bool(value: str | bool) -> bool:
@@ -34,6 +35,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-root", required=True)
     parser.add_argument("--fail-on-critical", type=_parse_bool, default=True)
     parser.add_argument("--input-manifest")
+    parser.add_argument("--materialize-live-input", type=_parse_bool, default=False)
+    parser.add_argument(
+        "--live-materialization-authorized", type=_parse_bool, default=False
+    )
+    parser.add_argument("--run-profile")
+    parser.add_argument("--resume", type=_parse_bool, default=False)
 
     # Explicit fixture/backward-compatibility surface. None of these options is
     # consulted by the canonical path.
@@ -64,9 +71,21 @@ def main(argv: list[str] | None = None) -> int:
         args.output_root,
         "--fail-on-critical",
         str(args.fail_on_critical).lower(),
+        "--materialize-live-input",
+        str(args.materialize_live_input).lower(),
+        "--live-materialization-authorized",
+        str(args.live_materialization_authorized).lower(),
+        "--live-run-mode",
+        (
+            LiveRunMode.LIVE_CENSUS_SELECTIVE_DEEP.value
+            if args.mode == "census_selective_deep"
+            else LiveRunMode.LIVE_CENSUS_BASELINE.value
+        ),
     ]
     if args.input_manifest:
         translated.extend(("--input-manifest", args.input_manifest))
+    if args.run_profile:
+        translated.extend(("--run-profile", args.run_profile))
     return run_current_operation_main(
         translated,
         command_name="run_e2r_census_mode",
@@ -84,6 +103,12 @@ def _canonical_manifest_args(args: argparse.Namespace) -> dict[str, Any]:
         "output_root": args.output_root,
         "fail_on_critical": args.fail_on_critical,
         "input_manifest": args.input_manifest,
+        "materialize_live_input": args.materialize_live_input,
+        "live_materialization_authorized": args.live_materialization_authorized,
+        "run_profile": args.run_profile,
+        "resume": args.resume,
+        "shard_count": args.shard_count,
+        "shard_index": args.shard_index,
         "allow_legacy_v1": False,
     }
 

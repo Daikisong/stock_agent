@@ -21,6 +21,12 @@ from e2r.research_brain.runtime.current_operation_runner import (
     run_current_daily_census,
     write_current_daily_census,
 )
+from e2r.research_brain.runtime.live_materialization import (
+    AuthorizationPath,
+    LiveRunMode,
+    load_live_run_profile,
+    resolve_live_authorization,
+)
 
 
 def _parse_bool(value: str | bool) -> bool:
@@ -52,12 +58,71 @@ def main(
     parser.add_argument("--output-root", required=True)
     parser.add_argument("--fail-on-critical", type=_parse_bool, default=True)
     parser.add_argument("--input-manifest")
+    parser.add_argument("--materialize-live-input", type=_parse_bool, default=False)
+    parser.add_argument(
+        "--live-materialization-authorized", type=_parse_bool, default=False
+    )
+    parser.add_argument("--run-profile")
+    parser.add_argument(
+        "--live-run-mode",
+        choices=tuple(
+            mode.value
+            for mode in LiveRunMode
+            if mode not in {LiveRunMode.MANIFEST_REPLAY, LiveRunMode.TEST_FIXTURE}
+        ),
+        default=LiveRunMode.LIVE_DAILY_INCREMENTAL.value,
+    )
     args = parser.parse_args(argv)
     effective_argv = recorded_argv or (
         tuple(argv) if argv is not None else tuple(sys.argv[1:])
     )
     recorded_args = dict(manifest_args) if manifest_args is not None else vars(args)
     output_root = Path(args.output_root)
+    authorization = resolve_live_authorization(
+        input_manifest=args.input_manifest,
+        materialize_live_input=args.materialize_live_input,
+        live_materialization_authorized=args.live_materialization_authorized,
+        run_profile=args.run_profile,
+        requested_live_mode=(
+            LiveRunMode.TEST_FIXTURE.value
+            if args.mode == "test"
+            else args.live_run_mode
+        ),
+    )
+    if authorization.path == AuthorizationPath.REJECTED.value:
+        return write_current_internal_materializer_pending_run(
+            command=command_name,
+            args=recorded_args,
+            effective_argv=effective_argv,
+            output_root=output_root,
+            blockers=authorization.blocker_codes,
+            authorization=authorization.to_dict(),
+        )
+    if authorization.path == AuthorizationPath.LIVE_MATERIALIZATION.value:
+        try:
+            profile = load_live_run_profile(str(authorization.run_profile))
+            if profile.run_mode != authorization.run_mode:
+                raise ValueError("live run profile mode does not match CLI live mode")
+        except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
+            return write_current_internal_materializer_pending_run(
+                command=command_name,
+                args=recorded_args,
+                effective_argv=effective_argv,
+                output_root=output_root,
+                blockers=("LIVE_RUN_PROFILE_INVALID",),
+                authorization={
+                    **authorization.to_dict(),
+                    "profile_error_category": type(exc).__name__,
+                },
+            )
+        return write_current_internal_materializer_pending_run(
+            command=command_name,
+            args=recorded_args,
+            effective_argv=effective_argv,
+            output_root=output_root,
+            blockers=("MISSING_INTERNAL_MATERIALIZER",),
+            authorization=authorization.to_dict(),
+        )
     input_manifest = _resolve_default_input_manifest(args)
     if input_manifest is None:
         return write_current_source_pending_run(
@@ -248,6 +313,112 @@ def write_current_source_pending_run(
         )
     )
     return 3
+
+
+def write_current_internal_materializer_pending_run(
+    *,
+    command: str,
+    args: Mapping[str, Any],
+    effective_argv: tuple[str, ...],
+    output_root: str | Path,
+    blockers: tuple[str, ...],
+    authorization: Mapping[str, Any],
+) -> int:
+    """Record an internal live-path blocker without mislabelling it external."""
+
+    root = Path(output_root)
+    root.mkdir(parents=True, exist_ok=True)
+    pending_path = root / "live_materialization_internal_pending.json"
+    pending_payload = {
+        "schema_version": "e2r_live_materialization_internal_pending_v1",
+        "status": "INTERNAL_E2R_RUNTIME_NOT_READY",
+        "as_of_date": args.get("as_of_date"),
+        "universe": args.get("universe"),
+        "mode": args.get("mode"),
+        "blockers": list(blockers),
+        "authorization": dict(authorization),
+        "materializer_called": False,
+        "score_valid": False,
+        "raw_reference_score": None,
+        "canonical_stage": "0",
+        "production_runtime_ready": False,
+    }
+    pending_path.write_text(
+        json.dumps(pending_payload, ensure_ascii=False, indent=2, sort_keys=True)
+        + "\n",
+        encoding="utf-8",
+    )
+    repo_root = Path(__file__).resolve().parents[3]
+    manifest = build_command_run_manifest(
+        command=command,
+        semantic_status="INTERNAL_E2R_RUNTIME_NOT_READY",
+        exit_code=2,
+        argv=effective_argv,
+        output_root=root,
+        repo_root=repo_root,
+        hash_inputs={
+            "config": (
+                command_inline_hash_entry(
+                    "live-materialization-authorization",
+                    {"args": dict(args), "authorization": dict(authorization)},
+                ),
+            ),
+            "corpus": (
+                command_inline_hash_entry(
+                    "live-materialization-universe-state",
+                    {"state": "NOT_MATERIALIZED_INTERNAL_PATH_INCOMPLETE"},
+                ),
+            ),
+            "memory": (
+                command_inline_hash_entry(
+                    "live-materialization-ledger-state",
+                    {"state": "NOT_LOADED_INTERNAL_PATH_INCOMPLETE"},
+                ),
+            ),
+            "recipe": (
+                command_file_hash_entry(
+                    "live-materialization-config",
+                    repo_root / "configs" / "e2r_live_materialization_v1.json",
+                ),
+            ),
+            "prompt": (
+                command_file_hash_entry(
+                    "live-materialization-authorization-source",
+                    repo_root
+                    / "src"
+                    / "e2r"
+                    / "research_brain"
+                    / "runtime"
+                    / "live_materialization"
+                    / "authorization.py",
+                ),
+            ),
+            "source": (
+                command_file_hash_entry(
+                    "live-materialization-internal-pending-leaf", pending_path
+                ),
+            ),
+        },
+        blockers=blockers,
+        runtime_critical_count_sum=1,
+    )
+    paths = write_command_run_manifest(manifest, output_root=root)
+    print(
+        json.dumps(
+            {
+                **pending_payload,
+                "command": command,
+                "command_run_id": manifest["run_id"],
+                "output_paths": {
+                    "pending": str(pending_path),
+                    **{key: str(path) for key, path in paths.items()},
+                },
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+    )
+    return 2
 
 
 def _resolve_default_input_manifest(args: argparse.Namespace) -> Path | None:

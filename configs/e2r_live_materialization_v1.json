@@ -1,0 +1,36 @@
+{
+  "schema_version": "e2r_live_materialization_config_v1",
+  "authorization": {
+    "live_flags_required": [
+      "materialize_live_input",
+      "live_materialization_authorized"
+    ],
+    "manifest_replay_live_authorization_required": false,
+    "production_live_authorization_required": true
+  },
+  "allowed_run_modes": [
+    "MANIFEST_REPLAY",
+    "LIVE_BOOTSTRAP",
+    "LIVE_DAILY_INCREMENTAL",
+    "LIVE_CENSUS_BASELINE",
+    "LIVE_CENSUS_SELECTIVE_DEEP",
+    "TARGETED_LIVE_SMOKE",
+    "TEST_FIXTURE"
+  ],
+  "blocker_taxonomy": [
+    "MISSING_INTERNAL_MATERIALIZER",
+    "MISSING_CREDENTIAL",
+    "INVALID_CREDENTIAL",
+    "PROVIDER_AUTH_FAILURE",
+    "PROVIDER_RATE_LIMIT",
+    "PROVIDER_SCHEMA_CHANGED",
+    "PROVIDER_NETWORK_FAILURE",
+    "UNIVERSE_FETCH_FAILURE",
+    "DOCUMENT_FETCH_FAILURE",
+    "LLM_PROVIDER_FAILURE",
+    "SOURCE_EXHAUSTED",
+    "RUNTIME_BUDGET_EXHAUSTED"
+  ],
+  "pure_evaluator": "e2r.research_brain.runtime.current_operation_runner.run_current_daily_census",
+  "secret_output_allowed": false
+}
