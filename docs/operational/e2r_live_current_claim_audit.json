@@ -1,0 +1,68 @@
+{
+  "schema_version": "e2r_live_current_claim_audit_v1",
+  "phase": 28,
+  "as_of_date": "2026-07-10",
+  "status": "PHASE_28_ACCEPTED",
+  "evidence_document_count": 2,
+  "evidence_anchor_count": 2,
+  "contract_blind_raw_assertion_count": 12,
+  "adjudicated_claim_count": 12,
+  "primitive_mapping_proposal_count": 1,
+  "accepted_current_claim_count": 0,
+  "daily_claim_provenance_count": 0,
+  "claim_compilation_pending_count": 0,
+  "source_task_satisfaction_counts": {
+    "NO_RELEVANT_CLAIM": 6,
+    "PROVIDER_FAILED": 3
+  },
+  "mapping_result": {
+    "accepted_mapping_count": 0,
+    "rejected_mapping_count": 1,
+    "rejected_mapping_primitive": "rpo_to_sales",
+    "rejected_mapping_reason": "전환사채 기한이익상실 사실은 RPO·수주잔고 또는 계약잔액을 직접 나타내지 않는다."
+  },
+  "critical_counts": {
+    "accepted_claim_without_provenance_count": 0,
+    "accepted_claim_without_exact_quote_count": 0,
+    "accepted_claim_without_content_hash_count": 0,
+    "wrong_subject_score_count": 0,
+    "source_proxy_current_claim_count": 0,
+    "rerouted_claim_closed_original_gap_count": 0,
+    "old_unknown_risk_penalty_count": 0,
+    "unstructured_rule_fallback_score_count": 0
+  },
+  "lineage": {
+    "evidence_documents": "output/live_materialization/2026-07-10/evidence_documents.jsonl",
+    "evidence_anchors": "output/live_materialization/2026-07-10/evidence_anchors.jsonl",
+    "raw_assertions": "output/live_materialization/2026-07-10/raw_assertions.jsonl",
+    "adjudicated_claims": "output/live_materialization/2026-07-10/adjudicated_claims.jsonl",
+    "primitive_mappings": "output/live_materialization/2026-07-10/primitive_mappings.jsonl",
+    "accepted_current_claims": "output/live_materialization/2026-07-10/accepted_current_claims.jsonl",
+    "daily_claim_provenance": "output/live_materialization/2026-07-10/daily_claim_provenance.jsonl",
+    "source_task_satisfaction": "output/live_materialization/2026-07-10/source_task_satisfaction.jsonl",
+    "claim_compilation_pending": "output/live_materialization/2026-07-10/claim_compilation_pending.jsonl",
+    "claim_compiler_audit": "output/live_materialization/2026-07-10/claim_compiler_audit.json"
+  },
+  "artifact_hashes": {
+    "evidence_anchors_sha256": "8c28cc5f86d5bcb6dea59ebcb4bc18c0c1830ee6df4c77039b016cdac03a5f74",
+    "raw_assertions_sha256": "aa16bb7e0059ac1c72337039accbe6fbe36548288ee1073c9dde8fe1035800ed",
+    "adjudicated_claims_sha256": "4d7e61f6d95e77caa011639b5ba34a9609cfacccd1a64c847d15ce86d2197d56",
+    "primitive_mappings_sha256": "9a259348fb791d6e2ed041d71e1cc9d52153d2475aec0bb885ca701408a27a8b",
+    "accepted_current_claims_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "daily_claim_provenance_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_task_satisfaction_sha256": "c2998b6b0254ecaa0b451195f08c904d2dedd4c518694fe089d1f4f4c1f4cb18",
+    "claim_compilation_pending_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "claim_compiler_audit_sha256": "22df0ea10dc965cb7e4ff05599fe3fe631a0b42fa62b7cdb2ea19ed08499a927"
+  },
+  "safety": {
+    "raw_extractor_saw_desired_primitive": false,
+    "raw_extractor_saw_score_or_stage": false,
+    "official_document_auto_accepted": false,
+    "wrong_subject_or_unrelated_claim_scored": false,
+    "unstructured_rule_fallback_used": false,
+    "original_gap_closed_by_rerouted_claim": false,
+    "accepted_claim_count_zero_is_honest": true,
+    "production_runtime_ready": false
+  },
+  "note": "실제 DART 원문 2건에서 contract-blind 사실 12건을 추출·판정했지만 현재 C17/C28 질문을 직접 충족한 claim은 없었다. 관련 없는 공식 문서를 점수 재료로 승격하지 않았고 6개 gap은 NO_RELEVANT_CLAIM, 문서가 없는 3개 gap은 PROVIDER_FAILED로 유지했다."
+}

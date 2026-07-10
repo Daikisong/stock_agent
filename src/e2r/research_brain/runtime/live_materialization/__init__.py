@@ -112,6 +112,14 @@ from .source_acquisition_orchestrator import (
     SourceAcquisitionRunResult,
     write_source_acquisition_run,
 )
+from .current_claim_compiler import (
+    LIVE_CURRENT_CLAIM_SCHEMA_VERSION,
+    CurrentClaimCompilationResult,
+    CurrentClaimCompiler,
+    CurrentClaimCompilerConfig,
+    SourceTaskSatisfactionRecord,
+    write_current_claim_compilation,
+)
 
 __all__ = [
     "AuthorizationPath",
@@ -134,6 +142,9 @@ __all__ = [
     "CurrentKrxUniverseMaterializer",
     "CurrentBaselineMaterializer",
     "CurrentBrainPlannerRunner",
+    "CurrentClaimCompilationResult",
+    "CurrentClaimCompiler",
+    "CurrentClaimCompilerConfig",
     "CurrentQuestionSourceTaskMaterializer",
     "CurrentSourceAcquisitionOrchestrator",
     "CurrentDepthSelector",
@@ -147,6 +158,7 @@ __all__ = [
     "CurrentStateRecord",
     "CurrentStateSourceAttempt",
     "LIVE_OPERATIONAL_ENVELOPE_SCHEMA_VERSION",
+    "LIVE_CURRENT_CLAIM_SCHEMA_VERSION",
     "LIVE_PLANNER_RUN_SCHEMA_VERSION",
     "LIVE_RUN_PROFILE_SCHEMA_VERSION",
     "LIVE_SOURCE_ACQUISITION_SCHEMA_VERSION",
@@ -173,6 +185,7 @@ __all__ = [
     "SourceAcquisitionRunResult",
     "SourceTaskMaterializationConfig",
     "SourceTaskMaterializationResult",
+    "SourceTaskSatisfactionRecord",
     "ThesisStatus",
     "TRIGGER_SIGNAL_SCHEMA_VERSION",
     "TriggerFusionConfig",
@@ -199,6 +212,7 @@ __all__ = [
     "resolve_live_authorization",
     "refresh_event_lifecycle",
     "write_current_state_bootstrap",
+    "write_current_claim_compilation",
     "write_baseline_materialization",
     "write_brain_planner_run",
     "write_source_acquisition_run",
