@@ -1,863 +1,1113 @@
-왜냐면 baaf2e7은 실제 구현 커밋이 아니라 acceptance report의 push 상태 한 줄을 바꾼 report-only 커밋이야. GitHub commit 페이지에도 Census v3 acceptance report 푸시 상태 갱신, 1 file changed, 대상 파일이 docs/operational/census_mode_v3_acceptance_report.md 하나라고 나온다. 그리고 구현 커밋은 그 전의 c5bc76a Census v3 전체지도 leaf audit 구현이라고 명시돼 있어.
+# E2R EVIDENCE INTELLIGENCE RECONSTRUCTION PROGRAM v1
+## Research Corpus Semantic Compiler / Evidence Recipe OS / Unified Research Brain / Adaptive Claim Closure / Historical Replay & Current Operation
 
-c5bc76a 자체는 꽤 큰 패치야. census_runner_v3.py, leaf_artifact_auditor.py, production_cutover_leaf_loader.py, reviewers.py, run_e2r_census_v3_until_pass.py, 여러 source_family_collectors, 그리고 Census v3 테스트 파일들이 대량 추가됐어. 즉 “아무것도 안 함”은 아니고, 네가 시킨 방향의 구조는 많이 들어갔다.
+너는 `Daikisong/stock_agent` 레포를 원래 의도대로 다시 작동시키는 수석 아키텍트이자 구현 에이전트다.
 
-그런데 문제는 검증 산출물이 아직 너무 report 중심이라는 거야. census_mode_v3_acceptance_report.md는 FULL_UNIVERSE_STAGE_MAP_PASS, 3391 symbols, accepted claims 92, score contributions 92, StageCourt traces 92, claim-to-stage trace 3391이라고 말한다. 하지만 이건 report 텍스트야. 실제 output/census_v3/2026-07-01/... leaf artifact들이 레포에 같이 올라와 있지 않으면, 내가 외부에서 claim_to_stage_trace.jsonl, accepted_claims.jsonl, score_contributions.jsonl, stagecourt_traces.jsonl, census_stage_status.jsonl을 독립 재계산할 수 없어. 실제로 해당 output 경로는 GitHub에서 404로 확인돼.
+이번 작업은 기존 Goal4 위에 감사 게이트를 하나 더 붙이는 일이 아니다.
+이번 작업은 **연구자료를 운영 지능으로 바꾸는 핵심 계층을 재건**하는 작업이다.
 
-그리고 치명적인 혼선이 하나 더 있어. main의 기존 src/e2r/census/census_runner.py에는 여전히 구형 Census runner가 남아 있고, 그 경로는 build_stage_status(... accepted_claims=(), score_contributions=())를 넘긴다. v3 runner가 별도 파일로 생긴 건 맞지만, 기본 CLI/운영 진입점이 v3만 쓰는지, 구형 runner가 실수로 사용될 여지가 없는지 더 막아야 해. 구형 runner가 남아 있는 한, 나중에 누가 run_e2r_census_mode를 실행하면 다시 빈 claim/score 상태판을 만들 수 있다.
+현재 레포에는 다음 자산이 이미 존재한다.
 
-또 v3 acceptance report의 runtime이 3.67초라고 되어 있다. 3391개 전 종목에 대해 진짜 DART/KIND/KRX/CompanyGuide/IR/뉴스/기존 claim lifecycle, selective deep, Evidence OS, StageCourt까지 강하게 돈 결과라면 3.67초는 너무 짧아. 이 숫자는 실제 live source fetch라기보다 기존 cutover leaf/report를 읽어 Census map으로 재조립한 경량 실행일 가능성이 크다. report는 Stage 분포를 보여주지만, 그걸 만든 leaf artifact 전체가 공개/재현 가능하지 않으면 pass를 확정하면 안 된다.
+- 수백 개의 historical research MD와 machine-readable JSONL/CSV/table row
+- C01~C32 canonical archetype과 R13 cross-archetype registry
+- Evidence Contract, deterministic score engine, StageCourt
+- Evidence OS의 claim/primitive/score ledger 철학
+- OpenDART/KIND/KRX/CompanyGuide/IR/TrustedNews/Naver/Web connector
+- Research Brain, Memory Store, LLM planner/provider, Census, Production Cutover
+- 광범위한 테스트와 known-bad regression
 
-원래 목표는 report가 아니라, 문서 원문에서 claim 장부를 만들고, 그 claim의 주체·날짜·현재성·대상회사 직접 귀속을 검증한 뒤 deterministic score/stage에 넣는 구조였어. 그 원칙에 따르면 “accepted claim 92개”라는 합계가 중요한 게 아니라, 각 Stage row가 어떤 claim_id, score_contribution_id, stagecourt_trace_id를 물고 있는지가 증명돼야 한다.
+하지만 현재 official verdict는 `MEANINGFUL_RUNTIME_PARITY_NOT_READY`다.
 
-또 과거 연구 원료도 조심해야 해. C06/C08처럼 URL-backed row가 있는 자료는 replay 원료로 쓸 수 있지만, C24/C28/C17 일부는 source_proxy_only, evidence_url_pending, shadow_weight_only라서 production score 근거로 쓰면 안 된다. C24 연구는 source-proxy/pending을 명시하고 production scoring 변경이 아니라고 했고, C28/C17 연구도 URL repair 전 promotion 금지 성격이 강하다.
+현재의 근본 결함은 다음이다.
 
-아래 프롬프트는 이제 못 속이게 만드는 Census v4 Goal이야. 이번에는 “성공했다는 report”가 아니라 실제 leaf bundle + 재실행 + 구형 runner 차단 + random row audit + live/snapshot 구분까지 요구해야 해.
+1. historical research 파일을 case 단위로 의미 있게 컴파일하지 않고,
+   파일 앞부분, 키워드, 첫 종목코드, primitive 문자열 출현 여부로 얕게 축약한다.
 
-너는 Daikisong/stock_agent 레포의 E2R Census Mode v4 / Runtime-Proven Full Universe Stage Map을 구현하는 coding agent다.
+2. 연구 MD 안에 이미 존재하는 `case`, `trigger`, `score_simulation`, `shadow_weight`,
+   `residual_contribution`, `stage_transition_summary`, source URL과 날짜를 충분히 보존하지 않는다.
 
-현재 전제:
-- Production Cutover v3는 CUTOVER_READY였다.
-- Census v1은 전 종목 row만 만들었고 Unknown/ProviderPending 100%였다.
-- Census v2는 report synthesis/replay 성격이 강했고 claim-to-stage 연결이 불충분했다.
-- Census v3는 c5bc76a에서 leaf audit, reviewer, self-repair 구조를 구현했고 baaf2e7에서 acceptance report push 상태를 갱신했다.
-- 그러나 baaf2e7은 report-only commit이다.
-- 현재 v3 acceptance report는 FULL_UNIVERSE_STAGE_MAP_PASS를 주장하지만, output/census_v3/2026-07-01 leaf artifacts 전체가 repo에서 독립 검증 가능하지 않다.
-- main의 기존 src/e2r/census/census_runner.py에는 여전히 accepted_claims=(), score_contributions=()를 넘기는 구형 runner 경로가 남아 있다.
-- 따라서 v3를 운영 통합 기준으로 받기 전에, 실제 runtime proof와 committed/hashed leaf artifact bundle이 필요하다.
+3. `research_brain`이라는 기존 계층과,
+   Goal4에서 추가한 `research_reverse` / `source_routing` 계층이 병렬로 존재한다.
+   같은 연구자료를 서로 다른 schema와 heuristic으로 읽어 두 개 이상의 두뇌가 생겼다.
 
-이번 Goal 이름:
-E2R Census Mode v4 — Runtime Proof, Committed Leaf Bundle, Legacy Runner Lockout, Claim-to-Stage Forensic Audit
+4. MemoryCard가 historical positive/counterexample의 의미를 학습한 카드라기보다
+   기존 Evidence Contract의 required/positive/green primitive를 다시 포장한 카드에 가깝다.
 
-최종 목표:
-FULL_UNIVERSE_STAGE_MAP_PASS를 “report 문구”가 아니라 “재현 가능한 실행 + leaf artifact + 독립 audit + trace forensic”으로 증명한다.
+5. Source Route가 historical research에서 실제 성공한 문서·섹션·claim 경로를 복원한 것이 아니라,
+   primitive 이름에 `contract`, `margin`, `hbm` 등이 들어가는지를 보고 자료실을 추정한다.
 
-즉:
+6. Research Brain planner가 실제 연구자처럼 사고하는 것이 아니라,
+   event text와 archetype 이름의 토큰을 매칭하고,
+   generic한 “이 primitive를 source-backed하게 확인하라”는 작업을 만든다.
 
-실제 Census v4 command
-→ output/census_v4/YYYY-MM-DD leaf artifacts 생성
-→ 모든 eligible symbol의 source timeline / last effective thesis / baseline / depth / stage row 생성
-→ selected deep rows는 source task → evidence document → accepted claim → score contribution → StageCourt trace까지 연결
-→ leaf artifact auditor가 report를 읽지 않고 재계산
-→ random row forensic auditor가 실제 row 내부 연결을 샘플링 검증
-→ legacy runner/old CLI로는 FULL_UNIVERSE_STAGE_MAP_PASS를 낼 수 없게 차단
-→ committed manifest와 artifact hashes로 외부 검증 가능
-→ FULL_UNIVERSE_STAGE_MAP_PASS
+7. 검색 결과에서 문서는 가져오지만,
+   원래 질문을 직접 충족하는 claim이 아니라 generic company fact나 다른 primitive claim을 얻는 경우가 많다.
+   `rerouted claim accepted`가 원래 gap을 닫은 것처럼 보일 위험이 있다.
 
-까지 닫혀야 한다.
+8. `until_pass` 실행기는 코드를 고치는 self-repair가 아니다.
+   같은 manifest/run을 재실행하고, blocker가 남으면 코드나 route repair가 필요하다고 멈추는 runtime retry다.
 
-절대 원칙:
-1. report 숫자는 source of truth가 아니다.
-2. source of truth는 leaf artifacts다.
-3. leaf artifacts가 repo에 없거나 artifact manifest/hash로 재현 불가하면 pass 금지.
-4. accepted_claim_count 합계만으로 pass 금지.
-5. 각 scored Stage row가 accepted_claim_ids, score_contribution_ids, stagecourt_trace_id를 가져야 한다.
-6. 기존 report/cutover/candidate_event를 replay한 source task는 “reference/replay”로만 세고 real source execution으로 세지 않는다.
-7. source task execution의 accepted_claim_ids가 비어 있으면 claim-producing task가 아니다.
-8. main의 legacy census_runner.py 경로가 production/pass CLI로 남아 있으면 실패다.
-9. `run_e2r_census_mode`가 구형 v1 runner를 호출하면 실패다.
-10. `run_e2r_census_v3_until_pass` 또는 v4 CLI가 실제 운영 진입점이어야 한다.
-11. source_proxy_only/evidence_url_pending/price_path_only memory는 score evidence가 아니다.
-12. 최근 공시 window는 Stage cutoff가 아니다. 마지막 유효 thesis/lifecycle이 기준이다.
-13. 실패하면 원인 분석 → 코드 패치 → 같은 명령 재실행 → leaf audit 재검증까지 반복한다.
-14. 외부 API 장애만 EXTERNAL_BLOCKER_NOT_READY로 남길 수 있다. 코드 wiring/report overclaim은 반드시 고친다.
-15. scoring weight와 Stage threshold는 변경하지 않는다.
-16. 특정 종목명/URL/키워드 예외 처리 금지.
+9. “전 아키타입 시스템이 이해하는가?”를 검증하는 historical replay와
+   “현재 시장에 어떤 종목이 좋은가?”를 판단하는 current operation이 섞여 있다.
+   현재 시장에 없는 아키타입까지 억지 종목 materialization을 시도하면서 이상한 routing과 C05 편향이 발생했다.
 
-================================================================================
-0. v3 상태 재분류
-================================================================================
+10. audit/report/manifest의 개수는 늘었지만,
+    핵심 conversion funnel인
+    `research case → evidence recipe → source task → fetched document → direct accepted claim → primitive closure → full thesis`
+    가 충분히 닫히지 않았다.
 
-먼저 v3를 정확히 재분류하라.
+이번 Goal은 위 문제를 뿌리부터 해결한다.
 
-생성/수정:
-docs/operational/census_mode_v3_forensic_review.md
+---
 
-내용:
-- baaf2e7은 report-only commit이며 implementation commit은 c5bc76a임을 명시한다.
-- c5bc76a는 Census v3 runner/auditor/reviewer/test를 추가했지만, FULL_UNIVERSE_STAGE_MAP_PASS는 leaf artifact가 외부 검증 가능할 때만 인정된다고 명시한다.
-- output/census_v3/2026-07-01 leaf artifacts가 repo에 없거나 artifact manifest로 재현 불가하면 v3 pass는 provisional이다.
-- 기존 src/e2r/census/census_runner.py의 v1 path가 accepted_claims=(), score_contributions=()를 넘기는 구형 경로임을 명시한다.
-- v4의 목표는 “report pass”가 아니라 “runtime-proven pass”다.
+# 0. 최종 목표
 
-Acceptance:
-- v3 report는 삭제하지 않고 PROVISIONAL_REPORT_PASS로 재라벨링.
-- v4 pass 전까지 v3만으로 READY_FOR_DAILY_TRIGGER_INTEGRATION 확정 금지.
-- forensic review 문서에 root-cause file/function 목록 포함.
+원래 의도한 시스템은 다음이어야 한다.
 
-================================================================================
-1. Legacy Census Runner Lockout
-================================================================================
+[Historical Research Intelligence]
 
-현재 main에는 v1/v3 경로가 혼재되어 있다.
-구형 runner가 실수로 pass를 만들 수 없게 막아라.
+historical research MD/JSONL
+→ case-level semantic compiler
+→ historical case graph
+→ positive / counterexample / guard / source-success / source-failure memory
+→ primitive별 executable Evidence Recipe
+→ archetype별 Runtime Intelligence Pack
+→ frozen historical replay benchmark
 
-Required:
-- src/e2r/census/census_runner.py를 legacy로 명확히 재라벨링하거나 v4 runner로 forward한다.
-- accepted_claims=(), score_contributions=()를 넘기는 경로가 production/census pass CLI에서 절대 실행되지 않게 한다.
-- CLI `run_e2r_census_mode`가 구형 v1 runner를 호출하지 않도록 하거나, 실행 시 deprecation error를 내게 한다.
-- 새 공식 CLI는 `run_e2r_census_v4_until_pass.py`다.
-- old v1 runner는 test fixture 전용으로만 남기고, production/pass label 생성 금지.
+[Current Runtime Operation]
 
-Static rule:
-- production census path에서 `accepted_claims=()` 문자열 감지 시 critical fail.
-- production census path에서 `score_contributions=()` 문자열 감지 시 critical fail.
-- `run_e2r_census_mode`가 legacy runner를 부르면 critical fail.
-- old runner가 FULL_UNIVERSE_STAGE_MAP_PASS label을 만들면 critical fail.
+현재 시장 CandidateEvent / Census state / existing claim ledger
+→ contract-blind current hypothesis generation
+→ Research Memory retrieval
+→ LLM Research Brain critique / top-k archetype / missing evidence questions
+→ bounded official-first SourceTask
+→ DART / KIND / KRX / CompanyGuide / IR / report / Naver/Web acquisition
+→ full source document / table / API record
+→ contract-blind RawAssertion extraction
+→ subject / target / time / lifecycle adjudication
+→ primitive mapping
+→ append-only accepted claim ledger
+→ PrimitiveState
+→ ScoreContribution
+→ deterministic scorer
+→ StageCourt
+→ Stage + score + evidence + missing conditions
+
+역할은 다음처럼 고정한다.
+
+Historical research:
+현재 점수의 증거가 아니라, 무엇을 어떻게 찾아야 하는지 가르치는 판례집
+
+LLM Research Brain:
+아키타입 가설, 조사 질문, source route, query intent, claim extraction, 반례 탐색
+
+Code:
+source/date/scope/current lifecycle/duplicate/conflict/primitive eligibility 검증
+
+Deterministic scorer / StageCourt:
+점수와 Stage 계산
+
+현재 source-backed claim:
+점수에 들어가는 유일한 증거
+
+---
+
+# 1. 최우선 금지사항
+
+다음은 어떤 Phase에서도 금지한다.
+
+1. scoring weight 또는 Stage threshold를 변경해서 통과하지 마라.
+2. C05, 삼성전자, SK하이닉스 같은 특정 종목/아키타입 예외를 하드코딩하지 마라.
+3. source_proxy_only / evidence_url_pending / price_path_only / shadow_only research row를 current score evidence로 쓰지 마라.
+4. historical MFE/MAE/outcome label을 current planner나 claim extractor prompt에 넣지 마라.
+5. LLM이 score/stage를 직접 출력하거나 FeatureInput/ScoreContribution을 mutate하지 못하게 하라.
+6. primitive 이름을 보고 고정 query string을 만드는 deterministic query template를 만들지 마라.
+7. 뉴스 headline/snippet을 score evidence로 쓰지 마라.
+8. Naver/Web search result가 full article fetch 없이 점수로 들어가지 못하게 하라.
+9. provider failure, source gap, runtime budget exhaustion을 낮은 점수나 Red로 확정하지 마라.
+10. accepted claim이 없는데 nonzero score를 만들지 마라.
+11. 원래 primitive와 다른 rerouted claim이 accepted되었다고 원래 source task를 satisfied 처리하지 마라.
+12. old risk를 current OPEN 확인 없이 현재 penalty/hard break로 쓰지 마라.
+13. report summary 숫자를 leaf artifact보다 우선하지 마라.
+14. PASS 라벨을 report-only commit으로 바꾸지 마라.
+15. 실패한 test를 삭제하거나 threshold를 낮춰 통과하지 마라.
+16. 동일 runtime 명령 재실행만 하고 self-repair라고 부르지 마라.
+17. 현재 시장에 각 아키타입 후보가 없다는 이유로 억지 종목을 materialize하지 마라.
+18. historical replay와 current operation의 결과를 같은 production row로 섞지 마라.
+19. 기존 research MD를 수정·삭제해 의미를 바꾸지 마라.
+20. 새로운 historical research round를 시작하지 마라. 연구는 끝났고, 기존 연구를 제대로 컴파일하는 것이 이번 목표다.
+
+---
+
+# 2. 실행 프로토콜
+
+코딩을 시작하기 전에 반드시 아래 순서로 진행한다.
+
+## 2.1 최초 Read-Only Forensic
+
+먼저 코드를 고치지 말고 다음을 읽고 call graph를 만든다.
+
+- `AGENTS.md`
+- `docs/core/e2r_v12_prompt_round_scheduler_corrected.txt`
+- `docs/core/V12_Research_No_Repeat_Index.md`
+- `docs/operational/research_to_runtime_acceptance_report.md`
+- `docs/operational/research_to_runtime_readiness_verdict.md`
+- `docs/0701/*`
+- `docs/0703/*`
+- `docs/0705/*`
+- `src/e2r/research_brain/**`
+- `src/e2r/research_reverse/**`
+- `src/e2r/source_routing/**`
+- `src/e2r/production/**`
+- `src/e2r/census/**`
+- `src/e2r/evidence/**`
+- `src/e2r/scoring/**`
+- `src/e2r/stage/**`
+- 관련 CLI와 tests
+
+생성:
+
+docs/operational/e2r_reconstruction_forensic_baseline.md
+docs/operational/e2r_runtime_call_graph_before.json
+docs/operational/e2r_duplicate_brain_stack_inventory.json
+docs/operational/e2r_current_conversion_funnel_baseline.json
+
+반드시 기록할 것:
+
+- production에서 실제 호출되는 entrypoint
+- 각 entrypoint가 어떤 parser/memory/planner/router/extractor를 사용하는지
+- `research_brain`과 `research_reverse/source_routing` 중복 경로
+- production reachable / test-only / dead code
+- summary artifact를 다시 읽는 경로
+- source task → accepted claim → primitive → score → StageCourt 연결부
+- 현재 failure funnel
+- current official verdict와 blockers
+
+## 2.2 내부 Master Plan
+
+그 다음에 아래 문서를 작성한다.
+
+docs/operational/e2r_reconstruction_master_plan.md
+
+각 Phase마다 다음을 적는다.
+
+- 문제
+- root cause file/function
+- 제거할 legacy path
+- 새 schema/API
+- migration 방식
+- 구현 파일
+- 테스트
+- runtime acceptance
+- rollback point
+- commit message
+
+Master Plan 작성 후 질문하거나 확인을 요구하지 말고 즉시 구현에 들어간다.
+
+## 2.3 Phase Commit 규칙
+
+각 Phase는 독립적인 한글 커밋으로 남긴다.
+
+예:
+
+Phase 0: E2R 중복 두뇌 경로와 기준선 감사
+Phase 1: Research Brain 단일 실행 경로 통합
+Phase 2: 연구 JSONL case 단위 의미 컴파일러 구현
+...
+
+규칙:
+
+- Phase별 unit test 통과 후 커밋
+- 전체 integration test는 주요 Phase마다 실행
+- 최종 full test 전에 report-only PASS commit 금지
+- 최종 HEAD에서 working tree clean
+- 모든 commit SHA를 final report에 기록
+
+## 2.4 실패 시 행동
+
+Phase 또는 end-to-end 실행이 실패하면:
+
+실패
+→ failure cluster 생성
+→ 가장 많은 실패를 만드는 root cause file/function 식별
+→ 코드/schema/prompt/source recipe 패치
+→ focused unit test
+→ 같은 frozen replay/current run 재실행
+→ conversion funnel before/after 비교
+
+다음을 금지한다.
+
+실패 → report에 NOT_READY 쓰고 Goal 완료
+실패 → 같은 query 그대로 재실행
+실패 → threshold 완화
+실패 → 특정 종목 예외
+
+외부 API/유료 source/네트워크 장애만 `EXTERNAL_SOURCE_BLOCKER_NOT_READY`로 남길 수 있다.
+그 경우에도 외부 blocker와 무관한 모든 코드 Phase는 끝까지 완료한다.
+
+---
+
+# 3. Phase 0 — 현재 결과 재분류와 안전한 기준선
+
+현재 Goal4 산출물을 삭제하지 않되 의미를 정확히 낮춘다.
+
+현재 공식 상태는 다음과 같이 유지한다.
+
+MEANINGFUL_RUNTIME_PARITY_NOT_READY
+
+생성:
+
+docs/operational/e2r_reconstruction_phase0_baseline.md
+docs/operational/e2r_legacy_artifact_classification.json
+
+분류:
+
+- VALID_SAFETY_INFRASTRUCTURE
+- VALID_DETERMINISTIC_SCORING_INFRASTRUCTURE
+- PROVISIONAL_RESEARCH_MEMORY
+- HEURISTIC_RESEARCH_REVERSE
+- HEURISTIC_SOURCE_ROUTE
+- REPORT_OR_PLAN_ONLY
+- RUNTIME_PROOF
+- DEPRECATED
+- TEST_ONLY
+
+Hard acceptance:
+
+- 현재 11,394 research case count를 meaningful case count로 간주하지 않음
+- 현재 1,855 source route pattern을 recovered route count로 간주하지 않음
+- 111 task shell을 evidence count로 간주하지 않음
+- current promoted full thesis 0개 상태를 정직하게 보존
+- report label을 올리지 않음
+
+---
+
+# 4. Phase 1 — Research Brain 단일 Source of Truth 통합
+
+현재 `src/e2r/research_brain`과 `src/e2r/research_reverse`, `src/e2r/source_routing`이 병렬로 존재한다.
+
+`src/e2r/research_brain`을 canonical intelligence layer로 정한다.
+
+구현 전략:
+
+src/e2r/research_brain/
+    corpus/
+    compiler/
+    recipes/
+    retrieval/
+    planning/
+    replay/
+    runtime/
+
+기존:
+
+src/e2r/research_reverse/**
+src/e2r/source_routing/**
+
+처리:
+
+- production import 금지
+- 새 canonical 구현으로 forward하는 compatibility adapter만 허용
+- deprecation warning
+- 새로운 schema를 복제하지 않음
+- production reachable legacy count = 0
+
+새 모듈 예:
+
+src/e2r/research_brain/corpus/research_corpus_parser.py
+src/e2r/research_brain/corpus/research_case_linker.py
+src/e2r/research_brain/compiler/semantic_case_compiler.py
+src/e2r/research_brain/compiler/source_verification_compiler.py
+src/e2r/research_brain/recipes/evidence_recipe_compiler.py
+src/e2r/research_brain/recipes/evidence_recipe_catalog.py
+src/e2r/research_brain/retrieval/semantic_memory_index.py
+src/e2r/research_brain/retrieval/balanced_case_retriever.py
+src/e2r/research_brain/planning/two_pass_brain_planner.py
+src/e2r/research_brain/runtime/adaptive_investigation_controller.py
+
+공식 CLI:
+
+python -m e2r.cli.compile_e2r_research_intelligence
+python -m e2r.cli.run_e2r_historical_replay
+python -m e2r.cli.run_e2r_current_operation
+python -m e2r.cli.audit_e2r_evidence_intelligence
+
+legacy CLI는 production-ready 라벨을 만들 수 없게 한다.
+
+Hard acceptance:
+
+- duplicate brain schema source of truth count = 1
+- production reachable legacy research_reverse count = 0
+- production reachable primitive-name route guesser count = 0
+- old CLI pass-label capability count = 0
+- all current tests migrated or adapter로 보존
 
 Tests:
-tests/test_census_v4_legacy_runner_lockout.py
-tests/test_census_v4_no_empty_claims_in_production_path.py
-tests/test_census_v4_cli_uses_v4_runner.py
+
+tests/test_research_brain_single_source_of_truth.py
+tests/test_legacy_research_reverse_not_production_reachable.py
+tests/test_legacy_source_route_not_production_reachable.py
+tests/test_legacy_cli_cannot_claim_ready.py
+
+---
+
+# 5. Phase 2 — Research Corpus Semantic Compiler
+
+기존 `research_case_extractor.py`의 다음 방식은 production에서 완전히 제거한다.
+
+- text[:24000]
+- 파일명/본문에서 archetype 문자열 탐색
+- 첫 번째 6자리 symbol
+- company_name=None
+- trigger_date=None
+- 파일 전체 URL을 case URL로 사용
+- primitive 문자열 출현 여부로 positive/missing 결정
+- 파일 하나를 archetype별 record 하나로 압축
+
+## 5.1 Structured Row First
+
+historical research MD는 다음 순서로 읽는다.
+
+1. YAML front matter
+2. fenced JSON
+3. fenced JSONL
+4. fenced CSV
+5. Markdown table
+6. narrative section
+7. handoff prompt는 별도 metadata이며 case evidence로 읽지 않음
+
+이미 machine-readable row가 있으면 해당 row가 source of truth다.
+LLM으로 다시 추정하지 않는다.
+
+## 5.2 새 canonical schema
+
+HistoricalResearchArtifact, HistoricalResearchCase, HistoricalOutcome, HistoricalRuleCandidate를 구현한다.
+
+HistoricalResearchCase에는 최소 다음 필드를 둔다.
+
+- case_id
+- artifact_id
+- source_file
+- source line range
+- symbol
+- company_name
+- trigger_type
+- trigger_date
+- entry_date
+- canonical/fine archetype
+- large sector
+- case role
+- classification
+- evidence family
+- evidence URLs/summaries
+- declared source quality
+- positive/missing/counter evidence fields
+- stage caps/hard breaks/false-positive patterns
+- price metrics ref
+- score simulation refs
+- shadow rule refs
+- transition refs
+- runtime_score_eligible=false
+
+HistoricalOutcome은 evaluator-only로 분리하고 runtime prompt에 노출하지 않는다.
+
+## 5.3 Row Linking
+
+다음을 실제 ID로 연결한다.
+
+- case.case_id
+- trigger.case_id / trigger_id
+- score_simulation.case_id / trigger_id
+- shadow_weight.trigger_ids / evidence_case_ids
+- stage_transition_summary.symbol + entry_date
+- residual_contribution.archetype
+- source map rows
+
+하나의 파일에 8개 case가 있으면 8개 HistoricalResearchCase를 만든다.
+첫 symbol만 뽑지 않는다.
+
+## 5.4 Narrative Fallback
+
+machine-readable row가 없는 narrative만 LLM semantic compiler를 사용한다.
+
+LLM은 case 후보·uncertainty·source span을 출력하고 score/stage는 계산하지 않는다.
+LLM row는 `LLM_DERIVED_UNVERIFIED`로 quarantine review에 보낸다.
+
+## 5.5 Quarantine
+
+- malformed JSONL
+- conflicting duplicate
+- missing symbol/date
+- URL-case association ambiguous
+- inconsistent archetype
+- outcome only
+- handoff prompt accidental parsing
+
+출력:
+
+output/research_intelligence/corpus/historical_cases.jsonl
+output/research_intelligence/corpus/historical_outcomes.jsonl
+output/research_intelligence/corpus/historical_rules.jsonl
+output/research_intelligence/corpus/quarantine.jsonl
+output/research_intelligence/corpus/linkage_errors.jsonl
+
+Hard acceptance:
+
+- valid structured JSONL row preservation = 100%
+- golden files case count exact
+- present company_name loss = 0
+- present trigger_date loss = 0
+- first-symbol collapse = 0
+- 24k truncation = 0
+- handoff prompt parsed as case = 0
+- duplicate conflict silent overwrite = 0
+
+Golden corpus 최소:
+
+- C06 URL-backed research
+- C08 URL-backed research
+- C15 URL-backed research
+- C17 source-proxy research
+- C24 source-proxy research
+- C28 source-proxy research
+- registry 전체 샘플
+
+---
+
+# 6. Phase 3 — Case-Level Source Verification Compiler
+
+파일에 URL 하나가 있다고 case 전체가 A2가 되어서는 안 된다.
+
+새 source state:
+
+SOURCE_PROXY_ONLY
+EVIDENCE_URL_PENDING
+URL_PRESENT_UNVERIFIED
+URL_FETCH_FAILED
+URL_FETCHED_NO_ANCHOR
+URL_FETCHED_WRONG_SUBJECT
+URL_FETCHED_DATE_INVALID
+URL_FETCHED_ANCHORED
+URL_FETCHED_ANCHORED_CASE_MATCH
+HISTORICAL_REPLAY_READY
+
+A2/HISTORICAL_REPLAY_READY는 다음을 모두 만족해야 한다.
+
+- URL 또는 official document id
+- fetch 또는 valid provider snapshot
+- content hash
+- published date
+- historical as-of 이전
+- target/subject directness
+- exact quote/table/API locator
+- case/trigger와 의미적으로 연결
+- evidence summary와 source가 모순되지 않음
+- current score evidence와 분리
+
+source_proxy/evidence_url_pending row는 URL repair queue로 보낸다.
+
+Hard acceptance:
+
+- case-level URL association 없는 A2 = 0
+- URL string only A2 = 0
+- wrong-subject replay fixture = 0
+- source_proxy replay ready = 0
+- 모든 URL-backed golden case는 replay ready 또는 exact blocker
+- source proxy는 repair/planning only
+
+---
+
+# 7. Phase 4 — Executable Evidence Recipe OS
+
+“primitive 이름을 source-backed하게 확인”하는 generic route를 폐기한다.
+
+EvidenceRecipe는 최소 다음을 포함한다.
+
+- archetype/primitive/role
+- economic mechanism
+- question to answer
+- accepted claim predicates
+- required entities/values/units/time
+- required target directness/current lifecycle
+- preferred source families/document types/sections
+- discovery source
+- forbidden score source
+- positive examples
+- counterexamples
+- wrong-subject examples
+- source success/failure examples
+- rejection conditions
+- counter/supersession questions
+- query intent constraints
+- stop/source-exhaustion conditions
+- supporting case IDs
+
+C06, C08, C15, C17, C24, C28의 세밀한 판례를 반영한다.
+
+recipe는 Evidence Contract + historical case + verified source success/failure를 결합해서 만든다.
+primitive 이름 substring으로 route를 결정하지 않는다.
+
+Hard acceptance:
+
+- registry 모든 required primitive에 recipe 또는 explicit unsupported reason
+- URL-backed case recipe example 비어 있지 않음
+- source proxy example planning-only
+- generic query-only recipe = 0
+- primitive substring production routing = 0
+- acceptance/rejection/counter/lifecycle 누락 = 0
+
+---
+
+# 8. Phase 5 — Semantic Memory Graph와 Retrieval
+
+ResearchMemoryGraph node/edge를 구현한다.
+
+Node:
+
+- case
+- recipe
+- primitive
+- archetype
+- source
+- positive/counter/hard-break/source-success/source-failure
+
+Edge:
+
+- SUPPORTS
+- COUNTERS
+- CAPS
+- REQUIRES
+- BEST_FOUND_IN
+- FAILED_IN
+- SUPERSEDES
+- WRONG_SUBJECT_EXAMPLE
+- SAME_MECHANISM
+
+retrieval은 first-N이나 memory count 우선이 아니라 다음을 균형 있게 반환한다.
+
+- positive
+- counterexample/guard
+- source success
+- source failure
+- semantic guard
+- direct recipe
+
+historical MFE/MAE는 planner에서 숨긴다.
 
 Acceptance:
-- legacy_runner_production_reachable_count = 0.
-- empty_claims_stage_builder_production_count = 0.
-- old_cli_can_claim_pass_count = 0.
-- official CLI documented and tested.
 
-================================================================================
-2. Runtime-Proven Leaf Artifact Bundle
-================================================================================
+- top-3 archetype retrieval hit >= 95%
+- required recipe hit >= 95%
+- positive+guard pair >= 90%
+- future leakage = 0
+- first-N-only retrieval = 0
+- popularity bias critical = 0
 
-v4는 반드시 실제 output leaf artifacts를 생성하고, repo에 audit 가능한 manifest를 남긴다.
+---
 
-Required output:
-output/census_v4/YYYY-MM-DD/
-  run_metadata.json
-  universe.jsonl
-  census_assessment_events.jsonl
-  source_timelines.jsonl
-  last_effective_thesis_states.jsonl
-  baseline_inputs_summary.json
-  baseline_scan_results.jsonl
-  census_events.jsonl
-  depth_decisions.jsonl
-  research_brain_plans.jsonl
-  source_tasks.jsonl
-  source_task_executions.jsonl
-  evidence_documents.jsonl
-  evidence_anchors.jsonl
-  raw_assertions.jsonl
-  adjudicated_claims.jsonl
-  accepted_claims.jsonl
-  primitive_states.jsonl
-  score_contributions.jsonl
-  stagecourt_traces.jsonl
-  claim_to_stage_trace.jsonl
-  census_stage_status.jsonl
-  census_stage_map.jsonl
-  census_stage_map.csv
-  census_stage_summary.json
-  leaf_artifact_audit.json
-  reviewer_A_trace_audit.json
-  reviewer_B_source_audit.json
-  reviewer_C_stage_audit.json
-  operator_digest.md
-  watchlist_seed_candidates.json
-  deep_backfill_plan.json
-  audit_summary.json
+# 9. Phase 6 — Two-Pass LLM Research Brain
 
-If output is too large for git:
-- commit a manifest with sha256, byte_size, row_count, schema_version, and local path for every leaf.
-- commit a deterministic reproduction command.
-- commit at least a representative sampled bundle:
-  - 50 Stage0/NoKnownThesis rows
-  - all Stage2+ rows
-  - all Red/RiskReview rows
-  - all ProviderPending/SourcePending rows
-  - all rows with accepted_claim_ids
-  - all rows with score_contribution_ids
-  - all rows in watchlist seed
-- full local artifact manifest must match report.
+Pass A는 source_primary/archetype label/score/Stage/outcome을 보지 않고 current evidence만으로 top-k hypothesis를 만든다.
 
-Required docs:
-docs/operational/census_mode_v4_artifact_manifest.json
-docs/operational/census_mode_v4_sample_leaf_bundle.jsonl
-docs/operational/census_mode_v4_reproduction_command.md
+Pass B에서 balanced memory와 recipes를 이용해 critique한다.
+
+출력:
+
+- top-k archetype
+- supporting/contradicting current facts
+- positive thesis
+- counter thesis
+- must-verify questions
+- red-team questions
+- source task drafts
+- do-not-promote
+- abstention/ambiguity
+
+코드는 다음을 검증한다.
+
+- score/stage output 없음
+- source-primary copy 없음
+- target/sector plausibility
+- recipe coverage
+- official-first/budget
+- outcome leakage
+- unsupported ambiguity abstention
 
 Acceptance:
-- Every leaf artifact has row_count, sha256, byte_size.
-- Report numbers equal manifest row_counts.
-- sample bundle includes every scored row, not just random examples.
-- If full leaf output is not committed, manifest must prove existence and reproducibility.
-- Missing claim_to_stage_trace.jsonl is critical fail.
-- Missing accepted_claims.jsonl while accepted_claim_count > 0 is critical fail.
-- Missing score_contributions.jsonl while score_contribution_count > 0 is critical fail.
 
-Tests:
-tests/test_census_v4_artifact_manifest.py
-tests/test_census_v4_manifest_counts_match_report.py
-tests/test_census_v4_sample_bundle_contains_all_scored_rows.py
+- planner score/stage mutation = 0
+- source-primary copy without reason = 0
+- ambiguous abstention 지원
+- blind top-3 >= 95%
+- top-1 >= 85%
+- critical guard misroute = 0
+- impossible archetype assignment = 0
+- prompt/response hash 보존
+- provider failure는 PlannerPending
 
-================================================================================
-3. Report 생성 금지: Leaf Audit First
-================================================================================
+---
 
-Acceptance report must be generated only after independent leaf audit.
+# 10. Phase 7 — Question-Centric SourceTask
 
-Flow:
-1. Run census.
-2. Write leaf artifacts.
-3. Close files.
-4. Reopen leaf artifacts from disk.
-5. Independent LeafArtifactAuditor recalculates all metrics.
-6. Reviewer A/B/C read only leaf artifacts.
-7. Acceptance report uses auditor output only.
-8. If report in-memory counters differ from leaf audit, fail.
+SourceTask는 단순 primitive label이 아니라 실제 질문과 성공조건을 가진다.
 
-Ban:
-- acceptance report generated from in-memory stage_summary.
-- acceptance report generated before leaf artifact audit.
-- same function generating report and auditor counters.
-- report-only commit claiming new pass without rerun/manifest update.
+필수 필드:
 
-Acceptance:
-- report_generated_from_leaf_audit = true.
-- in_memory_summary_used_for_acceptance_count = 0.
-- leaf_report_metric_mismatch_count = 0.
-- report_only_commit_without_rerun cannot change final status except wording fix.
+- recipe_id
+- question_to_answer
+- why_material
+- accepted predicates
+- entities/values/time scope
+- counter questions
+- rejection conditions
+- source/document/section
+- discovery/forbidden source
+- LLM query intent
+- bounded budgets
+- stop/exhaustion condition
 
-Tests:
-tests/test_census_v4_report_generated_from_leaf_audit.py
-tests/test_census_v4_report_only_commit_cannot_change_status.py
-
-================================================================================
-4. Claim-to-Stage Forensic Audit
-================================================================================
-
-각 scored row에 대해 실제 연결을 증명한다.
-
-For every row in census_stage_status.jsonl:
-
-If verified_score is not null or score_valid_status indicates FINAL/FINAL_WITH_NONMATERIAL_GAPS:
-- accepted_claim_ids non-empty
-- score_contribution_ids non-empty
-- stagecourt_trace_id non-null
-- every accepted_claim_id exists in accepted_claims.jsonl
-- every score_contribution_id exists in score_contributions.jsonl
-- stagecourt_trace_id exists in stagecourt_traces.jsonl
-- score contribution support_claim_ids subset of accepted_claim_ids or explicitly linked by claim_to_stage_trace
-- no support claim is source_proxy_only/evidence_url_pending/price_path_only
-- no support claim lacks source_url or official API locator
-- no support claim lacks event/source date
-- no support claim lacks target/temporal adjudication
-
-If base_stage in Stage2-Watch/Stage2-Actionable/Stage3-Yellow/Stage3-Green/Red/Reject:
-- must have either score trace or explicit non-scored guard/pending reason.
-- Red/Reject requires current direct negative claim or explicit guard status.
-- Provider failure cannot be Red/Reject.
-
-If Stage0/NoKnownThesis:
-- source_timeline_id and last_effective_thesis_id required.
-- source families attempted or existing ledger checked.
-- reason must not be “recent lookback expired”.
-- if provider failures exist, status must be ProviderPending, not Stage0.
-
-If ProviderPending/SourcePending:
-- provider/source gap record required.
-- no final score.
-
-Reports:
-docs/operational/census_mode_v4_claim_to_stage_forensic_audit.json
+literal query는 LLM이 current context를 보고 생성하고 code가 검증한다.
 
 Acceptance:
-- scored_row_missing_claim_ids = 0
-- scored_row_missing_score_contribution_ids = 0
-- scored_row_missing_stagecourt_trace = 0
-- claim_id_not_found_count = 0
-- score_contribution_id_not_found_count = 0
-- stagecourt_trace_id_not_found_count = 0
-- support_claim_not_accepted_count = 0
-- source_proxy_support_claim_count = 0
-- source_pending_marked_red_count = 0
-- provider_failed_final_score_count = 0
-- stage0_without_timeline_count = 0
-- no_current_thesis_recent_cutoff_reason_count = 0
 
-Tests:
-tests/test_census_v4_claim_to_stage_forensic_audit.py
-tests/test_census_v4_scored_rows_have_trace.py
-tests/test_census_v4_stage0_requires_source_timeline.py
-tests/test_census_v4_provider_pending_never_red.py
+- empty question = 0
+- empty accepted predicate = 0
+- empty rejection condition = 0
+- generic verify-primitive task = 0
+- official-first violation = 0
+- FCF/contract/backlog Naver-first = 0
+- unbounded query/fetch = 0
 
-================================================================================
-5. SourceTask Realness Audit
-================================================================================
+---
 
-SourceTask 숫자가 “기존 report replay”를 의미하면 안 된다.
+# 11. Phase 8 — Source Acquisition와 Document Selection
 
-Classify each source task execution:
-- REAL_PROVIDER_FETCH
-- FRESH_PROVIDER_CACHE
-- EXISTING_ACCEPTED_CLAIM_LIFECYCLE_REFRESH
-- REPORT_REPLAY_REFERENCE_ONLY
-- RESEARCH_MEMORY_REFERENCE_ONLY
+모드:
+
+- PRODUCTION_BOUNDED
+- HISTORICAL_REPLAY
+- SOURCE_REPAIR_BACKFILL
+- CONTROLLED_SMOKE
+
+공식 source 우선 후 public report/industry/TrustedNews/Naver discovery를 사용한다.
+
+Naver/Web:
+
+- discovery only
+- full article fetch
+- original source
+- snippet score 금지
+- repost/wrong-subject guard
+
+recipe에 맞는 문서 섹션을 선택한다.
+
+Acceptance:
+
+- snapshot-as-live = 0
+- snippet-as-document = 0
+- no content hash fetched = 0
+- provider failure masked = 0
+- source class/document mismatch = 0
+- report replay counted real fetch = 0
+- docs linked to task/recipe
+- Naver result has full fetch or rejection
+
+---
+
+# 12. Phase 9 — Contract-Blind Claim Compiler
+
+Raw extractor는 target identity, as-of, source document만 보고 assertion을 뽑는다.
+
+primitive gap, desired archetype, score, Stage, historical outcome을 보지 않는다.
+
+순서:
+
+Anchor
+→ Entity/subject
+→ Target directness
+→ Temporal/effective period
+→ Lifecycle
+→ Contradiction/supersession
+→ Recipe/primitive mapping
+→ Score eligibility
+
+SourceTask satisfaction을 분리한다.
+
+- DIRECT_TASK_SATISFIED
+- REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN
+- BASELINE_CLAIM_REUSED
+- LIFECYCLE_REFRESH_ONLY
+- COUNTER_CLAIM_FOUND
+- NO_RELEVANT_CLAIM
+- WRONG_SUBJECT
+- STALE_ONLY
 - PROVIDER_FAILED
-- NO_EVIDENCE_FOUND
-- BUDGET_EXHAUSTED
+- SOURCE_EXHAUSTED
 
-Rules:
-- REAL_PROVIDER_FETCH and FRESH_PROVIDER_CACHE may create new EvidenceDocument/Anchor.
-- EXISTING_ACCEPTED_CLAIM_LIFECYCLE_REFRESH may reuse claim only with lifecycle refresh.
-- REPORT_REPLAY_REFERENCE_ONLY cannot count as real source execution.
-- RESEARCH_MEMORY_REFERENCE_ONLY cannot count as real source execution.
-- source_task_execution status PARSED with accepted_claim_ids=[] cannot count as accepted evidence.
-- source task count for acceptance must split planned/executed/claim-producing.
-- “source task executed 92” is meaningless unless claim-producing count is separately shown.
+rerouted claim은 ledger에는 넣되 원래 gap을 닫지 않는다.
 
-Reports:
-docs/operational/census_mode_v4_source_task_realness_audit.json
+Hard acceptance:
 
-Acceptance:
-- source_task_planned_count reported.
-- source_task_real_fetch_count reported.
-- source_task_lifecycle_refresh_count reported.
-- source_task_report_replay_reference_count reported.
-- source_task_claim_producing_count reported.
-- claim_producing_source_task_count > 0.
-- report_replay_count not included in real_fetch_count.
-- source_task_accepted_with_empty_claim_ids_count = 0.
-- PARSED_without_claim_count not counted as evidence.
+- accepted claim missing anchor/source/date/subject/target = 0
+- source proxy current claim = 0
+- wrong subject score = 0
+- old unknown risk penalty = 0
+- rerouted original gap closure = 0
+- unstructured rule fallback score = 0
+- recipe mapping 없는 score claim = 0
+- parser mention direct score = 0
 
-Tests:
-tests/test_census_v4_source_task_realness_audit.py
-tests/test_census_v4_report_replay_not_real_execution.py
-tests/test_census_v4_parsed_without_claim_not_claim_producing.py
+---
 
-================================================================================
-6. Existing Ledger Reuse Audit
-================================================================================
+# 13. Phase 10 — Adaptive Investigation Controller
 
-If Census v4 relies on production_cutover leaf claims, make that explicit and safe.
+실패 이유별 next action을 만든다.
 
-For every reused claim:
-- original_run_id
-- original_as_of_date
-- source_document_id
-- source_url or official API locator
-- original_claim_id
-- lifecycle_refresh_status
-- as_of_date_current_status
-- reused_in_symbol
-- reused_in_stage_row
-- freshness/lifecycle policy
-- supersession check
-- contradiction check
+- NO_DOCUMENT_FOUND
+- WRONG_SUBJECT
+- STALE_ONLY
+- GENERIC_CONTEXT_ONLY
+- REROUTED_PRIMITIVE
+- MAPPING_REJECTED
+- CONTRADICTION_OPEN
+- PROVIDER_FAILED
+- SOURCE_EXHAUSTED
 
-Rules:
-- existing claim can be reused only after lifecycle refresh.
-- previous Stage cannot be copied blindly.
-- old positive claim must remain active.
-- old risk claim must be current OPEN to score.
-- reused claim must appear in claim_to_stage_trace if it affects stage/score.
+각 failure는 query/source/document/target constraint를 다르게 바꾼다.
 
-Reports:
-docs/operational/census_mode_v4_existing_ledger_reuse_audit.json
+동일 query 재실행을 금지한다.
+
+Runtime adaptive investigation과 coding-agent systemic repair를 분리한다.
+
+`until_pass`라는 이름으로 단순 rerun을 self-repair라고 부르지 않는다.
 
 Acceptance:
-- reused_claim_count reported.
-- lifecycle_refreshed_reused_claim_count == reused_claim_count.
-- stale_claim_reused_current_count = 0.
-- previous_stage_blind_copy_count = 0.
-- existing_claim_without_source_locator_count = 0.
-- reused_claim_not_in_trace_count = 0.
 
-Tests:
-tests/test_census_v4_existing_ledger_reuse_audit.py
-tests/test_census_v4_no_stale_claim_reuse.py
-tests/test_census_v4_no_previous_stage_blind_copy.py
+- failure reason 없는 retry = 0
+- identical retry = 0
+- rerouted feedback 반영
+- rejection → next action trace
+- material unresolved → score_valid false
+- round limit → pending
+- systemic failure cluster와 code repair history 존재
 
-================================================================================
-7. Last Effective Thesis Must Not Be Cosmetic
-================================================================================
+---
 
-LastEffectiveThesisState cannot be a dummy row for every symbol.
+# 14. Phase 11 — Historical Replay와 Current Operation 분리
 
-For each symbol:
-- status derived from SourceTimeline
-- source family attempts present
-- if NO_KNOWN_THESIS:
-  - latest regular report or official/price/ledger check attempted
-  - no candidate event / no accepted current claim / no active research memory claim
-- if ACTIVE_THESIS:
-  - support event or claim exists
-  - lifecycle active
-- if PROVIDER_PENDING:
-  - provider failure exists
-- if SOURCE_PENDING:
-  - event exists but verification source missing
-- if HISTORICAL_ONLY:
-  - old event exists but expired/resolved/superseded
+Historical Replay:
 
-Reports:
-docs/operational/census_mode_v4_last_effective_thesis_audit.json
+- 전 registry 아키타입 system parity 검증
+- frozen as-of
+- positive/guard/wrong-subject/old-risk/source-missing
+- outcome/expected stage/archetype는 prompt에서 숨김
 
-Acceptance:
-- last_effective_thesis_count == eligible_count.
-- dummy_no_known_thesis_count = 0.
-- no_known_thesis_without_any_source_attempt_count = 0.
-- active_thesis_without_event_or_claim_count = 0.
-- provider_pending_without_provider_failure_count = 0.
-- historical_only_without_historical_event_count = 0.
-- recent_lookback_used_as_stage_cutoff_count = 0.
+Current Operation:
 
-Tests:
-tests/test_census_v4_last_effective_thesis_not_dummy.py
-tests/test_census_v4_no_known_thesis_requires_source_attempt.py
-tests/test_census_v4_active_thesis_requires_support.py
+- 현재 evidence가 있는 후보만
+- archetype quota 강제 금지
+- current claim만 score
 
-================================================================================
-8. Real Source Coverage, Not Just Cutover Replay
-================================================================================
+Historical acceptance:
 
-Census v4 may reuse cutover leaf artifacts, but must also demonstrate actual Census-time source coverage.
+- registry 100%
+- each archetype parity row
+- NOT_ATTEMPTED without reason = 0
+- URL-backed replay or blocker
+- critical guards 100%
+- source proxy score 0
+- top-3 >=95%, top-1 >=85%
+- mapping precision >=95%
+- positive recall >=90%
+- guard accuracy >=95%
+- future leakage 0
 
-Minimum:
-- OpenDART/KIND/KRX/CompanyGuide or provider cache attempts across full universe.
-- price/volume anomaly detection attempted.
-- report/news/IR sources either attempted or explicit nonblocking gap.
-- existing ledger loaded.
-- research memory hints loaded as planning-only.
+Current acceptance:
 
-Reports:
-docs/operational/census_mode_v4_source_coverage_audit.json
+- full-universe baseline
+- real trigger pool
+- bounded selective deep
+- each deep candidate ends in:
+  full thesis / disproved / source pending / provider pending / budget pending
+- current market에 없는 archetype은 row가 없어도 정상
 
-Metrics:
-- census_time_opendart_attempt_count
-- census_time_kind_krx_attempt_count
-- census_time_companyguide_attempt_count
-- census_time_price_attempt_count
-- census_time_existing_ledger_attempt_count
-- census_time_report_news_ir_attempt_count
-- provider_cache_used_count
-- stale_cache_used_count
-- cutover_replay_only_symbol_count
-- symbol_without_any_census_time_source_attempt_count
+---
+
+# 15. Phase 12 — Deterministic Score/Stage 재검증
+
+점수 종류:
+
+- EVENT_EVIDENCE_PARTIAL
+- FULL_E2R_100
+- NO_SCORE
+
+full score는 material primitive assessment와 accepted current claims, contradiction resolution, score_valid, StageCourt trace가 있어야 한다.
+
+한 AtomicStageDecision에서 stage/score/status/claims/contributions/trace/risk/missing gaps를 가져온다.
+
+score delta는 claim/config 변경으로 설명한다.
+
+hard break는 target-direct, current OPEN, source-backed, material, unresolved 조건을 모두 만족해야 한다.
 
 Acceptance:
-- symbol_without_any_census_time_source_attempt_count = 0.
-- cutover_replay_only_symbol_count must be reported and cannot be all scored rows.
-- if all accepted claims are reused from cutover, Census status must say “ledger refresh map”, not “new full source map”.
-- at least one Census-time source family must run over the full universe.
-- accepted claim rows must distinguish reused vs newly verified.
 
-Tests:
-tests/test_census_v4_source_coverage_audit.py
-tests/test_census_v4_no_symbol_without_source_attempt.py
-tests/test_census_v4_reused_vs_new_claim_distinction.py
+- claimless score = 0
+- material gap full score = 0
+- event score as full = 0
+- stage/score/trace mismatch = 0
+- pending final low score = 0
+- hard break without current direct OPEN = 0
+- unexplained score delta = 0
+- fingerprint mismatch concealed = 0
 
-================================================================================
-9. Runtime Plausibility Audit
-================================================================================
+---
 
-If a full universe run claims to use many live/LLM paths but finishes in a few seconds, that is suspicious.
-Runtime is not pass/fail alone, but must match declared work.
+# 16. Phase 13 — Census / Daily Operation
 
-Add:
-RuntimePlausibilityAudit
+전 종목:
 
-Checks:
-- runtime_seconds
-- eligible_count
-- provider_call_count
-- LLM_call_count
-- source_task_real_fetch_count
-- evidence_extraction_count
-- average_time_per_real_fetch
-- average_time_per_llm_call
-- zero_llm_but_llm_claimed_count
-- runtime_too_short_for_declared_live_fetch_count
-- runtime_too_short_for_declared_llm_extraction_count
-- report_claims_live_but_only_replay_count
+Universe
+→ official/price/risk/existing-ledger baseline
+→ SourceTimeline
+→ LastEffectiveThesis
+→ DepthPolicy
+→ selected deep
+→ CensusStageStatus
 
-Rules:
-- If LLM_call_count=0, report must not say LLM-driven Census.
-- If source_task_real_fetch_count=0, report must not say real source execution.
-- If runtime < threshold and claimed live fetch count high, require provider request log proof.
-- Runtime proof uses provider request logs and prompt/response logs, not summary text.
+최근 lookback을 Stage cutoff로 쓰지 않는다.
 
-Reports:
-docs/operational/census_mode_v4_runtime_plausibility_audit.json
+모든 종목에 LLM/Naver를 돌리지 않는다.
 
-Acceptance:
-- zero_llm_but_llm_claimed_count = 0.
-- report_claims_live_but_only_replay_count = 0.
-- runtime_too_short_for_declared_live_fetch_count = 0 or provider logs explain cache/fresh provider cache.
-- runtime mode is clearly labeled:
-  - FULL_LIVE
-  - FRESH_PROVIDER_CACHE
-  - LEDGER_REFRESH
-  - REPLAY_VALIDATION
-  - HYBRID
+- L0/L1 전 종목
+- L2 official light
+- L3 Brain
+- L4 acquisition
+- L5 full thesis
 
-Tests:
-tests/test_census_v4_runtime_plausibility_audit.py
-tests/test_census_v4_no_llm_claim_when_llm_zero.py
-tests/test_census_v4_no_live_claim_when_replay_only.py
+Daily trigger는 official/earnings/IR/report/news/market/risk/existing ledger를 포함한다.
+시장·뉴스는 trigger이지 score evidence가 아니다.
 
-================================================================================
-10. Independent Anti-Cheat Reviewers v4
-================================================================================
+Watchlist는 score type, confidence, claims, missing conditions, gaps, next action을 보여준다.
 
-Reviewer A/B/C from v3 were too easy if they trusted v3 artifacts.
-Strengthen them:
+---
 
-Reviewer A: Trace Forensics
-- samples 100 Stage0 rows, all Stage2+ rows, all Red rows, all scored rows.
-- verifies source_timeline_id / last_effective_thesis_id / claim IDs / score IDs / StageCourt trace IDs exist.
-- checks row IDs in leaf artifacts, not report.
+# 17. Phase 14 — Conversion Funnel Observability
 
-Reviewer B: Source Realness
-- classifies every source task execution.
-- checks provider request IDs, cache freshness, report replay markers.
-- verifies source_proxy/evidence_url_pending cannot score.
+다음을 archetype/candidate별로 기록한다.
 
-Reviewer C: Stage Semantics
-- checks Stage0 reasons, ProviderPending reasons, Red reasons, Stage2 reasons.
-- checks last effective thesis lifecycle and recent cutoff misuse.
-- checks accepted claims actually support stage semantics.
+candidate
+→ hypothesis
+→ retrieval
+→ recipe
+→ source task
+→ query
+→ result
+→ fetched doc
+→ relevant doc
+→ assertion
+→ claim
+→ primitive
+→ score
+→ full thesis/pending/disproved
 
-Reviewer D: Runtime Plausibility
-- checks runtime/provider/LLM counts vs claimed mode.
+핵심 지표:
 
-All reviewers:
-- read only leaf artifacts and manifests.
-- do not import acceptance report.
-- do not share counters with report generator.
-- any critical fail blocks pass.
-- 99/100 is fail if one critical item fails.
+- relevant document rate
+- accepted claim rate
+- original-gap direct closure
+- rerouted claim
+- mapping rejection
+- full thesis
+- pending reason
+- cost/runtime
 
-Reports:
-docs/operational/census_mode_v4_reviewer_A_trace_forensics.json
-docs/operational/census_mode_v4_reviewer_B_source_realness.json
-docs/operational/census_mode_v4_reviewer_C_stage_semantics.json
-docs/operational/census_mode_v4_reviewer_D_runtime_plausibility.json
+task shell 수를 progress로 말하지 않는다.
+accepted claim 총량보다 direct original-gap closure를 우선한다.
+leaf artifact에서 독립 재계산한다.
 
-Acceptance:
-- Reviewer A/B/C/D verdict = PASS.
-- critical_count = 0 for each.
-- sampled row IDs included.
-- all scored rows reviewed, not sampled.
+---
 
-Tests:
-tests/test_census_v4_reviewer_trace_forensics.py
-tests/test_census_v4_reviewer_source_realness.py
-tests/test_census_v4_reviewer_stage_semantics.py
-tests/test_census_v4_reviewer_runtime_plausibility.py
+# 18. Phase 15 — Known-Bad Suite
 
-================================================================================
-11. Self-Repair Until Runtime-Proven Pass
-================================================================================
+반드시 잡아야 할 것:
 
-Keep the self-repair loop, but require actual patch/rerun when failures occur.
+- file-level case collapse
+- first symbol extraction
+- company/date loss
+- one URL whole-file A2
+- handoff prompt as case
+- source proxy promoted
+- C05 context copy
+- product profile as order
+- HBM keyword positive
+- security keyword ARR
+- commodity headline margin
+- snippet score
+- wrong subject
+- customer CAPA as target CAPA
+- industry demand as issuer order
+- financial contract as commercial contract
+- stale risk penalty
+- rerouted gap closure
+- provider failure Red
+- replay as real fetch
+- event score full score
+- stage/trace mismatch
+- historical outcome leakage
+- historical replay current watchlist contamination
+- forced current archetype materialization
 
-Failure classes:
-- LEGACY_RUNNER_REACHABLE
-- OUTPUT_LEAF_BUNDLE_MISSING
-- CLAIM_TO_STAGE_DISCONNECTED
-- SOURCE_TASK_REPLAY_COUNTED_AS_REAL
-- REPORT_GENERATED_BEFORE_LEAF_AUDIT
-- LAST_EFFECTIVE_THESIS_DUMMY
-- SOURCE_COVERAGE_COSMETIC
-- RUNTIME_IMPLAUSIBLE
-- LLM_CLAIMED_BUT_ZERO_CALLS
-- LIVE_CLAIMED_BUT_REPLAY_ONLY
-- SOURCE_PROXY_SCORE
-- PROVIDER_FAILURE_FINAL_SCORE
-- RECENT_CUTOFF_MISUSE
-- ACCEPTANCE_REPORT_OVERCLAIM
-- EXTERNAL_PROVIDER_BLOCKER
+---
 
-Self-repair must:
-- name exact file/function.
-- patch code/config.
-- rerun same command.
-- rerun tests.
-- rerun leaf audit.
-- compare before/after metrics.
+# 19. Phase 16 — Test / Runtime Commands
 
-Acceptance:
-- self_repair_log includes actual iterations.
-- unresolved non-external failures = 0.
-- no threshold loosening.
-- no fake artifact generation.
-- no report-only fix counted as repair.
-- If pass happens on first run, run known-bad regression fixtures to prove failures are detected.
+Full tests:
 
-Tests:
-tests/test_census_v4_self_repair_requires_rerun.py
-tests/test_census_v4_no_report_only_repair.py
-tests/test_census_v4_known_bad_regressions_fail.py
-
-================================================================================
-12. Known-Bad Regression Bundle
-================================================================================
-
-Create fixtures that must fail.
-
-fixtures/census_v4_known_bad/
-  accepted_claim_summary_only/
-  source_task_replay_as_execution/
-  all_unknown_fake_pass/
-  all_provider_pending_fake_pass/
-  all_stage0_without_source_proof/
-  stage2_without_trace/
-  score_without_claim/
-  source_proxy_score/
-  recent_cutoff_drops_active_contract/
-  provider_failure_marked_red/
-  report_leaf_mismatch/
-  runtime_claims_llm_but_zero_calls/
-
-For each:
-- auditor must fail.
-- reviewer must fail if relevant.
-- acceptance report cannot pass.
-
-Tests:
-tests/test_census_v4_known_bad_bundle.py
-
-Acceptance:
-- every known-bad fixture produces expected critical failures.
-- any known-bad fixture passing is critical failure.
-
-================================================================================
-13. Realistic Run Modes
-================================================================================
-
-Census v4 must label its run mode honestly.
-
-Allowed run modes:
-- FULL_LIVE_CENSUS
-  real provider calls and/or fresh provider cache across universe.
-- FRESH_PROVIDER_CACHE_CENSUS
-  provider cache generated by current run, no stale replay.
-- LEDGER_REFRESH_CENSUS
-  primarily reuses existing accepted claims with lifecycle refresh.
-- REPLAY_VALIDATION_CENSUS
-  validates old outputs only; cannot claim FULL_UNIVERSE_STAGE_MAP_PASS for live operation.
-- HYBRID_CENSUS
-  mixture; must show proportions.
-
-For each mode, report:
-- provider call count
-- provider cache count
-- existing ledger reuse count
-- new accepted claim count
-- reused accepted claim count
-- LLM call count
-- Research Brain plan count
-- real source task count
-- replay reference task count
-
-Acceptance:
-- final label must match run mode.
-- REPLAY_VALIDATION_CENSUS cannot claim READY_FOR_DAILY_TRIGGER_INTEGRATION.
-- LEDGER_REFRESH_CENSUS can claim FULL_UNIVERSE_STAGE_MAP_PASS only if it clearly says stage map is based on existing ledger refresh, not new source discovery.
-- FULL_LIVE_CENSUS requires provider logs.
-- HYBRID_CENSUS requires source proportion table.
-
-Tests:
-tests/test_census_v4_run_mode_honesty.py
-tests/test_census_v4_replay_mode_cannot_claim_live_ready.py
-
-================================================================================
-14. Final Hard Gates
-================================================================================
-
-FULL_UNIVERSE_STAGE_MAP_PASS requires all:
-
-A. Universe
-- eligible_count > 1000
-- stage_status_count == eligible_count
-- no missing/duplicate symbols
-
-B. Baseline
-- source_timeline_count == eligible_count
-- last_effective_thesis_count == eligible_count
-- baseline_scan_count == eligible_count
-- symbol_without_any_source_attempt_count = 0
-
-C. Trace
-- claim_to_stage_trace_count == eligible_count
-- all scored rows have accepted claim IDs, score contribution IDs, StageCourt trace
-- all Stage2+ rows have trace or explicit pending/guard reason
-
-D. Evidence
-- accepted_claim_count > 0
-- score_contribution_count > 0
-- source_task_claim_producing_count > 0
-- accepted_claims linked to stage rows or backlog with reason
-
-E. Safety
-- no claimless nonzero score
-- no source_proxy/evidence_url_pending/price_path_only score
-- no market anomaly/news snippet score
-- no provider failure final score
-- no stale claim reuse
-- no recent cutoff misuse
-
-F. Source realness
-- source task realness audit pass
-- report replay not counted as real
-- source coverage audit pass
-
-G. Review
-- leaf audit pass
-- reviewers A/B/C/D pass
-- known-bad bundle fails
-
-H. Reproducibility
-- command, config hash, source corpus hash, artifact manifest present
-- report generated from leaf audit
-- no one-line huge report
-- no report-only pass
-
-I. Runtime honesty
-- run mode correctly labeled
-- runtime plausible for claimed work
-
-If any hard gate fails:
-- final status = NOT_READY or EXTERNAL_BLOCKER_NOT_READY.
-- do not use FULL_UNIVERSE_STAGE_MAP_PASS.
-
-================================================================================
-15. Required Tests
-================================================================================
-
-Add/strengthen:
-
-tests/test_census_v4_legacy_runner_lockout.py
-tests/test_census_v4_artifact_manifest.py
-tests/test_census_v4_report_generated_from_leaf_audit.py
-tests/test_census_v4_claim_to_stage_forensic_audit.py
-tests/test_census_v4_source_task_realness_audit.py
-tests/test_census_v4_existing_ledger_reuse_audit.py
-tests/test_census_v4_last_effective_thesis_not_dummy.py
-tests/test_census_v4_source_coverage_audit.py
-tests/test_census_v4_runtime_plausibility_audit.py
-tests/test_census_v4_reviewer_trace_forensics.py
-tests/test_census_v4_reviewer_source_realness.py
-tests/test_census_v4_reviewer_stage_semantics.py
-tests/test_census_v4_reviewer_runtime_plausibility.py
-tests/test_census_v4_known_bad_bundle.py
-tests/test_census_v4_run_mode_honesty.py
-tests/test_census_v4_hard_gates.py
-tests/test_census_v4_no_report_only_pass.py
-tests/test_census_v4_no_summary_only_pass.py
-tests/test_census_v4_no_replay_as_live.py
-
-Full test command:
 PYTHONPATH=src python -m unittest discover -s tests -v
 
-No skipped Census v4 tests.
-No xfail for known issues.
-No threshold-loosening tests.
-Known-bad fixtures must fail correctly.
+Compile:
 
-================================================================================
-16. Required Reports
-================================================================================
+PYTHONPATH=src python -m e2r.cli.compile_e2r_research_intelligence \
+  --repo-root . \
+  --output-root output/research_intelligence/v1 \
+  --strict true
 
-Generate:
+Replay:
 
-docs/operational/census_mode_v4_acceptance_report.md
-docs/operational/census_mode_v4_readiness_verdict.md
-docs/operational/census_mode_v4_artifact_manifest.json
-docs/operational/census_mode_v4_sample_leaf_bundle.jsonl
-docs/operational/census_mode_v4_reproduction_command.md
-docs/operational/census_mode_v4_leaf_artifact_audit.json
-docs/operational/census_mode_v4_claim_to_stage_forensic_audit.json
-docs/operational/census_mode_v4_source_task_realness_audit.json
-docs/operational/census_mode_v4_existing_ledger_reuse_audit.json
-docs/operational/census_mode_v4_last_effective_thesis_audit.json
-docs/operational/census_mode_v4_source_coverage_audit.json
-docs/operational/census_mode_v4_runtime_plausibility_audit.json
-docs/operational/census_mode_v4_reviewer_A_trace_forensics.json
-docs/operational/census_mode_v4_reviewer_B_source_realness.json
-docs/operational/census_mode_v4_reviewer_C_stage_semantics.json
-docs/operational/census_mode_v4_reviewer_D_runtime_plausibility.json
-docs/operational/census_mode_v4_known_bad_regression_report.json
-docs/operational/census_mode_v4_self_repair_summary.md
+PYTHONPATH=src python -m e2r.cli.run_e2r_historical_replay \
+  --registry canonical \
+  --mode blind_frozen_replay \
+  --output-root output/historical_replay/v1 \
+  --fail-on-critical true
 
-Output:
-output/census_v4/YYYY-MM-DD/...
-or if too large:
-output manifest + sample bundle + reproduction command must be committed.
+Current:
 
-================================================================================
-17. Final Answer Format
-================================================================================
+PYTHONPATH=src python -m e2r.cli.run_e2r_current_operation \
+  --as-of-date <current as-of> \
+  --mode production_bounded \
+  --universe krx \
+  --output-root output/current_operation/v1 \
+  --fail-on-critical true
 
-After completion, report only:
+Census:
+
+PYTHONPATH=src python -m e2r.cli.run_e2r_census_mode \
+  --as-of-date <current as-of> \
+  --mode census_selective_deep \
+  --brain canonical_v1 \
+  --output-root output/census_v_next \
+  --fail-on-critical true
+
+각 실행은 commit/config/corpus/memory/recipe/prompt/source hash와 dirty status를 남긴다.
+
+---
+
+# 20. 완료 라벨
+
+필수 단계:
+
+- UNIFIED_RESEARCH_BRAIN_ARCHITECTURE_PASS
+- RESEARCH_CORPUS_SEMANTIC_COMPILER_PASS
+- CASE_LEVEL_SOURCE_VERIFICATION_PASS
+- EVIDENCE_RECIPE_OS_PASS
+- SEMANTIC_RESEARCH_BRAIN_PASS
+- ADAPTIVE_EVIDENCE_CLOSURE_PASS
+- HISTORICAL_REPLAY_PARITY_PASS
+- CURRENT_OPERATIONAL_BRAIN_PASS
+
+최종:
+
+MEANINGFUL_E2R_RUNTIME_READY
+
+외부 blocker:
+
+EXTERNAL_SOURCE_BLOCKER_NOT_READY
+
+외부 blocker가 있어도 내부 코드 Phase를 생략하지 않는다.
+
+---
+
+# 21. 절대 완료가 아닌 상태
+
+- report 문구만 READY
+- research case count만 증가
+- MemoryCard 수만 증가
+- Source Route pattern 수만 증가
+- task shell만 증가
+- 동일 query rerun
+- rerouted claim 원래 gap closure
+- full thesis 0인데 준비 완료
+- replay/current 혼합
+- current archetype quota 강제
+- source proxy score
+- `until_pass` runtime retry만 수행
+- known-bad 통과
+- leaf artifact 없는 summary
+- legacy Brain production reachable
+- threshold/weight 변경
+
+---
+
+# 22. 최종 독립 감사
+
+Reviewer A: Corpus Fidelity  
+Reviewer B: Recipe/Retrieval  
+Reviewer C: Source/Claim Realness  
+Reviewer D: Score/Stage Integrity  
+Reviewer E: Historical/Current Separation
+
+각 reviewer는 report generator counters를 공유하지 않고 leaf artifacts를 읽는다.
+critical 1개면 FAIL이다.
+
+---
+
+# 23. 최종 응답 형식
 
 1. Final status
-2. Commit SHA / message / push status / working tree
-3. Test result
-4. Run mode
-5. Artifact manifest summary
-6. Universe / stage distribution
-7. Source coverage
-8. Source task realness
-9. Existing ledger reuse
-10. Claim-to-stage forensic audit
-11. Leaf artifact audit
-12. Reviewer A/B/C/D
-13. Runtime plausibility
-14. Known-bad regression result
-15. Watchlist seed / deep backfill plan
-16. Final verdict
-17. Remaining blockers
+2. Phase별 commit/push/worktree
+3. Full tests와 known-bad
+4. Architecture 통합
+5. Corpus compiler 수치
+6. Source verification
+7. Recipe coverage
+8. Retrieval/Brain benchmark
+9. Source/Claim closure
+10. Historical replay
+11. Current operation
+12. Conversion funnel before/after
+13. Systemic root causes repaired
+14. Reviewer A~E
+15. Final verdict와 blockers
 
-================================================================================
-18. Prohibitions
-================================================================================
+---
 
-- Do not claim pass from acceptance report alone.
-- Do not claim pass without leaf artifact manifest.
-- Do not claim pass without claim_to_stage_trace.jsonl.
-- Do not use old census_runner.py for pass.
-- Do not leave accepted_claims=(), score_contributions=() in production/pass path.
-- Do not count report replay as real source execution.
-- Do not count PARSED-with-empty-claims as claim-producing.
-- Do not claim live/LLM if provider/LLM calls are zero.
-- Do not mark all Stage0/Unknown/ProviderPending as pass.
-- Do not use source_proxy/evidence_url_pending/price_path_only as score.
-- Do not use market anomaly/news snippet as score.
-- Do not use recent lookback as Stage cutoff.
-- Do not finalize low score on provider failure.
-- Do not hardcode symbols/URLs/keywords.
-- Do not loosen thresholds to pass.
-- Do not create fake leaf artifacts.
-- Do not output one-line huge reports.
+# 24. 마지막 완료 명령
 
-================================================================================
-19. One-line goal
-================================================================================
+이번 작업의 성공은 문서 수, MemoryCard 수, SourceTask 수, 테스트 개수로 판단하지 않는다.
 
-Census v4의 목적은 “FULL_UNIVERSE_STAGE_MAP_PASS라고 쓰인 report”가 아니다.
+성공은 다음 사슬이 닫힐 때만 인정한다.
 
-목적은:
+historical structured case
+→ verified case-level memory
+→ executable evidence recipe
+→ balanced semantic retrieval
+→ LLM investigation plan
+→ question-specific SourceTask
+→ real fetched source
+→ direct current claim
+→ primitive closure
+→ deterministic score
+→ StageCourt
 
-전체 KRX universe의 각 symbol마다
-source timeline,
-last effective thesis,
-baseline,
-depth,
-source task,
-accepted claim,
-score contribution,
-StageCourt trace,
-CensusStageStatus가
-leaf artifact로 연결되어 있고,
-독립 auditor가 report 없이 재계산해도 같은 결론이 나오는 전 시장 Stage 지도다.
+전 아키타입 이해 여부는 historical blind replay로 검증한다.
 
-실패하면 숨기지 말고,
-원인을 찾아 패치하고,
-같은 명령으로 재실행해서,
-runtime-proven FULL_UNIVERSE_STAGE_MAP_PASS가 될 때까지 반복하라.
+현재 좋은 종목 판단은 current operation에서 실제 current evidence가 있는 후보만 평가한다.
 
-핵심만 다시 말하면, 지금 baaf2e7은 보고서 상태를 바꾼 report-only 커밋이고, 구현은 c5bc76a야. c5bc76a는 Census v3 구조를 많이 넣었지만, 외부에서 봤을 때 full output leaf artifacts가 없고, 구형 runner 경로도 그대로 남아 있어서 “진짜 전체지도 성공”을 확정하기엔 아직 부족해.
+실패하면 report에 남기고 끝내지 마라.
+가장 큰 failure cluster의 root cause를 코드에서 수정하고,
+같은 frozen replay와 current operation을 다시 실행하고,
+conversion funnel이 실제로 개선될 때까지 반복하라.
 
-다음 Goal은 “또 통과했다고 쓰기”가 아니라, 통과를 증명하는 물증을 커밋하게 만드는 것이야.
+scoring weights와 Stage threshold는 건드리지 마라.
+
+최종적으로 `MEANINGFUL_E2R_RUNTIME_READY`가 아니면 Goal 완료라고 말하지 마라.
