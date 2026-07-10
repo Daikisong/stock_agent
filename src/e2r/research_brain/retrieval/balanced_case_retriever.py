@@ -89,8 +89,14 @@ class BlindRetrievalBenchmarkCase:
             raise ValueError("benchmark exclusions require an exact reason")
 
     def to_request(self) -> BalancedRetrievalRequest:
+        blind_request_id = "BLIND-" + stable_hash(
+            {
+                "current_evidence": self.current_evidence,
+                "as_of_date": self.as_of_date,
+            }
+        )[:24]
         return BalancedRetrievalRequest(
-            request_id=self.benchmark_id,
+            request_id=blind_request_id,
             current_evidence_text=self.current_evidence,
             as_of_date=self.as_of_date,
             top_k_archetypes=3,
@@ -399,6 +405,9 @@ def load_blind_retrieval_benchmark(
             rows.append(row)
     if not rows:
         raise ValueError("blind retrieval benchmark is empty")
+    blind_request_ids = tuple(item.to_request().request_id for item in rows)
+    if len(blind_request_ids) != len(set(blind_request_ids)):
+        raise ValueError("blind retrieval benchmark contains duplicate evidence requests")
     return tuple(rows)
 
 

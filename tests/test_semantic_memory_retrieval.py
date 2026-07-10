@@ -233,6 +233,12 @@ class SemanticMemoryRetrievalTest(unittest.TestCase):
         request_payload = request.to_dict()
         self.assertNotIn("expected_archetype_id", request_payload)
         self.assertNotIn("expected_primitive_id", request_payload)
+        self.assertTrue(request.request_id.startswith("BLIND-"))
+        self.assertNotIn(benchmark_case.benchmark_id, request.request_id)
+        self.assertNotIn(
+            benchmark_case.expected_archetype_id.split("_", 1)[0],
+            request.request_id,
+        )
         result = retrieve_balanced_memory(self.memory_result.index, request)
         for recipe_id in result.direct_recipe_ids:
             roles = {
