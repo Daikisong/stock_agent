@@ -1,1113 +1,2517 @@
-# E2R EVIDENCE INTELLIGENCE RECONSTRUCTION PROGRAM v1
-## Research Corpus Semantic Compiler / Evidence Recipe OS / Unified Research Brain / Adaptive Claim Closure / Historical Replay & Current Operation
+# E2R LIVE CURRENT MATERIALIZATION & OPERATIONAL ORCHESTRATION MASTER GOAL v1
+## Phase 17+ — Current-State Bootstrap / Bounded Live Acquisition / Research Brain / Evidence OS / Current & Census Cutover
 
-너는 `Daikisong/stock_agent` 레포를 원래 의도대로 다시 작동시키는 수석 아키텍트이자 구현 에이전트다.
+너는 `Daikisong/stock_agent` 레포의 수석 아키텍트이자 구현 에이전트다.
 
-이번 작업은 기존 Goal4 위에 감사 게이트를 하나 더 붙이는 일이 아니다.
-이번 작업은 **연구자료를 운영 지능으로 바꾸는 핵심 계층을 재건**하는 작업이다.
+이번 Goal은 이전 `E2R Evidence Intelligence Reconstruction Program`의 후속 작업이다.
+이전 작업에서 내부 연구 두뇌, research corpus compiler, Evidence Recipe, historical blind replay,
+claim/score/stage 안전성은 상당 부분 재건되었다.
 
-현재 레포에는 다음 자산이 이미 존재한다.
+그러나 현재 canonical current/Census 경로는 실제 시장을 보지 않는다.
 
-- 수백 개의 historical research MD와 machine-readable JSONL/CSV/table row
-- C01~C32 canonical archetype과 R13 cross-archetype registry
-- Evidence Contract, deterministic score engine, StageCourt
-- Evidence OS의 claim/primitive/score ledger 철학
-- OpenDART/KIND/KRX/CompanyGuide/IR/TrustedNews/Naver/Web connector
-- Research Brain, Memory Store, LLM planner/provider, Census, Production Cutover
-- 광범위한 테스트와 known-bad regression
+현재 구조는 대략 다음과 같다.
 
-하지만 현재 official verdict는 `MEANINGFUL_RUNTIME_PARITY_NOT_READY`다.
+```text
+run_e2r_current_operation
+→ 완성된 CurrentOperationRunnerInput manifest가 있는지 확인
+→ manifest가 없으면
+   CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE
+   Stage 0
+   score_valid=false
+   exit 3
+→ 종료
+```
 
-현재의 근본 결함은 다음이다.
+`CurrentOperationRunnerInput`에는 이미 아래가 들어 있어야 한다.
 
-1. historical research 파일을 case 단위로 의미 있게 컴파일하지 않고,
-   파일 앞부분, 키워드, 첫 종목코드, primitive 문자열 출현 여부로 얕게 축약한다.
+```text
+universe
+baseline_lanes
+triggers
+claims
+claim_provenance
+source_tasks
+atomic_decisions
+deep_executions
+config
+```
 
-2. 연구 MD 안에 이미 존재하는 `case`, `trigger`, `score_simulation`, `shadow_weight`,
-   `residual_contribution`, `stage_transition_summary`, source URL과 날짜를 충분히 보존하지 않는다.
+즉 현재 canonical CLI는 실제 KRX universe, DART/KIND/KRX/CompanyGuide/IR/뉴스,
+Research Brain, Evidence OS를 실행해 입력을 만드는 운영 엔진이 아니라,
+거의 완성된 입력 manifest를 받아 deterministic하게 조립·감사하는 evaluator다.
 
-3. `research_brain`이라는 기존 계층과,
-   Goal4에서 추가한 `research_reverse` / `source_routing` 계층이 병렬로 존재한다.
-   같은 연구자료를 서로 다른 schema와 heuristic으로 읽어 두 개 이상의 두뇌가 생겼다.
+이번 Goal의 목적은 사용자가 이 JSON을 직접 만들어 제공하게 하는 것이 아니다.
 
-4. MemoryCard가 historical positive/counterexample의 의미를 학습한 카드라기보다
-   기존 Evidence Contract의 required/positive/green primitive를 다시 포장한 카드에 가깝다.
-
-5. Source Route가 historical research에서 실제 성공한 문서·섹션·claim 경로를 복원한 것이 아니라,
-   primitive 이름에 `contract`, `margin`, `hbm` 등이 들어가는지를 보고 자료실을 추정한다.
-
-6. Research Brain planner가 실제 연구자처럼 사고하는 것이 아니라,
-   event text와 archetype 이름의 토큰을 매칭하고,
-   generic한 “이 primitive를 source-backed하게 확인하라”는 작업을 만든다.
-
-7. 검색 결과에서 문서는 가져오지만,
-   원래 질문을 직접 충족하는 claim이 아니라 generic company fact나 다른 primitive claim을 얻는 경우가 많다.
-   `rerouted claim accepted`가 원래 gap을 닫은 것처럼 보일 위험이 있다.
-
-8. `until_pass` 실행기는 코드를 고치는 self-repair가 아니다.
-   같은 manifest/run을 재실행하고, blocker가 남으면 코드나 route repair가 필요하다고 멈추는 runtime retry다.
-
-9. “전 아키타입 시스템이 이해하는가?”를 검증하는 historical replay와
-   “현재 시장에 어떤 종목이 좋은가?”를 판단하는 current operation이 섞여 있다.
-   현재 시장에 없는 아키타입까지 억지 종목 materialization을 시도하면서 이상한 routing과 C05 편향이 발생했다.
-
-10. audit/report/manifest의 개수는 늘었지만,
-    핵심 conversion funnel인
-    `research case → evidence recipe → source task → fetched document → direct accepted claim → primitive closure → full thesis`
-    가 충분히 닫히지 않았다.
-
-이번 Goal은 위 문제를 뿌리부터 해결한다.
+이번 Goal의 목적은 기존 레포에 이미 존재하는 공식 source connector, Naver/Web transport,
+Research Brain, Evidence OS, deterministic scorer, StageCourt를 하나의 bounded live path로 연결해,
+canonical current/Census CLI가 입력 manifest를 스스로 materialize하고 실제 운영 결과를 내게 만드는 것이다.
 
 ---
 
-# 0. 최종 목표
+# 0. 이번 요청의 명시적 Live 연결 승인
 
-원래 의도한 시스템은 다음이어야 한다.
+이 Goal은 루트 `AGENTS.md`의 다음 제한에 대한 **사용자의 명시적 별도 승인**이다.
 
-[Historical Research Intelligence]
+```text
+live web scraping이나 live API 연결은 별도 요청 전까지 추가하지 않는다.
+```
 
-historical research MD/JSONL
-→ case-level semantic compiler
-→ historical case graph
-→ positive / counterexample / guard / source-success / source-failure memory
-→ primitive별 executable Evidence Recipe
-→ archetype별 Runtime Intelligence Pack
-→ frozen historical replay benchmark
+사용자는 이번 Goal에서 다음을 명시적으로 승인한다.
 
-[Current Runtime Operation]
+```text
+1. 기존 레포에 구현된 OpenDART, KIND, KRX, CompanyGuide, IssuerIR,
+   TrustedNews, Naver/Web connector와 현재 `.env` provider 구성을 사용하는
+   bounded live current-input materialization 구현 및 실행을 승인한다.
 
-현재 시장 CandidateEvent / Census state / existing claim ledger
-→ contract-blind current hypothesis generation
-→ Research Memory retrieval
-→ LLM Research Brain critique / top-k archetype / missing evidence questions
-→ bounded official-first SourceTask
-→ DART / KIND / KRX / CompanyGuide / IR / report / Naver/Web acquisition
-→ full source document / table / API record
-→ contract-blind RawAssertion extraction
-→ subject / target / time / lifecycle adjudication
-→ primitive mapping
-→ append-only accepted claim ledger
+2. 필요한 경우 기존 connector가 generic portal page만 가져오거나 symbol-specific
+   데이터를 만들지 못하는 부분을 공식 공개 endpoint/페이지 기준으로 보강하는 것을 승인한다.
+
+3. canonical current/Census CLI가 KRX universe부터 source acquisition,
+   Research Brain, Evidence OS claim, deterministic score/Stage까지 실행해
+   CurrentOperationRunnerInput manifest를 스스로 생성하도록 구현하는 것을 승인한다.
+
+4. 무제한 scraping은 승인하지 않는다.
+   Production daily와 Census selective-deep는 official-first, bounded budget,
+   rate limit, circuit breaker, shard/checkpoint, stop-on-resolution을 유지한다.
+
+5. Naver/general web는 모든 티커에 무차별 실행하지 않는다.
+   Research Brain이 선별한 L3/L4 후보의 exact source gap에만 bounded fallback으로 사용한다.
+
+6. `.env` secret 값은 절대 출력·커밋하지 않는다.
+   credential 존재 여부와 provider error category만 기록한다.
+```
+
+이 승인 이후 다음 행위는 금지한다.
+
+```text
+- input manifest가 없다는 이유만으로 외부 blocker를 선언하고 종료
+- 사용자에게 universe/claim/atomic decision이 든 완성 manifest를 달라고 요구
+- 기존 connector를 실행하지 않고 "외부 데이터 부재"로 책임 전가
+- generic portal homepage fetch를 symbol-specific evidence로 계산
+- snapshot/fixture를 live evidence로 위장
+```
+
+---
+
+# 1. 최종 목표
+
+최종 운영 플로우는 다음이어야 한다.
+
+## 1.1 Initial Current-State Bootstrap
+
+```text
+현재 KRX 전체 universe
+→ 종목/시장/상장상태/보통주 eligibility
+→ bulk official baseline
+→ latest regular financial state
+→ open material events / contracts / investments / risk lifecycle
+→ existing accepted claim ledger refresh
+→ source timeline / last effective thesis
+→ versioned CurrentStateStore
+```
+
+초기 지도는 최근 며칠 공시만 보는 지도가 아니다.
+
+```text
+한 달 전, 일 년 전, 그보다 오래된 사건이라도
+계약 기간이 남았거나,
+시설투자가 진행 중이거나,
+리스크가 아직 OPEN이거나,
+latest regular report에 의해 supersede되지 않았다면
+현재 상태에 포함한다.
+```
+
+`recent window`는 source refresh 우선순위일 뿐 Stage cutoff가 아니다.
+
+## 1.2 Daily Current Operation
+
+```text
+CurrentStateStore
++ 오늘/최근 delta source
++ current market/risk/report/news event
+→ CandidateEvent/Trigger pool
+→ DepthPolicy
+→ selected Research Brain planning
+→ official-first SourceTask
+→ bounded IR/report/Naver/Web fallback
+→ full source fetch
+→ EvidenceDocument / Anchor
+→ RawAssertion
+→ adjudicated current claim
+→ append-only claim ledger
 → PrimitiveState
 → ScoreContribution
 → deterministic scorer
 → StageCourt
-→ Stage + score + evidence + missing conditions
+→ CurrentOperationRunnerInput manifest
+→ pure CurrentOperationRunner evaluator
+→ daily watchlist / pending / risk review
+```
 
-역할은 다음처럼 고정한다.
+## 1.3 Full-Universe Census
 
-Historical research:
-현재 점수의 증거가 아니라, 무엇을 어떻게 찾아야 하는지 가르치는 판례집
+```text
+동일한 current source corpus / claim ledger / atomic decision
+→ 전 eligible symbol의 baseline status
+→ 필요한 종목만 selective deep
+→ Stage0 / Stage1 / Stage2 / Yellow / Green / Red / 4A/4B/4C
+   또는 Provider/Source/Budget Pending
+→ 전체 Stage map
+```
 
-LLM Research Brain:
-아키타입 가설, 조사 질문, source route, query intent, claim extraction, 반례 탐색
-
-Code:
-source/date/scope/current lifecycle/duplicate/conflict/primitive eligibility 검증
-
-Deterministic scorer / StageCourt:
-점수와 Stage 계산
-
-현재 source-backed claim:
-점수에 들어가는 유일한 증거
-
----
-
-# 1. 최우선 금지사항
-
-다음은 어떤 Phase에서도 금지한다.
-
-1. scoring weight 또는 Stage threshold를 변경해서 통과하지 마라.
-2. C05, 삼성전자, SK하이닉스 같은 특정 종목/아키타입 예외를 하드코딩하지 마라.
-3. source_proxy_only / evidence_url_pending / price_path_only / shadow_only research row를 current score evidence로 쓰지 마라.
-4. historical MFE/MAE/outcome label을 current planner나 claim extractor prompt에 넣지 마라.
-5. LLM이 score/stage를 직접 출력하거나 FeatureInput/ScoreContribution을 mutate하지 못하게 하라.
-6. primitive 이름을 보고 고정 query string을 만드는 deterministic query template를 만들지 마라.
-7. 뉴스 headline/snippet을 score evidence로 쓰지 마라.
-8. Naver/Web search result가 full article fetch 없이 점수로 들어가지 못하게 하라.
-9. provider failure, source gap, runtime budget exhaustion을 낮은 점수나 Red로 확정하지 마라.
-10. accepted claim이 없는데 nonzero score를 만들지 마라.
-11. 원래 primitive와 다른 rerouted claim이 accepted되었다고 원래 source task를 satisfied 처리하지 마라.
-12. old risk를 current OPEN 확인 없이 현재 penalty/hard break로 쓰지 마라.
-13. report summary 숫자를 leaf artifact보다 우선하지 마라.
-14. PASS 라벨을 report-only commit으로 바꾸지 마라.
-15. 실패한 test를 삭제하거나 threshold를 낮춰 통과하지 마라.
-16. 동일 runtime 명령 재실행만 하고 self-repair라고 부르지 마라.
-17. 현재 시장에 각 아키타입 후보가 없다는 이유로 억지 종목을 materialize하지 마라.
-18. historical replay와 current operation의 결과를 같은 production row로 섞지 마라.
-19. 기존 research MD를 수정·삭제해 의미를 바꾸지 마라.
-20. 새로운 historical research round를 시작하지 마라. 연구는 끝났고, 기존 연구를 제대로 컴파일하는 것이 이번 목표다.
+모든 티커가 full-thesis 점수를 받아야 하는 것은 아니다.
+그러나 모든 eligible symbol은 실제 current source attempt와 상태 이유를 가져야 한다.
 
 ---
 
-# 2. 실행 프로토콜
+# 2. 최종 역할 분리
 
-코딩을 시작하기 전에 반드시 아래 순서로 진행한다.
+## 2.1 Pure Evaluator는 유지한다
 
-## 2.1 최초 Read-Only Forensic
+`src/e2r/research_brain/runtime/current_operation_runner.py`의 핵심 원칙은 유지한다.
 
-먼저 코드를 고치지 말고 다음을 읽고 call graph를 만든다.
+```text
+- live I/O를 하지 않는다.
+- 이미 materialize된 입력을 deterministic하게 검증·조립한다.
+- same input → same leaf output
+- leaf artifact / manifest / audit를 재현한다.
+```
 
-- `AGENTS.md`
-- `docs/core/e2r_v12_prompt_round_scheduler_corrected.txt`
-- `docs/core/V12_Research_No_Repeat_Index.md`
-- `docs/operational/research_to_runtime_acceptance_report.md`
-- `docs/operational/research_to_runtime_readiness_verdict.md`
-- `docs/0701/*`
-- `docs/0703/*`
-- `docs/0705/*`
-- `src/e2r/research_brain/**`
-- `src/e2r/research_reverse/**`
-- `src/e2r/source_routing/**`
-- `src/e2r/production/**`
-- `src/e2r/census/**`
-- `src/e2r/evidence/**`
-- `src/e2r/scoring/**`
-- `src/e2r/stage/**`
-- 관련 CLI와 tests
+이 evaluator에 네트워크 호출을 마구 넣지 않는다.
+
+## 2.2 새 Live Materializer를 만든다
+
+새 계층이 실제 데이터를 만든다.
+
+예시 구조:
+
+```text
+src/e2r/research_brain/runtime/live_materialization/
+    __init__.py
+    authorization.py
+    schemas.py
+    provider_capabilities.py
+    credential_audit.py
+    universe_materializer.py
+    baseline_materializer.py
+    current_state_store.py
+    source_timeline_bootstrap.py
+    trigger_fusion.py
+    depth_selector.py
+    brain_planner_runner.py
+    source_task_builder.py
+    source_acquisition_runner.py
+    claim_compiler_runner.py
+    adaptive_closure_controller.py
+    atomic_decision_builder.py
+    current_input_manifest_builder.py
+    census_orchestrator.py
+    current_orchestrator.py
+    checkpoint_store.py
+    observability.py
+    audits.py
+```
+
+실제 파일명은 현재 레포 구조에 맞게 조정할 수 있으나,
+**live materializer와 pure evaluator 경계는 반드시 유지**한다.
+
+## 2.3 새 Operational Envelope를 만든다
+
+기존 `CurrentOperationRunnerResult.production_runtime_ready=False`는
+fixture/contract evaluator의 안전 경계로 유지할 수 있다.
+
+대신 최종 live readiness는 별도 envelope에서 판정한다.
+
+```text
+LiveOperationalRunEnvelope
+- materialization_run_id
+- evaluator_run_id
+- as_of_date
+- run_mode
+- source_corpus_hash
+- input_manifest_hash
+- evaluator_leaf_hash
+- actual_live_source_count
+- fresh_provider_cache_count
+- accepted_current_claim_count
+- current_atomic_decision_count
+- provider_blockers
+- critical_counts
+- production_runtime_ready
+```
+
+Pure evaluator 결과 하나만 보고 production ready를 선언하지 않는다.
+
+---
+
+# 3. 절대 금지사항
+
+1. scoring weight와 Stage threshold를 변경해 통과하지 마라.
+2. 삼성전자, SK하이닉스, C06 등 특정 종목/아키타입을 production logic에 하드코딩하지 마라.
+3. current/Census CLI가 manifest를 기다리기만 하는 상태에서 완료 선언하지 마라.
+4. KRX/KIND main homepage 하나를 전 종목의 universe/risk evidence로 세지 마라.
+5. generic CompanyGuide page fetch를 symbol consensus evidence로 세지 마라.
+6. snapshot, fixture, example.com, reserved test URL을 live claim provenance로 쓰지 마라.
+7. Naver headline/snippet을 score evidence로 쓰지 마라.
+8. source_proxy_only, evidence_url_pending, price_path_only historical memory를 current score에 쓰지 마라.
+9. historical MFE/MAE/outcome을 current planner/extractor prompt에 넣지 마라.
+10. LLM이 score/stage를 직접 결정하거나 AtomicScoreContribution을 임의 생성하지 못하게 하라.
+11. deterministic hardcoded query template를 canonical live path에 쓰지 마라.
+12. 기존 `naver_news.py`의 고정 query templates를 canonical Research Brain query로 사용하지 마라.
+13. provider failure를 NO_RESULT로 숨기지 마라.
+14. provider/source/runtime failure를 낮은 점수나 Red로 확정하지 마라.
+15. old risk를 current OPEN claim 없이 penalty/hard break로 쓰지 마라.
+16. rerouted claim이 accepted되었다고 원래 primitive gap을 닫지 마라.
+17. current material gap이 남았는데 FULL_E2R_100 final score를 만들지 마라.
+18. 모든 티커에 Naver/LLM deep research를 무차별 실행하지 마라.
+19. 모든 아키타입을 현재 시장에 억지로 하나씩 materialize하지 마라.
+20. report summary 수치로만 PASS하지 마라.
+21. 테스트 fixture 결과로 live production ready를 선언하지 마라.
+22. 실패 후 같은 명령만 반복하고 self-repair라고 부르지 마라.
+23. threshold 완화, fixture 추가, 특정 종목 예외로 acceptance를 통과하지 마라.
+24. 외부 blocker와 내부 materializer 미구현을 하나의 blocker로 합치지 마라.
+25. 사용자가 수정한 `docs/core/goal*.md`를 임의로 되돌리거나 삭제하지 마라.
+
+---
+
+# 4. Phase 17 — Read-Only Live Gap Forensic
+
+코드를 고치기 전에 현재 live/current 경로를 전수 감사한다.
+
+대상:
+
+```text
+AGENTS.md
+src/e2r/cli/run_e2r_current_operation.py
+src/e2r/cli/run_e2r_census_mode.py
+src/e2r/research_brain/runtime/current_operation_runner.py
+src/e2r/pipeline/korea_live_lite.py
+src/e2r/production/source_connectors/**
+src/e2r/sources/**
+src/e2r/research_brain/planning/**
+src/e2r/research_brain/runtime/**
+src/e2r/evidence/**
+src/e2r/scoring/**
+src/e2r/stage/**
+tests/**
+docs/operational/e2r_reconstruction_phase16*
+```
 
 생성:
 
-docs/operational/e2r_reconstruction_forensic_baseline.md
-docs/operational/e2r_runtime_call_graph_before.json
-docs/operational/e2r_duplicate_brain_stack_inventory.json
-docs/operational/e2r_current_conversion_funnel_baseline.json
+```text
+docs/operational/e2r_live_materialization_forensic_baseline.md
+docs/operational/e2r_live_materialization_call_graph_before.json
+docs/operational/e2r_provider_capability_inventory_before.json
+docs/operational/e2r_current_manifest_dependency_inventory.json
+```
 
-반드시 기록할 것:
+반드시 답할 질문:
 
-- production에서 실제 호출되는 entrypoint
-- 각 entrypoint가 어떤 parser/memory/planner/router/extractor를 사용하는지
-- `research_brain`과 `research_reverse/source_routing` 중복 경로
-- production reachable / test-only / dead code
-- summary artifact를 다시 읽는 경로
-- source task → accepted claim → primitive → score → StageCourt 연결부
-- 현재 failure funnel
-- current official verdict와 blockers
+1. canonical current/Census CLI가 실제로 어디서 manifest를 찾는가?
+2. manifest 부재 시 어떤 함수가 exit 3를 만드는가?
+3. `CurrentOperationRunnerInput`의 각 필드를 현재 어느 코드가 만들 수 있는가?
+4. 기존 KoreaLiveLite의 어떤 부분을 재사용할 수 있고, 어떤 부분은 legacy/unsafe인가?
+5. OpenDART/KIND/KRX/CompanyGuide connector가 실제 symbol-specific 데이터를 주는가?
+6. generic portal fetch가 실질 evidence로 오인될 경로가 있는가?
+7. KRX current universe를 실제로 materialize하는 기존 코드가 있는가?
+8. Naver/Web transport와 LLM query generation이 분리되어 있는가?
+9. current accepted claim → provenance → atomic decision을 만드는 canonical 경로가 있는가?
+10. initial full-universe bootstrap과 daily incremental update가 분리되어 있는가?
+11. 내부 구현 blocker와 credential/provider blocker가 어떻게 섞여 있는가?
 
-## 2.2 내부 Master Plan
+Phase 17 완료 조건:
 
-그 다음에 아래 문서를 작성한다.
+```text
+- MISSING_INTERNAL_MATERIALIZER와 EXTERNAL_PROVIDER_BLOCKER를 분리
+- production reachable manifest-only path를 정확히 기록
+- 재사용 가능한 connector/service 목록 확정
+- 폐기/adapter/deprecate할 legacy 경로 확정
+```
 
-docs/operational/e2r_reconstruction_master_plan.md
+한글 커밋:
 
-각 Phase마다 다음을 적는다.
+```text
+Phase 17 현재 운영 입력 단절과 live connector 경로 감사
+```
 
-- 문제
-- root cause file/function
-- 제거할 legacy path
-- 새 schema/API
-- migration 방식
-- 구현 파일
-- 테스트
-- runtime acceptance
-- rollback point
-- commit message
+---
 
-Master Plan 작성 후 질문하거나 확인을 요구하지 말고 즉시 구현에 들어간다.
+# 5. Phase 18 — Architecture & Authorization Contract
 
-## 2.3 Phase Commit 규칙
+생성:
 
-각 Phase는 독립적인 한글 커밋으로 남긴다.
+```text
+docs/operational/e2r_live_materialization_architecture.md
+configs/e2r_live_materialization_v1.json
+configs/e2r_current_bootstrap_v1.json
+configs/e2r_production_daily_v1.json
+configs/e2r_census_selective_deep_v1.json
+```
 
-예:
+운영 모드:
 
-Phase 0: E2R 중복 두뇌 경로와 기준선 감사
-Phase 1: Research Brain 단일 실행 경로 통합
-Phase 2: 연구 JSONL case 단위 의미 컴파일러 구현
-...
+```text
+MANIFEST_REPLAY
+LIVE_BOOTSTRAP
+LIVE_DAILY_INCREMENTAL
+LIVE_CENSUS_BASELINE
+LIVE_CENSUS_SELECTIVE_DEEP
+TARGETED_LIVE_SMOKE
+TEST_FIXTURE
+```
+
+각 모드는 다음을 명시한다.
+
+```text
+- live authorization required?
+- allowed providers
+- universe policy
+- baseline policy
+- Brain candidate budget
+- source task budget
+- LLM budget
+- Naver/Web budget
+- checkpoint/resume
+- final label ceiling
+```
+
+CLI authorization:
+
+```text
+--input-manifest <path>
+```
+
+가 있으면 기존 replay/evaluator 모드.
+
+```text
+--materialize-live-input true
+--live-materialization-authorized true
+```
+
+이면 기존 connector를 사용해 manifest를 스스로 만든다.
+
+둘 다 없으면 기존 fail-closed Stage 0/Pending을 유지한다.
+
+중요:
+
+```text
+live-materialization-authorized=true가 있는데
+manifest가 없다는 이유로 바로 exit 3 하면 critical fail.
+```
+
+한글 커밋:
+
+```text
+Phase 18 bounded live materialization 승인과 실행 계약 추가
+```
+
+---
+
+# 6. Phase 19 — Provider Capability Matrix & Credential Audit
+
+각 provider를 기능별로 분해한다.
+
+```text
+ProviderCapability
+- provider_name
+- required_for_bootstrap
+- required_for_daily
+- can_build_universe
+- can_fetch_bulk_price
+- can_fetch_symbol_price
+- can_fetch_disclosure_index
+- can_fetch_full_official_document
+- can_fetch_risk_status
+- can_fetch_consensus_revision
+- can_discover_issuer_ir
+- can_search_news
+- can_fetch_full_article
+- supports_batch
+- supports_checkpoint
+- auth_env_keys
+- live_ready
+- blocker_reason
+```
+
+필수 provider:
+
+```text
+OpenDART
+KRX
+KIND
+CompanyGuide
+IssuerIR
+TrustedNews
+NaverSearch
+GeneralWebFetcher
+ExistingLedger
+ResearchMemory
+```
+
+Credential audit:
+
+```text
+- load_project_env로 `.env`를 읽는다.
+- secret 값은 출력하지 않는다.
+- PRESENT / MISSING / INVALID / AUTH_FAILED만 기록한다.
+- `.env`에 키가 있는데 process env에 없다는 이유로 missing 처리하지 않는다.
+```
+
+Blocker taxonomy:
+
+```text
+MISSING_INTERNAL_MATERIALIZER
+MISSING_CREDENTIAL
+INVALID_CREDENTIAL
+PROVIDER_AUTH_FAILURE
+PROVIDER_RATE_LIMIT
+PROVIDER_SCHEMA_CHANGED
+PROVIDER_NETWORK_FAILURE
+UNIVERSE_FETCH_FAILURE
+DOCUMENT_FETCH_FAILURE
+LLM_PROVIDER_FAILURE
+SOURCE_EXHAUSTED
+RUNTIME_BUDGET_EXHAUSTED
+```
+
+금지:
+
+```text
+CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE
+```
+
+하나로 모든 문제를 뭉개지 마라.
+
+Generic portal guard:
+
+```text
+- KRX main page fetch != KRX universe
+- KIND main page fetch != symbol risk status
+- CompanyGuide homepage != symbol consensus
+- generic portal document는 provider health check일 수는 있어도
+  symbol-specific baseline/evidence source로 세지 않는다.
+```
+
+출력:
+
+```text
+docs/operational/e2r_live_provider_capability_matrix.json
+docs/operational/e2r_live_credential_audit.json
+docs/operational/e2r_live_provider_blocker_matrix.json
+```
+
+한글 커밋:
+
+```text
+Phase 19 live provider 기능과 credential blocker 분리
+```
+
+---
+
+# 7. Phase 20 — Current KRX Universe Materializer
+
+구현 예:
+
+```text
+src/e2r/research_brain/runtime/live_materialization/universe_materializer.py
+```
+
+목표:
+
+```text
+KRX current full universe
+→ market / name / symbol / security type / listing status
+→ eligible common-stock universe
+→ DailyUniverseMember
+```
+
+필수 규칙:
+
+1. official KRX source 또는 현재성이 증명된 official-derived data를 사용한다.
+2. KRX main HTML page만 가져와 universe가 만들어졌다고 하지 않는다.
+3. ETF, ETN, SPAC, preferred share, REIT 등 제외 정책을 config로 명시한다.
+4. excluded instrument도 count와 reason을 남긴다.
+5. symbol/company/market/eligibility가 없는 row는 quarantine한다.
+6. `as_of_date` 이후 데이터 사용 금지.
+7. same source snapshot + same config에서 deterministic.
+8. bulk-first로 구현한다.
+9. full universe를 symbol별 HTTP 3천 번으로 만들지 않는다.
+10. source URL/official document ID/content hash/fetched time/provider request ID를 남긴다.
+
+출력:
+
+```text
+output/live_materialization/<AS_OF_DATE>/universe_raw.jsonl
+output/live_materialization/<AS_OF_DATE>/universe_eligible.jsonl
+output/live_materialization/<AS_OF_DATE>/universe_excluded.jsonl
+output/live_materialization/<AS_OF_DATE>/universe_provenance.json
+```
+
+Hard acceptance:
+
+```text
+raw_universe_count > 1000
+eligible_universe_count > 1000
+missing_symbol_count = 0
+missing_company_name_count = 0
+duplicate_eligible_symbol_count = 0
+fixture_symbol_count = 0
+generic_portal_counted_as_universe_count = 0
+future_universe_data_count = 0
+```
+
+한글 커밋:
+
+```text
+Phase 20 KRX 현재 전체 universe materializer 구현
+```
+
+---
+
+# 8. Phase 21 — Versioned CurrentStateStore & Initial Bootstrap
+
+초기 전체 지도는 daily recent window만으로 만들 수 없다.
+
+구현 예:
+
+```text
+current_state_store.py
+source_timeline_bootstrap.py
+claim_ledger_loader.py
+lifecycle_refresher.py
+```
+
+CurrentStateStore:
+
+```text
+- target identity
+- universe snapshot
+- baseline source attempts
+- latest regular financial state
+- material official events
+- open contract/investment/capacity events
+- current risk lifecycle
+- consensus/revision state
+- accepted current claims
+- historical-only claims
+- pending source tasks
+- last effective thesis
+- last updated source corpus hash
+```
+
+Initial bootstrap source policy:
+
+```text
+1. latest regular report / latest financial actual
+2. latest material disclosure
+3. open supply contract / investment / financing / risk event lifecycle
+4. existing claim ledger
+5. previous Census/daily state
+6. latest consensus/revision where available
+7. price/volume baseline
+```
+
+중요:
+
+```text
+최근 30/90/365일 밖이라는 이유만으로 active event를 버리지 않는다.
+```
+
+Lifecycle examples:
+
+```text
+공급계약:
+contract end/cancellation/supersession까지 active
+
+시설투자:
+completion/cancellation/revenue conversion까지 active
+
+정기보고서:
+latest report가 prior financial state를 supersede
+
+리스크:
+official clear/resolution/supersession까지 OPEN 가능
+
+뉴스/IR:
+full source current claim + later official contradiction check 필요
+
+가격 이상:
+짧은 investigation trigger일 뿐 current thesis evidence가 아님
+```
+
+Bootstrap completeness:
+
+```text
+COMPLETE
+PARTIAL_HISTORY_PENDING
+PROVIDER_PENDING
+SOURCE_GAP
+```
+
+history가 불완전한 종목을 `NoCurrentCatalyst`로 위장하지 않는다.
+
+출력:
+
+```text
+output/current_state/<AS_OF_DATE>/current_state_store.jsonl
+output/current_state/<AS_OF_DATE>/source_timelines.jsonl
+output/current_state/<AS_OF_DATE>/last_effective_thesis.jsonl
+output/current_state/<AS_OF_DATE>/bootstrap_completeness.json
+```
+
+Hard acceptance:
+
+```text
+source_timeline_count == eligible_universe_count
+last_effective_thesis_count == eligible_universe_count
+symbol_without_any_source_attempt_count = 0
+recent_window_used_as_stage_cutoff_count = 0
+old_active_contract_dropped_count = 0
+old_resolved_risk_scored_count = 0
+provider_failure_mapped_no_thesis_count = 0
+```
+
+한글 커밋:
+
+```text
+Phase 21 전 종목 current state bootstrap과 claim lifecycle 구현
+```
+
+---
+
+# 9. Phase 22 — Four Required Baseline Lanes
+
+`CurrentOperationRunnerInput`이 요구하는 baseline lane을 실제로 만든다.
+
+각 eligible symbol에 대해:
+
+```text
+OFFICIAL
+PRICE
+RISK
+EXISTING_LEDGER
+```
+
+## OFFICIAL
+
+```text
+- latest regular report checked
+- latest material official event checked
+- source IDs / observed date
+- no result vs provider failed 분리
+```
+
+## PRICE
+
+```text
+- current/as-of price
+- trading value
+- relative strength / anomaly
+- price는 trigger 우선순위용
+- score evidence 아님
+```
+
+## RISK
+
+```text
+- trading halt
+- management issue
+- delisting/listing risk
+- disclosure violation
+- investment warning
+- current official lifecycle
+```
+
+## EXISTING_LEDGER
+
+```text
+- prior current accepted claim
+- stale needs refresh
+- superseded/contradicted
+- no prior ledger
+```
+
+Bulk-first 원칙:
+
+```text
+KRX price/universe/risk, DART disclosure index는 가능한 한 batch/pagination으로 수집한다.
+symbol별 3천 번 동일 portal page를 요청하지 않는다.
+```
+
+Provider failure는 해당 symbol/lane에만 붙인다.
+전 universe를 ProviderPending으로 만들지 않는다.
+
+Hard acceptance:
+
+```text
+baseline_lane_count == eligible_count * 4
+missing_required_baseline_lane_count = 0
+baseline_lane_provider_failure_without_error_count = 0
+observed_lane_without_source_id_count = 0
+price_lane_to_score_count = 0
+generic_portal_observed_lane_count = 0
+```
+
+한글 커밋:
+
+```text
+Phase 22 current operation 필수 baseline lane 실제 연결
+```
+
+---
+
+# 10. Phase 23 — Trigger Fusion & Candidate Pool
+
+Current trigger type:
+
+```text
+OFFICIAL
+EARNINGS
+IR
+REPORT
+NEWS
+MARKET
+RISK
+EXISTING_LEDGER
+```
+
+Trigger source:
+
+```text
+OpenDART/KIND/KRX
+CompanyGuide/report radar
+Issuer IR/newsroom
+TrustedNews/Naver discovery
+market anomaly
+existing current claim/pending thesis
+```
 
 규칙:
 
-- Phase별 unit test 통과 후 커밋
-- 전체 integration test는 주요 Phase마다 실행
-- 최종 full test 전에 report-only PASS commit 금지
-- 최종 HEAD에서 working tree clean
-- 모든 commit SHA를 final report에 기록
-
-## 2.4 실패 시 행동
-
-Phase 또는 end-to-end 실행이 실패하면:
-
-실패
-→ failure cluster 생성
-→ 가장 많은 실패를 만드는 root cause file/function 식별
-→ 코드/schema/prompt/source recipe 패치
-→ focused unit test
-→ 같은 frozen replay/current run 재실행
-→ conversion funnel before/after 비교
-
-다음을 금지한다.
-
-실패 → report에 NOT_READY 쓰고 Goal 완료
-실패 → 같은 query 그대로 재실행
-실패 → threshold 완화
-실패 → 특정 종목 예외
-
-외부 API/유료 source/네트워크 장애만 `EXTERNAL_SOURCE_BLOCKER_NOT_READY`로 남길 수 있다.
-그 경우에도 외부 blocker와 무관한 모든 코드 Phase는 끝까지 완료한다.
-
----
-
-# 3. Phase 0 — 현재 결과 재분류와 안전한 기준선
-
-현재 Goal4 산출물을 삭제하지 않되 의미를 정확히 낮춘다.
-
-현재 공식 상태는 다음과 같이 유지한다.
-
-MEANINGFUL_RUNTIME_PARITY_NOT_READY
-
-생성:
-
-docs/operational/e2r_reconstruction_phase0_baseline.md
-docs/operational/e2r_legacy_artifact_classification.json
-
-분류:
-
-- VALID_SAFETY_INFRASTRUCTURE
-- VALID_DETERMINISTIC_SCORING_INFRASTRUCTURE
-- PROVISIONAL_RESEARCH_MEMORY
-- HEURISTIC_RESEARCH_REVERSE
-- HEURISTIC_SOURCE_ROUTE
-- REPORT_OR_PLAN_ONLY
-- RUNTIME_PROOF
-- DEPRECATED
-- TEST_ONLY
-
-Hard acceptance:
-
-- 현재 11,394 research case count를 meaningful case count로 간주하지 않음
-- 현재 1,855 source route pattern을 recovered route count로 간주하지 않음
-- 111 task shell을 evidence count로 간주하지 않음
-- current promoted full thesis 0개 상태를 정직하게 보존
-- report label을 올리지 않음
-
----
-
-# 4. Phase 1 — Research Brain 단일 Source of Truth 통합
-
-현재 `src/e2r/research_brain`과 `src/e2r/research_reverse`, `src/e2r/source_routing`이 병렬로 존재한다.
-
-`src/e2r/research_brain`을 canonical intelligence layer로 정한다.
-
-구현 전략:
-
-src/e2r/research_brain/
-    corpus/
-    compiler/
-    recipes/
-    retrieval/
-    planning/
-    replay/
-    runtime/
-
-기존:
-
-src/e2r/research_reverse/**
-src/e2r/source_routing/**
-
-처리:
-
-- production import 금지
-- 새 canonical 구현으로 forward하는 compatibility adapter만 허용
-- deprecation warning
-- 새로운 schema를 복제하지 않음
-- production reachable legacy count = 0
-
-새 모듈 예:
-
-src/e2r/research_brain/corpus/research_corpus_parser.py
-src/e2r/research_brain/corpus/research_case_linker.py
-src/e2r/research_brain/compiler/semantic_case_compiler.py
-src/e2r/research_brain/compiler/source_verification_compiler.py
-src/e2r/research_brain/recipes/evidence_recipe_compiler.py
-src/e2r/research_brain/recipes/evidence_recipe_catalog.py
-src/e2r/research_brain/retrieval/semantic_memory_index.py
-src/e2r/research_brain/retrieval/balanced_case_retriever.py
-src/e2r/research_brain/planning/two_pass_brain_planner.py
-src/e2r/research_brain/runtime/adaptive_investigation_controller.py
-
-공식 CLI:
-
-python -m e2r.cli.compile_e2r_research_intelligence
-python -m e2r.cli.run_e2r_historical_replay
-python -m e2r.cli.run_e2r_current_operation
-python -m e2r.cli.audit_e2r_evidence_intelligence
-
-legacy CLI는 production-ready 라벨을 만들 수 없게 한다.
-
-Hard acceptance:
-
-- duplicate brain schema source of truth count = 1
-- production reachable legacy research_reverse count = 0
-- production reachable primitive-name route guesser count = 0
-- old CLI pass-label capability count = 0
-- all current tests migrated or adapter로 보존
-
-Tests:
-
-tests/test_research_brain_single_source_of_truth.py
-tests/test_legacy_research_reverse_not_production_reachable.py
-tests/test_legacy_source_route_not_production_reachable.py
-tests/test_legacy_cli_cannot_claim_ready.py
-
----
-
-# 5. Phase 2 — Research Corpus Semantic Compiler
-
-기존 `research_case_extractor.py`의 다음 방식은 production에서 완전히 제거한다.
-
-- text[:24000]
-- 파일명/본문에서 archetype 문자열 탐색
-- 첫 번째 6자리 symbol
-- company_name=None
-- trigger_date=None
-- 파일 전체 URL을 case URL로 사용
-- primitive 문자열 출현 여부로 positive/missing 결정
-- 파일 하나를 archetype별 record 하나로 압축
-
-## 5.1 Structured Row First
-
-historical research MD는 다음 순서로 읽는다.
-
-1. YAML front matter
-2. fenced JSON
-3. fenced JSONL
-4. fenced CSV
-5. Markdown table
-6. narrative section
-7. handoff prompt는 별도 metadata이며 case evidence로 읽지 않음
-
-이미 machine-readable row가 있으면 해당 row가 source of truth다.
-LLM으로 다시 추정하지 않는다.
-
-## 5.2 새 canonical schema
-
-HistoricalResearchArtifact, HistoricalResearchCase, HistoricalOutcome, HistoricalRuleCandidate를 구현한다.
-
-HistoricalResearchCase에는 최소 다음 필드를 둔다.
-
-- case_id
-- artifact_id
-- source_file
-- source line range
-- symbol
-- company_name
-- trigger_type
-- trigger_date
-- entry_date
-- canonical/fine archetype
-- large sector
-- case role
-- classification
-- evidence family
-- evidence URLs/summaries
-- declared source quality
-- positive/missing/counter evidence fields
-- stage caps/hard breaks/false-positive patterns
-- price metrics ref
-- score simulation refs
-- shadow rule refs
-- transition refs
-- runtime_score_eligible=false
-
-HistoricalOutcome은 evaluator-only로 분리하고 runtime prompt에 노출하지 않는다.
-
-## 5.3 Row Linking
-
-다음을 실제 ID로 연결한다.
-
-- case.case_id
-- trigger.case_id / trigger_id
-- score_simulation.case_id / trigger_id
-- shadow_weight.trigger_ids / evidence_case_ids
-- stage_transition_summary.symbol + entry_date
-- residual_contribution.archetype
-- source map rows
-
-하나의 파일에 8개 case가 있으면 8개 HistoricalResearchCase를 만든다.
-첫 symbol만 뽑지 않는다.
-
-## 5.4 Narrative Fallback
-
-machine-readable row가 없는 narrative만 LLM semantic compiler를 사용한다.
-
-LLM은 case 후보·uncertainty·source span을 출력하고 score/stage는 계산하지 않는다.
-LLM row는 `LLM_DERIVED_UNVERIFIED`로 quarantine review에 보낸다.
-
-## 5.5 Quarantine
-
-- malformed JSONL
-- conflicting duplicate
-- missing symbol/date
-- URL-case association ambiguous
-- inconsistent archetype
-- outcome only
-- handoff prompt accidental parsing
+1. trigger는 investigation을 연다.
+2. trigger 자체는 score evidence가 아니다.
+3. headline/snippet은 verification task를 만든다.
+4. current source-backed claim만 score를 연다.
+5. trigger dedupe는 symbol + source event + effective date 기준.
+6. wrong subject / related company / customer company를 target event로 오인하지 않는다.
+7. existing active thesis와 pending source task도 trigger pool에 포함한다.
+8. active contract가 오래됐다는 이유로 trigger pool에서 사라지지 않는다.
+9. current market에 실제 trigger가 없는 archetype을 억지로 만들지 않는다.
 
 출력:
 
-output/research_intelligence/corpus/historical_cases.jsonl
-output/research_intelligence/corpus/historical_outcomes.jsonl
-output/research_intelligence/corpus/historical_rules.jsonl
-output/research_intelligence/corpus/quarantine.jsonl
-output/research_intelligence/corpus/linkage_errors.jsonl
+```text
+candidate_events.jsonl
+trigger_signals.jsonl
+trigger_dedupe_report.json
+trigger_source_distribution.json
+```
 
 Hard acceptance:
 
-- valid structured JSONL row preservation = 100%
-- golden files case count exact
-- present company_name loss = 0
-- present trigger_date loss = 0
-- first-symbol collapse = 0
-- 24k truncation = 0
-- handoff prompt parsed as case = 0
-- duplicate conflict silent overwrite = 0
+```text
+full_universe_trigger_scan_attempted = true
+market_trigger_to_score_count = 0
+news_snippet_to_score_count = 0
+wrong_subject_trigger_count = 0
+trigger_without_source_ref_count = 0
+```
 
-Golden corpus 최소:
+한글 커밋:
 
-- C06 URL-backed research
-- C08 URL-backed research
-- C15 URL-backed research
-- C17 source-proxy research
-- C24 source-proxy research
-- C28 source-proxy research
-- registry 전체 샘플
+```text
+Phase 23 공식·리포트·뉴스·시장·기존 장부 trigger 통합
+```
 
 ---
 
-# 6. Phase 3 — Case-Level Source Verification Compiler
+# 11. Phase 24 — DepthPolicy & Bounded Candidate Selection
 
-파일에 URL 하나가 있다고 case 전체가 A2가 되어서는 안 된다.
+전 종목 baseline은 실행하지만 deep research는 선별한다.
 
-새 source state:
+Depth:
 
-SOURCE_PROXY_ONLY
-EVIDENCE_URL_PENDING
-URL_PRESENT_UNVERIFIED
-URL_FETCH_FAILED
-URL_FETCHED_NO_ANCHOR
-URL_FETCHED_WRONG_SUBJECT
-URL_FETCHED_DATE_INVALID
-URL_FETCHED_ANCHORED
-URL_FETCHED_ANCHORED_CASE_MATCH
-HISTORICAL_REPLAY_READY
+```text
+L0_UNIVERSE
+L1_BASELINE
+L2_OFFICIAL_LIGHT
+L3_RESEARCH_BRAIN
+L4_ACQUISITION
+L5_FULL_THESIS
+```
 
-A2/HISTORICAL_REPLAY_READY는 다음을 모두 만족해야 한다.
+Selection inputs:
 
-- URL 또는 official document id
-- fetch 또는 valid provider snapshot
-- content hash
-- published date
-- historical as-of 이전
-- target/subject directness
-- exact quote/table/API locator
-- case/trigger와 의미적으로 연결
-- evidence summary와 source가 모순되지 않음
-- current score evidence와 분리
+```text
+- trigger materiality
+- current risk
+- existing active thesis
+- pending material gap
+- official event
+- earnings/revision
+- report/IR/news verification need
+- market anomaly
+- provider/source gap
+- random sector audit sample
+```
 
-source_proxy/evidence_url_pending row는 URL repair queue로 보낸다.
+중요:
 
-Hard acceptance:
+```text
+current operation에서 archetype quota를 강제로 채우지 않는다.
+```
 
-- case-level URL association 없는 A2 = 0
-- URL string only A2 = 0
-- wrong-subject replay fixture = 0
-- source_proxy replay ready = 0
-- 모든 URL-backed golden case는 replay ready 또는 exact blocker
-- source proxy는 repair/planning only
+Historical parity는 historical replay에서 검증한다.
+현재 시장에서는 실제 후보만 선택한다.
 
----
+Budgets:
 
-# 7. Phase 4 — Executable Evidence Recipe OS
+```text
+max_official_light_targets
+max_deep_candidates
+max_brain_candidates
+max_acquisition_candidates
+max_llm_calls_per_candidate
+max_source_tasks_per_candidate
+max_fetches_per_candidate
+max_retries_per_candidate
+max_general_web_fetches_per_candidate
+max_runtime_seconds
+```
 
-“primitive 이름을 source-backed하게 확인”하는 generic route를 폐기한다.
-
-EvidenceRecipe는 최소 다음을 포함한다.
-
-- archetype/primitive/role
-- economic mechanism
-- question to answer
-- accepted claim predicates
-- required entities/values/units/time
-- required target directness/current lifecycle
-- preferred source families/document types/sections
-- discovery source
-- forbidden score source
-- positive examples
-- counterexamples
-- wrong-subject examples
-- source success/failure examples
-- rejection conditions
-- counter/supersession questions
-- query intent constraints
-- stop/source-exhaustion conditions
-- supporting case IDs
-
-C06, C08, C15, C17, C24, C28의 세밀한 판례를 반영한다.
-
-recipe는 Evidence Contract + historical case + verified source success/failure를 결합해서 만든다.
-primitive 이름 substring으로 route를 결정하지 않는다.
-
-Hard acceptance:
-
-- registry 모든 required primitive에 recipe 또는 explicit unsupported reason
-- URL-backed case recipe example 비어 있지 않음
-- source proxy example planning-only
-- generic query-only recipe = 0
-- primitive substring production routing = 0
-- acceptance/rejection/counter/lifecycle 누락 = 0
-
----
-
-# 8. Phase 5 — Semantic Memory Graph와 Retrieval
-
-ResearchMemoryGraph node/edge를 구현한다.
-
-Node:
-
-- case
-- recipe
-- primitive
-- archetype
-- source
-- positive/counter/hard-break/source-success/source-failure
-
-Edge:
-
-- SUPPORTS
-- COUNTERS
-- CAPS
-- REQUIRES
-- BEST_FOUND_IN
-- FAILED_IN
-- SUPERSEDES
-- WRONG_SUBJECT_EXAMPLE
-- SAME_MECHANISM
-
-retrieval은 first-N이나 memory count 우선이 아니라 다음을 균형 있게 반환한다.
-
-- positive
-- counterexample/guard
-- source success
-- source failure
-- semantic guard
-- direct recipe
-
-historical MFE/MAE는 planner에서 숨긴다.
-
-Acceptance:
-
-- top-3 archetype retrieval hit >= 95%
-- required recipe hit >= 95%
-- positive+guard pair >= 90%
-- future leakage = 0
-- first-N-only retrieval = 0
-- popularity bias critical = 0
-
----
-
-# 9. Phase 6 — Two-Pass LLM Research Brain
-
-Pass A는 source_primary/archetype label/score/Stage/outcome을 보지 않고 current evidence만으로 top-k hypothesis를 만든다.
-
-Pass B에서 balanced memory와 recipes를 이용해 critique한다.
+`CurrentOperationRunnerConfig`의 nested budget 조건을 유지한다.
 
 출력:
 
-- top-k archetype
-- supporting/contradicting current facts
-- positive thesis
-- counter thesis
+```text
+depth_decisions.jsonl
+candidate_selection_audit.json
+budget_allocation.json
+not_selected_budget.jsonl
+```
+
+Hard acceptance:
+
+```text
+every eligible symbol has depth decision
+selected_deep_count > 0 on full live validation unless exact low-signal proof
+unbounded_candidate_count = 0
+forced_archetype_quota_count = 0
+not_selected_without_reason_count = 0
+```
+
+한글 커밋:
+
+```text
+Phase 24 전 종목 baseline과 bounded selective deep 정책 연결
+```
+
+---
+
+# 12. Phase 25 — Canonical Research Brain Live Planning
+
+이전 reconstruction에서 만든 canonical Research Brain을 사용한다.
+legacy keyword router 또는 primitive-name query template를 사용하지 않는다.
+
+Planner input:
+
+```text
+- target identity
+- as_of_date
+- current source timeline
+- current baseline events
+- existing current claims
+- last effective thesis
+- balanced historical memory
+- Evidence Recipes
+- provider capability/gap
+- budget
+```
+
+Planner input에서 숨길 것:
+
+```text
+- score
+- Stage
+- future MFE/MAE
+- historical outcome
+- expected archetype answer
+- source_primary archetype binding
+```
+
+Two-pass:
+
+```text
+Pass A:
+current facts만 보고 top-k mechanism/hypothesis
+
+Pass B:
+balanced positive/counter/source-success/source-failure memory로 critique
+```
+
+Planner output:
+
+```text
+- top-k archetype hypotheses
+- current supporting facts
+- current counter thesis
 - must-verify questions
 - red-team questions
-- source task drafts
-- do-not-promote
-- abstention/ambiguity
+- do-not-promote reasons
+- SourceTask drafts
+- LLM-generated query intents
+- ambiguity/abstention
+```
 
-코드는 다음을 검증한다.
+금지:
 
-- score/stage output 없음
-- source-primary copy 없음
-- target/sector plausibility
-- recipe coverage
-- official-first/budget
-- outcome leakage
-- unsupported ambiguity abstention
+```text
+- score output
+- Stage output
+- hard break final
+- current_score_eligible final
+- deterministic hardcoded query
+```
 
-Acceptance:
+LLM provider failure:
 
-- planner score/stage mutation = 0
-- source-primary copy without reason = 0
-- ambiguous abstention 지원
-- blind top-3 >= 95%
-- top-1 >= 85%
-- critical guard misroute = 0
-- impossible archetype assignment = 0
-- prompt/response hash 보존
-- provider failure는 PlannerPending
+```text
+PlannerPending / ProviderPending
+```
 
----
+으로 남긴다.
 
-# 10. Phase 7 — Question-Centric SourceTask
+출력:
 
-SourceTask는 단순 primitive label이 아니라 실제 질문과 성공조건을 가진다.
+```text
+planner_runs.jsonl
+llm_prompts.jsonl
+llm_responses.jsonl
+planner_validation.json
+```
 
-필수 필드:
+Hard acceptance:
 
-- recipe_id
-- question_to_answer
-- why_material
-- accepted predicates
-- entities/values/time scope
-- counter questions
-- rejection conditions
-- source/document/section
-- discovery/forbidden source
-- LLM query intent
-- bounded budgets
-- stop/exhaustion condition
+```text
+selected_L3_count > 0
+planner_call_count > 0
+real_planner_success_count > 0 or exact LLM blocker
+planner_score_stage_key_count = 0
+future_outcome_prompt_leak_count = 0
+source_primary_copy_without_reason_count = 0
+provider_failure_final_score_count = 0
+```
 
-literal query는 LLM이 current context를 보고 생성하고 code가 검증한다.
+한글 커밋:
 
-Acceptance:
-
-- empty question = 0
-- empty accepted predicate = 0
-- empty rejection condition = 0
-- generic verify-primitive task = 0
-- official-first violation = 0
-- FCF/contract/backlog Naver-first = 0
-- unbounded query/fetch = 0
+```text
+Phase 25 canonical Research Brain current 조사계획 실제 실행
+```
 
 ---
 
-# 11. Phase 8 — Source Acquisition와 Document Selection
+# 13. Phase 26 — Question-Centric SourceTask Materialization
 
-모드:
+`DailySourceTaskRecord`에 맞는 bounded task를 실제 생성한다.
 
-- PRODUCTION_BOUNDED
-- HISTORICAL_REPLAY
-- SOURCE_REPAIR_BACKFILL
-- CONTROLLED_SMOKE
+각 task에는 내부적으로 다음이 있어야 한다.
 
-공식 source 우선 후 public report/industry/TrustedNews/Naver discovery를 사용한다.
+```text
+task_id
+target_id
+question_task_id
+recipe_id
+question_to_answer
+why_material
+accepted_predicates
+required_entities
+required_values_units
+time_scope
+counter_questions
+rejection_conditions
+source_class
+preferred_document_types
+preferred_sections
+max_queries
+max_candidates
+max_fetches
+max_retries
+stop_on_resolution
+allows_general_web
+official_first_attempted
+official_gap_reasons
+```
 
-Naver/Web:
+공식 우선:
 
-- discovery only
-- full article fetch
-- original source
+```text
+DART/KIND/KRX/CompanyGuide/IssuerIR
+→ gap 남음
+→ TrustedNews/Naver/Web bounded fallback
+```
+
+예:
+
+```text
+FCF gap을 Naver부터 보내지 않는다.
+공급계약 gap을 DART보다 Naver 먼저 보내지 않는다.
+```
+
+기존 `naver_news.py`의 deterministic company/sector query templates는
+canonical live path에서 사용 금지한다.
+
+Naver는 transport 역할만 한다.
+
+```text
+Research Brain query
+→ validation
+→ Naver API request
+```
+
+Hard acceptance:
+
+```text
+generic_verify_primitive_task_count = 0
+empty_question_task_count = 0
+empty_success_condition_count = 0
+official_first_violation_count = 0
+hardcoded_query_template_used_in_canonical_path_count = 0
+unbounded_source_task_count = 0
+```
+
+한글 커밋:
+
+```text
+Phase 26 질문 중심 SourceTask와 official-first query 경로 구현
+```
+
+---
+
+# 14. Phase 27 — Real Source Acquisition Orchestrator
+
+기존 connector를 재사용하되 실제 기능이 약하면 보강한다.
+
+## OpenDART
+
+필수:
+
+```text
+- corp code index
+- bulk disclosure index by date
+- symbol/corp mapping
+- latest regular report
+- material disclosure
+- full official document/API record
+- financial actual where available
+- correction/cancellation/supersession
+```
+
+## KRX
+
+필수:
+
+```text
+- current universe
+- current market/status
+- price/trading value baseline
+- actual relevant structured output
+```
+
+KRX main page HTML health check만으로 충족 금지.
+
+## KIND
+
+필수:
+
+```text
+- symbol-specific risk/listing/disclosure status
+```
+
+KIND main portal page 하나를 모든 symbol의 risk evidence로 쓰지 않는다.
+
+## CompanyGuide
+
+필수:
+
+```text
+- symbol-specific consensus/revision
+- fetched page date/currentness
+- structured parse provenance
+```
+
+## IssuerIR
+
+필수:
+
+```text
+- official IR/newsroom discovery
+- earnings presentation / conference call / business update
+- source URL/content hash/published date
+```
+
+## TrustedNews/Naver/Web
+
+필수:
+
+```text
+- Research Brain-generated query만
+- result discovery
+- original source preference
+- full article/PDF fetch
+- repost dedupe
+- wrong-subject rejection
 - snippet score 금지
-- repost/wrong-subject guard
+```
 
-recipe에 맞는 문서 섹션을 선택한다.
+Acquisition result classes:
 
-Acceptance:
+```text
+REAL_PROVIDER_FETCH
+FRESH_PROVIDER_CACHE
+EXISTING_LEDGER_REFRESH
+NO_RESULT
+PROVIDER_FAILED
+AUTH_FAILED
+RATE_LIMITED
+REJECTED_BY_POLICY
+SOURCE_EXHAUSTED
+BUDGET_EXHAUSTED
+```
 
-- snapshot-as-live = 0
-- snippet-as-document = 0
-- no content hash fetched = 0
-- provider failure masked = 0
-- source class/document mismatch = 0
-- report replay counted real fetch = 0
-- docs linked to task/recipe
-- Naver result has full fetch or rejection
+Generic portal result는:
+
+```text
+PROVIDER_HEALTH_ONLY
+```
+
+로 분리하고 symbol evidence로 쓰지 않는다.
+
+출력:
+
+```text
+provider_requests.jsonl
+provider_fetch_results.jsonl
+evidence_documents.jsonl
+web_search_tasks.jsonl
+web_search_results.jsonl
+web_fetched_documents.jsonl
+web_rejected_documents.jsonl
+provider_call_report.json
+```
+
+Hard acceptance:
+
+```text
+actual_live_or_fresh_document_count > 0
+generic_portal_counted_as_symbol_evidence = 0
+fetched_without_content_hash_count = 0
+future_document_count = 0
+snippet_document_count = 0
+snapshot_counted_live_count = 0
+wrong_subject_document_to_claim_count = 0
+provider_failure_masked_no_result_count = 0
+```
+
+한글 커밋:
+
+```text
+Phase 27 official-first live source acquisition과 full document provenance 구현
+```
 
 ---
 
-# 12. Phase 9 — Contract-Blind Claim Compiler
+# 15. Phase 28 — Current Claim Compiler & Provenance
 
-Raw extractor는 target identity, as-of, source document만 보고 assertion을 뽑는다.
-
-primitive gap, desired archetype, score, Stage, historical outcome을 보지 않는다.
+실제 fetched document에서 current claim을 만든다.
 
 순서:
 
-Anchor
-→ Entity/subject
-→ Target directness
-→ Temporal/effective period
-→ Lifecycle
-→ Contradiction/supersession
-→ Recipe/primitive mapping
-→ Score eligibility
+```text
+EvidenceDocument
+→ EvidenceAnchor
+→ contract-blind RawAssertion
+→ subject/target resolution
+→ temporal/effective period
+→ lifecycle/supersession
+→ contradiction
+→ recipe/primitive mapping
+→ accepted claim
+→ DailyClaimProvenance
+```
 
-SourceTask satisfaction을 분리한다.
+`DailyClaimProvenance` 요구사항을 만족한다.
 
-- DIRECT_TASK_SATISFIED
-- REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN
-- BASELINE_CLAIM_REUSED
-- LIFECYCLE_REFRESH_ONLY
-- COUNTER_CLAIM_FOUND
-- NO_RELEVANT_CLAIM
-- WRONG_SUBJECT
-- STALE_ONLY
-- PROVIDER_FAILED
-- SOURCE_EXHAUSTED
+```text
+- document_id
+- source_url
+- published_date
+- available_date
+- content_sha256
+- full document text
+- exact quote
+- source IDs
+- anchor IDs
+- mapping IDs
+- extraction provider
+- mapping provider
+- DIRECT
+- CURRENT
+- ACCEPTED
+- fetched=true
+- anchor_verified=true
+- source_proxy_only=false
+```
 
-rerouted claim은 ledger에는 넣되 원래 gap을 닫지 않는다.
+LLM raw extractor는 보지 않는다.
+
+```text
+- desired primitive
+- score
+- Stage
+- failed Green gate
+- historical outcome
+```
+
+Structured official API는 deterministic extraction을 허용하되,
+명확한 subject/date/value/locator가 있어야 한다.
+
+Unstructured text는 LLM extractor가 실패하면 mention-only/pending이다.
+
+Task satisfaction:
+
+```text
+DIRECT_TASK_SATISFIED
+REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN
+BASELINE_CLAIM_REUSED
+LIFECYCLE_REFRESH_ONLY
+COUNTER_CLAIM_FOUND
+NO_RELEVANT_CLAIM
+WRONG_SUBJECT
+STALE_ONLY
+PROVIDER_FAILED
+SOURCE_EXHAUSTED
+```
 
 Hard acceptance:
 
-- accepted claim missing anchor/source/date/subject/target = 0
-- source proxy current claim = 0
-- wrong subject score = 0
-- old unknown risk penalty = 0
-- rerouted original gap closure = 0
-- unstructured rule fallback score = 0
-- recipe mapping 없는 score claim = 0
-- parser mention direct score = 0
+```text
+accepted_claim_without_provenance_count = 0
+accepted_claim_without_exact_quote_count = 0
+accepted_claim_without_content_hash_count = 0
+wrong_subject_score_count = 0
+source_proxy_current_claim_count = 0
+rerouted_claim_closed_original_gap_count = 0
+old_unknown_risk_penalty_count = 0
+unstructured_rule_fallback_score_count = 0
+```
+
+한글 커밋:
+
+```text
+Phase 28 live fetched document를 current claim provenance로 연결
+```
 
 ---
 
-# 13. Phase 10 — Adaptive Investigation Controller
+# 16. Phase 29 — Append-Only Ledger & Adaptive Gap Closure
 
-실패 이유별 next action을 만든다.
+Current claim ledger는 append-only다.
 
-- NO_DOCUMENT_FOUND
-- WRONG_SUBJECT
-- STALE_ONLY
-- GENERIC_CONTEXT_ONLY
-- REROUTED_PRIMITIVE
-- MAPPING_REJECTED
-- CONTRADICTION_OPEN
-- PROVIDER_FAILED
-- SOURCE_EXHAUSTED
+```text
+새 claim 추가
+supersession 명시
+contradiction 연결
+invalidation reason
+lifecycle refresh
+```
 
-각 failure는 query/source/document/target constraint를 다르게 바꾼다.
+기존 claim을 조용히 덮어쓰거나 삭제하지 않는다.
 
-동일 query 재실행을 금지한다.
+실패 원인별 next action:
 
-Runtime adaptive investigation과 coding-agent systemic repair를 분리한다.
+```text
+NO_DOCUMENT_FOUND
+WRONG_SUBJECT
+STALE_ONLY
+GENERIC_CONTEXT_ONLY
+REROUTED_PRIMITIVE
+MAPPING_REJECTED
+CONTRADICTION_OPEN
+PROVIDER_FAILED
+SOURCE_EXHAUSTED
+BUDGET_EXHAUSTED
+```
 
-`until_pass`라는 이름으로 단순 rerun을 self-repair라고 부르지 않는다.
+각 원인별로 다음 attempt가 달라야 한다.
 
-Acceptance:
+```text
+- query 수정
+- provider 변경
+- document section 변경
+- target directness 강화
+- date/lifecycle query
+- counter-claim search
+```
 
-- failure reason 없는 retry = 0
-- identical retry = 0
-- rerouted feedback 반영
-- rejection → next action trace
-- material unresolved → score_valid false
-- round limit → pending
-- systemic failure cluster와 code repair history 존재
+동일 query 반복 금지.
 
----
+LLM에게 rejection context를 돌려주되,
+deterministic fallback query template를 만들지 않는다.
 
-# 14. Phase 11 — Historical Replay와 Current Operation 분리
+종료:
 
-Historical Replay:
+```text
+RESOLVED
+DISPROVED
+SOURCE_PENDING
+PROVIDER_PENDING
+BUDGET_PENDING
+SOURCE_EXHAUSTED
+```
 
-- 전 registry 아키타입 system parity 검증
-- frozen as-of
-- positive/guard/wrong-subject/old-risk/source-missing
-- outcome/expected stage/archetype는 prompt에서 숨김
+material gap이 남으면:
 
-Current Operation:
+```text
+score_valid=false
+raw reference score optional
+canonical Stage 0/Pending
+```
 
-- 현재 evidence가 있는 후보만
-- archetype quota 강제 금지
-- current claim만 score
+Hard acceptance:
 
-Historical acceptance:
+```text
+silent_claim_overwrite_count = 0
+identical_retry_count = 0
+retry_without_failure_reason_count = 0
+unresolved_material_gap_final_score_count = 0
+provider_failure_low_score_count = 0
+round_limit_score_valid_true_count = 0
+```
 
-- registry 100%
-- each archetype parity row
-- NOT_ATTEMPTED without reason = 0
-- URL-backed replay or blocker
-- critical guards 100%
-- source proxy score 0
-- top-3 >=95%, top-1 >=85%
-- mapping precision >=95%
-- positive recall >=90%
-- guard accuracy >=95%
-- future leakage 0
+한글 커밋:
 
-Current acceptance:
-
-- full-universe baseline
-- real trigger pool
-- bounded selective deep
-- each deep candidate ends in:
-  full thesis / disproved / source pending / provider pending / budget pending
-- current market에 없는 archetype은 row가 없어도 정상
-
----
-
-# 15. Phase 12 — Deterministic Score/Stage 재검증
-
-점수 종류:
-
-- EVENT_EVIDENCE_PARTIAL
-- FULL_E2R_100
-- NO_SCORE
-
-full score는 material primitive assessment와 accepted current claims, contradiction resolution, score_valid, StageCourt trace가 있어야 한다.
-
-한 AtomicStageDecision에서 stage/score/status/claims/contributions/trace/risk/missing gaps를 가져온다.
-
-score delta는 claim/config 변경으로 설명한다.
-
-hard break는 target-direct, current OPEN, source-backed, material, unresolved 조건을 모두 만족해야 한다.
-
-Acceptance:
-
-- claimless score = 0
-- material gap full score = 0
-- event score as full = 0
-- stage/score/trace mismatch = 0
-- pending final low score = 0
-- hard break without current direct OPEN = 0
-- unexplained score delta = 0
-- fingerprint mismatch concealed = 0
+```text
+Phase 29 append-only current claim ledger와 adaptive evidence closure 구현
+```
 
 ---
 
-# 16. Phase 13 — Census / Daily Operation
+# 17. Phase 30 — Primitive / Score / Atomic Stage Decision
 
-전 종목:
+검증된 current claims만 PrimitiveState에 들어간다.
 
-Universe
-→ official/price/risk/existing-ledger baseline
-→ SourceTimeline
-→ LastEffectiveThesis
-→ DepthPolicy
-→ selected deep
-→ CensusStageStatus
+```text
+PRESENT_CURRENT
+ABSENT_CURRENT
+UNKNOWN
+CONTRADICTED
+HISTORICAL_ONLY
+RESOLVED
+```
 
-최근 lookback을 Stage cutoff로 쓰지 않는다.
+ScoreContribution:
 
-모든 종목에 LLM/Naver를 돌리지 않는다.
+```text
+nonzero score
+→ support claim IDs 필수
+```
 
-- L0/L1 전 종목
-- L2 official light
-- L3 Brain
-- L4 acquisition
-- L5 full thesis
+Score type:
 
-Daily trigger는 official/earnings/IR/report/news/market/risk/existing ledger를 포함한다.
-시장·뉴스는 trigger이지 score evidence가 아니다.
+```text
+EVENT_EVIDENCE_PARTIAL
+FULL_E2R_100
+NO_SCORE
+```
 
-Watchlist는 score type, confidence, claims, missing conditions, gaps, next action을 보여준다.
+FULL_E2R_100 조건:
+
+```text
+- material primitive assessment 완료
+- accepted current claim 존재
+- contradiction 상태 정리
+- required source gap 없음
+- score_valid=true
+- StageCourt trace
+```
+
+Atomic decision에서 한 번에 가져온다.
+
+```text
+stage
+score
+score status
+claims
+contributions
+hard break
+missing conditions
+trace
+```
+
+Hard break:
+
+```text
+target direct
+current OPEN
+source-backed
+material
+unresolved
+```
+
+이 모두 필요하다.
+
+금지:
+
+```text
+qualification delay 하나로 sticky hard 4C
+old audit issue로 current hard break
+provider failure로 Red
+```
+
+Hard acceptance:
+
+```text
+claimless_nonzero_score_count = 0
+orphan_score_count = 0
+event_partial_as_full_score_count = 0
+atomic_stage_trace_mismatch_count = 0
+hard_break_without_current_direct_open_count = 0
+unexplained_score_delta_count = 0
+```
+
+한글 커밋:
+
+```text
+Phase 30 current claim 기반 deterministic score와 Atomic StageDecision 연결
+```
 
 ---
 
-# 17. Phase 14 — Conversion Funnel Observability
+# 18. Phase 31 — CurrentOperationRunnerInput Manifest Builder
 
-다음을 archetype/candidate별로 기록한다.
+가장 중요한 Phase다.
 
-candidate
-→ hypothesis
-→ retrieval
-→ recipe
-→ source task
+구현:
+
+```text
+CurrentOperationInputMaterializer
+CurrentOperationRunnerInputBuilder
+```
+
+스스로 생성해야 하는 필드:
+
+```text
+as_of_date
+universe
+baseline_lanes
+triggers
+claims
+claim_provenance
+source_tasks
+atomic_decisions
+deep_executions
+config
+```
+
+절대 사용자에게 수동 작성 요청하지 않는다.
+
+Manifest output:
+
+```text
+output/current_operation_inputs/<AS_OF_DATE>.json
+output/live_materialization/<AS_OF_DATE>/current_operation_input_manifest.json
+```
+
+Manifest validation:
+
+```text
+- full universe nonempty
+- as_of_date match
+- production config test_mode=false
+- claim provenance exact
+- budgets bounded
+- source task official-first
+- atomic decisions linked
+- provider/runtime pending explicit
+```
+
+`run_e2r_current_operation.py` 수정:
+
+```text
+A. --input-manifest가 있으면 replay/evaluate
+B. --materialize-live-input true
+   + --live-materialization-authorized true이면
+   materializer 실행 → manifest 저장 → evaluator 실행
+C. 둘 다 없으면 기존 fail-closed
+```
+
+Hard acceptance:
+
+```text
+authorized_live_run_manifest_missing_exit_count = 0
+user_manual_manifest_required_count = 0
+materialized_manifest_schema_error_count = 0
+materializer_evaluator_as_of_mismatch_count = 0
+```
+
+한글 커밋:
+
+```text
+Phase 31 canonical current CLI live input 자동 materialization 연결
+```
+
+---
+
+# 19. Phase 32 — Live Current Operational Orchestrator
+
+공식 CLI:
+
+```bash
+PYTHONPATH=src python -m e2r.cli.run_e2r_current_operation \
+  --as-of-date 2026-07-10 \
+  --mode production_bounded \
+  --universe krx \
+  --materialize-live-input true \
+  --live-materialization-authorized true \
+  --run-profile configs/e2r_production_daily_v1.json \
+  --output-root output/current_operation/live_2026-07-10 \
+  --fail-on-critical true
+```
+
+실행 단계:
+
+```text
+authorization
+→ credential/provider preflight
+→ current universe
+→ current state load/bootstrap
+→ baseline lanes
+→ trigger fusion
+→ depth selection
+→ Research Brain
+→ SourceTask
+→ acquisition
+→ claim compiler
+→ adaptive closure
+→ atomic decision
+→ CurrentOperationRunnerInput
+→ pure evaluator
+→ Operational Envelope
+```
+
+최종 output:
+
+```text
+universe.jsonl
+baseline_lanes.jsonl
+trigger_signals.jsonl
+planner_runs.jsonl
+source_tasks.jsonl
+source_task_executions.jsonl
+evidence_documents.jsonl
+evidence_anchors.jsonl
+raw_assertions.jsonl
+adjudicated_claims.jsonl
+accepted_claims.jsonl
+claim_provenance.jsonl
+primitive_states.jsonl
+score_contributions.jsonl
+atomic_decisions.jsonl
+deep_executions.jsonl
+current_operation_input_manifest.json
+current_stage_status.jsonl
+current_watchlist.json
+operator_digest.md
+live_operational_envelope.json
+audit_summary.json
+```
+
+완료 상태:
+
+```text
+FULL_THESIS
+DISPROVED
+SOURCE_PENDING
+PROVIDER_PENDING
+BUDGET_PENDING
+BASELINE_ONLY
+OFFICIAL_LIGHT
+```
+
+Stage0/Pending은 정직한 결과일 수 있다.
+하지만 manifest 부재 때문에 전부 Stage0인 것은 실패다.
+
+한글 커밋:
+
+```text
+Phase 32 실제 current operation live 오케스트레이터 완성
+```
+
+---
+
+# 20. Phase 33 — Full-Universe Census Orchestrator
+
+공식 Census CLI:
+
+```bash
+PYTHONPATH=src python -m e2r.cli.run_e2r_census_mode \
+  --as-of-date 2026-07-10 \
+  --mode census_selective_deep \
+  --universe krx \
+  --materialize-live-input true \
+  --live-materialization-authorized true \
+  --run-profile configs/e2r_census_selective_deep_v1.json \
+  --shard-count <N> \
+  --resume true \
+  --output-root output/census/live_2026-07-10 \
+  --fail-on-critical true
+```
+
+Census 규칙:
+
+1. full eligible universe baseline.
+2. all symbols get source timeline/last effective thesis/baseline lanes.
+3. selected candidates only L3/L4/L5.
+4. no-event/no-thesis can be Stage0.
+5. provider/source failure is Pending.
+6. active old thesis remains.
+7. market anomaly only gets investigation signal.
+8. score requires accepted claim.
+9. no forced score for every ticker.
+10. no forced archetype quota.
+
+Sharding:
+
+```text
+- deterministic shard
+- checkpoint
+- resume
+- idempotent rerun
+- no duplicate claims
+- deterministic merge
+```
+
+Census outputs:
+
+```text
+census_stage_map.jsonl
+census_stage_map.csv
+stage_distribution.json
+sector_distribution.json
+depth_distribution.json
+provider_gap_report.json
+source_gap_report.json
+watchlist_seed.json
+deep_backfill_queue.json
+operator_digest.md
+```
+
+Hard acceptance:
+
+```text
+every eligible symbol represented exactly once
+missing_symbol_count = 0
+duplicate_symbol_count = 0
+source_timeline_count == eligible_count
+baseline_lane_count == eligible_count * 4
+unknown_default_count = 0
+provider_pending_without_failure_count = 0
+stage0_without_source_attempt_count = 0
+claimless_nonzero_score_count = 0
+```
+
+한글 커밋:
+
+```text
+Phase 33 current source corpus 기반 전체 Census selective-deep 완성
+```
+
+---
+
+# 21. Phase 34 — Historical Source-Backed Replay Closure
+
+이전 historical replay는 semantic parity와 future-leakage 안전성은 통과했지만,
+실제 replay-ready source가 0인 상태를 그대로 최종 READY에 포함하면 안 된다.
+
+Historical replay와 current operation은 분리한다.
+
+작업:
+
+```text
+- URL-backed historical case의 full source fetch
+- content hash
+- published/available date
+- historical as-of
+- target directness
+- exact quote/table/API locator
+- positive/guard mapping
+- frozen Evidence OS replay
+```
+
+source_proxy/evidence_url_pending case:
+
+```text
+SOURCE_REPAIR_REQUIRED
+```
+
+로 남기고 score하지 않는다.
+
+Canary:
+
+```text
+C06
+C08
+C15
+C17
+C24
+C28
+```
+
+는 상세 source-backed positive/guard replay를 수행한다.
+
+전체 registry:
+
+```text
+URL-backed case가 있는 archetype은
+replay-ready 또는 exact external blocker여야 한다.
+```
+
+출력:
+
+```text
+historical_source_backed_replay.jsonl
+historical_source_repair_queue.jsonl
+historical_replay_provenance.jsonl
+```
+
+Hard acceptance:
+
+```text
+URL string only replay ready = 0
+source proxy replay score = 0
+future leakage = 0
+wrong subject replay accepted = 0
+canary source-backed replay count > 0
+```
+
+한글 커밋:
+
+```text
+Phase 34 historical URL-backed case 실제 source replay 연결
+```
+
+---
+
+# 22. Phase 35 — Targeted Live Smoke
+
+Production logic에는 종목 하드코딩 금지지만,
+explicit smoke/validation target은 허용한다.
+
+필수 smoke:
+
+```text
+005930 삼성전자
+000660 SK하이닉스
+```
+
+추가로 대형 섹터 L1~L9에서 최소 1개씩 무작위/규칙 기반 sample.
+
+삼성/하이닉스 출력은 분리한다.
+
+```text
+daily event status
+full thesis status
+accepted current claims
+source tasks
+provider/source gaps
+score type
+StageCourt trace
+```
+
+DART event partial score를 HBM full thesis score로 부르지 않는다.
+
+C06 full-thesis task는 다음을 검사한다.
+
+```text
+- customer allocation
+- sold-out/pre-sold capacity
+- qualification
+- shipment
+- revenue mix
+- margin/FCF/revision bridge
+- conventional memory drag
+- current lifecycle
+```
+
+Smoke pass는 Green을 강제하지 않는다.
+
+Pass:
+
+```text
+- actual live/fresh docs
+- real planner trace if deep selected
+- claim provenance
+- deterministic terminal status
+```
+
+Blocker가 있으면 exact pending.
+
+출력:
+
+```text
+docs/operational/e2r_live_targeted_smoke_report.json
+```
+
+한글 커밋:
+
+```text
+Phase 35 삼성전자·하이닉스와 전 섹터 live smoke 검증
+```
+
+---
+
+# 23. Phase 36 — Full Live Acceptance Run
+
+최초 acceptance 기준일:
+
+```text
+2026-07-10 KST
+```
+
+실행일이 달라지면 명시적 `as_of_date`를 사용하고 보고서에 적는다.
+
+필수 실행:
+
+```text
+1. live bootstrap
+2. live daily current
+3. live full-universe Census baseline
+4. live Census selective deep
+5. historical source-backed replay
+6. same manifest replay determinism
+```
+
+최소 current/Census 증거:
+
+```text
+eligible_universe_count > 1000
+baseline lanes complete
+nonempty trigger pool
+selected L3/L4 count > 0
+real planner calls > 0
+source tasks > 0
+real/fresh fetched docs > 0
+accepted current claims > 0
+claim provenance rows > 0
+atomic decisions > 0
+```
+
+현재 시장이 조용하다는 이유로 Green을 요구하지 않는다.
+
+그러나 full KRX에서:
+
+```text
+trigger=0
+document=0
+claim=0
+```
+
+이면 low-signal day로 통과하지 않는다.
+materialization/source/selection failure로 조사한다.
+
+동일 input manifest replay:
+
+```text
+same config/source/input hash
+→ zero variance
+```
+
+---
+
+# 24. Phase 37 — Runtime Observability & Conversion Funnel
+
+다음을 provider/symbol/candidate/archetype별로 기록한다.
+
+```text
+universe
+→ baseline attempt
+→ trigger
+→ depth
+→ planner
+→ SourceTask
 → query
-→ result
-→ fetched doc
-→ relevant doc
-→ assertion
-→ claim
-→ primitive
-→ score
-→ full thesis/pending/disproved
+→ search result
+→ fetched document
+→ relevant document
+→ RawAssertion
+→ adjudicated claim
+→ accepted claim
+→ primitive closure
+→ score contribution
+→ atomic decision
+→ terminal status
+```
 
 핵심 지표:
 
-- relevant document rate
-- accepted claim rate
-- original-gap direct closure
-- rerouted claim
-- mapping rejection
-- full thesis
-- pending reason
-- cost/runtime
+```text
+provider call/failure/rate limit
+baseline coverage
+trigger yield
+deep selection yield
+planner success
+query novelty
+full document fetch rate
+relevant document rate
+accepted claim rate
+direct original-gap closure rate
+rerouted claim rate
+mapping rejection
+full thesis/disproved/pending rate
+runtime/cost/cache/checkpoint
+```
 
-task shell 수를 progress로 말하지 않는다.
-accepted claim 총량보다 direct original-gap closure를 우선한다.
-leaf artifact에서 독립 재계산한다.
+Task shell 수나 search result 수만 progress로 말하지 않는다.
 
----
+출력:
 
-# 18. Phase 15 — Known-Bad Suite
-
-반드시 잡아야 할 것:
-
-- file-level case collapse
-- first symbol extraction
-- company/date loss
-- one URL whole-file A2
-- handoff prompt as case
-- source proxy promoted
-- C05 context copy
-- product profile as order
-- HBM keyword positive
-- security keyword ARR
-- commodity headline margin
-- snippet score
-- wrong subject
-- customer CAPA as target CAPA
-- industry demand as issuer order
-- financial contract as commercial contract
-- stale risk penalty
-- rerouted gap closure
-- provider failure Red
-- replay as real fetch
-- event score full score
-- stage/trace mismatch
-- historical outcome leakage
-- historical replay current watchlist contamination
-- forced current archetype materialization
+```text
+docs/operational/e2r_live_conversion_funnel.json
+docs/operational/e2r_live_runtime_sla.json
+docs/operational/e2r_live_provider_performance.json
+```
 
 ---
 
-# 19. Phase 16 — Test / Runtime Commands
+# 25. Phase 38 — Self-Repair Until Pass
 
-Full tests:
+이번 Goal은 실패 보고로 끝나지 않는다.
 
+Coding-agent self-repair:
+
+```text
+run
+→ leaf audit
+→ failure cluster
+→ root cause file/function
+→ code/config/prompt/recipe patch
+→ focused tests
+→ same live/frozen run
+→ before/after funnel
+→ repeat
+```
+
+Runtime adaptive retry와 code self-repair를 분리한다.
+
+Failure classes:
+
+```text
+MATERIALIZER_NOT_CALLED
+UNIVERSE_NOT_MATERIALIZED
+GENERIC_PORTAL_COUNTED_AS_DATA
+BASELINE_LANE_MISSING
+TRIGGER_FUSION_EMPTY
+DEPTH_SELECTION_EMPTY
+PLANNER_NOT_CALLED
+QUERY_TEMPLATE_HARDCODED
+OFFICIAL_FIRST_VIOLATION
+DOCUMENT_NOT_FETCHED
+CLAIM_PROVENANCE_MISSING
+ORIGINAL_GAP_NOT_CLOSED
+ATOMIC_DECISION_MISSING
+CURRENT_MANIFEST_BUILD_FAILED
+CENSUS_ALL_DEFAULT
+EXTERNAL_PROVIDER_BLOCKER
+```
+
+규칙:
+
+1. max iterations 10 이상.
+2. 동일 failure가 남으면 계속 수정.
+3. threshold 완화 금지.
+4. fixture로 live pass 대체 금지.
+5. report-only patch를 repair로 세지 않음.
+6. 외부 blocker면 provider/env/request/error/affected scope를 정확히 남김.
+7. 외부 blocker와 무관한 내부 Phase는 모두 완료.
+8. 내부 미구현 blocker를 external blocker라고 부르지 않음.
+
+생성:
+
+```text
+docs/operational/e2r_live_self_repair_log.json
+docs/operational/e2r_live_self_repair_summary.md
+```
+
+---
+
+# 26. 필수 Known-Bad Regression
+
+반드시 실패해야 하는 fixture:
+
+```text
+1. live authorization=true인데 manifest 부재로 즉시 Stage0 종료
+2. KRX homepage를 universe로 계산
+3. KIND homepage를 모든 symbol의 risk observed로 계산
+4. CompanyGuide generic page를 consensus로 계산
+5. Naver snippet을 score claim으로 계산
+6. deterministic hardcoded query template 사용
+7. provider failure를 NO_RESULT로 변환
+8. provider failure를 Red/low score로 확정
+9. source_proxy historical memory를 current score로 사용
+10. old resolved risk current penalty
+11. rerouted claim으로 original gap closure
+12. current material gap인데 FULL_E2R_100
+13. claim provenance 없이 accepted claim
+14. content hash와 document text 불일치
+15. exact quote가 document에 없음
+16. all Stage0 due source wiring failure를 Census PASS
+17. test fixture manifest를 production live로 사용
+18. snapshot URL을 live provenance로 사용
+19. same source snapshot replay variance
+20. current/Census source corpus hash 불일치
+```
+
+---
+
+# 27. 필수 테스트
+
+예시:
+
+```text
+tests/test_live_authorization_contract.py
+tests/test_live_materializer_called_without_manifest.py
+tests/test_live_provider_capability_matrix.py
+tests/test_live_current_universe_materializer.py
+tests/test_live_current_state_bootstrap.py
+tests/test_live_baseline_lane_materializer.py
+tests/test_live_trigger_fusion.py
+tests/test_live_depth_policy.py
+tests/test_live_brain_planner.py
+tests/test_live_question_source_tasks.py
+tests/test_live_official_first.py
+tests/test_live_naver_transport_queries_from_llm.py
+tests/test_live_source_acquisition.py
+tests/test_live_claim_provenance.py
+tests/test_live_adaptive_closure.py
+tests/test_live_atomic_decision.py
+tests/test_live_input_manifest_builder.py
+tests/test_live_current_orchestrator.py
+tests/test_live_census_orchestrator.py
+tests/test_live_shard_resume.py
+tests/test_live_runtime_observability.py
+tests/test_live_known_bad_regressions.py
+tests/test_historical_source_backed_replay.py
+```
+
+Hermetic full test:
+
+```bash
 PYTHONPATH=src python -m unittest discover -s tests -v
+```
 
-Compile:
+규칙:
 
-PYTHONPATH=src python -m e2r.cli.compile_e2r_research_intelligence \
-  --repo-root . \
-  --output-root output/research_intelligence/v1 \
-  --strict true
-
-Replay:
-
-PYTHONPATH=src python -m e2r.cli.run_e2r_historical_replay \
-  --registry canonical \
-  --mode blind_frozen_replay \
-  --output-root output/historical_replay/v1 \
-  --fail-on-critical true
-
-Current:
-
-PYTHONPATH=src python -m e2r.cli.run_e2r_current_operation \
-  --as-of-date <current as-of> \
-  --mode production_bounded \
-  --universe krx \
-  --output-root output/current_operation/v1 \
-  --fail-on-critical true
-
-Census:
-
-PYTHONPATH=src python -m e2r.cli.run_e2r_census_mode \
-  --as-of-date <current as-of> \
-  --mode census_selective_deep \
-  --brain canonical_v1 \
-  --output-root output/census_v_next \
-  --fail-on-critical true
-
-각 실행은 commit/config/corpus/memory/recipe/prompt/source hash와 dirty status를 남긴다.
+```text
+- no skipped Goal tests
+- live credentials/network가 필요한 테스트는 transport fixture로 hermetic하게 검증
+- 실제 live acceptance는 별도 command evidence로 검증
+- test mode 결과로 production ready 선언 금지
+```
 
 ---
 
-# 20. 완료 라벨
+# 28. 필수 출력 산출물
 
-필수 단계:
+```text
+docs/operational/e2r_live_materialization_forensic_baseline.md
+docs/operational/e2r_live_materialization_architecture.md
+docs/operational/e2r_live_provider_capability_matrix.json
+docs/operational/e2r_live_credential_audit.json
+docs/operational/e2r_live_provider_blocker_matrix.json
+docs/operational/e2r_live_universe_audit.json
+docs/operational/e2r_live_current_state_bootstrap_audit.json
+docs/operational/e2r_live_baseline_lane_audit.json
+docs/operational/e2r_live_trigger_fusion_audit.json
+docs/operational/e2r_live_depth_selection_audit.json
+docs/operational/e2r_live_brain_planner_audit.json
+docs/operational/e2r_live_source_task_audit.json
+docs/operational/e2r_live_source_acquisition_audit.json
+docs/operational/e2r_live_claim_provenance_audit.json
+docs/operational/e2r_live_adaptive_closure_audit.json
+docs/operational/e2r_live_atomic_stage_audit.json
+docs/operational/e2r_live_input_manifest_audit.json
+docs/operational/e2r_live_current_acceptance_report.md
+docs/operational/e2r_live_census_acceptance_report.md
+docs/operational/e2r_historical_source_replay_report.md
+docs/operational/e2r_live_targeted_smoke_report.json
+docs/operational/e2r_live_conversion_funnel.json
+docs/operational/e2r_live_runtime_sla.json
+docs/operational/e2r_live_self_repair_summary.md
+docs/operational/e2r_live_final_readiness_verdict.md
+```
 
-- UNIFIED_RESEARCH_BRAIN_ARCHITECTURE_PASS
-- RESEARCH_CORPUS_SEMANTIC_COMPILER_PASS
-- CASE_LEVEL_SOURCE_VERIFICATION_PASS
-- EVIDENCE_RECIPE_OS_PASS
-- SEMANTIC_RESEARCH_BRAIN_PASS
-- ADAPTIVE_EVIDENCE_CLOSURE_PASS
-- HISTORICAL_REPLAY_PARITY_PASS
-- CURRENT_OPERATIONAL_BRAIN_PASS
+Leaf output:
+
+```text
+output/live_materialization/<AS_OF_DATE>/
+output/current_state/<AS_OF_DATE>/
+output/current_operation/live_<AS_OF_DATE>/
+output/census/live_<AS_OF_DATE>/
+output/historical_replay/source_backed_v1/
+```
+
+---
+
+# 29. 독립 Reviewer Gate
+
+Reviewer A — Universe & Baseline Fidelity
+
+```text
+actual current universe
+eligibility
+baseline lane completeness
+generic portal misuse
+```
+
+Reviewer B — Brain & SourceTask Semantics
+
+```text
+LLM planner real use
+hardcoded query absence
+official-first
+question-specific task
+```
+
+Reviewer C — Source & Claim Realness
+
+```text
+actual fetch
+content hash
+quote
+target/date/current
+source-proxy rejection
+```
+
+Reviewer D — Score & Stage Integrity
+
+```text
+claim-backed score
+atomic decision
+pending semantics
+hard break
+```
+
+Reviewer E — Current/Census Separation & Consistency
+
+```text
+same source corpus
+full universe coverage
+selective deep
+no forced archetype
+```
+
+Reviewer F — Live Orchestration & Runtime Honesty
+
+```text
+materializer actually called
+manifest self-generated
+provider calls
+LLM/web calls
+runtime mode honesty
+```
+
+각 reviewer:
+
+```text
+- report generator counter를 공유하지 않는다.
+- leaf artifacts를 다시 읽는다.
+- critical 1개면 FAIL.
+- 99/100이라도 critical 1개면 FAIL.
+```
+
+---
+
+# 30. 완료 라벨
+
+중간:
+
+```text
+LIVE_MATERIALIZER_ARCHITECTURE_PASS
+LIVE_PROVIDER_CAPABILITY_PASS
+CURRENT_UNIVERSE_MATERIALIZATION_PASS
+CURRENT_STATE_BOOTSTRAP_PASS
+CURRENT_BASELINE_LANES_PASS
+CURRENT_TRIGGER_FUSION_PASS
+CURRENT_BRAIN_PLANNER_PASS
+CURRENT_SOURCE_ACQUISITION_PASS
+CURRENT_CLAIM_PROVENANCE_PASS
+CURRENT_INPUT_MANIFEST_PASS
+CURRENT_OPERATIONAL_BRAIN_PASS
+FULL_UNIVERSE_CENSUS_BASELINE_PASS
+CENSUS_SELECTIVE_DEEP_PASS
+HISTORICAL_SOURCE_BACKED_REPLAY_PASS
+```
 
 최종:
 
+```text
 MEANINGFUL_E2R_RUNTIME_READY
+```
 
 외부 blocker:
 
+```text
 EXTERNAL_SOURCE_BLOCKER_NOT_READY
+```
 
-외부 blocker가 있어도 내부 코드 Phase를 생략하지 않는다.
+단, external blocker는 다음 조건에서만 허용한다.
 
----
-
-# 21. 절대 완료가 아닌 상태
-
-- report 문구만 READY
-- research case count만 증가
-- MemoryCard 수만 증가
-- Source Route pattern 수만 증가
-- task shell만 증가
-- 동일 query rerun
-- rerouted claim 원래 gap closure
-- full thesis 0인데 준비 완료
-- replay/current 혼합
-- current archetype quota 강제
-- source proxy score
-- `until_pass` runtime retry만 수행
-- known-bad 통과
-- leaf artifact 없는 summary
-- legacy Brain production reachable
-- threshold/weight 변경
+```text
+- internal materializer 구현 완료
+- provider 호출 실제 시도
+- credential/provider/network error leaf 존재
+- affected scope 명시
+- 내부 미구현 blocker 0
+```
 
 ---
 
-# 22. 최종 독립 감사
+# 31. `MEANINGFUL_E2R_RUNTIME_READY` Hard Gate
 
-Reviewer A: Corpus Fidelity  
-Reviewer B: Recipe/Retrieval  
-Reviewer C: Source/Claim Realness  
-Reviewer D: Score/Stage Integrity  
-Reviewer E: Historical/Current Separation
+다음이 모두 참이어야 한다.
 
-각 reviewer는 report generator counters를 공유하지 않고 leaf artifacts를 읽는다.
-critical 1개면 FAIL이다.
+## Architecture
+
+```text
+pure evaluator와 live materializer 분리
+canonical CLI live materialization 경로 존재
+legacy manifest-only path가 final production 경로를 막지 않음
+```
+
+## Live universe/baseline
+
+```text
+actual eligible KRX universe > 1000
+all eligible symbols have required baseline lanes
+all eligible symbols have source timeline / last effective thesis
+```
+
+## Brain/acquisition
+
+```text
+selected deep candidates > 0
+real planner calls > 0
+question-specific SourceTasks > 0
+actual official/fresh fetched docs > 0
+bounded Naver/Web calls if exact gaps require
+```
+
+## Claims/score/stage
+
+```text
+accepted current claim > 0
+claim provenance > 0
+score contribution > 0
+atomic decision > 0
+claimless score = 0
+source proxy score = 0
+provider failure final score = 0
+```
+
+## Current/Census
+
+```text
+current operation command PASS
+Census baseline PASS
+Census selective deep PASS
+manifest was self-materialized
+not all Stage0 because manifest/source path missing
+```
+
+## Replay/safety
+
+```text
+historical source-backed canary replay PASS
+future leakage = 0
+known-bad regressions PASS
+```
+
+## Reproducibility
+
+```text
+same commit
+repo_dirty=false in clean verification
+config/corpus/memory/recipe/prompt/source/input hashes
+same manifest replay variance=0
+```
+
+## Verification
+
+```text
+full unittest PASS
+Reviewer A~F PASS
+critical count=0
+blockers=[]
+```
+
+Green/Yellow 종목이 반드시 존재할 필요는 없다.
+하지만 실제 데이터 경로가 실행되고 claim-backed terminal status가 나와야 한다.
 
 ---
 
-# 23. 최종 응답 형식
+# 32. 절대 완료가 아닌 상태
+
+다음 중 하나라도 해당하면 Goal 완료가 아니다.
+
+```text
+- current/Census가 input manifest 부재로 Stage0 exit 3
+- 사용자가 완성 manifest를 제공해야만 실행 가능
+- KRX/KIND generic homepage만 fetch
+- actual universe 없음
+- baseline lane 없음
+- planner call 0인데 Brain PASS
+- source task 0인데 acquisition PASS
+- actual fetched doc 0인데 live PASS
+- accepted current claim 0인데 runtime ready
+- source_proxy historical row가 score
+- current/Census all default due wiring failure
+- test fixture로 live acceptance 대체
+- report-only PASS
+- external blocker로 내부 미구현을 숨김
+```
+
+---
+
+# 33. 실행 중 사용자에게 묻지 말 것
+
+이 Goal은 필요한 live 연결을 명시적으로 승인했다.
+
+따라서 다음 질문으로 중단하지 마라.
+
+```text
+"live API 연결을 승인해 달라"
+"CurrentOperationRunnerInput manifest를 제공해 달라"
+"KRX universe JSON을 제공해 달라"
+"fetched documents를 제공해 달라"
+```
+
+이미 승인되었다.
+
+Credential이 실제로 없다면:
+
+```text
+어떤 env key가 missing인지 secret 없이 기록
+그 provider 외 내부 구현 계속
+대체 official source가 있으면 bounded fallback
+최종 exact external blocker
+```
+
+로 처리한다.
+
+---
+
+# 34. Phase Commit 규칙
+
+각 Phase를 한글 커밋으로 나눈다.
+
+예:
+
+```text
+Phase 17 현재 운영 입력 단절과 live connector 경로 감사
+Phase 18 bounded live materialization 승인과 실행 계약 추가
+Phase 19 live provider 기능과 credential blocker 분리
+Phase 20 KRX 현재 전체 universe materializer 구현
+...
+Phase 36 실제 KRX current와 Census acceptance 실행
+```
+
+규칙:
+
+```text
+- Phase unit test 후 commit
+- 주요 integration 후 commit
+- report-only commit으로 status 승격 금지
+- 최종 HEAD에서 worktree clean
+- push 완료
+- commit SHA 목록을 acceptance report에 기록
+```
+
+---
+
+# 35. 최종 응답 형식
+
+완료 후 다음만 보고한다.
 
 1. Final status
-2. Phase별 commit/push/worktree
-3. Full tests와 known-bad
-4. Architecture 통합
-5. Corpus compiler 수치
-6. Source verification
-7. Recipe coverage
-8. Retrieval/Brain benchmark
-9. Source/Claim closure
-10. Historical replay
-11. Current operation
-12. Conversion funnel before/after
-13. Systemic root causes repaired
-14. Reviewer A~E
-15. Final verdict와 blockers
+2. Phase별 commit SHA / 한글 message / push / clean worktree
+3. Full tests
+4. Live authorization / credential audit
+5. KRX universe materialization
+6. CurrentState bootstrap
+7. Baseline lane coverage
+8. Trigger/depth distribution
+9. Research Brain calls
+10. SourceTask / provider fetch / Naver-Web calls
+11. Evidence documents / accepted current claims / provenance
+12. Primitive / score contribution / atomic decision
+13. Current operation result
+14. Full-universe Census result
+15. Samsung/Hynix + sector smoke
+16. Historical source-backed replay
+17. Self-repair iterations
+18. Reviewer A~F
+19. Final blockers
+20. Exact final verdict
 
 ---
 
-# 24. 마지막 완료 명령
+# 36. 마지막 명령
 
-이번 작업의 성공은 문서 수, MemoryCard 수, SourceTask 수, 테스트 개수로 판단하지 않는다.
+이번 Goal의 성공은 “외부 입력을 기다리는 안전한 엔진”이 아니다.
 
-성공은 다음 사슬이 닫힐 때만 인정한다.
+성공은 다음 사슬이 실제로 닫힐 때만 인정한다.
 
-historical structured case
-→ verified case-level memory
-→ executable evidence recipe
-→ balanced semantic retrieval
-→ LLM investigation plan
+```text
+current KRX universe
+→ current baseline lanes
+→ current triggers
+→ Research Brain
 → question-specific SourceTask
-→ real fetched source
-→ direct current claim
+→ official-first real source fetch
+→ current direct claim provenance
 → primitive closure
 → deterministic score
 → StageCourt
+→ self-generated CurrentOperationRunnerInput
+→ current operation
+→ full-universe Census
+```
 
-전 아키타입 이해 여부는 historical blind replay로 검증한다.
+`CurrentOperationRunner`는 순수 evaluator로 유지하되,
+그 앞의 live materializer와 orchestrator를 완성하라.
 
-현재 좋은 종목 판단은 current operation에서 실제 current evidence가 있는 후보만 평가한다.
+실패하면 `EXTERNAL_SOURCE_BLOCKER_NOT_READY`라고 쓰고 끝내지 마라.
 
-실패하면 report에 남기고 끝내지 마라.
-가장 큰 failure cluster의 root cause를 코드에서 수정하고,
-같은 frozen replay와 current operation을 다시 실행하고,
-conversion funnel이 실제로 개선될 때까지 반복하라.
+먼저 다음을 판정하라.
 
-scoring weights와 Stage threshold는 건드리지 마라.
+```text
+내부 materializer가 없는가?
+connector가 generic page만 가져오는가?
+credential이 없는가?
+provider가 실패했는가?
+문서는 가져왔지만 claim이 안 닫히는가?
+```
 
-최종적으로 `MEANINGFUL_E2R_RUNTIME_READY`가 아니면 Goal 완료라고 말하지 마라.
+내부 문제라면 코드를 수정하고 같은 실행을 다시 돌린다.
+
+외부 provider 문제만 exact blocker로 남긴다.
+
+최종적으로 current/Census가 실제 fetched document provenance를 사용해 PASS하고,
+Reviewer A~F와 full tests가 모두 통과한 경우에만:
+
+```text
+MEANINGFUL_E2R_RUNTIME_READY
+```
+
+를 선언하라.
