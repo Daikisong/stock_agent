@@ -128,6 +128,12 @@ from .adaptive_gap_closure import (
     CurrentAdaptiveGapClosure,
     write_adaptive_gap_closure,
 )
+from .current_atomic_decision import (
+    CurrentAtomicDecisionBuilder,
+    CurrentAtomicDecisionResult,
+    CurrentPrimitiveState,
+    write_current_atomic_decisions,
+)
 
 __all__ = [
     "AuthorizationPath",
@@ -158,7 +164,10 @@ __all__ = [
     "CurrentClaimCompiler",
     "CurrentClaimCompilerConfig",
     "CurrentAdaptiveGapClosure",
+    "CurrentAtomicDecisionBuilder",
+    "CurrentAtomicDecisionResult",
     "CurrentQuestionSourceTaskMaterializer",
+    "CurrentPrimitiveState",
     "CurrentSourceAcquisitionOrchestrator",
     "CurrentDepthSelector",
     "CurrentTriggerFusion",
@@ -227,6 +236,7 @@ __all__ = [
     "write_current_state_bootstrap",
     "write_current_claim_compilation",
     "write_adaptive_gap_closure",
+    "write_current_atomic_decisions",
     "write_baseline_materialization",
     "write_brain_planner_run",
     "write_source_acquisition_run",

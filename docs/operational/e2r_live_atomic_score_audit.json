@@ -1,0 +1,42 @@
+{
+  "schema_version": "e2r_live_current_atomic_score_audit_v1",
+  "phase": 30,
+  "as_of_date": "2026-07-10",
+  "status": "PHASE_30_ACCEPTED",
+  "primitive_state_count": 9,
+  "unknown_primitive_count": 9,
+  "atomic_decision_count": 3,
+  "no_score_count": 3,
+  "stage_zero_pending_count": 3,
+  "score_valid_true_count": 0,
+  "accepted_current_claim_count": 0,
+  "score_contribution_count": 0,
+  "hard_break_count": 0,
+  "critical_counts": {
+    "claimless_nonzero_score_count": 0,
+    "orphan_score_count": 0,
+    "event_partial_as_full_score_count": 0,
+    "atomic_stage_trace_mismatch_count": 0,
+    "hard_break_without_current_direct_open_count": 0,
+    "unexplained_score_delta_count": 0
+  },
+  "lineage": {
+    "primitive_states": "output/live_materialization/2026-07-10/primitive_states.jsonl",
+    "atomic_stage_decisions": "output/live_materialization/2026-07-10/atomic_stage_decisions.jsonl",
+    "atomic_score_audit": "output/live_materialization/2026-07-10/atomic_score_audit.json"
+  },
+  "artifact_hashes": {
+    "primitive_states_sha256": "a7337f9480e80c4125dc311e734daab41f14b6553e8a2a8a2ffc296b8e4b4741",
+    "atomic_stage_decisions_sha256": "96a0c821353a1c7d50715fae1aecc500ddc0e2c7602a613d54a76043d892f7b4",
+    "atomic_score_audit_sha256": "a6e933637fd66823cf84baea2af8af962ab2f0ccc7d81b320cb14e5f39b62c0b"
+  },
+  "safety": {
+    "deterministic_rule_engine_used": true,
+    "llm_decided_stage": false,
+    "provider_failure_became_red": false,
+    "old_issue_became_hard_break": false,
+    "claimless_score_emitted": false,
+    "production_runtime_ready": false
+  },
+  "note": "accepted current claim이 없으므로 9개 primitive를 UNKNOWN으로 유지하고, 3개 target 모두 deterministic NO_SCORE / Stage 0 / Pending으로 원자 결정했다."
+}
