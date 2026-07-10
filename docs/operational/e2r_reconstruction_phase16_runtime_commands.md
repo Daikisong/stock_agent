@@ -143,7 +143,21 @@ compile summary의 숫자를 `999999`로 바꿔도 Reviewer A는 summary를 믿�
 
 `--require-live-current false`로 검사를 끄는 것 자체가 critical이다. 검사를 껐다고 READY가 되지는 않는다.
 
-현재는 실제 current source input과 clean worktree 조건이 충족되지 않았으므로 최종 상태를 정직하게 `EXTERNAL_SOURCE_BLOCKER_NOT_READY`로 유지한다.
+main worktree는 사용자 변경 때문에 dirty이고, 별도 clean 검증에서도 실제 current source input은 없었다. 따라서 최종 상태를 정직하게 `EXTERNAL_SOURCE_BLOCKER_NOT_READY`로 유지한다.
+
+### 사용자 dirty 상태와 코드 clean 검증 분리
+
+main worktree에는 사용자가 수정·삭제한 `docs/core/goal*.md` 4개가 있어 이를 임의로 되돌리지 않았다. 대신 같은 commit을 별도 clean worktree에서 다시 실행했다.
+
+- clean worktree `repo_dirty=false`
+- compile component: PASS
+- replay component: PASS
+- component commit mismatch: 0
+- working-tree critical: 0
+- clean final audit critical sum: 30
+- clean final audit status: `EXTERNAL_SOURCE_BLOCKER_NOT_READY`
+
+즉 main의 dirty 표시는 코드 변경 때문이 아니다. clean 환경에서도 남는 blocker는 실제 current/Census input leaf 부재다.
 
 ## Phase 0 기준선 18개 실패 해소
 

@@ -90,6 +90,13 @@ class E2RReconstructionPhase16AcceptanceTest(unittest.TestCase):
         final = self.acceptance["final_audit_boundary"]
         self.assertEqual(final["observed_status"], "EXTERNAL_SOURCE_BLOCKER_NOT_READY")
         self.assertFalse(final["production_runtime_ready"])
+        self.assertFalse(final["main_worktree_clean"])
+        self.assertTrue(final["main_worktree_user_changes_preserved"])
+        self.assertTrue(final["separate_clean_worktree_verified"])
+        self.assertTrue(final["clean_audit_working_tree_clean"])
+        self.assertTrue(final["clean_audit_compile_component_pass"])
+        self.assertTrue(final["clean_audit_replay_component_pass"])
+        self.assertEqual(final["clean_audit_critical_count_sum"], 30)
         self.assertTrue(final["disabling_live_requirement_is_itself_critical"])
         self.assertTrue(all(value == 0 for value in self.acceptance["hard_acceptance"].values()))
 
