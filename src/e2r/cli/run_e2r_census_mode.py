@@ -1,7 +1,7 @@
 """Run E2R Census Mode v1.
 
-This legacy CLI is fixture/backward-compatibility only. Production Census pass
-generation must use `run_e2r_census_v4_until_pass`.
+This legacy CLI is fixture/backward-compatibility only. Canonical bounded daily
+operation uses `run_e2r_current_operation` with a validated input manifest.
 """
 
 from __future__ import annotations
@@ -31,7 +31,8 @@ def main(argv: list[str] | None = None) -> int:
     if not args.allow_legacy_v1:
         print(
             "run_e2r_census_mode is legacy v1 and cannot claim production Census pass. "
-            "Use python -m e2r.cli.run_e2r_census_v4_until_pass, or pass --allow-legacy-v1 for explicit fixture-only runs."
+            "Use python -m e2r.cli.run_e2r_current_operation with a bounded input manifest, "
+            "or pass --allow-legacy-v1 for explicit fixture-only runs."
         )
         return 2
     result = run_census_mode(

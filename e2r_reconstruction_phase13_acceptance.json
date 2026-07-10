@@ -1,0 +1,212 @@
+{
+  "schema_version": "e2r_reconstruction_phase13_acceptance_v1",
+  "phase": 13,
+  "status": "CURRENT_OPERATIONAL_BRAIN_PASS",
+  "verified_on": "2026-07-10",
+  "scope": "Full-universe current daily Census with bounded selective depth, atomic score-stage projection, SourceTask leaves, and safe watchlist output",
+  "production_runtime_ready": false,
+  "canonical_daily_pipeline": {
+    "universe_to_four_lane_baseline": true,
+    "baseline_to_source_timeline": true,
+    "source_timeline_to_last_effective_thesis": true,
+    "last_effective_thesis_to_depth_policy": true,
+    "selected_deep_to_terminal_execution": true,
+    "atomic_decision_to_census_stage_status": true,
+    "census_stage_status_to_safe_watchlist": true,
+    "recent_lookback_stage_cutoff_forbidden": true,
+    "all_symbol_llm_forbidden": true,
+    "all_symbol_general_web_forbidden": true,
+    "archetype_or_sector_quota_forbidden": true
+  },
+  "frozen_daily_run": {
+    "as_of_date": "2026-06-30",
+    "run_id": "DAILY-315ef13cc27b84d8e3477d0a",
+    "full_universe_count": 8,
+    "eligible_universe_count": 8,
+    "baseline_lane_count": 32,
+    "required_baseline_lane_count": 32,
+    "source_timeline_count": 8,
+    "last_effective_thesis_count": 8,
+    "depth_policy_count": 8,
+    "census_stage_status_count": 8,
+    "watchlist_count": 8,
+    "candidate_target_count": 8,
+    "selected_deep_candidate_count": 5,
+    "source_task_leaf_count": 6,
+    "deep_terminal_outcome_count": 5,
+    "leaf_hash": "bb7ed7dccbd9e68ed56d8b9ad04ff469f9b16b2b80c770634ec611357419b27e"
+  },
+  "baseline_contract": {
+    "required_lanes": [
+      "OFFICIAL",
+      "PRICE",
+      "RISK",
+      "EXISTING_LEDGER"
+    ],
+    "lane_count_per_eligible_symbol": 4,
+    "baseline_is_score_evidence": false,
+    "provider_failure_becomes_pending_not_zero_score": true
+  },
+  "depth_policy": {
+    "L0_UNIVERSE": 8,
+    "L1_BASELINE": 8,
+    "L2_OFFICIAL_LIGHT": 8,
+    "L3_RESEARCH_BRAIN": 5,
+    "L4_ACQUISITION": 4,
+    "L5_FULL_THESIS": 1,
+    "selection_uses_trigger_priority_with_bounded_capacity": true,
+    "selection_uses_archetype_quota": false,
+    "selection_uses_recent_stage_cutoff": false
+  },
+  "daily_trigger_contract": {
+    "trigger_family_counts": {
+      "OFFICIAL": 1,
+      "EARNINGS": 1,
+      "IR": 1,
+      "REPORT": 1,
+      "NEWS": 1,
+      "MARKET": 1,
+      "RISK": 1,
+      "EXISTING_LEDGER": 1
+    },
+    "all_triggers_open_investigation_only": true,
+    "trigger_used_as_score_evidence_count": 0,
+    "market_news_used_as_score_evidence_count": 0
+  },
+  "bounded_source_tasks": {
+    "task_leaf_count": 6,
+    "all_tasks_have_max_queries": true,
+    "all_tasks_have_max_candidates": true,
+    "all_tasks_have_max_fetches": true,
+    "all_tasks_have_max_retries": true,
+    "all_tasks_stop_on_resolution": true,
+    "all_task_leaves_referenced_exactly_once": true,
+    "official_first_general_web_task_count": 1,
+    "unbounded_task_count": 0,
+    "unreferenced_or_duplicate_task_count": 0,
+    "task_outside_selected_deep_count": 0,
+    "execution_over_task_budget_count": 0
+  },
+  "terminal_outcomes": {
+    "FULL_THESIS": 1,
+    "DISPROVED": 1,
+    "SOURCE_PENDING": 1,
+    "PROVIDER_PENDING": 1,
+    "BUDGET_PENDING": 1
+  },
+  "atomic_status_projection": {
+    "stage_counts": {
+      "0": 3,
+      "1": 3,
+      "3-Green": 1,
+      "4C": 1
+    },
+    "score_type_counts": {
+      "FULL_E2R_100": 1,
+      "NO_SCORE": 7
+    },
+    "finalized_score_count": 1,
+    "pending_finalized_score_count": 0,
+    "provider_or_source_pending_low_score_count": 0,
+    "stage_score_without_atomic_decision_count": 0
+  },
+  "last_effective_thesis_contract": {
+    "current_open_claim_count": 18,
+    "oldest_open_claim_observed_date": "2024-01-15",
+    "old_open_claim_preserved_as_of_2026_06_30": true,
+    "recent_cutoff_stage_drop_count": 0,
+    "historical_replay_claim_count": 0
+  },
+  "watchlist_contract": {
+    "row_count": 8,
+    "shows_score_type": true,
+    "shows_confidence": true,
+    "shows_claims": true,
+    "shows_missing_conditions": true,
+    "shows_gaps": true,
+    "shows_next_action": true,
+    "direct_investment_recommendation_count": 0,
+    "projection_mismatch_count": 0
+  },
+  "legacy_adapter_contract": {
+    "one_way_existing_census_to_canonical_current": true,
+    "universe_baseline_timeline_and_thesis_leaves_preserved": true,
+    "legacy_stage_hint_copied_to_canonical_stage_count": 0,
+    "legacy_score_promoted_to_atomic_score_count": 0,
+    "adapter_fixture_baseline_lane_count": 4,
+    "adapter_fixture_trigger_count": 2
+  },
+  "production_boundary": {
+    "production_bounded_contract_ready": true,
+    "test_only_source_task_rejected_in_production": true,
+    "fixture_provider_rejected_in_production": true,
+    "bounded_codex_provider_contract_accepted": true,
+    "live_execution_observed": false,
+    "real_krx_universe_provider_observed": false,
+    "real_official_source_completion_observed": false,
+    "production_acceptance_credit": false,
+    "production_runtime_ready": false
+  },
+  "integrity_audit": {
+    "schema_version": "e2r_current_operation_runner_audit_v1",
+    "status": "BOUNDED_DAILY_CENSUS_PASS",
+    "critical_check_count": 61,
+    "critical_count_sum": 0,
+    "result_hash": "bb7ed7dccbd9e68ed56d8b9ad04ff469f9b16b2b80c770634ec611357419b27e",
+    "production_runtime_ready": false
+  },
+  "known_bad_detection": {
+    "missing_universe_status_detected": true,
+    "market_trigger_score_promotion_detected": true,
+    "recent_stage_cutoff_detected": true,
+    "open_claim_dropped_from_thesis_detected": true,
+    "pending_score_finalization_detected": true,
+    "investment_recommendation_language_detected": true,
+    "missing_watchlist_projection_detected": true,
+    "unbounded_daily_config_detected": true,
+    "unbounded_source_task_detected": true,
+    "source_task_without_stop_condition_detected": true,
+    "unreferenced_source_task_detected": true,
+    "unauthorized_general_web_detected": true,
+    "forbidden_archetype_or_sector_quota_detected": true,
+    "all_symbol_llm_detected": true
+  },
+  "hard_acceptance": {
+    "universe_symbol_without_status_count": 0,
+    "eligible_symbol_missing_l0_l1_count": 0,
+    "required_baseline_lane_missing_count": 0,
+    "recent_lookback_stage_cutoff_count": 0,
+    "current_open_claim_dropped_by_lookback_count": 0,
+    "market_news_score_evidence_count": 0,
+    "selected_deep_without_terminal_outcome_count": 0,
+    "llm_outside_selected_deep_count": 0,
+    "all_symbol_llm_execution_count": 0,
+    "all_symbol_general_web_execution_count": 0,
+    "unbounded_production_config_count": 0,
+    "unbounded_source_task_count": 0,
+    "source_task_lineage_error_count": 0,
+    "general_web_without_official_gap_count": 0,
+    "pending_final_score_count": 0,
+    "watchlist_recommendation_language_count": 0,
+    "critical_count_sum": 0
+  },
+  "acceptance_evidence_scope": {
+    "deterministic_fixture_only": true,
+    "phase12_atomic_decision_wired_into_daily_status": true,
+    "legacy_census_adapter_observed": true,
+    "daily_cli_manifest_round_trip_observed": true,
+    "real_daily_runtime_wiring_observed": false,
+    "production_acceptance_credit": false
+  },
+  "verification": {
+    "phase0_through_phase13_targeted_test_count": 236,
+    "phase13_contract_test_count": 16,
+    "full_suite_test_count": 5541,
+    "full_suite_failure_count": 18,
+    "phase0_baseline_known_failure_count": 18,
+    "new_failure_count": 0,
+    "known_failure_scope": "mutable goal4 research-to-runtime operational snapshots"
+  },
+  "official_verification_command": "PYTHONPATH=src:tests python -m unittest tests.test_current_operation_runner tests.test_e2r_reconstruction_phase13_acceptance -v",
+  "next_required_phase": "Phase 14 conversion funnel observability from candidate through full thesis, pending, or disproved, independently recomputed from leaf artifacts"
+}
