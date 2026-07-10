@@ -2,13 +2,16 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
+import re
 from dataclasses import asdict, dataclass
 from datetime import date
 from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Sequence
+from urllib.parse import urlsplit
 
 from e2r.production.metadata import stable_hash, write_json, write_jsonl, write_text
 from e2r.research_brain.runtime.atomic_score_stage import (
@@ -79,6 +82,112 @@ class DailyProviderKind(str, Enum):
     CODEX = "CODEX"
     FIXTURE = "FIXTURE"
     NONE = "NONE"
+
+
+_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+_NON_PRODUCTION_SOURCE_HOSTS = frozenset(
+    {
+        "example.com",
+        "example.net",
+        "example.org",
+        "example.test",
+        "localhost",
+    }
+)
+
+
+@dataclass(frozen=True)
+class DailyClaimProvenance:
+    provenance_id: str
+    claim_id: str
+    target_id: str
+    document_id: str
+    source_url: str
+    published_date: str
+    available_date: str
+    content_sha256: str
+    document_text: str
+    exact_quote: str
+    source_ids: tuple[str, ...]
+    anchor_ids: tuple[str, ...]
+    mapping_ids: tuple[str, ...]
+    extraction_provider_kind: str
+    mapping_provider_kind: str
+    decision_use: str = "SCORE"
+    directness: str = "DIRECT"
+    temporal_status: str = "CURRENT"
+    mapping_status: str = "ACCEPTED"
+    fetched: bool = True
+    anchor_verified: bool = True
+    source_proxy_only: bool = False
+    test_only: bool = False
+
+    def __post_init__(self) -> None:
+        for provider in (
+            self.extraction_provider_kind,
+            self.mapping_provider_kind,
+        ):
+            if DailyProviderKind(provider) == DailyProviderKind.NONE:
+                raise ValueError("claim provenance requires an explicit provider")
+        if not all(
+            isinstance(item, str) and item.strip()
+            for item in (
+                self.provenance_id,
+                self.claim_id,
+                self.target_id,
+                self.document_id,
+                self.source_url,
+                self.document_text,
+                self.exact_quote,
+            )
+        ):
+            raise ValueError("claim provenance identity/source/quote is required")
+        published = date.fromisoformat(self.published_date)
+        available = date.fromisoformat(self.available_date)
+        if available < published:
+            raise ValueError("claim provenance cannot predate publication")
+        if not _SHA256_RE.fullmatch(self.content_sha256):
+            raise ValueError("claim provenance content hash must be SHA-256")
+        if (
+            hashlib.sha256(self.document_text.encode("utf-8")).hexdigest()
+            != self.content_sha256
+            or self.exact_quote not in self.document_text
+        ):
+            raise ValueError("claim provenance document hash/quote mismatch")
+        if self.decision_use not in {"SCORE", "HARD_BREAK"}:
+            raise ValueError("claim provenance decision use is invalid")
+        for field_name in ("source_ids", "anchor_ids", "mapping_ids"):
+            _require_unique_text(
+                getattr(self, field_name),
+                context=f"claim provenance {field_name}",
+                required=field_name != "mapping_ids" or self.decision_use == "SCORE",
+            )
+        if (
+            self.directness != "DIRECT"
+            or self.temporal_status != "CURRENT"
+            or (
+                self.decision_use == "SCORE"
+                and self.mapping_status != "ACCEPTED"
+            )
+            or (
+                self.decision_use == "HARD_BREAK"
+                and self.mapping_status != "NOT_REQUIRED_HARD_BREAK"
+            )
+        ):
+            raise ValueError("claim provenance must be direct/current/accepted")
+        for field_name in (
+            "fetched",
+            "anchor_verified",
+            "source_proxy_only",
+            "test_only",
+        ):
+            if not isinstance(getattr(self, field_name), bool):
+                raise ValueError(f"claim provenance {field_name} must be boolean")
+        if not self.fetched or not self.anchor_verified or self.source_proxy_only:
+            raise ValueError("claim provenance must be fetched, anchored, and non-proxy")
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
 
 
 class DailyThesisLifecycle(str, Enum):
@@ -382,6 +491,7 @@ class CurrentOperationRunnerConfig:
     max_general_web_fetches_per_candidate: int
     max_runtime_seconds: float
     test_mode: bool = False
+    require_claim_provenance: bool = False
 
     def __post_init__(self) -> None:
         positive = (
@@ -418,8 +528,11 @@ class CurrentOperationRunnerConfig:
             or self.max_runtime_seconds <= 0.0
         ):
             raise ValueError("daily runtime budget must be finite and positive")
-        if not isinstance(self.test_mode, bool):
-            raise ValueError("daily test_mode must be boolean")
+        for name in ("test_mode", "require_claim_provenance"):
+            if not isinstance(getattr(self, name), bool):
+                raise ValueError(f"daily {name} must be boolean")
+        if self.test_mode and self.require_claim_provenance:
+            raise ValueError("test mode cannot claim production provenance enforcement")
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -743,6 +856,7 @@ class CurrentOperationRunnerInput:
     atomic_decisions: tuple[AtomicStageDecision, ...]
     deep_executions: tuple[DailyDeepExecution, ...]
     config: CurrentOperationRunnerConfig
+    claim_provenance: tuple[DailyClaimProvenance, ...] = ()
 
     def __post_init__(self) -> None:
         date.fromisoformat(self.as_of_date)
@@ -757,6 +871,9 @@ class CurrentOperationRunnerInput:
             "baseline_lanes": [item.to_dict() for item in self.baseline_lanes],
             "triggers": [item.to_dict() for item in self.triggers],
             "claims": [item.to_dict() for item in self.claims],
+            "claim_provenance": [
+                item.to_dict() for item in self.claim_provenance
+            ],
             "source_tasks": [item.to_dict() for item in self.source_tasks],
             "atomic_decisions": [
                 item.to_dict() for item in self.atomic_decisions
@@ -774,6 +891,7 @@ class CurrentOperationRunnerResult:
     baseline_lanes: tuple[DailyBaselineLane, ...]
     triggers: tuple[CurrentTriggerSignal, ...]
     claims: tuple[AtomicScoreClaim, ...]
+    claim_provenance: tuple[DailyClaimProvenance, ...]
     source_tasks: tuple[DailySourceTaskRecord, ...]
     source_timelines: tuple[DailySourceTimeline, ...]
     thesis_states: tuple[DailyLastEffectiveThesis, ...]
@@ -857,6 +975,7 @@ def run_current_daily_census(
         baseline_lanes=inputs.baseline_lanes,
         triggers=inputs.triggers,
         claims=inputs.claims,
+        claim_provenance=inputs.claim_provenance,
         source_tasks=inputs.source_tasks,
         source_timelines=timelines,
         thesis_states=thesis_states,
@@ -927,6 +1046,7 @@ def run_current_daily_census(
             item.current_open and item.source_backed and not item.historical_replay
             for item in inputs.claims
         ),
+        "claim_provenance_count": len(inputs.claim_provenance),
         "recent_cutoff_stage_drop_count": 0,
         "market_news_score_evidence_count": 0,
         "llm_outside_selected_deep_count": 0,
@@ -937,7 +1057,12 @@ def run_current_daily_census(
         "leaf_hash": leaf_hash,
         "test_mode": inputs.config.test_mode,
         "production_bounded_contract_ready": True,
-        "live_execution_observed": False,
+        "live_execution_observed": bool(
+            not inputs.config.test_mode
+            and inputs.config.require_claim_provenance
+            and inputs.claim_provenance
+            and any(item.fetches > 0 for item in inputs.deep_executions)
+        ),
         "production_runtime_ready": False,
     }
     return CurrentOperationRunnerResult(
@@ -947,6 +1072,7 @@ def run_current_daily_census(
         baseline_lanes=inputs.baseline_lanes,
         triggers=inputs.triggers,
         claims=inputs.claims,
+        claim_provenance=inputs.claim_provenance,
         source_tasks=inputs.source_tasks,
         source_timelines=timelines,
         thesis_states=thesis_states,
@@ -1021,6 +1147,58 @@ def _validate_current_inputs(
         if claim.historical_replay:
             raise ValueError("historical replay claim entered daily current operation")
         claims_by_target.setdefault(claim.target_id, []).append(claim)
+    provenance_by_claim = _unique_by(
+        inputs.claim_provenance,
+        key=lambda item: item.claim_id,
+        context="daily claim provenance",
+    )
+    for provenance in inputs.claim_provenance:
+        claim = claim_by_id.get(provenance.claim_id)
+        if claim is None or provenance.target_id != claim.target_id:
+            raise ValueError("claim provenance differs from current claim ledger")
+        if (
+            provenance.source_ids != claim.source_ids
+            or provenance.anchor_ids != claim.anchor_ids
+            or provenance.mapping_ids != claim.mapping_ids
+        ):
+            raise ValueError("claim provenance source/anchor/mapping lineage mismatch")
+        if (
+            date.fromisoformat(provenance.published_date) > as_of
+            or date.fromisoformat(provenance.available_date) > as_of
+            or date.fromisoformat(provenance.available_date)
+            > date.fromisoformat(claim.observed_date)
+        ):
+            raise ValueError("future claim provenance entered daily current operation")
+        if not inputs.config.test_mode and provenance.test_only:
+            raise ValueError("test-only claim provenance entered production daily mode")
+        if (
+            not inputs.config.test_mode
+            and (
+                provenance.extraction_provider_kind
+                != DailyProviderKind.CODEX.value
+                or provenance.mapping_provider_kind
+                != DailyProviderKind.CODEX.value
+                or not _is_production_source_url(provenance.source_url)
+            )
+        ):
+            raise ValueError(
+                "production claim provenance requires Codex providers and a live URL"
+            )
+    if inputs.config.require_claim_provenance:
+        effective_claim_ids = {
+            claim_id
+            for decision in inputs.atomic_decisions
+            for claim_id in (
+                *decision.accepted_claim_ids,
+                *decision.hard_break_claim_ids,
+            )
+        }
+        missing_provenance = effective_claim_ids - set(provenance_by_claim)
+        if missing_provenance:
+            raise ValueError(
+                "production score claims lack claim provenance: "
+                + ",".join(sorted(missing_provenance))
+            )
     decision_by_id = _unique_by(
         inputs.atomic_decisions,
         key=lambda item: item.decision_id,
@@ -1163,6 +1341,7 @@ def _validate_current_inputs(
         "triggers_by_target": triggers_by_target,
         "claim_by_id": claim_by_id,
         "claims_by_target": claims_by_target,
+        "provenance_by_claim": provenance_by_claim,
         "decision_by_id": decision_by_id,
         "decision_by_target": decision_by_target,
         "source_task_by_id": source_task_by_id,
@@ -1738,6 +1917,7 @@ def audit_current_daily_census(
     lanes = tuple(_mapping_rows(payload.get("baseline_lanes")))
     triggers = tuple(_mapping_rows(payload.get("triggers")))
     claims = tuple(_mapping_rows(payload.get("claims")))
+    claim_provenance = tuple(_mapping_rows(payload.get("claim_provenance")))
     source_tasks = tuple(_mapping_rows(payload.get("source_tasks")))
     timelines = tuple(_mapping_rows(payload.get("source_timelines")))
     theses = tuple(_mapping_rows(payload.get("thesis_states")))
@@ -1803,6 +1983,17 @@ def audit_current_daily_census(
         for item in claims
         if item.get("claim_id")
     }
+    provenance_ids = tuple(
+        str(item.get("provenance_id") or "") for item in claim_provenance
+    )
+    provenance_claim_ids = tuple(
+        str(item.get("claim_id") or "") for item in claim_provenance
+    )
+    provenance_by_claim = {
+        str(item.get("claim_id") or ""): item
+        for item in claim_provenance
+        if item.get("claim_id")
+    }
     source_task_ids = tuple(
         str(item.get("task_id") or "") for item in source_tasks
     )
@@ -1832,6 +2023,8 @@ def audit_current_daily_census(
             *((item, "observed_date") for item in lanes if item.get("observed_date")),
             *((item, "observed_date") for item in triggers),
             *((item, "observed_date") for item in claims),
+            *((item, "published_date") for item in claim_provenance),
+            *((item, "available_date") for item in claim_provenance),
         ):
             observed = _safe_date(row.get(field_name))
             if observed is None or observed > as_of:
@@ -1903,6 +2096,102 @@ def audit_current_daily_census(
         or claim_by_id[claim_id].get("historical_replay") is not False
         for target_id, claim_ids in thesis_open_claim_ids_by_target.items()
         for claim_id in claim_ids
+    )
+    accepted_effective_claim_ids = {
+        str(claim_id)
+        for decision in decisions
+        for claim_id in decision.get("accepted_claim_ids") or ()
+    }
+    hard_break_effective_claim_ids = {
+        str(claim_id)
+        for decision in decisions
+        for claim_id in decision.get("hard_break_claim_ids") or ()
+    }
+    effective_claim_ids = (
+        accepted_effective_claim_ids | hard_break_effective_claim_ids
+    )
+    claim_provenance_contract_failure = 0
+    for item in claim_provenance:
+        claim_id = str(item.get("claim_id") or "")
+        claim = claim_by_id.get(claim_id)
+        published_date = _safe_date(item.get("published_date"))
+        available_date = _safe_date(item.get("available_date"))
+        claim_observed_date = (
+            _safe_date(claim.get("observed_date"))
+            if claim is not None
+            else None
+        )
+        providers = {
+            str(item.get("extraction_provider_kind") or ""),
+            str(item.get("mapping_provider_kind") or ""),
+        }
+        if (
+            claim is None
+            or str(item.get("target_id") or "")
+            != str(claim.get("target_id") or "")
+            or tuple(item.get("source_ids") or ())
+            != tuple(claim.get("source_ids") or ())
+            or tuple(item.get("anchor_ids") or ())
+            != tuple(claim.get("anchor_ids") or ())
+            or tuple(item.get("mapping_ids") or ())
+            != tuple(claim.get("mapping_ids") or ())
+            or not str(item.get("document_id") or "").strip()
+            or not str(item.get("source_url") or "").strip()
+            or published_date is None
+            or available_date is None
+            or available_date < published_date
+            or claim_observed_date is None
+            or available_date > claim_observed_date
+            or not str(item.get("document_text") or "").strip()
+            or not str(item.get("exact_quote") or "").strip()
+            or not _SHA256_RE.fullmatch(str(item.get("content_sha256") or ""))
+            or hashlib.sha256(
+                str(item.get("document_text") or "").encode("utf-8")
+            ).hexdigest()
+            != item.get("content_sha256")
+            or str(item.get("exact_quote") or "")
+            not in str(item.get("document_text") or "")
+            or item.get("directness") != "DIRECT"
+            or item.get("temporal_status") != "CURRENT"
+            or item.get("decision_use") not in {"SCORE", "HARD_BREAK"}
+            or (
+                item.get("decision_use") == "SCORE"
+                and (
+                    item.get("mapping_status") != "ACCEPTED"
+                    or claim_id not in accepted_effective_claim_ids
+                )
+            )
+            or (
+                item.get("decision_use") == "HARD_BREAK"
+                and (
+                    item.get("mapping_status") != "NOT_REQUIRED_HARD_BREAK"
+                    or claim_id not in hard_break_effective_claim_ids
+                )
+            )
+            or item.get("fetched") is not True
+            or item.get("anchor_verified") is not True
+            or item.get("source_proxy_only") is not False
+            or not providers
+            or DailyProviderKind.NONE.value in providers
+            or not providers.issubset(
+                {DailyProviderKind.CODEX.value, DailyProviderKind.FIXTURE.value}
+            )
+            or (
+                config.get("test_mode") is False
+                and (
+                    item.get("test_only") is True
+                    or providers != {DailyProviderKind.CODEX.value}
+                    or not _is_production_source_url(
+                        str(item.get("source_url") or "")
+                    )
+                )
+            )
+        ):
+            claim_provenance_contract_failure += 1
+    decision_claim_without_required_provenance = (
+        len(effective_claim_ids - set(provenance_by_claim))
+        if config.get("require_claim_provenance") is True
+        else 0
     )
 
     max_deep = _safe_nonnegative_int(config.get("max_deep_candidates"))
@@ -2173,6 +2462,7 @@ def audit_current_daily_census(
         "max_general_web_fetches_per_candidate",
         "max_runtime_seconds",
         "test_mode",
+        "require_claim_provenance",
     }
     positive_config_keys = {
         "max_official_light_targets",
@@ -2199,6 +2489,11 @@ def audit_current_daily_census(
         )
         or _safe_nonnegative_float(config.get("max_runtime_seconds")) <= 0.0
         or not isinstance(config.get("test_mode"), bool)
+        or not isinstance(config.get("require_claim_provenance"), bool)
+        or (
+            config.get("test_mode") is True
+            and config.get("require_claim_provenance") is True
+        )
     )
     nested_depth_budget_violation = int(
         any(
@@ -2276,6 +2571,16 @@ def audit_current_daily_census(
         "required_baseline_lane_missing": baseline_lane_missing,
         "duplicate_baseline_lane": baseline_lane_duplicate,
         "future_data_leakage": future_count,
+        "duplicate_claim_provenance_id": len(provenance_ids)
+        - len(set(provenance_ids)),
+        "duplicate_claim_provenance_claim": len(provenance_claim_ids)
+        - len(set(provenance_claim_ids)),
+        "claim_provenance_contract_failure": (
+            claim_provenance_contract_failure
+        ),
+        "decision_claim_without_required_provenance": (
+            decision_claim_without_required_provenance
+        ),
         "recent_lookback_stage_cutoff": sum(
             item.get("recent_cutoff_applied") is True
             for item in (*theses, *statuses)
@@ -2441,6 +2746,7 @@ def write_current_daily_census(
         "audit": root / "current_daily_census_audit.json",
         "universe": root / "current_daily_universe.jsonl",
         "baseline": root / "current_daily_baseline_lanes.jsonl",
+        "claim_provenance": root / "current_daily_claim_provenance.jsonl",
         "source_tasks": root / "current_daily_source_tasks.jsonl",
         "timelines": root / "current_daily_source_timelines.jsonl",
         "theses": root / "current_daily_last_effective_theses.jsonl",
@@ -2457,6 +2763,10 @@ def write_current_daily_census(
     write_jsonl(
         paths["baseline"],
         (item.to_dict() for item in result.baseline_lanes),
+    )
+    write_jsonl(
+        paths["claim_provenance"],
+        (item.to_dict() for item in result.claim_provenance),
     )
     write_jsonl(
         paths["source_tasks"],
@@ -2559,6 +2869,17 @@ def current_operation_runner_input_from_mapping(
         claims=tuple(
             _atomic_claim_from_mapping(item)
             for item in _mapping_rows(payload.get("claims"))
+        ),
+        claim_provenance=tuple(
+            DailyClaimProvenance(
+                **{
+                    **dict(item),
+                    "source_ids": tuple(item.get("source_ids") or ()),
+                    "anchor_ids": tuple(item.get("anchor_ids") or ()),
+                    "mapping_ids": tuple(item.get("mapping_ids") or ()),
+                }
+            )
+            for item in _mapping_rows(payload.get("claim_provenance"))
         ),
         source_tasks=tuple(
             DailySourceTaskRecord(
@@ -2681,6 +3002,7 @@ def _result_leaf_payload(
         baseline_lanes=result.baseline_lanes,
         triggers=result.triggers,
         claims=result.claims,
+        claim_provenance=result.claim_provenance,
         source_tasks=result.source_tasks,
         source_timelines=result.source_timelines,
         thesis_states=result.thesis_states,
@@ -2699,6 +3021,7 @@ def _leaf_payload_from_parts(
     baseline_lanes: Sequence[DailyBaselineLane],
     triggers: Sequence[CurrentTriggerSignal],
     claims: Sequence[AtomicScoreClaim],
+    claim_provenance: Sequence[DailyClaimProvenance],
     source_tasks: Sequence[DailySourceTaskRecord],
     source_timelines: Sequence[DailySourceTimeline],
     thesis_states: Sequence[DailyLastEffectiveThesis],
@@ -2714,6 +3037,7 @@ def _leaf_payload_from_parts(
         "baseline_lanes": [item.to_dict() for item in baseline_lanes],
         "triggers": [item.to_dict() for item in triggers],
         "claims": [item.to_dict() for item in claims],
+        "claim_provenance": [item.to_dict() for item in claim_provenance],
         "source_tasks": [item.to_dict() for item in source_tasks],
         "source_timelines": [item.to_dict() for item in source_timelines],
         "thesis_states": [item.to_dict() for item in thesis_states],
@@ -2732,6 +3056,7 @@ def _mapping_leaf_payload(payload: Mapping[str, Any]) -> Mapping[str, Any]:
         "baseline_lanes",
         "triggers",
         "claims",
+        "claim_provenance",
         "source_tasks",
         "source_timelines",
         "thesis_states",
@@ -2749,6 +3074,29 @@ def _mapping_rows(value: Any) -> tuple[Mapping[str, Any], ...]:
     if not isinstance(value, (list, tuple)):
         return ()
     return tuple(item for item in value if isinstance(item, Mapping))
+
+
+def _is_production_source_url(value: str) -> bool:
+    try:
+        parsed = urlsplit(value)
+    except ValueError:
+        return False
+    host = (parsed.hostname or "").casefold().rstrip(".")
+    return bool(
+        parsed.scheme in {"http", "https"}
+        and host
+        and host not in _NON_PRODUCTION_SOURCE_HOSTS
+        and not host.endswith(
+            (
+                ".example.com",
+                ".example.net",
+                ".example.org",
+                ".test",
+                ".invalid",
+                ".localhost",
+            )
+        )
+    )
 
 
 def _safe_date(value: Any) -> date | None:
@@ -2816,6 +3164,7 @@ __all__ = [
     "DailyBaselineLaneStatus",
     "DailyBaselineLaneType",
     "DailyCensusStageStatus",
+    "DailyClaimProvenance",
     "DailyConfidence",
     "DailyDeepExecution",
     "DailyDepthDecision",

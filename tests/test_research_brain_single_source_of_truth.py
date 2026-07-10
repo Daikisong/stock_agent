@@ -28,7 +28,7 @@ class ResearchBrainSingleSourceOfTruthTests(unittest.TestCase):
         for package in ("corpus", "compiler", "recipes", "retrieval", "planning", "replay", "runtime"):
             self.assertTrue((root / package / "__init__.py").is_file(), package)
 
-    def test_canonical_cli_surface_exists_without_ready_overclaim(self) -> None:
+    def test_canonical_cli_surface_is_wired_and_ready_label_is_gated(self) -> None:
         cli_root = Path("src/e2r/cli")
         status_text = Path(
             "src/e2r/research_brain/runtime/command_status.py"
@@ -39,14 +39,30 @@ class ResearchBrainSingleSourceOfTruthTests(unittest.TestCase):
         )
         self.assertIn("compile_research_intelligence", compile_text)
         self.assertNotIn("MEANINGFUL_E2R_RUNTIME_READY", compile_text)
-        for name in (
-            "run_e2r_historical_replay.py",
-            "run_e2r_current_operation.py",
-            "audit_e2r_evidence_intelligence.py",
-        ):
-            text = (cli_root / name).read_text(encoding="utf-8")
-            self.assertIn("reconstruction_pending_payload", text)
-            self.assertNotIn("MEANINGFUL_E2R_RUNTIME_READY", text)
+        replay_text = (cli_root / "run_e2r_historical_replay.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("compile_canonical_frozen_replay", replay_text)
+        self.assertIn("build_command_run_manifest", replay_text)
+        self.assertNotIn("reconstruction_pending_payload", replay_text)
+        self.assertNotIn("MEANINGFUL_E2R_RUNTIME_READY", replay_text)
+
+        current_text = (cli_root / "run_e2r_current_operation.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("run_current_daily_census", current_text)
+        self.assertIn("write_current_source_pending_run", current_text)
+        self.assertIn("build_command_run_manifest", current_text)
+        self.assertNotIn("reconstruction_pending_payload", current_text)
+        self.assertNotIn("MEANINGFUL_E2R_RUNTIME_READY", current_text)
+
+        audit_text = (cli_root / "audit_e2r_evidence_intelligence.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("run_independent_review", audit_text)
+        self.assertIn("build_command_run_manifest", audit_text)
+        self.assertIn('final_status == _READY', audit_text)
+        self.assertNotIn("reconstruction_pending_payload", audit_text)
 
     def test_canonical_modules_never_import_legacy_namespaces(self) -> None:
         root = Path("src/e2r/research_brain")

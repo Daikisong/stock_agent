@@ -1,0 +1,156 @@
+{
+  "schema_version": "e2r_reconstruction_phase16_acceptance_v1",
+  "phase": 16,
+  "status": "PHASE16_RUNTIME_COMMAND_AUDIT_PASS",
+  "overall_readiness": "EXTERNAL_SOURCE_BLOCKER_NOT_READY",
+  "verified_on": "2026-07-10",
+  "scope": "Canonical compile, blind frozen replay, bounded current/Census facades, six-category reproducibility hashes, and independent A-E leaf review",
+  "phase_internal_complete": true,
+  "production_runtime_ready": false,
+  "canonical_commands": {
+    "compile": {
+      "command": "PYTHONPATH=src python -m e2r.cli.compile_e2r_research_intelligence --repo-root . --output-root output/research_intelligence/v1 --strict true",
+      "expected_semantic_status": "COMPILE_RUN_PASS",
+      "observed_exit_code": 0
+    },
+    "replay": {
+      "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_historical_replay --registry canonical --mode blind_frozen_replay --output-root output/historical_replay/v1 --fail-on-critical true",
+      "expected_semantic_status": "HISTORICAL_REPLAY_PARITY_PASS",
+      "observed_exit_code": 0
+    },
+    "current": {
+      "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_current_operation --as-of-date 2026-07-10 --mode production_bounded --universe krx --output-root output/current_operation/v1 --fail-on-critical true",
+      "observed_semantic_status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY",
+      "observed_exit_code": 3
+    },
+    "census": {
+      "command": "PYTHONPATH=src python -m e2r.cli.run_e2r_census_mode --as-of-date 2026-07-10 --mode census_selective_deep --brain canonical_v1 --output-root output/census_v_next --fail-on-critical true",
+      "observed_semantic_status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY",
+      "observed_exit_code": 3
+    }
+  },
+  "reproducibility_contract": {
+    "required_hash_categories": [
+      "config",
+      "corpus",
+      "memory",
+      "recipe",
+      "prompt",
+      "source"
+    ],
+    "commit_hash_recorded": true,
+    "dirty_paths_and_dirty_status_hash_recorded": true,
+    "file_hashes_recomputed_from_leaf_bytes": true,
+    "inline_hashes_recomputed_from_payload": true,
+    "run_id_recomputed_from_command_identity": true,
+    "current_commit_must_match_every_component_commit": true,
+    "tampered_file_detected": true,
+    "changed_repository_state_detected": true,
+    "dirty_or_blocked_run_cannot_claim_production_ready": true
+  },
+  "canonical_compile_observation": {
+    "artifact_count": 2260,
+    "historical_case_count": 10920,
+    "historical_outcome_count": 19031,
+    "historical_rule_count": 6255,
+    "quarantine_count": 5549,
+    "linkage_error_count": 1036,
+    "historical_replay_ready_source_count": 0,
+    "source_repair_task_count": 10920,
+    "executable_recipe_count": 31,
+    "explicit_unsupported_recipe_count": 158,
+    "semantic_memory_node_count": 25532,
+    "semantic_memory_edge_count": 44221,
+    "retrieval_benchmark_count": 61,
+    "top3_archetype_hit_rate": 1.0,
+    "required_recipe_hit_rate": 1.0,
+    "positive_guard_pair_rate": 1.0,
+    "critical_count_sum": 0
+  },
+  "canonical_replay_observation": {
+    "run_id": "HREPLAY-ac6559e7c76e820678b48b8f",
+    "frozen_as_of_date": "2026-06-30",
+    "benchmark_leaf_count": 61,
+    "registry_archetype_count": 36,
+    "top1_accuracy": 0.916667,
+    "top3_accuracy": 1.0,
+    "mapping_precision": 1.0,
+    "positive_recall": 1.0,
+    "guard_accuracy": 1.0,
+    "exact_source_blocker_archetype_count": 36,
+    "future_leakage_count": 0,
+    "source_proxy_score_credit_count": 0,
+    "current_watchlist_eligible_count": 0,
+    "critical_count_sum": 0,
+    "production_runtime_ready": false
+  },
+  "production_current_boundary": {
+    "required_input_manifest_missing": true,
+    "exact_blocker": "CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE",
+    "canonical_stage": "0",
+    "score_valid": false,
+    "raw_reference_score": null,
+    "new_live_scraping_or_api_wiring_added": false,
+    "reason_live_wiring_was_not_added": "Project instructions require a separate request before adding live web scraping or live API connections",
+    "synthetic_or_fixture_input_cannot_claim_global_readiness": true,
+    "production_claim_requires_content_hash_exact_quote_lineage": true,
+    "production_claim_requires_codex_extraction_and_mapping": true,
+    "production_claim_rejects_snapshot_or_reserved_test_url": true,
+    "production_claim_rejects_impossible_publication_availability_order": true
+  },
+  "independent_review_contract": {
+    "reviewer_ids": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ],
+    "reviewer_A_focus": "Corpus Fidelity",
+    "reviewer_B_focus": "Recipe/Retrieval",
+    "reviewer_C_focus": "Source/Claim Realness",
+    "reviewer_D_focus": "Score/Stage Integrity",
+    "reviewer_E_focus": "Historical/Current Separation",
+    "each_reviewer_reads_leaf_artifacts_independently": true,
+    "shared_summary_counters_are_not_acceptance_evidence": true,
+    "summary_counter_mutation_does_not_change_leaf_verdict": true,
+    "corpus_leaf_mutation_is_detected": true,
+    "stage_status_leaf_mutation_is_detected": true,
+    "watchlist_projection_mutation_is_detected": true,
+    "production_provenance_mutation_is_detected": true,
+    "reviewer_result_alone_cannot_claim_runtime_ready": true
+  },
+  "final_audit_boundary": {
+    "observed_status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY",
+    "live_current_contract_proven": false,
+    "live_census_contract_proven": false,
+    "current_census_live_leaf_parity_proven": false,
+    "working_tree_clean": false,
+    "production_runtime_ready": false,
+    "ready_label_requires_all_reviewers_component_commands_live_parity_and_clean_tree": true,
+    "disabling_live_requirement_is_itself_critical": true
+  },
+  "hard_acceptance": {
+    "compile_runtime_critical_count": 0,
+    "replay_runtime_critical_count": 0,
+    "command_hash_category_gap_count": 0,
+    "historical_future_leakage_count": 0,
+    "historical_source_proxy_score_credit_count": 0,
+    "historical_current_watchlist_contamination_count": 0,
+    "synthetic_ready_overclaim_count": 0,
+    "live_requirement_bypass_ready_count": 0
+  },
+  "verification": {
+    "phase0_through_phase16_targeted_test_count": 93,
+    "phase16_runtime_contract_test_count": 9,
+    "phase16_acceptance_test_count": 6,
+    "full_suite_test_count": 5584,
+    "full_suite_failure_count": 18,
+    "phase0_baseline_known_failure_count": 18,
+    "new_failure_count": 0,
+    "known_failure_scope": "User-owned mutable goal4 research-to-runtime operational snapshots",
+    "global_completion_claimed": false
+  },
+  "official_verification_command": "PYTHONPATH=src:tests python -m unittest tests.test_e2r_reconstruction_phase16_runtime_commands tests.test_e2r_reconstruction_phase16_acceptance -v",
+  "next_required_action": "Provide or separately authorize materialization of a bounded KRX current input with real fetched documents and source-backed claim provenance, then rerun current, Census, and final audit from one clean commit"
+}

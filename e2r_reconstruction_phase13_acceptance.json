@@ -20,7 +20,7 @@
   },
   "frozen_daily_run": {
     "as_of_date": "2026-06-30",
-    "run_id": "DAILY-315ef13cc27b84d8e3477d0a",
+    "run_id": "DAILY-51b02a1a726510410b962228",
     "full_universe_count": 8,
     "eligible_universe_count": 8,
     "baseline_lane_count": 32,
@@ -34,7 +34,7 @@
     "selected_deep_candidate_count": 5,
     "source_task_leaf_count": 6,
     "deep_terminal_outcome_count": 5,
-    "leaf_hash": "bb7ed7dccbd9e68ed56d8b9ad04ff469f9b16b2b80c770634ec611357419b27e"
+    "leaf_hash": "ab2003fa498fcc4e384942d4eba8299a802375a37e51d0608e043546a62b6492"
   },
   "baseline_contract": {
     "required_lanes": [
@@ -150,9 +150,9 @@
   "integrity_audit": {
     "schema_version": "e2r_current_operation_runner_audit_v1",
     "status": "BOUNDED_DAILY_CENSUS_PASS",
-    "critical_check_count": 61,
+    "critical_check_count": 65,
     "critical_count_sum": 0,
-    "result_hash": "bb7ed7dccbd9e68ed56d8b9ad04ff469f9b16b2b80c770634ec611357419b27e",
+    "result_hash": "ab2003fa498fcc4e384942d4eba8299a802375a37e51d0608e043546a62b6492",
     "production_runtime_ready": false
   },
   "known_bad_detection": {
