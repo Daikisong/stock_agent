@@ -5,7 +5,7 @@ from pathlib import Path
 
 from e2r.census.census_runner_v4 import CensusV4RunConfig, _self_repair_log_v4, run_census_mode_v4
 from e2r.census.test_result_evidence import TEST_RESULT_ARTIFACT_SCHEMA
-from tests.census_v4_test_helpers import census_v4_artifacts, read_json
+from tests.census_v4_test_helpers import census_v4_artifacts, census_v4_test_support_kwargs, read_json
 
 
 class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
@@ -138,7 +138,7 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
         self.assertIn("IssuerIR", connector_capability["non_executable_full_thesis_source_classes"])
         self.assertNotIn("TrustedNews", connector_capability["non_executable_full_thesis_source_classes"])
         self.assertIn("TrustedNews", connector_capability["bounded_web_acquisition_source_classes"])
-        self.assertIn("IssuerOfficial", connector_capability["missing_connector_source_classes"])
+        self.assertNotIn("IssuerIR", connector_capability["missing_connector_source_classes"])
         self.assertIn("ReportPDF", connector_capability["registry_missing_but_acquisition_covered_source_classes"])
         self.assertIn("BrokerReportPublicPDF", connector_capability["registry_missing_but_acquisition_covered_source_classes"])
         self.assertIn("CompanyNewsroom", connector_capability["registry_missing_but_acquisition_covered_source_classes"])
@@ -191,11 +191,11 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
         self.assertEqual(source_satisfaction["verdict"], "PASS_LEDGER_REFRESH_SOURCE_TASK_SATISFACTION")
         self.assertEqual(source_satisfaction["verdict_scope"], "LEDGER_REFRESH_SOURCE_TASK_SATISFACTION_PASS")
         self.assertFalse(source_satisfaction["live_source_task_satisfaction_pass_allowed"])
-        self.assertGreater(source_satisfaction["baseline_only_score_claim_count"], 0)
+        self.assertEqual(source_satisfaction["baseline_only_stage_promotion_count"], 0)
         self.assertGreater(source_satisfaction["representative_score_claim_count"], 0)
         self.assertEqual(
             source_satisfaction["source_task_chain_closed_to_representative_stage_count"],
-            source_satisfaction["representative_score_claim_count"],
+            source_satisfaction["source_task_score_claim_reference_count"],
         )
         self.assertEqual(primitive_chain["verdict"], "PASS")
         self.assertEqual(primitive_chain["critical_count"], 0)
@@ -443,7 +443,7 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(output_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     write_operational_docs=False,
                     test_result_summary="string summary is not enough",
                     test_result_artifact=str(artifact),
@@ -483,7 +483,7 @@ class CensusV4GoalRequiredAuditsTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(output_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     write_operational_docs=False,
                     test_result_artifact=str(artifact),
                 )

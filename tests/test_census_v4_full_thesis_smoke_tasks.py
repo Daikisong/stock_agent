@@ -11,7 +11,7 @@ from e2r.census.census_runner_v4 import (
     run_census_mode_v4,
 )
 from e2r.production.metadata import write_jsonl
-from tests.census_v4_test_helpers import census_v4_artifacts, read_json, read_jsonl
+from tests.census_v4_test_helpers import census_v4_artifacts, census_v4_test_support_kwargs, read_json, read_jsonl
 
 
 class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
@@ -51,7 +51,7 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(output_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     write_operational_docs=False,
                 )
             )
@@ -99,7 +99,7 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(output_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     write_operational_docs=False,
                 )
             )
@@ -307,7 +307,7 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(output_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     brain_web_mode="enabled",
                     brain_planner_provider="none",
                     brain_universe_limit=2,
@@ -403,7 +403,7 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(output_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     brain_web_mode="enabled",
                     brain_planner_provider="none",
                     brain_candidate_event_seed_path=str(external_seed_path),
@@ -738,7 +738,7 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(output_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     run_mode="FULL_LIVE_BRAIN_CENSUS",
                     brain_web_mode="enabled",
                     brain_planner_provider="none",
@@ -775,7 +775,7 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(output_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     run_mode="LEDGER_REFRESH_CENSUS",
                     brain_web_mode="disabled",
                     full_thesis_smoke_mode="controlled_replay",
@@ -810,7 +810,7 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(smoke_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     run_mode="LEDGER_REFRESH_CENSUS",
                     brain_web_mode="disabled",
                     full_thesis_smoke_mode="controlled_replay",
@@ -824,7 +824,7 @@ class CensusV4FullThesisSmokeTaskTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(output_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     run_mode="LEDGER_REFRESH_CENSUS",
                     brain_web_mode="disabled",
                     full_thesis_smoke_artifact_root=str(smoke_root),

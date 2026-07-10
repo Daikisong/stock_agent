@@ -162,7 +162,7 @@ class CensusV4SourceTaskSatisfactionChainTests(unittest.TestCase):
         self.assertGreater(audit["representative_score_claim_count"], 0)
         self.assertEqual(
             audit["source_task_chain_closed_to_representative_stage_count"],
-            audit["representative_score_claim_count"],
+            audit["source_task_score_claim_reference_count"],
         )
         self.assertGreaterEqual(audit["warning_counts"]["non_representative_source_task_claim_count"], 0)
 

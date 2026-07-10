@@ -99,6 +99,19 @@ class CensusV4RunConfig:
     write_operational_docs: bool = True
     test_result_summary: str = "not_run_by_census_v4_runner"
     test_result_artifact: str | None = None
+    test_mode: bool = False
+    test_all_archetype_source_backed_replay_manifest_path: str | None = None
+    test_all_archetype_replay_acceptance_path: str | None = None
+    test_all_archetype_adversarial_acceptance_path: str | None = None
+
+    def __post_init__(self) -> None:
+        test_paths = (
+            self.test_all_archetype_source_backed_replay_manifest_path,
+            self.test_all_archetype_replay_acceptance_path,
+            self.test_all_archetype_adversarial_acceptance_path,
+        )
+        if any(path is not None for path in test_paths) and self.test_mode is not True:
+            raise ValueError("test replay acceptance paths may only be injected when test_mode=True")
 
     def resolved_output_root(self) -> str:
         return self.output_root or f"output/census_v4/{self.as_of_date}"
@@ -142,6 +155,15 @@ class CensusV4RunConfig:
             "write_operational_docs": self.write_operational_docs,
             "test_result_summary": self.test_result_summary,
             "test_result_artifact": self.test_result_artifact,
+            "test_mode": self.test_mode,
+            "test_replay_acceptance_paths_injected": all(
+                path is not None
+                for path in (
+                    self.test_all_archetype_source_backed_replay_manifest_path,
+                    self.test_all_archetype_replay_acceptance_path,
+                    self.test_all_archetype_adversarial_acceptance_path,
+                )
+            ),
         }
 
 
@@ -10614,11 +10636,24 @@ def _float_or_none(value: Any) -> float | None:
         return None
 
 
-def _external_all_archetype_replay_acceptance(*, contracts: Mapping[str, Any]) -> dict[str, Any]:
+def _external_all_archetype_replay_acceptance(
+    *,
+    contracts: Mapping[str, Any],
+    config: CensusV4RunConfig,
+) -> dict[str, Any]:
     contract_ids = {str(archetype_id) for archetype_id in contracts if str(archetype_id)}
-    manifest_path = ALL_ARCHETYPE_SOURCE_BACKED_REPLAY_MANIFEST_PATH
-    replay_path = ALL_ARCHETYPE_REPLAY_ACCEPTANCE_PATH
-    adversarial_path = ALL_ARCHETYPE_ADVERSARIAL_ACCEPTANCE_PATH
+    manifest_path = Path(
+        config.test_all_archetype_source_backed_replay_manifest_path
+        or ALL_ARCHETYPE_SOURCE_BACKED_REPLAY_MANIFEST_PATH
+    )
+    replay_path = Path(
+        config.test_all_archetype_replay_acceptance_path
+        or ALL_ARCHETYPE_REPLAY_ACCEPTANCE_PATH
+    )
+    adversarial_path = Path(
+        config.test_all_archetype_adversarial_acceptance_path
+        or ALL_ARCHETYPE_ADVERSARIAL_ACCEPTANCE_PATH
+    )
     manifest = _read_json(manifest_path)
     replay_acceptance = _read_json(replay_path)
     adversarial_acceptance = _read_json(adversarial_path)
@@ -10765,7 +10800,10 @@ def _all_archetype_replay_matrix(
     from e2r.agentic.evidence_contract_v2 import load_evidence_contracts_v2
 
     contracts = load_evidence_contracts_v2(require_all_archetypes=True)
-    external_replay_acceptance = _external_all_archetype_replay_acceptance(contracts=contracts)
+    external_replay_acceptance = _external_all_archetype_replay_acceptance(
+        contracts=contracts,
+        config=config,
+    )
     external_replay_rows = external_replay_acceptance.get("rows_by_archetype") or {}
     external_replay_pass = external_replay_acceptance.get("external_replay_acceptance_pass") is True
     external_global_guard_pass = external_replay_acceptance.get("external_adversarial_acceptance_ready") is True

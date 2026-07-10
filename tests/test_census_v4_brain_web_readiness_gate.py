@@ -11,7 +11,7 @@ from e2r.census.census_runner_v4 import (
     run_census_mode_v4,
 )
 from e2r.production.metadata import write_jsonl
-from tests.census_v4_test_helpers import census_v4_artifacts, read_json
+from tests.census_v4_test_helpers import census_v4_artifacts, census_v4_test_support_kwargs, read_json
 
 
 class CensusV4BrainWebReadinessGateTests(unittest.TestCase):
@@ -258,7 +258,9 @@ class CensusV4BrainWebReadinessGateTests(unittest.TestCase):
         self.assertEqual(readiness["brain_web_readiness_gate"]["minimum_required_counts"], gate["minimum_required_counts"])
         self.assertEqual(readiness["full_thesis_seed_materialization_audit"]["verdict"], "PASS")
         self.assertEqual(readiness["full_thesis_seed_materialization_audit"]["verdict_scope"], "LEDGER_INTEGRITY_ONLY")
-        self.assertEqual(readiness["full_thesis_seed_materialization_audit"]["status_counts"], {"PLANNER_NOT_RUN": 85})
+        seed_audit = readiness["full_thesis_seed_materialization_audit"]
+        self.assertEqual(set(seed_audit["status_counts"]), {"PLANNER_NOT_RUN"})
+        self.assertEqual(seed_audit["status_counts"]["PLANNER_NOT_RUN"], seed_audit["seed_event_count"])
         self.assertEqual(readiness["full_thesis_seed_materialization_audit"]["full_thesis_promoted_seed_count"], 0)
         self.assertFalse(readiness["full_thesis_seed_materialization_audit"]["full_thesis_seed_promotion_pass"])
         self.assertTrue(readiness["full_thesis_seed_materialization_audit"]["ledger_integrity_pass_allowed"])
@@ -281,7 +283,7 @@ class CensusV4BrainWebReadinessGateTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     run_mode="BRAIN_AND_WEB_ACQUISITION_ENABLED",
                     brain_web_mode="enabled",
                     brain_planner_provider="none",

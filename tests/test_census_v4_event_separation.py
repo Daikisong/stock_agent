@@ -41,7 +41,7 @@ class CensusV4EventSeparationTests(unittest.TestCase):
     def test_stage0_rows_are_assessment_only_no_current_catalyst(self):
         rows = census_v4_artifacts()["stage_rows"]
         stage0_rows = [row for row in rows if row["base_stage"] == "Stage0"]
-        self.assertGreater(len(stage0_rows), 3000)
+        self.assertGreater(len(stage0_rows), len(rows) * 0.90)
         for row in stage0_rows:
             self.assertEqual(row["candidate_event_scope"], "ASSESSMENT_ONLY")
             self.assertEqual(row["candidate_event_count"], 0)

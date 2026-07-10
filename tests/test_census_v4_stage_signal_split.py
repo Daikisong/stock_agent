@@ -125,7 +125,7 @@ class CensusV4StageSignalSplitTests(unittest.TestCase):
             _mutate_stage_row(
                 output_root,
                 lambda row: row.update({"full_thesis_stage": "Stage3-Green", "stage_scope": "CENSUS_EVENT_BOARD"})
-                if row.get("base_stage") == "Stage1"
+                if row.get("base_stage") == "Stage1" and row.get("atomic_stage_decision_id")
                 else None,
             )
             audit = audit_census_v4_leaf_artifacts(output_root)
@@ -165,7 +165,7 @@ class CensusV4StageSignalSplitTests(unittest.TestCase):
                         }
                     )
                 )
-                if row.get("base_stage") == "Stage1"
+                if row.get("base_stage") == "Stage1" and row.get("atomic_stage_decision_id")
                 else None,
             )
             audit = audit_census_v4_leaf_artifacts(output_root)

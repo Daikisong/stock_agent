@@ -23,7 +23,7 @@ from e2r.production.metadata import write_jsonl
 from e2r.research_brain.v4_evidence_extraction_bridge import execute_source_tasks_with_evidence_os_v4
 from e2r.research_brain.v4_schemas import DailyWatchlistItemV4
 from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRunnerV4
-from tests.census_v4_test_helpers import census_v4_artifacts, read_json
+from tests.census_v4_test_helpers import census_v4_artifacts, census_v4_test_support_kwargs, read_json
 from tests.research_brain_v4_test_helpers import c06_source_task, sample_v4_event
 
 
@@ -1896,7 +1896,7 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
                     CensusV4RunConfig(
                         as_of_date="2026-07-01",
                         output_root=str(output_root),
-                        v3_output_root="output/census_v3/2026-07-01",
+                        **census_v4_test_support_kwargs(),
                         run_mode="BRAIN_AND_WEB_ACQUISITION_ENABLED",
                         brain_web_mode="enabled",
                         brain_planner_provider="real",

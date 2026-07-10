@@ -19,7 +19,7 @@ from e2r.census.census_runner_v4 import (
 from e2r.production.metadata import write_jsonl
 from e2r.cli.run_e2r_census_v4_until_pass import _resolve_write_operational_docs, main as census_v4_cli_main
 from e2r.research_brain.v4_schemas import SourceTaskExecutionV4
-from tests.census_v4_test_helpers import census_v4_artifacts
+from tests.census_v4_test_helpers import census_v4_artifacts, census_v4_test_support_kwargs
 
 
 def _read_jsonl(path: Path) -> list[dict]:
@@ -32,7 +32,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
             CensusV4RunConfig(
                 as_of_date="2026-07-01",
                 output_root="output/census_v4/unit",
-                v3_output_root="output/census_v3/2026-07-01",
+                **census_v4_test_support_kwargs(),
                 run_mode="BRAIN_AND_WEB_ACQUISITION_ENABLED",
                 brain_web_mode="enabled",
                 brain_runtime_budget_seconds=900.0,
@@ -476,7 +476,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(Path(tmp) / "out"),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     run_mode="BRAIN_AND_WEB_ACQUISITION_ENABLED",
                     brain_web_mode="enabled",
                     brain_planner_provider="none",
@@ -510,7 +510,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                 CensusV4RunConfig(
                     as_of_date="2026-07-01",
                     output_root=str(output_root),
-                    v3_output_root="output/census_v3/2026-07-01",
+                    **census_v4_test_support_kwargs(),
                     max_symbols=20,
                     run_mode="BRAIN_AND_WEB_ACQUISITION_ENABLED",
                     brain_web_mode="enabled",

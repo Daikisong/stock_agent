@@ -17,10 +17,15 @@ _CACHE_TEMP_DIR: tempfile.TemporaryDirectory[str] | None = None
 _REAL_SYMBOLS = (
     ("000660", "SK하이닉스"),
     ("001440", "대한전선"),
+    ("001470", "삼부토건"),
+    ("003090", "대웅"),
     ("003230", "삼양식품"),
     ("005930", "삼성전자"),
     ("011200", "HMM"),
     ("012450", "한화에어로스페이스"),
+    ("024840", "KBI메탈"),
+    ("030350", "드래곤플라이"),
+    ("043260", "성호전자"),
     ("062040", "산일전기"),
     ("096530", "씨젠"),
     ("103590", "일진전기"),
@@ -28,6 +33,7 @@ _REAL_SYMBOLS = (
     ("257720", "실리콘투"),
     ("267260", "HD현대일렉트릭"),
     ("298040", "효성중공업"),
+    ("473980", "노머스"),
 )
 
 
@@ -123,20 +129,21 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
     for index, symbol in enumerate(task_symbols):
         event_id = f"CE-TEST-{index:03d}"
         task_id = f"TASK-TEST-{index:03d}"
-        candidate_events.append(
-            {
-                "schema_version": "e2r_candidate_event_v1",
-                "candidate_event_id": event_id,
-                "symbol": symbol,
-                "event_date": "2026-06-30",
-                "event_title": "정기 공시에서 확인할 현재 증거 발생",
-                "event_summary": "공식 문서의 현재 사실을 Evidence OS로 검증하는 테스트 사건",
-                "source_family": "OpenDART",
-                "source_url": f"https://example.test/disclosure/{symbol}/{index}",
-                "trigger_category": "Official Filing",
-                "source_task_generation_policy": "test_fake_planner",
-            }
-        )
+        if symbol in scored_symbols:
+            candidate_events.append(
+                {
+                    "schema_version": "e2r_candidate_event_v1",
+                    "candidate_event_id": event_id,
+                    "symbol": symbol,
+                    "event_date": "2026-06-30",
+                    "event_title": "정기 공시에서 확인할 현재 증거 발생",
+                    "event_summary": "공식 문서의 현재 사실을 Evidence OS로 검증하는 테스트 사건",
+                    "source_family": "OpenDART",
+                    "source_url": f"https://example.test/disclosure/{symbol}/{index}",
+                    "trigger_category": "Official Filing",
+                    "source_task_generation_policy": "test_fake_planner",
+                }
+            )
         research_plans.append(
             {
                 "schema_version": "e2r_census_v3_research_brain_plan_ref_v1",
@@ -174,6 +181,9 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
                 "fetched_document_ids": [f"DOC-TEST-{index:03d}"] if accepted_ids else [],
                 "source_task_execution_origin": "production_cutover_v3_leaf_artifact",
                 "claim_producing_execution": bool(accepted_ids),
+                "provider_name": "OpenDART",
+                "source_class": "DART",
+                "requested_source_classes": ["DART"],
             }
         )
 
@@ -186,8 +196,10 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
         raw_id = f"RAW-TEST-{index:03d}"
         contribution_id = f"CONTRIB-TEST-{index:03d}"
         trace_id = f"SCT-TEST-{index:03d}"
-        primitive_id = "revenue_growth"
+        primitive_id = "information_confidence"
+        mapping_id = f"MAP-TEST-{index:03d}"
         source_url = f"https://example.test/disclosure/{symbol}/{index}"
+        quote_text = f"검증기업 {index:03d} 투자판단관련주요경영사항 현재 공시"
         documents.append(
             {
                 "document_id": document_id,
@@ -204,7 +216,7 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
                 "anchor_id": anchor_id,
                 "document_id": document_id,
                 "symbol": symbol,
-                "quote_text": f"검증된 현재 공시 사실 {index:03d}",
+                "quote_text": quote_text,
                 "page_number": 1,
             }
         )
@@ -216,7 +228,7 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
                 "document_id": document_id,
                 "anchor_id": anchor_id,
                 "primitive_id": primitive_id,
-                "assertion_text": "현재 공시에서 직접 확인한 매출 성장 사실",
+                "assertion_text": quote_text,
             }
         )
         claim = {
@@ -230,6 +242,20 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
             "anchor_id": anchor_id,
             "raw_assertion_id": raw_id,
             "primitive_id": primitive_id,
+            "mapping": {
+                "mapping_status": "ACCEPTED",
+                "primitive_id": primitive_id,
+                "rationale": "predicate:official_information_claim",
+                "support_direction": "SUPPORT",
+            },
+            "mapping_status": "ACCEPTED",
+            "support_direction": "SUPPORT",
+            "target_scope_status": "DIRECT",
+            "directness": "DIRECT",
+            "temporal_status": "CURRENT",
+            "semantic_status": "PASS",
+            "polarity": "POSITIVE",
+            "satisfies_source_task": True,
             "event_date": "2026-06-30",
             "as_of_date": "2026-07-01",
             "source_provider": "OpenDART",
@@ -239,7 +265,7 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
             "score_eligible": True,
             "evidence_type": "direct",
             "lifecycle_status": "current",
-            "quote_text": f"검증된 현재 공시 사실 {index:03d}",
+            "quote_text": quote_text,
         }
         adjudicated_claims.append(dict(claim))
         accepted_claims.append(claim)
@@ -249,7 +275,7 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
                 "symbol": symbol,
                 "primitive_id": primitive_id,
                 "support_claim_ids": [claim_id],
-                "state": "SUPPORTED",
+                "status": "PRESENT_CURRENT",
             }
         )
         contributions.append(
@@ -257,23 +283,23 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
                 "score_contribution_id": contribution_id,
                 "contribution_id": contribution_id,
                 "symbol": symbol,
-                "component_key": "growth_quality",
-                "criterion_id": "revenue_growth_current",
+                "component_key": "information_confidence",
+                "criterion_id": "production_cutover_information_confidence",
                 "primitive_id": primitive_id,
                 "support_claim_ids": [claim_id],
                 "accepted_claim_ids": [claim_id],
-                "raw_points": 3.0 + (index % 3),
+                "raw_points": 1.0,
                 "max_points": 5.0,
                 "source_family": "OpenDART",
                 "source_family_ids": ["OpenDART"],
-                "mapping_ids": ["MAP-REVENUE-GROWTH"],
+                "mapping_ids": [mapping_id],
                 "source_type": "official_filing",
                 "source_proxy_only": False,
                 "evidence_url_pending": False,
                 "price_path_only": False,
             }
         )
-        score = 3.0 + (index % 3)
+        score = 4.0
         stagecourt_traces.append(
             {
                 "schema_version": "e2r_stagecourt_trace_v1",
@@ -292,6 +318,21 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
             }
         )
 
+    _append_v4_semantic_scenarios(
+        candidate_events=candidate_events,
+        research_plans=research_plans,
+        source_tasks=source_tasks,
+        executions=executions,
+        documents=documents,
+        anchors=anchors,
+        raw_assertions=raw_assertions,
+        adjudicated_claims=adjudicated_claims,
+        accepted_claims=accepted_claims,
+        primitive_states=primitive_states,
+        contributions=contributions,
+        stagecourt_traces=stagecourt_traces,
+    )
+
     return ProductionCutoverLeafBundle(
         candidate_events=tuple(candidate_events),
         research_brain_plans=tuple(research_plans),
@@ -308,6 +349,283 @@ def _test_leaf_bundle() -> ProductionCutoverLeafBundle:
         watchlist_rows=(),
         skipped_rows=(),
     )
+
+
+def _append_v4_semantic_scenarios(**rows: list[dict[str, Any]]) -> None:
+    scenarios = (
+        {
+            "symbol": "005930",
+            "company_name": "삼성전자",
+            "suffix": "SAMSUNG-DAILY",
+            "primitive_id": "information_confidence",
+            "quote_text": "삼성전자 현재 분기보고서 직접 확인",
+            "component_key": "information_confidence",
+            "criterion_id": "production_cutover_information_confidence",
+            "raw_points": 1.0,
+            "score": 4.0,
+            "base_stage": "1",
+        },
+        {
+            "symbol": "000660",
+            "company_name": "SK하이닉스",
+            "suffix": "HYNIX-DAILY",
+            "primitive_id": "information_confidence",
+            "quote_text": "SK하이닉스 현재 분기보고서 직접 확인",
+            "component_key": "information_confidence",
+            "criterion_id": "production_cutover_information_confidence",
+            "raw_points": 1.0,
+            "score": 4.0,
+            "base_stage": "1",
+        },
+        {
+            "symbol": "473980",
+            "company_name": "노머스",
+            "suffix": "BUYBACK",
+            "primitive_id": "contract_quality",
+            "quote_text": "노머스 주요사항보고서(자기주식취득신탁계약체결결정)",
+            "component_key": "earnings_visibility",
+            "criterion_id": "production_cutover_contract_quality",
+            "raw_points": 4.0,
+            "score": 4.4,
+            "base_stage": "2",
+        },
+        {
+            "symbol": "043260",
+            "company_name": "성호전자",
+            "suffix": "PLEDGE",
+            "primitive_id": "contract_quality",
+            "quote_text": "성호전자 최대주주변경을수반하는주식담보제공계약체결",
+            "component_key": "earnings_visibility",
+            "criterion_id": "production_cutover_contract_quality",
+            "raw_points": 4.0,
+            "score": 4.4,
+            "base_stage": "2",
+        },
+        {
+            "symbol": "003090",
+            "company_name": "대웅",
+            "suffix": "CAPACITY-CORRECTION",
+            "primitive_id": "capacity_expansion",
+            "quote_text": "대웅 [기재정정]신규시설투자등(자회사의 주요경영사항)",
+            "component_key": "bottleneck_pricing",
+            "criterion_id": "production_cutover_capacity_expansion",
+            "raw_points": 3.0,
+            "score": 1.5,
+            "base_stage": "2",
+        },
+        {
+            "symbol": "030350",
+            "company_name": "드래곤플라이",
+            "suffix": "CURRENT-RISK",
+            "primitive_id": "information_confidence",
+            "quote_text": "드래곤플라이 주권매매거래정지기간변경 (개선기간 부여)",
+            "component_key": "information_confidence",
+            "criterion_id": "production_cutover_information_confidence",
+            "raw_points": 1.0,
+            "score": 4.0,
+            "base_stage": "3-Red",
+        },
+        {
+            "symbol": "001470",
+            "company_name": "삼부토건",
+            "suffix": "ADMIN",
+            "primitive_id": "information_confidence",
+            "quote_text": "삼부토건 투자판단관련주요경영사항",
+            "component_key": "information_confidence",
+            "criterion_id": "production_cutover_information_confidence",
+            "raw_points": 1.0,
+            "score": 4.0,
+            "base_stage": "1",
+        },
+        {
+            "symbol": "001470",
+            "company_name": "삼부토건",
+            "suffix": "SUPPLY",
+            "primitive_id": "contract_quality",
+            "quote_text": "삼부토건 [기재정정]단일판매ㆍ공급계약체결",
+            "component_key": "earnings_visibility",
+            "criterion_id": "production_cutover_contract_quality",
+            "raw_points": 4.0,
+            "score": 4.4,
+            "base_stage": "2",
+        },
+    )
+    for index, scenario in enumerate(scenarios):
+        suffix = str(scenario["suffix"])
+        symbol = str(scenario["symbol"])
+        event_id = f"CE-V4-{suffix}"
+        task_id = f"TASK-V4-{suffix}"
+        claim_id = f"CLAIM-V4-{suffix}"
+        document_id = f"DOC-V4-{suffix}"
+        anchor_id = f"ANCHOR-V4-{suffix}"
+        raw_id = f"RAW-V4-{suffix}"
+        mapping_id = f"MAP-V4-{suffix}"
+        contribution_id = f"CONTRIB-V4-{suffix}"
+        trace_id = f"SCT-V4-{suffix}"
+        primitive_id = str(scenario["primitive_id"])
+        quote_text = str(scenario["quote_text"])
+        source_url = f"https://example.test/v4/{symbol}/{suffix.lower()}"
+
+        rows["candidate_events"].append(
+            {
+                "candidate_event_id": event_id,
+                "symbol": symbol,
+                "company_name": scenario["company_name"],
+                "event_date": "2026-06-30",
+                "event_title": quote_text,
+                "event_summary": quote_text,
+                "source_family": "OpenDART",
+                "source_url": source_url,
+                "trigger_category": "Risk Trigger" if scenario["base_stage"] == "3-Red" else "Official Filing",
+                "source_task_generation_policy": "bounded_test_fake_planner",
+            }
+        )
+        rows["research_plans"].append(
+            {
+                "plan_id": f"RBPLAN-V4-{suffix}",
+                "symbol": symbol,
+                "candidate_event_id": event_id,
+                "source_task_ids": [task_id],
+                "planner_origin": "bounded_test_fake_planner",
+                "forbidden_direct_score_stage": True,
+            }
+        )
+        rows["source_tasks"].append(
+            {
+                "task_id": task_id,
+                "symbol": symbol,
+                "candidate_event_id": event_id,
+                "primitive_gap": primitive_id,
+                "source_family": "OpenDART",
+                "budget": {"max_queries": 1, "max_candidates": 1, "max_fetches": 1, "max_retries": 0},
+                "stop_condition": "accepted_claim_or_exhausted",
+                "source_task_origin": "production_cutover_v3_leaf_artifact",
+                "general_search_allowed": False,
+            }
+        )
+        rows["executions"].append(
+            {
+                "task_id": task_id,
+                "symbol": symbol,
+                "candidate_event_id": event_id,
+                "status": "EVIDENCE_OS_ACCEPTED",
+                "accepted_claim_ids": [claim_id],
+                "fetched_document_ids": [document_id],
+                "source_task_execution_origin": "production_cutover_v3_leaf_artifact",
+                "claim_producing_execution": True,
+                "provider_name": "OpenDART",
+                "source_class": "DART",
+                "requested_source_classes": ["DART"],
+            }
+        )
+        rows["documents"].append(
+            {
+                "document_id": document_id,
+                "symbol": symbol,
+                "source_family": "OpenDART",
+                "source_url": source_url,
+                "published_at": "2026-06-30",
+                "as_of_date": "2026-07-01",
+                "raw_text": quote_text,
+            }
+        )
+        rows["anchors"].append(
+            {
+                "anchor_id": anchor_id,
+                "document_id": document_id,
+                "symbol": symbol,
+                "quote_text": quote_text,
+                "page_number": 1,
+            }
+        )
+        assertion = {
+            "raw_assertion_id": raw_id,
+            "claim_id": claim_id,
+            "symbol": symbol,
+            "document_id": document_id,
+            "anchor_id": anchor_id,
+            "primitive_id": primitive_id,
+            "quote_text": quote_text,
+        }
+        rows["raw_assertions"].append(assertion)
+        claim = {
+            **assertion,
+            "accepted": True,
+            "target_entity_id": f"TICKER:{symbol}",
+            "subject_entity_id": f"TICKER:{symbol}",
+            "candidate_event_id": event_id,
+            "event_date": "2026-06-30",
+            "as_of_date": "2026-07-01",
+            "source_provider": "OpenDART",
+            "source_family": "OpenDART",
+            "source_url": source_url,
+            "claim_status": "ACCEPTED",
+            "score_eligible": True,
+            "mapping": {
+                "mapping_status": "ACCEPTED",
+                "primitive_id": primitive_id,
+                "rationale": f"predicate:{primitive_id}",
+                "support_direction": "SUPPORT",
+            },
+            "mapping_status": "ACCEPTED",
+            "support_direction": "SUPPORT",
+            "target_scope_status": "DIRECT",
+            "directness": "DIRECT",
+            "temporal_status": "CURRENT",
+            "semantic_status": "PASS",
+            "polarity": "POSITIVE",
+            "satisfies_source_task": True,
+        }
+        rows["adjudicated_claims"].append(dict(claim))
+        rows["accepted_claims"].append(claim)
+        rows["primitive_states"].append(
+            {
+                "primitive_state_id": f"PSTATE-V4-{suffix}",
+                "candidate_event_id": event_id,
+                "symbol": symbol,
+                "primitive_id": primitive_id,
+                "support_claim_ids": [claim_id],
+                "counter_claim_ids": [],
+                "status": "PRESENT_CURRENT",
+            }
+        )
+        rows["contributions"].append(
+            {
+                "score_contribution_id": contribution_id,
+                "contribution_id": contribution_id,
+                "symbol": symbol,
+                "component_key": scenario["component_key"],
+                "criterion_id": scenario["criterion_id"],
+                "primitive_id": primitive_id,
+                "support_claim_ids": [claim_id],
+                "accepted_claim_ids": [claim_id],
+                "raw_points": scenario["raw_points"],
+                "max_points": 20.0 if scenario["component_key"] != "information_confidence" else 5.0,
+                "source_family": "OpenDART",
+                "source_family_ids": [f"DART:{claim_id}"],
+                "mapping_ids": [mapping_id],
+                "source_type": "official_filing",
+                "source_proxy_only": False,
+                "evidence_url_pending": False,
+                "price_path_only": False,
+            }
+        )
+        rows["stagecourt_traces"].append(
+            {
+                "stagecourt_trace_id": trace_id,
+                "trace_id": trace_id,
+                "symbol": symbol,
+                "candidate_event_id": event_id,
+                "accepted_claim_ids": [claim_id],
+                "score_contribution_ids": [contribution_id],
+                "base_stage": scenario["base_stage"],
+                "score_status": "FINAL_WITH_NONMATERIAL_GAPS",
+                "score_interval": {"lower": scenario["score"], "upper": scenario["score"]},
+                "missing_green_primitives": ["repeat_evidence_family", "cash_or_revision_conversion"],
+                "missing_yellow_primitives": ["multi_source_confirmation"],
+                "stage_decision_reason": "bounded semantic guard test fixture",
+            }
+        )
 
 
 def temp_census_v3_copy() -> tuple[tempfile.TemporaryDirectory, Path]:
