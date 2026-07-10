@@ -1,0 +1,84 @@
+{
+  "schema_version": "e2r_live_depth_selection_audit_v1",
+  "status": "CURRENT_DEPTH_SELECTION_PASS",
+  "verdict_scope": "full_universe_depth_decisions_and_bounded_selective_deep",
+  "as_of_date": "2026-07-10",
+  "generated_from_commit": "2a125523eb16ba4653d9a7fdb330091480831494",
+  "run_profile": "configs/e2r_production_daily_v1.json",
+  "test_mode": false,
+  "fixture_used": false,
+  "eligible_universe_count": 2542,
+  "depth_decision_count": 2542,
+  "selected_official_light_count": 419,
+  "deep_candidate_pool_count": 60,
+  "selected_deep_count": 40,
+  "selected_brain_count": 40,
+  "acquisition_eligible_count": 40,
+  "not_selected_count": 2502,
+  "depth_distribution": {
+    "L1_BASELINE": 2123,
+    "L2_OFFICIAL_LIGHT": 379,
+    "L3_RESEARCH_BRAIN": 40,
+    "L4_ACQUISITION": 0,
+    "L5_FULL_THESIS": 0
+  },
+  "selected_reason_counts": {
+    "TRIGGER_RISK": 35,
+    "TRIGGER_OFFICIAL": 19,
+    "TRIGGER_MARKET": 7,
+    "TRIGGER_REPORT": 1
+  },
+  "not_selected_reason_counts": {
+    "NO_CURRENT_TRIGGER": 2123,
+    "DEEP_BUDGET_LIMIT": 359,
+    "BRAIN_BUDGET_LIMIT": 20
+  },
+  "budget_limits": {
+    "max_official_light_targets": 500,
+    "max_deep_candidates": 60,
+    "max_brain_candidates": 40,
+    "max_acquisition_candidates": 40,
+    "max_llm_calls_per_candidate": 3,
+    "max_source_tasks_per_candidate": 6,
+    "max_fetches_per_candidate": 10,
+    "max_retries_per_candidate": 2,
+    "max_general_web_fetches_per_candidate": 3,
+    "max_runtime_seconds": 7200
+  },
+  "honesty_note": "Phase 24는 후보 선택까지만 수행하므로 selected target의 maximum depth는 L3_RESEARCH_BRAIN이다. L4/L5는 실제 planner와 source acquisition/claim closure가 성공한 뒤에만 올라간다. 종목·섹터·아키타입 quota를 강제로 채우지 않았다.",
+  "input_hashes": {
+    "production_profile_sha256": "7015de5c60a6a47a4ad615664a0077ed15b733328202fdaf4ad3163b519e8533",
+    "candidate_events_sha256": "4573bde19c0f721d4d16ae831da4923ecce1d745b2cfe16de68cf18d57fcf3b9",
+    "trigger_signals_sha256": "bcb6ce25717ee937947cdf6347e238b552aebf7ca02317f6889e9de1485716f0",
+    "baseline_lanes_sha256": "6ada47cf178126cf238c292ad891d7a2d30e493c72b1c8ed63057044a2d42d85"
+  },
+  "output_hashes": {
+    "depth_decisions_sha256": "8f183d1680c4feef878ec0265aae23537b1a3b556ef69bda42c62e33bc311428",
+    "candidate_selection_audit_sha256": "af4a69c53b6300b5ebb0e35d0fb635ad8e3f2b9b06c5e640345d58bbdce5c166",
+    "budget_allocation_sha256": "ed8c319b8ccae0813ff85dc82ba785691a94da6396917014a600c2bcdba79289",
+    "not_selected_budget_sha256": "417f1eaa20cb4b2e6832ae9a46254b03b84a64cc8b5ca2812010b25a77fe52c0"
+  },
+  "output_paths": {
+    "depth_decisions": "output/live_materialization/2026-07-10/depth_decisions.jsonl",
+    "candidate_selection_audit": "output/live_materialization/2026-07-10/candidate_selection_audit.json",
+    "budget_allocation": "output/live_materialization/2026-07-10/budget_allocation.json",
+    "not_selected_budget": "output/live_materialization/2026-07-10/not_selected_budget.jsonl"
+  },
+  "unbounded_candidate_count": 0,
+  "forced_archetype_quota_count": 0,
+  "not_selected_without_reason_count": 0,
+  "critical_counts": {
+    "eligible_depth_decision_count_mismatch": 0,
+    "duplicate_depth_target": 0,
+    "selected_deep_empty": 0,
+    "official_light_budget_exceeded": 0,
+    "deep_budget_exceeded": 0,
+    "brain_budget_exceeded": 0,
+    "acquisition_budget_exceeded": 0,
+    "unbounded_candidate": 0,
+    "forced_archetype_quota": 0,
+    "not_selected_without_reason": 0
+  },
+  "critical_count_sum": 0,
+  "hard_acceptance_pass": true
+}

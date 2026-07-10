@@ -71,6 +71,16 @@ from .trigger_fusion import (
     load_trigger_signals,
     write_trigger_fusion,
 )
+from .depth_selector import (
+    DEPTH_DECISION_SCHEMA_VERSION,
+    CurrentDepthSelector,
+    DepthSelectionConfig,
+    DepthSelectionResult,
+    LiveDepth,
+    LiveDepthDecision,
+    load_depth_decisions,
+    write_depth_selection,
+)
 
 __all__ = [
     "AuthorizationPath",
@@ -89,7 +99,11 @@ __all__ = [
     "CandidateEvent",
     "CurrentKrxUniverseMaterializer",
     "CurrentBaselineMaterializer",
+    "CurrentDepthSelector",
     "CurrentTriggerFusion",
+    "DEPTH_DECISION_SCHEMA_VERSION",
+    "DepthSelectionConfig",
+    "DepthSelectionResult",
     "CurrentStateBootstrapResult",
     "CurrentStateBootstrapper",
     "CurrentStateEvent",
@@ -98,6 +112,8 @@ __all__ = [
     "LIVE_OPERATIONAL_ENVELOPE_SCHEMA_VERSION",
     "LIVE_RUN_PROFILE_SCHEMA_VERSION",
     "LiveAuthorizationDecision",
+    "LiveDepth",
+    "LiveDepthDecision",
     "LiveOperationalRunEnvelope",
     "LiveUniverseRow",
     "EventLifecycleStatus",
@@ -124,12 +140,14 @@ __all__ = [
     "load_current_state_store",
     "load_baseline_lanes",
     "load_candidate_events",
+    "load_depth_decisions",
     "load_trigger_signals",
     "provider_capabilities",
     "resolve_live_authorization",
     "refresh_event_lifecycle",
     "write_current_state_bootstrap",
     "write_baseline_materialization",
+    "write_depth_selection",
     "write_trigger_fusion",
     "write_universe_materialization",
 ]
