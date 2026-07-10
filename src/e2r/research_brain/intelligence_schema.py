@@ -103,6 +103,23 @@ class BalancedMemoryRole(str, Enum):
     CONTEXT_CASE = "CONTEXT_CASE"
 
 
+class PlannerPass(str, Enum):
+    BLIND_HYPOTHESIS = "BLIND_HYPOTHESIS"
+    MEMORY_CRITIQUE = "MEMORY_CRITIQUE"
+
+
+class PlannerStatus(str, Enum):
+    COMPLETE = "COMPLETE"
+    PENDING = "PENDING"
+    ABSTAINED = "ABSTAINED"
+
+
+class HypothesisStrength(str, Enum):
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+
+
 def stable_intelligence_id(prefix: str, payload: Mapping[str, Any]) -> str:
     encoded = json.dumps(_json_safe(payload), ensure_ascii=False, sort_keys=True).encode("utf-8")
     return f"{prefix}-{hashlib.sha256(encoded).hexdigest()[:24]}"
@@ -900,6 +917,383 @@ class BalancedRetrievalResult:
 
 
 @dataclass(frozen=True)
+class CurrentEvidenceFact:
+    fact_id: str
+    text: str
+    observed_date: str
+    target_relation: str
+    current_status: str
+
+    def __post_init__(self) -> None:
+        if not all(
+            value.strip()
+            for value in (
+                self.fact_id,
+                self.text,
+                self.observed_date,
+                self.target_relation,
+                self.current_status,
+            )
+        ):
+            raise ValueError("current evidence fact fields must be non-empty")
+        try:
+            date.fromisoformat(self.observed_date)
+        except ValueError as exc:
+            raise ValueError("current evidence fact observed_date must be ISO date") from exc
+        _assert_planner_memory_safe(
+            {"fact_id": self.fact_id, "text": self.text},
+            context=f"current evidence fact {self.fact_id}",
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class BlindHypothesisInput:
+    input_id: str
+    target_id: str
+    target_name: str
+    target_aliases: tuple[str, ...]
+    as_of_date: str
+    current_facts: tuple[CurrentEvidenceFact, ...]
+    sector_context: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if not all(
+            value.strip()
+            for value in (
+                self.input_id,
+                self.target_id,
+                self.target_name,
+                self.as_of_date,
+            )
+        ):
+            raise ValueError("blind hypothesis input identity is required")
+        try:
+            as_of = date.fromisoformat(self.as_of_date)
+        except ValueError as exc:
+            raise ValueError("blind hypothesis as_of_date must be ISO date") from exc
+        if not self.current_facts:
+            raise ValueError("blind hypothesis input requires current evidence facts")
+        if len({fact.fact_id for fact in self.current_facts}) != len(self.current_facts):
+            raise ValueError("blind hypothesis input contains duplicate fact ids")
+        if any(date.fromisoformat(fact.observed_date) > as_of for fact in self.current_facts):
+            raise ValueError("blind hypothesis input contains future evidence")
+        _assert_blind_pass_payload_safe(self.to_dict(), context=self.input_id)
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class BlindMechanismHypothesis:
+    hypothesis_id: str
+    rank: int
+    mechanism_summary: str
+    strength: str
+    supporting_fact_ids: tuple[str, ...]
+    contradicting_fact_ids: tuple[str, ...]
+    must_verify_questions: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        HypothesisStrength(self.strength)
+        if self.rank <= 0 or not self.hypothesis_id.strip() or not self.mechanism_summary.strip():
+            raise ValueError("blind mechanism hypothesis requires identity, rank, and summary")
+        if not self.supporting_fact_ids or not self.must_verify_questions:
+            raise ValueError("blind mechanism hypothesis requires facts and questions")
+        _assert_blind_pass_payload_safe(self.to_dict(), context=self.hypothesis_id)
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class BlindHypothesisOutput:
+    input_id: str
+    hypotheses: tuple[BlindMechanismHypothesis, ...]
+    ambiguity_reasons: tuple[str, ...]
+    abstain: bool
+    abstention_reason: str | None
+
+    def __post_init__(self) -> None:
+        if not self.input_id.strip():
+            raise ValueError("blind hypothesis output requires input id")
+        if self.abstain and not str(self.abstention_reason or "").strip():
+            raise ValueError("blind abstention requires a reason")
+        if not self.abstain and not self.hypotheses:
+            raise ValueError("non-abstaining blind output requires hypotheses")
+        ranks = [item.rank for item in self.hypotheses]
+        if ranks != list(range(1, len(ranks) + 1)):
+            raise ValueError("blind hypotheses must use contiguous rank order")
+        if len({item.hypothesis_id for item in self.hypotheses}) != len(self.hypotheses):
+            raise ValueError("blind hypotheses require unique IDs")
+        _assert_blind_pass_payload_safe(self.to_dict(), context=self.input_id)
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class MemoryCritiqueInput:
+    input_id: str
+    blind_input_id: str
+    as_of_date: str
+    current_facts: tuple[CurrentEvidenceFact, ...]
+    blind_hypotheses: tuple[BlindMechanismHypothesis, ...]
+    balanced_memory: Mapping[str, Any]
+    available_recipe_ids: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        if not all(
+            value.strip() for value in (self.input_id, self.blind_input_id, self.as_of_date)
+        ):
+            raise ValueError("memory critique input identity is required")
+        try:
+            date.fromisoformat(self.as_of_date)
+        except ValueError as exc:
+            raise ValueError("memory critique as_of_date must be ISO date") from exc
+        if not self.current_facts or not self.blind_hypotheses:
+            raise ValueError("memory critique requires current facts and blind hypotheses")
+        if not self.balanced_memory:
+            raise ValueError("memory critique requires balanced memory")
+        as_of = date.fromisoformat(self.as_of_date)
+        if any(date.fromisoformat(fact.observed_date) > as_of for fact in self.current_facts):
+            raise ValueError("memory critique input contains future evidence")
+        if len({fact.fact_id for fact in self.current_facts}) != len(self.current_facts):
+            raise ValueError("memory critique input contains duplicate fact IDs")
+        fact_ids = {fact.fact_id for fact in self.current_facts}
+        referenced_fact_ids = {
+            fact_id
+            for hypothesis in self.blind_hypotheses
+            for fact_id in (
+                *hypothesis.supporting_fact_ids,
+                *hypothesis.contradicting_fact_ids,
+            )
+        }
+        if not referenced_fact_ids <= fact_ids:
+            raise ValueError("memory critique hypothesis references an unknown current fact")
+        if len(set(self.available_recipe_ids)) != len(self.available_recipe_ids):
+            raise ValueError("memory critique input contains duplicate recipe IDs")
+        _assert_two_pass_output_safe(self.to_dict(), context=self.input_id)
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class ArchetypeHypothesis:
+    archetype_id: str
+    rank: int
+    reason: str
+    supporting_fact_ids: tuple[str, ...]
+    contradicting_fact_ids: tuple[str, ...]
+    recipe_ids: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        if self.rank <= 0 or not self.archetype_id.strip() or not self.reason.strip():
+            raise ValueError("archetype hypothesis requires identity, rank, and reason")
+        if not self.supporting_fact_ids:
+            raise ValueError("archetype hypothesis requires supporting current facts")
+        _assert_two_pass_output_safe(self.to_dict(), context=self.archetype_id)
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class PlannerSourceTaskDraft:
+    draft_id: str
+    recipe_id: str
+    question_to_answer: str
+    why_material: str
+    query_intent: str
+    preferred_source_families: tuple[str, ...]
+    fallback_source_families: tuple[str, ...]
+    max_queries: int
+    max_candidates: int
+    max_fetches: int
+    stop_condition: str
+
+    def __post_init__(self) -> None:
+        required = (
+            self.draft_id,
+            self.recipe_id,
+            self.question_to_answer,
+            self.why_material,
+            self.query_intent,
+            self.stop_condition,
+        )
+        if not all(value.strip() for value in required):
+            raise ValueError("planner source-task draft fields must be non-empty")
+        if not self.preferred_source_families:
+            raise ValueError("planner source-task draft requires preferred sources")
+        if min(self.max_queries, self.max_candidates, self.max_fetches) <= 0:
+            raise ValueError("planner source-task draft budgets must be bounded and positive")
+        _assert_two_pass_output_safe(self.to_dict(), context=self.draft_id)
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class MemoryCritiqueOutput:
+    input_id: str
+    top_k_archetypes: tuple[ArchetypeHypothesis, ...]
+    supporting_current_fact_ids: tuple[str, ...]
+    contradicting_current_fact_ids: tuple[str, ...]
+    positive_thesis: str
+    counter_thesis: str
+    must_verify_questions: tuple[str, ...]
+    red_team_questions: tuple[str, ...]
+    source_task_drafts: tuple[PlannerSourceTaskDraft, ...]
+    do_not_promote_reasons: tuple[str, ...]
+    ambiguity_reasons: tuple[str, ...]
+    abstain: bool
+    abstention_reason: str | None
+
+    def __post_init__(self) -> None:
+        if not self.input_id.strip():
+            raise ValueError("memory critique output requires input id")
+        if self.abstain and not str(self.abstention_reason or "").strip():
+            raise ValueError("memory critique abstention requires a reason")
+        if not self.abstain:
+            required = (
+                self.top_k_archetypes,
+                self.supporting_current_fact_ids,
+                self.positive_thesis,
+                self.counter_thesis,
+                self.must_verify_questions,
+                self.red_team_questions,
+                self.do_not_promote_reasons,
+            )
+            if not all(required):
+                raise ValueError("non-abstaining critique output is incomplete")
+        ranks = [item.rank for item in self.top_k_archetypes]
+        if ranks != list(range(1, len(ranks) + 1)):
+            raise ValueError("archetype hypotheses must use contiguous rank order")
+        if len({item.archetype_id for item in self.top_k_archetypes}) != len(
+            self.top_k_archetypes
+        ):
+            raise ValueError("archetype hypotheses require unique IDs")
+        _assert_two_pass_output_safe(self.to_dict(), context=self.input_id)
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class ProviderCallTrace:
+    planner_pass: str
+    provider_name: str
+    real_provider: bool
+    fake_provider: bool
+    prompt_hash: str
+    response_hash: str
+
+    def __post_init__(self) -> None:
+        PlannerPass(self.planner_pass)
+        if not all(
+            value.strip()
+            for value in (
+                self.provider_name,
+                self.prompt_hash,
+                self.response_hash,
+            )
+        ):
+            raise ValueError("provider call trace requires provider and hashes")
+        if self.real_provider and self.fake_provider:
+            raise ValueError("provider cannot be both real and fake")
+        if not _is_sha256(self.prompt_hash) or not _is_sha256(self.response_hash):
+            raise ValueError("provider call trace hashes must be SHA-256 hex")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class PlannerPending:
+    input_id: str
+    failed_pass: str
+    reason_code: str
+    reason_detail: str
+    provider_name: str
+    prompt_hash: str
+    response_hash: str
+
+    def __post_init__(self) -> None:
+        PlannerPass(self.failed_pass)
+        if not all(
+            value.strip()
+            for value in (
+                self.input_id,
+                self.reason_code,
+                self.reason_detail,
+                self.provider_name,
+                self.prompt_hash,
+                self.response_hash,
+            )
+        ):
+            raise ValueError("planner pending requires exact provider failure provenance")
+        if not _is_sha256(self.prompt_hash) or not _is_sha256(self.response_hash):
+            raise ValueError("planner pending hashes must be SHA-256 hex")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class TwoPassPlan:
+    plan_id: str
+    blind_input_id: str
+    status: str
+    blind_output: BlindHypothesisOutput | None
+    critique_output: MemoryCritiqueOutput | None
+    pending: PlannerPending | None
+    provider_traces: tuple[ProviderCallTrace, ...]
+    deterministic_stage_or_score_mutation: bool = False
+
+    def __post_init__(self) -> None:
+        PlannerStatus(self.status)
+        if not self.plan_id.strip() or not self.blind_input_id.strip():
+            raise ValueError("two-pass plan identity is required")
+        if self.deterministic_stage_or_score_mutation:
+            raise ValueError("Research Brain cannot mutate deterministic score or stage")
+        if self.blind_output is not None and self.blind_output.input_id != self.blind_input_id:
+            raise ValueError("two-pass plan blind output identity mismatch")
+        if self.pending is not None and self.pending.input_id != self.blind_input_id:
+            raise ValueError("two-pass plan pending identity mismatch")
+        if self.status == PlannerStatus.PENDING.value:
+            if self.pending is None or self.critique_output is not None:
+                raise ValueError("pending plan requires pending detail and no critique output")
+        elif self.status == PlannerStatus.COMPLETE.value:
+            if self.pending is not None or self.blind_output is None or self.critique_output is None:
+                raise ValueError("complete plan requires both pass outputs")
+            if self.critique_output.abstain:
+                raise ValueError("complete plan cannot carry critique abstention")
+        else:
+            if self.pending is not None or self.blind_output is None:
+                raise ValueError("abstained plan requires blind output and no pending state")
+            if self.critique_output is not None and not self.critique_output.abstain:
+                raise ValueError("abstained plan critique must also abstain")
+        _assert_two_pass_output_safe(
+            {
+                "blind_output": self.blind_output.to_dict() if self.blind_output else None,
+                "critique_output": (
+                    self.critique_output.to_dict() if self.critique_output else None
+                ),
+                "deterministic_stage_or_score_mutation": (
+                    self.deterministic_stage_or_score_mutation
+                ),
+            },
+            context=self.plan_id,
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
 class QuarantineRecord:
     quarantine_id: str
     artifact_id: str
@@ -945,6 +1339,48 @@ _FORBIDDEN_PLANNER_MEMORY_PATTERN = re.compile(
     r")(?:$|[^a-z0-9])",
     re.IGNORECASE,
 )
+_CANONICAL_ARCHETYPE_TOKEN_PATTERN = re.compile(
+    r"(?:^|[^A-Za-z0-9])(?:C[0-9]{2}|R13)_[A-Z0-9_]+(?:$|[^A-Za-z0-9])",
+    re.IGNORECASE,
+)
+_FORBIDDEN_STAGE_SCORE_TEXT_PATTERN = re.compile(
+    r"(?:target[_ -]?score|expected[_ -]?stage|"
+    r"(?:e2r|final|planner|target)\s+score\s*(?:[:=]|is|was)?\s*[0-9]|"
+    r"score\s*(?:[:=]|is\s|was\s|of\s)\s*[0-9]|"
+    r"(?:canonical|e2r|expected|target)\s+stage|"
+    r"stage\s*[:=]\s*(?:0|1|2|3|4[abc]?|5|3-(?:green|yellow|red))|"
+    r"stage\s+(?:3-(?:green|yellow|red)|4[abc])|"
+    r"stage[0-9]+-(?:green|yellow|red)|source[_ -]?primary)",
+    re.IGNORECASE,
+)
+_FORBIDDEN_TWO_PASS_KEYS = frozenset(
+    {
+        "score",
+        "stage",
+        "target_score",
+        "target_stage",
+        "expected_stage",
+        "current_score_eligible",
+        "feature_input",
+        "score_contribution",
+        "verified_score",
+        "provisional_score",
+        "base_stage",
+        "source_primary",
+        "expected_archetype_id",
+        "expected_primitive_id",
+        "outcome_label",
+        "price_metrics",
+        "current_profile_verdict",
+    }
+)
+_ALLOWED_TWO_PASS_AUDIT_KEYS = frozenset(
+    {"deterministic_stage_or_score_mutation", "forbidden_score_sources"}
+)
+
+
+def _is_sha256(value: str) -> bool:
+    return re.fullmatch(r"[0-9a-f]{64}", value) is not None
 
 
 def _assert_planner_memory_safe(value: Any, *, context: str) -> None:
@@ -952,6 +1388,63 @@ def _assert_planner_memory_safe(value: Any, *, context: str) -> None:
     match = _FORBIDDEN_PLANNER_MEMORY_PATTERN.search(serialized)
     if match:
         raise ValueError(f"{context} contains forbidden historical outcome token: {match.group(0)!r}")
+
+
+def _assert_blind_pass_payload_safe(value: Any, *, context: str) -> None:
+    _assert_two_pass_output_safe(value, context=context)
+    serialized = json.dumps(_json_safe(value), ensure_ascii=False, sort_keys=True)
+    if _CANONICAL_ARCHETYPE_TOKEN_PATTERN.search(serialized):
+        raise ValueError(f"blind pass {context} contains an archetype label")
+    for key in _iter_mapping_keys(value):
+        normalized = str(key).strip().lower()
+        if "archetype" in normalized or normalized == "source_primary":
+            raise ValueError(f"blind pass {context} contains forbidden key {key!r}")
+
+
+def _assert_two_pass_output_safe(value: Any, *, context: str) -> None:
+    for key, item in _iter_mapping_items(value):
+        normalized = str(key).strip().lower()
+        if normalized in _ALLOWED_TWO_PASS_AUDIT_KEYS:
+            if normalized == "deterministic_stage_or_score_mutation" and bool(item):
+                raise ValueError(f"two-pass payload {context} mutates score/stage")
+            continue
+        if (
+            normalized in _FORBIDDEN_TWO_PASS_KEYS
+            or normalized.endswith("_score")
+            or normalized.endswith("_stage")
+            or normalized.startswith("score_")
+            or normalized.startswith("stage_")
+        ):
+            raise ValueError(f"two-pass payload {context} contains forbidden key {key!r}")
+    serialized = json.dumps(_json_safe(value), ensure_ascii=False, sort_keys=True)
+    match = _FORBIDDEN_PLANNER_MEMORY_PATTERN.search(serialized)
+    if match:
+        raise ValueError(
+            f"two-pass payload {context} contains historical outcome token: {match.group(0)!r}"
+        )
+    stage_score_scan_text = _CANONICAL_ARCHETYPE_TOKEN_PATTERN.sub(" ", serialized)
+    if _FORBIDDEN_STAGE_SCORE_TEXT_PATTERN.search(stage_score_scan_text):
+        raise ValueError(f"two-pass payload {context} contains score/stage target text")
+
+
+def _iter_mapping_keys(value: Any):
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            yield key
+            yield from _iter_mapping_keys(item)
+    elif isinstance(value, (tuple, list)):
+        for item in value:
+            yield from _iter_mapping_keys(item)
+
+
+def _iter_mapping_items(value: Any):
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            yield key, item
+            yield from _iter_mapping_items(item)
+    elif isinstance(value, (tuple, list)):
+        for item in value:
+            yield from _iter_mapping_items(item)
 
 
 def _json_safe(value: Any) -> Any:
@@ -973,6 +1466,10 @@ __all__ = [
     "BalancedRetrievalItem",
     "BalancedRetrievalRequest",
     "BalancedRetrievalResult",
+    "BlindHypothesisInput",
+    "BlindHypothesisOutput",
+    "BlindMechanismHypothesis",
+    "CurrentEvidenceFact",
     "EvidenceRecipe",
     "EvidenceRecipeRole",
     "INTELLIGENCE_SCHEMA_VERSION",
@@ -988,20 +1485,30 @@ __all__ = [
     "HistoricalSourceRepairTask",
     "HistoricalSourceState",
     "HistoricalSourceVerification",
+    "HypothesisStrength",
     "LinkageError",
     "MemoryEdge",
     "MemoryEdgeType",
     "MemoryNode",
     "MemoryNodeType",
+    "MemoryCritiqueInput",
+    "MemoryCritiqueOutput",
     "NarrativeCaseCandidate",
     "ParsedResearchArtifact",
     "ParsedResearchRow",
     "ParsedRowKind",
+    "PlannerPass",
+    "PlannerPending",
+    "PlannerSourceTaskDraft",
+    "PlannerStatus",
+    "ProviderCallTrace",
     "QuarantineReason",
     "QuarantineRecord",
     "ResearchMemoryGraph",
     "SemanticMemoryIndexEntry",
     "SourceLineRange",
+    "TwoPassPlan",
     "UnsupportedEvidenceRecipe",
+    "ArchetypeHypothesis",
     "stable_intelligence_id",
 ]

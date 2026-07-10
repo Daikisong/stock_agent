@@ -7,7 +7,6 @@ import hashlib
 import os
 import re
 import shlex
-import signal
 import subprocess
 import tempfile
 from dataclasses import dataclass, field
@@ -18,6 +17,11 @@ from e2r.agentic.evidence_contract_v2 import load_evidence_contracts_v2
 from e2r.calibration.taxonomy import CANONICAL_ARCHETYPE_IDS
 from e2r.env import load_project_env
 from e2r.research_brain.schemas import SourceTask, SourceTaskType, deterministic_id
+from e2r.research_brain.planning.provider_transport import (
+    json_object_from_text as _shared_json_object_from_text,
+    run_codex_command as _shared_run_codex_command,
+    terminate_process_tree as _shared_terminate_process_tree,
+)
 from e2r.research_brain.v2_archetype_router import route_candidate_event_v2
 from e2r.research_brain.v2_llm_planner import validate_llm_planner_output_v2
 from e2r.research_brain.v2_schemas import ArchetypeMemoryCard, CandidateEventV2, LLMPlannerOutputV2
@@ -1329,62 +1333,15 @@ def _planner_raw_response_path(planner_run_id: str) -> str:
 
 
 def _run_codex_command(command: Sequence[str], *, prompt: str, timeout: float) -> subprocess.CompletedProcess[str]:
-    process = subprocess.Popen(
-        list(command),
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-        start_new_session=(os.name == "posix"),
-    )
-    try:
-        stdout, stderr = process.communicate(prompt, timeout=timeout)
-    except subprocess.TimeoutExpired:
-        _terminate_process_tree(process)
-        raise
-    return subprocess.CompletedProcess(list(command), process.returncode, stdout, stderr)
+    return _shared_run_codex_command(command, prompt=prompt, timeout=timeout)
 
 
 def _terminate_process_tree(process: subprocess.Popen[str]) -> None:
-    if process.poll() is not None:
-        return
-    if os.name == "posix":
-        try:
-            os.killpg(process.pid, signal.SIGTERM)
-        except ProcessLookupError:
-            return
-        try:
-            process.wait(timeout=5)
-            return
-        except subprocess.TimeoutExpired:
-            try:
-                os.killpg(process.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                return
-            process.wait(timeout=5)
-            return
-    process.kill()
-    process.wait(timeout=5)
+    _shared_terminate_process_tree(process)
 
 
 def _json_object_from_text(text: str) -> Mapping[str, object] | None:
-    clean = text.strip()
-    if not clean:
-        return None
-    try:
-        parsed = json.loads(clean)
-        return parsed if isinstance(parsed, Mapping) else None
-    except json.JSONDecodeError:
-        pass
-    decoder = json.JSONDecoder()
-    for match in re.finditer(r"\{", clean):
-        try:
-            parsed, _ = decoder.raw_decode(clean[match.start() :])
-        except json.JSONDecodeError:
-            continue
-        if isinstance(parsed, Mapping):
-            return parsed
-    return None
+    return _shared_json_object_from_text(text)
 
 
 def _count_forbidden_keys(value: object) -> int:

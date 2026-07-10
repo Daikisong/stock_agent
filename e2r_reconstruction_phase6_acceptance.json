@@ -1,0 +1,120 @@
+{
+  "schema_version": "e2r_reconstruction_phase6_acceptance_v1",
+  "phase": 6,
+  "status": "TWO_PASS_PLANNER_PHASE_CONTRACT_PASS",
+  "verified_on": "2026-07-10",
+  "scope": "Blind Pass A, balanced-memory Pass B, strict decoder, provider transport, pending provenance, and evaluator-only benchmark",
+  "production_runtime_ready": false,
+  "planner_schema_version": "e2r_two_pass_research_brain_v1",
+  "implementation": {
+    "pass_a": "BLIND_HYPOTHESIS",
+    "pass_a_visible_inputs": [
+      "target identity",
+      "as_of_date",
+      "current evidence facts"
+    ],
+    "pass_a_forbidden_inputs": [
+      "source_primary",
+      "archetype label",
+      "score",
+      "Stage",
+      "historical outcome",
+      "future evidence"
+    ],
+    "pass_b": "MEMORY_CRITIQUE",
+    "balanced_memory_roles": [
+      "DIRECT_RECIPE",
+      "POSITIVE",
+      "COUNTEREXAMPLE_GUARD",
+      "SOURCE_SUCCESS",
+      "SOURCE_FAILURE",
+      "SEMANTIC_GUARD"
+    ],
+    "required_outputs": [
+      "top-k archetype hypotheses",
+      "supporting and contradicting current facts",
+      "positive and counter thesis",
+      "must-verify and red-team questions",
+      "bounded official-first source-task drafts",
+      "do-not-promote reasons",
+      "abstention and ambiguity"
+    ],
+    "strict_json_type_validation": true,
+    "target_directness_validation": true,
+    "sector_plausibility_validation": true,
+    "sector_context_forwarded_to_pass_a": false,
+    "leading_recipe_coverage_validation": true,
+    "dotenv_fills_empty_provider_environment": true,
+    "shared_codex_transport_preserves_v4_compatibility": true
+  },
+  "blind_benchmark": {
+    "schema_version": "e2r_two_pass_planner_benchmark_v1",
+    "status": "TWO_PASS_PLANNER_TEST_BENCHMARK_PASS",
+    "provider_name": "fixture_two_pass_planner",
+    "real_provider": false,
+    "fake_provider": true,
+    "benchmark_count": 61,
+    "archetype_benchmark_count": 60,
+    "top3_hit_count": 60,
+    "top3_hit_rate": 1.0,
+    "top1_hit_count": 57,
+    "top1_hit_rate": 0.95,
+    "abstention_count": 27,
+    "critical_guard_case_count": 5,
+    "critical_guard_misroute_count": 0,
+    "impossible_archetype_assignment_count": 0,
+    "planner_score_stage_mutation_count": 0,
+    "source_primary_copy_without_reason_count": 0,
+    "prompt_response_hash_missing_count": 0,
+    "pending_count": 0,
+    "critical_count_sum": 0,
+    "result_hash": "4fff0816abb1bd01a37bf78bc7a923768d237c24ef0203552bccf146f4d5dbe9",
+    "production_acceptance_credit": false
+  },
+  "provider_pending_contract": {
+    "missing_provider_becomes_pending": true,
+    "provider_failure_becomes_pending": true,
+    "invalid_provider_output_becomes_pending": true,
+    "fake_provider_outside_test_mode_becomes_pending": true,
+    "pending_preserves_prompt_hash": true,
+    "returned_invalid_response_preserves_raw_response_hash": true,
+    "pending_can_finalize_score_or_stage": false
+  },
+  "real_provider_smoke": {
+    "executed": true,
+    "real_pass_a_completion_observed": true,
+    "real_pass_b_completion_observed": false,
+    "final_status": "PLANNER_PENDING",
+    "failed_pass": "MEMORY_CRITIQUE",
+    "observed_failure_classes": [
+      "OUTPUT_VALIDATION_REJECTION",
+      "CODEX_CLI_TIMEOUT"
+    ],
+    "production_acceptance_credit": false,
+    "note": "Real provider smoke proved the pending path but did not prove production completion."
+  },
+  "verification": {
+    "phase0_through_phase6_targeted_test_count": 102,
+    "legacy_v4_operational_regression_test_count": 95,
+    "full_suite_test_count": 5409,
+    "full_suite_failure_count": 18,
+    "phase0_baseline_known_failure_count": 18,
+    "new_failure_count": 0,
+    "known_failure_scope": "mutable goal4 research-to-runtime operational snapshots"
+  },
+  "hard_acceptance": {
+    "planner_score_stage_mutation_count": 0,
+    "source_primary_copy_without_reason_count": 0,
+    "critical_guard_misroute_count": 0,
+    "impossible_archetype_assignment_count": 0,
+    "prompt_response_hash_missing_count": 0,
+    "nonofficial_first_draft_accept_count": 0,
+    "peer_only_assignment_accept_count": 0,
+    "invalid_json_type_accept_count": 0,
+    "fake_provider_outside_test_accept_count": 0,
+    "provider_failure_score_finalization_count": 0,
+    "critical_count_sum": 0
+  },
+  "official_verification_command": "PYTHONPATH=src:tests python -m unittest tests.test_two_pass_brain_planner tests.test_e2r_reconstruction_phase6_acceptance tests.test_research_brain_v4_real_planner_provider -v",
+  "next_required_phase": "Phase 7 QuestionSourceTask; real Pass B completion and production cutover remain later runtime gates"
+}
