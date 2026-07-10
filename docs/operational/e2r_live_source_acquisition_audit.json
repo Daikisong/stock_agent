@@ -1,0 +1,75 @@
+{
+  "schema_version": "e2r_live_source_acquisition_audit_v1",
+  "phase": 27,
+  "as_of_date": "2026-07-10",
+  "status": "PHASE_27_ACCEPTED",
+  "question_source_task_count": 9,
+  "provider_request_count": 18,
+  "actual_provider_call_count": 6,
+  "actual_provider_call_counts": {
+    "OpenDART": 3,
+    "IssuerIR": 3
+  },
+  "acquisition_class_counts": {
+    "REAL_PROVIDER_FETCH": 2,
+    "FRESH_PROVIDER_CACHE": 4,
+    "REJECTED_BY_POLICY": 3,
+    "PROVIDER_FAILED": 9
+  },
+  "actual_live_or_fresh_document_count": 6,
+  "unique_evidence_document_count": 2,
+  "exact_pending_or_rejection": {
+    "issuer_ir_provider_failed_logical_count": 9,
+    "issuer_ir_actual_provider_failed_count": 3,
+    "opendart_error_body_rejected_logical_count": 3,
+    "opendart_error_body_reason": "fetched_document_content_too_small"
+  },
+  "web": {
+    "search_task_count": 0,
+    "search_result_count": 0,
+    "fetched_document_count": 0,
+    "rejected_document_count": 0,
+    "fallback_deferred_until_question_resolution": true
+  },
+  "critical_counts": {
+    "actual_live_or_fresh_document_empty_count": 0,
+    "generic_portal_counted_as_symbol_evidence_count": 0,
+    "fetched_without_content_hash_count": 0,
+    "future_document_count": 0,
+    "snippet_document_count": 0,
+    "snapshot_counted_live_count": 0,
+    "wrong_subject_document_to_claim_count": 0,
+    "provider_failure_masked_no_result_count": 0
+  },
+  "lineage": {
+    "provider_requests": "output/live_materialization/2026-07-10/provider_requests.jsonl",
+    "provider_fetch_results": "output/live_materialization/2026-07-10/provider_fetch_results.jsonl",
+    "evidence_documents": "output/live_materialization/2026-07-10/evidence_documents.jsonl",
+    "web_search_tasks": "output/live_materialization/2026-07-10/web_search_tasks.jsonl",
+    "web_search_results": "output/live_materialization/2026-07-10/web_search_results.jsonl",
+    "web_fetched_documents": "output/live_materialization/2026-07-10/web_fetched_documents.jsonl",
+    "web_rejected_documents": "output/live_materialization/2026-07-10/web_rejected_documents.jsonl",
+    "provider_call_report": "output/live_materialization/2026-07-10/provider_call_report.json"
+  },
+  "artifact_hashes": {
+    "provider_requests_sha256": "d80a5236e7116a2c021dec8d2d1d5acc5e8c63cfdaa3092e2794ab2edb31dca5",
+    "provider_fetch_results_sha256": "77dfb49699d8d782b093890eb159614fe9b3960bcae06cd62119231b7825a21e",
+    "evidence_documents_sha256": "03751f0ec360c30f958000bd92675febee19002a0634080a0b49bc7041ff68bb",
+    "web_search_tasks_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "web_search_results_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "web_fetched_documents_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "web_rejected_documents_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "provider_call_report_sha256": "ce1f577499e49b09b20491c6f4d4a5aa7759ce14468628bcfd4d1d4061ab678f"
+  },
+  "safety": {
+    "official_first": true,
+    "same_target_provider_deduplicated": true,
+    "provider_error_body_materialized": false,
+    "generic_portal_symbol_evidence_allowed": false,
+    "search_snippet_materialized": false,
+    "snapshot_counted_as_live": false,
+    "document_direct_score_eligible": false,
+    "production_runtime_ready": false
+  },
+  "note": "실제 OpenDART 상세 원문 2건을 취득했고 동일 회사의 다른 질문에는 fresh cache 계보로 연결했다. IssuerIR connector 미구성은 NO_RESULT로 숨기지 않고 PROVIDER_FAILED로 남겼다. 에코심플렉스 OpenDART의 18자 오류 본문은 실제 문서가 아니므로 정책 거절했다. 일반 웹 fallback은 Phase 28에서 질문별 predicate 미충족이 확인되기 전에는 열지 않는다."
+}

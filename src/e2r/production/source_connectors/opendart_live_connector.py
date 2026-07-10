@@ -253,7 +253,12 @@ def _is_watch_report(report_name: str) -> bool:
 def _fetch_detail_text(*, api_key: str, rcept_no: str) -> str:
     response = requests.get(_DETAIL_URL, params={"crtfc_key": api_key, "rcept_no": rcept_no}, timeout=30)
     response.raise_for_status()
-    return _decode_detail_payload(response.content or response.text.encode("utf-8", errors="replace"))
+    text = _decode_detail_payload(
+        response.content or response.text.encode("utf-8", errors="replace")
+    )
+    if len(text.strip()) < 80 or "파일이 존재하지 않습니다" in text:
+        return ""
+    return text
 
 
 def _decode_detail_payload(payload: bytes) -> str:
