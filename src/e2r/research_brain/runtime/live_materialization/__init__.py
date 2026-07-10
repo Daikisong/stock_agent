@@ -120,10 +120,22 @@ from .current_claim_compiler import (
     SourceTaskSatisfactionRecord,
     write_current_claim_compilation,
 )
+from .adaptive_gap_closure import (
+    AdaptiveGapAttempt,
+    AdaptiveGapClosureConfig,
+    AdaptiveGapClosureResult,
+    AppendOnlyLedgerEntry,
+    CurrentAdaptiveGapClosure,
+    write_adaptive_gap_closure,
+)
 
 __all__ = [
     "AuthorizationPath",
     "AcquisitionResultClass",
+    "AdaptiveGapAttempt",
+    "AdaptiveGapClosureConfig",
+    "AdaptiveGapClosureResult",
+    "AppendOnlyLedgerEntry",
     "BASELINE_LANE_SCHEMA_VERSION",
     "BaselineBulkSnapshot",
     "BaselineBulkTransport",
@@ -145,6 +157,7 @@ __all__ = [
     "CurrentClaimCompilationResult",
     "CurrentClaimCompiler",
     "CurrentClaimCompilerConfig",
+    "CurrentAdaptiveGapClosure",
     "CurrentQuestionSourceTaskMaterializer",
     "CurrentSourceAcquisitionOrchestrator",
     "CurrentDepthSelector",
@@ -213,6 +226,7 @@ __all__ = [
     "refresh_event_lifecycle",
     "write_current_state_bootstrap",
     "write_current_claim_compilation",
+    "write_adaptive_gap_closure",
     "write_baseline_materialization",
     "write_brain_planner_run",
     "write_source_acquisition_run",

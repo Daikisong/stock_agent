@@ -1,0 +1,57 @@
+{
+  "schema_version": "e2r_live_adaptive_gap_audit_v1",
+  "phase": 29,
+  "as_of_date": "2026-07-10",
+  "status": "PHASE_29_ACCEPTED",
+  "append_only_ledger_entry_count": 30,
+  "ledger_entry_breakdown": {
+    "CLAIM_ADJUDICATED": 12,
+    "MATERIAL_GAP_OPEN": 9,
+    "ADAPTIVE_RETRY_PLANNED": 9
+  },
+  "adaptive_attempt_count": 9,
+  "real_llm_planning_complete_count": 9,
+  "previous_query_count": 18,
+  "new_llm_query_count": 18,
+  "terminal_status_counts": {
+    "SOURCE_PENDING": 6,
+    "PROVIDER_PENDING": 3
+  },
+  "score_valid_true_count": 0,
+  "canonical_stage_zero_pending_count": 9,
+  "critical_counts": {
+    "silent_claim_overwrite_count": 0,
+    "identical_retry_count": 0,
+    "retry_without_failure_reason_count": 0,
+    "unresolved_material_gap_final_score_count": 0,
+    "provider_failure_low_score_count": 0,
+    "round_limit_score_valid_true_count": 0
+  },
+  "lineage": {
+    "current_claim_ledger": "output/live_materialization/2026-07-10/current_claim_ledger.jsonl",
+    "adaptive_gap_attempts": "output/live_materialization/2026-07-10/adaptive_gap_attempts.jsonl",
+    "adaptive_gap_prompts": "output/live_materialization/2026-07-10/adaptive_gap_prompts.jsonl",
+    "adaptive_gap_responses": "output/live_materialization/2026-07-10/adaptive_gap_responses.jsonl",
+    "gap_closure_status": "output/live_materialization/2026-07-10/gap_closure_status.jsonl",
+    "adaptive_gap_audit": "output/live_materialization/2026-07-10/adaptive_gap_audit.json"
+  },
+  "artifact_hashes": {
+    "current_claim_ledger_sha256": "acf92fd2476574cfe28a224cd80964c178c9f8fb7a7efce599704d6b021ea9a7",
+    "adaptive_gap_attempts_sha256": "1d375ac875d1ecbe73ba8395c4462fb68352449bc834a107e5da64dc6fa6455a",
+    "adaptive_gap_prompts_sha256": "c127a3d4608b55a807d4b59af8a0c855bf45d6cff97f73e572166864311de3c6",
+    "adaptive_gap_responses_sha256": "dcbcabd8c4ccb2f3db9c36bf1be1600f96c04089e12cfab23e630c8ada55e1aa",
+    "gap_closure_status_sha256": "9a1966a6f8550df1722fb610872230c29f01519403c566e74db40783fb78a22c",
+    "adaptive_gap_audit_sha256": "a5a81e63aeb80c45d6afb2b19b5d6b51b402e44d86795e69ef8d20939612f2d8"
+  },
+  "safety": {
+    "ledger_append_only_hash_chain": true,
+    "existing_claim_silently_replaced": false,
+    "deterministic_fallback_query_used": false,
+    "same_query_repeated": false,
+    "failure_reason_returned_to_llm": true,
+    "provider_failure_converted_to_low_score": false,
+    "material_gap_converted_to_final_score": false,
+    "production_runtime_ready": false
+  },
+  "note": "accepted claim이 없는 상태를 점수로 확정하지 않았다. NO_RELEVANT_CLAIM 6건은 문서 section/query 변경, provider 실패 3건은 official provider/query 변경 사유를 LLM에 전달했고, LLM이 기존 검색문과 겹치지 않는 새 검색문 18개를 생성했다."
+}
