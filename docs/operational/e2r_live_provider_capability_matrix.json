@@ -36,7 +36,7 @@
       "supports_checkpoint": false,
       "auth_env_keys": ["OPENDART_API_KEY", "OPEN_DART_API_KEY"],
       "live_ready": false,
-      "blocker_reason": "bulk current materializer and checkpoint integration pending"
+      "blocker_reason": "bulk disclosure index is connected; full-document lifecycle backfill and checkpoint integration pending"
     },
     {
       "schema_version": "e2r_live_provider_capability_v1",
@@ -57,7 +57,7 @@
       "supports_checkpoint": false,
       "auth_env_keys": ["KRX_OPENAPI_KEY"],
       "live_ready": false,
-      "blocker_reason": "generic MDC main connector is health-only; OpenAPI executor pending"
+      "blocker_reason": "universe and bulk price OpenAPI are connected; complete symbol risk lifecycle adapter pending"
     },
     {
       "schema_version": "e2r_live_provider_capability_v1",

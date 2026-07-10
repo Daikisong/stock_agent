@@ -377,6 +377,63 @@ def write_current_state_bootstrap(
     return paths
 
 
+def load_current_state_store(path: str | Path) -> tuple[CurrentStateRecord, ...]:
+    """Load the versioned leaf store without weakening nested schema checks."""
+
+    source = Path(path)
+    if not source.is_file():
+        return ()
+    records: list[CurrentStateRecord] = []
+    with source.open(encoding="utf-8") as handle:
+        for line_number, raw_line in enumerate(handle, start=1):
+            line = raw_line.strip()
+            if not line:
+                continue
+            try:
+                payload = json.loads(line)
+                attempts = tuple(
+                    CurrentStateSourceAttempt(**dict(item))
+                    for item in payload.pop("source_attempts")
+                )
+                events = tuple(
+                    CurrentStateEvent(
+                        **{
+                            **dict(item),
+                            "source_ids": tuple(item.get("source_ids") or ()),
+                        }
+                    )
+                    for item in payload.pop("material_events")
+                )
+                universe_source_ids = tuple(payload.pop("universe_source_ids"))
+                accepted_current_claim_ids = tuple(
+                    payload.pop("accepted_current_claim_ids")
+                )
+                historical_only_claim_ids = tuple(
+                    payload.pop("historical_only_claim_ids")
+                )
+                pending_source_task_ids = tuple(
+                    payload.pop("pending_source_task_ids")
+                )
+                records.append(
+                    CurrentStateRecord(
+                        **payload,
+                        universe_source_ids=universe_source_ids,
+                        source_attempts=attempts,
+                        material_events=events,
+                        accepted_current_claim_ids=accepted_current_claim_ids,
+                        historical_only_claim_ids=historical_only_claim_ids,
+                        pending_source_task_ids=pending_source_task_ids,
+                    )
+                )
+            except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+                raise ValueError(
+                    f"invalid current-state store row at line {line_number}: {exc}"
+                ) from exc
+    if len({record.target_id for record in records}) != len(records):
+        raise ValueError("duplicate target in current-state store")
+    return tuple(records)
+
+
 def _merge_events(
     prior: Sequence[CurrentStateEvent],
     discovered: Sequence[CurrentStateEvent],
@@ -624,5 +681,6 @@ __all__ = [
     "SourceAttemptStatus",
     "ThesisStatus",
     "refresh_event_lifecycle",
+    "load_current_state_store",
     "write_current_state_bootstrap",
 ]

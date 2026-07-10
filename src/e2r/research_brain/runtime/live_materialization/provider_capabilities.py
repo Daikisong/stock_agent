@@ -70,7 +70,7 @@ def provider_capabilities() -> tuple[ProviderCapability, ...]:
             full_official=True,
             batch=True,
             auth=("OPENDART_API_KEY", "OPEN_DART_API_KEY"),
-            blocker="bulk current materializer and checkpoint integration pending",
+            blocker="bulk disclosure index is connected; full-document lifecycle backfill and checkpoint integration pending",
         ),
         _capability(
             "KRX",
@@ -82,7 +82,7 @@ def provider_capabilities() -> tuple[ProviderCapability, ...]:
             risk=True,
             batch=True,
             auth=("KRX_OPENAPI_KEY",),
-            blocker="generic MDC main connector is health-only; OpenAPI executor pending",
+            blocker="universe and bulk price OpenAPI are connected; complete symbol risk lifecycle adapter pending",
         ),
         _capability(
             "KIND",

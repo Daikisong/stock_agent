@@ -1,0 +1,102 @@
+{
+  "schema_version": "e2r_live_baseline_lane_audit_v1",
+  "status": "CURRENT_BASELINE_LANES_PASS",
+  "verdict_scope": "four_required_baseline_lane_coverage_and_source_integrity",
+  "as_of_date": "2026-07-10",
+  "price_effective_date": "2026-07-09",
+  "dart_index_start_date": "2026-07-10",
+  "generated_from_commit": "89aeeeb76f5dbb41b2cc73d32a236acd751f9140",
+  "test_mode": false,
+  "fixture_used": false,
+  "eligible_universe_count": 2542,
+  "baseline_lane_count": 10168,
+  "expected_baseline_lane_count": 10168,
+  "lane_counts": {
+    "OFFICIAL": 2542,
+    "PRICE": 2542,
+    "RISK": 2542,
+    "EXISTING_LEDGER": 2542
+  },
+  "lane_status_counts": {
+    "OFFICIAL": {
+      "PARTIAL_HISTORY_PENDING": 2542
+    },
+    "PRICE": {
+      "OBSERVED": 2542
+    },
+    "RISK": {
+      "OBSERVED": 120,
+      "NO_RESULT": 2422
+    },
+    "EXISTING_LEDGER": {
+      "NO_PRIOR_LEDGER": 2542
+    }
+  },
+  "risk_lifecycle_counts": {
+    "CURRENT_OPEN_CANDIDATE": 119,
+    "RESOLVED_EVENT": 1,
+    "NO_RESULT_IN_BOUNDED_DAILY_OFFICIAL_SCAN": 2422
+  },
+  "honesty_note": "당일 OpenDART index는 실제 조회했지만 latest regular report와 장기 event history 전체를 완료했다고 볼 수 없어 OFFICIAL lane 2542개를 PARTIAL_HISTORY_PENDING으로 유지했다. RISK NO_RESULT도 위험 없음 확정이 아니라 bounded daily official scan에서 결과가 없다는 뜻이다.",
+  "actual_provider_fetch_count": 3,
+  "actual_http_request_count": 10,
+  "source_snapshots": [
+    {
+      "provider_name": "KRX",
+      "source_class": "PRICE_KOSDAQ",
+      "row_count": 1820,
+      "page_count": 1,
+      "content_hash": "e207a41fc9ac0414a25a5877c5d479849f3944d3d9ac07f24d5c6cba2c35754c",
+      "source_document_id": "BASESRC-08692f53d251fcd16153d41b",
+      "status": "FETCHED"
+    },
+    {
+      "provider_name": "KRX",
+      "source_class": "PRICE_KOSPI",
+      "row_count": 945,
+      "page_count": 1,
+      "content_hash": "c1b3af7060e86497de31519ea29f90640e561f700e9658e83d84e3aee9d55f5c",
+      "source_document_id": "BASESRC-dc80390bcdd957df5bb4ac3d",
+      "status": "FETCHED"
+    },
+    {
+      "provider_name": "OpenDART",
+      "source_class": "DISCLOSURE_INDEX",
+      "row_count": 796,
+      "eligible_symbol_row_count": 487,
+      "eligible_symbol_with_row_count": 289,
+      "page_count": 8,
+      "content_hash": "841d58b5837a2dc20695794777b96e0408cd6d04cd3e796eb3b3f1b2dbd9a12c",
+      "source_document_id": "BASESRC-5db155dfb4c07d06388cd313",
+      "status": "FETCHED"
+    }
+  ],
+  "source_corpus_hash": "6f798102a8fc50db1b1e0b73c2fba1ac061aeca4d3e3181a8f81faa07aee8455",
+  "output_hashes": {
+    "baseline_lanes_sha256": "6ada47cf178126cf238c292ad891d7a2d30e493c72b1c8ed63057044a2d42d85",
+    "baseline_source_snapshots_sha256": "baf929fa7d11b38012ff359f880b9109c37c0d82bd37269a0b4d28938fe8669b",
+    "baseline_lane_audit_sha256": "cbe4aaffa9ba51421c73afb7c40735b22cf463cc9227636abf9556b2c0217c6a"
+  },
+  "output_paths": {
+    "baseline_lanes": "output/live_materialization/2026-07-10/baseline_lanes.jsonl",
+    "baseline_source_snapshots": "output/live_materialization/2026-07-10/baseline_source_snapshots.jsonl",
+    "baseline_lane_audit": "output/live_materialization/2026-07-10/baseline_lane_audit.json"
+  },
+  "missing_required_baseline_lane_count": 0,
+  "baseline_lane_provider_failure_without_error_count": 0,
+  "observed_lane_without_source_id_count": 0,
+  "price_lane_to_score_count": 0,
+  "generic_portal_observed_lane_count": 0,
+  "future_baseline_source_count": 0,
+  "critical_counts": {
+    "baseline_lane_count_mismatch": 0,
+    "missing_required_baseline_lane": 0,
+    "baseline_lane_provider_failure_without_error": 0,
+    "observed_lane_without_source_id": 0,
+    "price_lane_to_score": 0,
+    "generic_portal_observed_lane": 0,
+    "future_baseline_source": 0
+  },
+  "critical_count_sum": 0,
+  "hard_acceptance_pass": true
+}

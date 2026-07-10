@@ -1,23 +1,23 @@
 {
   "schema_version": "e2r_live_provider_blocker_matrix_v1",
   "audited_at_kst": "2026-07-11",
-  "internal_blocker_count": 9,
+  "internal_blocker_count": 11,
   "external_blocker_count": 0,
   "external_blocker_claim_allowed": false,
   "rows": [
     {
       "provider_name": "OpenDART",
       "credential_state": "PRESENT",
-      "internal_blockers": ["BULK_CURRENT_MATERIALIZER_NOT_CONNECTED", "CHECKPOINT_NOT_CONNECTED"],
+      "internal_blockers": ["FULL_DOCUMENT_LIFECYCLE_BACKFILL_NOT_CONNECTED", "CHECKPOINT_NOT_CONNECTED"],
       "external_blockers": [],
-      "next_proof": "execute bounded corp-code and disclosure request"
+      "next_proof": "fetch bounded full official documents and preserve correction/cancellation lifecycle"
     },
     {
       "provider_name": "KRX",
       "credential_state": "PRESENT",
-      "internal_blockers": ["OPENAPI_EXECUTOR_NOT_CONNECTED", "GENERIC_PORTAL_HEALTH_ONLY"],
+      "internal_blockers": ["COMPLETE_SYMBOL_RISK_LIFECYCLE_ADAPTER_NOT_CONNECTED"],
       "external_blockers": [],
-      "next_proof": "execute KOSPI/KOSDAQ issue-base-info bulk requests"
+      "next_proof": "merge current KRX/KIND symbol risk lifecycle with the connected universe and price OpenAPI"
     },
     {
       "provider_name": "KIND",
@@ -64,9 +64,9 @@
     {
       "provider_name": "ExistingLedger",
       "credential_state": "NOT_REQUIRED",
-      "internal_blockers": ["VERSIONED_CURRENT_STATE_STORE_NOT_IMPLEMENTED"],
+      "internal_blockers": ["APPEND_ONLY_CURRENT_CLAIM_LEDGER_NOT_CONNECTED"],
       "external_blockers": [],
-      "next_proof": "load append-only current claim ledger by as-of date"
+      "next_proof": "connect accepted current claims and explicit supersession events to the versioned current-state store"
     },
     {
       "provider_name": "ResearchMemory",
