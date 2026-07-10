@@ -1,0 +1,125 @@
+{
+  "schema_version": "e2r_live_materialization_call_graph_before_v1",
+  "audited_commit": "c385ee5",
+  "audited_at_kst": "2026-07-11",
+  "canonical_current_path": [
+    {
+      "order": 1,
+      "symbol": "e2r.cli.run_e2r_current_operation.main",
+      "action": "parse_cli"
+    },
+    {
+      "order": 2,
+      "symbol": "e2r.cli.run_e2r_current_operation._resolve_default_input_manifest",
+      "action": "search_prebuilt_manifest"
+    },
+    {
+      "order": 3,
+      "branch": "manifest_missing",
+      "symbol": "e2r.cli.run_e2r_current_operation.write_current_source_pending_run",
+      "result": "EXTERNAL_SOURCE_BLOCKER_NOT_READY",
+      "exit_code": 3,
+      "materializer_called": false,
+      "provider_preflight_called": false
+    },
+    {
+      "order": 3,
+      "branch": "manifest_present",
+      "symbol": "e2r.research_brain.runtime.current_operation_runner.load_current_operation_runner_input",
+      "action": "deserialize"
+    },
+    {
+      "order": 4,
+      "branch": "manifest_present",
+      "symbol": "e2r.cli.run_e2r_current_operation._validate_cli_input_contract",
+      "action": "validate_mode_as_of_and_provenance_policy"
+    },
+    {
+      "order": 5,
+      "branch": "manifest_present",
+      "symbol": "e2r.research_brain.runtime.current_operation_runner.run_current_daily_census",
+      "action": "pure_deterministic_evaluation",
+      "live_io": false
+    }
+  ],
+  "canonical_census_path": [
+    {
+      "order": 1,
+      "symbol": "e2r.cli.run_e2r_census_mode.main",
+      "action": "parse_cli"
+    },
+    {
+      "order": 2,
+      "symbol": "e2r.cli.run_e2r_census_mode.main",
+      "action": "translate_to_current_cli_arguments"
+    },
+    {
+      "order": 3,
+      "symbol": "e2r.cli.run_e2r_current_operation.main",
+      "action": "reuse_manifest_only_current_path"
+    }
+  ],
+  "disconnected_reusable_subgraphs": [
+    {
+      "root": "e2r.pipeline.korea_live_lite.KoreaLiveLiteRunner.run",
+      "capabilities": [
+        "env_loading",
+        "provider_requests",
+        "rate_limit",
+        "cache",
+        "cheap_scan",
+        "web_research"
+      ],
+      "produces_current_operation_runner_input": false,
+      "canonical_cli_caller_count": 0
+    },
+    {
+      "root": "e2r.census.canonical_current_adapter.adapt_census_snapshot_to_current_input",
+      "capabilities": [
+        "universe_conversion",
+        "baseline_lane_conversion",
+        "trigger_conversion"
+      ],
+      "live_io": false,
+      "source_tasks_materialized": false,
+      "canonical_cli_caller_count": 0
+    },
+    {
+      "root": "e2r.research_brain.planning.two_pass_brain_planner",
+      "capabilities": [
+        "blind_two_pass_planning",
+        "source_task_drafts"
+      ],
+      "canonical_current_caller_count": 0
+    },
+    {
+      "root": "e2r.research_brain.runtime.source_acquisition",
+      "capabilities": [
+        "bounded_question_task_acquisition",
+        "full_document_guard"
+      ],
+      "canonical_current_caller_count": 0
+    },
+    {
+      "root": "e2r.research_brain.runtime.claim_compiler",
+      "capabilities": [
+        "provenance_claim_compilation"
+      ],
+      "canonical_current_caller_count": 0
+    },
+    {
+      "root": "e2r.research_brain.runtime.atomic_score_stage",
+      "capabilities": [
+        "deterministic_atomic_score_stage"
+      ],
+      "canonical_current_caller_count": 0
+    }
+  ],
+  "manifest_search_paths": [
+    "--input-manifest",
+    "output/current_operation_inputs/<AS_OF_DATE>.json",
+    "data/current_operation/<AS_OF_DATE>.json"
+  ],
+  "primary_internal_blocker": "MISSING_INTERNAL_MATERIALIZER",
+  "external_provider_blocker_proven": false
+}

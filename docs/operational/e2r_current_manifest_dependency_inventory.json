@@ -1,0 +1,95 @@
+{
+  "schema_version": "e2r_current_manifest_dependency_inventory_v1",
+  "audited_commit": "c385ee5",
+  "current_operation_runner_schema_version": "e2r_current_operation_runner_v1",
+  "manifest_fields": [
+    {
+      "field": "as_of_date",
+      "required": true,
+      "current_producers": ["manual_manifest", "tests", "canonical_current_adapter"],
+      "canonical_live_producer": null,
+      "status": "MISSING_INTERNAL_MATERIALIZER"
+    },
+    {
+      "field": "universe",
+      "required": true,
+      "current_producers": ["tests", "canonical_current_adapter"],
+      "reusable_inputs": ["KRXConnector request metadata", "Census UniverseInstrument"],
+      "canonical_live_producer": null,
+      "status": "MISSING_INTERNAL_MATERIALIZER"
+    },
+    {
+      "field": "baseline_lanes",
+      "required": true,
+      "required_lane_types": ["OFFICIAL", "PRICE", "RISK", "EXISTING_LEDGER"],
+      "current_producers": ["tests", "canonical_current_adapter"],
+      "canonical_live_producer": null,
+      "status": "MISSING_INTERNAL_MATERIALIZER"
+    },
+    {
+      "field": "triggers",
+      "required": true,
+      "current_producers": ["tests", "canonical_current_adapter"],
+      "canonical_live_producer": null,
+      "status": "MISSING_INTERNAL_MATERIALIZER"
+    },
+    {
+      "field": "claims",
+      "required": true,
+      "current_producers": ["tests", "atomic decision claim leaves"],
+      "reusable_components": ["runtime/claim_compiler.py", "runtime/atomic_score_stage.py"],
+      "canonical_live_producer": null,
+      "status": "MISSING_INTERNAL_ORCHESTRATION"
+    },
+    {
+      "field": "claim_provenance",
+      "required_in_production": true,
+      "current_producers": ["tests", "manifest loader"],
+      "reusable_components": ["runtime/claim_compiler.py", "DailyClaimProvenance validator"],
+      "canonical_live_producer": null,
+      "status": "MISSING_INTERNAL_ORCHESTRATION"
+    },
+    {
+      "field": "source_tasks",
+      "required": true,
+      "current_producers": ["tests", "QuestionSourceTask planner modules"],
+      "reusable_components": ["planning/two_pass_brain_planner.py", "planning/source_task.py"],
+      "canonical_live_producer": null,
+      "status": "MISSING_INTERNAL_ORCHESTRATION"
+    },
+    {
+      "field": "atomic_decisions",
+      "required": true,
+      "current_producers": ["tests", "runtime/atomic_score_stage.py"],
+      "canonical_live_producer": null,
+      "status": "MISSING_INTERNAL_ORCHESTRATION"
+    },
+    {
+      "field": "deep_executions",
+      "required": true,
+      "current_producers": ["tests"],
+      "canonical_live_producer": null,
+      "status": "MISSING_INTERNAL_ORCHESTRATION"
+    },
+    {
+      "field": "config",
+      "required": true,
+      "current_producers": ["manual_manifest", "tests"],
+      "canonical_live_producer": null,
+      "status": "MISSING_RUN_PROFILE_LOADER"
+    }
+  ],
+  "pure_evaluator_contract": {
+    "symbol": "e2r.research_brain.runtime.current_operation_runner.run_current_daily_census",
+    "performs_live_io": false,
+    "must_remain_pure": true,
+    "same_input_same_leaf": true
+  },
+  "default_manifest_paths": [
+    "output/current_operation_inputs/<AS_OF_DATE>.json",
+    "data/current_operation/<AS_OF_DATE>.json"
+  ],
+  "manual_manifest_currently_required": true,
+  "canonical_live_materialization_entrypoint": null,
+  "primary_blocker": "MISSING_INTERNAL_MATERIALIZER"
+}
