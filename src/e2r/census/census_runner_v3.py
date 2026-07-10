@@ -5,7 +5,7 @@ from __future__ import annotations
 import csv
 import json
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -43,6 +43,12 @@ class CensusV3RunConfig:
     write_operational_docs: bool = True
     test_result_summary: str = "not_run_by_census_v3_runner"
     commit_push_status: str = "pending_at_report_generation"
+    test_mode: bool = False
+    test_leaf_bundle: ProductionCutoverLeafBundle | None = field(default=None, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        if self.test_leaf_bundle is not None and self.test_mode is not True:
+            raise ValueError("test_leaf_bundle may only be injected when test_mode=True")
 
     def resolved_output_root(self) -> str:
         return self.output_root or f"output/census_v3/{self.as_of_date}"
@@ -61,6 +67,8 @@ class CensusV3RunConfig:
             "write_operational_docs": self.write_operational_docs,
             "test_result_summary": self.test_result_summary,
             "commit_push_status": self.commit_push_status,
+            "test_mode": self.test_mode,
+            "test_leaf_bundle_injected": self.test_leaf_bundle is not None,
         }
 
 
@@ -85,7 +93,9 @@ def run_census_mode_v3(config: CensusV3RunConfig) -> CensusV3RunResult:
     )
     instruments = eligible_instruments(universe.instruments)
     symbol_to_instrument = {item.symbol: item for item in instruments}
-    bundle = load_production_cutover_leaf_bundle(eligible_symbols=[item.symbol for item in instruments])
+    bundle = config.test_leaf_bundle
+    if bundle is None:
+        bundle = load_production_cutover_leaf_bundle(eligible_symbols=[item.symbol for item in instruments])
     report_events = _load_report_events(eligible_symbols=set(symbol_to_instrument), as_of_date=config.as_of_date)
     market_events = _load_market_events(eligible_symbols=set(symbol_to_instrument), as_of_date=config.as_of_date)
     inputs = _baseline_inputs(bundle=bundle, report_events=report_events, market_events=market_events, eligible_symbols=set(symbol_to_instrument))
@@ -193,7 +203,10 @@ def run_census_mode_v3(config: CensusV3RunConfig) -> CensusV3RunResult:
     )
     leaf_audit = audit_leaf_artifacts(output_root)
     write_json(output_root / "leaf_artifact_audit.json", leaf_audit)
-    reviewers = write_reviewer_outputs(output_root)
+    reviewers = write_reviewer_outputs(
+        output_root,
+        docs_root="docs/operational" if config.write_operational_docs else None,
+    )
     readiness = _readiness_verdict(leaf_audit=leaf_audit, reviewers=reviewers)
     repair_log = build_self_repair_log_v3(
         as_of_date=config.as_of_date,

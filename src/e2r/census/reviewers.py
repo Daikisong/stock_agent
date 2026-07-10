@@ -72,10 +72,13 @@ def run_all_reviewers(output_root: str | Path) -> dict[str, dict[str, Any]]:
     }
 
 
-def write_reviewer_outputs(output_root: str | Path, docs_root: str | Path = "docs/operational") -> dict[str, dict[str, Any]]:
+def write_reviewer_outputs(
+    output_root: str | Path,
+    docs_root: str | Path | None = "docs/operational",
+) -> dict[str, dict[str, Any]]:
     reviewers = run_all_reviewers(output_root)
     root = Path(output_root)
-    docs = Path(docs_root)
+    docs = Path(docs_root) if docs_root is not None else None
     mapping = {
         "reviewer_A_trace": ("reviewer_A_trace_audit.json", "census_mode_v3_reviewer_A_trace_audit.json"),
         "reviewer_B_source": ("reviewer_B_source_audit.json", "census_mode_v3_reviewer_B_source_audit.json"),
@@ -83,7 +86,8 @@ def write_reviewer_outputs(output_root: str | Path, docs_root: str | Path = "doc
     }
     for key, (output_name, docs_name) in mapping.items():
         _write_json(root / output_name, reviewers[key])
-        _write_json(docs / docs_name, reviewers[key])
+        if docs is not None:
+            _write_json(docs / docs_name, reviewers[key])
     return reviewers
 
 
