@@ -1,0 +1,90 @@
+{
+  "schema_version": "e2r_live_brain_planner_audit_v1",
+  "status": "CURRENT_BRAIN_PLANNER_PASS",
+  "verdict_scope": "canonical_two_pass_real_provider_execution_and_output_safety",
+  "as_of_date": "2026-07-10",
+  "generated_from_commit": "fbee570",
+  "test_mode": false,
+  "fixture_used": false,
+  "provider_name": "codex_cli_two_pass_planner",
+  "selected_L3_count": 40,
+  "planner_run_count": 40,
+  "planner_call_count": 118,
+  "selected_attempt_call_count": 66,
+  "real_planner_success_count": 37,
+  "planner_pending_count": 3,
+  "exact_llm_blocker_count": 3,
+  "planner_status_counts": {
+    "COMPLETE": 0,
+    "ABSTAINED": 37,
+    "PENDING": 3
+  },
+  "source_task_draft_count": 9,
+  "repair": {
+    "attempt_count": 1,
+    "initial_call_count": 68,
+    "initial_success_count": 14,
+    "initial_pending_count": 26,
+    "repair_call_count": 50,
+    "repair_success_count": 23,
+    "repair_pending_count": 3,
+    "resolved_pending_count": 23,
+    "remaining_pending_target_ids": [
+      "008290",
+      "012750",
+      "224060"
+    ],
+    "remaining_pending_reasons": {
+      "PROVIDER_UNAVAILABLE": 2,
+      "PROVIDER_OR_OUTPUT_ERROR": 1
+    }
+  },
+  "memory": {
+    "graph_id": "memory-graph-7a282044ac4a53f898efc731",
+    "node_count": 25532,
+    "edge_count": 44221,
+    "index_entry_count": 25532,
+    "manifest_status": "SEMANTIC_MEMORY_GRAPH_COMPILER_PASS",
+    "critical_count_sum": 0,
+    "file_hashes": {
+      "manifest": "ee2eb9befe723b4a34e7c45568f7b7b721a947717874b4cdf576880bbec688ba",
+      "nodes": "a5e8dba03f3939842f9dafc97848142be3f94ff2baba72988bcc4a07f557ae3a",
+      "edges": "1e87dd019aeaa8e896ed5dd070dc24e34f9ae0c0653a8d29cc7a406a9d958b37",
+      "index": "b2a672cc342a50ce9bc39102488986c0169116592476d06832f7e3e4da615513"
+    }
+  },
+  "honesty_note": "37개 real provider run은 근거가 부족하거나 leading reviewed recipe가 없어 ABSTAINED했다. 이는 COMPLETE thesis가 아니다. 다만 3개 후보의 9개 bounded official-first question draft는 ambiguity를 해소하기 위한 조사 작업으로 보존한다. 남은 3개는 점수로 바꾸지 않고 exact PlannerPending이다.",
+  "output_hashes": {
+    "planner_runs_sha256": "456881b598549e22024ec5a8321aa0404076be201056b35a1870e5a043adb8c6",
+    "llm_prompts_sha256": "fbf838fbc03782bbdf45f313bbaaed7fa0e01b081a5ced6f0b1a3720f9bd5a59",
+    "llm_responses_sha256": "8f62825e8794fc8cafd7b3cf026c782f94d49e7fe02fca639183960a86883816",
+    "planner_validation_sha256": "f833488f4b6d3b9557cde84c6f6d629febc6f1d2c36612b091bad7748111a6fa",
+    "planner_memory_metadata_sha256": "56f47482071ea5dbe3babb65d50c5f2b797d642194bc6be3225319ef47f3848b",
+    "planner_repair_attempts_sha256": "cde1e16e4f295808986814a01fd53641b516aaf391f4278b58607abc6ac28b2b"
+  },
+  "output_paths": {
+    "planner_runs": "output/live_materialization/2026-07-10/planner_runs.jsonl",
+    "llm_prompts": "output/live_materialization/2026-07-10/llm_prompts.jsonl",
+    "llm_responses": "output/live_materialization/2026-07-10/llm_responses.jsonl",
+    "planner_validation": "output/live_materialization/2026-07-10/planner_validation.json",
+    "planner_memory_metadata": "output/live_materialization/2026-07-10/planner_memory_metadata.json",
+    "planner_repair_attempts": "output/live_materialization/2026-07-10/planner_repair_attempts.json"
+  },
+  "planner_score_stage_key_count": 0,
+  "future_outcome_prompt_leak_count": 0,
+  "source_primary_copy_without_reason_count": 0,
+  "provider_failure_final_score_count": 0,
+  "critical_counts": {
+    "selected_l3_empty": 0,
+    "selected_planner_run_count_mismatch": 0,
+    "planner_call_empty": 0,
+    "real_success_or_exact_blocker_missing": 0,
+    "planner_score_stage_key": 0,
+    "future_outcome_prompt_leak": 0,
+    "source_primary_copy_without_reason": 0,
+    "provider_failure_final_score": 0,
+    "future_input_fact_used": 0
+  },
+  "critical_count_sum": 0,
+  "hard_acceptance_pass": true
+}

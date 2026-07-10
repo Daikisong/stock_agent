@@ -177,9 +177,9 @@ PASS_A_OUTPUT_SCHEMA: Mapping[str, Any] = {
                 "type": "object",
                 "additionalProperties": False,
                 "properties": {
-                    "hypothesis_id": {"type": "string"},
+                    "hypothesis_id": {"type": "string", "minLength": 1},
                     "rank": {"type": "integer"},
-                    "mechanism_summary": {"type": "string"},
+                    "mechanism_summary": {"type": "string", "minLength": 1},
                     "strength": {"type": "string", "enum": ["HIGH", "MEDIUM", "LOW"]},
                     "supporting_fact_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
                     "contradicting_fact_ids": {"type": "array", "items": {"type": "string"}},
@@ -207,9 +207,9 @@ PASS_B_OUTPUT_SCHEMA: Mapping[str, Any] = {
                 "type": "object",
                 "additionalProperties": False,
                 "properties": {
-                    "archetype_id": {"type": "string"},
+                    "archetype_id": {"type": "string", "minLength": 1},
                     "rank": {"type": "integer"},
-                    "reason": {"type": "string"},
+                    "reason": {"type": "string", "minLength": 1},
                     "supporting_fact_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
                     "contradicting_fact_ids": {"type": "array", "items": {"type": "string"}},
                     "recipe_ids": {"type": "array", "items": {"type": "string"}},
@@ -229,17 +229,17 @@ PASS_B_OUTPUT_SCHEMA: Mapping[str, Any] = {
                 "type": "object",
                 "additionalProperties": False,
                 "properties": {
-                    "draft_id": {"type": "string"},
-                    "recipe_id": {"type": "string"},
-                    "question_to_answer": {"type": "string"},
-                    "why_material": {"type": "string"},
-                    "query_intent": {"type": "string"},
+                    "draft_id": {"type": "string", "minLength": 1},
+                    "recipe_id": {"type": "string", "minLength": 1},
+                    "question_to_answer": {"type": "string", "minLength": 1},
+                    "why_material": {"type": "string", "minLength": 1},
+                    "query_intent": {"type": "string", "minLength": 1},
                     "preferred_source_families": {"type": "array", "minItems": 1, "items": {"type": "string"}},
                     "fallback_source_families": {"type": "array", "items": {"type": "string"}},
                     "max_queries": {"type": "integer"},
                     "max_candidates": {"type": "integer"},
                     "max_fetches": {"type": "integer"},
-                    "stop_condition": {"type": "string"},
+                    "stop_condition": {"type": "string", "minLength": 1},
                 },
                 "required": list(sorted(_PASS_B_DRAFT_KEYS)),
             },
@@ -347,7 +347,7 @@ def build_codex_two_pass_planner_provider(
     if load_env:
         load_project_env(env_file)
     env = os.environ
-    timeout_text = (env.get("E2R_CODEX_PLANNER_TIMEOUT_SECONDS") or "180").strip()
+    timeout_text = (env.get("E2R_CODEX_PLANNER_TIMEOUT_SECONDS") or "300").strip()
     try:
         timeout_seconds = float(timeout_text)
     except ValueError as exc:
@@ -955,6 +955,17 @@ def build_pass_b_prompt(payload: Mapping[str, Any]) -> str:
             (
                 "Use only retrieved canonical options. Draft bounded official-first evidence "
                 "questions. Never finalize an investment classification."
+            ),
+            (
+                "For every top_k_archetypes.recipe_ids and source_task_drafts.recipe_id, copy "
+                "only an exact non-empty ID from input.available_recipe_ids. Never invent, "
+                "shorten, or leave a recipe ID blank. If no exact reviewed recipe is usable, "
+                "set source_task_drafts to [] and abstain with an explanation."
+            ),
+            (
+                "supporting_current_fact_ids must contain the union of every supporting_fact_ids "
+                "listed under top_k_archetypes; contradicting_current_fact_ids must do the same "
+                "for contradictions."
             ),
             "If the leading option has no reviewed executable recipe or remains ambiguous, abstain and explain why.",
             "Return exactly one JSON object matching the supplied schema.",

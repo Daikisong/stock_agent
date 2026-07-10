@@ -48,7 +48,7 @@ class E2RReconstructionPhase6AcceptanceTest(unittest.TestCase):
         self.assertFalse(benchmark["production_acceptance_credit"])
         self.assertEqual(
             benchmark["result_hash"],
-            "4fff0816abb1bd01a37bf78bc7a923768d237c24ef0203552bccf146f4d5dbe9",
+            "97212312ba0ebc70089a3e3e8e7c16368de53fbbe960e735630a70603c2b0044",
         )
 
     def test_provider_failure_is_pending_and_cannot_finalize(self) -> None:

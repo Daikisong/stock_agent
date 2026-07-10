@@ -346,7 +346,7 @@ class TwoPassBrainPlannerTest(unittest.TestCase):
         self.assertEqual(manifest["prompt_response_hash_missing_count"], 0)
         self.assertEqual(
             manifest["result_hash"],
-            "4fff0816abb1bd01a37bf78bc7a923768d237c24ef0203552bccf146f4d5dbe9",
+            "97212312ba0ebc70089a3e3e8e7c16368de53fbbe960e735630a70603c2b0044",
         )
         self.assertFalse(manifest["production_runtime_ready"])
 

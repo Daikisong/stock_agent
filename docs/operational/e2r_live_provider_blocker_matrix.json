@@ -73,7 +73,7 @@
       "credential_state": "NOT_REQUIRED",
       "internal_blockers": [],
       "external_blockers": [],
-      "next_proof": "connect balanced memory to live two-pass planner"
+      "next_proof": "preserve the connected balanced-memory graph and prompt hashes through SourceTask and acquisition"
     }
   ],
   "operator_rule": "Credential PRESENT is not AUTH success. External blocker requires an actual bounded request leaf with error category and affected scope."
