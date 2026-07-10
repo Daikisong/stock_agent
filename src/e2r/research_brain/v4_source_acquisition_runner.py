@@ -2371,6 +2371,10 @@ def _score_block_reasons_for_live_result(result: SourceFetchResult) -> tuple[str
         reasons.append(str(score_usage))
     if result.source_class in {"KIND", "KRX"} and result.official_document_id in {"kind:main", "krx:mdc:main"}:
         reasons.append("provider_portal_coverage_only_not_symbol_claim")
+    if _date_or_datetime_from_any(result.published_at) is None:
+        reasons.append("published_at_unknown_not_source_backed")
+    if _date_or_datetime_from_any(result.available_at) is None:
+        reasons.append("available_at_unknown_not_source_backed")
     return tuple(dict.fromkeys(reasons))
 
 
