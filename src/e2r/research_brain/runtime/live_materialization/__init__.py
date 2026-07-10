@@ -153,6 +153,12 @@ from .targeted_smoke import (
     select_sector_samples,
     write_targeted_live_smoke,
 )
+from .live_acceptance import (
+    LIVE_ACCEPTANCE_SCHEMA_VERSION,
+    FullLiveAcceptanceResult,
+    run_full_live_acceptance,
+    write_full_live_acceptance,
+)
 
 __all__ = [
     "AuthorizationPath",
@@ -202,11 +208,13 @@ __all__ = [
     "CurrentStateSourceAttempt",
     "LIVE_OPERATIONAL_ENVELOPE_SCHEMA_VERSION",
     "LIVE_CURRENT_CLAIM_SCHEMA_VERSION",
+    "LIVE_ACCEPTANCE_SCHEMA_VERSION",
     "LIVE_PLANNER_RUN_SCHEMA_VERSION",
     "LIVE_RUN_PROFILE_SCHEMA_VERSION",
     "LIVE_SOURCE_ACQUISITION_SCHEMA_VERSION",
     "LIVE_SOURCE_TASK_AUDIT_SCHEMA_VERSION",
     "LiveAuthorizationDecision",
+    "FullLiveAcceptanceResult",
     "LiveDepth",
     "LiveDepthDecision",
     "LiveOperationalRunEnvelope",
@@ -262,6 +270,7 @@ __all__ = [
     "refresh_event_lifecycle",
     "resume_targeted_smoke_claims",
     "run_targeted_live_smoke",
+    "run_full_live_acceptance",
     "select_sector_samples",
     "write_current_state_bootstrap",
     "write_current_claim_compilation",
@@ -275,5 +284,6 @@ __all__ = [
     "write_depth_selection",
     "write_trigger_fusion",
     "write_targeted_live_smoke",
+    "write_full_live_acceptance",
     "write_universe_materialization",
 ]

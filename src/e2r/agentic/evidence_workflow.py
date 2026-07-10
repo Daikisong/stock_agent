@@ -1521,6 +1521,7 @@ def build_claim_extraction_messages(inputs: ClaimExtractionInput) -> tuple[Mappi
         "extraction_rules": [
             "Return RawAssertion-like facts only.",
             "Every raw assertion must reference one of available_anchors by anchor_id.",
+            "Set subject_text to a named legal entity or one provided target issuer alias only. Do not append metric or phenomenon nouns such as customer demand, supply capacity, revenue, margin, backlog, or shipments to the entity name; put those in predicate/object_text and put other named entities in related_entity_texts.",
             "If the document explicitly states target-company financial, customer, contract, capacity, shipment, pricing, guidance, cash-flow, accounting, legal, regulatory, or operational-risk facts, extract them even when downstream relevance is uncertain.",
             "When space is limited, prioritize explicit operating, financial, customer, contract, supply, capacity, shipment, pricing, cash-flow, accounting, legal, regulatory, and risk facts over valuation opinions or generic investment views.",
             "Do not skip target-scoped event or benefit claims in the article title, subtitle, or lead paragraph just because later paragraphs contain company background.",

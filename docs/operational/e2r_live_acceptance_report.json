@@ -1,0 +1,118 @@
+{
+  "accepted_claim_proof": {
+    "canonical_stage": "0",
+    "claim_id": "CLM-94438945025662847395",
+    "content_sha256": "73ae3c9e232df2bc951e5a6637b7b829f7e3523ffa42762f3b168017260c2d93",
+    "decision_status": "PENDING",
+    "exact_quote": "The Device Solutions (DS) Division posted a QoQ sales increase of 86%, with the Memory Business setting an all-time high for quarterly revenue and operating profit as a result of technological leadership in the memory market, as well as higher average selling price (ASP).",
+    "mapping_ids": [
+      "MAP-2ba74cff75dd0197f280"
+    ],
+    "material_gap_ids": [
+      "customer_preorder_or_allocation",
+      "hbm_capacity_constraint",
+      "hbm_capacity_pre_sold",
+      "medium_term_revision_visibility",
+      "revenue_visibility_contract"
+    ],
+    "primitive_id": "memory_price_increase_mentioned",
+    "published_date": "2026-04-30",
+    "query_generator_kind": "REAL_LLM",
+    "query_prompt_hash": "7ccf831a31c9fbb48f81434878b40e2c07a7c32f7e0fd319c8d721c28c70cb3c",
+    "score_type": "NO_SCORE",
+    "score_valid": false,
+    "source_url": "https://news.samsung.com/global/samsung-electronics-announces-first-quarter-2026-results",
+    "target_id": "005930"
+  },
+  "as_of_date": "2026-07-10",
+  "critical_count_sum": 0,
+  "current_census_evidence": {
+    "accepted_current_claim_count": 1,
+    "atomic_decision_count": 4,
+    "baseline_lane_count": 10168,
+    "claim_provenance_count": 1,
+    "eligible_universe_count": 2542,
+    "real_fresh_fetched_document_count": 3,
+    "real_planner_call_count": 62,
+    "required_baseline_lane_count": 10168,
+    "selected_l3_count": 180,
+    "selected_l4_count": 4,
+    "source_task_count": 10,
+    "trigger_count": 446
+  },
+  "determinism": {
+    "config_hash": "08a32c83d7edff02a882cec935ef4eafa73a754cd076e79a41b9f0546677a18d",
+    "first_leaf_hash": "aa4fdd00f4153932f793774890444779691c7785d96ebb41496368ffce162cb0",
+    "input_hash": "88e53371bc20be8f5311879f4b8e096b918be94bfaa3c91267221b907205e0cc",
+    "second_leaf_hash": "aa4fdd00f4153932f793774890444779691c7785d96ebb41496368ffce162cb0",
+    "source_hash": "89cc5d583308ab03d03ca630e3ebfd2facb8eab1c3153783e775defa310e2b55",
+    "variance_count": 0
+  },
+  "executed_at": "2026-07-10T23:57:05+00:00",
+  "hard_acceptance_counts": {
+    "accepted_current_claim_missing": 0,
+    "atomic_decision_missing": 0,
+    "baseline_lane_incomplete": 0,
+    "bootstrap_failed": 0,
+    "claim_provenance_missing": 0,
+    "current_audit_failed": 0,
+    "eligible_universe_too_small": 0,
+    "fresh_document_missing": 0,
+    "historical_replay_variance": 0,
+    "historical_source_replay_failed": 0,
+    "partial_claim_promoted_to_final_score": 0,
+    "real_planner_call_missing": 0,
+    "same_manifest_replay_variance": 0,
+    "selected_l3_or_l4_empty": 0,
+    "source_task_missing": 0,
+    "trigger_pool_empty": 0
+  },
+  "hard_acceptance_pass": true,
+  "historical_replay": {
+    "actual_full_source_fetch_count": 11,
+    "case_count": 13,
+    "repeat_replay_leaf_hash": "ff2fb546d619d87a0a6a2f9fc80a63364ff61bd3493e6136bc23094da87c9977",
+    "replay_leaf_hash": "ff2fb546d619d87a0a6a2f9fc80a63364ff61bd3493e6136bc23094da87c9977",
+    "source_corpus_hash": "a1094a67eeed155c37b7dd914317b285dbc27673db6de909586cee965a9b86f0"
+  },
+  "phase_commit_shas": [
+    "39ff830",
+    "77191c1",
+    "56154ad",
+    "84fd6e7",
+    "a2bbcff",
+    "89aeeeb",
+    "73d19f3",
+    "2a12552",
+    "fbee570",
+    "dc686b9",
+    "2a475ff",
+    "b9751cc",
+    "5b21780",
+    "7989608",
+    "cae677a",
+    "9bab395",
+    "9babe6a",
+    "78c5407",
+    "3464748",
+    "66a81fd"
+  ],
+  "required_runs": {
+    "historical_source_backed_replay": "HISTORICAL_SOURCE_BACKED_REPLAY_PASS",
+    "live_bootstrap": "CURRENT_STATE_BOOTSTRAP_PASS",
+    "live_census_selective_deep": "PASS",
+    "live_daily_current": "BOUNDED_DAILY_CENSUS_PASS",
+    "live_full_universe_census_baseline": "PASS",
+    "same_manifest_replay_determinism": "ZERO_VARIANCE"
+  },
+  "safety": {
+    "claim_provenance_contract_complete": true,
+    "full_thesis_pending_not_green": true,
+    "future_data_leakage_count": 0,
+    "investment_recommendation_emitted": false,
+    "production_runtime_ready": false,
+    "search_snippet_used_as_score_evidence": false
+  },
+  "schema_version": "e2r_full_live_acceptance_v1",
+  "status": "FULL_LIVE_ACCEPTANCE_PASS"
+}

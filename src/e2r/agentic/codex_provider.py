@@ -1098,6 +1098,7 @@ def _adjudication_payload(inputs: AdjudicationInput) -> Mapping[str, object]:
             "Do not decide scores or stages.",
             "Decide subject entity, relation/directness to target, polarity, temporal status, and semantic validity.",
             "If the subject is not the target issuer, do not force it into target scope.",
+            "Resolve subject_entity_id from the named legal entity inside raw_assertion.subject_text. If subject_text contains an exact target_entity_names value followed by a metric or phenomenon noun such as customer demand, supply capacity, revenue, margin, backlog, or shipments, the legal subject remains the target issuer and the trailing noun is not a separate CUSTOMER or facility entity. This rule does not make an assertion direct when no target name is present or the quote is only industry-wide.",
             "If the subject is the target issuer's plant, factory, facility, branch, segment, division, product line, or operating asset and the quote attributes it to the target issuer, treat it as relation_to_target=SELF, target_scope_status=DIRECT, directness=DIRECT. Do not mark operating assets as SUBSIDIARY unless the quote names a separate legal entity.",
             "If the subject is a legally separate subsidiary, parent, customer, supplier, or unrelated partner, keep that relationship separate from the target issuer.",
             "If the claim is historical or superseded, mark temporal_status accordingly.",

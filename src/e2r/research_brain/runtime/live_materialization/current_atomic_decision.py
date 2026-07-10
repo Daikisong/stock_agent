@@ -11,6 +11,7 @@ from e2r.production.metadata import write_json, write_jsonl
 from e2r.research_brain.runtime.atomic_score_stage import (
     AtomicPrimitiveAssessment,
     AtomicPrimitiveStatus,
+    AtomicScoreClaim,
     AtomicScoreRule,
     AtomicScoreType,
     AtomicScoringInput,
@@ -52,6 +53,7 @@ class CurrentAtomicDecisionResult:
     as_of_date: str
     status: str
     primitive_states: tuple[CurrentPrimitiveState, ...]
+    claims: tuple[AtomicScoreClaim, ...]
     decisions: tuple[AtomicStageDecision, ...]
     audit: Mapping[str, Any]
 
@@ -64,29 +66,37 @@ class CurrentAtomicDecisionBuilder:
         source_task_satisfaction: Sequence[Mapping[str, Any]],
         gap_status_rows: Sequence[Mapping[str, Any]],
         accepted_current_claims: Sequence[Mapping[str, Any]],
+        claim_provenance: Sequence[Mapping[str, Any]] = (),
     ) -> CurrentAtomicDecisionResult:
         date.fromisoformat(as_of_date)
-        if accepted_current_claims:
-            raise ValueError(
-                "live accepted claims require the claim-to-atomic adapter before scoring"
-            )
         gap_by_task = {
             str(item.get("source_task_id") or ""): item for item in gap_status_rows
         }
-        primitives_by_target: dict[str, list[tuple[str, str]]] = {}
+        primitives_by_target: dict[str, dict[str, list[Mapping[str, Any]]]] = {}
         for item in source_task_satisfaction:
             target_id = str(item.get("target_id") or "")
             primitive_id = str(item.get("primitive_id") or "")
             task_id = str(item.get("source_task_id") or "")
-            if not target_id or not primitive_id or task_id not in gap_by_task:
+            if not target_id or not primitive_id or not task_id:
                 raise ValueError("atomic input has incomplete material-gap lineage")
-            primitives_by_target.setdefault(target_id, []).append((primitive_id, task_id))
+            primitives_by_target.setdefault(target_id, {}).setdefault(
+                primitive_id, []
+            ).append(item)
+        claims = _adapt_direct_current_claims(
+            accepted_current_claims=accepted_current_claims,
+            claim_provenance=claim_provenance,
+            source_task_satisfaction=source_task_satisfaction,
+            as_of_date=as_of_date,
+        )
+        claims_by_target_primitive: dict[tuple[str, str], list[AtomicScoreClaim]] = {}
+        for claim in claims:
+            claims_by_target_primitive.setdefault(
+                (claim.target_id, claim.primitive_id), []
+            ).append(claim)
         states: list[CurrentPrimitiveState] = []
         decisions: list[AtomicStageDecision] = []
-        for target_id, primitive_tasks in sorted(primitives_by_target.items()):
-            unique = tuple(dict.fromkeys(primitive for primitive, _ in primitive_tasks))
-            if len(unique) != len(primitive_tasks):
-                raise ValueError("target has duplicate primitive SourceTasks")
+        for target_id, primitive_rows in sorted(primitives_by_target.items()):
+            unique = tuple(primitive_rows)
             points = _balanced_points(len(unique))
             rules = tuple(
                 AtomicScoreRule(
@@ -98,54 +108,180 @@ class CurrentAtomicDecisionBuilder:
                 )
                 for primitive, point in zip(unique, points)
             )
-            assessments = tuple(
-                AtomicPrimitiveAssessment(
-                    primitive_id=primitive,
-                    status=AtomicPrimitiveStatus.MISSING.value,
-                    evidence_strength=0.0,
+            assessments: list[AtomicPrimitiveAssessment] = []
+            for primitive in unique:
+                support = tuple(
+                    item.claim_id
+                    for item in claims_by_target_primitive.get(
+                        (target_id, primitive), ()
+                    )
                 )
-                for primitive in unique
+                assessments.append(
+                    AtomicPrimitiveAssessment(
+                        primitive_id=primitive,
+                        status=(
+                            AtomicPrimitiveStatus.SATISFIED.value
+                            if support
+                            else AtomicPrimitiveStatus.MISSING.value
+                        ),
+                        evidence_strength=1.0 if support else 0.0,
+                        support_claim_ids=support,
+                    )
+                )
+            target_task_ids = {
+                str(row.get("source_task_id") or "")
+                for rows in primitive_rows.values()
+                for row in rows
+            }
+            target_gaps = tuple(
+                gap_by_task[task_id]
+                for task_id in target_task_ids
+                if task_id in gap_by_task
             )
-            target_gaps = tuple(gap_by_task[task_id] for _, task_id in primitive_tasks)
             provider_pending = any(
                 item.get("terminal_status") == "PROVIDER_PENDING" for item in target_gaps
             )
-            source_pending = any(
-                item.get("terminal_status") == "SOURCE_PENDING" for item in target_gaps
+            source_pending = bool(
+                any(item.status == AtomicPrimitiveStatus.MISSING.value for item in assessments)
+                or any(
+                    item.get("terminal_status") == "SOURCE_PENDING"
+                    for item in target_gaps
+                )
             )
+            target_claims = tuple(item for item in claims if item.target_id == target_id)
             decision = decide_atomic_score_stage(
                 AtomicScoringInput(
                     target_id=target_id,
                     as_of_date=as_of_date,
                     scope=AtomicScoringScope.FULL_THESIS.value,
-                    claims=(),
-                    primitive_assessments=assessments,
+                    claims=target_claims,
+                    primitive_assessments=tuple(assessments),
                     rules=rules,
                     provider_pending=provider_pending,
                     source_pending=source_pending,
                 )
             )
             decisions.append(decision)
-            states.extend(
-                CurrentPrimitiveState(
-                    target_id=target_id,
-                    primitive_id=primitive,
-                    state="UNKNOWN",
-                    support_claim_ids=(),
-                    counter_claim_ids=(),
-                    material_gap_open=True,
-                    reason="no accepted current claim; deterministic score remains pending",
+            for assessment in assessments:
+                present = assessment.status == AtomicPrimitiveStatus.SATISFIED.value
+                states.append(
+                    CurrentPrimitiveState(
+                        target_id=target_id,
+                        primitive_id=assessment.primitive_id,
+                        state="PRESENT_CURRENT" if present else "UNKNOWN",
+                        support_claim_ids=assessment.support_claim_ids,
+                        counter_claim_ids=(),
+                        material_gap_open=not present,
+                        reason=(
+                            "direct current claim and provenance satisfy the primitive"
+                            if present
+                            else "no accepted current claim; deterministic score remains pending"
+                        ),
+                    )
                 )
-                for primitive in unique
-            )
         audit = _audit_current_atomic(states=states, decisions=decisions)
         return CurrentAtomicDecisionResult(
             as_of_date=as_of_date,
             status="CURRENT_ATOMIC_DECISION_PASS" if audit["hard_acceptance_pass"] else "CURRENT_ATOMIC_DECISION_FAIL",
             primitive_states=tuple(states),
+            claims=claims,
             decisions=tuple(decisions),
             audit=audit,
         )
+
+
+def _adapt_direct_current_claims(
+    *,
+    accepted_current_claims: Sequence[Mapping[str, Any]],
+    claim_provenance: Sequence[Mapping[str, Any]],
+    source_task_satisfaction: Sequence[Mapping[str, Any]],
+    as_of_date: str,
+) -> tuple[AtomicScoreClaim, ...]:
+    """Promote only direct task closures with exact live provenance to atomic claims."""
+
+    provenance_by_claim = {
+        str(item.get("claim_id") or ""): item for item in claim_provenance
+    }
+    if len(provenance_by_claim) != len(claim_provenance):
+        raise ValueError("duplicate or empty current claim provenance")
+    closure_by_claim: dict[str, tuple[str, str, tuple[str, ...]]] = {}
+    for item in source_task_satisfaction:
+        if (
+            item.get("status") != "DIRECT_TASK_SATISFIED"
+            or item.get("original_gap_open") is not False
+        ):
+            continue
+        target_id = str(item.get("target_id") or "")
+        primitive_id = str(item.get("primitive_id") or "")
+        mapping_ids = tuple(str(value) for value in item.get("accepted_mapping_ids") or ())
+        for claim_id in item.get("accepted_claim_ids") or ():
+            key = str(claim_id)
+            value = (target_id, primitive_id, mapping_ids)
+            if key in closure_by_claim and closure_by_claim[key] != value:
+                raise ValueError("current claim closes multiple direct primitives")
+            closure_by_claim[key] = value
+
+    adapted: list[AtomicScoreClaim] = []
+    for row in accepted_current_claims:
+        claim_id = str(row.get("claim_id") or "")
+        closure = closure_by_claim.get(claim_id)
+        if closure is None:
+            continue
+        target_id, primitive_id, closure_mapping_ids = closure
+        provenance = provenance_by_claim.get(claim_id)
+        if provenance is None:
+            raise ValueError("direct accepted current claim lacks provenance")
+        row_mapping_ids = tuple(str(value) for value in row.get("mapping_ids") or ())
+        provenance_mapping_ids = tuple(
+            str(value) for value in provenance.get("mapping_ids") or ()
+        )
+        mapping_ids = tuple(
+            value
+            for value in closure_mapping_ids
+            if value in row_mapping_ids and value in provenance_mapping_ids
+        )
+        available_date = str(provenance.get("available_date") or "")
+        if (
+            str(row.get("target_id") or row.get("target_entity_id") or "")
+            != target_id
+            or str(provenance.get("target_id") or "") != target_id
+            or row.get("accepted") is not True
+            or row.get("directness") != "DIRECT"
+            or row.get("temporal_status") != "CURRENT"
+            or row.get("semantic_status") != "PASS"
+            or provenance.get("directness") != "DIRECT"
+            or provenance.get("temporal_status") != "CURRENT"
+            or provenance.get("mapping_status") != "ACCEPTED"
+            or provenance.get("fetched") is not True
+            or provenance.get("anchor_verified") is not True
+            or provenance.get("source_proxy_only") is not False
+            or not mapping_ids
+            or not available_date
+            or available_date > as_of_date
+        ):
+            raise ValueError("direct accepted current claim violates atomic bridge contract")
+        adapted.append(
+            AtomicScoreClaim(
+                claim_id=claim_id,
+                target_id=target_id,
+                primitive_id=primitive_id,
+                observed_date=available_date,
+                content_hash=str(provenance.get("content_sha256") or ""),
+                source_ids=tuple(str(value) for value in provenance.get("source_ids") or ()),
+                anchor_ids=tuple(str(value) for value in provenance.get("anchor_ids") or ()),
+                mapping_ids=mapping_ids,
+                polarity="SUPPORT",
+                target_direct=True,
+                current_open=True,
+                source_backed=True,
+                material=True,
+                contradiction_resolved=True,
+                historical_replay=False,
+                mapping_accepted=True,
+                score_eligible=True,
+            )
+        )
+    return tuple(adapted)
 
 
 def write_current_atomic_decisions(

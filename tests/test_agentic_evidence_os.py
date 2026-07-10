@@ -2217,6 +2217,73 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertIn("target_scope_status=DIRECT", rules_text)
         self.assertIn("separate legal entity", rules_text)
 
+    def test_extraction_and_adjudication_keep_metric_nouns_out_of_entity_identity(self):
+        text = "Target Corp emphasized that customer demand exceeds its supply capacity."
+        document = EvidenceDocument.from_text(
+            text=text,
+            canonical_url="https://example.com/target-demand-capacity",
+            source_type=SourceType.IR,
+            source_name="FixtureIR",
+            published_at=date(2026, 6, 1),
+        )
+        anchor = EvidenceAnchor.text_span(
+            document=document,
+            document_text=text,
+            exact_text=text,
+        )
+        raw = RawAssertion(
+            raw_assertion_id="RAW-TARGET-DEMAND",
+            anchor_id=anchor.anchor_id,
+            subject_text="Target Corp customer demand",
+            predicate="exceeds",
+            object_text="supply capacity",
+            polarity_proposal=Polarity.MIXED,
+            exact_quote="customer demand exceeds its supply capacity",
+        )
+        extraction_payload = json.loads(
+            build_claim_extraction_messages(
+                ClaimExtractionInput(
+                    target_entity_id="CORP_TARGET",
+                    target_names=("Target Corp",),
+                    as_of_date=date(2026, 6, 21),
+                    document=document,
+                    document_text=text,
+                    anchors=(anchor,),
+                )
+            )[1]["content"]
+        )
+        adjudication_payload = _adjudication_payload(
+            AdjudicationInput(
+                raw_assertion=raw,
+                document=document,
+                anchor=anchor,
+                target_entity_id="CORP_TARGET",
+                entity_registry=EntityRegistry(
+                    {
+                        "CORP_TARGET": EntityRecord(
+                            entity_id="CORP_TARGET",
+                            legal_name="Target Corp",
+                            aliases=("Target Corp",),
+                        )
+                    }
+                ),
+                as_of_date=date(2026, 6, 21),
+            )
+        )
+
+        self.assertTrue(
+            any(
+                "metric or phenomenon nouns" in rule
+                for rule in extraction_payload["extraction_rules"]
+            )
+        )
+        self.assertTrue(
+            any(
+                "legal subject remains the target issuer" in rule
+                for rule in adjudication_payload["rules"]
+            )
+        )
+
     def test_codex_adjudicator_splits_duplicate_raw_assertion_ids_out_of_batch(self):
         class _Provider(CodexCLIAgenticEvidenceProvider):
             def __init__(self):
