@@ -19,6 +19,13 @@ from e2r.research_brain.recipes import (
     compile_evidence_recipe_os,
     write_evidence_recipe_os,
 )
+from e2r.research_brain.retrieval import (
+    compile_semantic_memory_graph,
+    evaluate_balanced_retrieval,
+    load_blind_retrieval_benchmark,
+    write_balanced_retrieval_benchmark,
+    write_semantic_memory_graph,
+)
 
 
 _SUPPORTED_SUFFIXES = {".md", ".json", ".jsonl", ".csv"}
@@ -82,6 +89,10 @@ def main(argv: list[str] | None = None) -> int:
         "--recipe-semantics",
         help="reviewed EvidenceRecipe semantic definition JSON (default: canonical config)",
     )
+    parser.add_argument(
+        "--retrieval-benchmark",
+        help="evaluator-only blind semantic retrieval benchmark JSONL",
+    )
     args = parser.parse_args(argv)
     repo_root = Path(args.repo_root).resolve()
     try:
@@ -124,6 +135,28 @@ def main(argv: list[str] | None = None) -> int:
         )
         recipe_output_paths = write_evidence_recipe_os(
             recipe_result,
+            output_root=args.output_root,
+        )
+        memory_result = compile_semantic_memory_graph(
+            result.cases,
+            recipe_result.recipes,
+            source_verifications=source_result.verifications,
+        )
+        memory_output_paths = write_semantic_memory_graph(
+            memory_result,
+            output_root=args.output_root,
+        )
+        retrieval_benchmark = load_blind_retrieval_benchmark(
+            _resolve_optional_path(args.retrieval_benchmark, repo_root=repo_root)
+            if args.retrieval_benchmark
+            else None
+        )
+        retrieval_audit = evaluate_balanced_retrieval(
+            memory_result.index,
+            retrieval_benchmark,
+        )
+        retrieval_output_paths = write_balanced_retrieval_benchmark(
+            retrieval_audit,
             output_root=args.output_root,
         )
     except (FileNotFoundError, OSError, ValueError) as exc:
@@ -173,6 +206,31 @@ def main(argv: list[str] | None = None) -> int:
         "evidence_recipe_output_paths": {
             key: str(path) for key, path in recipe_output_paths.items()
         },
+        "semantic_memory_status": memory_result.manifest["status"],
+        "semantic_memory_node_count": memory_result.manifest["node_count"],
+        "semantic_memory_edge_count": memory_result.manifest["edge_count"],
+        "semantic_memory_critical_count_sum": memory_result.manifest[
+            "critical_count_sum"
+        ],
+        "semantic_memory_output_paths": {
+            key: str(path) for key, path in memory_output_paths.items()
+        },
+        "balanced_retrieval_status": retrieval_audit.manifest["status"],
+        "top3_archetype_hit_rate": retrieval_audit.manifest[
+            "top3_archetype_hit_rate"
+        ],
+        "required_recipe_hit_rate": retrieval_audit.manifest[
+            "required_recipe_hit_rate"
+        ],
+        "positive_guard_pair_rate": retrieval_audit.manifest[
+            "positive_guard_pair_rate"
+        ],
+        "balanced_retrieval_critical_count_sum": retrieval_audit.manifest[
+            "critical_count_sum"
+        ],
+        "balanced_retrieval_output_paths": {
+            key: str(path) for key, path in retrieval_output_paths.items()
+        },
     }
     print(json.dumps(payload, ensure_ascii=False, sort_keys=True))
     passed = (
@@ -180,6 +238,10 @@ def main(argv: list[str] | None = None) -> int:
         and source_result.manifest["status"]
         == "CASE_LEVEL_SOURCE_VERIFICATION_COMPILER_PASS"
         and recipe_result.manifest["status"] == "EVIDENCE_RECIPE_OS_COMPILER_PASS"
+        and memory_result.manifest["status"]
+        == "SEMANTIC_MEMORY_GRAPH_COMPILER_PASS"
+        and retrieval_audit.manifest["status"]
+        == "BALANCED_SEMANTIC_RETRIEVAL_PASS"
     )
     return 0 if passed or not args.strict else 2
 

@@ -1,26 +1,29 @@
-"""Lightweight memory relation graph."""
+"""Canonical ResearchMemoryGraph facade."""
 
 from __future__ import annotations
 
-from collections import defaultdict
-from typing import Mapping, Sequence
+from typing import Iterable
 
-from e2r.research_brain.schemas import ResearchMemoryRecord
+from e2r.research_brain.intelligence_schema import (
+    EvidenceRecipe,
+    HistoricalResearchCase,
+    HistoricalSourceVerification,
+    ResearchMemoryGraph,
+)
+from e2r.research_brain.retrieval import compile_semantic_memory_graph
 
 
-def build_memory_graph(records: Sequence[ResearchMemoryRecord]) -> Mapping[str, object]:
-    by_archetype: dict[str, list[str]] = defaultdict(list)
-    by_primitive: dict[str, list[str]] = defaultdict(list)
-    for record in records:
-        if record.canonical_archetype_id:
-            by_archetype[record.canonical_archetype_id].append(record.record_id)
-        for primitive_id in record.primitive_ids:
-            by_primitive[primitive_id].append(record.record_id)
-    return {
-        "schema_version": "research_brain_memory_graph_v1",
-        "archetype_edges": dict(by_archetype),
-        "primitive_edges": dict(by_primitive),
-    }
+def build_memory_graph(
+    cases: Iterable[HistoricalResearchCase],
+    recipes: Iterable[EvidenceRecipe],
+    *,
+    source_verifications: Iterable[HistoricalSourceVerification] = (),
+) -> ResearchMemoryGraph:
+    return compile_semantic_memory_graph(
+        cases,
+        recipes,
+        source_verifications=source_verifications,
+    ).graph
 
 
 __all__ = ["build_memory_graph"]

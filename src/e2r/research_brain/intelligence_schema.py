@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from dataclasses import asdict, dataclass, field
+from datetime import date
 from enum import Enum
 from typing import Any, Mapping
 
@@ -64,6 +66,41 @@ class EvidenceRecipeRole(str, Enum):
     POSITIVE = "POSITIVE"
     GUARD = "GUARD"
     HARD_BREAK = "HARD_BREAK"
+
+
+class MemoryNodeType(str, Enum):
+    CASE = "CASE"
+    RECIPE = "RECIPE"
+    PRIMITIVE = "PRIMITIVE"
+    ARCHETYPE = "ARCHETYPE"
+    SOURCE = "SOURCE"
+    POSITIVE = "POSITIVE"
+    COUNTER = "COUNTER"
+    HARD_BREAK = "HARD_BREAK"
+    SOURCE_SUCCESS = "SOURCE_SUCCESS"
+    SOURCE_FAILURE = "SOURCE_FAILURE"
+
+
+class MemoryEdgeType(str, Enum):
+    SUPPORTS = "SUPPORTS"
+    COUNTERS = "COUNTERS"
+    CAPS = "CAPS"
+    REQUIRES = "REQUIRES"
+    BEST_FOUND_IN = "BEST_FOUND_IN"
+    FAILED_IN = "FAILED_IN"
+    SUPERSEDES = "SUPERSEDES"
+    WRONG_SUBJECT_EXAMPLE = "WRONG_SUBJECT_EXAMPLE"
+    SAME_MECHANISM = "SAME_MECHANISM"
+
+
+class BalancedMemoryRole(str, Enum):
+    DIRECT_RECIPE = "DIRECT_RECIPE"
+    POSITIVE = "POSITIVE"
+    COUNTEREXAMPLE_GUARD = "COUNTEREXAMPLE_GUARD"
+    SOURCE_SUCCESS = "SOURCE_SUCCESS"
+    SOURCE_FAILURE = "SOURCE_FAILURE"
+    SEMANTIC_GUARD = "SEMANTIC_GUARD"
+    CONTEXT_CASE = "CONTEXT_CASE"
 
 
 def stable_intelligence_id(prefix: str, payload: Mapping[str, Any]) -> str:
@@ -582,6 +619,287 @@ class UnsupportedEvidenceRecipe:
 
 
 @dataclass(frozen=True)
+class MemoryNode:
+    node_id: str
+    node_type: str
+    label: str
+    search_text: str
+    archetype_id: str | None = None
+    primitive_id: str | None = None
+    case_id: str | None = None
+    recipe_id: str | None = None
+    source_verification_id: str | None = None
+    role_slot: str | None = None
+    available_from_date: str | None = None
+    planner_payload: Mapping[str, Any] = field(default_factory=dict)
+    planner_visible: bool = True
+    planning_only: bool = True
+    runtime_score_eligible: bool = False
+    schema_version: str = INTELLIGENCE_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        MemoryNodeType(self.node_type)
+        if not self.node_id.strip() or not self.label.strip():
+            raise ValueError("memory node identity and label are required")
+        if self.role_slot is not None:
+            BalancedMemoryRole(self.role_slot)
+        if self.available_from_date is not None:
+            try:
+                date.fromisoformat(self.available_from_date)
+            except ValueError as exc:
+                raise ValueError("memory node available_from_date must be ISO date") from exc
+        if not self.planning_only or self.runtime_score_eligible:
+            raise ValueError("research memory nodes are planning-only and non-scoring")
+        if self.planner_visible:
+            _assert_planner_memory_safe(
+                {
+                    "node_id": self.node_id,
+                    "node_type": self.node_type,
+                    "label": self.label,
+                    "search_text": self.search_text,
+                    "archetype_id": self.archetype_id,
+                    "primitive_id": self.primitive_id,
+                    "case_id": self.case_id,
+                    "recipe_id": self.recipe_id,
+                    "source_verification_id": self.source_verification_id,
+                    "role_slot": self.role_slot,
+                    "planner_payload": self.planner_payload,
+                },
+                context=f"planner-visible memory node {self.node_id}",
+            )
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class MemoryEdge:
+    edge_id: str
+    edge_type: str
+    source_node_id: str
+    target_node_id: str
+    rationale: str
+    planner_visible: bool = True
+    planning_only: bool = True
+    runtime_score_eligible: bool = False
+    metadata: Mapping[str, Any] = field(default_factory=dict)
+    schema_version: str = INTELLIGENCE_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        MemoryEdgeType(self.edge_type)
+        if not all(
+            value.strip()
+            for value in (
+                self.edge_id,
+                self.source_node_id,
+                self.target_node_id,
+                self.rationale,
+            )
+        ):
+            raise ValueError("memory edge identity, endpoints, and rationale are required")
+        if not self.planning_only or self.runtime_score_eligible:
+            raise ValueError("research memory edges are planning-only and non-scoring")
+        if self.planner_visible:
+            _assert_planner_memory_safe(
+                {
+                    "edge_id": self.edge_id,
+                    "edge_type": self.edge_type,
+                    "rationale": self.rationale,
+                    "metadata": self.metadata,
+                },
+                context=f"planner-visible memory edge {self.edge_id}",
+            )
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class ResearchMemoryGraph:
+    graph_id: str
+    nodes: tuple[MemoryNode, ...]
+    edges: tuple[MemoryEdge, ...]
+    schema_version: str = INTELLIGENCE_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        if not self.graph_id.strip() or not self.nodes:
+            raise ValueError("research memory graph requires identity and nodes")
+        node_ids = [node.node_id for node in self.nodes]
+        if len(node_ids) != len(set(node_ids)):
+            raise ValueError("research memory graph contains duplicate node ids")
+        edge_ids = [edge.edge_id for edge in self.edges]
+        if len(edge_ids) != len(set(edge_ids)):
+            raise ValueError("research memory graph contains duplicate edge ids")
+        known_nodes = set(node_ids)
+        dangling = [
+            edge.edge_id
+            for edge in self.edges
+            if edge.source_node_id not in known_nodes or edge.target_node_id not in known_nodes
+        ]
+        if dangling:
+            raise ValueError(f"research memory graph contains dangling edges: {dangling[:5]}")
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "graph_id": self.graph_id,
+            "schema_version": self.schema_version,
+            "nodes": [node.to_dict() for node in self.nodes],
+            "edges": [edge.to_dict() for edge in self.edges],
+        }
+
+
+@dataclass(frozen=True)
+class SemanticMemoryIndexEntry:
+    node_id: str
+    node_type: str
+    archetype_id: str | None
+    primitive_id: str | None
+    recipe_id: str | None
+    role_slot: str | None
+    concepts: tuple[str, ...]
+    available_from_date: str | None
+    planner_visible: bool
+    search_text_sha256: str
+    schema_version: str = INTELLIGENCE_SCHEMA_VERSION
+
+    def __post_init__(self) -> None:
+        MemoryNodeType(self.node_type)
+        if self.role_slot is not None:
+            BalancedMemoryRole(self.role_slot)
+        if not self.node_id.strip() or not self.search_text_sha256.strip():
+            raise ValueError("semantic memory index entry requires node and text hash")
+        if self.planner_visible:
+            _assert_planner_memory_safe(
+                {
+                    "node_id": self.node_id,
+                    "archetype_id": self.archetype_id,
+                    "primitive_id": self.primitive_id,
+                    "recipe_id": self.recipe_id,
+                    "concepts": self.concepts,
+                },
+                context=f"semantic memory index entry {self.node_id}",
+            )
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class BalancedRetrievalRequest:
+    request_id: str
+    current_evidence_text: str
+    as_of_date: str
+    candidate_archetype_ids: tuple[str, ...] = ()
+    required_primitive_ids: tuple[str, ...] = ()
+    excluded_case_ids: tuple[str, ...] = ()
+    top_k_archetypes: int = 3
+    max_recipe_hits: int = 3
+
+    def __post_init__(self) -> None:
+        if not self.request_id.strip() or not self.current_evidence_text.strip():
+            raise ValueError("balanced retrieval request requires id and current evidence")
+        if not self.as_of_date.strip():
+            raise ValueError("balanced retrieval request requires as_of_date")
+        try:
+            date.fromisoformat(self.as_of_date)
+        except ValueError as exc:
+            raise ValueError("balanced retrieval request as_of_date must be ISO date") from exc
+        if self.top_k_archetypes <= 0 or self.max_recipe_hits <= 0:
+            raise ValueError("balanced retrieval limits must be positive")
+        _assert_planner_memory_safe(
+            {
+                "request_id": self.request_id,
+                "current_evidence_text": self.current_evidence_text,
+                "candidate_archetype_ids": self.candidate_archetype_ids,
+                "required_primitive_ids": self.required_primitive_ids,
+            },
+            context=f"balanced retrieval request {self.request_id}",
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class ArchetypeRetrievalHit:
+    archetype_id: str
+    semantic_score: float
+    matched_concepts: tuple[str, ...]
+    supporting_node_ids: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        if not self.archetype_id.strip() or self.semantic_score < 0.0:
+            raise ValueError("archetype retrieval hit requires id and non-negative score")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class BalancedRetrievalItem:
+    node_id: str
+    node_type: str
+    role_slot: str
+    archetype_id: str
+    primitive_id: str | None
+    recipe_id: str | None
+    semantic_score: float
+    matched_concepts: tuple[str, ...]
+    planner_payload: Mapping[str, Any]
+    available_from_date: str | None = None
+
+    def __post_init__(self) -> None:
+        MemoryNodeType(self.node_type)
+        BalancedMemoryRole(self.role_slot)
+        if not self.node_id.strip() or not self.archetype_id.strip():
+            raise ValueError("balanced retrieval item requires node and archetype")
+        if self.semantic_score < 0.0:
+            raise ValueError("balanced retrieval item score cannot be negative")
+        _assert_planner_memory_safe(
+            {
+                "node_id": self.node_id,
+                "node_type": self.node_type,
+                "role_slot": self.role_slot,
+                "archetype_id": self.archetype_id,
+                "primitive_id": self.primitive_id,
+                "recipe_id": self.recipe_id,
+                "matched_concepts": self.matched_concepts,
+                "planner_payload": self.planner_payload,
+            },
+            context=f"balanced retrieval item {self.node_id}",
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
+class BalancedRetrievalResult:
+    request_id: str
+    archetype_hits: tuple[ArchetypeRetrievalHit, ...]
+    items: tuple[BalancedRetrievalItem, ...]
+    covered_roles: tuple[str, ...]
+    missing_roles: tuple[str, ...]
+    direct_recipe_ids: tuple[str, ...]
+    first_n_only: bool
+    popularity_weight_used: bool
+    future_leakage_count: int
+
+    def __post_init__(self) -> None:
+        if not self.request_id.strip() or not self.archetype_hits:
+            raise ValueError("balanced retrieval result requires request and archetype hits")
+        for role in (*self.covered_roles, *self.missing_roles):
+            BalancedMemoryRole(role)
+        if self.first_n_only or self.popularity_weight_used:
+            raise ValueError("balanced retrieval cannot use first-N or popularity weight")
+        if self.future_leakage_count:
+            raise ValueError("balanced retrieval result contains future leakage")
+
+    def to_dict(self) -> dict[str, Any]:
+        return _json_safe(asdict(self))
+
+
+@dataclass(frozen=True)
 class QuarantineRecord:
     quarantine_id: str
     artifact_id: str
@@ -614,6 +932,28 @@ class LinkageError:
         return _json_safe(asdict(self))
 
 
+_FORBIDDEN_PLANNER_MEMORY_PATTERN = re.compile(
+    r"(?:^|[^a-z0-9])(?:"
+    r"mfe(?:[_-]?[0-9]+[a-z]*)?|"
+    r"mae(?:[_-]?[0-9]+[a-z]*)?|"
+    r"future[_ -]?return|"
+    r"future[_ -]?outcome|"
+    r"outcome[_ -]?label|"
+    r"expected[_ -]?stage|"
+    r"price[_ -]?metrics|"
+    r"current[_ -]?profile[_ -]?verdict"
+    r")(?:$|[^a-z0-9])",
+    re.IGNORECASE,
+)
+
+
+def _assert_planner_memory_safe(value: Any, *, context: str) -> None:
+    serialized = json.dumps(_json_safe(value), ensure_ascii=False, sort_keys=True)
+    match = _FORBIDDEN_PLANNER_MEMORY_PATTERN.search(serialized)
+    if match:
+        raise ValueError(f"{context} contains forbidden historical outcome token: {match.group(0)!r}")
+
+
 def _json_safe(value: Any) -> Any:
     if isinstance(value, Enum):
         return value.value
@@ -628,6 +968,11 @@ def _json_safe(value: Any) -> Any:
 
 __all__ = [
     "AcceptedClaimPredicate",
+    "ArchetypeRetrievalHit",
+    "BalancedMemoryRole",
+    "BalancedRetrievalItem",
+    "BalancedRetrievalRequest",
+    "BalancedRetrievalResult",
     "EvidenceRecipe",
     "EvidenceRecipeRole",
     "INTELLIGENCE_SCHEMA_VERSION",
@@ -644,12 +989,18 @@ __all__ = [
     "HistoricalSourceState",
     "HistoricalSourceVerification",
     "LinkageError",
+    "MemoryEdge",
+    "MemoryEdgeType",
+    "MemoryNode",
+    "MemoryNodeType",
     "NarrativeCaseCandidate",
     "ParsedResearchArtifact",
     "ParsedResearchRow",
     "ParsedRowKind",
     "QuarantineReason",
     "QuarantineRecord",
+    "ResearchMemoryGraph",
+    "SemanticMemoryIndexEntry",
     "SourceLineRange",
     "UnsupportedEvidenceRecipe",
     "stable_intelligence_id",
