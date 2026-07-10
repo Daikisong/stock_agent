@@ -1,0 +1,51 @@
+{
+  "schema_version": "e2r_live_source_task_audit_v1",
+  "phase": 26,
+  "as_of_date": "2026-07-10",
+  "status": "PHASE_26_ACCEPTED",
+  "planner_source_task_draft_count": 9,
+  "materialized_source_task_count": 9,
+  "real_query_provider_task_count": 9,
+  "real_query_generation_call_count": 9,
+  "query_generation_status_counts": {
+    "COMPLETE": 9
+  },
+  "official_first_pending_execution_count": 9,
+  "general_web_open_count": 0,
+  "query_generation_pending_count": 0,
+  "query_generation_abstained_count": 0,
+  "critical_counts": {
+    "generic_verify_primitive_task_count": 0,
+    "empty_question_task_count": 0,
+    "empty_success_condition_count": 0,
+    "official_first_violation_count": 0,
+    "hardcoded_query_template_used_in_canonical_path_count": 0,
+    "unbounded_source_task_count": 0
+  },
+  "lineage": {
+    "planner_runs": "output/live_materialization/2026-07-10/planner_runs.jsonl",
+    "source_tasks": "output/live_materialization/2026-07-10/source_tasks.jsonl",
+    "question_source_tasks": "output/live_materialization/2026-07-10/question_source_tasks.jsonl",
+    "planning_results": "output/live_materialization/2026-07-10/source_task_planning_results.jsonl",
+    "query_prompts": "output/live_materialization/2026-07-10/query_generation_prompts.jsonl",
+    "query_responses": "output/live_materialization/2026-07-10/query_generation_responses.jsonl",
+    "runtime_audit": "output/live_materialization/2026-07-10/source_task_audit.json"
+  },
+  "artifact_hashes": {
+    "source_tasks_sha256": "436ee30499ce661fe4d602068ae33e83ed1bf2f8db123adc426b5088f5a0467c",
+    "question_source_tasks_sha256": "09a16f0aa02bbf5ac3022124f1686dc8c3a5ffc1d9739137691f5d316cb132f0",
+    "planning_results_sha256": "fd2ba53ad260bcb5dfa9336a7c128635d8c6ded02855aef34bef69b8cb763d1e",
+    "query_prompts_sha256": "14cfa039f20d4352dcb3c4626d2fe3c3d132b84459f0b79939fe02d6db877afd",
+    "query_responses_sha256": "c9262deb62c6fb015e75e015fa7276bf699b9e5f9b5ef2f013b369c8a76c07e0",
+    "runtime_audit_sha256": "dcf439e53867ec029f68f237993f065339f197f65639a753d1e2bb849231886c"
+  },
+  "safety": {
+    "literal_queries_generated_by_research_brain_llm": true,
+    "deterministic_literal_query_fallback_present": false,
+    "official_fetch_claimed_before_execution": false,
+    "general_web_requires_recorded_official_gap": true,
+    "query_task_direct_score_eligible": false,
+    "production_runtime_ready": false
+  },
+  "note": "Phase 26은 실제 조사 질문과 검색문을 만들었지만 문서 취득은 아직 수행하지 않았다. Phase 27에서 공식 출처를 먼저 bounded 실행하고, 실제 gap이 남은 task만 제한적으로 일반 웹 fallback을 연다."
+}

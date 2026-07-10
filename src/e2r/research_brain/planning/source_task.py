@@ -1291,6 +1291,15 @@ def _query_mentions_target(query: str, context: QuestionTaskContext) -> bool:
 
 
 def _primitive_appears_in_query(primitive_id: str, query: str) -> bool:
+    primitive_tokens = tuple(
+        token
+        for token in re.split(r"[^0-9a-z가-힣]+", primitive_id.casefold())
+        if token
+    )
+    if len(primitive_tokens) == 1 and len(primitive_tokens[0]) <= 5:
+        # Short economic acronyms such as NRR/FCF are legitimate search terms,
+        # not internal code labels. Multi-token primitive IDs remain forbidden.
+        return False
     normalized_query = _normalize_query(query).replace("-", "_").replace(" ", "_")
     normalized_primitive = _normalize_query(primitive_id).replace("-", "_").replace(
         " ", "_"
@@ -1446,6 +1455,7 @@ __all__ = [
     "QueryGenerationTrace",
     "QueryGeneratorKind",
     "QueryIntent",
+    "QueryProviderCompletion",
     "QuestionAcceptanceContract",
     "QuestionQueryProvider",
     "QuestionSourceTask",

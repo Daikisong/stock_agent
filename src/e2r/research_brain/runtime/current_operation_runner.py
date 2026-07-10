@@ -338,6 +338,23 @@ class DailySourceTaskRecord:
     max_candidates: int
     max_fetches: int
     max_retries: int
+    recipe_id: str = ""
+    question_to_answer: str = ""
+    why_material: str = ""
+    accepted_predicates: tuple[Mapping[str, Any], ...] = ()
+    required_entities: tuple[str, ...] = ()
+    required_values_units: tuple[str, ...] = ()
+    time_scope: tuple[str, ...] = ()
+    counter_questions: tuple[str, ...] = ()
+    rejection_conditions: tuple[str, ...] = ()
+    preferred_document_types: tuple[str, ...] = ()
+    preferred_sections: tuple[str, ...] = ()
+    fallback_source_classes: tuple[str, ...] = ()
+    literal_queries: tuple[str, ...] = ()
+    query_provider_name: str = ""
+    query_prompt_hash: str = ""
+    query_response_hash: str = ""
+    resolution_conditions: tuple[str, ...] = ()
     stop_condition: str = "stop_on_resolution"
     allows_general_web: bool = False
     official_first_attempted: bool = True
@@ -384,12 +401,71 @@ class DailySourceTaskRecord:
             context="daily SourceTask official gap reasons",
             required=False,
         )
+        for name in (
+            "required_entities",
+            "required_values_units",
+            "time_scope",
+            "counter_questions",
+            "rejection_conditions",
+            "preferred_document_types",
+            "preferred_sections",
+            "fallback_source_classes",
+            "literal_queries",
+            "resolution_conditions",
+        ):
+            _require_unique_text(
+                getattr(self, name),
+                context=f"daily SourceTask {name}",
+                required=False,
+            )
+        if any(not isinstance(item, Mapping) or not item for item in self.accepted_predicates):
+            raise ValueError("daily SourceTask accepted predicates must be non-empty mappings")
         if self.allows_general_web and (
             not self.official_first_attempted or not self.official_gap_reasons
         ):
             raise ValueError("daily web SourceTask requires official-first exact gap")
         if not self.allows_general_web and self.official_gap_reasons:
             raise ValueError("official-only SourceTask cannot carry web fallback gap")
+        semantic_payload_present = any(
+            (
+                self.recipe_id,
+                self.question_to_answer,
+                self.why_material,
+                self.accepted_predicates,
+                self.required_entities,
+                self.literal_queries,
+                self.query_provider_name,
+            )
+        )
+        if semantic_payload_present:
+            required_semantics = (
+                self.recipe_id,
+                self.question_to_answer,
+                self.why_material,
+                self.query_provider_name,
+                self.query_prompt_hash,
+                self.query_response_hash,
+            )
+            if not all(isinstance(item, str) and item.strip() for item in required_semantics):
+                raise ValueError("canonical daily SourceTask semantic identity is required")
+            required_collections = (
+                self.accepted_predicates,
+                self.required_entities,
+                self.required_values_units,
+                self.time_scope,
+                self.counter_questions,
+                self.rejection_conditions,
+                self.preferred_document_types,
+                self.preferred_sections,
+                self.literal_queries,
+                self.resolution_conditions,
+            )
+            if any(not values for values in required_collections):
+                raise ValueError("canonical daily SourceTask success contract cannot be empty")
+            if not re.fullmatch(r"[0-9a-f]{64}", self.query_prompt_hash) or not re.fullmatch(
+                r"[0-9a-f]{64}", self.query_response_hash
+            ):
+                raise ValueError("canonical daily SourceTask query hashes must be SHA-256")
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -2885,6 +2961,29 @@ def current_operation_runner_input_from_mapping(
             DailySourceTaskRecord(
                 **{
                     **dict(item),
+                    "accepted_predicates": tuple(
+                        item.get("accepted_predicates") or ()
+                    ),
+                    "required_entities": tuple(item.get("required_entities") or ()),
+                    "required_values_units": tuple(
+                        item.get("required_values_units") or ()
+                    ),
+                    "time_scope": tuple(item.get("time_scope") or ()),
+                    "counter_questions": tuple(item.get("counter_questions") or ()),
+                    "rejection_conditions": tuple(
+                        item.get("rejection_conditions") or ()
+                    ),
+                    "preferred_document_types": tuple(
+                        item.get("preferred_document_types") or ()
+                    ),
+                    "preferred_sections": tuple(item.get("preferred_sections") or ()),
+                    "fallback_source_classes": tuple(
+                        item.get("fallback_source_classes") or ()
+                    ),
+                    "literal_queries": tuple(item.get("literal_queries") or ()),
+                    "resolution_conditions": tuple(
+                        item.get("resolution_conditions") or ()
+                    ),
                     "official_gap_reasons": tuple(
                         item.get("official_gap_reasons") or ()
                     ),

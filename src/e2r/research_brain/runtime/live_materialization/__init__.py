@@ -92,6 +92,15 @@ from .brain_planner_runner import (
     load_planner_run_rows,
     write_brain_planner_run,
 )
+from .source_task_materializer import (
+    LIVE_SOURCE_TASK_AUDIT_SCHEMA_VERSION,
+    CurrentQuestionSourceTaskMaterializer,
+    RecordingQuestionQueryProvider,
+    SourceTaskMaterializationConfig,
+    SourceTaskMaterializationResult,
+    load_evidence_recipes,
+    write_source_task_materialization,
+)
 
 __all__ = [
     "AuthorizationPath",
@@ -113,6 +122,7 @@ __all__ = [
     "CurrentKrxUniverseMaterializer",
     "CurrentBaselineMaterializer",
     "CurrentBrainPlannerRunner",
+    "CurrentQuestionSourceTaskMaterializer",
     "CurrentDepthSelector",
     "CurrentTriggerFusion",
     "DEPTH_DECISION_SCHEMA_VERSION",
@@ -126,6 +136,7 @@ __all__ = [
     "LIVE_OPERATIONAL_ENVELOPE_SCHEMA_VERSION",
     "LIVE_PLANNER_RUN_SCHEMA_VERSION",
     "LIVE_RUN_PROFILE_SCHEMA_VERSION",
+    "LIVE_SOURCE_TASK_AUDIT_SCHEMA_VERSION",
     "LiveAuthorizationDecision",
     "LiveDepth",
     "LiveDepthDecision",
@@ -139,7 +150,10 @@ __all__ = [
     "ProviderDocumentRole",
     "RequestsBaselineBulkTransport",
     "RecordingTwoPassPlannerProvider",
+    "RecordingQuestionQueryProvider",
     "SourceAttemptStatus",
+    "SourceTaskMaterializationConfig",
+    "SourceTaskMaterializationResult",
     "ThesisStatus",
     "TRIGGER_SIGNAL_SCHEMA_VERSION",
     "TriggerFusionConfig",
@@ -159,6 +173,7 @@ __all__ = [
     "load_candidate_events",
     "load_canonical_semantic_memory_index",
     "load_depth_decisions",
+    "load_evidence_recipes",
     "load_planner_run_rows",
     "load_trigger_signals",
     "provider_capabilities",
@@ -167,6 +182,7 @@ __all__ = [
     "write_current_state_bootstrap",
     "write_baseline_materialization",
     "write_brain_planner_run",
+    "write_source_task_materialization",
     "write_depth_selection",
     "write_trigger_fusion",
     "write_universe_materialization",
