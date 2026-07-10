@@ -26,6 +26,7 @@ from e2r.research_brain.runtime.live_materialization import (
     CurrentOperationRunnerInputBuilder,
     LiveRunMode,
     load_live_run_profile,
+    package_live_current_operation,
     resolve_live_authorization,
     write_current_operation_input_manifest,
 )
@@ -101,6 +102,7 @@ def main(
             authorization=authorization.to_dict(),
         )
     materialized_input_manifest: str | None = None
+    materialized_live_root: Path | None = None
     if authorization.path == AuthorizationPath.LIVE_MATERIALIZATION.value:
         try:
             profile = load_live_run_profile(str(authorization.run_profile))
@@ -122,6 +124,7 @@ def main(
                 encoding="utf-8",
             )
             materialized_input_manifest = str(materialized_paths["canonical_manifest"])
+            materialized_live_root = live_root
         except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
             return write_current_internal_materializer_pending_run(
                 command=command_name,
@@ -152,6 +155,16 @@ def main(
         output_paths = dict(
             write_current_daily_census(result, output_root=output_root)
         )
+        if materialized_live_root is not None:
+            output_paths.update(
+                package_live_current_operation(
+                    result=result,
+                    live_root=materialized_live_root,
+                    input_manifest=input_manifest,
+                    output_root=output_root,
+                    run_mode=authorization.run_mode,
+                )
+            )
         runtime_critical = int(result.audit["critical_count_sum"])
         exit_code = (
             2 if args.fail_on_critical and runtime_critical else 0

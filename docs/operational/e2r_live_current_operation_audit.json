@@ -1,0 +1,46 @@
+{
+  "schema_version": "e2r_live_current_operation_audit_v1",
+  "phase": 32,
+  "as_of_date": "2026-07-10",
+  "status": "PHASE_32_EXECUTED_PROVIDER_SOURCE_PENDING",
+  "official_cli_exit_code": 0,
+  "full_universe_count": 2542,
+  "baseline_lane_count": 10168,
+  "candidate_target_count": 419,
+  "watchlist_count": 419,
+  "deep_execution_count": 124,
+  "deep_outcome_counts": {
+    "BUDGET_PENDING": 121,
+    "SOURCE_PENDING": 2,
+    "PROVIDER_PENDING": 1,
+    "FULL_THESIS": 0,
+    "DISPROVED": 0
+  },
+  "actual_live_source_count": 2,
+  "fresh_provider_cache_count": 4,
+  "accepted_current_claim_count": 0,
+  "atomic_decision_count": 3,
+  "evaluator_critical_count_sum": 0,
+  "production_runtime_ready": false,
+  "provider_blockers": [
+    "IssuerIR connector unavailable",
+    "NO_ACCEPTED_CURRENT_CLAIM"
+  ],
+  "required_output_file_count": 20,
+  "artifact_hashes": {
+    "live_operational_envelope_sha256": "0681f9fc9e3d5f9dcab5b895d2c1d109694081d2e0f1eb8de499a4f95917ebd4",
+    "audit_summary_sha256": "17b57f8c5a92fd516eed2514323df6da272974dc2e144bc223b67ecfc3a2b56d",
+    "current_stage_status_sha256": "16ae4430a837651a4afe32662cef44e07b315971c706bea71a91097605ce929f",
+    "current_watchlist_sha256": "31b17ed764a15e229295f0632c6db803e8de55c2ba0d3f8ac3ddf297df7dfd34",
+    "operator_digest_sha256": "24e899eb2b90eb0ed394b440bcd5274ba39845d56f8a79002091a39e6c55d41b"
+  },
+  "safety": {
+    "manifest_missing_stage_zero": false,
+    "actual_live_execution_performed": true,
+    "claimless_nonzero_score": false,
+    "provider_failure_finalized_as_low_score": false,
+    "stage_zero_pending_is_explicit": true,
+    "investment_recommendation_emitted": false
+  },
+  "note": "공식 CLI가 전체 current operation을 exit 0으로 실행하고 지정된 운영 산출물을 만들었다. 다만 관련 accepted claim이 없고 IssuerIR blocker가 남아 READY를 선언하지 않고 Provider/Source Pending으로 유지한다."
+}

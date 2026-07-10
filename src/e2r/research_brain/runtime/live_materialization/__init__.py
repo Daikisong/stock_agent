@@ -138,6 +138,7 @@ from .current_operation_input_builder import (
     CurrentOperationRunnerInputBuilder,
     write_current_operation_input_manifest,
 )
+from .live_operational_packager import package_live_current_operation
 
 __all__ = [
     "AuthorizationPath",
@@ -236,6 +237,7 @@ __all__ = [
     "load_planner_run_rows",
     "load_trigger_signals",
     "provider_capabilities",
+    "package_live_current_operation",
     "resolve_live_authorization",
     "refresh_event_lifecycle",
     "write_current_state_bootstrap",
