@@ -6,7 +6,7 @@ Phase 16의 내부 명령 연결과 감사 장치는 완료했다.
 
 - compile: `COMPILE_RUN_PASS`
 - blind frozen replay: `HISTORICAL_REPLAY_PARITY_PASS`
-- full unittest suite: 5,584/5,584 PASS
+- full unittest suite: 5,585/5,585 PASS
 - current/Census: `EXTERNAL_SOURCE_BLOCKER_NOT_READY`
 - 최종 라벨: `EXTERNAL_SOURCE_BLOCKER_NOT_READY`
 - `production_runtime_ready=false`
