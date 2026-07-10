@@ -1,0 +1,91 @@
+{
+  "schema_version": "e2r_live_universe_audit_v1",
+  "status": "CURRENT_UNIVERSE_MATERIALIZATION_PASS",
+  "as_of_date": "2026-07-10",
+  "source_effective_date": "2026-07-09",
+  "source_provider": "KRX_OPENAPI",
+  "source_mode": "LIVE",
+  "blockers": [],
+  "raw_universe_count": 2765,
+  "eligible_universe_count": 2542,
+  "excluded_universe_count": 223,
+  "missing_symbol_count": 0,
+  "missing_company_name_count": 0,
+  "duplicate_eligible_symbol_count": 0,
+  "fixture_symbol_count": 0,
+  "generic_portal_counted_as_universe_count": 0,
+  "future_universe_data_count": 0,
+  "provider_request_count": 4,
+  "selected_market_count": 2,
+  "exclusion_reason_counts": {
+    "DR": 9,
+    "INVESTMENT_COMPANY": 3,
+    "PREFERRED_OR_CLASS_SHARE": 113,
+    "REIT": 25,
+    "SPAC": 73
+  },
+  "critical_counts": {
+    "duplicate_eligible_symbol": 0,
+    "eligible_universe_below_1000": 0,
+    "fixture_symbol": 0,
+    "future_universe_data": 0,
+    "generic_portal_counted_as_universe": 0,
+    "missing_company_name": 0,
+    "missing_symbol": 0,
+    "raw_universe_below_1000": 0
+  },
+  "critical_count_sum": 0,
+  "hard_acceptance_pass": true,
+  "raw_universe_hash": "610fedfa6fa5f17099d535b3bb36c3936166ca49fa0563263d55c629e6e21520",
+  "eligible_universe_hash": "c761cec40da23647ddade4d2dbf4a38dd71b782eb7d40ec557fe35f325349f7b",
+  "request_attempts": [
+    {
+      "market": "KOSPI",
+      "effective_date": "2026-07-10",
+      "canonical_url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_isu_base_info?basDd=20260710",
+      "provider_request_id": "KRXREQ-daab9411ebbeeb7025ce0835",
+      "content_hash": "82c0031bc13af348ac1e1304aca28f309632975110f2508534e93216791dfa90",
+      "row_count": 0,
+      "status": "FETCHED",
+      "error_category": null
+    },
+    {
+      "market": "KOSDAQ",
+      "effective_date": "2026-07-10",
+      "canonical_url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_isu_base_info?basDd=20260710",
+      "provider_request_id": "KRXREQ-eeacdbec255eb45e3f03d1ce",
+      "content_hash": "82c0031bc13af348ac1e1304aca28f309632975110f2508534e93216791dfa90",
+      "row_count": 0,
+      "status": "FETCHED",
+      "error_category": null
+    },
+    {
+      "market": "KOSPI",
+      "effective_date": "2026-07-09",
+      "canonical_url": "https://data-dbg.krx.co.kr/svc/apis/sto/stk_isu_base_info?basDd=20260709",
+      "provider_request_id": "KRXREQ-65cbbf63681bbc54172e6698",
+      "content_hash": "294ce27d06b1ec6440b1daed20dbb15cb8ad89f7b59e9a33c508711154bdefbe",
+      "row_count": 945,
+      "status": "FETCHED",
+      "error_category": null
+    },
+    {
+      "market": "KOSDAQ",
+      "effective_date": "2026-07-09",
+      "canonical_url": "https://data-dbg.krx.co.kr/svc/apis/sto/ksq_isu_base_info?basDd=20260709",
+      "provider_request_id": "KRXREQ-cbf554e34709654f99848f1e",
+      "content_hash": "d902ae0511d1028cd26623244137afe952c153443aff9cc21e1395878205c3a4",
+      "row_count": 1820,
+      "status": "FETCHED",
+      "error_category": null
+    }
+  ],
+  "output_paths": {
+    "raw": "output/live_materialization/2026-07-10/universe_raw.jsonl",
+    "eligible": "output/live_materialization/2026-07-10/universe_eligible.jsonl",
+    "excluded": "output/live_materialization/2026-07-10/universe_excluded.jsonl",
+    "provenance": "output/live_materialization/2026-07-10/universe_provenance.json",
+    "audit": "output/live_materialization/2026-07-10/universe_audit.json"
+  },
+  "operator_note": "KRX 2026-07-10 issue-base-info was empty, so the bounded as-of-safe lookup selected the latest nonempty official snapshot 2026-07-09. KRX short codes may contain uppercase letters; six-character alphanumeric codes are valid current symbols."
+}

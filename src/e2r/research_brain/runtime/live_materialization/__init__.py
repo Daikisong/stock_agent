@@ -22,19 +22,32 @@ from .provider_capabilities import (
     counts_as_symbol_evidence,
     provider_capabilities,
 )
+from .universe_materializer import (
+    CurrentKrxUniverseMaterializer,
+    KrxBulkResponse,
+    LiveUniverseRow,
+    UniverseMaterializationResult,
+    UniverseMaterializerConfig,
+    write_universe_materialization,
+)
 
 __all__ = [
     "AuthorizationPath",
     "CredentialAuditRow",
     "CredentialState",
+    "CurrentKrxUniverseMaterializer",
     "LIVE_OPERATIONAL_ENVELOPE_SCHEMA_VERSION",
     "LIVE_RUN_PROFILE_SCHEMA_VERSION",
     "LiveAuthorizationDecision",
     "LiveOperationalRunEnvelope",
+    "LiveUniverseRow",
     "LiveRunMode",
     "LiveRunProfile",
     "ProviderCapability",
     "ProviderDocumentRole",
+    "KrxBulkResponse",
+    "UniverseMaterializationResult",
+    "UniverseMaterializerConfig",
     "audit_live_credentials",
     "build_provider_capability_matrix",
     "classify_provider_result",
@@ -42,4 +55,5 @@ __all__ = [
     "load_live_run_profile",
     "provider_capabilities",
     "resolve_live_authorization",
+    "write_universe_materialization",
 ]
