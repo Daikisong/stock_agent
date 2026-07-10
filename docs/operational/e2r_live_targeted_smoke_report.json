@@ -1,0 +1,1347 @@
+{
+  "aggregate": {
+    "accepted_current_claim_count": 0,
+    "actual_live_full_document_count": 8,
+    "claim_provenance_count": 0,
+    "daily_planner_run_count": 2,
+    "daily_real_planner_call_count": 4,
+    "eligible_universe_count": 2542,
+    "mandatory_target_count": 2,
+    "question_planning_count": 36,
+    "question_source_task_count": 22,
+    "recovered_provider_error_history": [
+      "ReadTimeout:HTTPSConnectionPool(host='news.samsung.com', port=443): Read timed out. (read timeout=20)"
+    ],
+    "resume_official_feed_errors": [],
+    "search_provider_errors": [],
+    "search_result_count": 26,
+    "sector_sample_count": 9,
+    "source_task_satisfaction_count": 22
+  },
+  "as_of_date": "2026-07-10",
+  "critical_count_sum": 0,
+  "executed_at": "2026-07-10T22:19:02+00:00",
+  "frozen_snapshot_audit": {
+    "audited_at": "2026-07-10T23:31:14+00:00",
+    "claim_leaf_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "network_calls": 0,
+    "provenance_leaf_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "provider_calls": 0
+  },
+  "hard_acceptance_counts": {
+    "accepted_claim_without_provenance_count": 0,
+    "actual_live_full_document_missing_count": 0,
+    "claim_provenance_missing_count": 0,
+    "dart_partial_called_full_thesis_count": 0,
+    "future_document_count": 0,
+    "llm_query_task_missing_count": 0,
+    "mandatory_target_missing_count": 0,
+    "non_deterministic_terminal_status_count": 0,
+    "real_planner_trace_missing_count": 0,
+    "sector_sample_missing_count": 0,
+    "snippet_used_as_evidence_count": 0
+  },
+  "hard_acceptance_pass": true,
+  "live_input_root": "output/live_materialization/2026-07-10",
+  "mandatory_targets": [
+    {
+      "accepted_current_claims": [],
+      "canonical_stage": "0",
+      "claim_provenance": [],
+      "company_name": "삼성전자",
+      "daily_event_status": {
+        "abstention_reason": "선두 후보 C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE에 대응하는 검토 완료 실행 recipe가 available_recipe_ids에 없다. 또한 현재 자료는 삼성전자의 대량보유 보고서가 접수됐다는 사실만 보여 주며, 메모리 장비 사이클·EPC 계약·보안 소프트웨어 유지율 중 어느 메커니즘도 입증하지 않는다. C28용 recipe는 실행 가능하지만 명백한 wrong-subject이므로 대량보유 사건 조사에 전용할 수 없다.",
+        "called_hbm_full_thesis": false,
+        "candidate_event_id": "CAND-6b7d2740b1a9365cc73a39a9",
+        "official_events": [
+          {
+            "report_name": "주식등의대량보유상황보고서(일반)",
+            "score_evidence_eligible": false,
+            "source_refs": [
+              "DART-RCEPT-20260710000678"
+            ],
+            "trigger_signal_id": "TRIG-bb72f9ad310aea666ffd2577"
+          }
+        ],
+        "planner_run_id": "LIVEPLAN-591c999dd09f29d2ed16683d",
+        "planner_terminal_status": "ABSTAINED",
+        "provider_call_count": 2,
+        "provider_name": "codex_cli_two_pass_planner",
+        "provider_real": true,
+        "real_provider_success": true,
+        "status": "PARTIAL_OFFICIAL_EVENT_NOT_FULL_THESIS"
+      },
+      "diagnostic_slots": {
+        "conventional_memory_drag": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        },
+        "current_lifecycle": {
+          "accepted_primitive_ids": [],
+          "document_markers": [
+            "2026"
+          ],
+          "score_eligible": false,
+          "status": "DOCUMENT_OBSERVED_CLAIM_NOT_ACCEPTED"
+        },
+        "customer_allocation": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        },
+        "margin_fcf_revision_bridge": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        },
+        "qualification": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        },
+        "revenue_mix": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        },
+        "shipment": {
+          "accepted_primitive_ids": [],
+          "document_markers": [
+            "shipment",
+            "shipments"
+          ],
+          "score_eligible": false,
+          "status": "DOCUMENT_OBSERVED_CLAIM_NOT_ACCEPTED"
+        },
+        "sold_out_or_pre_sold_capacity": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        }
+      },
+      "fetched_documents": [
+        {
+          "actual_live_full_document": true,
+          "canonical_url": "https://news.samsung.com/global/samsung-electronics-begins-shipment-of-industry-first-hbm4e-samples",
+          "content_hash": "cc9bdb2d2da63a0b07e8d5204370fff78d9880df7d6dfcd59481164b33f9d85e",
+          "document_id": "DOC-cc9bdb2d2da63a0b07e8",
+          "published_at": "2026-05-29",
+          "source_task_ids": [
+            "QSOURCE-8b5fcd06bdb71c28f60e161d",
+            "QSOURCE-427fa3417cdd74fd6ffd75cf"
+          ]
+        },
+        {
+          "actual_live_full_document": true,
+          "canonical_url": "https://news.samsung.com/global/samsung-ships-industry-first-commercial-hbm4-with-ultimate-performance-for-ai-computing",
+          "content_hash": "2c721be1fd867cd146bce2ff2104fe7e445424fd86c48dfa74ff141e857a1a12",
+          "document_id": "DOC-2c721be1fd867cd146bc",
+          "published_at": "2026-02-12",
+          "source_task_ids": [
+            "QSOURCE-8b5fcd06bdb71c28f60e161d",
+            "QSOURCE-427fa3417cdd74fd6ffd75cf"
+          ]
+        },
+        {
+          "actual_live_full_document": true,
+          "canonical_url": "https://news.samsung.com/global/samsung-electronics-ranks-5th-in-global-brands-for-the-sixth-consecutive-year",
+          "content_hash": "9b9f2add953cd8306ad90ad585fa81e897a4225d1e31d8679bb2b243d38bf0d4",
+          "document_id": "DOC-9b9f2add953cd8306ad9",
+          "published_at": "2025-10-15",
+          "source_task_ids": [
+            "QSOURCE-fcc27b72030dd208a7b21898"
+          ]
+        },
+        {
+          "actual_live_full_document": true,
+          "canonical_url": "https://news.samsung.com/global/samsung-electronics-announces-fourth-quarter-and-fy-2024-results",
+          "content_hash": "ea682648e1f5f5fb44de04d342c690ab039f9a04eb9f8950cb9b9b11bc6199f7",
+          "document_id": "DOC-ea682648e1f5f5fb44de",
+          "published_at": "2025-01-31",
+          "source_task_ids": [
+            "QSOURCE-fcc27b72030dd208a7b21898"
+          ]
+        }
+      ],
+      "full_thesis_status": {
+        "deterministic": true,
+        "green_forced": false,
+        "reason": "C06 전체 논리의 모든 material slot이 닫히기 전에는 Stage 0 NO_SCORE로 보류한다.",
+        "score_finalized": false,
+        "status": "FULL_THESIS_EVIDENCE_PENDING"
+      },
+      "provider_source_gaps": {
+        "fetch_rejections": [],
+        "open_primitives": [
+          "customer_preorder_or_allocation",
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold",
+          "medium_term_revision_visibility",
+          "memory_price_increase_mentioned",
+          "revenue_visibility_contract",
+          "customer_preorder_or_allocation",
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold",
+          "medium_term_revision_visibility",
+          "memory_price_increase_mentioned",
+          "revenue_visibility_contract"
+        ],
+        "query_pending": []
+      },
+      "score_type": "NO_SCORE",
+      "score_valid": false,
+      "score_value": null,
+      "source_task_satisfaction": [
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "customer_preorder_or_allocation",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-eb1993a3224b2be359aa7881",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-89712d285969202a4da172f5",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "hbm_capacity_constraint",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-c69f8ebdacd75642a3c809ee",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-5f008bf8ea9987692fb1294d",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "hbm_capacity_pre_sold",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-0a9c893df390e609684738ae",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-4db325e9cd2199f1bc495a40",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "medium_term_revision_visibility",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-e956517b8b132632376d5760",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-58f19b57bd193dae1340a9fa",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "memory_price_increase_mentioned",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-a8414a7df43146d9fe91f92e",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-1f139bbaf1ededfb4c125720",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "revenue_visibility_contract",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-60beb675cf0a203620551cf3",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-55b2d68ff0fed955b4029467",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [
+            "DOC-cc9bdb2d2da63a0b07e8",
+            "DOC-2c721be1fd867cd146bc"
+          ],
+          "original_gap_open": true,
+          "primitive_id": "customer_preorder_or_allocation",
+          "raw_assertion_ids": [
+            "RA-002",
+            "RA-006",
+            "RA-007",
+            "RA-012",
+            "RA-001",
+            "RA-008",
+            "RA-003",
+            "RA-004",
+            "RA-005",
+            "RA-009",
+            "RA-010",
+            "RA-011"
+          ],
+          "reason": "fetched official documents did not satisfy the task predicate",
+          "recipe_id": "ERECIPE-eb1993a3224b2be359aa7881",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-8b5fcd06bdb71c28f60e161d",
+          "status": "NO_RELEVANT_CLAIM",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [
+            "DOC-cc9bdb2d2da63a0b07e8",
+            "DOC-2c721be1fd867cd146bc"
+          ],
+          "original_gap_open": true,
+          "primitive_id": "hbm_capacity_constraint",
+          "raw_assertion_ids": [
+            "RA-002",
+            "RA-006",
+            "RA-007",
+            "RA-012",
+            "RA-001",
+            "RA-008",
+            "RA-003",
+            "RA-004",
+            "RA-005",
+            "RA-009",
+            "RA-010",
+            "RA-011"
+          ],
+          "reason": "fetched official documents did not satisfy the task predicate",
+          "recipe_id": "ERECIPE-c69f8ebdacd75642a3c809ee",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-427fa3417cdd74fd6ffd75cf",
+          "status": "NO_RELEVANT_CLAIM",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "hbm_capacity_pre_sold",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-0a9c893df390e609684738ae",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-7e90221aeff9bb01014aa7f0",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [
+            "DOC-9b9f2add953cd8306ad9",
+            "DOC-ea682648e1f5f5fb44de"
+          ],
+          "original_gap_open": true,
+          "primitive_id": "medium_term_revision_visibility",
+          "raw_assertion_ids": [
+            "RA-007",
+            "RA-008",
+            "RA-004",
+            "RA-001",
+            "RA-002",
+            "RA-003",
+            "RA-005",
+            "RA-006",
+            "RA-011",
+            "RA-010",
+            "RA-012",
+            "RA-009"
+          ],
+          "reason": "fetched official documents did not satisfy the task predicate",
+          "recipe_id": "ERECIPE-e956517b8b132632376d5760",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-fcc27b72030dd208a7b21898",
+          "status": "NO_RELEVANT_CLAIM",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "memory_price_increase_mentioned",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-a8414a7df43146d9fe91f92e",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-c6bfb1c1730800aa045d7e91",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "005930"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "revenue_visibility_contract",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-60beb675cf0a203620551cf3",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-8a327c67f4681cbc3a7e5ce9",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "005930"
+        }
+      ],
+      "source_tasks": [
+        {
+          "literal_queries": [
+            "site:news.samsung.com \"Samsung Electronics\" HBM customer allocation preorder supply agreement commitment cancellable conditional \"2025\" \"first half 2026\""
+          ],
+          "primitive_id": "customer_preorder_or_allocation",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has an identifiable customer committed, preordered, or received an allocation of the target producer's HBM volume for a defined product and period?",
+          "recipe_id": "ERECIPE-eb1993a3224b2be359aa7881",
+          "task_id": "QSOURCE-89712d285969202a4da172f5"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com \"Samsung Electronics\" (HBM3E OR HBM4) (capacity OR utilization OR \"supply constraint\" OR \"sold out\" OR expansion) (demand OR customer) (Pyeongtaek OR production) (\"2025\" OR \"first half 2026\")"
+          ],
+          "primitive_id": "hbm_capacity_constraint",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Is the target producer's current HBM capacity constrained relative to demand for a specified generation and period?",
+          "recipe_id": "ERECIPE-c69f8ebdacd75642a3c809ee",
+          "task_id": "QSOURCE-5f008bf8ea9987692fb1294d"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com \"Samsung Electronics\" HBM capacity customer (allocated OR reservation OR \"supply agreement\") (binding OR cancellation OR defer) \"first quarter 2026\""
+          ],
+          "primitive_id": "hbm_capacity_pre_sold",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has the target producer already sold, booked, reserved, or allocated HBM capacity for a defined future period?",
+          "recipe_id": "ERECIPE-0a9c893df390e609684738ae",
+          "task_id": "QSOURCE-4db325e9cd2199f1bc495a40"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com \"Samsung Electronics\" HBM (qualification OR shipment OR \"revenue mix\") (guidance OR outlook OR profit OR \"cash flow\") (capacity OR customer) (\"2025\" OR \"first half 2026\" OR \"second quarter 2026\")"
+          ],
+          "primitive_id": "medium_term_revision_visibility",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Do current target guidance or source-backed estimates show a medium-term earnings or cash revision tied to HBM customer/capacity evidence?",
+          "recipe_id": "ERECIPE-e956517b8b132632376d5760",
+          "task_id": "QSOURCE-58f19b57bd193dae1340a9fa"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com \"Samsung Electronics\" (HBM OR DRAM OR NAND) (\"price increase\" OR pricing OR ASP OR \"average selling price\") (realized OR contracted OR agreement) (\"first quarter 2026\" OR \"second quarter 2026\" OR \"first half 2026\") (\"2025\" OR \"year-over-year\" OR \"quarter-over-quarter\") (mix OR rebate OR reset)"
+          ],
+          "primitive_id": "memory_price_increase_mentioned",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has the target reported or guided a realized or contracted memory/HBM price increase for a defined product and comparison period?",
+          "recipe_id": "ERECIPE-a8414a7df43146d9fe91f92e",
+          "task_id": "QSOURCE-1f139bbaf1ededfb4c125720"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com \"Samsung Electronics\" HBM (\"supply contract\" OR \"long-term supply agreement\" OR \"customer commitment\") (counterparty OR customer) (\"contract value\" OR \"committed volume\" OR duration) (cancellation OR termination OR reduction OR penalty) (\"January 2026\" OR \"first half 2026\" OR \"July 10 2026\")"
+          ],
+          "primitive_id": "revenue_visibility_contract",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Does a current supply agreement or equivalent commercial commitment give the target producer revenue visibility with identifiable term, product, and enforceable scope?",
+          "recipe_id": "ERECIPE-60beb675cf0a203620551cf3",
+          "task_id": "QSOURCE-55b2d68ff0fed955b4029467"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com/kr 삼성전자 HBM3E HBM4 고객사 공급 배정 계약 양산 취소 조건 \"2025년\" OR \"2026년 상반기\""
+          ],
+          "primitive_id": "customer_preorder_or_allocation",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has an identifiable customer committed, preordered, or received an allocation of the target producer's HBM volume for a defined product and period?",
+          "recipe_id": "ERECIPE-eb1993a3224b2be359aa7881",
+          "task_id": "QSOURCE-8b5fcd06bdb71c28f60e161d"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com/kr 삼성전자 HBM4 생산능력 수요 공급 제약 증설 \"2026년 상반기\""
+          ],
+          "primitive_id": "hbm_capacity_constraint",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Is the target producer's current HBM capacity constrained relative to demand for a specified generation and period?",
+          "recipe_id": "ERECIPE-c69f8ebdacd75642a3c809ee",
+          "task_id": "QSOURCE-427fa3417cdd74fd6ffd75cf"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com/kr \"삼성전자\" HBM 고객 배정 공급물량 생산능력 \"2026년 상반기\""
+          ],
+          "primitive_id": "hbm_capacity_pre_sold",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has the target producer already sold, booked, reserved, or allocated HBM capacity for a defined future period?",
+          "recipe_id": "ERECIPE-0a9c893df390e609684738ae",
+          "task_id": "QSOURCE-7e90221aeff9bb01014aa7f0"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com/global \"Samsung Electronics\" HBM (\"FY 2025\" OR \"Q1 2026\") (customer OR qualification OR capacity) (revenue OR \"operating profit\" OR \"cash flow\" OR outlook)"
+          ],
+          "primitive_id": "medium_term_revision_visibility",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Do current target guidance or source-backed estimates show a medium-term earnings or cash revision tied to HBM customer/capacity evidence?",
+          "recipe_id": "ERECIPE-e956517b8b132632376d5760",
+          "task_id": "QSOURCE-fcc27b72030dd208a7b21898"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com \"Samsung Electronics\" \"first quarter 2026\" (memory OR HBM) (ASP OR pricing)"
+          ],
+          "primitive_id": "memory_price_increase_mentioned",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has the target reported or guided a realized or contracted memory/HBM price increase for a defined product and comparison period?",
+          "recipe_id": "ERECIPE-a8414a7df43146d9fe91f92e",
+          "task_id": "QSOURCE-c6bfb1c1730800aa045d7e91"
+        },
+        {
+          "literal_queries": [
+            "site:news.samsung.com/kr \"삼성전자\" HBM (\"실적 발표\" OR \"컨퍼런스콜\") (\"장기 공급\" OR \"고객 확약\" OR \"생산능력 선점\") (\"계약 기간\" OR \"공급 물량\" OR \"계약 금액\" OR \"취소 조건\") \"2026년 상반기\""
+          ],
+          "primitive_id": "revenue_visibility_contract",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Does a current supply agreement or equivalent commercial commitment give the target producer revenue visibility with identifiable term, product, and enforceable scope?",
+          "recipe_id": "ERECIPE-60beb675cf0a203620551cf3",
+          "task_id": "QSOURCE-8a327c67f4681cbc3a7e5ce9"
+        }
+      ],
+      "stage_court_trace": {
+        "accepted_claim_ids": [],
+        "canonical_stage": "0",
+        "config_fingerprint": "5a767fa9ef6f6209049f0e37863263fd858696b593bf4c779361aeaf879e0aea",
+        "contribution_ids": [],
+        "decision_status": "PENDING",
+        "hard_break_claim_ids": [],
+        "input_fingerprint": "a4a97e16b5d84ed0227af5c4ec43df121cbe40419724c29fc0d9c43fc40ad3b6",
+        "material_gap_ids": [
+          "customer_preorder_or_allocation",
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold",
+          "medium_term_revision_visibility",
+          "memory_price_increase_mentioned",
+          "revenue_visibility_contract"
+        ],
+        "reasons": [
+          "source_pending",
+          "claimless_score",
+          "material_gap:customer_preorder_or_allocation",
+          "material_gap:hbm_capacity_constraint",
+          "material_gap:hbm_capacity_pre_sold",
+          "material_gap:medium_term_revision_visibility",
+          "material_gap:memory_price_increase_mentioned",
+          "material_gap:revenue_visibility_contract"
+        ],
+        "score_fingerprint": "60cedc5ed17d29aed9f9413aaf26d29587a955c71b7cfcdbfc6ed5fb934996dc",
+        "score_type": "NO_SCORE",
+        "score_value": null,
+        "scoring_scope": "FULL_THESIS",
+        "trace_id": "ACTRACE-7bcf5b005f3f2198ee5de311"
+      },
+      "symbol": "005930"
+    },
+    {
+      "accepted_current_claims": [],
+      "canonical_stage": "0",
+      "claim_provenance": [],
+      "company_name": "SK하이닉스",
+      "daily_event_status": {
+        "abstention_reason": "사용 가능한 검토 완료 recipe ID가 하나도 없어 선두 후보를 실행 가능한 공식 출처 조사로 검증할 수 없다. 현재 공식 공시는 DR 정정 사실만 확인하며, 세 후보의 핵심 메커니즘을 직접 뒷받침하지 않는다.",
+        "called_hbm_full_thesis": false,
+        "candidate_event_id": "CAND-284f594893409a35ba7ab9c1",
+        "official_events": [
+          {
+            "report_name": "[기재정정]증권예탁증권(DR)발행결정              ",
+            "score_evidence_eligible": false,
+            "source_refs": [
+              "DART-RCEPT-20260710800023"
+            ],
+            "trigger_signal_id": "TRIG-0aef7ac28240dcfea31fa5f1"
+          }
+        ],
+        "planner_run_id": "LIVEPLAN-5004e4a0a700a29303d2607b",
+        "planner_terminal_status": "ABSTAINED",
+        "provider_call_count": 2,
+        "provider_name": "codex_cli_two_pass_planner",
+        "provider_real": true,
+        "real_provider_success": true,
+        "status": "PARTIAL_OFFICIAL_EVENT_NOT_FULL_THESIS"
+      },
+      "diagnostic_slots": {
+        "conventional_memory_drag": {
+          "accepted_primitive_ids": [],
+          "document_markers": [
+            "conventional dram"
+          ],
+          "score_eligible": false,
+          "status": "DOCUMENT_OBSERVED_CLAIM_NOT_ACCEPTED"
+        },
+        "current_lifecycle": {
+          "accepted_primitive_ids": [],
+          "document_markers": [
+            "2026"
+          ],
+          "score_eligible": false,
+          "status": "DOCUMENT_OBSERVED_CLAIM_NOT_ACCEPTED"
+        },
+        "customer_allocation": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        },
+        "margin_fcf_revision_bridge": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        },
+        "qualification": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        },
+        "revenue_mix": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        },
+        "shipment": {
+          "accepted_primitive_ids": [],
+          "document_markers": [
+            "shipment"
+          ],
+          "score_eligible": false,
+          "status": "DOCUMENT_OBSERVED_CLAIM_NOT_ACCEPTED"
+        },
+        "sold_out_or_pre_sold_capacity": {
+          "accepted_primitive_ids": [],
+          "document_markers": [],
+          "score_eligible": false,
+          "status": "OPEN"
+        }
+      },
+      "fetched_documents": [
+        {
+          "actual_live_full_document": true,
+          "canonical_url": "https://news.skhynix.com/q1-2026-business-results/",
+          "content_hash": "417fed21d8e630adf1e3f17e19af043bc411f46776854dae944283fea829d686",
+          "document_id": "DOC-417fed21d8e630adf1e3",
+          "published_at": "2026-04-22",
+          "source_task_ids": [
+            "QSOURCE-059547089e68d7b6b70eeabf",
+            "QSOURCE-9bf82ee275d4781ded8fe491"
+          ]
+        },
+        {
+          "actual_live_full_document": true,
+          "canonical_url": "https://news.skhynix.com/celebrating-adr-trading/",
+          "content_hash": "c7b989c6fda2b0e75da939a713b6b937d473fb46954bed795c8071f6fb8fd164",
+          "document_id": "DOC-c7b989c6fda2b0e75da9",
+          "published_at": "2026-07-10",
+          "source_task_ids": [
+            "QSOURCE-4873b61fb643cfc24f56bcdb"
+          ]
+        },
+        {
+          "actual_live_full_document": true,
+          "canonical_url": "https://news.skhynix.com/hbm-to-essd/",
+          "content_hash": "ea44b7d3b41fa55047b64cd3a61e9965b254709386b668a9fd27347906c91ac7",
+          "document_id": "DOC-ea44b7d3b41fa55047b6",
+          "published_at": "2026-07-08",
+          "source_task_ids": [
+            "QSOURCE-2767d1dfc145f55c6d10bace"
+          ]
+        },
+        {
+          "actual_live_full_document": true,
+          "canonical_url": "https://news.skhynix.com/fact-05/",
+          "content_hash": "44fe7392c4e7c38f3e2a1f522ccbcae2aaf6c1643a779975b301ec31a8a0eb2d",
+          "document_id": "DOC-44fe7392c4e7c38f3e2a",
+          "published_at": "2026-06-29",
+          "source_task_ids": [
+            "QSOURCE-2767d1dfc145f55c6d10bace"
+          ]
+        }
+      ],
+      "full_thesis_status": {
+        "deterministic": true,
+        "green_forced": false,
+        "reason": "C06 전체 논리의 모든 material slot이 닫히기 전에는 Stage 0 NO_SCORE로 보류한다.",
+        "score_finalized": false,
+        "status": "FULL_THESIS_EVIDENCE_PENDING"
+      },
+      "provider_source_gaps": {
+        "fetch_rejections": [],
+        "open_primitives": [
+          "customer_preorder_or_allocation",
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold",
+          "medium_term_revision_visibility",
+          "memory_price_increase_mentioned",
+          "revenue_visibility_contract",
+          "hbm_capacity_pre_sold",
+          "medium_term_revision_visibility",
+          "memory_price_increase_mentioned",
+          "revenue_visibility_contract"
+        ],
+        "query_pending": []
+      },
+      "score_type": "NO_SCORE",
+      "score_valid": false,
+      "score_value": null,
+      "source_task_satisfaction": [
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "customer_preorder_or_allocation",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-eb1993a3224b2be359aa7881",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-067d983b95880c9524443287",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "000660"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "hbm_capacity_constraint",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-c69f8ebdacd75642a3c809ee",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-6baa782f23ec3523f49813f4",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "000660"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "hbm_capacity_pre_sold",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-0a9c893df390e609684738ae",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-0f4b40b69d0c72990a618b56",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "000660"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "medium_term_revision_visibility",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-e956517b8b132632376d5760",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-5b9f6b39e2618174a5d2d25c",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "000660"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "memory_price_increase_mentioned",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-a8414a7df43146d9fe91f92e",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-450cc8046b10d977898a2f2e",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "000660"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [],
+          "original_gap_open": true,
+          "primitive_id": "revenue_visibility_contract",
+          "raw_assertion_ids": [],
+          "reason": "official source route produced no usable document",
+          "recipe_id": "ERECIPE-60beb675cf0a203620551cf3",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-0a38ba60a116f7446b3e958b",
+          "status": "SOURCE_EXHAUSTED",
+          "target_id": "000660"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [
+            "DOC-c7b989c6fda2b0e75da9"
+          ],
+          "original_gap_open": true,
+          "primitive_id": "hbm_capacity_pre_sold",
+          "raw_assertion_ids": [
+            "RA-000660-20260710-03",
+            "RA-000660-20260710-04",
+            "RA-000660-20260710-01",
+            "RA-000660-20260710-02"
+          ],
+          "reason": "fetched official documents did not satisfy the task predicate",
+          "recipe_id": "ERECIPE-0a9c893df390e609684738ae",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-4873b61fb643cfc24f56bcdb",
+          "status": "NO_RELEVANT_CLAIM",
+          "target_id": "000660"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [
+            "DOC-417fed21d8e630adf1e3"
+          ],
+          "original_gap_open": true,
+          "primitive_id": "medium_term_revision_visibility",
+          "raw_assertion_ids": [
+            "RA-005",
+            "RA-011",
+            "RA-010",
+            "RA-012",
+            "RA-009",
+            "RA-002",
+            "RA-003",
+            "RA-001",
+            "RA-004",
+            "RA-006",
+            "RA-007",
+            "RA-008"
+          ],
+          "reason": "fetched official documents did not satisfy the task predicate",
+          "recipe_id": "ERECIPE-e956517b8b132632376d5760",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-059547089e68d7b6b70eeabf",
+          "status": "NO_RELEVANT_CLAIM",
+          "target_id": "000660"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [
+            "DOC-ea44b7d3b41fa55047b6",
+            "DOC-44fe7392c4e7c38f3e2a"
+          ],
+          "original_gap_open": true,
+          "primitive_id": "memory_price_increase_mentioned",
+          "raw_assertion_ids": [
+            "RA-001",
+            "RA-010",
+            "RA-011",
+            "RA-002",
+            "RA-003",
+            "RA-012",
+            "RA-004",
+            "RA-005",
+            "RA-006",
+            "RA-007",
+            "RA-008",
+            "RA-009",
+            "RA-44fe7392-005",
+            "RA-44fe7392-008",
+            "RA-44fe7392-011",
+            "RA-44fe7392-012",
+            "RA-44fe7392-002",
+            "RA-44fe7392-006",
+            "RA-44fe7392-010",
+            "RA-44fe7392-001",
+            "RA-44fe7392-004",
+            "RA-44fe7392-007",
+            "RA-44fe7392-009",
+            "RA-44fe7392-003"
+          ],
+          "reason": "fetched official documents did not satisfy the task predicate",
+          "recipe_id": "ERECIPE-a8414a7df43146d9fe91f92e",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-2767d1dfc145f55c6d10bace",
+          "status": "NO_RELEVANT_CLAIM",
+          "target_id": "000660"
+        },
+        {
+          "accepted_claim_ids": [],
+          "accepted_mapping_ids": [],
+          "document_ids": [
+            "DOC-417fed21d8e630adf1e3"
+          ],
+          "original_gap_open": true,
+          "primitive_id": "revenue_visibility_contract",
+          "raw_assertion_ids": [
+            "RA-005",
+            "RA-011",
+            "RA-010",
+            "RA-012",
+            "RA-009",
+            "RA-002",
+            "RA-003",
+            "RA-001",
+            "RA-004",
+            "RA-006",
+            "RA-007",
+            "RA-008"
+          ],
+          "reason": "fetched official documents did not satisfy the task predicate",
+          "recipe_id": "ERECIPE-60beb675cf0a203620551cf3",
+          "rerouted_mapping_ids": [],
+          "schema_version": "e2r_live_current_claim_v1",
+          "source_task_id": "QSOURCE-9bf82ee275d4781ded8fe491",
+          "status": "NO_RELEVANT_CLAIM",
+          "target_id": "000660"
+        }
+      ],
+      "source_tasks": [
+        {
+          "literal_queries": [
+            "site:news.skhynix.com (\"SK hynix\" OR \"SK Hynix\" OR \"SK하이닉스\") (HBM3E OR HBM4) (customer commitment OR customer allocation OR preorder OR supply agreement) (volume OR capacity OR shipment) (cancellable OR conditional OR cancellation) \"2025 fiscal year\""
+          ],
+          "primitive_id": "customer_preorder_or_allocation",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has an identifiable customer committed, preordered, or received an allocation of the target producer's HBM volume for a defined product and period?",
+          "recipe_id": "ERECIPE-eb1993a3224b2be359aa7881",
+          "task_id": "QSOURCE-067d983b95880c9524443287"
+        },
+        {
+          "literal_queries": [
+            "site:news.skhynix.com (\"SK hynix\" OR \"SK Hynix\" OR \"SK하이닉스\") HBM4 (\"2026 second quarter\" OR \"2026 Q2\" OR \"2026년 2분기\") (\"fully booked\" OR \"sold out\" OR \"demand exceeds supply\" OR \"capacity constraint\") (M15X OR expansion OR \"mass production\")"
+          ],
+          "primitive_id": "hbm_capacity_constraint",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Is the target producer's current HBM capacity constrained relative to demand for a specified generation and period?",
+          "recipe_id": "ERECIPE-c69f8ebdacd75642a3c809ee",
+          "task_id": "QSOURCE-6baa782f23ec3523f49813f4"
+        },
+        {
+          "literal_queries": [
+            "site:news.skhynix.com (\"SK hynix\" OR \"SK Hynix\" OR \"SK하이닉스\") HBM (\"2026 first half\" OR \"2026년 상반기\") (\"2026 production\" OR \"2026 capacity\" OR \"2026년 생산\") (\"fully booked\" OR \"sold out\" OR \"customer allocation\" OR \"pre-sold\") (cancellation OR cancellable OR defer OR conditional)"
+          ],
+          "primitive_id": "hbm_capacity_pre_sold",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has the target producer already sold, booked, reserved, or allocated HBM capacity for a defined future period?",
+          "recipe_id": "ERECIPE-0a9c893df390e609684738ae",
+          "task_id": "QSOURCE-0f4b40b69d0c72990a618b56"
+        },
+        {
+          "literal_queries": [
+            "site:news.skhynix.com (\"SK hynix\" OR \"SK Hynix\" OR \"SK하이닉스\") (\"2026 first half\" OR \"2026년 상반기\" OR \"2026 fiscal year\" OR \"2026 회계연도\") (HBM3E OR HBM4 OR HBM) (customer OR allocation OR qualification OR capacity OR shipment) (guidance OR outlook OR forecast OR \"revenue growth\" OR \"operating profit\" OR margin OR \"cash flow\" OR FCF) (raise OR increase OR revise OR maintain OR cut OR inventory)"
+          ],
+          "primitive_id": "medium_term_revision_visibility",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Do current target guidance or source-backed estimates show a medium-term earnings or cash revision tied to HBM customer/capacity evidence?",
+          "recipe_id": "ERECIPE-e956517b8b132632376d5760",
+          "task_id": "QSOURCE-5b9f6b39e2618174a5d2d25c"
+        },
+        {
+          "literal_queries": [
+            "site:news.skhynix.com (\"SK hynix\" OR \"SK Hynix\" OR \"SK하이닉스\") (\"2026 first quarter\" OR \"2026 Q1\" OR \"2026년 1분기\") (HBM OR DRAM) (\"average selling price\" OR ASP OR \"contract price\" OR \"price increase\") (\"quarter-on-quarter\" OR \"compared with the fourth quarter of 2025\" OR \"2025년 4분기 대비\") (\"product mix\" OR rebate OR \"contract reset\")"
+          ],
+          "primitive_id": "memory_price_increase_mentioned",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has the target reported or guided a realized or contracted memory/HBM price increase for a defined product and comparison period?",
+          "recipe_id": "ERECIPE-a8414a7df43146d9fe91f92e",
+          "task_id": "QSOURCE-450cc8046b10d977898a2f2e"
+        },
+        {
+          "literal_queries": [
+            "site:news.skhynix.com (\"SK hynix\" OR \"SK Hynix\" OR \"SK하이닉스\") (\"2026 fiscal year\" OR \"2026 회계연도\") (HBM3E OR HBM4) (\"long-term supply agreement\" OR \"supply contract\" OR \"multi-year agreement\" OR \"장기 공급계약\") (customer OR counterparty OR 고객) (term OR duration OR volume OR \"committed revenue\" OR 기간 OR 물량) (cancellation OR cancellable OR \"take-or-pay\" OR penalty OR \"volume reduction\" OR 취소)"
+          ],
+          "primitive_id": "revenue_visibility_contract",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Does a current supply agreement or equivalent commercial commitment give the target producer revenue visibility with identifiable term, product, and enforceable scope?",
+          "recipe_id": "ERECIPE-60beb675cf0a203620551cf3",
+          "task_id": "QSOURCE-0a38ba60a116f7446b3e958b"
+        },
+        {
+          "literal_queries": [
+            "site:news.skhynix.com (\"SK hynix\" OR \"SK Hynix\" OR \"SK하이닉스\") HBM \"2026년 2분기\" (\"공급 물량 확정\" OR \"물량 협의 완료\" OR \"생산 물량 배정\" OR 완판) (계약 OR 취소 OR 연기 OR 변경)"
+          ],
+          "primitive_id": "hbm_capacity_pre_sold",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has the target producer already sold, booked, reserved, or allocated HBM capacity for a defined future period?",
+          "recipe_id": "ERECIPE-0a9c893df390e609684738ae",
+          "task_id": "QSOURCE-4873b61fb643cfc24f56bcdb"
+        },
+        {
+          "literal_queries": [
+            "site:news.skhynix.com (\"SK hynix\" OR \"SK Hynix\" OR \"SK하이닉스\") (\"Q1 2026\" OR \"first quarter 2026\" OR \"2026년 1분기\") (earnings OR results) HBM (customer OR demand OR capacity) (outlook OR guidance) (revenue OR profit OR margin OR \"cash flow\" OR FCF)"
+          ],
+          "primitive_id": "medium_term_revision_visibility",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Do current target guidance or source-backed estimates show a medium-term earnings or cash revision tied to HBM customer/capacity evidence?",
+          "recipe_id": "ERECIPE-e956517b8b132632376d5760",
+          "task_id": "QSOURCE-059547089e68d7b6b70eeabf"
+        },
+        {
+          "literal_queries": [
+            "site:news.skhynix.com \"SK hynix\" \"2025 financial results\" HBM (price OR pricing OR ASP) (increase OR change) (\"2024\" OR \"year-on-year\")"
+          ],
+          "primitive_id": "memory_price_increase_mentioned",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Has the target reported or guided a realized or contracted memory/HBM price increase for a defined product and comparison period?",
+          "recipe_id": "ERECIPE-a8414a7df43146d9fe91f92e",
+          "task_id": "QSOURCE-2767d1dfc145f55c6d10bace"
+        },
+        {
+          "literal_queries": [
+            "site:news.skhynix.com (\"SK hynix\" OR \"SK Hynix\" OR \"SK하이닉스\") (\"Q1 2026\" OR \"first quarter 2026\" OR \"2026년 1분기\") (HBM OR memory OR 메모리) (\"purchase commitment\" OR \"committed volume\" OR \"capacity reservation\" OR \"예약 물량\") (term OR duration OR volume OR cancellation OR penalty OR 기간 OR 취소)"
+          ],
+          "primitive_id": "revenue_visibility_contract",
+          "production_execution_allowed": true,
+          "query_generator_kind": "REAL_LLM",
+          "question_to_answer": "Does a current supply agreement or equivalent commercial commitment give the target producer revenue visibility with identifiable term, product, and enforceable scope?",
+          "recipe_id": "ERECIPE-60beb675cf0a203620551cf3",
+          "task_id": "QSOURCE-9bf82ee275d4781ded8fe491"
+        }
+      ],
+      "stage_court_trace": {
+        "accepted_claim_ids": [],
+        "canonical_stage": "0",
+        "config_fingerprint": "5a767fa9ef6f6209049f0e37863263fd858696b593bf4c779361aeaf879e0aea",
+        "contribution_ids": [],
+        "decision_status": "PENDING",
+        "hard_break_claim_ids": [],
+        "input_fingerprint": "a6aa992e60200ff099f47b6131436b4659606c65173f9de1991996211ee7d962",
+        "material_gap_ids": [
+          "customer_preorder_or_allocation",
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold",
+          "medium_term_revision_visibility",
+          "memory_price_increase_mentioned",
+          "revenue_visibility_contract"
+        ],
+        "reasons": [
+          "source_pending",
+          "claimless_score",
+          "material_gap:customer_preorder_or_allocation",
+          "material_gap:hbm_capacity_constraint",
+          "material_gap:hbm_capacity_pre_sold",
+          "material_gap:medium_term_revision_visibility",
+          "material_gap:memory_price_increase_mentioned",
+          "material_gap:revenue_visibility_contract"
+        ],
+        "score_fingerprint": "60cedc5ed17d29aed9f9413aaf26d29587a955c71b7cfcdbfc6ed5fb934996dc",
+        "score_type": "NO_SCORE",
+        "score_value": null,
+        "scoring_scope": "FULL_THESIS",
+        "trace_id": "ACTRACE-b9b95edcdf0edc970bcdd6e6"
+      },
+      "symbol": "000660"
+    }
+  ],
+  "resume": {
+    "claim_extractor_max_assertions": 12,
+    "refreshed_at": "2026-07-10T23:31:14+00:00",
+    "resumed_from_frozen_llm_queries": true,
+    "selected_document_count": 8
+  },
+  "safety": {
+    "accepted_claim_provenance_contract_complete": true,
+    "daily_event_and_full_thesis_separated": true,
+    "green_required": false,
+    "investment_recommendation_emitted": false,
+    "literal_queries_generated_by_llm_only": true,
+    "official_domain_full_documents_only": true,
+    "search_snippets_score_eligible": false
+  },
+  "schema_version": "e2r_targeted_live_smoke_v1",
+  "sector_samples": [
+    {
+      "baseline_lane_status": {
+        "EXISTING_LEDGER": "NO_PRIOR_LEDGER",
+        "OFFICIAL": "PARTIAL_HISTORY_PENDING",
+        "PRICE": "OBSERVED",
+        "RISK": "NO_RESULT"
+      },
+      "baseline_source_ids": [
+        "BASESRC-5db155dfb4c07d06388cd313",
+        "BASESRC-dc80390bcdd957df5bb4ac3d",
+        "CURRENTSTATE-f3af205a9a1163785af25aaa"
+      ],
+      "candidate_event_id": null,
+      "company_name": "HD현대일렉트릭",
+      "depth": "L1_BASELINE",
+      "market": "KOSPI",
+      "sector": "L1",
+      "selected_for_brain": false,
+      "selection_hash": "14edcc942d017d03048ffb984535f562d9c42099a3826c09a3396faf762f7830",
+      "selection_rule": "MIN_STABLE_HASH_WITHIN_EXPLICIT_VALIDATION_POOL",
+      "symbol": "267260",
+      "terminal_status": "LIVE_BASELINE_OBSERVED_NO_CURRENT_TRIGGER"
+    },
+    {
+      "baseline_lane_status": {
+        "EXISTING_LEDGER": "NO_PRIOR_LEDGER",
+        "OFFICIAL": "PARTIAL_HISTORY_PENDING",
+        "PRICE": "OBSERVED",
+        "RISK": "NO_RESULT"
+      },
+      "baseline_source_ids": [
+        "BASESRC-08692f53d251fcd16153d41b",
+        "BASESRC-5db155dfb4c07d06388cd313",
+        "CURRENTSTATE-a1385044691a00185aba1368",
+        "DART-RCEPT-20260710000204"
+      ],
+      "candidate_event_id": "CAND-23ceeefe9e36c4859ddec807",
+      "company_name": "리노공업",
+      "depth": "L2_OFFICIAL_LIGHT",
+      "market": "KOSDAQ",
+      "sector": "L2",
+      "selected_for_brain": false,
+      "selection_hash": "5c43322dd8d7e1a4daa7c89d6c0aeddf3b1ca1f92ed10d787d042bf1c248796d",
+      "selection_rule": "MIN_STABLE_HASH_WITHIN_EXPLICIT_VALIDATION_POOL",
+      "symbol": "058470",
+      "terminal_status": "CURRENT_TRIGGER_OBSERVED"
+    },
+    {
+      "baseline_lane_status": {
+        "EXISTING_LEDGER": "NO_PRIOR_LEDGER",
+        "OFFICIAL": "PARTIAL_HISTORY_PENDING",
+        "PRICE": "OBSERVED",
+        "RISK": "NO_RESULT"
+      },
+      "baseline_source_ids": [
+        "BASESRC-5db155dfb4c07d06388cd313",
+        "BASESRC-dc80390bcdd957df5bb4ac3d",
+        "CURRENTSTATE-37c1486ee5981a2ba83ff3fd",
+        "DART-RCEPT-20260710000577",
+        "DART-RCEPT-20260710800714"
+      ],
+      "candidate_event_id": "CAND-8ccea447c9a35313c27e76e0",
+      "company_name": "현대차",
+      "depth": "L2_OFFICIAL_LIGHT",
+      "market": "KOSPI",
+      "sector": "L3",
+      "selected_for_brain": false,
+      "selection_hash": "ad42fc3f1aa246b099a3b8df49cffca77eaf6063573e53c292d3763f9c2a732c",
+      "selection_rule": "MIN_STABLE_HASH_WITHIN_EXPLICIT_VALIDATION_POOL",
+      "symbol": "005380",
+      "terminal_status": "CURRENT_TRIGGER_OBSERVED"
+    },
+    {
+      "baseline_lane_status": {
+        "EXISTING_LEDGER": "NO_PRIOR_LEDGER",
+        "OFFICIAL": "PARTIAL_HISTORY_PENDING",
+        "PRICE": "OBSERVED",
+        "RISK": "NO_RESULT"
+      },
+      "baseline_source_ids": [
+        "BASESRC-5db155dfb4c07d06388cd313",
+        "BASESRC-dc80390bcdd957df5bb4ac3d",
+        "CURRENTSTATE-5152727b42d04af97cfbcbc9",
+        "DART-RCEPT-20260710800915"
+      ],
+      "candidate_event_id": "CAND-af083c06af9c1dd5b2f5d002",
+      "company_name": "풍산",
+      "depth": "L2_OFFICIAL_LIGHT",
+      "market": "KOSPI",
+      "sector": "L4",
+      "selected_for_brain": false,
+      "selection_hash": "2dc0154a6a9c6973bf0b0a4ad24242033f0c84bd310ba439163e424a6201adbc",
+      "selection_rule": "MIN_STABLE_HASH_WITHIN_EXPLICIT_VALIDATION_POOL",
+      "symbol": "103140",
+      "terminal_status": "CURRENT_TRIGGER_OBSERVED"
+    },
+    {
+      "baseline_lane_status": {
+        "EXISTING_LEDGER": "NO_PRIOR_LEDGER",
+        "OFFICIAL": "PARTIAL_HISTORY_PENDING",
+        "PRICE": "OBSERVED",
+        "RISK": "NO_RESULT"
+      },
+      "baseline_source_ids": [
+        "BASESRC-5db155dfb4c07d06388cd313",
+        "BASESRC-dc80390bcdd957df5bb4ac3d",
+        "CURRENTSTATE-056a49f7ce261e54835a7702"
+      ],
+      "candidate_event_id": null,
+      "company_name": "코스맥스",
+      "depth": "L1_BASELINE",
+      "market": "KOSPI",
+      "sector": "L5",
+      "selected_for_brain": false,
+      "selection_hash": "19668a7bef99c228855f80e45384cbd7baca06df06163a7a7a3d5f929a596ec4",
+      "selection_rule": "MIN_STABLE_HASH_WITHIN_EXPLICIT_VALIDATION_POOL",
+      "symbol": "192820",
+      "terminal_status": "LIVE_BASELINE_OBSERVED_NO_CURRENT_TRIGGER"
+    },
+    {
+      "baseline_lane_status": {
+        "EXISTING_LEDGER": "NO_PRIOR_LEDGER",
+        "OFFICIAL": "PARTIAL_HISTORY_PENDING",
+        "PRICE": "OBSERVED",
+        "RISK": "NO_RESULT"
+      },
+      "baseline_source_ids": [
+        "BASESRC-5db155dfb4c07d06388cd313",
+        "BASESRC-dc80390bcdd957df5bb4ac3d",
+        "CURRENTSTATE-26a29e8ec8663a58f01a15e7"
+      ],
+      "candidate_event_id": null,
+      "company_name": "삼성화재",
+      "depth": "L1_BASELINE",
+      "market": "KOSPI",
+      "sector": "L6",
+      "selected_for_brain": false,
+      "selection_hash": "228120e116ae38147ee0eee19fb509f10db5c444c54c954fffd930b97dd0ee0c",
+      "selection_rule": "MIN_STABLE_HASH_WITHIN_EXPLICIT_VALIDATION_POOL",
+      "symbol": "000810",
+      "terminal_status": "LIVE_BASELINE_OBSERVED_NO_CURRENT_TRIGGER"
+    },
+    {
+      "baseline_lane_status": {
+        "EXISTING_LEDGER": "NO_PRIOR_LEDGER",
+        "OFFICIAL": "PARTIAL_HISTORY_PENDING",
+        "PRICE": "OBSERVED",
+        "RISK": "NO_RESULT"
+      },
+      "baseline_source_ids": [
+        "BASESRC-5db155dfb4c07d06388cd313",
+        "BASESRC-dc80390bcdd957df5bb4ac3d",
+        "CURRENTSTATE-ce27fc82b25db94e8ae79fc4",
+        "DART-RCEPT-20260710000573"
+      ],
+      "candidate_event_id": "CAND-0ea842836cd96396338e0dd1",
+      "company_name": "셀트리온",
+      "depth": "L2_OFFICIAL_LIGHT",
+      "market": "KOSPI",
+      "sector": "L7",
+      "selected_for_brain": false,
+      "selection_hash": "5fd61e35ae5d3edfae12c2413968c60ab77ff5745c2cdc7bbe502291e6f190ff",
+      "selection_rule": "MIN_STABLE_HASH_WITHIN_EXPLICIT_VALIDATION_POOL",
+      "symbol": "068270",
+      "terminal_status": "CURRENT_TRIGGER_OBSERVED"
+    },
+    {
+      "baseline_lane_status": {
+        "EXISTING_LEDGER": "NO_PRIOR_LEDGER",
+        "OFFICIAL": "PARTIAL_HISTORY_PENDING",
+        "PRICE": "OBSERVED",
+        "RISK": "NO_RESULT"
+      },
+      "baseline_source_ids": [
+        "BASESRC-5db155dfb4c07d06388cd313",
+        "BASESRC-dc80390bcdd957df5bb4ac3d",
+        "CURRENTSTATE-c35041a9a060345aa3f255d7"
+      ],
+      "candidate_event_id": null,
+      "company_name": "NAVER",
+      "depth": "L1_BASELINE",
+      "market": "KOSPI",
+      "sector": "L8",
+      "selected_for_brain": false,
+      "selection_hash": "b12daca044bf2b3d5a31d5282bfff9bf9b343f50b4eff3b94bd655b2def502b3",
+      "selection_rule": "MIN_STABLE_HASH_WITHIN_EXPLICIT_VALIDATION_POOL",
+      "symbol": "035420",
+      "terminal_status": "LIVE_BASELINE_OBSERVED_NO_CURRENT_TRIGGER"
+    },
+    {
+      "baseline_lane_status": {
+        "EXISTING_LEDGER": "NO_PRIOR_LEDGER",
+        "OFFICIAL": "PARTIAL_HISTORY_PENDING",
+        "PRICE": "OBSERVED",
+        "RISK": "NO_RESULT"
+      },
+      "baseline_source_ids": [
+        "BASESRC-5db155dfb4c07d06388cd313",
+        "BASESRC-dc80390bcdd957df5bb4ac3d",
+        "CURRENTSTATE-300c1272c00c6b552737ad26",
+        "DART-RCEPT-20260710800437"
+      ],
+      "candidate_event_id": "CAND-a394f65e3abf3095e70e7cfe",
+      "company_name": "현대건설",
+      "depth": "L2_OFFICIAL_LIGHT",
+      "market": "KOSPI",
+      "sector": "L9",
+      "selected_for_brain": false,
+      "selection_hash": "3226e8e65eae9065b9ab0abb78229c53943e43adce42f31ad4ec85f144970f94",
+      "selection_rule": "MIN_STABLE_HASH_WITHIN_EXPLICIT_VALIDATION_POOL",
+      "symbol": "000720",
+      "terminal_status": "CURRENT_TRIGGER_OBSERVED"
+    }
+  ],
+  "status": "TARGETED_LIVE_SMOKE_PASS"
+}

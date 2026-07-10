@@ -11,6 +11,8 @@ from datetime import date
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Mapping, Protocol, Sequence
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 import requests
 from pypdf import PdfReader
@@ -78,6 +80,41 @@ class RequestsHistoricalSourceTransport:
                 error=None,
             )
         except requests.RequestException as exc:
+            return HistoricalHttpResponse(
+                url=url,
+                status_code=0,
+                content_type="",
+                body=b"",
+                error=f"{type(exc).__name__}:{exc}",
+            )
+
+
+class UrllibHistoricalSourceTransport:
+    """urllib transport for official hosts that stall with requests/urllib3."""
+
+    def __init__(self, *, user_agent: str = "E2R-Historical-Replay/1.0") -> None:
+        self._user_agent = user_agent
+
+    def fetch(self, *, url: str, timeout_seconds: int) -> HistoricalHttpResponse:
+        request = Request(url, headers={"User-Agent": self._user_agent})
+        try:
+            with urlopen(request, timeout=timeout_seconds) as response:  # nosec - user-authorized official fetch
+                return HistoricalHttpResponse(
+                    url=str(response.geturl()),
+                    status_code=int(response.status),
+                    content_type=str(response.headers.get("content-type") or ""),
+                    body=response.read(),
+                    error=None,
+                )
+        except HTTPError as exc:
+            return HistoricalHttpResponse(
+                url=str(exc.geturl() or url),
+                status_code=int(exc.code),
+                content_type=str(exc.headers.get("content-type") or ""),
+                body=exc.read(),
+                error=f"HTTPError:{exc.code}:{exc.reason}",
+            )
+        except (OSError, URLError) as exc:
             return HistoricalHttpResponse(
                 url=url,
                 status_code=0,
@@ -841,6 +878,20 @@ def _extract_full_text(
     return _normalize_text("".join(parser.parts)), ()
 
 
+def extract_source_full_text(
+    body: bytes,
+    *,
+    content_type: str,
+) -> tuple[str, tuple[tuple[int, int], ...]]:
+    """Extract full HTML/PDF text for a score-auditable evidence document.
+
+    Current validation shares the historical replay parser so search snippets
+    cannot accidentally become evidence text.
+    """
+
+    return _extract_full_text(body, content_type=content_type)
+
+
 class _VisibleTextParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -939,7 +990,9 @@ __all__ = [
     "HistoricalSourceBackedReplayResult",
     "HistoricalSourceTransport",
     "RequestsHistoricalSourceTransport",
+    "UrllibHistoricalSourceTransport",
     "compile_historical_source_backed_replay",
+    "extract_source_full_text",
     "load_historical_source_backed_snapshot",
     "write_historical_source_backed_replay",
 ]

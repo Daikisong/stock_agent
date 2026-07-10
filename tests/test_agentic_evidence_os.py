@@ -22167,7 +22167,7 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         value_schema = RAW_ASSERTION_OUTPUT_JSON_SCHEMA["properties"]["raw_assertions"]["items"]["properties"]["value"]
         polarity_schema = RAW_ASSERTION_OUTPUT_JSON_SCHEMA["properties"]["raw_assertions"]["items"]["properties"]["polarity_proposal"]
 
-        self.assertEqual(raw_assertions_schema["maxItems"], 6)
+        self.assertEqual(raw_assertions_schema["maxItems"], 12)
         self.assertIn("type", value_schema)
         self.assertIn("enum", polarity_schema)
 

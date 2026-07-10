@@ -143,6 +143,16 @@ from .census_operational_packager import (
     CENSUS_OPERATIONAL_SCHEMA_VERSION,
     package_live_census_operation,
 )
+from .targeted_smoke import (
+    TARGETED_SMOKE_CONFIG_SCHEMA_VERSION,
+    TARGETED_SMOKE_SCHEMA_VERSION,
+    TargetedSmokeRunResult,
+    audit_targeted_smoke_snapshot,
+    resume_targeted_smoke_claims,
+    run_targeted_live_smoke,
+    select_sector_samples,
+    write_targeted_live_smoke,
+)
 
 __all__ = [
     "AuthorizationPath",
@@ -221,6 +231,10 @@ __all__ = [
     "SourceTaskSatisfactionRecord",
     "ThesisStatus",
     "TRIGGER_SIGNAL_SCHEMA_VERSION",
+    "TARGETED_SMOKE_CONFIG_SCHEMA_VERSION",
+    "TARGETED_SMOKE_SCHEMA_VERSION",
+    "TargetedSmokeRunResult",
+    "audit_targeted_smoke_snapshot",
     "TriggerFusionConfig",
     "TriggerFusionResult",
     "TriggerSignal",
@@ -246,6 +260,9 @@ __all__ = [
     "package_live_census_operation",
     "resolve_live_authorization",
     "refresh_event_lifecycle",
+    "resume_targeted_smoke_claims",
+    "run_targeted_live_smoke",
+    "select_sector_samples",
     "write_current_state_bootstrap",
     "write_current_claim_compilation",
     "write_adaptive_gap_closure",
@@ -257,5 +274,6 @@ __all__ = [
     "write_source_task_materialization",
     "write_depth_selection",
     "write_trigger_fusion",
+    "write_targeted_live_smoke",
     "write_universe_materialization",
 ]

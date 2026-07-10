@@ -1,0 +1,57 @@
+{
+  "schema_version": "e2r_targeted_live_smoke_config_v1",
+  "as_of_date": "2026-07-10",
+  "mandatory_targets": [
+    {
+      "symbol": "005930",
+      "company_name": "삼성전자",
+      "aliases": ["Samsung Electronics", "Samsung"],
+      "official_domains": ["news.samsung.com"],
+      "official_feed_search_url": "https://news.samsung.com/global/feed/",
+      "official_feed_language": "English"
+    },
+    {
+      "symbol": "000660",
+      "company_name": "SK하이닉스",
+      "aliases": ["SK hynix", "SK Hynix"],
+      "official_domains": ["news.skhynix.com"],
+      "official_feed_search_url": "https://news.skhynix.com/feed/",
+      "official_feed_language": "English"
+    }
+  ],
+  "sector_candidate_pools": {
+    "L1": ["267260", "012450", "009540"],
+    "L2": ["042700", "058470", "064760"],
+    "L3": ["373220", "006400", "005380"],
+    "L4": ["005490", "103140", "010950"],
+    "L5": ["003230", "090430", "192820"],
+    "L6": ["105560", "000810", "323410"],
+    "L7": ["207940", "068270", "009420"],
+    "L8": ["035420", "035720", "053800"],
+    "L9": ["000720", "375500", "006360"]
+  },
+  "c06_archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "full_thesis_diagnostic_slots": [
+    "customer_allocation",
+    "sold_out_or_pre_sold_capacity",
+    "qualification",
+    "shipment",
+    "revenue_mix",
+    "margin_fcf_revision_bridge",
+    "conventional_memory_drag",
+    "current_lifecycle"
+  ],
+  "budgets": {
+    "planner_calls_per_target": 2,
+    "query_generation_attempts": 3,
+    "query_search_repair_rounds": 1,
+    "queries_per_task": 1,
+    "search_candidates_per_query": 100,
+    "fetches_per_target": 8,
+    "claim_documents_per_target": 6,
+    "fetch_candidates_per_query": 2,
+    "fetch_timeout_seconds": 20,
+    "official_feed_search_attempts": 2,
+    "max_raw_assertions_per_document": 12
+  }
+}

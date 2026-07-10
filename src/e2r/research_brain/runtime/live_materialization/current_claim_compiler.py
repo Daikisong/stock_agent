@@ -271,6 +271,7 @@ class CurrentClaimCompiler:
                     (direct if mapping.primitive_id == primitive_id else rerouted).append(mapping)
                     accepted_claims[claim.claim_id] = {
                         **_json_safe(asdict(claim)),
+                        "target_id": target_id,
                         "raw_assertion": _json_safe(asdict(raw)),
                         "mapping_ids": [mapping.mapping_id],
                         "document_id": compiled["document"].document_id,
