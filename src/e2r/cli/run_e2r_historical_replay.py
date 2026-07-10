@@ -4,12 +4,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 from e2r.research_brain.replay import (
     CANONICAL_FROZEN_REPLAY_RUNNER_SCHEMA_VERSION,
     compile_canonical_frozen_replay,
+    compile_historical_source_backed_replay,
+    load_historical_source_backed_snapshot,
     write_historical_replay_parity,
+    write_historical_source_backed_replay,
 )
 from e2r.research_brain.runtime.command_manifest import (
     REQUIRED_COMMAND_HASH_CATEGORIES,
@@ -37,24 +41,51 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--mode", default="blind_frozen_replay")
     parser.add_argument("--output-root", required=True)
     parser.add_argument("--fail-on-critical", type=_parse_bool, default=True)
+    parser.add_argument("--source-backed", type=_parse_bool, default=False)
+    parser.add_argument(
+        "--live-source-fetch-authorized",
+        type=_parse_bool,
+        default=False,
+    )
+    parser.add_argument(
+        "--source-registry",
+        default="configs/e2r_historical_source_backed_replay_v1.json",
+    )
+    parser.add_argument("--source-snapshot-root")
     args = parser.parse_args(argv)
     output_root = Path(args.output_root)
-    effective_argv = tuple(argv) if argv is not None else (
-        "--registry",
-        args.registry,
-        "--mode",
-        args.mode,
-        "--output-root",
-        args.output_root,
-        "--fail-on-critical",
-        str(args.fail_on_critical).lower(),
+    effective_argv = tuple(argv) if argv is not None else tuple(sys.argv[1:])
+    source_authorization_valid = (
+        (
+            not args.source_backed
+            and not args.live_source_fetch_authorized
+            and args.source_snapshot_root is None
+        )
+        or (
+            args.source_backed
+            and args.live_source_fetch_authorized
+            and args.source_snapshot_root is None
+        )
+        or (
+            args.source_backed
+            and not args.live_source_fetch_authorized
+            and args.source_snapshot_root is not None
+        )
     )
-    if args.registry != "canonical" or args.mode != "blind_frozen_replay":
+    if (
+        args.registry != "canonical"
+        or args.mode != "blind_frozen_replay"
+        or not source_authorization_valid
+    ):
         return _write_rejected_run(
             args=vars(args),
             effective_argv=effective_argv,
             output_root=output_root,
-            blocker="ONLY_CANONICAL_BLIND_FROZEN_REPLAY_IS_SUPPORTED",
+            blocker=(
+                "HISTORICAL_LIVE_SOURCE_FETCH_AUTHORIZATION_MISMATCH"
+                if not source_authorization_valid
+                else "ONLY_CANONICAL_BLIND_FROZEN_REPLAY_IS_SUPPORTED"
+            ),
         )
     try:
         bundle = compile_canonical_frozen_replay(repo_root=".")
@@ -62,14 +93,43 @@ def main(argv: list[str] | None = None) -> int:
         output_paths = dict(
             write_historical_replay_parity(result, output_root=output_root)
         )
-        runtime_critical = int(result.manifest["critical_count_sum"])
+        source_backed_result = None
+        if args.source_backed:
+            source_backed_result = (
+                load_historical_source_backed_snapshot(args.source_snapshot_root)
+                if args.source_snapshot_root is not None
+                else compile_historical_source_backed_replay(
+                    registry_path=args.source_registry,
+                    repo_root=".",
+                )
+            )
+            output_paths.update(
+                write_historical_source_backed_replay(
+                    source_backed_result,
+                    output_root=output_root,
+                )
+            )
+        runtime_critical = int(result.manifest["critical_count_sum"]) + int(
+            source_backed_result.manifest["critical_count_sum"]
+            if source_backed_result is not None
+            else 0
+        )
         passed = (
             result.manifest["status"] == "HISTORICAL_REPLAY_PARITY_PASS"
             and runtime_critical == 0
+            and (
+                source_backed_result is None
+                or source_backed_result.manifest["status"]
+                == "HISTORICAL_SOURCE_BACKED_REPLAY_PASS"
+            )
         )
         exit_code = 0 if passed or not args.fail_on_critical else 2
         semantic_status = (
-            "HISTORICAL_REPLAY_PARITY_PASS"
+            (
+                "HISTORICAL_SOURCE_BACKED_REPLAY_PASS"
+                if source_backed_result is not None
+                else "HISTORICAL_REPLAY_PARITY_PASS"
+            )
             if passed
             else "HISTORICAL_REPLAY_PARITY_FAIL"
         )
@@ -137,6 +197,20 @@ def main(argv: list[str] | None = None) -> int:
                     "historical-source-resolution-leaves",
                     output_paths["archetype_rows"],
                 ),
+                *(
+                    (
+                        command_file_hash_entry(
+                            "historical-source-backed-replay-leaves",
+                            output_paths["source_backed_replay"],
+                        ),
+                        command_file_hash_entry(
+                            "historical-source-backed-provenance",
+                            output_paths["replay_provenance"],
+                        ),
+                    )
+                    if source_backed_result is not None
+                    else ()
+                ),
             ),
         }
         command_manifest = build_command_run_manifest(
@@ -166,6 +240,11 @@ def main(argv: list[str] | None = None) -> int:
 
     payload = {
         **dict(result.manifest),
+        "source_backed_manifest": (
+            dict(source_backed_result.manifest)
+            if source_backed_result is not None
+            else None
+        ),
         "command": "run_e2r_historical_replay",
         "command_run_id": command_manifest["run_id"],
         "command_hashes": {

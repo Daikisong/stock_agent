@@ -20,10 +20,22 @@ from e2r.research_brain.replay.canonical_runner import (
     CanonicalFrozenReplayBundle,
     compile_canonical_frozen_replay,
 )
+from e2r.research_brain.replay.source_backed import (
+    HISTORICAL_SOURCE_BACKED_REPLAY_SCHEMA_VERSION,
+    HistoricalFrozenDocument,
+    HistoricalHttpResponse,
+    HistoricalSourceBackedReplayResult,
+    HistoricalSourceTransport,
+    RequestsHistoricalSourceTransport,
+    compile_historical_source_backed_replay,
+    load_historical_source_backed_snapshot,
+    write_historical_source_backed_replay,
+)
 
 __all__ = [
     "HISTORICAL_REPLAY_PARITY_SCHEMA_VERSION",
     "CANONICAL_FROZEN_REPLAY_RUNNER_SCHEMA_VERSION",
+    "HISTORICAL_SOURCE_BACKED_REPLAY_SCHEMA_VERSION",
     "CanonicalFrozenReplayBundle",
     "FrozenReplaySourceStatus",
     "HistoricalArchetypeParityRow",
@@ -34,8 +46,16 @@ __all__ = [
     "HistoricalReplayBenchmarkLeaf",
     "HistoricalReplayParityResult",
     "HistoricalSourceResolution",
+    "HistoricalFrozenDocument",
+    "HistoricalHttpResponse",
+    "HistoricalSourceBackedReplayResult",
+    "HistoricalSourceTransport",
+    "RequestsHistoricalSourceTransport",
     "compile_historical_replay_parity",
     "compile_canonical_frozen_replay",
+    "compile_historical_source_backed_replay",
+    "load_historical_source_backed_snapshot",
     "render_historical_replay_report",
     "write_historical_replay_parity",
+    "write_historical_source_backed_replay",
 ]

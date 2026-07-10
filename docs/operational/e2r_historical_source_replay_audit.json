@@ -1,0 +1,59 @@
+{
+  "schema_version": "e2r_historical_source_replay_audit_v1",
+  "phase": 34,
+  "snapshot_acquired_date": "2026-07-11",
+  "status": "PHASE_34_HISTORICAL_SOURCE_BACKED_REPLAY_PASS",
+  "live_fetch_cli_exit_code": 0,
+  "frozen_snapshot_replay_cli_exit_code": 0,
+  "live_fetch_command_run_id": "COMMAND-f8cdd2919554c3509e91d112",
+  "frozen_replay_command_run_id": "COMMAND-3290b034b2b20b3bcf703fd0",
+  "actual_full_source_fetch_count": 11,
+  "fetched_raw_byte_count": 11476353,
+  "frozen_extracted_text_char_count": 204023,
+  "replay_ready_count": 13,
+  "positive_replay_ready_count": 6,
+  "guard_replay_ready_count": 6,
+  "wrong_subject_probe_count": 1,
+  "canary_archetype_count": 6,
+  "registry_source_repair_count": 6621,
+  "source_repair_reason_counts": {
+    "SOURCE_PROXY_ONLY": 3428,
+    "URL_ONLY_WITHOUT_FROZEN_CONTENT_AND_ANCHOR": 3150,
+    "EVIDENCE_URL_PENDING": 43
+  },
+  "live_source_corpus_hash": "a1094a67eeed155c37b7dd914317b285dbc27673db6de909586cee965a9b86f0",
+  "frozen_replay_source_corpus_hash": "a1094a67eeed155c37b7dd914317b285dbc27673db6de909586cee965a9b86f0",
+  "live_replay_leaf_hash": "ff2fb546d619d87a0a6a2f9fc80a63364ff61bd3493e6136bc23094da87c9977",
+  "frozen_replay_leaf_hash": "ff2fb546d619d87a0a6a2f9fc80a63364ff61bd3493e6136bc23094da87c9977",
+  "same_frozen_snapshot_variance_count": 0,
+  "hard_acceptance_counts": {
+    "url_string_only_replay_ready_count": 0,
+    "source_proxy_replay_score_count": 0,
+    "future_leakage_count": 0,
+    "wrong_subject_replay_accepted_count": 0,
+    "canary_missing_positive_count": 0,
+    "canary_missing_guard_count": 0,
+    "canary_source_backed_replay_zero_count": 0,
+    "curated_case_not_replay_ready_count": 0,
+    "registry_url_case_unresolved_count": 0,
+    "duplicate_replay_case_count": 0
+  },
+  "artifact_hashes": {
+    "historical_source_backed_replay_sha256": "29901722f6ff5f8015056d13cbe2e4a2c561e150b2c3bb9720f37f9158d7cfa3",
+    "historical_source_repair_queue_sha256": "794f99334bd11b86207b0e483e15f31c4bd901dae82370d645c6b609ca1b2ff1",
+    "historical_replay_provenance_sha256": "3ae0760eb2870940b55a790c1660992351d59100dfbaa398e040f3dc048ac33f",
+    "historical_source_backed_manifest_sha256": "5eff3b4d78bc4947fcd04f5965996f208ae5f170b79fd3d60add4b0f8b649970"
+  },
+  "safety": {
+    "full_source_fetch_observed": true,
+    "content_hash_and_frozen_text_verified": true,
+    "published_available_as_of_order_verified": true,
+    "target_directness_verified": true,
+    "exact_quote_locator_verified": true,
+    "positive_and_guard_mapping_verified": true,
+    "source_proxy_scored": false,
+    "historical_claim_entered_current_watchlist": false,
+    "investment_recommendation_emitted": false,
+    "production_runtime_ready": false
+  }
+}
