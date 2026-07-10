@@ -63,6 +63,33 @@ def _event(
 
 
 class LiveCurrentStateBootstrapTests(unittest.TestCase):
+    def test_live_operational_audit_records_full_universe_bootstrap(self):
+        audit = json.loads(
+            (
+                Path(__file__).resolve().parents[1]
+                / "docs/operational/e2r_live_current_state_bootstrap_audit.json"
+            ).read_text(encoding="utf-8")
+        )
+
+        self.assertEqual(audit["status"], "CURRENT_STATE_BOOTSTRAP_PASS")
+        self.assertGreater(audit["eligible_universe_count"], 1000)
+        self.assertEqual(
+            audit["current_state_record_count"], audit["eligible_universe_count"]
+        )
+        self.assertEqual(
+            audit["source_timeline_count"], audit["eligible_universe_count"]
+        )
+        self.assertEqual(
+            audit["last_effective_thesis_count"], audit["eligible_universe_count"]
+        )
+        self.assertEqual(audit["symbol_without_any_source_attempt_count"], 0)
+        self.assertEqual(audit["recent_window_used_as_stage_cutoff_count"], 0)
+        self.assertEqual(audit["old_active_contract_dropped_count"], 0)
+        self.assertEqual(audit["old_resolved_risk_scored_count"], 0)
+        self.assertEqual(audit["provider_failure_mapped_no_thesis_count"], 0)
+        self.assertEqual(audit["critical_count_sum"], 0)
+        self.assertTrue(audit["hard_acceptance_pass"])
+
     def test_every_eligible_symbol_gets_timeline_thesis_and_source_attempts(self):
         universe = (
             _universe_row("005930", "삼성전자"),
