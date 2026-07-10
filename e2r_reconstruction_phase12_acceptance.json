@@ -1,0 +1,190 @@
+{
+  "schema_version": "e2r_reconstruction_phase12_acceptance_v1",
+  "phase": 12,
+  "status": "DETERMINISTIC_SCORE_STAGE_INTEGRITY_PASS",
+  "verified_on": "2026-07-10",
+  "scope": "Claim-backed deterministic score, canonical Stage, status, risk, gap, contribution, fingerprint, and StageCourt trace as one atomic decision",
+  "production_runtime_ready": false,
+  "score_taxonomy": [
+    "EVENT_EVIDENCE_PARTIAL",
+    "FULL_E2R_100",
+    "NO_SCORE"
+  ],
+  "canonical_stage_enum": [
+    "0",
+    "1",
+    "2",
+    "3-Green",
+    "3-Yellow",
+    "3-Red",
+    "4A",
+    "4B",
+    "4C",
+    "5"
+  ],
+  "atomic_decision_contract": {
+    "single_object_carries_stage_score_status_claims_contributions_trace_risk_and_gaps": true,
+    "full_score_requires_full_thesis_scope": true,
+    "full_score_requires_material_primitive_assessments": true,
+    "full_score_requires_accepted_current_source_backed_mapped_claims": true,
+    "full_score_requires_resolved_contradictions": true,
+    "full_score_requires_score_valid_and_finalization_allowed": true,
+    "event_evidence_never_finalizes_full_score": true,
+    "pending_keeps_raw_reference_score_separate": true,
+    "stage_and_status_recomputed_from_score_rules_and_hard_break": true,
+    "stage_court_trace_must_exactly_match_decision": true,
+    "claim_config_input_score_decision_and_trace_fingerprints_verified": true,
+    "score_contribution_requires_claim_and_mapping_lineage": true
+  },
+  "frozen_decisions": {
+    "full": {
+      "decision_id": "ADEC-e5d977ecc906b6d1abddbb0d",
+      "score_type": "FULL_E2R_100",
+      "score_value": 100.0,
+      "raw_reference_score": 100.0,
+      "canonical_stage": "3-Green",
+      "decision_status": "FINAL",
+      "accepted_claim_count": 4,
+      "contribution_count": 4,
+      "material_gap_count": 0,
+      "input_fingerprint": "ac90b5429254fc587b0192226afa2a87fb8539cffeb0bdcec9a784ced504c7e9",
+      "claim_state_hash": "a3c96f1bd4b827094f64282a1b1ed8891bf752660729f062673a40494c3a8d0f",
+      "config_fingerprint": "42cf8af2a05bfc5e96492560a67ac5732ca9c0a02cfbf27f9f4f9c08d548909e",
+      "score_fingerprint": "aa581be97cd88814ea18d8e4de7da6064fa3a949ea65dbfaffa8713c8d3d4f66",
+      "trace_id": "ACTRACE-3db75290038c21d926766477"
+    },
+    "event_partial": {
+      "decision_id": "ADEC-e591dda83503e84b4fd115c7",
+      "score_type": "EVENT_EVIDENCE_PARTIAL",
+      "score_value": 75.0,
+      "canonical_stage": "2",
+      "decision_status": "EVENT_PARTIAL",
+      "score_finalization_allowed": false
+    },
+    "material_gap_pending": {
+      "decision_id": "ADEC-6653a6960146acdfa08d2527",
+      "score_type": "NO_SCORE",
+      "score_value": null,
+      "raw_reference_score": 75.0,
+      "canonical_stage": "0",
+      "decision_status": "PENDING",
+      "score_valid": false,
+      "score_finalization_allowed": false,
+      "material_gap_ids": [
+        "contract_quality"
+      ]
+    }
+  },
+  "claim_lineage_integration": {
+    "source_acquisition_document_used": true,
+    "phase9_claim_ledger_event_used": true,
+    "claim_content_hash_equals_source_document_hash": true,
+    "accepted_claim_id_preserved": true,
+    "mapping_id_preserved_in_contribution": true,
+    "fixture_score_eligibility_requires_explicit_test_mode": true,
+    "same_fixture_is_not_production_score_eligible": true,
+    "historical_replay_never_score_eligible": true
+  },
+  "hard_break_contract": {
+    "target_direct_required": true,
+    "current_open_required": true,
+    "source_backed_required": true,
+    "material_required": true,
+    "unresolved_required": true,
+    "historical_replay_forbidden": true,
+    "valid_prior_thesis_hard_break_stage": "4C",
+    "wrong_subject_signal_rejected_count": 1,
+    "invalid_condition_probe_count": 8,
+    "invalid_condition_probe_rejected_count": 8,
+    "hard_break_without_current_direct_open_count": 0
+  },
+  "integrity_audit": {
+    "schema_version": "e2r_atomic_score_stage_audit_v1",
+    "status": "DETERMINISTIC_SCORE_STAGE_INTEGRITY_PASS",
+    "decision_count": 3,
+    "score_type_counts": {
+      "EVENT_EVIDENCE_PARTIAL": 1,
+      "FULL_E2R_100": 1,
+      "NO_SCORE": 1
+    },
+    "critical_counts": {
+      "claimless_score": 0,
+      "material_gap_full_score": 0,
+      "event_score_as_full": 0,
+      "stage_score_trace_mismatch": 0,
+      "pending_final_low_score": 0,
+      "hard_break_without_current_direct_open": 0,
+      "score_contribution_without_claim": 0,
+      "score_contribution_without_mapping": 0,
+      "fingerprint_mismatch_concealed": 0
+    },
+    "critical_count_sum": 0,
+    "result_hash": "be5c0d66b45bee42d0e37285f5a96161672a4daf7c0e867c7d658090c3bf9dbe",
+    "production_runtime_ready": false
+  },
+  "score_delta_audit": {
+    "explained": {
+      "status": "ATOMIC_SCORE_DELTA_EXPLAINED",
+      "before_decision_id": "ADEC-e5d977ecc906b6d1abddbb0d",
+      "after_decision_id": "ADEC-73f445e85b6b9ca0cafa43b5",
+      "score_delta": -5.0,
+      "claim_state_changed": true,
+      "config_changed": false,
+      "contribution_changed": true,
+      "unexplained_score_delta_count": 0,
+      "result_hash": "66cd8f060745f9c87089788f87657e545d23c8dcb384d9d1a3eb1f845c911803"
+    },
+    "known_bad_unexplained": {
+      "status": "ATOMIC_SCORE_DELTA_UNEXPLAINED",
+      "score_delta": -1.0,
+      "claim_state_changed": false,
+      "config_changed": false,
+      "contribution_changed": false,
+      "unexplained_score_delta_count": 1,
+      "result_hash": "561f48499350a517e569a5bd768c72ece6e4e82ce5108408cb41338ce6051430"
+    }
+  },
+  "known_bad_detection": {
+    "joint_decision_and_trace_stage_forgery_detected": true,
+    "trace_reason_tampering_detected": true,
+    "omitted_valid_hard_break_detected": true,
+    "score_fingerprint_tampering_detected": true,
+    "input_fingerprint_tampering_detected": true,
+    "missing_raw_reference_score_detected": true,
+    "boolean_threshold_detected": true,
+    "pending_status_on_full_score_detected": true,
+    "unexplained_score_delta_detected": true,
+    "invalid_numeric_delta_detected": true
+  },
+  "acceptance_evidence_scope": {
+    "deterministic_fixture_only": true,
+    "phase9_acquisition_to_claim_to_score_path_observed": true,
+    "real_daily_runtime_wiring_observed": false,
+    "real_current_provider_completion_observed": false,
+    "production_acceptance_credit": false
+  },
+  "hard_acceptance": {
+    "claimless_score_count": 0,
+    "material_gap_full_score_count": 0,
+    "event_score_as_full_count": 0,
+    "stage_score_trace_mismatch_count": 0,
+    "pending_final_low_score_count": 0,
+    "hard_break_without_current_direct_open_count": 0,
+    "unexplained_score_delta_count": 0,
+    "fingerprint_mismatch_concealed_count": 0,
+    "score_contribution_without_claim_count": 0,
+    "score_contribution_without_mapping_count": 0,
+    "critical_count_sum": 0
+  },
+  "verification": {
+    "phase0_through_phase12_targeted_test_count": 220,
+    "phase12_contract_test_count": 17,
+    "full_suite_test_count": 5525,
+    "full_suite_failure_count": 18,
+    "phase0_baseline_known_failure_count": 18,
+    "new_failure_count": 0,
+    "known_failure_scope": "mutable goal4 research-to-runtime operational snapshots"
+  },
+  "official_verification_command": "PYTHONPATH=src:tests python -m unittest tests.test_atomic_score_stage_integrity tests.test_e2r_reconstruction_phase12_acceptance -v",
+  "next_required_phase": "Phase 13 census and daily operation; Phase 12 fixture proves atomic score integrity but is not yet wired into the real daily universe runtime"
+}
