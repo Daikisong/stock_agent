@@ -1,0 +1,101 @@
+{
+  "schema_version": "e2r_reconstruction_phase7_acceptance_v1",
+  "phase": 7,
+  "status": "QUESTION_SOURCE_TASK_CONTRACT_PASS",
+  "verified_on": "2026-07-10",
+  "scope": "QuestionSourceTask, recipe acceptance contract, LLM literal-query validation, bounded official-first routing, and legacy adapter",
+  "production_runtime_ready": false,
+  "question_source_task_schema_version": "e2r_question_source_task_v1",
+  "required_contract": {
+    "recipe_id": true,
+    "question_to_answer": true,
+    "why_material": true,
+    "context_and_current_fact_lineage": true,
+    "accepted_predicates": true,
+    "required_entities_values_units_time_scope": true,
+    "counter_questions": true,
+    "rejection_conditions": true,
+    "preferred_source_document_section": true,
+    "discovery_and_forbidden_sources": true,
+    "llm_query_intent_and_literal_queries": true,
+    "bounded_budget": true,
+    "stop_and_exhaustion_conditions": true
+  },
+  "recipe_task_audit": {
+    "schema_version": "e2r_question_source_task_audit_v1",
+    "task_count": 31,
+    "fixture_query_provider_task_count": 31,
+    "real_query_provider_task_count": 0,
+    "retried_query_task_count": 0,
+    "production_execution_allowed_count": 0,
+    "critical_counts": {
+      "empty_question": 0,
+      "empty_accepted_predicate": 0,
+      "empty_rejection_condition": 0,
+      "generic_verify_primitive_task": 0,
+      "official_first_violation": 0,
+      "fcf_contract_backlog_naver_first": 0,
+      "unbounded_query_or_fetch": 0,
+      "missing_llm_literal_query": 0
+    },
+    "critical_count_sum": 0,
+    "result_hash": "2b20637db04e9517295a0ddd8361cd2ec5956d6c921a8121be7f3d73c62bfa3e",
+    "production_acceptance_credit": false
+  },
+  "literal_query_policy": {
+    "deterministic_query_synthesis": false,
+    "llm_current_context_required": true,
+    "target_scope_required": true,
+    "explicit_reporting_year_required": true,
+    "duplicate_query_rejected": true,
+    "already_executed_query_rejected": true,
+    "future_date_year_quarter_rejected": true,
+    "relative_latest_today_query_rejected": true,
+    "primitive_id_copy_rejected": true,
+    "canonical_archetype_copy_rejected": true,
+    "score_stage_outcome_query_rejected": true,
+    "validation_failure_feedback_returned_to_llm": true,
+    "bounded_llm_retry_max_three": true,
+    "empty_or_invalid_output_becomes_pending_after_retry_exhaustion": true
+  },
+  "legacy_migration": {
+    "legacy_reader_preserved": true,
+    "missing_recipe_becomes_invalid_legacy_task": true,
+    "missing_question_becomes_invalid_legacy_task": true,
+    "missing_why_material_becomes_invalid_legacy_task": true,
+    "missing_llm_query_intent_becomes_invalid_legacy_task": true,
+    "legacy_canonical_production_routing_allowed": false,
+    "diagnostic_reader_allowed": true
+  },
+  "provider_safety": {
+    "missing_provider_becomes_pending": true,
+    "provider_failure_becomes_pending": true,
+    "invalid_output_becomes_pending": true,
+    "fixture_provider_outside_test_mode_becomes_pending": true,
+    "returned_invalid_response_hash_preserved": true,
+    "provider_failure_creates_fallback_query": false
+  },
+  "verification": {
+    "phase0_through_phase7_targeted_test_count": 124,
+    "legacy_source_task_regression_test_count": 12,
+    "full_suite_test_count": 5431,
+    "full_suite_failure_count": 18,
+    "phase0_baseline_known_failure_count": 18,
+    "new_failure_count": 0,
+    "known_failure_scope": "mutable goal4 research-to-runtime operational snapshots"
+  },
+  "hard_acceptance": {
+    "empty_question_count": 0,
+    "empty_accepted_predicate_count": 0,
+    "empty_rejection_condition_count": 0,
+    "generic_verify_primitive_task_count": 0,
+    "official_first_violation_count": 0,
+    "fcf_contract_backlog_naver_first_count": 0,
+    "unbounded_query_fetch_count": 0,
+    "deterministic_fallback_query_count": 0,
+    "legacy_task_canonical_execution_count": 0,
+    "critical_count_sum": 0
+  },
+  "official_verification_command": "PYTHONPATH=src:tests python -m unittest tests.test_question_source_task tests.test_e2r_reconstruction_phase7_acceptance -v",
+  "next_required_phase": "Phase 8 mode-aware source acquisition and recipe document selection; fixture queries do not grant production readiness"
+}

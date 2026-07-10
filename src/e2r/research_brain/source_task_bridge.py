@@ -1,4 +1,8 @@
-"""Bridge Research Brain SourceTask rows to source-router-compatible dicts."""
+"""Legacy SourceTask audit bridge.
+
+Canonical production routing uses planning.source_task_bridge and
+QuestionSourceTask.  This module keeps the legacy reader/auditor only.
+"""
 
 from __future__ import annotations
 
@@ -7,7 +11,15 @@ from typing import Mapping
 from e2r.research_brain.schemas import SourceTask
 
 
-def source_task_to_router_payload(task: SourceTask) -> Mapping[str, object]:
+def source_task_to_router_payload(
+    task: SourceTask,
+    *,
+    allow_legacy_diagnostic: bool = False,
+) -> Mapping[str, object]:
+    if not allow_legacy_diagnostic:
+        raise ValueError(
+            "legacy SourceTask is INVALID_LEGACY_TASK for canonical production routing"
+        )
     payload = task.to_dict()
     if payload.get("max_fetches") is None or payload.get("max_queries") is None:
         raise ValueError("Research Brain SourceTask must be bounded before source routing")
@@ -16,6 +28,8 @@ def source_task_to_router_payload(task: SourceTask) -> Mapping[str, object]:
         "official_first": True,
         "dedupe_before_fetch": True,
         "stop_on_resolution": True,
+        "canonical_execution_allowed": False,
+        "legacy_diagnostic_only": True,
     }
 
 
