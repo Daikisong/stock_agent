@@ -6,6 +6,7 @@ Phase 16의 내부 명령 연결과 감사 장치는 완료했다.
 
 - compile: `COMPILE_RUN_PASS`
 - blind frozen replay: `HISTORICAL_REPLAY_PARITY_PASS`
+- full unittest suite: 5,584/5,584 PASS
 - current/Census: `EXTERNAL_SOURCE_BLOCKER_NOT_READY`
 - 최종 라벨: `EXTERNAL_SOURCE_BLOCKER_NOT_READY`
 - `production_runtime_ready=false`
@@ -143,3 +144,18 @@ compile summary의 숫자를 `999999`로 바꿔도 Reviewer A는 summary를 믿�
 `--require-live-current false`로 검사를 끄는 것 자체가 critical이다. 검사를 껐다고 READY가 되지는 않는다.
 
 현재는 실제 current source input과 clean worktree 조건이 충족되지 않았으므로 최종 상태를 정직하게 `EXTERNAL_SOURCE_BLOCKER_NOT_READY`로 유지한다.
+
+## Phase 0 기준선 18개 실패 해소
+
+Phase 0부터 추적하던 18개 실패는 같은 stale expectation 묶음이었다. authoritative operational leaf는 production full-thesis가 0건인데, 과거 테스트가 C17 score-path-only 1건을 계속 기대했다.
+
+이를 C17을 억지로 다시 PASS시키는 방식으로 고치지 않았다. 대신 다음 현재 사실을 검증하도록 테스트를 바꿨다.
+
+- C15/C17/C24: accepted claim은 있지만 full-thesis score path는 닫히지 않음
+- C06: material gap으로 blocked
+- C08/C28: source task는 실행됐지만 accepted claim이 없음
+- production full-thesis: 0건
+- score-path status: `PRODUCTION_FULL_E2R_SCORE_PATH_PENDING`
+- promoted row가 0건이므로 required-positive/green-gap promoted-row 숫자도 0
+
+쉬운 예로, 계약서 초안이 있다는 사실을 계약 체결로 세지 않는 것과 같다. accepted claim이 있어도 score contribution과 StageCourt까지 연결되지 않았다면 full thesis가 아니다.

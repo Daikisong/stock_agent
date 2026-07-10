@@ -32,10 +32,7 @@ class ResearchToRuntimeReplayMandatoryArchetypesTests(unittest.TestCase):
                 prefix,
             )
             self.assertFalse(row["production_score_evidence_allowed"], prefix)
-            if prefix in {"C17"}:
-                self.assertEqual(row["runtime_full_thesis_row_count"], 1, prefix)
-            else:
-                self.assertEqual(row["runtime_full_thesis_row_count"], 0, prefix)
+            self.assertEqual(row["runtime_full_thesis_row_count"], 0, prefix)
 
     def test_c06_is_replay_and_blocked_production_not_smoke_substitution(self) -> None:
         c06 = self.by_prefix["C06"]

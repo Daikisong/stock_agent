@@ -144,11 +144,12 @@ Phase 15 자체는 12개 contract/acceptance test로 검증한다. detector regi
 
 - Phase 0~15 targeted chain: 264개 통과
 - full suite: 5,569개 실행
-- full suite 실패: 18개
+- full suite 현재 실패: 0개
 - Phase 0 기준선의 알려진 실패: 같은 18개
+- Phase 16에서 해소한 기준선 실패: 18개
 - Phase 15 신규 실패: 0개
 
-18개는 mutable goal4 research-to-runtime operational snapshot과 과거 기대값의 불일치 cluster다. 이를 전체 통과라고 숨기지는 않지만 Phase 15 known-bad suite가 만든 새 회귀로도 세지 않는다.
+18개는 current leaf가 이미 production full-thesis 0건으로 바뀐 뒤에도 과거 C17 score-path-only 1건을 기대하던 goal4 테스트 cluster였다. Phase 16에서 운영 코드를 약하게 만들지 않고 기대값을 현재 fail-closed leaf에 맞춰 해소했다.
 
 ## 한계와 Phase 16 인계
 

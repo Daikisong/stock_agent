@@ -130,10 +130,11 @@
     "phase0_through_phase15_targeted_test_count": 264,
     "phase15_contract_test_count": 12,
     "full_suite_test_count": 5569,
-    "full_suite_failure_count": 18,
+    "full_suite_failure_count": 0,
     "phase0_baseline_known_failure_count": 18,
+    "phase16_resolved_baseline_failure_count": 18,
     "new_failure_count": 0,
-    "known_failure_scope": "mutable goal4 research-to-runtime operational snapshots"
+    "resolved_failure_scope": "stale goal4 expectations that treated one C17 score-path-only row as a production full thesis after current leaves had already moved to zero promoted rows"
   },
   "official_verification_command": "PYTHONPATH=src:tests python -m unittest tests.test_unified_known_bad_suite tests.test_e2r_reconstruction_phase15_acceptance -v",
   "next_required_phase": "Phase 16 execute and audit the official compile, historical replay, current operation, Census, and full-test commands with reproducibility metadata"

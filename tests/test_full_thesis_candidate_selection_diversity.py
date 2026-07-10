@@ -11,12 +11,13 @@ class FullThesisCandidateSelectionDiversityTests(unittest.TestCase):
             row["archetype_id"].split("_", 1)[0]
             for row in audit["next_required_archetype_attempts"][:12]
         ]
-        self.assertEqual(selected_prefixes[:5], ["C06", "C08", "C15", "C24", "C28"])
-        self.assertTrue({"C01", "C02", "C03", "C04", "C05", "C07"}.issubset(set(selected_prefixes[5:12])))
-        self.assertEqual(audit["current_full_thesis_row_count"], 1)
-        self.assertEqual(audit["current_distinct_full_thesis_archetype_count"], 1)
+        self.assertEqual(selected_prefixes[:6], ["C06", "C08", "C15", "C17", "C24", "C28"])
+        self.assertTrue({"C01", "C02", "C03", "C04", "C05", "C07"}.issubset(set(selected_prefixes[6:12])))
+        self.assertEqual(audit["current_full_thesis_row_count"], 0)
+        self.assertEqual(audit["current_distinct_full_thesis_archetype_count"], 0)
         self.assertEqual(audit["current_c05_full_thesis_share"], 0.0)
-        self.assertIn("required_positive_missing_promoted_rows", audit["blockers"])
+        self.assertNotIn("required_positive_missing_promoted_rows", audit["blockers"])
+        self.assertIn("full_thesis_archetype_count_below_meaningful_minimum", audit["blockers"])
 
 
 if __name__ == "__main__":

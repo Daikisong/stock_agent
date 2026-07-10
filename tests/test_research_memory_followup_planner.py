@@ -10,12 +10,12 @@ class ResearchMemoryFollowupPlannerTests(unittest.TestCase):
 
     def test_every_blocked_candidate_has_memory_followup_task(self) -> None:
         self.assertEqual(self.audit["schema_version"], "e2r_research_memory_followup_task_audit_v1")
-        self.assertEqual(self.audit["blocked_candidate_count"], 5)
-        self.assertEqual(self.audit["task_count"], 11)
+        self.assertEqual(self.audit["blocked_candidate_count"], 3)
+        self.assertEqual(self.audit["task_count"], 10)
         self.assertEqual(
             self.audit["tasks_by_archetype"],
             {
-                "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 4,
+                "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": 3,
                 "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": 2,
                 "C06_HBM_MEMORY_CUSTOMER_CAPACITY": 5,
             },

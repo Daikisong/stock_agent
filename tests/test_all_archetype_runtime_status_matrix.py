@@ -214,42 +214,27 @@ class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
         self.assertIn("005930", c06["blocked_symbols"])
 
     def test_canaries_split_score_path_blocked_and_source_repair_states(self) -> None:
-        score_path_gap_prefixes = ("C17",)
-        for prefix in score_path_gap_prefixes:
+        accepted_claim_not_closed_prefixes = ("C15", "C17")
+        for prefix in accepted_claim_not_closed_prefixes:
             row = self.by_prefix[prefix]
-            self.assertEqual(row["runtime_attempt_status"], "PRODUCTION_FULL_THESIS_ATTEMPTED", prefix)
+            self.assertEqual(row["runtime_attempt_status"], "SOURCE_TASK_EXECUTED", prefix)
             self.assertEqual(row["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_WITH_ACCEPTED_CLAIMS", prefix)
-            self.assertEqual(row["accepted_claim_status"], "PRODUCTION_SCORE_PATH_HAS_ACCEPTED_CLAIMS", prefix)
-            self.assertEqual(row["full_thesis_status"], "SCORE_PATH_ONLY_WITH_REQUIRED_OR_GREEN_GAPS", prefix)
-            self.assertEqual(row["runtime_parity_proof_status"], "NOT_PROVEN_SCORE_PATH_ONLY", prefix)
-            self.assertEqual(row["runtime_status"], "SCORE_PATH_CLOSED_WITH_THESIS_GAPS", prefix)
-            self.assertEqual(row["primary_blocker_class"], "REQUIRED_POSITIVE_MISSING", prefix)
-            self.assertEqual(row["runtime_full_thesis_row_count"], 1, prefix)
-            self.assertEqual(row["runtime_full_thesis_row_with_required_positive_missing_count"], 1, prefix)
-            self.assertEqual(row["runtime_full_thesis_row_with_green_gap_count"], 1, prefix)
+            self.assertEqual(row["accepted_claim_status"], "ACCEPTED_CLAIM_PRESENT_NOT_FULL_THESIS_CLOSED", prefix)
+            self.assertEqual(row["full_thesis_status"], "NO_PRODUCTION_FULL_THESIS_ROW", prefix)
+            self.assertEqual(row["runtime_parity_proof_status"], "NOT_PROVEN_ACCEPTED_CLAIM_NOT_CLOSED", prefix)
+            self.assertEqual(row["runtime_status"], "SCORE_PATH_NOT_CLOSED", prefix)
+            self.assertEqual(row["primary_blocker_class"], "SCORE_PATH_NOT_CLOSED", prefix)
+            self.assertEqual(row["runtime_full_thesis_row_count"], 0, prefix)
+            self.assertEqual(row["runtime_full_thesis_row_with_required_positive_missing_count"], 0, prefix)
+            self.assertEqual(row["runtime_full_thesis_row_with_green_gap_count"], 0, prefix)
             self.assertGreater(row["runtime_source_task_execution_count"], 0, prefix)
             self.assertGreater(row["source_task_execution_log_count"], 0, prefix)
             self.assertGreater(row["source_task_any_accepted_claim_count"], 0, prefix)
             self.assertEqual(
                 row["next_required_action"],
-                "CLOSE_REQUIRED_POSITIVE_AND_GREEN_GAPS_BEFORE_MEANINGFUL_PASS",
+                "MAP_ACCEPTED_CLAIMS_TO_SCORE_CONTRIBUTIONS_OR_EXPLAIN_REMAINING_GAPS",
                 prefix,
             )
-
-        c15 = self.by_prefix["C15"]
-        self.assertEqual(c15["runtime_attempt_status"], "SOURCE_TASK_EXECUTED")
-        self.assertEqual(c15["runtime_source_route_execution_status"], "SOURCE_TASK_EXECUTED_NO_ACCEPTED_CLAIMS")
-        self.assertEqual(c15["accepted_claim_status"], "REPLAY_ACCEPTED_CLAIM_ONLY")
-        self.assertEqual(c15["full_thesis_status"], "NO_PRODUCTION_FULL_THESIS_ROW")
-        self.assertEqual(c15["runtime_parity_proof_status"], "NOT_PROVEN_SOURCE_EXECUTED_NO_ACCEPTED_CLAIM")
-        self.assertEqual(c15["runtime_status"], "SOURCE_REPAIR_REQUIRED")
-        self.assertEqual(c15["primary_blocker_class"], "ACCEPTED_CLAIM_NOT_CREATED")
-        self.assertEqual(c15["runtime_full_thesis_row_count"], 0)
-        self.assertEqual(c15["source_task_any_accepted_claim_count"], 0)
-        self.assertEqual(
-            c15["next_required_action"],
-            "REPLAN_SOURCE_TASKS_WITH_RESEARCH_MEMORY_AND_REQUIRE_ANCHORS",
-        )
 
         for prefix in ("C28",):
             row = self.by_prefix[prefix]

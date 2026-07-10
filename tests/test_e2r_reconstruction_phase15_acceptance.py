@@ -136,7 +136,10 @@ class E2RReconstructionPhase15AcceptanceTest(unittest.TestCase):
         )
         self.assertEqual(verification["phase15_contract_test_count"], 12)
         self.assertEqual(verification["full_suite_test_count"], 5569)
-        self.assertEqual(verification["full_suite_failure_count"], 18)
+        self.assertEqual(verification["full_suite_failure_count"], 0)
+        self.assertEqual(
+            verification["phase16_resolved_baseline_failure_count"], 18
+        )
         self.assertEqual(verification["new_failure_count"], 0)
 
     def test_operational_report_explains_examples_limits_and_phase16_handoff(self) -> None:
