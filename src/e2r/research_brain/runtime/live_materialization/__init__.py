@@ -134,6 +134,10 @@ from .current_atomic_decision import (
     CurrentPrimitiveState,
     write_current_atomic_decisions,
 )
+from .current_operation_input_builder import (
+    CurrentOperationRunnerInputBuilder,
+    write_current_operation_input_manifest,
+)
 
 __all__ = [
     "AuthorizationPath",
@@ -167,6 +171,7 @@ __all__ = [
     "CurrentAtomicDecisionBuilder",
     "CurrentAtomicDecisionResult",
     "CurrentQuestionSourceTaskMaterializer",
+    "CurrentOperationRunnerInputBuilder",
     "CurrentPrimitiveState",
     "CurrentSourceAcquisitionOrchestrator",
     "CurrentDepthSelector",
@@ -237,6 +242,7 @@ __all__ = [
     "write_current_claim_compilation",
     "write_adaptive_gap_closure",
     "write_current_atomic_decisions",
+    "write_current_operation_input_manifest",
     "write_baseline_materialization",
     "write_brain_planner_run",
     "write_source_acquisition_run",

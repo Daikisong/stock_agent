@@ -23,9 +23,11 @@ from e2r.research_brain.runtime.current_operation_runner import (
 )
 from e2r.research_brain.runtime.live_materialization import (
     AuthorizationPath,
+    CurrentOperationRunnerInputBuilder,
     LiveRunMode,
     load_live_run_profile,
     resolve_live_authorization,
+    write_current_operation_input_manifest,
 )
 
 
@@ -98,11 +100,28 @@ def main(
             blockers=authorization.blocker_codes,
             authorization=authorization.to_dict(),
         )
+    materialized_input_manifest: str | None = None
     if authorization.path == AuthorizationPath.LIVE_MATERIALIZATION.value:
         try:
             profile = load_live_run_profile(str(authorization.run_profile))
             if profile.run_mode != authorization.run_mode:
                 raise ValueError("live run profile mode does not match CLI live mode")
+            live_root = Path("output/live_materialization") / args.as_of_date
+            inputs, builder_audit = CurrentOperationRunnerInputBuilder().build_from_live_root(
+                as_of_date=args.as_of_date,
+                live_root=live_root,
+                run_profile=str(authorization.run_profile),
+            )
+            materialized_paths = write_current_operation_input_manifest(
+                inputs,
+                live_root=live_root,
+            )
+            builder_audit_path = live_root / "current_operation_input_builder_audit.json"
+            builder_audit_path.write_text(
+                json.dumps(builder_audit, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            materialized_input_manifest = str(materialized_paths["canonical_manifest"])
         except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
             return write_current_internal_materializer_pending_run(
                 command=command_name,
@@ -115,15 +134,7 @@ def main(
                     "profile_error_category": type(exc).__name__,
                 },
             )
-        return write_current_internal_materializer_pending_run(
-            command=command_name,
-            args=recorded_args,
-            effective_argv=effective_argv,
-            output_root=output_root,
-            blockers=("MISSING_INTERNAL_MATERIALIZER",),
-            authorization=authorization.to_dict(),
-        )
-    input_manifest = _resolve_default_input_manifest(args)
+    input_manifest = materialized_input_manifest or _resolve_default_input_manifest(args)
     if input_manifest is None:
         return write_current_source_pending_run(
             command=command_name,

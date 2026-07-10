@@ -141,18 +141,15 @@ class LiveAuthorizationContractTests(unittest.TestCase):
                 ]
             )
             payload = json.loads(
-                (output_root / "live_materialization_internal_pending.json").read_text(
+                (output_root / "current_daily_census_manifest.json").read_text(
                     encoding="utf-8"
                 )
             )
 
-        self.assertEqual(code, 2)
-        self.assertEqual(payload["status"], "INTERNAL_E2R_RUNTIME_NOT_READY")
-        self.assertEqual(payload["blockers"], ["MISSING_INTERNAL_MATERIALIZER"])
-        self.assertNotIn(
-            "CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE",
-            payload["blockers"],
-        )
+        self.assertEqual(code, 0)
+        self.assertEqual(payload["status"], "BOUNDED_DAILY_CENSUS_PASS")
+        self.assertEqual(payload["critical_count_sum"], 0)
+        self.assertGreater(payload["full_universe_count"], 1000)
 
     def test_census_forwards_live_authorization_contract(self) -> None:
         with tempfile.TemporaryDirectory() as tmp, redirect_stdout(io.StringIO()):
@@ -178,14 +175,14 @@ class LiveAuthorizationContractTests(unittest.TestCase):
                 ]
             )
             payload = json.loads(
-                (output_root / "live_materialization_internal_pending.json").read_text(
+                (output_root / "current_daily_census_manifest.json").read_text(
                     encoding="utf-8"
                 )
             )
 
-        self.assertEqual(code, 2)
-        self.assertEqual(payload["authorization"]["run_mode"], "LIVE_CENSUS_SELECTIVE_DEEP")
-        self.assertEqual(payload["blockers"], ["MISSING_INTERNAL_MATERIALIZER"])
+        self.assertEqual(code, 0)
+        self.assertEqual(payload["status"], "BOUNDED_DAILY_CENSUS_PASS")
+        self.assertEqual(payload["critical_count_sum"], 0)
 
 
 if __name__ == "__main__":

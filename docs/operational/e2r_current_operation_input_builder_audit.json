@@ -1,0 +1,43 @@
+{
+  "schema_version": "e2r_current_operation_input_builder_audit_v1",
+  "phase": 31,
+  "as_of_date": "2026-07-10",
+  "status": "PHASE_31_ACCEPTED",
+  "universe_count": 2542,
+  "baseline_lane_count": 10168,
+  "trigger_count": 446,
+  "candidate_target_count": 419,
+  "source_task_count": 9,
+  "atomic_decision_count": 3,
+  "deep_execution_count": 124,
+  "census_stage_status_count": 2542,
+  "watchlist_count": 419,
+  "runtime_max_deep_candidates": 124,
+  "profile_max_deep_candidates": 60,
+  "runtime_depth_reconciliation_reason": "실제 Phase 24~30 materialized target 038870의 canonical evaluator trigger rank가 124이므로 이미 수행된 SourceTask/AtomicDecision leaf를 잃지 않는 최소 유한 범위로 조정했다.",
+  "evaluator_status": "CURRENT_OPERATIONAL_BRAIN_PASS",
+  "evaluator_critical_count_sum": 0,
+  "critical_counts": {
+    "authorized_live_run_manifest_missing_exit_count": 0,
+    "user_manual_manifest_required_count": 0,
+    "materialized_manifest_schema_error_count": 0,
+    "materializer_evaluator_as_of_mismatch_count": 0
+  },
+  "artifact_hashes": {
+    "canonical_input_manifest_sha256": "b76e40e5d1b9c8a7a5d4cba54865488d71f4e897085e73848643ec453e35e557",
+    "live_input_manifest_sha256": "b76e40e5d1b9c8a7a5d4cba54865488d71f4e897085e73848643ec453e35e557",
+    "builder_audit_sha256": "5dc7dd30b506d0820d8caedf7597dfbebf812786c70488cc0a41058ffc473992",
+    "evaluator_manifest_sha256": "2ce1378c045ed0c8da65ac702b729656c1b35854e80c959a90646688c59ec224",
+    "evaluator_audit_sha256": "769254c0c2842949f4362740cac39af275ac48d25c8c6d377c7d725dab6d9c54"
+  },
+  "safety": {
+    "user_manual_manifest_required": false,
+    "production_test_mode": false,
+    "full_universe_nonempty": true,
+    "budgets_bounded": true,
+    "source_tasks_official_first": true,
+    "provider_pending_explicit": true,
+    "source_pending_explicit": true,
+    "production_runtime_ready": false
+  }
+}
