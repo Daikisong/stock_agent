@@ -26,6 +26,7 @@ from e2r.research_brain.runtime.live_materialization import (
     CurrentOperationRunnerInputBuilder,
     LiveRunMode,
     load_live_run_profile,
+    package_live_census_operation,
     package_live_current_operation,
     resolve_live_authorization,
     write_current_operation_input_manifest,
@@ -163,6 +164,15 @@ def main(
                     input_manifest=input_manifest,
                     output_root=output_root,
                     run_mode=authorization.run_mode,
+                )
+            )
+        if command_name == "run_e2r_census_mode":
+            output_paths.update(
+                package_live_census_operation(
+                    result=result,
+                    output_root=output_root,
+                    shard_count=int(recorded_args.get("shard_count", 1)),
+                    resume=bool(recorded_args.get("resume", False)),
                 )
             )
         runtime_critical = int(result.audit["critical_count_sum"])

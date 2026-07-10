@@ -1,0 +1,70 @@
+{
+  "schema_version": "e2r_live_census_audit_v1",
+  "phase": 33,
+  "as_of_date": "2026-07-10",
+  "status": "PHASE_33_CENSUS_SELECTIVE_DEEP_PASS",
+  "official_cli_exit_code": 0,
+  "eligible_universe_count": 2542,
+  "source_timeline_count": 2542,
+  "baseline_lane_count": 10168,
+  "candidate_target_count": 419,
+  "selected_deep_count": 180,
+  "deep_outcome_counts": {
+    "BUDGET_PENDING": 177,
+    "SOURCE_PENDING": 2,
+    "PROVIDER_PENDING": 1,
+    "FULL_THESIS": 0,
+    "DISPROVED": 0
+  },
+  "stage_counts": {
+    "0": 2303,
+    "1": 239
+  },
+  "depth_counts": {
+    "L1_BASELINE": 2123,
+    "L2_OFFICIAL_LIGHT": 239,
+    "L3_RESEARCH_BRAIN": 177,
+    "L4_ACQUISITION": 3
+  },
+  "shard_count": 4,
+  "checkpoint_count": 4,
+  "resume_reused_shard_count": 4,
+  "merged_stage_map_hash": "13c24c94611724e4c688ecfeb6e3b8e7ed914f6a6abe115a149b5420a4e982f4",
+  "hard_acceptance_counts": {
+    "missing_symbol_count": 0,
+    "duplicate_symbol_count": 0,
+    "symbol_outside_eligible_count": 0,
+    "source_timeline_count_mismatch": 0,
+    "baseline_lane_count_mismatch": 0,
+    "unknown_default_count": 0,
+    "provider_pending_without_failure_count": 0,
+    "stage0_without_source_attempt_count": 0,
+    "claimless_nonzero_score_count": 0,
+    "duplicate_claim_reference_count": 0
+  },
+  "required_output_file_count": 10,
+  "artifact_hashes": {
+    "census_stage_map_jsonl_sha256": "af1dca3675b7615deff370c89b12a25d352a41bb545d9002f67650dad2336e4b",
+    "census_stage_map_csv_sha256": "486203c6a913203d1fb8575f71913517fcef7d7e146665e206095fbcf6b313cb",
+    "stage_distribution_sha256": "54cc8af70971697a32878a1a433137b840576df489919f40e4899d37ae09d4ff",
+    "sector_distribution_sha256": "4d97f0c0832f967160e67b7643f81b05707b12a2f5c0f96c33a8775431119561",
+    "depth_distribution_sha256": "8391eb26e3df2e50fd5dd9a03403666bf08645f888908c866c918f4dd87bf71d",
+    "provider_gap_report_sha256": "8a4dac8b1bb31ecd4568b1ff681c245fb0182a06851032026d37e6a4ade9705f",
+    "source_gap_report_sha256": "be2e323cc02878a3145602f4e0ccd4762d39f4b7ebaa91f8442bdeda9e1b35e8",
+    "watchlist_seed_sha256": "6b0db2ccc4384ccf2711393be02789647825acbe787e7d0f0b9d8b16d0e5d2db",
+    "deep_backfill_queue_sha256": "f1565dc7d4211e87d80e7f702d1f1e6bc70234b77e54b5a5d0707ab1d295803f",
+    "operator_digest_sha256": "af1d6f705254ece23128d954f5418b027c3034012d385f691c4ee040cce5bbf0"
+  },
+  "safety": {
+    "full_universe_exactly_once": true,
+    "all_symbols_have_timeline_and_baselines": true,
+    "deep_execution_selected_only": true,
+    "market_trigger_used_as_score": false,
+    "claimless_nonzero_score": false,
+    "provider_pending_has_exact_gap": true,
+    "archetype_quota_used": false,
+    "investment_recommendation_emitted": false,
+    "production_runtime_ready": false
+  },
+  "note": "공식 selective-deep Census CLI를 실제 KRX 2,542종목에 실행했다. 전체 종목은 한 번씩 stage map에 들어갔고 4개 baseline lane과 source timeline을 모두 가졌다. 심층 실행은 선택된 180종목에만 적용했으며, accepted current claim이 없는 상태를 억지 점수로 바꾸지 않고 Stage 0/1 및 Source·Provider·Budget Pending으로 유지했다."
+}

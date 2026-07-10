@@ -139,6 +139,10 @@ from .current_operation_input_builder import (
     write_current_operation_input_manifest,
 )
 from .live_operational_packager import package_live_current_operation
+from .census_operational_packager import (
+    CENSUS_OPERATIONAL_SCHEMA_VERSION,
+    package_live_census_operation,
+)
 
 __all__ = [
     "AuthorizationPath",
@@ -177,6 +181,7 @@ __all__ = [
     "CurrentSourceAcquisitionOrchestrator",
     "CurrentDepthSelector",
     "CurrentTriggerFusion",
+    "CENSUS_OPERATIONAL_SCHEMA_VERSION",
     "DEPTH_DECISION_SCHEMA_VERSION",
     "DepthSelectionConfig",
     "DepthSelectionResult",
@@ -238,6 +243,7 @@ __all__ = [
     "load_trigger_signals",
     "provider_capabilities",
     "package_live_current_operation",
+    "package_live_census_operation",
     "resolve_live_authorization",
     "refresh_event_lifecycle",
     "write_current_state_bootstrap",
