@@ -73,6 +73,23 @@ class CanonicalCommandManifestTest(unittest.TestCase):
     def test_six_hashes_dirty_status_and_tamper_detection(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
+            repo = root / "repo"
+            repo.mkdir()
+            subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+            subprocess.run(
+                ["git", "config", "user.email", "phase16@example.test"],
+                cwd=repo,
+                check=True,
+            )
+            subprocess.run(
+                ["git", "config", "user.name", "Phase 16"], cwd=repo, check=True
+            )
+            tracked = repo / "tracked.txt"
+            tracked.write_text("frozen\n", encoding="utf-8")
+            subprocess.run(["git", "add", "tracked.txt"], cwd=repo, check=True)
+            subprocess.run(
+                ["git", "commit", "-q", "-m", "fixture"], cwd=repo, check=True
+            )
             source = root / "source.json"
             source.write_text('{"source": 1}\n', encoding="utf-8")
             inputs = self._inline_inputs()
@@ -83,7 +100,7 @@ class CanonicalCommandManifestTest(unittest.TestCase):
                 exit_code=0,
                 argv=("--fixture", "one"),
                 output_root=root / "output",
-                repo_root=REPO_ROOT,
+                repo_root=repo,
                 hash_inputs=inputs,
             )
             self.assertEqual(
@@ -102,6 +119,7 @@ class CanonicalCommandManifestTest(unittest.TestCase):
 
             overclaim = dict(manifest)
             overclaim["production_runtime_ready"] = True
+            overclaim["blockers"] = ["unit-test-unresolved-source-gap"]
             overclaim_audit = audit_command_run_manifest(overclaim)
             self.assertEqual(
                 overclaim_audit["critical_counts"]["production_readiness_overclaim"],

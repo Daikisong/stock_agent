@@ -9,7 +9,7 @@ from e2r.research_brain.v4_evidence_extraction_bridge import execute_source_task
 from e2r.research_brain.schemas import SourceTask, SourceTaskType
 from e2r.research_brain.v4_schemas import SourceAcquisitionResultV4, SourceTaskExecutionStatusV4
 from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRunnerV4
-from tests.research_brain_v4_test_helpers import c06_source_task, sample_v4_event
+from tests.research_brain_v4_test_helpers import c06_source_task, research_brain_v4_fixture_root, sample_v4_event
 
 
 class _SingleDocumentRunner:
@@ -739,7 +739,10 @@ class ResearchBrainV4EvidenceExtractionFromRealDocumentTests(unittest.TestCase):
             tasks=(c06_source_task(),),
             contract=contract,
             as_of_date=date(2026, 6, 29),
-            source_runner=SourceAcquisitionRunnerV4(mode="frozen_real_source_snapshot"),
+            source_runner=SourceAcquisitionRunnerV4(
+                mode="frozen_real_source_snapshot",
+                repo_root=research_brain_v4_fixture_root(),
+            ),
         )
         execution = bundle.executions[0]
         self.assertEqual(execution.status, "EVIDENCE_OS_ACCEPTED")

@@ -7,14 +7,13 @@ from e2r.census.source_lineage_repair_audit import (
     build_source_lineage_repair_audit,
     write_source_lineage_repair_audit,
 )
+from tests.research_to_runtime_test_helpers import runtime_fixture_output_root
 
 
 class SourceLineageRepairAuditTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.output_root = Path(
-            "output/census_v4/2026-07-05-research-to-runtime-parity-self-repair-01-20260707T130702Z"
-        )
+        cls.output_root = runtime_fixture_output_root()
         cls.audit = build_source_lineage_repair_audit(output_root=cls.output_root)
         cls.by_archetype = {row["archetype_id"]: row for row in cls.audit["archetypes"]}
 

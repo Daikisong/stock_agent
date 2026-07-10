@@ -2,11 +2,17 @@ import json
 import unittest
 from pathlib import Path
 
+from e2r.census.research_to_runtime_replay import build_research_to_runtime_replay_matrix
+from tests.research_to_runtime_test_helpers import runtime_fixture_output_root
+
 
 class ResearchToRuntimeReplayMandatoryArchetypesTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.matrix = json.loads(Path("docs/operational/research_to_runtime_replay_matrix_v1.json").read_text())
+        cls.matrix = build_research_to_runtime_replay_matrix(
+            repo_root=Path(".").resolve(),
+            output_root=runtime_fixture_output_root(),
+        )
         cls.by_prefix = {row["archetype_id"].split("_", 1)[0]: row for row in cls.matrix["rows"]}
 
     def test_mandatory_archetype_replay_matrix_exists(self) -> None:

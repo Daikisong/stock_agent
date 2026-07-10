@@ -24,7 +24,7 @@ from e2r.research_brain.v4_evidence_extraction_bridge import execute_source_task
 from e2r.research_brain.v4_schemas import DailyWatchlistItemV4
 from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRunnerV4
 from tests.census_v4_test_helpers import census_v4_artifacts, census_v4_test_support_kwargs, read_json
-from tests.research_brain_v4_test_helpers import c06_source_task, sample_v4_event
+from tests.research_brain_v4_test_helpers import c06_source_task, research_brain_v4_fixture_root, sample_v4_event
 
 
 class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
@@ -46,7 +46,10 @@ class CensusV4BrainStagePromotionGateTests(unittest.TestCase):
             tasks=(c06_source_task(),),
             contract=contract,
             as_of_date=date(2026, 6, 29),
-            source_runner=SourceAcquisitionRunnerV4(mode="frozen_real_source_snapshot"),
+            source_runner=SourceAcquisitionRunnerV4(
+                mode="frozen_real_source_snapshot",
+                repo_root=research_brain_v4_fixture_root(),
+            ),
         )
         self.assertTrue(bundle.executions[0].accepted_claim_ids)
 

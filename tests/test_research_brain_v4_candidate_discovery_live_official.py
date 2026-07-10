@@ -8,12 +8,16 @@ from e2r.research_brain.v4_production_orchestrator import (
 )
 from e2r.research_brain.v4_schemas import ProductionShadowV4Config
 from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRunnerV4
-from tests.research_brain_v4_test_helpers import c06_source_task, sample_v4_event
+from tests.research_brain_v4_test_helpers import c06_source_task, research_brain_v4_fixture_root, sample_v4_event
 
 
 class ResearchBrainV4CandidateDiscoveryLiveOfficialTests(unittest.TestCase):
     def test_daily_discovery_finds_current_real_snapshot_candidates(self):
-        events = discover_daily_candidate_events_v4(repo_root=".", as_of_date=date(2026, 6, 29), universe_limit=30)
+        events = discover_daily_candidate_events_v4(
+            repo_root=research_brain_v4_fixture_root(),
+            as_of_date=date(2026, 6, 29),
+            universe_limit=30,
+        )
         self.assertGreaterEqual(len(events), 30)
         self.assertEqual(len({event.candidate_event_id for event in events}), len(events))
         source_families = {event.source_family for event in events}
@@ -34,7 +38,8 @@ class ResearchBrainV4CandidateDiscoveryLiveOfficialTests(unittest.TestCase):
             self.assertTrue(result.provider_errors)
 
     def test_live_official_planner_prioritizes_production_eligible_symbols_before_fixtures(self):
-        events = discover_daily_candidate_events_v4(repo_root=".", as_of_date=date(2026, 7, 1), universe_limit=10)
+        fixture_root = research_brain_v4_fixture_root()
+        events = discover_daily_candidate_events_v4(repo_root=fixture_root, as_of_date=date(2026, 7, 1), universe_limit=10)
         self.assertTrue(any(event.symbol == "111111" for event in events))
 
         ordered = _planner_candidate_order(
@@ -45,7 +50,7 @@ class ResearchBrainV4CandidateDiscoveryLiveOfficialTests(unittest.TestCase):
                 universe_limit=10,
                 planner_success_limit=1,
             ),
-            repo_root=".",
+            repo_root=fixture_root,
             as_of_date=date(2026, 7, 1),
         )
 

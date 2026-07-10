@@ -3,7 +3,7 @@ from datetime import date
 
 from e2r.research_brain.schemas import SourceTask, SourceTaskType
 from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRunnerV4
-from tests.research_brain_v4_test_helpers import sample_v4_event
+from tests.research_brain_v4_test_helpers import research_brain_v4_fixture_root, sample_v4_event
 
 
 class ResearchBrainV4NoUnboundedProductionFetchTests(unittest.TestCase):
@@ -25,7 +25,10 @@ class ResearchBrainV4NoUnboundedProductionFetchTests(unittest.TestCase):
             max_fetches=3,
             general_search_allowed=False,
         )
-        result = SourceAcquisitionRunnerV4(mode="frozen_real_source_snapshot").acquire(
+        result = SourceAcquisitionRunnerV4(
+            mode="frozen_real_source_snapshot",
+            repo_root=research_brain_v4_fixture_root(),
+        ).acquire(
             event=event,
             task=task,
             as_of_date=date(2026, 6, 29),

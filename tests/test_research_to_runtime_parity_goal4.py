@@ -5,18 +5,19 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from e2r.census.research_to_runtime_parity import build_research_to_runtime_parity_audit
+from e2r.research_brain.planner_bias_audit import build_planner_bias_audit
 from e2r.cli.run_research_to_runtime_parity_until_pass import (
     _run_next_runtime_attempt,
     main as parity_cli_main,
 )
+from tests.research_to_runtime_test_helpers import research_to_runtime_fixture_audit, runtime_fixture_output_root
 
 
 class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.repo_root = Path(".").resolve()
-        cls.audit = build_research_to_runtime_parity_audit(repo_root=cls.repo_root, as_of_date="2026-07-05")
+        cls.audit = research_to_runtime_fixture_audit()
         cls.contract_ids = [
             row["archetype_id"]
             for row in json.loads(
@@ -167,19 +168,24 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         self.assertEqual(v2["green_gap_full_thesis_row_count"], matrix["green_gap_full_thesis_row_count"])
 
     def test_cli_fail_flags_return_failure_for_current_c05_monoculture(self) -> None:
-        exit_code = parity_cli_main(
-            [
-                "--as-of-date",
-                "2026-07-05",
-                "--allow-legacy-diagnostic",
-                "--fail-on-c05-monoculture",
-                "true",
-                "--fail-on-unknown-target-promoted",
-                "true",
-                "--fail-on-required-positive-missing-over-threshold",
-                "true",
-            ]
-        )
+        with tempfile.TemporaryDirectory(dir=self.repo_root / "output") as temp_dir:
+            exit_code = parity_cli_main(
+                [
+                    "--as-of-date",
+                    "2026-07-05",
+                    "--allow-legacy-diagnostic",
+                    "--output-root",
+                    str(runtime_fixture_output_root()),
+                    "--docs-dir",
+                    temp_dir,
+                    "--fail-on-c05-monoculture",
+                    "true",
+                    "--fail-on-unknown-target-promoted",
+                    "true",
+                    "--fail-on-required-positive-missing-over-threshold",
+                    "true",
+                ]
+            )
         self.assertNotEqual(exit_code, 0)
 
     def test_cli_max_iterations_above_one_executes_next_runtime_manifest(self) -> None:
@@ -419,13 +425,10 @@ class ResearchToRuntimeParityGoal4Tests(unittest.TestCase):
         self.assertIn("full_thesis_archetype_count_below_meaningful_minimum", audit["blockers"])
 
     def test_planner_bias_audit_catches_c05_routing_concentration(self) -> None:
-        audit = json.loads(
-            (
-                self.repo_root
-                / "docs"
-                / "operational"
-                / "planner_bias_and_archetype_routing_audit_2026-07-05.json"
-            ).read_text(encoding="utf-8")
+        audit = build_planner_bias_audit(
+            repo_root=self.repo_root,
+            output_root=runtime_fixture_output_root(),
+            parity_audit=self.audit,
         )
 
         self.assertEqual(audit["status"], "PLANNER_ARCHETYPE_ROUTING_BIAS_PASS")

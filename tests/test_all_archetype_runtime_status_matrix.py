@@ -5,14 +5,14 @@ from pathlib import Path
 
 from e2r.census.all_archetype_runtime_status_matrix import build_all_archetype_runtime_status_matrix
 from e2r.census.full_thesis_candidate_selector import build_balanced_full_thesis_candidate_selection_audit
-from e2r.census.research_to_runtime_parity import build_research_to_runtime_parity_audit
+from tests.research_to_runtime_test_helpers import research_to_runtime_fixture_audit
 
 
 class AllArchetypeRuntimeStatusMatrixTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.docs = Path("docs/operational")
-        cls.parity = build_research_to_runtime_parity_audit(repo_root=Path(".").resolve(), as_of_date="2026-07-05")
+        cls.parity = research_to_runtime_fixture_audit()
         cls.contract_ids = [
             row["archetype_id"]
             for row in json.loads(

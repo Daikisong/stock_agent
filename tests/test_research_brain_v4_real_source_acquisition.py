@@ -17,12 +17,15 @@ from e2r.research.search_provider import FixtureSearchProvider, SearchResult, no
 from e2r.research_brain.v4_production_orchestrator import build_source_acquisition_report_v4
 from e2r.research_brain.v4_schemas import SourceTaskExecutionV4
 from e2r.research_brain.v4_source_acquisition_runner import SourceAcquisitionRunnerV4
-from tests.research_brain_v4_test_helpers import c06_source_task, sample_v4_event
+from tests.research_brain_v4_test_helpers import c06_source_task, research_brain_v4_fixture_root, sample_v4_event
 
 
 class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
     def test_companyguide_snapshot_fetches_real_document_and_anchor(self):
-        result = SourceAcquisitionRunnerV4(mode="frozen_real_source_snapshot").acquire(
+        result = SourceAcquisitionRunnerV4(
+            mode="frozen_real_source_snapshot",
+            repo_root=research_brain_v4_fixture_root(),
+        ).acquire(
             event=sample_v4_event(),
             task=c06_source_task(),
             as_of_date=date(2026, 6, 29),

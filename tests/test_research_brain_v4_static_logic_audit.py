@@ -2,7 +2,7 @@ import unittest
 
 from e2r.research_brain.v4_production_orchestrator import run_research_brain_v4_production_shadow
 from e2r.research_brain.v4_schemas import ProductionShadowV4Config
-from tests.research_brain_v4_test_helpers import RealStubPlannerProviderV4, load_v4_matrix
+from tests.research_brain_v4_test_helpers import RealStubPlannerProviderV4, load_v4_matrix, research_brain_v4_fixture_root
 
 
 class ResearchBrainV4StaticLogicAuditTests(unittest.TestCase):
@@ -17,6 +17,7 @@ class ResearchBrainV4StaticLogicAuditTests(unittest.TestCase):
             ),
             v1_archetype_matrix=load_v4_matrix(),
             planner_provider=RealStubPlannerProviderV4(),
+            repo_root=research_brain_v4_fixture_root(),
         )
         audit = result["static_audit"]["summary"]
         candidate = result["candidate_report"]["summary"]

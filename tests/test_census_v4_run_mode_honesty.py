@@ -19,7 +19,7 @@ from e2r.census.census_runner_v4 import (
 from e2r.production.metadata import write_jsonl
 from e2r.cli.run_e2r_census_v4_until_pass import _resolve_write_operational_docs, main as census_v4_cli_main
 from e2r.research_brain.v4_schemas import SourceTaskExecutionV4
-from tests.census_v4_test_helpers import census_v4_artifacts, census_v4_test_support_kwargs
+from tests.census_v4_test_helpers import census_v3_output_root, census_v4_artifacts, census_v4_test_support_kwargs
 
 
 def _read_jsonl(path: Path) -> list[dict]:
@@ -566,7 +566,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                     "--output-root",
                     str(Path(tmp) / "out"),
                     "--v3-output-root",
-                    "output/census_v3/2026-07-01",
+                    str(census_v3_output_root()),
                     "--run-mode",
                     "BRAIN_AND_WEB_ACQUISITION_ENABLED",
                     "--brain-web-mode",
@@ -596,7 +596,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                         "--output-root",
                         str(output_root),
                         "--v3-output-root",
-                        "output/census_v3/2026-07-01",
+                        str(census_v3_output_root()),
                         "--run-mode",
                         "FULL_LIVE_BRAIN_CENSUS",
                         "--brain-web-mode",
@@ -642,7 +642,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                         "--output-root",
                         str(output_root),
                         "--v3-output-root",
-                        "output/census_v3/2026-07-01",
+                        str(census_v3_output_root()),
                         "--run-mode",
                         "BRAIN_AND_WEB_ACQUISITION_ENABLED",
                         "--brain-web-mode",
@@ -672,7 +672,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                     "--output-root",
                     str(Path(tmp) / "anti_fake"),
                     "--v3-output-root",
-                    "output/census_v3/2026-07-01",
+                    str(census_v3_output_root()),
                     "--run-mode",
                     "LEDGER_REFRESH_CENSUS",
                     "--target-gate",
@@ -690,7 +690,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                     "--output-root",
                     str(Path(tmp) / "meaningful"),
                     "--v3-output-root",
-                    "output/census_v3/2026-07-01",
+                    str(census_v3_output_root()),
                     "--mode",
                     "HYBRID_CENSUS",
                     "--brain-web-mode",
@@ -725,7 +725,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                     "--output-root",
                     str(Path(tmp) / "brain_web"),
                     "--v3-output-root",
-                    "output/census_v3/2026-07-01",
+                    str(census_v3_output_root()),
                     "--run-mode",
                     "LEDGER_REFRESH_CENSUS",
                     "--brain-web-mode",
@@ -747,7 +747,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                     "--output-root",
                     str(Path(tmp) / "full_thesis"),
                     "--v3-output-root",
-                    "output/census_v3/2026-07-01",
+                    str(census_v3_output_root()),
                     "--run-mode",
                     "LEDGER_REFRESH_CENSUS",
                     "--brain-web-mode",
@@ -769,7 +769,7 @@ class CensusV4RunModeHonestyTests(unittest.TestCase):
                     "--output-root",
                     str(Path(tmp) / "full_thesis_smoke"),
                     "--v3-output-root",
-                    "output/census_v3/2026-07-01",
+                    str(census_v3_output_root()),
                     "--run-mode",
                     "LEDGER_REFRESH_CENSUS",
                     "--brain-web-mode",
