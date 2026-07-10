@@ -1,0 +1,75 @@
+{
+  "schema_version": "e2r_live_trigger_fusion_audit_v1",
+  "status": "CURRENT_TRIGGER_FUSION_PASS",
+  "verdict_scope": "full_universe_trigger_scan_and_investigation_only_semantics",
+  "as_of_date": "2026-07-10",
+  "generated_from_commit": "73d19f3",
+  "test_mode": false,
+  "fixture_used": false,
+  "eligible_universe_count": 2542,
+  "full_universe_trigger_scan_attempted": true,
+  "raw_trigger_signal_count": 452,
+  "trigger_signal_count": 446,
+  "deduplicated_trigger_count": 6,
+  "candidate_event_count": 419,
+  "candidate_symbol_count": 419,
+  "trigger_type_counts": {
+    "OFFICIAL": 282,
+    "REPORT": 1,
+    "RISK": 121,
+    "MARKET": 42,
+    "EARNINGS": 0,
+    "IR": 0,
+    "NEWS": 0,
+    "EXISTING_LEDGER": 0
+  },
+  "trigger_lifecycle_counts": {
+    "LATEST_REGULAR_REPORT_CANDIDATE": 1,
+    "OPEN_CANDIDATE": 5,
+    "OPEN_CANDIDATE_REQUIRES_LIFECYCLE_REFRESH": 113,
+    "REQUIRES_CURRENT_LIFECYCLE_ADJUDICATION": 282,
+    "RESOLVED": 3,
+    "SHORT_LIVED_INVESTIGATION_TRIGGER": 42
+  },
+  "provider_reference_counts": {
+    "KRX": 163,
+    "OpenDART": 404
+  },
+  "honesty_note": "공시·위험·가격 row는 조사 후보를 열 뿐 score evidence가 아니다. 특히 MARKET 42건은 단일 거래일 가격 이상 신호이며 current thesis나 점수로 사용하지 않았다. RESOLVED 위험 event도 검토 신호로는 보존하지만 OPEN 위험으로 되살리지 않는다.",
+  "input_hashes": {
+    "universe_eligible_sha256": "74333c6b2d1c638a2bbd39ba58c7057fadf34dce0342fa20f38dace3b7263f65",
+    "baseline_lanes_sha256": "6ada47cf178126cf238c292ad891d7a2d30e493c72b1c8ed63057044a2d42d85",
+    "current_state_store_sha256": "8ffbc17bc311bfade189f24aaf8714f7b873284c48e3e3bb9e5a644b59c03499"
+  },
+  "output_hashes": {
+    "candidate_events_sha256": "4573bde19c0f721d4d16ae831da4923ecce1d745b2cfe16de68cf18d57fcf3b9",
+    "trigger_signals_sha256": "bcb6ce25717ee937947cdf6347e238b552aebf7ca02317f6889e9de1485716f0",
+    "trigger_dedupe_report_sha256": "cce71bcbfbfc39e3fb1c11fdaccfa75a7e32fe0830268379c0627ffd30f5619e",
+    "trigger_source_distribution_sha256": "f7e5892d47332c09853673e35f993575701b946004217c5e6cccc7ef813cca64",
+    "trigger_fusion_audit_sha256": "cb6b8fd41de4674876926a1fc7c6ab02373d87bc8d9bb1aa85f4ffcacedfa6e8"
+  },
+  "output_paths": {
+    "candidate_events": "output/live_materialization/2026-07-10/candidate_events.jsonl",
+    "trigger_signals": "output/live_materialization/2026-07-10/trigger_signals.jsonl",
+    "trigger_dedupe_report": "output/live_materialization/2026-07-10/trigger_dedupe_report.json",
+    "trigger_source_distribution": "output/live_materialization/2026-07-10/trigger_source_distribution.json",
+    "trigger_fusion_audit": "output/live_materialization/2026-07-10/trigger_fusion_audit.json"
+  },
+  "market_trigger_to_score_count": 0,
+  "news_snippet_to_score_count": 0,
+  "wrong_subject_trigger_count": 0,
+  "trigger_without_source_ref_count": 0,
+  "future_trigger_count": 0,
+  "critical_counts": {
+    "full_universe_trigger_scan_not_attempted": 0,
+    "symbol_without_required_baseline_for_trigger_scan": 0,
+    "market_trigger_to_score": 0,
+    "news_snippet_to_score": 0,
+    "wrong_subject_trigger": 0,
+    "trigger_without_source_ref": 0,
+    "future_trigger": 0,
+    "duplicate_trigger_emitted": 0
+  },
+  "critical_count_sum": 0,
+  "hard_acceptance_pass": true
+}

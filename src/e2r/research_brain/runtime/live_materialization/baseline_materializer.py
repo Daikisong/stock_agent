@@ -616,6 +616,37 @@ def write_baseline_materialization(
     return paths
 
 
+def load_baseline_lanes(path: str | Path) -> tuple[BaselineLaneRecord, ...]:
+    source = Path(path)
+    if not source.is_file():
+        return ()
+    lanes: list[BaselineLaneRecord] = []
+    with source.open(encoding="utf-8") as handle:
+        for line_number, raw_line in enumerate(handle, start=1):
+            line = raw_line.strip()
+            if not line:
+                continue
+            try:
+                payload = json.loads(line)
+                provider_names = tuple(payload.pop("provider_names"))
+                source_ids = tuple(payload.pop("source_ids"))
+                lanes.append(
+                    BaselineLaneRecord(
+                        **payload,
+                        provider_names=provider_names,
+                        source_ids=source_ids,
+                    )
+                )
+            except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+                raise ValueError(
+                    f"invalid baseline lane row at line {line_number}: {exc}"
+                ) from exc
+    identities = {(lane.target_id, lane.lane) for lane in lanes}
+    if len(identities) != len(lanes):
+        raise ValueError("duplicate target/lane in baseline file")
+    return tuple(lanes)
+
+
 def _official_lane(
     *,
     member: LiveUniverseRow,
@@ -1124,5 +1155,6 @@ __all__ = [
     "BulkSnapshotStatus",
     "CurrentBaselineMaterializer",
     "RequestsBaselineBulkTransport",
+    "load_baseline_lanes",
     "write_baseline_materialization",
 ]
