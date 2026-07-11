@@ -15,9 +15,10 @@ class DossierQuestionFinalizerTests(unittest.TestCase):
             dossier, research = root / "dossier", root / "research"
             dossier.mkdir(); research.mkdir()
             question = "Is a current direct fact confirmed?"
-            self._jsonl(dossier / "question_source_tasks.jsonl", [{"target_id":"X","question_family_id":"F1","question_to_answer":question}])
+            routes = ["OFFICIAL","ISSUER_IR","FINANCIAL_REVISION","INDEPENDENT","COUNTER","SUPERSESSION"]
+            self._jsonl(dossier / "question_source_tasks.jsonl", [{"target_id":"X","question_family_id":"F1","question_to_answer":question,"as_of_date":"2026-07-11","required_route_categories":routes}])
             self._jsonl(dossier / "question_closure.jsonl", [{"target_id":"X","question_family_id":"F1","status":"PROVIDER_PENDING","search_exhaustion_proof":[]}])
-            self._jsonl(research / "question_source_tasks.jsonl", [{"task_id":"T1","target_id":"X","question_to_answer":question,"budget":{"max_queries":1,"max_candidates":2,"max_fetches":1},"query_intent":{"generator_kind":"REAL_LLM","literal_queries":["X 2026 official fact"]}}])
+            self._jsonl(research / "question_source_tasks.jsonl", [{"task_id":"T1","target_id":"X","question_to_answer":question,"budget":{"max_queries":1,"max_candidates":2,"max_fetches":1},"query_intent":{"generator_kind":"REAL_LLM","literal_queries":["X 2026 official fact"]},"adequacy_route_attempts":[{"route_category":route,"status":"ATTEMPTED","proof_id":"R1"} for route in routes]}])
             self._jsonl(research / "provider_requests.jsonl", [{"provider_request_record_id":"R1","source_task_id":"T1","actual_provider_call":False}])
             self._jsonl(research / "provider_fetch_results.jsonl", [{"source_task_id":"T1","acquisition_class":"SOURCE_EXHAUSTED"}])
             self._jsonl(research / "web_search_tasks.jsonl", [{"web_task_id":"W1","source_task_id":"T1","official_first_attempted":True,"search_call_executed":True,"status":"SEARCH_EXECUTED"}])

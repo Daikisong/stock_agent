@@ -7,6 +7,13 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.production.metadata import write_json, write_jsonl
+from e2r.research_brain.research_quality import (
+    audit_search_adequacy,
+    compile_dossier_search_adequacy,
+)
+from e2r.research_brain.scoring.question_impact_contract import (
+    load_question_impact_contracts,
+)
 
 
 QUESTION_FINALIZER_SCHEMA_VERSION = "e2r_dossier_question_finalizer_v1"
@@ -44,6 +51,35 @@ def finalize_dossier_question_closures(
         for research_root in research_roots
         for row in _read_jsonl(research_root / "web_search_tasks.jsonl")
     )
+    documents = tuple(
+        row
+        for research_root in research_roots
+        for name in ("evidence_documents.jsonl", "web_fetched_documents.jsonl")
+        for row in _read_jsonl(research_root / name)
+    )
+    adequacy_rows = compile_dossier_search_adequacy(
+        question_tasks=tasks,
+        executed_tasks=executed_tasks,
+        provider_requests=request_rows,
+        provider_fetch_results=fetch_rows,
+        web_search_tasks=web_tasks,
+        documents=documents,
+        claims=_read_jsonl(root / "accepted_current_claims.jsonl"),
+        primitive_mappings=_read_jsonl(root / "primitive_mappings.jsonl"),
+        question_closures=closures,
+        question_contracts=load_question_impact_contracts(),
+        claim_eligibility_decisions=_read_jsonl(
+            root / "claim_eligibility_decisions.jsonl"
+        ),
+        proposed_impacts=_read_jsonl(root / "claim_impacts_proposed.jsonl"),
+        validated_impacts=_read_jsonl(root / "claim_impacts_validated.jsonl"),
+        material_fact_comparisons=_read_jsonl(
+            root / "material_fact_comparison.jsonl"
+        ),
+    )
+    adequacy_by_family = {
+        row.question_family_id: row for row in adequacy_rows
+    }
     task_by_family = {
         str(row.get("question_family_id") or ""): row for row in tasks
     }
@@ -57,6 +93,7 @@ def finalize_dossier_question_closures(
     evaluated_absent_count = 0
     for family_id, task in task_by_family.items():
         closure = dict(closure_by_family[family_id])
+        adequacy = adequacy_by_family[family_id]
         matching_tasks = tuple(
             row
             for row in executed_tasks
@@ -119,22 +156,33 @@ def finalize_dossier_question_closures(
             "SOURCE_PENDING",
             "BUDGET_PENDING",
         }
-        if pending and researched and web_completed and proof:
+        if pending and adequacy.adequate_absence_allowed:
             closure.update(
                 {
                     "status": "EVALUATED_ABSENT",
-                    "failure_class": "SOURCE_EXHAUSTED",
-                    "search_exhaustion_proof": list(dict.fromkeys(proof)),
+                    "failure_class": "ADEQUATE_ABSENCE",
+                    "search_exhaustion_proof": list(
+                        adequacy.search_proof_ids
+                    ),
                     "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
                 }
             )
             evaluated_absent_count += 1
+        elif pending:
+            closure["status"] = {
+                "PROVIDER_PENDING": "PROVIDER_PENDING",
+                "BUDGET_PENDING": "BUDGET_PENDING",
+            }.get(adequacy.saturation_status, "SOURCE_PENDING")
+            closure["failure_class"] = adequacy.saturation_status
+            closure["next_action"] = "RESEARCH_REPAIR_REQUIRED"
         closure["research_execution"] = {
             "real_llm_query": real_query,
             "bounded": bounded,
             "official_attempted": official_attempted,
             "web_fallback_completed": web_completed,
             "executed_source_task_ids": sorted(task_ids),
+            "saturation_status": adequacy.saturation_status,
+            "adequacy_id": adequacy.adequacy_id,
         }
         finalized.append(closure)
     nonterminal = tuple(
@@ -155,6 +203,13 @@ def finalize_dossier_question_closures(
             for row in finalized
         ),
         "nonterminal_question_count": len(nonterminal),
+        "inadequate_absence_count": sum(
+            row.get("status") == "EVALUATED_ABSENT"
+            and not adequacy_by_family[
+                str(row.get("question_family_id") or "")
+            ].adequate_absence_allowed
+            for row in finalized
+        ),
     }
     audit = {
         "schema_version": QUESTION_FINALIZER_SCHEMA_VERSION,
@@ -179,9 +234,18 @@ def finalize_dossier_question_closures(
         research_roots=research_roots,
         executed_tasks=executed_tasks,
         request_rows=request_rows,
+        fetch_rows=fetch_rows,
         web_tasks=web_tasks,
     )
     write_jsonl(root / "question_closure.jsonl", finalized)
+    write_jsonl(
+        root / "evidence_search_adequacy.jsonl",
+        (row.to_dict() for row in adequacy_rows),
+    )
+    write_json(
+        root / "evidence_search_adequacy_audit.json",
+        audit_search_adequacy(adequacy_rows),
+    )
     write_json(root / "question_closure_audit.json", audit)
     return audit
 
@@ -192,6 +256,7 @@ def _write_research_attempt_leaves(
     research_roots: Sequence[Path],
     executed_tasks: Sequence[Mapping[str, Any]],
     request_rows: Sequence[Mapping[str, Any]],
+    fetch_rows: Sequence[Mapping[str, Any]],
     web_tasks: Sequence[Mapping[str, Any]],
 ) -> None:
     write_jsonl(
@@ -201,6 +266,10 @@ def _write_research_attempt_leaves(
     write_jsonl(
         root / "research_provider_requests.jsonl",
         _dedupe_rows(request_rows, ("provider_request_record_id",)),
+    )
+    write_jsonl(
+        root / "research_provider_fetch_results.jsonl",
+        _dedupe_rows(fetch_rows, ("provider_fetch_result_id",)),
     )
     write_jsonl(
         root / "research_web_search_tasks.jsonl",

@@ -1,0 +1,3 @@
+{"target_id":"TARGET-A","question_family_id":"qualification_pass_lag_reopen","status":"EVALUATED_ABSENT","search_exhaustion_proof":["A-O","A-I","A-F","A-X","A-C","A-S"]}
+{"target_id":"TARGET-A","question_family_id":"medium_term_revision_consensus","status":"PROVIDER_PENDING","search_exhaustion_proof":[]}
+{"target_id":"TARGET-A","question_family_id":"shipment_mass_production_generation","status":"SUPPORTED_SCORING","supporting_claim_ids":["CLAIM-SHIPMENT"]}
