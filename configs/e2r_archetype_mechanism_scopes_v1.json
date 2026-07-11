@@ -1,0 +1,38 @@
+{
+  "schema_version": "e2r_archetype_mechanism_scopes_v1",
+  "contracts": {
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+      "allowed_business_segments": ["MEMORY"],
+      "allowed_product_families": ["HBM", "DRAM", "MEMORY_GENERIC", "AI_MEMORY"],
+      "allowed_technology_families": ["HBM", "DRAM", "MEMORY", "AI_MEMORY"],
+      "allowed_transaction_types": ["CUSTOMER_COMMITMENT", "PRODUCT_SHIPMENT", "PRODUCT_PROFILE", "REVENUE_ACTUAL", "PRICING_ACTUAL", "CAPACITY_INVESTMENT", "QUALIFICATION", "RISK", "GENERIC_INFORMATION"],
+      "allowed_economic_mechanisms": ["CUSTOMER_ALLOCATION", "CAPACITY_SCARCITY", "PRODUCT_COMMERCIALIZATION", "REVENUE_CONVERSION", "PRICING_POWER", "SUPPLY_RESPONSE", "QUALIFICATION_EXECUTION", "RISK_COUNTER", "INFORMATION_ONLY"],
+      "generic_company_allowed_components": ["information_confidence", "capital_allocation"],
+      "forbidden_business_segments": ["FOUNDRY", "DISPLAY", "MOBILE", "APPLIANCE"],
+      "forbidden_product_families": ["LOGIC_FOUNDRY", "PACKAGE_SUBSTRATE_ADJACENT", "NAND"],
+      "reroute_by_segment": {"FOUNDRY": "C01_ORDER_BACKLOG_MARGIN_BRIDGE"}
+    },
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
+      "allowed_business_segments": ["SEMICONDUCTOR_COMPONENT"],
+      "allowed_product_families": ["SEMI_TEST_SOCKET", "SEMICONDUCTOR_COMPONENT"],
+      "allowed_technology_families": ["SEMICONDUCTOR_TEST", "SEMICONDUCTOR_COMPONENT"],
+      "allowed_transaction_types": ["CUSTOMER_COMMITMENT", "PRODUCT_PROFILE", "REVENUE_ACTUAL", "GENERIC_INFORMATION"],
+      "allowed_economic_mechanisms": ["NAMED_CUSTOMER_ORDER", "CUSTOMER_QUALITY", "REVENUE_CONVERSION", "INFORMATION_ONLY"],
+      "generic_company_allowed_components": ["information_confidence", "capital_allocation"],
+      "forbidden_business_segments": [],
+      "forbidden_product_families": [],
+      "reroute_by_segment": {}
+    },
+    "C15_MATERIAL_SPREAD_SUPERCYCLE": {
+      "allowed_business_segments": ["MATERIALS"],
+      "allowed_product_families": ["MATERIAL_COMMODITY", "MATERIAL_PRODUCT"],
+      "allowed_technology_families": ["MATERIAL_PROCESS", "COMMODITY_SPREAD"],
+      "allowed_transaction_types": ["PRICING_ACTUAL", "REVENUE_ACTUAL", "CAPACITY_INVESTMENT", "RISK", "GENERIC_INFORMATION"],
+      "allowed_economic_mechanisms": ["ISSUER_PASS_THROUGH", "MARGIN_SPREAD", "INVENTORY_CYCLE", "SUPPLY_RESPONSE", "RISK_COUNTER", "INFORMATION_ONLY"],
+      "generic_company_allowed_components": ["information_confidence", "capital_allocation"],
+      "forbidden_business_segments": [],
+      "forbidden_product_families": [],
+      "reroute_by_segment": {}
+    }
+  }
+}

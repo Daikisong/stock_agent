@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from typing import Any, Mapping, Sequence
 
 from e2r.research_brain.runtime.scoring_contracts import load_archetype_scoring_contract
@@ -62,9 +62,10 @@ class ValidatedClaimImpact:
     proposal: ClaimImpactProposal
     validation_status: str = "LINEAGE_AND_EDGE_VALIDATED"
     original_source_task_gap_closed: bool = False
+    scope_validation: Mapping[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Mapping[str, Any]:
-        return {**self.proposal.to_dict(), "validation_status": self.validation_status, "original_source_task_gap_closed": self.original_source_task_gap_closed}
+        return {**self.proposal.to_dict(), "validation_status": self.validation_status, "original_source_task_gap_closed": self.original_source_task_gap_closed, "scope_validation": dict(self.scope_validation)}
 
 
 @dataclass(frozen=True)
@@ -88,6 +89,11 @@ class ClaimImpactLedgerBuilder:
         from e2r.research_brain.compiler.evidence_impact_rubric_compiler import (
             compile_evidence_impact_rubrics,
         )
+        from .business_mechanism_scope import (
+            MechanismScopeValidator,
+            infer_business_mechanism_scope,
+            load_mechanism_scope_contracts,
+        )
 
         claims = _unique(accepted_current_claims, "claim_id")
         provenance_mappings: dict[str, set[str]] = {}
@@ -97,6 +103,8 @@ class ClaimImpactLedgerBuilder:
         rejected: list[Mapping[str, Any]] = []
         economic_keys: set[tuple[str, str, str, str]] = set()
         impact_ids: set[str] = set()
+        mechanism_contracts = load_mechanism_scope_contracts()
+        scope_by_impact: dict[str, Mapping[str, Any]] = {}
         for proposal in proposals:
             reason = ""
             claim = claims.get(proposal.claim_id)
@@ -122,15 +130,30 @@ class ClaimImpactLedgerBuilder:
                 allowed = set(rubric.allowed_component_ids if rubric else contract.primitive_to_component_allowed_edges.get(proposal.primitive_id, ()))
                 if proposal.component_id not in allowed:
                     reason = "PRIMITIVE_COMPONENT_EDGE_NOT_ALLOWED"
+                mechanism_contract = mechanism_contracts.get(proposal.archetype_id)
+                if not reason and mechanism_contract is not None:
+                    scope = infer_business_mechanism_scope(
+                        claim,
+                        primitive_id=proposal.primitive_id,
+                        archetype_id=proposal.archetype_id,
+                    )
+                    scope_validation = MechanismScopeValidator().validate(
+                        scope=scope,
+                        contract=mechanism_contract,
+                        component_id=proposal.component_id,
+                    )
+                    scope_by_impact[proposal.impact_id] = scope_validation.to_dict()
+                    if not scope_validation.scope_match:
+                        reason = scope_validation.status
             economic_key = (proposal.claim_id, proposal.component_id, proposal.direction, proposal.evidence_family_id)
             if not reason and economic_key in economic_keys:
                 reason = "DUPLICATE_ECONOMIC_CREDIT"
             if reason:
-                rejected.append({"impact_id": proposal.impact_id, "claim_id": proposal.claim_id, "reason": reason})
+                rejected.append({"impact_id": proposal.impact_id, "claim_id": proposal.claim_id, "reason": reason, "scope_validation": scope_by_impact.get(proposal.impact_id, {})})
                 continue
             impact_ids.add(proposal.impact_id)
             economic_keys.add(economic_key)
-            validated.append(ValidatedClaimImpact(proposal=proposal))
+            validated.append(ValidatedClaimImpact(proposal=proposal, scope_validation=scope_by_impact.get(proposal.impact_id, {})))
         rerouted_mapping_ids = {
             str(mapping_id)
             for row in source_task_satisfaction
@@ -151,18 +174,37 @@ class ClaimImpactLedgerBuilder:
             "mapping_lineage_loss_count": sum(row["reason"] in {"CLAIM_MAPPING_LINEAGE_MISSING", "PROVENANCE_MAPPING_LINEAGE_MISSING", "CONSOLIDATED_MAPPING_LINEAGE_MISSING"} for row in rejected),
             "duplicate_economic_credit_count": sum(row["reason"] == "DUPLICATE_ECONOMIC_CREDIT" for row in rejected),
             "original_gap_closed_by_rerouted_count": sum(row.get("status") == "REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN" and row.get("original_gap_open") is not True for row in source_task_satisfaction),
+            "cross_mechanism_impact_count": sum(row["reason"] in {"REROUTED_TO_OTHER_MECHANISM", "MECHANISM_SCOPE_REJECTED"} and not row.get("scope_validation") for row in rejected),
+            "mechanism_scope_missing_count": sum(not item.scope_validation for item in validated if item.proposal.archetype_id in mechanism_contracts),
         }
         audit = {
             "schema_version": "e2r_claim_impact_ledger_audit_v1",
             "proposal_count": len(proposals),
             "validated_impact_count": len(validated),
             "rejected_impact_count": len(rejected),
+            "mechanism_scope_rejected_count": sum(
+                row["reason"]
+                in {"REROUTED_TO_OTHER_MECHANISM", "MECHANISM_SCOPE_REJECTED"}
+                for row in rejected
+            ),
             "multi_impact_claim_count": sum(1 for claim_id in {p.claim_id for p in proposals} if sum(v.proposal.claim_id == claim_id for v in validated) > 1),
             "critical_counts": critical,
             "critical_count_sum": sum(critical.values()),
         }
         return ClaimImpactLedgerResult(
-            status="MANY_TO_MANY_CLAIM_IMPACT_PASS" if not rejected and sum(critical.values()) == 0 else "MANY_TO_MANY_CLAIM_IMPACT_FAIL",
+            status=(
+                "MANY_TO_MANY_CLAIM_IMPACT_PASS"
+                if not any(
+                    row["reason"]
+                    not in {
+                        "REROUTED_TO_OTHER_MECHANISM",
+                        "MECHANISM_SCOPE_REJECTED",
+                    }
+                    for row in rejected
+                )
+                and sum(critical.values()) == 0
+                else "MANY_TO_MANY_CLAIM_IMPACT_FAIL"
+            ),
             validated_impacts=tuple(validated),
             rejected_impacts=tuple(rejected),
             source_task_satisfaction=tuple(dict(row) for row in source_task_satisfaction),
