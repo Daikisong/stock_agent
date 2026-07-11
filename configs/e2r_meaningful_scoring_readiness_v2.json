@@ -1,0 +1,48 @@
+{
+  "schema_version": "e2r_meaningful_scoring_readiness_v2",
+  "as_of_date": "2026-07-11",
+  "required_component_ids": [
+    "eps_fcf_explosion",
+    "earnings_visibility",
+    "bottleneck_pricing",
+    "market_mispricing",
+    "valuation_rerating",
+    "capital_allocation",
+    "information_confidence"
+  ],
+  "mandatory_targets": [
+    {
+      "target_id": "005930",
+      "company_name": "삼성전자",
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "expected_profile_id": "e2r_2_2_archetype_weight_runtime",
+      "success_label": "SAMSUNG_CANONICAL_FULL_THESIS_PASS",
+      "dossier_root": "output/evidence_to_score/c06/2026-07-11/005930"
+    },
+    {
+      "target_id": "000660",
+      "company_name": "SK하이닉스",
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "expected_profile_id": "e2r_2_2_archetype_weight_runtime",
+      "success_label": "SK_HYNIX_CANONICAL_FULL_THESIS_PASS",
+      "dossier_root": "output/evidence_to_score/c06/2026-07-11/000660"
+    }
+  ],
+  "required_global_audits": [
+    {
+      "audit_id": "live_materialization",
+      "path": "docs/operational/e2r_live_acceptance_report.json",
+      "accepted_statuses": ["FULL_LIVE_ACCEPTANCE_PASS"]
+    },
+    {
+      "audit_id": "canonical_scoring_contract",
+      "path": "docs/operational/e2r_canonical_scoring_contract_audit.json",
+      "accepted_statuses": ["CANONICAL_SCORING_CONTRACT_PASS"]
+    },
+    {
+      "audit_id": "acceptance_probe_separation",
+      "path": "docs/operational/e2r_acceptance_probe_separation_audit.json",
+      "accepted_statuses": ["CONTROLLED_CLAIM_PROBE_PASS"]
+    }
+  ]
+}

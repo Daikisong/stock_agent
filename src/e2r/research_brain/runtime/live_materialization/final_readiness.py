@@ -143,9 +143,16 @@ def compile_final_readiness(
     }
     critical = sum(hard.values())
     phase_commits = _phase_commits()
+    legacy_status = (
+        "LIVE_MATERIALIZATION_PASS"
+        if critical == 0
+        else "LIVE_MATERIALIZATION_NOT_READY"
+    )
     verdict = {
         "schema_version": FINAL_READINESS_SCHEMA_VERSION,
-        "status": "MEANINGFUL_E2R_RUNTIME_READY" if critical == 0 else "E2R_RUNTIME_NOT_READY",
+        "status": legacy_status,
+        "canonical_scoring_readiness_eligible": False,
+        "superseded_by": "e2r_meaningful_scoring_readiness_v2",
         "as_of_date": config["as_of_date"],
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "reviewers": reviewers,
@@ -167,7 +174,7 @@ def compile_final_readiness(
         "hard_acceptance_counts": hard,
         "critical_count_sum": critical,
         "hard_acceptance_pass": critical == 0,
-        "exact_final_verdict": "MEANINGFUL_E2R_RUNTIME_READY" if critical == 0 else "E2R_RUNTIME_NOT_READY",
+        "exact_final_verdict": legacy_status,
     }
     return verdict
 
