@@ -33,7 +33,8 @@ def _impact(*, source_family: str = "ISSUER_OFFICIAL", temporal_scope: str = "CU
             confidence=0.9,
             rationale="직접 actual earnings conversion 근거다.",
             unsupported_aspects=("FCF는 별도 확인이 필요하다.",),
-        )
+        ),
+        eligibility_decision_id="ELIG-TOTALITY",
     )
 
 
@@ -44,6 +45,13 @@ PROVENANCE = (
         "source_proxy_only": False,
         "directness": "DIRECT",
         "temporal_status": "CURRENT",
+    },
+)
+ELIGIBILITY = (
+    {
+        "eligibility_decision_id": "ELIG-TOTALITY",
+        "claim_id": "CLM-TOTALITY",
+        "component_scoring_eligibility": True,
     },
 )
 
@@ -57,6 +65,7 @@ class NoSilentZeroCapTests(unittest.TestCase):
             ImpactValidator().validate(
                 impacts=(_impact(source_family="UNKNOWN_NEW_SOURCE"),),
                 claim_provenance=PROVENANCE,
+                claim_eligibility_decisions=ELIGIBILITY,
             )
 
     def test_unknown_temporal_scope_is_hard_error_not_zero_credit(self) -> None:
@@ -67,6 +76,7 @@ class NoSilentZeroCapTests(unittest.TestCase):
             ImpactValidator().validate(
                 impacts=(_impact(temporal_scope="UNKNOWN_PERIOD"),),
                 claim_provenance=PROVENANCE,
+                claim_eligibility_decisions=ELIGIBILITY,
             )
 
 

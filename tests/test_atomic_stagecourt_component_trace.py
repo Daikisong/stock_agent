@@ -41,5 +41,15 @@ class AtomicStageCourtComponentTraceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"current direct OPEN"):
             AtomicStageCourtV2().decide(target_id="005930",as_of_date="2026-07-11",contract=self.contract,score=score,assessments=assessments,impacts=(self.impact,),accepted_claim_ids=("C1",),risk_overlay={"hard_break_claim_ids":["RISK-1"],"current_direct_open_counter_claim_ids":[]})
 
+    def test_accepted_claim_is_not_implicitly_a_high_quality_event(self):
+        assessments,score=self._score(True)
+        decision=AtomicStageCourtV2().decide(target_id="005930",as_of_date="2026-07-11",contract=self.contract,score=score,assessments=assessments,impacts=(self.impact,),accepted_claim_ids=("C1",))
+        self.assertEqual(decision.stage_event_claim_ids,())
+
+    def test_only_explicit_event_eligible_claim_enters_event_plane(self):
+        assessments,score=self._score(True)
+        decision=AtomicStageCourtV2().decide(target_id="005930",as_of_date="2026-07-11",contract=self.contract,score=score,assessments=assessments,impacts=(self.impact,),accepted_claim_ids=("C1",),claim_eligibility_decisions=({"claim_id":"C1","stage_event_eligibility":True},))
+        self.assertEqual(decision.stage_event_claim_ids,("C1",))
+
 
 if __name__=="__main__": unittest.main()

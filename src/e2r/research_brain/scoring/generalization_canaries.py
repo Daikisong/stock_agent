@@ -159,8 +159,8 @@ def _score_case(
     contract = load_archetype_scoring_contract(archetype_id)
     claim_id = proposals[0].claim_id
     mapping_ids = tuple(proposal.mapping_id for proposal in proposals)
-    claims = ({"claim_id": claim_id, "target_id": target_id, "accepted": True, "mapping_ids": mapping_ids, "evidence_origin": "ORGANIC_LIVE"},)
-    provenance = ({"claim_id": claim_id, "mapping_ids": mapping_ids, "source_proxy_only": False, "directness": "DIRECT", "temporal_status": "CURRENT"},)
+    claims = ({"claim_id": claim_id, "target_id": target_id, "accepted": True, "mapping_ids": mapping_ids, "evidence_origin": "ORGANIC_LIVE", "exact_quote": "The issuer directly reported the configured bounded operating fact."},)
+    provenance = ({"claim_id": claim_id, "mapping_ids": mapping_ids, "source_proxy_only": False, "test_only": False, "fetched": True, "anchor_verified": True, "mapping_status": "ACCEPTED", "directness": "DIRECT", "temporal_status": "CURRENT"},)
     satisfaction = ({"status": "REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN", "rerouted_mapping_ids": mapping_ids, "original_gap_open": True},)
     ledger = ClaimImpactLedgerBuilder().build(
         proposals=proposals,
@@ -169,7 +169,8 @@ def _score_case(
         source_task_satisfaction=satisfaction,
     )
     validation = ImpactValidator().validate(
-        impacts=ledger.validated_impacts, claim_provenance=provenance
+        impacts=ledger.validated_impacts, claim_provenance=provenance,
+        claim_eligibility_decisions=ledger.claim_eligibility_decisions,
     )
     terminal = {
         component_id: {

@@ -22,28 +22,31 @@ class AtomicStageDecisionV2:
     full_e2r_score: float | None; full_score_valid: bool
     component_assessment_ids: tuple[str,...]; claim_impact_ids: tuple[str,...]
     accepted_claim_ids: tuple[str,...]; material_nonterminal_components: tuple[str,...]
+    stage_event_claim_ids: tuple[str,...]
     risk_overlay: Mapping[str,Any]; canonical_stage: str; decision_status: str
     stage_reason: tuple[str,...]; trace_id: str
     def to_dict(self)->Mapping[str,Any]: return asdict(self)
 
 
 class AtomicStageCourtV2:
-    def decide(self, *, target_id: str, as_of_date: str, contract: ArchetypeScoringContract, score: ResearchCalibratedScoreResult, assessments: Sequence[ComponentAssessment], impacts: Sequence[CreditValidatedImpact], accepted_claim_ids: Sequence[str], risk_overlay: Mapping[str,Any] | None=None) -> AtomicStageDecisionV2:
+    def decide(self, *, target_id: str, as_of_date: str, contract: ArchetypeScoringContract, score: ResearchCalibratedScoreResult, assessments: Sequence[ComponentAssessment], impacts: Sequence[CreditValidatedImpact], accepted_claim_ids: Sequence[str], claim_eligibility_decisions: Sequence[Mapping[str,Any]] = (), risk_overlay: Mapping[str,Any] | None=None) -> AtomicStageDecisionV2:
         date.fromisoformat(as_of_date); risk=dict(risk_overlay or {})
         assessment_ids=tuple(a.assessment_id for a in assessments); impact_ids=tuple(i.impact_id for i in impacts); claim_ids=tuple(dict.fromkeys(str(v) for v in accepted_claim_ids))
         if any(i.claim_id not in claim_ids for i in impacts): raise ValueError("stage score impact lineage references an unaccepted claim")
         if set(score.component_score_vector)!={a.component_id for a in assessments}: raise ValueError("stage score component vector differs from assessments")
         hard_break=set(str(v) for v in risk.get("hard_break_claim_ids") or ()); direct_open=set(str(v) for v in risk.get("current_direct_open_counter_claim_ids") or ())
         if not hard_break<=direct_open: raise ValueError("hard break requires current direct OPEN counter claim")
+        event_claim_ids=tuple(str(row.get("claim_id") or "") for row in claim_eligibility_decisions if row.get("stage_event_eligibility") is True)
+        if not set(event_claim_ids)<=set(claim_ids): raise ValueError("stage event eligibility references an unaccepted claim")
         if not score.full_score_valid:
             stage="0"; reasons=("full score is pending material component assessment",); status=_pending_status(assessments)
         else:
             snapshot=_score_snapshot(target_id,as_of_date,contract,score,claim_ids,impact_ids)
-            staged=StageClassifier().classify(StageClassificationInput(score=snapshot,company_event_score=60.0 if claim_ids else 0.0,high_quality_company_event=bool(claim_ids),evidence_ids=claim_ids))
+            staged=StageClassifier().classify(StageClassificationInput(score=snapshot,company_event_score=60.0 if event_claim_ids else 0.0,high_quality_company_event=bool(event_claim_ids),evidence_ids=event_claim_ids))
             stage=staged.stage.value; reasons=staged.stage_reason; status="RISK_REVIEW" if hard_break else "FINAL"
-        payload={"target_id":target_id,"as_of_date":as_of_date,"score_type":score.score_type,"verified_supported_score":score.verified_supported_score,"full_e2r_score":score.full_e2r_score,"component_assessment_ids":assessment_ids,"claim_impact_ids":impact_ids,"accepted_claim_ids":claim_ids,"canonical_stage":stage,"decision_status":status}
+        payload={"target_id":target_id,"as_of_date":as_of_date,"score_type":score.score_type,"verified_supported_score":score.verified_supported_score,"full_e2r_score":score.full_e2r_score,"component_assessment_ids":assessment_ids,"claim_impact_ids":impact_ids,"accepted_claim_ids":claim_ids,"stage_event_claim_ids":event_claim_ids,"canonical_stage":stage,"decision_status":status}
         trace="STAGEV2-"+_hash(payload)[:24]
-        return AtomicStageDecisionV2("ADEC2-"+_hash({**payload,"trace_id":trace})[:24],target_id,as_of_date,score.score_type,score.verified_supported_score,score.provisional_score_lower,score.provisional_score_upper,score.full_e2r_score,score.full_score_valid,assessment_ids,impact_ids,claim_ids,score.material_nonterminal_components,risk,stage,status,tuple(reasons),trace)
+        return AtomicStageDecisionV2("ADEC2-"+_hash({**payload,"trace_id":trace})[:24],target_id,as_of_date,score.score_type,score.verified_supported_score,score.provisional_score_lower,score.provisional_score_upper,score.full_e2r_score,score.full_score_valid,assessment_ids,impact_ids,claim_ids,score.material_nonterminal_components,event_claim_ids,risk,stage,status,tuple(reasons),trace)
 
 
 def _score_snapshot(target_id: str, as_of_date: str, contract: ArchetypeScoringContract, score: ResearchCalibratedScoreResult, claim_ids: Sequence[str], impact_ids: Sequence[str]) -> ScoreSnapshot:

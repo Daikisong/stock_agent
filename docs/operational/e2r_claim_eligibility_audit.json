@@ -1,0 +1,823 @@
+{
+  "component_eligible_count": 28,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "component_score_without_eligibility_decision_count": 0,
+    "duplicate_eligibility_decision_count": 0,
+    "eligibility_boolean_contradiction_count": 0,
+    "stage_event_without_event_eligibility_count": 0
+  },
+  "decision_count": 39,
+  "decisions": [
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-464ca5cde1b30c363997",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-d57e8c8782ceb7ce2387e860",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-4df55f27da648bb0024e",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-ade70cd4a832921efdd01ee0",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-47103baa9b99062ef88a",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-8266c822fbeb28cd8c5abdc9",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-48f304f4471c4d575cec",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-2fce4ee33a7d391b466d8a2e",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-8a6484cd91e4ef637201",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-5405821d8ef9510565c9cf31",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-db034d8f03ce72819564",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-a0a78066f70e1023aac373f0",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-63f797bc4396e1bff5f0",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-0fb6404865a7a6c38d4a63cd",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-e0a7f204219f352da273",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-48534f33af46f9217888ff37",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-13d3c5605df791dcf819",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-7a4c58f4c7d6d8b06ec00dec",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-10501873f575a69571d9",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-e0fee5027d18d317c8f14d9a",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-1982ea2aca36ebef450e",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-d3852c630790065f99f18a79",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": true,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-ea9b82182ac296c6d682",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-9d5ac16acf7d913c41e37af7",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-63085bc76ba54eba7d67",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-547f5002cd0574fd12a00562",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": true,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-bab8bc1c37b4bb92f54e",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-e98457ea17d7b667802b8180",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-0bb55c3d4d5844a1c859",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-3a3a43fdab75ea81959d9d7c",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-e341ee4c41bd41f3fab0",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-aa4d28751068b9873654bbdc",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-0d0760af8405137dfe90",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-3bbf7f78526059707c56f30a",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-0d59f6d8b09b36fb145d",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-a6cd8d05b6b11dfb0e51db53",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-1fc27cd4caa01dd2f04c",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-b3d44189ad0d640a137df8dd",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-ccb03c3ca97a6a4dac73",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-d4b187e02d7998c6ee4e9c74",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-cde7ddca235c60d20ada",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-ab5b5565ff8fc8f51b4f295c",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-d33eea243c334096866d",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-3a57921d8fb661b784467987",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": true,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-33685f026d180edb6417",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-78879650ab628278387d33e5",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-79444b89b7d92a3930ab",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-8fd4fbaae95a150d0211d832",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-0f9c0b328976f0995bed",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-75653b0326ee5de4981fe984",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-90533c9daf13fefd691c",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-dbd703b6eb0f311ea88ceb2a",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-3fe807708c2eee9d9908",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-8a850cecf502758443000ccd",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": true,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-15ee8897fe8ae2155f25",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-88eb7e49838f035048d43687",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-95da73592de9afc97446",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-3ce44bc98745eccf945e1acb",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-b6a7d89a604a1e12d6f4",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-f02b97d999ef35e8d998a473",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": true,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-81cdb44f9ea4a488a790",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-25bb283870ed1c97a3f24b24",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-fcc98ec139169a04e7ae",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-e8efeeba74530e9fcfe1c5a0",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-53ae6758183d6993b268",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-e97f40918f6adf7a353c2193",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-b0012c7f76d639aed2da",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-f169dee905259f29aca81250",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-24ae165ad172de0d6649",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-6e9ec09b9c05ef9e9dc01289",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-889d81821ec004838246",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-da9d6fb1bcc6415699af0d02",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-c35e896dc619cf663b61",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-294a8582c9b1ac0bc1361d44",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-6542a27e94fc793947e1",
+      "component_scoring_eligibility": false,
+      "eligibility_decision_id": "ELIG-23e091c3726567e206929a3d",
+      "eligibility_reasons": [
+        "WRONG_BUSINESS_MECHANISM"
+      ],
+      "eligibility_status": "INELIGIBLE_WRONG_MECHANISM",
+      "full_thesis_eligibility": false,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    },
+    {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "claim_id": "CLM-85a8e1ec74fd4c208401",
+      "component_scoring_eligibility": true,
+      "eligibility_decision_id": "ELIG-01809387c78c08c1993ab405",
+      "eligibility_reasons": [],
+      "eligibility_status": "ELIGIBLE",
+      "full_thesis_eligibility": true,
+      "ledger_acceptance": true,
+      "risk_scoring_eligibility": false,
+      "source_task_satisfaction": "NOT_EVALUATED_IN_CLAIM_PLANE",
+      "stage_event_eligibility": false
+    }
+  ],
+  "full_thesis_eligible_count": 28,
+  "legacy_boolean_contradiction_count": 39,
+  "legacy_boolean_contradictions": [
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-464ca5cde1b30c363997",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-4df55f27da648bb0024e",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-47103baa9b99062ef88a",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-48f304f4471c4d575cec",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-8a6484cd91e4ef637201",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-db034d8f03ce72819564",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-63f797bc4396e1bff5f0",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-e0a7f204219f352da273",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-13d3c5605df791dcf819",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-10501873f575a69571d9",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-1982ea2aca36ebef450e",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-ea9b82182ac296c6d682",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-63085bc76ba54eba7d67",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-bab8bc1c37b4bb92f54e",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-0bb55c3d4d5844a1c859",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-e341ee4c41bd41f3fab0",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-0d0760af8405137dfe90",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-0d59f6d8b09b36fb145d",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-1fc27cd4caa01dd2f04c",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-ccb03c3ca97a6a4dac73",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-cde7ddca235c60d20ada",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-d33eea243c334096866d",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-33685f026d180edb6417",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-79444b89b7d92a3930ab",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-0f9c0b328976f0995bed",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-90533c9daf13fefd691c",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-3fe807708c2eee9d9908",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-15ee8897fe8ae2155f25",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-95da73592de9afc97446",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-b6a7d89a604a1e12d6f4",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-81cdb44f9ea4a488a790",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-fcc98ec139169a04e7ae",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-53ae6758183d6993b268",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-b0012c7f76d639aed2da",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-24ae165ad172de0d6649",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-889d81821ec004838246",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-c35e896dc619cf663b61",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-6542a27e94fc793947e1",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "canonical_use": "COMPATIBILITY_ONLY",
+      "claim_id": "CLM-85a8e1ec74fd4c208401",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    }
+  ],
+  "risk_eligible_count": 5,
+  "schema_version": "e2r_claim_eligibility_audit_v1",
+  "stage_event_eligible_count": 0,
+  "status": "CLAIM_ELIGIBILITY_PLANES_PASS"
+}

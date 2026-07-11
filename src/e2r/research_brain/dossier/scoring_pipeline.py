@@ -236,6 +236,7 @@ def run_dossier_scoring_pipeline(
             provenance_by_claim[str(row.get("claim_id") or "")]
             for row in selected_claims
         ),
+        claim_eligibility_decisions=ledger.claim_eligibility_decisions,
     )
     terminal_evidence = _terminal_component_evidence(
         contract_components=tuple(contract.component_weights),
@@ -262,6 +263,7 @@ def run_dossier_scoring_pipeline(
         accepted_claim_ids=tuple(
             str(row.get("claim_id") or "") for row in selected_claims
         ),
+        claim_eligibility_decisions=ledger.claim_eligibility_decisions,
     )
     adjudication_failure_count = sum(
         row["status"]
@@ -491,6 +493,10 @@ def _write_pipeline_leaves(
     )
     write_jsonl(root / "claim_impacts_proposed.jsonl", (row.to_dict() for row in proposals))
     write_jsonl(
+        root / "claim_eligibility_decisions.jsonl",
+        ledger.claim_eligibility_decisions,
+    )
+    write_jsonl(
         root / "claim_impact_ledger.jsonl",
         (row.to_dict() for row in ledger.validated_impacts),
     )
@@ -524,6 +530,7 @@ def _write_pipeline_leaves(
             "target_id": decision.target_id,
             "as_of_date": decision.as_of_date,
             "accepted_claim_ids": list(decision.accepted_claim_ids),
+            "stage_event_claim_ids": list(decision.stage_event_claim_ids),
             "claim_impact_ids": list(decision.claim_impact_ids),
             "component_assessment_ids": list(decision.component_assessment_ids),
         },

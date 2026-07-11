@@ -24,8 +24,8 @@ def proposal(impact_id: str, mapping_id: str, primitive_id: str, component_id: s
 class ClaimManyToManyImpactTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
     def setUp(self) -> None:
-        self.claims = ({"claim_id":"CLM-1","target_id":"005930","accepted":True,"mapping_ids":["MAP-1","MAP-2"]},)
-        self.provenance = ({"claim_id":"CLM-1","mapping_ids":["MAP-1","MAP-2"]},)
+        self.claims = ({"claim_id":"CLM-1","target_id":"005930","accepted":True,"mapping_ids":["MAP-1","MAP-2"],"evidence_origin":"ORGANIC_LIVE","exact_quote":"메모리 ASP 상승과 HBM 출하가 확인됐다."},)
+        self.provenance = ({"claim_id":"CLM-1","mapping_ids":["MAP-1","MAP-2"],"source_proxy_only":False,"test_only":False,"fetched":True,"anchor_verified":True,"directness":"DIRECT","temporal_status":"CURRENT","mapping_status":"ACCEPTED"},)
         self.satisfaction = ({"status":"REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN","original_gap_open":True,"rerouted_mapping_ids":["MAP-2"]},)
 
     def test_one_claim_can_support_multiple_primitive_and_component_impacts(self) -> None:

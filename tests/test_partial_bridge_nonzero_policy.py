@@ -32,7 +32,7 @@ class PartialBridgeNonzeroPolicyTests(unittest.TestCase):
             unsupported_aspects=("고객별 확약 물량은 확인되지 않았다.",),
         )
         result = ImpactValidator().validate(
-            impacts=(ValidatedClaimImpact(proposal),),
+            impacts=(ValidatedClaimImpact(proposal, eligibility_decision_id="ELIG-PARTIAL"),),
             claim_provenance=(
                 {
                     "claim_id": "CLM-PARTIAL",
@@ -40,6 +40,13 @@ class PartialBridgeNonzeroPolicyTests(unittest.TestCase):
                     "source_proxy_only": False,
                     "directness": "DIRECT",
                     "temporal_status": "CURRENT",
+                },
+            ),
+            claim_eligibility_decisions=(
+                {
+                    "eligibility_decision_id": "ELIG-PARTIAL",
+                    "claim_id": "CLM-PARTIAL",
+                    "component_scoring_eligibility": True,
                 },
             ),
         )

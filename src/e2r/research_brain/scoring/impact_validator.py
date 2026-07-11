@@ -33,6 +33,7 @@ class CreditValidatedImpact:
     claim_budget_scaled: bool
     correlation_scaled: bool
     lineage_mapping_ids: tuple[str, ...] = ()
+    eligibility_decision_id: str = ""
     validation_status: str = "CREDIT_VALIDATED"
 
     def to_dict(self) -> Mapping[str, Any]: return asdict(self)
@@ -47,13 +48,14 @@ class ImpactValidationResult:
 
 
 class ImpactValidator:
-    def validate(self, *, impacts: Sequence[ValidatedClaimImpact], claim_provenance: Sequence[Mapping[str, Any]]) -> ImpactValidationResult:
+    def validate(self, *, impacts: Sequence[ValidatedClaimImpact], claim_provenance: Sequence[Mapping[str, Any]], claim_eligibility_decisions: Sequence[Mapping[str, Any]] = ()) -> ImpactValidationResult:
         from e2r.research_brain.compiler.evidence_impact_rubric_compiler import (
             compile_evidence_impact_rubrics,
         )
 
         scoring_policy = load_scoring_policy_v2()
         provenance = {str(r.get("claim_id") or ""): r for r in claim_provenance}
+        eligibility = {str(r.get("eligibility_decision_id") or ""): r for r in claim_eligibility_decisions}
         accepted: list[CreditValidatedImpact] = []; rejected: list[Mapping[str, Any]] = []
         group_by_primitive: dict[tuple[str,str], str] = {}
         for impact in impacts:
@@ -65,13 +67,15 @@ class ImpactValidator:
             elif prov is None or prov.get("source_proxy_only") is not False or prov.get("directness") != "DIRECT" or prov.get("temporal_status") != "CURRENT": reason="PROVENANCE_NOT_CURRENT_DIRECT"
             elif p.mapping_id not in set(str(v) for v in prov.get("mapping_ids") or ()): reason="PROVENANCE_MAPPING_MISSING"
             elif any(mapping_id not in set(str(v) for v in prov.get("mapping_ids") or ()) for mapping_id in p.lineage_mapping_ids): reason="PROVENANCE_MAPPING_MISSING"
+            elif not impact.eligibility_decision_id or impact.eligibility_decision_id not in eligibility: reason="ELIGIBILITY_DECISION_MISSING"
+            elif eligibility[impact.eligibility_decision_id].get("component_scoring_eligibility") is not True: reason="CLAIM_COMPONENT_INELIGIBLE"
             if reason:
                 rejected.append({"impact_id":p.impact_id,"reason":reason}); continue
             strength=float(require_scoring_key(rubric.strength_bands,p.strength_band,policy_name="strength_bands")); completeness=float(require_scoring_key(rubric.completeness_bands,p.completeness_band,policy_name="completeness_bands"))
             causal=float(require_scoring_key(rubric.causal_distance_caps,p.causal_distance,policy_name="causal_distance_caps")); source=float(require_scoring_key(rubric.source_family_caps,p.source_family,policy_name="source_family_caps"))
             temporal=float(require_scoring_key(contract.freshness_caps,p.temporal_scope,policy_name="temporal_scope_caps")); support=float(scoring_policy.cap_for(support_type=p.support_type,direction=p.direction))
             raw=round(strength*completeness,6); validated=round(min(raw,causal,source,temporal,support),6)
-            accepted.append(CreditValidatedImpact(impact_id=p.impact_id,claim_id=p.claim_id,mapping_id=p.mapping_id,target_id=p.target_id,archetype_id=p.archetype_id,primitive_id=p.primitive_id,component_id=p.component_id,direction=p.direction,evidence_family_id=p.evidence_family_id,raw_credit_fraction=raw,validated_credit_fraction=validated,strength_fraction=strength,completeness_fraction=completeness,causal_cap=causal,source_cap=source,temporal_cap=temporal,support_type_cap=support,claim_budget_scaled=False,correlation_scaled=False,lineage_mapping_ids=p.lineage_mapping_ids))
+            accepted.append(CreditValidatedImpact(impact_id=p.impact_id,claim_id=p.claim_id,mapping_id=p.mapping_id,target_id=p.target_id,archetype_id=p.archetype_id,primitive_id=p.primitive_id,component_id=p.component_id,direction=p.direction,evidence_family_id=p.evidence_family_id,raw_credit_fraction=raw,validated_credit_fraction=validated,strength_fraction=strength,completeness_fraction=completeness,causal_cap=causal,source_cap=source,temporal_cap=temporal,support_type_cap=support,claim_budget_scaled=False,correlation_scaled=False,lineage_mapping_ids=p.lineage_mapping_ids,eligibility_decision_id=impact.eligibility_decision_id))
             for group, primitives in contract.correlation_groups.items():
                 if p.primitive_id in primitives: group_by_primitive[(p.archetype_id,p.primitive_id)]=group
         accepted=_scale_groups(accepted, group_by_primitive)
@@ -82,6 +86,7 @@ class ImpactValidator:
             "source_cap_violation_count":sum(i.validated_credit_fraction>i.source_cap+1e-9 for i in accepted),
             "claim_credit_budget_violation_count":sum(sum(i.validated_credit_fraction for i in accepted if i.claim_id==cid)>1.000001 for cid in {i.claim_id for i in accepted}),
             "correlated_double_count_count":0,
+            "component_score_without_eligibility_decision_count":sum(r["reason"]=="ELIGIBILITY_DECISION_MISSING" for r in rejected),
         }
         return ImpactValidationResult(status="IMPACT_CREDIT_CAP_PASS" if not rejected and sum(critical.values())==0 else "IMPACT_CREDIT_CAP_FAIL",impacts=tuple(accepted),rejected=tuple(rejected),audit={"schema_version":"e2r_impact_credit_cap_audit_v1","validated_impact_count":len(accepted),"rejected_impact_count":len(rejected),"claim_budget_scaled_count":sum(i.claim_budget_scaled for i in accepted),"correlation_scaled_count":sum(i.correlation_scaled for i in accepted),"critical_counts":critical,"critical_count_sum":sum(critical.values())})
 

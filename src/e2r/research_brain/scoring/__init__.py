@@ -15,6 +15,7 @@ from .atomic_stagecourt_v2 import AtomicStageCourtV2, AtomicStageDecisionV2
 from .evidence_origin import EvidenceOrigin, ScoringEvidencePartition, audit_probe_separation, partition_scoring_evidence
 from .scoring_readiness import SCORING_READINESS_SCHEMA_VERSION, compile_meaningful_scoring_readiness, write_meaningful_scoring_readiness
 from .codex_impact_provider import CodexEvidenceImpactProvider
+from .claim_eligibility import ClaimEligibilityDecision, audit_claim_eligibility, compile_claim_eligibility_decisions
 
 __all__ = [
     "ClaimImpactLedgerBuilder", "ClaimImpactLedgerResult", "ClaimImpactProposal",
@@ -27,4 +28,5 @@ __all__ = [
     "EvidenceOrigin", "ScoringEvidencePartition", "audit_probe_separation", "partition_scoring_evidence",
     "SCORING_READINESS_SCHEMA_VERSION", "compile_meaningful_scoring_readiness", "write_meaningful_scoring_readiness",
     "CodexEvidenceImpactProvider",
+    "ClaimEligibilityDecision", "audit_claim_eligibility", "compile_claim_eligibility_decisions",
 ]

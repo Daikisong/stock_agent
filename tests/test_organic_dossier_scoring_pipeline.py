@@ -132,6 +132,7 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
                     "evidence_origin": "ORGANIC_LIVE",
                     "fetched": True,
                     "source_proxy_only": False,
+                    "exact_quote": "The issuer introduced its current HBM product.",
                 }
             ],
         )
@@ -149,6 +150,10 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
                     "directness": "DIRECT",
                     "temporal_status": "CURRENT",
                     "source_proxy_only": False,
+                    "test_only": False,
+                    "fetched": True,
+                    "anchor_verified": True,
+                    "mapping_status": "ACCEPTED",
                 }
             ],
         )
