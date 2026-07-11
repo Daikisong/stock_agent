@@ -1,0 +1,14 @@
+{
+  "schema_version":"e2r_atomic_stagecourt_v2_audit_v1",
+  "as_of_date":"2026-07-11",
+  "status":"ATOMIC_STAGECOURT_V2_PASS",
+  "scope":"DETERMINISTIC_CONTRACT_CANARY",
+  "atomic_decision_count":1,
+  "component_assessment_count":7,
+  "claim_impact_count":1,
+  "verified_supported_score":11.4,
+  "full_score_valid":true,
+  "score_type":"FULL_E2R_100",
+  "critical_counts":{"stage_without_component_vector_count":0,"score_without_impact_lineage_count":0,"pending_score_erased_count":0,"hard_break_without_current_direct_open_count":0,"atomic_trace_mismatch_count":0},
+  "critical_count_sum":0
+}
