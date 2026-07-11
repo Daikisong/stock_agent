@@ -71,6 +71,12 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
             decision = json.loads((root / "atomic_stage_decision.json").read_text())
             self.assertTrue(decision["full_score_valid"])
             self.assertEqual(decision["accepted_claim_ids"], ["CLM-1"])
+            closures_v2 = self._read_jsonl(root / "question_closure_v2.jsonl")
+            self.assertEqual(len(closures_v2), 12)
+            self.assertNotIn(
+                "SUPPORTED",
+                {row["status"] for row in closures_v2},
+            )
 
     def test_provider_pending_component_preserves_points_but_blocks_full_score(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -199,6 +205,10 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
     @staticmethod
     def _jsonl(path: Path, rows):
         path.write_text("".join(json.dumps(row) + "\n" for row in rows))
+
+    @staticmethod
+    def _read_jsonl(path: Path):
+        return [json.loads(line) for line in path.read_text().splitlines()]
 
 
 if __name__ == "__main__":

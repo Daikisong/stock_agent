@@ -16,6 +16,12 @@ from .evidence_origin import EvidenceOrigin, ScoringEvidencePartition, audit_pro
 from .scoring_readiness import SCORING_READINESS_SCHEMA_VERSION, compile_meaningful_scoring_readiness, write_meaningful_scoring_readiness
 from .codex_impact_provider import CodexEvidenceImpactProvider
 from .claim_eligibility import ClaimEligibilityDecision, audit_claim_eligibility, compile_claim_eligibility_decisions
+from .question_impact_contract import (
+    QuestionImpactContract,
+    audit_question_impact_contracts,
+    compile_question_closures_v2,
+    load_question_impact_contracts,
+)
 
 __all__ = [
     "ClaimImpactLedgerBuilder", "ClaimImpactLedgerResult", "ClaimImpactProposal",
@@ -29,4 +35,6 @@ __all__ = [
     "SCORING_READINESS_SCHEMA_VERSION", "compile_meaningful_scoring_readiness", "write_meaningful_scoring_readiness",
     "CodexEvidenceImpactProvider",
     "ClaimEligibilityDecision", "audit_claim_eligibility", "compile_claim_eligibility_decisions",
+    "QuestionImpactContract", "audit_question_impact_contracts",
+    "compile_question_closures_v2", "load_question_impact_contracts",
 ]

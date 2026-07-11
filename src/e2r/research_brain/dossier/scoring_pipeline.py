@@ -21,6 +21,9 @@ from e2r.research_brain.scoring import (
     EvidenceImpactAdjudicator,
     ImpactValidator,
     ResearchCalibratedComponentScorer,
+    compile_claim_eligibility_decisions,
+    compile_question_closures_v2,
+    load_question_impact_contracts,
 )
 from e2r.research_brain.scoring.claim_impact_ledger import ClaimImpactProposal
 
@@ -90,6 +93,17 @@ def run_dossier_scoring_pipeline(
             mappings_by_claim.setdefault(str(row.get("claim_id") or ""), []).append(row)
     contract = load_archetype_scoring_contract(archetype_id)
     rubrics = compile_evidence_impact_rubrics(archetype_id)
+    eligibility_decisions = tuple(
+        decision.to_dict()
+        for decision in compile_claim_eligibility_decisions(
+            claims=selected_claims,
+            claim_provenance=tuple(
+                provenance_by_claim[str(row.get("claim_id") or "")]
+                for row in selected_claims
+            ),
+            archetype_id=archetype_id,
+        )
+    )
     adjudication_rows: list[Mapping[str, Any]] = []
     proposals: list[ClaimImpactProposal] = []
     invalid_proposal_count = 0
@@ -229,6 +243,7 @@ def run_dossier_scoring_pipeline(
             for row in selected_claims
         ),
         source_task_satisfaction=satisfaction,
+        claim_eligibility_decisions=eligibility_decisions,
     )
     validation = ImpactValidator().validate(
         impacts=ledger.validated_impacts,
@@ -238,10 +253,27 @@ def run_dossier_scoring_pipeline(
         ),
         claim_eligibility_decisions=ledger.claim_eligibility_decisions,
     )
+    question_contracts = {
+        question_id: question_contract
+        for question_id, question_contract in load_question_impact_contracts().items()
+        if question_contract.archetype_id == archetype_id
+    }
+    closures_v2 = (
+        compile_question_closures_v2(
+            contracts=question_contracts,
+            claims=selected_claims,
+            primitive_mappings=mappings,
+            eligibility_decisions=ledger.claim_eligibility_decisions,
+            prior_closures=closures,
+            validated_impacts=validation.impacts,
+        )
+        if question_contracts
+        else tuple(closures)
+    )
     terminal_evidence = _terminal_component_evidence(
         contract_components=tuple(contract.component_weights),
         impacts=validation.impacts,
-        question_closures=closures,
+        question_closures=closures_v2,
     )
     assessment = ComponentAssessmentBuilder().build(
         contract=contract,
@@ -365,6 +397,7 @@ def run_dossier_scoring_pipeline(
         score=score,
         decision=decision,
         audit=audit,
+        question_closures_v2=closures_v2,
     )
     return audit
 
@@ -395,11 +428,8 @@ def _terminal_component_evidence(
             for proof in row.get("search_exhaustion_proof") or ()
         )
         investigated_statuses = {
-            "SUPPORTED",
-            "PARTIALLY_SUPPORTED",
-            "COUNTERED",
+            "COUNTER_SUPPORTED",
             "EVALUATED_ABSENT",
-            "SOURCE_EXHAUSTED",
         }
         investigated_proof = tuple(
             str(claim_id)
@@ -465,7 +495,7 @@ def _impact_satisfaction_rows(
 
 
 def _write_pipeline_leaves(
-    *, root: Path, adjudications, proposals, ledger, validation, assessment, score, decision, audit
+    *, root: Path, adjudications, proposals, ledger, validation, assessment, score, decision, audit, question_closures_v2
 ) -> None:
     write_jsonl(root / "impact_adjudications.jsonl", adjudications)
     proposal_mapping_ids = {
@@ -496,6 +526,7 @@ def _write_pipeline_leaves(
         root / "claim_eligibility_decisions.jsonl",
         ledger.claim_eligibility_decisions,
     )
+    write_jsonl(root / "question_closure_v2.jsonl", question_closures_v2)
     write_jsonl(
         root / "claim_impact_ledger.jsonl",
         (row.to_dict() for row in ledger.validated_impacts),
