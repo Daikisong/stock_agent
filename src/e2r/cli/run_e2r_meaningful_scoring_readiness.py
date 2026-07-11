@@ -14,11 +14,11 @@ from e2r.research_brain.scoring.scoring_readiness import (
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--config", default="configs/e2r_meaningful_scoring_readiness_v2.json"
+        "--config", default="configs/e2r_meaningful_scoring_readiness_v3.json"
     )
     parser.add_argument(
         "--output",
-        default="docs/operational/e2r_meaningful_scoring_readiness_verdict.md",
+        default="docs/operational/e2r_meaningful_scoring_readiness_v3.md",
     )
     parser.add_argument("--verify-repository", action="store_true")
     args = parser.parse_args(argv)

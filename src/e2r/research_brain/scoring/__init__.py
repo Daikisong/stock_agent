@@ -19,7 +19,12 @@ from .atomic_stagecourt_v2 import (
     RiskOverlayInput,
 )
 from .evidence_origin import EvidenceOrigin, ScoringEvidencePartition, audit_probe_separation, partition_scoring_evidence
-from .scoring_readiness import SCORING_READINESS_SCHEMA_VERSION, compile_meaningful_scoring_readiness, write_meaningful_scoring_readiness
+from .scoring_readiness import (
+    MEANINGFUL_READY_V2,
+    SCORING_READINESS_SCHEMA_VERSION,
+    compile_meaningful_scoring_readiness,
+    write_meaningful_scoring_readiness,
+)
 from .codex_impact_provider import CodexEvidenceImpactProvider
 from .claim_eligibility import ClaimEligibilityDecision, audit_claim_eligibility, compile_claim_eligibility_decisions
 from .component_scoring_model import (
@@ -68,7 +73,8 @@ __all__ = [
     "AtomicStageCourtV2", "AtomicStageDecisionV2",
     "EventOverlayInput", "FullThesisStageInput", "RiskOverlayInput",
     "EvidenceOrigin", "ScoringEvidencePartition", "audit_probe_separation", "partition_scoring_evidence",
-    "SCORING_READINESS_SCHEMA_VERSION", "compile_meaningful_scoring_readiness", "write_meaningful_scoring_readiness",
+    "MEANINGFUL_READY_V2", "SCORING_READINESS_SCHEMA_VERSION",
+    "compile_meaningful_scoring_readiness", "write_meaningful_scoring_readiness",
     "CodexEvidenceImpactProvider",
     "ClaimEligibilityDecision", "audit_claim_eligibility", "compile_claim_eligibility_decisions",
     "ArchetypeComponentScoringModel", "ComponentScoringModel",

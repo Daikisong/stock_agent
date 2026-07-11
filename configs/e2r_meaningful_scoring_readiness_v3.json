@@ -1,0 +1,123 @@
+{
+  "schema_version": "e2r_meaningful_scoring_readiness_v3",
+  "as_of_date": "2026-07-11",
+  "required_component_ids": [
+    "eps_fcf_explosion",
+    "earnings_visibility",
+    "bottleneck_pricing",
+    "market_mispricing",
+    "valuation_rerating",
+    "capital_allocation",
+    "information_confidence"
+  ],
+  "mandatory_targets": [
+    {
+      "target_id": "005930",
+      "company_name": "삼성전자",
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "expected_profile_id": "e2r_2_2_archetype_weight_runtime",
+      "success_label": "SAMSUNG_SEMANTIC_FULL_THESIS_PASS",
+      "dossier_root": "output/evidence_to_score_v2/live_2026-07-11/005930"
+    },
+    {
+      "target_id": "000660",
+      "company_name": "SK하이닉스",
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "expected_profile_id": "e2r_2_2_archetype_weight_runtime",
+      "success_label": "SK_HYNIX_SEMANTIC_FULL_THESIS_PASS",
+      "dossier_root": "output/evidence_to_score_v2/live_2026-07-11/000660"
+    }
+  ],
+  "required_global_audits": [
+    {
+      "audit_id": "live_materialization",
+      "path": "docs/operational/e2r_live_acceptance_report.json",
+      "accepted_statuses": ["FULL_LIVE_ACCEPTANCE_PASS"]
+    },
+    {
+      "audit_id": "scoring_schema_totality",
+      "path": "docs/operational/e2r_scoring_schema_totality_audit.json",
+      "accepted_statuses": ["SCORING_SCHEMA_TOTALITY_PASS"]
+    },
+    {
+      "audit_id": "impact_validator_v2",
+      "path": "docs/operational/e2r_impact_validator_v2_audit.json",
+      "accepted_statuses": ["STRICT_IMPACT_VALIDATOR_V2_PASS"]
+    },
+    {
+      "audit_id": "business_mechanism_scope",
+      "path": "docs/operational/e2r_business_mechanism_scope_audit.json",
+      "accepted_statuses": ["BUSINESS_MECHANISM_SCOPE_PASS"]
+    },
+    {
+      "audit_id": "question_component_reconciliation",
+      "path": "docs/operational/e2r_question_component_reconciliation_audit.json",
+      "accepted_statuses": ["QUESTION_COMPONENT_RECONCILIATION_PASS"]
+    },
+    {
+      "audit_id": "counter_component",
+      "path": "docs/operational/e2r_counter_component_audit.json",
+      "accepted_statuses": ["COUNTER_COMPONENT_MATH_PASS"]
+    },
+    {
+      "audit_id": "fact_document_dedupe",
+      "path": "docs/operational/e2r_fact_document_dedupe_audit.json",
+      "accepted_statuses": ["FACT_DOCUMENT_DEDUPE_PASS"]
+    },
+    {
+      "audit_id": "full_thesis_event_separation",
+      "path": "docs/operational/e2r_full_thesis_event_separation_audit.json",
+      "accepted_statuses": ["STAGECOURT_EVENT_SEPARATION_PASS"]
+    },
+    {
+      "audit_id": "claim_eligibility",
+      "path": "docs/operational/e2r_claim_eligibility_audit.json",
+      "accepted_statuses": ["CLAIM_ELIGIBILITY_PLANES_PASS"]
+    },
+    {
+      "audit_id": "research_quality_gold",
+      "path": "docs/operational/e2r_research_quality_gold_audit.json",
+      "accepted_statuses": ["BLIND_RESEARCH_QUALITY_PASS"]
+    },
+    {
+      "audit_id": "evidence_search_adequacy",
+      "path": "docs/operational/e2r_evidence_search_adequacy_audit.json",
+      "accepted_statuses": ["EVIDENCE_SEARCH_ADEQUACY_PASS"]
+    },
+    {
+      "audit_id": "question_impact_contract",
+      "path": "docs/operational/e2r_question_impact_contract_audit.json",
+      "accepted_statuses": ["QUESTION_IMPACT_CONTRACT_PASS"]
+    },
+    {
+      "audit_id": "full_score_validity_v2",
+      "path": "docs/operational/e2r_full_score_validity_v2_audit.json",
+      "accepted_statuses": ["FULL_SCORE_VALIDITY_V2_AUDIT_PASS"]
+    },
+    {
+      "audit_id": "frozen_52f09f3_repair",
+      "path": "docs/operational/e2r_frozen_52f09f3_repair_audit.json",
+      "accepted_statuses": ["FROZEN_52F09F3_REPAIR_PASS"]
+    },
+    {
+      "audit_id": "c06_historical_component_replay",
+      "path": "docs/operational/e2r_c06_historical_component_replay.json",
+      "accepted_statuses": ["C06_HISTORICAL_COMPONENT_REPLAY_PASS"]
+    },
+    {
+      "audit_id": "evidence_to_score_generalization",
+      "path": "docs/operational/e2r_evidence_to_score_generalization_audit.json",
+      "accepted_statuses": ["EVIDENCE_TO_SCORE_GENERALIZATION_PASS"]
+    },
+    {
+      "audit_id": "semantic_scoring_known_bad",
+      "path": "docs/operational/e2r_semantic_scoring_known_bad_audit.json",
+      "accepted_statuses": ["SEMANTIC_SCORING_KNOWN_BAD_PASS"]
+    },
+    {
+      "audit_id": "semantic_scoring_reviewer_gate",
+      "path": "docs/operational/e2r_semantic_scoring_reviewer_gate.json",
+      "accepted_statuses": ["SEMANTIC_SCORING_REVIEWER_GATE_PASS"]
+    }
+  ]
+}
