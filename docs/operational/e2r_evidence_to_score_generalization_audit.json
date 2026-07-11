@@ -1,0 +1,147 @@
+{
+  "cases": {
+    "c08_direct_customer_order_positive": {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "credited_impact_count": 2,
+      "critical_count_sum": 0,
+      "edge_catalog_status": "EXPLICIT",
+      "full_score_valid": true,
+      "multi_impact_claim_count": 1,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "proposal_count": 2,
+      "score_type": "FULL_E2R_100",
+      "terminal_component_count": 7,
+      "validated_impact_count": 2,
+      "verified_supported_score": 15.0
+    },
+    "c08_product_profile_only_guard": {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "credited_impact_count": 0,
+      "critical_count_sum": 0,
+      "edge_catalog_status": "EXPLICIT",
+      "full_score_valid": true,
+      "multi_impact_claim_count": 0,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "proposal_count": 1,
+      "score_type": "FULL_E2R_100",
+      "terminal_component_count": 7,
+      "validated_impact_count": 1,
+      "verified_supported_score": 0.0
+    },
+    "c15_issuer_pass_through_positive": {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "credited_impact_count": 2,
+      "critical_count_sum": 0,
+      "edge_catalog_status": "EXPLICIT",
+      "full_score_valid": true,
+      "multi_impact_claim_count": 1,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "proposal_count": 2,
+      "score_type": "FULL_E2R_100",
+      "terminal_component_count": 7,
+      "validated_impact_count": 2,
+      "verified_supported_score": 20.0
+    },
+    "c15_raw_commodity_headline_guard": {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "credited_impact_count": 0,
+      "critical_count_sum": 0,
+      "edge_catalog_status": "EXPLICIT",
+      "full_score_valid": true,
+      "multi_impact_claim_count": 0,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "proposal_count": 1,
+      "score_type": "FULL_E2R_100",
+      "terminal_component_count": 7,
+      "validated_impact_count": 1,
+      "verified_supported_score": 0.0
+    },
+    "old_risk_resolved_guard": {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "credited_impact_count": 0,
+      "critical_count_sum": 0,
+      "edge_catalog_status": "EXPLICIT",
+      "full_score_valid": true,
+      "multi_impact_claim_count": 0,
+      "open_counter_impact_count": 0,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "proposal_count": 1,
+      "resolved_impact_count": 1,
+      "score_type": "FULL_E2R_100",
+      "terminal_component_count": 7,
+      "validated_impact_count": 1,
+      "verified_supported_score": 0.0
+    },
+    "wrong_subject_accounting_guard": {
+      "rejected_impact_count": 1,
+      "rejection_reason": "TARGET_MISMATCH"
+    }
+  },
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "c08_positive_bridge_failure_count": 0,
+    "c08_profile_guard_failure_count": 0,
+    "c15_headline_guard_failure_count": 0,
+    "c15_positive_bridge_failure_count": 0,
+    "resolved_risk_guard_failure_count": 0,
+    "rubric_critical_count": 0,
+    "wrong_subject_guard_failure_count": 0
+  },
+  "future_outcome_leakage_count": 0,
+  "rubric_audits": {
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
+      "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "config_hash": "12b8d0da10ed096ea36169ab49c6ffacbb4bcc89c1076ae693ff83eeb3f802e7",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 5,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [
+        "named_customer_quality",
+        "qualification_confirmed",
+        "repeat_order_confirmed",
+        "socket_or_test_demand_visible",
+        "margin_bridge_visible"
+      ],
+      "source_backed_example_count": 2,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C15_MATERIAL_SPREAD_SUPERCYCLE": {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "config_hash": "e80df830dd48c5d6b71c2875c85cf4be5240e72eb71c4f2430e2fcb364970beb",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 5,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [
+        "spread_expansion",
+        "utilization_rate",
+        "inventory_cycle",
+        "pricing_power_confirmed",
+        "fcf_quality_score"
+      ],
+      "source_backed_example_count": 3,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    }
+  },
+  "schema_version": "e2r_evidence_to_score_generalization_v1",
+  "source_proxy_score_count": 0,
+  "status": "EVIDENCE_TO_SCORE_GENERALIZATION_PASS",
+  "target_specific_branch_count": 0
+}

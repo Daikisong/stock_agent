@@ -75,6 +75,80 @@
         "earnings_conversion": ["memory_price_increase_mentioned", "medium_term_revision_visibility"]
       },
       "counter_effect_rules": {"OPEN_DIRECT_COUNTER": "CAP_COMPONENT", "RESOLVED_COUNTER": "NO_CURRENT_PENALTY", "INDUSTRY_ONLY_COUNTER": "DIAGNOSTIC_ONLY"}
+    },
+    "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
+      "primitive_to_component_allowed_edges": {
+        "named_customer_quality": ["earnings_visibility", "information_confidence"],
+        "qualification_confirmed": ["earnings_visibility", "information_confidence"],
+        "repeat_order_confirmed": ["earnings_visibility", "information_confidence"],
+        "socket_or_test_demand_visible": ["earnings_visibility", "bottleneck_pricing", "information_confidence"],
+        "margin_bridge_visible": ["eps_fcf_explosion", "information_confidence"]
+      },
+      "primitive_materiality": {
+        "named_customer_quality": true,
+        "qualification_confirmed": true,
+        "repeat_order_confirmed": true,
+        "socket_or_test_demand_visible": true,
+        "margin_bridge_visible": true
+      },
+      "primitive_green_requirements": {
+        "named_customer_quality": true,
+        "qualification_confirmed": true,
+        "repeat_order_confirmed": true,
+        "socket_or_test_demand_visible": true,
+        "margin_bridge_visible": true
+      },
+      "component_required_evidence_roles": {
+        "eps_fcf_explosion": ["MARGIN_CONVERSION", "CASH_CONVERSION"],
+        "earnings_visibility": ["NAMED_CUSTOMER", "QUALIFICATION", "REPEAT_ORDER"],
+        "bottleneck_pricing": ["SOCKET_TEST_DEMAND", "CAPACITY_CONSTRAINT"],
+        "market_mispricing": ["CURRENT_VALUATION", "EARNINGS_REVISION"],
+        "valuation_rerating": ["CURRENT_VALUATION", "DURABLE_VISIBILITY"],
+        "capital_allocation": ["CASH_CONVERSION"],
+        "information_confidence": ["OFFICIAL_DIRECT", "CUSTOMER_CORROBORATION"]
+      },
+      "component_caps": {"eps_fcf_explosion": 22.0, "earnings_visibility": 21.0, "bottleneck_pricing": 16.0, "market_mispricing": 14.0, "valuation_rerating": 12.0, "capital_allocation": 6.0, "information_confidence": 9.0},
+      "source_tier_caps": {"ISSUER_OFFICIAL": 1.0, "OFFICIAL_FILING": 1.0, "CUSTOMER_OFFICIAL": 0.95, "TRUSTED_INDEPENDENT": 0.85, "DISCOVERY_ONLY": 0.0, "SNIPPET": 0.0},
+      "freshness_caps": {"CURRENT": 1.0, "CURRENT_BASELINE": 0.85, "HISTORICAL_ONLY": 0.0, "FUTURE": 0.0},
+      "correlation_groups": {"customer_quality_visibility": ["named_customer_quality", "qualification_confirmed", "repeat_order_confirmed", "socket_or_test_demand_visible"]},
+      "counter_effect_rules": {"OPEN_DIRECT_COUNTER": "CAP_COMPONENT", "RESOLVED_COUNTER": "NO_CURRENT_PENALTY", "INDUSTRY_ONLY_COUNTER": "DIAGNOSTIC_ONLY"}
+    },
+    "C15_MATERIAL_SPREAD_SUPERCYCLE": {
+      "primitive_to_component_allowed_edges": {
+        "spread_expansion": ["bottleneck_pricing", "eps_fcf_explosion", "information_confidence"],
+        "utilization_rate": ["bottleneck_pricing", "earnings_visibility", "information_confidence"],
+        "inventory_cycle": ["earnings_visibility", "bottleneck_pricing", "information_confidence"],
+        "pricing_power_confirmed": ["bottleneck_pricing", "eps_fcf_explosion", "information_confidence"],
+        "fcf_quality_score": ["eps_fcf_explosion", "capital_allocation", "information_confidence"]
+      },
+      "primitive_materiality": {
+        "spread_expansion": true,
+        "utilization_rate": true,
+        "inventory_cycle": true,
+        "pricing_power_confirmed": true,
+        "fcf_quality_score": true
+      },
+      "primitive_green_requirements": {
+        "spread_expansion": true,
+        "utilization_rate": true,
+        "inventory_cycle": true,
+        "pricing_power_confirmed": true,
+        "fcf_quality_score": true
+      },
+      "component_required_evidence_roles": {
+        "eps_fcf_explosion": ["SPREAD_CONVERSION", "FCF_QUALITY"],
+        "earnings_visibility": ["UTILIZATION", "INVENTORY_CYCLE"],
+        "bottleneck_pricing": ["SPREAD_EXPANSION", "PRICING_POWER"],
+        "market_mispricing": ["CURRENT_VALUATION", "CYCLE_EXPECTATION"],
+        "valuation_rerating": ["CURRENT_VALUATION", "DURABLE_SPREAD"],
+        "capital_allocation": ["FCF_QUALITY", "SUPPLY_DISCIPLINE"],
+        "information_confidence": ["OFFICIAL_DIRECT", "INDEPENDENT_CORROBORATION"]
+      },
+      "component_caps": {"eps_fcf_explosion": 20.0, "earnings_visibility": 12.0, "bottleneck_pricing": 20.0, "market_mispricing": 10.0, "valuation_rerating": 10.0, "capital_allocation": 8.0, "information_confidence": 20.0},
+      "source_tier_caps": {"ISSUER_OFFICIAL": 1.0, "OFFICIAL_FILING": 1.0, "CUSTOMER_OFFICIAL": 0.95, "TRUSTED_INDEPENDENT": 0.85, "DISCOVERY_ONLY": 0.0, "SNIPPET": 0.0},
+      "freshness_caps": {"CURRENT": 1.0, "CURRENT_BASELINE": 0.85, "HISTORICAL_ONLY": 0.0, "FUTURE": 0.0},
+      "correlation_groups": {"spread_pricing": ["spread_expansion", "pricing_power_confirmed"], "cycle_supply": ["utilization_rate", "inventory_cycle"]},
+      "counter_effect_rules": {"OPEN_DIRECT_COUNTER": "CAP_COMPONENT", "RESOLVED_COUNTER": "NO_CURRENT_PENALTY", "INDUSTRY_ONLY_COUNTER": "DIAGNOSTIC_ONLY"}
     }
   }
 }
