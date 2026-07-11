@@ -1,0 +1,56 @@
+{
+  "schema_version": "e2r_archetype_scoring_contract_edges_v1",
+  "contracts": {
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+      "primitive_to_component_allowed_edges": {
+        "customer_preorder_or_allocation": ["earnings_visibility", "bottleneck_pricing", "information_confidence"],
+        "revenue_visibility_contract": ["earnings_visibility", "information_confidence"],
+        "hbm_capacity_constraint": ["bottleneck_pricing", "earnings_visibility", "capital_allocation"],
+        "hbm_capacity_pre_sold": ["bottleneck_pricing", "earnings_visibility", "information_confidence"],
+        "memory_price_increase_mentioned": ["bottleneck_pricing", "eps_fcf_explosion", "information_confidence"],
+        "medium_term_revision_visibility": ["earnings_visibility", "eps_fcf_explosion", "information_confidence"]
+      },
+      "primitive_materiality": {
+        "customer_preorder_or_allocation": true,
+        "revenue_visibility_contract": true,
+        "hbm_capacity_constraint": true,
+        "hbm_capacity_pre_sold": true,
+        "memory_price_increase_mentioned": true,
+        "medium_term_revision_visibility": true
+      },
+      "primitive_green_requirements": {
+        "customer_preorder_or_allocation": true,
+        "revenue_visibility_contract": true,
+        "hbm_capacity_constraint": true,
+        "hbm_capacity_pre_sold": true,
+        "memory_price_increase_mentioned": false,
+        "medium_term_revision_visibility": false
+      },
+      "component_required_evidence_roles": {
+        "eps_fcf_explosion": ["ACTUAL_EARNINGS", "FORWARD_REVISION", "CASH_CONVERSION"],
+        "earnings_visibility": ["CUSTOMER_COMMITMENT", "CAPACITY_BOOKING", "FORWARD_REVISION"],
+        "bottleneck_pricing": ["CAPACITY_CONSTRAINT", "PRE_SOLD_CAPACITY", "REALIZED_PRICING"],
+        "market_mispricing": ["CURRENT_VALUATION", "EARNINGS_REVISION"],
+        "valuation_rerating": ["CURRENT_VALUATION", "DURABLE_VISIBILITY"],
+        "capital_allocation": ["CAPEX_SUPPLY_RESPONSE", "CASH_CONVERSION"],
+        "information_confidence": ["OFFICIAL_DIRECT", "INDEPENDENT_CORROBORATION"]
+      },
+      "component_caps": {
+        "eps_fcf_explosion": 24.0,
+        "earnings_visibility": 21.0,
+        "bottleneck_pricing": 19.0,
+        "market_mispricing": 15.0,
+        "valuation_rerating": 12.0,
+        "capital_allocation": 4.0,
+        "information_confidence": 5.0
+      },
+      "source_tier_caps": {"ISSUER_OFFICIAL": 1.0, "OFFICIAL_FILING": 1.0, "CUSTOMER_OFFICIAL": 0.95, "TRUSTED_INDEPENDENT": 0.85, "DISCOVERY_ONLY": 0.0, "SNIPPET": 0.0},
+      "freshness_caps": {"CURRENT": 1.0, "CURRENT_BASELINE": 0.85, "HISTORICAL_ONLY": 0.0, "FUTURE": 0.0},
+      "correlation_groups": {
+        "customer_capacity_visibility": ["customer_preorder_or_allocation", "hbm_capacity_constraint", "hbm_capacity_pre_sold", "revenue_visibility_contract"],
+        "earnings_conversion": ["memory_price_increase_mentioned", "medium_term_revision_visibility"]
+      },
+      "counter_effect_rules": {"OPEN_DIRECT_COUNTER": "CAP_COMPONENT", "RESOLVED_COUNTER": "NO_CURRENT_PENALTY", "INDUSTRY_ONLY_COUNTER": "DIAGNOSTIC_ONLY"}
+    }
+  }
+}

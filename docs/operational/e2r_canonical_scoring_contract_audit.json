@@ -1,0 +1,38 @@
+{
+  "schema_version": "e2r_canonical_scoring_contract_audit_v1",
+  "as_of_date": "2026-07-11",
+  "status": "CANONICAL_SCORING_CONTRACT_PASS",
+  "profile_id": "e2r_2_2_archetype_weight_runtime",
+  "profile_version": "v2_2",
+  "contract_count": 36,
+  "config_hash": "ea43dce607ea173ba521b45703175e6807ba1ff07fba078cb3184b5690a1ff28",
+  "c06_contract": {
+    "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+    "config_hash": "996ed1c57cd762281457df7594b8463aefaa453ebe25200e0aa7e08a0c7740e6",
+    "edge_catalog_status": "EXPLICIT",
+    "component_max_points": {
+      "eps_fcf_explosion": 24.0,
+      "earnings_visibility": 21.0,
+      "bottleneck_pricing": 19.0,
+      "market_mispricing": 15.0,
+      "valuation_rerating": 12.0,
+      "capital_allocation": 4.0,
+      "information_confidence": 5.0
+    },
+    "primitive_to_component_allowed_edges": {
+      "customer_preorder_or_allocation": ["earnings_visibility", "bottleneck_pricing", "information_confidence"],
+      "revenue_visibility_contract": ["earnings_visibility", "information_confidence"],
+      "hbm_capacity_constraint": ["bottleneck_pricing", "earnings_visibility", "capital_allocation"],
+      "hbm_capacity_pre_sold": ["bottleneck_pricing", "earnings_visibility", "information_confidence"],
+      "memory_price_increase_mentioned": ["bottleneck_pricing", "eps_fcf_explosion", "information_confidence"],
+      "medium_term_revision_visibility": ["earnings_visibility", "eps_fcf_explosion", "information_confidence"]
+    }
+  },
+  "critical_counts": {
+    "component_weight_sum_mismatch_count": 0,
+    "missing_component_contract_count": 0,
+    "source_task_defined_score_weight_count": 0,
+    "unknown_profile_silent_fallback_count": 0
+  },
+  "critical_count_sum": 0
+}
