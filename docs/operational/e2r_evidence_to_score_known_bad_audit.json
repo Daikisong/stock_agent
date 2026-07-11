@@ -1,0 +1,250 @@
+{
+  "case_count": 25,
+  "cases": [
+    {
+      "case_id": "KB-01",
+      "detector_ids": [
+        "tests.test_canonical_archetype_scoring_contract.CanonicalArchetypeScoringContractTests.test_c06_uses_research_weights_not_source_task_count"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "SourceTask count로 100점을 균등분배",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-02",
+      "detector_ids": [
+        "tests.test_production_no_balanced_points.ProductionNoBalancedPointsTests.test_static_lockout_audit_has_zero_critical_counts"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "모든 primitive를 material/green_required로 강제",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-03",
+      "detector_ids": [
+        "tests.test_production_no_balanced_points.ProductionNoBalancedPointsTests.test_static_lockout_audit_has_zero_critical_counts"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "direct task closure만으로 점수 계산",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-04",
+      "detector_ids": [
+        "tests.test_claim_many_to_many_impacts.ClaimManyToManyImpactTests.test_rerouted_impact_survives_without_closing_original_gap"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "rerouted valid claim의 score impact를 폐기",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-05",
+      "detector_ids": [
+        "tests.test_claim_many_to_many_impacts.ClaimManyToManyImpactTests.test_rerouted_impact_survives_without_closing_original_gap"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "rerouted claim이 original gap까지 닫음",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-06",
+      "detector_ids": [
+        "tests.test_claim_many_to_many_impacts.ClaimManyToManyImpactTests.test_one_claim_can_support_multiple_primitive_and_component_impacts"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "한 claim의 복수 impact를 금지",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-07",
+      "detector_ids": [
+        "tests.test_claim_mapping_lineage_preserved.ClaimMappingLineagePreservedTests.test_same_claim_provenance_unions_every_mapping_id"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "동일 claim의 mapping ID를 나중 값으로 덮어씀",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-08",
+      "detector_ids": [
+        "tests.test_claim_many_to_many_impacts.ClaimManyToManyImpactTests.test_duplicate_economic_credit_is_rejected"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "동일 claim에 같은 경제적 credit을 중복 부여",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-09",
+      "detector_ids": [
+        "tests.test_impact_credit_caps.ImpactCreditCapsTests.test_claim_total_credit_budget_scales_many_components"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "claim 전체 credit budget을 초과",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-10",
+      "detector_ids": [
+        "tests.test_component_assessment_states.ComponentAssessmentStateTests.test_partial_component_score_is_preserved_while_other_components_unknown"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "한 component gap이 이미 확인된 component 점수를 삭제",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-11",
+      "detector_ids": [
+        "tests.test_component_assessment_states.ComponentAssessmentStateTests.test_evaluated_absent_allows_terminal_full_thesis_assessment"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "VERIFIED_ABSENT_AFTER_SEARCH를 UNKNOWN으로 붕괴",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-12",
+      "detector_ids": [
+        "tests.test_component_assessment_states.ComponentAssessmentStateTests.test_unknown_and_provider_pending_block_finalization"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "UNKNOWN_UNINVESTIGATED를 0점 final로 확정",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-13",
+      "detector_ids": [
+        "tests.test_atomic_stagecourt_component_trace.AtomicStageCourtComponentTraceTests.test_pending_preserves_verified_score_and_does_not_finalize_stage"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "provider pending 상태에서 full score 확정",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-14",
+      "detector_ids": [
+        "tests.test_acceptance_probe_not_organic.AcceptanceProbeNotOrganicTests.test_controlled_probe_claim_is_excluded_from_scoring_plane"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "acceptance probe를 organic claim으로 계산",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-15",
+      "detector_ids": [
+        "tests.test_acceptance_probe_not_organic.AcceptanceProbeNotOrganicTests.test_probe_no_score_decision_cannot_unlock_scoring_readiness"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "NO_SCORE probe로 readiness를 PASS",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-16",
+      "detector_ids": [
+        "tests.test_research_calibrated_component_scorer.ResearchCalibratedComponentScorerTests.test_component_vector_uses_c06_calibrated_maxima"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "calibrated profile을 사용하지 않고 점수 계산",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-17",
+      "detector_ids": [
+        "tests.test_historical_current_mode_separation.HistoricalCurrentModeSeparationTest.test_historical_prompt_is_blind_and_source_proxy_never_scores"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "historical outcome을 planner prompt에 누수",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-18",
+      "detector_ids": [
+        "tests.test_samsung_q1_claim_component_impacts.SamsungQ1ClaimComponentImpactTests.test_asp_and_record_revenue_do_not_become_customer_allocation"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "Samsung Q1 ASP/record 실적을 customer allocation으로 과매핑",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-19",
+      "detector_ids": [
+        "tests.test_samsung_q1_claim_component_impacts.SamsungQ1ClaimComponentImpactTests.test_asp_and_record_revenue_keep_bounded_economic_impacts"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "Samsung Q1 claim의 bounded component impact까지 전부 폐기",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-20",
+      "detector_ids": [
+        "tests.test_c06_qualification_lag_guard.C06QualificationLagGuardTests.test_qualification_counter_does_not_force_hard_4c"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "qualification lag를 hard 4C로 강제",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-21",
+      "detector_ids": [
+        "tests.test_samsung_q1_claim_component_impacts.SamsungQ1ClaimComponentImpactTests.test_hbm_product_keyword_does_not_become_sold_out_capacity"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "HBM 키워드만으로 sold-out capacity를 생성",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-22",
+      "detector_ids": [
+        "tests.test_samsung_q1_claim_component_impacts.SamsungQ1ClaimComponentImpactTests.test_package_profile_does_not_become_target_hbm_allocation"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "package substrate profile을 target HBM customer allocation으로 과매핑",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-23",
+      "detector_ids": [
+        "tests.test_atomic_stagecourt_component_trace.AtomicStageCourtComponentTraceTests.test_score_impact_lineage_mismatch_is_rejected"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "Stage/score/component trace lineage 불일치 허용",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-24",
+      "detector_ids": [
+        "tests.test_final_readiness_requires_valid_score.FinalReadinessRequiresValidScoreTests.test_missing_dossiers_are_explicit_not_ready"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "organic canary claim이 0인데 READY",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-25",
+      "detector_ids": [
+        "tests.test_final_readiness_requires_valid_score.FinalReadinessRequiresValidScoreTests.test_no_score_decision_cannot_pass_even_with_organic_claim"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "full_score_valid=false인데 meaningful scoring READY",
+      "status": "PASS"
+    }
+  ],
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "case_count_mismatch": 0,
+    "case_id_roster_mismatch": 0,
+    "duplicate_case_id_count": 0,
+    "failed_case_count": 0,
+    "unittest_error_count": 0,
+    "unittest_failure_count": 0,
+    "unittest_run_count_mismatch": 0
+  },
+  "detector_lineage": {
+    "case_registry_hash": "342a2c70ba1468416202dd302c24e79802ee9c75f415d4918a01b6c64b610c55",
+    "executed_detector_count": 23,
+    "passed_detector_count": 23,
+    "unique_detector_count": 23
+  },
+  "required_case_count": 25,
+  "runner_output": "",
+  "schema_version": "e2r_evidence_to_score_known_bad_v1",
+  "status": "EVIDENCE_TO_SCORE_KNOWN_BAD_PASS"
+}
