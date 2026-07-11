@@ -5,10 +5,10 @@
   "profile_id": "e2r_2_2_archetype_weight_runtime",
   "profile_version": "v2_2",
   "contract_count": 36,
-  "config_hash": "ea43dce607ea173ba521b45703175e6807ba1ff07fba078cb3184b5690a1ff28",
+  "config_hash": "4af3c527e40baf0e9a3e7f3bd5a9f0deda4467f2d879680270f05e3e2208a2ba",
   "c06_contract": {
     "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-    "config_hash": "996ed1c57cd762281457df7594b8463aefaa453ebe25200e0aa7e08a0c7740e6",
+    "config_hash": "8285c4a09306c5c2c97b44478ed15b6b95a01114955f73ef09a556bd9974c0e9",
     "edge_catalog_status": "EXPLICIT",
     "component_max_points": {
       "eps_fcf_explosion": 24.0,
@@ -25,7 +25,15 @@
       "hbm_capacity_constraint": ["bottleneck_pricing", "earnings_visibility", "capital_allocation"],
       "hbm_capacity_pre_sold": ["bottleneck_pricing", "earnings_visibility", "information_confidence"],
       "memory_price_increase_mentioned": ["bottleneck_pricing", "eps_fcf_explosion", "information_confidence"],
-      "medium_term_revision_visibility": ["earnings_visibility", "eps_fcf_explosion", "information_confidence"]
+      "medium_term_revision_visibility": ["earnings_visibility", "eps_fcf_explosion", "information_confidence"],
+      "hbm_product_profile": ["information_confidence"],
+      "qualification_state": ["earnings_visibility", "information_confidence"],
+      "shipment_or_revenue_mix": ["earnings_visibility", "eps_fcf_explosion", "information_confidence"],
+      "actual_earnings_conversion": ["eps_fcf_explosion", "information_confidence"],
+      "margin_fcf_conversion": ["eps_fcf_explosion", "capital_allocation"],
+      "conventional_memory_drag": ["eps_fcf_explosion", "earnings_visibility"],
+      "capacity_supply_response": ["capital_allocation", "bottleneck_pricing", "earnings_visibility"],
+      "package_substrate_sympathy": ["information_confidence"]
     }
   },
   "critical_counts": {

@@ -840,9 +840,9 @@
         "customer_preorder_or_allocation",
         "revenue_visibility_contract",
         "hbm_capacity_constraint",
-        "hbm_capacity_pre_sold",
-        "memory_price_increase_mentioned",
-        "medium_term_revision_visibility"
+      "hbm_capacity_pre_sold",
+      "memory_price_increase_mentioned",
+      "medium_term_revision_visibility"
       ],
       "green_gate": {
         "all": [
@@ -866,9 +866,17 @@
           "customer_preorder_or_allocation",
           "revenue_visibility_contract"
         ],
-        "cash_or_revision_conversion": [
-          "revenue_visibility_contract"
-        ]
+    "cash_or_revision_conversion": [
+      "revenue_visibility_contract"
+    ],
+    "hbm_product_profile": [],
+    "qualification_state": [],
+    "shipment_or_revenue_mix": [],
+    "actual_earnings_conversion": [],
+    "margin_fcf_conversion": [],
+    "conventional_memory_drag": [],
+    "capacity_supply_response": [],
+    "package_substrate_sympathy": []
       },
       "primitive_aliases": {
         "customer_preorder_or_allocation": [
@@ -1006,7 +1014,7 @@
           "가격 인상",
           "HBM 판가"
         ],
-        "medium_term_revision_visibility": [
+    "medium_term_revision_visibility": [
           "estimate revision",
           "earnings revision",
           "guidance revision",
@@ -1014,8 +1022,80 @@
           "추정치 상향",
           "실적 상향",
           "가이던스 상향",
-          "리비전"
-        ]
+      "리비전"
+    ],
+    "hbm_product_profile": [
+      "HBM product generation",
+      "HBM3E",
+      "HBM4",
+      "HBM4E",
+      "product specification",
+      "제품 세대",
+      "제품 사양"
+    ],
+    "qualification_state": [
+      "qualification pass",
+      "qualification lag",
+      "customer approval",
+      "customer validation",
+      "reopen",
+      "redesign",
+      "고객 인증",
+      "인증 지연",
+      "재설계"
+    ],
+    "shipment_or_revenue_mix": [
+      "commercial shipment",
+      "mass production",
+      "HBM revenue mix",
+      "AI memory mix",
+      "양산",
+      "상업 출하",
+      "매출 비중"
+    ],
+    "actual_earnings_conversion": [
+      "actual revenue",
+      "operating profit",
+      "record revenue",
+      "earnings conversion",
+      "실제 매출",
+      "영업이익",
+      "실적 전환"
+    ],
+    "margin_fcf_conversion": [
+      "margin",
+      "free cash flow",
+      "cash conversion",
+      "working capital",
+      "마진",
+      "잉여현금흐름",
+      "현금 전환"
+    ],
+    "conventional_memory_drag": [
+      "conventional DRAM",
+      "NAND weakness",
+      "inventory drag",
+      "legacy memory",
+      "범용 메모리",
+      "낸드 약세",
+      "재고 부담"
+    ],
+    "capacity_supply_response": [
+      "capacity expansion",
+      "capex plan",
+      "supply response",
+      "oversupply risk",
+      "증설",
+      "설비투자",
+      "공급 과잉"
+    ],
+    "package_substrate_sympathy": [
+      "advanced packaging",
+      "substrate",
+      "packaging beneficiary",
+      "첨단 패키징",
+      "기판"
+    ]
       },
       "route_hints": {
         "emerging_theme_ids": [
@@ -1129,7 +1209,7 @@
             "RESEARCH_REPORT"
           ]
         },
-        "medium_term_revision_visibility": {
+    "medium_term_revision_visibility": {
           "max_age_days": 365,
           "supersession_rule": "latest_authoritative_update",
           "closure_conditions": [
@@ -1140,9 +1220,57 @@
             "FILING",
             "IR",
             "NEWS",
-            "RESEARCH_REPORT"
-          ]
-        }
+        "RESEARCH_REPORT"
+      ]
+    },
+    "hbm_product_profile": {
+      "max_age_days": 365,
+      "supersession_rule": "latest_authoritative_product_update",
+      "closure_conditions": ["superseded_by_newer_product_generation"],
+      "authoritative_followup_sources": ["FILING", "IR", "NEWS", "RESEARCH_REPORT"]
+    },
+    "qualification_state": {
+      "max_age_days": 365,
+      "supersession_rule": "latest_authoritative_qualification_update",
+      "closure_conditions": ["qualification_passed", "qualification_failed", "superseded_by_newer_qualification_update"],
+      "authoritative_followup_sources": ["FILING", "IR", "NEWS", "RESEARCH_REPORT"]
+    },
+    "shipment_or_revenue_mix": {
+      "max_age_days": 365,
+      "supersession_rule": "latest_authoritative_shipment_or_mix_update",
+      "closure_conditions": ["superseded_by_newer_shipment_or_mix_update"],
+      "authoritative_followup_sources": ["FILING", "IR", "NEWS", "RESEARCH_REPORT"]
+    },
+    "actual_earnings_conversion": {
+      "max_age_days": 550,
+      "supersession_rule": "latest_authoritative_earnings_update",
+      "closure_conditions": ["superseded_by_newer_earnings_result"],
+      "authoritative_followup_sources": ["FILING", "XBRL", "IR", "RESEARCH_REPORT"]
+    },
+    "margin_fcf_conversion": {
+      "max_age_days": 550,
+      "supersession_rule": "latest_authoritative_cash_flow_update",
+      "closure_conditions": ["superseded_by_newer_cash_flow_result"],
+      "authoritative_followup_sources": ["FILING", "XBRL", "IR", "RESEARCH_REPORT"]
+    },
+    "conventional_memory_drag": {
+      "max_age_days": 365,
+      "supersession_rule": "latest_authoritative_memory_cycle_update",
+      "closure_conditions": ["resolved_by_newer_memory_cycle_update"],
+      "authoritative_followup_sources": ["FILING", "IR", "NEWS", "RESEARCH_REPORT"]
+    },
+    "capacity_supply_response": {
+      "max_age_days": 730,
+      "supersession_rule": "latest_authoritative_capacity_plan",
+      "closure_conditions": ["capacity_plan_completed", "capacity_plan_cancelled", "superseded_by_newer_capacity_plan"],
+      "authoritative_followup_sources": ["FILING", "IR", "NEWS", "RESEARCH_REPORT"]
+    },
+    "package_substrate_sympathy": {
+      "max_age_days": 365,
+      "supersession_rule": "latest_authoritative_profile_update",
+      "closure_conditions": ["superseded_by_newer_profile_update"],
+      "authoritative_followup_sources": ["FILING", "IR", "NEWS", "RESEARCH_REPORT"]
+    }
       },
       "guard_modes": {},
       "aggregation_rules": [
@@ -1153,22 +1281,31 @@
         "append_only_claim_ledger"
       ],
       "score_rubric": {
-        "eps_fcf_explosion": [
-          "revenue_visibility_contract"
+    "eps_fcf_explosion": [
+      "revenue_visibility_contract",
+      "shipment_or_revenue_mix",
+      "actual_earnings_conversion",
+      "margin_fcf_conversion",
+      "conventional_memory_drag"
         ],
         "earnings_visibility": [
           "customer_preorder_or_allocation",
           "revenue_visibility_contract",
           "hbm_capacity_constraint",
           "hbm_capacity_pre_sold",
-          "memory_price_increase_mentioned",
-          "medium_term_revision_visibility"
+      "memory_price_increase_mentioned",
+      "medium_term_revision_visibility",
+      "qualification_state",
+      "shipment_or_revenue_mix",
+      "conventional_memory_drag",
+      "capacity_supply_response"
         ],
         "bottleneck_pricing": [
           "customer_preorder_or_allocation",
           "revenue_visibility_contract",
-          "hbm_capacity_constraint",
-          "hbm_capacity_pre_sold"
+      "hbm_capacity_constraint",
+      "hbm_capacity_pre_sold",
+      "capacity_supply_response"
         ],
         "market_mispricing": [
           "customer_preorder_or_allocation",
@@ -1182,14 +1319,22 @@
           "hbm_capacity_constraint",
           "hbm_capacity_pre_sold"
         ],
-        "capital_allocation": [],
+    "capital_allocation": [
+      "margin_fcf_conversion",
+      "capacity_supply_response"
+    ],
         "information_confidence": [
           "customer_preorder_or_allocation",
           "revenue_visibility_contract",
           "hbm_capacity_constraint",
           "hbm_capacity_pre_sold",
-          "memory_price_increase_mentioned",
-          "medium_term_revision_visibility"
+      "memory_price_increase_mentioned",
+      "medium_term_revision_visibility",
+      "hbm_product_profile",
+      "qualification_state",
+      "shipment_or_revenue_mix",
+      "actual_earnings_conversion",
+      "package_substrate_sympathy"
         ]
       }
     },

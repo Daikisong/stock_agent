@@ -1,0 +1,63 @@
+{
+  "schema_version": "e2r_adaptive_organic_claim_closure_audit_v1",
+  "as_of_date": "2026-07-11",
+  "status": "ADAPTIVE_ORGANIC_CLAIM_CLOSURE_PASS",
+  "canonical_archetype": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "source_run": "output/targeted_smoke/2026-07-10",
+  "targets": [
+    {
+      "target_id": "005930",
+      "company_name": "삼성전자",
+      "actual_live_full_document_count": 4,
+      "raw_assertion_count": 44,
+      "adjudicated_claim_count": 44,
+      "organic_accepted_claim_count": 20,
+      "accepted_mapping_count": 22,
+      "question_closure_counts": {
+        "SUPPORTED": 3,
+        "PROVIDER_PENDING": 9
+      },
+      "target_contamination_count": 0,
+      "probe_contamination_count": 0
+    },
+    {
+      "target_id": "000660",
+      "company_name": "SK하이닉스",
+      "actual_live_full_document_count": 4,
+      "raw_assertion_count": 40,
+      "adjudicated_claim_count": 40,
+      "organic_accepted_claim_count": 13,
+      "accepted_mapping_count": 15,
+      "question_closure_counts": {
+        "SUPPORTED": 4,
+        "PARTIALLY_SUPPORTED": 1,
+        "PROVIDER_PENDING": 7
+      },
+      "target_contamination_count": 0,
+      "probe_contamination_count": 0
+    }
+  ],
+  "conversion": {
+    "fetched_document_count": 8,
+    "raw_assertion_count": 84,
+    "organic_accepted_claim_count": 33,
+    "accepted_mapping_count": 37,
+    "organic_claim_rate": 0.392857,
+    "duplicate_query_count": 0,
+    "validated_impact_count": 0,
+    "verified_component_points": 0.0,
+    "next_failure_class": "IMPACT_ADJUDICATION_REQUIRED"
+  },
+  "critical_counts": {
+    "organic_claim_zero_target_count": 0,
+    "target_contamination_count": 0,
+    "probe_contamination_count": 0,
+    "content_hash_mismatch_count": 0,
+    "future_source_count": 0,
+    "duplicate_query_count": 0,
+    "synthetic_claim_count": 0
+  },
+  "critical_count_sum": 0,
+  "readiness_eligible": false,
+  "note": "Organic claim closure passed. LLM impact adjudication and terminal component assessment remain required before scoring readiness."
+}

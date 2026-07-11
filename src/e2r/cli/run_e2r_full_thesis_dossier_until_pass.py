@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
 from e2r.research_brain.dossier import (
     DossierRunConfig,
     DossierTarget,
     FullThesisDossierOrchestrator,
     load_question_family_catalog,
+    run_organic_claim_closure,
 )
 
 
@@ -46,6 +48,7 @@ def main(argv: list[str] | None = None) -> int:
         "--question-family-config",
         default="configs/e2r_full_thesis_question_families_v1.json",
     )
+    parser.add_argument("--resume-source-root")
     args = parser.parse_args(argv)
     targets = _targets(args)
     config = DossierRunConfig(
@@ -64,6 +67,19 @@ def main(argv: list[str] | None = None) -> int:
     result = FullThesisDossierOrchestrator(
         question_family_catalog=catalog
     ).initialize(config, targets=targets)
+    closure_results = ()
+    if args.resume_source_root:
+        closure_results = tuple(
+            run_organic_claim_closure(
+                target=target,
+                as_of_date=args.as_of_date,
+                archetype_id=args.canonical_archetype,
+                source_root=args.resume_source_root,
+                output_root=Path(result.target_results[index]["output_root"]),
+            )
+            for index, target in enumerate(targets)
+        )
+    organic_claim_count = sum(row.organic_claim_count for row in closure_results)
     print(
         json.dumps(
             {
@@ -71,6 +87,8 @@ def main(argv: list[str] | None = None) -> int:
                 "target_results": result.target_results,
                 "critical_count_sum": result.audit["critical_count_sum"],
                 "research_complete": False,
+                "organic_claim_count": organic_claim_count,
+                "organic_closure_statuses": [row.status for row in closure_results],
             },
             ensure_ascii=False,
             sort_keys=True,

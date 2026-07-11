@@ -8,7 +8,15 @@
         "hbm_capacity_constraint": ["bottleneck_pricing", "earnings_visibility", "capital_allocation"],
         "hbm_capacity_pre_sold": ["bottleneck_pricing", "earnings_visibility", "information_confidence"],
         "memory_price_increase_mentioned": ["bottleneck_pricing", "eps_fcf_explosion", "information_confidence"],
-        "medium_term_revision_visibility": ["earnings_visibility", "eps_fcf_explosion", "information_confidence"]
+        "medium_term_revision_visibility": ["earnings_visibility", "eps_fcf_explosion", "information_confidence"],
+        "hbm_product_profile": ["information_confidence"],
+        "qualification_state": ["earnings_visibility", "information_confidence"],
+        "shipment_or_revenue_mix": ["earnings_visibility", "eps_fcf_explosion", "information_confidence"],
+        "actual_earnings_conversion": ["eps_fcf_explosion", "information_confidence"],
+        "margin_fcf_conversion": ["eps_fcf_explosion", "capital_allocation"],
+        "conventional_memory_drag": ["eps_fcf_explosion", "earnings_visibility"],
+        "capacity_supply_response": ["capital_allocation", "bottleneck_pricing", "earnings_visibility"],
+        "package_substrate_sympathy": ["information_confidence"]
       },
       "primitive_materiality": {
         "customer_preorder_or_allocation": true,
@@ -16,7 +24,15 @@
         "hbm_capacity_constraint": true,
         "hbm_capacity_pre_sold": true,
         "memory_price_increase_mentioned": true,
-        "medium_term_revision_visibility": true
+        "medium_term_revision_visibility": true,
+        "hbm_product_profile": false,
+        "qualification_state": true,
+        "shipment_or_revenue_mix": true,
+        "actual_earnings_conversion": true,
+        "margin_fcf_conversion": true,
+        "conventional_memory_drag": true,
+        "capacity_supply_response": true,
+        "package_substrate_sympathy": false
       },
       "primitive_green_requirements": {
         "customer_preorder_or_allocation": true,
@@ -24,7 +40,15 @@
         "hbm_capacity_constraint": true,
         "hbm_capacity_pre_sold": true,
         "memory_price_increase_mentioned": false,
-        "medium_term_revision_visibility": false
+        "medium_term_revision_visibility": false,
+        "hbm_product_profile": false,
+        "qualification_state": false,
+        "shipment_or_revenue_mix": false,
+        "actual_earnings_conversion": false,
+        "margin_fcf_conversion": false,
+        "conventional_memory_drag": false,
+        "capacity_supply_response": false,
+        "package_substrate_sympathy": false
       },
       "component_required_evidence_roles": {
         "eps_fcf_explosion": ["ACTUAL_EARNINGS", "FORWARD_REVISION", "CASH_CONVERSION"],

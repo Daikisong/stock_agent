@@ -38,6 +38,7 @@ class CurrentClaimCompilerConfig:
     max_documents: int
     max_raw_assertions_per_document: int = 12
     test_mode: bool = False
+    additional_primitive_ids: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         date.fromisoformat(self.as_of_date)
@@ -45,6 +46,10 @@ class CurrentClaimCompilerConfig:
             raise ValueError("current claim compiler document budget must be bounded by 100")
         if not 1 <= self.max_raw_assertions_per_document <= 30:
             raise ValueError("raw assertion budget must be bounded by 30")
+        if len(self.additional_primitive_ids) != len(set(self.additional_primitive_ids)):
+            raise ValueError("additional primitive ids must be unique")
+        if any(not str(value).strip() for value in self.additional_primitive_ids):
+            raise ValueError("additional primitive ids must be non-empty")
 
 
 @dataclass(frozen=True)
@@ -141,6 +146,25 @@ class CurrentClaimCompiler:
             contract = contracts.get(archetype_id)
             if contract is None:
                 raise ValueError(f"QuestionSourceTask archetype lacks EvidenceContract: {archetype_id}")
+            allowed_optional = set(contract.alternative_primitives)
+            allowed_optional.update(
+                value
+                for values in contract.alternative_primitives.values()
+                for value in values
+            )
+            unknown_additional = set(config.additional_primitive_ids) - (
+                set(contract.required_primitives) | allowed_optional
+            )
+            if unknown_additional:
+                raise ValueError(
+                    "additional dossier primitive is outside EvidenceContract: "
+                    f"{sorted(unknown_additional)}"
+                )
+            canonical_primitive_ids = tuple(
+                dict.fromkeys(
+                    (*contract.required_primitives, *config.additional_primitive_ids)
+                )
+            )
             document, text = _evidence_document(document_row)
             anchor = EvidenceAnchor.text_span(
                 document=document,
@@ -178,7 +202,7 @@ class CurrentClaimCompiler:
                         anchors=(anchor,),
                         entity_registry=registry,
                         contract=contract,
-                        canonical_primitive_ids=tuple(contract.required_primitives),
+                        canonical_primitive_ids=canonical_primitive_ids,
                         max_raw_assertions=config.max_raw_assertions_per_document,
                     )
                 )
@@ -243,6 +267,7 @@ class CurrentClaimCompiler:
         for row in provider_fetch_results:
             fetch_by_task.setdefault(str(row.get("source_task_id") or ""), []).append(row)
         for task_id, task in question_by_id.items():
+            target_id = str(task.get("target_id") or "")
             task_documents = tuple(documents_by_task.get(task_id, ()))
             task_raw_ids: list[str] = []
             direct: list[Any] = []
