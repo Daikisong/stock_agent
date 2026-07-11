@@ -1,0 +1,542 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "absence_with_inadequate_search_count": 0,
+    "absence_with_internal_rejection_count": 0,
+    "absence_with_provider_failure_count": 0,
+    "guard_canary_failure_count": 0,
+    "partially_supported_question_zero_credit_count": 0,
+    "positive_claim_absent_component_count": 0,
+    "positive_proposal_absent_component_count": 0,
+    "supported_non_scoring_component_credit_count": 0,
+    "supported_question_absent_component_count": 0,
+    "supported_question_zero_credit_count": 0
+  },
+  "guard_canaries": {
+    "absence_inadequate_search": {
+      "detected_critical_counts": {
+        "absence_with_inadequate_search_count": 1,
+        "absence_with_internal_rejection_count": 0,
+        "absence_with_provider_failure_count": 0,
+        "partially_supported_question_zero_credit_count": 0,
+        "positive_claim_absent_component_count": 0,
+        "positive_proposal_absent_component_count": 0,
+        "supported_non_scoring_component_credit_count": 0,
+        "supported_question_absent_component_count": 0,
+        "supported_question_zero_credit_count": 0
+      },
+      "error_codes": [
+        "ABSENCE_WITH_INADEQUATE_SEARCH"
+      ],
+      "reconciled_closure_status": "SOURCE_PENDING"
+    },
+    "absence_internal_rejection": {
+      "detected_critical_counts": {
+        "absence_with_inadequate_search_count": 0,
+        "absence_with_internal_rejection_count": 1,
+        "absence_with_provider_failure_count": 0,
+        "partially_supported_question_zero_credit_count": 0,
+        "positive_claim_absent_component_count": 0,
+        "positive_proposal_absent_component_count": 1,
+        "supported_non_scoring_component_credit_count": 0,
+        "supported_question_absent_component_count": 0,
+        "supported_question_zero_credit_count": 0
+      },
+      "error_codes": [
+        "ABSENCE_HAS_POSITIVE_SCORING_LINEAGE",
+        "ABSENCE_MASKS_INTERNAL_REJECTION",
+        "POSITIVE_PROPOSAL_WITHOUT_COMPONENT"
+      ],
+      "reconciled_closure_status": "SCORING_PIPELINE_ERROR"
+    },
+    "absence_provider_failure": {
+      "detected_critical_counts": {
+        "absence_with_inadequate_search_count": 0,
+        "absence_with_internal_rejection_count": 0,
+        "absence_with_provider_failure_count": 1,
+        "partially_supported_question_zero_credit_count": 0,
+        "positive_claim_absent_component_count": 0,
+        "positive_proposal_absent_component_count": 0,
+        "supported_non_scoring_component_credit_count": 0,
+        "supported_question_absent_component_count": 0,
+        "supported_question_zero_credit_count": 0
+      },
+      "error_codes": [
+        "ABSENCE_MASKS_PROVIDER_FAILURE"
+      ],
+      "reconciled_closure_status": "PROVIDER_PENDING"
+    },
+    "non_scoring_with_component_credit": {
+      "detected_critical_counts": {
+        "absence_with_inadequate_search_count": 0,
+        "absence_with_internal_rejection_count": 0,
+        "absence_with_provider_failure_count": 0,
+        "partially_supported_question_zero_credit_count": 0,
+        "positive_claim_absent_component_count": 0,
+        "positive_proposal_absent_component_count": 0,
+        "supported_non_scoring_component_credit_count": 1,
+        "supported_question_absent_component_count": 0,
+        "supported_question_zero_credit_count": 0
+      },
+      "error_codes": [
+        "NON_SCORING_SUPPORT_HAS_COMPONENT_CREDIT"
+      ],
+      "reconciled_closure_status": "SCORING_PIPELINE_ERROR"
+    },
+    "partial_zero_credit": {
+      "detected_critical_counts": {
+        "absence_with_inadequate_search_count": 0,
+        "absence_with_internal_rejection_count": 0,
+        "absence_with_provider_failure_count": 0,
+        "partially_supported_question_zero_credit_count": 1,
+        "positive_claim_absent_component_count": 1,
+        "positive_proposal_absent_component_count": 0,
+        "supported_non_scoring_component_credit_count": 0,
+        "supported_question_absent_component_count": 1,
+        "supported_question_zero_credit_count": 0
+      },
+      "error_codes": [
+        "PARTIAL_SUPPORT_WITHOUT_BOUNDED_CREDIT",
+        "POSITIVE_CLAIM_WITHOUT_COMPONENT"
+      ],
+      "reconciled_closure_status": "SCORING_PIPELINE_ERROR"
+    },
+    "positive_proposal_missing_component": {
+      "detected_critical_counts": {
+        "absence_with_inadequate_search_count": 0,
+        "absence_with_internal_rejection_count": 0,
+        "absence_with_provider_failure_count": 0,
+        "partially_supported_question_zero_credit_count": 0,
+        "positive_claim_absent_component_count": 1,
+        "positive_proposal_absent_component_count": 1,
+        "supported_non_scoring_component_credit_count": 0,
+        "supported_question_absent_component_count": 1,
+        "supported_question_zero_credit_count": 1
+      },
+      "error_codes": [
+        "SUPPORTED_SCORING_WITHOUT_CREDIT",
+        "POSITIVE_CLAIM_WITHOUT_COMPONENT",
+        "POSITIVE_PROPOSAL_WITHOUT_COMPONENT"
+      ],
+      "reconciled_closure_status": "SCORING_PIPELINE_ERROR"
+    },
+    "supported_zero_credit": {
+      "detected_critical_counts": {
+        "absence_with_inadequate_search_count": 0,
+        "absence_with_internal_rejection_count": 0,
+        "absence_with_provider_failure_count": 0,
+        "partially_supported_question_zero_credit_count": 0,
+        "positive_claim_absent_component_count": 1,
+        "positive_proposal_absent_component_count": 0,
+        "supported_non_scoring_component_credit_count": 0,
+        "supported_question_absent_component_count": 1,
+        "supported_question_zero_credit_count": 1
+      },
+      "error_codes": [
+        "SUPPORTED_SCORING_WITHOUT_CREDIT",
+        "POSITIVE_CLAIM_WITHOUT_COMPONENT"
+      ],
+      "reconciled_closure_status": "SCORING_PIPELINE_ERROR"
+    }
+  },
+  "question_count": 12,
+  "reconciliations": [
+    {
+      "component_ids": [
+        "earnings_visibility"
+      ],
+      "component_links": [
+        {
+          "claim_id": "C-SUPPORT",
+          "component_id": "earnings_visibility",
+          "component_state": "SUPPORT_WITH_COUNTER_CAP",
+          "component_subcriterion_id": "C06_VIS_CUSTOMER_COMMITMENT",
+          "counter_effect_fraction": 0.0,
+          "direction": "SUPPORT",
+          "eligibility_decision_id": "ELIG-C-SUPPORT",
+          "impact_id": "I-SUPPORT",
+          "resolution_effect": 0.0,
+          "support_credit_fraction": 0.8
+        }
+      ],
+      "component_states": {
+        "earnings_visibility": "SUPPORT_WITH_COUNTER_CAP"
+      },
+      "component_subcriterion_ids": [
+        "C06_VIS_CUSTOMER_COMMITMENT"
+      ],
+      "credit_result": "NONZERO_BOUNDED_SUPPORT",
+      "eligibility_decision_ids": [
+        "ELIG-C-SUPPORT"
+      ],
+      "error_codes": [],
+      "input_closure_status": "SUPPORTED_SCORING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [
+        "I-SUPPORT"
+      ],
+      "positive_scoring_claim_ids": [
+        "C-SUPPORT"
+      ],
+      "proposal_impact_ids": [
+        "I-SUPPORT"
+      ],
+      "provider_failure": false,
+      "question_contract_hash": "b80468fb03ba048a11c47e5d52ef5b0e544c06b833ca996296e0ffda44ab21e2",
+      "question_family_id": "current_customer_allocation_commitment",
+      "reconciled_closure_status": "SUPPORTED_SCORING",
+      "reconciliation_id": "RECON-d5cc150c1ddbd9b06778bbd5",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [
+        "C-SUPPORT"
+      ],
+      "validated_impact_ids": [
+        "I-SUPPORT"
+      ]
+    },
+    {
+      "component_ids": [],
+      "component_links": [],
+      "component_states": {
+        "earnings_visibility": "SUPPORT_WITH_COUNTER_CAP"
+      },
+      "component_subcriterion_ids": [],
+      "credit_result": "ZERO_CREDIT",
+      "eligibility_decision_ids": [],
+      "error_codes": [],
+      "input_closure_status": "SOURCE_PENDING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [],
+      "provider_failure": false,
+      "question_contract_hash": "90ecd06662c06263d60c45df2c9de63eb63c27825a78fe98a8c2de61a1b384d2",
+      "question_family_id": "capacity_constraint_presold_status",
+      "reconciled_closure_status": "SOURCE_PENDING",
+      "reconciliation_id": "RECON-9d3532df6e56af9d406b6e6e",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": []
+    },
+    {
+      "component_ids": [],
+      "component_links": [],
+      "component_states": {
+        "earnings_visibility": "SUPPORT_WITH_COUNTER_CAP"
+      },
+      "component_subcriterion_ids": [],
+      "credit_result": "EVALUATED_ABSENCE",
+      "eligibility_decision_ids": [],
+      "error_codes": [],
+      "input_closure_status": "EVALUATED_ABSENT",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [],
+      "provider_failure": false,
+      "question_contract_hash": "978182bb7015e6a2227b8cd01c5226122b8b8d71ed412fcdf6ea962e8a0ad611",
+      "question_family_id": "qualification_pass_lag_reopen",
+      "reconciled_closure_status": "EVALUATED_ABSENT",
+      "reconciliation_id": "RECON-8d54aa71d39f108de0e2fd08",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": true,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": []
+    },
+    {
+      "component_ids": [],
+      "component_links": [],
+      "component_states": {
+        "earnings_visibility": "SUPPORT_WITH_COUNTER_CAP",
+        "eps_fcf_explosion": "VERIFIED_WEAK_SUPPORT"
+      },
+      "component_subcriterion_ids": [],
+      "credit_result": "NON_SCORING_SUPPORT",
+      "eligibility_decision_ids": [
+        "ELIG-C-NONSCORING"
+      ],
+      "error_codes": [],
+      "input_closure_status": "SUPPORTED_NON_SCORING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [],
+      "provider_failure": false,
+      "question_contract_hash": "47fd0cd4efebbbf489346335b17f152cb3577fcc7ff3745da2c3051b67f4bdb0",
+      "question_family_id": "shipment_mass_production_generation",
+      "reconciled_closure_status": "SUPPORTED_NON_SCORING",
+      "reconciliation_id": "RECON-6642a1515105227fcd22fa02",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": []
+    },
+    {
+      "component_ids": [],
+      "component_links": [],
+      "component_states": {
+        "earnings_visibility": "SUPPORT_WITH_COUNTER_CAP",
+        "eps_fcf_explosion": "VERIFIED_WEAK_SUPPORT"
+      },
+      "component_subcriterion_ids": [],
+      "credit_result": "ZERO_CREDIT",
+      "eligibility_decision_ids": [],
+      "error_codes": [],
+      "input_closure_status": "SOURCE_PENDING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [],
+      "provider_failure": false,
+      "question_contract_hash": "cda3f2f0101022656dac6a02ddf2e36ea52cd7a0661b69570bcb7fc88c2ef0cd",
+      "question_family_id": "hbm_ai_memory_revenue_mix",
+      "reconciled_closure_status": "SOURCE_PENDING",
+      "reconciliation_id": "RECON-6f54a02a726e415008829e57",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": []
+    },
+    {
+      "component_ids": [],
+      "component_links": [],
+      "component_states": {
+        "eps_fcf_explosion": "VERIFIED_WEAK_SUPPORT"
+      },
+      "component_subcriterion_ids": [],
+      "credit_result": "ZERO_CREDIT",
+      "eligibility_decision_ids": [
+        "ELIG-C-PARTIAL"
+      ],
+      "error_codes": [],
+      "input_closure_status": "SOURCE_PENDING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [],
+      "provider_failure": false,
+      "question_contract_hash": "5417b35f9d07e529c70824b729d0ed7cef2089edad1faa53390715564fa91e17",
+      "question_family_id": "asp_pricing_actual",
+      "reconciled_closure_status": "SOURCE_PENDING",
+      "reconciliation_id": "RECON-b1694a486a65c8c4a9d00929",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": []
+    },
+    {
+      "component_ids": [
+        "eps_fcf_explosion"
+      ],
+      "component_links": [
+        {
+          "claim_id": "C-PARTIAL",
+          "component_id": "eps_fcf_explosion",
+          "component_state": "VERIFIED_WEAK_SUPPORT",
+          "component_subcriterion_id": "C06_EPS_ACTUAL_REVENUE_PROFIT",
+          "counter_effect_fraction": 0.0,
+          "direction": "SUPPORT",
+          "eligibility_decision_id": "ELIG-C-PARTIAL",
+          "impact_id": "I-PARTIAL",
+          "resolution_effect": 0.0,
+          "support_credit_fraction": 0.4
+        }
+      ],
+      "component_states": {
+        "earnings_visibility": "SUPPORT_WITH_COUNTER_CAP",
+        "eps_fcf_explosion": "VERIFIED_WEAK_SUPPORT"
+      },
+      "component_subcriterion_ids": [
+        "C06_EPS_ACTUAL_REVENUE_PROFIT"
+      ],
+      "credit_result": "NONZERO_BOUNDED_SUPPORT",
+      "eligibility_decision_ids": [
+        "ELIG-C-PARTIAL"
+      ],
+      "error_codes": [],
+      "input_closure_status": "PARTIALLY_SUPPORTED_SCORING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [
+        "I-PARTIAL"
+      ],
+      "positive_scoring_claim_ids": [
+        "C-PARTIAL"
+      ],
+      "proposal_impact_ids": [
+        "I-PARTIAL"
+      ],
+      "provider_failure": false,
+      "question_contract_hash": "c9bc1022a8df715b5ffd99467b10dc97ac9d0624c3d73ad2d0804b2764f30b94",
+      "question_family_id": "revenue_operating_profit_conversion",
+      "reconciled_closure_status": "PARTIALLY_SUPPORTED_SCORING",
+      "reconciliation_id": "RECON-c42f10a6a39f71775a957ecb",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [
+        "C-PARTIAL"
+      ],
+      "validated_impact_ids": [
+        "I-PARTIAL"
+      ]
+    },
+    {
+      "component_ids": [],
+      "component_links": [],
+      "component_states": {
+        "eps_fcf_explosion": "VERIFIED_WEAK_SUPPORT"
+      },
+      "component_subcriterion_ids": [],
+      "credit_result": "ZERO_CREDIT",
+      "eligibility_decision_ids": [
+        "ELIG-C-PARTIAL"
+      ],
+      "error_codes": [],
+      "input_closure_status": "SOURCE_PENDING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [],
+      "provider_failure": false,
+      "question_contract_hash": "6b63ecec211aea06ad5b38fdff6809634b688d04febda9385748b1a038195ebf",
+      "question_family_id": "margin_fcf_conversion",
+      "reconciled_closure_status": "SOURCE_PENDING",
+      "reconciliation_id": "RECON-d46169c846c7f0a68c3dd349",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": []
+    },
+    {
+      "component_ids": [],
+      "component_links": [],
+      "component_states": {
+        "earnings_visibility": "SUPPORT_WITH_COUNTER_CAP",
+        "eps_fcf_explosion": "VERIFIED_WEAK_SUPPORT"
+      },
+      "component_subcriterion_ids": [],
+      "credit_result": "ZERO_CREDIT",
+      "eligibility_decision_ids": [],
+      "error_codes": [],
+      "input_closure_status": "SOURCE_PENDING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [],
+      "provider_failure": false,
+      "question_contract_hash": "b88d4156a85b44d3a9d2759475d18dfadd28da5569f38457116c8968cb00b6a8",
+      "question_family_id": "medium_term_revision_consensus",
+      "reconciled_closure_status": "SOURCE_PENDING",
+      "reconciliation_id": "RECON-0259714f03676be0e501a179",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": []
+    },
+    {
+      "component_ids": [
+        "earnings_visibility"
+      ],
+      "component_links": [
+        {
+          "claim_id": "C-COUNTER",
+          "component_id": "earnings_visibility",
+          "component_state": "SUPPORT_WITH_COUNTER_CAP",
+          "component_subcriterion_id": "C06_VIS_MEDIUM_REVISION",
+          "counter_effect_fraction": 0.6,
+          "direction": "COUNTER",
+          "eligibility_decision_id": "ELIG-C-COUNTER",
+          "impact_id": "I-COUNTER",
+          "resolution_effect": 0.0,
+          "support_credit_fraction": 0.0
+        }
+      ],
+      "component_states": {
+        "earnings_visibility": "SUPPORT_WITH_COUNTER_CAP",
+        "eps_fcf_explosion": "VERIFIED_WEAK_SUPPORT"
+      },
+      "component_subcriterion_ids": [
+        "C06_VIS_MEDIUM_REVISION"
+      ],
+      "credit_result": "EXPLICIT_COUNTER_OR_CAP",
+      "eligibility_decision_ids": [
+        "ELIG-C-COUNTER"
+      ],
+      "error_codes": [],
+      "input_closure_status": "COUNTER_SUPPORTED",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [
+        "I-COUNTER"
+      ],
+      "provider_failure": false,
+      "question_contract_hash": "664a031ac2869e6cf8cecbfb66d055afc51f3723a58c7415792282a6c04a11c9",
+      "question_family_id": "conventional_memory_drag",
+      "reconciled_closure_status": "COUNTER_SUPPORTED",
+      "reconciliation_id": "RECON-9e29971733796fca75f9b39e",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": [
+        "I-COUNTER"
+      ]
+    },
+    {
+      "component_ids": [],
+      "component_links": [],
+      "component_states": {
+        "earnings_visibility": "SUPPORT_WITH_COUNTER_CAP"
+      },
+      "component_subcriterion_ids": [],
+      "credit_result": "ZERO_CREDIT",
+      "eligibility_decision_ids": [],
+      "error_codes": [],
+      "input_closure_status": "SOURCE_PENDING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [],
+      "provider_failure": false,
+      "question_contract_hash": "4a313a74e5f00297821ed8945c6c4f09ad038cfd7d6866a4a0e0e3a5591aa040",
+      "question_family_id": "capex_supply_oversupply",
+      "reconciled_closure_status": "SOURCE_PENDING",
+      "reconciliation_id": "RECON-123db85624001dde8989a882",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": []
+    },
+    {
+      "component_ids": [],
+      "component_links": [],
+      "component_states": {
+        "earnings_visibility": "SUPPORT_WITH_COUNTER_CAP"
+      },
+      "component_subcriterion_ids": [],
+      "credit_result": "ZERO_CREDIT",
+      "eligibility_decision_ids": [
+        "ELIG-C-SUPPORT"
+      ],
+      "error_codes": [],
+      "input_closure_status": "SOURCE_PENDING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [],
+      "provider_failure": false,
+      "question_contract_hash": "a073ccc69e2f5cf532c6872c66ce9f5450c345e4934637fbdcb6c32febc2fd2f",
+      "question_family_id": "customer_concentration_dependency",
+      "reconciled_closure_status": "SOURCE_PENDING",
+      "reconciliation_id": "RECON-33ed058c2c1bc188f8de573d",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": []
+    }
+  ],
+  "schema_version": "e2r_question_component_reconciliation_audit_v1",
+  "status": "QUESTION_COMPONENT_RECONCILIATION_PASS"
+}

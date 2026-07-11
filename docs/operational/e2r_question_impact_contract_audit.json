@@ -990,14 +990,17 @@
         "ELIG-48534f33af46f9217888ff37"
       ],
       "counter_claim_ids": [],
-      "eligibility_decision_ids": [],
+      "eligibility_decision_ids": [
+        "ELIG-8266c822fbeb28cd8c5abdc9"
+      ],
       "failure_class": "SOURCE_EXHAUSTED",
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [
-        "CLM-47103baa9b99062ef88a",
         "CLM-e0a7f204219f352da273"
       ],
-      "partial_supporting_claim_ids": [],
+      "partial_supporting_claim_ids": [
+        "CLM-47103baa9b99062ef88a"
+      ],
       "question_contract_hash": "90ecd06662c06263d60c45df2c9de63eb63c27825a78fe98a8c2de61a1b384d2",
       "question_family_id": "capacity_constraint_presold_status",
       "search_exhaustion_proof": [
@@ -1008,8 +1011,10 @@
         "WEBTASK-637744d44f3e5f7522f3ca07"
       ],
       "source_task_id": "DST-efed8905b729bd8d8239d29b",
-      "status": "SUPPORTED_NON_SCORING",
-      "supporting_claim_ids": [],
+      "status": "PARTIALLY_SUPPORTED_SCORING",
+      "supporting_claim_ids": [
+        "CLM-47103baa9b99062ef88a"
+      ],
       "target_id": "005930"
     },
     {
@@ -1086,24 +1091,24 @@
         "ELIG-7a4c58f4c7d6d8b06ec00dec",
         "ELIG-78879650ab628278387d33e5",
         "ELIG-8fd4fbaae95a150d0211d832",
+        "ELIG-e0fee5027d18d317c8f14d9a",
         "ELIG-d3852c630790065f99f18a79",
         "ELIG-9d5ac16acf7d913c41e37af7",
         "ELIG-547f5002cd0574fd12a00562",
-        "ELIG-3a57921d8fb661b784467987",
-        "ELIG-8a850cecf502758443000ccd",
-        "ELIG-a0a78066f70e1023aac373f0",
-        "ELIG-0fb6404865a7a6c38d4a63cd",
-        "ELIG-e0fee5027d18d317c8f14d9a",
         "ELIG-e98457ea17d7b667802b8180",
         "ELIG-3a3a43fdab75ea81959d9d7c",
         "ELIG-aa4d28751068b9873654bbdc",
-        "ELIG-3bbf7f78526059707c56f30a",
         "ELIG-a6cd8d05b6b11dfb0e51db53",
         "ELIG-b3d44189ad0d640a137df8dd",
         "ELIG-d4b187e02d7998c6ee4e9c74",
         "ELIG-ab5b5565ff8fc8f51b4f295c",
+        "ELIG-3a57921d8fb661b784467987",
         "ELIG-75653b0326ee5de4981fe984",
-        "ELIG-dbd703b6eb0f311ea88ceb2a"
+        "ELIG-dbd703b6eb0f311ea88ceb2a",
+        "ELIG-8a850cecf502758443000ccd",
+        "ELIG-a0a78066f70e1023aac373f0",
+        "ELIG-0fb6404865a7a6c38d4a63cd",
+        "ELIG-3bbf7f78526059707c56f30a"
       ],
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
@@ -1117,23 +1122,23 @@
       "non_scoring_claim_ids": [
         "CLM-db034d8f03ce72819564",
         "CLM-63f797bc4396e1bff5f0",
+        "CLM-0d0760af8405137dfe90"
+      ],
+      "partial_supporting_claim_ids": [
         "CLM-10501873f575a69571d9",
+        "CLM-1982ea2aca36ebef450e",
+        "CLM-ea9b82182ac296c6d682",
+        "CLM-63085bc76ba54eba7d67",
         "CLM-bab8bc1c37b4bb92f54e",
         "CLM-0bb55c3d4d5844a1c859",
         "CLM-e341ee4c41bd41f3fab0",
-        "CLM-0d0760af8405137dfe90",
         "CLM-0d59f6d8b09b36fb145d",
         "CLM-1fc27cd4caa01dd2f04c",
         "CLM-ccb03c3ca97a6a4dac73",
         "CLM-cde7ddca235c60d20ada",
-        "CLM-0f9c0b328976f0995bed",
-        "CLM-90533c9daf13fefd691c"
-      ],
-      "partial_supporting_claim_ids": [
-        "CLM-1982ea2aca36ebef450e",
-        "CLM-ea9b82182ac296c6d682",
-        "CLM-63085bc76ba54eba7d67",
         "CLM-d33eea243c334096866d",
+        "CLM-0f9c0b328976f0995bed",
+        "CLM-90533c9daf13fefd691c",
         "CLM-3fe807708c2eee9d9908"
       ],
       "question_contract_hash": "47fd0cd4efebbbf489346335b17f152cb3577fcc7ff3745da2c3051b67f4bdb0",
@@ -1167,30 +1172,37 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
-        "ELIG-a0a78066f70e1023aac373f0",
-        "ELIG-0fb6404865a7a6c38d4a63cd",
         "ELIG-7a4c58f4c7d6d8b06ec00dec",
         "ELIG-d3852c630790065f99f18a79",
+        "ELIG-a0a78066f70e1023aac373f0",
+        "ELIG-0fb6404865a7a6c38d4a63cd",
         "ELIG-78879650ab628278387d33e5"
       ],
       "counter_claim_ids": [],
-      "eligibility_decision_ids": [],
+      "eligibility_decision_ids": [
+        "ELIG-7a4c58f4c7d6d8b06ec00dec",
+        "ELIG-d3852c630790065f99f18a79"
+      ],
       "failure_class": null,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-db034d8f03ce72819564",
         "CLM-63f797bc4396e1bff5f0",
-        "CLM-13d3c5605df791dcf819",
-        "CLM-1982ea2aca36ebef450e",
         "CLM-33685f026d180edb6417"
       ],
-      "partial_supporting_claim_ids": [],
+      "partial_supporting_claim_ids": [
+        "CLM-13d3c5605df791dcf819",
+        "CLM-1982ea2aca36ebef450e"
+      ],
       "question_contract_hash": "cda3f2f0101022656dac6a02ddf2e36ea52cd7a0661b69570bcb7fc88c2ef0cd",
       "question_family_id": "hbm_ai_memory_revenue_mix",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-12e7d3dc6483a3ea2a11427e",
-      "status": "SUPPORTED_NON_SCORING",
-      "supporting_claim_ids": [],
+      "status": "PARTIALLY_SUPPORTED_SCORING",
+      "supporting_claim_ids": [
+        "CLM-13d3c5605df791dcf819",
+        "CLM-1982ea2aca36ebef450e"
+      ],
       "target_id": "005930"
     },
     {
@@ -1252,32 +1264,39 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
+        "ELIG-7a4c58f4c7d6d8b06ec00dec",
+        "ELIG-d3852c630790065f99f18a79",
         "ELIG-5405821d8ef9510565c9cf31",
         "ELIG-a0a78066f70e1023aac373f0",
         "ELIG-0fb6404865a7a6c38d4a63cd",
-        "ELIG-7a4c58f4c7d6d8b06ec00dec",
-        "ELIG-d3852c630790065f99f18a79",
         "ELIG-78879650ab628278387d33e5"
       ],
       "counter_claim_ids": [],
-      "eligibility_decision_ids": [],
+      "eligibility_decision_ids": [
+        "ELIG-7a4c58f4c7d6d8b06ec00dec",
+        "ELIG-d3852c630790065f99f18a79"
+      ],
       "failure_class": null,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-8a6484cd91e4ef637201",
         "CLM-db034d8f03ce72819564",
         "CLM-63f797bc4396e1bff5f0",
-        "CLM-13d3c5605df791dcf819",
-        "CLM-1982ea2aca36ebef450e",
         "CLM-33685f026d180edb6417"
       ],
-      "partial_supporting_claim_ids": [],
+      "partial_supporting_claim_ids": [
+        "CLM-13d3c5605df791dcf819",
+        "CLM-1982ea2aca36ebef450e"
+      ],
       "question_contract_hash": "c9bc1022a8df715b5ffd99467b10dc97ac9d0624c3d73ad2d0804b2764f30b94",
       "question_family_id": "revenue_operating_profit_conversion",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-01f1734755c5b5f9923d41ef",
-      "status": "SUPPORTED_NON_SCORING",
-      "supporting_claim_ids": [],
+      "status": "PARTIALLY_SUPPORTED_SCORING",
+      "supporting_claim_ids": [
+        "CLM-13d3c5605df791dcf819",
+        "CLM-1982ea2aca36ebef450e"
+      ],
       "target_id": "005930"
     },
     {
@@ -1406,20 +1425,25 @@
         "ELIG-48534f33af46f9217888ff37"
       ],
       "counter_claim_ids": [],
-      "eligibility_decision_ids": [],
+      "eligibility_decision_ids": [
+        "ELIG-8266c822fbeb28cd8c5abdc9"
+      ],
       "failure_class": null,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
-        "CLM-47103baa9b99062ef88a",
         "CLM-e0a7f204219f352da273"
       ],
-      "partial_supporting_claim_ids": [],
+      "partial_supporting_claim_ids": [
+        "CLM-47103baa9b99062ef88a"
+      ],
       "question_contract_hash": "4a313a74e5f00297821ed8945c6c4f09ad038cfd7d6866a4a0e0e3a5591aa040",
       "question_family_id": "capex_supply_oversupply",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-e158f322d8946ecab0f8bc9b",
-      "status": "SUPPORTED_NON_SCORING",
-      "supporting_claim_ids": [],
+      "status": "PARTIALLY_SUPPORTED_SCORING",
+      "supporting_claim_ids": [
+        "CLM-47103baa9b99062ef88a"
+      ],
       "target_id": "005930"
     },
     {
@@ -1508,24 +1532,29 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
-        "ELIG-3ce44bc98745eccf945e1acb",
-        "ELIG-01809387c78c08c1993ab405"
+        "ELIG-01809387c78c08c1993ab405",
+        "ELIG-3ce44bc98745eccf945e1acb"
       ],
       "counter_claim_ids": [],
-      "eligibility_decision_ids": [],
+      "eligibility_decision_ids": [
+        "ELIG-01809387c78c08c1993ab405"
+      ],
       "failure_class": null,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
-        "CLM-95da73592de9afc97446",
+        "CLM-95da73592de9afc97446"
+      ],
+      "partial_supporting_claim_ids": [
         "CLM-85a8e1ec74fd4c208401"
       ],
-      "partial_supporting_claim_ids": [],
       "question_contract_hash": "90ecd06662c06263d60c45df2c9de63eb63c27825a78fe98a8c2de61a1b384d2",
       "question_family_id": "capacity_constraint_presold_status",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-744e68f35dbf203e1cba6a51",
-      "status": "SUPPORTED_NON_SCORING",
-      "supporting_claim_ids": [],
+      "status": "PARTIALLY_SUPPORTED_SCORING",
+      "supporting_claim_ids": [
+        "CLM-85a8e1ec74fd4c208401"
+      ],
       "target_id": "000660"
     },
     {
@@ -1581,17 +1610,21 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
-        "ELIG-01809387c78c08c1993ab405",
-        "ELIG-88eb7e49838f035048d43687",
-        "ELIG-f02b97d999ef35e8d998a473",
         "ELIG-25bb283870ed1c97a3f24b24",
         "ELIG-6e9ec09b9c05ef9e9dc01289",
         "ELIG-da9d6fb1bcc6415699af0d02",
         "ELIG-294a8582c9b1ac0bc1361d44",
+        "ELIG-01809387c78c08c1993ab405",
+        "ELIG-88eb7e49838f035048d43687",
+        "ELIG-f02b97d999ef35e8d998a473",
         "ELIG-23e091c3726567e206929a3d"
       ],
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
+        "ELIG-25bb283870ed1c97a3f24b24",
+        "ELIG-6e9ec09b9c05ef9e9dc01289",
+        "ELIG-da9d6fb1bcc6415699af0d02",
+        "ELIG-294a8582c9b1ac0bc1361d44",
         "ELIG-01809387c78c08c1993ab405"
       ],
       "failure_class": null,
@@ -1599,13 +1632,13 @@
       "non_scoring_claim_ids": [
         "CLM-15ee8897fe8ae2155f25",
         "CLM-b6a7d89a604a1e12d6f4",
+        "CLM-6542a27e94fc793947e1"
+      ],
+      "partial_supporting_claim_ids": [
         "CLM-81cdb44f9ea4a488a790",
         "CLM-24ae165ad172de0d6649",
         "CLM-889d81821ec004838246",
         "CLM-c35e896dc619cf663b61",
-        "CLM-6542a27e94fc793947e1"
-      ],
-      "partial_supporting_claim_ids": [
         "CLM-85a8e1ec74fd4c208401"
       ],
       "question_contract_hash": "47fd0cd4efebbbf489346335b17f152cb3577fcc7ff3745da2c3051b67f4bdb0",
@@ -1614,6 +1647,10 @@
       "source_task_id": "DST-ac22963e794e47da71b10db0",
       "status": "PARTIALLY_SUPPORTED_SCORING",
       "supporting_claim_ids": [
+        "CLM-81cdb44f9ea4a488a790",
+        "CLM-24ae165ad172de0d6649",
+        "CLM-889d81821ec004838246",
+        "CLM-c35e896dc619cf663b61",
         "CLM-85a8e1ec74fd4c208401"
       ],
       "target_id": "000660"
@@ -1636,30 +1673,37 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
-        "ELIG-88eb7e49838f035048d43687",
-        "ELIG-f02b97d999ef35e8d998a473",
         "ELIG-25bb283870ed1c97a3f24b24",
         "ELIG-294a8582c9b1ac0bc1361d44",
+        "ELIG-88eb7e49838f035048d43687",
+        "ELIG-f02b97d999ef35e8d998a473",
         "ELIG-23e091c3726567e206929a3d"
       ],
       "counter_claim_ids": [],
-      "eligibility_decision_ids": [],
+      "eligibility_decision_ids": [
+        "ELIG-25bb283870ed1c97a3f24b24",
+        "ELIG-294a8582c9b1ac0bc1361d44"
+      ],
       "failure_class": null,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-15ee8897fe8ae2155f25",
         "CLM-b6a7d89a604a1e12d6f4",
-        "CLM-81cdb44f9ea4a488a790",
-        "CLM-c35e896dc619cf663b61",
         "CLM-6542a27e94fc793947e1"
       ],
-      "partial_supporting_claim_ids": [],
+      "partial_supporting_claim_ids": [
+        "CLM-81cdb44f9ea4a488a790",
+        "CLM-c35e896dc619cf663b61"
+      ],
       "question_contract_hash": "cda3f2f0101022656dac6a02ddf2e36ea52cd7a0661b69570bcb7fc88c2ef0cd",
       "question_family_id": "hbm_ai_memory_revenue_mix",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-806dc9a6b54772435e29a686",
-      "status": "SUPPORTED_NON_SCORING",
-      "supporting_claim_ids": [],
+      "status": "PARTIALLY_SUPPORTED_SCORING",
+      "supporting_claim_ids": [
+        "CLM-81cdb44f9ea4a488a790",
+        "CLM-c35e896dc619cf663b61"
+      ],
       "target_id": "000660"
     },
     {
@@ -1729,34 +1773,41 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
+        "ELIG-25bb283870ed1c97a3f24b24",
+        "ELIG-294a8582c9b1ac0bc1361d44",
         "ELIG-88eb7e49838f035048d43687",
         "ELIG-f02b97d999ef35e8d998a473",
-        "ELIG-25bb283870ed1c97a3f24b24",
         "ELIG-e8efeeba74530e9fcfe1c5a0",
         "ELIG-f169dee905259f29aca81250",
-        "ELIG-294a8582c9b1ac0bc1361d44",
         "ELIG-23e091c3726567e206929a3d"
       ],
       "counter_claim_ids": [],
-      "eligibility_decision_ids": [],
+      "eligibility_decision_ids": [
+        "ELIG-25bb283870ed1c97a3f24b24",
+        "ELIG-294a8582c9b1ac0bc1361d44"
+      ],
       "failure_class": null,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-15ee8897fe8ae2155f25",
         "CLM-b6a7d89a604a1e12d6f4",
-        "CLM-81cdb44f9ea4a488a790",
         "CLM-fcc98ec139169a04e7ae",
         "CLM-b0012c7f76d639aed2da",
-        "CLM-c35e896dc619cf663b61",
         "CLM-6542a27e94fc793947e1"
       ],
-      "partial_supporting_claim_ids": [],
+      "partial_supporting_claim_ids": [
+        "CLM-81cdb44f9ea4a488a790",
+        "CLM-c35e896dc619cf663b61"
+      ],
       "question_contract_hash": "c9bc1022a8df715b5ffd99467b10dc97ac9d0624c3d73ad2d0804b2764f30b94",
       "question_family_id": "revenue_operating_profit_conversion",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-660c86eb9a7e8dfd2b9b8f4a",
-      "status": "SUPPORTED_NON_SCORING",
-      "supporting_claim_ids": [],
+      "status": "PARTIALLY_SUPPORTED_SCORING",
+      "supporting_claim_ids": [
+        "CLM-81cdb44f9ea4a488a790",
+        "CLM-c35e896dc619cf663b61"
+      ],
       "target_id": "000660"
     },
     {
@@ -1885,24 +1936,29 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
-        "ELIG-3ce44bc98745eccf945e1acb",
-        "ELIG-01809387c78c08c1993ab405"
+        "ELIG-01809387c78c08c1993ab405",
+        "ELIG-3ce44bc98745eccf945e1acb"
       ],
       "counter_claim_ids": [],
-      "eligibility_decision_ids": [],
+      "eligibility_decision_ids": [
+        "ELIG-01809387c78c08c1993ab405"
+      ],
       "failure_class": null,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
-        "CLM-95da73592de9afc97446",
+        "CLM-95da73592de9afc97446"
+      ],
+      "partial_supporting_claim_ids": [
         "CLM-85a8e1ec74fd4c208401"
       ],
-      "partial_supporting_claim_ids": [],
       "question_contract_hash": "4a313a74e5f00297821ed8945c6c4f09ad038cfd7d6866a4a0e0e3a5591aa040",
       "question_family_id": "capex_supply_oversupply",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-3a6242b6dd8ae07352bc036b",
-      "status": "SUPPORTED_NON_SCORING",
-      "supporting_claim_ids": [],
+      "status": "PARTIALLY_SUPPORTED_SCORING",
+      "supporting_claim_ids": [
+        "CLM-85a8e1ec74fd4c208401"
+      ],
       "target_id": "000660"
     },
     {
@@ -1942,8 +1998,8 @@
   "status": "QUESTION_IMPACT_CONTRACT_PASS",
   "status_counts": {
     "EVALUATED_ABSENT": 8,
-    "PARTIALLY_SUPPORTED_SCORING": 1,
-    "SUPPORTED_NON_SCORING": 13,
+    "PARTIALLY_SUPPORTED_SCORING": 9,
+    "SUPPORTED_NON_SCORING": 5,
     "SUPPORTED_SCORING": 2
   }
 }

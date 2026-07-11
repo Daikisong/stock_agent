@@ -165,14 +165,17 @@ def compile_question_closures_v2(
             if decision.get("component_scoring_eligibility") is not True:
                 non_scoring_ids.append(claim_id)
                 continue
-            if validated_impacts is not None and not _has_scoring_impact(
-                claim_id=claim_id,
-                matching_mappings=matching_mappings,
-                impacts_by_claim=impacts_by_claim,
-                contract=contract,
-            ):
-                non_scoring_ids.append(claim_id)
-                continue
+            has_validated_scoring_impact = False
+            if validated_impacts is not None:
+                has_validated_scoring_impact = _has_scoring_impact(
+                    claim_id=claim_id,
+                    matching_mappings=matching_mappings,
+                    impacts_by_claim=impacts_by_claim,
+                    contract=contract,
+                )
+                if not has_validated_scoring_impact:
+                    non_scoring_ids.append(claim_id)
+                    continue
             full_match = all(
                 _contains_any(text, group)
                 for group in contract.required_keyword_groups
@@ -180,7 +183,7 @@ def compile_question_closures_v2(
             partial_match = _contains_any(text, contract.partial_keywords)
             if full_match:
                 scoring_ids.append(claim_id)
-            elif partial_match:
+            elif partial_match or has_validated_scoring_impact:
                 partial_ids.append(claim_id)
             else:
                 non_scoring_ids.append(claim_id)

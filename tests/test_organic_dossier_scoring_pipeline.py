@@ -6,8 +6,10 @@ import unittest
 from pathlib import Path
 
 from e2r.research_brain.dossier.scoring_pipeline import (
-    COMPONENT_QUESTION_FAMILIES,
     run_dossier_scoring_pipeline,
+)
+from e2r.research_brain.scoring.question_impact_contract import (
+    load_question_impact_contracts,
 )
 
 
@@ -202,18 +204,23 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
                 }
             ],
         )
-        families = sorted(
-            {family for values in COMPONENT_QUESTION_FAMILIES.values() for family in values}
-        )
+        families = sorted(load_question_impact_contracts())
         self._jsonl(
             root / "question_closure.jsonl",
             [
                 {
                     "question_family_id": family,
                     "status": "PROVIDER_PENDING" if family == pending_family else "EVALUATED_ABSENT",
+                    "failure_class": None
+                    if family == pending_family
+                    else "SOURCE_EXHAUSTED",
                     "search_exhaustion_proof": []
                     if family == pending_family
                     else [f"SEARCH-{family}"],
+                    "research_execution": {
+                        "bounded": family != pending_family,
+                        "official_attempted": family != pending_family,
+                    },
                 }
                 for family in families
             ],

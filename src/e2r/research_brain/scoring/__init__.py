@@ -28,6 +28,12 @@ from .component_scoring_model import (
     score_component_subcriteria,
 )
 from .counter_component_math import audit_counter_component_math
+from .semantic_closure_reconciler import (
+    QuestionComponentReconciliation,
+    SemanticClosureReconciler,
+    SemanticClosureReconciliationResult,
+    audit_question_component_reconciliation,
+)
 from .question_impact_contract import (
     QuestionImpactContract,
     audit_question_impact_contracts,
@@ -56,6 +62,9 @@ __all__ = [
     "component_subcriteria_context", "load_component_scoring_model",
     "score_component_subcriteria",
     "audit_counter_component_math",
+    "QuestionComponentReconciliation", "SemanticClosureReconciler",
+    "SemanticClosureReconciliationResult",
+    "audit_question_component_reconciliation",
     "QuestionImpactContract", "audit_question_impact_contracts",
     "compile_question_closures_v2", "load_question_impact_contracts",
 ]

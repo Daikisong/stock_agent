@@ -21,6 +21,7 @@ from e2r.research_brain.scoring import (
     EvidenceImpactAdjudicator,
     ImpactValidator,
     ResearchCalibratedComponentScorer,
+    SemanticClosureReconciler,
     compile_claim_eligibility_decisions,
     compile_question_component_subcriteria,
     compile_question_closures_v2,
@@ -77,6 +78,7 @@ def run_dossier_scoring_pipeline(
     provenance = _read_jsonl(root / "claim_provenance.jsonl")
     mappings = _read_jsonl(root / "primitive_mappings.jsonl")
     closures = _read_jsonl(root / "question_closure.jsonl")
+    search_adequacy = _read_jsonl(root / "evidence_search_adequacy.jsonl")
     documents = _read_jsonl(root / "evidence_documents.jsonl")
     if not claims or not provenance or not mappings:
         raise ValueError("dossier scoring requires organic claim, provenance, and mapping leaves")
@@ -330,15 +332,43 @@ def run_dossier_scoring_pipeline(
         if question_contracts
         else tuple(closures)
     )
+    rejected_impacts = tuple(
+        (*ledger.rejected_impacts, *validation.rejected)
+    )
+    preliminary_reconciliation = SemanticClosureReconciler().reconcile(
+        contracts=question_contracts,
+        question_closures=closures_v2,
+        claims=selected_claims,
+        primitive_mappings=mappings,
+        eligibility_decisions=ledger.claim_eligibility_decisions,
+        proposed_impacts=proposals,
+        validated_impacts=validation.impacts,
+        rejected_impacts=rejected_impacts,
+        adjudications=adjudication_rows,
+        search_adequacy=search_adequacy,
+    )
     terminal_evidence = _terminal_component_evidence(
         contract_components=tuple(contract.component_weights),
         impacts=validation.impacts,
-        question_closures=closures_v2,
+        question_closures=preliminary_reconciliation.question_closures,
     )
     assessment = ComponentAssessmentBuilder().build(
         contract=contract,
         impacts=validation.impacts,
         terminal_evidence=terminal_evidence,
+    )
+    reconciliation = SemanticClosureReconciler().reconcile(
+        contracts=question_contracts,
+        question_closures=closures_v2,
+        claims=selected_claims,
+        primitive_mappings=mappings,
+        eligibility_decisions=ledger.claim_eligibility_decisions,
+        proposed_impacts=proposals,
+        validated_impacts=validation.impacts,
+        component_assessments=assessment.assessments,
+        rejected_impacts=rejected_impacts,
+        adjudications=adjudication_rows,
+        search_adequacy=search_adequacy,
     )
     score = ResearchCalibratedComponentScorer().score(
         contract=contract,
@@ -418,6 +448,9 @@ def run_dossier_scoring_pipeline(
         "component_assessment_critical_count": int(
             assessment.audit.get("critical_count_sum") or 0
         ),
+        "question_component_reconciliation_critical_count": int(
+            reconciliation.audit.get("critical_count_sum") or 0
+        ),
         "score_audit_critical_count": int(score.audit.get("critical_count_sum") or 0),
         "probe_contamination_count": sum(
             row.get("evidence_origin") == "CONTROLLED_CLAIM_PROBE"
@@ -425,7 +458,7 @@ def run_dossier_scoring_pipeline(
         ),
     }
     audit = {
-        "schema_version": "e2r_organic_dossier_scoring_pipeline_v1",
+        "schema_version": "e2r_organic_dossier_scoring_pipeline_v2",
         "status": (
             "ORGANIC_DOSSIER_FULL_SCORE_PASS"
             if sum(critical.values()) == 0 and score.full_score_valid
@@ -465,6 +498,7 @@ def run_dossier_scoring_pipeline(
         decision=decision,
         audit=audit,
         question_closures_v2=closures_v2,
+        reconciliation=reconciliation,
     )
     return audit
 
@@ -483,7 +517,11 @@ def _terminal_component_evidence(
     for component_id in contract_components:
         if component_id in supported:
             continue
-        families = COMPONENT_QUESTION_FAMILIES[component_id]
+        families = tuple(
+            str(row.get("question_family_id") or "")
+            for row in question_closures
+            if component_id in set(row.get("allowed_component_ids") or ())
+        ) or COMPONENT_QUESTION_FAMILIES[component_id]
         rows = tuple(
             closure_by_family[family]
             for family in families
@@ -497,6 +535,7 @@ def _terminal_component_evidence(
         investigated_statuses = {
             "COUNTER_SUPPORTED",
             "EVALUATED_ABSENT",
+            "SUPPORTED_NON_SCORING",
         }
         investigated_proof = tuple(
             str(claim_id)
@@ -506,9 +545,18 @@ def _terminal_component_evidence(
                 *(row.get("counter_claim_ids") or ()),
             )
         )
-        if rows and all(
-            row.get("status") in investigated_statuses for row in rows
-        ) and (exhaustion or investigated_proof):
+        component_resolved = all(
+            row.get("status") in investigated_statuses
+            or (
+                row.get("status")
+                in {"SUPPORTED_SCORING", "PARTIALLY_SUPPORTED_SCORING"}
+                and component_id
+                not in set(row.get("reconciled_component_ids") or ())
+                and row.get("reconciliation_search_adequate") is True
+            )
+            for row in rows
+        )
+        if rows and component_resolved and (exhaustion or investigated_proof):
             result[component_id] = {
                 "status": "VERIFIED_ABSENT_AFTER_SEARCH",
                 "search_exhaustion_proof": tuple(
@@ -562,7 +610,7 @@ def _impact_satisfaction_rows(
 
 
 def _write_pipeline_leaves(
-    *, root: Path, adjudications, proposals, ledger, validation, assessment, score, decision, audit, question_closures_v2
+    *, root: Path, adjudications, proposals, ledger, validation, assessment, score, decision, audit, question_closures_v2, reconciliation
 ) -> None:
     write_jsonl(root / "impact_adjudications.jsonl", adjudications)
     proposal_mapping_ids = {
@@ -593,7 +641,18 @@ def _write_pipeline_leaves(
         root / "claim_eligibility_decisions.jsonl",
         ledger.claim_eligibility_decisions,
     )
-    write_jsonl(root / "question_closure_v2.jsonl", question_closures_v2)
+    write_jsonl(
+        root / "question_closure_v2_pre_reconciliation.jsonl",
+        question_closures_v2,
+    )
+    write_jsonl(
+        root / "question_closure_v2.jsonl",
+        reconciliation.question_closures,
+    )
+    write_jsonl(
+        root / "question_component_reconciliation.jsonl",
+        (row.to_dict() for row in reconciliation.reconciliations),
+    )
     write_jsonl(
         root / "claim_impact_ledger.jsonl",
         (row.to_dict() for row in ledger.validated_impacts),
@@ -649,6 +708,10 @@ def _write_pipeline_leaves(
     write_json(root / "claim_impact_ledger_audit.json", ledger.audit)
     write_json(root / "impact_validation_audit.json", validation.audit)
     write_json(root / "component_assessment_audit.json", assessment.audit)
+    write_json(
+        root / "question_component_reconciliation_audit.json",
+        reconciliation.audit,
+    )
     write_json(root / "component_score_audit.json", score.audit)
     write_text(
         root / "operator_digest.md",
