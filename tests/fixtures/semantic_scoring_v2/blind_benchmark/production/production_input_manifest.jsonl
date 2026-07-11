@@ -1,0 +1,4 @@
+{"input_id":"PI-CONFIG","input_type":"CONFIG","value":"C06 production daily contract","origin":"CANONICAL_CONFIG"}
+{"input_id":"PI-Q1","input_type":"QUERY","value":"issuer current memory allocation evidence","origin":"LLM_PLANNER"}
+{"input_id":"PI-Q2","input_type":"QUERY","value":"current HBM capacity counter and supersession","origin":"LLM_PLANNER"}
+{"input_id":"PI-CONTEXT","input_type":"PROMPT_CONTEXT","value":"question contracts and current production evidence only","origin":"CANONICAL_PIPELINE"}

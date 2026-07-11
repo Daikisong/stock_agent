@@ -1,0 +1,7 @@
+{"source_id":"GS-FILING","research_route":"official_filing","source_url":"https://gold.private.example/filing","research_query":"private filing query","anchor":"table-1"}
+{"source_id":"GS-IR","research_route":"issuer_ir_earnings","source_url":"https://gold.private.example/ir","research_query":"private allocation query","anchor":"earnings-call"}
+{"source_id":"GS-NEWS","research_route":"issuer_newsroom","source_url":"https://gold.private.example/news","research_query":"private shipment query","anchor":"paragraph-3"}
+{"source_id":"GS-CUSTOMER","research_route":"customer_official","source_url":"https://gold.private.example/customer","research_query":"private customer query","anchor":"release-2"}
+{"source_id":"GS-REUTERS","research_route":"trusted_independent","source_url":"https://gold.private.example/trusted","research_query":"private supply counter query","anchor":"paragraph-7"}
+{"source_id":"GS-FINANCIAL","research_route":"financial_revision","source_url":"https://gold.private.example/revision","research_query":"private revision query","anchor":"estimate-table"}
+{"source_id":"GS-SUPERSESSION","research_route":"counter_supersession","source_url":"https://gold.private.example/supersession","research_query":"private qualification supersession query","anchor":"current-status"}

@@ -1,0 +1,7 @@
+{
+  "schema_version": "e2r_production_blind_lane_v1",
+  "lane_role": "PRODUCTION",
+  "gold_visibility": false,
+  "planner_input_classes": ["QUESTION_CONTRACT", "CURRENT_PRODUCTION_EVIDENCE", "SCORE_GAP_CONTEXT"],
+  "forbidden_input_classes": ["GOLD_URL", "GOLD_QUERY", "GOLD_FACT", "EXPECTED_COMPONENT", "EXPECTED_SCORE"]
+}

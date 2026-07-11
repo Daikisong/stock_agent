@@ -1,0 +1,150 @@
+{
+  "benchmark_mode": "CONTROLLED_BLIND_LANE_CONTRACT",
+  "comparisons": [
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-A-ALLOCATION",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "P-101",
+      "question_family_id": "current_customer_allocation_commitment",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "TARGET-A"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-A-SHIPMENT",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "P-102",
+      "question_family_id": "shipment_mass_production_generation",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "TARGET-A"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-A-ASP",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "P-103",
+      "question_family_id": "asp_pricing_actual",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "TARGET-A"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-B-CAPACITY",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "P-201",
+      "question_family_id": "capacity_constraint_presold_status",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "TARGET-B"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-B-REVISION",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "P-202",
+      "question_family_id": "medium_term_revision_consensus",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "TARGET-B"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-B-OVERSUPPLY",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "P-203",
+      "question_family_id": "capex_supply_oversupply",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "TARGET-B"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPERSESSION",
+      "gold_fact_id": "G-A-QUAL-RESOLVED",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "P-104",
+      "question_family_id": "qualification_pass_lag_reopen",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "TARGET-A"
+    }
+  ],
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "critical_material_fact_miss_count": 0,
+    "gold_fact_leaked_into_production_prompt_count": 0,
+    "gold_query_leaked_into_production_count": 0,
+    "gold_route_missing_count": 0,
+    "gold_source_injected_into_production_count": 0,
+    "material_counter_fact_miss_count": 0,
+    "material_supersession_fact_miss_count": 0,
+    "noncritical_recall_below_90_count": 0
+  },
+  "gold_fact_count": 7,
+  "gold_lane_role": "PRIVATE_POST_RUN_EVALUATION",
+  "lane_isolation": {
+    "comparison_timing": "POST_RUN_ONLY",
+    "gold_root_hash": "e49852bff1448a5fcfc4abe59d99c02633b797871428820f2124f664423aa1c6",
+    "gold_visibility_during_production": false,
+    "production_root_hash": "3326d7c6d48af97d2e32f634f8f5bc85b588c8fce408fa79edef8da827415afa",
+    "roots_are_disjoint": true
+  },
+  "leakage_audit": {
+    "fact_leak_input_ids": [],
+    "gold_fact_leaked_into_production_prompt_count": 0,
+    "gold_query_leaked_into_production_count": 0,
+    "gold_source_injected_into_production_count": 0,
+    "query_leak_input_ids": [],
+    "source_injection_input_ids": []
+  },
+  "missing_gold_routes": [],
+  "noncritical_fact_count": 2,
+  "noncritical_fact_recall": 1.0,
+  "observed_gold_routes": [
+    "counter_supersession",
+    "customer_official",
+    "financial_revision",
+    "issuer_ir_earnings",
+    "issuer_newsroom",
+    "official_filing",
+    "trusted_independent"
+  ],
+  "production_fact_count": 7,
+  "production_lane_role": "CANONICAL_BLIND_RUN",
+  "qualified_material_fact_match_count": 7,
+  "required_gold_routes": [
+    "counter_supersession",
+    "customer_official",
+    "financial_revision",
+    "issuer_ir_earnings",
+    "issuer_newsroom",
+    "official_filing",
+    "trusted_independent"
+  ],
+  "schema_version": "e2r_research_quality_gold_audit_v1",
+  "status": "BLIND_RESEARCH_QUALITY_PASS"
+}
