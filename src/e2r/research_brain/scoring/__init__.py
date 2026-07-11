@@ -12,6 +12,7 @@ from .impact_validator import CreditValidatedImpact, ImpactValidationResult, Imp
 from .component_assessment import ComponentAssessment, ComponentAssessmentBuilder, ComponentAssessmentResult, ComponentAssessmentStatus
 from .component_scorer import ResearchCalibratedComponentScorer, ResearchCalibratedScoreResult
 from .atomic_stagecourt_v2 import AtomicStageCourtV2, AtomicStageDecisionV2
+from .evidence_origin import EvidenceOrigin, ScoringEvidencePartition, audit_probe_separation, partition_scoring_evidence
 
 __all__ = [
     "ClaimImpactLedgerBuilder", "ClaimImpactLedgerResult", "ClaimImpactProposal",
@@ -21,4 +22,5 @@ __all__ = [
     "ComponentAssessment", "ComponentAssessmentBuilder", "ComponentAssessmentResult", "ComponentAssessmentStatus",
     "ResearchCalibratedComponentScorer", "ResearchCalibratedScoreResult",
     "AtomicStageCourtV2", "AtomicStageDecisionV2",
+    "EvidenceOrigin", "ScoringEvidencePartition", "audit_probe_separation", "partition_scoring_evidence",
 ]

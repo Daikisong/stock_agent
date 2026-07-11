@@ -245,6 +245,11 @@ def run_full_live_acceptance(
     report = {
         "schema_version": LIVE_ACCEPTANCE_SCHEMA_VERSION,
         "status": "FULL_LIVE_ACCEPTANCE_PASS" if critical == 0 else "FULL_LIVE_ACCEPTANCE_FAIL",
+        "acceptance_scope": "CONTROLLED_CLAIM_PROBE",
+        "controlled_claim_probe_status": (
+            "CONTROLLED_CLAIM_PROBE_PASS" if critical == 0 else "CONTROLLED_CLAIM_PROBE_FAIL"
+        ),
+        "scoring_readiness_eligible": False,
         "as_of_date": as_of_date,
         "executed_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "required_runs": {
@@ -263,6 +268,8 @@ def run_full_live_acceptance(
             }
         ),
         "accepted_claim_proof": {
+            "evidence_origin": "CONTROLLED_CLAIM_PROBE",
+            "scoring_readiness_eligible": False,
             "target_id": target_id,
             "claim_id": atomic.claims[0].claim_id,
             "primitive_id": atomic.claims[0].primitive_id,

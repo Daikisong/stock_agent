@@ -49,6 +49,13 @@ class FullLiveAcceptanceTest(unittest.TestCase):
         self.assertEqual(claim["canonical_stage"], "0")
         self.assertTrue(claim["material_gap_ids"])
 
+        # Phase 51: this is a controlled smoke probe, never organic scoring proof.
+        self.assertEqual(
+            report.get("controlled_claim_probe_status", "CONTROLLED_CLAIM_PROBE_PASS"),
+            "CONTROLLED_CLAIM_PROBE_PASS",
+        )
+        self.assertFalse(report.get("scoring_readiness_eligible", False))
+
     def test_frozen_live_inputs_recompile_with_zero_variance(self) -> None:
         probe = REPO_ROOT / "output/live_acceptance/2026-07-10/claim_probe_samsung_q1"
         census = REPO_ROOT / "output/census/live_2026-07-10/current_operation_input_manifest.json"
@@ -60,6 +67,11 @@ class FullLiveAcceptanceTest(unittest.TestCase):
         )
 
         self.assertEqual(result.status, "FULL_LIVE_ACCEPTANCE_PASS")
+        self.assertEqual(
+            result.report["controlled_claim_probe_status"],
+            "CONTROLLED_CLAIM_PROBE_PASS",
+        )
+        self.assertFalse(result.report["scoring_readiness_eligible"])
         self.assertEqual(result.report["critical_count_sum"], 0)
         self.assertEqual(result.report["determinism"]["variance_count"], 0)
         samsung = next(

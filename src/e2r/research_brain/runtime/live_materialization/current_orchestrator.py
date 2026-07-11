@@ -190,6 +190,10 @@ def write_live_acceptance_promotion(
         "promoted_input_sha256": _file_sha256(promoted_path),
         "source_roots": source_rows,
         "accepted_claim_ids": sorted(accepted_ids),
+        "evidence_origin_by_claim_id": {
+            claim_id: "CONTROLLED_CLAIM_PROBE" for claim_id in sorted(accepted_ids)
+        },
+        "scoring_readiness_eligible": False,
         "claim_provenance_count": len(promoted_input.claim_provenance),
         "source_task_count": len(promoted_input.source_tasks),
         "atomic_decision_count": len(promoted_input.atomic_decisions),

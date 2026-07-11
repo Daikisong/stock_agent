@@ -1,0 +1,12 @@
+{
+  "schema_version":"e2r_acceptance_probe_separation_audit_v1",
+  "as_of_date":"2026-07-11",
+  "status":"CONTROLLED_CLAIM_PROBE_PASS",
+  "legacy_runtime_probe_claim_count":1,
+  "organic_scoring_claim_count":0,
+  "scoring_plane_decision_count":0,
+  "origin_counts":{"CONTROLLED_CLAIM_PROBE":1},
+  "critical_counts":{"probe_claim_counted_organic_count":0,"probe_decision_merged_into_canonical_score_count":0,"no_score_probe_unlocks_readiness_count":0},
+  "critical_count_sum":0,
+  "note":"The legacy runtime evaluator may still replay the controlled probe, but the canonical scoring plane excludes it from organic claim, impact, component, and readiness counts."
+}

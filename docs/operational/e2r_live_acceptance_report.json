@@ -1,9 +1,11 @@
 {
+  "acceptance_scope": "CONTROLLED_CLAIM_PROBE",
   "accepted_claim_proof": {
     "canonical_stage": "0",
     "claim_id": "CLM-94438945025662847395",
     "content_sha256": "73ae3c9e232df2bc951e5a6637b7b829f7e3523ffa42762f3b168017260c2d93",
     "decision_status": "PENDING",
+    "evidence_origin": "CONTROLLED_CLAIM_PROBE",
     "exact_quote": "The Device Solutions (DS) Division posted a QoQ sales increase of 86%, with the Memory Business setting an all-time high for quarterly revenue and operating profit as a result of technological leadership in the memory market, as well as higher average selling price (ASP).",
     "mapping_ids": [
       "MAP-2ba74cff75dd0197f280"
@@ -21,6 +23,7 @@
     "query_prompt_hash": "7ccf831a31c9fbb48f81434878b40e2c07a7c32f7e0fd319c8d721c28c70cb3c",
     "score_type": "NO_SCORE",
     "score_valid": false,
+    "scoring_readiness_eligible": false,
     "source_url": "https://news.samsung.com/global/samsung-electronics-announces-first-quarter-2026-results",
     "target_id": "005930"
   },
@@ -30,6 +33,7 @@
     "DOC-bad9ee44dd6cfb8c19c7"
   ],
   "as_of_date": "2026-07-10",
+  "controlled_claim_probe_status": "CONTROLLED_CLAIM_PROBE_PASS",
   "critical_count_sum": 0,
   "current_census_evidence": {
     "accepted_current_claim_count": 1,
@@ -53,7 +57,7 @@
     "source_hash": "89cc5d583308ab03d03ca630e3ebfd2facb8eab1c3153783e775defa310e2b55",
     "variance_count": 0
   },
-  "executed_at": "2026-07-11T03:57:45+00:00",
+  "executed_at": "2026-07-11T10:39:01+00:00",
   "hard_acceptance_counts": {
     "accepted_current_claim_missing": 0,
     "atomic_decision_missing": 0,
@@ -81,29 +85,26 @@
     "source_corpus_hash": "a1094a67eeed155c37b7dd914317b285dbc27673db6de909586cee965a9b86f0"
   },
   "phase_commit_shas": [
-    "39ff8300b3be22014e4cf89268ab17463922ca39",
-    "77191c10f7f772a1031b1a33b10cc0958a2e0626",
-    "56154ad4f605812870b406aa8e18e6bd97f65661",
-    "84fd6e7f8ac78033994b05cdab04438bbc93a35b",
-    "a2bbcff6215e52d5048b39a202784faaf4e7d1cb",
-    "89aeeeb76f5dbb41b2cc73d32a236acd751f9140",
-    "73d19f397860008a0c9cdb6cdafda48b8af1d6ac",
-    "2a125523eb16ba4653d9a7fdb330091480831494",
-    "fbee5700699ea97a4f951f4b3681282ae9ef4622",
-    "dc686b9bdec8dd4c3aa6416125cd2d29997d0c90",
-    "2a475ff1a93d030188f3b0df7595385561351019",
-    "b9751cc4efbe70e2420a550dd21df31d73b1d13b",
-    "5b2178033fd1c89d5c7a0da904cbedfbbe86812e",
-    "79896083bfdf81ed63dccdd5c5849b8398fcfc94",
-    "cae677a67d31a08c70511099ef39aeceabf6061a",
-    "9bab39524cbfee9ab0498b837d8750d631af9799",
-    "9babe6aaeab22238a4eb17f5e0b99ae9130de4ed",
-    "78c54071a31b91e3d5b4a5b55a0bf5534b22d006",
-    "3464748e7bdcfdfa25ac64281588f9ed067cbcef",
-    "66a81fd312c6b4c8f24f5263d3b67f276f2652c2",
-    "26e63c22c9f19d3361979aefed6ed428a9a967b5",
-    "a9e8bfc2b00a54290b8ff3428fecdfaa7cc28e3e",
-    "f8dd47305f82321ebdc30eb85f3ea853ff18d14a"
+    "39ff830",
+    "77191c1",
+    "56154ad",
+    "84fd6e7",
+    "a2bbcff",
+    "89aeeeb",
+    "73d19f3",
+    "2a12552",
+    "fbee570",
+    "dc686b9",
+    "2a475ff",
+    "b9751cc",
+    "5b21780",
+    "7989608",
+    "cae677a",
+    "9bab395",
+    "9babe6a",
+    "78c5407",
+    "3464748",
+    "66a81fd"
   ],
   "required_runs": {
     "historical_source_backed_replay": "HISTORICAL_SOURCE_BACKED_REPLAY_PASS",
@@ -122,5 +123,6 @@
     "search_snippet_used_as_score_evidence": false
   },
   "schema_version": "e2r_full_live_acceptance_v1",
+  "scoring_readiness_eligible": false,
   "status": "FULL_LIVE_ACCEPTANCE_PASS"
 }
