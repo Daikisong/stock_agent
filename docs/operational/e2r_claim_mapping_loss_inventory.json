@@ -1,0 +1,35 @@
+{
+  "schema_version": "e2r_claim_mapping_loss_inventory_v1",
+  "as_of_date": "2026-07-11",
+  "status": "CLAIM_MAPPING_LOSS_PATH_CONFIRMED",
+  "observed_counts": {
+    "organic_accepted_claim_count": 0,
+    "organic_rerouted_claim_count": 0,
+    "observed_mapping_lineage_loss_count": 0,
+    "probe_accepted_claim_count": 1,
+    "probe_mapping_count": 1
+  },
+  "structural_loss_paths": [
+    {
+      "file": "src/e2r/research_brain/runtime/live_materialization/current_claim_compiler.py",
+      "symbol": "accepted_claims[claim.claim_id]",
+      "failure": "a later accepted mapping replaces the claim row mapping_ids with one mapping"
+    },
+    {
+      "file": "src/e2r/research_brain/runtime/live_materialization/current_atomic_decision.py",
+      "symbol": "closure_by_claim",
+      "failure": "one claim closing multiple direct primitives raises instead of preserving impacts"
+    },
+    {
+      "file": "src/e2r/research_brain/runtime/live_materialization/current_atomic_decision.py",
+      "symbol": "_adapt_direct_current_claims",
+      "failure": "rerouted accepted mappings never enter global score adaptation"
+    }
+  ],
+  "required_separation": {
+    "source_task_satisfaction": "only answers whether the original question closed",
+    "claim_impact_ledger": "preserves every validated global primitive/component impact",
+    "original_gap_closed_by_rerouted": false
+  },
+  "production_structural_loss_path_count": 3
+}

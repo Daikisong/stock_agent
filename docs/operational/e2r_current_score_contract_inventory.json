@@ -1,0 +1,47 @@
+{
+  "schema_version": "e2r_current_score_contract_inventory_v1",
+  "as_of_date": "2026-07-11",
+  "status": "CURRENT_SCORE_CONTRACT_MISMATCH_CONFIRMED",
+  "canonical_profile": {
+    "path": "configs/e2r_archetype_weight_profile_v2_2.json",
+    "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+    "weights": {
+      "eps_fcf_explosion": 24.0,
+      "earnings_visibility": 21.0,
+      "bottleneck_pricing": 19.0,
+      "market_mispricing": 15.0,
+      "valuation_rerating": 12.0,
+      "capital_allocation": 4.0,
+      "information_confidence": 5.0
+    },
+    "weight_sum": 100.0
+  },
+  "current_live_contract": {
+    "source": "SourceTask primitive set",
+    "primitive_count": 6,
+    "points": [16.666667, 16.666667, 16.666667, 16.666667, 16.666667, 16.666665],
+    "all_material": true,
+    "all_green_required": true,
+    "profile_loaded": false
+  },
+  "critical_counts": {
+    "production_balanced_points_usage_count": 1,
+    "production_all_material_true_rule_count": 1,
+    "production_all_green_required_true_rule_count": 1,
+    "production_direct_only_score_claim_count": 1,
+    "production_claim_single_primitive_enforcement_count": 1,
+    "canonical_profile_not_loaded_count": 1
+  },
+  "organic_runtime": {
+    "accepted_claim_count": 0,
+    "score_valid_true_count": 0,
+    "full_e2r_100_count": 0
+  },
+  "controlled_probe": {
+    "accepted_claim_count": 1,
+    "contribution_points": 16.666667,
+    "score_valid": false,
+    "score_type": "NO_SCORE",
+    "canonical_stage": "0"
+  }
+}

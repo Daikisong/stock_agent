@@ -1,0 +1,29 @@
+{
+  "schema_version": "e2r_evidence_to_score_call_graph_before_v1",
+  "as_of_date": "2026-07-11",
+  "status": "SCORING_BRIDGE_FORENSIC_PASS",
+  "nodes": [
+    {"id": "claim_compiler", "symbol": "CurrentClaimCompiler.compile", "role": "document_to_claim_and_task_satisfaction"},
+    {"id": "accepted_claim_dict", "symbol": "accepted_claims[claim.claim_id]", "role": "mapping_lineage_single_row_overwrite"},
+    {"id": "direct_adapter", "symbol": "_adapt_direct_current_claims", "role": "direct_task_closure_only"},
+    {"id": "balanced_points", "symbol": "_balanced_points", "role": "source_task_count_based_100_points"},
+    {"id": "atomic_engine", "symbol": "decide_atomic_score_stage", "role": "all_material_satisfied_full_score_gate"},
+    {"id": "acceptance_probe", "symbol": "run_full_live_acceptance", "role": "controlled_probe_promotion"},
+    {"id": "operational_envelope", "symbol": "package_live_current_operation", "role": "claim_and_contribution_readiness"},
+    {"id": "final_readiness", "symbol": "compile_final_readiness", "role": "runtime_ready_without_full_score_canary"}
+  ],
+  "edges": [
+    {"from": "claim_compiler", "to": "accepted_claim_dict", "condition": "accepted Evidence OS mapping"},
+    {"from": "accepted_claim_dict", "to": "direct_adapter", "condition": "DIRECT_TASK_SATISFIED only"},
+    {"from": "direct_adapter", "to": "balanced_points", "condition": "one claim to one primitive"},
+    {"from": "balanced_points", "to": "atomic_engine", "condition": "all rules material and green_required"},
+    {"from": "acceptance_probe", "to": "operational_envelope", "condition": "probe merged into canonical leaves"},
+    {"from": "operational_envelope", "to": "final_readiness", "condition": "accepted claim and contribution exist"}
+  ],
+  "missing_edges": [
+    "accepted_claim_to_many_to_many_impact",
+    "impact_to_calibrated_component",
+    "component_state_to_score_interval",
+    "organic_full_score_to_readiness"
+  ]
+}
