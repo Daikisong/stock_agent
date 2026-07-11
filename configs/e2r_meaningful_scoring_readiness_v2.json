@@ -40,9 +40,49 @@
       "accepted_statuses": ["CANONICAL_SCORING_CONTRACT_PASS"]
     },
     {
+      "audit_id": "evidence_impact_rubric",
+      "path": "docs/operational/e2r_evidence_impact_rubric_audit.json",
+      "accepted_statuses": ["RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"]
+    },
+    {
+      "audit_id": "claim_impact_ledger",
+      "path": "docs/operational/e2r_claim_impact_ledger_audit.json",
+      "accepted_statuses": ["MANY_TO_MANY_CLAIM_IMPACT_PASS"]
+    },
+    {
+      "audit_id": "component_assessment",
+      "path": "docs/operational/e2r_component_assessment_audit.json",
+      "accepted_statuses": ["COMPONENT_ASSESSMENT_STATE_PASS"]
+    },
+    {
+      "audit_id": "research_calibrated_score",
+      "path": "docs/operational/e2r_research_calibrated_score_audit.json",
+      "accepted_statuses": ["RESEARCH_CALIBRATED_COMPONENT_SCORING_PASS"]
+    },
+    {
       "audit_id": "acceptance_probe_separation",
       "path": "docs/operational/e2r_acceptance_probe_separation_audit.json",
       "accepted_statuses": ["CONTROLLED_CLAIM_PROBE_PASS"]
+    },
+    {
+      "audit_id": "c06_historical_component_replay",
+      "path": "docs/operational/e2r_c06_historical_component_replay.json",
+      "accepted_statuses": ["C06_HISTORICAL_COMPONENT_REPLAY_PASS"]
+    },
+    {
+      "audit_id": "evidence_to_score_generalization",
+      "path": "docs/operational/e2r_evidence_to_score_generalization_audit.json",
+      "accepted_statuses": ["EVIDENCE_TO_SCORE_GENERALIZATION_PASS"]
+    },
+    {
+      "audit_id": "evidence_to_score_known_bad",
+      "path": "docs/operational/e2r_evidence_to_score_known_bad_audit.json",
+      "accepted_statuses": ["EVIDENCE_TO_SCORE_KNOWN_BAD_PASS"]
+    },
+    {
+      "audit_id": "evidence_to_score_reviewer_gate",
+      "path": "docs/operational/e2r_evidence_to_score_reviewer_gate.json",
+      "accepted_statuses": ["EVIDENCE_TO_SCORE_REVIEWER_GATE_PASS"]
     }
   ]
 }

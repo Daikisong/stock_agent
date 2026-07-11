@@ -180,6 +180,23 @@ def write_meaningful_scoring_readiness(
             f"points={row['counts']['organic_verified_component_points']}, "
             f"score_type={row['facts'].get('score_type')}"
         )
+    lines.extend(("", "## Required Global Audits", ""))
+    for row in verdict["global_audits"]:
+        lines.append(
+            f"- {row['audit_id']}: {row['observed_status']}; "
+            f"critical={row['critical_count_sum']}"
+        )
+    repository = verdict["repository_verification"]
+    lines.extend(
+        (
+            "",
+            "## Repository Verification",
+            "",
+            f"- status: {repository['status']}",
+            f"- repo_dirty: {repository['repo_dirty']}",
+            f"- head_origin_same_commit: {repository['head_origin_same_commit']}",
+        )
+    )
     lines.extend(("", "## Exact Final Verdict", "", str(verdict["exact_final_verdict"]), ""))
     path.write_text("\n".join(lines), encoding="utf-8")
     return path

@@ -4319,7 +4319,12 @@ def _agentic_document_priority_bucket(
     time_bucket = _agentic_document_time_bucket(document, as_of_date=as_of_date)
     if time_bucket >= 3:
         return 6
-    overlap_score = _agentic_document_overlap_score(row, primitive_tokens=primitive_tokens)
+    # Source 이름/URL에 우연히 들어간 한 단어보다 실제 본문·anchor의
+    # contract relevance를 먼저 본다. 예: "FixtureBroker"의 broker 토큰이
+    # 직접 HBM allocation 문서보다 높은 priority bucket을 얻으면 안 된다.
+    overlap_score = _agentic_document_content_overlap_score(
+        row, primitive_tokens=primitive_tokens
+    )
     relevant = overlap_score > 0
     high_trust = _agentic_is_high_trust_document_type(document.source_type)
     target_direct_signal = _agentic_document_target_direct_signal_score(
@@ -4354,7 +4359,12 @@ def _agentic_should_reserve_official_document(
         return False
     if _agentic_source_quality_adjustment(document) < 0:
         return False
-    return _agentic_document_overlap_score(row, primitive_tokens=primitive_tokens) > 0
+    return (
+        _agentic_document_content_overlap_score(
+            row, primitive_tokens=primitive_tokens
+        )
+        > 0
+    )
 
 
 def _agentic_document_relevance_score(
@@ -4432,6 +4442,28 @@ def _agentic_document_overlap_score(
     )
     haystack_tokens = _agentic_text_tokens(haystack)
     return sum(weight for token, weight in primitive_tokens.items() if token in haystack_tokens)
+
+
+def _agentic_document_content_overlap_score(
+    row: tuple[EvidenceDocument, str, tuple[EvidenceAnchor, ...]],
+    *,
+    primitive_tokens: Mapping[str, float],
+) -> float:
+    """본문과 검증 anchor에 실제로 나타난 contract 토큰만 센다."""
+
+    _document, text, anchors = row
+    haystack = " ".join(
+        item
+        for item in (
+            text,
+            " ".join(anchor.locator for anchor in anchors),
+        )
+        if item
+    )
+    haystack_tokens = _agentic_text_tokens(haystack)
+    return sum(
+        weight for token, weight in primitive_tokens.items() if token in haystack_tokens
+    )
 
 
 def _agentic_document_target_direct_signal_score(
