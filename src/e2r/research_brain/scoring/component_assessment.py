@@ -20,7 +20,9 @@ class ComponentAssessmentStatus(str, Enum):
     VERIFIED_WEAK_SUPPORT = "VERIFIED_WEAK_SUPPORT"
     VERIFIED_ABSENT_AFTER_SEARCH = "VERIFIED_ABSENT_AFTER_SEARCH"
     VERIFIED_COUNTER = "VERIFIED_COUNTER"
+    SUPPORT_WITH_COUNTER_CAP = "SUPPORT_WITH_COUNTER_CAP"
     CONTRADICTED_OPEN = "CONTRADICTED_OPEN"
+    RESOLVED_COUNTER = "RESOLVED_COUNTER"
     HISTORICAL_ONLY = "HISTORICAL_ONLY"
     NOT_APPLICABLE = "NOT_APPLICABLE"
     UNKNOWN_UNINVESTIGATED = "UNKNOWN_UNINVESTIGATED"
@@ -35,6 +37,8 @@ TERMINAL_FULL_SCORE_STATUSES = {
     ComponentAssessmentStatus.VERIFIED_WEAK_SUPPORT.value,
     ComponentAssessmentStatus.VERIFIED_ABSENT_AFTER_SEARCH.value,
     ComponentAssessmentStatus.VERIFIED_COUNTER.value,
+    ComponentAssessmentStatus.SUPPORT_WITH_COUNTER_CAP.value,
+    ComponentAssessmentStatus.RESOLVED_COUNTER.value,
     ComponentAssessmentStatus.NOT_APPLICABLE.value,
 }
 
@@ -47,7 +51,14 @@ class ComponentAssessment:
     status: str
     support_impact_ids: tuple[str, ...]
     counter_impact_ids: tuple[str, ...]
+    resolution_impact_ids: tuple[str, ...]
+    support_points: float
+    counter_effect: float
+    net_points: float
+    contradiction_status: str
     verified_points: float
+    lower_bound: float
+    upper_bound: float
     lower_bound_points: float
     upper_bound_points: float
     missing_questions: tuple[str, ...]
@@ -111,6 +122,12 @@ class ComponentAssessmentBuilder:
                 if item.component_id == component_id
                 and item.counter_effect_fraction > 0
             )
+            resolution = tuple(
+                item
+                for item in impacts
+                if item.component_id == component_id
+                and item.resolution_effect > 0
+            )
             explicit = dict(terminal_evidence.get(component_id) or {})
             component_subcriteria = subcriteria_by_component.get(
                 component_id, ()
@@ -118,6 +135,21 @@ class ComponentAssessmentBuilder:
             if subcriteria_result is not None:
                 verified = float(
                     subcriteria_result.component_points[component_id]
+                )
+                support_points = float(
+                    subcriteria_result.component_support_points[
+                        component_id
+                    ]
+                )
+                counter_effect = float(
+                    subcriteria_result.component_counter_effects[
+                        component_id
+                    ]
+                )
+                contradiction_status = str(
+                    subcriteria_result.component_contradiction_statuses[
+                        component_id
+                    ]
                 )
                 fraction = (
                     verified / float(max_points) if max_points else 0.0
@@ -128,6 +160,27 @@ class ComponentAssessmentBuilder:
                     sum(item.support_credit_fraction for item in support),
                 )
                 verified = round(float(max_points) * fraction, 6)
+                support_points = verified
+                counter_effect = round(
+                    float(max_points)
+                    * min(
+                        1.0,
+                        sum(
+                            item.counter_effect_fraction
+                            for item in counter
+                        ),
+                    ),
+                    6,
+                )
+                contradiction_status = (
+                    "CONTRADICTED_OPEN"
+                    if support and counter
+                    else "COUNTER_ONLY"
+                    if counter
+                    else "RESOLVED_COUNTER"
+                    if resolution
+                    else "NO_COUNTER"
+                )
             proof = tuple(
                 str(value)
                 for value in explicit.get("search_exhaustion_proof") or ()
@@ -137,7 +190,16 @@ class ComponentAssessmentBuilder:
                 for value in explicit.get("missing_questions") or ()
             )
             if support and counter:
-                state = ComponentAssessmentStatus.CONTRADICTED_OPEN.value
+                if contradiction_status == "CONTRADICTED_OPEN":
+                    state = ComponentAssessmentStatus.CONTRADICTED_OPEN.value
+                elif contradiction_status == "SUPPORT_WITH_COUNTER_CAP":
+                    state = (
+                        ComponentAssessmentStatus.SUPPORT_WITH_COUNTER_CAP.value
+                    )
+                elif contradiction_status == "RESOLVED_COUNTER":
+                    state = ComponentAssessmentStatus.RESOLVED_COUNTER.value
+                else:
+                    state = ComponentAssessmentStatus.CONTRADICTED_OPEN.value
             elif support:
                 state = (
                     ComponentAssessmentStatus.VERIFIED_STRONG_SUPPORT.value
@@ -147,7 +209,13 @@ class ComponentAssessmentBuilder:
                     else ComponentAssessmentStatus.VERIFIED_WEAK_SUPPORT.value
                 )
             elif counter:
-                state = ComponentAssessmentStatus.VERIFIED_COUNTER.value
+                state = (
+                    ComponentAssessmentStatus.RESOLVED_COUNTER.value
+                    if contradiction_status == "RESOLVED_COUNTER"
+                    else ComponentAssessmentStatus.VERIFIED_COUNTER.value
+                )
+            elif resolution:
+                state = ComponentAssessmentStatus.RESOLVED_COUNTER.value
             else:
                 state = str(
                     explicit.get("status")
@@ -172,7 +240,7 @@ class ComponentAssessmentBuilder:
             confidence = max(
                 (
                     item.validated_credit_fraction
-                    for item in (*support, *counter)
+                    for item in (*support, *counter, *resolution)
                 ),
                 default=float(explicit.get("confidence") or 0.0),
             )
@@ -192,7 +260,16 @@ class ComponentAssessmentBuilder:
                     counter_impact_ids=tuple(
                         item.impact_id for item in counter
                     ),
+                    resolution_impact_ids=tuple(
+                        item.impact_id for item in resolution
+                    ),
+                    support_points=round(support_points, 6),
+                    counter_effect=round(counter_effect, 6),
+                    net_points=round(verified, 6),
+                    contradiction_status=contradiction_status,
                     verified_points=round(verified, 6),
+                    lower_bound=round(verified, 6),
+                    upper_bound=round(upper, 6),
                     lower_bound_points=round(verified, 6),
                     upper_bound_points=round(upper, 6),
                     missing_questions=missing,
@@ -223,7 +300,9 @@ class ComponentAssessmentBuilder:
             "unknown_uninvestigated_allows_full_score_count": 0,
             "provider_pending_allows_full_score_count": 0,
             "supported_component_erased_by_other_gap_count": sum(
-                bool(row.support_impact_ids) and row.verified_points <= 0
+                bool(row.support_impact_ids)
+                and not row.counter_impact_ids
+                and row.verified_points <= 0
                 for row in assessments
             ),
             "subcriterion_scoring_critical_count": int(
@@ -235,6 +314,34 @@ class ComponentAssessmentBuilder:
                 > 1e-6
                 and row.aggregation_mode != "CAP_BY_MISSING_BRIDGE"
                 for row in assessments
+            ),
+            "counter_impact_ignored_count": int(
+                subcriteria_result.audit["critical_counts"][
+                    "counter_impact_ignored_count"
+                ]
+                if subcriteria_result
+                else 0
+            ),
+            "support_counter_same_component_unreconciled_count": int(
+                subcriteria_result.audit["critical_counts"][
+                    "support_counter_same_component_unreconciled_count"
+                ]
+                if subcriteria_result
+                else 0
+            ),
+            "risk_open_zero_effect_count": int(
+                subcriteria_result.audit["critical_counts"][
+                    "risk_open_zero_effect_count"
+                ]
+                if subcriteria_result
+                else 0
+            ),
+            "risk_resolved_still_penalized_count": int(
+                subcriteria_result.audit["critical_counts"][
+                    "risk_resolved_still_penalized_count"
+                ]
+                if subcriteria_result
+                else 0
             ),
         }
         critical_sum = sum(critical.values())
@@ -250,7 +357,7 @@ class ComponentAssessmentBuilder:
             ),
             material_nonterminal_components=nonterminal,
             audit={
-                "schema_version": "e2r_component_assessment_audit_v2",
+                "schema_version": "e2r_component_assessment_audit_v3",
                 "component_count": len(assessments),
                 "subcriterion_count": sum(
                     len(row.subcriterion_score_ids) for row in assessments

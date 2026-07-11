@@ -96,6 +96,7 @@ class CreditValidatedImpact:
     information_diversity_scaled: bool
     corroboration_only: bool
     duplicate_reason: str | None
+    counter_claim_ids: tuple[str, ...] = ()
     lineage_mapping_ids: tuple[str, ...] = ()
     eligibility_decision_id: str = ""
     validation_status: str = "CREDIT_VALIDATED_V2"
@@ -288,6 +289,7 @@ class ImpactValidator:
                     information_diversity_scaled=False,
                     corroboration_only=False,
                     duplicate_reason=None,
+                    counter_claim_ids=proposal.counter_claim_ids,
                     lineage_mapping_ids=proposal.lineage_mapping_ids,
                     eligibility_decision_id=impact.eligibility_decision_id,
                 )

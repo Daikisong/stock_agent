@@ -70,7 +70,7 @@ class ResearchCalibratedComponentScorer:
         critical={
             "balanced_point_score_count":int(len(set(vector.values()))==1 and len(vector)>1 and verified>0),
             "calibrated_profile_not_used_count":0,
-            "supported_component_lost_count":sum(bool(a.support_impact_ids) and a.verified_points<=0 for a in assessments),
+            "supported_component_lost_count":sum(bool(a.support_impact_ids) and not a.counter_impact_ids and a.verified_points<=0 for a in assessments),
             "full_score_with_nonterminal_component_count":int(full is not None and bool(nonterminal)),
             "component_sum_total_mismatch_count":int(full is not None and abs(sum(vector.values())-full)>1e-6),
         }

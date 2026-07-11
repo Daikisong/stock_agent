@@ -71,9 +71,15 @@ class ComponentSubcriterionScore:
     support_fraction: float
     counter_effect_fraction: float
     resolution_effect: float
+    counter_mode: str
+    support_points: float
+    counter_effect_points: float
+    net_points: float
     net_fraction: float
     points: float
     status: str
+    contradiction_status: str
+    resolved_counter_impact_ids: tuple[str, ...]
     historical_case_refs: tuple[str, ...]
 
     def to_dict(self) -> Mapping[str, Any]:
@@ -85,7 +91,10 @@ class ComponentSubcriteriaScoringResult:
     status: str
     scores: tuple[ComponentSubcriterionScore, ...]
     component_points: Mapping[str, float]
+    component_support_points: Mapping[str, float]
+    component_counter_effects: Mapping[str, float]
     component_support_fractions: Mapping[str, float]
+    component_contradiction_statuses: Mapping[str, str]
     unmapped_impact_ids: tuple[str, ...]
     audit: Mapping[str, Any]
 
@@ -252,7 +261,10 @@ def score_component_subcriteria(
 
     scores = []
     component_points = {}
+    component_support_points = {}
+    component_counter_effects = {}
     component_support_fractions = {}
+    component_contradiction_statuses = {}
     for component in model.components:
         if component.aggregation_mode == "MAX_SOURCE_QUALITY":
             component_scores = list(
@@ -294,10 +306,49 @@ def score_component_subcriteria(
             )
         points = round(min(component.max_points, raw_points), 6)
         component_points[component.component_id] = points
+        component_support_points[component.component_id] = round(
+            min(
+                component.max_points,
+                sum(row.support_points for row in component_scores),
+            ),
+            6,
+        )
+        component_counter_effects[component.component_id] = round(
+            sum(row.counter_effect_points for row in component_scores),
+            6,
+        )
         component_support_fractions[component.component_id] = round(
             points / component.max_points if component.max_points else 0.0,
             6,
         )
+        component_contradiction_statuses[component.component_id] = (
+            _component_contradiction_status(component_scores)
+        )
+    counter_impact_ids = {
+        row.impact_id
+        for row in impacts
+        if row.counter_effect_fraction > 0
+    }
+    accounted_counter_ids = {
+        impact_id for row in scores for impact_id in row.counter_impact_ids
+    }
+    active_counter_ids = {
+        impact_id
+        for row in scores
+        if row.counter_effect_points > 0
+        for impact_id in row.counter_impact_ids
+    }
+    resolved_counter_ids = {
+        impact_id
+        for row in scores
+        for impact_id in row.resolved_counter_impact_ids
+    }
+    support_components = {
+        row.component_id for row in impacts if row.support_credit_fraction > 0
+    }
+    counter_components = {
+        row.component_id for row in impacts if row.counter_effect_fraction > 0
+    }
     critical = {
         "unmapped_nonzero_impact_count": len(unmapped),
         "subcriterion_points_over_budget_count": sum(
@@ -316,6 +367,33 @@ def score_component_subcriteria(
             for row in model.components
         ),
         "same_impact_multi_subcriterion_count": 0,
+        "counter_impact_ignored_count": len(
+            counter_impact_ids - accounted_counter_ids
+        ),
+        "support_counter_same_component_unreconciled_count": sum(
+            component_contradiction_statuses[component_id]
+            not in {
+                "SUPPORT_WITH_COUNTER_CAP",
+                "CONTRADICTED_OPEN",
+                "RESOLVED_COUNTER",
+            }
+            for component_id in support_components.intersection(
+                counter_components
+            )
+        ),
+        "risk_open_zero_effect_count": sum(
+            row.support_type == "RISK_OPEN"
+            and row.counter_effect_fraction > 0
+            and row.impact_id not in active_counter_ids
+            and row.impact_id not in resolved_counter_ids
+            for row in impacts
+        ),
+        "risk_resolved_still_penalized_count": sum(
+            bool(row.resolved_counter_impact_ids)
+            and row.resolution_effect >= 1.0
+            and row.counter_effect_points > 0
+            for row in scores
+        ),
     }
     critical_sum = sum(critical.values())
     return ComponentSubcriteriaScoringResult(
@@ -326,10 +404,15 @@ def score_component_subcriteria(
         ),
         scores=tuple(scores),
         component_points=component_points,
+        component_support_points=component_support_points,
+        component_counter_effects=component_counter_effects,
         component_support_fractions=component_support_fractions,
+        component_contradiction_statuses=(
+            component_contradiction_statuses
+        ),
         unmapped_impact_ids=tuple(unmapped),
         audit={
-            "schema_version": "e2r_component_subcriteria_scoring_audit_v1",
+            "schema_version": "e2r_component_subcriteria_scoring_audit_v2",
             "status": (
                 "COMPONENT_SUBCRITERIA_SCORING_PASS"
                 if critical_sum == 0
@@ -359,8 +442,9 @@ def _score_assigned_subcriterion(
     counter_fraction = min(
         1.0, sum(row.counter_effect_fraction for row in counter)
     )
-    resolution_effect = max(
-        (row.resolution_effect for row in resolution), default=0.0
+    resolution_effect, resolved_counter_ids = _linked_resolution_effect(
+        counter=counter,
+        resolution=resolution,
     )
     return _make_subcriterion_score(
         model=model,
@@ -372,6 +456,7 @@ def _score_assigned_subcriterion(
         support_fraction=support_fraction,
         counter_fraction=counter_fraction,
         resolution_effect=resolution_effect,
+        resolved_counter_ids=resolved_counter_ids,
     )
 
 
@@ -384,6 +469,10 @@ def _score_max_source_quality(
     support = tuple(row for row in impacts if row.support_credit_fraction > 0)
     counter = tuple(row for row in impacts if row.counter_effect_fraction > 0)
     resolution = tuple(row for row in impacts if row.resolution_effect > 0)
+    resolution_effect, resolved_counter_ids = _linked_resolution_effect(
+        counter=counter,
+        resolution=resolution,
+    )
     primary = max(
         support,
         key=lambda row: (
@@ -458,11 +547,16 @@ def _score_max_source_quality(
                 )
                 if dimension == "BEST_SOURCE_QUALITY"
                 else 0.0,
-                resolution_effect=max(
-                    (row.resolution_effect for row in resolution), default=0.0
-                )
-                if dimension == "BEST_SOURCE_QUALITY"
-                else 0.0,
+                resolution_effect=(
+                    resolution_effect
+                    if dimension == "BEST_SOURCE_QUALITY"
+                    else 0.0
+                ),
+                resolved_counter_ids=(
+                    resolved_counter_ids
+                    if dimension == "BEST_SOURCE_QUALITY"
+                    else ()
+                ),
             )
         )
     return tuple(result)
@@ -479,12 +573,34 @@ def _make_subcriterion_score(
     support_fraction: float,
     counter_fraction: float,
     resolution_effect: float,
+    resolved_counter_ids: Sequence[str],
 ) -> ComponentSubcriterionScore:
     effective_counter = counter_fraction * (1.0 - resolution_effect)
-    net_fraction = max(0.0, support_fraction - effective_counter)
-    points = round(subcriterion.max_points * net_fraction, 6)
-    if support_fraction and effective_counter:
-        status = "SUPPORT_WITH_COUNTER"
+    if (
+        subcriterion.counter_mode == "OPEN_BLOCK"
+        and support_fraction
+        and effective_counter
+    ):
+        net_fraction = 0.0
+    else:
+        net_fraction = max(0.0, support_fraction - effective_counter)
+    support_points = round(
+        subcriterion.max_points * support_fraction, 6
+    )
+    counter_effect_points = round(
+        subcriterion.max_points * effective_counter, 6
+    )
+    net_points = round(subcriterion.max_points * net_fraction, 6)
+    if support_fraction and counter_fraction and not effective_counter:
+        status = "RESOLVED_COUNTER"
+    elif (
+        support_fraction
+        and effective_counter
+        and subcriterion.counter_mode == "OPEN_BLOCK"
+    ):
+        status = "CONTRADICTED_OPEN"
+    elif support_fraction and effective_counter:
+        status = "SUPPORT_WITH_COUNTER_CAP"
     elif support_fraction:
         status = "SUPPORTED"
     elif effective_counter:
@@ -517,11 +633,81 @@ def _make_subcriterion_score(
         support_fraction=round(support_fraction, 6),
         counter_effect_fraction=round(effective_counter, 6),
         resolution_effect=round(resolution_effect, 6),
+        counter_mode=subcriterion.counter_mode,
+        support_points=support_points,
+        counter_effect_points=counter_effect_points,
+        net_points=net_points,
         net_fraction=round(net_fraction, 6),
-        points=points,
+        points=net_points,
         status=status,
+        contradiction_status=(
+            "NO_COUNTER" if status == "SUPPORTED" else status
+        ),
+        resolved_counter_impact_ids=tuple(resolved_counter_ids),
         historical_case_refs=subcriterion.historical_case_refs,
     )
+
+
+def _linked_resolution_effect(
+    *,
+    counter: Sequence[CreditValidatedImpact],
+    resolution: Sequence[CreditValidatedImpact],
+) -> tuple[float, tuple[str, ...]]:
+    if not resolution:
+        return 0.0, ()
+    if not counter:
+        return (
+            max(row.resolution_effect for row in resolution),
+            (),
+        )
+    counter_by_claim = {row.claim_id: row for row in counter}
+    linked_resolutions = tuple(
+        row
+        for row in resolution
+        if set(row.counter_claim_ids).intersection(counter_by_claim)
+    )
+    if not linked_resolutions:
+        return 0.0, ()
+    resolved_claim_ids = {
+        claim_id
+        for row in linked_resolutions
+        for claim_id in row.counter_claim_ids
+        if claim_id in counter_by_claim
+    }
+    return (
+        max(row.resolution_effect for row in linked_resolutions),
+        tuple(
+            counter_by_claim[claim_id].impact_id
+            for claim_id in sorted(resolved_claim_ids)
+        ),
+    )
+
+
+def _component_contradiction_status(
+    scores: Sequence[ComponentSubcriterionScore],
+) -> str:
+    statuses = {row.contradiction_status for row in scores}
+    has_support = any(row.support_points > 0 for row in scores)
+    active_counter_rows = tuple(
+        row for row in scores if row.counter_effect_points > 0
+    )
+    if has_support and active_counter_rows:
+        if any(
+            row.counter_mode == "OPEN_BLOCK" for row in active_counter_rows
+        ):
+            return "CONTRADICTED_OPEN"
+        return "SUPPORT_WITH_COUNTER_CAP"
+    if "CONTRADICTED_OPEN" in statuses:
+        return "CONTRADICTED_OPEN"
+    if "SUPPORT_WITH_COUNTER_CAP" in statuses:
+        return "SUPPORT_WITH_COUNTER_CAP"
+    if "RESOLVED_COUNTER" in statuses:
+        return "RESOLVED_COUNTER"
+    if "COUNTER_ONLY" in statuses:
+        return "COUNTER_ONLY"
+    if has_support:
+        return "NO_COUNTER"
+    return "UNSUPPORTED"
 
 
 def _aggregate_component_points(

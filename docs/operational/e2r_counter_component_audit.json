@@ -1,0 +1,720 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "counter_impact_ignored_count": 0,
+    "risk_open_zero_effect_count": 0,
+    "risk_resolved_still_penalized_count": 0,
+    "support_counter_same_component_unreconciled_count": 0
+  },
+  "scenario_count": 6,
+  "scenarios": {
+    "bounded_asp_counter": {
+      "active_component_assessments": [
+        {
+          "aggregation_mode": "NET_SUPPORT_COUNTER",
+          "assessment_id": "COMP-c013e1bd-bottleneck_pricing",
+          "component_id": "bottleneck_pricing",
+          "confidence": 0.6,
+          "contradiction_status": "SUPPORT_WITH_COUNTER_CAP",
+          "counter_effect": 2.0,
+          "counter_impact_ids": [
+            "IMPACT-ASP-COUNTER"
+          ],
+          "lower_bound": 1.0,
+          "lower_bound_points": 1.0,
+          "max_points": 19.0,
+          "missing_questions": [],
+          "net_points": 1.0,
+          "resolution_impact_ids": [],
+          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "search_exhaustion_proof": [],
+          "status": "SUPPORT_WITH_COUNTER_CAP",
+          "subcriterion_points": {
+            "C06_BOT_CAPACITY_CONSTRAINT": 0.0,
+            "C06_BOT_CUSTOMER_ALLOCATION": 0.0,
+            "C06_BOT_REALIZED_ASP": 1.0,
+            "C06_BOT_SUPPLY_RESPONSE": 0.0
+          },
+          "subcriterion_score_ids": [
+            "SUBSCORE-365ecc6b4cb1688641db9449",
+            "SUBSCORE-00ecc46b17a66c0d50f6f4ca",
+            "SUBSCORE-f7a165b1ee68cdaf7a42baa1",
+            "SUBSCORE-0d0f096af73f7ecb81e16c97"
+          ],
+          "support_impact_ids": [
+            "IMPACT-ASP-SUPPORT"
+          ],
+          "support_points": 3.0,
+          "upper_bound": 1.0,
+          "upper_bound_points": 1.0,
+          "verified_points": 1.0
+        }
+      ],
+      "active_subcriterion_scores": [
+        {
+          "component_id": "bottleneck_pricing",
+          "contradiction_status": "SUPPORT_WITH_COUNTER_CAP",
+          "counter_effect_fraction": 0.4,
+          "counter_effect_points": 2.0,
+          "counter_impact_ids": [
+            "IMPACT-ASP-COUNTER"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SAMSUNG-20250131-REOPEN-CAP"
+          ],
+          "max_points": 5.0,
+          "net_fraction": 0.2,
+          "net_points": 1.0,
+          "points": 1.0,
+          "resolution_effect": 0.0,
+          "resolution_impact_ids": [],
+          "resolved_counter_impact_ids": [],
+          "role": "REQUIRED",
+          "score_id": "SUBSCORE-f7a165b1ee68cdaf7a42baa1",
+          "status": "SUPPORT_WITH_COUNTER_CAP",
+          "subcriterion_id": "C06_BOT_REALIZED_ASP",
+          "support_fraction": 0.6,
+          "support_impact_ids": [
+            "IMPACT-ASP-SUPPORT"
+          ],
+          "support_points": 3.0
+        }
+      ],
+      "assessment_audit": {
+        "component_count": 7,
+        "critical_count_sum": 0,
+        "critical_counts": {
+          "component_subcriterion_sum_mismatch_count": 0,
+          "counter_impact_ignored_count": 0,
+          "evaluated_absent_blocks_full_score_count": 0,
+          "provider_pending_allows_full_score_count": 0,
+          "risk_open_zero_effect_count": 0,
+          "risk_resolved_still_penalized_count": 0,
+          "subcriterion_scoring_critical_count": 0,
+          "support_counter_same_component_unreconciled_count": 0,
+          "supported_component_erased_by_other_gap_count": 0,
+          "unknown_uninvestigated_allows_full_score_count": 0
+        },
+        "nonterminal_component_count": 0,
+        "schema_version": "e2r_component_assessment_audit_v3",
+        "subcriterion_count": 26,
+        "terminal_component_count": 7,
+        "verified_supported_points": 1.0
+      },
+      "assessment_status": "COMPONENT_ASSESSMENT_STATE_PASS",
+      "full_score_valid": true,
+      "material_nonterminal_components": [],
+      "validation_status": "IMPACT_CREDIT_CAP_PASS",
+      "verified_supported_score": 1.0
+    },
+    "capacity_support_and_scarcity_counter": {
+      "active_component_assessments": [
+        {
+          "aggregation_mode": "NET_SUPPORT_COUNTER",
+          "assessment_id": "COMP-c013e1bd-bottleneck_pricing",
+          "component_id": "bottleneck_pricing",
+          "confidence": 0.5,
+          "contradiction_status": "COUNTER_ONLY",
+          "counter_effect": 2.0,
+          "counter_impact_ids": [
+            "IMPACT-SCARCITY-COUNTER"
+          ],
+          "lower_bound": 0.0,
+          "lower_bound_points": 0.0,
+          "max_points": 19.0,
+          "missing_questions": [],
+          "net_points": 0.0,
+          "resolution_impact_ids": [],
+          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "search_exhaustion_proof": [],
+          "status": "VERIFIED_COUNTER",
+          "subcriterion_points": {
+            "C06_BOT_CAPACITY_CONSTRAINT": 0.0,
+            "C06_BOT_CUSTOMER_ALLOCATION": 0.0,
+            "C06_BOT_REALIZED_ASP": 0.0,
+            "C06_BOT_SUPPLY_RESPONSE": 0.0
+          },
+          "subcriterion_score_ids": [
+            "SUBSCORE-365ecc6b4cb1688641db9449",
+            "SUBSCORE-00ecc46b17a66c0d50f6f4ca",
+            "SUBSCORE-ad7a354411cde6b36b7be7c1",
+            "SUBSCORE-3fa2c535e9132845d6e3d674"
+          ],
+          "support_impact_ids": [],
+          "support_points": 0.0,
+          "upper_bound": 0.0,
+          "upper_bound_points": 0.0,
+          "verified_points": 0.0
+        },
+        {
+          "aggregation_mode": "NET_SUPPORT_COUNTER",
+          "assessment_id": "COMP-c013e1bd-capital_allocation",
+          "component_id": "capital_allocation",
+          "confidence": 0.5,
+          "contradiction_status": "NO_COUNTER",
+          "counter_effect": 0.0,
+          "counter_impact_ids": [],
+          "lower_bound": 0.75,
+          "lower_bound_points": 0.75,
+          "max_points": 4.0,
+          "missing_questions": [],
+          "net_points": 0.75,
+          "resolution_impact_ids": [],
+          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "search_exhaustion_proof": [],
+          "status": "VERIFIED_WEAK_SUPPORT",
+          "subcriterion_points": {
+            "C06_CAP_CAPACITY_RESPONSE": 0.75,
+            "C06_CAP_CAPEX_SCHEDULE": 0.0,
+            "C06_CAP_CASH_BURDEN": 0.0
+          },
+          "subcriterion_score_ids": [
+            "SUBSCORE-f90bfbf9f01e2f90fa98ca78",
+            "SUBSCORE-9afe43caef4bd686e264c90b",
+            "SUBSCORE-9248189920b6dba140d39fb4"
+          ],
+          "support_impact_ids": [
+            "IMPACT-CAPACITY-SUPPORT"
+          ],
+          "support_points": 0.75,
+          "upper_bound": 0.75,
+          "upper_bound_points": 0.75,
+          "verified_points": 0.75
+        }
+      ],
+      "active_subcriterion_scores": [
+        {
+          "component_id": "bottleneck_pricing",
+          "contradiction_status": "COUNTER_ONLY",
+          "counter_effect_fraction": 0.5,
+          "counter_effect_points": 2.0,
+          "counter_impact_ids": [
+            "IMPACT-SCARCITY-COUNTER"
+          ],
+          "counter_mode": "OPEN_BLOCK",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"
+          ],
+          "max_points": 4.0,
+          "net_fraction": 0.0,
+          "net_points": 0.0,
+          "points": 0.0,
+          "resolution_effect": 0.0,
+          "resolution_impact_ids": [],
+          "resolved_counter_impact_ids": [],
+          "role": "REQUIRED",
+          "score_id": "SUBSCORE-3fa2c535e9132845d6e3d674",
+          "status": "COUNTER_ONLY",
+          "subcriterion_id": "C06_BOT_SUPPLY_RESPONSE",
+          "support_fraction": 0,
+          "support_impact_ids": [],
+          "support_points": 0.0
+        },
+        {
+          "component_id": "capital_allocation",
+          "contradiction_status": "NO_COUNTER",
+          "counter_effect_fraction": 0.0,
+          "counter_effect_points": 0.0,
+          "counter_impact_ids": [],
+          "counter_mode": "OPEN_BLOCK",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"
+          ],
+          "max_points": 1.5,
+          "net_fraction": 0.5,
+          "net_points": 0.75,
+          "points": 0.75,
+          "resolution_effect": 0.0,
+          "resolution_impact_ids": [],
+          "resolved_counter_impact_ids": [],
+          "role": "REQUIRED",
+          "score_id": "SUBSCORE-9afe43caef4bd686e264c90b",
+          "status": "SUPPORTED",
+          "subcriterion_id": "C06_CAP_CAPACITY_RESPONSE",
+          "support_fraction": 0.5,
+          "support_impact_ids": [
+            "IMPACT-CAPACITY-SUPPORT"
+          ],
+          "support_points": 0.75
+        }
+      ],
+      "assessment_audit": {
+        "component_count": 7,
+        "critical_count_sum": 0,
+        "critical_counts": {
+          "component_subcriterion_sum_mismatch_count": 0,
+          "counter_impact_ignored_count": 0,
+          "evaluated_absent_blocks_full_score_count": 0,
+          "provider_pending_allows_full_score_count": 0,
+          "risk_open_zero_effect_count": 0,
+          "risk_resolved_still_penalized_count": 0,
+          "subcriterion_scoring_critical_count": 0,
+          "support_counter_same_component_unreconciled_count": 0,
+          "supported_component_erased_by_other_gap_count": 0,
+          "unknown_uninvestigated_allows_full_score_count": 0
+        },
+        "nonterminal_component_count": 0,
+        "schema_version": "e2r_component_assessment_audit_v3",
+        "subcriterion_count": 26,
+        "terminal_component_count": 7,
+        "verified_supported_points": 0.75
+      },
+      "assessment_status": "COMPONENT_ASSESSMENT_STATE_PASS",
+      "full_score_valid": true,
+      "material_nonterminal_components": [],
+      "validation_status": "IMPACT_CREDIT_CAP_PASS",
+      "verified_supported_score": 0.75
+    },
+    "open_qualification_counter": {
+      "active_component_assessments": [
+        {
+          "aggregation_mode": "COVERAGE_WEIGHTED",
+          "assessment_id": "COMP-c013e1bd-earnings_visibility",
+          "component_id": "earnings_visibility",
+          "confidence": 0.6,
+          "contradiction_status": "CONTRADICTED_OPEN",
+          "counter_effect": 1.8,
+          "counter_impact_ids": [
+            "IMPACT-OPEN-COUNTER"
+          ],
+          "lower_bound": 0.0,
+          "lower_bound_points": 0.0,
+          "max_points": 21.0,
+          "missing_questions": [],
+          "net_points": 0.0,
+          "resolution_impact_ids": [],
+          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "search_exhaustion_proof": [],
+          "status": "CONTRADICTED_OPEN",
+          "subcriterion_points": {
+            "C06_VIS_CAPACITY_BOOKING": 0.0,
+            "C06_VIS_CUSTOMER_COMMITMENT": 0.0,
+            "C06_VIS_MEDIUM_REVISION": 0.0,
+            "C06_VIS_QUALIFICATION": 0.0,
+            "C06_VIS_SHIPMENT_REVENUE_MIX": 0.0
+          },
+          "subcriterion_score_ids": [
+            "SUBSCORE-024b50788c6392769eae7c42",
+            "SUBSCORE-6f1df9162e6a39b070e0bc5f",
+            "SUBSCORE-98bc06da79508ad8bd27ec70",
+            "SUBSCORE-be9cf0ff4db2a41278deee9e",
+            "SUBSCORE-4c5d5e09babbb4cd1adfb235"
+          ],
+          "support_impact_ids": [
+            "IMPACT-OPEN-SUPPORT"
+          ],
+          "support_points": 1.8,
+          "upper_bound": 21.0,
+          "upper_bound_points": 21.0,
+          "verified_points": 0.0
+        }
+      ],
+      "active_subcriterion_scores": [
+        {
+          "component_id": "earnings_visibility",
+          "contradiction_status": "CONTRADICTED_OPEN",
+          "counter_effect_fraction": 0.6,
+          "counter_effect_points": 1.8,
+          "counter_impact_ids": [
+            "IMPACT-OPEN-COUNTER"
+          ],
+          "counter_mode": "OPEN_BLOCK",
+          "historical_case_refs": [
+            "C06-SAMSUNG-20240524-QUALIFICATION-LAG"
+          ],
+          "max_points": 3.0,
+          "net_fraction": 0.0,
+          "net_points": 0.0,
+          "points": 0.0,
+          "resolution_effect": 0.0,
+          "resolution_impact_ids": [],
+          "resolved_counter_impact_ids": [],
+          "role": "REQUIRED",
+          "score_id": "SUBSCORE-98bc06da79508ad8bd27ec70",
+          "status": "CONTRADICTED_OPEN",
+          "subcriterion_id": "C06_VIS_QUALIFICATION",
+          "support_fraction": 0.6,
+          "support_impact_ids": [
+            "IMPACT-OPEN-SUPPORT"
+          ],
+          "support_points": 1.8
+        }
+      ],
+      "assessment_audit": {
+        "component_count": 7,
+        "critical_count_sum": 0,
+        "critical_counts": {
+          "component_subcriterion_sum_mismatch_count": 0,
+          "counter_impact_ignored_count": 0,
+          "evaluated_absent_blocks_full_score_count": 0,
+          "provider_pending_allows_full_score_count": 0,
+          "risk_open_zero_effect_count": 0,
+          "risk_resolved_still_penalized_count": 0,
+          "subcriterion_scoring_critical_count": 0,
+          "support_counter_same_component_unreconciled_count": 0,
+          "supported_component_erased_by_other_gap_count": 0,
+          "unknown_uninvestigated_allows_full_score_count": 0
+        },
+        "nonterminal_component_count": 1,
+        "schema_version": "e2r_component_assessment_audit_v3",
+        "subcriterion_count": 26,
+        "terminal_component_count": 6,
+        "verified_supported_points": 0.0
+      },
+      "assessment_status": "COMPONENT_ASSESSMENT_STATE_PASS",
+      "full_score_valid": false,
+      "material_nonterminal_components": [
+        "earnings_visibility"
+      ],
+      "validation_status": "IMPACT_CREDIT_CAP_PASS",
+      "verified_supported_score": 0.0
+    },
+    "resolved_qualification_counter": {
+      "active_component_assessments": [
+        {
+          "aggregation_mode": "COVERAGE_WEIGHTED",
+          "assessment_id": "COMP-c013e1bd-earnings_visibility",
+          "component_id": "earnings_visibility",
+          "confidence": 1.0,
+          "contradiction_status": "RESOLVED_COUNTER",
+          "counter_effect": 0.0,
+          "counter_impact_ids": [
+            "IMPACT-RESOLVED-COUNTER"
+          ],
+          "lower_bound": 1.8,
+          "lower_bound_points": 1.8,
+          "max_points": 21.0,
+          "missing_questions": [],
+          "net_points": 1.8,
+          "resolution_impact_ids": [
+            "IMPACT-RESOLUTION"
+          ],
+          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "search_exhaustion_proof": [],
+          "status": "RESOLVED_COUNTER",
+          "subcriterion_points": {
+            "C06_VIS_CAPACITY_BOOKING": 0.0,
+            "C06_VIS_CUSTOMER_COMMITMENT": 0.0,
+            "C06_VIS_MEDIUM_REVISION": 0.0,
+            "C06_VIS_QUALIFICATION": 1.8,
+            "C06_VIS_SHIPMENT_REVENUE_MIX": 0.0
+          },
+          "subcriterion_score_ids": [
+            "SUBSCORE-024b50788c6392769eae7c42",
+            "SUBSCORE-6f1df9162e6a39b070e0bc5f",
+            "SUBSCORE-a0e73d7b4a3972d82c2c3397",
+            "SUBSCORE-be9cf0ff4db2a41278deee9e",
+            "SUBSCORE-4c5d5e09babbb4cd1adfb235"
+          ],
+          "support_impact_ids": [
+            "IMPACT-RESOLVED-SUPPORT"
+          ],
+          "support_points": 1.8,
+          "upper_bound": 1.8,
+          "upper_bound_points": 1.8,
+          "verified_points": 1.8
+        }
+      ],
+      "active_subcriterion_scores": [
+        {
+          "component_id": "earnings_visibility",
+          "contradiction_status": "RESOLVED_COUNTER",
+          "counter_effect_fraction": 0.0,
+          "counter_effect_points": 0.0,
+          "counter_impact_ids": [
+            "IMPACT-RESOLVED-COUNTER"
+          ],
+          "counter_mode": "OPEN_BLOCK",
+          "historical_case_refs": [
+            "C06-SAMSUNG-20240524-QUALIFICATION-LAG"
+          ],
+          "max_points": 3.0,
+          "net_fraction": 0.6,
+          "net_points": 1.8,
+          "points": 1.8,
+          "resolution_effect": 1.0,
+          "resolution_impact_ids": [
+            "IMPACT-RESOLUTION"
+          ],
+          "resolved_counter_impact_ids": [
+            "IMPACT-RESOLVED-COUNTER"
+          ],
+          "role": "REQUIRED",
+          "score_id": "SUBSCORE-a0e73d7b4a3972d82c2c3397",
+          "status": "RESOLVED_COUNTER",
+          "subcriterion_id": "C06_VIS_QUALIFICATION",
+          "support_fraction": 0.6,
+          "support_impact_ids": [
+            "IMPACT-RESOLVED-SUPPORT"
+          ],
+          "support_points": 1.8
+        }
+      ],
+      "assessment_audit": {
+        "component_count": 7,
+        "critical_count_sum": 0,
+        "critical_counts": {
+          "component_subcriterion_sum_mismatch_count": 0,
+          "counter_impact_ignored_count": 0,
+          "evaluated_absent_blocks_full_score_count": 0,
+          "provider_pending_allows_full_score_count": 0,
+          "risk_open_zero_effect_count": 0,
+          "risk_resolved_still_penalized_count": 0,
+          "subcriterion_scoring_critical_count": 0,
+          "support_counter_same_component_unreconciled_count": 0,
+          "supported_component_erased_by_other_gap_count": 0,
+          "unknown_uninvestigated_allows_full_score_count": 0
+        },
+        "nonterminal_component_count": 0,
+        "schema_version": "e2r_component_assessment_audit_v3",
+        "subcriterion_count": 26,
+        "terminal_component_count": 7,
+        "verified_supported_points": 1.8
+      },
+      "assessment_status": "COMPONENT_ASSESSMENT_STATE_PASS",
+      "full_score_valid": true,
+      "material_nonterminal_components": [],
+      "validation_status": "IMPACT_CREDIT_CAP_PASS",
+      "verified_supported_score": 1.8
+    },
+    "same_component_distinct_subcriterion_counter": {
+      "active_component_assessments": [
+        {
+          "aggregation_mode": "NET_SUPPORT_COUNTER",
+          "assessment_id": "COMP-c013e1bd-bottleneck_pricing",
+          "component_id": "bottleneck_pricing",
+          "confidence": 0.6,
+          "contradiction_status": "CONTRADICTED_OPEN",
+          "counter_effect": 2.4,
+          "counter_impact_ids": [
+            "IMPACT-SUPPLY-OPEN-COUNTER"
+          ],
+          "lower_bound": 3.6,
+          "lower_bound_points": 3.6,
+          "max_points": 19.0,
+          "missing_questions": [],
+          "net_points": 3.6,
+          "resolution_impact_ids": [],
+          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "search_exhaustion_proof": [],
+          "status": "CONTRADICTED_OPEN",
+          "subcriterion_points": {
+            "C06_BOT_CAPACITY_CONSTRAINT": 3.6,
+            "C06_BOT_CUSTOMER_ALLOCATION": 0.0,
+            "C06_BOT_REALIZED_ASP": 0.0,
+            "C06_BOT_SUPPLY_RESPONSE": 0.0
+          },
+          "subcriterion_score_ids": [
+            "SUBSCORE-60eac2fc94d3d44106904ff5",
+            "SUBSCORE-00ecc46b17a66c0d50f6f4ca",
+            "SUBSCORE-ad7a354411cde6b36b7be7c1",
+            "SUBSCORE-83ad9003bbcd493f4cdbcf17"
+          ],
+          "support_impact_ids": [
+            "IMPACT-SCARCITY-SUPPORT"
+          ],
+          "support_points": 3.6,
+          "upper_bound": 19.0,
+          "upper_bound_points": 19.0,
+          "verified_points": 3.6
+        }
+      ],
+      "active_subcriterion_scores": [
+        {
+          "component_id": "bottleneck_pricing",
+          "contradiction_status": "NO_COUNTER",
+          "counter_effect_fraction": 0.0,
+          "counter_effect_points": 0.0,
+          "counter_impact_ids": [],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SKHYNIX-20240502-SOLDOUT"
+          ],
+          "max_points": 6.0,
+          "net_fraction": 0.6,
+          "net_points": 3.6,
+          "points": 3.6,
+          "resolution_effect": 0.0,
+          "resolution_impact_ids": [],
+          "resolved_counter_impact_ids": [],
+          "role": "REQUIRED",
+          "score_id": "SUBSCORE-60eac2fc94d3d44106904ff5",
+          "status": "SUPPORTED",
+          "subcriterion_id": "C06_BOT_CAPACITY_CONSTRAINT",
+          "support_fraction": 0.6,
+          "support_impact_ids": [
+            "IMPACT-SCARCITY-SUPPORT"
+          ],
+          "support_points": 3.6
+        },
+        {
+          "component_id": "bottleneck_pricing",
+          "contradiction_status": "COUNTER_ONLY",
+          "counter_effect_fraction": 0.6,
+          "counter_effect_points": 2.4,
+          "counter_impact_ids": [
+            "IMPACT-SUPPLY-OPEN-COUNTER"
+          ],
+          "counter_mode": "OPEN_BLOCK",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"
+          ],
+          "max_points": 4.0,
+          "net_fraction": 0.0,
+          "net_points": 0.0,
+          "points": 0.0,
+          "resolution_effect": 0.0,
+          "resolution_impact_ids": [],
+          "resolved_counter_impact_ids": [],
+          "role": "REQUIRED",
+          "score_id": "SUBSCORE-83ad9003bbcd493f4cdbcf17",
+          "status": "COUNTER_ONLY",
+          "subcriterion_id": "C06_BOT_SUPPLY_RESPONSE",
+          "support_fraction": 0,
+          "support_impact_ids": [],
+          "support_points": 0.0
+        }
+      ],
+      "assessment_audit": {
+        "component_count": 7,
+        "critical_count_sum": 0,
+        "critical_counts": {
+          "component_subcriterion_sum_mismatch_count": 0,
+          "counter_impact_ignored_count": 0,
+          "evaluated_absent_blocks_full_score_count": 0,
+          "provider_pending_allows_full_score_count": 0,
+          "risk_open_zero_effect_count": 0,
+          "risk_resolved_still_penalized_count": 0,
+          "subcriterion_scoring_critical_count": 0,
+          "support_counter_same_component_unreconciled_count": 0,
+          "supported_component_erased_by_other_gap_count": 0,
+          "unknown_uninvestigated_allows_full_score_count": 0
+        },
+        "nonterminal_component_count": 1,
+        "schema_version": "e2r_component_assessment_audit_v3",
+        "subcriterion_count": 26,
+        "terminal_component_count": 6,
+        "verified_supported_points": 3.6
+      },
+      "assessment_status": "COMPONENT_ASSESSMENT_STATE_PASS",
+      "full_score_valid": false,
+      "material_nonterminal_components": [
+        "bottleneck_pricing"
+      ],
+      "validation_status": "IMPACT_CREDIT_CAP_PASS",
+      "verified_supported_score": 3.6
+    },
+    "unlinked_resolution_keeps_counter_open": {
+      "active_component_assessments": [
+        {
+          "aggregation_mode": "COVERAGE_WEIGHTED",
+          "assessment_id": "COMP-c013e1bd-earnings_visibility",
+          "component_id": "earnings_visibility",
+          "confidence": 1.0,
+          "contradiction_status": "CONTRADICTED_OPEN",
+          "counter_effect": 1.8,
+          "counter_impact_ids": [
+            "IMPACT-UNLINKED-COUNTER"
+          ],
+          "lower_bound": 0.0,
+          "lower_bound_points": 0.0,
+          "max_points": 21.0,
+          "missing_questions": [],
+          "net_points": 0.0,
+          "resolution_impact_ids": [
+            "IMPACT-UNLINKED-RESOLUTION"
+          ],
+          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "search_exhaustion_proof": [],
+          "status": "CONTRADICTED_OPEN",
+          "subcriterion_points": {
+            "C06_VIS_CAPACITY_BOOKING": 0.0,
+            "C06_VIS_CUSTOMER_COMMITMENT": 0.0,
+            "C06_VIS_MEDIUM_REVISION": 0.0,
+            "C06_VIS_QUALIFICATION": 0.0,
+            "C06_VIS_SHIPMENT_REVENUE_MIX": 0.0
+          },
+          "subcriterion_score_ids": [
+            "SUBSCORE-024b50788c6392769eae7c42",
+            "SUBSCORE-6f1df9162e6a39b070e0bc5f",
+            "SUBSCORE-bedd1e8a5aafcf756b7806a1",
+            "SUBSCORE-be9cf0ff4db2a41278deee9e",
+            "SUBSCORE-4c5d5e09babbb4cd1adfb235"
+          ],
+          "support_impact_ids": [
+            "IMPACT-UNLINKED-SUPPORT"
+          ],
+          "support_points": 1.8,
+          "upper_bound": 21.0,
+          "upper_bound_points": 21.0,
+          "verified_points": 0.0
+        }
+      ],
+      "active_subcriterion_scores": [
+        {
+          "component_id": "earnings_visibility",
+          "contradiction_status": "CONTRADICTED_OPEN",
+          "counter_effect_fraction": 0.6,
+          "counter_effect_points": 1.8,
+          "counter_impact_ids": [
+            "IMPACT-UNLINKED-COUNTER"
+          ],
+          "counter_mode": "OPEN_BLOCK",
+          "historical_case_refs": [
+            "C06-SAMSUNG-20240524-QUALIFICATION-LAG"
+          ],
+          "max_points": 3.0,
+          "net_fraction": 0.0,
+          "net_points": 0.0,
+          "points": 0.0,
+          "resolution_effect": 0.0,
+          "resolution_impact_ids": [
+            "IMPACT-UNLINKED-RESOLUTION"
+          ],
+          "resolved_counter_impact_ids": [],
+          "role": "REQUIRED",
+          "score_id": "SUBSCORE-bedd1e8a5aafcf756b7806a1",
+          "status": "CONTRADICTED_OPEN",
+          "subcriterion_id": "C06_VIS_QUALIFICATION",
+          "support_fraction": 0.6,
+          "support_impact_ids": [
+            "IMPACT-UNLINKED-SUPPORT"
+          ],
+          "support_points": 1.8
+        }
+      ],
+      "assessment_audit": {
+        "component_count": 7,
+        "critical_count_sum": 0,
+        "critical_counts": {
+          "component_subcriterion_sum_mismatch_count": 0,
+          "counter_impact_ignored_count": 0,
+          "evaluated_absent_blocks_full_score_count": 0,
+          "provider_pending_allows_full_score_count": 0,
+          "risk_open_zero_effect_count": 0,
+          "risk_resolved_still_penalized_count": 0,
+          "subcriterion_scoring_critical_count": 0,
+          "support_counter_same_component_unreconciled_count": 0,
+          "supported_component_erased_by_other_gap_count": 0,
+          "unknown_uninvestigated_allows_full_score_count": 0
+        },
+        "nonterminal_component_count": 1,
+        "schema_version": "e2r_component_assessment_audit_v3",
+        "subcriterion_count": 26,
+        "terminal_component_count": 6,
+        "verified_supported_points": 0.0
+      },
+      "assessment_status": "COMPONENT_ASSESSMENT_STATE_PASS",
+      "full_score_valid": false,
+      "material_nonterminal_components": [
+        "earnings_visibility"
+      ],
+      "validation_status": "IMPACT_CREDIT_CAP_PASS",
+      "verified_supported_score": 0.0
+    }
+  },
+  "schema_version": "e2r_counter_component_audit_v1",
+  "status": "COUNTER_COMPONENT_MATH_PASS"
+}

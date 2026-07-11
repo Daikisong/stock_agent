@@ -27,6 +27,7 @@ from .component_scoring_model import (
     load_component_scoring_model,
     score_component_subcriteria,
 )
+from .counter_component_math import audit_counter_component_math
 from .question_impact_contract import (
     QuestionImpactContract,
     audit_question_impact_contracts,
@@ -54,6 +55,7 @@ __all__ = [
     "ComponentSubcriterionScore", "audit_component_scoring_model",
     "component_subcriteria_context", "load_component_scoring_model",
     "score_component_subcriteria",
+    "audit_counter_component_math",
     "QuestionImpactContract", "audit_question_impact_contracts",
     "compile_question_closures_v2", "load_question_impact_contracts",
 ]
