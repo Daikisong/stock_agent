@@ -58,7 +58,7 @@
     },
     "old_risk_resolved_guard": {
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
-      "credited_impact_count": 0,
+      "credited_impact_count": 1,
       "critical_count_sum": 0,
       "edge_catalog_status": "EXPLICIT",
       "full_score_valid": true,
@@ -91,7 +91,7 @@
   "rubric_audits": {
     "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
-      "config_hash": "12b8d0da10ed096ea36169ab49c6ffacbb4bcc89c1076ae693ff83eeb3f802e7",
+      "config_hash": "6fc0ab7a0af9c9427118d625befc3ce7c168a11b18a5ae16bcc4cdb07b955ebf",
       "critical_count_sum": 0,
       "critical_counts": {
         "counter_predicate_missing_count": 0,
@@ -116,7 +116,7 @@
     },
     "C15_MATERIAL_SPREAD_SUPERCYCLE": {
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
-      "config_hash": "e80df830dd48c5d6b71c2875c85cf4be5240e72eb71c4f2430e2fcb364970beb",
+      "config_hash": "51f5a12a1fb4801df03771b74447836c2cc9570597772788d87bb7e38c439a63",
       "critical_count_sum": 0,
       "critical_counts": {
         "counter_predicate_missing_count": 0,

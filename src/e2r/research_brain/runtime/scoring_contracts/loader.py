@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from .schemas import ArchetypeScoringContract, ScoringContractCatalog
+from .scoring_policy_v2 import load_scoring_policy_v2
 from .validator import validate_scoring_contract
 
 
@@ -38,6 +39,7 @@ def load_scoring_contract_catalog(
     evidence_path = Path(evidence_contract_path)
     edge_path = Path(edge_catalog_path)
     stage_path = Path(stage_config_path)
+    scoring_policy = load_scoring_policy_v2()
     weights = _read_json(weight_path)
     evidence = _read_json(evidence_path)
     edges = _read_json(edge_path)
@@ -90,11 +92,17 @@ def load_scoring_contract_catalog(
             },
             "source_tier_caps": {
                 str(key): float(value)
-                for key, value in (edge_row.get("source_tier_caps") or {}).items()
+                for key, value in (
+                    edge_row.get("source_tier_caps")
+                    or scoring_policy.source_family_caps
+                ).items()
             },
             "freshness_caps": {
                 str(key): float(value)
-                for key, value in (edge_row.get("freshness_caps") or {}).items()
+                for key, value in (
+                    edge_row.get("freshness_caps")
+                    or scoring_policy.temporal_scope_caps
+                ).items()
             },
             "correlation_groups": {
                 str(key): tuple(str(value) for value in values)
@@ -102,7 +110,13 @@ def load_scoring_contract_catalog(
             },
             "counter_effect_rules": {
                 str(key): str(value)
-                for key, value in (edge_row.get("counter_effect_rules") or {}).items()
+                for key, value in (
+                    edge_row.get("counter_effect_rules")
+                    or {
+                        component_id: "NET_SUPPORT_COUNTER"
+                        for component_id in component_weights
+                    }
+                ).items()
             },
             "stage_config": stage_config,
             "edge_catalog_status": "EXPLICIT" if edge_row else "EXPLICIT_PENDING",

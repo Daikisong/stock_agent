@@ -13,8 +13,10 @@ from .evidence_origin import partition_scoring_evidence
 
 
 SCORING_READINESS_SCHEMA_VERSION = "e2r_meaningful_scoring_readiness_v2"
-READY = "MEANINGFUL_E2R_SCORING_READY"
+READY = "ORGANIC_EVIDENCE_TO_SCORE_PIPELINE_PARTIAL_PASS"
 NOT_READY = "MEANINGFUL_E2R_SCORING_NOT_READY"
+SEMANTIC_NOT_READY = "SEMANTIC_SCORING_CLOSURE_NOT_READY"
+RESEARCH_NOT_VERIFIED = "RESEARCH_GRADE_EVIDENCE_ACQUISITION_NOT_VERIFIED"
 
 REQUIRED_DOSSIER_LEAVES = (
     "accepted_current_claims.jsonl",
@@ -116,7 +118,10 @@ def compile_meaningful_scoring_readiness(
     return {
         "schema_version": SCORING_READINESS_SCHEMA_VERSION,
         "status": READY if critical == 0 else NOT_READY,
-        "exact_final_verdict": READY if critical == 0 else NOT_READY,
+        "exact_final_verdict": SEMANTIC_NOT_READY if critical == 0 else NOT_READY,
+        "research_grade_acquisition_status": RESEARCH_NOT_VERIFIED,
+        "legacy_ready_alias_active": False,
+        "readiness_v3_required": True,
         "as_of_date": config["as_of_date"],
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "intermediate_labels": intermediate_labels,
@@ -167,6 +172,9 @@ def write_meaningful_scoring_readiness(
         f"- full score valid canaries: {verdict['counts']['full_score_valid_canary_count']}",
         f"- critical_count_sum: {verdict['critical_count_sum']}",
         f"- blockers: {verdict['blockers']}",
+        f"- research-grade acquisition: {verdict['research_grade_acquisition_status']}",
+        f"- legacy READY alias active: {str(verdict['legacy_ready_alias_active']).lower()}",
+        f"- readiness v3 required: {str(verdict['readiness_v3_required']).lower()}",
         "- investment recommendation emitted: false",
         "",
         "## Mandatory Target Gates",
@@ -494,6 +502,8 @@ def _read_jsonl(path: Path) -> tuple[Mapping[str, Any], ...]:
 __all__ = [
     "NOT_READY",
     "READY",
+    "RESEARCH_NOT_VERIFIED",
+    "SEMANTIC_NOT_READY",
     "REQUIRED_DOSSIER_LEAVES",
     "SCORING_READINESS_SCHEMA_VERSION",
     "compile_meaningful_scoring_readiness",

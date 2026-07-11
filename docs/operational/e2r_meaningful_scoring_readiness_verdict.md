@@ -1,6 +1,6 @@
 # E2R Meaningful Scoring Readiness Verdict
 
-- final status: MEANINGFUL_E2R_SCORING_READY
+- final status: ORGANIC_EVIDENCE_TO_SCORE_PIPELINE_PARTIAL_PASS
 - as_of_date: 2026-07-11
 - mandatory targets: 2
 - organic accepted claims: 39
@@ -9,6 +9,9 @@
 - full score valid canaries: 2
 - critical_count_sum: 0
 - blockers: []
+- research-grade acquisition: RESEARCH_GRADE_EVIDENCE_ACQUISITION_NOT_VERIFIED
+- legacy READY alias active: false
+- readiness v3 required: true
 - investment recommendation emitted: false
 
 ## Mandatory Target Gates
@@ -38,4 +41,4 @@
 
 ## Exact Final Verdict
 
-MEANINGFUL_E2R_SCORING_READY
+SEMANTIC_SCORING_CLOSURE_NOT_READY

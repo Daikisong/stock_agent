@@ -6,6 +6,9 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from e2r.research_brain.runtime.scoring_contracts import load_archetype_scoring_contract
+from e2r.research_brain.runtime.scoring_contracts.scoring_policy_v2 import (
+    load_scoring_policy_v2,
+)
 from e2r.research_brain.scoring.evidence_impact_rubric import (
     EvidenceImpactRubric,
     EvidenceImpactRubricCatalog,
@@ -40,6 +43,7 @@ def compile_evidence_impact_rubrics(
     supplemental = _read(Path(supplemental_path))
     historical = _read(Path(historical_path))
     contract = load_archetype_scoring_contract(archetype_id)
+    scoring_policy = load_scoring_policy_v2()
     rows: list[Mapping[str, Any]] = []
     for row in recipe.get("primitive_definitions") or ():
         if row.get("archetype_id") != archetype_id:
@@ -88,11 +92,14 @@ def compile_evidence_impact_rubrics(
             "partial_predicates": tuple(row.get("partial_predicates") or ()),
             "counter_predicates": tuple(row.get("counter_predicates") or ()),
             "unsupported_predicates": tuple(row.get("unsupported_predicates") or ()),
-            "strength_bands": {"NONE": 0.0, "WEAK": 0.25, "MODERATE": 0.5, "STRONG": 0.75, "VERY_STRONG": 1.0},
-            "completeness_bands": {"MENTION": 0.2, "PARTIAL": 0.5, "SUBSTANTIAL": 0.8, "COMPLETE_FOR_PRIMITIVE": 1.0},
-            "causal_distance_caps": {"DIRECT": 1.0, "ONE_HOP": 0.75, "TWO_HOP": 0.4, "INDUSTRY_ONLY": 0.0},
+            "strength_bands": dict(scoring_policy.strength_bands),
+            "completeness_bands": dict(scoring_policy.completeness_bands),
+            "causal_distance_caps": dict(scoring_policy.causal_distance_caps),
             "source_family_caps": dict(contract.source_tier_caps),
-            "actual_vs_forward_rules": {"DIRECT_ACTUAL": 1.0, "DIRECT_FORWARD": 0.8, "PROFILE_ONLY": 0.2, "DISCOVERY_ONLY": 0.0},
+            "actual_vs_forward_rules": {
+                support_type: policy.support_credit_cap
+                for support_type, policy in scoring_policy.support_type_policies.items()
+            },
             "evidence_family_diversity_rules": {"independent_family_bonus_allowed": True, "same_family_duplicate_bonus": 0.0},
             "double_count_correlation_rules": {"claim_total_fraction_cap": 1.0, "same_economic_effect_deduped": True},
             "positive_historical_case_refs": tuple(str(case.get("case_id")) for case in matching if case.get("source_role") == "POSITIVE"),

@@ -9,19 +9,32 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.production.metadata import stable_hash, write_json, write_text
-from e2r.research_brain.compiler.evidence_impact_rubric_compiler import (
-    compile_evidence_impact_rubrics,
-)
-from e2r.research_brain.runtime.scoring_contracts import (
-    load_archetype_scoring_contract,
-)
-
 from .claim_impact_ledger import SUPPORT_TYPES
 
 
 SCHEMA_VERSION = "e2r_semantic_scoring_v2_forensic_baseline_v1"
 ARCHETYPE_ID = "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
 TARGETS = ("005930", "000660")
+FROZEN_52F09F3_SUPPORT_CAP_TYPES = {
+    "DIRECT_ACTUAL",
+    "DIRECT_FORWARD",
+    "PROFILE_ONLY",
+    "DISCOVERY_ONLY",
+}
+FROZEN_52F09F3_SOURCE_CAP_TYPES = {
+    "ISSUER_OFFICIAL",
+    "OFFICIAL_FILING",
+    "CUSTOMER_OFFICIAL",
+    "TRUSTED_INDEPENDENT",
+    "DISCOVERY_ONLY",
+    "SNIPPET",
+}
+FROZEN_52F09F3_TEMPORAL_CAP_TYPES = {
+    "CURRENT",
+    "CURRENT_BASELINE",
+    "HISTORICAL_ONLY",
+    "FUTURE",
+}
 
 QUESTION_COMPONENTS = {
     "current_customer_allocation_commitment": (
@@ -73,13 +86,9 @@ def compile_semantic_scoring_v2_forensic_baseline(
     *, repo_root: str | Path = "."
 ) -> Mapping[str, Any]:
     root = Path(repo_root).resolve()
-    contract = load_archetype_scoring_contract(ARCHETYPE_ID)
-    rubric_catalog = compile_evidence_impact_rubrics(ARCHETYPE_ID)
-    cap_support_types = set(
-        next(iter(rubric_catalog.rubrics)).actual_vs_forward_rules
-        if rubric_catalog.rubrics
-        else ()
-    )
+    # Phase 58은 이후 code patch가 아니라 52f09f3 당시 lookup table을
+    # 감사하는 immutable before-snapshot이다.
+    cap_support_types = set(FROZEN_52F09F3_SUPPORT_CAP_TYPES)
     declared_support_types = set(SUPPORT_TYPES)
 
     positive_zero_rows: list[Mapping[str, Any]] = []
@@ -313,10 +322,10 @@ def compile_semantic_scoring_v2_forensic_baseline(
 
     missing_support_types = sorted(declared_support_types - cap_support_types)
     missing_source_families = sorted(
-        observed_source_families - set(contract.source_tier_caps)
+        observed_source_families - FROZEN_52F09F3_SOURCE_CAP_TYPES
     )
     missing_temporal_scopes = sorted(
-        observed_temporal_scopes - set(contract.freshness_caps)
+        observed_temporal_scopes - FROZEN_52F09F3_TEMPORAL_CAP_TYPES
     )
     supported_absent = [
         row for row in question_absence_rows if row["question_status"] == "SUPPORTED"

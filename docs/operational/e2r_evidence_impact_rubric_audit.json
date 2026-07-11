@@ -1,28 +1,34 @@
 {
-  "schema_version": "e2r_evidence_impact_rubric_audit_v1",
-  "as_of_date": "2026-07-11",
-  "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS",
   "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "config_hash": "b713b042978f5c8866fbcb6c95f2e591fa2e9937893567a8ea5d7859460cf47b",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "counter_predicate_missing_count": 0,
+    "future_outcome_leakage_count": 0,
+    "generic_verify_primitive_rubric_count": 0,
+    "partial_predicate_missing_count": 0,
+    "positive_predicate_missing_count": 0,
+    "source_proxy_current_score_allowed_count": 0,
+    "unsupported_predicate_missing_count": 0
+  },
   "rubric_count": 14,
-  "source_backed_example_count": 2,
-  "config_hash": "121392e0be04ccb7704ea6f45dad9d6714e2b9f436f09f1da4ee7cd520dc5e5f",
+  "schema_version": "e2r_evidence_impact_rubric_audit_v1",
   "semantic_distinctions": [
-    "customer_preorder_or_allocation", "revenue_visibility_contract",
-    "hbm_capacity_constraint", "hbm_capacity_pre_sold",
-    "memory_price_increase_mentioned", "medium_term_revision_visibility",
-    "hbm_product_profile", "qualification_state", "shipment_or_revenue_mix",
-    "actual_earnings_conversion", "margin_fcf_conversion",
-    "conventional_memory_drag", "capacity_supply_response",
+    "customer_preorder_or_allocation",
+    "revenue_visibility_contract",
+    "hbm_capacity_constraint",
+    "hbm_capacity_pre_sold",
+    "memory_price_increase_mentioned",
+    "medium_term_revision_visibility",
+    "hbm_product_profile",
+    "qualification_state",
+    "shipment_or_revenue_mix",
+    "actual_earnings_conversion",
+    "margin_fcf_conversion",
+    "conventional_memory_drag",
+    "capacity_supply_response",
     "package_substrate_sympathy"
   ],
-  "critical_counts": {
-    "positive_predicate_missing_count": 0,
-    "partial_predicate_missing_count": 0,
-    "counter_predicate_missing_count": 0,
-    "unsupported_predicate_missing_count": 0,
-    "future_outcome_leakage_count": 0,
-    "source_proxy_current_score_allowed_count": 0,
-    "generic_verify_primitive_rubric_count": 0
-  },
-  "critical_count_sum": 0
+  "source_backed_example_count": 2,
+  "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
 }
