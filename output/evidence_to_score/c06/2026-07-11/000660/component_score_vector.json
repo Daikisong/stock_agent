@@ -1,0 +1,35 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "audit": {
+    "critical_count_sum": 0,
+    "critical_counts": {
+      "balanced_point_score_count": 0,
+      "calibrated_profile_not_used_count": 0,
+      "component_sum_total_mismatch_count": 0,
+      "full_score_with_nonterminal_component_count": 0,
+      "supported_component_lost_count": 0
+    },
+    "schema_version": "e2r_research_calibrated_score_audit_v1",
+    "status": "RESEARCH_CALIBRATED_COMPONENT_SCORING_PASS"
+  },
+  "component_score_vector": {
+    "bottleneck_pricing": 0.0,
+    "capital_allocation": 1.0,
+    "earnings_visibility": 0.0,
+    "eps_fcf_explosion": 1.2,
+    "information_confidence": 5.0,
+    "market_mispricing": 0.0,
+    "valuation_rerating": 0.0
+  },
+  "contract_hash": "8285c4a09306c5c2c97b44478ed15b6b95a01114955f73ef09a556bd9974c0e9",
+  "full_e2r_score": 7.2,
+  "full_score_valid": true,
+  "material_nonterminal_components": [],
+  "profile_id": "e2r_2_2_archetype_weight_runtime",
+  "profile_version": "v2_2",
+  "provisional_score_lower": 7.2,
+  "provisional_score_upper": 7.2,
+  "score_confidence": 0.521,
+  "score_type": "FULL_E2R_100",
+  "verified_supported_score": 7.2
+}

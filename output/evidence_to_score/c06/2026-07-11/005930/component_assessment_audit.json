@@ -1,0 +1,14 @@
+{
+  "component_count": 7,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "evaluated_absent_blocks_full_score_count": 0,
+    "provider_pending_allows_full_score_count": 0,
+    "supported_component_erased_by_other_gap_count": 0,
+    "unknown_uninvestigated_allows_full_score_count": 0
+  },
+  "nonterminal_component_count": 0,
+  "schema_version": "e2r_component_assessment_audit_v1",
+  "terminal_component_count": 7,
+  "verified_supported_points": 23.639696
+}

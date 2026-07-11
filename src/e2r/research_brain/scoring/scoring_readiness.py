@@ -239,7 +239,11 @@ def _evaluate_target(
         row
         for row in impacts
         if str(row.get("claim_id") or "") in organic_claim_ids
-        and float(row.get("validated_credit_fraction") or 0.0) > 0.0
+    )
+    credited_impacts = tuple(
+        row
+        for row in valid_impacts
+        if float(row.get("validated_credit_fraction") or 0.0) > 0.0
     )
     impact_ids = {str(row.get("impact_id") or "") for row in valid_impacts}
     assessment_ids = {str(row.get("assessment_id") or "") for row in assessments}
@@ -335,6 +339,7 @@ def _evaluate_target(
         "counts": {
             "organic_accepted_claim_count": len(organic_claims),
             "organic_validated_impact_count": len(valid_impacts),
+            "organic_credited_impact_count": len(credited_impacts),
             "organic_verified_component_points": round(verified_points, 6),
             "calibrated_profile_used_count": int(
                 bool(score.get("profile_id") and score.get("contract_hash"))

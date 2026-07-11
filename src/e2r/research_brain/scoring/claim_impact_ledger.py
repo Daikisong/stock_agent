@@ -41,6 +41,7 @@ class ClaimImpactProposal:
     rationale: str
     unsupported_aspects: tuple[str, ...]
     counter_claim_ids: tuple[str, ...] = ()
+    lineage_mapping_ids: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if self.direction not in DIRECTIONS or self.support_type not in SUPPORT_TYPES:
@@ -109,6 +110,12 @@ class ClaimImpactLedgerBuilder:
                 reason = "CLAIM_MAPPING_LINEAGE_MISSING"
             elif proposal.mapping_id not in provenance_mappings.get(proposal.claim_id, set()):
                 reason = "PROVENANCE_MAPPING_LINEAGE_MISSING"
+            elif any(
+                mapping_id not in set(str(v) for v in claim.get("mapping_ids") or ())
+                or mapping_id not in provenance_mappings.get(proposal.claim_id, set())
+                for mapping_id in proposal.lineage_mapping_ids
+            ):
+                reason = "CONSOLIDATED_MAPPING_LINEAGE_MISSING"
             else:
                 contract = load_archetype_scoring_contract(proposal.archetype_id)
                 rubric = compile_evidence_impact_rubrics(proposal.archetype_id).by_primitive().get(proposal.primitive_id)
@@ -130,11 +137,18 @@ class ClaimImpactLedgerBuilder:
             if row.get("status") == "REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN"
             for mapping_id in row.get("rerouted_mapping_ids") or ()
         }
-        validated_mapping_ids = {item.proposal.mapping_id for item in validated}
+        validated_mapping_ids = {
+            mapping_id
+            for item in validated
+            for mapping_id in (
+                item.proposal.mapping_id,
+                *item.proposal.lineage_mapping_ids,
+            )
+        }
         critical = {
             "valid_rerouted_claim_lost_score_impact_count": len(rerouted_mapping_ids - validated_mapping_ids),
             "one_claim_multiple_impact_rejected_count": 0,
-            "mapping_lineage_loss_count": sum(row["reason"] in {"CLAIM_MAPPING_LINEAGE_MISSING", "PROVENANCE_MAPPING_LINEAGE_MISSING"} for row in rejected),
+            "mapping_lineage_loss_count": sum(row["reason"] in {"CLAIM_MAPPING_LINEAGE_MISSING", "PROVENANCE_MAPPING_LINEAGE_MISSING", "CONSOLIDATED_MAPPING_LINEAGE_MISSING"} for row in rejected),
             "duplicate_economic_credit_count": sum(row["reason"] == "DUPLICATE_ECONOMIC_CREDIT" for row in rejected),
             "original_gap_closed_by_rerouted_count": sum(row.get("status") == "REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN" and row.get("original_gap_open") is not True for row in source_task_satisfaction),
         }

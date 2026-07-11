@@ -25,13 +25,27 @@ COMPONENTS = (
 
 class FinalReadinessRequiresValidScoreTests(unittest.TestCase):
     def test_missing_dossiers_are_explicit_not_ready(self) -> None:
-        verdict = compile_meaningful_scoring_readiness(
-            config_path="configs/e2r_meaningful_scoring_readiness_v2.json"
-        )
-        self.assertEqual(verdict["status"], NOT_READY)
-        self.assertGreater(verdict["critical_count_sum"], 0)
-        self.assertEqual(verdict["counts"]["organic_accepted_claim_count"], 0)
-        self.assertEqual(verdict["counts"]["full_score_valid_canary_count"], 0)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            audit = root / "audit.json"
+            audit.write_text(json.dumps({"status":"PASS","critical_count_sum":0}))
+            config = {
+                "schema_version":"e2r_meaningful_scoring_readiness_v2",
+                "as_of_date":"2026-07-11",
+                "required_component_ids":list(COMPONENTS),
+                "mandatory_targets":[
+                    {"target_id":target_id,"company_name":target_id,"archetype_id":"C06_HBM_MEMORY_CUSTOMER_CAPACITY","dossier_root":str(root/target_id)}
+                    for target_id in ("005930","000660")
+                ],
+                "required_global_audits":[{"audit_id":"live_materialization","path":str(audit),"accepted_statuses":["PASS"]}],
+            }
+            config_path=root/"config.json"
+            config_path.write_text(json.dumps(config))
+            verdict = compile_meaningful_scoring_readiness(config_path=config_path)
+            self.assertEqual(verdict["status"], NOT_READY)
+            self.assertGreater(verdict["critical_count_sum"], 0)
+            self.assertEqual(verdict["counts"]["organic_accepted_claim_count"], 0)
+            self.assertEqual(verdict["counts"]["full_score_valid_canary_count"], 0)
 
     def test_organic_claim_without_validated_impact_cannot_pass(self) -> None:
         verdict = self._compile(impact=False, full_score=True)

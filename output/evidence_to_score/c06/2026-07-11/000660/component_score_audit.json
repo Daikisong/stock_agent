@@ -1,0 +1,12 @@
+{
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "balanced_point_score_count": 0,
+    "calibrated_profile_not_used_count": 0,
+    "component_sum_total_mismatch_count": 0,
+    "full_score_with_nonterminal_component_count": 0,
+    "supported_component_lost_count": 0
+  },
+  "schema_version": "e2r_research_calibrated_score_audit_v1",
+  "status": "RESEARCH_CALIBRATED_COMPONENT_SCORING_PASS"
+}

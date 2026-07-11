@@ -28,6 +28,7 @@ class CreditValidatedImpact:
     support_type_cap: float
     claim_budget_scaled: bool
     correlation_scaled: bool
+    lineage_mapping_ids: tuple[str, ...] = ()
     validation_status: str = "CREDIT_VALIDATED"
 
     def to_dict(self) -> Mapping[str, Any]: return asdict(self)
@@ -58,13 +59,14 @@ class ImpactValidator:
             elif rubric is None or p.component_id not in rubric.allowed_component_ids: reason="RUBRIC_EDGE_VIOLATION"
             elif prov is None or prov.get("source_proxy_only") is not False or prov.get("directness") != "DIRECT" or prov.get("temporal_status") != "CURRENT": reason="PROVENANCE_NOT_CURRENT_DIRECT"
             elif p.mapping_id not in set(str(v) for v in prov.get("mapping_ids") or ()): reason="PROVENANCE_MAPPING_MISSING"
+            elif any(mapping_id not in set(str(v) for v in prov.get("mapping_ids") or ()) for mapping_id in p.lineage_mapping_ids): reason="PROVENANCE_MAPPING_MISSING"
             if reason:
                 rejected.append({"impact_id":p.impact_id,"reason":reason}); continue
             strength=float(rubric.strength_bands[p.strength_band]); completeness=float(rubric.completeness_bands[p.completeness_band])
             causal=float(rubric.causal_distance_caps[p.causal_distance]); source=float(rubric.source_family_caps.get(p.source_family,0.0))
             temporal=float(contract.freshness_caps.get(p.temporal_scope,0.0)); support=float(rubric.actual_vs_forward_rules.get(p.support_type,0.0))
             raw=round(strength*completeness,6); validated=round(min(raw,causal,source,temporal,support),6)
-            accepted.append(CreditValidatedImpact(impact_id=p.impact_id,claim_id=p.claim_id,mapping_id=p.mapping_id,target_id=p.target_id,archetype_id=p.archetype_id,primitive_id=p.primitive_id,component_id=p.component_id,direction=p.direction,evidence_family_id=p.evidence_family_id,raw_credit_fraction=raw,validated_credit_fraction=validated,strength_fraction=strength,completeness_fraction=completeness,causal_cap=causal,source_cap=source,temporal_cap=temporal,support_type_cap=support,claim_budget_scaled=False,correlation_scaled=False))
+            accepted.append(CreditValidatedImpact(impact_id=p.impact_id,claim_id=p.claim_id,mapping_id=p.mapping_id,target_id=p.target_id,archetype_id=p.archetype_id,primitive_id=p.primitive_id,component_id=p.component_id,direction=p.direction,evidence_family_id=p.evidence_family_id,raw_credit_fraction=raw,validated_credit_fraction=validated,strength_fraction=strength,completeness_fraction=completeness,causal_cap=causal,source_cap=source,temporal_cap=temporal,support_type_cap=support,claim_budget_scaled=False,correlation_scaled=False,lineage_mapping_ids=p.lineage_mapping_ids))
             for group, primitives in contract.correlation_groups.items():
                 if p.primitive_id in primitives: group_by_primitive[(p.archetype_id,p.primitive_id)]=group
         accepted=_scale_groups(accepted, group_by_primitive)

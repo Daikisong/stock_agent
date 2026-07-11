@@ -1,0 +1,31 @@
+{"claim_id": "CLM-464ca5cde1b30c363997", "mapping_id": "MAP-bde852da0c3e6c274de3", "review_issues": [], "status": "IMPACT_MAPPING_REJECTED_NO_BOUNDED_EFFECT"}
+{"claim_id": "CLM-464ca5cde1b30c363997", "mapping_id": "MAP-59035c4a5849bf202825", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-4df55f27da648bb0024e", "mapping_id": "MAP-1cbc1247614b5842d1da", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-47103baa9b99062ef88a", "mapping_id": "MAP-7dea3578c65473599f04", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-48f304f4471c4d575cec", "mapping_id": "MAP-e863845ae693ee78dfd5", "review_issues": ["메모리 전체 ASP 상승으로 HBM 전용 ASP·계약가격을 입증하지 않는다.", "HBM 판매량·제품 믹스·고객 할당·CAPA 선판매는 확인되지 않는다.", "매출·이익·마진·FCF 전환과 가격 상승의 구조적 지속성은 확인되지 않는다.", "두 impact는 같은 공시와 동일한 가격 효과에 기반하므로 독립 증거로 중복 가산하면 안 된다."], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-8a6484cd91e4ef637201", "mapping_id": "MAP-665ebec2381a187d711d", "review_issues": ["연결 매출 증가만 제시되어 actual_earnings_conversion의 PARTIAL 요건인 실적과 ASP 공개를 충족하지 못한다.", "HBM·메모리 믹스 귀속, 영업이익, 마진 및 FCF 근거가 없어 eps_fcf_explosion 영향으로 연결할 수 없다.", "공식 공시라는 출처 신뢰성과 해당 경제적 primitive의 충족 여부는 별개이므로, 같은 매핑으로 information_confidence 영향을 부여하는 것도 부적절하다."], "status": "IMPACT_MAPPING_REJECTED"}
+{"claim_id": "CLM-db034d8f03ce72819564", "mapping_id": "MAP-b475ab850f97b828666a", "review_issues": ["주요 5대 매출처와 전사 매출 비중 23%는 HBM 출하, 양산, HBM 매출 믹스 또는 출하 계획을 식별하지 않는다.", "열거된 고객의 HBM 구매·배정·예약 여부와 해당 매출의 HBM 귀속이 모두 확인되지 않는다.", "따라서 MAP-b475ab850f97b828666a는 shipment_or_revenue_mix의 PARTIAL predicate인 'shipment plan without realized mix'조차 충족하지 못한다."], "status": "IMPACT_MAPPING_REJECTED"}
+{"claim_id": "CLM-63f797bc4396e1bff5f0", "mapping_id": "MAP-2a4be93ff23de87ae7f9", "review_issues": ["`shipment_or_revenue_mix` 매핑은 잘못되었습니다. 인용문은 DS 전체 부문의 매출액·연결 매출 비중만 제시하며, HBM 출하·양산·매출 비중을 밝히지 않아 해당 primitive의 PARTIAL predicate조차 충족하지 않습니다.", "DS 매출 비중에서 HBM 고객 할당, 예약 CAPA, 매출 전환, 이익 기여 또는 FCF를 추론할 수 없습니다.", "pass_a가 impacts를 비워 두고 이러한 한계를 명시한 판단 자체는 타당하지만, 선행 매핑은 HBM 경제 메커니즘과 일치하지 않습니다."], "status": "IMPACT_MAPPING_REJECTED"}
+{"claim_id": "CLM-e0a7f204219f352da273", "mapping_id": "MAP-45470baa5740e6f3d050", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-13d3c5605df791dcf819", "mapping_id": "MAP-c4b2aad71aa7241f1d64", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-13d3c5605df791dcf819", "mapping_id": "MAP-070df0543fe8bff6508b", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-10501873f575a69571d9", "mapping_id": "MAP-5755d572a5c46dc3ee5b", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-1982ea2aca36ebef450e", "mapping_id": "MAP-11f7032ade03e0b99ddc", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-1982ea2aca36ebef450e", "mapping_id": "MAP-268f5a4376303749e054", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-ea9b82182ac296c6d682", "mapping_id": "MAP-52cee1aa5ee198cfc6b6", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-63085bc76ba54eba7d67", "mapping_id": "MAP-aa9cad9905b33461f82a", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-bab8bc1c37b4bb92f54e", "mapping_id": "MAP-8088ef3f72f794002a6d", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-0bb55c3d4d5844a1c859", "mapping_id": "MAP-23b91e3ab88b43c81117", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-e341ee4c41bd41f3fab0", "mapping_id": "MAP-a4aedfabc2a74dd6c57a", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-0d0760af8405137dfe90", "mapping_id": "MAP-2c9cb42aa852fcd785a3", "review_issues": ["영향은 information_confidence에 대한 WEAK·MENTION·PROFILE_ONLY로 한정된다.", "고객 자격 인증·채택, 고객 물량 배정, 예약·선판매 CAPA, 계약상 매출 가시성, 출하·매출 전환, ASP, 이익·마진·FCF는 이 주장으로 뒷받침되지 않는다."], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-0d59f6d8b09b36fb145d", "mapping_id": "MAP-4f52c53029287253ef66", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-1fc27cd4caa01dd2f04c", "mapping_id": "MAP-47bcd13a508555bf9a1a", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-ccb03c3ca97a6a4dac73", "mapping_id": "MAP-1f881721395cb4530df2", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-cde7ddca235c60d20ada", "mapping_id": "MAP-9136725a0fddd9baa1e7", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-d33eea243c334096866d", "mapping_id": "MAP-f3bfc958786dc3d32afb", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-33685f026d180edb6417", "mapping_id": "MAP-a57eeb0283c2f8b109b8", "review_issues": ["고객 자격인증·채택, 고객별 물량 배정, 예약·선판매 생산능력은 입증되지 않는다.", "구속력 있는 공급계약, 계약 기간·물량·가격은 입증되지 않는다.", "HBM4 출하량·매출 비중·귀속 매출·이익·마진·FCF 전환은 입증되지 않는다.", "양산 개시는 shipment_or_revenue_mix의 명시적 positive predicate에 해당하지만, earnings_visibility와 eps_fcf_explosion 영향은 명시된 한계 내의 부분 연결로만 유효하다."], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-33685f026d180edb6417", "mapping_id": "MAP-d4732c70324a4af247ca", "review_issues": ["고객 자격인증·채택, 고객별 물량 배정, 예약·선판매 생산능력은 입증되지 않는다.", "구속력 있는 공급계약, 계약 기간·물량·가격은 입증되지 않는다.", "HBM4 출하량·매출 비중·귀속 매출·이익·마진·FCF 전환은 입증되지 않는다.", "양산 개시는 shipment_or_revenue_mix의 명시적 positive predicate에 해당하지만, earnings_visibility와 eps_fcf_explosion 영향은 명시된 한계 내의 부분 연결로만 유효하다."], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-79444b89b7d92a3930ab", "mapping_id": "MAP-863791801d1d17961b29", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-0f9c0b328976f0995bed", "mapping_id": "MAP-f768930b5e1b83dea2bf", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-90533c9daf13fefd691c", "mapping_id": "MAP-15d7a2e65ef56d8c1325", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}
+{"claim_id": "CLM-3fe807708c2eee9d9908", "mapping_id": "MAP-aab0db0d620f00ef804f", "review_issues": [], "status": "IMPACT_ADJUDICATION_PASS"}

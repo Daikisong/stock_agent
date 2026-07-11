@@ -205,7 +205,11 @@ def _select_source_documents(
         content_hash = str(row.get("content_hash") or "")
         if hashlib.sha256(text.encode("utf-8")).hexdigest() != content_hash:
             raise ValueError("organic source document content hash mismatch")
-        if row.get("acquisition_class") != "ACTUAL_LIVE_FULL_DOCUMENT":
+        if row.get("acquisition_class") not in {
+            "ACTUAL_LIVE_FULL_DOCUMENT",
+            "REAL_PROVIDER_FETCH",
+            "FRESH_PROVIDER_CACHE",
+        }:
             continue
         if not str(row.get("canonical_url") or "").startswith("https://"):
             continue

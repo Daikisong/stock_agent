@@ -119,7 +119,7 @@ _SKEPTIC_SCHEMA: Mapping[str, Any] = {
     "additionalProperties": False,
     "required": ["verdict", "issues"],
     "properties": {
-        "verdict": {"enum": ["APPROVE", "REVIEW_PENDING"]},
+        "verdict": {"enum": ["APPROVE", "REJECT_MAPPING", "REVIEW_PENDING"]},
         "issues": {"type": "array", "items": {"type": "string"}},
     },
 }
@@ -154,11 +154,18 @@ class CodexEvidenceImpactProvider:
         schema = _IMPACT_SCHEMA if pass_name == "IMPACT_PROPOSAL" else _SKEPTIC_SCHEMA
         pass_instruction = (
             "For the skeptic pass, APPROVE bounded rubric-compliant impacts when "
-            "their limitations are explicitly listed. Use REVIEW_PENDING only for "
-            "an invalid mapping, unsupported economic effect, or unresolved contradiction."
+            "their limitations are explicitly listed. A PARTIAL predicate may support "
+            "a WEAK or MODERATE impact even when a stronger positive predicate is absent; "
+            "do not reject that bounded impact merely because allocation, HBM attribution, "
+            "or FCF remains unsupported. Use REVIEW_PENDING only for an invalid mapping, "
+            "or unresolved contradiction that cannot be decided from the supplied evidence. "
+            "Use REJECT_MAPPING when the exact claim clearly fails even the rubric's PARTIAL "
+            "predicate or refers to the wrong product/economic mechanism."
             if pass_name == "IMPACT_SKEPTIC"
             else "For the proposal pass, return every distinct directly supported "
-            "component impact allowed by the matching primitive rubric."
+            "component impact allowed by the matching primitive rubric. Apply the rubric's "
+            "PARTIAL predicates as bounded WEAK or MODERATE impacts and list every missing "
+            "stronger bridge in unsupported_aspects."
         )
         prompt = "\n".join(
             (

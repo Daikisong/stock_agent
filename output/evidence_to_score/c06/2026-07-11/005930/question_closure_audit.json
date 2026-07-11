@@ -1,0 +1,19 @@
+{
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "nonterminal_question_count": 0,
+    "pending_marked_absent_without_proof_count": 0,
+    "unbounded_research_count": 0
+  },
+  "evaluated_absent_count": 5,
+  "nonterminal_question_family_ids": [],
+  "question_family_count": 12,
+  "researched_family_count": 12,
+  "schema_version": "e2r_dossier_question_finalizer_v1",
+  "source_research_roots": [
+    "output/evidence_to_score/source_research/2026-07-11/005930/official-first-1",
+    "output/evidence_to_score/source_research/2026-07-11/005930/web-gap-2"
+  ],
+  "status": "DOSSIER_QUESTION_CLOSURE_PASS",
+  "target_id": "005930"
+}

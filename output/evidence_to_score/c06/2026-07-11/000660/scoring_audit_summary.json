@@ -1,0 +1,32 @@
+{
+  "accepted_mapping_count": 15,
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "as_of_date": "2026-07-11",
+  "canonical_stage": "1",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "accepted_mapping_without_validated_impact_count": 0,
+    "claim_impact_ledger_critical_count": 0,
+    "component_assessment_critical_count": 0,
+    "impact_adjudication_failure_count": 0,
+    "impact_validation_critical_count": 0,
+    "invalid_provider_proposal_count": 0,
+    "probe_contamination_count": 0,
+    "score_audit_critical_count": 0
+  },
+  "decision_status": "FINAL",
+  "effective_accepted_mapping_count": 7,
+  "full_score_valid": true,
+  "impact_proposal_count": 12,
+  "impact_rejected_mapping_count": 8,
+  "organic_accepted_claim_count": 12,
+  "schema_version": "e2r_organic_dossier_scoring_pipeline_v1",
+  "score_type": "FULL_E2R_100",
+  "status": "ORGANIC_DOSSIER_FULL_SCORE_PASS",
+  "supported_component_count": 3,
+  "suppressed_duplicate_economic_proposal_count": 0,
+  "target_id": "000660",
+  "terminal_component_count": 7,
+  "validated_impact_count": 12,
+  "verified_supported_score": 7.2
+}

@@ -1,0 +1,15 @@
+{
+  "claim_budget_scaled_count": 4,
+  "correlation_scaled_count": 0,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "claim_credit_budget_violation_count": 0,
+    "correlated_double_count_count": 0,
+    "rubric_edge_violation_count": 0,
+    "source_cap_violation_count": 0,
+    "unvalidated_impact_to_score_count": 0
+  },
+  "rejected_impact_count": 0,
+  "schema_version": "e2r_impact_credit_cap_audit_v1",
+  "validated_impact_count": 32
+}

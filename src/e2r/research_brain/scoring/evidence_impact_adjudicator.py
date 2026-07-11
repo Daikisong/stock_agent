@@ -26,6 +26,7 @@ class EvidenceImpactAdjudicationResult:
     proposals: tuple[ClaimImpactProposal, ...]
     unsupported_aspects: tuple[str, ...]
     counter_thesis: tuple[str, ...]
+    review_issues: tuple[str, ...]
     prompt_hashes: tuple[str, ...]
     response_hashes: tuple[str, ...]
     audit: Mapping[str, Any]
@@ -68,6 +69,8 @@ class EvidenceImpactAdjudicator:
         stage_key_count = _forbidden_key_count(response_a, STAGE_KEYS)
         proposals, unsupported, counters, parse_errors = _decode_proposals(response_a, accepted_claim=accepted_claim, archetype_id=archetype_id, allowed_component_ids=set(allowed_component_ids))
         review_pending = False
+        mapping_rejected = False
+        review_issues: tuple[str, ...] = ()
         if high_importance and not parse_errors and not score_key_count and not stage_key_count:
             skeptic_payload = {**payload, "pass_a": _sanitize(response_a), "task": "Skeptically test each proposed impact, unsupported aspect, causal distance, and counter thesis. Output APPROVE or REVIEW_PENDING; never score or Stage."}
             prompt_hashes.append(_hash(skeptic_payload))
@@ -75,7 +78,14 @@ class EvidenceImpactAdjudicator:
             response_hashes.append(_hash(response_b))
             score_key_count += _forbidden_key_count(response_b, SCORE_KEYS)
             stage_key_count += _forbidden_key_count(response_b, STAGE_KEYS)
-            review_pending = str(response_b.get("verdict") or "") != "APPROVE"
+            verdict = str(response_b.get("verdict") or "")
+            review_pending = verdict == "REVIEW_PENDING"
+            mapping_rejected = verdict == "REJECT_MAPPING"
+            review_issues = tuple(
+                str(value)
+                for value in response_b.get("issues") or ()
+                if str(value).strip()
+            )
         critical = {
             "llm_final_score_key_count": score_key_count,
             "llm_stage_key_count": stage_key_count,
@@ -84,13 +94,16 @@ class EvidenceImpactAdjudicator:
             "unsupported_aspect_omission_count": int(not unsupported),
         }
         status = "IMPACT_ADJUDICATION_PASS"
-        if review_pending:
+        if mapping_rejected:
+            status = "IMPACT_MAPPING_REJECTED"
+            proposals = ()
+        elif review_pending:
             status = "REVIEW_PENDING"
             proposals = ()
         elif sum(critical.values()):
             status = "IMPACT_ADJUDICATION_FAIL"
             proposals = ()
-        return EvidenceImpactAdjudicationResult(status=status, proposals=tuple(proposals), unsupported_aspects=tuple(unsupported), counter_thesis=tuple(counters), prompt_hashes=tuple(prompt_hashes), response_hashes=tuple(response_hashes), audit={"provider_name":self.provider.provider_name,"provider_call_count":len(response_hashes),"critical_counts":critical,"critical_count_sum":sum(critical.values())})
+        return EvidenceImpactAdjudicationResult(status=status, proposals=tuple(proposals), unsupported_aspects=tuple(unsupported), counter_thesis=tuple(counters), review_issues=review_issues, prompt_hashes=tuple(prompt_hashes), response_hashes=tuple(response_hashes), audit={"provider_name":self.provider.provider_name,"provider_call_count":len(response_hashes),"critical_counts":critical,"critical_count_sum":sum(critical.values())})
 
 
 def _decode_proposals(response: Mapping[str, Any], *, accepted_claim: Mapping[str, Any], archetype_id: str, allowed_component_ids: set[str]) -> tuple[tuple[ClaimImpactProposal, ...], tuple[str, ...], tuple[str, ...], int]:

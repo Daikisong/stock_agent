@@ -19,6 +19,12 @@ class FakeProvider:
 
 
 class EvidenceImpactAdjudicatorTests(unittest.TestCase):
+    def test_skeptic_can_terminally_reject_invalid_mapping(self) -> None:
+        provider = FakeProvider(skeptic="REJECT_MAPPING")
+        result = self._run(provider)
+        self.assertEqual(result.status, "IMPACT_MAPPING_REJECTED")
+        self.assertEqual(result.proposals, ())
+
     def _run(self, provider):
         rubrics = compile_evidence_impact_rubrics("C06_HBM_MEMORY_CUSTOMER_CAPACITY")
         return EvidenceImpactAdjudicator(provider).adjudicate(
