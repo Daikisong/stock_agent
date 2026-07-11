@@ -16,7 +16,7 @@ def main() -> int:
     parser.add_argument(
         "--output",
         default=(
-            "docs/operational/e2r_stagecourt_event_separation_audit.json"
+            "docs/operational/e2r_full_thesis_event_separation_audit.json"
         ),
     )
     args = parser.parse_args()

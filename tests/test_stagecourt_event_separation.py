@@ -15,7 +15,7 @@ class StageCourtEventSeparationTests(unittest.TestCase):
         expected = json.loads(
             (
                 self.ROOT
-                / "docs/operational/e2r_stagecourt_event_separation_audit.json"
+                / "docs/operational/e2r_full_thesis_event_separation_audit.json"
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(actual, expected)
