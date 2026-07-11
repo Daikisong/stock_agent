@@ -17,7 +17,10 @@ from e2r.research_brain.runtime.scoring_contracts import (
     ArchetypeScoringContract,
 )
 
-from .component_assessment import ComponentAssessment
+from .component_assessment import (
+    ComponentAssessment,
+    TERMINAL_FULL_SCORE_STATUSES,
+)
 from .component_scorer import ResearchCalibratedScoreResult
 from .impact_validator import CreditValidatedImpact
 
@@ -264,10 +267,21 @@ class AtomicStageCourtV2:
         hard_break = bool(risk_input.hard_break_claim_ids)
         if not stage_input.score.full_score_valid:
             stage = "0"
-            reasons = (
-                "full score is pending material component assessment",
+            validity = stage_input.score.audit.get(
+                "full_score_validity", {}
             )
-            status = _pending_status(stage_input.assessments)
+            blocking_reasons = tuple(
+                str(value)
+                for value in validity.get("blocking_reasons") or ()
+            )
+            reasons = (
+                "full score is pending semantic validity: "
+                + ", ".join(blocking_reasons),
+            )
+            status = _pending_status(
+                stage_input.assessments,
+                semantic_blocking_reasons=blocking_reasons,
+            )
             stage_signal = "FULL_THESIS_PENDING"
         else:
             snapshot = _score_snapshot(
@@ -386,7 +400,11 @@ def _score_snapshot(
     )
 
 
-def _pending_status(assessments: Sequence[ComponentAssessment]) -> str:
+def _pending_status(
+    assessments: Sequence[ComponentAssessment],
+    *,
+    semantic_blocking_reasons: Sequence[str] = (),
+) -> str:
     text = " ".join(row.status for row in assessments)
     if "PROVIDER_PENDING" in text:
         return "PROVIDER_PENDING"
@@ -394,6 +412,13 @@ def _pending_status(assessments: Sequence[ComponentAssessment]) -> str:
         return "SOURCE_PENDING"
     if "BUDGET_PENDING" in text:
         return "BUDGET_PENDING"
+    if any(
+        row.status not in TERMINAL_FULL_SCORE_STATUSES
+        for row in assessments
+    ):
+        return "PENDING_MATERIAL_COMPONENTS"
+    if semantic_blocking_reasons:
+        return "SEMANTIC_VALIDITY_PENDING"
     return "PENDING_MATERIAL_COMPONENTS"
 
 

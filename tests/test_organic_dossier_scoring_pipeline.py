@@ -115,6 +115,33 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
             score = json.loads((root / "component_score_vector.json").read_text())
             self.assertEqual(score["score_type"], "VERIFIED_COMPONENT_PARTIAL")
 
+    def test_closure_proof_without_search_adequacy_cannot_finalize_score(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._write_inputs(root)
+            (root / "evidence_search_adequacy.jsonl").unlink()
+            result = run_dossier_scoring_pipeline(
+                dossier_root=root,
+                target_id="123456",
+                company_name="임의회사",
+                as_of_date="2026-07-11",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                impact_provider=_ImpactProvider(),
+            )
+            self.assertFalse(result["full_score_valid"])
+            score = json.loads(
+                (root / "component_score_vector.json").read_text()
+            )
+            validity = score["audit"]["full_score_validity"]
+            self.assertGreater(
+                validity["critical_counts"][
+                    "absence_without_adequacy_count"
+                ],
+                0,
+            )
+            self.assertGreater(score["verified_supported_score"], 0)
+            self.assertIsNone(score["full_e2r_score"])
+
     def test_retry_failed_only_preserves_passed_rows_and_replaces_failure(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -204,7 +231,8 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
                 }
             ],
         )
-        families = sorted(load_question_impact_contracts())
+        contracts = load_question_impact_contracts()
+        families = sorted(contracts)
         self._jsonl(
             root / "question_closure.jsonl",
             [
@@ -221,6 +249,37 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
                         "bounded": family != pending_family,
                         "official_attempted": family != pending_family,
                     },
+                }
+                for family in families
+            ],
+        )
+        profile_families = {
+            family
+            for family, contract in contracts.items()
+            if "hbm_product_profile" in contract.allowed_primitive_ids
+        }
+        self._jsonl(
+            root / "evidence_search_adequacy.jsonl",
+            [
+                {
+                    "adequacy_id": f"ADEQ-{family}",
+                    "question_family_id": family,
+                    "saturation_status": (
+                        "EVIDENCE_FOUND"
+                        if family in profile_families
+                        else "PROVIDER_PENDING"
+                        if family == pending_family
+                        else "ADEQUATE_ABSENCE"
+                    ),
+                    "adequate_absence_allowed": (
+                        family not in profile_families
+                        and family != pending_family
+                    ),
+                    "provider_failures": int(family == pending_family),
+                    "budget_exhausted": False,
+                    "missing_route_categories": [],
+                    "positive_proposal_zeroed_by_internal_validation_count": 0,
+                    "gold_material_fact_miss_count": 0,
                 }
                 for family in families
             ],

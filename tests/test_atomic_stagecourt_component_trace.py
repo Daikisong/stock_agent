@@ -5,6 +5,9 @@ import unittest
 from e2r.research_brain.runtime.scoring_contracts import load_archetype_scoring_contract
 from e2r.research_brain.scoring import AtomicStageCourtV2, ComponentAssessmentBuilder, ResearchCalibratedComponentScorer
 from tests.test_component_assessment_states import supported_impact
+from tests.full_score_validity_fixture import (
+    passing_full_score_validity_evidence,
+)
 
 
 class AtomicStageCourtComponentTraceTests(unittest.TestCase):
@@ -15,7 +18,12 @@ class AtomicStageCourtComponentTraceTests(unittest.TestCase):
         evidence={}
         if terminal:evidence={key:{"status":"VERIFIED_ABSENT_AFTER_SEARCH","search_exhaustion_proof":["TASK-EXHAUSTED"]} for key in self.contract.component_weights if key!="bottleneck_pricing"}
         assessments=ComponentAssessmentBuilder().build(contract=self.contract,impacts=(self.impact,),terminal_evidence=evidence).assessments
-        score=ResearchCalibratedComponentScorer().score(contract=self.contract,impacts=(self.impact,),assessments=assessments)
+        score=ResearchCalibratedComponentScorer().score(
+            contract=self.contract,
+            impacts=(self.impact,),
+            assessments=assessments,
+            validity_evidence=passing_full_score_validity_evidence(),
+        )
         return assessments,score
 
     def test_pending_preserves_verified_score_and_does_not_finalize_stage(self):

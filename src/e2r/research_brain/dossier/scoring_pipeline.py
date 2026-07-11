@@ -12,6 +12,7 @@ from e2r.research_brain.compiler.evidence_impact_rubric_compiler import (
     compile_evidence_impact_rubrics,
 )
 from e2r.research_brain.runtime.scoring_contracts import (
+    audit_scoring_schema_totality,
     load_archetype_scoring_contract,
 )
 from e2r.research_brain.scoring import (
@@ -26,6 +27,7 @@ from e2r.research_brain.scoring import (
     RiskOverlayInput,
     SemanticClosureReconciler,
     compile_claim_eligibility_decisions,
+    compile_full_score_validity_evidence_v2,
     compile_question_component_subcriteria,
     compile_question_closures_v2,
     load_question_impact_contracts,
@@ -82,6 +84,9 @@ def run_dossier_scoring_pipeline(
     mappings = _read_jsonl(root / "primitive_mappings.jsonl")
     closures = _read_jsonl(root / "question_closure.jsonl")
     search_adequacy = _read_jsonl(root / "evidence_search_adequacy.jsonl")
+    material_fact_comparisons = _read_jsonl(
+        root / "material_fact_comparison.jsonl"
+    )
     documents = _read_jsonl(root / "evidence_documents.jsonl")
     if not claims or not provenance or not mappings:
         raise ValueError("dossier scoring requires organic claim, provenance, and mapping leaves")
@@ -373,10 +378,24 @@ def run_dossier_scoring_pipeline(
         adjudications=adjudication_rows,
         search_adequacy=search_adequacy,
     )
+    scoring_schema_audit = audit_scoring_schema_totality(
+        repo_root=Path(__file__).resolve().parents[4]
+    )
+    validity_evidence = compile_full_score_validity_evidence_v2(
+        assessments=assessment.assessments,
+        scoring_schema_audit=scoring_schema_audit,
+        impact_validation_audit=validation.audit,
+        validated_impacts=validation.impacts,
+        reconciliation_audit=reconciliation.audit,
+        reconciliations=reconciliation.reconciliations,
+        search_adequacy=search_adequacy,
+        material_fact_comparisons=material_fact_comparisons,
+    )
     score = ResearchCalibratedComponentScorer().score(
         contract=contract,
         impacts=validation.impacts,
         assessments=assessment.assessments,
+        validity_evidence=validity_evidence,
     )
     accepted_claim_ids = tuple(
         str(row.get("claim_id") or "") for row in selected_claims
@@ -518,6 +537,12 @@ def run_dossier_scoring_pipeline(
         - len(assessment.material_nonterminal_components),
         "verified_supported_score": score.verified_supported_score,
         "full_score_valid": score.full_score_valid,
+        "full_score_validity_status": score.audit[
+            "full_score_validity"
+        ]["status"],
+        "full_score_blocking_reasons": score.audit[
+            "full_score_validity"
+        ]["blocking_reasons"],
         "score_type": score.score_type,
         "canonical_stage": decision.canonical_stage,
         "decision_status": decision.decision_status,
@@ -536,6 +561,7 @@ def run_dossier_scoring_pipeline(
         audit=audit,
         question_closures_v2=closures_v2,
         reconciliation=reconciliation,
+        scoring_schema_audit=scoring_schema_audit,
     )
     return audit
 
@@ -647,7 +673,19 @@ def _impact_satisfaction_rows(
 
 
 def _write_pipeline_leaves(
-    *, root: Path, adjudications, proposals, ledger, validation, assessment, score, decision, audit, question_closures_v2, reconciliation
+    *,
+    root: Path,
+    adjudications,
+    proposals,
+    ledger,
+    validation,
+    assessment,
+    score,
+    decision,
+    audit,
+    question_closures_v2,
+    reconciliation,
+    scoring_schema_audit,
 ) -> None:
     write_jsonl(root / "impact_adjudications.jsonl", adjudications)
     proposal_mapping_ids = {
@@ -725,6 +763,15 @@ def _write_pipeline_leaves(
             "provisional_score_upper": score.provisional_score_upper,
             "full_e2r_score": score.full_e2r_score,
             "full_score_valid": score.full_score_valid,
+            "full_score_validity_id": score.audit[
+                "full_score_validity"
+            ]["validity_id"],
+            "full_score_validity_status": score.audit[
+                "full_score_validity"
+            ]["status"],
+            "full_score_blocking_reasons": score.audit[
+                "full_score_validity"
+            ]["blocking_reasons"],
         },
     )
     write_json(root / "atomic_stage_decision.json", decision.to_dict())
@@ -755,6 +802,14 @@ def _write_pipeline_leaves(
         reconciliation.audit,
     )
     write_json(root / "component_score_audit.json", score.audit)
+    write_json(
+        root / "full_score_validity_v2.json",
+        score.audit["full_score_validity"],
+    )
+    write_json(
+        root / "scoring_schema_totality_audit.json",
+        scoring_schema_audit,
+    )
     write_text(
         root / "operator_digest.md",
         "\n".join(

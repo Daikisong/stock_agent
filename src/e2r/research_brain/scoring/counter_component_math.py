@@ -13,6 +13,7 @@ from e2r.research_brain.runtime.scoring_contracts import (
 from .claim_impact_ledger import ClaimImpactProposal, ValidatedClaimImpact
 from .component_assessment import ComponentAssessmentBuilder
 from .component_scorer import ResearchCalibratedComponentScorer
+from .full_score_validity import FullScoreValidityEvidenceV2
 from .impact_validator import ImpactValidator
 
 
@@ -231,6 +232,35 @@ def _run_scenario(specs: Sequence[_ImpactSpec]) -> Mapping[str, Any]:
         contract=contract,
         impacts=validation.impacts,
         assessments=assessment.assessments,
+        validity_evidence=FullScoreValidityEvidenceV2(
+            schema_totality_status="SCORING_SCHEMA_TOTALITY_PASS",
+            scoring_schema_critical_count=0,
+            silent_zero_default_count=0,
+            positive_impact_zeroed_by_missing_cap_count=0,
+            counter_impact_zeroed_by_missing_cap_count=0,
+            mechanism_scope_failure_count=0,
+            question_component_reconciliation_critical_count=0,
+            unresolved_contradiction_count=sum(
+                row.status == "CONTRADICTED_OPEN"
+                for row in assessment.assessments
+            ),
+            pending_state_count=sum(
+                row.status
+                in {
+                    "UNKNOWN_UNINVESTIGATED",
+                    "SOURCE_PENDING",
+                    "PROVIDER_PENDING",
+                    "BUDGET_PENDING",
+                }
+                for row in assessment.assessments
+            ),
+            absence_without_adequacy_count=0,
+            gold_critical_fact_miss_count=0,
+            cross_business_question_closure_count=0,
+            same_fact_duplicate_credit_count=0,
+            same_document_duplicate_credit_count=0,
+            source_audit_ids=("CONTROLLED-COUNTER-COMPONENT-CANARY",),
+        ),
     )
     active_assessments = tuple(
         row

@@ -34,6 +34,13 @@ from .component_scoring_model import (
     score_component_subcriteria,
 )
 from .counter_component_math import audit_counter_component_math
+from .full_score_validity import (
+    FullScoreValidityEvidenceV2,
+    FullScoreValidityResultV2,
+    compile_full_score_validity_evidence_v2,
+    evaluate_full_score_validity_v2,
+)
+from .full_score_validity_audit import audit_full_score_validity_v2
 from .semantic_closure_reconciler import (
     QuestionComponentReconciliation,
     SemanticClosureReconciler,
@@ -70,6 +77,10 @@ __all__ = [
     "component_subcriteria_context", "load_component_scoring_model",
     "score_component_subcriteria",
     "audit_counter_component_math",
+    "FullScoreValidityEvidenceV2", "FullScoreValidityResultV2",
+    "compile_full_score_validity_evidence_v2",
+    "evaluate_full_score_validity_v2",
+    "audit_full_score_validity_v2",
     "QuestionComponentReconciliation", "SemanticClosureReconciler",
     "SemanticClosureReconciliationResult",
     "audit_question_component_reconciliation",
