@@ -140,6 +140,9 @@ class EvidenceImpactAdjudicator:
             question_contracts=question_by_id,
             scope_validation_by_component=scope_validation_by_component,
             component_subcriteria=normalized_subcriteria,
+            rubric_by_primitive={
+                item.primitive_id: item for item in rubrics
+            },
         )
         raw_impacts = tuple(response_a.get("impacts") or ())
         impact_without_scope = sum(
@@ -224,6 +227,30 @@ def compile_question_component_subcriteria(
     *,
     allowed_component_ids: Sequence[str],
 ) -> Mapping[str, tuple[Mapping[str, Any], ...]]:
+    from .component_scoring_model import component_subcriteria_context
+
+    archetype_ids = {row.archetype_id for row in question_contracts}
+    if len(archetype_ids) == 1:
+        calibrated = component_subcriteria_context(
+            archetype_id=next(iter(archetype_ids)),
+            question_contracts=question_contracts,
+            allowed_component_ids=allowed_component_ids,
+        )
+        if calibrated:
+            result = {
+                component_id: list(calibrated.get(component_id) or ())
+                for component_id in allowed_component_ids
+            }
+            for component_id, rows in result.items():
+                if not rows:
+                    rows.append(
+                        {
+                            "subcriterion_id": f"{component_id}:non_applicable_to_claim",
+                            "question_family_id": "NON_APPLICABLE_TO_CURRENT_CLAIM",
+                            "role": "NO_IMPACT_ALLOWED_FOR_CURRENT_CLAIM",
+                        }
+                    )
+            return {key: tuple(value) for key, value in result.items()}
     result: dict[str, list[Mapping[str, Any]]] = {
         component_id: [] for component_id in allowed_component_ids
     }
@@ -238,6 +265,14 @@ def compile_question_component_subcriteria(
                     ),
                     "question_family_id": contract.question_family_id,
                     "role": "QUESTION_BOUNDED_IMPACT",
+                    "allowed_primitive_ids": tuple(
+                        contract.allowed_primitive_ids
+                    ),
+                    "allowed_directions": (
+                        "SUPPORT",
+                        "COUNTER",
+                        "RESOLUTION",
+                    ),
                 }
             )
     for component_id, rows in result.items():
@@ -261,6 +296,7 @@ def _decode_proposals(
     question_contracts: Mapping[str, QuestionImpactContract],
     scope_validation_by_component: Mapping[str, Mapping[str, Any]],
     component_subcriteria: Mapping[str, Sequence[Mapping[str, Any]]],
+    rubric_by_primitive: Mapping[str, EvidenceImpactRubric],
 ) -> tuple[tuple[ClaimImpactProposal, ...], tuple[str, ...], tuple[str, ...], int]:
     unsupported = tuple(str(v) for v in response.get("unsupported_aspects") or () if str(v).strip())
     counters = tuple(str(v) for v in response.get("counter_thesis") or () if str(v).strip())
@@ -280,16 +316,31 @@ def _decode_proposals(
                 raise ValueError("primitive is outside question contract")
             if component_id not in question.allowed_component_ids:
                 raise ValueError("component is outside question contract")
+            rubric = rubric_by_primitive.get(primitive_id)
+            if rubric is None or component_id not in rubric.allowed_component_ids:
+                raise ValueError("component is outside primitive rubric")
             question_hash = str(row.get("question_contract_hash") or "")
             if question_hash != question.contract_hash:
                 raise ValueError("question contract hash mismatch")
             subcriterion_id = str(row.get("component_subcriterion_id") or "")
-            allowed_subcriteria = {
-                str(value.get("subcriterion_id") or "")
-                for value in component_subcriteria.get(component_id, ())
-            }
-            if subcriterion_id not in allowed_subcriteria:
+            selected_subcriterion = next(
+                (
+                    value
+                    for value in component_subcriteria.get(component_id, ())
+                    if str(value.get("subcriterion_id") or "")
+                    == subcriterion_id
+                    and str(value.get("question_family_id") or "")
+                    == question_id
+                ),
+                None,
+            )
+            if selected_subcriterion is None:
                 raise ValueError("component subcriterion is unknown")
+            subcriterion_primitives = tuple(
+                selected_subcriterion.get("allowed_primitive_ids") or ()
+            )
+            if subcriterion_primitives and primitive_id not in subcriterion_primitives:
+                raise ValueError("primitive is outside component subcriterion")
             scope_match = row.get("mechanism_scope_match")
             if not isinstance(scope_match, bool):
                 raise ValueError("mechanism scope match must be boolean")

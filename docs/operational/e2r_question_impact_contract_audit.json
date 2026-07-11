@@ -80,7 +80,9 @@
       "allowed_component_ids": [
         "earnings_visibility",
         "bottleneck_pricing",
-        "capital_allocation"
+        "valuation_rerating",
+        "capital_allocation",
+        "information_confidence"
       ],
       "allowed_primitive_ids": [
         "hbm_capacity_constraint",
@@ -88,7 +90,7 @@
         "capacity_supply_response"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-      "contract_hash": "b6c3362ca6e91f8f3a2a8bc6e17ba920f0730c2d160f3716cfb1e20879032193",
+      "contract_hash": "90ecd06662c06263d60c45df2c9de63eb63c27825a78fe98a8c2de61a1b384d2",
       "counter_keywords": [
         "oversupply",
         "supply expansion",
@@ -308,6 +310,7 @@
       "allowed_component_ids": [
         "earnings_visibility",
         "bottleneck_pricing",
+        "valuation_rerating",
         "information_confidence"
       ],
       "allowed_primitive_ids": [
@@ -315,7 +318,7 @@
         "revenue_visibility_contract"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-      "contract_hash": "5e36d7df52a60b18ae5798f7877042aa16347cead3f66abd0b997b7158090e19",
+      "contract_hash": "b80468fb03ba048a11c47e5d52ef5b0e544c06b833ca996296e0ffda44ab21e2",
       "counter_keywords": [
         "cancel",
         "withdraw",
@@ -605,46 +608,66 @@
     "medium_term_revision_consensus": {
       "accepted_claim_predicates": [
         "HBM or memory attribution",
-        "estimate, guidance, revision, or consensus"
+        "estimate, guidance, revision, consensus, expectation gap, or current/forward earnings multiple"
       ],
       "allowed_component_ids": [
         "earnings_visibility",
         "market_mispricing",
-        "eps_fcf_explosion"
+        "valuation_rerating",
+        "eps_fcf_explosion",
+        "information_confidence"
       ],
       "allowed_primitive_ids": [
-        "medium_term_revision_visibility"
+        "medium_term_revision_visibility",
+        "market_expectation_gap",
+        "current_valuation_vs_earnings"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-      "contract_hash": "5cfe49ebed1cbe6cc53626c567bd76fa9dac9cd00d35580491a533cf783537a1",
+      "contract_hash": "b88d4156a85b44d3a9d2759475d18dfadd28da5569f38457116c8968cb00b6a8",
       "counter_keywords": [
         "downward",
         "cut",
-        "하향"
+        "priced in",
+        "already reflected",
+        "하향",
+        "선반영"
       ],
       "counter_predicates": [
-        "downward revision"
+        "downward revision",
+        "favorable scenario already reflected in current expectations or valuation"
       ],
       "full_support_keywords": [
         "estimate",
         "guidance",
         "revision",
         "consensus",
+        "expectation gap",
+        "valuation multiple",
+        "earnings multiple",
+        "p/e",
         "가이던스",
         "추정",
-        "컨센서스"
+        "컨센서스",
+        "기대 격차",
+        "밸류에이션"
       ],
-      "mechanism_scope": "Current medium-term HBM/memory estimate revision and consensus",
+      "mechanism_scope": "Current medium-term HBM/memory estimate revision, consensus expectation, and valuation-to-earnings bridge",
       "non_scoring_support_predicates": [
         "target price only",
+        "raw price momentum",
         "historical outcome"
       ],
       "partial_keywords": [
         "outlook",
-        "전망"
+        "target price",
+        "valuation",
+        "전망",
+        "목표주가",
+        "밸류에이션"
       ],
       "partial_support_predicates": [
-        "qualitative outlook without estimate"
+        "qualitative outlook without estimate",
+        "valuation multiple without a complete HBM earnings bridge"
       ],
       "question_family_id": "medium_term_revision_consensus",
       "required_counter_routes": [
@@ -663,10 +686,16 @@
           "guidance",
           "revision",
           "consensus",
+          "expectation",
+          "valuation",
+          "multiple",
+          "p/e",
           "전망",
           "가이던스",
           "추정",
-          "컨센서스"
+          "컨센서스",
+          "기대",
+          "밸류에이션"
         ]
       ],
       "required_source_routes": [
@@ -831,10 +860,11 @@
       ],
       "allowed_primitive_ids": [
         "shipment_or_revenue_mix",
-        "hbm_product_profile"
+        "hbm_product_profile",
+        "package_substrate_sympathy"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-      "contract_hash": "60db939a1ab89ed881b4098c16a4af6e33d093cc4e9f8ddfac09f4c7f3083f93",
+      "contract_hash": "47fd0cd4efebbbf489346335b17f152cb3577fcc7ff3745da2c3051b67f4bdb0",
       "counter_keywords": [
         "delay",
         "stopped",
@@ -910,6 +940,7 @@
       "allowed_component_ids": [
         "earnings_visibility",
         "bottleneck_pricing",
+        "valuation_rerating",
         "information_confidence"
       ],
       "allowed_primitive_ids": [
@@ -928,7 +959,7 @@
         "CLM-464ca5cde1b30c363997"
       ],
       "partial_supporting_claim_ids": [],
-      "question_contract_hash": "5e36d7df52a60b18ae5798f7877042aa16347cead3f66abd0b997b7158090e19",
+      "question_contract_hash": "b80468fb03ba048a11c47e5d52ef5b0e544c06b833ca996296e0ffda44ab21e2",
       "question_family_id": "current_customer_allocation_commitment",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-c07c6754de6164a19856599b",
@@ -944,7 +975,9 @@
       "allowed_component_ids": [
         "earnings_visibility",
         "bottleneck_pricing",
-        "capital_allocation"
+        "valuation_rerating",
+        "capital_allocation",
+        "information_confidence"
       ],
       "allowed_primitive_ids": [
         "hbm_capacity_constraint",
@@ -965,7 +998,7 @@
         "CLM-e0a7f204219f352da273"
       ],
       "partial_supporting_claim_ids": [],
-      "question_contract_hash": "b6c3362ca6e91f8f3a2a8bc6e17ba920f0730c2d160f3716cfb1e20879032193",
+      "question_contract_hash": "90ecd06662c06263d60c45df2c9de63eb63c27825a78fe98a8c2de61a1b384d2",
       "question_family_id": "capacity_constraint_presold_status",
       "search_exhaustion_proof": [
         "PROVREQ-7e617847b89f98daae00aa28",
@@ -1044,7 +1077,8 @@
       ],
       "allowed_primitive_ids": [
         "shipment_or_revenue_mix",
-        "hbm_product_profile"
+        "hbm_product_profile",
+        "package_substrate_sympathy"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
@@ -1102,7 +1136,7 @@
         "CLM-d33eea243c334096866d",
         "CLM-3fe807708c2eee9d9908"
       ],
-      "question_contract_hash": "60db939a1ab89ed881b4098c16a4af6e33d093cc4e9f8ddfac09f4c7f3083f93",
+      "question_contract_hash": "47fd0cd4efebbbf489346335b17f152cb3577fcc7ff3745da2c3051b67f4bdb0",
       "question_family_id": "shipment_mass_production_generation",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-4d1db4232fbf0e0d3c5e0d52",
@@ -1290,10 +1324,14 @@
       "allowed_component_ids": [
         "earnings_visibility",
         "market_mispricing",
-        "eps_fcf_explosion"
+        "valuation_rerating",
+        "eps_fcf_explosion",
+        "information_confidence"
       ],
       "allowed_primitive_ids": [
-        "medium_term_revision_visibility"
+        "medium_term_revision_visibility",
+        "market_expectation_gap",
+        "current_valuation_vs_earnings"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
@@ -1303,7 +1341,7 @@
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
-      "question_contract_hash": "5cfe49ebed1cbe6cc53626c567bd76fa9dac9cd00d35580491a533cf783537a1",
+      "question_contract_hash": "b88d4156a85b44d3a9d2759475d18dfadd28da5569f38457116c8968cb00b6a8",
       "question_family_id": "medium_term_revision_consensus",
       "search_exhaustion_proof": [
         "PROVREQ-c7c74029e85d80a576cf0ff8",
@@ -1423,6 +1461,7 @@
       "allowed_component_ids": [
         "earnings_visibility",
         "bottleneck_pricing",
+        "valuation_rerating",
         "information_confidence"
       ],
       "allowed_primitive_ids": [
@@ -1437,7 +1476,7 @@
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
-      "question_contract_hash": "5e36d7df52a60b18ae5798f7877042aa16347cead3f66abd0b997b7158090e19",
+      "question_contract_hash": "b80468fb03ba048a11c47e5d52ef5b0e544c06b833ca996296e0ffda44ab21e2",
       "question_family_id": "current_customer_allocation_commitment",
       "search_exhaustion_proof": [
         "PROVREQ-99637abb2f4551452916fa0d",
@@ -1458,7 +1497,9 @@
       "allowed_component_ids": [
         "earnings_visibility",
         "bottleneck_pricing",
-        "capital_allocation"
+        "valuation_rerating",
+        "capital_allocation",
+        "information_confidence"
       ],
       "allowed_primitive_ids": [
         "hbm_capacity_constraint",
@@ -1479,7 +1520,7 @@
         "CLM-85a8e1ec74fd4c208401"
       ],
       "partial_supporting_claim_ids": [],
-      "question_contract_hash": "b6c3362ca6e91f8f3a2a8bc6e17ba920f0730c2d160f3716cfb1e20879032193",
+      "question_contract_hash": "90ecd06662c06263d60c45df2c9de63eb63c27825a78fe98a8c2de61a1b384d2",
       "question_family_id": "capacity_constraint_presold_status",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-744e68f35dbf203e1cba6a51",
@@ -1523,8 +1564,10 @@
         "MAP-72165dd86b8b17e77d32",
         "MAP-4017ce2ad625078e2a48",
         "MAP-e9efa2b464507e0ab3ed",
+        "MAP-0be47976ef2fde0b0e7b",
         "MAP-1b8acefe50f974ec784d",
-        "MAP-2ed5cfc776ccf5a5aec4"
+        "MAP-2ed5cfc776ccf5a5aec4",
+        "MAP-ee86bf939436bb9904d2"
       ],
       "allowed_component_ids": [
         "earnings_visibility",
@@ -1533,19 +1576,24 @@
       ],
       "allowed_primitive_ids": [
         "shipment_or_revenue_mix",
-        "hbm_product_profile"
+        "hbm_product_profile",
+        "package_substrate_sympathy"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [
+        "ELIG-01809387c78c08c1993ab405",
         "ELIG-88eb7e49838f035048d43687",
         "ELIG-f02b97d999ef35e8d998a473",
         "ELIG-25bb283870ed1c97a3f24b24",
         "ELIG-6e9ec09b9c05ef9e9dc01289",
+        "ELIG-da9d6fb1bcc6415699af0d02",
         "ELIG-294a8582c9b1ac0bc1361d44",
         "ELIG-23e091c3726567e206929a3d"
       ],
       "counter_claim_ids": [],
-      "eligibility_decision_ids": [],
+      "eligibility_decision_ids": [
+        "ELIG-01809387c78c08c1993ab405"
+      ],
       "failure_class": null,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
@@ -1553,16 +1601,21 @@
         "CLM-b6a7d89a604a1e12d6f4",
         "CLM-81cdb44f9ea4a488a790",
         "CLM-24ae165ad172de0d6649",
+        "CLM-889d81821ec004838246",
         "CLM-c35e896dc619cf663b61",
         "CLM-6542a27e94fc793947e1"
       ],
-      "partial_supporting_claim_ids": [],
-      "question_contract_hash": "60db939a1ab89ed881b4098c16a4af6e33d093cc4e9f8ddfac09f4c7f3083f93",
+      "partial_supporting_claim_ids": [
+        "CLM-85a8e1ec74fd4c208401"
+      ],
+      "question_contract_hash": "47fd0cd4efebbbf489346335b17f152cb3577fcc7ff3745da2c3051b67f4bdb0",
       "question_family_id": "shipment_mass_production_generation",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-ac22963e794e47da71b10db0",
-      "status": "SUPPORTED_NON_SCORING",
-      "supporting_claim_ids": [],
+      "status": "PARTIALLY_SUPPORTED_SCORING",
+      "supporting_claim_ids": [
+        "CLM-85a8e1ec74fd4c208401"
+      ],
       "target_id": "000660"
     },
     {
@@ -1754,10 +1807,14 @@
       "allowed_component_ids": [
         "earnings_visibility",
         "market_mispricing",
-        "eps_fcf_explosion"
+        "valuation_rerating",
+        "eps_fcf_explosion",
+        "information_confidence"
       ],
       "allowed_primitive_ids": [
-        "medium_term_revision_visibility"
+        "medium_term_revision_visibility",
+        "market_expectation_gap",
+        "current_valuation_vs_earnings"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
@@ -1767,7 +1824,7 @@
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
-      "question_contract_hash": "5cfe49ebed1cbe6cc53626c567bd76fa9dac9cd00d35580491a533cf783537a1",
+      "question_contract_hash": "b88d4156a85b44d3a9d2759475d18dfadd28da5569f38457116c8968cb00b6a8",
       "question_family_id": "medium_term_revision_consensus",
       "search_exhaustion_proof": [
         "PROVREQ-9cb80934886722bc8f7138d9",
@@ -1885,7 +1942,8 @@
   "status": "QUESTION_IMPACT_CONTRACT_PASS",
   "status_counts": {
     "EVALUATED_ABSENT": 8,
-    "SUPPORTED_NON_SCORING": 14,
+    "PARTIALLY_SUPPORTED_SCORING": 1,
+    "SUPPORTED_NON_SCORING": 13,
     "SUPPORTED_SCORING": 2
   }
 }

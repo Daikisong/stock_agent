@@ -11,6 +11,15 @@ from e2r.research_brain.compiler.evidence_impact_rubric_compiler import (
     compile_evidence_impact_rubrics,
 )
 from e2r.research_brain.scoring import EvidenceImpactAdjudicator
+from e2r.research_brain.scoring.business_mechanism_scope import (
+    infer_business_mechanism_scope,
+)
+from e2r.research_brain.scoring.evidence_impact_adjudicator import (
+    compile_question_component_subcriteria,
+)
+from e2r.research_brain.scoring.question_impact_contract import (
+    load_question_impact_contracts,
+)
 from e2r.research_brain.replay.source_backed import (
     UrllibHistoricalSourceTransport,
     extract_source_full_text,
@@ -29,6 +38,11 @@ def run_c06_component_replay(
         raise ValueError("C06 component replay config schema mismatch")
     archetype_id = str(config["archetype_id"])
     rubrics = compile_evidence_impact_rubrics(archetype_id)
+    all_question_contracts = tuple(
+        row
+        for row in load_question_impact_contracts().values()
+        if row.archetype_id == archetype_id
+    )
     allowed_components = (
         "eps_fcf_explosion",
         "earnings_visibility",
@@ -99,7 +113,26 @@ def run_c06_component_replay(
             "accepted": True,
             "primitive_id": case["primitive_id"],
             "temporal_status": "CURRENT",
+            "exact_quote": case["exact_quote"],
+            "raw_assertion": {
+                "predicate": case["primitive_id"],
+                "object_text": case["exact_quote"],
+            },
         }
+        question_contracts = tuple(
+            row
+            for row in all_question_contracts
+            if case["primitive_id"] in row.allowed_primitive_ids
+        )
+        if not question_contracts:
+            raise ValueError(
+                "historical replay primitive has no question impact contract"
+            )
+        mechanism_scope = infer_business_mechanism_scope(
+            claim,
+            primitive_id=case["primitive_id"],
+            archetype_id=archetype_id,
+        )
         result = EvidenceImpactAdjudicator(provider).adjudicate(
             target_identity={
                 "target_id": case["target_id"],
@@ -122,6 +155,20 @@ def run_c06_component_replay(
             counter_claims=(),
             rubrics=rubrics.rubrics,
             allowed_component_ids=allowed_components,
+            business_mechanism_scope=mechanism_scope,
+            question_impact_contracts=question_contracts,
+            claim_eligibility_decision={
+                "eligibility_decision_id": (
+                    "REPLAY-ELIG-" + _hash({"claim_id": claim_id})[:20]
+                ),
+                "claim_id": claim_id,
+                "component_scoring_eligibility": True,
+                "eligibility_status": "RESEARCH_REPLAY_ELIGIBLE",
+            },
+            component_subcriteria=compile_question_component_subcriteria(
+                question_contracts,
+                allowed_component_ids=allowed_components,
+            ),
         )
         proposals = tuple(
             proposal

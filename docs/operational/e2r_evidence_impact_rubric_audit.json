@@ -1,6 +1,6 @@
 {
   "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-  "config_hash": "b713b042978f5c8866fbcb6c95f2e591fa2e9937893567a8ea5d7859460cf47b",
+  "config_hash": "29f46e13db58c5e3eddc1dac1badbf1537613705d2f6076f03a209f9f7c8c974",
   "critical_count_sum": 0,
   "critical_counts": {
     "counter_predicate_missing_count": 0,
@@ -11,7 +11,7 @@
     "source_proxy_current_score_allowed_count": 0,
     "unsupported_predicate_missing_count": 0
   },
-  "rubric_count": 14,
+  "rubric_count": 16,
   "schema_version": "e2r_evidence_impact_rubric_audit_v1",
   "semantic_distinctions": [
     "customer_preorder_or_allocation",
@@ -27,7 +27,9 @@
     "margin_fcf_conversion",
     "conventional_memory_drag",
     "capacity_supply_response",
-    "package_substrate_sympathy"
+    "package_substrate_sympathy",
+    "market_expectation_gap",
+    "current_valuation_vs_earnings"
   ],
   "source_backed_example_count": 2,
   "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"

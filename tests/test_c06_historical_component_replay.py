@@ -27,12 +27,30 @@ class _BlindFixtureProvider:
             "hbm_product_profile": ["information_confidence"],
             "package_substrate_sympathy": ["information_confidence"],
         }
-        return {
-            "impacts": [
+        rows = []
+        for component in required_by_primitive[primitive]:
+            if component not in rubric["allowed_component_ids"]:
+                continue
+            question, subcriterion = next(
+                (question, subcriterion)
+                for question in payload["question_impact_contracts"]
+                if primitive in question["allowed_primitive_ids"]
+                and component in question["allowed_component_ids"]
+                for subcriterion in payload["component_subcriteria"][component]
+                if subcriterion["question_family_id"]
+                == question["question_family_id"]
+            )
+            rows.append(
                 {
                     "mapping_id": claim["mapping_ids"][0],
                     "primitive_id": primitive,
+                    "question_family_id": question["question_family_id"],
+                    "question_contract_hash": question["contract_hash"],
                     "component_id": component,
+                    "component_subcriterion_id": subcriterion["subcriterion_id"],
+                    "mechanism_scope_match": payload[
+                        "mechanism_scope_validation_by_component"
+                    ][component]["scope_match"],
                     "direction": direction,
                     "support_type": "RISK_OPEN" if direction == "COUNTER" else "DIRECT_ACTUAL",
                     "strength_band": "STRONG",
@@ -46,9 +64,9 @@ class _BlindFixtureProvider:
                     "unsupported_aspects": ["No other economic effect is established."],
                     "counter_claim_ids": [],
                 }
-                for component in required_by_primitive[primitive]
-                if component in rubric["allowed_component_ids"]
-            ],
+            )
+        return {
+            "impacts": rows,
             "unsupported_aspects": ["No score, Stage, or unquoted effect is inferred."],
             "counter_thesis": [],
             "reasoning_summary": "Blind bounded attribution only.",

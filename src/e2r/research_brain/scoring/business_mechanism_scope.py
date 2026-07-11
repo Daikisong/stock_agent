@@ -341,6 +341,10 @@ def infer_business_mechanism_scope(
 
 def _transaction_and_mechanism(text: str, primitive_id: str) -> tuple[str, str]:
     joined = f"{text} {primitive_id}".casefold()
+    if any(token in joined for token in ("valuation", "earnings multiple", "p/e", "밸류에이션")):
+        return "VALUATION_ANALYSIS", "VALUATION_EARNINGS_BRIDGE"
+    if any(token in joined for token in ("consensus", "expectation gap", "컨센서스", "기대 격차")):
+        return "VALUATION_ANALYSIS", "MARKET_EXPECTATION_GAP"
     if any(token in joined for token in ("qualification", "qualif", "인증")):
         return "QUALIFICATION", "QUALIFICATION_EXECUTION"
     if any(token in joined for token in ("allocation", "preorder", "contract", "배정", "계약")):

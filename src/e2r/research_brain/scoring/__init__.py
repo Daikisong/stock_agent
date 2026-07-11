@@ -16,6 +16,17 @@ from .evidence_origin import EvidenceOrigin, ScoringEvidencePartition, audit_pro
 from .scoring_readiness import SCORING_READINESS_SCHEMA_VERSION, compile_meaningful_scoring_readiness, write_meaningful_scoring_readiness
 from .codex_impact_provider import CodexEvidenceImpactProvider
 from .claim_eligibility import ClaimEligibilityDecision, audit_claim_eligibility, compile_claim_eligibility_decisions
+from .component_scoring_model import (
+    ArchetypeComponentScoringModel,
+    ComponentScoringModel,
+    ComponentSubcriteriaScoringResult,
+    ComponentSubcriterion,
+    ComponentSubcriterionScore,
+    audit_component_scoring_model,
+    component_subcriteria_context,
+    load_component_scoring_model,
+    score_component_subcriteria,
+)
 from .question_impact_contract import (
     QuestionImpactContract,
     audit_question_impact_contracts,
@@ -38,6 +49,11 @@ __all__ = [
     "SCORING_READINESS_SCHEMA_VERSION", "compile_meaningful_scoring_readiness", "write_meaningful_scoring_readiness",
     "CodexEvidenceImpactProvider",
     "ClaimEligibilityDecision", "audit_claim_eligibility", "compile_claim_eligibility_decisions",
+    "ArchetypeComponentScoringModel", "ComponentScoringModel",
+    "ComponentSubcriteriaScoringResult", "ComponentSubcriterion",
+    "ComponentSubcriterionScore", "audit_component_scoring_model",
+    "component_subcriteria_context", "load_component_scoring_model",
+    "score_component_subcriteria",
     "QuestionImpactContract", "audit_question_impact_contracts",
     "compile_question_closures_v2", "load_question_impact_contracts",
 ]

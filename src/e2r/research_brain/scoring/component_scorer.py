@@ -5,6 +5,10 @@ from typing import Any, Mapping, Sequence
 
 from e2r.research_brain.runtime.scoring_contracts import ArchetypeScoringContract
 from .component_assessment import ComponentAssessment, TERMINAL_FULL_SCORE_STATUSES
+from .component_scoring_model import (
+    load_component_scoring_model,
+    score_component_subcriteria,
+)
 from .impact_validator import CreditValidatedImpact
 
 
@@ -31,10 +35,30 @@ class ResearchCalibratedComponentScorer:
     def score(self, *, contract: ArchetypeScoringContract, impacts: Sequence[CreditValidatedImpact], assessments: Sequence[ComponentAssessment]) -> ResearchCalibratedScoreResult:
         by_component={a.component_id:a for a in assessments}
         if set(by_component)!=set(contract.component_weights): raise ValueError("component assessment coverage differs from calibrated profile")
+        model = load_component_scoring_model(contract.archetype_id)
+        calibrated = (
+            score_component_subcriteria(model=model, impacts=impacts)
+            if model is not None
+            else None
+        )
         for component_id,a in by_component.items():
             if abs(a.max_points-contract.component_max_points[component_id])>1e-6: raise ValueError("component max points differ from calibrated profile")
-            expected_fraction=min(1.0,sum(i.validated_credit_fraction for i in impacts if i.component_id==component_id and i.direction=="SUPPORT"))
-            expected=round(a.max_points*expected_fraction,6)
+            expected=(
+                calibrated.component_points[component_id]
+                if calibrated is not None
+                else round(
+                    a.max_points
+                    * min(
+                        1.0,
+                        sum(
+                            i.support_credit_fraction
+                            for i in impacts
+                            if i.component_id == component_id
+                        ),
+                    ),
+                    6,
+                )
+            )
             if a.support_impact_ids and abs(a.verified_points-expected)>1e-6: raise ValueError("component points differ from validated impacts")
         vector={key:round(by_component[key].verified_points,6) for key in contract.component_weights}
         verified=round(sum(vector.values()),6)

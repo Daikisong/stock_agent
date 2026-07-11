@@ -15,8 +15,8 @@ class ResearchCalibratedComponentScorerTests(unittest.TestCase):
     def test_verified_score_survives_with_provisional_interval(self):
         assessments=ComponentAssessmentBuilder().build(contract=self.contract,impacts=(self.impact,)).assessments
         score=ResearchCalibratedComponentScorer().score(contract=self.contract,impacts=(self.impact,),assessments=assessments)
-        self.assertEqual(score.verified_supported_score,11.4)
-        self.assertEqual((score.provisional_score_lower,score.provisional_score_upper),(11.4,92.4))
+        self.assertEqual(score.verified_supported_score,3.0)
+        self.assertEqual((score.provisional_score_lower,score.provisional_score_upper),(3.0,84.0))
         self.assertFalse(score.full_score_valid); self.assertIsNone(score.full_e2r_score)
         self.assertEqual(score.score_type,"VERIFIED_COMPONENT_PARTIAL")
 
@@ -24,7 +24,7 @@ class ResearchCalibratedComponentScorerTests(unittest.TestCase):
         evidence={key:{"status":"VERIFIED_ABSENT_AFTER_SEARCH","search_exhaustion_proof":["TASK-EXHAUSTED"]} for key in self.contract.component_weights if key!="bottleneck_pricing"}
         assessments=ComponentAssessmentBuilder().build(contract=self.contract,impacts=(self.impact,),terminal_evidence=evidence).assessments
         score=ResearchCalibratedComponentScorer().score(contract=self.contract,impacts=(self.impact,),assessments=assessments)
-        self.assertTrue(score.full_score_valid); self.assertEqual(score.full_e2r_score,11.4)
+        self.assertTrue(score.full_score_valid); self.assertEqual(score.full_e2r_score,3.0)
         self.assertEqual(score.score_type,"FULL_E2R_100")
         self.assertEqual(sum(score.component_score_vector.values()),score.full_e2r_score)
 

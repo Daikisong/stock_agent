@@ -11,7 +11,7 @@
       "market_mispricing": 15.0,
       "valuation_rerating": 12.0
     },
-    "config_hash": "8285c4a09306c5c2c97b44478ed15b6b95a01114955f73ef09a556bd9974c0e9",
+    "config_hash": "c013e1bd3b923f80f7dd2e19ed127c0fb427a93d04b6cf624371817423d0d2fa",
     "edge_catalog_status": "EXPLICIT",
     "primitive_to_component_allowed_edges": {
       "actual_earnings_conversion": [
@@ -27,9 +27,15 @@
         "eps_fcf_explosion",
         "earnings_visibility"
       ],
+      "current_valuation_vs_earnings": [
+        "market_mispricing",
+        "valuation_rerating",
+        "information_confidence"
+      ],
       "customer_preorder_or_allocation": [
         "earnings_visibility",
         "bottleneck_pricing",
+        "valuation_rerating",
         "information_confidence"
       ],
       "hbm_capacity_constraint": [
@@ -40,6 +46,7 @@
       "hbm_capacity_pre_sold": [
         "bottleneck_pricing",
         "earnings_visibility",
+        "valuation_rerating",
         "information_confidence"
       ],
       "hbm_product_profile": [
@@ -49,9 +56,15 @@
         "eps_fcf_explosion",
         "capital_allocation"
       ],
+      "market_expectation_gap": [
+        "market_mispricing",
+        "information_confidence"
+      ],
       "medium_term_revision_visibility": [
         "earnings_visibility",
         "eps_fcf_explosion",
+        "market_mispricing",
+        "valuation_rerating",
         "information_confidence"
       ],
       "memory_price_increase_mentioned": [
@@ -68,6 +81,7 @@
       ],
       "revenue_visibility_contract": [
         "earnings_visibility",
+        "valuation_rerating",
         "information_confidence"
       ],
       "shipment_or_revenue_mix": [
@@ -77,7 +91,7 @@
       ]
     }
   },
-  "config_hash": "90a56a2aa25d2dcbb9caef62d1d6d5601a5ff55fcd65f95ee44bcce4f43f6353",
+  "config_hash": "dc89c3059135665033a4567ce565ba1b4819c5617689715c0f57aa44abf0050d",
   "contract_count": 36,
   "critical_count_sum": 0,
   "critical_counts": {

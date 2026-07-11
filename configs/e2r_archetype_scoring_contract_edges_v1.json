@@ -3,12 +3,12 @@
   "contracts": {
     "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
       "primitive_to_component_allowed_edges": {
-        "customer_preorder_or_allocation": ["earnings_visibility", "bottleneck_pricing", "information_confidence"],
-        "revenue_visibility_contract": ["earnings_visibility", "information_confidence"],
+        "customer_preorder_or_allocation": ["earnings_visibility", "bottleneck_pricing", "valuation_rerating", "information_confidence"],
+        "revenue_visibility_contract": ["earnings_visibility", "valuation_rerating", "information_confidence"],
         "hbm_capacity_constraint": ["bottleneck_pricing", "earnings_visibility", "capital_allocation"],
-        "hbm_capacity_pre_sold": ["bottleneck_pricing", "earnings_visibility", "information_confidence"],
+        "hbm_capacity_pre_sold": ["bottleneck_pricing", "earnings_visibility", "valuation_rerating", "information_confidence"],
         "memory_price_increase_mentioned": ["bottleneck_pricing", "eps_fcf_explosion", "information_confidence"],
-        "medium_term_revision_visibility": ["earnings_visibility", "eps_fcf_explosion", "information_confidence"],
+        "medium_term_revision_visibility": ["earnings_visibility", "eps_fcf_explosion", "market_mispricing", "valuation_rerating", "information_confidence"],
         "hbm_product_profile": ["information_confidence"],
         "qualification_state": ["earnings_visibility", "information_confidence"],
         "shipment_or_revenue_mix": ["earnings_visibility", "eps_fcf_explosion", "information_confidence"],
@@ -16,7 +16,9 @@
         "margin_fcf_conversion": ["eps_fcf_explosion", "capital_allocation"],
         "conventional_memory_drag": ["eps_fcf_explosion", "earnings_visibility"],
         "capacity_supply_response": ["capital_allocation", "bottleneck_pricing", "earnings_visibility"],
-        "package_substrate_sympathy": ["information_confidence"]
+        "package_substrate_sympathy": ["information_confidence"],
+        "market_expectation_gap": ["market_mispricing", "information_confidence"],
+        "current_valuation_vs_earnings": ["market_mispricing", "valuation_rerating", "information_confidence"]
       },
       "primitive_materiality": {
         "customer_preorder_or_allocation": true,
@@ -32,7 +34,9 @@
         "margin_fcf_conversion": true,
         "conventional_memory_drag": true,
         "capacity_supply_response": true,
-        "package_substrate_sympathy": false
+        "package_substrate_sympathy": false,
+        "market_expectation_gap": true,
+        "current_valuation_vs_earnings": true
       },
       "primitive_green_requirements": {
         "customer_preorder_or_allocation": true,
@@ -48,7 +52,9 @@
         "margin_fcf_conversion": false,
         "conventional_memory_drag": false,
         "capacity_supply_response": false,
-        "package_substrate_sympathy": false
+        "package_substrate_sympathy": false,
+        "market_expectation_gap": false,
+        "current_valuation_vs_earnings": false
       },
       "component_required_evidence_roles": {
         "eps_fcf_explosion": ["ACTUAL_EARNINGS", "FORWARD_REVISION", "CASH_CONVERSION"],

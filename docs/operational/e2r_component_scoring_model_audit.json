@@ -1,0 +1,720 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "component_count": 7,
+  "component_models": [
+    {
+      "aggregation_mode": "SUM_DISTINCT_SUBCRITERIA",
+      "component_id": "eps_fcf_explosion",
+      "correlation_groups": [
+        "ACTUAL_MARGIN_CASH_CONVERSION",
+        "FORWARD_REVISION"
+      ],
+      "max_points": 24.0,
+      "missing_required_cap_fraction": 1.0,
+      "subcriteria": [
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "actual_earnings_conversion",
+            "shipment_or_revenue_mix",
+            "memory_price_increase_mentioned"
+          ],
+          "allowed_question_family_ids": [
+            "revenue_operating_profit_conversion",
+            "hbm_ai_memory_revenue_mix",
+            "asp_pricing_actual"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SAMSUNG-20250131-REOPEN-CAP",
+            "C06-SKHYNIX-20250123-REVENUE-MIX"
+          ],
+          "max_points": 7.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_EPS_ACTUAL_REVENUE_PROFIT"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "margin_fcf_conversion",
+            "actual_earnings_conversion",
+            "conventional_memory_drag"
+          ],
+          "allowed_question_family_ids": [
+            "margin_fcf_conversion",
+            "revenue_operating_profit_conversion",
+            "conventional_memory_drag"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SAMSUNG-20250131-REOPEN-CAP",
+            "C06-COMPONENT-PROXY-CASH-CONVERSION"
+          ],
+          "max_points": 5.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_EPS_MARGIN_CONVERSION"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "margin_fcf_conversion",
+            "conventional_memory_drag"
+          ],
+          "allowed_question_family_ids": [
+            "margin_fcf_conversion",
+            "conventional_memory_drag"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-CASH-CONVERSION"
+          ],
+          "max_points": 6.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_EPS_FCF_CASH_CONVERSION"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "medium_term_revision_visibility"
+          ],
+          "allowed_question_family_ids": [
+            "medium_term_revision_consensus"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-FORWARD-REVISION"
+          ],
+          "max_points": 6.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_EPS_FORWARD_REVISION"
+        }
+      ],
+      "support_counter_rules": [
+        "actual, margin, cash, and forward revision remain distinct",
+        "counter affects only its mapped subcriterion"
+      ]
+    },
+    {
+      "aggregation_mode": "COVERAGE_WEIGHTED",
+      "component_id": "earnings_visibility",
+      "correlation_groups": [
+        "CUSTOMER_CAPACITY",
+        "EXECUTION",
+        "REVISION"
+      ],
+      "max_points": 21.0,
+      "missing_required_cap_fraction": 1.0,
+      "subcriteria": [
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "customer_preorder_or_allocation",
+            "revenue_visibility_contract"
+          ],
+          "allowed_question_family_ids": [
+            "current_customer_allocation_commitment",
+            "customer_concentration_dependency"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SKHYNIX-20240502-SOLDOUT"
+          ],
+          "max_points": 5.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_VIS_CUSTOMER_COMMITMENT"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "hbm_capacity_constraint",
+            "hbm_capacity_pre_sold",
+            "capacity_supply_response"
+          ],
+          "allowed_question_family_ids": [
+            "capacity_constraint_presold_status",
+            "capex_supply_oversupply"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SKHYNIX-20240502-SOLDOUT"
+          ],
+          "max_points": 5.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_VIS_CAPACITY_BOOKING"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "qualification_state"
+          ],
+          "allowed_question_family_ids": [
+            "qualification_pass_lag_reopen"
+          ],
+          "counter_mode": "OPEN_BLOCK",
+          "historical_case_refs": [
+            "C06-SAMSUNG-20240524-QUALIFICATION-LAG"
+          ],
+          "max_points": 3.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_VIS_QUALIFICATION"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "shipment_or_revenue_mix"
+          ],
+          "allowed_question_family_ids": [
+            "shipment_mass_production_generation",
+            "hbm_ai_memory_revenue_mix"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SKHYNIX-20250123-REVENUE-MIX"
+          ],
+          "max_points": 4.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_VIS_SHIPMENT_REVENUE_MIX"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "medium_term_revision_visibility",
+            "conventional_memory_drag"
+          ],
+          "allowed_question_family_ids": [
+            "medium_term_revision_consensus",
+            "conventional_memory_drag"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-FORWARD-REVISION"
+          ],
+          "max_points": 4.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_VIS_MEDIUM_REVISION"
+        }
+      ],
+      "support_counter_rules": [
+        "customer, capacity, qualification, shipment, and revision are separate visibility bridges"
+      ]
+    },
+    {
+      "aggregation_mode": "NET_SUPPORT_COUNTER",
+      "component_id": "bottleneck_pricing",
+      "correlation_groups": [
+        "SCARCITY",
+        "REALIZED_PRICING",
+        "SUPPLY_RESPONSE"
+      ],
+      "max_points": 19.0,
+      "missing_required_cap_fraction": 1.0,
+      "subcriteria": [
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "hbm_capacity_constraint",
+            "hbm_capacity_pre_sold"
+          ],
+          "allowed_question_family_ids": [
+            "capacity_constraint_presold_status"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SKHYNIX-20240502-SOLDOUT"
+          ],
+          "max_points": 6.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_BOT_CAPACITY_CONSTRAINT"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "customer_preorder_or_allocation"
+          ],
+          "allowed_question_family_ids": [
+            "current_customer_allocation_commitment",
+            "customer_concentration_dependency"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SKHYNIX-20240502-SOLDOUT"
+          ],
+          "max_points": 4.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_BOT_CUSTOMER_ALLOCATION"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "memory_price_increase_mentioned"
+          ],
+          "allowed_question_family_ids": [
+            "asp_pricing_actual"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SAMSUNG-20250131-REOPEN-CAP"
+          ],
+          "max_points": 5.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_BOT_REALIZED_ASP"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "capacity_supply_response",
+            "hbm_capacity_constraint"
+          ],
+          "allowed_question_family_ids": [
+            "capex_supply_oversupply",
+            "capacity_constraint_presold_status"
+          ],
+          "counter_mode": "OPEN_BLOCK",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"
+          ],
+          "max_points": 4.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_BOT_SUPPLY_RESPONSE"
+        }
+      ],
+      "support_counter_rules": [
+        "capacity expansion support for output is simultaneously a scarcity counter",
+        "realized ASP is distinct from spot-price headlines"
+      ]
+    },
+    {
+      "aggregation_mode": "CAP_BY_MISSING_BRIDGE",
+      "component_id": "market_mispricing",
+      "correlation_groups": [
+        "EXPECTATION_GAP",
+        "VALUATION_BRIDGE"
+      ],
+      "max_points": 15.0,
+      "missing_required_cap_fraction": 0.55,
+      "subcriteria": [
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "medium_term_revision_visibility",
+            "market_expectation_gap"
+          ],
+          "allowed_question_family_ids": [
+            "medium_term_revision_consensus"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-EARNINGS-REVISION"
+          ],
+          "max_points": 6.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_MKT_REVISION_VS_CONSENSUS"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "market_expectation_gap"
+          ],
+          "allowed_question_family_ids": [
+            "medium_term_revision_consensus"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-WEIGHT-PROXY-MARKET-MISPRICING"
+          ],
+          "max_points": 5.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_MKT_CURRENT_EXPECTATION_GAP"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "current_valuation_vs_earnings"
+          ],
+          "allowed_question_family_ids": [
+            "medium_term_revision_consensus"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-WEIGHT-PROXY-MARKET-MISPRICING"
+          ],
+          "max_points": 4.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_MKT_VALUATION_EARNINGS_BRIDGE"
+        }
+      ],
+      "support_counter_rules": [
+        "revision must be compared with current market expectation",
+        "raw price momentum is non-scoring"
+      ]
+    },
+    {
+      "aggregation_mode": "CAP_BY_MISSING_BRIDGE",
+      "component_id": "valuation_rerating",
+      "correlation_groups": [
+        "CURRENT_FORWARD_VALUATION",
+        "DURABLE_VISIBILITY"
+      ],
+      "max_points": 12.0,
+      "missing_required_cap_fraction": 0.5,
+      "subcriteria": [
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "current_valuation_vs_earnings"
+          ],
+          "allowed_question_family_ids": [
+            "medium_term_revision_consensus"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-WEIGHT-PROXY-VALUATION-RERATING"
+          ],
+          "max_points": 4.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_VAL_CURRENT_EARNINGS_MULTIPLE"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "current_valuation_vs_earnings",
+            "medium_term_revision_visibility"
+          ],
+          "allowed_question_family_ids": [
+            "medium_term_revision_consensus"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-FORWARD-REVISION"
+          ],
+          "max_points": 4.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_VAL_FORWARD_EARNINGS_MULTIPLE"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "customer_preorder_or_allocation",
+            "revenue_visibility_contract",
+            "hbm_capacity_pre_sold"
+          ],
+          "allowed_question_family_ids": [
+            "current_customer_allocation_commitment",
+            "capacity_constraint_presold_status"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SKHYNIX-20240502-SOLDOUT"
+          ],
+          "max_points": 4.0,
+          "role": "OPTIONAL",
+          "subcriterion_id": "C06_VAL_DURABLE_VISIBILITY"
+        }
+      ],
+      "support_counter_rules": [
+        "valuation requires current or forward earnings denominator",
+        "durable visibility alone cannot fill the valuation denominator"
+      ]
+    },
+    {
+      "aggregation_mode": "NET_SUPPORT_COUNTER",
+      "component_id": "capital_allocation",
+      "correlation_groups": [
+        "CAPEX_SCHEDULE",
+        "CASH_BURDEN"
+      ],
+      "max_points": 4.0,
+      "missing_required_cap_fraction": 1.0,
+      "subcriteria": [
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "capacity_supply_response",
+            "hbm_capacity_constraint"
+          ],
+          "allowed_question_family_ids": [
+            "capex_supply_oversupply",
+            "capacity_constraint_presold_status"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"
+          ],
+          "max_points": 1.5,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_CAP_CAPEX_SCHEDULE"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "capacity_supply_response"
+          ],
+          "allowed_question_family_ids": [
+            "capex_supply_oversupply"
+          ],
+          "counter_mode": "OPEN_BLOCK",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"
+          ],
+          "max_points": 1.5,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_CAP_CAPACITY_RESPONSE"
+        },
+        {
+          "aggregation_dimension": "IMPACT_CREDIT",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "margin_fcf_conversion"
+          ],
+          "allowed_question_family_ids": [
+            "margin_fcf_conversion"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-CASH-CONVERSION"
+          ],
+          "max_points": 1.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_CAP_CASH_BURDEN"
+        }
+      ],
+      "support_counter_rules": [
+        "funded capacity schedule and cash burden remain separate",
+        "oversupply counter remains live"
+      ]
+    },
+    {
+      "aggregation_mode": "MAX_SOURCE_QUALITY",
+      "component_id": "information_confidence",
+      "correlation_groups": [
+        "SOURCE_QUALITY",
+        "DIRECTNESS_CURRENTNESS",
+        "CORROBORATION"
+      ],
+      "max_points": 5.0,
+      "missing_required_cap_fraction": 1.0,
+      "subcriteria": [
+        {
+          "aggregation_dimension": "BEST_SOURCE_QUALITY",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "*"
+          ],
+          "allowed_question_family_ids": [
+            "*"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-SKHYNIX-PRODUCT-SPEC-GUARD",
+            "C06-SAMSUNG-PACKAGE-PROFILE-GUARD"
+          ],
+          "max_points": 2.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_INFO_SOURCE_QUALITY"
+        },
+        {
+          "aggregation_dimension": "TARGET_DIRECTNESS",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "*"
+          ],
+          "allowed_question_family_ids": [
+            "*"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-OFFICIAL-DIRECT"
+          ],
+          "max_points": 1.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_INFO_TARGET_DIRECTNESS"
+        },
+        {
+          "aggregation_dimension": "CURRENT_ANCHOR",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "*"
+          ],
+          "allowed_question_family_ids": [
+            "*"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-OFFICIAL-DIRECT"
+          ],
+          "max_points": 1.0,
+          "role": "REQUIRED",
+          "subcriterion_id": "C06_INFO_CURRENT_ANCHOR"
+        },
+        {
+          "aggregation_dimension": "INDEPENDENT_CORROBORATION",
+          "allowed_directions": [
+            "SUPPORT",
+            "COUNTER",
+            "RESOLUTION"
+          ],
+          "allowed_primitive_ids": [
+            "*"
+          ],
+          "allowed_question_family_ids": [
+            "*"
+          ],
+          "counter_mode": "BOUNDED_NET",
+          "historical_case_refs": [
+            "C06-COMPONENT-PROXY-INDEPENDENT-CORROBORATION"
+          ],
+          "max_points": 1.0,
+          "role": "OPTIONAL",
+          "subcriterion_id": "C06_INFO_INDEPENDENT_CORROBORATION"
+        }
+      ],
+      "support_counter_rules": [
+        "claim count never adds confidence",
+        "best source plus bounded independent corroboration only"
+      ]
+    }
+  ],
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "component_coverage_mismatch_count": 0,
+    "component_max_mismatch_count": 0,
+    "max_source_quality_dimension_mismatch_count": 0,
+    "missing_research_lineage_count": 0,
+    "subcriterion_budget_sum_mismatch_count": 0,
+    "subcriterion_without_research_ref_count": 0,
+    "target_specific_exception_count": 0,
+    "uncovered_primitive_component_edge_count": 0,
+    "unknown_aggregation_mode_count": 0,
+    "unknown_counter_mode_count": 0,
+    "unknown_question_family_count": 0,
+    "unreachable_subcriterion_count": 0
+  },
+  "model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+  "schema_version": "e2r_component_scoring_model_audit_v1",
+  "status": "COMPONENT_SCORING_MODEL_PASS",
+  "subcriterion_count": 26,
+  "uncovered_edges": [],
+  "unknown_question_refs": [],
+  "unreachable_subcriteria": []
+}

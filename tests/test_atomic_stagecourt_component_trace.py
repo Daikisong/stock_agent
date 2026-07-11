@@ -22,7 +22,7 @@ class AtomicStageCourtComponentTraceTests(unittest.TestCase):
         assessments,score=self._score(False)
         decision=AtomicStageCourtV2().decide(target_id="005930",as_of_date="2026-07-11",contract=self.contract,score=score,assessments=assessments,impacts=(self.impact,),accepted_claim_ids=("C1",))
         self.assertEqual(decision.canonical_stage,"0"); self.assertEqual(decision.decision_status,"PENDING_MATERIAL_COMPONENTS")
-        self.assertEqual(decision.verified_supported_score,11.4); self.assertFalse(decision.full_score_valid)
+        self.assertEqual(decision.verified_supported_score,3.0); self.assertFalse(decision.full_score_valid)
 
     def test_final_score_runs_existing_deterministic_stage_classifier(self):
         assessments,score=self._score(True)

@@ -614,6 +614,10 @@ def _write_pipeline_leaves(
         root / "component_assessments.jsonl",
         (row.to_dict() for row in assessment.assessments),
     )
+    write_jsonl(
+        root / "component_subcriteria.jsonl",
+        (row.to_dict() for row in assessment.subcriterion_scores),
+    )
     score_payload = {**score.to_dict(), "archetype_id": audit["archetype_id"]}
     write_json(root / "component_score_vector.json", score_payload)
     write_json(

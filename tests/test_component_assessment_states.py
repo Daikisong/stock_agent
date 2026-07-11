@@ -17,8 +17,8 @@ class ComponentAssessmentStateTests(unittest.TestCase):
     def test_partial_component_score_is_preserved_while_other_components_unknown(self):
         result=ComponentAssessmentBuilder().build(contract=self.contract,impacts=(supported_impact(),))
         pricing=next(a for a in result.assessments if a.component_id=="bottleneck_pricing")
-        self.assertEqual(pricing.status,"VERIFIED_PARTIAL_SUPPORT")
-        self.assertEqual(pricing.verified_points,11.4)
+        self.assertEqual(pricing.status,"VERIFIED_WEAK_SUPPORT")
+        self.assertEqual(pricing.verified_points,3.0)
         self.assertIn("earnings_visibility",result.material_nonterminal_components)
 
     def test_evaluated_absent_allows_terminal_full_thesis_assessment(self):
@@ -26,7 +26,7 @@ class ComponentAssessmentStateTests(unittest.TestCase):
         result=ComponentAssessmentBuilder().build(contract=self.contract,impacts=(supported_impact(),),terminal_evidence=evidence)
         self.assertEqual(result.material_nonterminal_components,())
         self.assertEqual(result.audit["terminal_component_count"],7)
-        self.assertEqual(result.audit["verified_supported_points"],11.4)
+        self.assertEqual(result.audit["verified_supported_points"],3.0)
 
     def test_unknown_and_provider_pending_block_finalization(self):
         unknown=ComponentAssessmentBuilder().build(contract=self.contract,impacts=())

@@ -1,0 +1,111 @@
+{
+  "schema_version": "e2r_component_scoring_models_v1",
+  "models": {
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+      "research_lineage": {
+        "weight_profile": "configs/e2r_archetype_weight_profile_v2_2.json",
+        "historical_replay": "configs/e2r_c06_historical_component_replay_v1.json",
+        "component_proxy": "configs/e2r_archetype_scoring_contract_edges_v1.json",
+        "rationale": "C06 broad weights are preserved while historical sold-out, revenue-mix, qualification, realized earnings, profile guards, and component evidence roles allocate bounded internal subcriteria."
+      },
+      "components": [
+        {
+          "component_id": "eps_fcf_explosion",
+          "max_points": 24.0,
+          "aggregation_mode": "SUM_DISTINCT_SUBCRITERIA",
+          "missing_required_cap_fraction": 1.0,
+          "support_counter_rules": ["actual, margin, cash, and forward revision remain distinct", "counter affects only its mapped subcriterion"],
+          "correlation_groups": ["ACTUAL_MARGIN_CASH_CONVERSION", "FORWARD_REVISION"],
+          "subcriteria": [
+            {"subcriterion_id":"C06_EPS_ACTUAL_REVENUE_PROFIT","max_points":7.0,"role":"REQUIRED","allowed_primitive_ids":["actual_earnings_conversion","shipment_or_revenue_mix","memory_price_increase_mentioned"],"allowed_question_family_ids":["revenue_operating_profit_conversion","hbm_ai_memory_revenue_mix","asp_pricing_actual"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-SAMSUNG-20250131-REOPEN-CAP","C06-SKHYNIX-20250123-REVENUE-MIX"]},
+            {"subcriterion_id":"C06_EPS_MARGIN_CONVERSION","max_points":5.0,"role":"REQUIRED","allowed_primitive_ids":["margin_fcf_conversion","actual_earnings_conversion","conventional_memory_drag"],"allowed_question_family_ids":["margin_fcf_conversion","revenue_operating_profit_conversion","conventional_memory_drag"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-SAMSUNG-20250131-REOPEN-CAP","C06-COMPONENT-PROXY-CASH-CONVERSION"]},
+            {"subcriterion_id":"C06_EPS_FCF_CASH_CONVERSION","max_points":6.0,"role":"REQUIRED","allowed_primitive_ids":["margin_fcf_conversion","conventional_memory_drag"],"allowed_question_family_ids":["margin_fcf_conversion","conventional_memory_drag"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-COMPONENT-PROXY-CASH-CONVERSION"]},
+            {"subcriterion_id":"C06_EPS_FORWARD_REVISION","max_points":6.0,"role":"REQUIRED","allowed_primitive_ids":["medium_term_revision_visibility"],"allowed_question_family_ids":["medium_term_revision_consensus"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-COMPONENT-PROXY-FORWARD-REVISION"]}
+          ]
+        },
+        {
+          "component_id": "earnings_visibility",
+          "max_points": 21.0,
+          "aggregation_mode": "COVERAGE_WEIGHTED",
+          "missing_required_cap_fraction": 1.0,
+          "support_counter_rules": ["customer, capacity, qualification, shipment, and revision are separate visibility bridges"],
+          "correlation_groups": ["CUSTOMER_CAPACITY", "EXECUTION", "REVISION"],
+          "subcriteria": [
+            {"subcriterion_id":"C06_VIS_CUSTOMER_COMMITMENT","max_points":5.0,"role":"REQUIRED","allowed_primitive_ids":["customer_preorder_or_allocation","revenue_visibility_contract"],"allowed_question_family_ids":["current_customer_allocation_commitment","customer_concentration_dependency"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-SKHYNIX-20240502-SOLDOUT"]},
+            {"subcriterion_id":"C06_VIS_CAPACITY_BOOKING","max_points":5.0,"role":"REQUIRED","allowed_primitive_ids":["hbm_capacity_constraint","hbm_capacity_pre_sold","capacity_supply_response"],"allowed_question_family_ids":["capacity_constraint_presold_status","capex_supply_oversupply"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-SKHYNIX-20240502-SOLDOUT"]},
+            {"subcriterion_id":"C06_VIS_QUALIFICATION","max_points":3.0,"role":"REQUIRED","allowed_primitive_ids":["qualification_state"],"allowed_question_family_ids":["qualification_pass_lag_reopen"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"OPEN_BLOCK","historical_case_refs":["C06-SAMSUNG-20240524-QUALIFICATION-LAG"]},
+            {"subcriterion_id":"C06_VIS_SHIPMENT_REVENUE_MIX","max_points":4.0,"role":"REQUIRED","allowed_primitive_ids":["shipment_or_revenue_mix"],"allowed_question_family_ids":["shipment_mass_production_generation","hbm_ai_memory_revenue_mix"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-SKHYNIX-20250123-REVENUE-MIX"]},
+            {"subcriterion_id":"C06_VIS_MEDIUM_REVISION","max_points":4.0,"role":"REQUIRED","allowed_primitive_ids":["medium_term_revision_visibility","conventional_memory_drag"],"allowed_question_family_ids":["medium_term_revision_consensus","conventional_memory_drag"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-COMPONENT-PROXY-FORWARD-REVISION"]}
+          ]
+        },
+        {
+          "component_id": "bottleneck_pricing",
+          "max_points": 19.0,
+          "aggregation_mode": "NET_SUPPORT_COUNTER",
+          "missing_required_cap_fraction": 1.0,
+          "support_counter_rules": ["capacity expansion support for output is simultaneously a scarcity counter", "realized ASP is distinct from spot-price headlines"],
+          "correlation_groups": ["SCARCITY", "REALIZED_PRICING", "SUPPLY_RESPONSE"],
+          "subcriteria": [
+            {"subcriterion_id":"C06_BOT_CAPACITY_CONSTRAINT","max_points":6.0,"role":"REQUIRED","allowed_primitive_ids":["hbm_capacity_constraint","hbm_capacity_pre_sold"],"allowed_question_family_ids":["capacity_constraint_presold_status"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-SKHYNIX-20240502-SOLDOUT"]},
+            {"subcriterion_id":"C06_BOT_CUSTOMER_ALLOCATION","max_points":4.0,"role":"REQUIRED","allowed_primitive_ids":["customer_preorder_or_allocation"],"allowed_question_family_ids":["current_customer_allocation_commitment","customer_concentration_dependency"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-SKHYNIX-20240502-SOLDOUT"]},
+            {"subcriterion_id":"C06_BOT_REALIZED_ASP","max_points":5.0,"role":"REQUIRED","allowed_primitive_ids":["memory_price_increase_mentioned"],"allowed_question_family_ids":["asp_pricing_actual"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-SAMSUNG-20250131-REOPEN-CAP"]},
+            {"subcriterion_id":"C06_BOT_SUPPLY_RESPONSE","max_points":4.0,"role":"REQUIRED","allowed_primitive_ids":["capacity_supply_response","hbm_capacity_constraint"],"allowed_question_family_ids":["capex_supply_oversupply","capacity_constraint_presold_status"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"OPEN_BLOCK","historical_case_refs":["C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"]}
+          ]
+        },
+        {
+          "component_id": "market_mispricing",
+          "max_points": 15.0,
+          "aggregation_mode": "CAP_BY_MISSING_BRIDGE",
+          "missing_required_cap_fraction": 0.55,
+          "support_counter_rules": ["revision must be compared with current market expectation", "raw price momentum is non-scoring"],
+          "correlation_groups": ["EXPECTATION_GAP", "VALUATION_BRIDGE"],
+          "subcriteria": [
+            {"subcriterion_id":"C06_MKT_REVISION_VS_CONSENSUS","max_points":6.0,"role":"REQUIRED","allowed_primitive_ids":["medium_term_revision_visibility","market_expectation_gap"],"allowed_question_family_ids":["medium_term_revision_consensus"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-COMPONENT-PROXY-EARNINGS-REVISION"]},
+            {"subcriterion_id":"C06_MKT_CURRENT_EXPECTATION_GAP","max_points":5.0,"role":"REQUIRED","allowed_primitive_ids":["market_expectation_gap"],"allowed_question_family_ids":["medium_term_revision_consensus"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-WEIGHT-PROXY-MARKET-MISPRICING"]},
+            {"subcriterion_id":"C06_MKT_VALUATION_EARNINGS_BRIDGE","max_points":4.0,"role":"REQUIRED","allowed_primitive_ids":["current_valuation_vs_earnings"],"allowed_question_family_ids":["medium_term_revision_consensus"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-WEIGHT-PROXY-MARKET-MISPRICING"]}
+          ]
+        },
+        {
+          "component_id": "valuation_rerating",
+          "max_points": 12.0,
+          "aggregation_mode": "CAP_BY_MISSING_BRIDGE",
+          "missing_required_cap_fraction": 0.5,
+          "support_counter_rules": ["valuation requires current or forward earnings denominator", "durable visibility alone cannot fill the valuation denominator"],
+          "correlation_groups": ["CURRENT_FORWARD_VALUATION", "DURABLE_VISIBILITY"],
+          "subcriteria": [
+            {"subcriterion_id":"C06_VAL_CURRENT_EARNINGS_MULTIPLE","max_points":4.0,"role":"REQUIRED","allowed_primitive_ids":["current_valuation_vs_earnings"],"allowed_question_family_ids":["medium_term_revision_consensus"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-WEIGHT-PROXY-VALUATION-RERATING"]},
+            {"subcriterion_id":"C06_VAL_FORWARD_EARNINGS_MULTIPLE","max_points":4.0,"role":"REQUIRED","allowed_primitive_ids":["current_valuation_vs_earnings","medium_term_revision_visibility"],"allowed_question_family_ids":["medium_term_revision_consensus"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-COMPONENT-PROXY-FORWARD-REVISION"]},
+            {"subcriterion_id":"C06_VAL_DURABLE_VISIBILITY","max_points":4.0,"role":"OPTIONAL","allowed_primitive_ids":["customer_preorder_or_allocation","revenue_visibility_contract","hbm_capacity_pre_sold"],"allowed_question_family_ids":["current_customer_allocation_commitment","capacity_constraint_presold_status"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-SKHYNIX-20240502-SOLDOUT"]}
+          ]
+        },
+        {
+          "component_id": "capital_allocation",
+          "max_points": 4.0,
+          "aggregation_mode": "NET_SUPPORT_COUNTER",
+          "missing_required_cap_fraction": 1.0,
+          "support_counter_rules": ["funded capacity schedule and cash burden remain separate", "oversupply counter remains live"],
+          "correlation_groups": ["CAPEX_SCHEDULE", "CASH_BURDEN"],
+          "subcriteria": [
+            {"subcriterion_id":"C06_CAP_CAPEX_SCHEDULE","max_points":1.5,"role":"REQUIRED","allowed_primitive_ids":["capacity_supply_response","hbm_capacity_constraint"],"allowed_question_family_ids":["capex_supply_oversupply","capacity_constraint_presold_status"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"]},
+            {"subcriterion_id":"C06_CAP_CAPACITY_RESPONSE","max_points":1.5,"role":"REQUIRED","allowed_primitive_ids":["capacity_supply_response"],"allowed_question_family_ids":["capex_supply_oversupply"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"OPEN_BLOCK","historical_case_refs":["C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"]},
+            {"subcriterion_id":"C06_CAP_CASH_BURDEN","max_points":1.0,"role":"REQUIRED","allowed_primitive_ids":["margin_fcf_conversion"],"allowed_question_family_ids":["margin_fcf_conversion"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-COMPONENT-PROXY-CASH-CONVERSION"]}
+          ]
+        },
+        {
+          "component_id": "information_confidence",
+          "max_points": 5.0,
+          "aggregation_mode": "MAX_SOURCE_QUALITY",
+          "missing_required_cap_fraction": 1.0,
+          "support_counter_rules": ["claim count never adds confidence", "best source plus bounded independent corroboration only"],
+          "correlation_groups": ["SOURCE_QUALITY", "DIRECTNESS_CURRENTNESS", "CORROBORATION"],
+          "subcriteria": [
+            {"subcriterion_id":"C06_INFO_SOURCE_QUALITY","max_points":2.0,"role":"REQUIRED","aggregation_dimension":"BEST_SOURCE_QUALITY","allowed_primitive_ids":["*"],"allowed_question_family_ids":["*"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-SKHYNIX-PRODUCT-SPEC-GUARD","C06-SAMSUNG-PACKAGE-PROFILE-GUARD"]},
+            {"subcriterion_id":"C06_INFO_TARGET_DIRECTNESS","max_points":1.0,"role":"REQUIRED","aggregation_dimension":"TARGET_DIRECTNESS","allowed_primitive_ids":["*"],"allowed_question_family_ids":["*"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-COMPONENT-PROXY-OFFICIAL-DIRECT"]},
+            {"subcriterion_id":"C06_INFO_CURRENT_ANCHOR","max_points":1.0,"role":"REQUIRED","aggregation_dimension":"CURRENT_ANCHOR","allowed_primitive_ids":["*"],"allowed_question_family_ids":["*"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-COMPONENT-PROXY-OFFICIAL-DIRECT"]},
+            {"subcriterion_id":"C06_INFO_INDEPENDENT_CORROBORATION","max_points":1.0,"role":"OPTIONAL","aggregation_dimension":"INDEPENDENT_CORROBORATION","allowed_primitive_ids":["*"],"allowed_question_family_ids":["*"],"allowed_directions":["SUPPORT","COUNTER","RESOLUTION"],"counter_mode":"BOUNDED_NET","historical_case_refs":["C06-COMPONENT-PROXY-INDEPENDENT-CORROBORATION"]}
+          ]
+        }
+      ]
+    }
+  }
+}
