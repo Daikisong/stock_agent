@@ -1,0 +1,861 @@
+{
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "claim_credit_budget_violation_count": 0,
+    "component_score_without_eligibility_decision_count": 0,
+    "correlated_double_count_count": 0,
+    "counter_impact_zeroed_by_missing_cap_count": 0,
+    "cross_mechanism_impact_count": 0,
+    "document_cluster_missing_count": 0,
+    "fact_cluster_missing_count": 0,
+    "positive_impact_zeroed_by_missing_cap_count": 0,
+    "rubric_edge_violation_count": 0,
+    "same_document_duplicate_credit_count": 0,
+    "same_fact_duplicate_credit_count": 0,
+    "source_cap_violation_count": 0,
+    "unvalidated_impact_to_score_count": 0
+  },
+  "frozen_source_commit": "52f09f3",
+  "schema_version": "e2r_impact_validator_v2_frozen_audit_v1",
+  "status": "STRICT_IMPACT_VALIDATOR_V2_PASS",
+  "targets": {
+    "000660": {
+      "document_clusters": [
+        {
+          "claim_ids": [
+            "CLM-85a8e1ec74fd4c208401"
+          ],
+          "content_identity": "44fe7392c4e7c38f3e2a1f522ccbcae2aaf6c1643a779975b301ec31a8a0eb2d",
+          "document_cluster_id": "DOC_CLUSTER-b421c1839daf12ca71ce2d8a",
+          "document_ids": [
+            "DOC-44fe7392c4e7c38f3e2a"
+          ],
+          "impact_ids": [
+            "IMPACT-2ab39de46072d3ee09c35b44",
+            "IMPACT-4b6b4bb8df93b559ed51f866",
+            "IMPACT-64f322de9e07ea858fdef021",
+            "IMPACT-beef235ec41f5c8f464383db"
+          ],
+          "source_urls": [
+            "https://news.skhynix.com/fact-05"
+          ]
+        },
+        {
+          "claim_ids": [
+            "CLM-24ae165ad172de0d6649",
+            "CLM-889d81821ec004838246",
+            "CLM-c35e896dc619cf663b61"
+          ],
+          "content_identity": "ea44b7d3b41fa55047b64cd3a61e9965b254709386b668a9fd27347906c91ac7",
+          "document_cluster_id": "DOC_CLUSTER-bd6b628019d6d15a7cc17e3b",
+          "document_ids": [
+            "DOC-ea44b7d3b41fa55047b6"
+          ],
+          "impact_ids": [
+            "IMPACT-33124d5bf4e5149dba689afa",
+            "IMPACT-61f3095e4bf400f8d3b7fe78",
+            "IMPACT-6d0f6f0a25ee088021681aea",
+            "IMPACT-c94904d00a8e24d208d6c8d3",
+            "IMPACT-d036f2c60d860a5dc63eac96"
+          ],
+          "source_urls": [
+            "https://news.skhynix.com/hbm-to-essd"
+          ]
+        },
+        {
+          "claim_ids": [
+            "CLM-81cdb44f9ea4a488a790"
+          ],
+          "content_identity": "417fed21d8e630adf1e3f17e19af043bc411f46776854dae944283fea829d686",
+          "document_cluster_id": "DOC_CLUSTER-c3038835cbc9426fae0f6b3d",
+          "document_ids": [
+            "DOC-417fed21d8e630adf1e3"
+          ],
+          "impact_ids": [
+            "IMPACT-0b6f2d9873b4a00eec212da3",
+            "IMPACT-25479a75efae437d565bb281"
+          ],
+          "source_urls": [
+            "https://news.skhynix.com/q1-2026-business-results"
+          ]
+        }
+      ],
+      "economic_fact_clusters": [
+        {
+          "business_mechanism": "information only",
+          "claim_ids": [
+            "CLM-889d81821ec004838246"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-bd6b628019d6d15a7cc17e3b"
+          ],
+          "evidence_confidence": 0.98,
+          "fact_cluster_id": "FACT-ae217c96a35c60904270648e",
+          "impact_ids": [
+            "IMPACT-6d0f6f0a25ee088021681aea"
+          ],
+          "normalized_object_value": "cheongju p t7 as an advanced packaging fab dedicated to ai memory products including hbm",
+          "normalized_predicate": "is establishing",
+          "normalized_subject": "000660 memory hbm",
+          "period": "2026-07-08",
+          "primary_impact_id": "IMPACT-6d0f6f0a25ee088021681aea"
+        },
+        {
+          "business_mechanism": "product commercialization",
+          "claim_ids": [
+            "CLM-81cdb44f9ea4a488a790"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [
+            "IMPACT-25479a75efae437d565bb281"
+          ],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-c3038835cbc9426fae0f6b3d"
+          ],
+          "evidence_confidence": 0.92,
+          "fact_cluster_id": "FACT-b61ddfe64f87923a6f880587",
+          "impact_ids": [
+            "IMPACT-0b6f2d9873b4a00eec212da3",
+            "IMPACT-25479a75efae437d565bb281"
+          ],
+          "normalized_object_value": "the 192gb socamm2 based on the 1cnm process began mass production",
+          "normalized_predicate": "began mass production of product",
+          "normalized_subject": "000660 memory dram",
+          "period": "2026-04-01",
+          "primary_impact_id": "IMPACT-0b6f2d9873b4a00eec212da3"
+        },
+        {
+          "business_mechanism": "product commercialization",
+          "claim_ids": [
+            "CLM-c35e896dc619cf663b61"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [
+            "IMPACT-33124d5bf4e5149dba689afa",
+            "IMPACT-61f3095e4bf400f8d3b7fe78"
+          ],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-bd6b628019d6d15a7cc17e3b"
+          ],
+          "evidence_confidence": 0.9,
+          "fact_cluster_id": "FACT-eccd49b4d7a503f51a8b8234",
+          "impact_ids": [
+            "IMPACT-33124d5bf4e5149dba689afa",
+            "IMPACT-61f3095e4bf400f8d3b7fe78",
+            "IMPACT-d036f2c60d860a5dc63eac96"
+          ],
+          "normalized_object_value": "192gb socamm2 using 1cnm lpddr5x low-power dram",
+          "normalized_predicate": "has begun mass production of",
+          "normalized_subject": "000660 memory dram",
+          "period": "2026-07-08",
+          "primary_impact_id": "IMPACT-d036f2c60d860a5dc63eac96"
+        },
+        {
+          "business_mechanism": "supply response",
+          "claim_ids": [
+            "CLM-85a8e1ec74fd4c208401"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [
+            "IMPACT-4b6b4bb8df93b559ed51f866",
+            "IMPACT-64f322de9e07ea858fdef021",
+            "IMPACT-beef235ec41f5c8f464383db"
+          ],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-b421c1839daf12ca71ce2d8a"
+          ],
+          "evidence_confidence": 0.85,
+          "fact_cluster_id": "FACT-f038ff4f548cef2d916e477c",
+          "impact_ids": [
+            "IMPACT-2ab39de46072d3ee09c35b44",
+            "IMPACT-4b6b4bb8df93b559ed51f866",
+            "IMPACT-64f322de9e07ea858fdef021",
+            "IMPACT-beef235ec41f5c8f464383db"
+          ],
+          "normalized_object_value": "krw 100 trillion will be invested in cheongju for new nand fabs production equipment and expanded advanced packaging capabilities for hbm",
+          "normalized_predicate": "plans cheongju investment and capacity expansion",
+          "normalized_subject": "000660 memory hbm",
+          "period": "2026-06-29 2026-06-29",
+          "primary_impact_id": "IMPACT-2ab39de46072d3ee09c35b44"
+        },
+        {
+          "business_mechanism": "product commercialization",
+          "claim_ids": [
+            "CLM-24ae165ad172de0d6649"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-bd6b628019d6d15a7cc17e3b"
+          ],
+          "evidence_confidence": 0.98,
+          "fact_cluster_id": "FACT-fff5da5f5010f5b9327c939f",
+          "impact_ids": [
+            "IMPACT-c94904d00a8e24d208d6c8d3"
+          ],
+          "normalized_object_value": "hbm4",
+          "normalized_predicate": "completed development and is preparing for mass production of",
+          "normalized_subject": "000660 memory hbm",
+          "period": "2026-07-08",
+          "primary_impact_id": "IMPACT-c94904d00a8e24d208d6c8d3"
+        }
+      ],
+      "ledger_scope_rejected_count": 1,
+      "ledger_validated_count": 11,
+      "proposal_count": 12,
+      "validator_audit": {
+        "claim_budget_scaled_count": 0,
+        "correlation_scaled_count": 0,
+        "credited_impact_count": 7,
+        "critical_count_sum": 0,
+        "critical_counts": {
+          "claim_credit_budget_violation_count": 0,
+          "component_score_without_eligibility_decision_count": 0,
+          "correlated_double_count_count": 0,
+          "counter_impact_zeroed_by_missing_cap_count": 0,
+          "cross_mechanism_impact_count": 0,
+          "document_cluster_missing_count": 0,
+          "fact_cluster_missing_count": 0,
+          "positive_impact_zeroed_by_missing_cap_count": 0,
+          "rubric_edge_violation_count": 0,
+          "same_document_duplicate_credit_count": 0,
+          "same_fact_duplicate_credit_count": 0,
+          "source_cap_violation_count": 0,
+          "unvalidated_impact_to_score_count": 0
+        },
+        "document_budget_scaled_count": 0,
+        "document_cluster_count": 3,
+        "economic_fact_cluster_count": 5,
+        "evidence_family_budget_scaled_count": 0,
+        "fact_budget_scaled_count": 0,
+        "information_diversity_scaled_count": 2,
+        "rejected_impact_count": 0,
+        "schema_version": "e2r_impact_validator_v2_audit_v1",
+        "status": "STRICT_IMPACT_VALIDATOR_V2_PASS",
+        "suppressed_same_document_duplicate_count": 2,
+        "suppressed_same_fact_duplicate_count": 0,
+        "validated_impact_count": 11
+      }
+    },
+    "005930": {
+      "document_clusters": [
+        {
+          "claim_ids": [
+            "CLM-0f9c0b328976f0995bed",
+            "CLM-33685f026d180edb6417",
+            "CLM-3fe807708c2eee9d9908",
+            "CLM-79444b89b7d92a3930ab",
+            "CLM-90533c9daf13fefd691c",
+            "CLM-ccb03c3ca97a6a4dac73",
+            "CLM-cde7ddca235c60d20ada",
+            "CLM-d33eea243c334096866d"
+          ],
+          "content_identity": "2c721be1fd867cd146bce2ff2104fe7e445424fd86c48dfa74ff141e857a1a12",
+          "document_cluster_id": "DOC_CLUSTER-0bdb3eea3f2045d21e90b697",
+          "document_ids": [
+            "DOC-2c721be1fd867cd146bc"
+          ],
+          "impact_ids": [
+            "IMPACT-0e4f55bfe72ddae32b067c32",
+            "IMPACT-32ca15e9021b43e5cb129abe",
+            "IMPACT-43ff0bb7a3e1d97124d46b90",
+            "IMPACT-593c7e5eb61143dc9423aab9",
+            "IMPACT-5ff3f2d93c928a77ad651beb",
+            "IMPACT-6a7e9b68bd4d2d6e5a1ae8d4",
+            "IMPACT-8da1af54e31cea32bbf15a26",
+            "IMPACT-9d2a1a3769bd003f4bc0cf08",
+            "IMPACT-e8d919381894b4202d8a4617",
+            "IMPACT-ef1bb50f23dc3214193868a2"
+          ],
+          "source_urls": [
+            "https://news.samsung.com/global/samsung-ships-industry-first-commercial-hbm4-with-ultimate-performance-for-ai-computing"
+          ]
+        },
+        {
+          "claim_ids": [
+            "CLM-0bb55c3d4d5844a1c859",
+            "CLM-0d59f6d8b09b36fb145d",
+            "CLM-10501873f575a69571d9",
+            "CLM-13d3c5605df791dcf819",
+            "CLM-1982ea2aca36ebef450e",
+            "CLM-1fc27cd4caa01dd2f04c",
+            "CLM-63085bc76ba54eba7d67",
+            "CLM-bab8bc1c37b4bb92f54e",
+            "CLM-e341ee4c41bd41f3fab0",
+            "CLM-ea9b82182ac296c6d682"
+          ],
+          "content_identity": "cc9bdb2d2da63a0b07e8d5204370fff78d9880df7d6dfcd59481164b33f9d85e",
+          "document_cluster_id": "DOC_CLUSTER-542a27bd58dd9446f73fd8f2",
+          "document_ids": [
+            "DOC-cc9bdb2d2da63a0b07e8"
+          ],
+          "impact_ids": [
+            "IMPACT-146b15f99b35d5e6fadd62c3",
+            "IMPACT-2d2ad3e4ebfe3f9e2c6fd97f",
+            "IMPACT-5080acf69688d0cffdea68d8",
+            "IMPACT-52b89c98e8b254204393d7f2",
+            "IMPACT-54c18b7677688cf266b58536",
+            "IMPACT-5f7ef190069f02ff3d12f5b9",
+            "IMPACT-64f80a26b05b4eed798f3471",
+            "IMPACT-921d3d6eae66261c37e85cf0",
+            "IMPACT-9367a921c9815048bcacd220",
+            "IMPACT-9da5d56fc61d842e5637822b",
+            "IMPACT-ced7f2ca93fada2644bdd067",
+            "IMPACT-d595ac23ce2e5c28126fac83",
+            "IMPACT-fa3eb5dd650cef17a68faa64",
+            "IMPACT-fa686288af26da4faf7d5898"
+          ],
+          "source_urls": [
+            "https://news.samsung.com/global/samsung-electronics-begins-shipment-of-industry-first-hbm4e-samples"
+          ]
+        },
+        {
+          "claim_ids": [
+            "CLM-47103baa9b99062ef88a",
+            "CLM-48f304f4471c4d575cec",
+            "CLM-4df55f27da648bb0024e"
+          ],
+          "content_identity": "d78e3500c9e0882567b5dd0faad9294545d46c11e2170db773c44a1b35a6dbae",
+          "document_cluster_id": "DOC_CLUSTER-fafe7c46908325e3bcbc9de2",
+          "document_ids": [
+            "DOC-d78e3500c9e0882567b5"
+          ],
+          "impact_ids": [
+            "IMPACT-02497e327a056821ed95ef08",
+            "IMPACT-670ee1af47facb3f742f04b3",
+            "IMPACT-aadca754270a4e9b2a2bf29d",
+            "IMPACT-ebec773a33c9561fbc1e85f8"
+          ],
+          "source_urls": [
+            "https://dart.fss.or.kr/dsaf001/main.do"
+          ]
+        }
+      ],
+      "economic_fact_clusters": [
+        {
+          "business_mechanism": "supply response",
+          "claim_ids": [
+            "CLM-d33eea243c334096866d"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-0bdb3eea3f2045d21e90b697"
+          ],
+          "evidence_confidence": 0.98,
+          "fact_cluster_id": "FACT-16595cfc0ea02a910a151cf2",
+          "impact_ids": [
+            "IMPACT-e8d919381894b4202d8a4617"
+          ],
+          "normalized_object_value": "up to 48gb using 16-layer stacking",
+          "normalized_predicate": "plans to expand hbm4 capacity offerings to",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-02-12",
+          "primary_impact_id": "IMPACT-e8d919381894b4202d8a4617"
+        },
+        {
+          "business_mechanism": "supply response",
+          "claim_ids": [
+            "CLM-cde7ddca235c60d20ada"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-0bdb3eea3f2045d21e90b697"
+          ],
+          "evidence_confidence": 0.99,
+          "fact_cluster_id": "FACT-206cd024194a023862356902",
+          "impact_ids": [
+            "IMPACT-5ff3f2d93c928a77ad651beb"
+          ],
+          "normalized_object_value": "12-layer hbm4 in capacities ranging from 24gb to 36gb",
+          "normalized_predicate": "offers",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-02-12",
+          "primary_impact_id": "IMPACT-5ff3f2d93c928a77ad651beb"
+        },
+        {
+          "business_mechanism": "product commercialization",
+          "claim_ids": [
+            "CLM-79444b89b7d92a3930ab"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-0bdb3eea3f2045d21e90b697"
+          ],
+          "evidence_confidence": 0.98,
+          "fact_cluster_id": "FACT-24ffcfa62f8e1cebbd458b37",
+          "impact_ids": [
+            "IMPACT-0e4f55bfe72ddae32b067c32"
+          ],
+          "normalized_object_value": "commercial hbm4 products to customers",
+          "normalized_predicate": "shipped",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-02-12",
+          "primary_impact_id": "IMPACT-0e4f55bfe72ddae32b067c32"
+        },
+        {
+          "business_mechanism": "product commercialization",
+          "claim_ids": [
+            "CLM-ea9b82182ac296c6d682"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-542a27bd58dd9446f73fd8f2"
+          ],
+          "evidence_confidence": 0.96,
+          "fact_cluster_id": "FACT-33c621816c45484c9afb2ecb",
+          "impact_ids": [
+            "IMPACT-2d2ad3e4ebfe3f9e2c6fd97f"
+          ],
+          "normalized_object_value": "the industry s first 12-layer hbm4e samples to major global customers",
+          "normalized_predicate": "began shipping",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-05-29 2026-05-29",
+          "primary_impact_id": "IMPACT-2d2ad3e4ebfe3f9e2c6fd97f"
+        },
+        {
+          "business_mechanism": "information only",
+          "claim_ids": [
+            "CLM-90533c9daf13fefd691c"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-0bdb3eea3f2045d21e90b697"
+          ],
+          "evidence_confidence": 0.99,
+          "fact_cluster_id": "FACT-40677a9cb7914eb1c8ee3273",
+          "impact_ids": [
+            "IMPACT-43ff0bb7a3e1d97124d46b90"
+          ],
+          "normalized_object_value": "a maximum of 3.3 tb s 2.7 times hbm3e",
+          "normalized_predicate": "increased total memory bandwidth per hbm4 stack to",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-02-12",
+          "primary_impact_id": "IMPACT-43ff0bb7a3e1d97124d46b90"
+        },
+        {
+          "business_mechanism": "pricing power",
+          "claim_ids": [
+            "CLM-48f304f4471c4d575cec"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [
+            "IMPACT-ebec773a33c9561fbc1e85f8"
+          ],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-fafe7c46908325e3bcbc9de2"
+          ],
+          "evidence_confidence": 0.95,
+          "fact_cluster_id": "FACT-450bd23043308eff2597eed0",
+          "impact_ids": [
+            "IMPACT-670ee1af47facb3f742f04b3",
+            "IMPACT-ebec773a33c9561fbc1e85f8"
+          ],
+          "normalized_object_value": "tv는 전년 연간 평균 대비 약 5% 하락 스마트폰은 약 23% 상승 메모리는 약 146% 상승 스마트폰용 oled 패널은 유사 디지털 콕핏은 약 5% 하락",
+          "normalized_predicate": "제품 평균판매가격 변동",
+          "normalized_subject": "005930 memory memory generic",
+          "period": "2026-01-01 2026-03-31",
+          "primary_impact_id": "IMPACT-670ee1af47facb3f742f04b3"
+        },
+        {
+          "business_mechanism": "information only",
+          "claim_ids": [
+            "CLM-bab8bc1c37b4bb92f54e"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-542a27bd58dd9446f73fd8f2"
+          ],
+          "evidence_confidence": 0.99,
+          "fact_cluster_id": "FACT-5d21f9aa3ae80cca7c983f86",
+          "impact_ids": [
+            "IMPACT-54c18b7677688cf266b58536"
+          ],
+          "normalized_object_value": "14 gigabits per second",
+          "normalized_predicate": "delivers stable hbm4e pin speed",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-05-29",
+          "primary_impact_id": "IMPACT-54c18b7677688cf266b58536"
+        },
+        {
+          "business_mechanism": "information only",
+          "claim_ids": [
+            "CLM-e341ee4c41bd41f3fab0"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-542a27bd58dd9446f73fd8f2"
+          ],
+          "evidence_confidence": 0.99,
+          "fact_cluster_id": "FACT-872295b66bc943024099e115",
+          "impact_ids": [
+            "IMPACT-146b15f99b35d5e6fadd62c3"
+          ],
+          "normalized_object_value": "up to 3.6 terabytes per second per stack",
+          "normalized_predicate": "provides hbm4e memory bandwidth",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-05-29",
+          "primary_impact_id": "IMPACT-146b15f99b35d5e6fadd62c3"
+        },
+        {
+          "business_mechanism": "information only",
+          "claim_ids": [
+            "CLM-1fc27cd4caa01dd2f04c"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-542a27bd58dd9446f73fd8f2"
+          ],
+          "evidence_confidence": 0.98,
+          "fact_cluster_id": "FACT-96636c91593bd6375d28d25e",
+          "impact_ids": [
+            "IMPACT-9367a921c9815048bcacd220"
+          ],
+          "normalized_object_value": "by more than 14% compared with the previous generation",
+          "normalized_predicate": "improved hbm4e thermal resistance characteristics",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-05-29",
+          "primary_impact_id": "IMPACT-9367a921c9815048bcacd220"
+        },
+        {
+          "business_mechanism": "product commercialization",
+          "claim_ids": [
+            "CLM-0f9c0b328976f0995bed"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-0bdb3eea3f2045d21e90b697"
+          ],
+          "evidence_confidence": 0.98,
+          "fact_cluster_id": "FACT-9a3e1de90da1c81b1802bd2d",
+          "impact_ids": [
+            "IMPACT-ef1bb50f23dc3214193868a2"
+          ],
+          "normalized_object_value": "stable yields from the outset of hbm4 mass production without additional redesigns",
+          "normalized_predicate": "achieved",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-02-12",
+          "primary_impact_id": "IMPACT-ef1bb50f23dc3214193868a2"
+        },
+        {
+          "business_mechanism": "product commercialization",
+          "claim_ids": [
+            "CLM-4df55f27da648bb0024e"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-fafe7c46908325e3bcbc9de2"
+          ],
+          "evidence_confidence": 0.98,
+          "fact_cluster_id": "FACT-9b84af3c2a608dcca2ae803c",
+          "impact_ids": [
+            "IMPACT-aadca754270a4e9b2a2bf29d"
+          ],
+          "normalized_object_value": "1c d램과 4나노 베이스 다이를 적용한 hbm4를 양산 출하",
+          "normalized_predicate": "hbm4 양산 출하",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-01-01 2026-03-31",
+          "primary_impact_id": "IMPACT-aadca754270a4e9b2a2bf29d"
+        },
+        {
+          "business_mechanism": "information only",
+          "claim_ids": [
+            "CLM-0bb55c3d4d5844a1c859"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-542a27bd58dd9446f73fd8f2"
+          ],
+          "evidence_confidence": 0.99,
+          "fact_cluster_id": "FACT-9cc881c98fa9f0e9b4efc32b",
+          "impact_ids": [
+            "IMPACT-d595ac23ce2e5c28126fac83"
+          ],
+          "normalized_object_value": "up to 16gbps",
+          "normalized_predicate": "offers scalable hbm4e performance",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-05-29",
+          "primary_impact_id": "IMPACT-d595ac23ce2e5c28126fac83"
+        },
+        {
+          "business_mechanism": "product commercialization",
+          "claim_ids": [
+            "CLM-1982ea2aca36ebef450e"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [
+            "IMPACT-fa3eb5dd650cef17a68faa64"
+          ],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-542a27bd58dd9446f73fd8f2"
+          ],
+          "evidence_confidence": 0.4,
+          "fact_cluster_id": "FACT-a5725d986cb024f795aaf1ee",
+          "impact_ids": [
+            "IMPACT-fa3eb5dd650cef17a68faa64",
+            "IMPACT-fa686288af26da4faf7d5898"
+          ],
+          "normalized_object_value": "hbm4e aligned with customer schedules after initial sample shipments and optimization",
+          "normalized_predicate": "plans to begin mass production",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-05-29",
+          "primary_impact_id": "IMPACT-fa686288af26da4faf7d5898"
+        },
+        {
+          "business_mechanism": "supply response",
+          "claim_ids": [
+            "CLM-10501873f575a69571d9"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-542a27bd58dd9446f73fd8f2"
+          ],
+          "evidence_confidence": 0.99,
+          "fact_cluster_id": "FACT-b4d86da78b72bf69f72b337e",
+          "impact_ids": [
+            "IMPACT-52b89c98e8b254204393d7f2"
+          ],
+          "normalized_object_value": "48 gigabytes",
+          "normalized_predicate": "offers 12-layer hbm4e capacity",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-05-29",
+          "primary_impact_id": "IMPACT-52b89c98e8b254204393d7f2"
+        },
+        {
+          "business_mechanism": "supply response",
+          "claim_ids": [
+            "CLM-47103baa9b99062ef88a"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-fafe7c46908325e3bcbc9de2"
+          ],
+          "evidence_confidence": 0.86,
+          "fact_cluster_id": "FACT-bcb015195add96fb648313cb",
+          "impact_ids": [
+            "IMPACT-02497e327a056821ed95ef08"
+          ],
+          "normalized_object_value": "메모리 차세대 기술 경쟁력 강화와 중장기 수요 대비 투자를 지속 추진했고 시스템 반도체 advanced 노드 capa 확보 투자도 진행 중",
+          "normalized_predicate": "반도체 투자 진행",
+          "normalized_subject": "005930 memory memory generic",
+          "period": "2026-01-01",
+          "primary_impact_id": "IMPACT-02497e327a056821ed95ef08"
+        },
+        {
+          "business_mechanism": "information only",
+          "claim_ids": [
+            "CLM-63085bc76ba54eba7d67"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-542a27bd58dd9446f73fd8f2"
+          ],
+          "evidence_confidence": 0.9,
+          "fact_cluster_id": "FACT-cd2411548338574015b03fd1",
+          "impact_ids": [
+            "IMPACT-5080acf69688d0cffdea68d8"
+          ],
+          "normalized_object_value": "to include 32gb 8-layer and 64gb 16-layer configurations in accordance with customer requirements",
+          "normalized_predicate": "plans to expand hbm4e lineup",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-05-29",
+          "primary_impact_id": "IMPACT-5080acf69688d0cffdea68d8"
+        },
+        {
+          "business_mechanism": "information only",
+          "claim_ids": [
+            "CLM-0d59f6d8b09b36fb145d"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-542a27bd58dd9446f73fd8f2"
+          ],
+          "evidence_confidence": 0.99,
+          "fact_cluster_id": "FACT-d73a350c0c538ce51501c573",
+          "impact_ids": [
+            "IMPACT-ced7f2ca93fada2644bdd067"
+          ],
+          "normalized_object_value": "by 16% compared with the previous generation",
+          "normalized_predicate": "improved hbm4e energy efficiency",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-05-29",
+          "primary_impact_id": "IMPACT-ced7f2ca93fada2644bdd067"
+        },
+        {
+          "business_mechanism": "product commercialization",
+          "claim_ids": [
+            "CLM-33685f026d180edb6417"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [
+            "IMPACT-593c7e5eb61143dc9423aab9",
+            "IMPACT-8da1af54e31cea32bbf15a26"
+          ],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-0bdb3eea3f2045d21e90b697"
+          ],
+          "evidence_confidence": 0.99,
+          "fact_cluster_id": "FACT-dbcff822c6d47624b61d3fe6",
+          "impact_ids": [
+            "IMPACT-593c7e5eb61143dc9423aab9",
+            "IMPACT-8da1af54e31cea32bbf15a26",
+            "IMPACT-9d2a1a3769bd003f4bc0cf08"
+          ],
+          "normalized_object_value": "hbm4",
+          "normalized_predicate": "began mass production of",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-02-12 2026-02-12",
+          "primary_impact_id": "IMPACT-9d2a1a3769bd003f4bc0cf08"
+        },
+        {
+          "business_mechanism": "supply response",
+          "claim_ids": [
+            "CLM-ccb03c3ca97a6a4dac73"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-0bdb3eea3f2045d21e90b697"
+          ],
+          "evidence_confidence": 0.99,
+          "fact_cluster_id": "FACT-e6fdaf52510a745e662a949f",
+          "impact_ids": [
+            "IMPACT-6a7e9b68bd4d2d6e5a1ae8d4"
+          ],
+          "normalized_object_value": "11.7 gbps with performance capable of reaching 13 gbps",
+          "normalized_predicate": "delivers hbm4 consistent transfer speed of",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-02-12",
+          "primary_impact_id": "IMPACT-6a7e9b68bd4d2d6e5a1ae8d4"
+        },
+        {
+          "business_mechanism": "product commercialization",
+          "claim_ids": [
+            "CLM-13d3c5605df791dcf819"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [
+            "IMPACT-5f7ef190069f02ff3d12f5b9",
+            "IMPACT-64f80a26b05b4eed798f3471",
+            "IMPACT-921d3d6eae66261c37e85cf0"
+          ],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-542a27bd58dd9446f73fd8f2"
+          ],
+          "evidence_confidence": 0.97,
+          "fact_cluster_id": "FACT-fbc1ebb56bf286b81ab80859",
+          "impact_ids": [
+            "IMPACT-5f7ef190069f02ff3d12f5b9",
+            "IMPACT-64f80a26b05b4eed798f3471",
+            "IMPACT-921d3d6eae66261c37e85cf0",
+            "IMPACT-9da5d56fc61d842e5637822b"
+          ],
+          "normalized_object_value": "hbm4",
+          "normalized_predicate": "mass-produced and commercially shipped",
+          "normalized_subject": "005930 memory hbm",
+          "period": "current",
+          "primary_impact_id": "IMPACT-9da5d56fc61d842e5637822b"
+        },
+        {
+          "business_mechanism": "information only",
+          "claim_ids": [
+            "CLM-3fe807708c2eee9d9908"
+          ],
+          "corroborating_document_count": 0,
+          "corroborating_impact_ids": [],
+          "corroborating_source_count": 0,
+          "document_cluster_ids": [
+            "DOC_CLUSTER-0bdb3eea3f2045d21e90b697"
+          ],
+          "evidence_confidence": 0.93,
+          "fact_cluster_id": "FACT-fd9521a96f0e07e549a21ba2",
+          "impact_ids": [
+            "IMPACT-32ca15e9021b43e5cb129abe"
+          ],
+          "normalized_object_value": "hbm4e sampling",
+          "normalized_predicate": "expects to begin",
+          "normalized_subject": "005930 memory hbm",
+          "period": "2026-07-01 2026-12-31",
+          "primary_impact_id": "IMPACT-32ca15e9021b43e5cb129abe"
+        }
+      ],
+      "ledger_scope_rejected_count": 4,
+      "ledger_validated_count": 28,
+      "proposal_count": 32,
+      "validator_audit": {
+        "claim_budget_scaled_count": 7,
+        "correlation_scaled_count": 0,
+        "credited_impact_count": 8,
+        "critical_count_sum": 0,
+        "critical_counts": {
+          "claim_credit_budget_violation_count": 0,
+          "component_score_without_eligibility_decision_count": 0,
+          "correlated_double_count_count": 0,
+          "counter_impact_zeroed_by_missing_cap_count": 0,
+          "cross_mechanism_impact_count": 0,
+          "document_cluster_missing_count": 0,
+          "fact_cluster_missing_count": 0,
+          "positive_impact_zeroed_by_missing_cap_count": 0,
+          "rubric_edge_violation_count": 0,
+          "same_document_duplicate_credit_count": 0,
+          "same_fact_duplicate_credit_count": 0,
+          "source_cap_violation_count": 0,
+          "unvalidated_impact_to_score_count": 0
+        },
+        "document_budget_scaled_count": 0,
+        "document_cluster_count": 3,
+        "economic_fact_cluster_count": 21,
+        "evidence_family_budget_scaled_count": 0,
+        "fact_budget_scaled_count": 0,
+        "information_diversity_scaled_count": 2,
+        "rejected_impact_count": 0,
+        "schema_version": "e2r_impact_validator_v2_audit_v1",
+        "status": "STRICT_IMPACT_VALIDATOR_V2_PASS",
+        "suppressed_same_document_duplicate_count": 17,
+        "suppressed_same_fact_duplicate_count": 1,
+        "validated_impact_count": 28
+      }
+    }
+  }
+}

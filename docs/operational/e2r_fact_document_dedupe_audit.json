@@ -1,0 +1,23 @@
+{
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "same_document_duplicate_credit_count": 0,
+    "same_fact_duplicate_credit_count": 0
+  },
+  "schema_version": "e2r_fact_document_dedupe_audit_v1",
+  "status": "FACT_DOCUMENT_DEDUPE_PASS",
+  "targets": {
+    "000660": {
+      "document_cluster_count": 3,
+      "economic_fact_cluster_count": 5,
+      "suppressed_same_document_duplicate_count": 2,
+      "suppressed_same_fact_duplicate_count": 0
+    },
+    "005930": {
+      "document_cluster_count": 3,
+      "economic_fact_cluster_count": 21,
+      "suppressed_same_document_duplicate_count": 17,
+      "suppressed_same_fact_duplicate_count": 1
+    }
+  }
+}

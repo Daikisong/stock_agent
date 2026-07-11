@@ -316,6 +316,7 @@ def run_dossier_scoring_pipeline(
             for row in selected_claims
         ),
         claim_eligibility_decisions=ledger.claim_eligibility_decisions,
+        accepted_current_claims=selected_claims,
     )
     closures_v2 = (
         compile_question_closures_v2(
@@ -600,6 +601,14 @@ def _write_pipeline_leaves(
     write_jsonl(
         root / "claim_impacts_validated.jsonl",
         (row.to_dict() for row in validation.impacts),
+    )
+    write_jsonl(
+        root / "economic_fact_clusters.jsonl",
+        (row.to_dict() for row in validation.economic_fact_clusters),
+    )
+    write_jsonl(
+        root / "document_clusters.jsonl",
+        (row.to_dict() for row in validation.document_clusters),
     )
     write_jsonl(
         root / "component_assessments.jsonl",

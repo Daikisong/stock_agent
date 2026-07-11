@@ -8,7 +8,7 @@ from e2r.research_brain.scoring import ClaimImpactProposal, ComponentAssessmentB
 
 def supported_impact():
     proposal=ClaimImpactProposal(impact_id="I1",claim_id="C1",mapping_id="M1",target_id="005930",archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",primitive_id="memory_price_increase_mentioned",component_id="bottleneck_pricing",direction="SUPPORT",support_type="DIRECT_ACTUAL",strength_band="STRONG",completeness_band="SUBSTANTIAL",causal_distance="DIRECT",temporal_scope="CURRENT",source_family="ISSUER_OFFICIAL",evidence_family_id="F1",confidence=.9,rationale="realized ASP supports pricing",unsupported_aspects=("allocation not shown",))
-    return ImpactValidator().validate(impacts=(ValidatedClaimImpact(proposal,eligibility_decision_id="ELIG-C1"),),claim_provenance=({"claim_id":"C1","mapping_ids":["M1"],"source_proxy_only":False,"directness":"DIRECT","temporal_status":"CURRENT"},),claim_eligibility_decisions=({"eligibility_decision_id":"ELIG-C1","claim_id":"C1","component_scoring_eligibility":True},)).impacts[0]
+    return ImpactValidator().validate(impacts=(ValidatedClaimImpact(proposal,scope_validation={"status":"MECHANISM_SCOPE_PASS","scope_match":True,"scope":{"issuer_id":"005930","business_segment":"MEMORY","product_family":"HBM","economic_mechanism":"REALIZED_PRICING"}},eligibility_decision_id="ELIG-C1"),),claim_provenance=({"claim_id":"C1","mapping_ids":["M1"],"source_proxy_only":False,"directness":"DIRECT","temporal_status":"CURRENT"},),claim_eligibility_decisions=({"eligibility_decision_id":"ELIG-C1","claim_id":"C1","component_scoring_eligibility":True},)).impacts[0]
 
 
 class ComponentAssessmentStateTests(unittest.TestCase):

@@ -75,7 +75,7 @@
     ]
   },
   "incomplete_archetype_ids": [],
-  "policy_config_hash": "915e34abbe6472e6d7b549adc177df13cf7e83520ee6240d17c369f80c6925a2",
+  "policy_config_hash": "3d187d4c33638c4133b1fca186f58a0237e717d91e36d9a98f01db14b6ecb9eb",
   "schema_version": "e2r_scoring_schema_totality_audit_v1",
   "status": "SCORING_SCHEMA_TOTALITY_PASS",
   "support_type_policies": {

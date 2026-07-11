@@ -32,7 +32,7 @@ class PartialBridgeNonzeroPolicyTests(unittest.TestCase):
             unsupported_aspects=("고객별 확약 물량은 확인되지 않았다.",),
         )
         result = ImpactValidator().validate(
-            impacts=(ValidatedClaimImpact(proposal, eligibility_decision_id="ELIG-PARTIAL"),),
+            impacts=(ValidatedClaimImpact(proposal, scope_validation={"status":"MECHANISM_SCOPE_PASS","scope_match":True,"scope":{"issuer_id":"000660","business_segment":"MEMORY","product_family":"HBM","economic_mechanism":"SHIPMENT_REVENUE_MIX"}}, eligibility_decision_id="ELIG-PARTIAL"),),
             claim_provenance=(
                 {
                     "claim_id": "CLM-PARTIAL",

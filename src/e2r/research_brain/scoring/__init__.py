@@ -8,7 +8,7 @@ from .claim_impact_ledger import (
     ValidatedClaimImpact,
 )
 from .evidence_impact_adjudicator import EvidenceImpactAdjudicator, EvidenceImpactAdjudicationResult, EvidenceImpactProvider, compile_question_component_subcriteria
-from .impact_validator import CreditValidatedImpact, ImpactValidationResult, ImpactValidator
+from .impact_validator import CreditValidatedImpact, DocumentCluster, EconomicFactCluster, ImpactValidationResult, ImpactValidator, audit_impact_validator_v2, compile_fact_document_dedupe_audit
 from .component_assessment import ComponentAssessment, ComponentAssessmentBuilder, ComponentAssessmentResult, ComponentAssessmentStatus
 from .component_scorer import ResearchCalibratedComponentScorer, ResearchCalibratedScoreResult
 from .atomic_stagecourt_v2 import AtomicStageCourtV2, AtomicStageDecisionV2
@@ -29,6 +29,8 @@ __all__ = [
     "EvidenceImpactAdjudicator", "EvidenceImpactAdjudicationResult", "EvidenceImpactProvider",
     "compile_question_component_subcriteria",
     "CreditValidatedImpact", "ImpactValidationResult", "ImpactValidator",
+    "DocumentCluster", "EconomicFactCluster",
+    "audit_impact_validator_v2", "compile_fact_document_dedupe_audit",
     "ComponentAssessment", "ComponentAssessmentBuilder", "ComponentAssessmentResult", "ComponentAssessmentStatus",
     "ResearchCalibratedComponentScorer", "ResearchCalibratedScoreResult",
     "AtomicStageCourtV2", "AtomicStageDecisionV2",

@@ -50,6 +50,21 @@
     "NEUTRAL": "support_credit_cap",
     "RESOLUTION": "resolution_effect"
   },
+  "credit_budget_policy": {
+    "claim_total_fraction_cap": 1.0,
+    "document_cluster_component_fraction_cap": 1.0,
+    "evidence_family_component_fraction_cap": 1.0,
+    "fact_cluster_component_fraction_cap": 1.0,
+    "component_correlation_fraction_cap": 1.0,
+    "information_confidence_diversity_increment_cap": 0.2,
+    "information_confidence_max_independent_families": 2,
+    "research_case_refs": [
+      "SAME-FACT-DEDUPE-GUARD",
+      "SAME-DOCUMENT-INFORMATION-CONFIDENCE-GUARD",
+      "INDEPENDENT-SOURCE-DIVERSITY-GUARD"
+    ],
+    "rationale": "동일 경제 fact와 동일 문서의 반복 claim은 점수를 반복하지 않고, 정보신뢰는 최상 source와 제한된 독립 source 다양성으로만 보강한다."
+  },
   "support_type_policies": {
     "DIRECT_ACTUAL": {
       "support_credit_cap": 1.0,

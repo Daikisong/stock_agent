@@ -33,6 +33,19 @@ class SupportTypePolicy:
 
 
 @dataclass(frozen=True)
+class CreditBudgetPolicy:
+    claim_total_fraction_cap: float
+    document_cluster_component_fraction_cap: float
+    evidence_family_component_fraction_cap: float
+    fact_cluster_component_fraction_cap: float
+    component_correlation_fraction_cap: float
+    information_confidence_diversity_increment_cap: float
+    information_confidence_max_independent_families: int
+    research_case_refs: tuple[str, ...]
+    rationale: str
+
+
+@dataclass(frozen=True)
 class ScoringPolicyV2:
     enum_registry: Mapping[str, tuple[str, ...]]
     strength_bands: Mapping[str, float]
@@ -42,6 +55,7 @@ class ScoringPolicyV2:
     temporal_scope_caps: Mapping[str, float]
     direction_policy_fields: Mapping[str, str]
     support_type_policies: Mapping[str, SupportTypePolicy]
+    credit_budget_policy: CreditBudgetPolicy
     config_hash: str
 
     def cap_for(self, *, support_type: str, direction: str) -> float:
@@ -93,6 +107,36 @@ def load_scoring_policy_v2(
         )
         for key, row in (payload.get("support_type_policies") or {}).items()
     }
+    raw_budget = payload.get("credit_budget_policy")
+    if not isinstance(raw_budget, Mapping):
+        raise ScoringContractIncompleteError(
+            "SCORING_CONTRACT_INCOMPLETE:credit_budget_policy"
+        )
+    credit_budget_policy = CreditBudgetPolicy(
+        claim_total_fraction_cap=float(raw_budget["claim_total_fraction_cap"]),
+        document_cluster_component_fraction_cap=float(
+            raw_budget["document_cluster_component_fraction_cap"]
+        ),
+        evidence_family_component_fraction_cap=float(
+            raw_budget["evidence_family_component_fraction_cap"]
+        ),
+        fact_cluster_component_fraction_cap=float(
+            raw_budget["fact_cluster_component_fraction_cap"]
+        ),
+        component_correlation_fraction_cap=float(
+            raw_budget["component_correlation_fraction_cap"]
+        ),
+        information_confidence_diversity_increment_cap=float(
+            raw_budget["information_confidence_diversity_increment_cap"]
+        ),
+        information_confidence_max_independent_families=int(
+            raw_budget["information_confidence_max_independent_families"]
+        ),
+        research_case_refs=tuple(
+            str(value) for value in raw_budget["research_case_refs"]
+        ),
+        rationale=str(raw_budget["rationale"]),
+    )
     result = ScoringPolicyV2(
         enum_registry=registry,
         strength_bands=_float_mapping(payload, "strength_bands"),
@@ -105,6 +149,7 @@ def load_scoring_policy_v2(
             for key, value in (payload.get("direction_policy_fields") or {}).items()
         },
         support_type_policies=support_policies,
+        credit_budget_policy=credit_budget_policy,
         config_hash=stable_hash(payload),
     )
     validate_scoring_policy_v2(result)
@@ -169,6 +214,27 @@ def validate_scoring_policy_v2(policy: ScoringPolicyV2) -> None:
                 raise ScoringContractIncompleteError(
                     f"SCORING_CONTRACT_INCOMPLETE:cap_range:{item.support_type}"
                 )
+    budget = policy.credit_budget_policy
+    if not budget.research_case_refs or not budget.rationale:
+        raise ScoringContractIncompleteError(
+            "SCORING_CONTRACT_INCOMPLETE:credit_budget_research_lineage"
+        )
+    for value in (
+        budget.claim_total_fraction_cap,
+        budget.document_cluster_component_fraction_cap,
+        budget.evidence_family_component_fraction_cap,
+        budget.fact_cluster_component_fraction_cap,
+        budget.component_correlation_fraction_cap,
+        budget.information_confidence_diversity_increment_cap,
+    ):
+        if not 0.0 <= value <= 1.0:
+            raise ScoringContractIncompleteError(
+                "SCORING_CONTRACT_INCOMPLETE:credit_budget_range"
+            )
+    if budget.information_confidence_max_independent_families < 1:
+        raise ScoringContractIncompleteError(
+            "SCORING_CONTRACT_INCOMPLETE:information_confidence_family_count"
+        )
 
 
 def audit_scoring_schema_totality(
@@ -295,6 +361,7 @@ __all__ = [
     "SCHEMA_VERSION",
     "ScoringContractIncompleteError",
     "ScoringPolicyV2",
+    "CreditBudgetPolicy",
     "SupportTypePolicy",
     "audit_scoring_schema_totality",
     "load_scoring_policy_v2",

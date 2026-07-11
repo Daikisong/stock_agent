@@ -4,11 +4,12 @@ import unittest
 
 from e2r.research_brain.scoring import ClaimImpactProposal, ImpactValidator, ValidatedClaimImpact
 
+SCOPE={"status":"MECHANISM_SCOPE_PASS","scope_match":True,"scope":{"issuer_id":"005930","business_segment":"MEMORY","product_family":"HBM","economic_mechanism":"ACTUAL_EARNINGS_CONVERSION"}}
 
 def impact(i: str, component: str, *, source="ISSUER_OFFICIAL", support="DIRECT_ACTUAL", primitive="memory_price_increase_mentioned", strength="STRONG", completeness="SUBSTANTIAL"):
     return ValidatedClaimImpact(ClaimImpactProposal(
         impact_id=i,claim_id="CLM-1",mapping_id="MAP-1",target_id="005930",archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",primitive_id=primitive,component_id=component,direction="SUPPORT",support_type=support,strength_band=strength,completeness_band=completeness,causal_distance="DIRECT",temporal_scope="CURRENT",source_family=source,evidence_family_id=i,confidence=.9,rationale="bounded direct impact",unsupported_aspects=("other components remain unsupported",)
-    ),eligibility_decision_id="ELIG-1")
+    ),scope_validation=SCOPE,eligibility_decision_id="ELIG-1")
 
 
 PROVENANCE=({"claim_id":"CLM-1","mapping_ids":["MAP-1"],"source_proxy_only":False,"directness":"DIRECT","temporal_status":"CURRENT"},)
