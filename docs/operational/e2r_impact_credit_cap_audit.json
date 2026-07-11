@@ -1,0 +1,12 @@
+{
+  "schema_version":"e2r_impact_credit_cap_audit_v1",
+  "as_of_date":"2026-07-11",
+  "status":"IMPACT_CREDIT_CAP_PASS",
+  "scope":"DETERMINISTIC_CONTRACT_CANARY",
+  "validated_impact_count":2,
+  "rejected_impact_count":0,
+  "claim_budget_scaled_count":2,
+  "correlation_scaled_count":0,
+  "critical_counts":{"unvalidated_impact_to_score_count":0,"rubric_edge_violation_count":0,"source_cap_violation_count":0,"claim_credit_budget_violation_count":0,"correlated_double_count_count":0},
+  "critical_count_sum":0
+}

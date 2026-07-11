@@ -8,9 +8,11 @@ from .claim_impact_ledger import (
     ValidatedClaimImpact,
 )
 from .evidence_impact_adjudicator import EvidenceImpactAdjudicator, EvidenceImpactAdjudicationResult, EvidenceImpactProvider
+from .impact_validator import CreditValidatedImpact, ImpactValidationResult, ImpactValidator
 
 __all__ = [
     "ClaimImpactLedgerBuilder", "ClaimImpactLedgerResult", "ClaimImpactProposal",
     "EvidenceImpactRubric", "EvidenceImpactRubricCatalog", "ValidatedClaimImpact",
     "EvidenceImpactAdjudicator", "EvidenceImpactAdjudicationResult", "EvidenceImpactProvider",
+    "CreditValidatedImpact", "ImpactValidationResult", "ImpactValidator",
 ]
