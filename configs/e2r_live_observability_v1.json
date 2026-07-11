@@ -1,0 +1,16 @@
+{
+  "schema_version": "e2r_live_observability_v1",
+  "as_of_date": "2026-07-10",
+  "live_materialization_root": "output/live_materialization/2026-07-10",
+  "acceptance_input_path": "output/live_acceptance/2026-07-10/full/current_operation_input_manifest.json",
+  "acceptance_report_path": "docs/operational/e2r_live_acceptance_report.json",
+  "claim_probe_root": "output/live_acceptance/2026-07-10/claim_probe_samsung_q1",
+  "targeted_smoke_root": "output/targeted_smoke/2026-07-10",
+  "census_root": "output/census/live_2026-07-10",
+  "accepted_claim_target_id": "005930",
+  "output_paths": {
+    "funnel": "docs/operational/e2r_live_conversion_funnel.json",
+    "sla": "docs/operational/e2r_live_runtime_sla.json",
+    "provider_performance": "docs/operational/e2r_live_provider_performance.json"
+  }
+}

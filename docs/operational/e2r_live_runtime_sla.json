@@ -1,0 +1,56 @@
+{
+  "as_of_date": "2026-07-10",
+  "bounded_limits": {
+    "max_acquisition_candidates": 100,
+    "max_brain_candidates": 100,
+    "max_deep_candidates": 180,
+    "max_fetches_per_candidate": 12,
+    "max_general_web_fetches_per_candidate": 3,
+    "max_llm_calls_per_candidate": 3,
+    "max_official_light_targets": 3000,
+    "max_retries_per_candidate": 3,
+    "max_runtime_seconds": 28800,
+    "max_source_tasks_per_candidate": 8,
+    "require_claim_provenance": true,
+    "test_mode": false
+  },
+  "cache": {
+    "cache_hit_count": 12,
+    "cache_hit_rate": 0.666667,
+    "fresh_provider_cache_count": 4,
+    "provider_fetch_result_count": 18
+  },
+  "checkpoint": {
+    "checkpoint_complete": true,
+    "checkpoint_count": 4,
+    "reused_shard_count": 4,
+    "shard_count": 4
+  },
+  "cost_measurement_status": "CODEX_CLI_COST_TELEMETRY_NOT_EXPOSED",
+  "cost_usd": null,
+  "critical_count_sum": 0,
+  "declared_runtime_budget_seconds": 28800,
+  "determinism": {
+    "config_hash": "08a32c83d7edff02a882cec935ef4eafa73a754cd076e79a41b9f0546677a18d",
+    "first_leaf_hash": "aa4fdd00f4153932f793774890444779691c7785d96ebb41496368ffce162cb0",
+    "input_hash": "88e53371bc20be8f5311879f4b8e096b918be94bfaa3c91267221b907205e0cc",
+    "second_leaf_hash": "aa4fdd00f4153932f793774890444779691c7785d96ebb41496368ffce162cb0",
+    "source_hash": "89cc5d583308ab03d03ca630e3ebfd2facb8eab1c3153783e775defa310e2b55",
+    "variance_count": 0
+  },
+  "generated_at": "2026-07-11T00:06:36+00:00",
+  "hard_acceptance_pass": true,
+  "production_runtime_ready": false,
+  "recorded_deep_runtime_seconds": 0.0,
+  "runtime_measurement_status": "UPSTREAM_WALL_CLOCK_NOT_RECORDED",
+  "schema_version": "e2r_live_observability_v1",
+  "source_input_hash": "9c84c154147a1a34a3ec95f4d1e3e23ef3060625ffe3d42948a1a94bca9965a8",
+  "status": "LIVE_RUNTIME_SLA_OBSERVABILITY_PASS",
+  "telemetry_gaps": [
+    "upstream wall-clock runtime is not persisted",
+    "Codex CLI token and cost telemetry is not exposed"
+  ],
+  "token_measurement_status": "CODEX_CLI_TOKEN_TELEMETRY_NOT_EXPOSED",
+  "token_usage": null,
+  "wall_clock_sla_status": "UNKNOWN"
+}

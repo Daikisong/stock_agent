@@ -159,6 +159,11 @@ from .live_acceptance import (
     run_full_live_acceptance,
     write_full_live_acceptance,
 )
+from .live_observability import (
+    LIVE_OBSERVABILITY_SCHEMA_VERSION,
+    compile_live_observability,
+    write_live_observability,
+)
 
 __all__ = [
     "AuthorizationPath",
@@ -207,6 +212,7 @@ __all__ = [
     "CurrentStateRecord",
     "CurrentStateSourceAttempt",
     "LIVE_OPERATIONAL_ENVELOPE_SCHEMA_VERSION",
+    "LIVE_OBSERVABILITY_SCHEMA_VERSION",
     "LIVE_CURRENT_CLAIM_SCHEMA_VERSION",
     "LIVE_ACCEPTANCE_SCHEMA_VERSION",
     "LIVE_PLANNER_RUN_SCHEMA_VERSION",
@@ -253,6 +259,7 @@ __all__ = [
     "audit_live_credentials",
     "build_provider_capability_matrix",
     "classify_provider_result",
+    "compile_live_observability",
     "counts_as_symbol_evidence",
     "load_live_run_profile",
     "load_current_state_store",
@@ -285,5 +292,6 @@ __all__ = [
     "write_trigger_fusion",
     "write_targeted_live_smoke",
     "write_full_live_acceptance",
+    "write_live_observability",
     "write_universe_materialization",
 ]
