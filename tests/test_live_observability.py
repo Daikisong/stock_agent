@@ -2,15 +2,45 @@ from __future__ import annotations
 
 import json
 import unittest
+from copy import deepcopy
 from pathlib import Path
 
-from e2r.research_brain.runtime.live_materialization import compile_live_observability
+from e2r.research_brain.runtime.live_materialization import (
+    audit_live_observability_report,
+    compile_live_observability,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 class LiveObservabilityTest(unittest.TestCase):
+    def test_all_default_source_wiring_cannot_claim_census_pass(self) -> None:
+        report = json.loads(
+            (REPO_ROOT / "docs/operational/e2r_live_conversion_funnel.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        broken = deepcopy(report)
+        for stage in (
+            "trigger",
+            "planner",
+            "source_task",
+            "fetched_document",
+            "accepted_claim",
+            "atomic_decision",
+        ):
+            broken["global_stage_counts"][stage] = 0
+        broken["status"] = "LIVE_CONVERSION_FUNNEL_PASS"
+
+        audit = audit_live_observability_report(broken)
+
+        self.assertEqual(audit["status"], "LIVE_OBSERVABILITY_AUDIT_FAIL")
+        self.assertEqual(
+            audit["critical_counts"]["all_default_due_source_wiring_failure"],
+            1,
+        )
+
     def test_phase37_reports_cover_the_full_conversion_chain(self) -> None:
         funnel = json.loads(
             (REPO_ROOT / "docs/operational/e2r_live_conversion_funnel.json").read_text(

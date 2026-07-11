@@ -444,6 +444,42 @@ def write_live_observability(
     return paths
 
 
+def audit_live_observability_report(report: Mapping[str, Any]) -> Mapping[str, Any]:
+    """Independently reject a claimed pass whose live funnel is empty/defaulted."""
+
+    counts = dict(report.get("global_stage_counts") or {})
+    universe = int(counts.get("universe") or 0)
+    critical = {
+        "stage_schema_incomplete": int(set(counts) != set(_STAGES)),
+        "universe_not_materialized": int(universe <= 1000),
+        "all_default_due_source_wiring_failure": int(
+            universe > 1000
+            and any(
+                int(counts.get(stage) or 0) == 0
+                for stage in (
+                    "trigger",
+                    "planner",
+                    "source_task",
+                    "fetched_document",
+                    "accepted_claim",
+                    "atomic_decision",
+                )
+            )
+        ),
+        "task_shell_progress_credit": int(
+            int((report.get("progress_policy") or {}).get("source_task_shell_progress_credit") or 0)
+            != 0
+        ),
+    }
+    total = sum(critical.values())
+    return {
+        "schema_version": LIVE_OBSERVABILITY_SCHEMA_VERSION,
+        "status": "LIVE_OBSERVABILITY_AUDIT_PASS" if total == 0 else "LIVE_OBSERVABILITY_AUDIT_FAIL",
+        "critical_counts": critical,
+        "critical_count_sum": total,
+    }
+
+
 def _symbol_rows(**data: Any) -> list[Mapping[str, Any]]:
     universe = data["universe"]
     result = data["result"]
@@ -679,6 +715,7 @@ def _read_jsonl(path: Path) -> tuple[Mapping[str, Any], ...]:
 
 __all__ = [
     "LIVE_OBSERVABILITY_SCHEMA_VERSION",
+    "audit_live_observability_report",
     "compile_live_observability",
     "write_live_observability",
 ]

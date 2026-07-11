@@ -20,7 +20,7 @@
   },
   "frozen_daily_run": {
     "as_of_date": "2026-06-30",
-    "run_id": "DAILY-51b02a1a726510410b962228",
+    "run_id": "DAILY-f9428a2401ceef26585ab1ca",
     "full_universe_count": 8,
     "eligible_universe_count": 8,
     "baseline_lane_count": 32,
@@ -34,7 +34,7 @@
     "selected_deep_candidate_count": 5,
     "source_task_leaf_count": 6,
     "deep_terminal_outcome_count": 5,
-    "leaf_hash": "ab2003fa498fcc4e384942d4eba8299a802375a37e51d0608e043546a62b6492"
+    "leaf_hash": "f2ccb7e068c0812773ba67d1ffbf075897fe3bb0e609733be3975ce5bf1a6265"
   },
   "baseline_contract": {
     "required_lanes": [

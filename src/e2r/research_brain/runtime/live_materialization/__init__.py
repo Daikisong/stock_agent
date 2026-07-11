@@ -161,8 +161,16 @@ from .live_acceptance import (
 )
 from .live_observability import (
     LIVE_OBSERVABILITY_SCHEMA_VERSION,
+    audit_live_observability_report,
     compile_live_observability,
     write_live_observability,
+)
+from .final_readiness import (
+    FINAL_READINESS_SCHEMA_VERSION,
+    compile_final_readiness,
+    run_known_bad_detectors,
+    run_unittest_command,
+    write_final_readiness,
 )
 
 __all__ = [
@@ -228,6 +236,7 @@ __all__ = [
     "LiveUniverseRow",
     "EventLifecycleStatus",
     "EvidenceDocumentRecord",
+    "FINAL_READINESS_SCHEMA_VERSION",
     "LiveRunMode",
     "LiveRunProfile",
     "ProviderCapability",
@@ -257,9 +266,11 @@ __all__ = [
     "UniverseMaterializationResult",
     "UniverseMaterializerConfig",
     "audit_live_credentials",
+    "audit_live_observability_report",
     "build_provider_capability_matrix",
     "classify_provider_result",
     "compile_live_observability",
+    "compile_final_readiness",
     "counts_as_symbol_evidence",
     "load_live_run_profile",
     "load_current_state_store",
@@ -278,6 +289,8 @@ __all__ = [
     "resume_targeted_smoke_claims",
     "run_targeted_live_smoke",
     "run_full_live_acceptance",
+    "run_known_bad_detectors",
+    "run_unittest_command",
     "select_sector_samples",
     "write_current_state_bootstrap",
     "write_current_claim_compilation",
@@ -293,5 +306,6 @@ __all__ = [
     "write_targeted_live_smoke",
     "write_full_live_acceptance",
     "write_live_observability",
+    "write_final_readiness",
     "write_universe_materialization",
 ]
