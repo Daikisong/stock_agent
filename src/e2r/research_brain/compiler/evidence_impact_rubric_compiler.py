@@ -6,7 +6,10 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from e2r.research_brain.runtime.scoring_contracts import load_archetype_scoring_contract
-from e2r.research_brain.scoring import EvidenceImpactRubric, EvidenceImpactRubricCatalog
+from e2r.research_brain.scoring.evidence_impact_rubric import (
+    EvidenceImpactRubric,
+    EvidenceImpactRubricCatalog,
+)
 
 
 DEFAULT_RECIPE_PATH = Path("configs/e2r_evidence_recipe_semantics_v1.json")

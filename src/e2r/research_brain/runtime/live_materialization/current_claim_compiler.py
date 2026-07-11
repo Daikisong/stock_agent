@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from datetime import date
 from enum import Enum
 from pathlib import Path
@@ -269,7 +269,7 @@ class CurrentClaimCompiler:
                         continue
                     accepted_ids.append(claim.claim_id)
                     (direct if mapping.primitive_id == primitive_id else rerouted).append(mapping)
-                    accepted_claims[claim.claim_id] = {
+                    accepted_row = {
                         **_json_safe(asdict(claim)),
                         "target_id": target_id,
                         "raw_assertion": _json_safe(asdict(raw)),
@@ -278,6 +278,23 @@ class CurrentClaimCompiler:
                         "accepted": True,
                         "current_score_eligible": False,
                     }
+                    previous = accepted_claims.get(claim.claim_id)
+                    if previous is not None:
+                        previous_without_mappings = {
+                            key: value for key, value in previous.items()
+                            if key != "mapping_ids"
+                        }
+                        current_without_mappings = {
+                            key: value for key, value in accepted_row.items()
+                            if key != "mapping_ids"
+                        }
+                        if previous_without_mappings != current_without_mappings:
+                            raise ValueError("same claim id has conflicting accepted payloads")
+                        accepted_row["mapping_ids"] = list(dict.fromkeys((
+                            *(previous.get("mapping_ids") or ()),
+                            mapping.mapping_id,
+                        )))
+                    accepted_claims[claim.claim_id] = accepted_row
                     provenance = _daily_provenance(
                         task=task,
                         document_row=document_row,
@@ -337,7 +354,9 @@ class CurrentClaimCompiler:
                     reason=reason,
                 )
             )
-        provenance = tuple(provenance_by_claim_mapping.values())
+        provenance = _merge_claim_provenance(
+            tuple(provenance_by_claim_mapping.values())
+        )
         audit = _audit_claim_compilation(
             raw_assertions=raw_rows,
             adjudicated_claims=claim_rows,
@@ -472,6 +491,40 @@ def _daily_provenance(
         source_proxy_only=False,
         test_only=test_mode,
     )
+
+
+def _merge_claim_provenance(
+    rows: Sequence[DailyClaimProvenance],
+) -> tuple[DailyClaimProvenance, ...]:
+    """Preserve every mapping while keeping one canonical provenance per claim."""
+
+    grouped: dict[str, list[DailyClaimProvenance]] = {}
+    for row in rows:
+        grouped.setdefault(row.claim_id, []).append(row)
+    merged: list[DailyClaimProvenance] = []
+    for claim_id, claim_rows in sorted(grouped.items()):
+        first = claim_rows[0]
+        comparable = asdict(first)
+        for key in ("provenance_id", "mapping_ids"):
+            comparable.pop(key, None)
+        mapping_ids: list[str] = []
+        for row in claim_rows:
+            other = asdict(row)
+            for key in ("provenance_id", "mapping_ids"):
+                other.pop(key, None)
+            if other != comparable:
+                raise ValueError("same claim id has conflicting provenance payloads")
+            mapping_ids.extend(row.mapping_ids)
+        unique_mapping_ids = tuple(dict.fromkeys(mapping_ids))
+        merged.append(replace(
+            first,
+            provenance_id="CLMPROV-" + stable_hash({
+                "claim_id": claim_id,
+                "mapping_ids": list(unique_mapping_ids),
+            })[:24],
+            mapping_ids=unique_mapping_ids,
+        ))
+    return tuple(merged)
 
 
 def _audit_claim_compilation(
