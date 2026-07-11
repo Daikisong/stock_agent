@@ -1,0 +1,204 @@
+{
+  "cross_business_question_closure_count": 22,
+  "rows": [
+    {
+      "claim_id": "CLM-464ca5cde1b30c363997",
+      "exact_quote": "DS부문Foundry 사업부\nTesla, Inc.\n반도체 위탁생산\n2025.07.26\n2033.12.31\n16,544",
+      "failure_reason": "WRONG_BUSINESS_SEGMENT_FOUNDRY",
+      "predicate": "반도체 위탁생산 계약",
+      "question_family_id": "current_customer_allocation_commitment",
+      "question_status": "SUPPORTED",
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-0d0760af8405137dfe90",
+      "exact_quote": "This includes the industry’s most advanced 6th-generation 10-nanometer (nm)-class DRAM process (1c) and Samsung Foundry’s 4nm logic base die",
+      "failure_reason": "WRONG_BUSINESS_SEGMENT_FOUNDRY",
+      "predicate": "uses manufacturing processes for HBM4E",
+      "question_family_id": "shipment_mass_production_generation",
+      "question_status": "SUPPORTED",
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-63f797bc4396e1bff5f0",
+      "exact_quote": "2026년 1분기 매출은 DX 부문이 52조 6,547억원(39.3%), DS 부문이 81조 7,156억원(61%)이며, SDC가 6조 6,935억원(5%), Harman은 3조 8,263억원(2.9%)입니다.",
+      "failure_reason": "HBM_PRODUCT_SCOPE_MISSING",
+      "predicate": "부문별 매출액",
+      "question_family_id": "shipment_mass_production_generation",
+      "question_status": "SUPPORTED",
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-db034d8f03ce72819564",
+      "exact_quote": "2026년 1분기 당사의 주요 매출처로는 Alphabet, Amazon, Apple, Hong Kong Techtronics, Supreme Electronics 등(알파벳순) 입니다. 당사의 주요 5대 매출처에 대한 매출비중은 전체 매출액 대비 약 23% 수준입니다.",
+      "failure_reason": "HBM_PRODUCT_SCOPE_MISSING",
+      "predicate": "주요 매출처",
+      "question_family_id": "shipment_mass_production_generation",
+      "question_status": "SUPPORTED",
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-63f797bc4396e1bff5f0",
+      "exact_quote": "2026년 1분기 매출은 DX 부문이 52조 6,547억원(39.3%), DS 부문이 81조 7,156억원(61%)이며, SDC가 6조 6,935억원(5%), Harman은 3조 8,263억원(2.9%)입니다.",
+      "failure_reason": "HBM_PRODUCT_SCOPE_MISSING",
+      "predicate": "부문별 매출액",
+      "question_family_id": "hbm_ai_memory_revenue_mix",
+      "question_status": "SUPPORTED",
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-db034d8f03ce72819564",
+      "exact_quote": "2026년 1분기 당사의 주요 매출처로는 Alphabet, Amazon, Apple, Hong Kong Techtronics, Supreme Electronics 등(알파벳순) 입니다. 당사의 주요 5대 매출처에 대한 매출비중은 전체 매출액 대비 약 23% 수준입니다.",
+      "failure_reason": "HBM_PRODUCT_SCOPE_MISSING",
+      "predicate": "주요 매출처",
+      "question_family_id": "hbm_ai_memory_revenue_mix",
+      "question_status": "SUPPORTED",
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-8a6484cd91e4ef637201",
+      "exact_quote": "2026년 1분기 당사의 매출은 133조 8,734억원으로 전년 동기 대비 69.2% 증가하였으며",
+      "failure_reason": "C06_ECONOMIC_ATTRIBUTION_MISSING",
+      "predicate": "연결 매출액",
+      "question_family_id": "revenue_operating_profit_conversion",
+      "question_status": "SUPPORTED",
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-e0a7f204219f352da273",
+      "exact_quote": "2026년 1분기 DS 부문 및 SDC 등의 첨단공정 증설ㆍ전환과 인프라 투자를 중심으로 11.2조원의 시설투자가 이루어졌습니다.",
+      "failure_reason": "MEMORY_CAPEX_ATTRIBUTION_MISSING",
+      "predicate": "시설투자액",
+      "question_family_id": "capex_supply_oversupply",
+      "question_status": "SUPPORTED",
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-464ca5cde1b30c363997",
+      "exact_quote": "DS부문Foundry 사업부\nTesla, Inc.\n반도체 위탁생산\n2025.07.26\n2033.12.31\n16,544",
+      "failure_reason": "WRONG_BUSINESS_SEGMENT_FOUNDRY",
+      "predicate": "반도체 위탁생산 계약",
+      "question_family_id": "customer_concentration_dependency",
+      "question_status": "PARTIALLY_SUPPORTED",
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-95da73592de9afc97446",
+      "exact_quote": "within the environment where customer demand exceeds supply capacity",
+      "failure_reason": "C06_ECONOMIC_ATTRIBUTION_MISSING",
+      "predicate": "described customer demand relative to supply capacity",
+      "question_family_id": "capacity_constraint_presold_status",
+      "question_status": "PARTIALLY_SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-6542a27e94fc793947e1",
+      "exact_quote": "SK hynix’s mass production of 321-layer QLC NAND",
+      "failure_reason": "WRONG_PRODUCT_FAMILY_NAND",
+      "predicate": "has mass-produced",
+      "question_family_id": "shipment_mass_production_generation",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-81cdb44f9ea4a488a790",
+      "exact_quote": "the 192GB SOCAMM2, which is based on the same process and began mass production this month",
+      "failure_reason": "WRONG_PRODUCT_FAMILY_SOCAMM",
+      "predicate": "began mass production of product",
+      "question_family_id": "shipment_mass_production_generation",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-b6a7d89a604a1e12d6f4",
+      "exact_quote": "the company will fully ramp up the shipment of LPDDR6, which applied 1cnm process, or the sixth-generation of the 10-nanometer technology, for the world’s first time, and the 192GB SOCAMM2",
+      "failure_reason": "WRONG_PRODUCT_FAMILY_SOCAMM",
+      "predicate": "plans production shipment ramp",
+      "question_family_id": "shipment_mass_production_generation",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-c35e896dc619cf663b61",
+      "exact_quote": "SK hynix has begun mass production of 192GB SOCAMM2, utilizing 1cnm LPDDR5X low-power DRAM.",
+      "failure_reason": "WRONG_PRODUCT_FAMILY_SOCAMM",
+      "predicate": "has begun mass production of",
+      "question_family_id": "shipment_mass_production_generation",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-6542a27e94fc793947e1",
+      "exact_quote": "SK hynix’s mass production of 321-layer QLC NAND",
+      "failure_reason": "WRONG_PRODUCT_FAMILY_NAND",
+      "predicate": "has mass-produced",
+      "question_family_id": "hbm_ai_memory_revenue_mix",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-81cdb44f9ea4a488a790",
+      "exact_quote": "the 192GB SOCAMM2, which is based on the same process and began mass production this month",
+      "failure_reason": "WRONG_PRODUCT_FAMILY_SOCAMM",
+      "predicate": "began mass production of product",
+      "question_family_id": "hbm_ai_memory_revenue_mix",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-b6a7d89a604a1e12d6f4",
+      "exact_quote": "the company will fully ramp up the shipment of LPDDR6, which applied 1cnm process, or the sixth-generation of the 10-nanometer technology, for the world’s first time, and the 192GB SOCAMM2",
+      "failure_reason": "WRONG_PRODUCT_FAMILY_SOCAMM",
+      "predicate": "plans production shipment ramp",
+      "question_family_id": "hbm_ai_memory_revenue_mix",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-c35e896dc619cf663b61",
+      "exact_quote": "SK hynix has begun mass production of 192GB SOCAMM2, utilizing 1cnm LPDDR5X low-power DRAM.",
+      "failure_reason": "WRONG_PRODUCT_FAMILY_SOCAMM",
+      "predicate": "has begun mass production of",
+      "question_family_id": "hbm_ai_memory_revenue_mix",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-b0012c7f76d639aed2da",
+      "exact_quote": "recorded 52.5763 trillion won in revenue",
+      "failure_reason": "C06_ECONOMIC_ATTRIBUTION_MISSING",
+      "predicate": "recorded first-quarter revenue",
+      "question_family_id": "revenue_operating_profit_conversion",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-fcc98ec139169a04e7ae",
+      "exact_quote": "37.6103 trillion won in operating profit (with an operating margin of 72%)",
+      "failure_reason": "C06_ECONOMIC_ATTRIBUTION_MISSING",
+      "predicate": "recorded first-quarter operating profit and operating margin",
+      "question_family_id": "revenue_operating_profit_conversion",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-53ae6758183d6993b268",
+      "exact_quote": "40.3459 trillion won in net profit (with a net margin of 77%)",
+      "failure_reason": "C06_ECONOMIC_ATTRIBUTION_MISSING",
+      "predicate": "recorded first-quarter net profit and net margin",
+      "question_family_id": "margin_fcf_conversion",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-fcc98ec139169a04e7ae",
+      "exact_quote": "37.6103 trillion won in operating profit (with an operating margin of 72%)",
+      "failure_reason": "C06_ECONOMIC_ATTRIBUTION_MISSING",
+      "predicate": "recorded first-quarter operating profit and operating margin",
+      "question_family_id": "margin_fcf_conversion",
+      "question_status": "SUPPORTED",
+      "target_id": "000660"
+    }
+  ],
+  "schema_version": "e2r_business_mechanism_scope_failures_before_v1"
+}

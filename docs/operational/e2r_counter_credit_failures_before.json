@@ -1,0 +1,29 @@
+{
+  "component_rows": [
+    {
+      "component_counter_impact_ids": [],
+      "component_id": "bottleneck_pricing",
+      "component_status": "VERIFIED_ABSENT_AFTER_SEARCH",
+      "counter_effect": 0.0,
+      "counter_impact_ids": [
+        "IMPACT-64f322de9e07ea858fdef021"
+      ],
+      "target_id": "000660"
+    }
+  ],
+  "counter_proposal_zeroed_by_missing_cap_count": 1,
+  "schema_version": "e2r_counter_credit_failures_before_v1",
+  "support_counter_component_counter_effect_zero_count": 1,
+  "zero_rows": [
+    {
+      "claim_id": "CLM-85a8e1ec74fd4c208401",
+      "component_id": "bottleneck_pricing",
+      "direction": "COUNTER",
+      "impact_id": "IMPACT-64f322de9e07ea858fdef021",
+      "primitive_id": "capacity_supply_response",
+      "support_type": "RISK_OPEN",
+      "support_type_cap": 0.0,
+      "target_id": "000660"
+    }
+  ]
+}

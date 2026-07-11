@@ -1,0 +1,136 @@
+{
+  "configured_support_types": [
+    "DIRECT_ACTUAL",
+    "DIRECT_FORWARD",
+    "DISCOVERY_ONLY",
+    "PROFILE_ONLY"
+  ],
+  "counter_zero_rows": [
+    {
+      "claim_id": "CLM-85a8e1ec74fd4c208401",
+      "component_id": "bottleneck_pricing",
+      "direction": "COUNTER",
+      "impact_id": "IMPACT-64f322de9e07ea858fdef021",
+      "primitive_id": "capacity_supply_response",
+      "support_type": "RISK_OPEN",
+      "support_type_cap": 0.0,
+      "target_id": "000660"
+    }
+  ],
+  "declared_support_types": [
+    "DIRECT_ACTUAL",
+    "DIRECT_FORWARD",
+    "DISCOVERY_ONLY",
+    "PARTIAL_BRIDGE",
+    "PROFILE_ONLY",
+    "RISK_OPEN",
+    "RISK_RESOLVED"
+  ],
+  "metrics": {
+    "cap_table_support_type_count": 4,
+    "counter_proposal_zeroed_by_missing_cap_count": 1,
+    "declared_support_type_count": 7,
+    "missing_support_type_count": 3,
+    "positive_proposal_zeroed_by_missing_cap_count": 9,
+    "source_cap_missing_count": 0,
+    "temporal_cap_missing_count": 0
+  },
+  "missing_support_types": [
+    "PARTIAL_BRIDGE",
+    "RISK_OPEN",
+    "RISK_RESOLVED"
+  ],
+  "positive_zero_rows": [
+    {
+      "claim_id": "CLM-464ca5cde1b30c363997",
+      "component_id": "earnings_visibility",
+      "direction": "SUPPORT",
+      "impact_id": "IMPACT-a0f7e1b1bbc4a9a640358e68",
+      "primitive_id": "revenue_visibility_contract",
+      "support_type": "PARTIAL_BRIDGE",
+      "support_type_cap": 0.0,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-464ca5cde1b30c363997",
+      "component_id": "information_confidence",
+      "direction": "SUPPORT",
+      "impact_id": "IMPACT-1c99d895633505c3ff1b7623",
+      "primitive_id": "revenue_visibility_contract",
+      "support_type": "PARTIAL_BRIDGE",
+      "support_type_cap": 0.0,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-13d3c5605df791dcf819",
+      "component_id": "eps_fcf_explosion",
+      "direction": "SUPPORT",
+      "impact_id": "IMPACT-64f80a26b05b4eed798f3471",
+      "primitive_id": "shipment_or_revenue_mix",
+      "support_type": "PARTIAL_BRIDGE",
+      "support_type_cap": 0.0,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-33685f026d180edb6417",
+      "component_id": "earnings_visibility",
+      "direction": "SUPPORT",
+      "impact_id": "IMPACT-9d2a1a3769bd003f4bc0cf08",
+      "primitive_id": "shipment_or_revenue_mix",
+      "support_type": "PARTIAL_BRIDGE",
+      "support_type_cap": 0.0,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-33685f026d180edb6417",
+      "component_id": "eps_fcf_explosion",
+      "direction": "SUPPORT",
+      "impact_id": "IMPACT-593c7e5eb61143dc9423aab9",
+      "primitive_id": "shipment_or_revenue_mix",
+      "support_type": "PARTIAL_BRIDGE",
+      "support_type_cap": 0.0,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-81cdb44f9ea4a488a790",
+      "component_id": "earnings_visibility",
+      "direction": "SUPPORT",
+      "impact_id": "IMPACT-0b6f2d9873b4a00eec212da3",
+      "primitive_id": "shipment_or_revenue_mix",
+      "support_type": "PARTIAL_BRIDGE",
+      "support_type_cap": 0.0,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-c35e896dc619cf663b61",
+      "component_id": "earnings_visibility",
+      "direction": "SUPPORT",
+      "impact_id": "IMPACT-33124d5bf4e5149dba689afa",
+      "primitive_id": "shipment_or_revenue_mix",
+      "support_type": "PARTIAL_BRIDGE",
+      "support_type_cap": 0.0,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-c35e896dc619cf663b61",
+      "component_id": "eps_fcf_explosion",
+      "direction": "SUPPORT",
+      "impact_id": "IMPACT-61f3095e4bf400f8d3b7fe78",
+      "primitive_id": "shipment_or_revenue_mix",
+      "support_type": "PARTIAL_BRIDGE",
+      "support_type_cap": 0.0,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-85a8e1ec74fd4c208401",
+      "component_id": "earnings_visibility",
+      "direction": "SUPPORT",
+      "impact_id": "IMPACT-4b6b4bb8df93b559ed51f866",
+      "primitive_id": "capacity_supply_response",
+      "support_type": "PARTIAL_BRIDGE",
+      "support_type_cap": 0.0,
+      "target_id": "000660"
+    }
+  ],
+  "schema_version": "e2r_support_type_cap_matrix_before_v1"
+}

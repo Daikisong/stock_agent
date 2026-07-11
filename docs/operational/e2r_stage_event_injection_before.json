@@ -1,0 +1,257 @@
+{
+  "accepted_claim_event_score_injection_count": 2,
+  "eligibility_contradiction_rows": [
+    {
+      "claim_id": "CLM-464ca5cde1b30c363997",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-4df55f27da648bb0024e",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-47103baa9b99062ef88a",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-48f304f4471c4d575cec",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-8a6484cd91e4ef637201",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-db034d8f03ce72819564",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-63f797bc4396e1bff5f0",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-e0a7f204219f352da273",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-13d3c5605df791dcf819",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-10501873f575a69571d9",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-1982ea2aca36ebef450e",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-ea9b82182ac296c6d682",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-63085bc76ba54eba7d67",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-bab8bc1c37b4bb92f54e",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-0bb55c3d4d5844a1c859",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-e341ee4c41bd41f3fab0",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-0d0760af8405137dfe90",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-0d59f6d8b09b36fb145d",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-1fc27cd4caa01dd2f04c",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-ccb03c3ca97a6a4dac73",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-cde7ddca235c60d20ada",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-d33eea243c334096866d",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-33685f026d180edb6417",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-79444b89b7d92a3930ab",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-0f9c0b328976f0995bed",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-90533c9daf13fefd691c",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-3fe807708c2eee9d9908",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "005930"
+    },
+    {
+      "claim_id": "CLM-15ee8897fe8ae2155f25",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-95da73592de9afc97446",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-b6a7d89a604a1e12d6f4",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-81cdb44f9ea4a488a790",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-fcc98ec139169a04e7ae",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-53ae6758183d6993b268",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-b0012c7f76d639aed2da",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-24ae165ad172de0d6649",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-889d81821ec004838246",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-c35e896dc619cf663b61",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-6542a27e94fc793947e1",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    },
+    {
+      "claim_id": "CLM-85a8e1ec74fd4c208401",
+      "current_score_eligible": false,
+      "scoring_readiness_eligible": true,
+      "target_id": "000660"
+    }
+  ],
+  "eligibility_field_contradiction_count": 39,
+  "event_injection_rows": [
+    {
+      "accepted_claim_count": 27,
+      "canonical_stage": "1",
+      "injected_company_event_score": 60.0,
+      "injected_high_quality_company_event": true,
+      "target_id": "005930"
+    },
+    {
+      "accepted_claim_count": 12,
+      "canonical_stage": "1",
+      "injected_company_event_score": 60.0,
+      "injected_high_quality_company_event": true,
+      "target_id": "000660"
+    }
+  ],
+  "schema_version": "e2r_stage_event_injection_before_v1"
+}

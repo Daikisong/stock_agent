@@ -1,0 +1,92 @@
+{
+  "document_groups": [
+    {
+      "claim_ids": [
+        "CLM-48f304f4471c4d575cec",
+        "CLM-4df55f27da648bb0024e"
+      ],
+      "component_id": "information_confidence",
+      "direction": "SUPPORT",
+      "document_id": "DOC-d78e3500c9e0882567b5",
+      "duplicate_credit_excess": 1,
+      "target_id": "005930"
+    },
+    {
+      "claim_ids": [
+        "CLM-47103baa9b99062ef88a",
+        "CLM-e0a7f204219f352da273"
+      ],
+      "component_id": "capital_allocation",
+      "direction": "SUPPORT",
+      "document_id": "DOC-d78e3500c9e0882567b5",
+      "duplicate_credit_excess": 1,
+      "target_id": "005930"
+    },
+    {
+      "claim_ids": [
+        "CLM-0bb55c3d4d5844a1c859",
+        "CLM-0d0760af8405137dfe90",
+        "CLM-0d59f6d8b09b36fb145d",
+        "CLM-10501873f575a69571d9",
+        "CLM-13d3c5605df791dcf819",
+        "CLM-1982ea2aca36ebef450e",
+        "CLM-1fc27cd4caa01dd2f04c",
+        "CLM-63085bc76ba54eba7d67",
+        "CLM-bab8bc1c37b4bb92f54e",
+        "CLM-e341ee4c41bd41f3fab0",
+        "CLM-ea9b82182ac296c6d682"
+      ],
+      "component_id": "information_confidence",
+      "direction": "SUPPORT",
+      "document_id": "DOC-cc9bdb2d2da63a0b07e8",
+      "duplicate_credit_excess": 10,
+      "target_id": "005930"
+    },
+    {
+      "claim_ids": [
+        "CLM-13d3c5605df791dcf819",
+        "CLM-1982ea2aca36ebef450e"
+      ],
+      "component_id": "earnings_visibility",
+      "direction": "SUPPORT",
+      "document_id": "DOC-cc9bdb2d2da63a0b07e8",
+      "duplicate_credit_excess": 1,
+      "target_id": "005930"
+    },
+    {
+      "claim_ids": [
+        "CLM-0f9c0b328976f0995bed",
+        "CLM-33685f026d180edb6417",
+        "CLM-3fe807708c2eee9d9908",
+        "CLM-79444b89b7d92a3930ab",
+        "CLM-90533c9daf13fefd691c",
+        "CLM-ccb03c3ca97a6a4dac73",
+        "CLM-cde7ddca235c60d20ada",
+        "CLM-d33eea243c334096866d"
+      ],
+      "component_id": "information_confidence",
+      "direction": "SUPPORT",
+      "document_id": "DOC-2c721be1fd867cd146bc",
+      "duplicate_credit_excess": 7,
+      "target_id": "005930"
+    },
+    {
+      "claim_ids": [
+        "CLM-24ae165ad172de0d6649",
+        "CLM-889d81821ec004838246",
+        "CLM-c35e896dc619cf663b61"
+      ],
+      "component_id": "information_confidence",
+      "direction": "SUPPORT",
+      "document_id": "DOC-ea44b7d3b41fa55047b6",
+      "duplicate_credit_excess": 2,
+      "target_id": "000660"
+    }
+  ],
+  "fact_groups": [],
+  "same_document_duplicate_credit_count": 22,
+  "same_document_duplicate_credit_group_count": 6,
+  "same_fact_duplicate_credit_count": 0,
+  "same_fact_duplicate_credit_group_count": 0,
+  "schema_version": "e2r_fact_duplication_before_v1"
+}

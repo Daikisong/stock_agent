@@ -1,0 +1,100 @@
+{
+  "partially_supported_question_absent_component_count": 2,
+  "rows": [
+    {
+      "component_id": "eps_fcf_explosion",
+      "component_status": "VERIFIED_ABSENT_AFTER_SEARCH",
+      "question_family_id": "hbm_ai_memory_revenue_mix",
+      "question_status": "SUPPORTED",
+      "supporting_claim_ids": [
+        "CLM-13d3c5605df791dcf819",
+        "CLM-1982ea2aca36ebef450e",
+        "CLM-33685f026d180edb6417",
+        "CLM-63f797bc4396e1bff5f0",
+        "CLM-db034d8f03ce72819564"
+      ],
+      "target_id": "005930"
+    },
+    {
+      "component_id": "eps_fcf_explosion",
+      "component_status": "VERIFIED_ABSENT_AFTER_SEARCH",
+      "question_family_id": "asp_pricing_actual",
+      "question_status": "SUPPORTED",
+      "supporting_claim_ids": [
+        "CLM-48f304f4471c4d575cec"
+      ],
+      "target_id": "005930"
+    },
+    {
+      "component_id": "eps_fcf_explosion",
+      "component_status": "VERIFIED_ABSENT_AFTER_SEARCH",
+      "question_family_id": "revenue_operating_profit_conversion",
+      "question_status": "SUPPORTED",
+      "supporting_claim_ids": [
+        "CLM-8a6484cd91e4ef637201"
+      ],
+      "target_id": "005930"
+    },
+    {
+      "component_id": "earnings_visibility",
+      "component_status": "VERIFIED_ABSENT_AFTER_SEARCH",
+      "question_family_id": "capacity_constraint_presold_status",
+      "question_status": "PARTIALLY_SUPPORTED",
+      "supporting_claim_ids": [
+        "CLM-95da73592de9afc97446"
+      ],
+      "target_id": "000660"
+    },
+    {
+      "component_id": "bottleneck_pricing",
+      "component_status": "VERIFIED_ABSENT_AFTER_SEARCH",
+      "question_family_id": "capacity_constraint_presold_status",
+      "question_status": "PARTIALLY_SUPPORTED",
+      "supporting_claim_ids": [
+        "CLM-95da73592de9afc97446"
+      ],
+      "target_id": "000660"
+    },
+    {
+      "component_id": "earnings_visibility",
+      "component_status": "VERIFIED_ABSENT_AFTER_SEARCH",
+      "question_family_id": "shipment_mass_production_generation",
+      "question_status": "SUPPORTED",
+      "supporting_claim_ids": [
+        "CLM-15ee8897fe8ae2155f25",
+        "CLM-24ae165ad172de0d6649",
+        "CLM-6542a27e94fc793947e1",
+        "CLM-81cdb44f9ea4a488a790",
+        "CLM-b6a7d89a604a1e12d6f4",
+        "CLM-c35e896dc619cf663b61"
+      ],
+      "target_id": "000660"
+    },
+    {
+      "component_id": "earnings_visibility",
+      "component_status": "VERIFIED_ABSENT_AFTER_SEARCH",
+      "question_family_id": "hbm_ai_memory_revenue_mix",
+      "question_status": "SUPPORTED",
+      "supporting_claim_ids": [
+        "CLM-15ee8897fe8ae2155f25",
+        "CLM-6542a27e94fc793947e1",
+        "CLM-81cdb44f9ea4a488a790",
+        "CLM-b6a7d89a604a1e12d6f4",
+        "CLM-c35e896dc619cf663b61"
+      ],
+      "target_id": "000660"
+    },
+    {
+      "component_id": "bottleneck_pricing",
+      "component_status": "VERIFIED_ABSENT_AFTER_SEARCH",
+      "question_family_id": "capex_supply_oversupply",
+      "question_status": "SUPPORTED",
+      "supporting_claim_ids": [
+        "CLM-85a8e1ec74fd4c208401"
+      ],
+      "target_id": "000660"
+    }
+  ],
+  "schema_version": "e2r_question_component_consistency_before_v1",
+  "supported_question_absent_component_count": 6
+}
