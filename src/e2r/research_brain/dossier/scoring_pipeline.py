@@ -19,8 +19,11 @@ from e2r.research_brain.scoring import (
     ClaimImpactLedgerBuilder,
     ComponentAssessmentBuilder,
     EvidenceImpactAdjudicator,
+    EventOverlayInput,
+    FullThesisStageInput,
     ImpactValidator,
     ResearchCalibratedComponentScorer,
+    RiskOverlayInput,
     SemanticClosureReconciler,
     compile_claim_eligibility_decisions,
     compile_question_component_subcriteria,
@@ -375,17 +378,51 @@ def run_dossier_scoring_pipeline(
         impacts=validation.impacts,
         assessments=assessment.assessments,
     )
-    decision = AtomicStageCourtV2().decide(
-        target_id=target_id,
-        as_of_date=as_of_date,
-        contract=contract,
-        score=score,
-        assessments=assessment.assessments,
-        impacts=validation.impacts,
-        accepted_claim_ids=tuple(
-            str(row.get("claim_id") or "") for row in selected_claims
+    accepted_claim_ids = tuple(
+        str(row.get("claim_id") or "") for row in selected_claims
+    )
+    event_claim_ids = tuple(
+        claim_id
+        for claim_id in accepted_claim_ids
+        if eligibility_by_claim.get(claim_id, {}).get(
+            "stage_event_eligibility"
+        )
+        is True
+        and next(
+            (
+                row.get("event_quality_contract_status")
+                for row in selected_claims
+                if str(row.get("claim_id") or "") == claim_id
+            ),
+            None,
+        )
+        == "HIGH_QUALITY_EVENT_PASS"
+    )
+    decision = AtomicStageCourtV2().decide_full_thesis(
+        full_thesis_input=FullThesisStageInput(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            contract=contract,
+            score=score,
+            assessments=assessment.assessments,
+            impacts=validation.impacts,
+            accepted_claim_ids=accepted_claim_ids,
         ),
-        claim_eligibility_decisions=ledger.claim_eligibility_decisions,
+        event_overlay_input=EventOverlayInput(
+            event_quality_contract_status=(
+                "HIGH_QUALITY_EVENT_PASS"
+                if event_claim_ids
+                else "NO_QUALIFYING_EVENT"
+            ),
+            event_claim_ids=event_claim_ids,
+            event_type="DAILY_WATCH_EVENT",
+            event_rationale=(
+                "Explicit event quality contract passed."
+                if event_claim_ids
+                else "Accepted claims are full-thesis evidence, not event labels."
+            ),
+        ),
+        risk_overlay_input=RiskOverlayInput(),
     )
     adjudication_failure_count = sum(
         row["status"]
@@ -702,6 +739,11 @@ def _write_pipeline_leaves(
             "stage_event_claim_ids": list(decision.stage_event_claim_ids),
             "claim_impact_ids": list(decision.claim_impact_ids),
             "component_assessment_ids": list(decision.component_assessment_ids),
+            "canonical_stage": decision.canonical_stage,
+            "full_thesis_stage": decision.full_thesis_stage,
+            "stage_signal": decision.stage_signal,
+            "event_overlay": decision.event_overlay,
+            "risk_overlay": decision.risk_overlay,
         },
     )
     write_json(root / "scoring_audit_summary.json", audit)

@@ -1,0 +1,224 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "claim_count_event_boost_count": 0,
+    "explicit_event_overlay_missing_count": 0,
+    "full_thesis_event_score_injection_count": 0,
+    "generic_claim_high_quality_event_count": 0
+  },
+  "explicit_event_decision": {
+    "accepted_claim_ids": [
+      "CLM-STAGE-SUPPORT"
+    ],
+    "as_of_date": "2026-07-11",
+    "canonical_stage": "0",
+    "claim_impact_ids": [
+      "IMPACT-STAGE-SUPPORT"
+    ],
+    "component_assessment_ids": [
+      "COMP-c013e1bd-bottleneck_pricing",
+      "COMP-c013e1bd-capital_allocation",
+      "COMP-c013e1bd-earnings_visibility",
+      "COMP-c013e1bd-eps_fcf_explosion",
+      "COMP-c013e1bd-information_confidence",
+      "COMP-c013e1bd-market_mispricing",
+      "COMP-c013e1bd-valuation_rerating"
+    ],
+    "decision_id": "ADEC2-b8202e76bce7d9e721046ae6",
+    "decision_status": "FINAL",
+    "event_overlay": {
+      "canonical_stage_effect": "NONE",
+      "event_claim_ids": [
+        "CLM-STAGE-SUPPORT"
+      ],
+      "event_quality_contract_status": "HIGH_QUALITY_EVENT_PASS",
+      "event_rationale": "Explicit bounded event-quality contract passed.",
+      "event_type": "EARNINGS_RELEASE_WATCH",
+      "source_evidence_ids": [
+        "DOC-STAGE-SUPPORT"
+      ],
+      "stage_signal": "EVENT_WATCH",
+      "status": "EVENT_OVERLAY_ACTIVE"
+    },
+    "full_e2r_score": 3.0,
+    "full_score_valid": true,
+    "full_thesis_stage": "0",
+    "material_nonterminal_components": [],
+    "provisional_score_lower": 3.0,
+    "provisional_score_upper": 3.0,
+    "risk_overlay": {
+      "current_direct_open_counter_claim_ids": [],
+      "hard_break_claim_ids": [],
+      "risk_state": "NO_HARD_BREAK"
+    },
+    "score_type": "FULL_E2R_100",
+    "stage_event_claim_ids": [
+      "CLM-STAGE-SUPPORT"
+    ],
+    "stage_reason": [
+      "higher-stage promotion gates remained unmet in point-in-time evaluation"
+    ],
+    "stage_signal": "FULL_THESIS_STAGE_0",
+    "target_id": "TARGET-STAGE-EVENT-SEPARATION",
+    "trace_id": "STAGEV2-31230e04574425d89b874bbc",
+    "verified_supported_score": 3.0
+  },
+  "generic_boolean_decision": {
+    "accepted_claim_ids": [
+      "CLM-STAGE-SUPPORT"
+    ],
+    "as_of_date": "2026-07-11",
+    "canonical_stage": "0",
+    "claim_impact_ids": [
+      "IMPACT-STAGE-SUPPORT"
+    ],
+    "component_assessment_ids": [
+      "COMP-c013e1bd-bottleneck_pricing",
+      "COMP-c013e1bd-capital_allocation",
+      "COMP-c013e1bd-earnings_visibility",
+      "COMP-c013e1bd-eps_fcf_explosion",
+      "COMP-c013e1bd-information_confidence",
+      "COMP-c013e1bd-market_mispricing",
+      "COMP-c013e1bd-valuation_rerating"
+    ],
+    "decision_id": "ADEC2-c6605224100f6fc33e2da4b3",
+    "decision_status": "FINAL",
+    "event_overlay": {
+      "canonical_stage_effect": "NONE",
+      "event_claim_ids": [],
+      "event_quality_contract_status": "NO_QUALIFYING_EVENT",
+      "event_rationale": "No explicit event-quality contract passed.",
+      "event_type": "ELIGIBILITY_DECISION_EVENT",
+      "source_evidence_ids": [],
+      "stage_signal": "NO_EVENT_SIGNAL",
+      "status": "NO_EVENT_OVERLAY"
+    },
+    "full_e2r_score": 3.0,
+    "full_score_valid": true,
+    "full_thesis_stage": "0",
+    "material_nonterminal_components": [],
+    "provisional_score_lower": 3.0,
+    "provisional_score_upper": 3.0,
+    "risk_overlay": {
+      "current_direct_open_counter_claim_ids": [],
+      "hard_break_claim_ids": [],
+      "risk_state": "NO_HARD_BREAK"
+    },
+    "score_type": "FULL_E2R_100",
+    "stage_event_claim_ids": [],
+    "stage_reason": [
+      "higher-stage promotion gates remained unmet in point-in-time evaluation"
+    ],
+    "stage_signal": "FULL_THESIS_STAGE_0",
+    "target_id": "TARGET-STAGE-EVENT-SEPARATION",
+    "trace_id": "STAGEV2-cd79243acc2cb4e27a2e131f",
+    "verified_supported_score": 3.0
+  },
+  "more_generic_claims_decision": {
+    "accepted_claim_ids": [
+      "CLM-STAGE-SUPPORT",
+      "CLM-GENERIC-2",
+      "CLM-GENERIC-3"
+    ],
+    "as_of_date": "2026-07-11",
+    "canonical_stage": "0",
+    "claim_impact_ids": [
+      "IMPACT-STAGE-SUPPORT"
+    ],
+    "component_assessment_ids": [
+      "COMP-c013e1bd-bottleneck_pricing",
+      "COMP-c013e1bd-capital_allocation",
+      "COMP-c013e1bd-earnings_visibility",
+      "COMP-c013e1bd-eps_fcf_explosion",
+      "COMP-c013e1bd-information_confidence",
+      "COMP-c013e1bd-market_mispricing",
+      "COMP-c013e1bd-valuation_rerating"
+    ],
+    "decision_id": "ADEC2-fbac704747ca8694c884d211",
+    "decision_status": "FINAL",
+    "event_overlay": {
+      "canonical_stage_effect": "NONE",
+      "event_claim_ids": [],
+      "event_quality_contract_status": "NO_QUALIFYING_EVENT",
+      "event_rationale": "",
+      "event_type": "",
+      "source_evidence_ids": [],
+      "stage_signal": "NO_EVENT_SIGNAL",
+      "status": "NO_EVENT_OVERLAY"
+    },
+    "full_e2r_score": 3.0,
+    "full_score_valid": true,
+    "full_thesis_stage": "0",
+    "material_nonterminal_components": [],
+    "provisional_score_lower": 3.0,
+    "provisional_score_upper": 3.0,
+    "risk_overlay": {
+      "current_direct_open_counter_claim_ids": [],
+      "hard_break_claim_ids": [],
+      "risk_state": "NO_HARD_BREAK"
+    },
+    "score_type": "FULL_E2R_100",
+    "stage_event_claim_ids": [],
+    "stage_reason": [
+      "higher-stage promotion gates remained unmet in point-in-time evaluation"
+    ],
+    "stage_signal": "FULL_THESIS_STAGE_0",
+    "target_id": "TARGET-STAGE-EVENT-SEPARATION",
+    "trace_id": "STAGEV2-c2ccb9223a6c4a13dc25f477",
+    "verified_supported_score": 3.0
+  },
+  "no_event_decision": {
+    "accepted_claim_ids": [
+      "CLM-STAGE-SUPPORT"
+    ],
+    "as_of_date": "2026-07-11",
+    "canonical_stage": "0",
+    "claim_impact_ids": [
+      "IMPACT-STAGE-SUPPORT"
+    ],
+    "component_assessment_ids": [
+      "COMP-c013e1bd-bottleneck_pricing",
+      "COMP-c013e1bd-capital_allocation",
+      "COMP-c013e1bd-earnings_visibility",
+      "COMP-c013e1bd-eps_fcf_explosion",
+      "COMP-c013e1bd-information_confidence",
+      "COMP-c013e1bd-market_mispricing",
+      "COMP-c013e1bd-valuation_rerating"
+    ],
+    "decision_id": "ADEC2-03ce85ff8e0a73f8e3d4d5b6",
+    "decision_status": "FINAL",
+    "event_overlay": {
+      "canonical_stage_effect": "NONE",
+      "event_claim_ids": [],
+      "event_quality_contract_status": "NO_QUALIFYING_EVENT",
+      "event_rationale": "",
+      "event_type": "",
+      "source_evidence_ids": [],
+      "stage_signal": "NO_EVENT_SIGNAL",
+      "status": "NO_EVENT_OVERLAY"
+    },
+    "full_e2r_score": 3.0,
+    "full_score_valid": true,
+    "full_thesis_stage": "0",
+    "material_nonterminal_components": [],
+    "provisional_score_lower": 3.0,
+    "provisional_score_upper": 3.0,
+    "risk_overlay": {
+      "current_direct_open_counter_claim_ids": [],
+      "hard_break_claim_ids": [],
+      "risk_state": "NO_HARD_BREAK"
+    },
+    "score_type": "FULL_E2R_100",
+    "stage_event_claim_ids": [],
+    "stage_reason": [
+      "higher-stage promotion gates remained unmet in point-in-time evaluation"
+    ],
+    "stage_signal": "FULL_THESIS_STAGE_0",
+    "target_id": "TARGET-STAGE-EVENT-SEPARATION",
+    "trace_id": "STAGEV2-80a689bf4e2deb5957d966b7",
+    "verified_supported_score": 3.0
+  },
+  "schema_version": "e2r_stagecourt_event_separation_audit_v1",
+  "status": "STAGECOURT_EVENT_SEPARATION_PASS"
+}

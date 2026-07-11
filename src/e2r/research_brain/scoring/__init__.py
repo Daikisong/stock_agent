@@ -11,7 +11,13 @@ from .evidence_impact_adjudicator import EvidenceImpactAdjudicator, EvidenceImpa
 from .impact_validator import CreditValidatedImpact, DocumentCluster, EconomicFactCluster, ImpactValidationResult, ImpactValidator, audit_impact_validator_v2, compile_fact_document_dedupe_audit
 from .component_assessment import ComponentAssessment, ComponentAssessmentBuilder, ComponentAssessmentResult, ComponentAssessmentStatus
 from .component_scorer import ResearchCalibratedComponentScorer, ResearchCalibratedScoreResult
-from .atomic_stagecourt_v2 import AtomicStageCourtV2, AtomicStageDecisionV2
+from .atomic_stagecourt_v2 import (
+    AtomicStageCourtV2,
+    AtomicStageDecisionV2,
+    EventOverlayInput,
+    FullThesisStageInput,
+    RiskOverlayInput,
+)
 from .evidence_origin import EvidenceOrigin, ScoringEvidencePartition, audit_probe_separation, partition_scoring_evidence
 from .scoring_readiness import SCORING_READINESS_SCHEMA_VERSION, compile_meaningful_scoring_readiness, write_meaningful_scoring_readiness
 from .codex_impact_provider import CodexEvidenceImpactProvider
@@ -34,6 +40,7 @@ from .semantic_closure_reconciler import (
     SemanticClosureReconciliationResult,
     audit_question_component_reconciliation,
 )
+from .stagecourt_event_separation import audit_stagecourt_event_separation
 from .question_impact_contract import (
     QuestionImpactContract,
     audit_question_impact_contracts,
@@ -52,6 +59,7 @@ __all__ = [
     "ComponentAssessment", "ComponentAssessmentBuilder", "ComponentAssessmentResult", "ComponentAssessmentStatus",
     "ResearchCalibratedComponentScorer", "ResearchCalibratedScoreResult",
     "AtomicStageCourtV2", "AtomicStageDecisionV2",
+    "EventOverlayInput", "FullThesisStageInput", "RiskOverlayInput",
     "EvidenceOrigin", "ScoringEvidencePartition", "audit_probe_separation", "partition_scoring_evidence",
     "SCORING_READINESS_SCHEMA_VERSION", "compile_meaningful_scoring_readiness", "write_meaningful_scoring_readiness",
     "CodexEvidenceImpactProvider",
@@ -65,6 +73,7 @@ __all__ = [
     "QuestionComponentReconciliation", "SemanticClosureReconciler",
     "SemanticClosureReconciliationResult",
     "audit_question_component_reconciliation",
+    "audit_stagecourt_event_separation",
     "QuestionImpactContract", "audit_question_impact_contracts",
     "compile_question_closures_v2", "load_question_impact_contracts",
 ]
