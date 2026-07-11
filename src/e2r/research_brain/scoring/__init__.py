@@ -10,6 +10,7 @@ from .claim_impact_ledger import (
 from .evidence_impact_adjudicator import EvidenceImpactAdjudicator, EvidenceImpactAdjudicationResult, EvidenceImpactProvider
 from .impact_validator import CreditValidatedImpact, ImpactValidationResult, ImpactValidator
 from .component_assessment import ComponentAssessment, ComponentAssessmentBuilder, ComponentAssessmentResult, ComponentAssessmentStatus
+from .component_scorer import ResearchCalibratedComponentScorer, ResearchCalibratedScoreResult
 
 __all__ = [
     "ClaimImpactLedgerBuilder", "ClaimImpactLedgerResult", "ClaimImpactProposal",
@@ -17,4 +18,5 @@ __all__ = [
     "EvidenceImpactAdjudicator", "EvidenceImpactAdjudicationResult", "EvidenceImpactProvider",
     "CreditValidatedImpact", "ImpactValidationResult", "ImpactValidator",
     "ComponentAssessment", "ComponentAssessmentBuilder", "ComponentAssessmentResult", "ComponentAssessmentStatus",
+    "ResearchCalibratedComponentScorer", "ResearchCalibratedScoreResult",
 ]

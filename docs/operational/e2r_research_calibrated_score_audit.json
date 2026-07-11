@@ -1,0 +1,15 @@
+{
+  "schema_version":"e2r_research_calibrated_score_audit_v1",
+  "as_of_date":"2026-07-11",
+  "status":"RESEARCH_CALIBRATED_COMPONENT_SCORING_PASS",
+  "scope":"DETERMINISTIC_CONTRACT_CANARY_NOT_ORGANIC_LIVE_READINESS",
+  "profile_id":"e2r_2_2_archetype_weight_runtime",
+  "component_score_vector":{"eps_fcf_explosion":0.0,"earnings_visibility":0.0,"bottleneck_pricing":11.4,"market_mispricing":0.0,"valuation_rerating":0.0,"capital_allocation":0.0,"information_confidence":0.0},
+  "verified_supported_score":11.4,
+  "provisional_score_interval":[11.4,11.4],
+  "full_e2r_score":11.4,
+  "full_score_valid":true,
+  "score_type":"FULL_E2R_100",
+  "critical_counts":{"balanced_point_score_count":0,"calibrated_profile_not_used_count":0,"supported_component_lost_count":0,"full_score_with_nonterminal_component_count":0,"component_sum_total_mismatch_count":0},
+  "critical_count_sum":0
+}
