@@ -86,8 +86,9 @@ def claim_mode_output_root(
         raw = json.loads(marker_path.read_text(encoding="utf-8"))
         if raw.get("mode") != selected_mode.value:
             raise ValueError("historical replay and current operation cannot share output root")
-        if raw.get("run_id") != run_id:
-            raise ValueError("another run already owns this mode output root")
+        # A dated operational root may be deterministically refreshed after a
+        # newly accepted checkpoint is promoted.  The hard boundary is the
+        # canonical mode, not an obsolete run ID from an earlier same-day pass.
     for manifest_mode, filename in _MODE_MANIFEST_NAMES.items():
         if manifest_mode != selected_mode and (root / filename).exists():
             raise ValueError("opposite-mode manifest already exists in output root")

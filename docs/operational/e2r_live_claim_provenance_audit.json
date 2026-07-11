@@ -1,0 +1,27 @@
+{
+  "accepted_current_claim_count": 1,
+  "artifact_role": "FINAL_CANONICAL_CURRENT_LEAF_AUDIT",
+  "claim_ids": [
+    "CLM-94438945025662847395"
+  ],
+  "claim_provenance_contract_complete": true,
+  "claim_provenance_count": 1,
+  "content_sha256s": [
+    "73ae3c9e232df2bc951e5a6637b7b829f7e3523ffa42762f3b168017260c2d93"
+  ],
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "accepted_current_claim_empty": 0,
+    "actual_fetched_document_empty": 0,
+    "claim_provenance_contract_failure": 0,
+    "claim_provenance_empty": 0,
+    "claim_provenance_identity_mismatch": 0,
+    "future_source_leakage": 0,
+    "source_proxy_score_claim": 0
+  },
+  "document_ids": [
+    "DOC-73ae3c9e232df2bc951e"
+  ],
+  "schema_version": "e2r_live_final_readiness_v1",
+  "status": "LIVE_CLAIM_PROVENANCE_PASS"
+}

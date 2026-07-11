@@ -35,6 +35,8 @@ def main(argv: list[str] | None = None) -> int:
         output_root=Path(config["output_root"]),
         operational_report_path=Path(config["operational_report_path"]),
         shard_count=int(config["shard_count"]),
+        promotion_live_root=config.get("promotion_live_root"),
+        promotion_source_roots=tuple(config.get("promotion_source_roots") or ()),
     )
     print(
         json.dumps(

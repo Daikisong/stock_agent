@@ -1,0 +1,223 @@
+{
+  "as_of_date": "2026-07-10",
+  "critical_count_sum": 2,
+  "reviewers": [
+    {
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "baseline_count_mismatch": 0,
+        "baseline_lane_family_gap": 0,
+        "baseline_lineage_failure": 0,
+        "baseline_target_coverage_gap": 0,
+        "duplicate_universe_symbol": 0,
+        "eligible_universe_too_small": 0,
+        "future_or_nonofficial_universe_source": 0,
+        "raw_eligible_partition_mismatch": 0,
+        "raw_excluded_partition_mismatch": 0
+      },
+      "evidence": {
+        "baseline_lane_count": 10168,
+        "eligible_universe_count": 2542,
+        "excluded_universe_count": 223,
+        "raw_universe_count": 2765
+      },
+      "independent_leaf_reread": true,
+      "leaf_hashes": {
+        "output/live_materialization/2026-07-10/baseline_lanes.jsonl": "6ada47cf178126cf238c292ad891d7a2d30e493c72b1c8ed63057044a2d42d85",
+        "output/live_materialization/2026-07-10/universe_eligible.jsonl": "74333c6b2d1c638a2bbd39ba58c7057fadf34dce0342fa20f38dace3b7263f65",
+        "output/live_materialization/2026-07-10/universe_excluded.jsonl": "8f67ce9807c7cfe7af9677437fb625b638e0b2d131f8d9ebe05a67bd74714cb3",
+        "output/live_materialization/2026-07-10/universe_raw.jsonl": "43897b5c3e107d04b9529f86f4b788dea5620ee201e55b0e95855fac1fb40a73"
+      },
+      "name": "Universe & Baseline Fidelity",
+      "reviewer_id": "A",
+      "status": "PASS"
+    },
+    {
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "empty_or_duplicate_literal_query": 0,
+        "fake_planner_in_live": 0,
+        "future_query_date": 0,
+        "non_llm_query": 0,
+        "official_first_violation": 0,
+        "planner_prompt_hash_mismatch": 0,
+        "planner_prompt_response_lineage_gap": 0,
+        "query_response_lineage_gap": 0,
+        "question_source_task_empty": 0,
+        "question_task_lineage_gap": 0,
+        "real_planner_missing": 0,
+        "selected_deep_empty": 0
+      },
+      "evidence": {
+        "llm_query_response_count": 58,
+        "question_source_task_count": 10,
+        "real_planner_call_count": 69
+      },
+      "independent_leaf_reread": true,
+      "leaf_hashes": {
+        "output/current_operation/live_2026-07-10/source_tasks.jsonl": "e7edbff3d4cb1556768cb65a91a66d2972ab5d578ccd9e83ecd1da528060d94f",
+        "output/live_materialization/2026-07-10/depth_decisions.jsonl": "8f183d1680c4feef878ec0265aae23537b1a3b556ef69bda42c62e33bc311428",
+        "output/live_materialization/2026-07-10/llm_prompts.jsonl": "fbf838fbc03782bbdf45f313bbaaed7fa0e01b081a5ced6f0b1a3720f9bd5a59",
+        "output/live_materialization/2026-07-10/llm_responses.jsonl": "8f62825e8794fc8cafd7b3cf026c782f94d49e7fe02fca639183960a86883816",
+        "output/live_materialization/2026-07-10/planner_runs.jsonl": "456881b598549e22024ec5a8321aa0404076be201056b35a1870e5a043adb8c6",
+        "output/live_materialization/2026-07-10/query_generation_responses.jsonl": "c9262deb62c6fb015e75e015fa7276bf699b9e5f9b5ef2f013b369c8a76c07e0",
+        "output/live_materialization/2026-07-10/question_source_tasks.jsonl": "09a16f0aa02bbf5ac3022124f1686dc8c3a5ffc1d9739137691f5d316cb132f0",
+        "output/targeted_smoke/2026-07-10/llm_prompts.jsonl": "510edf4d442d5c8ec87714ebca7b9a0e0780b56f1e8ab30dd480d4c40c9d4775",
+        "output/targeted_smoke/2026-07-10/llm_responses.jsonl": "3f8124be32ffff4d9d36d65594c3bc801bfe3d4c7c86541030ff36073c8cf333",
+        "output/targeted_smoke/2026-07-10/planner_runs.jsonl": "de0deb6130486ff1228a7d5b789a942a27d38e4d3267a8e6215e3cdcecc05312",
+        "output/targeted_smoke/2026-07-10/query_generation_responses.jsonl": "10d15d87673ad267af6056b1c376aec4fca0b79cfefe8ee21cd9fe4d3e086cc3",
+        "output/targeted_smoke/2026-07-10/question_source_tasks.jsonl": "46824426c518af5858a0329f0fc28b8b0bfced4db86a4e2558b7056cb3b7987e"
+      },
+      "name": "Brain & SourceTask Semantics",
+      "reviewer_id": "B",
+      "status": "PASS"
+    },
+    {
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "accepted_current_claim_empty": 0,
+        "actual_fetched_document_empty": 0,
+        "claim_provenance_contract_failure": 0,
+        "claim_provenance_empty": 0,
+        "claim_provenance_identity_mismatch": 0,
+        "future_source_leakage": 0,
+        "source_proxy_score_claim": 0
+      },
+      "evidence": {
+        "accepted_current_claim_count": 1,
+        "actual_document_count": 3,
+        "claim_provenance_count": 1
+      },
+      "independent_leaf_reread": true,
+      "leaf_hashes": {
+        "output/current_operation/live_2026-07-10/accepted_claims.jsonl": "056a6dea004fc39f662797de8118d70860f707850c323f99b3e84696f5136351",
+        "output/current_operation/live_2026-07-10/claim_provenance.jsonl": "c573a9a189b9a2148d7e6be15a86015ca4d83fa2f60914d09e2883bb81ae4d30",
+        "output/current_operation/live_2026-07-10/evidence_anchors.jsonl": "733df0102e06420dd779b26752cba67b198e8d4fc26498bd9b0548eaf53324a9",
+        "output/current_operation/live_2026-07-10/evidence_documents.jsonl": "21f95616bf2d695067891da751125b948dc0a7eaec92162a8790d4cbf4bb84c9"
+      },
+      "name": "Source & Claim Realness",
+      "reviewer_id": "C",
+      "status": "PASS"
+    },
+    {
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "accepted_claim_not_in_decision": 0,
+        "accepted_claim_without_provenance": 0,
+        "atomic_decision_empty": 0,
+        "atomic_decision_schema_failure": 0,
+        "canonical_atomic_audit_failure": 0,
+        "claimless_nonzero_score": 0,
+        "hard_break_without_current_direct_open": 0,
+        "orphan_score_contribution": 0,
+        "pending_final_score": 0,
+        "provider_failure_final_score": 0,
+        "score_contribution_empty": 0,
+        "score_contribution_projection_mismatch": 0
+      },
+      "evidence": {
+        "accepted_decision_claim_count": 1,
+        "atomic_decision_count": 4,
+        "score_contribution_count": 1
+      },
+      "independent_leaf_reread": true,
+      "leaf_hashes": {
+        "output/current_operation/live_2026-07-10/accepted_claims.jsonl": "056a6dea004fc39f662797de8118d70860f707850c323f99b3e84696f5136351",
+        "output/current_operation/live_2026-07-10/atomic_decisions.jsonl": "43f903eb6e49fc362a1126323d109cb2debf5f136190d06c44f4e4f73347134a",
+        "output/current_operation/live_2026-07-10/claim_provenance.jsonl": "c573a9a189b9a2148d7e6be15a86015ca4d83fa2f60914d09e2883bb81ae4d30",
+        "output/current_operation/live_2026-07-10/score_contributions.jsonl": "8774bf75770b6dbabca692cf3d80f70da7a59ff5fd60086fc6b77e2e3913d304"
+      },
+      "name": "Score & Stage Integrity",
+      "reviewer_id": "D",
+      "status": "PASS"
+    },
+    {
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "accepted_claim_not_projected_to_census": 0,
+        "census_universe_coverage_gap": 0,
+        "current_census_input_mismatch": 0,
+        "current_census_manifest_leaf_mismatch": 0,
+        "current_census_source_corpus_hash_failure": 0,
+        "current_census_source_leaf_projection_mismatch": 0,
+        "duplicate_census_symbol": 0,
+        "forced_archetype_quota": 0,
+        "selective_deep_empty": 0
+      },
+      "evidence": {
+        "census_stage_map_count": 2542,
+        "current_universe_count": 2542,
+        "selected_deep_count": 180,
+        "source_corpus_hash_equal": true
+      },
+      "independent_leaf_reread": true,
+      "leaf_hashes": {
+        "output/census/live_2026-07-10/accepted_claims.jsonl": "056a6dea004fc39f662797de8118d70860f707850c323f99b3e84696f5136351",
+        "output/census/live_2026-07-10/atomic_decisions.jsonl": "43f903eb6e49fc362a1126323d109cb2debf5f136190d06c44f4e4f73347134a",
+        "output/census/live_2026-07-10/census_acceptance_audit.json": "c5c37b2b267c6c2d81e01d55a31c3c0b93ae5ae3a6d07a90a0b2f59c2b9be65b",
+        "output/census/live_2026-07-10/census_stage_map.jsonl": "f6790032860017da5e645140be495a7a704f946b7b2afaecae2737a2abd78303",
+        "output/census/live_2026-07-10/claim_provenance.jsonl": "c573a9a189b9a2148d7e6be15a86015ca4d83fa2f60914d09e2883bb81ae4d30",
+        "output/census/live_2026-07-10/current_daily_census_manifest.json": "5e19689d92c14b68fb3f1c48b86d1fe03c934cc281aeaf8b9827a1b9c25f2082",
+        "output/census/live_2026-07-10/current_daily_depth_decisions.jsonl": "0d826c2bd9d95e59abcb738f7a1cdcfd37c540d5342002beecd377c532076675",
+        "output/census/live_2026-07-10/current_operation_input_manifest.json": "eea01ac30d59b3fd946ae6d109ce4a5a0da860e7bfb9abbf033bbc574dc087a5",
+        "output/census/live_2026-07-10/evidence_documents.jsonl": "21f95616bf2d695067891da751125b948dc0a7eaec92162a8790d4cbf4bb84c9",
+        "output/census/live_2026-07-10/score_contributions.jsonl": "8774bf75770b6dbabca692cf3d80f70da7a59ff5fd60086fc6b77e2e3913d304",
+        "output/current_operation/live_2026-07-10/accepted_claims.jsonl": "056a6dea004fc39f662797de8118d70860f707850c323f99b3e84696f5136351",
+        "output/current_operation/live_2026-07-10/atomic_decisions.jsonl": "43f903eb6e49fc362a1126323d109cb2debf5f136190d06c44f4e4f73347134a",
+        "output/current_operation/live_2026-07-10/claim_provenance.jsonl": "c573a9a189b9a2148d7e6be15a86015ca4d83fa2f60914d09e2883bb81ae4d30",
+        "output/current_operation/live_2026-07-10/current_daily_census_manifest.json": "5e19689d92c14b68fb3f1c48b86d1fe03c934cc281aeaf8b9827a1b9c25f2082",
+        "output/current_operation/live_2026-07-10/current_operation_input_manifest.json": "eea01ac30d59b3fd946ae6d109ce4a5a0da860e7bfb9abbf033bbc574dc087a5",
+        "output/current_operation/live_2026-07-10/evidence_documents.jsonl": "21f95616bf2d695067891da751125b948dc0a7eaec92162a8790d4cbf4bb84c9",
+        "output/current_operation/live_2026-07-10/score_contributions.jsonl": "8774bf75770b6dbabca692cf3d80f70da7a59ff5fd60086fc6b77e2e3913d304"
+      },
+      "name": "Current/Census Separation & Consistency",
+      "reviewer_id": "E",
+      "status": "PASS"
+    },
+    {
+      "critical_count_sum": 2,
+      "critical_counts": {
+        "census_command_not_live_materialized": 0,
+        "census_command_repo_dirty": 1,
+        "census_command_reproducibility_failure": 0,
+        "census_envelope_not_ready": 0,
+        "current_census_command_commit_mismatch": 0,
+        "current_command_not_live_materialized": 0,
+        "current_command_repo_dirty": 1,
+        "current_command_reproducibility_failure": 0,
+        "current_envelope_not_ready": 0,
+        "live_document_empty": 0,
+        "llm_calls_empty": 0,
+        "materialization_stage_trace_failure": 0,
+        "materializer_not_called": 0,
+        "promotion_not_applied": 0,
+        "provider_calls_empty": 0
+      },
+      "evidence": {
+        "actual_provider_call_count": 6,
+        "canonical_live_document_count": 3,
+        "current_census_same_commit": true,
+        "materialization_stage_count": 12,
+        "real_llm_prompt_count": 121
+      },
+      "independent_leaf_reread": true,
+      "leaf_hashes": {
+        "output/census/live_2026-07-10/command_run_manifest.json": "4f423c832de1f21faefea42a46bd42a9a44f45d6d262984fdb191878e6204305",
+        "output/census/live_2026-07-10/live_operational_envelope.json": "e94555b343f3ea4a5ff3ec0af8d788955c6c5a0afe1ac880d7bed02cac7a235c",
+        "output/current_operation/live_2026-07-10/command_run_manifest.json": "411c3202912e6b0dbf333215690db8861cc08a8e589546806ad0d81fcb8a1ffd",
+        "output/current_operation/live_2026-07-10/evidence_documents.jsonl": "21f95616bf2d695067891da751125b948dc0a7eaec92162a8790d4cbf4bb84c9",
+        "output/current_operation/live_2026-07-10/live_operational_envelope.json": "204d4a01cd963f0d0780a35f42f75379f39c81b9b58406f8a869f7688631ab35",
+        "output/live_materialization/2026-07-10/current_orchestration_audit.json": "9c6585a5ff4d23ae847f0d3670a946d1bdd2dc97674a2f2fe4bd1c2bbcbbf3a5",
+        "output/live_materialization/2026-07-10/live_acceptance_promotion.json": "90fe945ac2eca962ad0905fb293a628b49ed4fe90ab317a19a36a7dab7ed469f",
+        "output/live_materialization/2026-07-10/llm_prompts.jsonl": "fbf838fbc03782bbdf45f313bbaaed7fa0e01b081a5ced6f0b1a3720f9bd5a59",
+        "output/live_materialization/2026-07-10/provider_requests.jsonl": "d80a5236e7116a2c021dec8d2d1d5acc5e8c63cfdaa3092e2794ab2edb31dca5",
+        "output/targeted_smoke/2026-07-10/llm_prompts.jsonl": "510edf4d442d5c8ec87714ebca7b9a0e0780b56f1e8ab30dd480d4c40c9d4775"
+      },
+      "name": "Live Orchestration & Runtime Honesty",
+      "reviewer_id": "F",
+      "status": "FAIL"
+    }
+  ],
+  "schema_version": "e2r_live_final_readiness_v1",
+  "status": "REVIEWER_A_TO_F_FAIL"
+}

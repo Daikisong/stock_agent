@@ -23,13 +23,12 @@ from e2r.research_brain.runtime.current_operation_runner import (
 )
 from e2r.research_brain.runtime.live_materialization import (
     AuthorizationPath,
-    CurrentOperationRunnerInputBuilder,
+    LiveCurrentMaterializationOrchestrator,
     LiveRunMode,
     load_live_run_profile,
     package_live_census_operation,
     package_live_current_operation,
     resolve_live_authorization,
-    write_current_operation_input_manifest,
 )
 
 
@@ -104,21 +103,22 @@ def main(
         )
     materialized_input_manifest: str | None = None
     materialized_live_root: Path | None = None
+    materialization_audit_path: Path | None = None
     if authorization.path == AuthorizationPath.LIVE_MATERIALIZATION.value:
         try:
             profile = load_live_run_profile(str(authorization.run_profile))
             if profile.run_mode != authorization.run_mode:
                 raise ValueError("live run profile mode does not match CLI live mode")
             live_root = Path("output/live_materialization") / args.as_of_date
-            inputs, builder_audit = CurrentOperationRunnerInputBuilder().build_from_live_root(
+            orchestration = LiveCurrentMaterializationOrchestrator().materialize(
                 as_of_date=args.as_of_date,
                 live_root=live_root,
+                current_state_root=Path("output/current_state") / args.as_of_date,
                 run_profile=str(authorization.run_profile),
             )
-            materialized_paths = write_current_operation_input_manifest(
-                inputs,
-                live_root=live_root,
-            )
+            inputs = orchestration.inputs
+            builder_audit = orchestration.builder_audit
+            materialized_paths = orchestration.input_paths
             builder_audit_path = live_root / "current_operation_input_builder_audit.json"
             builder_audit_path.write_text(
                 json.dumps(builder_audit, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
@@ -126,13 +126,14 @@ def main(
             )
             materialized_input_manifest = str(materialized_paths["canonical_manifest"])
             materialized_live_root = live_root
+            materialization_audit_path = live_root / "current_orchestration_audit.json"
         except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
             return write_current_internal_materializer_pending_run(
                 command=command_name,
                 args=recorded_args,
                 effective_argv=effective_argv,
                 output_root=output_root,
-                blockers=("LIVE_RUN_PROFILE_INVALID",),
+                blockers=("LIVE_MATERIALIZATION_ORCHESTRATION_FAILED",),
                 authorization={
                     **authorization.to_dict(),
                     "profile_error_category": type(exc).__name__,
@@ -166,6 +167,8 @@ def main(
                     run_mode=authorization.run_mode,
                 )
             )
+            if materialization_audit_path is not None:
+                output_paths["current_orchestration_audit"] = materialization_audit_path
         if command_name == "run_e2r_census_mode":
             output_paths.update(
                 package_live_census_operation(

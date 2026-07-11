@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -20,6 +21,7 @@ from e2r.research_brain.runtime.current_operation_runner import (
 
 from .census_operational_packager import package_live_census_operation
 from .current_atomic_decision import CurrentAtomicDecisionBuilder
+from .current_orchestrator import write_live_acceptance_promotion
 
 
 LIVE_ACCEPTANCE_SCHEMA_VERSION = "e2r_full_live_acceptance_v1"
@@ -28,6 +30,7 @@ LIVE_ACCEPTANCE_SCHEMA_VERSION = "e2r_full_live_acceptance_v1"
 @dataclass(frozen=True)
 class FullLiveAcceptanceResult:
     status: str
+    base_inputs: CurrentOperationRunnerInput
     inputs: CurrentOperationRunnerInput
     current_result: CurrentOperationRunnerResult
     report: Mapping[str, Any]
@@ -95,19 +98,26 @@ def run_full_live_acceptance(
         raise ValueError("accepted claim lacks a real query-planner trace")
 
     payload = base.to_dict()
-    payload["claims"] = [item.to_dict() for item in (*base.claims, *atomic.claims)]
-    payload["claim_provenance"] = [
-        *[item.to_dict() for item in base.claim_provenance],
-        *provenance_rows,
-    ]
-    payload["source_tasks"] = [
-        *[item.to_dict() for item in base.source_tasks],
-        daily_task,
-    ]
-    payload["atomic_decisions"] = [
-        *[item.to_dict() for item in base.atomic_decisions],
-        decision.to_dict(),
-    ]
+    payload["claims"] = _merge_unique_rows(
+        [item.to_dict() for item in base.claims],
+        [item.to_dict() for item in atomic.claims],
+        key="claim_id",
+    )
+    payload["claim_provenance"] = _merge_unique_rows(
+        [item.to_dict() for item in base.claim_provenance],
+        list(provenance_rows),
+        key="claim_id",
+    )
+    payload["source_tasks"] = _merge_unique_rows(
+        [item.to_dict() for item in base.source_tasks],
+        [daily_task],
+        key="task_id",
+    )
+    payload["atomic_decisions"] = _merge_unique_rows(
+        [item.to_dict() for item in base.atomic_decisions],
+        [decision.to_dict()],
+        key="decision_id",
+    )
     payload["deep_executions"] = _replace_target_execution(
         base.deep_executions,
         target_id=target_id,
@@ -155,7 +165,29 @@ def run_full_live_acceptance(
         item.llm_calls for item in first.deep_executions
         if item.provider_kind == "CODEX"
     )
-    fetched_documents = sum(item.fetches for item in first.deep_executions)
+    base_live_root = Path(str(config.get("base_live_root") or ""))
+    base_documents = (
+        _read_jsonl(base_live_root / "evidence_documents.jsonl")
+        if base_live_root.is_dir()
+        else ()
+    )
+    probe_document_path = probe_root / "evidence_document.json"
+    probe_documents = (
+        (_read_json(probe_document_path),)
+        if probe_document_path.is_file()
+        else ()
+    )
+    fetched_document_rows = tuple(
+        row
+        for row in (*base_documents, *probe_documents)
+        if _is_actual_fetched_document(row, as_of_date=as_of_date)
+    )
+    fetched_documents = len(
+        {
+            str(row.get("document_id") or row.get("official_document_id") or "")
+            for row in fetched_document_rows
+        }
+    )
     eligible = sum(item.eligible for item in first.universe)
     required_lanes = eligible * 4
     evidence = {
@@ -223,6 +255,12 @@ def run_full_live_acceptance(
             "same_manifest_replay_determinism": "ZERO_VARIANCE" if hard["same_manifest_replay_variance"] == 0 else "VARIANCE",
         },
         "current_census_evidence": evidence,
+        "actual_fetched_document_ids": sorted(
+            {
+                str(row.get("document_id") or row.get("official_document_id") or "")
+                for row in fetched_document_rows
+            }
+        ),
         "accepted_claim_proof": {
             "target_id": target_id,
             "claim_id": atomic.claims[0].claim_id,
@@ -263,6 +301,7 @@ def run_full_live_acceptance(
     }
     return FullLiveAcceptanceResult(
         status=str(report["status"]),
+        base_inputs=base,
         inputs=inputs,
         current_result=first,
         report=report,
@@ -275,6 +314,8 @@ def write_full_live_acceptance(
     output_root: str | Path,
     operational_report_path: str | Path,
     shard_count: int = 4,
+    promotion_live_root: str | Path | None = None,
+    promotion_source_roots: Sequence[str | Path] = (),
 ) -> Mapping[str, Path]:
     root = Path(output_root)
     current_root = root / "current"
@@ -288,12 +329,41 @@ def write_full_live_acceptance(
         resume=False,
     )
     write_json(operational_report_path, result.report)
-    return {
+    paths = {
         "input_manifest": root / "current_operation_input_manifest.json",
         "current_manifest": current_root / "current_daily_census_manifest.json",
         "census_audit": census_root / "census_acceptance_audit.json",
         "operational_report": Path(operational_report_path),
     }
+    if promotion_live_root is not None:
+        paths.update(
+            write_live_acceptance_promotion(
+                as_of_date=result.inputs.as_of_date,
+                live_root=promotion_live_root,
+                base_input=result.base_inputs,
+                promoted_input=result.inputs,
+                acceptance_report=result.report,
+                source_roots=promotion_source_roots,
+            )
+        )
+    return paths
+
+
+def _is_actual_fetched_document(
+    row: Mapping[str, Any], *, as_of_date: str
+) -> bool:
+    text = str(row.get("content_text") or row.get("document_text") or "")
+    digest = str(row.get("content_hash") or row.get("content_sha256") or "")
+    available = str(row.get("available_at") or row.get("available_date") or "")[:10]
+    url = str(row.get("canonical_url") or row.get("source_url") or "")
+    return bool(
+        text
+        and hashlib.sha256(text.encode("utf-8")).hexdigest() == digest
+        and available
+        and available <= as_of_date
+        and url.startswith("https://")
+        and not url.startswith("snapshot://")
+    )
 
 
 def _daily_source_task(task: Mapping[str, Any]) -> Mapping[str, Any]:
@@ -338,6 +408,27 @@ def _daily_source_task(task: Mapping[str, Any]) -> Mapping[str, Any]:
         "official_gap_reasons": [],
         "test_only": False,
     }
+
+
+def _merge_unique_rows(
+    base_rows: Sequence[Mapping[str, Any]],
+    added_rows: Sequence[Mapping[str, Any]],
+    *,
+    key: str,
+) -> list[Mapping[str, Any]]:
+    merged = {str(row.get(key) or ""): dict(row) for row in base_rows}
+    if "" in merged:
+        raise ValueError(f"base acceptance row has empty {key}")
+    for row in added_rows:
+        identity = str(row.get(key) or "")
+        if not identity:
+            raise ValueError(f"promoted acceptance row has empty {key}")
+        existing = merged.get(identity)
+        if existing is not None and stable_hash(existing) != stable_hash(dict(row)):
+            raise ValueError(f"acceptance promotion conflicts on {key}: {identity}")
+        if existing is None:
+            merged[identity] = dict(row)
+    return list(merged.values())
 
 
 def _replace_target_execution(

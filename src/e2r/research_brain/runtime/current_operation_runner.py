@@ -988,6 +988,16 @@ class CurrentOperationRunnerResult:
             raise ValueError("daily current operation result identity/mode mismatch")
         leaf_payload = _result_leaf_payload(self)
         expected_leaf_hash = stable_hash(leaf_payload)
+        expected_source_corpus_hash = compute_current_source_corpus_hash(
+            as_of_date=self.as_of_date,
+            universe=self.universe,
+            baseline_lanes=self.baseline_lanes,
+            triggers=self.triggers,
+            claims=self.claims,
+            claim_provenance=self.claim_provenance,
+            source_tasks=self.source_tasks,
+            deep_executions=self.deep_executions,
+        )
         expected_run_id = "DAILY-" + stable_hash(
             {"as_of_date": self.as_of_date, "leaf_hash": expected_leaf_hash}
         )[:24]
@@ -1002,6 +1012,8 @@ class CurrentOperationRunnerResult:
             self.run_id != expected_run_id
             or self.manifest.get("run_id") != self.run_id
             or self.manifest.get("leaf_hash") != expected_leaf_hash
+            or self.manifest.get("source_corpus_hash")
+            != expected_source_corpus_hash
             or dict(self.audit) != dict(expected_audit)
             or expected_audit.get("critical_count_sum") != 0
             or self.manifest.get("critical_counts")
@@ -1072,6 +1084,16 @@ def run_current_daily_census(
     if audit["critical_count_sum"]:
         raise ValueError(f"daily current operation audit failed: {audit['critical_counts']}")
     leaf_hash = stable_hash(leaf_payload)
+    source_corpus_hash = compute_current_source_corpus_hash(
+        as_of_date=inputs.as_of_date,
+        universe=inputs.universe,
+        baseline_lanes=inputs.baseline_lanes,
+        triggers=inputs.triggers,
+        claims=inputs.claims,
+        claim_provenance=inputs.claim_provenance,
+        source_tasks=inputs.source_tasks,
+        deep_executions=inputs.deep_executions,
+    )
     run_id = "DAILY-" + stable_hash(
         {"as_of_date": inputs.as_of_date, "leaf_hash": leaf_hash}
     )[:24]
@@ -1131,6 +1153,7 @@ def run_current_daily_census(
         "critical_counts": dict(audit["critical_counts"]),
         "critical_count_sum": 0,
         "leaf_hash": leaf_hash,
+        "source_corpus_hash": source_corpus_hash,
         "test_mode": inputs.config.test_mode,
         "production_bounded_contract_ready": True,
         "live_execution_observed": bool(
@@ -1160,6 +1183,40 @@ def run_current_daily_census(
         config=inputs.config,
         audit=audit,
         manifest=manifest,
+    )
+
+
+def compute_current_source_corpus_hash(
+    *,
+    as_of_date: str,
+    universe: Sequence[DailyUniverseMember],
+    baseline_lanes: Sequence[DailyBaselineLane],
+    triggers: Sequence[CurrentTriggerSignal],
+    claims: Sequence[AtomicScoreClaim],
+    claim_provenance: Sequence[DailyClaimProvenance],
+    source_tasks: Sequence[DailySourceTaskRecord],
+    deep_executions: Sequence[DailyDeepExecution],
+) -> str:
+    """Return an order-independent hash of current source-bearing leaves."""
+
+    date.fromisoformat(as_of_date)
+
+    def canonical_rows(values: Sequence[Any]) -> list[Mapping[str, Any]]:
+        rows = [item.to_dict() for item in values]
+        return sorted(rows, key=stable_hash)
+
+    return stable_hash(
+        {
+            "schema_version": "e2r_current_source_corpus_v1",
+            "as_of_date": as_of_date,
+            "universe": canonical_rows(universe),
+            "baseline_lanes": canonical_rows(baseline_lanes),
+            "triggers": canonical_rows(triggers),
+            "claims": canonical_rows(claims),
+            "claim_provenance": canonical_rows(claim_provenance),
+            "source_tasks": canonical_rows(source_tasks),
+            "deep_executions": canonical_rows(deep_executions),
+        }
     )
 
 
@@ -3278,6 +3335,7 @@ __all__ = [
     "DailyUniverseMember",
     "atomic_stage_decision_from_mapping",
     "audit_current_daily_census",
+    "compute_current_source_corpus_hash",
     "current_operation_runner_input_from_mapping",
     "load_current_operation_runner_input",
     "render_current_daily_census_report",

@@ -1,0 +1,7 @@
+{
+  "critical_count_sum": 0,
+  "live_materialization_authorized": true,
+  "manifest_replay_separate": true,
+  "schema_version": "e2r_live_final_readiness_v1",
+  "status": "LIVE_AUTHORIZATION_MATRIX_PASS"
+}

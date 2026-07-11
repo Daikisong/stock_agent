@@ -16,6 +16,7 @@ from e2r.research_brain.runtime import (
     run_current_daily_census,
 )
 from e2r.research_brain.runtime.live_materialization import (
+    audit_current_census_source_corpus_hash,
     package_live_census_operation,
 )
 
@@ -45,31 +46,30 @@ class LiveCensusOperationalPackagerTests(unittest.TestCase):
             for member in universe
             for lane in DailyBaselineLaneType
         )
-        cls.result = run_current_daily_census(
-            CurrentOperationRunnerInput(
-                as_of_date=as_of_date,
-                universe=universe,
-                baseline_lanes=lanes,
-                triggers=(),
-                claims=(),
-                source_tasks=(),
-                atomic_decisions=(),
-                deep_executions=(),
-                config=CurrentOperationRunnerConfig(
-                    max_official_light_targets=3,
-                    max_deep_candidates=2,
-                    max_brain_candidates=2,
-                    max_acquisition_candidates=2,
-                    max_llm_calls_per_candidate=2,
-                    max_source_tasks_per_candidate=3,
-                    max_fetches_per_candidate=4,
-                    max_retries_per_candidate=1,
-                    max_general_web_fetches_per_candidate=1,
-                    max_runtime_seconds=60.0,
-                    test_mode=True,
-                ),
-            )
+        cls.inputs = CurrentOperationRunnerInput(
+            as_of_date=as_of_date,
+            universe=universe,
+            baseline_lanes=lanes,
+            triggers=(),
+            claims=(),
+            source_tasks=(),
+            atomic_decisions=(),
+            deep_executions=(),
+            config=CurrentOperationRunnerConfig(
+                max_official_light_targets=3,
+                max_deep_candidates=2,
+                max_brain_candidates=2,
+                max_acquisition_candidates=2,
+                max_llm_calls_per_candidate=2,
+                max_source_tasks_per_candidate=3,
+                max_fetches_per_candidate=4,
+                max_retries_per_candidate=1,
+                max_general_web_fetches_per_candidate=1,
+                max_runtime_seconds=60.0,
+                test_mode=True,
+            ),
         )
+        cls.result = run_current_daily_census(cls.inputs)
 
     def test_full_map_shards_and_hard_acceptance_are_complete(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -91,6 +91,22 @@ class LiveCensusOperationalPackagerTests(unittest.TestCase):
             self.assertEqual(audit["critical_count_sum"], 0)
             self.assertEqual(set(audit["hard_acceptance_counts"].values()), {0})
             self.assertEqual(audit["checkpoint_count"], 3)
+            self.assertEqual(
+                audit["current_source_corpus_hash"],
+                self.result.manifest["source_corpus_hash"],
+            )
+            self.assertEqual(
+                audit["census_source_corpus_hash"],
+                self.result.manifest["source_corpus_hash"],
+            )
+            self.assertEqual(
+                audit["source_corpus_hash"],
+                self.result.manifest["source_corpus_hash"],
+            )
+            self.assertEqual(
+                audit["source_corpus_hash_audit"]["status"],
+                "CURRENT_CENSUS_SOURCE_CORPUS_HASH_PASS",
+            )
             self.assertTrue((root / "census_stage_map.csv").is_file())
             self.assertTrue((root / "operator_digest.md").is_file())
 
@@ -136,6 +152,68 @@ class LiveCensusOperationalPackagerTests(unittest.TestCase):
                 stable_hash(self._read_jsonl(repaired["census_stage_map_jsonl"])),
                 first_hash,
             )
+
+    def test_same_source_snapshot_replay_has_zero_corpus_variance(self) -> None:
+        first = run_current_daily_census(self.inputs)
+        second = run_current_daily_census(self.inputs)
+
+        self.assertEqual(
+            first.manifest["source_corpus_hash"],
+            second.manifest["source_corpus_hash"],
+        )
+        with tempfile.TemporaryDirectory() as first_tmp, tempfile.TemporaryDirectory() as second_tmp:
+            first_paths = package_live_census_operation(
+                result=first,
+                output_root=first_tmp,
+                shard_count=2,
+                resume=False,
+            )
+            second_paths = package_live_census_operation(
+                result=second,
+                output_root=second_tmp,
+                shard_count=2,
+                resume=False,
+            )
+            first_audit = json.loads(
+                first_paths["census_acceptance_audit"].read_text(encoding="utf-8")
+            )
+            second_audit = json.loads(
+                second_paths["census_acceptance_audit"].read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                first_audit["source_corpus_hash"],
+                second_audit["source_corpus_hash"],
+            )
+
+    def test_current_census_source_corpus_hash_mismatch_is_rejected(self) -> None:
+        audit = audit_current_census_source_corpus_hash(
+            current_source_corpus_hash="a" * 64,
+            census_source_corpus_hash="b" * 64,
+        )
+
+        self.assertEqual(audit["status"], "CURRENT_CENSUS_SOURCE_CORPUS_HASH_FAIL")
+        self.assertEqual(
+            audit["critical_counts"][
+                "current_census_source_corpus_hash_mismatch"
+            ],
+            1,
+        )
+        original = self.result.manifest["source_corpus_hash"]
+        self.result.manifest["source_corpus_hash"] = "b" * 64
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                with self.assertRaisesRegex(
+                    ValueError,
+                    "current_census_source_corpus_hash_mismatch",
+                ):
+                    package_live_census_operation(
+                        result=self.result,
+                        output_root=tmp,
+                        shard_count=2,
+                        resume=False,
+                    )
+        finally:
+            self.result.manifest["source_corpus_hash"] = original
 
     @staticmethod
     def _read_jsonl(path: Path) -> list[dict[str, object]]:

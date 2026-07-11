@@ -145,11 +145,28 @@ class LiveAuthorizationContractTests(unittest.TestCase):
                     encoding="utf-8"
                 )
             )
+            envelope = json.loads(
+                (output_root / "live_operational_envelope.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            accepted = tuple(
+                line
+                for line in (output_root / "accepted_claims.jsonl")
+                .read_text(encoding="utf-8")
+                .splitlines()
+                if line.strip()
+            )
 
         self.assertEqual(code, 0)
         self.assertEqual(payload["status"], "BOUNDED_DAILY_CENSUS_PASS")
         self.assertEqual(payload["critical_count_sum"], 0)
         self.assertGreater(payload["full_universe_count"], 1000)
+        self.assertEqual(payload["claim_provenance_count"], 1)
+        self.assertTrue(payload["source_corpus_hash"])
+        self.assertEqual(len(accepted), 1)
+        self.assertTrue(envelope["production_runtime_ready"])
+        self.assertEqual(envelope["accepted_current_claim_count"], 1)
 
     def test_census_forwards_live_authorization_contract(self) -> None:
         with tempfile.TemporaryDirectory() as tmp, redirect_stdout(io.StringIO()):
@@ -179,10 +196,20 @@ class LiveAuthorizationContractTests(unittest.TestCase):
                     encoding="utf-8"
                 )
             )
+            census = json.loads(
+                (output_root / "census_acceptance_audit.json").read_text(
+                    encoding="utf-8"
+                )
+            )
 
         self.assertEqual(code, 0)
         self.assertEqual(payload["status"], "BOUNDED_DAILY_CENSUS_PASS")
         self.assertEqual(payload["critical_count_sum"], 0)
+        self.assertEqual(payload["claim_provenance_count"], 1)
+        self.assertEqual(
+            payload["source_corpus_hash"], census["census_source_corpus_hash"]
+        )
+        self.assertEqual(census["critical_count_sum"], 0)
 
 
 if __name__ == "__main__":

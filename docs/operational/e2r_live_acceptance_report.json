@@ -24,6 +24,11 @@
     "source_url": "https://news.samsung.com/global/samsung-electronics-announces-first-quarter-2026-results",
     "target_id": "005930"
   },
+  "actual_fetched_document_ids": [
+    "DOC-73ae3c9e232df2bc951e",
+    "DOC-aa34acde2818e3784e42",
+    "DOC-bad9ee44dd6cfb8c19c7"
+  ],
   "as_of_date": "2026-07-10",
   "critical_count_sum": 0,
   "current_census_evidence": {
@@ -41,14 +46,14 @@
     "trigger_count": 446
   },
   "determinism": {
-    "config_hash": "08a32c83d7edff02a882cec935ef4eafa73a754cd076e79a41b9f0546677a18d",
+    "config_hash": "f8b7e00174f072755247db80c30e2a3b6764e65e5117de7dfa634baca85c30ea",
     "first_leaf_hash": "aa4fdd00f4153932f793774890444779691c7785d96ebb41496368ffce162cb0",
     "input_hash": "88e53371bc20be8f5311879f4b8e096b918be94bfaa3c91267221b907205e0cc",
     "second_leaf_hash": "aa4fdd00f4153932f793774890444779691c7785d96ebb41496368ffce162cb0",
     "source_hash": "89cc5d583308ab03d03ca630e3ebfd2facb8eab1c3153783e775defa310e2b55",
     "variance_count": 0
   },
-  "executed_at": "2026-07-10T23:57:05+00:00",
+  "executed_at": "2026-07-11T03:57:45+00:00",
   "hard_acceptance_counts": {
     "accepted_current_claim_missing": 0,
     "atomic_decision_missing": 0,
@@ -76,26 +81,29 @@
     "source_corpus_hash": "a1094a67eeed155c37b7dd914317b285dbc27673db6de909586cee965a9b86f0"
   },
   "phase_commit_shas": [
-    "39ff830",
-    "77191c1",
-    "56154ad",
-    "84fd6e7",
-    "a2bbcff",
-    "89aeeeb",
-    "73d19f3",
-    "2a12552",
-    "fbee570",
-    "dc686b9",
-    "2a475ff",
-    "b9751cc",
-    "5b21780",
-    "7989608",
-    "cae677a",
-    "9bab395",
-    "9babe6a",
-    "78c5407",
-    "3464748",
-    "66a81fd"
+    "39ff8300b3be22014e4cf89268ab17463922ca39",
+    "77191c10f7f772a1031b1a33b10cc0958a2e0626",
+    "56154ad4f605812870b406aa8e18e6bd97f65661",
+    "84fd6e7f8ac78033994b05cdab04438bbc93a35b",
+    "a2bbcff6215e52d5048b39a202784faaf4e7d1cb",
+    "89aeeeb76f5dbb41b2cc73d32a236acd751f9140",
+    "73d19f397860008a0c9cdb6cdafda48b8af1d6ac",
+    "2a125523eb16ba4653d9a7fdb330091480831494",
+    "fbee5700699ea97a4f951f4b3681282ae9ef4622",
+    "dc686b9bdec8dd4c3aa6416125cd2d29997d0c90",
+    "2a475ff1a93d030188f3b0df7595385561351019",
+    "b9751cc4efbe70e2420a550dd21df31d73b1d13b",
+    "5b2178033fd1c89d5c7a0da904cbedfbbe86812e",
+    "79896083bfdf81ed63dccdd5c5849b8398fcfc94",
+    "cae677a67d31a08c70511099ef39aeceabf6061a",
+    "9bab39524cbfee9ab0498b837d8750d631af9799",
+    "9babe6aaeab22238a4eb17f5e0b99ae9130de4ed",
+    "78c54071a31b91e3d5b4a5b55a0bf5534b22d006",
+    "3464748e7bdcfdfa25ac64281588f9ed067cbcef",
+    "66a81fd312c6b4c8f24f5263d3b67f276f2652c2",
+    "26e63c22c9f19d3361979aefed6ed428a9a967b5",
+    "a9e8bfc2b00a54290b8ff3428fecdfaa7cc28e3e",
+    "f8dd47305f82321ebdc30eb85f3ea853ff18d14a"
   ],
   "required_runs": {
     "historical_source_backed_replay": "HISTORICAL_SOURCE_BACKED_REPLAY_PASS",

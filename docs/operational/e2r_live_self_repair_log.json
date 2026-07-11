@@ -1,0 +1,288 @@
+{
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "before_after_contract_failure": 0,
+    "focused_test_failed": 0,
+    "iteration_count_below_ten": 0,
+    "iteration_sequence_gap": 0,
+    "max_iterations_below_ten": 0,
+    "repair_commit_missing": 0,
+    "report_only_repair": 0,
+    "root_cause_file_not_changed": 0,
+    "threshold_relaxation": 0,
+    "unresolved_internal_failure": 0
+  },
+  "external_provider_blockers": [],
+  "final_failure_status": {
+    "ATOMIC_DECISION_MISSING": "RESOLVED",
+    "BASELINE_LANE_MISSING": "RESOLVED",
+    "CENSUS_ALL_DEFAULT": "RESOLVED",
+    "CLAIM_PROVENANCE_MISSING": "RESOLVED",
+    "CURRENT_MANIFEST_BUILD_FAILED": "RESOLVED",
+    "DEPTH_SELECTION_EMPTY": "RESOLVED",
+    "DOCUMENT_NOT_FETCHED": "RESOLVED",
+    "MATERIALIZER_NOT_CALLED": "RESOLVED",
+    "PLANNER_NOT_CALLED": "RESOLVED",
+    "QUERY_TEMPLATE_HARDCODED": "RESOLVED",
+    "TRIGGER_FUSION_EMPTY": "RESOLVED",
+    "UNIVERSE_NOT_MATERIALIZED": "RESOLVED"
+  },
+  "hard_acceptance_pass": true,
+  "iteration_count": 16,
+  "iterations": [
+    {
+      "after": {
+        "materializer_calls": 1
+      },
+      "before": {
+        "materializer_calls": 0
+      },
+      "commit_sha": "77191c1",
+      "failure_class": "MATERIALIZER_NOT_CALLED",
+      "focused_test": "tests.test_live_authorization_contract.LiveAuthorizationContractTests.test_authorized_live_current_does_not_fall_into_manifest_missing_exit_three",
+      "iteration": 1,
+      "repair": "authorized live mode and manifest replay were split into explicit paths",
+      "root_cause": "src/e2r/cli/run_e2r_current_operation.py: live authorization did not enter materialization",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "eligible_universe": 2542
+      },
+      "before": {
+        "eligible_universe": 0
+      },
+      "commit_sha": "84fd6e7",
+      "failure_class": "UNIVERSE_NOT_MATERIALIZED",
+      "focused_test": "tests.test_live_current_universe_materializer.LiveCurrentUniverseMaterializerTests.test_bulk_snapshot_is_normalized_and_exclusion_reasons_are_explicit",
+      "iteration": 2,
+      "repair": "current KRX bulk universe materializer and eligibility reasons added",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/universe_materializer.py: no KRX bulk normalizer",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "baseline_lanes": 10168
+      },
+      "before": {
+        "baseline_lanes": 0
+      },
+      "commit_sha": "73d19f3",
+      "failure_class": "BASELINE_LANE_MISSING",
+      "focused_test": "tests.test_live_baseline_lane_materializer.LiveBaselineLaneMaterializerTests.test_generic_krx_homepage_cannot_be_constructed_as_bulk_source",
+      "iteration": 3,
+      "repair": "OFFICIAL, PRICE, RISK, EXISTING_LEDGER lanes materialized for every eligible symbol",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/baseline_materializer.py: four lane contract absent",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "triggers": 446
+      },
+      "before": {
+        "triggers": 0
+      },
+      "commit_sha": "2a12552",
+      "failure_class": "TRIGGER_FUSION_EMPTY",
+      "focused_test": "tests.test_live_trigger_fusion.LiveTriggerFusionTests.test_resolved_risk_opens_review_but_is_not_reopened_as_current_risk",
+      "iteration": 4,
+      "repair": "official/report/news/market/ledger triggers fused without score authority",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/trigger_fusion.py: current provider events were not fused",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "selected_deep": 40
+      },
+      "before": {
+        "selected_deep": 0
+      },
+      "commit_sha": "fbee570",
+      "failure_class": "DEPTH_SELECTION_EMPTY",
+      "focused_test": "tests.test_live_depth_policy.LiveDepthPolicyTests.test_live_operational_audit_records_every_symbol_and_bounded_deep",
+      "iteration": 5,
+      "repair": "full baseline and bounded L3 selection implemented",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/depth_selector.py: no bounded selective-deep policy",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "real_planner_calls": 66
+      },
+      "before": {
+        "real_planner_calls": 0
+      },
+      "commit_sha": "dc686b9",
+      "failure_class": "PLANNER_NOT_CALLED",
+      "focused_test": "tests.test_live_brain_planner.LiveBrainPlannerTests.test_provider_failure_is_exact_pending_not_low_score",
+      "iteration": 6,
+      "repair": "real two-pass Codex planner calls and pending traces persisted",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/brain_planner_runner.py: canonical Brain not invoked",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "question_source_tasks": 9
+      },
+      "before": {
+        "question_source_tasks": 0
+      },
+      "commit_sha": "2a475ff",
+      "failure_class": "QUERY_TEMPLATE_HARDCODED",
+      "focused_test": "tests.test_targeted_live_smoke.TargetedLiveSmokeTest.test_config_contains_questions_and_budgets_but_no_literal_search_queries",
+      "iteration": 7,
+      "repair": "question-specific SourceTask and real LLM query generation added",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/source_task_materializer.py: missing gaps needed LLM question/query planning",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "fetched_documents": 2
+      },
+      "before": {
+        "fetched_documents": 0
+      },
+      "commit_sha": "b9751cc",
+      "failure_class": "DOCUMENT_NOT_FETCHED",
+      "focused_test": "tests.test_live_source_acquisition_orchestrator.LiveSourceAcquisitionOrchestratorTest.test_provider_failure_is_not_masked_as_no_result",
+      "iteration": 8,
+      "repair": "bounded OpenDART/IssuerIR acquisition and content-hash provenance added",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/source_acquisition_orchestrator.py: SourceTasks had no official-first executor",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "claim_provenance": 0
+      },
+      "before": {
+        "claim_provenance": 0
+      },
+      "commit_sha": "5b21780",
+      "failure_class": "CLAIM_PROVENANCE_MISSING",
+      "focused_test": "tests.test_live_current_claim_compiler.LiveCurrentClaimCompilerTest.test_document_content_hash_mismatch_is_rejected",
+      "iteration": 9,
+      "repair": "contract-blind extraction, adjudication, mapping, exact quote and hash checks added; unrelated documents remained rejected",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/current_claim_compiler.py: fetched documents were not compiled into current claims",
+      "status": "REPAIR_CONTINUED_NO_FALSE_PASS"
+    },
+    {
+      "after": {
+        "atomic_decisions": 3
+      },
+      "before": {
+        "atomic_decisions": 0
+      },
+      "commit_sha": "cae677a",
+      "failure_class": "ATOMIC_DECISION_MISSING",
+      "focused_test": "tests.test_live_current_atomic_decision.LiveCurrentAtomicDecisionTest.test_claimless_material_gaps_are_atomic_no_score_stage_zero",
+      "iteration": 10,
+      "repair": "claimless material gaps now yield NO_SCORE Stage 0 atomic decisions",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/current_atomic_decision.py: no deterministic pending decision",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "self_materialized_manifest": 1
+      },
+      "before": {
+        "self_materialized_manifest": 0
+      },
+      "commit_sha": "9bab395",
+      "failure_class": "CURRENT_MANIFEST_BUILD_FAILED",
+      "focused_test": "tests.test_current_operation_input_builder.CurrentOperationInputBuilderTest.test_real_live_leaves_build_full_valid_production_manifest",
+      "iteration": 11,
+      "repair": "canonical CurrentOperationRunnerInput is self-materialized from live leaves",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/current_operation_input_builder.py: live leaves required a user manifest",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "census_selected_deep": 180
+      },
+      "before": {
+        "census_selected_deep": 0
+      },
+      "commit_sha": "78c5407",
+      "failure_class": "CENSUS_ALL_DEFAULT",
+      "focused_test": "tests.test_live_census_operational_packager.LiveCensusOperationalPackagerTests.test_full_map_shards_and_hard_acceptance_are_complete",
+      "iteration": 12,
+      "repair": "all 2,542 symbols packaged exactly once with 180 selective-deep rows",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/census_operational_packager.py: no full map/shard/checkpoint merge",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "historical_full_sources": 11
+      },
+      "before": {
+        "historical_full_sources": 0
+      },
+      "commit_sha": "3464748",
+      "failure_class": "DOCUMENT_NOT_FETCHED",
+      "focused_test": "tests.test_historical_source_backed_replay.HistoricalSourceBackedReplayTests.test_same_frozen_fetch_has_zero_replay_variance",
+      "iteration": 13,
+      "repair": "13 canaries replayed from 11 actual fetched full sources with stable hashes",
+      "root_cause": "src/e2r/research_brain/replay/source_backed.py: historical URLs were strings without frozen source bodies",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "targeted_live_documents": 8
+      },
+      "before": {
+        "targeted_live_documents": 0
+      },
+      "commit_sha": "66a81fd",
+      "failure_class": "DOCUMENT_NOT_FETCHED",
+      "focused_test": "tests.test_targeted_live_smoke.TargetedLiveSmokeTest.test_official_feed_executes_short_query_and_uses_verified_rss_date",
+      "iteration": 14,
+      "repair": "LLM native-site query, issuer RSS, urllib transport, resume and frozen audit added",
+      "root_cause": "src/e2r/research_brain/runtime/live_materialization/targeted_smoke.py: issuer discovery and requests transport missed official pages",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "accepted_claims": 1,
+        "claim_provenance": 1,
+        "primitive_closure": 1,
+        "score_contribution": 1
+      },
+      "before": {
+        "accepted_claims": 0,
+        "claim_provenance": 0,
+        "primitive_closure": 0
+      },
+      "commit_sha": "26e63c2",
+      "failure_class": "CLAIM_PROVENANCE_MISSING",
+      "focused_test": "tests.test_live_acceptance.FullLiveAcceptanceTest.test_frozen_live_inputs_recompile_with_zero_variance",
+      "iteration": 15,
+      "repair": "entity prompt fixed; direct task closure requires exact provenance and enters pending atomic decision",
+      "root_cause": "src/e2r/agentic/evidence_workflow.py and current_atomic_decision.py: entity metric nouns and claim-to-atomic adapter blocked the accepted path",
+      "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "frozen_leaf_hash_match": 1,
+        "full_test_failures": 0
+      },
+      "before": {
+        "frozen_leaf_hash_match": 0,
+        "full_test_failures": 1
+      },
+      "commit_sha": "f8dd473",
+      "failure_class": "CURRENT_MANIFEST_BUILD_FAILED",
+      "focused_test": "tests.test_e2r_reconstruction_phase13_acceptance.E2RReconstructionPhase13AcceptanceTest.test_frozen_run_matches_full_universe_leaf_artifacts",
+      "iteration": 16,
+      "repair": "canonical current-operation leaf was regenerated; structure and critical counts remained unchanged while deterministic run/leaf hashes were refreshed",
+      "root_cause": "e2r_reconstruction_phase13_acceptance.json: Phase 26 SourceTask schema enrichment left the older frozen daily leaf hash stale",
+      "status": "RESOLVED"
+    }
+  ],
+  "max_iterations": 16,
+  "recovered_provider_gaps": [
+    "IssuerIR discovery unavailable; bounded IssuerNewsroom fallback produced accepted provenance"
+  ],
+  "runtime_adaptive_retry_separated_from_code_self_repair": true,
+  "schema_version": "e2r_live_final_readiness_v1",
+  "status": "SELF_REPAIR_PASS"
+}

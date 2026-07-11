@@ -107,3 +107,29 @@ actual live source, accepted claim, atomic decision 중 하나라도 0이면 env
 - bounded production profiles: 추가
 - authorized live 요청의 manifest-missing external exit 3: 차단
 - 실제 materializer: 다음 Phase 구현 대상
+
+## Phase 38 최종 reconciliation
+
+Phase 18의 마지막 문장은 당시 스냅샷이다. 최종 canonical 경로는 다음처럼
+연결됐다.
+
+```text
+authorized current/Census CLI
+→ LiveCurrentMaterializationOrchestrator
+→ Phase 20~30 provider checkpoint leaf/hash 재검증
+→ Phase 35/36 source-backed acceptance promotion 검증
+→ self-generated CurrentOperationRunnerInput
+→ pure evaluator
+→ dynamic LiveOperationalRunEnvelope
+```
+
+- `manifest_self_generated=true`와 각 단계 leaf SHA-256을
+  `current_orchestration_audit.json`에 남긴다.
+- accepted claim이 없으면 기존처럼 Provider/Source Pending이다.
+- 실제 HTTPS full document, exact provenance, atomic decision, score contribution이
+  모두 연결된 경우에만 별도 operational envelope가 ready가 된다.
+- current와 Census는 같은 promoted input 및 `source_corpus_hash`를 사용하며,
+  불일치하면 Census package가 fail-closed 한다.
+
+쉬운 예: Phase 18은 조리실 설계도였고, Phase 38에서는 각 재료 검수표의
+해시를 다시 확인한 뒤 같은 재료 상자를 current와 Census 주방에 전달한다.

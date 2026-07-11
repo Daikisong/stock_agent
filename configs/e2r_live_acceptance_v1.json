@@ -2,6 +2,7 @@
   "schema_version": "e2r_full_live_acceptance_v1",
   "as_of_date": "2026-07-10",
   "base_census_input_path": "output/census/live_2026-07-10/current_operation_input_manifest.json",
+  "base_live_root": "output/live_materialization/2026-07-10",
   "bootstrap_audit_path": "docs/operational/e2r_live_current_state_bootstrap_audit.json",
   "claim_probe_root": "output/live_acceptance/2026-07-10/claim_probe_samsung_q1",
   "targeted_smoke_root": "output/targeted_smoke/2026-07-10",
@@ -10,6 +11,12 @@
   "historical_replay_repeat_root": "output/historical_replay/source_backed_v1_replay",
   "output_root": "output/live_acceptance/2026-07-10/full",
   "operational_report_path": "docs/operational/e2r_live_acceptance_report.json",
+  "promotion_live_root": "output/live_materialization/2026-07-10",
+  "promotion_source_roots": [
+    "output/live_materialization/2026-07-10/evidence_documents.jsonl",
+    "output/live_acceptance/2026-07-10/claim_probe_samsung_q1",
+    "output/targeted_smoke/2026-07-10"
+  ],
   "shard_count": 4,
   "phase_commit_shas": [
     "39ff830",

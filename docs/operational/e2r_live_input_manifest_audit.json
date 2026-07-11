@@ -1,0 +1,33 @@
+{
+  "artifact_role": "FINAL_CANONICAL_CURRENT_INPUT_AUDIT",
+  "atomic_decision_count": 4,
+  "baseline_lane_count": 10168,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "accepted_claim_not_projected_to_census": 0,
+    "census_universe_coverage_gap": 0,
+    "current_census_input_mismatch": 0,
+    "current_census_manifest_leaf_mismatch": 0,
+    "current_census_source_corpus_hash_failure": 0,
+    "current_census_source_leaf_projection_mismatch": 0,
+    "duplicate_census_symbol": 0,
+    "forced_archetype_quota": 0,
+    "manifest_not_self_generated": 0,
+    "selective_deep_empty": 0
+  },
+  "manifest_self_generated": true,
+  "phase_31_snapshot": {
+    "artifact_role": "PRE_PROMOTION_INPUT_SNAPSHOT",
+    "atomic_decision_count": 3,
+    "path": "docs/operational/e2r_current_operation_input_builder_audit.json",
+    "sha256": "4daeba243a5a1caea231458b136d4e2c9d98145cc1c276963e682a170c303ebc",
+    "source_task_count": 9
+  },
+  "promotion_applied": true,
+  "schema_version": "e2r_live_final_readiness_v1",
+  "source_corpus_hash": "8b5f48d1c9b313a8d3b8d05ff04a8d057bc726bf661e3140fe04cdcea4ff2721",
+  "source_task_count": 10,
+  "status": "LIVE_FINAL_INPUT_MANIFEST_PASS",
+  "trigger_count": 446,
+  "universe_count": 2542
+}

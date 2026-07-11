@@ -15,6 +15,7 @@ from e2r.research_brain.runtime.current_operation_runner import (
     CurrentOperationRunnerResult,
     DailyBaselineLaneStatus,
     DailyTerminalStatus,
+    compute_current_source_corpus_hash,
 )
 
 
@@ -74,12 +75,33 @@ def package_live_census_operation(
     )
     merged_rows = tuple(sorted(merged_rows, key=lambda item: str(item["target_id"])))
 
-    hard_counts = _hard_acceptance_counts(
-        result=result,
-        eligible_target_ids=tuple(member_by_target),
-        stage_rows=merged_rows,
-        lane_by_target=lane_by_target,
+    current_source_corpus_hash = str(
+        result.manifest.get("source_corpus_hash") or ""
     )
+    census_source_corpus_hash = compute_current_source_corpus_hash(
+        as_of_date=result.as_of_date,
+        universe=result.universe,
+        baseline_lanes=result.baseline_lanes,
+        triggers=result.triggers,
+        claims=result.claims,
+        claim_provenance=result.claim_provenance,
+        source_tasks=result.source_tasks,
+        deep_executions=result.deep_executions,
+    )
+    source_corpus_audit = audit_current_census_source_corpus_hash(
+        current_source_corpus_hash=current_source_corpus_hash,
+        census_source_corpus_hash=census_source_corpus_hash,
+    )
+
+    hard_counts = {
+        **_hard_acceptance_counts(
+            result=result,
+            eligible_target_ids=tuple(member_by_target),
+            stage_rows=merged_rows,
+            lane_by_target=lane_by_target,
+        ),
+        **source_corpus_audit["critical_counts"],
+    }
     if any(hard_counts.values()):
         raise ValueError(f"Census hard acceptance failed: {hard_counts}")
 
@@ -207,6 +229,10 @@ def package_live_census_operation(
             "checkpoint_count": len(checkpoint_paths),
             "reused_shard_count": reused_shards,
             "merged_stage_map_hash": stable_hash(merged_rows),
+            "source_corpus_hash": census_source_corpus_hash,
+            "current_source_corpus_hash": current_source_corpus_hash,
+            "census_source_corpus_hash": census_source_corpus_hash,
+            "source_corpus_hash_audit": source_corpus_audit,
             "hard_acceptance_counts": hard_counts,
             "critical_count_sum": 0,
             "production_runtime_ready": False,
@@ -229,6 +255,44 @@ def package_live_census_operation(
     for index, path in enumerate(checkpoint_paths):
         paths[f"census_checkpoint_{index:04d}"] = path
     return paths
+
+
+def audit_current_census_source_corpus_hash(
+    *,
+    current_source_corpus_hash: str,
+    census_source_corpus_hash: str,
+) -> Mapping[str, Any]:
+    """Fail closed when current and Census did not use the same source corpus."""
+
+    def valid(value: str) -> bool:
+        return len(value) == 64 and all(
+            character in "0123456789abcdef" for character in value
+        )
+
+    current_valid = valid(current_source_corpus_hash)
+    census_valid = valid(census_source_corpus_hash)
+    critical = {
+        "current_source_corpus_hash_missing_or_invalid": int(not current_valid),
+        "census_source_corpus_hash_missing_or_invalid": int(not census_valid),
+        "current_census_source_corpus_hash_mismatch": int(
+            current_valid
+            and census_valid
+            and current_source_corpus_hash != census_source_corpus_hash
+        ),
+    }
+    total = sum(critical.values())
+    return {
+        "schema_version": CENSUS_OPERATIONAL_SCHEMA_VERSION,
+        "status": (
+            "CURRENT_CENSUS_SOURCE_CORPUS_HASH_PASS"
+            if total == 0
+            else "CURRENT_CENSUS_SOURCE_CORPUS_HASH_FAIL"
+        ),
+        "current_source_corpus_hash": current_source_corpus_hash,
+        "census_source_corpus_hash": census_source_corpus_hash,
+        "critical_counts": critical,
+        "critical_count_sum": total,
+    }
 
 
 def _census_stage_row(
@@ -502,5 +566,6 @@ def _render_operator_digest(
 
 __all__ = [
     "CENSUS_OPERATIONAL_SCHEMA_VERSION",
+    "audit_current_census_source_corpus_hash",
     "package_live_census_operation",
 ]

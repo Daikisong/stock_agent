@@ -1,0 +1,34 @@
+{
+  "accepted_current_claim_count": 1,
+  "artifact_role": "FINAL_CANONICAL_CURRENT_AUDIT",
+  "atomic_decision_count": 4,
+  "claim_provenance_count": 1,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "accepted_claim_not_in_decision": 0,
+    "accepted_claim_without_provenance": 0,
+    "atomic_decision_empty": 0,
+    "atomic_decision_schema_failure": 0,
+    "canonical_atomic_audit_failure": 0,
+    "claimless_nonzero_score": 0,
+    "hard_break_without_current_direct_open": 0,
+    "orphan_score_contribution": 0,
+    "pending_final_score": 0,
+    "provider_failure_final_score": 0,
+    "score_contribution_empty": 0,
+    "score_contribution_projection_mismatch": 0
+  },
+  "no_score_count": 4,
+  "phase_30_snapshot": {
+    "accepted_current_claim_count": 0,
+    "artifact_role": "PRE_PROMOTION_SAFETY_SNAPSHOT",
+    "atomic_decision_count": 3,
+    "path": "docs/operational/e2r_live_atomic_score_audit.json",
+    "sha256": "8330985654152cb45e99834c9e795d83d1de992e9fd145aacc5b5dd51a0ee817"
+  },
+  "schema_version": "e2r_live_final_readiness_v1",
+  "score_contribution_count": 1,
+  "score_valid_true_count": 0,
+  "stage_zero_pending_count": 4,
+  "status": "LIVE_FINAL_ATOMIC_STAGE_PASS"
+}

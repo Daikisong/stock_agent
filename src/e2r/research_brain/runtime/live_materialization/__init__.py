@@ -138,9 +138,17 @@ from .current_operation_input_builder import (
     CurrentOperationRunnerInputBuilder,
     write_current_operation_input_manifest,
 )
+from .current_orchestrator import (
+    LIVE_ACCEPTANCE_PROMOTION_SCHEMA_VERSION,
+    LIVE_CURRENT_ORCHESTRATOR_SCHEMA_VERSION,
+    LiveCurrentMaterializationOrchestrator,
+    LiveCurrentOrchestrationResult,
+    write_live_acceptance_promotion,
+)
 from .live_operational_packager import package_live_current_operation
 from .census_operational_packager import (
     CENSUS_OPERATIONAL_SCHEMA_VERSION,
+    audit_current_census_source_corpus_hash,
     package_live_census_operation,
 )
 from .targeted_smoke import (
@@ -206,6 +214,8 @@ __all__ = [
     "CurrentAtomicDecisionResult",
     "CurrentQuestionSourceTaskMaterializer",
     "CurrentOperationRunnerInputBuilder",
+    "LiveCurrentMaterializationOrchestrator",
+    "LiveCurrentOrchestrationResult",
     "CurrentPrimitiveState",
     "CurrentSourceAcquisitionOrchestrator",
     "CurrentDepthSelector",
@@ -222,6 +232,8 @@ __all__ = [
     "LIVE_OPERATIONAL_ENVELOPE_SCHEMA_VERSION",
     "LIVE_OBSERVABILITY_SCHEMA_VERSION",
     "LIVE_CURRENT_CLAIM_SCHEMA_VERSION",
+    "LIVE_ACCEPTANCE_PROMOTION_SCHEMA_VERSION",
+    "LIVE_CURRENT_ORCHESTRATOR_SCHEMA_VERSION",
     "LIVE_ACCEPTANCE_SCHEMA_VERSION",
     "LIVE_PLANNER_RUN_SCHEMA_VERSION",
     "LIVE_RUN_PROFILE_SCHEMA_VERSION",
@@ -266,6 +278,7 @@ __all__ = [
     "UniverseMaterializationResult",
     "UniverseMaterializerConfig",
     "audit_live_credentials",
+    "audit_current_census_source_corpus_hash",
     "audit_live_observability_report",
     "build_provider_capability_matrix",
     "classify_provider_result",
@@ -297,6 +310,7 @@ __all__ = [
     "write_adaptive_gap_closure",
     "write_current_atomic_decisions",
     "write_current_operation_input_manifest",
+    "write_live_acceptance_promotion",
     "write_baseline_materialization",
     "write_brain_planner_run",
     "write_source_acquisition_run",
