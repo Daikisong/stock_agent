@@ -1,6 +1,6 @@
 {
   "as_of_date": "2026-07-10",
-  "critical_count_sum": 2,
+  "critical_count_sum": 4,
   "reviewers": [
     {
       "critical_count_sum": 0,
@@ -175,16 +175,17 @@
       "status": "PASS"
     },
     {
-      "critical_count_sum": 2,
+      "critical_count_sum": 4,
       "critical_counts": {
+        "bounded_naver_web_calls_empty": 0,
         "census_command_not_live_materialized": 0,
         "census_command_repo_dirty": 1,
-        "census_command_reproducibility_failure": 0,
+        "census_command_reproducibility_failure": 1,
         "census_envelope_not_ready": 0,
         "current_census_command_commit_mismatch": 0,
         "current_command_not_live_materialized": 0,
         "current_command_repo_dirty": 1,
-        "current_command_reproducibility_failure": 0,
+        "current_command_reproducibility_failure": 1,
         "current_envelope_not_ready": 0,
         "live_document_empty": 0,
         "llm_calls_empty": 0,
@@ -195,6 +196,7 @@
       },
       "evidence": {
         "actual_provider_call_count": 6,
+        "bounded_naver_web_result_count": 144,
         "canonical_live_document_count": 3,
         "current_census_same_commit": true,
         "materialization_stage_count": 12,
@@ -211,7 +213,8 @@
         "output/live_materialization/2026-07-10/live_acceptance_promotion.json": "90fe945ac2eca962ad0905fb293a628b49ed4fe90ab317a19a36a7dab7ed469f",
         "output/live_materialization/2026-07-10/llm_prompts.jsonl": "fbf838fbc03782bbdf45f313bbaaed7fa0e01b081a5ced6f0b1a3720f9bd5a59",
         "output/live_materialization/2026-07-10/provider_requests.jsonl": "d80a5236e7116a2c021dec8d2d1d5acc5e8c63cfdaa3092e2794ab2edb31dca5",
-        "output/targeted_smoke/2026-07-10/llm_prompts.jsonl": "510edf4d442d5c8ec87714ebca7b9a0e0780b56f1e8ab30dd480d4c40c9d4775"
+        "output/targeted_smoke/2026-07-10/llm_prompts.jsonl": "510edf4d442d5c8ec87714ebca7b9a0e0780b56f1e8ab30dd480d4c40c9d4775",
+        "output/targeted_smoke/2026-07-10/web_search_results.jsonl": "dc58d794e50f9f4b2b9adf96f3f8d264e81230bffec583cceae22cd3f3e0b517"
       },
       "name": "Live Orchestration & Runtime Honesty",
       "reviewer_id": "F",

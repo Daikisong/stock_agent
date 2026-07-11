@@ -4,7 +4,7 @@
 - as_of_date: 2026-07-10
 - full tests: PASS (5690 tests)
 - known-bad: KNOWN_BAD_REGRESSION_PASS (20 cases)
-- self-repair: SELF_REPAIR_PASS (16 iterations)
+- self-repair: SELF_REPAIR_PASS (17 iterations)
 - reviewer A~F: FAIL
 - critical_count_sum: 2
 - blockers: ['reviewer_failed', 'repository_verification_failed']

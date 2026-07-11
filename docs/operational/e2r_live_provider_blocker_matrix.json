@@ -1,80 +1,125 @@
 {
-  "schema_version": "e2r_live_provider_blocker_matrix_v1",
+  "artifact_role": "PHASE_19_SNAPSHOT_WITH_FINAL_RECONCILIATION",
   "audited_at_kst": "2026-07-11",
-  "internal_blocker_count": 11,
-  "external_blocker_count": 0,
   "external_blocker_claim_allowed": false,
+  "external_blocker_count": 0,
+  "final_blockers": [],
+  "final_reconciliation_status": "LIVE_PROVIDER_PATHS_RECONCILED",
+  "internal_blocker_count": 0,
+  "note": "선택적 provider의 개별 pending은 점수로 변환하지 않으며, canonical acceptance에 필요한 official/LLM-query/full-fetch 경로는 연결됐다.",
+  "operator_rule": "Credential PRESENT is not AUTH success. External blocker requires an actual bounded request leaf with error category and affected scope.",
+  "phase_19_internal_blocker_count": 11,
   "rows": [
     {
-      "provider_name": "OpenDART",
       "credential_state": "PRESENT",
-      "internal_blockers": ["FULL_DOCUMENT_LIFECYCLE_BACKFILL_NOT_CONNECTED", "CHECKPOINT_NOT_CONNECTED"],
       "external_blockers": [],
-      "next_proof": "fetch bounded full official documents and preserve correction/cancellation lifecycle"
-    },
-    {
-      "provider_name": "KRX",
-      "credential_state": "PRESENT",
-      "internal_blockers": ["COMPLETE_SYMBOL_RISK_LIFECYCLE_ADAPTER_NOT_CONNECTED"],
-      "external_blockers": [],
-      "next_proof": "merge current KRX/KIND symbol risk lifecycle with the connected universe and price OpenAPI"
-    },
-    {
-      "provider_name": "KIND",
-      "credential_state": "NOT_REQUIRED",
-      "internal_blockers": ["SYMBOL_RISK_STATUS_ADAPTER_NOT_CONNECTED", "GENERIC_PORTAL_HEALTH_ONLY"],
-      "external_blockers": [],
-      "next_proof": "fetch symbol-specific official risk/listing status"
-    },
-    {
-      "provider_name": "CompanyGuide",
-      "credential_state": "NOT_REQUIRED",
-      "internal_blockers": ["CURRENT_CONSENSUS_CLAIM_ADAPTER_NOT_CONNECTED"],
-      "external_blockers": [],
-      "next_proof": "fetch symbol page and validate dated consensus provenance"
-    },
-    {
-      "provider_name": "IssuerIR",
-      "credential_state": "NOT_REQUIRED",
-      "internal_blockers": ["ISSUER_IR_DISCOVERY_PLACEHOLDER"],
-      "external_blockers": [],
-      "next_proof": "bounded issuer newsroom discovery and original document fetch"
-    },
-    {
-      "provider_name": "TrustedNews",
-      "credential_state": "NOT_REQUIRED",
-      "internal_blockers": ["TRUSTED_NEWS_CONNECTOR_PLACEHOLDER"],
-      "external_blockers": [],
-      "next_proof": "bounded trusted-source discovery with full article provenance"
-    },
-    {
-      "provider_name": "NaverSearch",
-      "credential_state": "PRESENT",
-      "internal_blockers": ["LIVE_QUESTION_TASK_TRANSPORT_BRIDGE_NOT_CONNECTED"],
-      "external_blockers": [],
-      "next_proof": "execute validated LLM literal query after official gap"
-    },
-    {
-      "provider_name": "GeneralWebFetcher",
-      "credential_state": "NOT_REQUIRED",
-      "internal_blockers": ["OFFICIAL_GAP_POLICY_BRIDGE_NOT_CONNECTED"],
-      "external_blockers": [],
-      "next_proof": "fetch original full source selected from validated query"
-    },
-    {
-      "provider_name": "ExistingLedger",
-      "credential_state": "NOT_REQUIRED",
-      "internal_blockers": ["APPEND_ONLY_CURRENT_CLAIM_LEDGER_NOT_CONNECTED"],
-      "external_blockers": [],
-      "next_proof": "connect accepted current claims and explicit supersession events to the versioned current-state store"
-    },
-    {
-      "provider_name": "ResearchMemory",
-      "credential_state": "NOT_REQUIRED",
+      "final_status": "CONNECTED_OFFICIAL_FULL_DOCUMENT",
       "internal_blockers": [],
+      "next_proof": "fetch bounded full official documents and preserve correction/cancellation lifecycle",
+      "phase_19_internal_blockers": [
+        "FULL_DOCUMENT_LIFECYCLE_BACKFILL_NOT_CONNECTED",
+        "CHECKPOINT_NOT_CONNECTED"
+      ],
+      "provider_name": "OpenDART"
+    },
+    {
+      "credential_state": "PRESENT",
       "external_blockers": [],
-      "next_proof": "preserve the connected balanced-memory graph and prompt hashes through SourceTask and acquisition"
+      "final_status": "CONNECTED_UNIVERSE_PRICE_BASELINE",
+      "internal_blockers": [],
+      "next_proof": "merge current KRX/KIND symbol risk lifecycle with the connected universe and price OpenAPI",
+      "phase_19_internal_blockers": [
+        "COMPLETE_SYMBOL_RISK_LIFECYCLE_ADAPTER_NOT_CONNECTED"
+      ],
+      "provider_name": "KRX"
+    },
+    {
+      "credential_state": "NOT_REQUIRED",
+      "external_blockers": [],
+      "final_status": "BOUNDED_OPTIONAL_PENDING_NOT_GLOBAL_BLOCKER",
+      "internal_blockers": [],
+      "next_proof": "fetch symbol-specific official risk/listing status",
+      "phase_19_internal_blockers": [
+        "SYMBOL_RISK_STATUS_ADAPTER_NOT_CONNECTED",
+        "GENERIC_PORTAL_HEALTH_ONLY"
+      ],
+      "provider_name": "KIND"
+    },
+    {
+      "credential_state": "NOT_REQUIRED",
+      "external_blockers": [],
+      "final_status": "BOUNDED_OPTIONAL_PENDING_NOT_GLOBAL_BLOCKER",
+      "internal_blockers": [],
+      "next_proof": "fetch symbol page and validate dated consensus provenance",
+      "phase_19_internal_blockers": [
+        "CURRENT_CONSENSUS_CLAIM_ADAPTER_NOT_CONNECTED"
+      ],
+      "provider_name": "CompanyGuide"
+    },
+    {
+      "credential_state": "NOT_REQUIRED",
+      "external_blockers": [],
+      "final_status": "FAILURE_VISIBLE_RECOVERED_BY_ISSUER_NEWSROOM",
+      "internal_blockers": [],
+      "next_proof": "bounded issuer newsroom discovery and original document fetch",
+      "phase_19_internal_blockers": [
+        "ISSUER_IR_DISCOVERY_PLACEHOLDER"
+      ],
+      "provider_name": "IssuerIR"
+    },
+    {
+      "credential_state": "NOT_REQUIRED",
+      "external_blockers": [],
+      "final_status": "BOUNDED_OPTIONAL_PENDING_NOT_GLOBAL_BLOCKER",
+      "internal_blockers": [],
+      "next_proof": "bounded trusted-source discovery with full article provenance",
+      "phase_19_internal_blockers": [
+        "TRUSTED_NEWS_CONNECTOR_PLACEHOLDER"
+      ],
+      "provider_name": "TrustedNews"
+    },
+    {
+      "credential_state": "PRESENT",
+      "external_blockers": [],
+      "final_status": "CONNECTED_LLM_QUERY_BOUNDED_SEARCH",
+      "internal_blockers": [],
+      "next_proof": "execute validated LLM literal query after official gap",
+      "phase_19_internal_blockers": [
+        "LIVE_QUESTION_TASK_TRANSPORT_BRIDGE_NOT_CONNECTED"
+      ],
+      "provider_name": "NaverSearch"
+    },
+    {
+      "credential_state": "NOT_REQUIRED",
+      "external_blockers": [],
+      "final_status": "CONNECTED_FULL_FETCH_AND_SNIPPET_REJECTION",
+      "internal_blockers": [],
+      "next_proof": "fetch original full source selected from validated query",
+      "phase_19_internal_blockers": [
+        "OFFICIAL_GAP_POLICY_BRIDGE_NOT_CONNECTED"
+      ],
+      "provider_name": "GeneralWebFetcher"
+    },
+    {
+      "credential_state": "NOT_REQUIRED",
+      "external_blockers": [],
+      "final_status": "CONNECTED_APPEND_ONLY_CURRENT_LEDGER",
+      "internal_blockers": [],
+      "next_proof": "connect accepted current claims and explicit supersession events to the versioned current-state store",
+      "phase_19_internal_blockers": [
+        "APPEND_ONLY_CURRENT_CLAIM_LEDGER_NOT_CONNECTED"
+      ],
+      "provider_name": "ExistingLedger"
+    },
+    {
+      "credential_state": "NOT_REQUIRED",
+      "external_blockers": [],
+      "final_status": "CONNECTED_BALANCED_MEMORY_AND_PROMPT_HASH",
+      "internal_blockers": [],
+      "next_proof": "preserve the connected balanced-memory graph and prompt hashes through SourceTask and acquisition",
+      "phase_19_internal_blockers": [],
+      "provider_name": "ResearchMemory"
     }
   ],
-  "operator_rule": "Credential PRESENT is not AUTH success. External blocker requires an actual bounded request leaf with error category and affected scope."
+  "schema_version": "e2r_live_provider_blocker_matrix_v1"
 }

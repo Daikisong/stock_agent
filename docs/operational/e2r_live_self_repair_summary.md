@@ -1,7 +1,7 @@
 # E2R Live Self-Repair Summary
 
 - status: SELF_REPAIR_PASS
-- iterations: 16/16
+- iterations: 17/17
 - critical_count_sum: 0
 - threshold relaxation: 0
 - fixture substituted for live acceptance: false
@@ -26,3 +26,4 @@
 - 14. DOCUMENT_NOT_FETCHED → RESOLVED (66a81fd)
 - 15. CLAIM_PROVENANCE_MISSING → RESOLVED (26e63c2)
 - 16. CURRENT_MANIFEST_BUILD_FAILED → RESOLVED (f8dd473)
+- 17. MATERIALIZER_NOT_CALLED → RESOLVED (56a53e5)

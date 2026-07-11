@@ -28,7 +28,7 @@
     "UNIVERSE_NOT_MATERIALIZED": "RESOLVED"
   },
   "hard_acceptance_pass": true,
-  "iteration_count": 16,
+  "iteration_count": 17,
   "iterations": [
     {
       "after": {
@@ -276,9 +276,28 @@
       "repair": "canonical current-operation leaf was regenerated; structure and critical counts remained unchanged while deterministic run/leaf hashes were refreshed",
       "root_cause": "e2r_reconstruction_phase13_acceptance.json: Phase 26 SourceTask schema enrichment left the older frozen daily leaf hash stale",
       "status": "RESOLVED"
+    },
+    {
+      "after": {
+        "canonical_accepted_claims": 1,
+        "canonical_claim_provenance": 1,
+        "canonical_score_contributions": 1
+      },
+      "before": {
+        "canonical_accepted_claims": 0,
+        "canonical_claim_provenance": 0,
+        "canonical_score_contributions": 0
+      },
+      "commit_sha": "56a53e5",
+      "failure_class": "MATERIALIZER_NOT_CALLED",
+      "focused_test": "tests.test_live_authorization_contract.LiveAuthorizationContractTests.test_authorized_live_current_does_not_fall_into_manifest_missing_exit_three",
+      "iteration": 17,
+      "repair": "canonical CLI now validates every checkpoint and source hash, promotes accepted live leaves, and independently gates Current/Census source-corpus equality",
+      "root_cause": "src/e2r/cli/run_e2r_current_operation.py: canonical live path assembled prebuilt leaves without validating and promoting the Phase 20-36 materialization chain",
+      "status": "RESOLVED"
     }
   ],
-  "max_iterations": 16,
+  "max_iterations": 17,
   "recovered_provider_gaps": [
     "IssuerIR discovery unavailable; bounded IssuerNewsroom fallback produced accepted provenance"
   ],
