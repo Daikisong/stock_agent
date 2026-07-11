@@ -113,6 +113,23 @@ class LiveFinalReadinessReviewerTests(unittest.TestCase):
         self.assertEqual(result["status"], "FAIL")
         self.assertEqual(result["critical_counts"]["materializer_not_called"], 1)
 
+    def test_reviewer_f_does_not_create_commit_manifest_hash_cycle(self) -> None:
+        result = self._reviewer(module._reviewer_f)
+        command_paths = {
+            str(self.paths["canonical_current_root"] / "command_run_manifest.json"),
+            str(self.paths["canonical_census_root"] / "command_run_manifest.json"),
+        }
+        self.assertTrue(command_paths.isdisjoint(result["leaf_hashes"]))
+        self.assertTrue(result["evidence"]["current_census_same_commit"])
+        self.assertEqual(
+            result["critical_counts"]["current_command_reproducibility_failure"],
+            0,
+        )
+        self.assertEqual(
+            result["critical_counts"]["census_command_reproducibility_failure"],
+            0,
+        )
+
     def _reviewers(self):
         return tuple(
             self._reviewer(reviewer)

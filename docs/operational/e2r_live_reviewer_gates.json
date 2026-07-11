@@ -204,9 +204,7 @@
       },
       "independent_leaf_reread": true,
       "leaf_hashes": {
-        "output/census/live_2026-07-10/command_run_manifest.json": "c1943c2a6b3f5a93c3f953f45fb7b0922fce99f17297e72163981b5a3aea2801",
         "output/census/live_2026-07-10/live_operational_envelope.json": "e94555b343f3ea4a5ff3ec0af8d788955c6c5a0afe1ac880d7bed02cac7a235c",
-        "output/current_operation/live_2026-07-10/command_run_manifest.json": "4c721f1a604608e570473d79bfab49bc0fccbac6115cd74ee82cba4eb811050f",
         "output/current_operation/live_2026-07-10/evidence_documents.jsonl": "21f95616bf2d695067891da751125b948dc0a7eaec92162a8790d4cbf4bb84c9",
         "output/current_operation/live_2026-07-10/live_operational_envelope.json": "204d4a01cd963f0d0780a35f42f75379f39c81b9b58406f8a869f7688631ab35",
         "output/live_materialization/2026-07-10/current_orchestration_audit.json": "71d2f5b2542f7755689d4a67062fe2a958a7c75a04f6c2d1d5a3752f9b4b460f",

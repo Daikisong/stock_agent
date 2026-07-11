@@ -827,8 +827,12 @@ def _reviewer_f(
         leaf_paths=(
             orchestration_path,
             promotion_path,
-            current_command_path,
-            census_command_path,
+            # Command manifests embed the commit that is being verified.  Hashing
+            # those two files into the tracked verdict creates a self-reference:
+            # committing the verdict changes HEAD, which changes the manifests,
+            # which changes the verdict again.  Their full payloads are still
+            # reread and independently audited above; source/runtime leaves keep
+            # byte-exact SHA-256 evidence here.
             current_envelope_path,
             census_envelope_path,
             provider_request_path,
