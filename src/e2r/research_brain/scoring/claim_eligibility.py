@@ -39,11 +39,19 @@ def compile_claim_eligibility_decisions(
     claims: Sequence[Mapping[str, Any]],
     claim_provenance: Sequence[Mapping[str, Any]],
     archetype_id: str,
+    primitive_mappings: Sequence[Mapping[str, Any]] = (),
 ) -> tuple[ClaimEligibilityDecision, ...]:
     provenance = {
         str(row.get("claim_id") or ""): row for row in claim_provenance
     }
     mechanism_contract = load_mechanism_scope_contracts().get(archetype_id)
+    primitives_by_claim: dict[str, list[str]] = {}
+    for row in primitive_mappings:
+        if row.get("accepted_by_evidence_os") is not True:
+            continue
+        primitives_by_claim.setdefault(
+            str(row.get("claim_id") or ""), []
+        ).append(str(row.get("primitive_id") or ""))
     results = []
     for claim in claims:
         claim_id = str(claim.get("claim_id") or "")
@@ -70,19 +78,27 @@ def compile_claim_eligibility_decisions(
             reasons.append("MAPPING_NOT_ACCEPTED")
         mechanism_pass = True
         if mechanism_contract is not None:
-            scope = infer_business_mechanism_scope(
-                claim,
-                primitive_id=str(
+            primitive_ids = tuple(
+                dict.fromkeys(primitives_by_claim.get(claim_id) or ())
+            ) or (
+                str(
                     (claim.get("raw_assertion") or {}).get("predicate") or ""
                 ),
-                archetype_id=archetype_id,
             )
-            scope_result = MechanismScopeValidator().validate(
-                scope=scope,
-                contract=mechanism_contract,
-                component_id="information_confidence",
+            mechanism_pass = any(
+                MechanismScopeValidator()
+                .validate(
+                    scope=infer_business_mechanism_scope(
+                        claim,
+                        primitive_id=primitive_id,
+                        archetype_id=archetype_id,
+                    ),
+                    contract=mechanism_contract,
+                    component_id="information_confidence",
+                )
+                .scope_match
+                for primitive_id in primitive_ids
             )
-            mechanism_pass = scope_result.scope_match
             if not mechanism_pass:
                 reasons.append("WRONG_BUSINESS_MECHANISM")
         component = ledger and not reasons

@@ -118,6 +118,7 @@ class SemanticClosureReconciler:
             str(_value(row, "impact_id") or ""): row
             for row in proposed_impacts
         }
+        shared_credit_sources = _shared_credit_sources(validated_impacts)
         rejected_by_impact = {
             str(row.get("impact_id") or ""): row
             for row in rejected_impacts
@@ -168,8 +169,14 @@ class SemanticClosureReconciler:
                 for row in validated_impacts
                 if str(_value(row, "question_family_id") or "")
                 == question_id
-                and float(_value(row, "validated_credit_fraction") or 0.0)
-                > 0
+                and (
+                    float(
+                        _value(row, "validated_credit_fraction") or 0.0
+                    )
+                    > 0
+                    or str(_value(row, "impact_id") or "")
+                    in shared_credit_sources
+                )
             )
             positive_proposals = tuple(
                 row
@@ -184,11 +191,21 @@ class SemanticClosureReconciler:
                 row
                 for row in question_impacts
                 if float(_value(row, "support_credit_fraction") or 0.0) > 0
+                or (
+                    str(_value(row, "direction") or "") == "SUPPORT"
+                    and str(_value(row, "impact_id") or "")
+                    in shared_credit_sources
+                )
             )
             counter_impacts = tuple(
                 row
                 for row in question_impacts
                 if float(_value(row, "counter_effect_fraction") or 0.0) > 0
+                or (
+                    str(_value(row, "direction") or "") == "COUNTER"
+                    and str(_value(row, "impact_id") or "")
+                    in shared_credit_sources
+                )
             )
             bounded_support = tuple(
                 row
@@ -198,10 +215,13 @@ class SemanticClosureReconciler:
                 < 1
                 or str(_value(row, "support_type") or "")
                 == "PARTIAL_BRIDGE"
+                or str(_value(row, "impact_id") or "")
+                in shared_credit_sources
             )
             component_links = _component_links(
                 impacts=question_impacts,
                 assessments=assessments,
+                shared_credit_sources=shared_credit_sources,
             )
             component_states = {
                 component_id: str(_value(row, "status") or "NOT_ASSESSED")
@@ -282,6 +302,11 @@ class SemanticClosureReconciler:
                 counter_impacts=counter_impacts,
                 bounded_support=bounded_support,
                 input_status=input_status,
+                shared_credit_count=sum(
+                    str(_value(row, "impact_id") or "")
+                    in shared_credit_sources
+                    for row in question_impacts
+                ),
             )
             payload = {
                 "question_family_id": question_id,
@@ -392,7 +417,10 @@ class SemanticClosureReconciler:
 
 
 def _component_links(
-    *, impacts: Sequence[Any], assessments: Mapping[str, Any]
+    *,
+    impacts: Sequence[Any],
+    assessments: Mapping[str, Any],
+    shared_credit_sources: Mapping[str, str],
 ) -> tuple[Mapping[str, Any], ...]:
     return tuple(
         {
@@ -414,6 +442,15 @@ def _component_links(
             ),
             "resolution_effect": float(
                 _value(impact, "resolution_effect") or 0.0
+            ),
+            "shared_credit_source_impact_id": shared_credit_sources.get(
+                str(_value(impact, "impact_id") or ""), ""
+            ),
+            "credit_link_type": (
+                "SHARED_FACT_OR_DOCUMENT_CREDIT"
+                if str(_value(impact, "impact_id") or "")
+                in shared_credit_sources
+                else "DIRECT_CREDIT"
             ),
             "component_state": str(
                 _value(
@@ -489,7 +526,14 @@ def _critical_counts(
         ),
         "supported_non_scoring_component_credit_count": sum(
             row.input_closure_status == "SUPPORTED_NON_SCORING"
-            and bool(row.validated_impact_ids)
+            and any(
+                str(link.get("direction") or "") == "SUPPORT"
+                and (
+                    float(link.get("support_credit_fraction") or 0.0) > 0
+                    or bool(link.get("shared_credit_source_impact_id"))
+                )
+                for link in row.component_links
+            )
             for row in rows
         ),
     }
@@ -562,20 +606,201 @@ def _credit_result(
     counter_impacts: Sequence[Any],
     bounded_support: Sequence[Any],
     input_status: str,
+    shared_credit_count: int = 0,
 ) -> str:
     if support_impacts and counter_impacts:
         return "SUPPORT_WITH_COUNTER_EFFECT"
     if bounded_support:
-        return "NONZERO_BOUNDED_SUPPORT"
+        return (
+            "SHARED_FACT_BOUNDED_SUPPORT"
+            if shared_credit_count
+            else "NONZERO_BOUNDED_SUPPORT"
+        )
     if support_impacts:
-        return "NONZERO_SUPPORT"
+        return (
+            "SHARED_FACT_SUPPORT"
+            if shared_credit_count
+            else "NONZERO_SUPPORT"
+        )
     if counter_impacts:
-        return "EXPLICIT_COUNTER_OR_CAP"
+        return (
+            "SHARED_FACT_COUNTER_OR_CAP"
+            if shared_credit_count
+            else "EXPLICIT_COUNTER_OR_CAP"
+        )
     if input_status == "SUPPORTED_NON_SCORING":
         return "NON_SCORING_SUPPORT"
     if input_status == "EVALUATED_ABSENT":
         return "EVALUATED_ABSENCE"
     return "ZERO_CREDIT"
+
+
+def _shared_credit_sources(
+    impacts: Sequence[Any],
+) -> Mapping[str, str]:
+    rows = tuple(impacts)
+    credited_fact: dict[tuple[str, str, str], str] = {}
+    credited_document: dict[tuple[str, str, str], str] = {}
+    credited_source: dict[tuple[str, str, str, str], str] = {}
+    credited_information_target: dict[tuple[str, str, str], str] = {}
+    fact_groups: dict[tuple[str, str, str], list[Any]] = {}
+    document_groups: dict[tuple[str, str, str], list[Any]] = {}
+    source_groups: dict[tuple[str, str, str, str], list[Any]] = {}
+    for row in rows:
+        fact_key = (
+            str(_value(row, "fact_cluster_id") or ""),
+            str(_value(row, "component_id") or ""),
+            str(_value(row, "direction") or ""),
+        )
+        document_key = (
+            str(_value(row, "document_cluster_id") or ""),
+            str(_value(row, "component_id") or ""),
+            str(_value(row, "direction") or ""),
+        )
+        if fact_key[0]:
+            fact_groups.setdefault(fact_key, []).append(row)
+        if document_key[0]:
+            document_groups.setdefault(document_key, []).append(row)
+        source_key = (
+            str(_value(row, "target_id") or ""),
+            str(_value(row, "source_independence_key") or ""),
+            str(_value(row, "component_id") or ""),
+            str(_value(row, "direction") or ""),
+        )
+        if source_key[0] and source_key[1]:
+            source_groups.setdefault(source_key, []).append(row)
+        if float(_value(row, "validated_credit_fraction") or 0.0) <= 0:
+            continue
+        impact_id = str(_value(row, "impact_id") or "")
+        if fact_key[0]:
+            credited_fact.setdefault(fact_key, impact_id)
+        if document_key[0]:
+            credited_document.setdefault(document_key, impact_id)
+        if source_key[0] and source_key[1]:
+            credited_source.setdefault(source_key, impact_id)
+        if (
+            source_key[0]
+            and str(_value(row, "component_id") or "")
+            == "information_confidence"
+        ):
+            credited_information_target.setdefault(
+                (
+                    str(_value(row, "target_id") or ""),
+                    str(_value(row, "component_id") or ""),
+                    str(_value(row, "direction") or ""),
+                ),
+                impact_id,
+            )
+    links: dict[str, str] = {}
+    for row in rows:
+        if _value(row, "corroboration_only") is not True:
+            continue
+        impact_id = str(_value(row, "impact_id") or "")
+        reason = str(_value(row, "duplicate_reason") or "")
+        component_id = str(_value(row, "component_id") or "")
+        direction = str(_value(row, "direction") or "")
+        source_id = ""
+        if reason == "SAME_ECONOMIC_FACT_CORROBORATION_ONLY":
+            key = (
+                str(_value(row, "fact_cluster_id") or ""),
+                component_id,
+                direction,
+            )
+            if key[0]:
+                source_id = credited_fact.get(
+                    key, ""
+                ) or _intermediate_primary(
+                    fact_groups.get(key, ()),
+                    excluded_reason=(
+                        "SAME_ECONOMIC_FACT_CORROBORATION_ONLY"
+                    ),
+                    current_impact_id=impact_id,
+                )
+        elif reason == "SAME_DOCUMENT_INFORMATION_CORROBORATION_ONLY":
+            key = (
+                str(_value(row, "document_cluster_id") or ""),
+                component_id,
+                direction,
+            )
+            if key[0]:
+                source_id = credited_document.get(
+                    key, ""
+                ) or _intermediate_primary(
+                    document_groups.get(key, ()),
+                    excluded_reason=(
+                        "SAME_DOCUMENT_INFORMATION_CORROBORATION_ONLY"
+                    ),
+                    current_impact_id=impact_id,
+                )
+        elif reason == "SAME_SOURCE_FAMILY_CONFIDENCE_ONLY":
+            key = (
+                str(_value(row, "target_id") or ""),
+                str(_value(row, "source_independence_key") or ""),
+                component_id,
+                direction,
+            )
+            if key[0] and key[1]:
+                source_id = credited_source.get(
+                    key, ""
+                ) or _intermediate_primary(
+                    source_groups.get(key, ()),
+                    excluded_reason=(
+                        "SAME_SOURCE_FAMILY_CONFIDENCE_ONLY"
+                    ),
+                    current_impact_id=impact_id,
+                )
+        elif reason == "INDEPENDENT_SOURCE_FAMILY_LIMIT":
+            source_id = credited_information_target.get(
+                (
+                    str(_value(row, "target_id") or ""),
+                    component_id,
+                    direction,
+                ),
+                "",
+            )
+        if source_id and source_id != impact_id:
+            links[impact_id] = source_id
+    credited_ids = {
+        str(_value(row, "impact_id") or "")
+        for row in rows
+        if float(_value(row, "validated_credit_fraction") or 0.0) > 0
+    }
+    result = {}
+    for impact_id in links:
+        visited = {impact_id}
+        source_id = links[impact_id]
+        while source_id in links and source_id not in visited:
+            visited.add(source_id)
+            source_id = links[source_id]
+        if source_id in credited_ids:
+            result[impact_id] = source_id
+    return result
+
+
+def _intermediate_primary(
+    rows: Sequence[Any],
+    *,
+    excluded_reason: str,
+    current_impact_id: str,
+) -> str:
+    candidates = tuple(
+        row
+        for row in rows
+        if str(_value(row, "impact_id") or "") != current_impact_id
+        and str(_value(row, "duplicate_reason") or "") != excluded_reason
+    )
+    if not candidates:
+        return ""
+    primary = max(
+        candidates,
+        key=lambda row: (
+            float(_value(row, "raw_credit_fraction") or 0.0),
+            float(_value(row, "source_cap") or 0.0),
+            float(_value(row, "evidence_confidence") or 0.0),
+            str(_value(row, "impact_id") or ""),
+        ),
+    )
+    return str(_value(primary, "impact_id") or "")
 
 
 def _value(row: Any, key: str) -> Any:

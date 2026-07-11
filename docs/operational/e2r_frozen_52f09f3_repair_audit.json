@@ -1,0 +1,864 @@
+{
+  "as_of_date": "2026-07-11",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "counter_capacity_impact_ignored_count": 0,
+    "document_payload_mismatch_count": 0,
+    "foundry_hbm_scope_violation_count": 0,
+    "foundry_reroute_missing_count": 0,
+    "frozen_input_leaf_mismatch_count": 0,
+    "legacy_missing_cap_impact_not_repaired_count": 0,
+    "missing_source_document_count": 0,
+    "new_document_count": 0,
+    "partial_bridge_missing_cap_zero_count": 0,
+    "positive_impact_internal_error_count": 0,
+    "provider_error_count": 0,
+    "required_bounded_impact_missing_count": 0,
+    "required_supported_fact_missing_count": 0,
+    "supported_question_absent_component_count": 0,
+    "target_roster_missing_count": 0
+  },
+  "investment_recommendation_emitted": false,
+  "new_documents_allowed": false,
+  "output_root": "output/evidence_to_score_v2/frozen_52f09f3",
+  "schema_version": "e2r_frozen_52f09f3_repair_audit_v1",
+  "search_or_fetch_performed": false,
+  "source_commit": "52f09f3",
+  "source_root": "output/evidence_to_score/c06/2026-07-11",
+  "status": "FROZEN_52F09F3_REPAIR_PASS",
+  "target_results": [
+    {
+      "before_after": {
+        "after_component_score_vector": {
+          "bottleneck_pricing": 1.5,
+          "capital_allocation": 0.6875,
+          "earnings_visibility": 1.446428,
+          "eps_fcf_explosion": 3.249998,
+          "information_confidence": 4.0,
+          "market_mispricing": 0.0,
+          "valuation_rerating": 0.0
+        },
+        "after_no_bounded_effect_disposition_count": 2,
+        "after_proposal_count": 33,
+        "after_rejected_impact_count": 0,
+        "after_subcriterion_points": [
+          {
+            "component_id": "eps_fcf_explosion",
+            "counter_impact_ids": [],
+            "points": 1.999998,
+            "subcriterion_id": "C06_EPS_ACTUAL_REVENUE_PROFIT",
+            "support_impact_ids": [
+              "IMPACT-9734ddc2289aec855f9e55cf",
+              "IMPACT-f3ba5c7c368577b4f5a47b3b"
+            ]
+          },
+          {
+            "component_id": "eps_fcf_explosion",
+            "counter_impact_ids": [],
+            "points": 1.25,
+            "subcriterion_id": "C06_EPS_MARGIN_CONVERSION",
+            "support_impact_ids": [
+              "IMPACT-18242d1a42836fe1f5c31c02"
+            ]
+          },
+          {
+            "component_id": "earnings_visibility",
+            "counter_impact_ids": [],
+            "points": 0.875,
+            "subcriterion_id": "C06_VIS_CAPACITY_BOOKING",
+            "support_impact_ids": [
+              "IMPACT-e0c91a78959e08bee16fa6ce",
+              "IMPACT-d6ca0f33910aeaf9d666313b"
+            ]
+          },
+          {
+            "component_id": "earnings_visibility",
+            "counter_impact_ids": [],
+            "points": 0.571428,
+            "subcriterion_id": "C06_VIS_SHIPMENT_REVENUE_MIX",
+            "support_impact_ids": [
+              "IMPACT-68ab0f3083ef84e336d67215"
+            ]
+          },
+          {
+            "component_id": "bottleneck_pricing",
+            "counter_impact_ids": [],
+            "points": 1.5,
+            "subcriterion_id": "C06_BOT_CAPACITY_CONSTRAINT",
+            "support_impact_ids": [
+              "IMPACT-dc93cccc7a5d914663529d63"
+            ]
+          },
+          {
+            "component_id": "bottleneck_pricing",
+            "counter_impact_ids": [
+              "IMPACT-97638445c7dc8ea9c7a738cd"
+            ],
+            "points": 0.0,
+            "subcriterion_id": "C06_BOT_SUPPLY_RESPONSE",
+            "support_impact_ids": []
+          },
+          {
+            "component_id": "capital_allocation",
+            "counter_impact_ids": [],
+            "points": 0.5625,
+            "subcriterion_id": "C06_CAP_CAPEX_SCHEDULE",
+            "support_impact_ids": [
+              "IMPACT-7df927feadef98243b170025",
+              "IMPACT-3e795de148c1738e4a70dccd"
+            ]
+          },
+          {
+            "component_id": "capital_allocation",
+            "counter_impact_ids": [],
+            "points": 0.125,
+            "subcriterion_id": "C06_CAP_CASH_BURDEN",
+            "support_impact_ids": [
+              "IMPACT-094518fc3d834bd0f9501007"
+            ]
+          },
+          {
+            "component_id": "information_confidence",
+            "counter_impact_ids": [],
+            "points": 2.0,
+            "subcriterion_id": "C06_INFO_SOURCE_QUALITY",
+            "support_impact_ids": [
+              "IMPACT-dd5703d67a3cec6b3f913f55"
+            ]
+          },
+          {
+            "component_id": "information_confidence",
+            "counter_impact_ids": [],
+            "points": 1.0,
+            "subcriterion_id": "C06_INFO_TARGET_DIRECTNESS",
+            "support_impact_ids": [
+              "IMPACT-dd5703d67a3cec6b3f913f55"
+            ]
+          },
+          {
+            "component_id": "information_confidence",
+            "counter_impact_ids": [],
+            "points": 1.0,
+            "subcriterion_id": "C06_INFO_CURRENT_ANCHOR",
+            "support_impact_ids": [
+              "IMPACT-dd5703d67a3cec6b3f913f55"
+            ]
+          }
+        ],
+        "after_validated_impact_count": 33,
+        "after_verified_supported_score": 10.883926,
+        "before_component_score_vector": {
+          "bottleneck_pricing": 0.0,
+          "capital_allocation": 1.0,
+          "earnings_visibility": 0.0,
+          "eps_fcf_explosion": 1.2,
+          "information_confidence": 5.0,
+          "market_mispricing": 0.0,
+          "valuation_rerating": 0.0
+        },
+        "before_verified_supported_score": 7.2,
+        "missing_cap_impact_repairs": [
+          {
+            "after_impacts": [],
+            "before_impact_id": "IMPACT-0b6f2d9873b4a00eec212da3",
+            "before_support_type_cap": 0.0,
+            "before_validated_credit_fraction": 0.0,
+            "claim_id": "CLM-81cdb44f9ea4a488a790",
+            "component_id": "earnings_visibility",
+            "direction": "SUPPORT",
+            "primitive_id": "shipment_or_revenue_mix",
+            "repaired": true,
+            "resolution": "EXPLICIT_SEMANTIC_REJECTION_OR_REROUTE"
+          },
+          {
+            "after_impacts": [],
+            "before_impact_id": "IMPACT-33124d5bf4e5149dba689afa",
+            "before_support_type_cap": 0.0,
+            "before_validated_credit_fraction": 0.0,
+            "claim_id": "CLM-c35e896dc619cf663b61",
+            "component_id": "earnings_visibility",
+            "direction": "SUPPORT",
+            "primitive_id": "shipment_or_revenue_mix",
+            "repaired": true,
+            "resolution": "EXPLICIT_SEMANTIC_REJECTION_OR_REROUTE"
+          },
+          {
+            "after_impacts": [],
+            "before_impact_id": "IMPACT-61f3095e4bf400f8d3b7fe78",
+            "before_support_type_cap": 0.0,
+            "before_validated_credit_fraction": 0.0,
+            "claim_id": "CLM-c35e896dc619cf663b61",
+            "component_id": "eps_fcf_explosion",
+            "direction": "SUPPORT",
+            "primitive_id": "shipment_or_revenue_mix",
+            "repaired": true,
+            "resolution": "EXPLICIT_SEMANTIC_REJECTION_OR_REROUTE"
+          },
+          {
+            "after_impacts": [
+              {
+                "claim_id": "CLM-85a8e1ec74fd4c208401",
+                "component_id": "earnings_visibility",
+                "component_subcriterion_id": "C06_VIS_CAPACITY_BOOKING",
+                "counter_effect_fraction": 0.0,
+                "direction": "SUPPORT",
+                "duplicate_reason": null,
+                "impact_id": "IMPACT-e0c91a78959e08bee16fa6ce",
+                "primitive_id": "capacity_supply_response",
+                "question_family_id": "capex_supply_oversupply",
+                "support_credit_fraction": 0.05,
+                "support_type": "PARTIAL_BRIDGE",
+                "support_type_cap": 0.6,
+                "validated_credit_fraction": 0.05
+              }
+            ],
+            "before_impact_id": "IMPACT-4b6b4bb8df93b559ed51f866",
+            "before_support_type_cap": 0.0,
+            "before_validated_credit_fraction": 0.0,
+            "claim_id": "CLM-85a8e1ec74fd4c208401",
+            "component_id": "earnings_visibility",
+            "direction": "SUPPORT",
+            "primitive_id": "capacity_supply_response",
+            "repaired": true,
+            "resolution": "NONZERO_OR_DEDUPED_SAME_EDGE"
+          },
+          {
+            "after_impacts": [
+              {
+                "claim_id": "CLM-85a8e1ec74fd4c208401",
+                "component_id": "bottleneck_pricing",
+                "component_subcriterion_id": "C06_BOT_SUPPLY_RESPONSE",
+                "counter_effect_fraction": 0.0,
+                "direction": "COUNTER",
+                "duplicate_reason": "SAME_ECONOMIC_FACT_CORROBORATION_ONLY",
+                "impact_id": "IMPACT-e9b04e644f068d9b8904d8c0",
+                "primitive_id": "capacity_supply_response",
+                "question_family_id": "capacity_constraint_presold_status",
+                "support_credit_fraction": 0.0,
+                "support_type": "RISK_OPEN",
+                "support_type_cap": 1.0,
+                "validated_credit_fraction": 0.0
+              },
+              {
+                "claim_id": "CLM-85a8e1ec74fd4c208401",
+                "component_id": "bottleneck_pricing",
+                "component_subcriterion_id": "C06_BOT_SUPPLY_RESPONSE",
+                "counter_effect_fraction": 0.125,
+                "direction": "COUNTER",
+                "duplicate_reason": null,
+                "impact_id": "IMPACT-97638445c7dc8ea9c7a738cd",
+                "primitive_id": "capacity_supply_response",
+                "question_family_id": "capex_supply_oversupply",
+                "support_credit_fraction": 0.0,
+                "support_type": "RISK_OPEN",
+                "support_type_cap": 1.0,
+                "validated_credit_fraction": 0.125
+              }
+            ],
+            "before_impact_id": "IMPACT-64f322de9e07ea858fdef021",
+            "before_support_type_cap": 0.0,
+            "before_validated_credit_fraction": 0.0,
+            "claim_id": "CLM-85a8e1ec74fd4c208401",
+            "component_id": "bottleneck_pricing",
+            "direction": "COUNTER",
+            "primitive_id": "capacity_supply_response",
+            "repaired": true,
+            "resolution": "NONZERO_OR_DEDUPED_SAME_EDGE"
+          }
+        ]
+      },
+      "company_name": "SK하이닉스",
+      "counter_capacity": {
+        "accounted_counter_impact_ids": [
+          "IMPACT-97638445c7dc8ea9c7a738cd"
+        ],
+        "contract": {
+          "component_id": "bottleneck_pricing",
+          "primitive_id": "capacity_supply_response"
+        },
+        "impact_ids": [
+          "IMPACT-97638445c7dc8ea9c7a738cd"
+        ]
+      },
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_capacity_impact_ignored_count": 0,
+        "document_payload_mismatch_count": 0,
+        "foundry_hbm_scope_violation_count": 0,
+        "foundry_reroute_missing_count": 0,
+        "frozen_input_leaf_mismatch_count": 0,
+        "legacy_missing_cap_impact_not_repaired_count": 0,
+        "missing_source_document_count": 0,
+        "new_document_count": 0,
+        "partial_bridge_missing_cap_zero_count": 0,
+        "positive_impact_internal_error_count": 0,
+        "provider_error_count": 0,
+        "required_bounded_impact_missing_count": 0,
+        "required_supported_fact_missing_count": 0,
+        "supported_question_absent_component_count": 0
+      },
+      "effective_supported_questions": [
+        "capacity_constraint_presold_status",
+        "capex_supply_oversupply",
+        "hbm_ai_memory_revenue_mix",
+        "margin_fcf_conversion",
+        "revenue_operating_profit_conversion",
+        "shipment_mass_production_generation"
+      ],
+      "foundry_scope": {
+        "forbidden_question_links": [],
+        "rerouted_or_rejected_impacts": [],
+        "source_claim_ids": [],
+        "validated_credit_impact_ids": []
+      },
+      "frozen_input": {
+        "after_document_count": 5,
+        "before_document_count": 5,
+        "document_payload_mismatch_ids": [],
+        "leaf_hashes": {
+          "accepted_current_claims.jsonl": {
+            "after_sha256": "d1f18810f8d4af6401d27711976385d5793c81e40ef475afc3c7ea0abad6c5c9",
+            "before_sha256": "d1f18810f8d4af6401d27711976385d5793c81e40ef475afc3c7ea0abad6c5c9"
+          },
+          "adjudicated_claims.jsonl": {
+            "after_sha256": "916c893cd47d17f087ff8fa3ab5cc46f6411e10fdad6c6cfe6cbd5dc49d673f0",
+            "before_sha256": "916c893cd47d17f087ff8fa3ab5cc46f6411e10fdad6c6cfe6cbd5dc49d673f0"
+          },
+          "claim_provenance.jsonl": {
+            "after_sha256": "fe181b2a1000c0aac0a184323e59b181c4a0761b18a52071e89908c811764554",
+            "before_sha256": "fe181b2a1000c0aac0a184323e59b181c4a0761b18a52071e89908c811764554"
+          },
+          "evidence_anchors.jsonl": {
+            "after_sha256": "0d42ff136f06cb4bacf254f8dc0009d64292e21822b0c40f9ef46db9f59f8c6e",
+            "before_sha256": "0d42ff136f06cb4bacf254f8dc0009d64292e21822b0c40f9ef46db9f59f8c6e"
+          },
+          "evidence_documents.jsonl": {
+            "after_sha256": "9e08428bcf7f8cc93fed90d967a0ea91d4bd9eee9b6083890b9c31b1e72299f7",
+            "before_sha256": "9e08428bcf7f8cc93fed90d967a0ea91d4bd9eee9b6083890b9c31b1e72299f7"
+          },
+          "executed_question_source_tasks.jsonl": {
+            "after_sha256": "b26806f025faf5e2fb6e3e4f87a8c2f1c48baa58a29f983d4d1bf3e0958672cd",
+            "before_sha256": "b26806f025faf5e2fb6e3e4f87a8c2f1c48baa58a29f983d4d1bf3e0958672cd"
+          },
+          "primitive_mappings.jsonl": {
+            "after_sha256": "5dbeae5dfed5dd4c63acf7d09509c208a57cb4ca8ec107cdd51d5af8cd8f3981",
+            "before_sha256": "5dbeae5dfed5dd4c63acf7d09509c208a57cb4ca8ec107cdd51d5af8cd8f3981"
+          },
+          "provider_fetch_results.jsonl": {
+            "after_sha256": "671dc38362bb6ab9e10b2816255dbb0acad55510b64791d524086db4adabd350",
+            "before_sha256": "671dc38362bb6ab9e10b2816255dbb0acad55510b64791d524086db4adabd350"
+          },
+          "query_change_log.jsonl": {
+            "after_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "question_closure.jsonl": {
+            "after_sha256": "d0805aa2187aee8b4836fbf38eea7d2c00e290c744d03c759bf62659dcc0796b",
+            "before_sha256": "d0805aa2187aee8b4836fbf38eea7d2c00e290c744d03c759bf62659dcc0796b"
+          },
+          "question_source_tasks.jsonl": {
+            "after_sha256": "169094281dd82d2e13f5248b21d8f4531e836c2167484d4336a14a8644ddf28e",
+            "before_sha256": "169094281dd82d2e13f5248b21d8f4531e836c2167484d4336a14a8644ddf28e"
+          },
+          "raw_assertions.jsonl": {
+            "after_sha256": "fdcd9d0deb8f3fd2909b0dd7227cd0ec36a7a3292ac95e09384d9eb1392c4af5",
+            "before_sha256": "fdcd9d0deb8f3fd2909b0dd7227cd0ec36a7a3292ac95e09384d9eb1392c4af5"
+          },
+          "research_brain_plans.jsonl": {
+            "after_sha256": "b002ccd6c2793766f73ba7dfea52e10d6857acbe1829d01fa0a7a0792f74ed4f",
+            "before_sha256": "b002ccd6c2793766f73ba7dfea52e10d6857acbe1829d01fa0a7a0792f74ed4f"
+          },
+          "research_provider_requests.jsonl": {
+            "after_sha256": "c8da47ae96745e48f64471321583a13690521e2f7734a2a55a5b63a0793dacd8",
+            "before_sha256": "c8da47ae96745e48f64471321583a13690521e2f7734a2a55a5b63a0793dacd8"
+          },
+          "research_web_fetched_documents.jsonl": {
+            "after_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "research_web_rejected_documents.jsonl": {
+            "after_sha256": "df38e9c00702d245ed4797a93b2b0431164efa7c5bd41910795825a329956438",
+            "before_sha256": "df38e9c00702d245ed4797a93b2b0431164efa7c5bd41910795825a329956438"
+          },
+          "research_web_search_results.jsonl": {
+            "after_sha256": "d35bf65dcd017f4bdcc9d22ae8c10b3422d7f7e21628881effb23083de6b4592",
+            "before_sha256": "d35bf65dcd017f4bdcc9d22ae8c10b3422d7f7e21628881effb23083de6b4592"
+          },
+          "research_web_search_tasks.jsonl": {
+            "after_sha256": "5ca570ae45aead2636ff80190c7f51e5bf1fc105b57b046372b1ba5d27035c50",
+            "before_sha256": "5ca570ae45aead2636ff80190c7f51e5bf1fc105b57b046372b1ba5d27035c50"
+          },
+          "source_timeline.jsonl": {
+            "after_sha256": "52290ac0467ee6094dd6fb55638ba21117cdeb3523fcbdd0644c68786fdb4b16",
+            "before_sha256": "52290ac0467ee6094dd6fb55638ba21117cdeb3523fcbdd0644c68786fdb4b16"
+          }
+        },
+        "mismatched_leaves": [],
+        "missing_document_ids": [],
+        "new_document_ids": []
+      },
+      "missing_required_bounded_impact_labels": [],
+      "missing_required_supported_questions": [],
+      "required_bounded_impacts": [],
+      "required_supported_questions": [
+        "shipment_mass_production_generation",
+        "hbm_ai_memory_revenue_mix",
+        "revenue_operating_profit_conversion",
+        "margin_fcf_conversion",
+        "capex_supply_oversupply"
+      ],
+      "status": "PASS",
+      "target_id": "000660"
+    },
+    {
+      "before_after": {
+        "after_component_score_vector": {
+          "bottleneck_pricing": 1.860465,
+          "capital_allocation": 0.375,
+          "earnings_visibility": 4.25,
+          "eps_fcf_explosion": 3.215114,
+          "information_confidence": 4.0,
+          "market_mispricing": 0.0,
+          "valuation_rerating": 0.0
+        },
+        "after_no_bounded_effect_disposition_count": 2,
+        "after_proposal_count": 73,
+        "after_rejected_impact_count": 0,
+        "after_subcriterion_points": [
+          {
+            "component_id": "eps_fcf_explosion",
+            "counter_impact_ids": [],
+            "points": 3.215114,
+            "subcriterion_id": "C06_EPS_ACTUAL_REVENUE_PROFIT",
+            "support_impact_ids": [
+              "IMPACT-3ff4592bb4dcf04f98b706d7",
+              "IMPACT-885dee545c78a630ab49e73f"
+            ]
+          },
+          {
+            "component_id": "earnings_visibility",
+            "counter_impact_ids": [],
+            "points": 0.25,
+            "subcriterion_id": "C06_VIS_CAPACITY_BOOKING",
+            "support_impact_ids": [
+              "IMPACT-1de9e5242c239f9cd6f63aab"
+            ]
+          },
+          {
+            "component_id": "earnings_visibility",
+            "counter_impact_ids": [],
+            "points": 4.0,
+            "subcriterion_id": "C06_VIS_SHIPMENT_REVENUE_MIX",
+            "support_impact_ids": [
+              "IMPACT-6ef2b8fee35355eac8dd04d3",
+              "IMPACT-2f120efb61215bf4c70493c9",
+              "IMPACT-6ba3d3bd8d9f23061a9bac7a"
+            ]
+          },
+          {
+            "component_id": "bottleneck_pricing",
+            "counter_impact_ids": [],
+            "points": 1.860465,
+            "subcriterion_id": "C06_BOT_REALIZED_ASP",
+            "support_impact_ids": [
+              "IMPACT-0d1d31d3758164f7603d1e51"
+            ]
+          },
+          {
+            "component_id": "bottleneck_pricing",
+            "counter_impact_ids": [
+              "IMPACT-05acb6376e064067b82f5f09"
+            ],
+            "points": 0.0,
+            "subcriterion_id": "C06_BOT_SUPPLY_RESPONSE",
+            "support_impact_ids": []
+          },
+          {
+            "component_id": "capital_allocation",
+            "counter_impact_ids": [],
+            "points": 0.375,
+            "subcriterion_id": "C06_CAP_CAPEX_SCHEDULE",
+            "support_impact_ids": [
+              "IMPACT-9e46eef989d90fdff4800b74"
+            ]
+          },
+          {
+            "component_id": "information_confidence",
+            "counter_impact_ids": [],
+            "points": 2.0,
+            "subcriterion_id": "C06_INFO_SOURCE_QUALITY",
+            "support_impact_ids": [
+              "IMPACT-e20206d21f3bdb133a5f8a6e"
+            ]
+          },
+          {
+            "component_id": "information_confidence",
+            "counter_impact_ids": [],
+            "points": 1.0,
+            "subcriterion_id": "C06_INFO_TARGET_DIRECTNESS",
+            "support_impact_ids": [
+              "IMPACT-e20206d21f3bdb133a5f8a6e"
+            ]
+          },
+          {
+            "component_id": "information_confidence",
+            "counter_impact_ids": [],
+            "points": 1.0,
+            "subcriterion_id": "C06_INFO_CURRENT_ANCHOR",
+            "support_impact_ids": [
+              "IMPACT-e20206d21f3bdb133a5f8a6e"
+            ]
+          }
+        ],
+        "after_validated_impact_count": 73,
+        "after_verified_supported_score": 13.700579,
+        "before_component_score_vector": {
+          "bottleneck_pricing": 4.75,
+          "capital_allocation": 2.0,
+          "earnings_visibility": 11.889696,
+          "eps_fcf_explosion": 0.0,
+          "information_confidence": 5.0,
+          "market_mispricing": 0.0,
+          "valuation_rerating": 0.0
+        },
+        "before_verified_supported_score": 23.639696,
+        "missing_cap_impact_repairs": [
+          {
+            "after_impacts": [],
+            "before_impact_id": "IMPACT-a0f7e1b1bbc4a9a640358e68",
+            "before_support_type_cap": 0.0,
+            "before_validated_credit_fraction": 0.0,
+            "claim_id": "CLM-464ca5cde1b30c363997",
+            "component_id": "earnings_visibility",
+            "direction": "SUPPORT",
+            "primitive_id": "revenue_visibility_contract",
+            "repaired": true,
+            "resolution": "EXPLICIT_SEMANTIC_REJECTION_OR_REROUTE"
+          },
+          {
+            "after_impacts": [],
+            "before_impact_id": "IMPACT-1c99d895633505c3ff1b7623",
+            "before_support_type_cap": 0.0,
+            "before_validated_credit_fraction": 0.0,
+            "claim_id": "CLM-464ca5cde1b30c363997",
+            "component_id": "information_confidence",
+            "direction": "SUPPORT",
+            "primitive_id": "revenue_visibility_contract",
+            "repaired": true,
+            "resolution": "EXPLICIT_SEMANTIC_REJECTION_OR_REROUTE"
+          },
+          {
+            "after_impacts": [],
+            "before_impact_id": "IMPACT-64f80a26b05b4eed798f3471",
+            "before_support_type_cap": 0.0,
+            "before_validated_credit_fraction": 0.0,
+            "claim_id": "CLM-13d3c5605df791dcf819",
+            "component_id": "eps_fcf_explosion",
+            "direction": "SUPPORT",
+            "primitive_id": "shipment_or_revenue_mix",
+            "repaired": true,
+            "resolution": "SEMANTICALLY_RESCOPED_NONZERO"
+          },
+          {
+            "after_impacts": [
+              {
+                "claim_id": "CLM-33685f026d180edb6417",
+                "component_id": "earnings_visibility",
+                "component_subcriterion_id": "C06_VIS_SHIPMENT_REVENUE_MIX",
+                "counter_effect_fraction": 0.0,
+                "direction": "SUPPORT",
+                "duplicate_reason": null,
+                "impact_id": "IMPACT-6ba3d3bd8d9f23061a9bac7a",
+                "primitive_id": "shipment_or_revenue_mix",
+                "question_family_id": "shipment_mass_production_generation",
+                "support_credit_fraction": 1.0,
+                "support_type": "DIRECT_ACTUAL",
+                "support_type_cap": 1.0,
+                "validated_credit_fraction": 1.0
+              }
+            ],
+            "before_impact_id": "IMPACT-9d2a1a3769bd003f4bc0cf08",
+            "before_support_type_cap": 0.0,
+            "before_validated_credit_fraction": 0.0,
+            "claim_id": "CLM-33685f026d180edb6417",
+            "component_id": "earnings_visibility",
+            "direction": "SUPPORT",
+            "primitive_id": "shipment_or_revenue_mix",
+            "repaired": true,
+            "resolution": "NONZERO_OR_DEDUPED_SAME_EDGE"
+          },
+          {
+            "after_impacts": [],
+            "before_impact_id": "IMPACT-593c7e5eb61143dc9423aab9",
+            "before_support_type_cap": 0.0,
+            "before_validated_credit_fraction": 0.0,
+            "claim_id": "CLM-33685f026d180edb6417",
+            "component_id": "eps_fcf_explosion",
+            "direction": "SUPPORT",
+            "primitive_id": "shipment_or_revenue_mix",
+            "repaired": true,
+            "resolution": "SEMANTICALLY_RESCOPED_NONZERO"
+          }
+        ]
+      },
+      "company_name": "삼성전자",
+      "counter_capacity": {
+        "accounted_counter_impact_ids": [
+          "IMPACT-05acb6376e064067b82f5f09"
+        ],
+        "contract": {},
+        "impact_ids": []
+      },
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_capacity_impact_ignored_count": 0,
+        "document_payload_mismatch_count": 0,
+        "foundry_hbm_scope_violation_count": 0,
+        "foundry_reroute_missing_count": 0,
+        "frozen_input_leaf_mismatch_count": 0,
+        "legacy_missing_cap_impact_not_repaired_count": 0,
+        "missing_source_document_count": 0,
+        "new_document_count": 0,
+        "partial_bridge_missing_cap_zero_count": 0,
+        "positive_impact_internal_error_count": 0,
+        "provider_error_count": 0,
+        "required_bounded_impact_missing_count": 0,
+        "required_supported_fact_missing_count": 0,
+        "supported_question_absent_component_count": 0
+      },
+      "effective_supported_questions": [
+        "asp_pricing_actual",
+        "capex_supply_oversupply",
+        "shipment_mass_production_generation"
+      ],
+      "foundry_scope": {
+        "forbidden_question_links": [],
+        "rerouted_or_rejected_impacts": [
+          {
+            "claim_id": "CLM-464ca5cde1b30c363997",
+            "reason": "IMPACT_MAPPING_REJECTED",
+            "review_issues": [
+              "Tesla 계약은 삼성전자 Foundry의 LOGIC_FOUNDRY 위탁생산 계약으로, C06의 HBM_MEMORY_CUSTOMER_CAPACITY 메커니즘과 제품·사업 부문이 다릅니다.",
+              "따라서 customer_preorder_or_allocation 및 revenue_visibility_contract에 대한 두 SUPPORT 매핑은 C06 문맥에서 성립하지 않습니다. HBM 고객 배정·예약·공급계약의 PARTIAL predicate조차 충족하지 않습니다.",
+              "계약 기간과 금액은 Foundry 계약의 가시성만 뒷받침하며, HBM 배정, booked capacity, 매출 전환 또는 FCF를 뒷받침하지 않습니다.",
+              "Pass A의 무영향 결론, counter thesis, unsupported_aspects, DIRECT 인식 및 다른 메커니즘으로의 reroute 판단은 공급된 근거와 일치합니다."
+            ]
+          }
+        ],
+        "source_claim_ids": [
+          "CLM-0d0760af8405137dfe90",
+          "CLM-464ca5cde1b30c363997"
+        ],
+        "validated_credit_impact_ids": []
+      },
+      "frozen_input": {
+        "after_document_count": 5,
+        "before_document_count": 5,
+        "document_payload_mismatch_ids": [],
+        "leaf_hashes": {
+          "accepted_current_claims.jsonl": {
+            "after_sha256": "8c1a5dd80f7dd0cdc8ee8474efe367c9a4176564c0bda63a9c8097655cb39921",
+            "before_sha256": "8c1a5dd80f7dd0cdc8ee8474efe367c9a4176564c0bda63a9c8097655cb39921"
+          },
+          "adjudicated_claims.jsonl": {
+            "after_sha256": "c4ded3785183a9fa23a70aa3e4a8cfe89c700b11966b89d04b930ee6857b2b0c",
+            "before_sha256": "c4ded3785183a9fa23a70aa3e4a8cfe89c700b11966b89d04b930ee6857b2b0c"
+          },
+          "claim_provenance.jsonl": {
+            "after_sha256": "e0bd985045e4f6522f9d4b1ab7fac4a3941e62075255c6c4602bb1c693f92287",
+            "before_sha256": "e0bd985045e4f6522f9d4b1ab7fac4a3941e62075255c6c4602bb1c693f92287"
+          },
+          "evidence_anchors.jsonl": {
+            "after_sha256": "45b7adf238ce0999292398c4e011d709e3dca91b8769cfd24de5fb7a611aecdd",
+            "before_sha256": "45b7adf238ce0999292398c4e011d709e3dca91b8769cfd24de5fb7a611aecdd"
+          },
+          "evidence_documents.jsonl": {
+            "after_sha256": "d696127b55673f33b8368ea9775c08fd8784a14e86000d563639a2fff630a3c6",
+            "before_sha256": "d696127b55673f33b8368ea9775c08fd8784a14e86000d563639a2fff630a3c6"
+          },
+          "executed_question_source_tasks.jsonl": {
+            "after_sha256": "953559a3b9ee28cf7bf164c734d2d7d6e27a58175ec5d00a2baf49f4c3718fe2",
+            "before_sha256": "953559a3b9ee28cf7bf164c734d2d7d6e27a58175ec5d00a2baf49f4c3718fe2"
+          },
+          "primitive_mappings.jsonl": {
+            "after_sha256": "3ea60d4e0a703ab325d92b9c23724f9ece628a6716259c7678b9458c9f6f33eb",
+            "before_sha256": "3ea60d4e0a703ab325d92b9c23724f9ece628a6716259c7678b9458c9f6f33eb"
+          },
+          "provider_fetch_results.jsonl": {
+            "after_sha256": "602377b9475cca8cefdf8129b4a098ed7e8bad079d42f1f011dd964e10bbbbd2",
+            "before_sha256": "602377b9475cca8cefdf8129b4a098ed7e8bad079d42f1f011dd964e10bbbbd2"
+          },
+          "query_change_log.jsonl": {
+            "after_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "question_closure.jsonl": {
+            "after_sha256": "dac5536c93b0a540a027c21f64db0cea260499177e2576100474d05351978852",
+            "before_sha256": "dac5536c93b0a540a027c21f64db0cea260499177e2576100474d05351978852"
+          },
+          "question_source_tasks.jsonl": {
+            "after_sha256": "0c752f880e46333107b3dc78417db267ac4a01cc972892b1f090a72da7ce79dd",
+            "before_sha256": "0c752f880e46333107b3dc78417db267ac4a01cc972892b1f090a72da7ce79dd"
+          },
+          "raw_assertions.jsonl": {
+            "after_sha256": "888e4c292183b5999f794488a1931e8ea01c70dfac05c5c1c84bbb0c69e1b4e1",
+            "before_sha256": "888e4c292183b5999f794488a1931e8ea01c70dfac05c5c1c84bbb0c69e1b4e1"
+          },
+          "research_brain_plans.jsonl": {
+            "after_sha256": "1c660496a1dbd644d3bde10caaafe320bc3c0f7e70c5d12327ecf390aad99eb8",
+            "before_sha256": "1c660496a1dbd644d3bde10caaafe320bc3c0f7e70c5d12327ecf390aad99eb8"
+          },
+          "research_provider_requests.jsonl": {
+            "after_sha256": "35f8f0d04fcfb5dab12a6fa32c3a11b3911b68f896575afc2c510bcaf0448351",
+            "before_sha256": "35f8f0d04fcfb5dab12a6fa32c3a11b3911b68f896575afc2c510bcaf0448351"
+          },
+          "research_web_fetched_documents.jsonl": {
+            "after_sha256": "e5aa9cf6c64aba99e6170a61a280c09f391dbdbb6d843eaa3c92020c3b7cec8f",
+            "before_sha256": "e5aa9cf6c64aba99e6170a61a280c09f391dbdbb6d843eaa3c92020c3b7cec8f"
+          },
+          "research_web_rejected_documents.jsonl": {
+            "after_sha256": "7fcccec6d88801bf52236c4102c74a1ede0b8ddfa75c7d3bf9d9c9fb4c944bbe",
+            "before_sha256": "7fcccec6d88801bf52236c4102c74a1ede0b8ddfa75c7d3bf9d9c9fb4c944bbe"
+          },
+          "research_web_search_results.jsonl": {
+            "after_sha256": "59d0dbf863780f31341e9d32a82f2414bf322e40839f5065c557b6de82e28e09",
+            "before_sha256": "59d0dbf863780f31341e9d32a82f2414bf322e40839f5065c557b6de82e28e09"
+          },
+          "research_web_search_tasks.jsonl": {
+            "after_sha256": "456119164550856932f579363aa7806e8965b56d495d8617c6f852c72ef9042e",
+            "before_sha256": "456119164550856932f579363aa7806e8965b56d495d8617c6f852c72ef9042e"
+          },
+          "source_timeline.jsonl": {
+            "after_sha256": "d797523c41e060eab44c38b31ef62dceb508ffab6190422aa68c0b4548acd19c",
+            "before_sha256": "d797523c41e060eab44c38b31ef62dceb508ffab6190422aa68c0b4548acd19c"
+          }
+        },
+        "mismatched_leaves": [],
+        "missing_document_ids": [],
+        "new_document_ids": []
+      },
+      "missing_required_bounded_impact_labels": [],
+      "missing_required_supported_questions": [],
+      "required_bounded_impacts": [
+        {
+          "contract": {
+            "allowed_support_types": [
+              "DIRECT_ACTUAL",
+              "PARTIAL_BRIDGE"
+            ],
+            "component_id": "earnings_visibility",
+            "direction": "SUPPORT",
+            "label": "hbm4_shipment_to_earnings_visibility",
+            "primitive_id": "shipment_or_revenue_mix",
+            "question_family_id": "shipment_mass_production_generation",
+            "scope_product_family": "HBM"
+          },
+          "label": "hbm4_shipment_to_earnings_visibility",
+          "matched_impacts": [
+            {
+              "claim_id": "CLM-13d3c5605df791dcf819",
+              "component_id": "earnings_visibility",
+              "component_subcriterion_id": "C06_VIS_SHIPMENT_REVENUE_MIX",
+              "counter_effect_fraction": 0.0,
+              "direction": "SUPPORT",
+              "duplicate_reason": null,
+              "impact_id": "IMPACT-6ef2b8fee35355eac8dd04d3",
+              "primitive_id": "shipment_or_revenue_mix",
+              "question_family_id": "shipment_mass_production_generation",
+              "support_credit_fraction": 0.8,
+              "support_type": "DIRECT_ACTUAL",
+              "support_type_cap": 1.0,
+              "validated_credit_fraction": 0.8
+            },
+            {
+              "claim_id": "CLM-33685f026d180edb6417",
+              "component_id": "earnings_visibility",
+              "component_subcriterion_id": "C06_VIS_SHIPMENT_REVENUE_MIX",
+              "counter_effect_fraction": 0.0,
+              "direction": "SUPPORT",
+              "duplicate_reason": null,
+              "impact_id": "IMPACT-6ba3d3bd8d9f23061a9bac7a",
+              "primitive_id": "shipment_or_revenue_mix",
+              "question_family_id": "shipment_mass_production_generation",
+              "support_credit_fraction": 1.0,
+              "support_type": "DIRECT_ACTUAL",
+              "support_type_cap": 1.0,
+              "validated_credit_fraction": 1.0
+            }
+          ],
+          "satisfied": true
+        },
+        {
+          "contract": {
+            "allowed_support_types": [
+              "DIRECT_ACTUAL",
+              "PARTIAL_BRIDGE"
+            ],
+            "component_id": "bottleneck_pricing",
+            "direction": "SUPPORT",
+            "label": "memory_asp_to_pricing",
+            "primitive_id": "memory_price_increase_mentioned",
+            "question_family_id": "asp_pricing_actual",
+            "scope_product_family": "MEMORY_GENERIC"
+          },
+          "label": "memory_asp_to_pricing",
+          "matched_impacts": [
+            {
+              "claim_id": "CLM-48f304f4471c4d575cec",
+              "component_id": "bottleneck_pricing",
+              "component_subcriterion_id": "C06_BOT_REALIZED_ASP",
+              "counter_effect_fraction": 0.0,
+              "direction": "SUPPORT",
+              "duplicate_reason": null,
+              "impact_id": "IMPACT-0d1d31d3758164f7603d1e51",
+              "primitive_id": "memory_price_increase_mentioned",
+              "question_family_id": "asp_pricing_actual",
+              "support_credit_fraction": 0.372093,
+              "support_type": "DIRECT_ACTUAL",
+              "support_type_cap": 1.0,
+              "validated_credit_fraction": 0.372093
+            }
+          ],
+          "satisfied": true
+        },
+        {
+          "contract": {
+            "allowed_support_types": [
+              "PARTIAL_BRIDGE"
+            ],
+            "component_id": "eps_fcf_explosion",
+            "direction": "SUPPORT",
+            "label": "actual_earnings_bounded_conversion",
+            "primitive_id": "actual_earnings_conversion",
+            "scope_product_family": "MEMORY_GENERIC"
+          },
+          "label": "actual_earnings_bounded_conversion",
+          "matched_impacts": [
+            {
+              "claim_id": "CLM-8a6484cd91e4ef637201",
+              "component_id": "eps_fcf_explosion",
+              "component_subcriterion_id": "C06_EPS_ACTUAL_REVENUE_PROFIT",
+              "counter_effect_fraction": 0.0,
+              "direction": "SUPPORT",
+              "duplicate_reason": null,
+              "impact_id": "IMPACT-885dee545c78a630ab49e73f",
+              "primitive_id": "actual_earnings_conversion",
+              "question_family_id": "asp_pricing_actual",
+              "support_credit_fraction": 0.25,
+              "support_type": "PARTIAL_BRIDGE",
+              "support_type_cap": 0.6,
+              "validated_credit_fraction": 0.25
+            }
+          ],
+          "satisfied": true
+        }
+      ],
+      "required_supported_questions": [
+        "shipment_mass_production_generation",
+        "asp_pricing_actual"
+      ],
+      "status": "PASS",
+      "target_id": "005930"
+    }
+  ]
+}

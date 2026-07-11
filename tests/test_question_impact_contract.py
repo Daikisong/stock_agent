@@ -116,6 +116,23 @@ class QuestionImpactContractTests(unittest.TestCase):
         )
         self.assertEqual(closure["status"], "SUPPORTED_NON_SCORING")
 
+    def test_impact_for_another_question_cannot_close_this_question(self) -> None:
+        closure = self._compile_one(
+            family="shipment_mass_production_generation",
+            claim={
+                "claim_id": "C-QUESTION-BOUND",
+                "raw_assertion": {
+                    "predicate": "commercially shipped",
+                    "object_text": "HBM sales increased",
+                },
+            },
+            primitive_id="shipment_or_revenue_mix",
+            eligibility={"component_scoring_eligibility": True},
+            impact=True,
+            impact_question="hbm_ai_memory_revenue_mix",
+        )
+        self.assertEqual(closure["status"], "SUPPORTED_NON_SCORING")
+
     def test_frozen_audit_matches_committed_pass_artifact(self) -> None:
         actual = audit_question_impact_contracts(repo_root=self.ROOT)
         expected = json.loads(
@@ -136,6 +153,7 @@ class QuestionImpactContractTests(unittest.TestCase):
         primitive_id: str,
         eligibility,
         impact: bool,
+        impact_question: str | None = None,
     ):
         contract = load_question_impact_contracts(
             self.ROOT / "configs/e2r_question_impact_contracts_v1.json"
@@ -158,6 +176,11 @@ class QuestionImpactContractTests(unittest.TestCase):
                     "component_id": contract.allowed_component_ids[0],
                     "direction": "SUPPORT",
                     "validated_credit_fraction": 0.5,
+                    **(
+                        {"question_family_id": impact_question}
+                        if impact_question
+                        else {}
+                    ),
                 }
             )
         return compile_question_closures_v2(

@@ -78,7 +78,7 @@ class MeaningfulScoringReadinessV3Tests(unittest.TestCase):
         self.assertEqual(verdict["status"], NOT_READY)
         self.assertFalse(verdict["hard_acceptance_pass"])
         self.assertIn(
-            "global:frozen_52f09f3_repair:audit_leaf_missing",
+            "global:semantic_scoring_known_bad:audit_leaf_missing",
             verdict["blockers"],
         )
         self.assertIn(

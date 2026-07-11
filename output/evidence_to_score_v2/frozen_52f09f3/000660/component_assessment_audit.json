@@ -1,0 +1,21 @@
+{
+  "component_count": 7,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "component_subcriterion_sum_mismatch_count": 0,
+    "counter_impact_ignored_count": 0,
+    "evaluated_absent_blocks_full_score_count": 0,
+    "provider_pending_allows_full_score_count": 0,
+    "risk_open_zero_effect_count": 0,
+    "risk_resolved_still_penalized_count": 0,
+    "subcriterion_scoring_critical_count": 0,
+    "support_counter_same_component_unreconciled_count": 0,
+    "supported_component_erased_by_other_gap_count": 0,
+    "unknown_uninvestigated_allows_full_score_count": 0
+  },
+  "nonterminal_component_count": 2,
+  "schema_version": "e2r_component_assessment_audit_v3",
+  "subcriterion_count": 26,
+  "terminal_component_count": 5,
+  "verified_supported_points": 10.883926
+}

@@ -413,6 +413,14 @@ def _has_scoring_impact(
         str(row.get("mapping_id") or "") for row in matching_mappings
     }
     for impact in impacts_by_claim.get(claim_id, ()):
+        impact_question_id = str(
+            _impact_value(impact, "question_family_id") or ""
+        )
+        if (
+            impact_question_id
+            and impact_question_id != contract.question_family_id
+        ):
+            continue
         lineage = {
             str(value)
             for value in (_impact_value(impact, "lineage_mapping_ids") or ())
@@ -436,7 +444,14 @@ def _has_scoring_impact(
         }:
             continue
         credit = _impact_value(impact, "validated_credit_fraction")
-        if credit is None or float(credit) > 0:
+        if (
+            credit is None
+            or float(credit) > 0
+            or (
+                _impact_value(impact, "corroboration_only") is True
+                and bool(_impact_value(impact, "duplicate_reason"))
+            )
+        ):
             return True
     return False
 

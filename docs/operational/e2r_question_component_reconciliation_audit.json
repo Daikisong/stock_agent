@@ -153,10 +153,12 @@
           "component_state": "SUPPORT_WITH_COUNTER_CAP",
           "component_subcriterion_id": "C06_VIS_CUSTOMER_COMMITMENT",
           "counter_effect_fraction": 0.0,
+          "credit_link_type": "DIRECT_CREDIT",
           "direction": "SUPPORT",
           "eligibility_decision_id": "ELIG-C-SUPPORT",
           "impact_id": "I-SUPPORT",
           "resolution_effect": 0.0,
+          "shared_credit_source_impact_id": "",
           "support_credit_fraction": 0.8
         }
       ],
@@ -186,7 +188,7 @@
       "question_contract_hash": "b80468fb03ba048a11c47e5d52ef5b0e544c06b833ca996296e0ffda44ab21e2",
       "question_family_id": "current_customer_allocation_commitment",
       "reconciled_closure_status": "SUPPORTED_SCORING",
-      "reconciliation_id": "RECON-d5cc150c1ddbd9b06778bbd5",
+      "reconciliation_id": "RECON-ceb8a5537cf2bbb976456613",
       "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
       "search_adequate": false,
       "supporting_claim_ids": [
@@ -338,10 +340,12 @@
           "component_state": "VERIFIED_WEAK_SUPPORT",
           "component_subcriterion_id": "C06_EPS_ACTUAL_REVENUE_PROFIT",
           "counter_effect_fraction": 0.0,
+          "credit_link_type": "DIRECT_CREDIT",
           "direction": "SUPPORT",
           "eligibility_decision_id": "ELIG-C-PARTIAL",
           "impact_id": "I-PARTIAL",
           "resolution_effect": 0.0,
+          "shared_credit_source_impact_id": "",
           "support_credit_fraction": 0.4
         }
       ],
@@ -372,7 +376,7 @@
       "question_contract_hash": "c9bc1022a8df715b5ffd99467b10dc97ac9d0624c3d73ad2d0804b2764f30b94",
       "question_family_id": "revenue_operating_profit_conversion",
       "reconciled_closure_status": "PARTIALLY_SUPPORTED_SCORING",
-      "reconciliation_id": "RECON-c42f10a6a39f71775a957ecb",
+      "reconciliation_id": "RECON-cc3d0234f4a5dd8120a290cb",
       "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
       "search_adequate": false,
       "supporting_claim_ids": [
@@ -446,10 +450,12 @@
           "component_state": "SUPPORT_WITH_COUNTER_CAP",
           "component_subcriterion_id": "C06_VIS_MEDIUM_REVISION",
           "counter_effect_fraction": 0.6,
+          "credit_link_type": "DIRECT_CREDIT",
           "direction": "COUNTER",
           "eligibility_decision_id": "ELIG-C-COUNTER",
           "impact_id": "I-COUNTER",
           "resolution_effect": 0.0,
+          "shared_credit_source_impact_id": "",
           "support_credit_fraction": 0.0
         }
       ],
@@ -476,7 +482,7 @@
       "question_contract_hash": "664a031ac2869e6cf8cecbfb66d055afc51f3723a58c7415792282a6c04a11c9",
       "question_family_id": "conventional_memory_drag",
       "reconciled_closure_status": "COUNTER_SUPPORTED",
-      "reconciliation_id": "RECON-9e29971733796fca75f9b39e",
+      "reconciliation_id": "RECON-9efe324f3b4e09fa5e52de5c",
       "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
       "search_adequate": false,
       "supporting_claim_ids": [],

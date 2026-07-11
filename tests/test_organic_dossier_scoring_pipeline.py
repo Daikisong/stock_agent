@@ -6,7 +6,11 @@ import unittest
 from pathlib import Path
 
 from e2r.research_brain.dossier.scoring_pipeline import (
+    _document_context_excerpt,
     run_dossier_scoring_pipeline,
+)
+from e2r.research_brain.planning.provider_transport import (
+    StructuredProviderUnavailable,
 )
 from e2r.research_brain.scoring.question_impact_contract import (
     load_question_impact_contracts,
@@ -69,7 +73,30 @@ class _ReviewPendingProvider(_ImpactProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class _UnavailableProvider(_ImpactProvider):
+    provider_name = "TEST_UNAVAILABLE_IMPACT_PROVIDER"
+
+    def complete(self, *, pass_name, payload):
+        raise StructuredProviderUnavailable("test provider unavailable")
+
+
 class OrganicDossierScoringPipelineTests(unittest.TestCase):
+    def test_impact_provider_receives_same_document_near_quote_context(self) -> None:
+        excerpt = _document_context_excerpt(
+            document={
+                "content_text": (
+                    "HBM sales increased in the quarter. "
+                    "Operating profit reached 10 trillion won. "
+                    "Free cash flow was not disclosed."
+                )
+            },
+            exact_quote="Operating profit reached 10 trillion won.",
+            max_chars=120,
+        )
+        self.assertIn("HBM sales increased", excerpt)
+        self.assertIn("Operating profit reached", excerpt)
+        self.assertIn("Free cash flow was not disclosed", excerpt)
+
     def test_full_leaf_chain_requires_impacts_and_terminal_components(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -171,6 +198,37 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
             ]
             self.assertEqual(rows[0]["status"], "IMPACT_ADJUDICATION_PASS")
             self.assertEqual(rows[0]["review_issues"], [])
+
+    def test_provider_error_is_persisted_and_can_be_retried(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._write_inputs(root)
+            first = run_dossier_scoring_pipeline(
+                dossier_root=root,
+                target_id="123456",
+                company_name="임의회사",
+                as_of_date="2026-07-11",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                impact_provider=_UnavailableProvider(),
+            )
+            self.assertEqual(first["status"], "ORGANIC_DOSSIER_SCORING_PENDING")
+            rows = self._read_jsonl(root / "impact_adjudications.jsonl")
+            self.assertEqual(rows[0]["status"], "PROVIDER_ERROR")
+            self.assertEqual(
+                rows[0]["audit"]["critical_counts"]["provider_error_count"],
+                1,
+            )
+
+            second = run_dossier_scoring_pipeline(
+                dossier_root=root,
+                target_id="123456",
+                company_name="임의회사",
+                as_of_date="2026-07-11",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                impact_provider=_ImpactProvider(),
+                retry_failed_only=True,
+            )
+            self.assertEqual(second["critical_count_sum"], 0)
 
     def _write_inputs(self, root: Path, pending_family: str | None = None) -> None:
         self._jsonl(

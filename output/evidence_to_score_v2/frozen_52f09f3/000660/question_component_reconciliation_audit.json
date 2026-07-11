@@ -1,0 +1,18 @@
+{
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "absence_with_inadequate_search_count": 0,
+    "absence_with_internal_rejection_count": 0,
+    "absence_with_provider_failure_count": 0,
+    "partially_supported_question_zero_credit_count": 0,
+    "positive_claim_absent_component_count": 0,
+    "positive_proposal_absent_component_count": 0,
+    "supported_non_scoring_component_credit_count": 0,
+    "supported_question_absent_component_count": 0,
+    "supported_question_zero_credit_count": 0
+  },
+  "pipeline_error_question_count": 0,
+  "question_count": 12,
+  "schema_version": "e2r_question_component_reconciliation_audit_v1",
+  "status": "QUESTION_COMPONENT_RECONCILIATION_PASS"
+}

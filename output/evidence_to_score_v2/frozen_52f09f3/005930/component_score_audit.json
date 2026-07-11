@@ -1,0 +1,57 @@
+{
+  "critical_count_sum": 5,
+  "critical_counts": {
+    "balanced_point_score_count": 0,
+    "calibrated_profile_not_used_count": 0,
+    "component_sum_total_mismatch_count": 0,
+    "full_score_validity_v2_critical_count": 5,
+    "full_score_with_nonterminal_component_count": 0,
+    "supported_component_lost_count": 0
+  },
+  "full_score_validity": {
+    "blocking_reasons": [
+      "terminal_component_gap_count",
+      "unresolved_contradiction_count",
+      "absence_without_adequacy_count"
+    ],
+    "critical_count_sum": 5,
+    "critical_counts": {
+      "absence_without_adequacy_count": 2,
+      "counter_impact_zeroed_by_missing_cap_count": 0,
+      "cross_business_question_closure_count": 0,
+      "gold_critical_fact_miss_count": 0,
+      "mechanism_scope_failure_count": 0,
+      "pending_state_count": 0,
+      "positive_impact_zeroed_by_missing_cap_count": 0,
+      "question_component_reconciliation_failure_count": 0,
+      "same_document_duplicate_credit_count": 0,
+      "same_fact_duplicate_credit_count": 0,
+      "scoring_schema_not_total_count": 0,
+      "silent_zero_default_count": 0,
+      "terminal_component_gap_count": 1,
+      "unresolved_contradiction_count": 2,
+      "validity_evidence_missing_count": 0
+    },
+    "full_score_valid": false,
+    "schema_version": "e2r_full_score_validity_v2",
+    "source_audit_ids": [
+      "3d187d4c33638c4133b1fca186f58a0237e717d91e36d9a98f01db14b6ecb9eb",
+      "RECON-fd37a163c4a125b6063084fc",
+      "RECON-d8973697bcf49b644bcb9ee2",
+      "RECON-8d54aa71d39f108de0e2fd08",
+      "RECON-499a3232a5ebabab4a37bf5d",
+      "RECON-da04b8eae0d1df88a694e914",
+      "RECON-d565c62c8aa0a6cf7b5aad48",
+      "RECON-f08abf6798720703b5733649",
+      "RECON-0f85b6bfe8560c89fa526b0d",
+      "RECON-436ac455e54a41ad8cf713e4",
+      "RECON-af8616ce3078392ec12ad512",
+      "RECON-81526d211f95b6b9b9336e37",
+      "RECON-ec9456c9e82c4896ba83643f"
+    ],
+    "status": "FULL_SCORE_VALIDITY_V2_FAIL",
+    "validity_id": "FSVALID-a137c14be83b560729567ded"
+  },
+  "schema_version": "e2r_research_calibrated_score_audit_v2",
+  "status": "RESEARCH_CALIBRATED_COMPONENT_SCORING_FAIL"
+}

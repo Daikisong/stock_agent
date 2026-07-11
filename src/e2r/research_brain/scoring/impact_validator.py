@@ -171,6 +171,12 @@ class ImpactValidator:
                     {
                         "impact_id": proposal.impact_id,
                         "claim_id": proposal.claim_id,
+                        "mapping_id": proposal.mapping_id,
+                        "component_id": proposal.component_id,
+                        "question_family_id": proposal.question_family_id,
+                        "component_subcriterion_id": (
+                            proposal.component_subcriterion_id
+                        ),
                         "reason": reason,
                         "scope_validation": dict(impact.scope_validation),
                     }

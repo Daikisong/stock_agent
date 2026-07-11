@@ -1,0 +1,234 @@
+{
+  "blockers": [],
+  "company_name": "삼성전자",
+  "conversion_funnel": {
+    "accepted_current_claims": 27,
+    "canonical_stage": "1",
+    "evaluated_absent_components": 3,
+    "fetched_documents": 5,
+    "full_score_valid": true,
+    "raw_assertions": 53,
+    "supported_components": 4,
+    "validated_impacts": 32,
+    "verified_supported_score": 23.639696
+  },
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "decision_claim_lineage_mismatch_count": 0,
+    "decision_component_lineage_mismatch_count": 0,
+    "decision_impact_lineage_mismatch_count": 0,
+    "full_score_invalid_count": 0,
+    "future_source_count": 0,
+    "nonterminal_component_count": 0,
+    "nonterminal_question_count": 0,
+    "organic_claim_missing_count": 0,
+    "probe_contamination_count": 0,
+    "provenance_hash_or_quote_mismatch_count": 0,
+    "red_team_gap_count": 0,
+    "score_sum_mismatch_count": 0,
+    "score_type_mismatch_count": 0,
+    "source_family_gap_count": 0,
+    "source_proxy_claim_count": 0,
+    "stage_trace_mismatch_count": 0,
+    "target_contamination_count": 0,
+    "validated_impact_missing_count": 0
+  },
+  "decision": {
+    "accepted_claim_ids": [
+      "CLM-464ca5cde1b30c363997",
+      "CLM-4df55f27da648bb0024e",
+      "CLM-47103baa9b99062ef88a",
+      "CLM-48f304f4471c4d575cec",
+      "CLM-8a6484cd91e4ef637201",
+      "CLM-db034d8f03ce72819564",
+      "CLM-63f797bc4396e1bff5f0",
+      "CLM-e0a7f204219f352da273",
+      "CLM-13d3c5605df791dcf819",
+      "CLM-10501873f575a69571d9",
+      "CLM-1982ea2aca36ebef450e",
+      "CLM-ea9b82182ac296c6d682",
+      "CLM-63085bc76ba54eba7d67",
+      "CLM-bab8bc1c37b4bb92f54e",
+      "CLM-0bb55c3d4d5844a1c859",
+      "CLM-e341ee4c41bd41f3fab0",
+      "CLM-0d0760af8405137dfe90",
+      "CLM-0d59f6d8b09b36fb145d",
+      "CLM-1fc27cd4caa01dd2f04c",
+      "CLM-ccb03c3ca97a6a4dac73",
+      "CLM-cde7ddca235c60d20ada",
+      "CLM-d33eea243c334096866d",
+      "CLM-33685f026d180edb6417",
+      "CLM-79444b89b7d92a3930ab",
+      "CLM-0f9c0b328976f0995bed",
+      "CLM-90533c9daf13fefd691c",
+      "CLM-3fe807708c2eee9d9908"
+    ],
+    "as_of_date": "2026-07-11",
+    "canonical_stage": "1",
+    "claim_impact_ids": [
+      "IMPACT-a0f7e1b1bbc4a9a640358e68",
+      "IMPACT-1c99d895633505c3ff1b7623",
+      "IMPACT-aadca754270a4e9b2a2bf29d",
+      "IMPACT-02497e327a056821ed95ef08",
+      "IMPACT-670ee1af47facb3f742f04b3",
+      "IMPACT-ebec773a33c9561fbc1e85f8",
+      "IMPACT-9ea105fc1c6c7b438e1ee42c",
+      "IMPACT-5f7ef190069f02ff3d12f5b9",
+      "IMPACT-9da5d56fc61d842e5637822b",
+      "IMPACT-921d3d6eae66261c37e85cf0",
+      "IMPACT-64f80a26b05b4eed798f3471",
+      "IMPACT-52b89c98e8b254204393d7f2",
+      "IMPACT-fa3eb5dd650cef17a68faa64",
+      "IMPACT-fa686288af26da4faf7d5898",
+      "IMPACT-2d2ad3e4ebfe3f9e2c6fd97f",
+      "IMPACT-5080acf69688d0cffdea68d8",
+      "IMPACT-54c18b7677688cf266b58536",
+      "IMPACT-d595ac23ce2e5c28126fac83",
+      "IMPACT-146b15f99b35d5e6fadd62c3",
+      "IMPACT-fa3ab124ad31745e71e98d8c",
+      "IMPACT-ced7f2ca93fada2644bdd067",
+      "IMPACT-9367a921c9815048bcacd220",
+      "IMPACT-6a7e9b68bd4d2d6e5a1ae8d4",
+      "IMPACT-5ff3f2d93c928a77ad651beb",
+      "IMPACT-e8d919381894b4202d8a4617",
+      "IMPACT-8da1af54e31cea32bbf15a26",
+      "IMPACT-9d2a1a3769bd003f4bc0cf08",
+      "IMPACT-593c7e5eb61143dc9423aab9",
+      "IMPACT-0e4f55bfe72ddae32b067c32",
+      "IMPACT-ef1bb50f23dc3214193868a2",
+      "IMPACT-43ff0bb7a3e1d97124d46b90",
+      "IMPACT-32ca15e9021b43e5cb129abe"
+    ],
+    "component_assessment_ids": [
+      "COMP-8285c4a0-bottleneck_pricing",
+      "COMP-8285c4a0-capital_allocation",
+      "COMP-8285c4a0-earnings_visibility",
+      "COMP-8285c4a0-eps_fcf_explosion",
+      "COMP-8285c4a0-information_confidence",
+      "COMP-8285c4a0-market_mispricing",
+      "COMP-8285c4a0-valuation_rerating"
+    ],
+    "decision_id": "ADEC2-dc3445b18486a1f991ae03af",
+    "decision_status": "FINAL",
+    "full_e2r_score": 23.639696,
+    "full_score_valid": true,
+    "material_nonterminal_components": [],
+    "provisional_score_lower": 23.639696,
+    "provisional_score_upper": 23.639696,
+    "risk_overlay": {},
+    "score_type": "FULL_E2R_100",
+    "stage_reason": [
+      "company-level event was present; candidate promotion gates remained unmet"
+    ],
+    "target_id": "005930",
+    "trace_id": "STAGEV2-c991cf00f9b44867e4f8585b",
+    "verified_supported_score": 23.639696
+  },
+  "investment_recommendation_emitted": false,
+  "many_to_many_claim_count": 5,
+  "red_team": {
+    "capacity_expansion_oversupply": {
+      "counter_claim_ids": [],
+      "search_exhaustion_proof": [],
+      "status": "SUPPORTED",
+      "supporting_claim_ids": [
+        "CLM-47103baa9b99062ef88a",
+        "CLM-e0a7f204219f352da273"
+      ]
+    },
+    "conventional_memory_drag": {
+      "counter_claim_ids": [],
+      "search_exhaustion_proof": [
+        "PROVREQ-4702c3f861477748f0676f98",
+        "PROVREQ-bb02c8888710af92660130f5",
+        "PROVREQ-86181b8542d1237e089307d2",
+        "WEBTASK-a954e2e47b140464651a04a8"
+      ],
+      "status": "EVALUATED_ABSENT",
+      "supporting_claim_ids": []
+    },
+    "customer_concentration": {
+      "counter_claim_ids": [],
+      "search_exhaustion_proof": [],
+      "status": "PARTIALLY_SUPPORTED",
+      "supporting_claim_ids": [
+        "CLM-464ca5cde1b30c363997"
+      ]
+    },
+    "qualification_execution": {
+      "counter_claim_ids": [],
+      "search_exhaustion_proof": [
+        "PROVREQ-951d970ff2ab60af09112a15",
+        "PROVREQ-34e93ccbf3392991dcc99e93",
+        "WEBTASK-de051134ec1c5b32e86cc32b",
+        "WEBTASK-612536fcc7d18240578b163d"
+      ],
+      "status": "EVALUATED_ABSENT",
+      "supporting_claim_ids": []
+    }
+  },
+  "schema_version": "e2r_canonical_target_acceptance_v1",
+  "score": {
+    "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+    "audit": {
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "balanced_point_score_count": 0,
+        "calibrated_profile_not_used_count": 0,
+        "component_sum_total_mismatch_count": 0,
+        "full_score_with_nonterminal_component_count": 0,
+        "supported_component_lost_count": 0
+      },
+      "schema_version": "e2r_research_calibrated_score_audit_v1",
+      "status": "RESEARCH_CALIBRATED_COMPONENT_SCORING_PASS"
+    },
+    "component_score_vector": {
+      "bottleneck_pricing": 4.75,
+      "capital_allocation": 2.0,
+      "earnings_visibility": 11.889696,
+      "eps_fcf_explosion": 0.0,
+      "information_confidence": 5.0,
+      "market_mispricing": 0.0,
+      "valuation_rerating": 0.0
+    },
+    "contract_hash": "8285c4a09306c5c2c97b44478ed15b6b95a01114955f73ef09a556bd9974c0e9",
+    "full_e2r_score": 23.639696,
+    "full_score_valid": true,
+    "material_nonterminal_components": [],
+    "profile_id": "e2r_2_2_archetype_weight_runtime",
+    "profile_version": "v2_2",
+    "provisional_score_lower": 23.639696,
+    "provisional_score_upper": 23.639696,
+    "score_confidence": 0.529206,
+    "score_type": "FULL_E2R_100",
+    "verified_supported_score": 23.639696
+  },
+  "score_interval": {
+    "full_e2r_score": 23.639696,
+    "full_score_valid": true,
+    "provisional_score_lower": 23.639696,
+    "provisional_score_upper": 23.639696,
+    "target_id": "005930",
+    "verified_supported_score": 23.639696
+  },
+  "source_family_coverage": {
+    "financial_revision": {
+      "provider_request_count": 5,
+      "status": "INVESTIGATED"
+    },
+    "independent_or_customer_industry": {
+      "status": "SOURCE_BACKED",
+      "web_task_count": 8
+    },
+    "issuer_official": {
+      "document_count": 4,
+      "status": "SOURCE_BACKED"
+    },
+    "official_filing": {
+      "document_count": 1,
+      "status": "SOURCE_BACKED"
+    }
+  },
+  "status": "SAMSUNG_CANONICAL_FULL_THESIS_PASS",
+  "target_id": "005930"
+}

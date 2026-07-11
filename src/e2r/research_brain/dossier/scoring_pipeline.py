@@ -15,6 +15,10 @@ from e2r.research_brain.runtime.scoring_contracts import (
     audit_scoring_schema_totality,
     load_archetype_scoring_contract,
 )
+from e2r.research_brain.planning.provider_transport import (
+    StructuredProviderRejected,
+    StructuredProviderUnavailable,
+)
 from e2r.research_brain.scoring import (
     AtomicStageCourtV2,
     ClaimImpactLedgerBuilder,
@@ -95,12 +99,31 @@ def run_dossier_scoring_pipeline(
     if max_claims is not None and max_claims <= 0:
         raise ValueError("max_claims must be positive when configured")
     selected_claims = tuple(claims[:max_claims] if max_claims else claims)
+    provider_claim_ledger = selected_claims
     provenance_by_claim = {
         str(row.get("claim_id") or ""): row for row in provenance
     }
     document_by_id = {
         str(row.get("document_id") or ""): row for row in documents
     }
+    selected_claims = tuple(
+        {
+            **dict(claim),
+            "document_context_excerpt": _document_context_excerpt(
+                document=document_by_id.get(
+                    str(
+                        provenance_by_claim.get(
+                            str(claim.get("claim_id") or ""), {}
+                        ).get("document_id")
+                        or ""
+                    ),
+                    {},
+                ),
+                exact_quote=str(claim.get("exact_quote") or ""),
+            ),
+        }
+        for claim in selected_claims
+    )
     mappings_by_claim: dict[str, list[Mapping[str, Any]]] = {}
     for row in mappings:
         if row.get("accepted_by_evidence_os") is True:
@@ -116,6 +139,7 @@ def run_dossier_scoring_pipeline(
                 for row in selected_claims
             ),
             archetype_id=archetype_id,
+            primitive_mappings=mappings,
         )
     )
     question_contracts = {
@@ -140,10 +164,15 @@ def run_dossier_scoring_pipeline(
         if not prior_adjudications:
             raise ValueError("claim retry requires prior impact adjudications")
         failed_claim_ids = retry_ids or {
-                str(row.get("claim_id") or "")
-                for row in prior_adjudications
-                if row.get("status") != "IMPACT_ADJUDICATION_PASS"
+            str(row.get("claim_id") or "")
+            for row in prior_adjudications
+            if row.get("status")
+            in {
+                "IMPACT_ADJUDICATION_FAIL",
+                "REVIEW_PENDING",
+                "PROVIDER_ERROR",
             }
+        }
         known_claim_ids = {str(row.get("claim_id") or "") for row in selected_claims}
         unknown_retry_ids = failed_claim_ids - known_claim_ids
         if unknown_retry_ids:
@@ -216,7 +245,11 @@ def run_dossier_scoring_pipeline(
             )
             continue
         enriched_claim = {
-            **dict(claim),
+            **{
+                key: value
+                for key, value in claim.items()
+                if key != "document_context_excerpt"
+            },
             "accepted_mappings": [
                 {
                     "mapping_id": row.get("mapping_id"),
@@ -241,41 +274,82 @@ def run_dossier_scoring_pipeline(
                 ),
             }
         document = document_by_id.get(str(claim_provenance.get("document_id") or ""), {})
-        result = EvidenceImpactAdjudicator(impact_provider).adjudicate(
-            target_identity={"target_id": target_id, "company_name": company_name},
-            as_of_date=as_of_date,
-            archetype_id=archetype_id,
-            accepted_claim=enriched_claim,
-            exact_quote=str(claim_provenance.get("exact_quote") or ""),
-            document_metadata={
-                "document_id": claim_provenance.get("document_id"),
-                "source_url": claim_provenance.get("source_url"),
-                "published_date": claim_provenance.get("published_date"),
-                "source_family": _source_family(document),
-                "evidence_origin": "ORGANIC_LIVE",
-            },
-            current_claim_ledger=selected_claims,
-            counter_claims=tuple(
-                row
-                for row in selected_claims
-                if str(row.get("claim_id") or "") != claim_id
-                and str(row.get("polarity") or "").upper()
-                in {"NEGATIVE", "CONDITIONAL", "COUNTER"}
-            ),
-            rubrics=rubrics.rubrics,
-            allowed_component_ids=tuple(contract.component_weights),
-            business_mechanism_scope=infer_business_mechanism_scope(
-                claim,
-                primitive_id=sorted(claim_primitive_ids)[0],
+        exact_quote = str(claim_provenance.get("exact_quote") or "")
+        try:
+            result = EvidenceImpactAdjudicator(impact_provider).adjudicate(
+                target_identity={
+                    "target_id": target_id,
+                    "company_name": company_name,
+                },
+                as_of_date=as_of_date,
                 archetype_id=archetype_id,
-            ),
-            question_impact_contracts=applicable_question_contracts,
-            claim_eligibility_decision=eligibility_by_claim[claim_id],
-            component_subcriteria=compile_question_component_subcriteria(
-                applicable_question_contracts,
+                accepted_claim=enriched_claim,
+                exact_quote=exact_quote,
+                document_metadata={
+                    "document_id": claim_provenance.get("document_id"),
+                    "source_url": claim_provenance.get("source_url"),
+                    "published_date": claim_provenance.get("published_date"),
+                    "source_family": _source_family(document),
+                    "evidence_origin": "ORGANIC_LIVE",
+                    "document_context_excerpt": _document_context_excerpt(
+                        document=document,
+                        exact_quote=exact_quote,
+                    ),
+                },
+                current_claim_ledger=provider_claim_ledger,
+                counter_claims=tuple(
+                    row
+                    for row in provider_claim_ledger
+                    if str(row.get("claim_id") or "") != claim_id
+                    and str(row.get("polarity") or "").upper()
+                    in {"NEGATIVE", "CONDITIONAL", "COUNTER"}
+                ),
+                rubrics=rubrics.rubrics,
                 allowed_component_ids=tuple(contract.component_weights),
-            ),
-        )
+                business_mechanism_scope=infer_business_mechanism_scope(
+                    claim,
+                    primitive_id=sorted(claim_primitive_ids)[0],
+                    archetype_id=archetype_id,
+                ),
+                question_impact_contracts=applicable_question_contracts,
+                claim_eligibility_decision=eligibility_by_claim[claim_id],
+                component_subcriteria=compile_question_component_subcriteria(
+                    applicable_question_contracts,
+                    allowed_component_ids=tuple(contract.component_weights),
+                ),
+            )
+        except (StructuredProviderUnavailable, StructuredProviderRejected) as exc:
+            adjudication_rows.append(
+                {
+                    "claim_id": claim_id,
+                    "status": "PROVIDER_ERROR",
+                    "accepted_mapping_ids": [
+                        row.get("mapping_id") for row in claim_mappings
+                    ],
+                    "valid_proposal_ids": [],
+                    "invalid_proposal_count": 0,
+                    "unsupported_aspects": [],
+                    "counter_thesis": [],
+                    "review_issues": [
+                        f"{type(exc).__name__}:{str(exc)[-1000:]}"
+                    ],
+                    "prompt_hashes": [],
+                    "response_hashes": [],
+                    "audit": {
+                        "provider_name": str(
+                            getattr(
+                                impact_provider,
+                                "provider_name",
+                                "UNKNOWN_PROVIDER",
+                            )
+                        ),
+                        "provider_call_count": 0,
+                        "critical_counts": {"provider_error_count": 1},
+                        "critical_count_sum": 1,
+                    },
+                }
+            )
+            continue
         mapping_pairs = {
             (str(row.get("mapping_id") or ""), str(row.get("primitive_id") or ""))
             for row in claim_mappings
@@ -467,7 +541,13 @@ def run_dossier_scoring_pipeline(
         if str(mapping_id) not in proposal_mapping_ids
     }
     rejected_mapping_ids = (
-        explicitly_rejected_mapping_ids | implicitly_rejected_mapping_ids
+        explicitly_rejected_mapping_ids
+        | implicitly_rejected_mapping_ids
+        | {
+            str(row.get("mapping_id") or "")
+            for row in (*ledger.rejected_impacts, *validation.rejected)
+            if str(row.get("mapping_id") or "")
+        }
     )
     accepted_mapping_ids = {
         str(row.get("mapping_id") or "")
@@ -555,6 +635,7 @@ def run_dossier_scoring_pipeline(
         proposals=proposals,
         ledger=ledger,
         validation=validation,
+        rejected_impacts=rejected_impacts,
         assessment=assessment,
         score=score,
         decision=decision,
@@ -658,15 +739,14 @@ def _impact_satisfaction_rows(
         )
         rows.append(
             {
-                "status": "REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN",
+                "status": "CLAIM_IMPACT_PROPOSAL_PRESENT",
                 "claim_id": claim_id,
-                "rerouted_mapping_ids": [
+                "proposal_mapping_ids": [
                     value for value in mapping_ids if value in proposal_mapping_ids
                 ],
                 "mapping_ids_without_impact": [
                     value for value in mapping_ids if value not in proposal_mapping_ids
                 ],
-                "original_gap_open": True,
             }
         )
     return tuple(rows)
@@ -679,6 +759,7 @@ def _write_pipeline_leaves(
     proposals,
     ledger,
     validation,
+    rejected_impacts,
     assessment,
     score,
     decision,
@@ -736,6 +817,7 @@ def _write_pipeline_leaves(
         root / "claim_impacts_validated.jsonl",
         (row.to_dict() for row in validation.impacts),
     )
+    write_jsonl(root / "claim_impacts_rejected.jsonl", rejected_impacts)
     write_jsonl(
         root / "economic_fact_clusters.jsonl",
         (row.to_dict() for row in validation.economic_fact_clusters),
@@ -840,6 +922,27 @@ def _source_family(document: Mapping[str, Any]) -> str:
     return "TRUSTED_INDEPENDENT"
 
 
+def _document_context_excerpt(
+    *,
+    document: Mapping[str, Any],
+    exact_quote: str,
+    max_chars: int = 6000,
+) -> str:
+    content = str(document.get("content_text") or "").strip()
+    if not content:
+        return exact_quote
+    quote = exact_quote.strip()
+    if not quote:
+        return content[:max_chars]
+    index = content.casefold().find(quote.casefold())
+    if index < 0:
+        return content[:max_chars]
+    half = max_chars // 2
+    start = max(0, index - half)
+    end = min(len(content), index + len(quote) + half)
+    return content[start:end]
+
+
 def _proposal_from_row(row: Mapping[str, Any]) -> ClaimImpactProposal:
     payload = dict(row)
     payload["unsupported_aspects"] = tuple(payload.get("unsupported_aspects") or ())
@@ -851,7 +954,7 @@ def _proposal_from_row(row: Mapping[str, Any]) -> ClaimImpactProposal:
 def _dedupe_economic_proposals(
     proposals: Sequence[ClaimImpactProposal],
 ) -> tuple[list[ClaimImpactProposal], int]:
-    seen: dict[tuple[str, str, str, str], int] = {}
+    seen: dict[tuple[str, str, str, str, str, str], int] = {}
     result: list[ClaimImpactProposal] = []
     suppressed = 0
     for proposal in proposals:
@@ -860,6 +963,8 @@ def _dedupe_economic_proposals(
             proposal.component_id,
             proposal.direction,
             proposal.evidence_family_id,
+            proposal.question_family_id,
+            proposal.component_subcriterion_id,
         )
         if key in seen:
             index = seen[key]

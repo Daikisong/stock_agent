@@ -1,0 +1,172 @@
+{
+  "canonical_archetype_count": 36,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "all_archetype_schema_incomplete_count": 0,
+    "missing_scoring_key_count": 0,
+    "partial_bridge_missing_cap_count": 0,
+    "risk_open_missing_cap_count": 0,
+    "risk_resolved_missing_cap_count": 0,
+    "silent_zero_default_count": 0,
+    "unknown_source_family_silent_zero_count": 0,
+    "unknown_temporal_scope_silent_zero_count": 0
+  },
+  "enum_registry": {
+    "causal_distances": [
+      "DIRECT",
+      "ONE_HOP",
+      "TWO_HOP",
+      "INDUSTRY_ONLY"
+    ],
+    "completeness_bands": [
+      "MENTION",
+      "PARTIAL",
+      "SUBSTANTIAL",
+      "COMPLETE_FOR_PRIMITIVE"
+    ],
+    "component_aggregation_modes": [
+      "SUM_DISTINCT_SUBCRITERIA",
+      "MAX_SOURCE_QUALITY",
+      "COVERAGE_WEIGHTED",
+      "NET_SUPPORT_COUNTER",
+      "CAP_BY_MISSING_BRIDGE"
+    ],
+    "counter_effect_modes": [
+      "NONE",
+      "BOUNDED_NET",
+      "OPEN_BLOCK",
+      "RESOLUTION_RELEASE"
+    ],
+    "directions": [
+      "SUPPORT",
+      "COUNTER",
+      "NEUTRAL",
+      "RESOLUTION"
+    ],
+    "source_families": [
+      "ISSUER_OFFICIAL",
+      "OFFICIAL_FILING",
+      "CUSTOMER_OFFICIAL",
+      "TRUSTED_INDEPENDENT",
+      "DISCOVERY_ONLY",
+      "SNIPPET"
+    ],
+    "strength_bands": [
+      "NONE",
+      "WEAK",
+      "MODERATE",
+      "STRONG",
+      "VERY_STRONG"
+    ],
+    "support_types": [
+      "DIRECT_ACTUAL",
+      "DIRECT_FORWARD",
+      "PARTIAL_BRIDGE",
+      "PROFILE_ONLY",
+      "DISCOVERY_ONLY",
+      "RISK_OPEN",
+      "RISK_RESOLVED"
+    ],
+    "temporal_scopes": [
+      "CURRENT",
+      "CURRENT_BASELINE",
+      "HISTORICAL_ONLY",
+      "FUTURE"
+    ]
+  },
+  "incomplete_archetype_ids": [],
+  "policy_config_hash": "3d187d4c33638c4133b1fca186f58a0237e717d91e36d9a98f01db14b6ecb9eb",
+  "schema_version": "e2r_scoring_schema_totality_audit_v1",
+  "status": "SCORING_SCHEMA_TOTALITY_PASS",
+  "support_type_policies": {
+    "DIRECT_ACTUAL": {
+      "counter_effect_cap": 1.0,
+      "counter_effect_mode": "BOUNDED_NET",
+      "rationale": "발행사 actual과 직접 현재 사실은 strength/completeness/causal/source cap 범위에서 전액 반영한다.",
+      "replay_result": "actual earnings and revenue-mix cases preserve direct bounded effects",
+      "research_case_refs": [
+        "C06-SKHYNIX-20250123-REVENUE-MIX",
+        "C06-SAMSUNG-20250131-REOPEN-CAP"
+      ],
+      "resolution_effect": 0.0,
+      "support_credit_cap": 1.0,
+      "support_type": "DIRECT_ACTUAL"
+    },
+    "DIRECT_FORWARD": {
+      "counter_effect_cap": 0.8,
+      "counter_effect_mode": "BOUNDED_NET",
+      "rationale": "직접 forward statement는 actual보다 낮은 상한을 적용한다.",
+      "replay_result": "pre-sold capacity remains nonzero but below direct actual",
+      "research_case_refs": [
+        "C06-SKHYNIX-20240502-SOLDOUT"
+      ],
+      "resolution_effect": 0.0,
+      "support_credit_cap": 0.8,
+      "support_type": "DIRECT_FORWARD"
+    },
+    "DISCOVERY_ONLY": {
+      "counter_effect_cap": 0.0,
+      "counter_effect_mode": "NONE",
+      "rationale": "검색 snippet과 discovery row는 원문 fetch 전에는 점수 효과가 없다.",
+      "replay_result": "source proxy score remains zero",
+      "research_case_refs": [
+        "SOURCE-PROXY-NO-SCORE"
+      ],
+      "resolution_effect": 0.0,
+      "support_credit_cap": 0.0,
+      "support_type": "DISCOVERY_ONLY"
+    },
+    "PARTIAL_BRIDGE": {
+      "counter_effect_cap": 0.6,
+      "counter_effect_mode": "BOUNDED_NET",
+      "rationale": "과거 판례에서 one-hop 경제 연결은 direct보다 낮지만 0이 아닌 bounded effect를 가진다.",
+      "replay_result": "sold-out, revenue-mix and qualification one-hop effects remain bounded and nonzero",
+      "research_case_refs": [
+        "C06-SKHYNIX-20240502-SOLDOUT",
+        "C06-SKHYNIX-20250123-REVENUE-MIX",
+        "C06-SAMSUNG-20240524-QUALIFICATION-LAG"
+      ],
+      "resolution_effect": 0.0,
+      "support_credit_cap": 0.6,
+      "support_type": "PARTIAL_BRIDGE"
+    },
+    "PROFILE_ONLY": {
+      "counter_effect_cap": 0.2,
+      "counter_effect_mode": "BOUNDED_NET",
+      "rationale": "제품 profile은 정보 신뢰 외 상업·재무 bridge를 열지 않는 약한 상한이다.",
+      "replay_result": "profile guards stay information-only",
+      "research_case_refs": [
+        "C06-SKHYNIX-PRODUCT-SPEC-GUARD",
+        "C06-SAMSUNG-PACKAGE-PROFILE-GUARD"
+      ],
+      "resolution_effect": 0.0,
+      "support_credit_cap": 0.2,
+      "support_type": "PROFILE_ONLY"
+    },
+    "RISK_OPEN": {
+      "counter_effect_cap": 1.0,
+      "counter_effect_mode": "OPEN_BLOCK",
+      "rationale": "현재 직접 open risk는 positive support가 아니라 counter plane에서만 반영한다.",
+      "replay_result": "qualification lag remains a current counter without forced hard 4C",
+      "research_case_refs": [
+        "C06-SAMSUNG-20240524-QUALIFICATION-LAG"
+      ],
+      "resolution_effect": 0.0,
+      "support_credit_cap": 0.0,
+      "support_type": "RISK_OPEN"
+    },
+    "RISK_RESOLVED": {
+      "counter_effect_cap": 0.0,
+      "counter_effect_mode": "RESOLUTION_RELEASE",
+      "rationale": "해소된 위험은 현재 감점을 추가하지 않고 기존 open counter를 해제한다.",
+      "replay_result": "old resolved risk has zero current penalty and explicit resolution effect",
+      "research_case_refs": [
+        "OLD-RISK-RESOLVED-GUARD"
+      ],
+      "resolution_effect": 1.0,
+      "support_credit_cap": 0.0,
+      "support_type": "RISK_RESOLVED"
+    }
+  },
+  "total_schema_archetype_count": 36
+}

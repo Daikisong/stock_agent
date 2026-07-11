@@ -69,6 +69,62 @@ class ClaimEligibilityDecisionTests(unittest.TestCase):
         self.assertFalse(decision.component_scoring_eligibility)
         self.assertEqual(decision.eligibility_status, "INELIGIBLE_SOURCE_PROXY")
 
+    def test_accepted_primitive_and_same_document_context_define_scope(self) -> None:
+        claims = (
+            {
+                "claim_id": "CLM-CAPACITY",
+                "target_id": "123456",
+                "accepted": True,
+                "evidence_origin": "ORGANIC_LIVE",
+                "exact_quote": "Customer demand exceeds supply capacity.",
+            },
+            {
+                "claim_id": "CLM-MARGIN",
+                "target_id": "123456",
+                "accepted": True,
+                "evidence_origin": "ORGANIC_LIVE",
+                "exact_quote": "Operating margin reached 72%.",
+                "document_context_excerpt": (
+                    "HBM sales increased during the quarter. "
+                    "Operating margin reached 72%."
+                ),
+            },
+        )
+        provenance = tuple(
+            {
+                "claim_id": claim["claim_id"],
+                "source_proxy_only": False,
+                "test_only": False,
+                "fetched": True,
+                "anchor_verified": True,
+                "directness": "DIRECT",
+                "temporal_status": "CURRENT",
+                "mapping_status": "ACCEPTED",
+            }
+            for claim in claims
+        )
+        mappings = (
+            {
+                "claim_id": "CLM-CAPACITY",
+                "primitive_id": "hbm_capacity_constraint",
+                "accepted_by_evidence_os": True,
+            },
+            {
+                "claim_id": "CLM-MARGIN",
+                "primitive_id": "margin_fcf_conversion",
+                "accepted_by_evidence_os": True,
+            },
+        )
+        decisions = compile_claim_eligibility_decisions(
+            claims=claims,
+            claim_provenance=provenance,
+            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            primitive_mappings=mappings,
+        )
+        self.assertTrue(
+            all(row.component_scoring_eligibility for row in decisions)
+        )
+
     def test_operational_eligibility_audit_ignores_legacy_boolean_for_scoring(self) -> None:
         audit = audit_claim_eligibility(repo_root=self.ROOT)
         artifact = json.loads(

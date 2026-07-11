@@ -1,0 +1,40 @@
+{
+  "accepted_mapping_count": 31,
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "as_of_date": "2026-07-11",
+  "canonical_stage": "0",
+  "critical_count_sum": 5,
+  "critical_counts": {
+    "accepted_mapping_without_validated_impact_count": 0,
+    "claim_impact_ledger_critical_count": 0,
+    "component_assessment_critical_count": 0,
+    "impact_adjudication_failure_count": 0,
+    "impact_validation_critical_count": 0,
+    "invalid_provider_proposal_count": 0,
+    "probe_contamination_count": 0,
+    "question_component_reconciliation_critical_count": 0,
+    "score_audit_critical_count": 5,
+    "semantic_proposal_contract_missing_count": 0
+  },
+  "decision_status": "PENDING_MATERIAL_COMPONENTS",
+  "effective_accepted_mapping_count": 25,
+  "full_score_blocking_reasons": [
+    "terminal_component_gap_count",
+    "unresolved_contradiction_count",
+    "absence_without_adequacy_count"
+  ],
+  "full_score_valid": false,
+  "full_score_validity_status": "FULL_SCORE_VALIDITY_V2_FAIL",
+  "impact_proposal_count": 73,
+  "impact_rejected_mapping_count": 6,
+  "organic_accepted_claim_count": 27,
+  "schema_version": "e2r_organic_dossier_scoring_pipeline_v2",
+  "score_type": "VERIFIED_COMPONENT_PARTIAL",
+  "status": "ORGANIC_DOSSIER_SCORING_PENDING",
+  "supported_component_count": 5,
+  "suppressed_duplicate_economic_proposal_count": 0,
+  "target_id": "005930",
+  "terminal_component_count": 6,
+  "validated_impact_count": 73,
+  "verified_supported_score": 13.700579
+}

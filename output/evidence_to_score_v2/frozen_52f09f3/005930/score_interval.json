@@ -1,0 +1,15 @@
+{
+  "full_e2r_score": null,
+  "full_score_blocking_reasons": [
+    "terminal_component_gap_count",
+    "unresolved_contradiction_count",
+    "absence_without_adequacy_count"
+  ],
+  "full_score_valid": false,
+  "full_score_validity_id": "FSVALID-a137c14be83b560729567ded",
+  "full_score_validity_status": "FULL_SCORE_VALIDITY_V2_FAIL",
+  "provisional_score_lower": 13.700579,
+  "provisional_score_upper": 30.840114,
+  "target_id": "005930",
+  "verified_supported_score": 13.700579
+}

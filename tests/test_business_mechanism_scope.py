@@ -8,6 +8,7 @@ from e2r.research_brain.scoring.business_mechanism_scope import (
     BusinessMechanismScope,
     MechanismScopeValidator,
     audit_business_mechanism_scope,
+    infer_business_mechanism_scope,
     load_mechanism_scope_contracts,
 )
 
@@ -67,6 +68,47 @@ class BusinessMechanismScopeTests(unittest.TestCase):
         )
         self.assertFalse(result.scope_match)
         self.assertEqual(result.reason_code, "WRONG_PRODUCT_FAMILY")
+
+    def test_mixed_memory_context_does_not_select_one_subtype_by_priority(
+        self,
+    ) -> None:
+        claim = {
+            "target_id": "TARGET",
+            "raw_assertion": {
+                "predicate": "reported actual revenue",
+                "object_text": "quarterly consolidated revenue",
+            },
+            "document_context_excerpt": (
+                "NAND shipment volume changed during the quarter. "
+                "The issuer also disclosed its aggregate memory ASP."
+            ),
+        }
+        scope = infer_business_mechanism_scope(
+            claim,
+            primitive_id="actual_earnings_conversion",
+            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        )
+        self.assertEqual(scope.business_segment, "MEMORY")
+        self.assertEqual(scope.product_family, "MEMORY_GENERIC")
+
+    def test_mixed_foundry_and_memory_context_is_fail_closed(self) -> None:
+        claim = {
+            "target_id": "TARGET",
+            "raw_assertion": {
+                "predicate": "reported actual revenue",
+                "object_text": "quarterly consolidated revenue",
+            },
+            "document_context_excerpt": (
+                "Foundry revenue increased while memory ASP also changed."
+            ),
+        }
+        scope = infer_business_mechanism_scope(
+            claim,
+            primitive_id="actual_earnings_conversion",
+            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        )
+        self.assertEqual(scope.business_segment, "CORPORATE_GENERIC")
+        self.assertEqual(scope.product_family, "CORPORATE_GENERIC")
 
     def test_operational_scope_audit_recomputes_from_frozen_leaves(self) -> None:
         audit = audit_business_mechanism_scope(repo_root=self.ROOT)

@@ -1,0 +1,64 @@
+{
+  "schema_version": "e2r_frozen_52f09f3_repair_config_v1",
+  "source_commit": "52f09f3",
+  "as_of_date": "2026-07-11",
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "source_root": "output/evidence_to_score/c06/2026-07-11",
+  "output_root": "output/evidence_to_score_v2/frozen_52f09f3",
+  "targets": [
+    {
+      "target_id": "000660",
+      "company_name": "SK하이닉스",
+      "required_supported_questions": [
+        "shipment_mass_production_generation",
+        "hbm_ai_memory_revenue_mix",
+        "revenue_operating_profit_conversion",
+        "margin_fcf_conversion",
+        "capex_supply_oversupply"
+      ],
+      "required_counter_impact": {
+        "primitive_id": "capacity_supply_response",
+        "component_id": "bottleneck_pricing"
+      },
+      "require_foundry_reroute": false
+    },
+    {
+      "target_id": "005930",
+      "company_name": "삼성전자",
+      "required_supported_questions": [
+        "shipment_mass_production_generation",
+        "asp_pricing_actual"
+      ],
+      "required_bounded_impacts": [
+        {
+          "label": "hbm4_shipment_to_earnings_visibility",
+          "primitive_id": "shipment_or_revenue_mix",
+          "component_id": "earnings_visibility",
+          "question_family_id": "shipment_mass_production_generation",
+          "direction": "SUPPORT",
+          "scope_product_family": "HBM",
+          "allowed_support_types": ["DIRECT_ACTUAL", "PARTIAL_BRIDGE"]
+        },
+        {
+          "label": "memory_asp_to_pricing",
+          "primitive_id": "memory_price_increase_mentioned",
+          "component_id": "bottleneck_pricing",
+          "question_family_id": "asp_pricing_actual",
+          "direction": "SUPPORT",
+          "scope_product_family": "MEMORY_GENERIC",
+          "allowed_support_types": ["DIRECT_ACTUAL", "PARTIAL_BRIDGE"]
+        },
+        {
+          "label": "actual_earnings_bounded_conversion",
+          "primitive_id": "actual_earnings_conversion",
+          "component_id": "eps_fcf_explosion",
+          "direction": "SUPPORT",
+          "scope_product_family": "MEMORY_GENERIC",
+          "allowed_support_types": ["PARTIAL_BRIDGE"]
+        }
+      ],
+      "required_counter_impact": {},
+      "require_foundry_reroute": true
+    }
+  ]
+}

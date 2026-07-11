@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 import unittest
+from types import SimpleNamespace
 
 from e2r.research_brain.compiler.evidence_impact_rubric_compiler import compile_evidence_impact_rubrics
-from e2r.research_brain.scoring import EvidenceImpactAdjudicator
+from e2r.research_brain.scoring import (
+    CodexEvidenceImpactProvider,
+    EvidenceImpactAdjudicator,
+)
 from e2r.research_brain.scoring.business_mechanism_scope import (
     infer_business_mechanism_scope,
 )
@@ -33,7 +37,45 @@ class FakeProvider:
         return result
 
 
+class SchemaCaptureTransport:
+    def __init__(self) -> None:
+        self.output_schema = None
+        self.prompt = ""
+
+    def complete(self, *, prompt, output_schema, schema_name):
+        self.prompt = prompt
+        self.output_schema = output_schema
+        return SimpleNamespace(
+            payload={
+                "impacts": [],
+                "unsupported_aspects": ["no bounded impact"],
+                "counter_thesis": [],
+                "reasoning_summary": "No impact.",
+            }
+        )
+
+
 class EvidenceImpactAdjudicatorTests(unittest.TestCase):
+    def test_codex_schema_allows_required_semantic_impact_fields(self) -> None:
+        transport = SchemaCaptureTransport()
+        provider = CodexEvidenceImpactProvider(transport)  # type: ignore[arg-type]
+
+        provider.complete(pass_name="IMPACT_PROPOSAL", payload={"claim": "x"})
+
+        item = transport.output_schema["properties"]["impacts"]["items"]
+        required = set(item["required"])
+        properties = set(item["properties"])
+        semantic_fields = {
+            "question_family_id",
+            "question_contract_hash",
+            "component_subcriterion_id",
+            "mechanism_scope_match",
+        }
+        self.assertTrue(semantic_fields <= required)
+        self.assertTrue(semantic_fields <= properties)
+        self.assertIn("same-document evidence", transport.prompt)
+        self.assertIn("bounded PARTIAL_BRIDGE", transport.prompt)
+
     def test_skeptic_can_terminally_reject_invalid_mapping(self) -> None:
         provider = FakeProvider(skeptic="REJECT_MAPPING")
         result = self._run(provider)

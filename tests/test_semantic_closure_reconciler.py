@@ -235,6 +235,214 @@ class SemanticClosureReconcilerTests(unittest.TestCase):
             1,
         )
 
+    def test_same_fact_can_close_two_questions_without_duplicate_credit(self) -> None:
+        first = self._proposal(
+            "I-PRIMARY",
+            "C-SHARED",
+            "shipment_mass_production_generation",
+            "shipment_or_revenue_mix",
+            "earnings_visibility",
+            "C06_VIS_SHIPMENT_REVENUE_MIX",
+        )
+        second = self._proposal(
+            "I-SHARED",
+            "C-SHARED",
+            "hbm_ai_memory_revenue_mix",
+            "shipment_or_revenue_mix",
+            "earnings_visibility",
+            "C06_VIS_SHIPMENT_REVENUE_MIX",
+        )
+        primary_impact = {
+            **self._impact(first, support=0.5),
+            "fact_cluster_id": "FACT-SHARED",
+            "document_cluster_id": "DOC-SHARED",
+            "corroboration_only": False,
+            "duplicate_reason": None,
+        }
+        shared_impact = {
+            **self._impact(second, support=0.0),
+            "direction": "SUPPORT",
+            "fact_cluster_id": "FACT-SHARED",
+            "document_cluster_id": "DOC-SHARED",
+            "corroboration_only": True,
+            "duplicate_reason": "SAME_ECONOMIC_FACT_CORROBORATION_ONLY",
+        }
+        result = self._reconcile(
+            closures=(
+                {
+                    "question_family_id": "shipment_mass_production_generation",
+                    "status": "PARTIALLY_SUPPORTED_SCORING",
+                    "partial_supporting_claim_ids": ["C-SHARED"],
+                },
+                {
+                    "question_family_id": "hbm_ai_memory_revenue_mix",
+                    "status": "PARTIALLY_SUPPORTED_SCORING",
+                    "partial_supporting_claim_ids": ["C-SHARED"],
+                },
+            ),
+            claims=(self._claim("C-SHARED"),),
+            mappings=(
+                self._mapping("C-SHARED", "shipment_or_revenue_mix"),
+            ),
+            eligibility=(self._eligibility("C-SHARED", True),),
+            proposals=(first, second),
+            impacts=(primary_impact, shared_impact),
+            assessments=(
+                {
+                    "component_id": "earnings_visibility",
+                    "status": "VERIFIED_PARTIAL_SUPPORT",
+                },
+            ),
+        )
+
+        self.assertEqual(result.audit["critical_count_sum"], 0)
+        shared = self._row(result, "hbm_ai_memory_revenue_mix")
+        self.assertEqual(shared.credit_result, "SHARED_FACT_BOUNDED_SUPPORT")
+        self.assertEqual(
+            shared.component_links[0]["shared_credit_source_impact_id"],
+            "I-PRIMARY",
+        )
+        self.assertEqual(shared.component_links[0]["support_credit_fraction"], 0.0)
+
+    def test_missing_fact_cluster_never_creates_shared_credit_link(self) -> None:
+        primary = self._proposal(
+            "I-NO-CLUSTER-PRIMARY",
+            "C-NO-CLUSTER",
+            "shipment_mass_production_generation",
+            "shipment_or_revenue_mix",
+            "earnings_visibility",
+            "C06_VIS_SHIPMENT_REVENUE_MIX",
+        )
+        shared = self._proposal(
+            "I-NO-CLUSTER-SHARED",
+            "C-NO-CLUSTER",
+            "hbm_ai_memory_revenue_mix",
+            "shipment_or_revenue_mix",
+            "earnings_visibility",
+            "C06_VIS_SHIPMENT_REVENUE_MIX",
+        )
+        result = self._reconcile(
+            closures=(
+                {
+                    "question_family_id": "shipment_mass_production_generation",
+                    "status": "PARTIALLY_SUPPORTED_SCORING",
+                    "partial_supporting_claim_ids": ["C-NO-CLUSTER"],
+                },
+                {
+                    "question_family_id": "hbm_ai_memory_revenue_mix",
+                    "status": "PARTIALLY_SUPPORTED_SCORING",
+                    "partial_supporting_claim_ids": ["C-NO-CLUSTER"],
+                },
+            ),
+            claims=(self._claim("C-NO-CLUSTER"),),
+            mappings=(
+                self._mapping("C-NO-CLUSTER", "shipment_or_revenue_mix"),
+            ),
+            eligibility=(self._eligibility("C-NO-CLUSTER", True),),
+            proposals=(primary, shared),
+            impacts=(
+                {
+                    **self._impact(primary, support=0.5),
+                    "fact_cluster_id": "",
+                    "document_cluster_id": "",
+                    "corroboration_only": False,
+                    "duplicate_reason": None,
+                },
+                {
+                    **self._impact(shared, support=0.0),
+                    "direction": "SUPPORT",
+                    "fact_cluster_id": "",
+                    "document_cluster_id": "",
+                    "corroboration_only": True,
+                    "duplicate_reason": (
+                        "SAME_ECONOMIC_FACT_CORROBORATION_ONLY"
+                    ),
+                },
+            ),
+            assessments=(
+                {
+                    "component_id": "earnings_visibility",
+                    "status": "VERIFIED_PARTIAL_SUPPORT",
+                },
+            ),
+        )
+
+        row = self._row(result, "hbm_ai_memory_revenue_mix")
+        self.assertEqual(row.component_links, ())
+        self.assertEqual(row.credit_result, "ZERO_CREDIT")
+        self.assertGreater(result.audit["critical_count_sum"], 0)
+
+    def test_same_source_confidence_cap_preserves_question_lineage(self) -> None:
+        primary = self._proposal(
+            "I-SOURCE-PRIMARY",
+            "C-SOURCE",
+            "hbm_ai_memory_revenue_mix",
+            "shipment_or_revenue_mix",
+            "information_confidence",
+            "C06_INFO_SOURCE_QUALITY",
+        )
+        shared = self._proposal(
+            "I-SOURCE-SHARED",
+            "C-SOURCE",
+            "shipment_mass_production_generation",
+            "shipment_or_revenue_mix",
+            "information_confidence",
+            "C06_INFO_CURRENT_ANCHOR",
+        )
+        result = self._reconcile(
+            closures=(
+                {
+                    "question_family_id": "hbm_ai_memory_revenue_mix",
+                    "status": "PARTIALLY_SUPPORTED_SCORING",
+                    "partial_supporting_claim_ids": ["C-SOURCE"],
+                },
+                {
+                    "question_family_id": "shipment_mass_production_generation",
+                    "status": "PARTIALLY_SUPPORTED_SCORING",
+                    "partial_supporting_claim_ids": ["C-SOURCE"],
+                },
+            ),
+            claims=(self._claim("C-SOURCE"),),
+            mappings=(
+                self._mapping("C-SOURCE", "shipment_or_revenue_mix"),
+            ),
+            eligibility=(self._eligibility("C-SOURCE", True),),
+            proposals=(primary, shared),
+            impacts=(
+                {
+                    **self._impact(primary, support=0.5),
+                    "target_id": "TARGET",
+                    "source_independence_key": "ISSUER:TARGET",
+                    "fact_cluster_id": "FACT-1",
+                    "document_cluster_id": "DOC-1",
+                    "corroboration_only": False,
+                    "duplicate_reason": None,
+                },
+                {
+                    **self._impact(shared, support=0.0),
+                    "direction": "SUPPORT",
+                    "target_id": "TARGET",
+                    "source_independence_key": "ISSUER:TARGET",
+                    "fact_cluster_id": "FACT-2",
+                    "document_cluster_id": "DOC-2",
+                    "corroboration_only": True,
+                    "duplicate_reason": "SAME_SOURCE_FAMILY_CONFIDENCE_ONLY",
+                },
+            ),
+            assessments=(
+                {
+                    "component_id": "information_confidence",
+                    "status": "VERIFIED_PARTIAL_SUPPORT",
+                },
+            ),
+        )
+        shipment = self._row(result, "shipment_mass_production_generation")
+        self.assertEqual(result.audit["critical_count_sum"], 0)
+        self.assertEqual(
+            shipment.component_links[0]["shared_credit_source_impact_id"],
+            "I-SOURCE-PRIMARY",
+        )
+
     def _valid_result(self):
         claims = (
             self._claim("C-SUPPORT"),

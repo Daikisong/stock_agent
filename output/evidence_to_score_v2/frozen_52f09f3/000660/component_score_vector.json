@@ -1,0 +1,84 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "audit": {
+    "critical_count_sum": 7,
+    "critical_counts": {
+      "balanced_point_score_count": 0,
+      "calibrated_profile_not_used_count": 0,
+      "component_sum_total_mismatch_count": 0,
+      "full_score_validity_v2_critical_count": 7,
+      "full_score_with_nonterminal_component_count": 0,
+      "supported_component_lost_count": 0
+    },
+    "full_score_validity": {
+      "blocking_reasons": [
+        "terminal_component_gap_count",
+        "unresolved_contradiction_count",
+        "pending_state_count",
+        "absence_without_adequacy_count"
+      ],
+      "critical_count_sum": 7,
+      "critical_counts": {
+        "absence_without_adequacy_count": 1,
+        "counter_impact_zeroed_by_missing_cap_count": 0,
+        "cross_business_question_closure_count": 0,
+        "gold_critical_fact_miss_count": 0,
+        "mechanism_scope_failure_count": 0,
+        "pending_state_count": 1,
+        "positive_impact_zeroed_by_missing_cap_count": 0,
+        "question_component_reconciliation_failure_count": 0,
+        "same_document_duplicate_credit_count": 0,
+        "same_fact_duplicate_credit_count": 0,
+        "scoring_schema_not_total_count": 0,
+        "silent_zero_default_count": 0,
+        "terminal_component_gap_count": 2,
+        "unresolved_contradiction_count": 3,
+        "validity_evidence_missing_count": 0
+      },
+      "full_score_valid": false,
+      "schema_version": "e2r_full_score_validity_v2",
+      "source_audit_ids": [
+        "3d187d4c33638c4133b1fca186f58a0237e717d91e36d9a98f01db14b6ecb9eb",
+        "RECON-3f13ccf5b952ac1bae4fe3f3",
+        "RECON-281eec2e94b81d9d70e79936",
+        "RECON-8d54aa71d39f108de0e2fd08",
+        "RECON-f7de56a40ce94cd1ea7776b8",
+        "RECON-05ce945d6e2394d6842cb8f9",
+        "RECON-e57a995b6f2ac4d9bdcecd9e",
+        "RECON-ff6806d268e95ca860f49b0b",
+        "RECON-50c56f77b2dfd8de6e70fe3f",
+        "RECON-436ac455e54a41ad8cf713e4",
+        "RECON-af8616ce3078392ec12ad512",
+        "RECON-8852dab6509152356c498652",
+        "RECON-85e628efdbf3eee8f0656335"
+      ],
+      "status": "FULL_SCORE_VALIDITY_V2_FAIL",
+      "validity_id": "FSVALID-3927b53b1531ee55a1548528"
+    },
+    "schema_version": "e2r_research_calibrated_score_audit_v2",
+    "status": "RESEARCH_CALIBRATED_COMPONENT_SCORING_FAIL"
+  },
+  "component_score_vector": {
+    "bottleneck_pricing": 1.5,
+    "capital_allocation": 0.6875,
+    "earnings_visibility": 1.446428,
+    "eps_fcf_explosion": 3.249998,
+    "information_confidence": 4.0,
+    "market_mispricing": 0.0,
+    "valuation_rerating": 0.0
+  },
+  "contract_hash": "c013e1bd3b923f80f7dd2e19ed127c0fb427a93d04b6cf624371817423d0d2fa",
+  "full_e2r_score": null,
+  "full_score_valid": false,
+  "material_nonterminal_components": [
+    "bottleneck_pricing",
+    "valuation_rerating"
+  ],
+  "profile_id": "e2r_2_2_archetype_weight_runtime",
+  "profile_version": "v2_2",
+  "provisional_score_lower": 10.883926,
+  "provisional_score_upper": 40.383926,
+  "score_confidence": 0.281071,
+  "score_type": "VERIFIED_COMPONENT_PARTIAL",
+  "verified_supported_score": 10.883926
+}

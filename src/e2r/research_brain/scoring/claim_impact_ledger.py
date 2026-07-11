@@ -177,11 +177,36 @@ class ClaimImpactLedgerBuilder:
                     reason = "ELIGIBILITY_DECISION_MISSING"
                 elif not reason and eligibility.get("component_scoring_eligibility") is not True:
                     reason = str(eligibility.get("eligibility_status") or "CLAIM_COMPONENT_INELIGIBLE")
-            economic_key = (proposal.claim_id, proposal.component_id, proposal.direction, proposal.evidence_family_id)
+            # 같은 경제적 fact가 여러 material question을 동시에 설명할 수 있다.
+            # question/subcriterion lineage는 보존하고 실제 점수 중복은
+            # ImpactValidator의 fact/document cluster에서 한 번만 제거한다.
+            economic_key = (
+                proposal.claim_id,
+                proposal.component_id,
+                proposal.direction,
+                proposal.evidence_family_id,
+                proposal.question_family_id,
+                proposal.component_subcriterion_id,
+            )
             if not reason and economic_key in economic_keys:
                 reason = "DUPLICATE_ECONOMIC_CREDIT"
             if reason:
-                rejected.append({"impact_id": proposal.impact_id, "claim_id": proposal.claim_id, "reason": reason, "scope_validation": scope_by_impact.get(proposal.impact_id, {})})
+                rejected.append(
+                    {
+                        "impact_id": proposal.impact_id,
+                        "claim_id": proposal.claim_id,
+                        "mapping_id": proposal.mapping_id,
+                        "component_id": proposal.component_id,
+                        "question_family_id": proposal.question_family_id,
+                        "component_subcriterion_id": (
+                            proposal.component_subcriterion_id
+                        ),
+                        "reason": reason,
+                        "scope_validation": scope_by_impact.get(
+                            proposal.impact_id, {}
+                        ),
+                    }
+                )
                 continue
             impact_ids.add(proposal.impact_id)
             economic_keys.add(economic_key)

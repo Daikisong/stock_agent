@@ -275,7 +275,9 @@ def infer_business_mechanism_scope(
             primitive_id,
         )
     ).casefold()
-    if any(token in text for token in ("foundry", "위탁생산")):
+    context = str(claim.get("document_context_excerpt") or "").casefold()
+    contextual_scope = _direct_or_context_segment_scope(text, context)
+    if contextual_scope and contextual_scope[0] == "FOUNDRY":
         segment, product, technology = "FOUNDRY", "LOGIC_FOUNDRY", "FOUNDRY"
     elif archetype_id == "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY":
         segment, product, technology = (
@@ -289,14 +291,8 @@ def infer_business_mechanism_scope(
             "MATERIAL_COMMODITY",
             "COMMODITY_SPREAD",
         )
-    elif "hbm" in text or "ai memory" in text:
-        segment, product, technology = "MEMORY", "HBM", "HBM"
-    elif "nand" in text:
-        segment, product, technology = "MEMORY", "NAND", "MEMORY"
-    elif any(token in text for token in ("dram", "d램", "lpddr", "socamm")):
-        segment, product, technology = "MEMORY", "DRAM", "DRAM"
-    elif any(token in text for token in ("memory", "메모리")):
-        segment, product, technology = "MEMORY", "MEMORY_GENERIC", "MEMORY"
+    elif contextual_scope is not None:
+        segment, product, technology = contextual_scope
     else:
         segment, product, technology = (
             "CORPORATE_GENERIC",
@@ -337,6 +333,52 @@ def infer_business_mechanism_scope(
         effective_period=period or "CURRENT_UNSPECIFIED",
         scope_confidence=0.95 if segment != "CORPORATE_GENERIC" else 0.5,
     )
+
+
+def _direct_or_context_segment_scope(
+    text: str, context: str
+) -> tuple[str, str, str] | None:
+    foundry_tokens = ("foundry", "위탁생산")
+    hbm_tokens = ("hbm", "ai memory")
+    nand_tokens = ("nand",)
+    dram_tokens = ("dram", "d램", "lpddr", "socamm")
+    memory_tokens = ("memory", "메모리")
+
+    if any(token in text for token in foundry_tokens):
+        return "FOUNDRY", "LOGIC_FOUNDRY", "FOUNDRY"
+    if any(token in text for token in hbm_tokens):
+        return "MEMORY", "HBM", "HBM"
+    if any(token in text for token in nand_tokens):
+        return "MEMORY", "NAND", "MEMORY"
+    if any(token in text for token in dram_tokens):
+        return "MEMORY", "DRAM", "DRAM"
+    if any(token in text for token in memory_tokens):
+        return "MEMORY", "MEMORY_GENERIC", "MEMORY"
+
+    has_foundry = any(token in context for token in foundry_tokens)
+    has_generic_memory = any(token in context for token in memory_tokens)
+    memory_subtypes = {
+        name
+        for name, tokens in (
+            ("HBM", hbm_tokens),
+            ("NAND", nand_tokens),
+            ("DRAM", dram_tokens),
+        )
+        if any(token in context for token in tokens)
+    }
+    if has_foundry and (has_generic_memory or memory_subtypes):
+        return "CORPORATE_GENERIC", "CORPORATE_GENERIC", "CORPORATE_GENERIC"
+    if has_foundry:
+        return "FOUNDRY", "LOGIC_FOUNDRY", "FOUNDRY"
+    if has_generic_memory or len(memory_subtypes) > 1:
+        return "MEMORY", "MEMORY_GENERIC", "MEMORY"
+    if memory_subtypes == {"HBM"}:
+        return "MEMORY", "HBM", "HBM"
+    if memory_subtypes == {"NAND"}:
+        return "MEMORY", "NAND", "MEMORY"
+    if memory_subtypes == {"DRAM"}:
+        return "MEMORY", "DRAM", "DRAM"
+    return None
 
 
 def _transaction_and_mechanism(text: str, primitive_id: str) -> tuple[str, str]:
