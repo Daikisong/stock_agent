@@ -7,8 +7,10 @@ from .claim_impact_ledger import (
     ClaimImpactProposal,
     ValidatedClaimImpact,
 )
+from .evidence_impact_adjudicator import EvidenceImpactAdjudicator, EvidenceImpactAdjudicationResult, EvidenceImpactProvider
 
 __all__ = [
     "ClaimImpactLedgerBuilder", "ClaimImpactLedgerResult", "ClaimImpactProposal",
     "EvidenceImpactRubric", "EvidenceImpactRubricCatalog", "ValidatedClaimImpact",
+    "EvidenceImpactAdjudicator", "EvidenceImpactAdjudicationResult", "EvidenceImpactProvider",
 ]

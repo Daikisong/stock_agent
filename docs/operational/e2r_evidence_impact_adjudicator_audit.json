@@ -1,0 +1,10 @@
+{
+  "schema_version":"e2r_evidence_impact_adjudicator_audit_v1",
+  "as_of_date":"2026-07-11",
+  "status":"IMPACT_ADJUDICATION_CONTRACT_PASS",
+  "scope":"TWO_PASS_SCHEMA_AND_SAFETY_CONTRACT",
+  "provider_call_count":2,
+  "critical_counts":{"llm_final_score_key_count":0,"llm_stage_key_count":0,"future_outcome_leakage_count":0,"impact_without_rationale_count":0,"unsupported_aspect_omission_count":0},
+  "critical_count_sum":0,
+  "note":"Organic live provider execution is required later by the C06 dossier acceptance and is not claimed by this contract audit."
+}

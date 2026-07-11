@@ -5,7 +5,6 @@ import json
 from dataclasses import asdict, dataclass
 from typing import Any, Mapping, Sequence
 
-from e2r.research_brain.compiler.evidence_impact_rubric_compiler import compile_evidence_impact_rubrics
 from e2r.research_brain.runtime.scoring_contracts import load_archetype_scoring_contract
 
 
@@ -85,6 +84,10 @@ class ClaimImpactLedgerBuilder:
         claim_provenance: Sequence[Mapping[str, Any]],
         source_task_satisfaction: Sequence[Mapping[str, Any]],
     ) -> ClaimImpactLedgerResult:
+        from e2r.research_brain.compiler.evidence_impact_rubric_compiler import (
+            compile_evidence_impact_rubrics,
+        )
+
         claims = _unique(accepted_current_claims, "claim_id")
         provenance_mappings: dict[str, set[str]] = {}
         for row in claim_provenance:
