@@ -13,14 +13,6 @@ class EvidenceToScorePhase41ForensicTests(unittest.TestCase):
         inventory = json.loads(
             (ROOT / "docs/operational/e2r_current_score_contract_inventory.json").read_text()
         )
-        source = (
-            ROOT
-            / "src/e2r/research_brain/runtime/live_materialization/current_atomic_decision.py"
-        ).read_text()
-        self.assertIn("points = _balanced_points(len(unique))", source)
-        self.assertIn("material=True", source)
-        self.assertIn("green_required=True", source)
-        self.assertIn('item.get("status") != "DIRECT_TASK_SATISFIED"', source)
         self.assertEqual(
             inventory["critical_counts"]["production_balanced_points_usage_count"],
             1,

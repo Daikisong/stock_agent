@@ -1,4 +1,9 @@
-"""Build deterministic current primitive states and atomic Stage decisions."""
+"""Build the deprecated controlled-probe atomic decision.
+
+The production evidence-to-score path must use the research-calibrated scoring
+contract introduced in Phase 43+. This module remains only to replay the
+explicit controlled acceptance probe and cannot be entered implicitly.
+"""
 
 from __future__ import annotations
 
@@ -59,6 +64,8 @@ class CurrentAtomicDecisionResult:
 
 
 class CurrentAtomicDecisionBuilder:
+    """Deprecated controlled-probe builder; not a production scorer."""
+
     def build(
         self,
         *,
@@ -67,8 +74,14 @@ class CurrentAtomicDecisionBuilder:
         gap_status_rows: Sequence[Mapping[str, Any]],
         accepted_current_claims: Sequence[Mapping[str, Any]],
         claim_provenance: Sequence[Mapping[str, Any]] = (),
+        controlled_probe: bool = False,
     ) -> CurrentAtomicDecisionResult:
         date.fromisoformat(as_of_date)
+        if controlled_probe is not True:
+            raise ValueError(
+                "legacy atomic builder is controlled-probe-only; "
+                "production requires a canonical scoring contract"
+            )
         gap_by_task = {
             str(item.get("source_task_id") or ""): item for item in gap_status_rows
         }
@@ -82,7 +95,7 @@ class CurrentAtomicDecisionBuilder:
             primitives_by_target.setdefault(target_id, {}).setdefault(
                 primitive_id, []
             ).append(item)
-        claims = _adapt_direct_current_claims(
+        claims = _adapt_controlled_probe_claims(
             accepted_current_claims=accepted_current_claims,
             claim_provenance=claim_provenance,
             source_task_satisfaction=source_task_satisfaction,
@@ -97,7 +110,7 @@ class CurrentAtomicDecisionBuilder:
         decisions: list[AtomicStageDecision] = []
         for target_id, primitive_rows in sorted(primitives_by_target.items()):
             unique = tuple(primitive_rows)
-            points = _balanced_points(len(unique))
+            points = _controlled_probe_points_test_only(len(unique))
             rules = tuple(
                 AtomicScoreRule(
                     primitive_id=primitive,
@@ -190,7 +203,7 @@ class CurrentAtomicDecisionBuilder:
         )
 
 
-def _adapt_direct_current_claims(
+def _adapt_controlled_probe_claims(
     *,
     accepted_current_claims: Sequence[Mapping[str, Any]],
     claim_provenance: Sequence[Mapping[str, Any]],
@@ -301,7 +314,7 @@ def write_current_atomic_decisions(
     return paths
 
 
-def _balanced_points(count: int) -> tuple[float, ...]:
+def _controlled_probe_points_test_only(count: int) -> tuple[float, ...]:
     if count <= 0:
         raise ValueError("atomic score configuration requires primitives")
     base = round(100.0 / count, 6)

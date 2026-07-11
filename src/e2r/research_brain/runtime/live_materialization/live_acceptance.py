@@ -68,6 +68,7 @@ def run_full_live_acceptance(
         gap_status_rows=(),
         accepted_current_claims=accepted_rows,
         claim_provenance=provenance_rows,
+        controlled_probe=True,
     )
     if len(atomic.claims) != 1 or len(atomic.decisions) != 1:
         raise ValueError("acceptance claim probe must yield one atomic claim/decision")

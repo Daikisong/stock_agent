@@ -252,6 +252,7 @@ class LiveOperationalPackagerTests(unittest.TestCase):
             ),
             accepted_current_claims=accepted,
             claim_provenance=bridge_provenance,
+            controlled_probe=True,
         )
         decision = atomic.decisions[0]
         claim_provenance = ()

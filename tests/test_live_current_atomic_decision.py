@@ -67,6 +67,7 @@ class LiveCurrentAtomicDecisionTest(unittest.TestCase):
             gap_status_rows=(),
             accepted_current_claims=accepted,
             claim_provenance=provenance,
+            controlled_probe=True,
         )
 
         decision = result.decisions[0]
@@ -87,6 +88,7 @@ class LiveCurrentAtomicDecisionTest(unittest.TestCase):
                 source_task_satisfaction=satisfaction,
                 gap_status_rows=(),
                 accepted_current_claims=accepted,
+                controlled_probe=True,
             )
 
     def test_claimless_material_gaps_are_atomic_no_score_stage_zero(self) -> None:
@@ -111,6 +113,7 @@ class LiveCurrentAtomicDecisionTest(unittest.TestCase):
             source_task_satisfaction=satisfaction,
             gap_status_rows=gaps,
             accepted_current_claims=(),
+            controlled_probe=True,
         )
 
         decision = result.decisions[0]
