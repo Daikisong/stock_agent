@@ -1,0 +1,91 @@
+{
+  "schema_version": "e2r_c06_historical_component_replay_v1",
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "cases": [
+    {
+      "case_id": "C06-SKHYNIX-20240502-SOLDOUT",
+      "target_id": "000660",
+      "target_name": "SK하이닉스",
+      "as_of_date": "2024-05-02",
+      "source_url": "https://theprint.in/tech/nvidia-supplier-sk-hynix-says-hbm-chips-almost-sold-out-for-2025/2066101/",
+      "source_family": "TRUSTED_INDEPENDENT",
+      "exact_quote": "its high-bandwidth memory (HBM) chips used in AI chipsets are almost sold out for 2025, after their 2024 chips were fully booked",
+      "primitive_id": "hbm_capacity_pre_sold",
+      "direction": "SUPPORT",
+      "required_component_ids": ["bottleneck_pricing", "earnings_visibility"],
+      "allowed_component_ids": ["bottleneck_pricing", "earnings_visibility", "information_confidence"],
+      "forbidden_component_ids": ["eps_fcf_explosion", "market_mispricing", "valuation_rerating"]
+    },
+    {
+      "case_id": "C06-SKHYNIX-20250123-REVENUE-MIX",
+      "target_id": "000660",
+      "target_name": "SK하이닉스",
+      "as_of_date": "2025-01-23",
+      "source_url": "https://news.skhynix.com/sk-hynix-announces-4q24-financial-results/",
+      "source_family": "ISSUER_OFFICIAL",
+      "exact_quote": "HBM continued its high growth in fourth quarter marking over 40% of total DRAM revenue",
+      "primitive_id": "shipment_or_revenue_mix",
+      "direction": "SUPPORT",
+      "required_component_ids": ["eps_fcf_explosion", "earnings_visibility"],
+      "allowed_component_ids": ["eps_fcf_explosion", "earnings_visibility", "information_confidence"],
+      "forbidden_component_ids": ["bottleneck_pricing", "market_mispricing", "valuation_rerating"]
+    },
+    {
+      "case_id": "C06-SAMSUNG-20240524-QUALIFICATION-LAG",
+      "target_id": "005930",
+      "target_name": "삼성전자",
+      "as_of_date": "2024-05-24",
+      "source_url": "https://www.aol.com/exclusive-samsungs-hbm-chips-failing-230356817.html",
+      "source_family": "TRUSTED_INDEPENDENT",
+      "exact_quote": "latest high bandwidth memory (HBM) chips have yet to pass Nvidia's tests",
+      "primitive_id": "qualification_state",
+      "direction": "COUNTER",
+      "required_component_ids": ["earnings_visibility"],
+      "allowed_component_ids": ["earnings_visibility", "information_confidence"],
+      "forbidden_component_ids": ["bottleneck_pricing", "eps_fcf_explosion", "market_mispricing", "valuation_rerating"],
+      "hard_break_allowed": false
+    },
+    {
+      "case_id": "C06-SAMSUNG-20250131-REOPEN-CAP",
+      "target_id": "005930",
+      "target_name": "삼성전자",
+      "as_of_date": "2025-01-31",
+      "source_url": "https://news.samsung.com/global/samsung-electronics-announces-fourth-quarter-and-fy-2024-results",
+      "source_family": "ISSUER_OFFICIAL",
+      "exact_quote": "record-high fourth-quarter revenue, backed by a higher blended DRAM average selling price (ASP) due to the increased sales of high-bandwidth memory (HBM)",
+      "primitive_id": "actual_earnings_conversion",
+      "direction": "SUPPORT",
+      "required_component_ids": ["eps_fcf_explosion"],
+      "allowed_component_ids": ["eps_fcf_explosion", "information_confidence"],
+      "forbidden_component_ids": ["bottleneck_pricing", "earnings_visibility", "market_mispricing", "valuation_rerating"]
+    },
+    {
+      "case_id": "C06-SKHYNIX-PRODUCT-SPEC-GUARD",
+      "target_id": "000660",
+      "target_name": "SK하이닉스",
+      "as_of_date": "2024-03-21",
+      "source_url": "https://news.skhynix.com/sk-hynix-presents-the-future-of-ai-memory-solutions-at-nvidia-gtc-2024/",
+      "source_family": "ISSUER_OFFICIAL",
+      "exact_quote": "highest capacity of 36 gigabytes",
+      "primitive_id": "hbm_product_profile",
+      "direction": "SUPPORT",
+      "required_component_ids": ["information_confidence"],
+      "allowed_component_ids": ["information_confidence"],
+      "forbidden_component_ids": ["bottleneck_pricing", "earnings_visibility", "eps_fcf_explosion", "market_mispricing", "valuation_rerating"]
+    },
+    {
+      "case_id": "C06-SAMSUNG-PACKAGE-PROFILE-GUARD",
+      "target_id": "005930",
+      "target_name": "삼성전자",
+      "as_of_date": "2026-05-29",
+      "source_url": "https://news.samsung.com/global/samsung-electronics-begins-shipment-of-industry-first-hbm4e-samples",
+      "source_family": "ISSUER_OFFICIAL",
+      "exact_quote": "optimized packaging structures improved energy efficiency by 16%",
+      "primitive_id": "package_substrate_sympathy",
+      "direction": "SUPPORT",
+      "required_component_ids": ["information_confidence"],
+      "allowed_component_ids": ["information_confidence"],
+      "forbidden_component_ids": ["bottleneck_pricing", "earnings_visibility", "eps_fcf_explosion", "market_mispricing", "valuation_rerating"]
+    }
+  ]
+}

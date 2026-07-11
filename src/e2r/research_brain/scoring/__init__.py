@@ -14,6 +14,7 @@ from .component_scorer import ResearchCalibratedComponentScorer, ResearchCalibra
 from .atomic_stagecourt_v2 import AtomicStageCourtV2, AtomicStageDecisionV2
 from .evidence_origin import EvidenceOrigin, ScoringEvidencePartition, audit_probe_separation, partition_scoring_evidence
 from .scoring_readiness import SCORING_READINESS_SCHEMA_VERSION, compile_meaningful_scoring_readiness, write_meaningful_scoring_readiness
+from .codex_impact_provider import CodexEvidenceImpactProvider
 
 __all__ = [
     "ClaimImpactLedgerBuilder", "ClaimImpactLedgerResult", "ClaimImpactProposal",
@@ -25,4 +26,5 @@ __all__ = [
     "AtomicStageCourtV2", "AtomicStageDecisionV2",
     "EvidenceOrigin", "ScoringEvidencePartition", "audit_probe_separation", "partition_scoring_evidence",
     "SCORING_READINESS_SCHEMA_VERSION", "compile_meaningful_scoring_readiness", "write_meaningful_scoring_readiness",
+    "CodexEvidenceImpactProvider",
 ]
