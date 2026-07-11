@@ -17,12 +17,29 @@ class _ImpactProvider:
     def complete(self, *, pass_name, payload):
         if pass_name == "IMPACT_SKEPTIC":
             return {"verdict": "APPROVE", "issues": []}
+        question = next(
+            row
+            for row in payload["question_impact_contracts"]
+            if "hbm_product_profile" in row["allowed_primitive_ids"]
+            and "information_confidence" in row["allowed_component_ids"]
+        )
+        subcriterion = next(
+            row
+            for row in payload["component_subcriteria"]["information_confidence"]
+            if row["question_family_id"] == question["question_family_id"]
+        )
         return {
             "impacts": [
                 {
                     "mapping_id": "MAP-1",
                     "primitive_id": "hbm_product_profile",
+                    "question_family_id": question["question_family_id"],
+                    "question_contract_hash": question["contract_hash"],
                     "component_id": "information_confidence",
+                    "component_subcriterion_id": subcriterion["subcriterion_id"],
+                    "mechanism_scope_match": payload[
+                        "mechanism_scope_validation_by_component"
+                    ]["information_confidence"]["scope_match"],
                     "direction": "SUPPORT",
                     "support_type": "PROFILE_ONLY",
                     "strength_band": "WEAK",

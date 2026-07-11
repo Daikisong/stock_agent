@@ -22,10 +22,14 @@ from e2r.research_brain.scoring import (
     ImpactValidator,
     ResearchCalibratedComponentScorer,
     compile_claim_eligibility_decisions,
+    compile_question_component_subcriteria,
     compile_question_closures_v2,
     load_question_impact_contracts,
 )
 from e2r.research_brain.scoring.claim_impact_ledger import ClaimImpactProposal
+from e2r.research_brain.scoring.business_mechanism_scope import (
+    infer_business_mechanism_scope,
+)
 
 
 COMPONENT_QUESTION_FAMILIES = {
@@ -104,6 +108,15 @@ def run_dossier_scoring_pipeline(
             archetype_id=archetype_id,
         )
     )
+    question_contracts = {
+        question_id: question_contract
+        for question_id, question_contract in load_question_impact_contracts().items()
+        if question_contract.archetype_id == archetype_id
+    }
+    eligibility_by_claim = {
+        str(row.get("claim_id") or ""): row
+        for row in eligibility_decisions
+    }
     adjudication_rows: list[Mapping[str, Any]] = []
     proposals: list[ClaimImpactProposal] = []
     invalid_proposal_count = 0
@@ -158,6 +171,40 @@ def run_dossier_scoring_pipeline(
         claim_provenance = provenance_by_claim.get(claim_id)
         if not claim_mappings or claim_provenance is None:
             raise ValueError("selected organic claim lacks accepted mapping or provenance")
+        claim_primitive_ids = {
+            str(row.get("primitive_id") or "") for row in claim_mappings
+        }
+        applicable_question_contracts = tuple(
+            question_contract
+            for question_contract in question_contracts.values()
+            if claim_primitive_ids.intersection(
+                question_contract.allowed_primitive_ids
+            )
+        )
+        if not applicable_question_contracts:
+            adjudication_rows.append(
+                {
+                    "claim_id": claim_id,
+                    "status": "IMPACT_MAPPING_REJECTED",
+                    "accepted_mapping_ids": [
+                        row.get("mapping_id") for row in claim_mappings
+                    ],
+                    "valid_proposal_ids": [],
+                    "invalid_proposal_count": 0,
+                    "unsupported_aspects": [
+                        "No QuestionImpactContract permits the mapped primitive."
+                    ],
+                    "counter_thesis": [],
+                    "review_issues": ["NO_APPLICABLE_QUESTION_CONTRACT"],
+                    "prompt_hashes": [],
+                    "response_hashes": [],
+                    "audit": {
+                        "provider_call_count": 0,
+                        "critical_count_sum": 0,
+                    },
+                }
+            )
+            continue
         enriched_claim = {
             **dict(claim),
             "accepted_mappings": [
@@ -198,9 +245,26 @@ def run_dossier_scoring_pipeline(
                 "evidence_origin": "ORGANIC_LIVE",
             },
             current_claim_ledger=selected_claims,
-            counter_claims=(),
+            counter_claims=tuple(
+                row
+                for row in selected_claims
+                if str(row.get("claim_id") or "") != claim_id
+                and str(row.get("polarity") or "").upper()
+                in {"NEGATIVE", "CONDITIONAL", "COUNTER"}
+            ),
             rubrics=rubrics.rubrics,
             allowed_component_ids=tuple(contract.component_weights),
+            business_mechanism_scope=infer_business_mechanism_scope(
+                claim,
+                primitive_id=sorted(claim_primitive_ids)[0],
+                archetype_id=archetype_id,
+            ),
+            question_impact_contracts=applicable_question_contracts,
+            claim_eligibility_decision=eligibility_by_claim[claim_id],
+            component_subcriteria=compile_question_component_subcriteria(
+                applicable_question_contracts,
+                allowed_component_ids=tuple(contract.component_weights),
+            ),
         )
         mapping_pairs = {
             (str(row.get("mapping_id") or ""), str(row.get("primitive_id") or ""))
@@ -253,11 +317,6 @@ def run_dossier_scoring_pipeline(
         ),
         claim_eligibility_decisions=ledger.claim_eligibility_decisions,
     )
-    question_contracts = {
-        question_id: question_contract
-        for question_id, question_contract in load_question_impact_contracts().items()
-        if question_contract.archetype_id == archetype_id
-    }
     closures_v2 = (
         compile_question_closures_v2(
             contracts=question_contracts,
@@ -339,6 +398,13 @@ def run_dossier_scoring_pipeline(
     critical = {
         "impact_adjudication_failure_count": adjudication_failure_count,
         "invalid_provider_proposal_count": invalid_proposal_count,
+        "semantic_proposal_contract_missing_count": sum(
+            not proposal.question_family_id
+            or not proposal.question_contract_hash
+            or not proposal.component_subcriterion_id
+            or proposal.mechanism_scope_match is None
+            for proposal in proposals
+        ),
         "accepted_mapping_without_validated_impact_count": len(
             effective_mapping_ids - impact_mapping_ids
         ),

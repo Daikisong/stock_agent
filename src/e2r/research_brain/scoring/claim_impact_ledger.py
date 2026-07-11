@@ -42,6 +42,10 @@ class ClaimImpactProposal:
     unsupported_aspects: tuple[str, ...]
     counter_claim_ids: tuple[str, ...] = ()
     lineage_mapping_ids: tuple[str, ...] = ()
+    question_family_id: str = ""
+    question_contract_hash: str = ""
+    component_subcriterion_id: str = ""
+    mechanism_scope_match: bool | None = None
 
     def __post_init__(self) -> None:
         if self.direction not in DIRECTIONS or self.support_type not in SUPPORT_TYPES:
