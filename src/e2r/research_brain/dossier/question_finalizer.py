@@ -173,7 +173,9 @@ def finalize_dossier_question_closures(
                 "PROVIDER_PENDING": "PROVIDER_PENDING",
                 "BUDGET_PENDING": "BUDGET_PENDING",
             }.get(adequacy.saturation_status, "SOURCE_PENDING")
-            closure["failure_class"] = adequacy.saturation_status
+            closure["failure_class"] = (
+                adequacy.repair_failure_class or adequacy.saturation_status
+            )
             closure["next_action"] = "RESEARCH_REPAIR_REQUIRED"
         closure["research_execution"] = {
             "real_llm_query": real_query,

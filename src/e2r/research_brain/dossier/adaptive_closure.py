@@ -16,23 +16,16 @@ from e2r.research_brain.runtime.live_materialization.current_claim_compiler impo
 from e2r.research_brain.runtime.scoring_contracts import (
     load_archetype_scoring_contract,
 )
+from e2r.research_brain.research_quality import (
+    FAILURE_NEXT_ACTIONS,
+    canonical_research_failure_class,
+)
 
 from .orchestrator import DossierTarget
 
 
 ADAPTIVE_CLOSURE_SCHEMA_VERSION = "e2r_adaptive_organic_claim_closure_v1"
-FAILURE_ACTIONS = {
-    "NO_DOCUMENT_FOUND": "LLM_REPLAN_SOURCE_ROUTE",
-    "WRONG_SUBJECT": "LLM_STRENGTHEN_TARGET_IDENTITY_AND_DIRECTNESS",
-    "STALE_ONLY": "LLM_MOVE_TO_CURRENT_LIFECYCLE_SOURCE",
-    "GENERIC_CONTEXT_ONLY": "LLM_PRIORITIZE_ISSUER_OR_CUSTOMER_DIRECT_SOURCE",
-    "REROUTED_PRIMITIVE": "PRESERVE_IMPACT_AND_REPLAN_ORIGINAL_GAP",
-    "IMPACT_MAPPING_REJECTED": "REVIEW_CLAIM_TO_PRIMITIVE_SEMANTICS",
-    "COUNTER_ONLY": "PRESERVE_COUNTER_AND_SEARCH_POSITIVE_ROUTE",
-    "PROVIDER_FAILED": "RETURN_PROVIDER_REASON_TO_LLM",
-    "SOURCE_EXHAUSTED": "EVALUATE_ABSENCE_WITH_SEARCH_PROOF",
-    "IMPACT_ADJUDICATION_REQUIRED": "RUN_LLM_IMPACT_ADJUDICATION",
-}
+FAILURE_ACTIONS = dict(FAILURE_NEXT_ACTIONS)
 
 
 @dataclass(frozen=True)
@@ -46,10 +39,8 @@ class OrganicClaimClosureResult:
 
 
 def next_action_for_failure(failure_class: str) -> str:
-    action = FAILURE_ACTIONS.get(failure_class)
-    if action is None:
-        raise ValueError(f"unknown adaptive closure failure class: {failure_class}")
-    return action
+    canonical = canonical_research_failure_class(failure_class)
+    return FAILURE_ACTIONS[canonical]
 
 
 def run_organic_claim_closure(
@@ -520,12 +511,12 @@ def _failure_class(
     if claim_result and claim_result.compilation_pending:
         return "PROVIDER_FAILED"
     if accepted:
-        return "IMPACT_ADJUDICATION_REQUIRED"
+        return "IMPACT_MAPPING_FAILED"
     if mappings:
-        return "IMPACT_MAPPING_REJECTED"
+        return "IMPACT_MAPPING_FAILED"
     if claim_result and claim_result.adjudicated_claims:
         return "GENERIC_CONTEXT_ONLY"
-    return "SOURCE_EXHAUSTED"
+    return "NO_DOCUMENT_FOUND"
 
 
 def _read_jsonl(path: Path) -> tuple[Mapping[str, Any], ...]:

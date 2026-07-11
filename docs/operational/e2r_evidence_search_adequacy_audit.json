@@ -11,7 +11,7 @@
   "question_count": 3,
   "rows": [
     {
-      "adequacy_id": "ADEQ-5246ae2905aebb67f4b986b2",
+      "adequacy_id": "ADEQ-0972b9a74666e291d0e760f7",
       "adequate_absence_allowed": true,
       "attempted_route_categories": [
         "COUNTER",
@@ -39,6 +39,7 @@
       "question_family_id": "qualification_pass_lag_reopen",
       "relevant_document_count": 0,
       "relevant_document_ids": [],
+      "repair_failure_class": null,
       "required_route_categories": [
         "COUNTER",
         "FINANCIAL_REVISION",
@@ -68,7 +69,7 @@
       "wrong_scope_document_count": 0
     },
     {
-      "adequacy_id": "ADEQ-10a8267d8094d13ec62d0d0b",
+      "adequacy_id": "ADEQ-65fecde8a6f37b82dbdf1919",
       "adequate_absence_allowed": false,
       "attempted_route_categories": [
         "COUNTER",
@@ -99,6 +100,7 @@
       "question_family_id": "medium_term_revision_consensus",
       "relevant_document_count": 0,
       "relevant_document_ids": [],
+      "repair_failure_class": "PROVIDER_FAILED",
       "required_route_categories": [
         "COUNTER",
         "FINANCIAL_REVISION",
@@ -128,7 +130,7 @@
       "wrong_scope_document_count": 0
     },
     {
-      "adequacy_id": "ADEQ-a4761dd7ff279ecc6e72d71c",
+      "adequacy_id": "ADEQ-b9a83be8bc2997717d183e25",
       "adequate_absence_allowed": false,
       "attempted_route_categories": [
         "COUNTER",
@@ -160,6 +162,7 @@
       "relevant_document_ids": [
         "DOC-SHIPMENT"
       ],
+      "repair_failure_class": null,
       "required_route_categories": [
         "COUNTER",
         "FINANCIAL_REVISION",

@@ -1,0 +1,408 @@
+{
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "budget_exhaustion_not_pending_count": 0,
+    "counter_evidence_not_preserved_count": 0,
+    "deterministic_fallback_query_allowed_count": 0,
+    "failure_class_without_action_count": 0,
+    "gold_payload_exposed_count": 0,
+    "non_llm_query_owner_count": 0,
+    "provider_failure_not_pending_count": 0,
+    "rerouted_impact_not_preserved_count": 0
+  },
+  "directives": [
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-1127dea6400180bd16012341",
+      "failure_class": "BUDGET_EXHAUSTED",
+      "next_action": "KEEP_PENDING_AND_PLAN_NEW_BOUNDED_TASK",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "BUDGET_EXHAUSTED",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "BUDGET_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-e6b10224848e4ec8ff844bf2",
+      "failure_class": "CLAIM_EXTRACTION_FAILED",
+      "next_action": "RESELECT_ANCHOR_AND_REEXTRACT_CLAIM",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "CLAIM_EXTRACTION_FAILED",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-85e9e7b40d4f1bb2c1f8d21b",
+      "failure_class": "COUNTER_ONLY",
+      "next_action": "PRESERVE_COUNTER_AND_SEARCH_SUPPORT_ROUTE",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": true,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "COUNTER_ONLY",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-d724f5bed94750af66eb2b12",
+      "failure_class": "DOCUMENT_PARSE_FAILED",
+      "next_action": "RESELECT_SECTION_TABLE_OR_PARSER",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "DOCUMENT_PARSE_FAILED",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-46a3301377e6b2b7bc51867f",
+      "failure_class": "GENERIC_CONTEXT_ONLY",
+      "next_action": "PRIORITIZE_TARGET_DIRECT_QUANTIFIED_SOURCE",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "GENERIC_CONTEXT_ONLY",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-65f35190dfefca124783f55f",
+      "failure_class": "GOLD_MATERIAL_FACT_MISSED",
+      "next_action": "REPLAN_WITHOUT_GOLD_SOURCE_OR_FACT",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "GOLD_MATERIAL_FACT_MISSED",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-8f03520f126fa746f8ee70b4",
+      "failure_class": "IMPACT_MAPPING_FAILED",
+      "next_action": "READJUDICATE_CLAIM_PRIMITIVE_EDGE",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "IMPACT_MAPPING_FAILED",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-9927729170b9f8f8b508dccb",
+      "failure_class": "NO_DOCUMENT_FOUND",
+      "next_action": "CHANGE_SOURCE_ROUTE_AND_REPLAN",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "NO_DOCUMENT_FOUND",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-0221852f202a4e683603c262",
+      "failure_class": "PROVIDER_FAILED",
+      "next_action": "CHANGE_OR_RETRY_PROVIDER_WITH_FAILURE_CONTEXT",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "PROVIDER_FAILED",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "PROVIDER_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-a1c8fb180aaf8f123004006b",
+      "failure_class": "REROUTED_MECHANISM",
+      "next_action": "PRESERVE_REROUTED_IMPACT_AND_REPLAN_ORIGINAL_GAP",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": true,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "REROUTED_MECHANISM",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-1d112b045827764115c82170",
+      "failure_class": "SNIPPET_ONLY",
+      "next_action": "FETCH_ORIGINAL_FULL_DOCUMENT",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "SNIPPET_ONLY",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-28bf21d33fad4e12e25654c0",
+      "failure_class": "STALE_ONLY",
+      "next_action": "FIND_CURRENT_OR_SUPERSEDING_SOURCE",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "STALE_ONLY",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-92c25c0a012a3330761fb3f0",
+      "failure_class": "WRONG_BUSINESS_SEGMENT",
+      "next_action": "TIGHTEN_BUSINESS_MECHANISM_SCOPE",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "WRONG_BUSINESS_SEGMENT",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-8d3f2a910b5d626d3527e66b",
+      "failure_class": "WRONG_PRODUCT_FAMILY",
+      "next_action": "TIGHTEN_PRODUCT_SCOPE",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "WRONG_PRODUCT_FAMILY",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    },
+    {
+      "deterministic_fallback_query_allowed": false,
+      "directive_id": "REPAIR-c86f9648c3cf43549771ada2",
+      "failure_class": "WRONG_SUBJECT",
+      "next_action": "TIGHTEN_TARGET_IDENTITY_AND_DIRECTNESS",
+      "original_gap_open": true,
+      "original_question": "What current source-backed fact resolves this material question?",
+      "preserve_counter_evidence": false,
+      "preserve_rerouted_impacts": false,
+      "query_generation_owner": "LLM",
+      "question_family_id": "GENERIC_MATERIAL_QUESTION",
+      "require_novel_query": true,
+      "score_gap_context": {
+        "failure_class": "WRONG_SUBJECT",
+        "failure_reason": "controlled contract audit",
+        "instruction": "Use the current evidence and this failure diagnosis to propose a new, target-specific query. Do not repeat an executed query. Do not infer a score or Stage. Do not use a gold URL, gold fact, or expected output.",
+        "missing_route_categories": [],
+        "preserved_evidence_ids": [
+          "EVIDENCE-1"
+        ],
+        "rejected_document_reasons": [],
+        "validation_feedback": []
+      },
+      "terminal_status_if_unresolved": "SOURCE_PENDING"
+    }
+  ],
+  "failure_class_count": 15,
+  "failure_classes": [
+    "BUDGET_EXHAUSTED",
+    "CLAIM_EXTRACTION_FAILED",
+    "COUNTER_ONLY",
+    "DOCUMENT_PARSE_FAILED",
+    "GENERIC_CONTEXT_ONLY",
+    "GOLD_MATERIAL_FACT_MISSED",
+    "IMPACT_MAPPING_FAILED",
+    "NO_DOCUMENT_FOUND",
+    "PROVIDER_FAILED",
+    "REROUTED_MECHANISM",
+    "SNIPPET_ONLY",
+    "STALE_ONLY",
+    "WRONG_BUSINESS_SEGMENT",
+    "WRONG_PRODUCT_FAMILY",
+    "WRONG_SUBJECT"
+  ],
+  "schema_version": "e2r_adaptive_research_repair_audit_v1",
+  "status": "ADAPTIVE_RESEARCH_REPAIR_PASS"
+}

@@ -11,6 +11,7 @@ from e2r.production.metadata import stable_hash
 from e2r.research_brain.scoring.question_impact_contract import (
     QuestionImpactContract,
 )
+from .adaptive_repair import canonical_research_failure_class
 
 
 SATURATION_STATUSES = {
@@ -54,6 +55,7 @@ class EvidenceSearchAdequacy:
     provider_failures: int
     budget_exhausted: bool
     saturation_status: str
+    repair_failure_class: str | None
     required_route_categories: tuple[str, ...]
     attempted_route_categories: tuple[str, ...]
     unavailable_route_categories: tuple[str, ...]
@@ -283,6 +285,15 @@ def compile_dossier_search_adequacy(
             search_proof_count=len(proof_ids),
             source_pending=bool(pending_routes),
         )
+        repair_failure = _derive_repair_failure(
+            saturation_status=saturation,
+            closure=closure,
+            rejected_documents=rejected,
+            selected_document_count=len(selected),
+            positive_claim_count=len(positive_claim_ids),
+            zeroed_internal=zeroed_internal,
+            gold_misses=gold_misses,
+        )
         payload = {
             "target_id": target_id,
             "question_family_id": family,
@@ -303,6 +314,7 @@ def compile_dossier_search_adequacy(
             "provider_failures": provider_failures,
             "budget_exhausted": budget_exhausted,
             "saturation_status": saturation,
+            "repair_failure_class": repair_failure,
             "required_route_categories": tuple(sorted(required)),
             "attempted_route_categories": tuple(sorted(attempted)),
             "unavailable_route_categories": tuple(sorted(unavailable)),
@@ -360,6 +372,14 @@ def select_research_grade_documents(
             reason = "FULL_DOCUMENT_MISSING"
         elif published and published[:10] > as_of_date:
             reason = "FUTURE_DOCUMENT"
+        elif row.get("subject_match") is False:
+            reason = "WRONG_SUBJECT"
+        elif row.get("product_family_match") is False:
+            reason = "WRONG_PRODUCT_FAMILY"
+        elif row.get("business_segment_match") is False:
+            reason = "WRONG_MECHANISM_SCOPE"
+        elif row.get("generic_context_only") is True:
+            reason = "GENERIC_CONTEXT_ONLY"
         elif question_ids and question_family_id not in question_ids:
             reason = "WRONG_QUESTION_PREDICATE"
         elif scopes and mechanism_scope.casefold() not in scopes:
@@ -371,6 +391,7 @@ def select_research_grade_documents(
                 {
                     "document_id": row.get("document_id"),
                     "reason": reason,
+                    "scope_mismatch_kind": row.get("scope_mismatch_kind"),
                 }
             )
         else:
@@ -632,6 +653,60 @@ def _source_quality(row: Mapping[str, Any]) -> int:
     if value in {"TRUSTED_INDEPENDENT", "IndustryData", "CompanyGuide"}:
         return 2
     return 1
+
+
+def _derive_repair_failure(
+    *,
+    saturation_status: str,
+    closure: Mapping[str, Any],
+    rejected_documents: Sequence[Mapping[str, Any]],
+    selected_document_count: int,
+    positive_claim_count: int,
+    zeroed_internal: int,
+    gold_misses: int,
+) -> str | None:
+    prior = str(closure.get("failure_class") or "")
+    if prior in {
+        "REROUTED_MECHANISM",
+        "REROUTED_PRIMITIVE",
+        "REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN",
+    }:
+        return "REROUTED_MECHANISM"
+    if gold_misses:
+        return "GOLD_MATERIAL_FACT_MISSED"
+    if saturation_status == "PROVIDER_PENDING":
+        return "PROVIDER_FAILED"
+    if saturation_status == "BUDGET_PENDING":
+        return "BUDGET_EXHAUSTED"
+    if zeroed_internal:
+        return "IMPACT_MAPPING_FAILED"
+    if str(closure.get("status") or "") == "COUNTER_SUPPORTED":
+        return "COUNTER_ONLY"
+    reasons = {str(row.get("reason") or "") for row in rejected_documents}
+    if "WRONG_SUBJECT" in reasons:
+        return "WRONG_SUBJECT"
+    if "WRONG_PRODUCT_FAMILY" in reasons:
+        return "WRONG_PRODUCT_FAMILY"
+    if any(
+        str(row.get("scope_mismatch_kind") or "").upper() == "PRODUCT"
+        for row in rejected_documents
+    ):
+        return "WRONG_PRODUCT_FAMILY"
+    if "WRONG_MECHANISM_SCOPE" in reasons:
+        return "WRONG_BUSINESS_SEGMENT"
+    if reasons and reasons <= {"GENERIC_CONTEXT_ONLY"}:
+        return "GENERIC_CONTEXT_ONLY"
+    if reasons and reasons <= {"SNIPPET_ONLY_DISCOVERY"}:
+        return "SNIPPET_ONLY"
+    if "PDF_ANCHOR_INCOMPLETE" in reasons:
+        return "DOCUMENT_PARSE_FAILED"
+    if reasons and reasons <= {"FUTURE_DOCUMENT"}:
+        return "STALE_ONLY"
+    if selected_document_count and not positive_claim_count:
+        return "CLAIM_EXTRACTION_FAILED"
+    if saturation_status in {"INADEQUATE_SEARCH", "SOURCE_PENDING"}:
+        return canonical_research_failure_class(prior or "NO_DOCUMENT_FOUND")
+    return None
 
 
 __all__ = [

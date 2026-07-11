@@ -18,6 +18,10 @@ from e2r.research_brain.planning import (
     compile_question_task_context,
     plan_question_source_task,
 )
+from e2r.research_brain.research_quality import (
+    canonical_research_failure_class,
+    compile_research_repair_directive,
+)
 
 from .source_task_materializer import RecordingQuestionQueryProvider, load_evidence_recipes
 
@@ -72,6 +76,11 @@ class AdaptiveGapAttempt:
     prompt_hash: str
     response_hash: str
     identical_query: bool
+    repair_directive_id: str = ""
+    score_gap_context: Mapping[str, Any] | None = None
+    preserved_evidence_ids: tuple[str, ...] = ()
+    query_generation_owner: str = "LLM"
+    deterministic_fallback_query_used: bool = False
     score_valid: bool = False
     canonical_stage: str = "0"
 
@@ -148,7 +157,43 @@ class CurrentAdaptiveGapClosure:
             if satisfaction.get("original_gap_open") is not True:
                 continue
             failure_code = _failure_code(str(satisfaction.get("status") or ""))
-            next_action = _next_action(failure_code)
+            preserved_evidence_ids = tuple(
+                dict.fromkeys(
+                    str(value)
+                    for name in (
+                        "rerouted_claim_ids",
+                        "rerouted_mapping_ids",
+                        "counter_claim_ids",
+                        "preserved_evidence_ids",
+                    )
+                    for value in satisfaction.get(name) or ()
+                    if str(value)
+                )
+            )
+            directive = compile_research_repair_directive(
+                failure_class=failure_code,
+                question_family_id=str(
+                    task.get("question_family_id")
+                    or task.get("primitive_id")
+                    or "UNKNOWN_QUESTION"
+                ),
+                original_question=str(task.get("question_to_answer") or ""),
+                failure_reason=str(satisfaction.get("reason") or failure_code),
+                missing_route_categories=tuple(
+                    satisfaction.get("missing_route_categories") or ()
+                ),
+                rejected_document_reasons=tuple(
+                    satisfaction.get("rejected_document_reasons") or ()
+                ),
+                preserved_evidence_ids=preserved_evidence_ids,
+                validation_feedback=tuple(
+                    (task.get("query_intent") or {}).get(
+                        "validation_feedback", ()
+                    )
+                ),
+            )
+            failure_code = directive.failure_class
+            next_action = directive.next_action
             recipe = recipes.get(str(task.get("recipe_id") or ""))
             if recipe is None:
                 raise ValueError("adaptive gap task references unknown recipe")
@@ -169,7 +214,13 @@ class CurrentAdaptiveGapClosure:
                 as_of_date=config.as_of_date,
                 current_facts=facts,
                 missing_information=(
-                    f"{failure_code}: {satisfaction.get('reason')}; next action={next_action}",
+                    (
+                        f"failure={failure_code}; reason="
+                        f"{directive.score_gap_context['failure_reason']}; "
+                        f"next action={next_action}; missing routes="
+                        f"{','.join(directive.score_gap_context['missing_route_categories']) or 'none'}; "
+                        "propose a new target-specific query without repeating an executed query"
+                    ),
                 ),
                 existing_queries=previous_queries,
             )
@@ -219,14 +270,18 @@ class CurrentAdaptiveGapClosure:
                 {_normalize(item) for item in previous_queries}
                 & {_normalize(item) for item in suggested}
             )
-            terminal = (
-                "PROVIDER_PENDING"
-                if failure_code == "PROVIDER_FAILED"
-                or result.status == QuestionTaskPlanningStatus.PENDING.value
-                else "SOURCE_PENDING"
-            )
             trace = result.trace
             pending_detail = result.pending
+            terminal = directive.terminal_status_if_unresolved
+            if pending_detail is not None and pending_detail.reason_code in {
+                "QUERY_PROVIDER_NOT_CONFIGURED",
+                "INVALID_QUERY_PROVIDER_IDENTITY",
+                "FAKE_QUERY_PROVIDER_NOT_ALLOWED",
+                "QUERY_PROVIDER_UNAVAILABLE",
+                "QUERY_PROVIDER_REJECTED",
+                "QUERY_PROVIDER_OR_OUTPUT_ERROR",
+            }:
+                terminal = "PROVIDER_PENDING"
             attempt = AdaptiveGapAttempt(
                 attempt_id="GAPATTEMPT-" + stable_hash(
                     {"task_id": task_id, "input_id": result.input_id}
@@ -261,6 +316,11 @@ class CurrentAdaptiveGapClosure:
                     else "0" * 64
                 ),
                 identical_query=identical,
+                repair_directive_id=directive.directive_id,
+                score_gap_context=directive.score_gap_context,
+                preserved_evidence_ids=preserved_evidence_ids,
+                query_generation_owner=directive.query_generation_owner,
+                deterministic_fallback_query_used=False,
             )
             attempts.append(attempt)
             gap_rows.append(
@@ -274,6 +334,9 @@ class CurrentAdaptiveGapClosure:
                     "material_gap_open": True,
                     "failure_reason_code": failure_code,
                     "next_action": next_action,
+                    "repair_directive_id": directive.directive_id,
+                    "preserved_evidence_ids": list(preserved_evidence_ids),
+                    "original_gap_open": True,
                 }
             )
             ledger_payloads.extend(
@@ -411,6 +474,12 @@ def _audit_adaptive_gap(
     critical = {
         "silent_claim_overwrite": 0,
         "identical_retry": sum(item.identical_query for item in attempts),
+        "deterministic_fallback_query_count": sum(
+            item.deterministic_fallback_query_used for item in attempts
+        ),
+        "repair_without_llm_query_owner_count": sum(
+            item.query_generation_owner != "LLM" for item in attempts
+        ),
         "retry_without_failure_reason": sum(not item.failure_reason_code for item in attempts),
         "unresolved_material_gap_final_score": sum(
             item.get("material_gap_open") is True and item.get("score_valid") is True for item in gaps
@@ -441,25 +510,16 @@ def _audit_adaptive_gap(
 
 
 def _failure_code(status: str) -> str:
-    return {
-        "NO_RELEVANT_CLAIM": "GENERIC_CONTEXT_ONLY",
-        "WRONG_SUBJECT": "WRONG_SUBJECT",
-        "STALE_ONLY": "STALE_ONLY",
-        "PROVIDER_FAILED": "PROVIDER_FAILED",
-        "SOURCE_EXHAUSTED": "SOURCE_EXHAUSTED",
-        "REROUTED_CLAIM_ACCEPTED_ORIGINAL_GAP_OPEN": "REROUTED_PRIMITIVE",
-    }.get(status, "NO_DOCUMENT_FOUND")
+    return canonical_research_failure_class(status)
 
 
 def _next_action(failure_code: str) -> str:
-    return {
-        "GENERIC_CONTEXT_ONLY": "CHANGE_DOCUMENT_SECTION_AND_QUERY",
-        "WRONG_SUBJECT": "STRENGTHEN_TARGET_DIRECTNESS_AND_QUERY",
-        "STALE_ONLY": "CHANGE_DATE_LIFECYCLE_QUERY",
-        "PROVIDER_FAILED": "CHANGE_OFFICIAL_PROVIDER_AND_QUERY",
-        "SOURCE_EXHAUSTED": "CHANGE_PROVIDER_WITH_SOURCE_GAP",
-        "REROUTED_PRIMITIVE": "RETURN_ORIGINAL_GAP_TO_LLM",
-    }.get(failure_code, "CHANGE_QUERY")
+    return compile_research_repair_directive(
+        failure_class=failure_code,
+        question_family_id="COMPATIBILITY_QUESTION",
+        original_question="Resolve the current material evidence gap.",
+        failure_reason=failure_code,
+    ).next_action
 
 
 def _normalize(value: str) -> str:
