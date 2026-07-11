@@ -17,9 +17,9 @@ READY = "MEANINGFUL_E2R_SCORING_READY"
 NOT_READY = "MEANINGFUL_E2R_SCORING_NOT_READY"
 
 REQUIRED_DOSSIER_LEAVES = (
-    "accepted_claims.jsonl",
-    "validated_impacts.jsonl",
-    "component_assessments.json",
+    "accepted_current_claims.jsonl",
+    "claim_impacts_validated.jsonl",
+    "component_assessments.jsonl",
     "component_score_vector.json",
     "atomic_stage_decision.json",
     "stagecourt_trace.json",
@@ -205,11 +205,9 @@ def _read_and_evaluate_target(
     return _evaluate_target(
         target=target,
         required_components=required_components,
-        claims=_read_jsonl(root / "accepted_claims.jsonl"),
-        impacts=_read_jsonl(root / "validated_impacts.jsonl"),
-        assessments=_object_rows(
-            _read_json(root / "component_assessments.json"), "assessments"
-        ),
+        claims=_read_jsonl(root / "accepted_current_claims.jsonl"),
+        impacts=_read_jsonl(root / "claim_impacts_validated.jsonl"),
+        assessments=_read_jsonl(root / "component_assessments.jsonl"),
         score=_read_json(root / "component_score_vector.json"),
         decision=_read_json(root / "atomic_stage_decision.json"),
         trace=_read_json(root / "stagecourt_trace.json"),

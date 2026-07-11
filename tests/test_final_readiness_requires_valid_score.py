@@ -104,7 +104,7 @@ class FinalReadinessRequiresValidScoreTests(unittest.TestCase):
         decision_id = f"DEC-{target_id}"
         trace_id = f"TRACE-{target_id}"
         assessment_ids = [f"ASM-{target_id}-{index}" for index in range(len(COMPONENTS))]
-        (root / "accepted_claims.jsonl").write_text(
+        (root / "accepted_current_claims.jsonl").write_text(
             json.dumps(
                 {
                     "claim_id": claim_id,
@@ -123,7 +123,7 @@ class FinalReadinessRequiresValidScoreTests(unittest.TestCase):
             if impact
             else []
         )
-        (root / "validated_impacts.jsonl").write_text(
+        (root / "claim_impacts_validated.jsonl").write_text(
             "".join(json.dumps(row) + "\n" for row in impact_rows), encoding="utf-8"
         )
         assessments = [
@@ -136,8 +136,9 @@ class FinalReadinessRequiresValidScoreTests(unittest.TestCase):
                 zip(assessment_ids, COMPONENTS)
             )
         ]
-        (root / "component_assessments.json").write_text(
-            json.dumps({"assessments": assessments}), encoding="utf-8"
+        (root / "component_assessments.jsonl").write_text(
+            "".join(json.dumps(row) + "\n" for row in assessments),
+            encoding="utf-8",
         )
         score_type = "FULL_E2R_100" if full_score else "NO_SCORE"
         score = {

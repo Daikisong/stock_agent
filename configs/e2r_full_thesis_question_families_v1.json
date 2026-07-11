@@ -1,0 +1,137 @@
+{
+  "schema_version": "e2r_full_thesis_question_families_v1",
+  "source_priority": [
+    "ISSUER_EARNINGS_IR_NEWSROOM_CALL",
+    "OFFICIAL_FILING",
+    "CUSTOMER_OFFICIAL",
+    "FINANCIAL_REVISION_SOURCE",
+    "TRUSTED_INDEPENDENT",
+    "GENERAL_WEB_DISCOVERY_TO_ORIGINAL"
+  ],
+  "archetypes": {
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+      "question_families": [
+        {
+          "question_family_id": "current_customer_allocation_commitment",
+          "question_to_answer": "Does a current customer commitment, allocation, preorder, or equivalent commercial commitment exist, and what exactly is committed?",
+          "primitive_ids": ["customer_preorder_or_allocation", "revenue_visibility_contract"],
+          "evidence_roles": ["CUSTOMER_COMMITMENT", "OFFICIAL_DIRECT"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "CUSTOMER_OFFICIAL", "OFFICIAL_FILING"],
+          "counter_thesis": false,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_DIRECT_COMMITMENT_IS_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "capacity_constraint_presold_status",
+          "question_to_answer": "Is current target capacity constrained, sold out, pre-sold, booked, or allocated for a defined product generation and period?",
+          "primitive_ids": ["hbm_capacity_constraint", "hbm_capacity_pre_sold"],
+          "evidence_roles": ["CAPACITY_CONSTRAINT", "PRE_SOLD_CAPACITY"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "OFFICIAL_FILING", "TRUSTED_INDEPENDENT"],
+          "counter_thesis": false,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_CAPACITY_STATUS_AND_PERIOD_ARE_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "qualification_pass_lag_reopen",
+          "question_to_answer": "What is the current customer qualification state, including pass, lag, redesign, reopen, or unresolved execution risk?",
+          "primitive_ids": ["qualification_state"],
+          "evidence_roles": ["QUALIFICATION_STATE", "EXECUTION_COUNTER"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "CUSTOMER_OFFICIAL", "TRUSTED_INDEPENDENT"],
+          "counter_thesis": true,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_QUALIFICATION_STATE_IS_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "shipment_mass_production_generation",
+          "question_to_answer": "Which product generation is currently in sample, mass production, shipment, or commercial delivery, and what remains only a product profile?",
+          "primitive_ids": ["shipment_or_revenue_mix", "hbm_product_profile"],
+          "evidence_roles": ["SHIPMENT_OR_MASS_PRODUCTION", "PRODUCT_PROFILE"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "CUSTOMER_OFFICIAL", "OFFICIAL_FILING"],
+          "counter_thesis": false,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_PRODUCT_LIFECYCLE_IS_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "hbm_ai_memory_revenue_mix",
+          "question_to_answer": "Is current HBM or AI-memory revenue, shipment, or mix directly quantified or otherwise bounded by the target?",
+          "primitive_ids": ["shipment_or_revenue_mix"],
+          "evidence_roles": ["ACTUAL_REVENUE_MIX", "OFFICIAL_DIRECT"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "OFFICIAL_FILING", "FINANCIAL_REVISION_SOURCE"],
+          "counter_thesis": false,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_HBM_MIX_IS_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "asp_pricing_actual",
+          "question_to_answer": "Did the target report a current realized or contracted ASP or pricing change, with product and period identified?",
+          "primitive_ids": ["memory_price_increase_mentioned"],
+          "evidence_roles": ["REALIZED_PRICING", "ACTUAL_EARNINGS"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "OFFICIAL_FILING", "FINANCIAL_REVISION_SOURCE"],
+          "counter_thesis": false,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_PRICING_CHANGE_IS_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "revenue_operating_profit_conversion",
+          "question_to_answer": "Do current actual revenue and operating profit demonstrate economic conversion, and how directly are they tied to HBM, memory mix, or ASP?",
+          "primitive_ids": ["actual_earnings_conversion"],
+          "evidence_roles": ["ACTUAL_EARNINGS", "CASH_CONVERSION"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "OFFICIAL_FILING", "FINANCIAL_REVISION_SOURCE"],
+          "counter_thesis": false,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_ACTUAL_CONVERSION_IS_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "margin_fcf_conversion",
+          "question_to_answer": "Do current margin and free-cash-flow facts show that operating economics survive capex and working-capital needs?",
+          "primitive_ids": ["margin_fcf_conversion"],
+          "evidence_roles": ["CASH_CONVERSION", "CAPEX_SUPPLY_RESPONSE"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "OFFICIAL_FILING", "FINANCIAL_REVISION_SOURCE"],
+          "counter_thesis": true,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_MARGIN_AND_FCF_STATE_IS_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "medium_term_revision_consensus",
+          "question_to_answer": "Do current guidance or source-backed estimates establish a medium-term earnings or cash revision, and what evidence drives it?",
+          "primitive_ids": ["medium_term_revision_visibility"],
+          "evidence_roles": ["FORWARD_REVISION", "EARNINGS_REVISION"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "FINANCIAL_REVISION_SOURCE", "TRUSTED_INDEPENDENT"],
+          "counter_thesis": false,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_REVISION_STATE_IS_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "conventional_memory_drag",
+          "question_to_answer": "Does current conventional DRAM or NAND weakness, inventory, or mix offset the HBM thesis?",
+          "primitive_ids": ["conventional_memory_drag"],
+          "evidence_roles": ["CONVENTIONAL_MEMORY_COUNTER", "ACTUAL_EARNINGS"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "OFFICIAL_FILING", "TRUSTED_INDEPENDENT"],
+          "counter_thesis": true,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_CONVENTIONAL_MEMORY_COUNTER_IS_EVALUATED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "capex_supply_oversupply",
+          "question_to_answer": "What current capex and capacity response is funded and scheduled, and could it relax scarcity or create oversupply risk?",
+          "primitive_ids": ["capacity_supply_response"],
+          "evidence_roles": ["CAPEX_SUPPLY_RESPONSE", "OVERSUPPLY_COUNTER"],
+          "source_priority": ["ISSUER_EARNINGS_IR_NEWSROOM_CALL", "OFFICIAL_FILING", "TRUSTED_INDEPENDENT"],
+          "counter_thesis": true,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_CAPACITY_RESPONSE_IS_EVALUATED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
+          "question_family_id": "customer_concentration_dependency",
+          "question_to_answer": "What current customer concentration or dependency is source-backed, and how does it limit the durability of visibility?",
+          "primitive_ids": ["revenue_visibility_contract", "qualification_state"],
+          "evidence_roles": ["CUSTOMER_DEPENDENCY_COUNTER", "INDEPENDENT_CORROBORATION"],
+          "source_priority": ["OFFICIAL_FILING", "CUSTOMER_OFFICIAL", "TRUSTED_INDEPENDENT"],
+          "counter_thesis": true,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_CUSTOMER_DEPENDENCY_IS_EVALUATED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        }
+      ]
+    }
+  }
+}
