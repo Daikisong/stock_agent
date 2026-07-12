@@ -1,0 +1,539 @@
+{
+  "counter_independence": {
+    "counter_namespaces": [
+      "semantic_reviewer_a",
+      "semantic_reviewer_b",
+      "semantic_reviewer_c",
+      "semantic_reviewer_d",
+      "semantic_reviewer_e",
+      "semantic_reviewer_f",
+      "semantic_reviewer_g",
+      "semantic_reviewer_h"
+    ],
+    "rule": "Each reviewer rereads detailed leaves and computes a private counter namespace.",
+    "shared_report_generator_counter_count": 0,
+    "unique_counter_namespace_count": 8
+  },
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "duplicate_counter_namespace_count": 0,
+    "report_generator_counter_reuse_count": 0,
+    "reviewer_a_critical_count": 0,
+    "reviewer_b_critical_count": 0,
+    "reviewer_c_critical_count": 0,
+    "reviewer_d_critical_count": 0,
+    "reviewer_e_critical_count": 0,
+    "reviewer_f_critical_count": 0,
+    "reviewer_g_critical_count": 0,
+    "reviewer_h_critical_count": 0,
+    "reviewer_roster_mismatch_count": 0,
+    "reviewer_without_direct_leaf_count": 0
+  },
+  "reviewer_count": 8,
+  "reviewers": {
+    "A": {
+      "counter_derivation": "DIRECT_DETAILED_LEAF_RECOMPUTE",
+      "counter_namespace": "semantic_reviewer_a",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "reviewer_a_missing_leaf_count": 0,
+        "schema_archetype_count_mismatch": 0,
+        "schema_component_cap_roster_mismatch_count": 0,
+        "schema_component_roster_mismatch_count": 0,
+        "schema_enum_policy_roster_mismatch_count": 0,
+        "schema_missing_explicit_edge_contract_count": 0,
+        "schema_partial_bridge_silent_zero_count": 0,
+        "schema_risk_open_counter_silent_zero_count": 0,
+        "schema_risk_resolved_release_silent_zero_count": 0,
+        "schema_source_cap_roster_mismatch_count": 0,
+        "schema_support_policy_field_missing_count": 0,
+        "schema_temporal_cap_roster_mismatch_count": 0,
+        "schema_weight_total_mismatch_count": 0
+      },
+      "direct_leaf_paths": [
+        "configs/e2r_scoring_policy_v2.json",
+        "configs/e2r_archetype_weight_profile_v2_2.json",
+        "configs/e2r_archetype_evidence_contracts_v12.json",
+        "configs/e2r_archetype_scoring_contract_edges_v1.json",
+        "configs/e2r_scoring_profile_v2_2.yaml"
+      ],
+      "direct_leaf_reread": true,
+      "direct_leaf_sha256": {
+        "configs/e2r_archetype_evidence_contracts_v12.json": "6ee91f624e19d8fae9b7e49ace499dccf00ef57ecdcc8265ded359d9e65b8596",
+        "configs/e2r_archetype_scoring_contract_edges_v1.json": "32d1635a23f7ada39caad9db24505d1e83bb0d08cc5f8c41af0172e4a6440d55",
+        "configs/e2r_archetype_weight_profile_v2_2.json": "206216c86f2597651c6b938b9f011057b667c429074aa3dd6eaa47828265c3fc",
+        "configs/e2r_scoring_policy_v2.json": "9ddfbdfb497a9da9c6facf07ddfd9722ad244a657f758eb6233135c98e73bfd1",
+        "configs/e2r_scoring_profile_v2_2.yaml": "7a5ab411822cc13b37dcb92ba05b114b2564773b0d9b4587b0adb073a66384eb"
+      },
+      "observations": {
+        "archetype_count": 36,
+        "component_count": 7,
+        "enum_policy_pairs_checked": 7,
+        "support_type_count": 7
+      },
+      "report_generator_counter_ids": [],
+      "reviewer_id": "A",
+      "scope": "Scoring Schema Totality",
+      "status": "REVIEWER_A_PASS"
+    },
+    "B": {
+      "counter_derivation": "DIRECT_DETAILED_LEAF_RECOMPUTE",
+      "counter_namespace": "semantic_reviewer_b",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "mechanism_adjacent_substrate_economic_credit_count": 0,
+        "mechanism_duplicate_eligibility_decision_id_count": 0,
+        "mechanism_eligibility_claim_roster_mismatch_count": 0,
+        "mechanism_foundry_credit_in_c06_count": 0,
+        "mechanism_implicit_stage_event_eligibility_count": 0,
+        "mechanism_ineligible_impact_credited_count": 0,
+        "mechanism_ledger_acceptance_contradiction_count": 0,
+        "mechanism_scope_field_missing_count": 0,
+        "mechanism_scope_match_failure_count": 0,
+        "mechanism_scope_target_mismatch_count": 0,
+        "mechanism_score_without_eligibility_count": 0,
+        "reviewer_b_missing_leaf_count": 0
+      },
+      "direct_leaf_paths": [
+        "output/evidence_to_score_v2/live_2026-07-11/005930/accepted_current_claims.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/claim_eligibility_decisions.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/claim_impacts_validated.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/accepted_current_claims.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/claim_eligibility_decisions.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/claim_impacts_validated.jsonl"
+      ],
+      "direct_leaf_reread": true,
+      "direct_leaf_sha256": {
+        "output/evidence_to_score_v2/live_2026-07-11/000660/accepted_current_claims.jsonl": "83ef3680726f944b89aabaa32e10581bf9df8dc2d5398102a4b3fc18140c1488",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/claim_eligibility_decisions.jsonl": "c7caac4f8b5537952c4434e82389ba525199fc6f6c8515e34874bfb99733649b",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/claim_impacts_validated.jsonl": "92174257d8991672cbe7db3e6673bad1d9920e80b3724e2f44381005a6479366",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/accepted_current_claims.jsonl": "ff2fb1e55a515001dcf47e83bc890d7e328134bf47c2ae37eac11e03cb0d2f6c",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/claim_eligibility_decisions.jsonl": "f22c4da4b27ca37b7a2236670a2a4df9082edaee28b034d35add3d2d8e459249",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/claim_impacts_validated.jsonl": "647d02cb6539f310eab65e0e1d5af2179e9bd459dc270b6c39e103e1f5f5284a"
+      },
+      "observations": {
+        "000660": {
+          "claim_count": 33,
+          "eligibility_decision_count": 33,
+          "validated_impact_count": 115,
+          "wrong_mechanism_decision_count": 9
+        },
+        "005930": {
+          "claim_count": 18,
+          "eligibility_decision_count": 18,
+          "validated_impact_count": 37,
+          "wrong_mechanism_decision_count": 5
+        }
+      },
+      "report_generator_counter_ids": [],
+      "reviewer_id": "B",
+      "scope": "Mechanism Scope & Eligibility",
+      "status": "REVIEWER_B_PASS"
+    },
+    "C": {
+      "counter_derivation": "DIRECT_DETAILED_LEAF_RECOMPUTE",
+      "counter_namespace": "semantic_reviewer_c",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "acquisition_counter_fact_missing_or_unmatched_count": 0,
+        "acquisition_critical_gold_miss_count": 0,
+        "acquisition_full_document_zero_count": 0,
+        "acquisition_gold_input_class_leak_count": 0,
+        "acquisition_gold_roster_mismatch_count": 0,
+        "acquisition_inadequate_absence_count": 0,
+        "acquisition_noncritical_recall_below_90_count": 0,
+        "acquisition_production_fact_zero_count": 0,
+        "acquisition_required_counter_route_not_attempted_count": 0,
+        "acquisition_required_supersession_route_not_attempted_count": 0,
+        "acquisition_source_route_roster_mismatch_count": 0,
+        "acquisition_supersession_route_missing_count": 0,
+        "acquisition_unavailable_route_reason_missing_count": 0,
+        "reviewer_c_missing_leaf_count": 0
+      },
+      "direct_leaf_paths": [
+        "output/evidence_to_score_v2/blind_2026-07-11/gold/gold_material_facts.jsonl",
+        "output/evidence_to_score_v2/blind_2026-07-11/gold/gold_source_map.jsonl",
+        "output/evidence_to_score_v2/blind_2026-07-11/production/production_input_manifest.jsonl",
+        "output/evidence_to_score_v2/blind_2026-07-11/production/production_lane_manifest.json",
+        "output/evidence_to_score_v2/blind_2026-07-11/production/production_material_facts.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/material_fact_comparison.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/evidence_search_adequacy.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/evidence_documents.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/question_source_tasks.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/material_fact_comparison.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/evidence_search_adequacy.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/evidence_documents.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/question_source_tasks.jsonl"
+      ],
+      "direct_leaf_reread": true,
+      "direct_leaf_sha256": {
+        "output/evidence_to_score_v2/blind_2026-07-11/gold/gold_material_facts.jsonl": "1e86e1784b64e4ef6e09f65841393af58a4827d2aafb4c6660d8c84177381792",
+        "output/evidence_to_score_v2/blind_2026-07-11/gold/gold_source_map.jsonl": "b75c5dff3a97105fa0f3afd8dc3a8cdb9404fc933149bd420da6892e363e700f",
+        "output/evidence_to_score_v2/blind_2026-07-11/production/production_input_manifest.jsonl": "90c382f689bee1438c66c0bc2014bbe3c0870ad6bb89332ede246f860ad7b4e9",
+        "output/evidence_to_score_v2/blind_2026-07-11/production/production_lane_manifest.json": "ccf0ed9fa561cfbf81613f3d31d8ecd30550bd911952ba643b88497c73d416dc",
+        "output/evidence_to_score_v2/blind_2026-07-11/production/production_material_facts.jsonl": "a3792899387022b48994e9240758aa52c862edc2ccda4c73b0c822c895c8bf72",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/evidence_documents.jsonl": "2f3dfd552c6fc6caa7d80c68f2a1d8ba0246e25fe9b6cda49efbff12b15d799f",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/evidence_search_adequacy.jsonl": "a994518408045dead59a13d47e15ad4952ce5058b4bad5ae8f12bf4728c61020",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/material_fact_comparison.jsonl": "3a89ac5304dc36c9efacf69355ade8d46373ea6fe327f7ea5ee4e007fe70a5fd",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/question_source_tasks.jsonl": "39b107c8ffc3b580a9f1f77b6d3bddd10c726bec38166a021f85360d87ff305e",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/evidence_documents.jsonl": "8723ad10491694c6acb579e0b666efd590be55eb5e8e406131d01a1fd311236c",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/evidence_search_adequacy.jsonl": "fb35dee6db4f45feca9390e046dd31bdf1d56fbd6a9dd1ef0cec67a60b42a89e",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/material_fact_comparison.jsonl": "145620dbf3fc1c1e5a44823f03d9dff8f7be3334ab42a3b06638c2d9dcdba958",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/question_source_tasks.jsonl": "75b865f1477301d8c505cfb2720554bb425274b963a93ae100b082b64666dae4"
+      },
+      "observations": {
+        "adequacy_question_count": 26,
+        "critical_gold_fact_count": 6,
+        "critical_gold_match_count": 6,
+        "evidence_document_count": 3,
+        "gold_fact_count": 9,
+        "noncritical_recall": 1.0,
+        "production_fact_count": 41,
+        "source_routes": [
+          "counter_supersession",
+          "customer_official",
+          "financial_revision",
+          "issuer_ir_earnings",
+          "issuer_newsroom",
+          "official_filing",
+          "trusted_independent"
+        ]
+      },
+      "report_generator_counter_ids": [],
+      "reviewer_id": "C",
+      "scope": "Research Acquisition",
+      "status": "REVIEWER_C_PASS"
+    },
+    "D": {
+      "counter_derivation": "DIRECT_DETAILED_LEAF_RECOMPUTE",
+      "counter_namespace": "semantic_reviewer_d",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "impact_corroboration_only_has_credit_count": 0,
+        "impact_counter_plane_empty_count": 0,
+        "impact_counter_zero_effect_count": 0,
+        "impact_document_cluster_lineage_missing_count": 0,
+        "impact_fact_cluster_lineage_missing_count": 0,
+        "impact_fact_primary_missing_count": 0,
+        "impact_invalid_validation_status_count": 0,
+        "impact_many_to_many_missing_count": 0,
+        "impact_same_document_information_duplicate_credit_count": 0,
+        "impact_same_fact_duplicate_credit_count": 0,
+        "impact_support_plane_empty_count": 0,
+        "reviewer_d_missing_leaf_count": 0
+      },
+      "direct_leaf_paths": [
+        "output/evidence_to_score_v2/live_2026-07-11/005930/claim_impacts_validated.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/economic_fact_clusters.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/document_clusters.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/claim_impacts_validated.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/economic_fact_clusters.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/document_clusters.jsonl"
+      ],
+      "direct_leaf_reread": true,
+      "direct_leaf_sha256": {
+        "output/evidence_to_score_v2/live_2026-07-11/000660/claim_impacts_validated.jsonl": "92174257d8991672cbe7db3e6673bad1d9920e80b3724e2f44381005a6479366",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/document_clusters.jsonl": "9a61a08c1ccafe1449c2acf9703636759c4bc84aa0695c6b6f6bc4440aeb3072",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/economic_fact_clusters.jsonl": "1ba03cd55cb4079ee030a1acd0e6e75ebeabe65633dc94d64c21e17d50139a03",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/claim_impacts_validated.jsonl": "647d02cb6539f310eab65e0e1d5af2179e9bd459dc270b6c39e103e1f5f5284a",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/document_clusters.jsonl": "1a530a6364bdf550220ff91d47f6ef6449180d134edff731a5d5b8feed9cb037",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/economic_fact_clusters.jsonl": "db84f7e96c9e0b3d87c289efe137bff0aba94267aa64d4ef81503a78aabe863e"
+      },
+      "observations": {
+        "000660": {
+          "counter_effect_count": 0,
+          "document_cluster_count": 1,
+          "fact_cluster_count": 19,
+          "impact_count": 115,
+          "multi_impact_claim_count": 19,
+          "support_effect_count": 36
+        },
+        "005930": {
+          "counter_effect_count": 1,
+          "document_cluster_count": 1,
+          "fact_cluster_count": 10,
+          "impact_count": 37,
+          "multi_impact_claim_count": 10,
+          "support_effect_count": 15
+        }
+      },
+      "report_generator_counter_ids": [],
+      "reviewer_id": "D",
+      "scope": "Claim Impact Semantics",
+      "status": "REVIEWER_D_PASS"
+    },
+    "E": {
+      "counter_derivation": "DIRECT_DETAILED_LEAF_RECOMPUTE",
+      "counter_namespace": "semantic_reviewer_e",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "reconciliation_component_roster_mismatch_count": 0,
+        "reconciliation_error_code_count": 0,
+        "reconciliation_false_adequate_absence_count": 0,
+        "reconciliation_inadequate_absence_count": 0,
+        "reconciliation_partially_supported_zero_credit_count": 0,
+        "reconciliation_positive_claim_absent_component_count": 0,
+        "reconciliation_provider_failure_finalized_count": 0,
+        "reconciliation_question_roster_mismatch_count": 0,
+        "reconciliation_supported_absent_component_count": 0,
+        "reconciliation_supported_zero_credit_count": 0,
+        "reviewer_e_missing_leaf_count": 0
+      },
+      "direct_leaf_paths": [
+        "output/evidence_to_score_v2/live_2026-07-11/005930/question_source_tasks.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/question_closure.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/semantic_closure_trace.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/evidence_search_adequacy.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/component_assessments.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/question_source_tasks.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/question_closure.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/semantic_closure_trace.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/evidence_search_adequacy.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/component_assessments.jsonl"
+      ],
+      "direct_leaf_reread": true,
+      "direct_leaf_sha256": {
+        "output/evidence_to_score_v2/live_2026-07-11/000660/component_assessments.jsonl": "44f2904e6d0f344f4e304c7f326779c4b692d3f2cfa183499f5d5515c612430f",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/evidence_search_adequacy.jsonl": "a994518408045dead59a13d47e15ad4952ce5058b4bad5ae8f12bf4728c61020",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/question_closure.jsonl": "97205173e73b05caedeb9ddc490b770427327598391b47dfe100fa8f87ff9ea3",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/question_source_tasks.jsonl": "39b107c8ffc3b580a9f1f77b6d3bddd10c726bec38166a021f85360d87ff305e",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/semantic_closure_trace.jsonl": "c99540769ee55552e3e960219eb9249ab3b38211f521d3bf24fe4277fe60a3d8",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/component_assessments.jsonl": "94ccc2c193101b2a82f743831c465d87d0a790d668a8948ce01dd9e1c4524513",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/evidence_search_adequacy.jsonl": "fb35dee6db4f45feca9390e046dd31bdf1d56fbd6a9dd1ef0cec67a60b42a89e",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/question_closure.jsonl": "953906ee4842faf9a73cc4d3c4925c321e2aaa1bea683dc8bf4517bb9d5d6712",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/question_source_tasks.jsonl": "75b865f1477301d8c505cfb2720554bb425274b963a93ae100b082b64666dae4",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/semantic_closure_trace.jsonl": "275d97ff5b6f58d7b1e06aeb47eeb4315f6fe26e086ec9adacc9263001128c8f"
+      },
+      "observations": {
+        "000660": {
+          "component_count": 7,
+          "evaluated_absent_count": 3,
+          "question_count": 13,
+          "scoring_question_count": 7
+        },
+        "005930": {
+          "component_count": 7,
+          "evaluated_absent_count": 4,
+          "question_count": 13,
+          "scoring_question_count": 4
+        }
+      },
+      "report_generator_counter_ids": [],
+      "reviewer_id": "E",
+      "scope": "Question/Component Reconciliation",
+      "status": "REVIEWER_E_PASS"
+    },
+    "F": {
+      "counter_derivation": "DIRECT_DETAILED_LEAF_RECOMPUTE",
+      "counter_namespace": "semantic_reviewer_f",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "reviewer_f_missing_leaf_count": 0,
+        "score_assessment_roster_mismatch_count": 0,
+        "score_assessment_vector_value_mismatch_count": 0,
+        "score_claim_trace_roster_mismatch_count": 0,
+        "score_component_sum_total_mismatch_count": 0,
+        "score_component_trace_roster_mismatch_count": 0,
+        "score_component_vector_roster_mismatch_count": 0,
+        "score_decision_value_mismatch_count": 0,
+        "score_event_overlay_stage_injection_count": 0,
+        "score_full_validity_failure_count": 0,
+        "score_hard_break_without_current_open_counter_count": 0,
+        "score_impact_trace_roster_mismatch_count": 0,
+        "score_invalid_canonical_stage_count": 0,
+        "score_stage_not_final_count": 0,
+        "score_stage_trace_identity_mismatch_count": 0,
+        "score_subcriterion_lineage_mismatch_count": 0,
+        "score_subcriterion_point_mismatch_count": 0
+      },
+      "direct_leaf_paths": [
+        "output/evidence_to_score_v2/live_2026-07-11/005930/component_subcriteria.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/component_assessments.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/component_score_vector.json",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/claim_impacts_validated.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/accepted_current_claims.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/atomic_stage_decision.json",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/stagecourt_trace.json",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/component_subcriteria.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/component_assessments.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/component_score_vector.json",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/claim_impacts_validated.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/accepted_current_claims.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/atomic_stage_decision.json",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/stagecourt_trace.json"
+      ],
+      "direct_leaf_reread": true,
+      "direct_leaf_sha256": {
+        "output/evidence_to_score_v2/live_2026-07-11/000660/accepted_current_claims.jsonl": "83ef3680726f944b89aabaa32e10581bf9df8dc2d5398102a4b3fc18140c1488",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/atomic_stage_decision.json": "3cee92c2be88606ee44fe42604988a537a89b8734c1eeb30a7bba840c3ada7a6",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/claim_impacts_validated.jsonl": "92174257d8991672cbe7db3e6673bad1d9920e80b3724e2f44381005a6479366",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/component_assessments.jsonl": "44f2904e6d0f344f4e304c7f326779c4b692d3f2cfa183499f5d5515c612430f",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/component_score_vector.json": "da0e220edf9cd56a2bc30f0ca7b18eb1143cdb99a4edd109faca6ac4137b6c19",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/component_subcriteria.jsonl": "7cd232b008183d4146a18e3e932700872dc70805d5514750f9eb7c8f65a7e342",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/stagecourt_trace.json": "4dccd5c7e53ed42772e9fd8b3339132de71d8e0468ab1b6182ed53b1f3431c18",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/accepted_current_claims.jsonl": "ff2fb1e55a515001dcf47e83bc890d7e328134bf47c2ae37eac11e03cb0d2f6c",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/atomic_stage_decision.json": "cb408ca367fcc4f093e93441137ff2e6d7cbe08c5678f64525660e70a9de22e2",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/claim_impacts_validated.jsonl": "647d02cb6539f310eab65e0e1d5af2179e9bd459dc270b6c39e103e1f5f5284a",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/component_assessments.jsonl": "94ccc2c193101b2a82f743831c465d87d0a790d668a8948ce01dd9e1c4524513",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/component_score_vector.json": "6a8de5649506856feef36e91d964751f519b7029d27594f465862578261f46d5",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/component_subcriteria.jsonl": "39e93414c0a1b3f719d8d90b70eecc6a6eaf7848fe59759e22df613079c952c4",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/stagecourt_trace.json": "da3e941c97adcc07b291ca89ff81671a5b27141739cd357fe5ace39a0711d917"
+      },
+      "observations": {
+        "000660": {
+          "canonical_stage": "0",
+          "component_vector": {
+            "bottleneck_pricing": 5.130446,
+            "capital_allocation": 0.6,
+            "earnings_visibility": 2.75,
+            "eps_fcf_explosion": 6.440063,
+            "information_confidence": 4.0,
+            "market_mispricing": 0.0,
+            "valuation_rerating": 0.2
+          },
+          "decision_status": "FINAL",
+          "event_overlay_status": "NO_EVENT_OVERLAY",
+          "full_e2r_score": 19.120509,
+          "score_type": "FULL_E2R_100",
+          "subcriterion_count": 26
+        },
+        "005930": {
+          "canonical_stage": "0",
+          "component_vector": {
+            "bottleneck_pricing": 3.55125,
+            "capital_allocation": 0.825,
+            "earnings_visibility": 4.157904,
+            "eps_fcf_explosion": 5.625823,
+            "information_confidence": 4.0,
+            "market_mispricing": 0.0,
+            "valuation_rerating": 0.0
+          },
+          "decision_status": "FINAL",
+          "event_overlay_status": "NO_EVENT_OVERLAY",
+          "full_e2r_score": 18.159977,
+          "score_type": "FULL_E2R_100",
+          "subcriterion_count": 26
+        }
+      },
+      "report_generator_counter_ids": [],
+      "reviewer_id": "F",
+      "scope": "Score & Stage",
+      "status": "REVIEWER_F_PASS"
+    },
+    "G": {
+      "counter_derivation": "DIRECT_DETAILED_LEAF_RECOMPUTE",
+      "counter_namespace": "semantic_reviewer_g",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "c06_capacity_counter_nonzero_missing_count": 0,
+        "c06_foundry_tesla_credited_count": 0,
+        "c06_foundry_tesla_eligibility_failure_count": 0,
+        "c06_foundry_tesla_fixture_missing_count": 0,
+        "c06_foundry_tesla_rejection_missing_count": 0,
+        "c06_historical_revenue_mix_effect_failure_count": 0,
+        "c06_historical_soldout_effect_failure_count": 0,
+        "c06_hynix_capacity_nonzero_missing_count": 0,
+        "c06_hynix_margin_nonzero_missing_count": 0,
+        "c06_hynix_revenue_nonzero_missing_count": 0,
+        "c06_package_profile_economic_credit_count": 0,
+        "c06_qualification_counter_failure_count": 0,
+        "c06_reopen_customer_dependency_overcredit_count": 0,
+        "c06_samsung_capacity_nonzero_missing_count": 0,
+        "c06_samsung_hbm_shipment_nonzero_missing_count": 0,
+        "c06_substrate_economic_credit_count": 0,
+        "reviewer_g_missing_leaf_count": 0
+      },
+      "direct_leaf_paths": [
+        "output/evidence_to_score_v2/live_2026-07-11/005930/accepted_current_claims.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/claim_impacts_validated.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/component_subcriteria.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/accepted_current_claims.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/claim_impacts_validated.jsonl",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/component_subcriteria.jsonl",
+        "output/evidence_to_score_v2/frozen_52f09f3/005930/accepted_current_claims.jsonl",
+        "output/evidence_to_score_v2/frozen_52f09f3/005930/claim_eligibility_decisions.jsonl",
+        "output/evidence_to_score_v2/frozen_52f09f3/005930/claim_impacts_validated.jsonl",
+        "output/evidence_to_score_v2/frozen_52f09f3/005930/impact_mapping_dispositions.jsonl",
+        "docs/operational/e2r_c06_historical_component_replay.json"
+      ],
+      "direct_leaf_reread": true,
+      "direct_leaf_sha256": {
+        "docs/operational/e2r_c06_historical_component_replay.json": "bbc9a77f06042c5a01741ca05ca6769980ff707610b8acdaeee968af0b7a7855",
+        "output/evidence_to_score_v2/frozen_52f09f3/005930/accepted_current_claims.jsonl": "8c1a5dd80f7dd0cdc8ee8474efe367c9a4176564c0bda63a9c8097655cb39921",
+        "output/evidence_to_score_v2/frozen_52f09f3/005930/claim_eligibility_decisions.jsonl": "580d8b58c025d3aac67a0942475b0c1f57ab9c85eb73870920c4031318328680",
+        "output/evidence_to_score_v2/frozen_52f09f3/005930/claim_impacts_validated.jsonl": "2fba3f82c36e4cb26ae1a5f0c044e28d8cf0d2006edb2114a951640239f499df",
+        "output/evidence_to_score_v2/frozen_52f09f3/005930/impact_mapping_dispositions.jsonl": "a1444eaf2d164af5d2e5b2908117b32c5e889d117fd85c05c6869c449f30f471",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/accepted_current_claims.jsonl": "83ef3680726f944b89aabaa32e10581bf9df8dc2d5398102a4b3fc18140c1488",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/claim_impacts_validated.jsonl": "92174257d8991672cbe7db3e6673bad1d9920e80b3724e2f44381005a6479366",
+        "output/evidence_to_score_v2/live_2026-07-11/000660/component_subcriteria.jsonl": "7cd232b008183d4146a18e3e932700872dc70805d5514750f9eb7c8f65a7e342",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/accepted_current_claims.jsonl": "ff2fb1e55a515001dcf47e83bc890d7e328134bf47c2ae37eac11e03cb0d2f6c",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/claim_impacts_validated.jsonl": "647d02cb6539f310eab65e0e1d5af2179e9bd459dc270b6c39e103e1f5f5284a",
+        "output/evidence_to_score_v2/live_2026-07-11/005930/component_subcriteria.jsonl": "39e93414c0a1b3f719d8d90b70eecc6a6eaf7848fe59759e22df613079c952c4"
+      },
+      "observations": {
+        "historical_case_count": 6,
+        "live_claim_counts": {
+          "000660": 33,
+          "005930": 18
+        },
+        "live_impact_counts": {
+          "000660": 115,
+          "005930": 37
+        },
+        "samsung_counter_effect_count": 1,
+        "tesla_foundry_claim_ids": [
+          "CLM-464ca5cde1b30c363997"
+        ]
+      },
+      "report_generator_counter_ids": [],
+      "reviewer_id": "G",
+      "scope": "Samsung/Hynix C06",
+      "status": "REVIEWER_G_PASS"
+    },
+    "H": {
+      "counter_derivation": "DIRECT_DETAILED_LEAF_RECOMPUTE",
+      "counter_namespace": "semantic_reviewer_h",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "generalization_all_archetype_totality_count_mismatch": 0,
+        "generalization_c08_positive_failure_count": 0,
+        "generalization_c08_profile_overcredit_count": 0,
+        "generalization_c15_headline_overcredit_count": 0,
+        "generalization_c15_positive_failure_count": 0,
+        "generalization_case_count_mismatch": 0,
+        "generalization_case_future_leakage_count": 0,
+        "generalization_old_risk_penalty_retained_count": 0,
+        "generalization_source_proxy_score_count": 0,
+        "generalization_support_counter_plane_loss_count": 0,
+        "generalization_wrong_segment_acceptance_count": 0,
+        "generalization_wrong_subject_acceptance_count": 0,
+        "reviewer_h_missing_leaf_count": 0
+      },
+      "direct_leaf_paths": [
+        "docs/operational/e2r_evidence_to_score_generalization_audit.json",
+        "configs/e2r_scoring_policy_v2.json",
+        "configs/e2r_archetype_weight_profile_v2_2.json"
+      ],
+      "direct_leaf_reread": true,
+      "direct_leaf_sha256": {
+        "configs/e2r_archetype_weight_profile_v2_2.json": "206216c86f2597651c6b938b9f011057b667c429074aa3dd6eaa47828265c3fc",
+        "configs/e2r_scoring_policy_v2.json": "9ddfbdfb497a9da9c6facf07ddfd9722ad244a657f758eb6233135c98e73bfd1",
+        "docs/operational/e2r_evidence_to_score_generalization_audit.json": "8dafdfdad1e3c82a1ba8fc2e8fb96a1fae325667d1663995cceeaa1af1207ad4"
+      },
+      "observations": {
+        "all_archetype_rubric_count": 36,
+        "c08_positive_score": 15.0,
+        "c08_profile_score": 1.8,
+        "c15_headline_score": 0.0,
+        "c15_positive_score": 20.0,
+        "case_count": 13
+      },
+      "report_generator_counter_ids": [],
+      "reviewer_id": "H",
+      "scope": "Generalization",
+      "status": "REVIEWER_H_PASS"
+    }
+  },
+  "schema_version": "e2r_semantic_scoring_reviewer_gate_v1",
+  "status": "SEMANTIC_SCORING_REVIEWER_GATE_PASS"
+}

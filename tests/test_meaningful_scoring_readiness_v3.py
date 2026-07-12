@@ -70,26 +70,20 @@ class MeaningfulScoringReadinessV3Tests(unittest.TestCase):
                     verdict["semantic_critical_counts"][critical_name], 0
                 )
 
-    def test_operational_v3_stays_not_ready_until_future_gates_exist(self) -> None:
+    def test_operational_v3_is_ready_after_all_semantic_gates_exist(self) -> None:
         verdict = compile_meaningful_scoring_readiness(
             config_path=self.ROOT
             / "configs/e2r_meaningful_scoring_readiness_v3.json"
         )
-        self.assertEqual(verdict["status"], NOT_READY)
-        self.assertFalse(verdict["hard_acceptance_pass"])
-        self.assertIn(
-            "global:semantic_scoring_known_bad:audit_leaf_missing",
-            verdict["blockers"],
-        )
-        self.assertIn(
-            "global:semantic_scoring_reviewer_gate:audit_leaf_missing",
-            verdict["blockers"],
-        )
+        self.assertEqual(verdict["status"], MEANINGFUL_READY_V2)
+        self.assertTrue(verdict["hard_acceptance_pass"])
+        self.assertEqual(verdict["blockers"], [])
+        self.assertEqual(verdict["critical_count_sum"], 0)
         text = (
             self.ROOT
             / "docs/operational/e2r_meaningful_scoring_readiness_v3.md"
         ).read_text(encoding="utf-8")
-        self.assertIn("MEANINGFUL_E2R_SCORING_NOT_READY", text)
+        self.assertIn("MEANINGFUL_E2R_SCORING_READY_V2", text)
         self.assertIn(
             "pass-only final label: MEANINGFUL_E2R_SCORING_READY_V2",
             text,
