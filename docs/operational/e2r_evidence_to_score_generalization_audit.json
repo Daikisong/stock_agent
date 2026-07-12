@@ -1,76 +1,451 @@
 {
+  "all_archetype_rubric_count": 36,
   "cases": {
+    "c06_hynix_revenue_mix_positive": {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "as_of_date": "2025-01-23",
+      "component_score_vector": {
+        "bottleneck_pricing": 0.0,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 1.297296,
+        "eps_fcf_explosion": 0.945945,
+        "information_confidence": 4.0,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "VERIFIED_WEAK_SUPPORT",
+        "eps_fcf_explosion": "VERIFIED_WEAK_SUPPORT",
+        "information_confidence": "VERIFIED_STRONG_SUPPORT",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.0,
+      "counter_impact_count": 0,
+      "edge_catalog_status": "EXPLICIT",
+      "forbidden_component_count": 0,
+      "full_score_valid": true,
+      "future_leakage_count": 0,
+      "hard_break_emitted": false,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "resolution_impact_count": 0,
+      "score_type": "FULL_E2R_100",
+      "scoring_critical_count_sum": 0,
+      "source_case_id": "C06-SKHYNIX-20250123-REVENUE-MIX",
+      "source_replay_required_component_missing_count": 0,
+      "source_url": "https://news.skhynix.com/sk-hynix-announces-4q24-financial-results/",
+      "source_verified": true,
+      "support_effect_fraction": 1.0,
+      "support_impact_count": 3,
+      "terminal_component_count": 7,
+      "validation_rejected_count": 0,
+      "verified_supported_score": 6.243241
+    },
+    "c06_hynix_sold_out_capacity_positive": {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "as_of_date": "2024-05-02",
+      "component_score_vector": {
+        "bottleneck_pricing": 1.62162,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 2.027025,
+        "eps_fcf_explosion": 0.0,
+        "information_confidence": 2.4,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "VERIFIED_WEAK_SUPPORT",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "VERIFIED_WEAK_SUPPORT",
+        "eps_fcf_explosion": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "information_confidence": "VERIFIED_PARTIAL_SUPPORT",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.0,
+      "counter_impact_count": 0,
+      "edge_catalog_status": "EXPLICIT",
+      "forbidden_component_count": 0,
+      "full_score_valid": true,
+      "future_leakage_count": 0,
+      "hard_break_emitted": false,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "resolution_impact_count": 0,
+      "score_type": "FULL_E2R_100",
+      "scoring_critical_count_sum": 0,
+      "source_case_id": "C06-SKHYNIX-20240502-SOLDOUT",
+      "source_replay_required_component_missing_count": 0,
+      "source_url": "https://theprint.in/tech/nvidia-supplier-sk-hynix-says-hbm-chips-almost-sold-out-for-2025/2066101/",
+      "source_verified": true,
+      "support_effect_fraction": 0.999999,
+      "support_impact_count": 3,
+      "terminal_component_count": 7,
+      "validation_rejected_count": 0,
+      "verified_supported_score": 6.048645
+    },
+    "c06_package_substrate_profile_guard": {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "as_of_date": "2026-05-29",
+      "component_score_vector": {
+        "bottleneck_pricing": 0.0,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 0.0,
+        "eps_fcf_explosion": 0.0,
+        "information_confidence": 0.5,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "eps_fcf_explosion": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "information_confidence": "VERIFIED_WEAK_SUPPORT",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.0,
+      "counter_impact_count": 0,
+      "edge_catalog_status": "EXPLICIT",
+      "forbidden_component_count": 0,
+      "full_score_valid": true,
+      "future_leakage_count": 0,
+      "hard_break_emitted": false,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "resolution_impact_count": 0,
+      "score_type": "FULL_E2R_100",
+      "scoring_critical_count_sum": 0,
+      "source_case_id": "C06-SAMSUNG-PACKAGE-PROFILE-GUARD",
+      "source_replay_required_component_missing_count": 0,
+      "source_url": "https://news.samsung.com/global/samsung-electronics-begins-shipment-of-industry-first-hbm4e-samples",
+      "source_verified": true,
+      "support_effect_fraction": 0.125,
+      "support_impact_count": 1,
+      "terminal_component_count": 7,
+      "validation_rejected_count": 0,
+      "verified_supported_score": 0.5
+    },
+    "c06_samsung_qualification_lag_guard": {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "as_of_date": "2024-05-24",
+      "component_score_vector": {
+        "bottleneck_pricing": 0.0,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 0.0,
+        "eps_fcf_explosion": 0.0,
+        "information_confidence": 0.0,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "VERIFIED_COUNTER",
+        "eps_fcf_explosion": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "information_confidence": "VERIFIED_COUNTER",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.85,
+      "counter_impact_count": 2,
+      "edge_catalog_status": "EXPLICIT",
+      "forbidden_component_count": 0,
+      "full_score_valid": true,
+      "future_leakage_count": 0,
+      "hard_break_emitted": false,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "resolution_impact_count": 0,
+      "score_type": "FULL_E2R_100",
+      "scoring_critical_count_sum": 0,
+      "source_case_id": "C06-SAMSUNG-20240524-QUALIFICATION-LAG",
+      "source_replay_required_component_missing_count": 0,
+      "source_url": "https://www.aol.com/exclusive-samsungs-hbm-chips-failing-230356817.html",
+      "source_verified": true,
+      "support_effect_fraction": 0.0,
+      "support_impact_count": 0,
+      "terminal_component_count": 7,
+      "validation_rejected_count": 0,
+      "verified_supported_score": 0.0
+    },
+    "c06_samsung_reopen_customer_dependency_guard": {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "as_of_date": "2025-01-31",
+      "component_score_vector": {
+        "bottleneck_pricing": 0.0,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 0.0,
+        "eps_fcf_explosion": 3.5,
+        "information_confidence": 2.4,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "eps_fcf_explosion": "VERIFIED_WEAK_SUPPORT",
+        "information_confidence": "VERIFIED_PARTIAL_SUPPORT",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.0,
+      "counter_impact_count": 0,
+      "edge_catalog_status": "EXPLICIT",
+      "forbidden_component_count": 0,
+      "full_score_valid": true,
+      "future_leakage_count": 0,
+      "hard_break_emitted": false,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "resolution_impact_count": 0,
+      "score_type": "FULL_E2R_100",
+      "scoring_critical_count_sum": 0,
+      "source_case_id": "C06-SAMSUNG-20250131-REOPEN-CAP",
+      "source_replay_required_component_missing_count": 0,
+      "source_url": "https://news.samsung.com/global/samsung-electronics-announces-fourth-quarter-and-fy-2024-results",
+      "source_verified": true,
+      "support_effect_fraction": 1.0,
+      "support_impact_count": 2,
+      "terminal_component_count": 7,
+      "validation_rejected_count": 0,
+      "verified_supported_score": 5.9
+    },
     "c08_direct_customer_order_positive": {
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
+      "component_score_vector": {
+        "bottleneck_pricing": 0.0,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 10.5,
+        "eps_fcf_explosion": 0.0,
+        "information_confidence": 4.5,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "VERIFIED_PARTIAL_SUPPORT",
+        "eps_fcf_explosion": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "information_confidence": "VERIFIED_PARTIAL_SUPPORT",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.0,
+      "counter_impact_count": 0,
       "credited_impact_count": 2,
-      "critical_count_sum": 0,
       "edge_catalog_status": "EXPLICIT",
       "full_score_valid": true,
       "multi_impact_claim_count": 1,
+      "pipeline_critical_count_sum": 0,
       "profile_id": "e2r_2_2_archetype_weight_runtime",
       "proposal_count": 2,
+      "resolution_impact_count": 0,
       "score_type": "FULL_E2R_100",
+      "scoring_critical_count_sum": 0,
+      "support_effect_fraction": 1.0,
+      "support_impact_count": 2,
       "terminal_component_count": 7,
       "validated_impact_count": 2,
       "verified_supported_score": 15.0
     },
     "c08_product_profile_only_guard": {
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
-      "credited_impact_count": 0,
-      "critical_count_sum": 0,
+      "component_score_vector": {
+        "bottleneck_pricing": 0.0,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 0.0,
+        "eps_fcf_explosion": 0.0,
+        "information_confidence": 1.8,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "eps_fcf_explosion": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "information_confidence": "VERIFIED_WEAK_SUPPORT",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.0,
+      "counter_impact_count": 0,
+      "credited_impact_count": 1,
       "edge_catalog_status": "EXPLICIT",
       "full_score_valid": true,
       "multi_impact_claim_count": 0,
+      "pipeline_critical_count_sum": 0,
       "profile_id": "e2r_2_2_archetype_weight_runtime",
       "proposal_count": 1,
+      "resolution_impact_count": 0,
       "score_type": "FULL_E2R_100",
+      "scoring_critical_count_sum": 0,
+      "support_effect_fraction": 0.2,
+      "support_impact_count": 1,
       "terminal_component_count": 7,
       "validated_impact_count": 1,
-      "verified_supported_score": 0.0
+      "verified_supported_score": 1.8
     },
     "c15_issuer_pass_through_positive": {
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "component_score_vector": {
+        "bottleneck_pricing": 10.0,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 0.0,
+        "eps_fcf_explosion": 10.0,
+        "information_confidence": 0.0,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "VERIFIED_PARTIAL_SUPPORT",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "eps_fcf_explosion": "VERIFIED_PARTIAL_SUPPORT",
+        "information_confidence": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.0,
+      "counter_impact_count": 0,
       "credited_impact_count": 2,
-      "critical_count_sum": 0,
       "edge_catalog_status": "EXPLICIT",
       "full_score_valid": true,
       "multi_impact_claim_count": 1,
+      "pipeline_critical_count_sum": 0,
       "profile_id": "e2r_2_2_archetype_weight_runtime",
       "proposal_count": 2,
+      "resolution_impact_count": 0,
       "score_type": "FULL_E2R_100",
+      "scoring_critical_count_sum": 0,
+      "support_effect_fraction": 1.0,
+      "support_impact_count": 2,
       "terminal_component_count": 7,
       "validated_impact_count": 2,
       "verified_supported_score": 20.0
     },
     "c15_raw_commodity_headline_guard": {
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "component_score_vector": {
+        "bottleneck_pricing": 0.0,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 0.0,
+        "eps_fcf_explosion": 0.0,
+        "information_confidence": 0.0,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "eps_fcf_explosion": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "information_confidence": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.0,
+      "counter_impact_count": 0,
       "credited_impact_count": 0,
-      "critical_count_sum": 0,
       "edge_catalog_status": "EXPLICIT",
       "full_score_valid": true,
       "multi_impact_claim_count": 0,
+      "pipeline_critical_count_sum": 0,
       "profile_id": "e2r_2_2_archetype_weight_runtime",
       "proposal_count": 1,
+      "resolution_impact_count": 0,
       "score_type": "FULL_E2R_100",
+      "scoring_critical_count_sum": 0,
+      "support_effect_fraction": 0.0,
+      "support_impact_count": 0,
       "terminal_component_count": 7,
       "validated_impact_count": 1,
       "verified_supported_score": 0.0
     },
     "old_risk_resolved_guard": {
       "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "component_score_vector": {
+        "bottleneck_pricing": 0.0,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 0.0,
+        "eps_fcf_explosion": 0.0,
+        "information_confidence": 0.0,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "RESOLVED_COUNTER",
+        "eps_fcf_explosion": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "information_confidence": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.0,
+      "counter_impact_count": 0,
       "credited_impact_count": 1,
-      "critical_count_sum": 0,
       "edge_catalog_status": "EXPLICIT",
       "full_score_valid": true,
       "multi_impact_claim_count": 0,
       "open_counter_impact_count": 0,
+      "pipeline_critical_count_sum": 0,
       "profile_id": "e2r_2_2_archetype_weight_runtime",
       "proposal_count": 1,
+      "resolution_impact_count": 1,
       "resolved_impact_count": 1,
       "score_type": "FULL_E2R_100",
+      "scoring_critical_count_sum": 0,
+      "support_effect_fraction": 0.0,
+      "support_impact_count": 0,
       "terminal_component_count": 7,
       "validated_impact_count": 1,
       "verified_supported_score": 0.0
+    },
+    "same_issuer_wrong_segment_guard": {
+      "original_gap_open": true,
+      "rejected_impact_count": 1,
+      "rejection_reason": "REROUTED_TO_OTHER_MECHANISM",
+      "same_issuer": true
+    },
+    "support_counter_same_component": {
+      "archetype_id": "C15_MATERIAL_SPREAD_SUPERCYCLE",
+      "component_score_vector": {
+        "bottleneck_pricing": 10.0,
+        "capital_allocation": 0.0,
+        "earnings_visibility": 0.0,
+        "eps_fcf_explosion": 0.0,
+        "information_confidence": 0.0,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_statuses": {
+        "bottleneck_pricing": "CONTRADICTED_OPEN",
+        "capital_allocation": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "earnings_visibility": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "eps_fcf_explosion": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "information_confidence": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "market_mispricing": "VERIFIED_ABSENT_AFTER_SEARCH",
+        "valuation_rerating": "VERIFIED_ABSENT_AFTER_SEARCH"
+      },
+      "counter_effect_fraction": 0.5,
+      "counter_impact_count": 1,
+      "credited_impact_count": 2,
+      "edge_catalog_status": "EXPLICIT",
+      "full_score_valid": false,
+      "multi_impact_claim_count": 1,
+      "pipeline_critical_count_sum": 1,
+      "profile_id": "e2r_2_2_archetype_weight_runtime",
+      "proposal_count": 2,
+      "resolution_impact_count": 0,
+      "score_type": "VERIFIED_COMPONENT_PARTIAL",
+      "scoring_critical_count_sum": 1,
+      "support_effect_fraction": 0.5,
+      "support_impact_count": 1,
+      "terminal_component_count": 6,
+      "validated_impact_count": 2,
+      "verified_supported_score": 10.0
     },
     "wrong_subject_accounting_guard": {
       "rejected_impact_count": 1,
@@ -79,16 +454,183 @@
   },
   "critical_count_sum": 0,
   "critical_counts": {
+    "c06_package_profile_guard_failure_count": 0,
+    "c06_qualification_lag_guard_failure_count": 0,
+    "c06_reopen_customer_dependency_guard_failure_count": 0,
+    "c06_revenue_mix_nonzero_failure_count": 0,
+    "c06_sold_out_nonzero_failure_count": 0,
     "c08_positive_bridge_failure_count": 0,
     "c08_profile_guard_failure_count": 0,
     "c15_headline_guard_failure_count": 0,
     "c15_positive_bridge_failure_count": 0,
+    "historical_source_case_roster_mismatch_count": 0,
+    "historical_source_replay_failure_count": 0,
     "resolved_risk_guard_failure_count": 0,
     "rubric_critical_count": 0,
+    "same_issuer_wrong_segment_failure_count": 0,
+    "scoring_schema_totality_critical_count": 0,
+    "support_counter_same_component_failure_count": 0,
     "wrong_subject_guard_failure_count": 0
   },
   "future_outcome_leakage_count": 0,
+  "historical_source_replay": {
+    "case_count": 6,
+    "critical_count_sum": 0,
+    "schema_version": "e2r_c06_historical_component_replay_v1",
+    "source_path": "docs/operational/e2r_c06_historical_component_replay.json",
+    "status": "C06_HISTORICAL_COMPONENT_REPLAY_PASS"
+  },
   "rubric_audits": {
+    "C01_ORDER_BACKLOG_MARGIN_BRIDGE": {
+      "archetype_id": "C01_ORDER_BACKLOG_MARGIN_BRIDGE",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C02_POWER_GRID_DATACENTER_CAPEX": {
+      "archetype_id": "C02_POWER_GRID_DATACENTER_CAPEX",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG": {
+      "archetype_id": "C03_DEFENSE_EXPORT_FRAMEWORK_BACKLOG",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY": {
+      "archetype_id": "C04_NUCLEAR_POLICY_PROJECT_LEGAL_DELAY",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C05_EPC_MEGA_CONTRACT_MARGIN_GAP": {
+      "archetype_id": "C05_EPC_MEGA_CONTRACT_MARGIN_GAP",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C06_HBM_MEMORY_CUSTOMER_CAPACITY": {
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "config_hash": "29f46e13db58c5e3eddc1dac1badbf1537613705d2f6076f03a209f9f7c8c974",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 16,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [
+        "customer_preorder_or_allocation",
+        "revenue_visibility_contract",
+        "hbm_capacity_constraint",
+        "hbm_capacity_pre_sold",
+        "memory_price_increase_mentioned",
+        "medium_term_revision_visibility",
+        "hbm_product_profile",
+        "qualification_state",
+        "shipment_or_revenue_mix",
+        "actual_earnings_conversion",
+        "margin_fcf_conversion",
+        "conventional_memory_drag",
+        "capacity_supply_response",
+        "package_substrate_sympathy",
+        "market_expectation_gap",
+        "current_valuation_vs_earnings"
+      ],
+      "source_backed_example_count": 2,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH": {
+      "archetype_id": "C07_HBM_EQUIPMENT_ORDER_RELATIVE_STRENGTH",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
     "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY": {
       "archetype_id": "C08_SEMI_TEST_SOCKET_CUSTOMER_QUALITY",
       "config_hash": "6fc0ab7a0af9c9427118d625befc3ce7c168a11b18a5ae16bcc4cdb07b955ebf",
@@ -112,6 +654,120 @@
         "margin_bridge_visible"
       ],
       "source_backed_example_count": 2,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF": {
+      "archetype_id": "C09_ADVANCED_EQUIPMENT_VALUATION_BLOWOFF",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE": {
+      "archetype_id": "C10_MEMORY_RECOVERY_EQUIPMENT_CYCLE",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C11_BATTERY_ORDERBOOK_RERATING": {
+      "archetype_id": "C11_BATTERY_ORDERBOOK_RERATING",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK": {
+      "archetype_id": "C12_BATTERY_CUSTOMER_CONTRACT_CALL_OFF_RISK",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C13_BATTERY_JV_UTILIZATION_AMPC_IRA": {
+      "archetype_id": "C13_BATTERY_JV_UTILIZATION_AMPC_IRA",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C14_EV_DEMAND_SLOWDOWN_4B_4C": {
+      "archetype_id": "C14_EV_DEMAND_SLOWDOWN_4B_4C",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
       "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
     },
     "C15_MATERIAL_SPREAD_SUPERCYCLE": {
@@ -138,9 +794,598 @@
       ],
       "source_backed_example_count": 3,
       "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY": {
+      "archetype_id": "C16_STRATEGIC_RESOURCE_POLICY_SUPPLY",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD": {
+      "archetype_id": "C17_CHEMICAL_COMMODITY_MARGIN_SPREAD",
+      "config_hash": "9ecb705c0eb07e76d91e360623aa4a26de3cbc49d231a89276c9cc60dd6cac23",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 5,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [
+        "spread_expansion",
+        "raw_material_cost_risk",
+        "utilization_rate",
+        "inventory_cycle",
+        "opm_expansion_pctp"
+      ],
+      "source_backed_example_count": 2,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C18_CONSUMER_EXPORT_CHANNEL_REORDER": {
+      "archetype_id": "C18_CONSUMER_EXPORT_CHANNEL_REORDER",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C19_BRAND_RETAIL_INVENTORY_MARGIN": {
+      "archetype_id": "C19_BRAND_RETAIL_INVENTORY_MARGIN",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION": {
+      "archetype_id": "C20_BEAUTY_FOOD_GLOBAL_DISTRIBUTION",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN": {
+      "archetype_id": "C21_FINANCIAL_ROE_PBR_CAPITAL_RETURN",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C22_INSURANCE_RATE_CYCLE_RESERVE": {
+      "archetype_id": "C22_INSURANCE_RATE_CYCLE_RESERVE",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION": {
+      "archetype_id": "C23_BIO_REGULATORY_APPROVAL_COMMERCIALIZATION",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C24_BIO_TRIAL_DATA_EVENT_RISK": {
+      "archetype_id": "C24_BIO_TRIAL_DATA_EVENT_RISK",
+      "config_hash": "8f2a9d054b8b1025d8018219b381c98e99fe058cd16fc3df43a8f0f83751c527",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 5,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [
+        "trial_quality_visible",
+        "binary_event_unresolved",
+        "approval_not_confirmed",
+        "safety_signal",
+        "cash_runway_risk"
+      ],
+      "source_backed_example_count": 2,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT": {
+      "archetype_id": "C25_MEDICAL_DEVICE_EXPORT_REIMBURSEMENT",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE": {
+      "archetype_id": "C26_PLATFORM_AD_REVENUE_OPERATING_LEVERAGE",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C27_CONTENT_IP_GLOBAL_MONETIZATION": {
+      "archetype_id": "C27_CONTENT_IP_GLOBAL_MONETIZATION",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION": {
+      "archetype_id": "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION",
+      "config_hash": "fbf74da4664436a03fe462b3b906d94d4a348b37d652916cfdc8341c36216213",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 5,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [
+        "arr_growth_visible",
+        "nrr",
+        "retention_or_renewal",
+        "rpo_to_sales",
+        "recurring_margin_leverage"
+      ],
+      "source_backed_example_count": 2,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE": {
+      "archetype_id": "C29_MOBILITY_VOLUME_MARGIN_OPERATING_LEVERAGE",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK": {
+      "archetype_id": "C30_CONSTRUCTION_PF_BALANCE_SHEET_BREAK",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C31_POLICY_SUBSIDY_LEGISLATION_EVENT": {
+      "archetype_id": "C31_POLICY_SUBSIDY_LEGISLATION_EVENT",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP": {
+      "archetype_id": "C32_GOVERNANCE_CONTROL_PREMIUM_TENDER_CAP",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM": {
+      "archetype_id": "R13_CROSS_ARCHETYPE_4B_4C_REDTEAM",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION": {
+      "archetype_id": "R13_CROSS_ARCHETYPE_ACCOUNTING_TRUST_PRICE_VALIDATION",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL": {
+      "archetype_id": "R13_CROSS_ARCHETYPE_HIGH_MAE_GUARDRAIL",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
+    },
+    "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW": {
+      "archetype_id": "R13_CROSS_ARCHETYPE_STAGE2_FALSE_POSITIVE_REVIEW",
+      "config_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "counter_predicate_missing_count": 0,
+        "future_outcome_leakage_count": 0,
+        "generic_verify_primitive_rubric_count": 0,
+        "partial_predicate_missing_count": 0,
+        "positive_predicate_missing_count": 0,
+        "source_proxy_current_score_allowed_count": 0,
+        "unsupported_predicate_missing_count": 0
+      },
+      "rubric_count": 0,
+      "schema_version": "e2r_evidence_impact_rubric_audit_v1",
+      "semantic_distinctions": [],
+      "source_backed_example_count": 0,
+      "status": "RESEARCH_CALIBRATED_IMPACT_RUBRIC_PASS"
     }
   },
-  "schema_version": "e2r_evidence_to_score_generalization_v1",
+  "schema_version": "e2r_evidence_to_score_generalization_v2",
+  "scoring_schema_totality": {
+    "canonical_archetype_count": 36,
+    "critical_count_sum": 0,
+    "critical_counts": {
+      "all_archetype_schema_incomplete_count": 0,
+      "missing_scoring_key_count": 0,
+      "partial_bridge_missing_cap_count": 0,
+      "risk_open_missing_cap_count": 0,
+      "risk_resolved_missing_cap_count": 0,
+      "silent_zero_default_count": 0,
+      "unknown_source_family_silent_zero_count": 0,
+      "unknown_temporal_scope_silent_zero_count": 0
+    },
+    "enum_registry": {
+      "causal_distances": [
+        "DIRECT",
+        "ONE_HOP",
+        "TWO_HOP",
+        "INDUSTRY_ONLY"
+      ],
+      "completeness_bands": [
+        "MENTION",
+        "PARTIAL",
+        "SUBSTANTIAL",
+        "COMPLETE_FOR_PRIMITIVE"
+      ],
+      "component_aggregation_modes": [
+        "SUM_DISTINCT_SUBCRITERIA",
+        "MAX_SOURCE_QUALITY",
+        "COVERAGE_WEIGHTED",
+        "NET_SUPPORT_COUNTER",
+        "CAP_BY_MISSING_BRIDGE"
+      ],
+      "counter_effect_modes": [
+        "NONE",
+        "BOUNDED_NET",
+        "OPEN_BLOCK",
+        "RESOLUTION_RELEASE"
+      ],
+      "directions": [
+        "SUPPORT",
+        "COUNTER",
+        "NEUTRAL",
+        "RESOLUTION"
+      ],
+      "source_families": [
+        "ISSUER_OFFICIAL",
+        "OFFICIAL_FILING",
+        "CUSTOMER_OFFICIAL",
+        "TRUSTED_INDEPENDENT",
+        "DISCOVERY_ONLY",
+        "SNIPPET"
+      ],
+      "strength_bands": [
+        "NONE",
+        "WEAK",
+        "MODERATE",
+        "STRONG",
+        "VERY_STRONG"
+      ],
+      "support_types": [
+        "DIRECT_ACTUAL",
+        "DIRECT_FORWARD",
+        "PARTIAL_BRIDGE",
+        "PROFILE_ONLY",
+        "DISCOVERY_ONLY",
+        "RISK_OPEN",
+        "RISK_RESOLVED"
+      ],
+      "temporal_scopes": [
+        "CURRENT",
+        "CURRENT_BASELINE",
+        "HISTORICAL_ONLY",
+        "FUTURE"
+      ]
+    },
+    "incomplete_archetype_ids": [],
+    "policy_config_hash": "3d187d4c33638c4133b1fca186f58a0237e717d91e36d9a98f01db14b6ecb9eb",
+    "schema_version": "e2r_scoring_schema_totality_audit_v1",
+    "status": "SCORING_SCHEMA_TOTALITY_PASS",
+    "support_type_policies": {
+      "DIRECT_ACTUAL": {
+        "counter_effect_cap": 1.0,
+        "counter_effect_mode": "BOUNDED_NET",
+        "rationale": "발행사 actual과 직접 현재 사실은 strength/completeness/causal/source cap 범위에서 전액 반영한다.",
+        "replay_result": "actual earnings and revenue-mix cases preserve direct bounded effects",
+        "research_case_refs": [
+          "C06-SKHYNIX-20250123-REVENUE-MIX",
+          "C06-SAMSUNG-20250131-REOPEN-CAP"
+        ],
+        "resolution_effect": 0.0,
+        "support_credit_cap": 1.0,
+        "support_type": "DIRECT_ACTUAL"
+      },
+      "DIRECT_FORWARD": {
+        "counter_effect_cap": 0.8,
+        "counter_effect_mode": "BOUNDED_NET",
+        "rationale": "직접 forward statement는 actual보다 낮은 상한을 적용한다.",
+        "replay_result": "pre-sold capacity remains nonzero but below direct actual",
+        "research_case_refs": [
+          "C06-SKHYNIX-20240502-SOLDOUT"
+        ],
+        "resolution_effect": 0.0,
+        "support_credit_cap": 0.8,
+        "support_type": "DIRECT_FORWARD"
+      },
+      "DISCOVERY_ONLY": {
+        "counter_effect_cap": 0.0,
+        "counter_effect_mode": "NONE",
+        "rationale": "검색 snippet과 discovery row는 원문 fetch 전에는 점수 효과가 없다.",
+        "replay_result": "source proxy score remains zero",
+        "research_case_refs": [
+          "SOURCE-PROXY-NO-SCORE"
+        ],
+        "resolution_effect": 0.0,
+        "support_credit_cap": 0.0,
+        "support_type": "DISCOVERY_ONLY"
+      },
+      "PARTIAL_BRIDGE": {
+        "counter_effect_cap": 0.6,
+        "counter_effect_mode": "BOUNDED_NET",
+        "rationale": "과거 판례에서 one-hop 경제 연결은 direct보다 낮지만 0이 아닌 bounded effect를 가진다.",
+        "replay_result": "sold-out, revenue-mix and qualification one-hop effects remain bounded and nonzero",
+        "research_case_refs": [
+          "C06-SKHYNIX-20240502-SOLDOUT",
+          "C06-SKHYNIX-20250123-REVENUE-MIX",
+          "C06-SAMSUNG-20240524-QUALIFICATION-LAG"
+        ],
+        "resolution_effect": 0.0,
+        "support_credit_cap": 0.6,
+        "support_type": "PARTIAL_BRIDGE"
+      },
+      "PROFILE_ONLY": {
+        "counter_effect_cap": 0.2,
+        "counter_effect_mode": "BOUNDED_NET",
+        "rationale": "제품 profile은 정보 신뢰 외 상업·재무 bridge를 열지 않는 약한 상한이다.",
+        "replay_result": "profile guards stay information-only",
+        "research_case_refs": [
+          "C06-SKHYNIX-PRODUCT-SPEC-GUARD",
+          "C06-SAMSUNG-PACKAGE-PROFILE-GUARD"
+        ],
+        "resolution_effect": 0.0,
+        "support_credit_cap": 0.2,
+        "support_type": "PROFILE_ONLY"
+      },
+      "RISK_OPEN": {
+        "counter_effect_cap": 1.0,
+        "counter_effect_mode": "OPEN_BLOCK",
+        "rationale": "현재 직접 open risk는 positive support가 아니라 counter plane에서만 반영한다.",
+        "replay_result": "qualification lag remains a current counter without forced hard 4C",
+        "research_case_refs": [
+          "C06-SAMSUNG-20240524-QUALIFICATION-LAG"
+        ],
+        "resolution_effect": 0.0,
+        "support_credit_cap": 0.0,
+        "support_type": "RISK_OPEN"
+      },
+      "RISK_RESOLVED": {
+        "counter_effect_cap": 0.0,
+        "counter_effect_mode": "RESOLUTION_RELEASE",
+        "rationale": "해소된 위험은 현재 감점을 추가하지 않고 기존 open counter를 해제한다.",
+        "replay_result": "old resolved risk has zero current penalty and explicit resolution effect",
+        "research_case_refs": [
+          "OLD-RISK-RESOLVED-GUARD"
+        ],
+        "resolution_effect": 1.0,
+        "support_credit_cap": 0.0,
+        "support_type": "RISK_RESOLVED"
+      }
+    },
+    "total_schema_archetype_count": 36
+  },
   "source_proxy_score_count": 0,
   "status": "EVIDENCE_TO_SCORE_GENERALIZATION_PASS",
   "target_specific_branch_count": 0
