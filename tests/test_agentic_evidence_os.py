@@ -1899,6 +1899,9 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertIn("concrete source-specific operating facts", rules_text)
         self.assertIn("Do not spend raw assertion slots on target price", rules_text)
         self.assertIn("mixes different effective periods", rules_text)
+        self.assertIn("product-family attribution", rules_text)
+        self.assertIn("demand is firm while supply is limited", rules_text)
+        self.assertIn("customer agreement on volume", rules_text)
         self.assertIn("effective_period_text", rules_text)
         self.assertIn("title, subtitle, or lead paragraph", rules_text)
         self.assertIn("policy, tax credit, subsidy", rules_text)
@@ -2030,6 +2033,42 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertIn(operating_sentence, decoded_payload["untrusted_document_text"])
         self.assertIn(sold_out_sentence, decoded_payload["untrusted_document_text"])
         self.assertLess(decoded_payload["untrusted_document_text"].count("목표주가"), 40)
+        self.assertFalse(messages_contain_forbidden_extractor_context(messages))
+
+    def test_claim_extraction_compaction_uses_llm_query_focus_for_large_filing(self):
+        generic = "삼성전자는 국내외 사업장을 운영한다.\n" * 400
+        focused = "삼성전자의 HBM 매출 비중은 AI 고객 출하 증가로 확대됐다."
+        long_text = generic + ("정기보고서 표와 주석입니다.\n" * 500) + focused
+        document = EvidenceDocument.from_text(
+            text=long_text,
+            canonical_url="https://example.com/large-periodic-filing",
+            source_type=SourceType.FILING,
+            source_name="FixtureFiling",
+            published_at=date(2026, 5, 15),
+        )
+        anchor = EvidenceAnchor.text_span(
+            document=document,
+            document_text=long_text,
+            exact_text=long_text[:100],
+        )
+
+        messages = build_claim_extraction_messages(
+            ClaimExtractionInput(
+                target_entity_id="KRX:005930",
+                target_names=("삼성전자", "005930"),
+                as_of_date=date(2026, 7, 11),
+                document=document,
+                document_text=long_text,
+                anchors=(anchor,),
+                retrieval_focus_terms=("HBM", "매출 비중", "AI 고객"),
+            )
+        )
+
+        payload = json.loads(messages[1]["content"])
+        self.assertIn(focused, payload["untrusted_document_text"])
+        self.assertIn("[[llm_query_focus_windows]]", payload["untrusted_document_text"])
+        self.assertEqual(payload["retrieval_focus_terms"], ["HBM", "매출 비중", "AI 고객"])
+        self.assertLess(len(payload["available_anchors"][0]["exact_text"]), len(long_text))
         self.assertFalse(messages_contain_forbidden_extractor_context(messages))
 
     def test_claim_extraction_messages_keep_policy_benefit_lead_before_company_background(self):
@@ -7113,6 +7152,29 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertFalse(events[0]["prompt_text_compacted"])
         self.assertEqual(events[0]["prompt_text_chars"], len(text))
         self.assertEqual(len(result.accepted_mappings), 2)
+
+    def test_v2_orchestrator_chunks_large_adjudication_batch(self):
+        adjudicator = _BatchAdjudicator()
+        events = []
+        orchestrator = EvidenceWorkflowOrchestrator(
+            extractor=FakeClaimExtractorProvider(),
+            adjudicator=adjudicator,
+            mapper=_BatchMapper("customer_preorder_or_allocation"),
+            adjudicator_batch_max_items=12,
+            event_sink=events.append,
+        )
+
+        proposals = orchestrator._adjudicate_inputs(tuple(object() for _ in range(25)))
+
+        self.assertEqual(len(proposals), 25)
+        self.assertEqual(adjudicator.batch_input_sizes, (12, 12, 1))
+        self.assertEqual(adjudicator.single_call_count, 0)
+        starts = [
+            event
+            for event in events
+            if event["phase"] == "agentic_evidence_adjudication_chunk_start"
+        ]
+        self.assertEqual([event["adjudication_input_count"] for event in starts], [12, 12, 1])
 
     def test_v2_orchestrator_mapper_self_consistency_unions_mapping_rounds(self):
         text = "Target issuer said most HBM capacity was already allocated to customers."
@@ -24332,10 +24394,13 @@ class _AlwaysEmptyCodexExtractor(CodexCLIAgenticEvidenceProvider):
 class _BatchAdjudicator:
     def __init__(self):
         self.batch_call_count = 0
+        self.batch_input_sizes = ()
         self.single_call_count = 0
 
     def adjudicate_many(self, inputs):
         self.batch_call_count += 1
+        input_tuple = tuple(inputs)
+        self.batch_input_sizes = (*self.batch_input_sizes, len(input_tuple))
         return tuple(
             AdjudicationProposal(
                 subject_entity_id="CORP_TARGET",
@@ -24348,7 +24413,7 @@ class _BatchAdjudicator:
                 investigation_status=InvestigationStatus.COMPLETE,
                 event_date=date(2026, 6, 20),
             )
-            for _item in inputs
+            for _item in input_tuple
         )
 
     def adjudicate(self, inputs):

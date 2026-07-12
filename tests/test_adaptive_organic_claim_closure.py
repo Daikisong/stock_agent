@@ -68,7 +68,7 @@ class AdaptiveOrganicClaimClosureTests(unittest.TestCase):
                 target=target,
                 as_of_date="2026-07-11",
                 archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-                source_root=source,
+                source_root=(source,),
                 output_root=output,
                 compiler=_FakeCompiler(),
             )

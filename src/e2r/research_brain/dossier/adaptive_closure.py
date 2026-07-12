@@ -48,16 +48,16 @@ def run_organic_claim_closure(
     target: DossierTarget,
     as_of_date: str,
     archetype_id: str,
-    source_root: str | Path,
+    source_root: str | Path | Sequence[str | Path],
     output_root: str | Path,
     compiler: CurrentClaimCompiler | None = None,
     provider_bundle: Any | None = None,
     max_documents: int = 20,
 ) -> OrganicClaimClosureResult:
-    source = Path(source_root)
+    sources = _normalize_source_roots(source_root)
     output = Path(output_root)
     documents = _select_source_documents(
-        source_root=source,
+        source_roots=sources,
         target_id=target.target_id,
         as_of_date=as_of_date,
         max_documents=max_documents,
@@ -69,12 +69,14 @@ def run_organic_claim_closure(
     }
     source_tasks = tuple(
         row
+        for source in sources
         for row in _read_jsonl(source / "question_source_tasks.jsonl")
         if str(row.get("task_id") or "") in referenced_task_ids
         and str(row.get("target_id") or "") == target.target_id
     )
     fetch_rows = tuple(
         row
+        for source in sources
         for row in _read_jsonl(source / "provider_fetch_results.jsonl")
         if str(row.get("target_id") or "") == target.target_id
     )
@@ -86,6 +88,9 @@ def run_organic_claim_closure(
             CurrentClaimCompilerConfig(
                 as_of_date=as_of_date,
                 max_documents=max(1, len(documents)),
+                max_raw_assertions_per_document=48,
+                max_extraction_passes_per_document=16,
+                mapper_self_consistency_rounds=2,
                 test_mode=False,
                 additional_primitive_ids=tuple(
                     load_archetype_scoring_contract(
@@ -102,7 +107,7 @@ def run_organic_claim_closure(
         claim_result = None
     paths = _write_closure_leaves(
         output_root=output,
-        source_root=source,
+        source_roots=sources,
         target=target,
         as_of_date=as_of_date,
         archetype_id=archetype_id,
@@ -175,39 +180,38 @@ def run_organic_claim_closure(
 
 def _select_source_documents(
     *,
-    source_root: Path,
+    source_roots: Sequence[Path],
     target_id: str,
     as_of_date: str,
     max_documents: int,
 ) -> tuple[Mapping[str, Any], ...]:
-    selected_path = source_root / "claim_selected_documents.jsonl"
-    evidence_path = source_root / "evidence_documents.jsonl"
-    path = selected_path if selected_path.is_file() else evidence_path
-    if not path.is_file():
-        return ()
     selected: list[Mapping[str, Any]] = []
     seen_hashes: set[str] = set()
-    for row in _read_jsonl(path):
-        if str(row.get("target_id") or "") != target_id:
-            continue
-        if str(row.get("published_at") or "") > as_of_date:
-            continue
-        text = str(row.get("content_text") or "")
-        content_hash = str(row.get("content_hash") or "")
-        if hashlib.sha256(text.encode("utf-8")).hexdigest() != content_hash:
-            raise ValueError("organic source document content hash mismatch")
-        if row.get("acquisition_class") not in {
-            "ACTUAL_LIVE_FULL_DOCUMENT",
-            "REAL_PROVIDER_FETCH",
-            "FRESH_PROVIDER_CACHE",
-        }:
-            continue
-        if not str(row.get("canonical_url") or "").startswith("https://"):
-            continue
-        if content_hash in seen_hashes:
-            continue
-        seen_hashes.add(content_hash)
-        selected.append(row)
+    for source_root in source_roots:
+        selected_path = source_root / "claim_selected_documents.jsonl"
+        evidence_path = source_root / "evidence_documents.jsonl"
+        path = selected_path if selected_path.is_file() else evidence_path
+        for row in _read_jsonl(path):
+            if str(row.get("target_id") or "") != target_id:
+                continue
+            if str(row.get("published_at") or "") > as_of_date:
+                continue
+            text = str(row.get("content_text") or "")
+            content_hash = str(row.get("content_hash") or "")
+            if hashlib.sha256(text.encode("utf-8")).hexdigest() != content_hash:
+                raise ValueError("organic source document content hash mismatch")
+            if row.get("acquisition_class") not in {
+                "ACTUAL_LIVE_FULL_DOCUMENT",
+                "REAL_PROVIDER_FETCH",
+                "FRESH_PROVIDER_CACHE",
+            }:
+                continue
+            if not str(row.get("canonical_url") or "").startswith("https://"):
+                continue
+            if content_hash in seen_hashes:
+                continue
+            seen_hashes.add(content_hash)
+            selected.append(row)
     selected.sort(
         key=lambda row: (
             str(row.get("published_at") or ""),
@@ -221,7 +225,7 @@ def _select_source_documents(
 def _write_closure_leaves(
     *,
     output_root: Path,
-    source_root: Path,
+    source_roots: Sequence[Path],
     target: DossierTarget,
     as_of_date: str,
     archetype_id: str,
@@ -296,7 +300,7 @@ def _write_closure_leaves(
     )
     write_jsonl(paths["question_closure"], closures)
     query_changes = _query_change_rows(
-        source_root=source_root,
+        source_roots=source_roots,
         target_id=target.target_id,
         source_tasks=source_tasks,
     )
@@ -471,9 +475,16 @@ def _question_closures(
 
 
 def _query_change_rows(
-    *, source_root: Path, target_id: str, source_tasks: Sequence[Mapping[str, Any]]
+    *,
+    source_roots: Sequence[Path],
+    target_id: str,
+    source_tasks: Sequence[Mapping[str, Any]],
 ) -> tuple[Mapping[str, Any], ...]:
-    rows = _read_jsonl(source_root / "web_search_results.jsonl")
+    rows = tuple(
+        row
+        for source_root in source_roots
+        for row in _read_jsonl(source_root / "web_search_results.jsonl")
+    )
     seen: set[str] = set()
     result: list[Mapping[str, Any]] = []
     task_ids = {str(row.get("task_id") or "") for row in source_tasks}
@@ -497,6 +508,16 @@ def _query_change_rows(
             }
         )
     return tuple(result)
+
+
+def _normalize_source_roots(
+    value: str | Path | Sequence[str | Path],
+) -> tuple[Path, ...]:
+    raw = (value,) if isinstance(value, (str, Path)) else tuple(value)
+    roots = tuple(dict.fromkeys(Path(item) for item in raw))
+    if not roots:
+        raise ValueError("organic claim closure requires at least one source root")
+    return roots
 
 
 def _failure_class(

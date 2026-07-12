@@ -235,6 +235,51 @@ class SemanticClosureReconcilerTests(unittest.TestCase):
             1,
         )
 
+    def test_explicitly_rejected_proposal_does_not_block_other_valid_impact(self) -> None:
+        valid = self._proposal(
+            "I-VALID",
+            "C-SHARED",
+            "qualification_pass_lag_reopen",
+            "qualification_state",
+            "earnings_visibility",
+            "C06_VIS_QUALIFICATION",
+        )
+        rejected = {
+            **valid,
+            "impact_id": "I-REJECTED-SCOPE",
+        }
+        result = self._reconcile(
+            closures=(
+                {
+                    "question_family_id": "qualification_pass_lag_reopen",
+                    "status": "SUPPORTED_SCORING",
+                    "supporting_claim_ids": ["C-SHARED"],
+                },
+            ),
+            claims=(self._claim("C-SHARED"),),
+            mappings=(self._mapping("C-SHARED", "qualification_state"),),
+            eligibility=(self._eligibility("C-SHARED", True),),
+            proposals=(valid, rejected),
+            impacts=(self._impact(valid, support=0.6),),
+            rejected=(
+                {
+                    "impact_id": "I-REJECTED-SCOPE",
+                    "reason": "MECHANISM_SCOPE_REJECTED",
+                },
+            ),
+            assessments=(
+                {
+                    "component_id": "earnings_visibility",
+                    "status": "VERIFIED_WEAK_SUPPORT",
+                },
+            ),
+        )
+        row = self._row(result, "qualification_pass_lag_reopen")
+        self.assertEqual(result.status, "QUESTION_COMPONENT_RECONCILIATION_PASS")
+        self.assertEqual(result.audit["critical_count_sum"], 0)
+        self.assertEqual(row.positive_proposal_impact_ids, ("I-VALID",))
+        self.assertTrue(row.internal_rejection)
+
     def test_same_fact_can_close_two_questions_without_duplicate_credit(self) -> None:
         first = self._proposal(
             "I-PRIMARY",

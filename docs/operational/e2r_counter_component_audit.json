@@ -27,7 +27,7 @@
           "missing_questions": [],
           "net_points": 1.0,
           "resolution_impact_ids": [],
-          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "scoring_model_hash": "b910e8949224af3b7052698c5dda758c731a5821b379348fa33cd08038653767",
           "search_exhaustion_proof": [],
           "status": "SUPPORT_WITH_COUNTER_CAP",
           "subcriterion_points": {
@@ -37,10 +37,10 @@
             "C06_BOT_SUPPLY_RESPONSE": 0.0
           },
           "subcriterion_score_ids": [
-            "SUBSCORE-365ecc6b4cb1688641db9449",
-            "SUBSCORE-00ecc46b17a66c0d50f6f4ca",
-            "SUBSCORE-f7a165b1ee68cdaf7a42baa1",
-            "SUBSCORE-0d0f096af73f7ecb81e16c97"
+            "SUBSCORE-dc9b4c152f5da5c3edc974ad",
+            "SUBSCORE-c3a630c093729de96258221a",
+            "SUBSCORE-6967e2c63547e57df00abe5c",
+            "SUBSCORE-8ea65bb377da8454620af783"
           ],
           "support_impact_ids": [
             "IMPACT-ASP-SUPPORT"
@@ -72,7 +72,7 @@
           "resolution_impact_ids": [],
           "resolved_counter_impact_ids": [],
           "role": "REQUIRED",
-          "score_id": "SUBSCORE-f7a165b1ee68cdaf7a42baa1",
+          "score_id": "SUBSCORE-6967e2c63547e57df00abe5c",
           "status": "SUPPORT_WITH_COUNTER_CAP",
           "subcriterion_id": "C06_BOT_REALIZED_ASP",
           "support_fraction": 0.6,
@@ -127,7 +127,7 @@
           "missing_questions": [],
           "net_points": 0.0,
           "resolution_impact_ids": [],
-          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "scoring_model_hash": "b910e8949224af3b7052698c5dda758c731a5821b379348fa33cd08038653767",
           "search_exhaustion_proof": [],
           "status": "VERIFIED_COUNTER",
           "subcriterion_points": {
@@ -137,10 +137,10 @@
             "C06_BOT_SUPPLY_RESPONSE": 0.0
           },
           "subcriterion_score_ids": [
-            "SUBSCORE-365ecc6b4cb1688641db9449",
-            "SUBSCORE-00ecc46b17a66c0d50f6f4ca",
-            "SUBSCORE-ad7a354411cde6b36b7be7c1",
-            "SUBSCORE-3fa2c535e9132845d6e3d674"
+            "SUBSCORE-dc9b4c152f5da5c3edc974ad",
+            "SUBSCORE-c3a630c093729de96258221a",
+            "SUBSCORE-b689cb7f620970c9c036ca02",
+            "SUBSCORE-665c90442b00f5d6273293fe"
           ],
           "support_impact_ids": [],
           "support_points": 0.0,
@@ -162,7 +162,7 @@
           "missing_questions": [],
           "net_points": 0.75,
           "resolution_impact_ids": [],
-          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "scoring_model_hash": "b910e8949224af3b7052698c5dda758c731a5821b379348fa33cd08038653767",
           "search_exhaustion_proof": [],
           "status": "VERIFIED_WEAK_SUPPORT",
           "subcriterion_points": {
@@ -171,9 +171,9 @@
             "C06_CAP_CASH_BURDEN": 0.0
           },
           "subcriterion_score_ids": [
-            "SUBSCORE-f90bfbf9f01e2f90fa98ca78",
-            "SUBSCORE-9afe43caef4bd686e264c90b",
-            "SUBSCORE-9248189920b6dba140d39fb4"
+            "SUBSCORE-cf0da60fa3b5e3a2dbb2bb19",
+            "SUBSCORE-3781c6190f2e00b1ba8f7e06",
+            "SUBSCORE-637cf30349dc156f53bbbf61"
           ],
           "support_impact_ids": [
             "IMPACT-CAPACITY-SUPPORT"
@@ -193,7 +193,7 @@
           "counter_impact_ids": [
             "IMPACT-SCARCITY-COUNTER"
           ],
-          "counter_mode": "OPEN_BLOCK",
+          "counter_mode": "BOUNDED_NET",
           "historical_case_refs": [
             "C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"
           ],
@@ -205,7 +205,7 @@
           "resolution_impact_ids": [],
           "resolved_counter_impact_ids": [],
           "role": "REQUIRED",
-          "score_id": "SUBSCORE-3fa2c535e9132845d6e3d674",
+          "score_id": "SUBSCORE-665c90442b00f5d6273293fe",
           "status": "COUNTER_ONLY",
           "subcriterion_id": "C06_BOT_SUPPLY_RESPONSE",
           "support_fraction": 0,
@@ -230,7 +230,7 @@
           "resolution_impact_ids": [],
           "resolved_counter_impact_ids": [],
           "role": "REQUIRED",
-          "score_id": "SUBSCORE-9afe43caef4bd686e264c90b",
+          "score_id": "SUBSCORE-3781c6190f2e00b1ba8f7e06",
           "status": "SUPPORTED",
           "subcriterion_id": "C06_CAP_CAPACITY_RESPONSE",
           "support_fraction": 0.5,
@@ -285,7 +285,7 @@
           "missing_questions": [],
           "net_points": 0.0,
           "resolution_impact_ids": [],
-          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "scoring_model_hash": "b910e8949224af3b7052698c5dda758c731a5821b379348fa33cd08038653767",
           "search_exhaustion_proof": [],
           "status": "CONTRADICTED_OPEN",
           "subcriterion_points": {
@@ -296,11 +296,11 @@
             "C06_VIS_SHIPMENT_REVENUE_MIX": 0.0
           },
           "subcriterion_score_ids": [
-            "SUBSCORE-024b50788c6392769eae7c42",
-            "SUBSCORE-6f1df9162e6a39b070e0bc5f",
-            "SUBSCORE-98bc06da79508ad8bd27ec70",
-            "SUBSCORE-be9cf0ff4db2a41278deee9e",
-            "SUBSCORE-4c5d5e09babbb4cd1adfb235"
+            "SUBSCORE-a62479cc5583f7a0dc3d7c96",
+            "SUBSCORE-e5ccd95e8e1ba3d1a05601d9",
+            "SUBSCORE-b52b6df425a51d5431f472b2",
+            "SUBSCORE-645ff8cef2b9835ee3d18320",
+            "SUBSCORE-bbdc21c9b10ea14a81ee1a67"
           ],
           "support_impact_ids": [
             "IMPACT-OPEN-SUPPORT"
@@ -332,7 +332,7 @@
           "resolution_impact_ids": [],
           "resolved_counter_impact_ids": [],
           "role": "REQUIRED",
-          "score_id": "SUBSCORE-98bc06da79508ad8bd27ec70",
+          "score_id": "SUBSCORE-b52b6df425a51d5431f472b2",
           "status": "CONTRADICTED_OPEN",
           "subcriterion_id": "C06_VIS_QUALIFICATION",
           "support_fraction": 0.6,
@@ -391,7 +391,7 @@
           "resolution_impact_ids": [
             "IMPACT-RESOLUTION"
           ],
-          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "scoring_model_hash": "b910e8949224af3b7052698c5dda758c731a5821b379348fa33cd08038653767",
           "search_exhaustion_proof": [],
           "status": "RESOLVED_COUNTER",
           "subcriterion_points": {
@@ -402,11 +402,11 @@
             "C06_VIS_SHIPMENT_REVENUE_MIX": 0.0
           },
           "subcriterion_score_ids": [
-            "SUBSCORE-024b50788c6392769eae7c42",
-            "SUBSCORE-6f1df9162e6a39b070e0bc5f",
-            "SUBSCORE-a0e73d7b4a3972d82c2c3397",
-            "SUBSCORE-be9cf0ff4db2a41278deee9e",
-            "SUBSCORE-4c5d5e09babbb4cd1adfb235"
+            "SUBSCORE-a62479cc5583f7a0dc3d7c96",
+            "SUBSCORE-e5ccd95e8e1ba3d1a05601d9",
+            "SUBSCORE-05d5ee4a0891b7630d5339b4",
+            "SUBSCORE-645ff8cef2b9835ee3d18320",
+            "SUBSCORE-bbdc21c9b10ea14a81ee1a67"
           ],
           "support_impact_ids": [
             "IMPACT-RESOLVED-SUPPORT"
@@ -442,7 +442,7 @@
             "IMPACT-RESOLVED-COUNTER"
           ],
           "role": "REQUIRED",
-          "score_id": "SUBSCORE-a0e73d7b4a3972d82c2c3397",
+          "score_id": "SUBSCORE-05d5ee4a0891b7630d5339b4",
           "status": "RESOLVED_COUNTER",
           "subcriterion_id": "C06_VIS_QUALIFICATION",
           "support_fraction": 0.6,
@@ -486,7 +486,7 @@
           "assessment_id": "COMP-c013e1bd-bottleneck_pricing",
           "component_id": "bottleneck_pricing",
           "confidence": 0.6,
-          "contradiction_status": "CONTRADICTED_OPEN",
+          "contradiction_status": "SUPPORT_WITH_COUNTER_CAP",
           "counter_effect": 2.4,
           "counter_impact_ids": [
             "IMPACT-SUPPLY-OPEN-COUNTER"
@@ -497,9 +497,9 @@
           "missing_questions": [],
           "net_points": 3.6,
           "resolution_impact_ids": [],
-          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "scoring_model_hash": "b910e8949224af3b7052698c5dda758c731a5821b379348fa33cd08038653767",
           "search_exhaustion_proof": [],
-          "status": "CONTRADICTED_OPEN",
+          "status": "SUPPORT_WITH_COUNTER_CAP",
           "subcriterion_points": {
             "C06_BOT_CAPACITY_CONSTRAINT": 3.6,
             "C06_BOT_CUSTOMER_ALLOCATION": 0.0,
@@ -507,17 +507,17 @@
             "C06_BOT_SUPPLY_RESPONSE": 0.0
           },
           "subcriterion_score_ids": [
-            "SUBSCORE-60eac2fc94d3d44106904ff5",
-            "SUBSCORE-00ecc46b17a66c0d50f6f4ca",
-            "SUBSCORE-ad7a354411cde6b36b7be7c1",
-            "SUBSCORE-83ad9003bbcd493f4cdbcf17"
+            "SUBSCORE-7d5ca7243d6abbde370226b5",
+            "SUBSCORE-c3a630c093729de96258221a",
+            "SUBSCORE-b689cb7f620970c9c036ca02",
+            "SUBSCORE-0425a96e1b57e72ae3b7b9d6"
           ],
           "support_impact_ids": [
             "IMPACT-SCARCITY-SUPPORT"
           ],
           "support_points": 3.6,
-          "upper_bound": 19.0,
-          "upper_bound_points": 19.0,
+          "upper_bound": 3.6,
+          "upper_bound_points": 3.6,
           "verified_points": 3.6
         }
       ],
@@ -540,7 +540,7 @@
           "resolution_impact_ids": [],
           "resolved_counter_impact_ids": [],
           "role": "REQUIRED",
-          "score_id": "SUBSCORE-60eac2fc94d3d44106904ff5",
+          "score_id": "SUBSCORE-7d5ca7243d6abbde370226b5",
           "status": "SUPPORTED",
           "subcriterion_id": "C06_BOT_CAPACITY_CONSTRAINT",
           "support_fraction": 0.6,
@@ -557,7 +557,7 @@
           "counter_impact_ids": [
             "IMPACT-SUPPLY-OPEN-COUNTER"
           ],
-          "counter_mode": "OPEN_BLOCK",
+          "counter_mode": "BOUNDED_NET",
           "historical_case_refs": [
             "C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"
           ],
@@ -569,7 +569,7 @@
           "resolution_impact_ids": [],
           "resolved_counter_impact_ids": [],
           "role": "REQUIRED",
-          "score_id": "SUBSCORE-83ad9003bbcd493f4cdbcf17",
+          "score_id": "SUBSCORE-0425a96e1b57e72ae3b7b9d6",
           "status": "COUNTER_ONLY",
           "subcriterion_id": "C06_BOT_SUPPLY_RESPONSE",
           "support_fraction": 0,
@@ -592,17 +592,15 @@
           "supported_component_erased_by_other_gap_count": 0,
           "unknown_uninvestigated_allows_full_score_count": 0
         },
-        "nonterminal_component_count": 1,
+        "nonterminal_component_count": 0,
         "schema_version": "e2r_component_assessment_audit_v3",
         "subcriterion_count": 26,
-        "terminal_component_count": 6,
+        "terminal_component_count": 7,
         "verified_supported_points": 3.6
       },
       "assessment_status": "COMPONENT_ASSESSMENT_STATE_PASS",
-      "full_score_valid": false,
-      "material_nonterminal_components": [
-        "bottleneck_pricing"
-      ],
+      "full_score_valid": true,
+      "material_nonterminal_components": [],
       "validation_status": "IMPACT_CREDIT_CAP_PASS",
       "verified_supported_score": 3.6
     },
@@ -626,7 +624,7 @@
           "resolution_impact_ids": [
             "IMPACT-UNLINKED-RESOLUTION"
           ],
-          "scoring_model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+          "scoring_model_hash": "b910e8949224af3b7052698c5dda758c731a5821b379348fa33cd08038653767",
           "search_exhaustion_proof": [],
           "status": "CONTRADICTED_OPEN",
           "subcriterion_points": {
@@ -637,11 +635,11 @@
             "C06_VIS_SHIPMENT_REVENUE_MIX": 0.0
           },
           "subcriterion_score_ids": [
-            "SUBSCORE-024b50788c6392769eae7c42",
-            "SUBSCORE-6f1df9162e6a39b070e0bc5f",
-            "SUBSCORE-bedd1e8a5aafcf756b7806a1",
-            "SUBSCORE-be9cf0ff4db2a41278deee9e",
-            "SUBSCORE-4c5d5e09babbb4cd1adfb235"
+            "SUBSCORE-a62479cc5583f7a0dc3d7c96",
+            "SUBSCORE-e5ccd95e8e1ba3d1a05601d9",
+            "SUBSCORE-befffd61db762c2363927905",
+            "SUBSCORE-645ff8cef2b9835ee3d18320",
+            "SUBSCORE-bbdc21c9b10ea14a81ee1a67"
           ],
           "support_impact_ids": [
             "IMPACT-UNLINKED-SUPPORT"
@@ -675,7 +673,7 @@
           ],
           "resolved_counter_impact_ids": [],
           "role": "REQUIRED",
-          "score_id": "SUBSCORE-bedd1e8a5aafcf756b7806a1",
+          "score_id": "SUBSCORE-befffd61db762c2363927905",
           "status": "CONTRADICTED_OPEN",
           "subcriterion_id": "C06_VIS_QUALIFICATION",
           "support_fraction": 0.6,

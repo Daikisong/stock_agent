@@ -37,6 +37,7 @@ from .evidence_workflow import (
     ClaimExtractionOutput,
     FollowUpPlanningInput,
     FollowUpPlanningOutput,
+    MAX_RAW_ASSERTIONS_PER_EXTRACTION_PASS,
     MAX_RAW_ASSERTIONS_PER_DOCUMENT,
     PrimitiveMappingInput,
     PrimitiveMappingOutput,
@@ -62,7 +63,7 @@ RAW_ASSERTION_OUTPUT_JSON_SCHEMA: Mapping[str, object] = {
         "blocked_reason": {"type": ["string", "null"]},
         "raw_assertions": {
             "type": "array",
-            "maxItems": MAX_RAW_ASSERTIONS_PER_DOCUMENT,
+            "maxItems": MAX_RAW_ASSERTIONS_PER_EXTRACTION_PASS,
             "items": {
                 "type": "object",
                 "additionalProperties": False,
@@ -466,7 +467,7 @@ class CodexCLIAgenticEvidenceProvider:
                 instruction=(
                     "The previous extraction returned no raw_assertions. Re-read the untrusted document text. "
                     "If it contains explicit factual statements about the target company or its named aliases, "
-                    f"extract up to {MAX_RAW_ASSERTIONS_PER_DOCUMENT} raw assertions for financials, guidance, customers, contracts, orders, "
+                    f"extract up to {MAX_RAW_ASSERTIONS_PER_EXTRACTION_PASS} raw assertions for financials, guidance, customers, contracts, orders, "
                     "backlog, capacity, production, shipments, pricing, investment, cash flow, accounting, legal, "
                     "regulatory, or operational-risk facts. Stay contract-blind: do not score, stage, or map to primitives. "
                     "Return exactly one JSON object matching the raw assertion schema. Do not include markdown."
@@ -954,7 +955,7 @@ def _claim_extraction_provider_error_retry_prompt(inputs: ClaimExtractionInput) 
             "Use one of the provided compact_anchors anchor_id values for every raw assertion.",
             "Use exact_quote as a short verbatim substring from compact_document_text or compact_anchors.",
             "Use null for unknown optional schema fields.",
-            f"Extract at most {min(3, MAX_RAW_ASSERTIONS_PER_DOCUMENT)} explicit raw assertions.",
+            f"Extract at most {min(3, MAX_RAW_ASSERTIONS_PER_EXTRACTION_PASS)} explicit raw assertions.",
             "If no explicit assertion is safely extractable, return status='ok', blocked_reason explaining why, and raw_assertions=[].",
             "Stay contract-blind: do not score, stage, or map to primitives.",
             "Do not return verified/current_score_eligible/source_tier/issuer_scoped/primitive_id/score/stage/hard_break.",

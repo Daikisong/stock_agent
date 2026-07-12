@@ -187,6 +187,11 @@ class SemanticClosureReconciler:
                 str(_value(row, "impact_id") or "")
                 for row in positive_proposals
             )
+            unrejected_positive_proposal_ids = tuple(
+                impact_id
+                for impact_id in positive_proposal_ids
+                if impact_id not in rejected_by_impact
+            )
             support_impacts = tuple(
                 row
                 for row in question_impacts
@@ -284,7 +289,7 @@ class SemanticClosureReconciler:
                 str(link["impact_id"]) for link in component_links
             }
             missing_positive_proposal_ids = (
-                set(positive_proposal_ids) - linked_impact_ids
+                set(unrejected_positive_proposal_ids) - linked_impact_ids
             )
             if missing_positive_claim_ids and not provider_failure:
                 errors.append("POSITIVE_CLAIM_WITHOUT_COMPONENT")
@@ -351,7 +356,9 @@ class SemanticClosureReconciler:
                     if claim_id in eligibility_by_claim
                 ),
                 proposal_impact_ids=payload["proposal_impact_ids"],
-                positive_proposal_impact_ids=positive_proposal_ids,
+                positive_proposal_impact_ids=(
+                    unrejected_positive_proposal_ids
+                ),
                 validated_impact_ids=payload["validated_impact_ids"],
                 component_ids=tuple(
                     dict.fromkeys(

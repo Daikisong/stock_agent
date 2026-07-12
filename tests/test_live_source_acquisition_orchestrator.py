@@ -17,6 +17,9 @@ from e2r.research_brain.runtime.live_materialization import (
     CurrentSourceAcquisitionOrchestrator,
     SourceAcquisitionConfig,
 )
+from e2r.research_brain.runtime.live_materialization.source_acquisition_orchestrator import (
+    _verified_issuer_domain_authority,
+)
 
 
 class LiveSourceAcquisitionOrchestratorTest(unittest.TestCase):
@@ -288,6 +291,62 @@ class LiveSourceAcquisitionOrchestratorTest(unittest.TestCase):
         self.assertEqual(result.audit["critical_counts"]["web_future_document_accepted"], 0)
         self.assertEqual(result.audit["critical_counts"]["snippet_document"], 0)
 
+    def test_unknown_search_date_can_be_verified_from_fetched_publication_label(self) -> None:
+        events: list[str] = []
+        query = "테스트회사 계약 조건 공식 원문"
+        url = "https://news.example.test/test-company-undated-result"
+        search = _RecordingSearchProvider(
+            events,
+            {
+                query: (
+                    SearchResult(
+                        title="테스트회사 계약 조건 확인",
+                        url=url,
+                        snippet="검색 API에는 게시일이 없는 결과",
+                        source="Naver web search",
+                        published_at=None,
+                        query=query,
+                        rank=1,
+                        is_news=False,
+                    ),
+                )
+            },
+        )
+        full_text = (
+            "기사입력 2026.07.09 09:30\n"
+            "테스트회사는 고객 계약의 취소 조건과 계약 잔액을 공식 원문에서 "
+            "설명했다. 검색 snippet이 아니라 실제 본문을 수집하고 날짜와 대상 "
+            "회사를 함께 검증할 수 있을 만큼 충분한 길이의 원문이다."
+        )
+        fetcher = _RecordingPageFetcher(
+            events,
+            PageFetcher(fixture_text_by_url={url: full_text}),
+        )
+
+        result = CurrentSourceAcquisitionOrchestrator().acquire(
+            SourceAcquisitionConfig(
+                as_of_date="2026-07-10",
+                max_tasks=1,
+                test_mode=True,
+            ),
+            source_tasks=(
+                _daily_task("Q-UNDATED", allow_web=True, queries=(query,)),
+            ),
+            question_source_tasks=(
+                _question_task("Q-UNDATED", queries=(query,)),
+            ),
+            provider_registry=SourceProviderRegistry(
+                (_OrderedFailedDartConnector(events),)
+            ),
+            web_search_provider=search,
+            page_fetcher=fetcher,
+        )
+
+        self.assertEqual(len(result.web_fetched_documents), 1)
+        self.assertEqual(result.web_fetched_documents[0]["published_at"], "2026-07-09")
+        self.assertEqual(result.evidence_documents[0].published_at, "2026-07-09")
+        self.assertEqual(result.audit["critical_count_sum"], 0)
+
     def test_production_web_fallback_rejects_fixture_search_provider(self) -> None:
         events: list[str] = []
         query = "테스트회사 2026년 1분기 계약 원문"
@@ -312,6 +371,29 @@ class LiveSourceAcquisitionOrchestratorTest(unittest.TestCase):
                 web_search_provider=_RecordingSearchProvider(events, {query: ()}),
                 page_fetcher=PageFetcher(live_enabled=True),
             )
+
+    def test_verified_issuer_domain_requires_symbol_and_asof_authority(self) -> None:
+        authority = _verified_issuer_domain_authority(
+            url="https://news.samsung.com/global/hbm-update",
+            target_id="005930",
+            as_of_date=date(2026, 7, 11),
+        )
+        self.assertIsNotNone(authority)
+        self.assertEqual(authority["symbol"], "005930")
+        self.assertIsNone(
+            _verified_issuer_domain_authority(
+                url="https://news.samsung.com/global/hbm-update",
+                target_id="000660",
+                as_of_date=date(2026, 7, 11),
+            )
+        )
+        self.assertIsNone(
+            _verified_issuer_domain_authority(
+                url="https://news.samsung.com/global/hbm-update",
+                target_id="005930",
+                as_of_date=date(2026, 5, 14),
+            )
+        )
 
 
 class _FetchedDartConnector:

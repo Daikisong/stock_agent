@@ -17,6 +17,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -43,6 +44,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -69,6 +71,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -92,6 +95,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -130,6 +134,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -153,6 +158,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -177,6 +183,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -198,6 +205,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -220,6 +228,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -259,6 +268,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -281,6 +291,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -303,6 +314,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -324,6 +336,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -334,7 +347,7 @@
             "capex_supply_oversupply",
             "capacity_constraint_presold_status"
           ],
-          "counter_mode": "OPEN_BLOCK",
+          "counter_mode": "BOUNDED_NET",
           "historical_case_refs": [
             "C06-COMPONENT-PROXY-CAPEX-SUPPLY-RESPONSE"
           ],
@@ -363,6 +376,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -370,7 +384,8 @@
             "market_expectation_gap"
           ],
           "allowed_question_family_ids": [
-            "medium_term_revision_consensus"
+            "medium_term_revision_consensus",
+            "valuation_market_expectation"
           ],
           "counter_mode": "BOUNDED_NET",
           "historical_case_refs": [
@@ -385,13 +400,15 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
             "market_expectation_gap"
           ],
           "allowed_question_family_ids": [
-            "medium_term_revision_consensus"
+            "medium_term_revision_consensus",
+            "valuation_market_expectation"
           ],
           "counter_mode": "BOUNDED_NET",
           "historical_case_refs": [
@@ -406,13 +423,15 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
             "current_valuation_vs_earnings"
           ],
           "allowed_question_family_ids": [
-            "medium_term_revision_consensus"
+            "medium_term_revision_consensus",
+            "valuation_market_expectation"
           ],
           "counter_mode": "BOUNDED_NET",
           "historical_case_refs": [
@@ -443,13 +462,15 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
             "current_valuation_vs_earnings"
           ],
           "allowed_question_family_ids": [
-            "medium_term_revision_consensus"
+            "medium_term_revision_consensus",
+            "valuation_market_expectation"
           ],
           "counter_mode": "BOUNDED_NET",
           "historical_case_refs": [
@@ -464,6 +485,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -471,7 +493,8 @@
             "medium_term_revision_visibility"
           ],
           "allowed_question_family_ids": [
-            "medium_term_revision_consensus"
+            "medium_term_revision_consensus",
+            "valuation_market_expectation"
           ],
           "counter_mode": "BOUNDED_NET",
           "historical_case_refs": [
@@ -486,6 +509,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -526,6 +550,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -549,6 +574,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -570,6 +596,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -608,6 +635,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -630,6 +658,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -651,6 +680,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -672,6 +702,7 @@
           "allowed_directions": [
             "SUPPORT",
             "COUNTER",
+            "NEUTRAL",
             "RESOLUTION"
           ],
           "allowed_primitive_ids": [
@@ -710,7 +741,7 @@
     "unknown_question_family_count": 0,
     "unreachable_subcriterion_count": 0
   },
-  "model_hash": "897c5d2aeb2fe0c97047b710c14a445477222e9bf6d0d731010510d2d413db43",
+  "model_hash": "b910e8949224af3b7052698c5dda758c731a5821b379348fa33cd08038653767",
   "schema_version": "e2r_component_scoring_model_audit_v1",
   "status": "COMPONENT_SCORING_MODEL_PASS",
   "subcriterion_count": 26,

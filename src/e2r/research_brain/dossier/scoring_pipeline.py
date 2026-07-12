@@ -166,12 +166,16 @@ def run_dossier_scoring_pipeline(
         failed_claim_ids = retry_ids or {
             str(row.get("claim_id") or "")
             for row in prior_adjudications
-            if row.get("status")
-            in {
-                "IMPACT_ADJUDICATION_FAIL",
-                "REVIEW_PENDING",
-                "PROVIDER_ERROR",
-            }
+            if (
+                row.get("status")
+                in {
+                    "IMPACT_ADJUDICATION_FAIL",
+                    "REVIEW_PENDING",
+                    "PROVIDER_ERROR",
+                }
+                or int(row.get("invalid_proposal_count") or 0) > 0
+                or int((row.get("audit") or {}).get("critical_count_sum") or 0) > 0
+            )
         }
         known_claim_ids = {str(row.get("claim_id") or "") for row in selected_claims}
         unknown_retry_ids = failed_claim_ids - known_claim_ids
@@ -195,16 +199,57 @@ def run_dossier_scoring_pipeline(
         if not claims_to_adjudicate:
             raise ValueError("claim retry found no matching adjudications")
     if reuse_proposals:
+        current_claim_ids = {
+            str(row.get("claim_id") or "") for row in selected_claims
+        }
+        current_mapping_ids_by_claim = {
+            claim_id: {
+                str(row.get("mapping_id") or "")
+                for row in mappings_by_claim.get(claim_id, ())
+            }
+            for claim_id in current_claim_ids
+        }
+        reusable_claim_ids: set[str] = set()
+        for row in _read_jsonl(root / "impact_adjudications.jsonl"):
+            claim_id = str(row.get("claim_id") or "")
+            if claim_id not in current_claim_ids:
+                continue
+            prior_mapping_ids = {
+                str(value)
+                for value in row.get("accepted_mapping_ids") or ()
+            }
+            audit_critical = int(
+                (row.get("audit") or {}).get("critical_count_sum") or 0
+            )
+            if (
+                row.get("status")
+                in {"IMPACT_ADJUDICATION_PASS", "IMPACT_MAPPING_REJECTED"}
+                and not row.get("invalid_proposal_count")
+                and audit_critical == 0
+                and prior_mapping_ids
+                == current_mapping_ids_by_claim.get(claim_id, set())
+            ):
+                adjudication_rows.append(row)
+                reusable_claim_ids.add(claim_id)
         proposals = [
             _proposal_from_row(row)
             for row in _read_jsonl(root / "claim_impacts_proposed.jsonl")
+            if str(row.get("claim_id") or "") in reusable_claim_ids
+            and str(row.get("mapping_id") or "")
+            in current_mapping_ids_by_claim.get(
+                str(row.get("claim_id") or ""), set()
+            )
         ]
-        adjudication_rows = list(_read_jsonl(root / "impact_adjudications.jsonl"))
+        claims_to_adjudicate = tuple(
+            row
+            for row in selected_claims
+            if str(row.get("claim_id") or "") not in reusable_claim_ids
+        )
     prior_by_claim = {
         str(row.get("claim_id") or ""): row
         for row in _read_jsonl(root / "impact_adjudications.jsonl")
     }
-    for claim in (() if reuse_proposals else claims_to_adjudicate):
+    for claim in claims_to_adjudicate:
         claim_id = str(claim.get("claim_id") or "")
         claim_mappings = tuple(mappings_by_claim.get(claim_id, ()))
         claim_provenance = provenance_by_claim.get(claim_id)
@@ -267,10 +312,20 @@ def run_dossier_scoring_pipeline(
                 "prior_unsupported_aspects": list(
                     prior.get("unsupported_aspects") or ()
                 ),
+                "allowed_mapping_pairs": [
+                    {
+                        "mapping_id": row.get("mapping_id"),
+                        "primitive_id": row.get("primitive_id"),
+                    }
+                    for row in claim_mappings
+                ],
                 "instruction": (
                     "Re-evaluate the exact accepted mapping against the supplied rubric. "
                     "Preserve a bounded PARTIAL impact when its partial predicate is "
-                    "directly supported; do not promote unsupported stronger effects."
+                    "directly supported; do not promote unsupported stronger effects. "
+                    "Every returned impact must copy one exact mapping_id and primitive_id "
+                    "pair from allowed_mapping_pairs. Never invent, substitute, or cross-wire "
+                    "a mapping or primitive, even when another rubric looks relevant."
                 ),
             }
         document = document_by_id.get(str(claim_provenance.get("document_id") or ""), {})
@@ -808,6 +863,16 @@ def _write_pipeline_leaves(
     write_jsonl(
         root / "question_component_reconciliation.jsonl",
         (row.to_dict() for row in reconciliation.reconciliations),
+    )
+    write_jsonl(
+        root / "semantic_closure_trace.jsonl",
+        (
+            {
+                **row.to_dict(),
+                "trace_schema_version": "e2r_semantic_closure_trace_v1",
+            }
+            for row in reconciliation.reconciliations
+        ),
     )
     write_jsonl(
         root / "claim_impact_ledger.jsonl",

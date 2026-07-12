@@ -19,6 +19,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--canonical-archetype", required=True)
     parser.add_argument("--force-web-family", action="append", default=[])
     parser.add_argument("--question-family", action="append", default=[])
+    parser.add_argument("--adequacy-route-category", action="append", default=[])
     args = parser.parse_args(argv)
     task_path = Path(args.dossier_root) / "question_source_tasks.jsonl"
     tasks = tuple(
@@ -32,6 +33,7 @@ def main(argv: list[str] | None = None) -> int:
         output_root=args.output_root,
         force_web_family_ids=args.force_web_family,
         question_family_ids=args.question_family,
+        adequacy_route_categories=args.adequacy_route_category,
     )
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
     return 0 if result["status"] == "DOSSIER_SOURCE_RESEARCH_PASS" else 2

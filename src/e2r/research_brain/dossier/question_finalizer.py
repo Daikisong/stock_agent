@@ -28,6 +28,10 @@ def finalize_dossier_question_closures(
     root = Path(dossier_root)
     tasks = _read_jsonl(root / "question_source_tasks.jsonl")
     closures = _read_jsonl(root / "question_closure.jsonl")
+    scoring_closures = {
+        str(row.get("question_family_id") or ""): row
+        for row in _read_jsonl(root / "question_closure_v2.jsonl")
+    }
     if not tasks or not closures:
         raise ValueError("question finalization requires dossier tasks and closures")
     research_roots = tuple(Path(value) for value in source_research_roots)
@@ -66,7 +70,13 @@ def finalize_dossier_question_closures(
         documents=documents,
         claims=_read_jsonl(root / "accepted_current_claims.jsonl"),
         primitive_mappings=_read_jsonl(root / "primitive_mappings.jsonl"),
-        question_closures=closures,
+        question_closures=tuple(
+            scoring_closures.get(
+                str(row.get("question_family_id") or ""),
+                row,
+            )
+            for row in closures
+        ),
         question_contracts=load_question_impact_contracts(),
         claim_eligibility_decisions=_read_jsonl(
             root / "claim_eligibility_decisions.jsonl"
@@ -156,7 +166,23 @@ def finalize_dossier_question_closures(
             "SOURCE_PENDING",
             "BUDGET_PENDING",
         }
-        if pending and adequacy.adequate_absence_allowed:
+        scoring_closure = scoring_closures.get(family_id) or {}
+        scoring_status = str(scoring_closure.get("status") or "")
+        requires_terminal_repair = pending or scoring_status == "SUPPORTED_NON_SCORING"
+        if (
+            requires_terminal_repair
+            and adequacy.saturation_status == "EVIDENCE_FOUND"
+            and scoring_status
+            in {
+                "SUPPORTED_SCORING",
+                "PARTIALLY_SUPPORTED_SCORING",
+                "COUNTER_SUPPORTED",
+            }
+        ):
+            closure.update(dict(scoring_closure))
+            closure["search_exhaustion_proof"] = list(adequacy.search_proof_ids)
+            closure["next_action"] = "QUESTION_TERMINAL_FROM_VALIDATED_IMPACT"
+        elif requires_terminal_repair and adequacy.adequate_absence_allowed:
             closure.update(
                 {
                     "status": "EVALUATED_ABSENT",
@@ -168,7 +194,7 @@ def finalize_dossier_question_closures(
                 }
             )
             evaluated_absent_count += 1
-        elif pending:
+        elif requires_terminal_repair:
             closure["status"] = {
                 "PROVIDER_PENDING": "PROVIDER_PENDING",
                 "BUDGET_PENDING": "BUDGET_PENDING",

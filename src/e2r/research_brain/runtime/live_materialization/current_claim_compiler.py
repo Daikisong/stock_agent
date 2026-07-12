@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from dataclasses import asdict, dataclass, replace
 from datetime import date
 from enum import Enum
@@ -17,6 +18,7 @@ from e2r.agentic import (
     EvidenceAnchor,
     EvidenceCompilationInput,
     EvidenceDocument,
+    EvidenceExtractionPass,
     EvidenceWorkflowOrchestrator,
     SourceType,
     build_default_codex_agentic_evidence_provider_bundle,
@@ -37,6 +39,8 @@ class CurrentClaimCompilerConfig:
     as_of_date: str
     max_documents: int
     max_raw_assertions_per_document: int = 12
+    max_extraction_passes_per_document: int = 16
+    mapper_self_consistency_rounds: int = 2
     test_mode: bool = False
     additional_primitive_ids: tuple[str, ...] = ()
 
@@ -44,8 +48,12 @@ class CurrentClaimCompilerConfig:
         date.fromisoformat(self.as_of_date)
         if not 1 <= self.max_documents <= 100:
             raise ValueError("current claim compiler document budget must be bounded by 100")
-        if not 1 <= self.max_raw_assertions_per_document <= 30:
-            raise ValueError("raw assertion budget must be bounded by 30")
+        if not 1 <= self.max_raw_assertions_per_document <= 48:
+            raise ValueError("raw assertion budget must be bounded by 48")
+        if not 1 <= self.max_extraction_passes_per_document <= 16:
+            raise ValueError("extraction pass budget must be bounded by 16")
+        if not 1 <= self.mapper_self_consistency_rounds <= 3:
+            raise ValueError("mapper self-consistency rounds must be bounded by 3")
         if len(self.additional_primitive_ids) != len(set(self.additional_primitive_ids)):
             raise ValueError("additional primitive ids must be unique")
         if any(not str(value).strip() for value in self.additional_primitive_ids):
@@ -118,7 +126,7 @@ class CurrentClaimCompiler:
         )
         contracts = load_evidence_contracts_v2(require_all_archetypes=True)
         documents_by_task: dict[str, list[Mapping[str, Any]]] = {}
-        compile_jobs: dict[tuple[str, str], tuple[Mapping[str, Any], Mapping[str, Any]]] = {}
+        compile_jobs: dict[tuple[str, str], dict[str, Any]] = {}
         for document in evidence_documents:
             for task_id in document.get("source_task_ids") or ():
                 task = question_by_id.get(str(task_id))
@@ -126,22 +134,47 @@ class CurrentClaimCompiler:
                     raise ValueError("evidence document references unknown QuestionSourceTask")
                 documents_by_task.setdefault(str(task_id), []).append(document)
                 key = (str(document.get("document_id") or ""), str(task.get("archetype_id") or ""))
-                compile_jobs.setdefault(key, (document, task))
+                job = compile_jobs.setdefault(
+                    key,
+                    {
+                        "document": document,
+                        "task": task,
+                        "retrieval_focus_terms": [],
+                        "retrieval_focus_term_sets": [],
+                    },
+                )
+                task_focus_terms = _retrieval_focus_terms(task)
+                job["retrieval_focus_terms"] = list(
+                    dict.fromkeys(
+                        (
+                            *job["retrieval_focus_terms"],
+                            *task_focus_terms,
+                        )
+                    )
+                )
+                if task_focus_terms and task_focus_terms not in job["retrieval_focus_term_sets"]:
+                    job["retrieval_focus_term_sets"].append(task_focus_terms)
 
         anchors: list[Mapping[str, Any]] = []
         raw_rows: list[Mapping[str, Any]] = []
         claim_rows: list[Mapping[str, Any]] = []
         mapping_rows: list[Mapping[str, Any]] = []
         pending: list[Mapping[str, Any]] = []
+        extraction_pass_count = 0
+        extracted_raw_assertion_count = 0
+        deduplicated_raw_assertion_count = 0
+        raw_assertion_budget_truncated_document_count = 0
         result_by_job: dict[tuple[str, str], Mapping[str, Any]] = {}
         orchestrator = EvidenceWorkflowOrchestrator(
             extractor=effective_bundle.extractor,
             adjudicator=effective_bundle.adjudicator,
             mapper=effective_bundle.mapper,
-            mapper_self_consistency_rounds=1,
+            mapper_self_consistency_rounds=config.mapper_self_consistency_rounds,
             mapper_self_consistency_min_agreement=1,
         )
-        for key, (document_row, task) in compile_jobs.items():
+        for key, job in compile_jobs.items():
+            document_row = job["document"]
+            task = job["task"]
             archetype_id = str(task.get("archetype_id") or "")
             contract = contracts.get(archetype_id)
             if contract is None:
@@ -166,18 +199,28 @@ class CurrentClaimCompiler:
                 )
             )
             document, text = _evidence_document(document_row)
-            anchor = EvidenceAnchor.text_span(
+            extraction_passes = _bounded_extraction_passes(
                 document=document,
                 document_text=text,
-                exact_text=text,
-                locator=f"char:0:{len(text)}",
+                focus_term_sets=tuple(job["retrieval_focus_term_sets"]),
+                fallback_focus_terms=tuple(job["retrieval_focus_terms"]),
+                max_passes=config.max_extraction_passes_per_document,
             )
-            anchors.append(
+            retrieval_anchors = tuple(
                 {
-                    **_json_safe(asdict(anchor)),
+                    anchor.anchor_id: anchor
+                    for extraction_pass in extraction_passes
+                    for anchor in extraction_pass.anchors
+                }.values()
+            )
+            anchor = retrieval_anchors[0]
+            anchors.extend(
+                {
+                    **_json_safe(asdict(item)),
                     "target_id": str(task.get("target_id") or ""),
                     "source_task_ids": list(document_row.get("source_task_ids") or ()),
                 }
+                for item in retrieval_anchors
             )
             target_id = str(task.get("target_id") or "")
             target_name = str(task.get("company_name") or "")
@@ -199,11 +242,13 @@ class CurrentClaimCompiler:
                         as_of_date=date.fromisoformat(config.as_of_date),
                         document=document,
                         document_text=text,
-                        anchors=(anchor,),
+                        anchors=retrieval_anchors,
                         entity_registry=registry,
                         contract=contract,
                         canonical_primitive_ids=canonical_primitive_ids,
                         max_raw_assertions=config.max_raw_assertions_per_document,
+                        retrieval_focus_terms=tuple(job["retrieval_focus_terms"]),
+                        extraction_passes=extraction_passes,
                     )
                 )
             except Exception as exc:
@@ -220,6 +265,12 @@ class CurrentClaimCompiler:
                 result_by_job[key] = {"pending": pending_row}
                 continue
             raw_by_id = {item.raw_assertion_id: item for item in compiled.raw_assertions}
+            extraction_pass_count += compiled.extraction_pass_count
+            extracted_raw_assertion_count += compiled.extracted_raw_assertion_count
+            deduplicated_raw_assertion_count += compiled.deduplicated_raw_assertion_count
+            raw_assertion_budget_truncated_document_count += int(
+                compiled.raw_assertion_budget_truncated
+            )
             claims_by_id = {item.claim_id: item for item in compiled.adjudicated_claims}
             raw_rows.extend(
                 {
@@ -254,6 +305,9 @@ class CurrentClaimCompiler:
                 "document": document,
                 "document_row": document_row,
                 "anchor": anchor,
+                "anchors_by_id": {
+                    item.anchor_id: item for item in retrieval_anchors
+                },
                 "raw_by_id": raw_by_id,
                 "claims_by_id": claims_by_id,
                 "accepted_mappings": tuple(compiled.accepted_mappings),
@@ -323,7 +377,10 @@ class CurrentClaimCompiler:
                     provenance = _daily_provenance(
                         task=task,
                         document_row=document_row,
-                        anchor=compiled["anchor"],
+                        anchor=compiled["anchors_by_id"].get(
+                            raw.anchor_id,
+                            compiled["anchor"],
+                        ),
                         claim=claim,
                         raw=raw,
                         mapping=mapping,
@@ -389,6 +446,12 @@ class CurrentClaimCompiler:
             provenance=provenance,
             satisfaction=satisfaction,
             pending=pending,
+            extraction_pass_count=extraction_pass_count,
+            extracted_raw_assertion_count=extracted_raw_assertion_count,
+            deduplicated_raw_assertion_count=deduplicated_raw_assertion_count,
+            raw_assertion_budget_truncated_document_count=(
+                raw_assertion_budget_truncated_document_count
+            ),
         )
         return CurrentClaimCompilationResult(
             as_of_date=config.as_of_date,
@@ -468,6 +531,154 @@ def _evidence_document(row: Mapping[str, Any]) -> tuple[EvidenceDocument, str]:
     if document.document_id != str(row.get("document_id") or ""):
         raise ValueError("evidence document stable identity mismatch")
     return document, text
+
+
+def _retrieval_focus_terms(task: Mapping[str, Any]) -> tuple[str, ...]:
+    """Tokenize only LLM-authored query/question text for document retrieval."""
+
+    query_intent = task.get("query_intent") or {}
+    texts = (
+        *(str(item) for item in query_intent.get("literal_queries") or ()),
+        str(task.get("question_to_answer") or ""),
+    )
+    blocked = {
+        re.sub(r"[^0-9a-z가-힣]", "", str(value).casefold())
+        for value in (
+            task.get("target_id"),
+            task.get("symbol"),
+            task.get("company_name"),
+        )
+        if str(value or "").strip()
+    }
+    generic = {
+        "official",
+        "source",
+        "document",
+        "current",
+        "latest",
+        "does",
+        "and",
+        "what",
+        "exactly",
+        "exist",
+        "equivalent",
+        "commercial",
+        "target",
+        "defined",
+        "product",
+        "period",
+        "currently",
+        "remains",
+        "only",
+        "site",
+        "com",
+        "before",
+        "after",
+        "원문",
+        "공식",
+        "최근",
+        "현재",
+        "확인",
+        "관련",
+        "이전",
+        "이후",
+        "발표",
+    }
+    result: list[str] = []
+    for text in texts:
+        for token in re.findall(r"[a-z][a-z0-9_-]{2,}|[가-힣]{2,}", text.casefold()):
+            normalized = re.sub(r"[^0-9a-z가-힣]", "", token)
+            if normalized in blocked or normalized in generic or normalized.isdigit():
+                continue
+            if token not in result:
+                result.append(token)
+            if len(result) >= 96:
+                return tuple(result)
+    return tuple(result)
+
+
+def _bounded_extraction_passes(
+    *,
+    document: EvidenceDocument,
+    document_text: str,
+    focus_term_sets: Sequence[Sequence[str]],
+    fallback_focus_terms: Sequence[str],
+    max_passes: int,
+) -> tuple[EvidenceExtractionPass, ...]:
+    """Keep LLM-authored question focuses separate under an explicit pass budget."""
+
+    unique_term_sets = list(
+        dict.fromkeys(
+            tuple(dict.fromkeys(str(term) for term in terms if str(term).strip()))
+            for terms in focus_term_sets
+            if any(str(term).strip() for term in terms)
+        )
+    )
+    if not unique_term_sets:
+        unique_term_sets = [tuple(fallback_focus_terms)]
+    if len(unique_term_sets) > max_passes:
+        retained = unique_term_sets[: max_passes - 1]
+        overflow = tuple(
+            dict.fromkeys(
+                term
+                for term_set in unique_term_sets[max_passes - 1 :]
+                for term in term_set
+            )
+        )
+        unique_term_sets = [*retained, overflow]
+    return tuple(
+        EvidenceExtractionPass(
+            anchors=_retrieval_anchors(
+                document=document,
+                document_text=document_text,
+                focus_terms=term_set,
+            ),
+            retrieval_focus_terms=term_set,
+        )
+        for term_set in unique_term_sets
+    )
+
+
+def _retrieval_anchors(
+    *,
+    document: EvidenceDocument,
+    document_text: str,
+    focus_terms: Sequence[str],
+    max_anchors: int = 8,
+) -> tuple[EvidenceAnchor, ...]:
+    lower = document_text.casefold()
+    ranked = sorted(
+        (
+            (lower.count(term.casefold()), -len(term), index, term.casefold())
+            for index, term in enumerate(focus_terms)
+            if term and lower.count(term.casefold()) > 0
+        ),
+        key=lambda item: item[:3],
+    )
+    spans: list[tuple[int, int]] = []
+    for _count, _negative_length, _index, term in ranked:
+        position = lower.find(term)
+        if position < 0:
+            continue
+        start = max(0, position - 700)
+        end = min(len(document_text), position + len(term) + 1_300)
+        if any(start < prior_end and end > prior_start for prior_start, prior_end in spans):
+            continue
+        spans.append((start, end))
+        if len(spans) >= max_anchors:
+            break
+    if not spans:
+        spans.append((0, min(len(document_text), 4_000)))
+    return tuple(
+        EvidenceAnchor.text_span(
+            document=document,
+            document_text=document_text,
+            exact_text=document_text[start:end],
+            locator=f"char:{start}:{end}",
+        )
+        for start, end in spans
+        if end > start
+    )
 
 
 def _daily_provenance(
@@ -560,6 +771,10 @@ def _audit_claim_compilation(
     provenance: Sequence[DailyClaimProvenance],
     satisfaction: Sequence[SourceTaskSatisfactionRecord],
     pending: Sequence[Mapping[str, Any]],
+    extraction_pass_count: int,
+    extracted_raw_assertion_count: int,
+    deduplicated_raw_assertion_count: int,
+    raw_assertion_budget_truncated_document_count: int,
 ) -> Mapping[str, Any]:
     provenance_claim_ids = {item.claim_id for item in provenance}
     critical = {
@@ -591,6 +806,12 @@ def _audit_claim_compilation(
         "schema_version": "e2r_live_current_claim_audit_v1",
         "anchor_count": len({item.get("anchor_id") for item in raw_assertions}),
         "raw_assertion_count": len(raw_assertions),
+        "extraction_pass_count": extraction_pass_count,
+        "extracted_raw_assertion_count": extracted_raw_assertion_count,
+        "deduplicated_raw_assertion_count": deduplicated_raw_assertion_count,
+        "raw_assertion_budget_truncated_document_count": (
+            raw_assertion_budget_truncated_document_count
+        ),
         "adjudicated_claim_count": len(adjudicated_claims),
         "accepted_current_claim_count": len(accepted_claims),
         "daily_claim_provenance_count": len(provenance),

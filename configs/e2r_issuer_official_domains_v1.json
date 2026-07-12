@@ -2,6 +2,30 @@
   "schema_version": "e2r_issuer_official_domains_v1",
   "entries": [
     {
+      "entry_id": "issuer-domain-005930-samsung-parent-20260515",
+      "symbol": "005930",
+      "company_name": "삼성전자",
+      "host": "samsung.com",
+      "source_class": "IssuerIR",
+      "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002181",
+      "source_anchor_text": "홈페이지 http://www.samsung.com/sec",
+      "valid_from": "2026-05-15",
+      "verified_as_of": "2026-05-15",
+      "status": "ACTIVE"
+    },
+    {
+      "entry_id": "issuer-domain-000660-skhynix-parent-20260515",
+      "symbol": "000660",
+      "company_name": "SK하이닉스",
+      "host": "skhynix.com",
+      "source_class": "IssuerIR",
+      "source_url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260515002287",
+      "source_anchor_text": "SK하이닉스 공식 회사 도메인",
+      "valid_from": "2026-05-15",
+      "verified_as_of": "2026-05-15",
+      "status": "ACTIVE"
+    },
+    {
       "entry_id": "issuer-domain-000660-newsroom-en-20260703",
       "symbol": "000660",
       "company_name": "SK하이닉스",

@@ -1,96 +1,122 @@
 {
-  "benchmark_mode": "CONTROLLED_BLIND_LANE_CONTRACT",
+  "benchmark_mode": "LIVE_SAMSUNG_HYNIX_POST_RUN_BLIND_GOLD",
   "comparisons": [
     {
       "currentness_match": true,
       "fact_role": "SUPPORT",
-      "gold_fact_id": "G-A-ALLOCATION",
+      "gold_fact_id": "G-005930-HBM4-SHIPMENT",
       "materiality": "CRITICAL",
       "mechanism_scope_match": true,
       "miss_reason": null,
-      "production_fact_id": "P-101",
-      "question_family_id": "current_customer_allocation_commitment",
-      "semantic_match": true,
-      "source_quality_match": true,
-      "target_id": "TARGET-A"
-    },
-    {
-      "currentness_match": true,
-      "fact_role": "SUPPORT",
-      "gold_fact_id": "G-A-SHIPMENT",
-      "materiality": "CRITICAL",
-      "mechanism_scope_match": true,
-      "miss_reason": null,
-      "production_fact_id": "P-102",
+      "production_fact_id": "PFACT-f3a9a4b7f3a606d1b826c21c",
       "question_family_id": "shipment_mass_production_generation",
       "semantic_match": true,
       "source_quality_match": true,
-      "target_id": "TARGET-A"
+      "target_id": "005930"
     },
     {
       "currentness_match": true,
       "fact_role": "SUPPORT",
-      "gold_fact_id": "G-A-ASP",
+      "gold_fact_id": "G-005930-MEMORY-ASP",
       "materiality": "NONCRITICAL",
       "mechanism_scope_match": true,
       "miss_reason": null,
-      "production_fact_id": "P-103",
+      "production_fact_id": "PFACT-4e5de641fb36cd579e38b060",
       "question_family_id": "asp_pricing_actual",
       "semantic_match": true,
       "source_quality_match": true,
-      "target_id": "TARGET-A"
+      "target_id": "005930"
     },
     {
       "currentness_match": true,
       "fact_role": "SUPPORT",
-      "gold_fact_id": "G-B-CAPACITY",
+      "gold_fact_id": "G-005930-CAPACITY-CONSTRAINT",
       "materiality": "CRITICAL",
       "mechanism_scope_match": true,
       "miss_reason": null,
-      "production_fact_id": "P-201",
+      "production_fact_id": "PFACT-41da9c239a74209c5f1131c9",
       "question_family_id": "capacity_constraint_presold_status",
       "semantic_match": true,
       "source_quality_match": true,
-      "target_id": "TARGET-B"
-    },
-    {
-      "currentness_match": true,
-      "fact_role": "SUPPORT",
-      "gold_fact_id": "G-B-REVISION",
-      "materiality": "NONCRITICAL",
-      "mechanism_scope_match": true,
-      "miss_reason": null,
-      "production_fact_id": "P-202",
-      "question_family_id": "medium_term_revision_consensus",
-      "semantic_match": true,
-      "source_quality_match": true,
-      "target_id": "TARGET-B"
+      "target_id": "005930"
     },
     {
       "currentness_match": true,
       "fact_role": "COUNTER",
-      "gold_fact_id": "G-B-OVERSUPPLY",
+      "gold_fact_id": "G-005930-CAPEX-COUNTER",
       "materiality": "CRITICAL",
       "mechanism_scope_match": true,
       "miss_reason": null,
-      "production_fact_id": "P-203",
+      "production_fact_id": "PFACT-5f818feb4f4bad64221e3e9c",
       "question_family_id": "capex_supply_oversupply",
       "semantic_match": true,
       "source_quality_match": true,
-      "target_id": "TARGET-B"
+      "target_id": "005930"
     },
     {
       "currentness_match": true,
-      "fact_role": "SUPERSESSION",
-      "gold_fact_id": "G-A-QUAL-RESOLVED",
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-CAPACITY-CONSTRAINT",
       "materiality": "CRITICAL",
       "mechanism_scope_match": true,
       "miss_reason": null,
-      "production_fact_id": "P-104",
-      "question_family_id": "qualification_pass_lag_reopen",
+      "production_fact_id": "PFACT-fcfcf9b5cae43e159dd3459c",
+      "question_family_id": "capacity_constraint_presold_status",
       "semantic_match": true,
       "source_quality_match": true,
-      "target_id": "TARGET-A"
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-OPERATING-PROFIT",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "PFACT-5f8243101d346c291ede3bbd",
+      "question_family_id": "revenue_operating_profit_conversion",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-OPERATING-MARGIN",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "PFACT-eeeb47f58e3eb4d6b96d106a",
+      "question_family_id": "margin_fcf_conversion",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-HBM-PRICE-CONVERSION",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "PFACT-de49e3b89b220d05d702cc55",
+      "question_family_id": "asp_pricing_actual",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-CUSTOMER-VOLUME-AGREEMENT",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "PFACT-af7ff62f8044342add78d596",
+      "question_family_id": "current_customer_allocation_commitment",
+      "semantic_match": true,
+      "source_quality_match": true,
+      "target_id": "000660"
     }
   ],
   "critical_count_sum": 0,
@@ -104,13 +130,13 @@
     "material_supersession_fact_miss_count": 0,
     "noncritical_recall_below_90_count": 0
   },
-  "gold_fact_count": 7,
+  "gold_fact_count": 9,
   "gold_lane_role": "PRIVATE_POST_RUN_EVALUATION",
   "lane_isolation": {
     "comparison_timing": "POST_RUN_ONLY",
-    "gold_root_hash": "e49852bff1448a5fcfc4abe59d99c02633b797871428820f2124f664423aa1c6",
+    "gold_root_hash": "7e2e400a98117e2fc50c58ced729e8280ecf0bc7645997a1ef3eb685572de47a",
     "gold_visibility_during_production": false,
-    "production_root_hash": "3326d7c6d48af97d2e32f634f8f5bc85b588c8fce408fa79edef8da827415afa",
+    "production_root_hash": "99e93e86c180b9b64f7c25b84dcf14e1223bda9ed5b451c5f15e384a005a190e",
     "roots_are_disjoint": true
   },
   "leakage_audit": {
@@ -122,7 +148,7 @@
     "source_injection_input_ids": []
   },
   "missing_gold_routes": [],
-  "noncritical_fact_count": 2,
+  "noncritical_fact_count": 3,
   "noncritical_fact_recall": 1.0,
   "observed_gold_routes": [
     "counter_supersession",
@@ -133,9 +159,9 @@
     "official_filing",
     "trusted_independent"
   ],
-  "production_fact_count": 7,
+  "production_fact_count": 41,
   "production_lane_role": "CANONICAL_BLIND_RUN",
-  "qualified_material_fact_match_count": 7,
+  "qualified_material_fact_match_count": 9,
   "required_gold_routes": [
     "counter_supersession",
     "customer_official",

@@ -44,6 +44,47 @@ class OpenDARTLiveConnector:
         )
 
     def fetch(self, *, symbol: str, company_name: str, as_of_date: date, mode: str) -> SourceFetchResult:
+        return self._fetch(
+            symbol=symbol,
+            company_name=company_name,
+            as_of_date=as_of_date,
+            mode=mode,
+            prefer_periodic_report=False,
+        )
+
+    def fetch_research_document(
+        self,
+        *,
+        symbol: str,
+        company_name: str,
+        as_of_date: date,
+        mode: str,
+    ) -> SourceFetchResult:
+        """Fetch a broad issuer document suitable for full-thesis research.
+
+        Daily event collection still uses :meth:`fetch` and therefore keeps the
+        latest material disclosure.  A dossier needs a document that can answer
+        several operating questions, so its dedicated entry point prefers the
+        latest periodic report without changing the ordinary connector contract.
+        """
+
+        return self._fetch(
+            symbol=symbol,
+            company_name=company_name,
+            as_of_date=as_of_date,
+            mode=mode,
+            prefer_periodic_report=True,
+        )
+
+    def _fetch(
+        self,
+        *,
+        symbol: str,
+        company_name: str,
+        as_of_date: date,
+        mode: str,
+        prefer_periodic_report: bool,
+    ) -> SourceFetchResult:
         if mode != "live":
             return self._snapshot.fetch(symbol=symbol, company_name=company_name, as_of_date=as_of_date, mode=mode)
         request_id = _stable_id("SRCREQ-OPENDART", symbol, company_name, as_of_date.isoformat())
@@ -84,6 +125,7 @@ class OpenDARTLiveConnector:
                     as_of_date=as_of_date,
                     request_id=request_id,
                     started=started,
+                    prefer_periodic_report=prefer_periodic_report,
                 )
             except Exception:
                 disclosure_result = None
@@ -149,6 +191,7 @@ def _fetch_latest_disclosure_result(
     as_of_date: date,
     request_id: str,
     started: float,
+    prefer_periodic_report: bool = False,
 ) -> SourceFetchResult | None:
     start = as_of_date - timedelta(days=_DISCLOSURE_LOOKBACK_DAYS)
     response = requests.get(
@@ -170,7 +213,12 @@ def _fetch_latest_disclosure_result(
         return None
     if status and status != "000":
         raise RuntimeError(f"OpenDART list.json failed: {status} {payload.get('message')}")
-    for row in _watch_disclosure_rows(payload, symbol=symbol, company_name=company_name):
+    for row in _watch_disclosure_rows(
+        payload,
+        symbol=symbol,
+        company_name=company_name,
+        prefer_periodic_report=prefer_periodic_report,
+    ):
         base_event = OpenDARTConnector.normalize_disclosure(row)
         if not base_event.rcept_no:
             continue
@@ -189,6 +237,7 @@ def _fetch_latest_disclosure_result(
                 row_source="opendart_detail",
                 raw_document=raw_detail,
                 score_usage=None,
+                preserve_research_document=prefer_periodic_report,
             )
         return _disclosure_fetch_result(
             event=base_event,
@@ -199,11 +248,18 @@ def _fetch_latest_disclosure_result(
             row_source="opendart_list",
             raw_document=json.dumps(row, ensure_ascii=False, sort_keys=True),
             score_usage="opendart_list_only_detail_not_fetched",
+            preserve_research_document=False,
         )
     return None
 
 
-def _watch_disclosure_rows(payload: Mapping[str, Any], *, symbol: str, company_name: str) -> tuple[Mapping[str, Any], ...]:
+def _watch_disclosure_rows(
+    payload: Mapping[str, Any],
+    *,
+    symbol: str,
+    company_name: str,
+    prefer_periodic_report: bool = False,
+) -> tuple[Mapping[str, Any], ...]:
     rows = payload.get("list") or ()
     if not isinstance(rows, (list, tuple)):
         return ()
@@ -220,7 +276,27 @@ def _watch_disclosure_rows(payload: Mapping[str, Any], *, symbol: str, company_n
         normalized.setdefault("corp_name", company_name)
         normalized.setdefault("source", "OpenDART")
         selected.append(normalized)
+    if prefer_periodic_report:
+        selected.sort(
+            key=lambda row: (
+                not _is_periodic_report(
+                    str(
+                        row.get("report_nm")
+                        or row.get("report_name")
+                        or row.get("title")
+                        or ""
+                    )
+                ),
+            )
+        )
     return tuple(selected)
+
+
+def _is_periodic_report(report_name: str) -> bool:
+    return any(
+        token in report_name
+        for token in ("분기보고서", "반기보고서", "사업보고서")
+    )
 
 
 def _is_watch_report(report_name: str) -> bool:
@@ -292,6 +368,7 @@ def _disclosure_fetch_result(
     row_source: str,
     raw_document: str,
     score_usage: str | None,
+    preserve_research_document: bool = False,
 ) -> SourceFetchResult:
     parsed_fields = dict(getattr(event, "parsed_fields", {}) or {})
     rcept_no = str(getattr(event, "rcept_no", "") or "")
@@ -311,7 +388,18 @@ def _disclosure_fetch_result(
     }
     if score_usage:
         structured_payload["score_usage"] = score_usage
-    raw_text = str(getattr(event, "raw_text", "") or raw_document or json.dumps(structured_payload, ensure_ascii=False, sort_keys=True))
+    event_text = str(getattr(event, "raw_text", "") or "")
+    raw_text = str(
+        raw_document
+        if preserve_research_document and raw_document
+        else event_text
+        or raw_document
+        or json.dumps(structured_payload, ensure_ascii=False, sort_keys=True)
+    )
+    if preserve_research_document:
+        structured_payload["research_document_preserved"] = True
+        structured_payload["research_document_char_count"] = len(raw_text)
+        structured_payload["normalized_event_excerpt_char_count"] = len(event_text)
     content_hash = hashlib.sha256(raw_text.encode("utf-8")).hexdigest()
     published_date = published_at_value.date() if hasattr(published_at_value, "date") else None
     available_date = available_at_value.date() if hasattr(available_at_value, "date") else None

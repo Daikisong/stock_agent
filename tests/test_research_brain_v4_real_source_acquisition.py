@@ -2253,6 +2253,72 @@ class ResearchBrainV4RealSourceAcquisitionTests(unittest.TestCase):
         self.assertIn("계약금액", result.raw_text)
         self.assertEqual(result.structured_payload["contract_amount_to_prior_sales"], 0.45)
 
+    def test_opendart_full_thesis_fetch_prefers_periodic_report_without_changing_daily_fetch(self):
+        detail_by_receipt = {
+            "202607100001": "<DOCUMENT>유상증자 시설자금 확정 공시와 발행 조건을 설명하는 충분한 길이의 공식 문서 본문입니다. 기준일 현재 발행 절차가 진행 중입니다.</DOCUMENT>",
+            "202605150001": (
+                "<DOCUMENT>분기보고서 공식 문서 본문입니다."
+                + ("정기보고서 본문 " * 3000)
+                + "20,000자 뒤의 HBM 매출과 영업이익 현황도 보존되어야 합니다.</DOCUMENT>"
+            ),
+        }
+
+        def fake_get(url, params=None, timeout=None):
+            if url.endswith("/list.json"):
+                return _FakeResponse(
+                    json_payload={
+                        "status": "000",
+                        "list": [
+                            {
+                                "stock_code": "000660",
+                                "corp_name": "SK하이닉스",
+                                "report_nm": "주요사항보고서(유상증자결정)",
+                                "rcept_no": "202607100001",
+                                "rcept_dt": "20260710",
+                            },
+                            {
+                                "stock_code": "000660",
+                                "corp_name": "SK하이닉스",
+                                "report_nm": "분기보고서 (2026.03)",
+                                "rcept_no": "202605150001",
+                                "rcept_dt": "20260515",
+                            },
+                        ],
+                    }
+                )
+            if url.endswith("/document.xml"):
+                return _FakeResponse(text_payload=detail_by_receipt[str(params["rcept_no"])])
+            raise AssertionError(f"unexpected OpenDART URL: {url}")
+
+        environment = {"OPENDART_API_KEY": "unit-secret"}
+        corp = {"symbol": "000660", "company_name": "SK하이닉스", "corp_code": "00164779"}
+        with patch.dict("os.environ", environment, clear=True), patch(
+            "e2r.production.source_connectors.opendart_live_connector._corp_row_for_symbol",
+            return_value=corp,
+        ), patch(
+            "e2r.production.source_connectors.opendart_live_connector.requests.get",
+            side_effect=fake_get,
+        ):
+            connector = OpenDARTLiveConnector(repo_root=".")
+            daily = connector.fetch(
+                symbol="000660",
+                company_name="SK하이닉스",
+                as_of_date=date(2026, 7, 11),
+                mode="live",
+            )
+            research = connector.fetch_research_document(
+                symbol="000660",
+                company_name="SK하이닉스",
+                as_of_date=date(2026, 7, 11),
+                mode="live",
+            )
+
+        self.assertEqual(daily.request_params["rcept_no"], "202607100001")
+        self.assertEqual(research.request_params["rcept_no"], "202605150001")
+        self.assertIn("HBM 매출", research.raw_text)
+        self.assertGreater(len(research.raw_text), 20_000)
+        self.assertTrue(research.structured_payload["research_document_preserved"])
+
     def test_opendart_live_connector_blocks_list_only_disclosure_when_detail_fails(self):
         def fake_get(url, params=None, timeout=None):
             if url.endswith("/list.json"):

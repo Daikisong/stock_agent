@@ -1,0 +1,22 @@
+{
+  "schema_version": "e2r_gold_question_coverage_v1",
+  "benchmark_mode": "LIVE_SAMSUNG_HYNIX_POST_RUN_BLIND_GOLD",
+  "as_of_date": "2026-07-11",
+  "target_ids": ["005930", "000660"],
+  "production_visibility_during_gold_research": false,
+  "questions": [
+    {"question_family_id": "current_customer_allocation_commitment", "evaluation": "EVIDENCE_FOUND"},
+    {"question_family_id": "capacity_constraint_presold_status", "evaluation": "EVIDENCE_FOUND"},
+    {"question_family_id": "qualification_pass_lag_reopen", "evaluation": "ADEQUATE_ABSENCE"},
+    {"question_family_id": "shipment_mass_production_generation", "evaluation": "EVIDENCE_FOUND"},
+    {"question_family_id": "hbm_ai_memory_revenue_mix", "evaluation": "ADEQUATE_ABSENCE"},
+    {"question_family_id": "asp_pricing_actual", "evaluation": "EVIDENCE_FOUND"},
+    {"question_family_id": "revenue_operating_profit_conversion", "evaluation": "EVIDENCE_FOUND"},
+    {"question_family_id": "margin_fcf_conversion", "evaluation": "EVIDENCE_FOUND"},
+    {"question_family_id": "medium_term_revision_consensus", "evaluation": "ADEQUATE_ABSENCE"},
+    {"question_family_id": "valuation_market_expectation", "evaluation": "ADEQUATE_ABSENCE"},
+    {"question_family_id": "conventional_memory_drag", "evaluation": "ADEQUATE_ABSENCE"},
+    {"question_family_id": "capex_supply_oversupply", "evaluation": "EVIDENCE_FOUND"},
+    {"question_family_id": "customer_concentration_dependency", "evaluation": "ADEQUATE_ABSENCE"}
+  ]
+}

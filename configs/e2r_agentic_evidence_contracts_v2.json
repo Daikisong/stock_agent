@@ -876,7 +876,9 @@
     "margin_fcf_conversion": [],
     "conventional_memory_drag": [],
     "capacity_supply_response": [],
-    "package_substrate_sympathy": []
+    "package_substrate_sympathy": [],
+    "market_expectation_gap": [],
+    "current_valuation_vs_earnings": []
       },
       "primitive_aliases": {
         "customer_preorder_or_allocation": [
@@ -950,6 +952,8 @@
           "supply constraint",
           "supply constraints",
           "supply shortage",
+          "limited supply",
+          "constrained supply",
           "supply tightness",
           "supply tight",
           "capacity bottleneck",
@@ -957,6 +961,9 @@
           "supply-demand imbalance",
           "supply demand imbalance",
           "공급 제약",
+          "제한된 공급",
+          "공급 제한",
+          "공급이 제한",
           "공급부족",
           "공급 부족",
           "공급 타이트",
@@ -1050,6 +1057,10 @@
       "HBM revenue mix",
       "AI memory mix",
       "양산",
+      "양산 출하",
+      "양산출하",
+      "상용 출하",
+      "상용출하",
       "상업 출하",
       "매출 비중"
     ],
@@ -1095,6 +1106,28 @@
       "packaging beneficiary",
       "첨단 패키징",
       "기판"
+    ],
+    "market_expectation_gap": [
+      "consensus gap",
+      "market expectation gap",
+      "earnings expectation",
+      "consensus estimate",
+      "priced in",
+      "컨센서스 격차",
+      "시장 기대",
+      "실적 기대",
+      "선반영"
+    ],
+    "current_valuation_vs_earnings": [
+      "current earnings multiple",
+      "forward earnings multiple",
+      "forward P/E",
+      "current P/E",
+      "valuation multiple",
+      "earnings denominator",
+      "현재 이익 배수",
+      "선행 이익 배수",
+      "밸류에이션 배수"
     ]
       },
       "route_hints": {
@@ -1270,6 +1303,18 @@
       "supersession_rule": "latest_authoritative_profile_update",
       "closure_conditions": ["superseded_by_newer_profile_update"],
       "authoritative_followup_sources": ["FILING", "IR", "NEWS", "RESEARCH_REPORT"]
+    },
+    "market_expectation_gap": {
+      "max_age_days": 180,
+      "supersession_rule": "latest_attributable_consensus_or_expectation_update",
+      "closure_conditions": ["superseded_by_newer_consensus_or_expectation"],
+      "authoritative_followup_sources": ["FILING", "IR", "RESEARCH_REPORT"]
+    },
+    "current_valuation_vs_earnings": {
+      "max_age_days": 180,
+      "supersession_rule": "latest_current_or_forward_earnings_multiple",
+      "closure_conditions": ["superseded_by_newer_valuation_or_earnings_denominator"],
+      "authoritative_followup_sources": ["FILING", "IR", "RESEARCH_REPORT"]
     }
       },
       "guard_modes": {},
@@ -1311,13 +1356,16 @@
           "customer_preorder_or_allocation",
           "revenue_visibility_contract",
           "hbm_capacity_constraint",
-          "hbm_capacity_pre_sold"
+          "hbm_capacity_pre_sold",
+          "market_expectation_gap",
+          "current_valuation_vs_earnings"
         ],
         "valuation_rerating": [
           "customer_preorder_or_allocation",
           "revenue_visibility_contract",
           "hbm_capacity_constraint",
-          "hbm_capacity_pre_sold"
+          "hbm_capacity_pre_sold",
+          "current_valuation_vs_earnings"
         ],
     "capital_allocation": [
       "margin_fcf_conversion",
@@ -1334,7 +1382,9 @@
       "qualification_state",
       "shipment_or_revenue_mix",
       "actual_earnings_conversion",
-      "package_substrate_sympathy"
+      "package_substrate_sympathy",
+      "market_expectation_gap",
+      "current_valuation_vs_earnings"
         ]
       }
     },

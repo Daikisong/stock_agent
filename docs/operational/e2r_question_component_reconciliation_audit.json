@@ -38,15 +38,14 @@
         "absence_with_provider_failure_count": 0,
         "partially_supported_question_zero_credit_count": 0,
         "positive_claim_absent_component_count": 0,
-        "positive_proposal_absent_component_count": 1,
+        "positive_proposal_absent_component_count": 0,
         "supported_non_scoring_component_credit_count": 0,
         "supported_question_absent_component_count": 0,
         "supported_question_zero_credit_count": 0
       },
       "error_codes": [
         "ABSENCE_HAS_POSITIVE_SCORING_LINEAGE",
-        "ABSENCE_MASKS_INTERNAL_REJECTION",
-        "POSITIVE_PROPOSAL_WITHOUT_COMPONENT"
+        "ABSENCE_MASKS_INTERNAL_REJECTION"
       ],
       "reconciled_closure_status": "SCORING_PIPELINE_ERROR"
     },
@@ -140,7 +139,7 @@
       "reconciled_closure_status": "SCORING_PIPELINE_ERROR"
     }
   },
-  "question_count": 12,
+  "question_count": 13,
   "reconciliations": [
     {
       "component_ids": [
@@ -434,6 +433,29 @@
       "question_family_id": "medium_term_revision_consensus",
       "reconciled_closure_status": "SOURCE_PENDING",
       "reconciliation_id": "RECON-0259714f03676be0e501a179",
+      "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
+      "search_adequate": false,
+      "supporting_claim_ids": [],
+      "validated_impact_ids": []
+    },
+    {
+      "component_ids": [],
+      "component_links": [],
+      "component_states": {},
+      "component_subcriterion_ids": [],
+      "credit_result": "ZERO_CREDIT",
+      "eligibility_decision_ids": [],
+      "error_codes": [],
+      "input_closure_status": "SOURCE_PENDING",
+      "internal_rejection": false,
+      "positive_proposal_impact_ids": [],
+      "positive_scoring_claim_ids": [],
+      "proposal_impact_ids": [],
+      "provider_failure": false,
+      "question_contract_hash": "428597045042603fd97ea3276a9c8831776591ebf801273c19ca92f73e252c83",
+      "question_family_id": "valuation_market_expectation",
+      "reconciled_closure_status": "SOURCE_PENDING",
+      "reconciliation_id": "RECON-b1a4a7f460ff5d98e706d08c",
       "reconciliation_status": "SEMANTIC_CLOSURE_RECONCILED",
       "search_adequate": false,
       "supporting_claim_ids": [],

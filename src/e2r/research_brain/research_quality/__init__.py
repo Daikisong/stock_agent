@@ -19,6 +19,13 @@ from .adaptive_repair import (
     compile_research_repair_directive,
     audit_adaptive_repair_contract,
 )
+from .material_fact_lane import (
+    PRODUCTION_MATERIAL_FACT_SCHEMA_VERSION,
+    ProductionMaterialFactLane,
+    combine_production_material_fact_lanes,
+    compile_production_material_fact_lane,
+    write_production_material_fact_lane,
+)
 
 __all__ = [
     "BlindResearchBenchmarkResult",
@@ -34,4 +41,9 @@ __all__ = [
     "canonical_research_failure_class",
     "compile_research_repair_directive",
     "audit_adaptive_repair_contract",
+    "PRODUCTION_MATERIAL_FACT_SCHEMA_VERSION",
+    "ProductionMaterialFactLane",
+    "combine_production_material_fact_lanes",
+    "compile_production_material_fact_lane",
+    "write_production_material_fact_lane",
 ]

@@ -923,6 +923,98 @@
         "issuer_ir"
       ],
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
+    },
+    "valuation_market_expectation": {
+      "accepted_claim_predicates": [
+        "attributable consensus or market expectation",
+        "current or forward earnings multiple with period and denominator"
+      ],
+      "allowed_component_ids": [
+        "market_mispricing",
+        "valuation_rerating",
+        "information_confidence"
+      ],
+      "allowed_primitive_ids": [
+        "market_expectation_gap",
+        "current_valuation_vs_earnings"
+      ],
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "contract_hash": "428597045042603fd97ea3276a9c8831776591ebf801273c19ca92f73e252c83",
+      "counter_keywords": [
+        "priced in",
+        "already reflected",
+        "premium valuation",
+        "선반영",
+        "고평가"
+      ],
+      "counter_predicates": [
+        "favorable HBM scenario already reflected in expectations or valuation"
+      ],
+      "full_support_keywords": [
+        "consensus gap",
+        "expectation gap",
+        "earnings multiple",
+        "forward p/e",
+        "current p/e",
+        "valuation multiple",
+        "컨센서스 격차",
+        "기대 격차",
+        "이익 배수",
+        "밸류에이션"
+      ],
+      "mechanism_scope": "Current HBM/memory market-expectation gap and current/forward valuation-to-earnings bridge",
+      "non_scoring_support_predicates": [
+        "raw price momentum",
+        "target price without earnings bridge",
+        "multiple without earnings period",
+        "historical outcome"
+      ],
+      "partial_keywords": [
+        "consensus",
+        "expectation",
+        "valuation",
+        "multiple",
+        "컨센서스",
+        "기대",
+        "밸류에이션",
+        "배수"
+      ],
+      "partial_support_predicates": [
+        "estimate direction without complete consensus dispersion",
+        "current valuation multiple with incomplete HBM earnings attribution"
+      ],
+      "question_family_id": "valuation_market_expectation",
+      "required_counter_routes": [
+        "expectation_counter",
+        "valuation_counter"
+      ],
+      "required_keyword_groups": [
+        [
+          "hbm",
+          "memory",
+          "dram",
+          "메모리",
+          "d램"
+        ],
+        [
+          "consensus",
+          "expectation",
+          "valuation",
+          "multiple",
+          "p/e",
+          "pbr",
+          "컨센서스",
+          "기대",
+          "밸류에이션",
+          "배수"
+        ]
+      ],
+      "required_source_routes": [
+        "financial_revision",
+        "official_filing",
+        "trusted_independent"
+      ],
+      "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     }
   },
   "critical_count_sum": 0,
@@ -1370,6 +1462,33 @@
         "WEBTASK-f310a6f32292430925674609"
       ],
       "source_task_id": "DST-561e3223ec26b26773ce1cb2",
+      "status": "EVALUATED_ABSENT",
+      "supporting_claim_ids": [],
+      "target_id": "005930"
+    },
+    {
+      "accepted_mapping_ids": [],
+      "allowed_component_ids": [
+        "market_mispricing",
+        "valuation_rerating",
+        "information_confidence"
+      ],
+      "allowed_primitive_ids": [
+        "market_expectation_gap",
+        "current_valuation_vs_earnings"
+      ],
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "candidate_eligibility_decision_ids": [],
+      "counter_claim_ids": [],
+      "eligibility_decision_ids": [],
+      "failure_class": null,
+      "next_action": null,
+      "non_scoring_claim_ids": [],
+      "partial_supporting_claim_ids": [],
+      "question_contract_hash": "428597045042603fd97ea3276a9c8831776591ebf801273c19ca92f73e252c83",
+      "question_family_id": "valuation_market_expectation",
+      "search_exhaustion_proof": [],
+      "source_task_id": null,
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
       "target_id": "005930"
@@ -1892,6 +2011,33 @@
     {
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
+        "market_mispricing",
+        "valuation_rerating",
+        "information_confidence"
+      ],
+      "allowed_primitive_ids": [
+        "market_expectation_gap",
+        "current_valuation_vs_earnings"
+      ],
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "candidate_eligibility_decision_ids": [],
+      "counter_claim_ids": [],
+      "eligibility_decision_ids": [],
+      "failure_class": null,
+      "next_action": null,
+      "non_scoring_claim_ids": [],
+      "partial_supporting_claim_ids": [],
+      "question_contract_hash": "428597045042603fd97ea3276a9c8831776591ebf801273c19ca92f73e252c83",
+      "question_family_id": "valuation_market_expectation",
+      "search_exhaustion_proof": [],
+      "source_task_id": null,
+      "status": "EVALUATED_ABSENT",
+      "supporting_claim_ids": [],
+      "target_id": "000660"
+    },
+    {
+      "accepted_mapping_ids": [],
+      "allowed_component_ids": [
         "eps_fcf_explosion",
         "earnings_visibility",
         "bottleneck_pricing"
@@ -1993,11 +2139,11 @@
       "target_id": "000660"
     }
   ],
-  "question_contract_count": 12,
+  "question_contract_count": 13,
   "schema_version": "e2r_question_impact_contract_audit_v1",
   "status": "QUESTION_IMPACT_CONTRACT_PASS",
   "status_counts": {
-    "EVALUATED_ABSENT": 8,
+    "EVALUATED_ABSENT": 10,
     "PARTIALLY_SUPPORTED_SCORING": 9,
     "SUPPORTED_NON_SCORING": 5,
     "SUPPORTED_SCORING": 2

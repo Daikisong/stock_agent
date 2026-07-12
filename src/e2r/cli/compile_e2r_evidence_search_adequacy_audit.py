@@ -24,9 +24,15 @@ def _jsonl(path: Path):
     )
 
 
+def _preferred_jsonl(root: Path, primary: str, fallback: str):
+    rows = _jsonl(root / primary)
+    return rows if rows else _jsonl(root / fallback)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input-root", required=True)
+    parser.add_argument("--input-root", action="append", required=True)
+    parser.add_argument("--write-back", action="store_true")
     parser.add_argument(
         "--leaf-output",
         default="docs/operational/e2r_evidence_search_adequacy.jsonl",
@@ -36,29 +42,62 @@ def main() -> int:
         default="docs/operational/e2r_evidence_search_adequacy_audit.json",
     )
     args = parser.parse_args()
-    root = Path(args.input_root)
-    rows = compile_dossier_search_adequacy(
-        question_tasks=_jsonl(root / "question_source_tasks.jsonl"),
-        executed_tasks=_jsonl(root / "executed_question_source_tasks.jsonl"),
-        provider_requests=_jsonl(root / "provider_requests.jsonl"),
-        provider_fetch_results=_jsonl(root / "provider_fetch_results.jsonl"),
-        web_search_tasks=_jsonl(root / "web_search_tasks.jsonl"),
-        documents=_jsonl(root / "evidence_documents.jsonl"),
-        claims=_jsonl(root / "accepted_current_claims.jsonl"),
-        primitive_mappings=_jsonl(root / "primitive_mappings.jsonl"),
-        question_closures=_jsonl(root / "question_closure.jsonl"),
-        question_contracts=load_question_impact_contracts(),
-        claim_eligibility_decisions=_jsonl(
-            root / "claim_eligibility_decisions.jsonl"
-        ),
-        proposed_impacts=_jsonl(root / "claim_impacts_proposed.jsonl"),
-        validated_impacts=_jsonl(root / "claim_impacts_validated.jsonl"),
-        material_fact_comparisons=_jsonl(
-            root / "material_fact_comparison.jsonl"
-        ),
+    all_rows = []
+    for input_root in args.input_root:
+        root = Path(input_root)
+        rows = compile_dossier_search_adequacy(
+            question_tasks=_jsonl(root / "question_source_tasks.jsonl"),
+            executed_tasks=_jsonl(root / "executed_question_source_tasks.jsonl"),
+            provider_requests=_preferred_jsonl(
+                root,
+                "research_provider_requests.jsonl",
+                "provider_requests.jsonl",
+            ),
+            provider_fetch_results=_preferred_jsonl(
+                root,
+                "research_provider_fetch_results.jsonl",
+                "provider_fetch_results.jsonl",
+            ),
+            web_search_tasks=_preferred_jsonl(
+                root,
+                "research_web_search_tasks.jsonl",
+                "web_search_tasks.jsonl",
+            ),
+            documents=(
+                *_jsonl(root / "evidence_documents.jsonl"),
+                *_jsonl(root / "research_web_fetched_documents.jsonl"),
+            ),
+            claims=_jsonl(root / "accepted_current_claims.jsonl"),
+            primitive_mappings=_jsonl(root / "primitive_mappings.jsonl"),
+            question_closures=_jsonl(root / "question_closure_v2.jsonl")
+            or _jsonl(root / "question_closure.jsonl"),
+            question_contracts=load_question_impact_contracts(),
+            claim_eligibility_decisions=_jsonl(
+                root / "claim_eligibility_decisions.jsonl"
+            ),
+            proposed_impacts=_jsonl(root / "claim_impacts_proposed.jsonl"),
+            validated_impacts=_jsonl(root / "claim_impacts_validated.jsonl"),
+            material_fact_comparisons=_jsonl(
+                root / "material_fact_comparison.jsonl"
+            ),
+        )
+        if not rows:
+            raise ValueError(f"no search adequacy rows compiled from {root}")
+        all_rows.extend(rows)
+        if args.write_back:
+            write_jsonl(
+                root / "evidence_search_adequacy.jsonl",
+                (row.to_dict() for row in rows),
+            )
+            write_json(
+                root / "evidence_search_adequacy_audit.json",
+                audit_search_adequacy(rows),
+            )
+    audit = audit_search_adequacy(tuple(all_rows))
+    write_jsonl(
+        Path(args.leaf_output),
+        (row.to_dict() for row in all_rows),
     )
-    audit = audit_search_adequacy(rows)
-    write_jsonl(Path(args.leaf_output), (row.to_dict() for row in rows))
     write_json(Path(args.audit_output), audit)
     print(
         f"{audit['status']} questions={audit['question_count']} "

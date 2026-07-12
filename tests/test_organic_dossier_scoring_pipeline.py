@@ -80,6 +80,26 @@ class _UnavailableProvider(_ImpactProvider):
         raise StructuredProviderUnavailable("test provider unavailable")
 
 
+class _DynamicImpactProvider(_ImpactProvider):
+    def __init__(self) -> None:
+        self.proposal_calls = 0
+        self.retry_contexts = []
+
+    def complete(self, *, pass_name, payload):
+        result = super().complete(pass_name=pass_name, payload=payload)
+        if pass_name == "IMPACT_PROPOSAL":
+            self.proposal_calls += 1
+            retry_context = payload["accepted_claim"].get(
+                "adjudication_retry_context"
+            )
+            if retry_context:
+                self.retry_contexts.append(retry_context)
+            result["impacts"][0]["mapping_id"] = payload["accepted_claim"][
+                "accepted_mappings"
+            ][0]["mapping_id"]
+        return result
+
+
 class OrganicDossierScoringPipelineTests(unittest.TestCase):
     def test_impact_provider_receives_same_document_near_quote_context(self) -> None:
         excerpt = _document_context_excerpt(
@@ -118,10 +138,21 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
             self.assertTrue(decision["full_score_valid"])
             self.assertEqual(decision["accepted_claim_ids"], ["CLM-1"])
             closures_v2 = self._read_jsonl(root / "question_closure_v2.jsonl")
-            self.assertEqual(len(closures_v2), 12)
+            self.assertEqual(len(closures_v2), 13)
             self.assertNotIn(
                 "SUPPORTED",
                 {row["status"] for row in closures_v2},
+            )
+            semantic_trace = self._read_jsonl(
+                root / "semantic_closure_trace.jsonl"
+            )
+            self.assertEqual(len(semantic_trace), 13)
+            self.assertTrue(
+                all(
+                    row["trace_schema_version"]
+                    == "e2r_semantic_closure_trace_v1"
+                    for row in semantic_trace
+                )
             )
 
     def test_provider_pending_component_preserves_points_but_blocks_full_score(self) -> None:
@@ -229,6 +260,123 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
                 retry_failed_only=True,
             )
             self.assertEqual(second["critical_count_sum"], 0)
+
+    def test_retry_failed_only_includes_pass_row_with_invalid_proposal(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._write_inputs(root)
+            first = run_dossier_scoring_pipeline(
+                dossier_root=root,
+                target_id="123456",
+                company_name="임의회사",
+                as_of_date="2026-07-11",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                impact_provider=_ImpactProvider(),
+            )
+            self.assertEqual(first["critical_count_sum"], 0)
+            rows = self._read_jsonl(root / "impact_adjudications.jsonl")
+            rows[0]["invalid_proposal_count"] = 1
+            self._jsonl(root / "impact_adjudications.jsonl", rows)
+
+            provider = _DynamicImpactProvider()
+            second = run_dossier_scoring_pipeline(
+                dossier_root=root,
+                target_id="123456",
+                company_name="임의회사",
+                as_of_date="2026-07-11",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                impact_provider=provider,
+                retry_failed_only=True,
+            )
+
+            self.assertEqual(provider.proposal_calls, 1)
+            self.assertEqual(second["critical_count_sum"], 0)
+            self.assertEqual(
+                provider.retry_contexts[0]["allowed_mapping_pairs"],
+                [{"mapping_id": "MAP-1", "primitive_id": "hbm_product_profile"}],
+            )
+            self.assertIn(
+                "Never invent, substitute, or cross-wire",
+                provider.retry_contexts[0]["instruction"],
+            )
+            retried = self._read_jsonl(root / "impact_adjudications.jsonl")
+            self.assertEqual(retried[0]["invalid_proposal_count"], 0)
+
+    def test_reuse_proposals_calls_provider_only_for_new_current_claims(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self._write_inputs(root)
+            first_provider = _DynamicImpactProvider()
+            first = run_dossier_scoring_pipeline(
+                dossier_root=root,
+                target_id="123456",
+                company_name="임의회사",
+                as_of_date="2026-07-11",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                impact_provider=first_provider,
+            )
+            self.assertEqual(first["critical_count_sum"], 0)
+            self.assertEqual(first_provider.proposal_calls, 1)
+            self._append_jsonl(
+                root / "accepted_current_claims.jsonl",
+                {
+                    "claim_id": "CLM-2",
+                    "target_id": "123456",
+                    "mapping_ids": ["MAP-2"],
+                    "accepted": True,
+                    "evidence_origin": "ORGANIC_LIVE",
+                    "fetched": True,
+                    "source_proxy_only": False,
+                    "exact_quote": "The issuer disclosed a second current HBM profile fact.",
+                },
+            )
+            self._append_jsonl(
+                root / "claim_provenance.jsonl",
+                {
+                    "claim_id": "CLM-2",
+                    "target_id": "123456",
+                    "document_id": "DOC-1",
+                    "source_url": "https://issuer.example/doc",
+                    "published_date": "2026-07-10",
+                    "exact_quote": "The issuer disclosed a second current HBM profile fact.",
+                    "mapping_ids": ["MAP-2"],
+                    "directness": "DIRECT",
+                    "temporal_status": "CURRENT",
+                    "source_proxy_only": False,
+                    "test_only": False,
+                    "fetched": True,
+                    "anchor_verified": True,
+                    "mapping_status": "ACCEPTED",
+                },
+            )
+            self._append_jsonl(
+                root / "primitive_mappings.jsonl",
+                {
+                    "mapping_id": "MAP-2",
+                    "claim_id": "CLM-2",
+                    "primitive_id": "hbm_product_profile",
+                    "support_direction": "SUPPORT",
+                    "accepted_by_evidence_os": True,
+                },
+            )
+            second_provider = _DynamicImpactProvider()
+            second = run_dossier_scoring_pipeline(
+                dossier_root=root,
+                target_id="123456",
+                company_name="임의회사",
+                as_of_date="2026-07-11",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                impact_provider=second_provider,
+                reuse_proposals=True,
+            )
+
+            self.assertEqual(second["critical_count_sum"], 0)
+            self.assertEqual(second_provider.proposal_calls, 1)
+            rows = self._read_jsonl(root / "impact_adjudications.jsonl")
+            self.assertEqual(
+                {row["claim_id"] for row in rows},
+                {"CLM-1", "CLM-2"},
+            )
 
     def _write_inputs(self, root: Path, pending_family: str | None = None) -> None:
         self._jsonl(
@@ -346,6 +494,11 @@ class OrganicDossierScoringPipelineTests(unittest.TestCase):
     @staticmethod
     def _jsonl(path: Path, rows):
         path.write_text("".join(json.dumps(row) + "\n" for row in rows))
+
+    @staticmethod
+    def _append_jsonl(path: Path, row):
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(row) + "\n")
 
     @staticmethod
     def _read_jsonl(path: Path):

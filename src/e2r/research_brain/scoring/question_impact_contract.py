@@ -325,6 +325,7 @@ def audit_question_impact_contracts(
         "revenue_operating_profit_conversion",
         "margin_fcf_conversion",
         "medium_term_revision_consensus",
+        "valuation_market_expectation",
         "conventional_memory_drag",
         "capex_supply_oversupply",
         "customer_concentration_dependency",

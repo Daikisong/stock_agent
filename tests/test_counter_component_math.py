@@ -82,15 +82,15 @@ class CounterComponentMathTests(unittest.TestCase):
             by_component["bottleneck_pricing"]["counter_effect"], 0
         )
 
-    def test_open_counter_in_another_subcriterion_blocks_same_component(self) -> None:
+    def test_capacity_counter_in_another_subcriterion_caps_same_component(self) -> None:
         scenario = self.audit["scenarios"][
             "same_component_distinct_subcriterion_counter"
         ]
         component = scenario["active_component_assessments"][0]
-        self.assertEqual(component["status"], "CONTRADICTED_OPEN")
+        self.assertEqual(component["status"], "SUPPORT_WITH_COUNTER_CAP")
         self.assertGreater(component["support_points"], 0)
         self.assertGreater(component["counter_effect"], 0)
-        self.assertFalse(scenario["full_score_valid"])
+        self.assertTrue(scenario["full_score_valid"])
 
 
 if __name__ == "__main__":

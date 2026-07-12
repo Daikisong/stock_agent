@@ -153,6 +153,231 @@ class LiveCurrentClaimCompilerTest(unittest.TestCase):
                 question_source_tasks=(_task(),),
                 provider_bundle=bundle,
             )
+        with self.assertRaisesRegex(ValueError, "bounded by 48"):
+            CurrentClaimCompilerConfig(
+                as_of_date="2026-07-10",
+                max_documents=1,
+                max_raw_assertions_per_document=49,
+                test_mode=True,
+            )
+
+    def test_large_filing_builds_bounded_anchors_around_llm_query_focus(self) -> None:
+        document = _document()
+        focused = "테스트회사의 HBM4 고객 물량 배정과 매출 비중이 확대됐다."
+        text = ("정기보고서 일반 표와 주석입니다.\n" * 3_000) + focused
+        document.update(
+            {
+                "document_id": "DOC-" + hashlib.sha256(text.encode()).hexdigest()[:20],
+                "content_hash": hashlib.sha256(text.encode()).hexdigest(),
+                "content_text": text,
+            }
+        )
+        task = _task()
+        task.update(
+            {
+                "question_to_answer": "Is HBM customer allocation and revenue mix visible?",
+                "query_intent": {
+                    "literal_queries": ["테스트회사 HBM4 고객 물량 배정 매출 비중 원문"]
+                },
+            }
+        )
+        extractor = FakeClaimExtractorProvider(ClaimExtractionOutput())
+
+        CurrentClaimCompiler().compile(
+            CurrentClaimCompilerConfig(
+                as_of_date="2026-07-10",
+                max_documents=1,
+                test_mode=True,
+            ),
+            evidence_documents=(document,),
+            question_source_tasks=(task,),
+            provider_bundle=AgenticEvidenceProviderBundle(
+                extractor=extractor,
+                adjudicator=_NeverAdjudicator(),
+                mapper=_NeverMapper(),
+            ),
+        )
+
+        call = extractor.calls[0]
+        self.assertIn("hbm4", call.retrieval_focus_terms)
+        self.assertTrue(any(focused in anchor.exact_text for anchor in call.anchors))
+        self.assertTrue(all(len(anchor.exact_text) <= 2_100 for anchor in call.anchors))
+
+    def test_distinct_llm_question_focuses_use_bounded_multipass_extraction(self) -> None:
+        document = _document(task_id="TASK-HBM")
+        text = (
+            "테스트회사는 HBM 수요가 견조하지만 공급은 제한적이라고 밝혔다.\n"
+            + ("일반 공시 표입니다.\n" * 300)
+            + "테스트회사의 잉여현금흐름 FCF는 설비투자 이후에도 개선됐다."
+        )
+        document.update(
+            {
+                "document_id": "DOC-" + hashlib.sha256(text.encode()).hexdigest()[:20],
+                "content_hash": hashlib.sha256(text.encode()).hexdigest(),
+                "content_text": text,
+                "source_task_ids": ["TASK-HBM", "TASK-FCF"],
+            }
+        )
+        hbm_task = _task(task_id="TASK-HBM")
+        hbm_task.update(
+            {
+                "question_to_answer": "HBM 수요와 제한된 공급은 무엇인가?",
+                "query_intent": {"literal_queries": ["테스트회사 HBM 제한된 공급"]},
+            }
+        )
+        fcf_task = _task(task_id="TASK-FCF")
+        fcf_task.update(
+            {
+                "question_to_answer": "FCF 개선은 무엇인가?",
+                "query_intent": {"literal_queries": ["테스트회사 잉여현금흐름 FCF 개선"]},
+            }
+        )
+        extractor = _FocusEchoExtractor()
+
+        result = CurrentClaimCompiler().compile(
+            CurrentClaimCompilerConfig(
+                as_of_date="2026-07-10",
+                max_documents=1,
+                max_raw_assertions_per_document=4,
+                max_extraction_passes_per_document=4,
+                test_mode=True,
+            ),
+            evidence_documents=(document,),
+            question_source_tasks=(hbm_task, fcf_task),
+            provider_bundle=AgenticEvidenceProviderBundle(
+                extractor=extractor,
+                adjudicator=_TargetEchoAdjudicator(),
+                mapper=_AcceptFirstPrimitiveMapper(),
+            ),
+        )
+
+        self.assertEqual(len(extractor.calls), 2)
+        self.assertEqual(len(result.raw_assertions), 2)
+        self.assertEqual(result.audit["extraction_pass_count"], 2)
+        self.assertEqual(result.audit["extracted_raw_assertion_count"], 2)
+        self.assertEqual(len({row["raw_assertion_id"] for row in result.raw_assertions}), 2)
+        self.assertTrue(any("hbm" in call.retrieval_focus_terms for call in extractor.calls))
+        self.assertTrue(any("fcf" in call.retrieval_focus_terms for call in extractor.calls))
+
+    def test_multipass_budget_reserves_a_candidate_for_each_llm_question(self) -> None:
+        document = _document(task_id="TASK-HBM")
+        text = (
+            "테스트회사는 HBM 가격과 제한된 공급을 공시했다.\n"
+            + ("일반 표입니다.\n" * 100)
+            + "테스트회사의 FCF는 전년보다 개선됐다."
+        )
+        document.update(
+            {
+                "document_id": "DOC-" + hashlib.sha256(text.encode()).hexdigest()[:20],
+                "content_hash": hashlib.sha256(text.encode()).hexdigest(),
+                "content_text": text,
+                "source_task_ids": ["TASK-HBM", "TASK-FCF"],
+            }
+        )
+        hbm_task = _task(task_id="TASK-HBM")
+        hbm_task["query_intent"] = {"literal_queries": ["테스트회사 HBM 가격 공급"]}
+        fcf_task = _task(task_id="TASK-FCF")
+        fcf_task["query_intent"] = {"literal_queries": ["테스트회사 FCF 개선"]}
+
+        result = CurrentClaimCompiler().compile(
+            CurrentClaimCompilerConfig(
+                as_of_date="2026-07-10",
+                max_documents=1,
+                max_raw_assertions_per_document=2,
+                max_extraction_passes_per_document=2,
+                test_mode=True,
+            ),
+            evidence_documents=(document,),
+            question_source_tasks=(hbm_task, fcf_task),
+            provider_bundle=AgenticEvidenceProviderBundle(
+                extractor=_CrowdingExtractor(),
+                adjudicator=_TargetEchoAdjudicator(),
+                mapper=_AcceptFirstPrimitiveMapper(),
+            ),
+        )
+
+        predicates = {row["predicate"] for row in result.raw_assertions}
+        self.assertEqual(len(result.raw_assertions), 2)
+        self.assertIn("reported improved FCF", predicates)
+
+    def test_limited_supply_wording_routes_to_capacity_constraint_contract(self) -> None:
+        document = _document()
+        text = "테스트회사는 견조한 수요 대비 제한된 공급 환경이 지속됐다고 밝혔다."
+        document.update(
+            {
+                "document_id": "DOC-" + hashlib.sha256(text.encode()).hexdigest()[:20],
+                "content_hash": hashlib.sha256(text.encode()).hexdigest(),
+                "content_text": text,
+            }
+        )
+        task = _task()
+        task["primitive_id"] = "hbm_capacity_constraint"
+
+        result = CurrentClaimCompiler().compile(
+            CurrentClaimCompilerConfig(
+                as_of_date="2026-07-10",
+                max_documents=1,
+                mapper_self_consistency_rounds=1,
+                test_mode=True,
+            ),
+            evidence_documents=(document,),
+            question_source_tasks=(task,),
+            provider_bundle=AgenticEvidenceProviderBundle(
+                extractor=_LimitedSupplyExtractor(),
+                adjudicator=_TargetEchoAdjudicator(),
+                mapper=_CapacityCandidateMapper(),
+            ),
+        )
+
+        accepted = [
+            row
+            for row in result.primitive_mappings
+            if row.get("accepted_by_evidence_os") is True
+        ]
+        self.assertEqual(
+            [row["primitive_id"] for row in accepted],
+            ["hbm_capacity_constraint"],
+        )
+
+    def test_korean_mass_production_shipment_routes_to_shipment_primitive(self) -> None:
+        document = _document()
+        text = "테스트회사는 세계 최초 업계 최고 성능의 HBM4 양산 출하를 완료했다."
+        document.update(
+            {
+                "document_id": "DOC-" + hashlib.sha256(text.encode()).hexdigest()[:20],
+                "content_hash": hashlib.sha256(text.encode()).hexdigest(),
+                "content_text": text,
+            }
+        )
+        task = _task()
+        task["primitive_id"] = "shipment_or_revenue_mix"
+
+        result = CurrentClaimCompiler().compile(
+            CurrentClaimCompilerConfig(
+                as_of_date="2026-07-10",
+                max_documents=1,
+                mapper_self_consistency_rounds=1,
+                test_mode=True,
+                additional_primitive_ids=("shipment_or_revenue_mix",),
+            ),
+            evidence_documents=(document,),
+            question_source_tasks=(task,),
+            provider_bundle=AgenticEvidenceProviderBundle(
+                extractor=_MassProductionShipmentExtractor(),
+                adjudicator=_TargetEchoAdjudicator(),
+                mapper=_ShipmentCandidateMapper(),
+            ),
+        )
+
+        accepted = [
+            row
+            for row in result.primitive_mappings
+            if row.get("accepted_by_evidence_os") is True
+        ]
+        self.assertEqual(
+            [row["primitive_id"] for row in accepted],
+            ["shipment_or_revenue_mix"],
+        )
 
 
 class _NeverAdjudicator:
@@ -178,6 +403,133 @@ class _TargetEchoExtractor:
                     polarity_proposal=Polarity.POSITIVE,
                     event_date_text="2026-06-01",
                     exact_quote=inputs.anchors[0].exact_text,
+                ),
+            )
+        )
+
+
+class _FocusEchoExtractor:
+    def __init__(self) -> None:
+        self.calls = []
+
+    def extract(self, inputs):
+        self.calls.append(inputs)
+        is_hbm = "hbm" in inputs.retrieval_focus_terms
+        marker = "HBM" if is_hbm else "FCF"
+        anchor = next(item for item in inputs.anchors if marker in item.exact_text)
+        return ClaimExtractionOutput(
+            (
+                RawAssertion(
+                    raw_assertion_id="RA-001",
+                    anchor_id=anchor.anchor_id,
+                    subject_text=inputs.target_names[0],
+                    predicate=(
+                        "reported firm HBM demand and limited supply"
+                        if is_hbm
+                        else "reported improved free cash flow"
+                    ),
+                    object_text=marker,
+                    polarity_proposal=Polarity.POSITIVE,
+                    event_date_text="2026-06-01",
+                    exact_quote=anchor.exact_text,
+                ),
+            )
+        )
+
+
+class _CrowdingExtractor:
+    def extract(self, inputs):
+        is_hbm = "hbm" in inputs.retrieval_focus_terms
+        marker = "HBM" if is_hbm else "FCF"
+        anchor = next(item for item in inputs.anchors if marker in item.exact_text)
+        if not is_hbm:
+            predicates = ("reported improved FCF",)
+        else:
+            predicates = tuple(f"reported HBM fact {index}" for index in range(4))
+        return ClaimExtractionOutput(
+            tuple(
+                RawAssertion(
+                    raw_assertion_id=f"RA-{index}",
+                    anchor_id=anchor.anchor_id,
+                    subject_text=inputs.target_names[0],
+                    predicate=predicate,
+                    object_text=marker,
+                    polarity_proposal=Polarity.POSITIVE,
+                    event_date_text="2026-06-01",
+                    exact_quote=anchor.exact_text,
+                )
+                for index, predicate in enumerate(predicates)
+            )
+        )
+
+
+class _LimitedSupplyExtractor:
+    def extract(self, inputs):
+        return ClaimExtractionOutput(
+            (
+                RawAssertion(
+                    raw_assertion_id="RA-LIMITED-SUPPLY",
+                    anchor_id=inputs.anchors[0].anchor_id,
+                    subject_text=inputs.target_names[0],
+                    predicate="환경이 지속됐다고 밝혔다",
+                    object_text="현재 환경",
+                    polarity_proposal=Polarity.NORMAL,
+                    event_date_text="2026-06-01",
+                    exact_quote="견조한 수요 대비 제한된 공급 환경이 지속",
+                ),
+            )
+        )
+
+
+class _MassProductionShipmentExtractor:
+    def extract(self, inputs):
+        return ClaimExtractionOutput(
+            (
+                RawAssertion(
+                    raw_assertion_id="RA-HBM4-MASS-PRODUCTION-SHIPMENT",
+                    anchor_id=inputs.anchors[0].anchor_id,
+                    subject_text=inputs.target_names[0],
+                    predicate="HBM4 양산 출하",
+                    object_text="HBM4를 고객에게 양산 출하",
+                    polarity_proposal=Polarity.POSITIVE,
+                    event_date_text="2026-02-12",
+                    exact_quote="세계 최초 업계 최고 성능의 HBM4 양산 출하",
+                ),
+            )
+        )
+
+
+class _CapacityCandidateMapper:
+    def map(self, inputs):
+        if "hbm_capacity_constraint" not in inputs.canonical_primitive_ids:
+            return PrimitiveMappingOutput()
+        return PrimitiveMappingOutput(
+            (
+                PrimitiveMappingProposal.build(
+                    claim_id=inputs.claim.claim_id,
+                    archetype_id=inputs.contract.archetype_id,
+                    primitive_id="hbm_capacity_constraint",
+                    support_direction=SupportDirection.SUPPORT,
+                    mapping_status=MappingStatus.ACCEPTED,
+                    rationale="제한된 공급 원문은 현재 공급 제약을 직접 뒷받침한다.",
+                ),
+            )
+        )
+
+
+class _ShipmentCandidateMapper:
+    def map(self, inputs):
+        if "shipment_or_revenue_mix" not in inputs.canonical_primitive_ids:
+            return PrimitiveMappingOutput()
+        return PrimitiveMappingOutput(
+            (
+                PrimitiveMappingProposal.build(
+                    claim_id=inputs.claim.claim_id,
+                    archetype_id=inputs.contract.archetype_id,
+                    primitive_id="shipment_or_revenue_mix",
+                    support_direction=SupportDirection.SUPPORT,
+                    mapping_status=MappingStatus.ACCEPTED,
+                    rationale="HBM4 양산 출하 원문은 실제 shipment를 직접 뒷받침한다.",
                 ),
             )
         )

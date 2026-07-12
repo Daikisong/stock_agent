@@ -180,6 +180,14 @@ def compile_dossier_search_adequacy(
                 str(value) for value in row.get("source_task_ids") or ()
             )
         )
+        resolved_document_routes = {
+            category
+            for row in matching_documents
+            for category in (
+                _source_class_category(str(row.get("source_class") or "")),
+            )
+            if category
+        }
         selected, rejected = select_research_grade_documents(
             candidates=matching_documents,
             question_family_id=family,
@@ -210,6 +218,24 @@ def compile_dossier_search_adequacy(
             if decision is None and claim_eligibility_decisions:
                 continue
             positive_claim_ids.append(claim_id)
+        tagged_question_proposals = tuple(
+            row
+            for row in proposed_impacts
+            if str(row.get("question_family_id") or "") == family
+        )
+        if any(row.get("question_family_id") for row in proposed_impacts):
+            validated_positive_claim_ids = {
+                str(row.get("claim_id") or "")
+                for row in tagged_question_proposals
+                if str(row.get("impact_id") or "") in validated_ids
+                and str(row.get("direction") or "").upper()
+                in {"SUPPORT", "RESOLUTION"}
+            }
+            positive_claim_ids = [
+                claim_id
+                for claim_id in positive_claim_ids
+                if claim_id in validated_positive_claim_ids
+            ]
         closure = closure_by_family.get(family, {})
         supported = str(closure.get("status") or "") in {
             "SUPPORTED",
@@ -222,23 +248,16 @@ def compile_dossier_search_adequacy(
             row
             for row in proposed_impacts
             if str(row.get("claim_id") or "") in positive_claim_ids
+            and str(row.get("question_family_id") or "") == family
             and str(row.get("direction") or "").upper()
             in {"SUPPORT", "RESOLUTION"}
         )
-        zeroed_internal = sum(
-            str(row.get("impact_id") or "") not in validated_ids
-            or float(
-                next(
-                    (
-                        item.get("validated_credit_fraction") or 0
-                        for item in validated_impacts
-                        if item.get("impact_id") == row.get("impact_id")
-                    ),
-                    0,
-                )
+        zeroed_internal = int(
+            bool(proposed_for_question)
+            and not any(
+                str(row.get("impact_id") or "") in validated_ids
+                for row in proposed_for_question
             )
-            <= 0
-            for row in proposed_for_question
         )
         gold_misses = sum(
             str(row.get("target_id") or "") == target_id
@@ -248,14 +267,28 @@ def compile_dossier_search_adequacy(
             for row in material_fact_comparisons
         )
         provider_failures = sum(
-            str(row.get("acquisition_class") or "")
-            in PROVIDER_FAILURE_CLASSES
-            or bool(row.get("provider_error"))
+            (
+                str(row.get("acquisition_class") or "")
+                in PROVIDER_FAILURE_CLASSES
+                or bool(row.get("provider_error"))
+            )
+            and _source_class_category(str(row.get("source_class") or ""))
+            not in resolved_document_routes
+            and _source_class_category(str(row.get("source_class") or ""))
+            not in unavailable
             for row in fetches
-        ) + sum(
-            bool(row.get("search_error")) or bool(row.get("provider_errors"))
+        )
+        clean_web_completed = any(
+            row.get("search_call_executed") is True
+            and not row.get("search_error")
+            and not row.get("provider_errors")
             for row in web
         )
+        if not clean_web_completed:
+            provider_failures += sum(
+                bool(row.get("search_error")) or bool(row.get("provider_errors"))
+                for row in web
+            )
         budget_exhausted = any(
             str(row.get("acquisition_class") or "") == "BUDGET_EXHAUSTED"
             or row.get("budget_exhausted") is True
@@ -506,7 +539,7 @@ def _route_evidence(
             if category not in ROUTE_CATEGORIES:
                 raise ValueError("unknown explicit adequacy route")
             status = str(attempt.get("status") or "").upper()
-            if status == "ATTEMPTED":
+            if status in {"ATTEMPTED", "RESOLVED"}:
                 attempted.add(category)
             elif status == "UNAVAILABLE":
                 unavailable.add(category)
@@ -536,6 +569,7 @@ def _route_evidence(
     for row in web:
         if row.get("search_call_executed") is True:
             attempted.add("INDEPENDENT")
+    pending.difference_update(unavailable)
     return attempted, unavailable, pending, tuple(dict.fromkeys(proof_ids))
 
 

@@ -48,7 +48,7 @@ def main(argv: list[str] | None = None) -> int:
         "--question-family-config",
         default="configs/e2r_full_thesis_question_families_v1.json",
     )
-    parser.add_argument("--resume-source-root")
+    parser.add_argument("--resume-source-root", action="append", default=[])
     args = parser.parse_args(argv)
     targets = _targets(args)
     config = DossierRunConfig(
@@ -74,7 +74,7 @@ def main(argv: list[str] | None = None) -> int:
                 target=target,
                 as_of_date=args.as_of_date,
                 archetype_id=args.canonical_archetype,
-                source_root=args.resume_source_root,
+                source_root=tuple(args.resume_source_root),
                 output_root=Path(result.target_results[index]["output_root"]),
             )
             for index, target in enumerate(targets)

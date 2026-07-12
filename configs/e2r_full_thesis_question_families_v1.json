@@ -102,6 +102,16 @@
           "stop_condition": "STOP_WHEN_CURRENT_REVISION_STATE_IS_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
         },
         {
+          "question_family_id": "valuation_market_expectation",
+          "question_to_answer": "How do current or forward earnings valuation and attributable market expectations compare with the source-backed HBM or memory earnings case, including whether the favorable scenario is already reflected?",
+          "primitive_ids": ["market_expectation_gap", "current_valuation_vs_earnings"],
+          "evidence_roles": ["MARKET_EXPECTATION_GAP", "CURRENT_FORWARD_VALUATION"],
+          "source_priority": ["FINANCIAL_REVISION_SOURCE", "OFFICIAL_FILING", "TRUSTED_INDEPENDENT"],
+          "counter_thesis": true,
+          "budget": {"max_queries": 3, "max_candidates": 30, "max_fetches": 6},
+          "stop_condition": "STOP_WHEN_CURRENT_EXPECTATION_AND_VALUATION_BRIDGE_IS_CONFIRMED_OR_BOUNDED_ROUTES_EXHAUSTED"
+        },
+        {
           "question_family_id": "conventional_memory_drag",
           "question_to_answer": "Does current conventional DRAM or NAND weakness, inventory, or mix offset the HBM thesis?",
           "primitive_ids": ["conventional_memory_drag"],

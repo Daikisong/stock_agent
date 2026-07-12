@@ -66,16 +66,62 @@ class AbsenceRequiresAdequateSearchTests(unittest.TestCase):
         self.assertEqual(row.saturation_status, "BUDGET_PENDING")
         self.assertFalse(row.adequate_absence_allowed)
 
-    def test_operational_audit_matches_compiled_fixture(self) -> None:
+    def test_later_same_route_document_resolves_earlier_provider_failure(self) -> None:
+        documents = list(self._jsonl("evidence_documents.jsonl"))
+        documents.append(
+            {
+                "document_id": "DOC-REVISION-RECOVERY",
+                "source_task_ids": ["TASK-PROVIDER"],
+                "canonical_url": "https://financial.example/revision",
+                "source_class": "CompanyGuide",
+                "published_at": "2026-07-01",
+                "content_text": "The current revision source was fetched and investigated.",
+                "snippet_only": False,
+            }
+        )
+        rows = compile_dossier_search_adequacy(
+            question_tasks=self._jsonl("question_source_tasks.jsonl"),
+            executed_tasks=self._jsonl("executed_question_source_tasks.jsonl"),
+            provider_requests=self._jsonl("provider_requests.jsonl"),
+            provider_fetch_results=self._jsonl("provider_fetch_results.jsonl"),
+            web_search_tasks=self._jsonl("web_search_tasks.jsonl"),
+            documents=documents,
+            claims=self._jsonl("accepted_current_claims.jsonl"),
+            primitive_mappings=self._jsonl("primitive_mappings.jsonl"),
+            question_closures=self._jsonl("question_closure.jsonl"),
+            question_contracts=load_question_impact_contracts(
+                self.ROOT / "configs/e2r_question_impact_contracts_v1.json"
+            ),
+        )
+        recovered = {
+            row.question_family_id: row for row in rows
+        }["medium_term_revision_consensus"]
+        self.assertEqual(recovered.provider_failures, 0)
+        self.assertEqual(recovered.saturation_status, "ADEQUATE_ABSENCE")
+        self.assertTrue(recovered.adequate_absence_allowed)
+
+    def test_controlled_fixture_search_adequacy_has_zero_critical(self) -> None:
         actual = audit_search_adequacy(self._compile())
-        expected = json.loads(
+        self.assertEqual(actual["critical_count_sum"], 0)
+
+    def test_operational_audit_is_live_samsung_hynix_not_fixture(self) -> None:
+        controlled = audit_search_adequacy(self._compile())
+        operational = json.loads(
             (
                 self.ROOT
                 / "docs/operational/e2r_evidence_search_adequacy_audit.json"
             ).read_text(encoding="utf-8")
         )
-        self.assertEqual(actual, expected)
-        self.assertEqual(actual["critical_count_sum"], 0)
+        self.assertEqual(operational["critical_count_sum"], 0)
+        self.assertEqual(operational["question_count"], 26)
+        self.assertEqual(
+            {row["target_id"] for row in operational["rows"]},
+            {"005930", "000660"},
+        )
+        self.assertEqual(operational["saturation_counts"]["PROVIDER_PENDING"], 0)
+        self.assertEqual(operational["saturation_counts"]["SOURCE_PENDING"], 0)
+        self.assertEqual(operational["saturation_counts"]["BUDGET_PENDING"], 0)
+        self.assertNotEqual(operational, controlled)
 
     def _compile(self, *, executed_tasks=None, provider_fetch_results=None):
         return compile_dossier_search_adequacy(

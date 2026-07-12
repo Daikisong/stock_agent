@@ -10,6 +10,7 @@ from datetime import date, datetime
 from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Sequence
+from urllib.parse import urlsplit
 
 from e2r.agentic.evidence_os import EvidenceDocument, SourceType
 from e2r.production.metadata import stable_hash, write_json, write_jsonl
@@ -20,6 +21,7 @@ from e2r.production.source_connectors.source_provider_registry import (
 )
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
 from e2r.research.page_fetcher import PageFetcher
+from e2r.research.publication_date import infer_publication_date
 from e2r.research.search_provider import SearchProvider, SearchResult
 
 from .provider_capabilities import ProviderDocumentRole, classify_provider_result
@@ -272,7 +274,12 @@ class CurrentSourceAcquisitionOrchestrator:
 
                     final_result: SourceFetchResult | None = None
                     for attempt in range(1, max_retries + 2):
-                        result = connector.fetch(
+                        research_fetch = getattr(
+                            connector,
+                            "fetch_research_document",
+                            connector.fetch,
+                        )
+                        result = research_fetch(
                             symbol=target_id,
                             company_name=str(question_task.get("company_name") or ""),
                             as_of_date=date.fromisoformat(config.as_of_date),
@@ -1002,24 +1009,7 @@ def _acquire_bounded_web_fallback(
                 )
                 local_rejection_count += 1
                 continue
-            if published is None:
-                results.append({**base_result, "selection_status": "REJECTED_UNKNOWN_DATE"})
-                rejected.append(
-                    _web_rejection_row(
-                        web_task_id=web_task_id,
-                        web_result=base_result,
-                        question_task=question_task,
-                        query=query,
-                        provider_name=search_provider_name,
-                        reason="UNKNOWN_PUBLISHED_DATE",
-                        detail="search discovery date is absent; page cannot enter current evidence",
-                        fetch_attempted=False,
-                        full_fetch_performed=False,
-                    )
-                )
-                local_rejection_count += 1
-                continue
-            if published > cutoff:
+            if published is not None and published > cutoff:
                 results.append({**base_result, "selection_status": "REJECTED_FUTURE_DATE"})
                 rejected.append(
                     _web_rejection_row(
@@ -1086,6 +1076,70 @@ def _acquire_bounded_web_fallback(
                 local_rejection_count += 1
                 continue
             content_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
+            published = infer_publication_date(
+                explicit=published,
+                metadata_parts=(
+                    url,
+                    str(search_result.title or ""),
+                    str(search_result.snippet or ""),
+                    str(search_result.source or ""),
+                ),
+                document_text=text,
+                as_of_date=cutoff,
+            )
+            base_result = {
+                **base_result,
+                "published_at": published.isoformat() if published else None,
+            }
+            if published is None:
+                results.append(
+                    {
+                        **base_result,
+                        "selection_status": "REJECTED_UNKNOWN_DATE_AFTER_FULL_FETCH",
+                    }
+                )
+                rejected.append(
+                    _web_rejection_row(
+                        web_task_id=web_task_id,
+                        web_result=base_result,
+                        question_task=question_task,
+                        query=query,
+                        provider_name=search_provider_name,
+                        reason="UNKNOWN_PUBLISHED_DATE",
+                        detail=(
+                            "search metadata and fetched full document contain no "
+                            "auditable publication date"
+                        ),
+                        fetch_attempted=True,
+                        full_fetch_performed=True,
+                        content_hash=content_hash,
+                    )
+                )
+                local_rejection_count += 1
+                continue
+            if published > cutoff:
+                results.append(
+                    {
+                        **base_result,
+                        "selection_status": "REJECTED_FUTURE_DATE_AFTER_FULL_FETCH",
+                    }
+                )
+                rejected.append(
+                    _web_rejection_row(
+                        web_task_id=web_task_id,
+                        web_result=base_result,
+                        question_task=question_task,
+                        query=query,
+                        provider_name=search_provider_name,
+                        reason="FUTURE_DOCUMENT",
+                        detail="fetched full document was published after as_of_date",
+                        fetch_attempted=True,
+                        full_fetch_performed=True,
+                        content_hash=content_hash,
+                    )
+                )
+                local_rejection_count += 1
+                continue
             if len(text.strip()) < 80:
                 results.append({**base_result, "selection_status": "REJECTED_SMALL_CONTENT"})
                 rejected.append(
@@ -1137,6 +1191,11 @@ def _acquire_bounded_web_fallback(
                 else as_of_date
             )
             combined_provider_name = f"{search_provider_name}+{page_fetcher_name}"
+            issuer_authority = _verified_issuer_domain_authority(
+                url=url,
+                target_id=target_id,
+                as_of_date=cutoff,
+            )
             evidence = EvidenceDocument.from_text(
                 text=text,
                 canonical_url=url,
@@ -1150,7 +1209,30 @@ def _acquire_bounded_web_fallback(
                 source_lineage_id=web_fetch_id,
                 source_proxy_only=False,
             )
-            source_class = "TrustedNews" if search_result.is_news else "GeneralWeb"
+            source_class = (
+                "IssuerIR"
+                if issuer_authority is not None
+                else "TrustedNews"
+                if search_result.is_news
+                else "GeneralWeb"
+            )
+            official_document_id = (
+                "issuer-domain:"
+                + str(issuer_authority["entry_id"])
+                + ":"
+                + _normalized_host(url)
+                if issuer_authority is not None
+                else "web:" + stable_hash({"url": url})[:24]
+            )
+            lineage_id = (
+                web_fetch_id
+                + ":verified_issuer_original:issuer_official_domain:"
+                + str(issuer_authority["host"])
+                + ":"
+                + _normalized_host(url)
+                if issuer_authority is not None
+                else web_fetch_id
+            )
             document = EvidenceDocumentRecord(
                 document_id=evidence.document_id,
                 target_id=target_id,
@@ -1159,7 +1241,7 @@ def _acquire_bounded_web_fallback(
                 source_class=source_class,
                 provider_name=combined_provider_name,
                 canonical_url=url,
-                official_document_id="web:" + stable_hash({"url": url})[:24],
+                official_document_id=official_document_id,
                 published_at=published.isoformat(),
                 available_at=published.isoformat(),
                 fetched_at=fetched_at,
@@ -1173,8 +1255,10 @@ def _acquire_bounded_web_fallback(
                     "full_fetch_performed": True,
                     "target_direct": True,
                     "snippet_score_forbidden": True,
+                    "verified_issuer_original": issuer_authority is not None,
+                    "issuer_domain_authority": dict(issuer_authority or {}),
                 },
-                source_lineage_id=web_fetch_id,
+                source_lineage_id=lineage_id,
                 acquisition_class=AcquisitionResultClass.REAL_PROVIDER_FETCH.value,
             )
             documents.append(document)
@@ -1205,6 +1289,13 @@ def _acquire_bounded_web_fallback(
                     "content_text": text,
                     "document_id": evidence.document_id,
                     "source_lineage_id": web_fetch_id,
+                    "source_class": source_class,
+                    "verified_issuer_original": issuer_authority is not None,
+                    "issuer_domain_authority_entry_id": (
+                        issuer_authority.get("entry_id")
+                        if issuer_authority is not None
+                        else None
+                    ),
                     "full_fetch_performed": True,
                     "target_direct": True,
                     "snippet_used_as_document": False,
@@ -1405,6 +1496,63 @@ def _document_mentions_target(
             for item in identities
         )
     )
+
+
+def _verified_issuer_domain_authority(
+    *,
+    url: str,
+    target_id: str,
+    as_of_date: date,
+) -> Mapping[str, Any] | None:
+    host = _normalized_host(url)
+    if not host:
+        return None
+    path = Path("configs/e2r_issuer_official_domains_v1.json")
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    entries = payload.get("entries") if isinstance(payload, Mapping) else ()
+    for entry in entries or ():
+        if not isinstance(entry, Mapping):
+            continue
+        if str(entry.get("status") or "ACTIVE").upper() != "ACTIVE":
+            continue
+        if str(entry.get("symbol") or "").zfill(6) != str(target_id).zfill(6):
+            continue
+        authority_host = _normalized_host(str(entry.get("host") or ""))
+        if not authority_host or not (
+            host == authority_host or host.endswith("." + authority_host)
+        ):
+            continue
+        valid_from = _date_value(entry.get("valid_from"))
+        verified_as_of = _date_value(entry.get("verified_as_of"))
+        valid_to = _date_value(entry.get("valid_to"))
+        if valid_from is None or verified_as_of is None:
+            continue
+        if valid_from > as_of_date or verified_as_of > as_of_date:
+            continue
+        if valid_to is not None and valid_to < as_of_date:
+            continue
+        if not str(entry.get("source_url") or "").startswith("https://"):
+            continue
+        if not str(entry.get("source_anchor_text") or "").strip():
+            continue
+        return dict(entry)
+    return None
+
+
+def _normalized_host(value: str) -> str:
+    try:
+        host = (
+            urlsplit(value if "://" in str(value) else "https://" + str(value)).hostname
+            or ""
+        ).casefold()
+    except ValueError:
+        return ""
+    return host[4:] if host.startswith("www.") else host
 
 
 def _is_http_url(value: str) -> bool:

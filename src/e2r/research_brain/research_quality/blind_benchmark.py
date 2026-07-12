@@ -197,6 +197,51 @@ class BlindResearchQualityBenchmark:
         )
         write_json(Path(audit_path), result.audit)
 
+    def write_dossier_leaves(
+        self,
+        *,
+        result: BlindResearchBenchmarkResult,
+        gold_root: str | Path,
+        production_root: str | Path,
+        dossier_roots: Mapping[str, str | Path],
+    ) -> Mapping[str, Mapping[str, Path]]:
+        gold_facts = _read_jsonl(Path(gold_root) / GOLD_FACT_FILE)
+        production_facts = _read_jsonl(
+            Path(production_root) / PRODUCTION_FACT_FILE
+        )
+        paths: dict[str, Mapping[str, Path]] = {}
+        for target_id, dossier_root in dossier_roots.items():
+            root = Path(dossier_root)
+            target_gold = tuple(
+                row
+                for row in gold_facts
+                if str(row.get("target_id") or "") == str(target_id)
+            )
+            target_production = tuple(
+                row
+                for row in production_facts
+                if str(row.get("target_id") or "") == str(target_id)
+            )
+            target_comparisons = tuple(
+                row.to_dict()
+                for row in result.comparisons
+                if row.target_id == str(target_id)
+            )
+            if not target_gold or not target_production or not target_comparisons:
+                raise ValueError(
+                    f"dossier material-fact leaves are empty for target {target_id}"
+                )
+            target_paths = {
+                "gold": root / GOLD_FACT_FILE,
+                "production": root / PRODUCTION_FACT_FILE,
+                "comparison": root / "material_fact_comparison.jsonl",
+            }
+            write_jsonl(target_paths["gold"], target_gold)
+            write_jsonl(target_paths["production"], target_production)
+            write_jsonl(target_paths["comparison"], target_comparisons)
+            paths[str(target_id)] = target_paths
+        return paths
+
 
 def _compare_material_facts(
     gold_facts: Sequence[Mapping[str, Any]],

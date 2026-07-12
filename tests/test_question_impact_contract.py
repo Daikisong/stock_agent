@@ -4,6 +4,7 @@ import json
 import unittest
 from pathlib import Path
 
+from e2r.agentic.evidence_contract_v2 import load_evidence_contracts_v2
 from e2r.research_brain.scoring.question_impact_contract import (
     QUESTION_CLOSURE_STATUSES,
     audit_question_impact_contracts,
@@ -15,11 +16,33 @@ from e2r.research_brain.scoring.question_impact_contract import (
 class QuestionImpactContractTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
 
-    def test_c06_twelve_families_have_total_semantic_contracts(self) -> None:
+    def test_c06_thirteen_families_have_total_semantic_contracts(self) -> None:
         contracts = load_question_impact_contracts(
             self.ROOT / "configs/e2r_question_impact_contracts_v1.json"
         )
-        self.assertEqual(len(contracts), 12)
+        self.assertEqual(len(contracts), 13)
+        valuation = contracts["valuation_market_expectation"]
+        self.assertEqual(
+            set(valuation.allowed_primitive_ids),
+            {"market_expectation_gap", "current_valuation_vs_earnings"},
+        )
+        self.assertEqual(
+            set(valuation.allowed_component_ids),
+            {"market_mispricing", "valuation_rerating", "information_confidence"},
+        )
+        evidence_contract = load_evidence_contracts_v2(
+            require_all_archetypes=True
+        )["C06_HBM_MEMORY_CUSTOMER_CAPACITY"]
+        evidence_primitives = set(evidence_contract.required_primitives)
+        evidence_primitives.update(evidence_contract.alternative_primitives)
+        evidence_primitives.update(
+            value
+            for values in evidence_contract.alternative_primitives.values()
+            for value in values
+        )
+        self.assertTrue(
+            set(valuation.allowed_primitive_ids) <= evidence_primitives
+        )
         self.assertEqual(
             QUESTION_CLOSURE_STATUSES,
             {

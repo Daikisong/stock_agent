@@ -23,6 +23,14 @@ from .orchestrator import DossierTarget
 
 
 SOURCE_RESEARCH_SCHEMA_VERSION = "e2r_dossier_source_research_v1"
+_ADEQUACY_ROUTE_CATEGORIES = {
+    "OFFICIAL",
+    "ISSUER_IR",
+    "FINANCIAL_REVISION",
+    "INDEPENDENT",
+    "COUNTER",
+    "SUPERSESSION",
+}
 _SOURCE_FAMILY_MAP = {
     "ISSUER_EARNINGS_IR_NEWSROOM_CALL": "IssuerIR",
     "OFFICIAL_FILING": "DART",
@@ -50,6 +58,7 @@ def run_dossier_source_research(
     query_provider: QuestionQueryProvider | None = None,
     force_web_family_ids: Sequence[str] = (),
     question_family_ids: Sequence[str] = (),
+    adequacy_route_categories: Sequence[str] = (),
     test_mode: bool = False,
 ) -> Mapping[str, Any]:
     """Plan and execute every supplied question with explicit bounded budgets."""
@@ -67,11 +76,26 @@ def run_dossier_source_research(
     if not tasks:
         raise ValueError("dossier source research requires target question tasks")
     force_web = {str(value) for value in force_web_family_ids}
+    route_categories = tuple(
+        dict.fromkeys(str(value).strip().upper() for value in adequacy_route_categories)
+    )
+    unknown_routes = set(route_categories) - _ADEQUACY_ROUTE_CATEGORIES
+    if unknown_routes:
+        raise ValueError(f"unknown adequacy route categories: {sorted(unknown_routes)}")
     recipes = tuple(
-        _recipe_from_task(row, archetype_id=archetype_id) for row in tasks
+        _recipe_from_task(
+            row,
+            archetype_id=archetype_id,
+            adequacy_route_categories=route_categories,
+        )
+        for row in tasks
     )
     drafts = tuple(
-        _draft_from_task(row, force_web=str(row["question_family_id"]) in force_web)
+        _draft_from_task(
+            row,
+            force_web=str(row["question_family_id"]) in force_web,
+            adequacy_route_categories=route_categories,
+        )
         for row in tasks
     )
     signal_id = "DOSSIG-" + stable_hash(
@@ -121,7 +145,18 @@ def run_dossier_source_research(
             )
         )
     question_rows = tuple(
-        row.to_dict()
+        {
+            **row.to_dict(),
+            "adequacy_route_attempts": [
+                {
+                    "route_category": category,
+                    "status": "ATTEMPTED",
+                    "proof_id": row.task_id,
+                    "reason": "LLM query generation and bounded source execution requested this route.",
+                }
+                for category in route_categories
+            ],
+        }
         for part in materialized_parts
         for row in part.question_source_tasks
     )
@@ -142,6 +177,11 @@ def run_dossier_source_research(
         ),
         source_tasks=daily_rows,
         question_source_tasks=question_rows,
+    )
+    question_rows = _finalize_adequacy_route_attempts(
+        question_rows=question_rows,
+        acquisition=acquisition,
+        route_categories=route_categories,
     )
     root = Path(output_root)
     root.mkdir(parents=True, exist_ok=True)
@@ -177,6 +217,7 @@ def run_dossier_source_research(
         "web_full_document_count": len(acquisition.web_fetched_documents),
         "force_web_family_ids": sorted(force_web),
         "selected_question_family_ids": sorted(selected_family_ids),
+        "adequacy_route_categories": list(route_categories),
         "materialization_critical_count": sum(
             int(part.audit["critical_count_sum"]) for part in materialized_parts
         ),
@@ -191,7 +232,10 @@ def run_dossier_source_research(
 
 
 def _recipe_from_task(
-    task: Mapping[str, Any], *, archetype_id: str
+    task: Mapping[str, Any],
+    *,
+    archetype_id: str,
+    adequacy_route_categories: Sequence[str] = (),
 ) -> EvidenceRecipe:
     family = str(task["question_family_id"])
     question = str(task["question_to_answer"])
@@ -209,6 +253,10 @@ def _recipe_from_task(
     )
     priorities = _source_families(task)
     preferred = tuple(value for value in priorities if value in _OFFICIAL_FIRST)
+    if "ISSUER_IR" in adequacy_route_categories:
+        preferred = tuple(dict.fromkeys(("IssuerIR", *preferred)))
+    if "FINANCIAL_REVISION" in adequacy_route_categories:
+        preferred = tuple(dict.fromkeys(("CompanyGuide", *preferred)))
     if not preferred:
         preferred = ("IssuerIR",)
     preferred = tuple(dict.fromkeys((*preferred, "CustomerOfficial")))
@@ -251,23 +299,46 @@ def _recipe_from_task(
     )
 
 
-def _draft_from_task(task: Mapping[str, Any], *, force_web: bool) -> Mapping[str, Any]:
+def _draft_from_task(
+    task: Mapping[str, Any],
+    *,
+    force_web: bool,
+    adequacy_route_categories: Sequence[str] = (),
+) -> Mapping[str, Any]:
     family = str(task["question_family_id"])
     budget = dict(task.get("budget") or {})
     priorities = _source_families(task)
     preferred = tuple(value for value in priorities if value in _OFFICIAL_FIRST)
-    if force_web:
+    if "ISSUER_IR" in adequacy_route_categories:
+        preferred = ("IssuerIR",)
+    elif "FINANCIAL_REVISION" in adequacy_route_categories:
+        preferred = ("CompanyGuide",)
+    elif force_web:
         preferred = ("CustomerOfficial",)
     if not preferred:
         preferred = ("IssuerIR",)
     return {
-        "draft_id": "DOSSDRAFT-" + stable_hash({"family": family, "web": force_web})[:24],
+        "draft_id": "DOSSDRAFT-"
+        + stable_hash(
+            {
+                "family": family,
+                "web": force_web,
+                "adequacy_route_categories": list(adequacy_route_categories),
+            }
+        )[:24],
         "recipe_id": "DOSSRECIPE-" + stable_hash({"family": family})[:24],
         "question_to_answer": str(task["question_to_answer"]),
-        "why_material": "This material question must be terminal before full score finalization.",
+        "why_material": (
+            "This material question must be terminal before full score finalization. "
+            "The bounded run must investigate these explicit evidence routes: "
+            + ", ".join(adequacy_route_categories or ("configured source route",))
+            + "."
+        ),
         "query_intent": (
             "Generate target-specific current-source queries from the semantic question, "
-            "without using deterministic query templates."
+            "without using deterministic query templates. Respect the requested evidence "
+            "route intent, including counter or supersession checks when present: "
+            + ", ".join(adequacy_route_categories or ("configured source route",))
         ),
         "preferred_source_families": list(preferred),
         "fallback_source_families": ["NaverSearch"],
@@ -285,6 +356,75 @@ def _source_families(task: Mapping[str, Any]) -> tuple[str, ...]:
             for value in task.get("source_priority") or ()
         )
     )
+
+
+def _finalize_adequacy_route_attempts(
+    *,
+    question_rows: Sequence[Mapping[str, Any]],
+    acquisition: Any,
+    route_categories: Sequence[str],
+) -> tuple[Mapping[str, Any], ...]:
+    documents_by_task: dict[str, list[Any]] = {}
+    for document in acquisition.evidence_documents:
+        for task_id in document.source_task_ids:
+            documents_by_task.setdefault(str(task_id), []).append(document)
+    web_by_task: dict[str, list[Mapping[str, Any]]] = {}
+    for row in acquisition.web_search_tasks:
+        web_by_task.setdefault(str(row.get("source_task_id") or ""), []).append(row)
+    result = []
+    for row in question_rows:
+        task_id = str(row.get("task_id") or "")
+        documents = tuple(documents_by_task.get(task_id, ()))
+        web = tuple(web_by_task.get(task_id, ()))
+        web_executed = any(item.get("search_call_executed") is True for item in web)
+        web_failed = any(item.get("search_error") or item.get("provider_errors") for item in web)
+        attempts = []
+        for category in route_categories:
+            terminal_source_classes = {
+                "ISSUER_IR": {"IssuerIR", "IssuerNewsroom"},
+                "FINANCIAL_REVISION": {"CompanyGuide", "FinancialRevision"},
+                "OFFICIAL": {"DART", "KIND", "KRX", "Official"},
+            }.get(category)
+            if terminal_source_classes is not None:
+                resolved_docs = tuple(
+                    item
+                    for item in documents
+                    if item.source_class in terminal_source_classes
+                )
+                if resolved_docs:
+                    status = "RESOLVED"
+                    proof_id = resolved_docs[0].document_id
+                    reason = "Verified full document resolved the requested source route."
+                elif web_executed and not web_failed:
+                    status = "UNAVAILABLE"
+                    proof_id = str(web[0].get("web_task_id") or task_id)
+                    reason = (
+                        "Preferred connector did not yield score evidence and bounded "
+                        "LLM-planned web fallback completed without a verified full "
+                        "document for the requested source route."
+                    )
+                else:
+                    status = "PENDING"
+                    proof_id = str((web[0] if web else {}).get("web_task_id") or task_id)
+                    reason = "Requested source route did not complete a usable bounded fallback."
+            else:
+                status = "ATTEMPTED" if web_executed and not web_failed else "PENDING"
+                proof_id = str((web[0] if web else {}).get("web_task_id") or task_id)
+                reason = (
+                    "LLM-generated bounded query executed for this evidence route."
+                    if status == "ATTEMPTED"
+                    else "Requested evidence route did not complete provider execution."
+                )
+            attempts.append(
+                {
+                    "route_category": category,
+                    "status": status,
+                    "proof_id": proof_id,
+                    "reason": reason,
+                }
+            )
+        result.append({**dict(row), "adequacy_route_attempts": attempts})
+    return tuple(result)
 
 
 __all__ = ["SOURCE_RESEARCH_SCHEMA_VERSION", "run_dossier_source_research"]

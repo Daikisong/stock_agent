@@ -164,6 +164,24 @@
       "counter_keywords": ["downward", "cut", "priced in", "already reflected", "하향", "선반영"]
     },
     {
+      "question_family_id": "valuation_market_expectation",
+      "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "mechanism_scope": "Current HBM/memory market-expectation gap and current/forward valuation-to-earnings bridge",
+      "accepted_claim_predicates": ["attributable consensus or market expectation", "current or forward earnings multiple with period and denominator"],
+      "allowed_primitive_ids": ["market_expectation_gap", "current_valuation_vs_earnings"],
+      "allowed_component_ids": ["market_mispricing", "valuation_rerating", "information_confidence"],
+      "partial_support_predicates": ["estimate direction without complete consensus dispersion", "current valuation multiple with incomplete HBM earnings attribution"],
+      "counter_predicates": ["favorable HBM scenario already reflected in expectations or valuation"],
+      "non_scoring_support_predicates": ["raw price momentum", "target price without earnings bridge", "multiple without earnings period", "historical outcome"],
+      "required_source_routes": ["financial_revision", "official_filing", "trusted_independent"],
+      "required_counter_routes": ["expectation_counter", "valuation_counter"],
+      "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH",
+      "required_keyword_groups": [["hbm", "memory", "dram", "메모리", "d램"], ["consensus", "expectation", "valuation", "multiple", "p/e", "pbr", "컨센서스", "기대", "밸류에이션", "배수"]],
+      "full_support_keywords": ["consensus gap", "expectation gap", "earnings multiple", "forward p/e", "current p/e", "valuation multiple", "컨센서스 격차", "기대 격차", "이익 배수", "밸류에이션"],
+      "partial_keywords": ["consensus", "expectation", "valuation", "multiple", "컨센서스", "기대", "밸류에이션", "배수"],
+      "counter_keywords": ["priced in", "already reflected", "premium valuation", "선반영", "고평가"]
+    },
+    {
       "question_family_id": "conventional_memory_drag",
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "mechanism_scope": "Conventional DRAM/NAND drag on HBM-linked economics",
