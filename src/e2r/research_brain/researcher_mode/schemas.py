@@ -622,9 +622,18 @@ class FinalComponentDecision:
     research_complete: bool
     confidence: float
     decision_trace: str
-    config_hash: str = ""
-    prompt_hashes: tuple[str, ...] = ()
-    schema_version: str = "e2r_final_component_decision_v1"
+    proposal_median: float
+    consensus_band: tuple[float, float]
+    confidence_interval: tuple[float, float]
+    judge_proposals: Mapping[str, float]
+    config_hash: str
+    prompt_hashes: tuple[str, ...]
+    response_hashes: tuple[str, ...]
+    judge_call_ids: tuple[str, ...]
+    corroboration_group_count: int
+    source_confidence_affects_points: bool = False
+    production_stage_authority: bool = False
+    schema_version: str = "e2r_final_component_decision_v2"
 
     def __post_init__(self) -> None:
         _require_component(self.component_id)
@@ -632,18 +641,96 @@ class FinalComponentDecision:
         _require_between(self.support_points, 0.0, self.max_points, "support_points")
         _require_between(self.counter_effect, 0.0, self.max_points, "counter_effect")
         _require_between(self.final_points, 0.0, self.max_points, "final_points")
+        _require_between(self.proposal_median, 0.0, self.max_points, "proposal_median")
         _require_probability(self.confidence, "confidence")
         _require_text(self.decision_trace, "decision_trace")
+        _require_text(self.config_hash, "config_hash")
+        if len(self.config_hash) != 64:
+            raise ValueError("component decision config_hash must be sha256")
+        try:
+            int(self.config_hash, 16)
+        except ValueError as exc:
+            raise ValueError("component decision config_hash must be hexadecimal") from exc
+        if len(self.consensus_band) != 2 or len(self.confidence_interval) != 2:
+            raise ValueError("component decision intervals require lower and upper")
+        consensus_lower, consensus_upper = (
+            float(value) for value in self.consensus_band
+        )
+        confidence_lower, confidence_upper = (
+            float(value) for value in self.confidence_interval
+        )
+        if not all(
+            math.isfinite(value)
+            for value in (
+                consensus_lower,
+                consensus_upper,
+                confidence_lower,
+                confidence_upper,
+            )
+        ):
+            raise ValueError("component decision intervals must be finite")
+        if not 0.0 <= consensus_lower <= consensus_upper <= self.max_points:
+            raise ValueError("component consensus band is invalid")
+        if not 0.0 <= confidence_lower <= confidence_upper <= self.max_points:
+            raise ValueError("component confidence interval is invalid")
+        if not confidence_lower <= self.final_points <= confidence_upper:
+            raise ValueError("final component points must lie inside confidence interval")
+        expected_roles = {value.value for value in ComponentJudgeRole}
+        if set(self.judge_proposals) != expected_roles:
+            raise ValueError("component decision requires one proposal per judge role")
+        for role, points in self.judge_proposals.items():
+            if isinstance(points, bool):
+                raise ValueError(f"judge proposal for {role} must be numeric")
+            _require_between(points, 0.0, self.max_points, f"judge_proposals[{role}]")
         for values, label, allow_empty in (
             (self.fact_ids, "fact_ids", True),
             (self.counter_fact_ids, "counter_fact_ids", True),
-            (self.anchor_ids, "anchor_ids", True),
+            (self.anchor_ids, "anchor_ids", False),
             (self.judge_ids, "judge_ids", False),
-            (self.prompt_hashes, "prompt_hashes", True),
+            (self.prompt_hashes, "prompt_hashes", False),
+            (self.response_hashes, "response_hashes", False),
+            (self.judge_call_ids, "judge_call_ids", False),
         ):
             _require_unique_texts(values, label, allow_empty=allow_empty)
+        if not self.research_complete:
+            raise ValueError("final component decision requires complete research")
+        if self.support_points > 0 and not self.fact_ids:
+            raise ValueError("positive component support requires fact lineage")
+        if any(
+            len(values) != len(expected_roles)
+            for values in (
+                self.judge_ids,
+                self.prompt_hashes,
+                self.response_hashes,
+                self.judge_call_ids,
+            )
+        ):
+            raise ValueError("component decision requires three independent judge lineages")
+        for values, label in (
+            (self.prompt_hashes, "prompt_hashes"),
+            (self.response_hashes, "response_hashes"),
+        ):
+            if any(len(value) != 64 for value in values):
+                raise ValueError(f"{label} must contain sha256 values")
+            try:
+                for value in values:
+                    int(value, 16)
+            except ValueError as exc:
+                raise ValueError(f"{label} must contain hexadecimal values") from exc
+        if (
+            isinstance(self.corroboration_group_count, bool)
+            or not isinstance(self.corroboration_group_count, int)
+            or self.corroboration_group_count < 0
+        ):
+            raise ValueError("corroboration_group_count must be a nonnegative integer")
         if self.final_points > self.support_points + 1e-9:
             raise ValueError("counter application cannot increase component points")
+        if abs((self.support_points - self.counter_effect) - self.final_points) > 1e-6:
+            raise ValueError("counter effect must reconcile support and final points")
+        if self.source_confidence_affects_points:
+            raise ValueError("source confidence cannot multiply economic points")
+        if self.production_stage_authority:
+            raise ValueError("component decision cannot decide Stage")
 
     def to_dict(self) -> Mapping[str, Any]:
         return _json_safe(asdict(self))

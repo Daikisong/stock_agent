@@ -1,0 +1,92 @@
+{
+  "aggregation_policy": {
+    "consensus_method": "MEDIAN_WITH_ALLOWED_RANGE_INTERSECTION",
+    "counter_application": "SKEPTIC_CANNOT_CREATE_SUPPORT",
+    "independent_corroboration_affects_points": false,
+    "invalid_proposal_policy": "REMOVE_AND_RECORD",
+    "material_disagreement_absolute_floor": 2.0,
+    "material_disagreement_fraction": 0.2,
+    "material_disagreement_policy": "RESEARCH_REQUIRED",
+    "minimum_finalization_confidence": 0.4,
+    "required_roles": [
+      "ANALYST",
+      "SKEPTIC",
+      "CALIBRATION_JUDGE"
+    ],
+    "source_confidence_affects_points": false,
+    "stage_authority": false,
+    "tiny_impact_cap_multiplication": false,
+    "version": "e2r_v5_component_consensus_v2"
+  },
+  "audit_hash": "d1b7c298153e6409352d380420ec526db4e721ffc92d96497693a7b65496da23",
+  "canary_counts": {
+    "component_decisions": 7,
+    "components": 7,
+    "invalid_proposals_removed": 1,
+    "judge_proposals": 21,
+    "research_requests_on_material_disagreement": 7
+  },
+  "canary_total_max_points": 100.0,
+  "canary_total_points": 72.0,
+  "component_ids": [
+    "eps_fcf_explosion",
+    "earnings_visibility",
+    "bottleneck_pricing",
+    "market_mispricing",
+    "valuation_rerating",
+    "capital_allocation",
+    "information_confidence"
+  ],
+  "component_max_clamped": true,
+  "counter_effect_applied_once": true,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "base_run_internal_critical_count": 0,
+    "base_run_not_complete_count": 0,
+    "component_max_violation_count": 0,
+    "component_roster_mismatch_count": 0,
+    "config_safeguard_violation_count": 0,
+    "corroboration_did_not_increase_confidence_count": 0,
+    "counter_effect_missing_or_unreconciled_count": 0,
+    "forbidden_stage_output_key_count": 0,
+    "invalid_proposal_not_removed_and_recorded_count": 0,
+    "material_disagreement_not_returned_to_research_count": 0,
+    "median_consensus_mismatch_count": 0,
+    "output_file_contract_mismatch_count": 0,
+    "proposal_validation_count_mismatch_count": 0,
+    "required_lineage_missing_count": 0,
+    "required_module_missing_count": 0,
+    "research_request_query_authority_mismatch_count": 0,
+    "source_confidence_changed_economic_points_count": 0,
+    "strong_direct_evidence_score_collapse_count": 0,
+    "target_name_condition_count": 0,
+    "tiny_impact_cap_multiplication_marker_count": 0,
+    "total_missing_or_unreconciled_count": 0,
+    "valid_proposal_count_mismatch_count": 0
+  },
+  "independent_corroboration_improves_confidence_only": true,
+  "invalid_proposals_are_removed_and_recorded": true,
+  "judge_roles": [
+    "ANALYST",
+    "SKEPTIC",
+    "CALIBRATION_JUDGE"
+  ],
+  "llm_total_score_authority": false,
+  "material_disagreement_returns_to_research": true,
+  "output_files": {
+    "audit": "deterministic_score_aggregation_audit.json",
+    "component_results": "deterministic_component_aggregation_results.jsonl",
+    "proposal_validations": "judge_proposal_validations.jsonl",
+    "research_requests": "component_score_research_requests.jsonl",
+    "run": "deterministic_score_aggregation_run.json",
+    "total_score": "deterministic_total_score.json"
+  },
+  "production_stage_authority": false,
+  "schema_version": "e2r_v5_deterministic_score_aggregator_audit_v1",
+  "seven_components_summed_deterministically": true,
+  "source_confidence_affects_points": false,
+  "status": "V5_PHASE90_DETERMINISTIC_SCORE_AGGREGATOR_PASS",
+  "strong_component_points": 17.6,
+  "tiny_impact_cap_multiplication_used": false,
+  "valid_proposals_use_median_and_consensus_band": true
+}

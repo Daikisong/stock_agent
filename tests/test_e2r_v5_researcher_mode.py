@@ -394,6 +394,9 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         result = DeterministicScoreAggregator().aggregate_component(
             memo=component,  # type: ignore[arg-type]
             judge_decisions=decisions,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            expected_as_of_date=AS_OF_DATE,
         )
         self.assertEqual(result.status, "COMPLETE")
         self.assertEqual(len(result.decision.judge_ids), 3)  # type: ignore[union-attr]

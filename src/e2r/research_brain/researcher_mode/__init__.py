@@ -19,6 +19,8 @@ from .audits import (
     PHASE88_PASS,
     PHASE89_AUDIT_PATH,
     PHASE89_PASS,
+    PHASE90_AUDIT_PATH,
+    PHASE90_PASS,
     compile_phase80_forensics,
     compile_phase84_researcher_mode_audit,
     compile_phase85_source_graph_acquisition_audit,
@@ -26,6 +28,7 @@ from .audits import (
     compile_phase87_semantic_research_saturation_audit,
     compile_phase88_evidence_fact_graph_audit,
     compile_phase89_component_scoring_memos_audit,
+    compile_phase90_deterministic_score_aggregator_audit,
     write_phase80_forensics,
     write_phase84_researcher_mode_audit,
     write_phase85_source_graph_acquisition_audit,
@@ -33,6 +36,7 @@ from .audits import (
     write_phase87_semantic_research_saturation_audit,
     write_phase88_evidence_fact_graph_audit,
     write_phase89_component_scoring_memos_audit,
+    write_phase90_deterministic_score_aggregator_audit,
 )
 from .historical_atlas import (
     ATLAS_OUTPUT_FILES,
@@ -124,10 +128,16 @@ from .component_scoring_memos import (
     write_component_scoring_memo_run,
 )
 from .score_aggregator import (
+    AGGREGATOR_CONFIG,
+    SCORE_AGGREGATION_OUTPUT_FILES,
     ComponentAggregationResult,
+    ComponentScoreResearchRequest,
+    DeterministicScoreAggregationRun,
     DeterministicScoreAggregator,
     DeterministicTotalScore,
+    JudgeProposalValidation,
     TotalAggregationResult,
+    write_deterministic_score_aggregation_run,
 )
 from .dossier import CanonicalResearchDossierBuilder, ResearcherModeDossier
 from .document_ranker import (
@@ -250,6 +260,7 @@ from .research_epoch import (
 )
 
 __all__ = [
+    "AGGREGATOR_CONFIG",
     "PHASE80_ARTIFACT_PATHS",
     "PHASE84_AUDIT_PATH",
     "PHASE84_PASS",
@@ -263,6 +274,8 @@ __all__ = [
     "PHASE88_PASS",
     "PHASE89_AUDIT_PATH",
     "PHASE89_PASS",
+    "PHASE90_AUDIT_PATH",
+    "PHASE90_PASS",
     "compile_phase80_forensics",
     "write_phase80_forensics",
     "ATLAS_OUTPUT_FILES",
@@ -284,6 +297,7 @@ __all__ = [
     "COMPONENT_ANCHOR_PASS",
     "ComponentAnchor",
     "ComponentAggregationResult",
+    "ComponentScoreResearchRequest",
     "ComponentJudge",
     "ComponentJudgeDecision",
     "ComponentJudgeResult",
@@ -304,6 +318,7 @@ __all__ = [
     "CandidateRankingResult",
     "CodexResearcherProvider",
     "DeterministicScoreAggregator",
+    "DeterministicScoreAggregationRun",
     "DeterministicTotalScore",
     "DocumentRelevanceDecision",
     "EPSFCFResearcher",
@@ -339,6 +354,7 @@ __all__ = [
     "JUDGE_PASS_BY_ROLE",
     "JUDGE_RESPONSE_FIELDS",
     "JUDGE_REVIEW_DIMENSIONS_BY_ROLE",
+    "JudgeProposalValidation",
     "LLMComponentScoringMemoEngine",
     "MarketExpectationResearcher",
     "MaterialDocumentRanker",
@@ -365,6 +381,7 @@ __all__ = [
     "RedTeamResearchResult",
     "RedTeamResearcher",
     "SATURATION_REVIEW_ROLES",
+    "SCORE_AGGREGATION_OUTPUT_FILES",
     "SEMANTIC_SATURATION_REVIEW_SCHEMA",
     "SOURCE_FAMILY_CLASSES",
     "SUPERVISOR_FAILURE_CLASSES",
@@ -378,6 +395,7 @@ __all__ = [
     "SourceGraphAcquisitionConfig",
     "SourceGraphAcquisitionMode",
     "SourceGraphAcquisitionRun",
+    "write_deterministic_score_aggregation_run",
     "SourceGraphExplorer",
     "SourceResearchObjective",
     "SourceCandidateMaterialityDecision",
@@ -415,6 +433,7 @@ __all__ = [
     "compile_phase87_semantic_research_saturation_audit",
     "compile_phase88_evidence_fact_graph_audit",
     "compile_phase89_component_scoring_memos_audit",
+    "compile_phase90_deterministic_score_aggregator_audit",
     "compile_component_anchor_atlas_from_files",
     "write_component_anchor_atlas",
     "audit_research_question_seed_authority",
@@ -428,6 +447,7 @@ __all__ = [
     "write_phase87_semantic_research_saturation_audit",
     "write_phase88_evidence_fact_graph_audit",
     "write_phase89_component_scoring_memos_audit",
+    "write_phase90_deterministic_score_aggregator_audit",
     "write_source_graph_acquisition_run",
     "write_evidence_fact_graph_result",
     "write_claim_impact_mapping_result",
