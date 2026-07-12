@@ -1,0 +1,61 @@
+{
+  "atlas_quarantine_count": 77728,
+  "covered_registry_archetype_count": 36,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "component_mapping_loss_count": 0,
+    "future_outcome_current_prompt_exposure_count": 0,
+    "present_company_name_loss_count": 0,
+    "present_trigger_date_loss_count": 0,
+    "registry_archetype_coverage_gap_count": 0,
+    "schema_type_unknown_without_quarantine_count": 0,
+    "source_proxy_exact_anchor_promotion_count": 0,
+    "structured_row_preservation_failure_count": 0,
+    "unregistered_judgment_archetype_count": 0
+  },
+  "exact_anchor_count": 31,
+  "fact_signature_count": 59229,
+  "fact_signature_hash": "32c3606addc25675eaa20e99b2c9b15a34cb5990049756e8a59b010eca78da58",
+  "future_outcome_evaluator_only": true,
+  "historical_case_count": 10920,
+  "judgment_count": 10920,
+  "judgment_hash": "7ab23dd9aafc796e69cd0e707b4f3949e13b99819349543c22d102a02b0c0e8f",
+  "ordinal_anchor_count": 5113,
+  "registered_artifact_count": 2260,
+  "registry_archetype_count": 36,
+  "registry_archetype_coverage_rate": 1.0,
+  "runtime_outcome_payload_allowed": false,
+  "schema_version": "e2r_historical_research_judgment_atlas_v1",
+  "score_anchor_count": 5868,
+  "score_anchor_hash": "d6950f52b92efbf645738b0685076b679b3823f99a6862c351adcfc602487811",
+  "score_component_source_count": 1334,
+  "score_schema_type_counts": {
+    "CUSTOM_ARCHETYPE_POINTS": 73,
+    "DIRECT_COMPONENT_POINTS": 467,
+    "NORMALIZED_COMPONENT_RATINGS": 697,
+    "NO_SCORE": 5807,
+    "RULE_ONLY": 3868,
+    "TOTAL_ONLY_PROXY": 8
+  },
+  "source_compile_status": "RESEARCH_CORPUS_SEMANTIC_COMPILER_PASS",
+  "source_corpus_hash": "d783a9a5410fe1c32e2a59e32c8a532bd6a2280765ae2a85e9e17376ddd3a4d6",
+  "source_quality_counts": {
+    "SHADOW_OR_UNVERIFIED": 1627,
+    "SOURCE_BACKED_HIGH": 128,
+    "SOURCE_BACKED_MEDIUM": 5597,
+    "SOURCE_PROXY_ONLY": 3568
+  },
+  "status": "HISTORICAL_RESEARCH_JUDGMENT_ATLAS_PASS",
+  "structured_row_accounting": {
+    "accounted_structured_row_count": 100282,
+    "accounting_role_counts": {
+      "CASE_JUDGMENT_LINEAGE": 28103,
+      "EVALUATOR_ONLY_OUTCOME": 1443,
+      "PRESERVED_NON_JUDGMENT_ROW": 67293,
+      "RULE_ONLY": 3443
+    },
+    "structured_row_count": 100282,
+    "structured_row_preservation_rate": 1.0
+  },
+  "structured_row_count": 100282
+}
