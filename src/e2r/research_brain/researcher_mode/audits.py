@@ -12,6 +12,7 @@ import ast
 import hashlib
 import json
 import subprocess
+from dataclasses import asdict
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
@@ -875,6 +876,198 @@ def write_phase84_researcher_mode_audit(
     return destination
 
 
+PHASE85_SCHEMA_VERSION = "e2r_v5_phase85_source_graph_acquisition_audit_v1"
+PHASE85_PASS = "V5_PHASE85_BROAD_SOURCE_GRAPH_ACQUISITION_PASS"
+PHASE85_AUDIT_PATH = "docs/operational/e2r_v5_source_graph_acquisition_audit.json"
+
+
+def compile_phase85_source_graph_acquisition_audit(
+    repo_root: str | Path,
+) -> Mapping[str, Any]:
+    """Audit the old-discovery/new-Evidence-OS integration boundary."""
+
+    import inspect
+
+    from .component_researcher import (
+        SOURCE_CANDIDATE_RANKING_SCHEMA,
+        SOURCE_QUERY_GENERATION_SCHEMA,
+    )
+    from .document_ranker import ResearcherDocumentRanker
+    from .source_graph_explorer import (
+        SOURCE_FAMILY_CLASSES,
+        SourceGraphAcquisitionConfig,
+        SourceGraphAcquisitionMode,
+        load_source_graph_checkpoint,
+        write_source_graph_acquisition_run,
+    )
+    from .source_query_planner import CANONICAL_SOURCE_FAMILIES
+
+    root = Path(repo_root).resolve()
+    explorer_path = root / "src/e2r/research_brain/researcher_mode/source_graph_explorer.py"
+    query_path = root / "src/e2r/research_brain/researcher_mode/source_query_planner.py"
+    ranker_path = root / "src/e2r/research_brain/researcher_mode/document_ranker.py"
+    explorer_text = explorer_path.read_text(encoding="utf-8")
+    query_text = query_path.read_text(encoding="utf-8")
+    ranker_text = ranker_path.read_text(encoding="utf-8")
+    required_families = {
+        "OPENDART",
+        "KIND_KRX",
+        "ISSUER_EARNINGS_RELEASE",
+        "ISSUER_PRESENTATION",
+        "ISSUER_NEWSROOM",
+        "CUSTOMER_OFFICIAL",
+        "FINANCIAL_STATEMENTS",
+        "SEGMENT_DATA",
+        "CASH_FLOW",
+        "MARKET_CAP_PRICE",
+        "CONSENSUS_REVISION",
+        "VALUATION_MULTIPLES",
+        "REUTERS",
+        "TRUSTED_BUSINESS_MEDIA",
+        "PUBLIC_BROKER_PDF",
+        "INDUSTRY_REPORT",
+        "NAVER_DISCOVERY",
+        "GENERAL_WEB_DISCOVERY",
+    }
+    configured_families = {
+        family for values in SOURCE_FAMILY_CLASSES.values() for family in values
+    }
+    default = SourceGraphAcquisitionConfig()
+    production = SourceGraphAcquisitionConfig(
+        mode=SourceGraphAcquisitionMode.PRODUCTION_DAILY.value,
+        max_queries_per_checkpoint=10,
+        max_candidates_per_checkpoint=100,
+        max_fetches_per_checkpoint=20,
+    )
+    schemas = (SOURCE_QUERY_GENERATION_SCHEMA, SOURCE_CANDIDATE_RANKING_SCHEMA)
+    forbidden_fields = {
+        "score",
+        "total_score",
+        "stage",
+        "final_stage",
+        "expected_score",
+        "future_outcome",
+        "mfe",
+        "mae",
+    }
+    schema_forbidden = [
+        sorted(forbidden_fields & set(schema.get("properties") or {}))
+        for schema in schemas
+    ]
+    rank_signature = inspect.signature(ResearcherDocumentRanker.rank_candidates)
+    rank_line = _find_line(explorer_path, ".rank_candidates(") or 0
+    fetch_line = _find_line(explorer_path, "_fetch_candidate_document(") or 0
+    critical = {
+        "required_source_family_missing_count": len(
+            required_families - configured_families
+        ),
+        "canonical_family_roster_mismatch_count": int(
+            configured_families != set(CANONICAL_SOURCE_FAMILIES)
+        ),
+        "default_max_results_per_query_mismatch_count": int(
+            default.max_results_per_query != 100
+        ),
+        "top_results_parameter_count": int(hasattr(default, "top_results"))
+        + int("top_results" in rank_signature.parameters),
+        "production_unbounded_budget_count": sum(
+            (
+                production.max_queries_per_checkpoint > 10,
+                production.max_candidates_per_checkpoint > 100,
+                production.max_fetches_per_checkpoint > 20,
+            )
+        ),
+        "provider_schema_forbidden_field_count": sum(
+            len(values) for values in schema_forbidden
+        ),
+        "provider_schema_open_object_count": sum(
+            schema.get("additionalProperties") is not False for schema in schemas
+        ),
+        "naver_provider_reuse_missing_count": int(
+            "from e2r.research.naver_search_provider import NaverFreeSearchProvider"
+            not in explorer_text
+        ),
+        "page_fetcher_reuse_missing_count": int(
+            "from e2r.research.page_fetcher import PageFetcher" not in explorer_text
+        ),
+        "material_rank_before_fetch_violation_count": int(
+            not rank_line or not fetch_line or rank_line >= fetch_line
+        ),
+        "snippet_fallback_import_count": sum(
+            value in explorer_text
+            for value in (
+                "news_item_from_search_snippet",
+                "WebResearchRunner",
+                "evidence_from_feature_domains",
+            )
+        ),
+        "checkpoint_api_missing_count": sum(
+            not callable(value)
+            for value in (
+                load_source_graph_checkpoint,
+                write_source_graph_acquisition_run,
+            )
+        ),
+        "deterministic_query_template_marker_count": sum(
+            marker in query_text
+            for marker in (
+                "if component_id ==",
+                "if archetype_id ==",
+                "if missing_slot ==",
+                "fallback_query_templates",
+            )
+        ),
+        "target_name_condition_count": sum(
+            value in (explorer_text + query_text + ranker_text)
+            for value in ("005930", "000660", "삼성전자", "SK하이닉스")
+        ),
+    }
+    return {
+        "schema_version": PHASE85_SCHEMA_VERSION,
+        "status": PHASE85_PASS if sum(critical.values()) == 0 else "V5_PHASE85_BROAD_SOURCE_GRAPH_ACQUISITION_FAIL",
+        "critical_counts": critical,
+        "critical_count_sum": sum(critical.values()),
+        "source_family_classes": {
+            key: list(values) for key, values in SOURCE_FAMILY_CLASSES.items()
+        },
+        "default_config": asdict(default),
+        "production_daily_maxima": asdict(production),
+        "query_generation_owned_by_llm": True,
+        "deterministic_query_fallback_allowed": False,
+        "snippet_is_evidence": False,
+        "material_relevance_fixed_top_n": False,
+        "transport_budget_certifies_completion": False,
+        "search_zero_certifies_saturation": False,
+        "parser_field_direct_score_authority": False,
+        "checkpoint_resume_supported": True,
+        "reused_legacy_capabilities": {
+            "naver_free_search_provider": True,
+            "page_fetcher_and_pdf_extractor": True,
+            "page_fetch_cache": True,
+            "url_and_content_hash_dedupe": True,
+            "score_gap_context_to_llm": True,
+        },
+        "audit_hash": _stable_hash(
+            {
+                "critical": critical,
+                "families": SOURCE_FAMILY_CLASSES,
+                "default": asdict(default),
+                "production": asdict(production),
+            }
+        ),
+    }
+
+
+def write_phase85_source_graph_acquisition_audit(
+    *, repo_root: str | Path, output_path: str | Path | None = None
+) -> Path:
+    root = Path(repo_root).resolve()
+    destination = Path(output_path or root / PHASE85_AUDIT_PATH)
+    if not destination.is_absolute():
+        destination = root / destination
+    write_json(destination, compile_phase85_source_graph_acquisition_audit(root))
+    return destination
+
+
 __all__ = [
     "PHASE80_ARTIFACT_PATHS",
     "PHASE80_PASS",
@@ -883,8 +1076,13 @@ __all__ = [
     "PHASE84_PASS",
     "PHASE84_REQUIRED_MODULES",
     "PHASE84_SCHEMA_VERSION",
+    "PHASE85_AUDIT_PATH",
+    "PHASE85_PASS",
+    "PHASE85_SCHEMA_VERSION",
     "compile_phase80_forensics",
     "compile_phase84_researcher_mode_audit",
+    "compile_phase85_source_graph_acquisition_audit",
     "write_phase80_forensics",
     "write_phase84_researcher_mode_audit",
+    "write_phase85_source_graph_acquisition_audit",
 ]

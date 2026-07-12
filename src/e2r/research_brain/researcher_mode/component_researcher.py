@@ -238,6 +238,72 @@ COMPONENT_JUDGE_SCHEMA: Mapping[str, Any] = {
     },
 }
 
+SOURCE_QUERY_GENERATION_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "suggested_queries",
+        "new_source_directions",
+        "unresolved_research_notes",
+    ],
+    "properties": {
+        "suggested_queries": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "objective_id",
+                    "literal_query",
+                    "source_families",
+                    "rationale",
+                    "counter_or_supersession_search",
+                ],
+                "properties": {
+                    "objective_id": {"type": "string", "minLength": 1},
+                    "literal_query": {"type": "string", "minLength": 1},
+                    "source_families": {**_STRING_ARRAY, "minItems": 1},
+                    "rationale": {"type": "string", "minLength": 1},
+                    "counter_or_supersession_search": {"type": "boolean"},
+                },
+            },
+        },
+        "new_source_directions": _STRING_ARRAY,
+        "unresolved_research_notes": _STRING_ARRAY,
+    },
+}
+
+SOURCE_CANDIDATE_RANKING_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": ["decisions", "ranking_complete", "unresolved_notes"],
+    "properties": {
+        "decisions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "candidate_id",
+                    "material_relevance",
+                    "priority",
+                    "objective_ids",
+                    "rationale",
+                ],
+                "properties": {
+                    "candidate_id": {"type": "string", "minLength": 1},
+                    "material_relevance": {"type": "boolean"},
+                    "priority": {"type": "number", "minimum": 0, "maximum": 1},
+                    "objective_ids": _STRING_ARRAY,
+                    "rationale": {"type": "string", "minLength": 1},
+                },
+            },
+        },
+        "ranking_complete": {"type": "boolean"},
+        "unresolved_notes": _STRING_ARRAY,
+    },
+}
+
 _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "BUSINESS_MODEL_RESEARCH": BUSINESS_MODEL_RESEARCH_SCHEMA,
     "COMPONENT_RESEARCH": COMPONENT_RESEARCH_SCHEMA,
@@ -246,6 +312,8 @@ _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "COMPONENT_ANALYST_JUDGE": COMPONENT_JUDGE_SCHEMA,
     "COMPONENT_SKEPTIC_JUDGE": COMPONENT_JUDGE_SCHEMA,
     "CALIBRATION_JUDGE": COMPONENT_JUDGE_SCHEMA,
+    "SOURCE_QUERY_GENERATION": SOURCE_QUERY_GENERATION_SCHEMA,
+    "SOURCE_CANDIDATE_RANKING": SOURCE_CANDIDATE_RANKING_SCHEMA,
 }
 
 
@@ -766,6 +834,17 @@ def _pass_instruction(pass_name: str) -> str:
         return "Challenge every material thesis independently, distinguish current counters from resolved history, and identify new research directions."
     if pass_name == "SYNTHESIS_REVIEW":
         return "Synthesize cross-component support and tension without calculating total points or Stage."
+    if pass_name == "SOURCE_QUERY_GENERATION":
+        return (
+            "Generate literal target-scoped discovery queries from the current facts, "
+            "missing information, source failures, and open objectives. Do not reuse an "
+            "executed query and do not supply a deterministic fallback template."
+        )
+    if pass_name == "SOURCE_CANDIDATE_RANKING":
+        return (
+            "Assess every discovery candidate for material relevance to the supplied "
+            "research objectives. Snippets are discovery metadata only, never evidence."
+        )
     if pass_name == "COMPONENT_ANALYST_JUDGE":
         return "Act as the positive analyst judge for exactly one component."
     if pass_name == "COMPONENT_SKEPTIC_JUDGE":
@@ -787,6 +866,8 @@ __all__ = [
     "InformationConfidenceResearcher",
     "MarketExpectationResearcher",
     "RED_TEAM_RESEARCH_SCHEMA",
+    "SOURCE_CANDIDATE_RANKING_SCHEMA",
+    "SOURCE_QUERY_GENERATION_SCHEMA",
     "SYNTHESIS_REVIEW_SCHEMA",
     "StructuredResearchProvider",
     "ValuationResearcher",

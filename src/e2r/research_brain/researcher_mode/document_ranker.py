@@ -7,7 +7,15 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Any, Mapping, Sequence
 
+from e2r.research_brain.intelligence_schema import stable_intelligence_id
+from e2r.research_brain.planning.provider_transport import (
+    StructuredProviderRejected,
+    StructuredProviderUnavailable,
+)
+
+from .component_researcher import StructuredResearchProvider
 from .schemas import ComponentResearchPlan
+from .schemas import assert_blind_research_output, scrub_blind_research_payload
 
 
 @dataclass(frozen=True)
@@ -28,6 +36,219 @@ class DocumentRelevanceDecision:
             "reasons": list(self.reasons),
             "evidence_eligible": self.evidence_eligible,
         }
+
+
+@dataclass(frozen=True)
+class SourceCandidateMaterialityDecision:
+    decision_id: str
+    candidate_id: str
+    material_relevance: bool
+    priority: float
+    objective_ids: tuple[str, ...]
+    rationale: str
+    snippet_discovery_only: bool = True
+    evidence_eligible: bool = False
+    score_authority: bool = False
+
+    def __post_init__(self) -> None:
+        if not self.decision_id or not self.candidate_id or not self.rationale.strip():
+            raise ValueError("candidate materiality decision identity is required")
+        if not 0 <= float(self.priority) <= 1:
+            raise ValueError("candidate materiality priority must be between 0 and 1")
+        if not self.snippet_discovery_only or self.evidence_eligible or self.score_authority:
+            raise ValueError("search-result metadata cannot become evidence or score")
+        if self.material_relevance and not self.objective_ids:
+            raise ValueError("material candidate must map to a research objective")
+
+    def to_dict(self) -> Mapping[str, Any]:
+        return {
+            "decision_id": self.decision_id,
+            "candidate_id": self.candidate_id,
+            "material_relevance": self.material_relevance,
+            "priority": self.priority,
+            "objective_ids": list(self.objective_ids),
+            "rationale": self.rationale,
+            "snippet_discovery_only": self.snippet_discovery_only,
+            "evidence_eligible": self.evidence_eligible,
+            "score_authority": self.score_authority,
+        }
+
+
+@dataclass(frozen=True)
+class CandidateRankingResult:
+    status: str
+    decisions: tuple[SourceCandidateMaterialityDecision, ...]
+    pending_reasons: tuple[str, ...]
+    provider_name: str
+    prompt_hash: str
+    response_hash: str | None
+
+    def __post_init__(self) -> None:
+        if self.status not in {"COMPLETE", "PENDING"}:
+            raise ValueError("unknown candidate ranking status")
+        if self.status == "PENDING" and not self.pending_reasons:
+            raise ValueError("pending candidate ranking requires reasons")
+
+    def to_dict(self) -> Mapping[str, Any]:
+        return {
+            "status": self.status,
+            "decisions": [row.to_dict() for row in self.decisions],
+            "pending_reasons": list(self.pending_reasons),
+            "provider_name": self.provider_name,
+            "prompt_hash": self.prompt_hash,
+            "response_hash": self.response_hash,
+        }
+
+
+class ResearcherDocumentRanker:
+    """LLM semantic ranker that accounts for every discovery candidate."""
+
+    def __init__(self, *, provider: StructuredResearchProvider) -> None:
+        self.provider = provider
+
+    def rank_candidates(
+        self,
+        *,
+        target_id: str,
+        target_name: str,
+        as_of_date: str,
+        open_objectives: Sequence[Mapping[str, Any]],
+        candidates: Sequence[Mapping[str, Any]],
+        current_evidence_facts: Sequence[Mapping[str, Any]],
+        target_business_model: Mapping[str, Any] | None,
+        source_coverage: Sequence[str | Mapping[str, Any]],
+    ) -> CandidateRankingResult:
+        candidate_by_id = {
+            str(row.get("candidate_id") or ""): row for row in candidates
+        }
+        if "" in candidate_by_id or len(candidate_by_id) != len(candidates):
+            raise ValueError("candidate ids must be nonempty and unique")
+        objective_ids = {
+            str(row.get("objective_id") or "") for row in open_objectives
+        }
+        if "" in objective_ids:
+            raise ValueError("source objective id is required")
+        payload = scrub_blind_research_payload(
+            {
+                "target_id": target_id,
+                "target_name": target_name,
+                "as_of_date": as_of_date,
+                "open_research_objectives": list(open_objectives),
+                "discovery_candidates": [
+                    {
+                        "candidate_id": row["candidate_id"],
+                        "title": row.get("title"),
+                        "url": row.get("url"),
+                        "snippet": row.get("snippet"),
+                        "source": row.get("source"),
+                        "published_at": row.get("published_at"),
+                        "query_ids": list(row.get("query_ids") or ()),
+                        "objective_ids": list(row.get("objective_ids") or ()),
+                        "snippet_discovery_only": True,
+                    }
+                    for row in candidates
+                ],
+                "current_evidence_fact_graph": list(current_evidence_facts),
+                "target_business_model": target_business_model,
+                "source_coverage": list(source_coverage),
+            }
+        )
+        prompt_hash = stable_intelligence_id("RANKPROMPT", payload)
+        try:
+            response = self.provider.complete(
+                pass_name="SOURCE_CANDIDATE_RANKING", payload=payload
+            )
+        except (
+            StructuredProviderUnavailable,
+            StructuredProviderRejected,
+            TimeoutError,
+            OSError,
+            RuntimeError,
+        ) as exc:
+            return CandidateRankingResult(
+                status="PENDING",
+                decisions=(),
+                pending_reasons=(f"RANKING_PROVIDER_ERROR:{_error_text(exc)}",),
+                provider_name=_provider_name(self.provider),
+                prompt_hash=prompt_hash,
+                response_hash=None,
+            )
+        response_hash = stable_intelligence_id(
+            "RANKRESP", scrub_blind_research_payload(response)
+        )
+        try:
+            assert_blind_research_output(response)
+            raw_decisions = response["decisions"]
+            if isinstance(raw_decisions, (str, bytes)) or not isinstance(
+                raw_decisions, Sequence
+            ):
+                raise TypeError("candidate decisions must be an array")
+            decisions = []
+            seen = set()
+            for raw in raw_decisions:
+                if not isinstance(raw, Mapping):
+                    raise TypeError("candidate decision must be an object")
+                candidate_id = str(raw.get("candidate_id") or "")
+                if candidate_id not in candidate_by_id or candidate_id in seen:
+                    raise ValueError("candidate ranking has unknown or duplicate id")
+                seen.add(candidate_id)
+                cited_objectives = _unique_strings(raw.get("objective_ids"))
+                if set(cited_objectives) - objective_ids:
+                    raise ValueError("candidate ranking cited unknown objective")
+                decisions.append(
+                    SourceCandidateMaterialityDecision(
+                        decision_id=stable_intelligence_id(
+                            "MATDEC",
+                            {
+                                "candidate_id": candidate_id,
+                                "response": scrub_blind_research_payload(raw),
+                            },
+                        ),
+                        candidate_id=candidate_id,
+                        material_relevance=bool(raw["material_relevance"]),
+                        priority=float(raw["priority"]),
+                        objective_ids=cited_objectives,
+                        rationale=str(raw["rationale"]),
+                    )
+                )
+            ranking_complete = bool(response["ranking_complete"])
+            missing = set(candidate_by_id) - seen
+            if ranking_complete and missing:
+                raise ValueError(
+                    "complete candidate ranking omitted ids: " + ",".join(sorted(missing))
+                )
+            notes = _unique_strings(response.get("unresolved_notes"))
+        except (KeyError, TypeError, ValueError) as exc:
+            return CandidateRankingResult(
+                status="PENDING",
+                decisions=(),
+                pending_reasons=(f"INVALID_RANKING_OUTPUT:{_error_text(exc)}",),
+                provider_name=_provider_name(self.provider),
+                prompt_hash=prompt_hash,
+                response_hash=response_hash,
+            )
+        if not ranking_complete:
+            return CandidateRankingResult(
+                status="PENDING",
+                decisions=tuple(decisions),
+                pending_reasons=(
+                    "RANKING_DECLARED_INCOMPLETE",
+                    *notes,
+                ),
+                provider_name=_provider_name(self.provider),
+                prompt_hash=prompt_hash,
+                response_hash=response_hash,
+            )
+        return CandidateRankingResult(
+            status="COMPLETE",
+            decisions=tuple(
+                sorted(decisions, key=lambda row: (-row.priority, row.candidate_id))
+            ),
+            pending_reasons=(),
+            provider_name=_provider_name(self.provider),
+            prompt_hash=prompt_hash,
+            response_hash=response_hash,
+        )
 
 
 class MaterialDocumentRanker:
@@ -162,4 +383,33 @@ def _tokens(value: str) -> set[str]:
     }
 
 
-__all__ = ["DocumentRelevanceDecision", "MaterialDocumentRanker"]
+def _unique_strings(value: Any) -> tuple[str, ...]:
+    if value is None:
+        return ()
+    if isinstance(value, (str, bytes)):
+        values = (value,)
+    elif isinstance(value, Sequence):
+        values = value
+    else:
+        raise TypeError("expected string array")
+    result = tuple(str(item).strip() for item in values)
+    if any(not item for item in result) or len(result) != len(set(result)):
+        raise ValueError("string array must contain unique nonempty values")
+    return result
+
+
+def _provider_name(provider: StructuredResearchProvider) -> str:
+    return str(getattr(provider, "provider_name", provider.__class__.__name__))
+
+
+def _error_text(error: Exception) -> str:
+    return " ".join(str(error).split())[-500:] or error.__class__.__name__
+
+
+__all__ = [
+    "CandidateRankingResult",
+    "DocumentRelevanceDecision",
+    "MaterialDocumentRanker",
+    "ResearcherDocumentRanker",
+    "SourceCandidateMaterialityDecision",
+]

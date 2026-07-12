@@ -1,0 +1,85 @@
+{
+  "audit_hash": "b5930b6e479ca7965975e624324f41ecbb9385ba9b8f384d5b8c1a9f5d10d038",
+  "checkpoint_resume_supported": true,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "canonical_family_roster_mismatch_count": 0,
+    "checkpoint_api_missing_count": 0,
+    "default_max_results_per_query_mismatch_count": 0,
+    "deterministic_query_template_marker_count": 0,
+    "material_rank_before_fetch_violation_count": 0,
+    "naver_provider_reuse_missing_count": 0,
+    "page_fetcher_reuse_missing_count": 0,
+    "production_unbounded_budget_count": 0,
+    "provider_schema_forbidden_field_count": 0,
+    "provider_schema_open_object_count": 0,
+    "required_source_family_missing_count": 0,
+    "snippet_fallback_import_count": 0,
+    "target_name_condition_count": 0,
+    "top_results_parameter_count": 0
+  },
+  "default_config": {
+    "checkpoint_resume_required": true,
+    "max_candidates_per_checkpoint": 2000,
+    "max_fetches_per_checkpoint": 200,
+    "max_queries_per_checkpoint": 20,
+    "max_results_per_query": 100,
+    "min_full_document_chars": 80,
+    "mode": "RESEARCH_BACKFILL",
+    "official_first_required": true,
+    "require_date_verified": true
+  },
+  "deterministic_query_fallback_allowed": false,
+  "material_relevance_fixed_top_n": false,
+  "parser_field_direct_score_authority": false,
+  "production_daily_maxima": {
+    "checkpoint_resume_required": true,
+    "max_candidates_per_checkpoint": 100,
+    "max_fetches_per_checkpoint": 20,
+    "max_queries_per_checkpoint": 10,
+    "max_results_per_query": 100,
+    "min_full_document_chars": 80,
+    "mode": "PRODUCTION_DAILY",
+    "official_first_required": true,
+    "require_date_verified": true
+  },
+  "query_generation_owned_by_llm": true,
+  "reused_legacy_capabilities": {
+    "naver_free_search_provider": true,
+    "page_fetch_cache": true,
+    "page_fetcher_and_pdf_extractor": true,
+    "score_gap_context_to_llm": true,
+    "url_and_content_hash_dedupe": true
+  },
+  "schema_version": "e2r_v5_phase85_source_graph_acquisition_audit_v1",
+  "search_zero_certifies_saturation": false,
+  "snippet_is_evidence": false,
+  "source_family_classes": {
+    "INDEPENDENT": [
+      "REUTERS",
+      "TRUSTED_BUSINESS_MEDIA",
+      "PUBLIC_BROKER_PDF",
+      "INDUSTRY_REPORT",
+      "NAVER_DISCOVERY",
+      "GENERAL_WEB_DISCOVERY"
+    ],
+    "OFFICIAL": [
+      "OPENDART",
+      "KIND_KRX",
+      "ISSUER_EARNINGS_RELEASE",
+      "ISSUER_PRESENTATION",
+      "ISSUER_NEWSROOM",
+      "CUSTOMER_OFFICIAL"
+    ],
+    "STRUCTURED": [
+      "FINANCIAL_STATEMENTS",
+      "SEGMENT_DATA",
+      "CASH_FLOW",
+      "MARKET_CAP_PRICE",
+      "CONSENSUS_REVISION",
+      "VALUATION_MULTIPLES"
+    ]
+  },
+  "status": "V5_PHASE85_BROAD_SOURCE_GRAPH_ACQUISITION_PASS",
+  "transport_budget_certifies_completion": false
+}

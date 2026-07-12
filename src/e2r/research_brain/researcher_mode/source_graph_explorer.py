@@ -6,13 +6,32 @@ from the current fact graph and failures in later acquisition phases.
 
 from __future__ import annotations
 
+import hashlib
+import json
+import re
 from dataclasses import asdict, dataclass
 from datetime import date
+from enum import Enum
+from pathlib import Path
 from typing import Any, Mapping, Sequence
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
+from e2r.production.metadata import write_json, write_jsonl
+from e2r.research.naver_search_provider import NaverFreeSearchProvider
+from e2r.research.page_fetcher import PageFetcher
+from e2r.research.publication_date import infer_publication_date
+from e2r.research.search_provider import SearchProvider, SearchResult
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
 
-from .schemas import ComponentResearchPlan
+from .component_researcher import StructuredResearchProvider
+from .document_ranker import CandidateRankingResult, ResearcherDocumentRanker
+from .schemas import ComponentResearchPlan, EvidenceFact
+from .source_query_planner import (
+    CANONICAL_SOURCE_FAMILIES,
+    GeneratedSourceQuery,
+    ResearcherSourceQueryPlanner,
+    SourceQueryGenerationResult,
+)
 
 
 SOURCE_FAMILY_CLASSES: Mapping[str, tuple[str, ...]] = {
@@ -80,6 +99,18 @@ class SourceResearchObjective:
     budget_required_before_execution: bool = True
     stop_condition: str = "material claim resolved and counter/supersession checked"
 
+    def __post_init__(self) -> None:
+        if not self.objective_id or not self.component_id or not self.research_objective.strip():
+            raise ValueError("source research objective identity is required")
+        if not self.preferred_source_families:
+            raise ValueError("source research objective needs source-family directions")
+        if self.literal_query is not None or not self.query_must_be_generated_by_llm:
+            raise ValueError("literal source query must remain LLM-owned")
+        if not self.budget_required_before_execution:
+            raise ValueError("source research execution requires a transport budget")
+        if "counter/supersession" not in self.stop_condition:
+            raise ValueError("source objective stop condition must include counter review")
+
     def to_dict(self) -> Mapping[str, Any]:
         return asdict(self)
 
@@ -113,11 +144,150 @@ class SourceGraphExplorer:
         documents: Sequence[Mapping[str, Any]],
         research_plans: Sequence[ComponentResearchPlan],
         source_coverage: Sequence[str | Mapping[str, Any]],
+        generated_queries: Sequence[Mapping[str, Any]] = (),
+        discovery_candidates: Sequence[Mapping[str, Any]] = (),
     ) -> SourceGraphExploration:
-        nodes = []
-        edges = []
+        objectives = []
+        for plan in research_plans:
+            hinted = tuple(
+                dict.fromkeys(
+                    family
+                    for value in plan.source_route_hints
+                    for family in (_canonical_source_family(value),)
+                    if family is not None
+                )
+            )
+            # Hints change priority only.  They never narrow the graph to an
+            # official-only or checklist-only source universe.
+            preferred = tuple(
+                dict.fromkeys(
+                    (
+                        *hinted,
+                        *(
+                            family
+                            for class_name in (
+                                "OFFICIAL",
+                                "STRUCTURED",
+                                "INDEPENDENT",
+                            )
+                            for family in SOURCE_FAMILY_CLASSES[class_name]
+                        ),
+                    )
+                )
+            )
+            for question in plan.research_questions:
+                payload = {
+                    "target_id": target_id,
+                    "as_of_date": as_of_date,
+                    "component_id": plan.component_id,
+                    "question": question,
+                    "preferred": preferred,
+                }
+                objectives.append(
+                    SourceResearchObjective(
+                        objective_id=stable_intelligence_id("SGOBJ", payload),
+                        component_id=plan.component_id,
+                        research_objective=question,
+                        preferred_source_families=preferred,
+                        counter_or_supersession_required=True,
+                    )
+                )
+        return self.build_graph(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            documents=documents,
+            open_objectives=objectives,
+            source_coverage=source_coverage,
+            generated_queries=generated_queries,
+            discovery_candidates=discovery_candidates,
+        )
+
+    def build_graph(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+        documents: Sequence[Mapping[str, Any]],
+        open_objectives: Sequence[SourceResearchObjective],
+        source_coverage: Sequence[str | Mapping[str, Any]],
+        generated_queries: Sequence[Mapping[str, Any]] = (),
+        discovery_candidates: Sequence[Mapping[str, Any]] = (),
+    ) -> SourceGraphExploration:
+        nodes: list[SourceGraphNode] = []
+        edges: list[SourceGraphEdge] = []
         cutoff = date.fromisoformat(as_of_date)
         document_node_ids: dict[str, str] = {}
+        url_node_ids: dict[str, str] = {}
+        query_node_ids: dict[str, str] = {}
+        candidate_node_ids: dict[str, str] = {}
+        document_url_node_ids: dict[str, str] = {}
+        reference_node_ids: dict[str, str] = {}
+        for query in generated_queries:
+            query_id = str(query.get("query_id") or "").strip()
+            if not query_id:
+                continue
+            node_id = stable_intelligence_id(
+                "SGNODE", {"query_id": query_id, "as_of_date": as_of_date}
+            )
+            query_node_ids[query_id] = node_id
+            nodes.append(
+                SourceGraphNode(
+                    node_id=node_id,
+                    node_type="LLM_QUERY",
+                    source_family="DISCOVERY",
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    evidence_eligible=False,
+                    metadata={
+                        "query_id": query_id,
+                        "objective_id": query.get("objective_id"),
+                        "literal_query": query.get("literal_query"),
+                        "generator_kind": query.get("generator_kind"),
+                        "prompt_hash": query.get("prompt_hash"),
+                        "response_hash": query.get("response_hash"),
+                        "score_authority": False,
+                    },
+                )
+            )
+        for candidate in discovery_candidates:
+            candidate_id = str(candidate.get("candidate_id") or "").strip()
+            if not candidate_id:
+                continue
+            node_id = stable_intelligence_id(
+                "SGNODE", {"candidate_id": candidate_id, "as_of_date": as_of_date}
+            )
+            candidate_node_ids[candidate_id] = node_id
+            url = str(candidate.get("url") or "")
+            if url:
+                url_node_ids[_normalize_url(url)] = node_id
+            nodes.append(
+                SourceGraphNode(
+                    node_id=node_id,
+                    node_type="SEARCH_CANDIDATE",
+                    source_family="DISCOVERY",
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    evidence_eligible=False,
+                    metadata={
+                        key: value
+                        for key, value in candidate.items()
+                        if key not in {"full_text", "content_text"}
+                    }
+                    | {
+                        "snippet_discovery_only": True,
+                        "score_authority": False,
+                    },
+                )
+            )
+            for query_id in candidate.get("query_ids") or ():
+                if str(query_id) in query_node_ids:
+                    edges.append(
+                        _edge(
+                            query_node_ids[str(query_id)],
+                            node_id,
+                            "DISCOVERED",
+                        )
+                    )
         for row in documents:
             document_id = str(
                 row.get("document_id") or row.get("source_id") or ""
@@ -138,6 +308,10 @@ class SourceGraphExplorer:
                 },
             )
             document_node_ids[document_id] = node_id
+            url = str(row.get("canonical_url") or row.get("url") or "")
+            candidate_node_id = url_node_ids.get(_normalize_url(url)) if url else None
+            if url:
+                document_url_node_ids[_normalize_url(url)] = node_id
             nodes.append(
                 SourceGraphNode(
                     node_id=node_id,
@@ -156,6 +330,7 @@ class SourceGraphExplorer:
                             "full_text",
                             "content",
                             "body",
+                            "content_text",
                             "future_outcome",
                             "reported_stage",
                         }
@@ -163,65 +338,1452 @@ class SourceGraphExplorer:
                     | ({"future_source_excluded": True} if future else {}),
                 )
             )
+            if candidate_node_id:
+                edges.append(_edge(candidate_node_id, node_id, "FULL_FETCH_OF"))
         for row in documents:
             source_id = str(
                 row.get("document_id") or row.get("source_id") or ""
             ).strip()
             for referenced in row.get("referenced_document_ids") or ():
                 referenced_id = str(referenced)
-                if referenced_id not in document_node_ids:
+                if referenced_id in document_node_ids:
+                    edges.append(
+                        _edge(
+                            document_node_ids[source_id],
+                            document_node_ids[referenced_id],
+                            "REFERENCES",
+                        )
+                    )
+            for referenced_url in row.get("referenced_urls") or ():
+                normalized = _normalize_url(str(referenced_url))
+                if not normalized:
                     continue
-                edge_payload = {
-                    "from": document_node_ids[source_id],
-                    "to": document_node_ids[referenced_id],
-                    "relationship": "REFERENCES",
-                }
+                target_node = document_url_node_ids.get(normalized) or url_node_ids.get(
+                    normalized
+                )
+                if target_node is None:
+                    target_node = reference_node_ids.get(normalized)
+                if target_node is None:
+                    target_node = stable_intelligence_id(
+                        "SGNODE",
+                        {
+                            "referenced_url": normalized,
+                            "as_of_date": as_of_date,
+                        },
+                    )
+                    reference_node_ids[normalized] = target_node
+                    nodes.append(
+                        SourceGraphNode(
+                            node_id=target_node,
+                            node_type="REFERENCE_CANDIDATE",
+                            source_family="GRAPH_EXPANSION",
+                            target_id=target_id,
+                            as_of_date=as_of_date,
+                            evidence_eligible=False,
+                            metadata={
+                                "url": str(referenced_url),
+                                "normalized_url": normalized,
+                                "full_fetch_required": True,
+                                "score_authority": False,
+                            },
+                        )
+                    )
                 edges.append(
-                    SourceGraphEdge(
-                        edge_id=stable_intelligence_id("SGEDGE", edge_payload),
-                        from_node_id=edge_payload["from"],
-                        to_node_id=edge_payload["to"],
-                        relationship="REFERENCES",
+                    _edge(
+                        document_node_ids[source_id],
+                        target_node,
+                        "REFERENCES_URL",
                     )
                 )
         covered = _coverage_labels(source_coverage)
-        objectives = []
-        for plan in research_plans:
-            preferred = tuple(
-                dict.fromkeys(
-                    (*plan.source_route_hints, *plan.counter_route_hints)
-                )
-            )
-            if not preferred:
-                # Generic family order, never a target/archetype-specific query.
-                preferred = tuple(
-                    family
-                    for class_name in ("OFFICIAL", "STRUCTURED", "INDEPENDENT")
-                    for family in SOURCE_FAMILY_CLASSES[class_name]
-                )
-            for question in plan.research_questions:
-                payload = {
-                    "target_id": target_id,
-                    "as_of_date": as_of_date,
-                    "component_id": plan.component_id,
-                    "question": question,
-                    "preferred": preferred,
-                }
-                objectives.append(
-                    SourceResearchObjective(
-                        objective_id=stable_intelligence_id("SGOBJ", payload),
-                        component_id=plan.component_id,
-                        research_objective=question,
-                        preferred_source_families=preferred,
-                        counter_or_supersession_required=True,
-                    )
-                )
         return SourceGraphExploration(
-            nodes=tuple(nodes),
-            edges=tuple(edges),
-            open_objectives=tuple(objectives),
+            nodes=tuple(_dedupe_nodes(nodes)),
+            edges=tuple(_dedupe_edges(edges)),
+            open_objectives=tuple(open_objectives),
             covered_source_families=tuple(sorted(covered)),
         )
+
+
+class SourceGraphAcquisitionMode(str, Enum):
+    RESEARCH_BACKFILL = "RESEARCH_BACKFILL"
+    PRODUCTION_DAILY = "PRODUCTION_DAILY"
+    TEST = "TEST"
+
+
+@dataclass(frozen=True)
+class SourceGraphAcquisitionConfig:
+    mode: str = SourceGraphAcquisitionMode.RESEARCH_BACKFILL.value
+    max_results_per_query: int = 100
+    max_queries_per_checkpoint: int = 20
+    max_candidates_per_checkpoint: int = 2_000
+    max_fetches_per_checkpoint: int = 200
+    min_full_document_chars: int = 80
+    require_date_verified: bool = True
+    official_first_required: bool = True
+    checkpoint_resume_required: bool = True
+
+    def __post_init__(self) -> None:
+        SourceGraphAcquisitionMode(self.mode)
+        for value, label in (
+            (self.max_results_per_query, "max_results_per_query"),
+            (self.max_queries_per_checkpoint, "max_queries_per_checkpoint"),
+            (self.max_candidates_per_checkpoint, "max_candidates_per_checkpoint"),
+            (self.max_fetches_per_checkpoint, "max_fetches_per_checkpoint"),
+            (self.min_full_document_chars, "min_full_document_chars"),
+        ):
+            if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+                raise ValueError(f"{label} must be a positive transport bound")
+        if self.max_results_per_query > 100:
+            raise ValueError("Naver API max_results_per_query cannot exceed 100")
+        if self.mode == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value:
+            if (
+                self.max_queries_per_checkpoint > 10
+                or self.max_candidates_per_checkpoint > 100
+                or self.max_fetches_per_checkpoint > 20
+            ):
+                raise ValueError("production daily source graph budget is unbounded")
+            if not self.official_first_required or not self.checkpoint_resume_required:
+                raise ValueError("production daily requires official-first checkpoint execution")
+
+
+@dataclass(frozen=True)
+class SourceGraphAcquisitionRun:
+    status: str
+    target_id: str
+    as_of_date: str
+    query_generation: SourceQueryGenerationResult | None
+    ranking_results: tuple[CandidateRankingResult, ...]
+    evidence_documents: tuple[Mapping[str, Any], ...]
+    source_graph: SourceGraphExploration
+    checkpoint: Mapping[str, Any]
+    audit: Mapping[str, Any]
+
+    def to_dict(self) -> Mapping[str, Any]:
+        return {
+            "status": self.status,
+            "target_id": self.target_id,
+            "as_of_date": self.as_of_date,
+            "query_generation": (
+                self.query_generation.to_dict() if self.query_generation else None
+            ),
+            "ranking_results": [row.to_dict() for row in self.ranking_results],
+            "evidence_documents": [dict(row) for row in self.evidence_documents],
+            "source_graph": self.source_graph.to_dict(),
+            "checkpoint": dict(self.checkpoint),
+            "audit": dict(self.audit),
+        }
+
+
+class ResearcherSourceGraphAcquirer:
+    """Reuse Naver/PageFetcher under the v5 Evidence OS boundary.
+
+    A transport cap only creates a resumable checkpoint.  It never certifies
+    source absence, component completion, a low score, or semantic saturation.
+    """
+
+    def __init__(
+        self,
+        *,
+        query_provider: StructuredResearchProvider,
+        search_provider: SearchProvider | None = None,
+        page_fetcher: PageFetcher | None = None,
+        document_ranker: ResearcherDocumentRanker | None = None,
+    ) -> None:
+        self.query_provider = query_provider
+        self.search_provider = search_provider
+        self.page_fetcher = page_fetcher
+        self.document_ranker = document_ranker or ResearcherDocumentRanker(
+            provider=query_provider
+        )
+
+    def acquire(
+        self,
+        *,
+        config: SourceGraphAcquisitionConfig,
+        target_id: str,
+        target_name: str,
+        target_aliases: Sequence[str],
+        as_of_date: str,
+        open_objectives: Sequence[SourceResearchObjective | Mapping[str, Any]],
+        current_evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        target_business_model: Mapping[str, Any] | None,
+        source_coverage: Sequence[str | Mapping[str, Any]],
+        official_documents: Sequence[Mapping[str, Any]] = (),
+        official_gap_reasons_by_objective: Mapping[str, Sequence[str]] | None = None,
+        prior_query_failures: Sequence[Mapping[str, Any]] = (),
+        theme_context: Mapping[str, Any] | None = None,
+        score_gap_context: Mapping[str, Any] | None = None,
+        resolved_objective_ids: Sequence[str] = (),
+        prior_checkpoint: Mapping[str, Any] | None = None,
+        official_domain_allowlist: Sequence[str] = (),
+    ) -> SourceGraphAcquisitionRun:
+        cutoff = date.fromisoformat(as_of_date)
+        objectives = tuple(_objective_dict(row) for row in open_objectives)
+        objective_by_id = {
+            str(row["objective_id"]): row for row in objectives
+        }
+        if len(objective_by_id) != len(objectives):
+            raise ValueError("source graph objectives must be unique")
+        resolved = set(str(value) for value in resolved_objective_ids)
+        unknown_resolved = resolved - set(objective_by_id)
+        if unknown_resolved:
+            raise ValueError("resolved objective ids are unknown")
+        facts = tuple(_fact_dict(row) for row in current_evidence_facts)
+        if any(str(row.get("target_id")) != target_id for row in facts):
+            raise ValueError("source graph received cross-target EvidenceFacts")
+        if any(str(row.get("as_of_date")) != as_of_date for row in facts):
+            raise ValueError("source graph EvidenceFact as_of_date mismatch")
+        state = _new_acquisition_state(
+            target_id=target_id,
+            target_name=target_name,
+            as_of_date=as_of_date,
+            mode=config.mode,
+        )
+        if prior_checkpoint is not None:
+            state = _resume_acquisition_state(
+                prior_checkpoint,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                mode=config.mode,
+            )
+        _merge_official_documents(
+            state,
+            official_documents,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
+        search_provider = self.search_provider or NaverFreeSearchProvider(
+            fixture_mode=config.mode == SourceGraphAcquisitionMode.TEST.value,
+            live_enabled=config.mode != SourceGraphAcquisitionMode.TEST.value,
+        )
+        page_fetcher = self.page_fetcher or PageFetcher(
+            live_enabled=config.mode != SourceGraphAcquisitionMode.TEST.value,
+            cache_directory=Path("output/researcher_parity/source_graph_cache"),
+        )
+        _validate_provider_mode(
+            config=config,
+            search_provider=search_provider,
+            page_fetcher=page_fetcher,
+        )
+        unresolved_objectives = tuple(
+            row for row in objectives if str(row["objective_id"]) not in resolved
+        )
+        query_generation: SourceQueryGenerationResult | None = None
+        pending_reasons: list[str] = []
+        generated_rows = state["generated_queries"]
+        candidates = state["search_candidates"]
+        ranking_rows = state["candidate_materiality_decisions"]
+        fetch_rows = state["fetch_records"]
+        rejected_rows = state["rejected_documents"]
+        evidence_documents = state["evidence_documents"]
+        for document in tuple(evidence_documents):
+            _enqueue_reference_candidates(
+                candidates,
+                document=document,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                default_objective_ids=tuple(
+                    str(row["objective_id"]) for row in unresolved_objectives
+                ),
+            )
+        query_failures = [*state["query_failures"], *prior_query_failures]
+        for row in generated_rows:
+            if row.get("execution_status") != "BLOCKED_OFFICIAL_FIRST":
+                continue
+            refreshed_gaps = list(
+                (official_gap_reasons_by_objective or {}).get(
+                    str(row.get("objective_id")), ()
+                )
+            )
+            if refreshed_gaps:
+                row["official_gap_reasons"] = refreshed_gaps
+                row["execution_status"] = "PENDING"
+        pending_query_rows = [
+            row
+            for row in generated_rows
+            if row.get("execution_status") == "PENDING"
+            and str(row.get("objective_id")) not in resolved
+        ]
+        pending_candidate_work = any(
+            row.get("ranking_status") == "PENDING"
+            or row.get("fetch_status") in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+            for row in candidates
+        )
+        if unresolved_objectives and not pending_query_rows and not pending_candidate_work:
+            query_generation = ResearcherSourceQueryPlanner(
+                provider=self.query_provider
+            ).generate(
+                target_id=target_id,
+                target_name=target_name,
+                target_aliases=target_aliases,
+                as_of_date=as_of_date,
+                open_objectives=unresolved_objectives,
+                current_evidence_facts=facts,
+                current_counterfacts=tuple(
+                    row for row in facts if row.get("direction") == "COUNTER"
+                ),
+                target_business_model=target_business_model,
+                source_coverage=source_coverage,
+                prior_query_failures=query_failures,
+                previously_executed_queries=state["executed_queries"],
+                theme_context=theme_context or {},
+                score_gap_context=score_gap_context or {},
+                generator_kind=(
+                    "TEST_FIXTURE_LLM"
+                    if config.mode == SourceGraphAcquisitionMode.TEST.value
+                    else "REAL_LLM"
+                ),
+            )
+            state["query_generation_history"].append(query_generation.to_dict())
+            pending_reasons.extend(query_generation.feedback_for_next_llm_call)
+            query_failures.extend(
+                {
+                    "query_id": "QUERY_GENERATION",
+                    "objective_id": "MULTI_OBJECTIVE",
+                    "failure_reason": reason,
+                }
+                for reason in query_generation.feedback_for_next_llm_call
+            )
+            for query in query_generation.queries:
+                row = dict(query.to_dict())
+                row["execution_status"] = "PENDING"
+                row["official_gap_reasons"] = list(
+                    (official_gap_reasons_by_objective or {}).get(
+                        query.objective_id, ()
+                    )
+                )
+                generated_rows.append(row)
+            pending_query_rows = [
+                row
+                for row in generated_rows
+                if row.get("execution_status") == "PENDING"
+                and str(row.get("objective_id")) not in resolved
+            ]
+        query_budget = config.max_queries_per_checkpoint
+        query_calls = 0
+        checkpoint_candidate_start_count = len(candidates)
+        for query_row in pending_query_rows:
+            if query_calls >= query_budget:
+                pending_reasons.append("QUERY_TRANSPORT_BUDGET_CHECKPOINT")
+                break
+            new_candidate_count = len(candidates) - checkpoint_candidate_start_count
+            if new_candidate_count >= config.max_candidates_per_checkpoint:
+                pending_reasons.append("CANDIDATE_DISCOVERY_TRANSPORT_BUDGET_CHECKPOINT")
+                break
+            objective_id = str(query_row["objective_id"])
+            gap_reasons = tuple(query_row.get("official_gap_reasons") or ())
+            if (
+                config.mode == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+                and config.official_first_required
+                and not gap_reasons
+            ):
+                query_row["execution_status"] = "BLOCKED_OFFICIAL_FIRST"
+                failure = {
+                    "query_id": query_row["query_id"],
+                    "objective_id": objective_id,
+                    "failure_reason": "GENERAL_WEB_WITHOUT_OFFICIAL_GAP",
+                }
+                query_failures.append(failure)
+                pending_reasons.append("GENERAL_WEB_WITHOUT_OFFICIAL_GAP")
+                continue
+            query_calls += 1
+            literal_query = str(query_row["literal_query"])
+            remaining_candidate_budget = max(
+                1,
+                config.max_candidates_per_checkpoint - new_candidate_count,
+            )
+            search_result_rows, errors = _execute_search_query(
+                search_provider=search_provider,
+                query=literal_query,
+                query_id=str(query_row["query_id"]),
+                objective_id=objective_id,
+                target_id=target_id,
+                as_of_date=cutoff,
+                max_results=min(
+                    config.max_results_per_query, remaining_candidate_budget
+                ),
+            )
+            query_row["execution_status"] = (
+                "PROVIDER_ERROR"
+                if errors
+                else "NO_RESULT"
+                if not search_result_rows
+                else "SEARCH_EXECUTED"
+            )
+            query_row["search_result_count"] = len(search_result_rows)
+            query_row["provider_errors"] = list(errors)
+            state["executed_queries"].append(literal_query)
+            if errors or not search_result_rows:
+                failure_reason = (
+                    "SEARCH_PROVIDER_ERROR:" + ";".join(errors)
+                    if errors
+                    else "SEARCH_NO_RESULT_NOT_SATURATION"
+                )
+                query_failures.append(
+                    {
+                        "query_id": query_row["query_id"],
+                        "objective_id": objective_id,
+                        "literal_query": literal_query,
+                        "failure_reason": failure_reason,
+                    }
+                )
+                pending_reasons.append(failure_reason)
+            _merge_search_candidates(
+                candidates,
+                rejected_rows,
+                search_result_rows,
+                cutoff=cutoff,
+            )
+        state["query_failures"] = _dedupe_mapping_rows(
+            query_failures, key_fields=("query_id", "failure_reason")
+        )
+        pending_rank = [
+            row
+            for row in candidates
+            if row.get("ranking_status") == "PENDING"
+            and not set(row.get("objective_ids") or ()).issubset(resolved)
+        ]
+        ranking_results: list[CandidateRankingResult] = []
+        if pending_rank:
+            rank_batch = pending_rank[: config.max_candidates_per_checkpoint]
+            if len(pending_rank) > len(rank_batch):
+                pending_reasons.append("CANDIDATE_RANKING_TRANSPORT_BUDGET_CHECKPOINT")
+            ranking = self.document_ranker.rank_candidates(
+                target_id=target_id,
+                target_name=target_name,
+                as_of_date=as_of_date,
+                open_objectives=unresolved_objectives,
+                candidates=rank_batch,
+                current_evidence_facts=facts,
+                target_business_model=target_business_model,
+                source_coverage=source_coverage,
+            )
+            ranking_results.append(ranking)
+            pending_reasons.extend(ranking.pending_reasons)
+            decision_by_candidate = {
+                row.candidate_id: row for row in ranking.decisions
+            }
+            for candidate in rank_batch:
+                decision = decision_by_candidate.get(str(candidate["candidate_id"]))
+                if decision is None:
+                    continue
+                ranking_rows.append(decision.to_dict())
+                candidate["materiality_decision_id"] = decision.decision_id
+                candidate["material_priority"] = decision.priority
+                candidate["materiality_rationale"] = decision.rationale
+                if decision.material_relevance:
+                    candidate["ranking_status"] = "MATERIAL"
+                    candidate["fetch_status"] = "MATERIAL_PENDING_FETCH"
+                    candidate["objective_ids"] = list(decision.objective_ids)
+                else:
+                    candidate["ranking_status"] = "NOT_MATERIAL"
+                    candidate["fetch_status"] = "DISCOVERY_ONLY_NOT_FETCHED"
+        pending_fetch = sorted(
+            (
+                row
+                for row in candidates
+                if row.get("fetch_status")
+                in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+                and not set(row.get("objective_ids") or ()).issubset(resolved)
+            ),
+            key=lambda row: (
+                -float(row.get("material_priority") or 0.0),
+                str(row.get("candidate_id")),
+            ),
+        )
+        fetch_batch = pending_fetch[: config.max_fetches_per_checkpoint]
+        if len(pending_fetch) > len(fetch_batch):
+            pending_reasons.append("FULL_FETCH_TRANSPORT_BUDGET_CHECKPOINT")
+        content_hash_to_document = {
+            str(row.get("content_hash")): row
+            for row in evidence_documents
+            if row.get("content_hash")
+        }
+        allowed_hosts = {
+            _normalized_host(value) for value in official_domain_allowlist if value
+        }
+        for candidate in fetch_batch:
+            fetch_record, document, rejection = _fetch_candidate_document(
+                candidate=candidate,
+                target_id=target_id,
+                target_name=target_name,
+                target_aliases=target_aliases,
+                as_of_date=cutoff,
+                page_fetcher=page_fetcher,
+                min_chars=config.min_full_document_chars,
+                require_date_verified=config.require_date_verified,
+                official_hosts=allowed_hosts,
+                content_hash_to_document=content_hash_to_document,
+            )
+            fetch_rows.append(fetch_record)
+            if rejection is not None:
+                rejected_rows.append(rejection)
+                if rejection.get("retryable"):
+                    candidate["fetch_status"] = "FETCH_RETRY_PENDING"
+                    pending_reasons.append(str(rejection["rejection_reason"]))
+                else:
+                    candidate["fetch_status"] = "FETCH_REJECTED"
+                continue
+            if document is None:
+                raise ValueError("fetch candidate terminated without document or rejection")
+            if fetch_record.get("disposition") == "DUPLICATE_CONTENT":
+                candidate["fetch_status"] = "DUPLICATE_CONTENT"
+                continue
+            evidence_documents.append(document)
+            content_hash_to_document[str(document["content_hash"])] = document
+            _enqueue_reference_candidates(
+                candidates,
+                document=document,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                default_objective_ids=tuple(candidate.get("objective_ids") or ()),
+            )
+            candidate["fetch_status"] = "FULL_DOCUMENT_FETCHED"
+            candidate["document_id"] = document["document_id"]
+        all_documents = tuple(
+            sorted(
+                (dict(row) for row in evidence_documents),
+                key=lambda row: str(row.get("document_id")),
+            )
+        )
+        coverage = [*source_coverage]
+        coverage.extend(
+            str(row.get("source_family"))
+            for row in all_documents
+            if row.get("source_family")
+        )
+        graph = SourceGraphExplorer().build_graph(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            documents=all_documents,
+            open_objectives=tuple(
+                SourceResearchObjective(**row) for row in objectives
+            ),
+            source_coverage=coverage,
+            generated_queries=generated_rows,
+            discovery_candidates=candidates,
+        )
+        still_pending_query = any(
+            row.get("execution_status") == "PENDING" for row in generated_rows
+        )
+        still_pending_rank = any(
+            row.get("ranking_status") == "PENDING" for row in candidates
+        )
+        still_pending_fetch = any(
+            row.get("fetch_status")
+            in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+            for row in candidates
+        )
+        if not unresolved_objectives:
+            status = "STOPPED_ON_RESOLUTION"
+        elif query_generation and query_generation.status == "PENDING" and not query_generation.queries:
+            status = "QUERY_GENERATION_PENDING"
+        elif still_pending_rank:
+            status = "CANDIDATE_RANKING_PENDING"
+        elif still_pending_query or still_pending_fetch:
+            status = "CHECKPOINT_PENDING"
+        elif any("PROVIDER_ERROR" in value for value in pending_reasons):
+            status = "SOURCE_PROVIDER_PENDING"
+        else:
+            status = "EPOCH_COMPLETE_REQUIRES_SUPERVISOR"
+        state["epoch"] = int(state.get("epoch") or 0) + 1
+        state["status"] = status
+        state["pending_reasons"] = list(dict.fromkeys(pending_reasons))
+        state["resolved_objective_ids"] = sorted(resolved)
+        state["candidate_materiality_decisions"] = _dedupe_mapping_rows(
+            ranking_rows, key_fields=("decision_id",)
+        )
+        state["fetch_records"] = _dedupe_mapping_rows(
+            fetch_rows, key_fields=("fetch_id",)
+        )
+        state["rejected_documents"] = _dedupe_mapping_rows(
+            rejected_rows, key_fields=("rejection_id",)
+        )
+        state["evidence_documents"] = [dict(row) for row in all_documents]
+        state["generated_queries"] = generated_rows
+        state["search_candidates"] = candidates
+        state["source_graph"] = graph.to_dict()
+        checkpoint = _finalize_checkpoint(state)
+        audit = _audit_acquisition_run(
+            config=config,
+            checkpoint=checkpoint,
+            query_provider=self.query_provider,
+            search_provider=search_provider,
+            page_fetcher=page_fetcher,
+        )
+        return SourceGraphAcquisitionRun(
+            status=status,
+            target_id=target_id,
+            as_of_date=as_of_date,
+            query_generation=query_generation,
+            ranking_results=tuple(ranking_results),
+            evidence_documents=all_documents,
+            source_graph=graph,
+            checkpoint=checkpoint,
+            audit=audit,
+        )
+
+
+def write_source_graph_acquisition_run(
+    result: SourceGraphAcquisitionRun,
+    *,
+    output_root: str | Path,
+) -> Mapping[str, Path]:
+    root = Path(output_root)
+    checkpoint = result.checkpoint
+    paths = {
+        "checkpoint": root / "source_graph_checkpoint.json",
+        "generated_queries": root / "generated_queries.jsonl",
+        "search_candidates": root / "search_candidates.jsonl",
+        "candidate_materiality": root / "candidate_materiality.jsonl",
+        "fetch_records": root / "source_graph_fetch_records.jsonl",
+        "evidence_documents": root / "source_graph_evidence_documents.jsonl",
+        "rejected_documents": root / "source_graph_rejected_documents.jsonl",
+        "source_graph": root / "source_graph.json",
+        "audit": root / "source_graph_acquisition_audit.json",
+    }
+    write_json(paths["checkpoint"], checkpoint)
+    write_jsonl(paths["generated_queries"], checkpoint["generated_queries"])
+    write_jsonl(paths["search_candidates"], checkpoint["search_candidates"])
+    write_jsonl(
+        paths["candidate_materiality"],
+        checkpoint["candidate_materiality_decisions"],
+    )
+    write_jsonl(paths["fetch_records"], checkpoint["fetch_records"])
+    write_jsonl(paths["evidence_documents"], checkpoint["evidence_documents"])
+    write_jsonl(paths["rejected_documents"], checkpoint["rejected_documents"])
+    write_json(paths["source_graph"], result.source_graph.to_dict())
+    write_json(paths["audit"], result.audit)
+    return paths
+
+
+def load_source_graph_checkpoint(path: str | Path) -> Mapping[str, Any]:
+    payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(payload, Mapping):
+        raise ValueError("source graph checkpoint must be an object")
+    expected = _checkpoint_hash(payload)
+    if payload.get("checkpoint_hash") != expected:
+        raise ValueError("source graph checkpoint hash mismatch")
+    return payload
+
+
+def _objective_dict(
+    row: SourceResearchObjective | Mapping[str, Any],
+) -> Mapping[str, Any]:
+    if isinstance(row, SourceResearchObjective):
+        return row.to_dict()
+    preferred = tuple(
+        dict.fromkeys(
+            family
+            for value in row.get("preferred_source_families") or ()
+            for family in (_canonical_source_family(str(value)),)
+            if family is not None
+        )
+    )
+    objective = SourceResearchObjective(
+        objective_id=str(row.get("objective_id") or ""),
+        component_id=str(row.get("component_id") or ""),
+        research_objective=str(row.get("research_objective") or ""),
+        preferred_source_families=preferred,
+        counter_or_supersession_required=bool(
+            row.get("counter_or_supersession_required", True)
+        ),
+    )
+    if not objective.objective_id or not objective.component_id or not objective.research_objective:
+        raise ValueError("source research objective is incomplete")
+    unknown = set(objective.preferred_source_families) - set(
+        CANONICAL_SOURCE_FAMILIES
+    )
+    if unknown:
+        raise ValueError(f"source objective has unknown families: {sorted(unknown)}")
+    return objective.to_dict()
+
+
+def _fact_dict(row: EvidenceFact | Mapping[str, Any]) -> Mapping[str, Any]:
+    return row.to_dict() if isinstance(row, EvidenceFact) else dict(row)
+
+
+def _new_acquisition_state(
+    *, target_id: str, target_name: str, as_of_date: str, mode: str
+) -> dict[str, Any]:
+    return {
+        "schema_version": "e2r_v5_source_graph_checkpoint_v1",
+        "target_id": target_id,
+        "target_name": target_name,
+        "as_of_date": as_of_date,
+        "mode": mode,
+        "epoch": 0,
+        "status": "NEW",
+        "resumed_from_checkpoint_id": None,
+        "query_generation_history": [],
+        "generated_queries": [],
+        "executed_queries": [],
+        "query_failures": [],
+        "search_candidates": [],
+        "candidate_materiality_decisions": [],
+        "fetch_records": [],
+        "evidence_documents": [],
+        "rejected_documents": [],
+        "resolved_objective_ids": [],
+        "pending_reasons": [],
+        "source_graph": {},
+        "semantic_saturation_certified": False,
+        "production_score_authority": False,
+        "parser_field_direct_score_authority": False,
+        "snippet_evidence_allowed": False,
+        "transport_budget_can_complete_research": False,
+    }
+
+
+def _resume_acquisition_state(
+    checkpoint: Mapping[str, Any], *, target_id: str, as_of_date: str, mode: str
+) -> dict[str, Any]:
+    if checkpoint.get("checkpoint_hash") != _checkpoint_hash(checkpoint):
+        raise ValueError("source graph checkpoint hash mismatch")
+    for key, expected in (
+        ("target_id", target_id),
+        ("as_of_date", as_of_date),
+        ("mode", mode),
+    ):
+        if str(checkpoint.get(key)) != expected:
+            raise ValueError(f"source graph checkpoint {key} mismatch")
+    state = json.loads(json.dumps(checkpoint, ensure_ascii=False))
+    state["resumed_from_checkpoint_id"] = checkpoint.get("checkpoint_id")
+    state.pop("checkpoint_id", None)
+    state.pop("checkpoint_hash", None)
+    return state
+
+
+def _finalize_checkpoint(state: Mapping[str, Any]) -> Mapping[str, Any]:
+    payload = json.loads(json.dumps(state, ensure_ascii=False, default=str))
+    payload.pop("checkpoint_id", None)
+    payload.pop("checkpoint_hash", None)
+    checkpoint_hash = _checkpoint_hash(payload)
+    payload["checkpoint_hash"] = checkpoint_hash
+    payload["checkpoint_id"] = stable_intelligence_id(
+        "SGCHECK",
+        {
+            "target_id": payload["target_id"],
+            "as_of_date": payload["as_of_date"],
+            "epoch": payload["epoch"],
+            "checkpoint_hash": checkpoint_hash,
+        },
+    )
+    return payload
+
+
+def _checkpoint_hash(checkpoint: Mapping[str, Any]) -> str:
+    payload = {
+        key: value
+        for key, value in checkpoint.items()
+        if key not in {"checkpoint_id", "checkpoint_hash"}
+    }
+    return hashlib.sha256(
+        json.dumps(payload, ensure_ascii=False, sort_keys=True, default=str).encode(
+            "utf-8"
+        )
+    ).hexdigest()
+
+
+def _merge_official_documents(
+    state: dict[str, Any],
+    documents: Sequence[Mapping[str, Any]],
+    *,
+    target_id: str,
+    as_of_date: str,
+) -> None:
+    existing = {
+        str(row.get("document_id")): row for row in state["evidence_documents"]
+    }
+    cutoff = date.fromisoformat(as_of_date)
+    for raw in documents:
+        row = dict(raw)
+        document_id = str(row.get("document_id") or "").strip()
+        if not document_id:
+            raise ValueError("official source graph document_id is required")
+        if str(row.get("target_id") or target_id) != target_id:
+            raise ValueError("official source graph document target mismatch")
+        observed = _observed_date(row)
+        if observed and observed > cutoff:
+            raise ValueError("future official document cannot enter source graph")
+        content = str(
+            row.get("content_text")
+            or row.get("full_text")
+            or row.get("content")
+            or ""
+        )
+        if row.get("evidence_eligible", True) and not content.strip():
+            raise ValueError("evidence-eligible official document requires full text")
+        content_hash = str(row.get("content_hash") or "")
+        if content and not content_hash:
+            content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
+        row.update(
+            {
+                "target_id": target_id,
+                "as_of_date": as_of_date,
+                "content_text": content,
+                "content_hash": content_hash,
+                "snippet_only": False,
+                "snippet_used_as_document": False,
+                "parser_field_direct_score_authority": False,
+                "production_score_authority": False,
+            }
+        )
+        if document_id in existing:
+            if existing[document_id].get("content_hash") != content_hash:
+                raise ValueError("official document identity collision")
+            continue
+        existing[document_id] = row
+        state["evidence_documents"].append(row)
+
+
+def _validate_provider_mode(
+    *,
+    config: SourceGraphAcquisitionConfig,
+    search_provider: SearchProvider,
+    page_fetcher: PageFetcher,
+) -> None:
+    if config.mode != SourceGraphAcquisitionMode.PRODUCTION_DAILY.value:
+        return
+    if (
+        not isinstance(search_provider, NaverFreeSearchProvider)
+        or search_provider.fixture_mode
+        or not search_provider.live_enabled
+        or search_provider.fixture_provider is not None
+    ):
+        raise ValueError("production source graph requires live Naver provider")
+    if (
+        not isinstance(page_fetcher, PageFetcher)
+        or not page_fetcher.live_enabled
+        or bool(page_fetcher.fixture_text_by_url)
+    ):
+        raise ValueError("production source graph requires live PageFetcher")
+
+
+def _execute_search_query(
+    *,
+    search_provider: SearchProvider,
+    query: str,
+    query_id: str,
+    objective_id: str,
+    target_id: str,
+    as_of_date: date,
+    max_results: int,
+) -> tuple[tuple[Mapping[str, Any], ...], tuple[str, ...]]:
+    error_start = len(getattr(search_provider, "errors", ()))
+    try:
+        results = tuple(search_provider.search(query, as_of_date, max_results))
+    except Exception as exc:
+        return (), (f"{type(exc).__name__}:{exc}",)
+    errors = tuple(
+        str(value)
+        for value in tuple(getattr(search_provider, "errors", ()))[error_start:]
+    )
+    rows = []
+    for result in results:
+        if not isinstance(result, SearchResult):
+            raise ValueError("search provider returned non-SearchResult")
+        normalized_url = _normalize_url(result.url)
+        candidate_id = stable_intelligence_id(
+            "SGCAND",
+            {
+                "target_id": target_id,
+                "as_of_date": as_of_date.isoformat(),
+                "normalized_url": normalized_url,
+            },
+        )
+        rows.append(
+            {
+                "schema_version": "e2r_v5_search_candidate_v1",
+                "candidate_id": candidate_id,
+                "target_id": target_id,
+                "as_of_date": as_of_date.isoformat(),
+                "url": result.url,
+                "normalized_url": normalized_url,
+                "title": result.title,
+                "snippet": result.snippet,
+                "source": result.source,
+                "published_at": (
+                    result.published_at.isoformat() if result.published_at else None
+                ),
+                "rank": result.rank,
+                "is_pdf": result.is_pdf,
+                "is_report_domain": result.is_report_domain,
+                "is_news": result.is_news,
+                "is_disclosure": result.is_disclosure,
+                "query_ids": [query_id],
+                "objective_ids": [objective_id],
+                "query_lineage_valid": result.query in {None, query},
+                "discovery_only": True,
+                "snippet_discovery_only": True,
+                "snippet_evidence_eligible": False,
+                "score_authority": False,
+                "ranking_status": "PENDING",
+                "fetch_status": "NOT_STARTED",
+            }
+        )
+    return tuple(rows), errors
+
+
+def _merge_search_candidates(
+    candidates: list[dict[str, Any]],
+    rejected: list[dict[str, Any]],
+    new_rows: Sequence[Mapping[str, Any]],
+    *,
+    cutoff: date,
+) -> None:
+    by_url = {str(row["normalized_url"]): row for row in candidates}
+    for raw in new_rows:
+        row = dict(raw)
+        reason = None
+        if not row.get("query_lineage_valid"):
+            reason = "QUERY_LINEAGE_MISMATCH"
+        elif not _is_http_url(str(row.get("url") or "")):
+            reason = "INVALID_OR_NON_HTTP_URL"
+        published = _parse_date(row.get("published_at"))
+        if published and published > cutoff:
+            reason = "FUTURE_SEARCH_RESULT"
+        if reason:
+            rejected.append(_candidate_rejection(row, reason, retryable=False))
+            continue
+        key = str(row["normalized_url"])
+        existing = by_url.get(key)
+        if existing is None:
+            candidates.append(row)
+            by_url[key] = row
+            continue
+        existing["query_ids"] = list(
+            dict.fromkeys((*existing.get("query_ids", ()), *row.get("query_ids", ())))
+        )
+        existing["objective_ids"] = list(
+            dict.fromkeys(
+                (*existing.get("objective_ids", ()), *row.get("objective_ids", ()))
+            )
+        )
+
+
+def _enqueue_reference_candidates(
+    candidates: list[dict[str, Any]],
+    *,
+    document: Mapping[str, Any],
+    target_id: str,
+    as_of_date: str,
+    default_objective_ids: Sequence[str],
+) -> None:
+    by_url = {str(row.get("normalized_url")): row for row in candidates}
+    for raw_url in document.get("referenced_urls") or ():
+        url = str(raw_url).strip()
+        normalized = _normalize_url(url)
+        if not normalized or not _is_http_url(url):
+            continue
+        existing = by_url.get(normalized)
+        objective_ids = tuple(
+            document.get("objective_ids") or default_objective_ids
+        )
+        query_ids = tuple(document.get("query_ids") or ())
+        if existing is not None:
+            existing["objective_ids"] = list(
+                dict.fromkeys((*existing.get("objective_ids", ()), *objective_ids))
+            )
+            existing["query_ids"] = list(
+                dict.fromkeys((*existing.get("query_ids", ()), *query_ids))
+            )
+            continue
+        candidate_id = stable_intelligence_id(
+            "SGCAND",
+            {
+                "target_id": target_id,
+                "as_of_date": as_of_date,
+                "normalized_url": normalized,
+            },
+        )
+        row = {
+            "schema_version": "e2r_v5_search_candidate_v1",
+            "candidate_id": candidate_id,
+            "target_id": target_id,
+            "as_of_date": as_of_date,
+            "url": url,
+            "normalized_url": normalized,
+            "title": f"Referenced by {document.get('document_id')}",
+            "snippet": None,
+            "source": _normalized_host(url),
+            "published_at": None,
+            "rank": 0,
+            "is_pdf": urlsplit(url).path.casefold().endswith(".pdf"),
+            "is_report_domain": False,
+            "is_news": "news" in _normalized_host(url),
+            "is_disclosure": False,
+            "query_ids": list(query_ids),
+            "objective_ids": list(objective_ids),
+            "query_lineage_valid": True,
+            "graph_expansion_parent_document_ids": [document.get("document_id")],
+            "discovery_only": True,
+            "snippet_discovery_only": True,
+            "snippet_evidence_eligible": False,
+            "score_authority": False,
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+        }
+        candidates.append(row)
+        by_url[normalized] = row
+
+
+def _fetch_candidate_document(
+    *,
+    candidate: dict[str, Any],
+    target_id: str,
+    target_name: str,
+    target_aliases: Sequence[str],
+    as_of_date: date,
+    page_fetcher: PageFetcher,
+    min_chars: int,
+    require_date_verified: bool,
+    official_hosts: set[str],
+    content_hash_to_document: dict[str, Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], Mapping[str, Any] | None, Mapping[str, Any] | None]:
+    url = str(candidate["url"])
+    fetch_id = stable_intelligence_id(
+        "SGFETCH",
+        {"candidate_id": candidate["candidate_id"], "url": url},
+    )
+    try:
+        result = page_fetcher.fetch(url, as_of_date=as_of_date)
+    except Exception as exc:
+        reason = f"PAGE_FETCH_PROVIDER_ERROR:{type(exc).__name__}:{exc}"
+        rejection = _candidate_rejection(candidate, reason, retryable=True)
+        return _fetch_record(fetch_id, candidate, "FETCH_FAILED", reason), None, rejection
+    if not result.ok or not str(result.text or "").strip():
+        reason = "SNIPPET_ONLY_FULL_FETCH_REQUIRED:" + str(
+            result.reason or "empty full document"
+        )
+        retryable = _retryable_fetch_reason(reason)
+        rejection = _candidate_rejection(candidate, reason, retryable=retryable)
+        return _fetch_record(fetch_id, candidate, "FETCH_FAILED", reason), None, rejection
+    text = str(result.text or "").strip()
+    content_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    if len(text) < min_chars:
+        reason = "FULL_DOCUMENT_CONTENT_TOO_SMALL"
+        rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
+        return _fetch_record(fetch_id, candidate, "REJECTED", reason, content_hash), None, rejection
+    explicit = _parse_date(candidate.get("published_at"))
+    published = infer_publication_date(
+        explicit=explicit,
+        metadata_parts=(
+            url,
+            str(candidate.get("title") or ""),
+            str(candidate.get("source") or ""),
+        ),
+        document_text=text,
+        as_of_date=as_of_date,
+    )
+    if published is None and require_date_verified:
+        reason = "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH"
+        rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
+        return _fetch_record(fetch_id, candidate, "REJECTED", reason, content_hash), None, rejection
+    if published and published > as_of_date:
+        reason = "FUTURE_DOCUMENT_AFTER_FULL_FETCH"
+        rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
+        return _fetch_record(fetch_id, candidate, "REJECTED", reason, content_hash), None, rejection
+    if not _document_mentions_target_v5(
+        text,
+        target_id=target_id,
+        target_name=target_name,
+        target_aliases=target_aliases,
+    ):
+        reason = "WRONG_SUBJECT_FULL_DOCUMENT"
+        rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
+        return _fetch_record(fetch_id, candidate, "REJECTED", reason, content_hash), None, rejection
+    existing = content_hash_to_document.get(content_hash)
+    if existing is not None:
+        if isinstance(existing, dict):
+            existing["query_ids"] = list(
+                dict.fromkeys(
+                    (*existing.get("query_ids", ()), *candidate.get("query_ids", ()))
+                )
+            )
+            existing["objective_ids"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("objective_ids", ()),
+                        *candidate.get("objective_ids", ()),
+                    )
+                )
+            )
+            existing["discovery_urls"] = list(
+                dict.fromkeys((*existing.get("discovery_urls", ()), url))
+            )
+        record = _fetch_record(
+            fetch_id,
+            candidate,
+            "DUPLICATE_CONTENT",
+            None,
+            content_hash,
+        )
+        record["existing_document_id"] = existing.get("document_id")
+        return record, existing, None
+    source_family = _classify_source_family(
+        candidate, url=url, official_hosts=official_hosts
+    )
+    document_id = stable_intelligence_id(
+        "SGDOC",
+        {
+            "target_id": target_id,
+            "content_hash": content_hash,
+            "published_at": published.isoformat() if published else None,
+        },
+    )
+    referenced_urls = tuple(
+        dict.fromkeys(
+            value.rstrip(".,);]")
+            for value in re.findall(r"https?://[^\s<>\"']+", text)
+            if _normalize_url(value) != _normalize_url(url)
+        )
+    )
+    fetched_at = result.fetched_at.isoformat() if result.fetched_at else as_of_date.isoformat()
+    document = {
+        "schema_version": "e2r_v5_source_graph_document_v1",
+        "document_id": document_id,
+        "target_id": target_id,
+        "as_of_date": as_of_date.isoformat(),
+        "canonical_url": url,
+        "discovery_urls": [url],
+        "title": candidate.get("title"),
+        "source_family": source_family,
+        "source_provider": type(page_fetcher).__name__,
+        "published_at": published.isoformat() if published else None,
+        "available_at": published.isoformat() if published else None,
+        "fetched_at": fetched_at,
+        "content_type": result.content_type,
+        "content_hash": content_hash,
+        "content_text": text,
+        "query_ids": list(candidate.get("query_ids") or ()),
+        "objective_ids": list(candidate.get("objective_ids") or ()),
+        "source_independence_group": _source_independence_group(url, source_family),
+        "referenced_urls": list(referenced_urls),
+        "referenced_document_ids": [],
+        "full_fetch_performed": True,
+        "snippet_only": False,
+        "snippet_used_as_document": False,
+        "snippet_evidence_eligible": False,
+        "evidence_eligible": True,
+        "evidence_os_ingest_eligible": True,
+        "parser_field_direct_score_authority": False,
+        "production_score_authority": False,
+    }
+    return (
+        _fetch_record(fetch_id, candidate, "FULL_DOCUMENT_FETCHED", None, content_hash, document_id),
+        document,
+        None,
+    )
+
+
+def _fetch_record(
+    fetch_id: str,
+    candidate: Mapping[str, Any],
+    disposition: str,
+    error: str | None,
+    content_hash: str | None = None,
+    document_id: str | None = None,
+) -> dict[str, Any]:
+    return {
+        "schema_version": "e2r_v5_source_graph_fetch_record_v1",
+        "fetch_id": fetch_id,
+        "candidate_id": candidate.get("candidate_id"),
+        "url": candidate.get("url"),
+        "query_ids": list(candidate.get("query_ids") or ()),
+        "objective_ids": list(candidate.get("objective_ids") or ()),
+        "disposition": disposition,
+        "provider_error": error,
+        "content_hash": content_hash,
+        "document_id": document_id,
+        "full_fetch_attempted": True,
+        "snippet_used_as_document": False,
+        "score_authority": False,
+    }
+
+
+def _candidate_rejection(
+    candidate: Mapping[str, Any],
+    reason: str,
+    *,
+    retryable: bool,
+    content_hash: str | None = None,
+) -> dict[str, Any]:
+    rejection_id = stable_intelligence_id(
+        "SGREJECT",
+        {
+            "candidate_id": candidate.get("candidate_id"),
+            "reason": reason,
+            "content_hash": content_hash,
+        },
+    )
+    return {
+        "schema_version": "e2r_v5_source_graph_rejection_v1",
+        "rejection_id": rejection_id,
+        "candidate_id": candidate.get("candidate_id"),
+        "url": candidate.get("url"),
+        "query_ids": list(candidate.get("query_ids") or ()),
+        "objective_ids": list(candidate.get("objective_ids") or ()),
+        "rejection_reason": reason,
+        "retryable": retryable,
+        "content_hash": content_hash,
+        "snippet_used_as_document": False,
+        "accepted_claim_ids": [],
+        "score_authority": False,
+    }
+
+
+def _audit_acquisition_run(
+    *,
+    config: SourceGraphAcquisitionConfig,
+    checkpoint: Mapping[str, Any],
+    query_provider: StructuredResearchProvider,
+    search_provider: SearchProvider,
+    page_fetcher: PageFetcher,
+) -> Mapping[str, Any]:
+    queries = checkpoint["generated_queries"]
+    candidates = checkpoint["search_candidates"]
+    documents = checkpoint["evidence_documents"]
+    rejected = checkpoint["rejected_documents"]
+    critical = {
+        "non_llm_query_count": sum(
+            row.get("generator_kind") not in {"REAL_LLM", "TEST_FIXTURE_LLM"}
+            for row in queries
+        ),
+        "deterministic_fallback_query_count": sum(
+            bool(row.get("deterministic_fallback_query_used")) for row in queries
+        ),
+        "snippet_evidence_document_count": sum(
+            bool(row.get("snippet_only"))
+            or bool(row.get("snippet_used_as_document"))
+            or bool(row.get("snippet_evidence_eligible"))
+            for row in documents
+        ),
+        "future_evidence_document_count": sum(
+            bool(_observed_date(row) and _observed_date(row) > date.fromisoformat(str(checkpoint["as_of_date"])))
+            for row in documents
+        ),
+        "full_document_lineage_missing_count": sum(
+            row.get("evidence_eligible") is True
+            and (
+                not row.get("content_hash")
+                or not str(row.get("content_text") or "").strip()
+                or row.get("full_fetch_performed") is not True
+                and str(row.get("source_family") or "").upper() not in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+            )
+            for row in documents
+        ),
+        "parser_direct_score_authority_count": sum(
+            bool(row.get("parser_field_direct_score_authority"))
+            or bool(row.get("production_score_authority"))
+            for row in documents
+        ),
+        "search_candidate_evidence_count": sum(
+            bool(row.get("snippet_evidence_eligible"))
+            or bool(row.get("score_authority"))
+            for row in candidates
+        ),
+        "checkpoint_hash_mismatch_count": int(
+            checkpoint.get("checkpoint_hash") != _checkpoint_hash(checkpoint)
+        ),
+        "fixed_top_n_configuration_count": int(hasattr(config, "top_results")),
+        "transport_budget_completion_authority_count": int(
+            checkpoint.get("transport_budget_can_complete_research") is not False
+        ),
+        "search_zero_treated_as_saturation_count": int(
+            checkpoint.get("semantic_saturation_certified") is not False
+        ),
+        "production_web_without_official_gap_execution_count": sum(
+            config.mode == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+            and row.get("execution_status")
+            in {"SEARCH_EXECUTED", "NO_RESULT", "PROVIDER_ERROR"}
+            and not row.get("official_gap_reasons")
+            for row in queries
+        ),
+    }
+    return {
+        "schema_version": "e2r_v5_source_graph_acquisition_run_audit_v1",
+        "status": (
+            "V5_SOURCE_GRAPH_ACQUISITION_SAFETY_PASS"
+            if sum(critical.values()) == 0
+            else "V5_SOURCE_GRAPH_ACQUISITION_SAFETY_FAIL"
+        ),
+        "critical_counts": critical,
+        "critical_count_sum": sum(critical.values()),
+        "mode": config.mode,
+        "max_results_per_query": config.max_results_per_query,
+        "top_results_parameter_present": False,
+        "query_count": len(queries),
+        "search_candidate_count": len(candidates),
+        "material_candidate_count": sum(
+            row.get("ranking_status") == "MATERIAL" for row in candidates
+        ),
+        "full_document_count": sum(
+            row.get("evidence_eligible") is True for row in documents
+        ),
+        "rejected_document_count": len(rejected),
+        "pending_candidate_count": sum(
+            row.get("ranking_status") == "PENDING"
+            or row.get("fetch_status") in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+            for row in candidates
+        ),
+        "query_provider_name": str(
+            getattr(query_provider, "provider_name", query_provider.__class__.__name__)
+        ),
+        "search_provider_name": type(search_provider).__name__,
+        "page_fetcher_name": type(page_fetcher).__name__,
+        "reuses_naver_free_search_provider": isinstance(
+            search_provider, NaverFreeSearchProvider
+        ),
+        "reuses_page_fetcher": isinstance(page_fetcher, PageFetcher),
+        "snippet_is_discovery_only": True,
+        "material_selection_uses_fixed_top_n": False,
+        "parser_field_direct_score_authority": False,
+        "input_dependent_score_mutation": False,
+        "checkpoint_resume_required": config.checkpoint_resume_required,
+    }
+
+
+def _classify_source_family(
+    candidate: Mapping[str, Any], *, url: str, official_hosts: set[str]
+) -> str:
+    host = _normalized_host(url)
+    if "dart.fss.or.kr" in host:
+        return "OPENDART"
+    if "kind.krx.co.kr" in host or host.endswith("krx.co.kr"):
+        return "KIND_KRX"
+    if host in official_hosts:
+        return "ISSUER_NEWSROOM"
+    if "reuters.com" in host:
+        return "REUTERS"
+    if candidate.get("is_report_domain") or candidate.get("is_pdf"):
+        return "PUBLIC_BROKER_PDF"
+    if candidate.get("is_news"):
+        return "TRUSTED_BUSINESS_MEDIA"
+    return "GENERAL_WEB_DISCOVERY"
+
+
+def _source_independence_group(url: str, source_family: str) -> str:
+    return f"{source_family}:{_normalized_host(url) or 'unknown'}"
+
+
+def _document_mentions_target_v5(
+    text: str,
+    *,
+    target_id: str,
+    target_name: str,
+    target_aliases: Sequence[str],
+) -> bool:
+    normalized_text = re.sub(r"\s+", "", text).casefold()
+    terms = tuple(
+        dict.fromkeys(
+            re.sub(r"\s+", "", str(value)).casefold()
+            for value in (target_name, target_id, *target_aliases)
+            if len(re.sub(r"\s+", "", str(value))) >= 3
+        )
+    )
+    return bool(terms and any(term in normalized_text for term in terms))
+
+
+def _retryable_fetch_reason(reason: str) -> bool:
+    lowered = reason.casefold()
+    return any(
+        token in lowered
+        for token in ("timeout", "tempor", "connection", "urlerror", "429", "503")
+    )
+
+
+def _dedupe_mapping_rows(
+    rows: Sequence[Mapping[str, Any]], *, key_fields: Sequence[str]
+) -> list[dict[str, Any]]:
+    result: dict[tuple[str, ...], dict[str, Any]] = {}
+    for row in rows:
+        key = tuple(str(row.get(field) or "") for field in key_fields)
+        result[key] = dict(row)
+    return list(result.values())
+
+
+def _parse_date(value: Any) -> date | None:
+    if value is None or value == "":
+        return None
+    try:
+        return date.fromisoformat(str(value)[:10])
+    except ValueError:
+        return None
+
+
+def _is_http_url(value: str) -> bool:
+    parts = urlsplit(value)
+    return parts.scheme in {"http", "https"} and bool(parts.netloc)
+
+
+def _normalize_url(value: str) -> str:
+    if not value:
+        return ""
+    parts = urlsplit(value.strip())
+    host = parts.netloc.casefold()
+    path = re.sub(r"/{2,}", "/", parts.path or "/").rstrip("/") or "/"
+    query = urlencode(
+        sorted(
+            (key, item)
+            for key, item in parse_qsl(parts.query, keep_blank_values=True)
+            if not key.casefold().startswith("utm_")
+            and key.casefold() not in {"fbclid", "gclid", "ref", "ocid"}
+        )
+    )
+    return urlunsplit((parts.scheme.casefold(), host, path, query, ""))
+
+
+def _normalized_host(value: str) -> str:
+    candidate = value if "://" in value else "https://" + value
+    return urlsplit(candidate).netloc.casefold().split(":", 1)[0].removeprefix("www.")
+
+
+def _edge(from_node_id: str, to_node_id: str, relationship: str) -> SourceGraphEdge:
+    payload = {
+        "from": from_node_id,
+        "to": to_node_id,
+        "relationship": relationship,
+    }
+    return SourceGraphEdge(
+        edge_id=stable_intelligence_id("SGEDGE", payload),
+        from_node_id=from_node_id,
+        to_node_id=to_node_id,
+        relationship=relationship,
+    )
+
+
+def _dedupe_nodes(rows: Sequence[SourceGraphNode]) -> tuple[SourceGraphNode, ...]:
+    return tuple({row.node_id: row for row in rows}.values())
+
+
+def _dedupe_edges(rows: Sequence[SourceGraphEdge]) -> tuple[SourceGraphEdge, ...]:
+    return tuple({row.edge_id: row for row in rows}.values())
+
+
+def _canonical_source_family(value: str) -> str | None:
+    if value in CANONICAL_SOURCE_FAMILIES:
+        return value
+    normalized = re.sub(r"[^a-z0-9]+", "_", value.casefold()).strip("_")
+    aliases = {
+        "dart": "OPENDART",
+        "opendart": "OPENDART",
+        "official_filing": "OPENDART",
+        "kind": "KIND_KRX",
+        "krx": "KIND_KRX",
+        "kind_krx": "KIND_KRX",
+        "customer_official": "CUSTOMER_OFFICIAL",
+        "issuer_earnings": "ISSUER_EARNINGS_RELEASE",
+        "issuer_guidance": "ISSUER_PRESENTATION",
+        "issuer_ir": "ISSUER_PRESENTATION",
+        "issuer_newsroom": "ISSUER_NEWSROOM",
+        "financial_revision": "CONSENSUS_REVISION",
+        "trusted_independent": "TRUSTED_BUSINESS_MEDIA",
+        "companyguide": "CONSENSUS_REVISION",
+        "naver": "NAVER_DISCOVERY",
+        "general_web": "GENERAL_WEB_DISCOVERY",
+    }
+    return aliases.get(normalized)
 
 
 def _coverage_labels(rows: Sequence[str | Mapping[str, Any]]) -> set[str]:
@@ -259,10 +1821,16 @@ def _observed_date(row: Mapping[str, Any]) -> date | None:
 
 
 __all__ = [
+    "ResearcherSourceGraphAcquirer",
     "SOURCE_FAMILY_CLASSES",
+    "SourceGraphAcquisitionConfig",
+    "SourceGraphAcquisitionMode",
+    "SourceGraphAcquisitionRun",
     "SourceGraphEdge",
     "SourceGraphExploration",
     "SourceGraphExplorer",
     "SourceGraphNode",
     "SourceResearchObjective",
+    "load_source_graph_checkpoint",
+    "write_source_graph_acquisition_run",
 ]
