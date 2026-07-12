@@ -28,6 +28,9 @@ from e2r.research_brain.researcher_mode import (
     SynthesisJudge,
     compile_phase84_researcher_mode_audit,
 )
+from e2r.research_brain.researcher_mode.component_researcher import (
+    CodexResearcherProvider,
+)
 
 
 ARCHETYPE = "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
@@ -153,6 +156,29 @@ class ScriptedResearchProvider:
         raise AssertionError(pass_name)
 
 
+class SchemaRecordingTransport:
+    def __init__(self) -> None:
+        self.output_schema: Mapping[str, Any] | None = None
+
+    def complete(self, *, prompt, output_schema, schema_name):
+        from e2r.research_brain.planning.provider_transport import (
+            StructuredProviderResponse,
+        )
+
+        del prompt, schema_name
+        self.output_schema = output_schema
+        return StructuredProviderResponse(
+            payload={
+                "suggested_queries": [],
+                "new_source_directions": [],
+                "unresolved_research_notes": [],
+            },
+            raw_response="{}",
+            stderr="",
+            returncode=0,
+        )
+
+
 class E2RV5ResearcherModeTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
 
@@ -192,6 +218,18 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(committed, audit)
+
+    def test_codex_researcher_schema_uses_supported_strict_json_subset(self) -> None:
+        transport = SchemaRecordingTransport()
+        provider = CodexResearcherProvider(transport=transport)  # type: ignore[arg-type]
+
+        provider.complete(
+            pass_name="SOURCE_QUERY_GENERATION",
+            payload={"target_id": TARGET, "as_of_date": AS_OF_DATE},
+        )
+
+        self.assertIsNotNone(transport.output_schema)
+        self.assertNotIn("uniqueItems", _recursive_keys(transport.output_schema))
 
     def test_planner_builds_seven_open_ended_plans_and_exposes_every_fact(self) -> None:
         plans = ComponentResearchPlanner().plan(

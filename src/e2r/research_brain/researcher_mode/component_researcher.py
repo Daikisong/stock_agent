@@ -75,7 +75,6 @@ class ComponentResearchResult:
 _STRING_ARRAY: Mapping[str, Any] = {
     "type": "array",
     "items": {"type": "string", "minLength": 1},
-    "uniqueItems": True,
 }
 
 BUSINESS_MODEL_RESEARCH_SCHEMA: Mapping[str, Any] = {
@@ -301,6 +300,126 @@ SOURCE_CANDIDATE_RANKING_SCHEMA: Mapping[str, Any] = {
         },
         "ranking_complete": {"type": "boolean"},
         "unresolved_notes": _STRING_ARRAY,
+    },
+}
+
+EVIDENCE_FACT_EXTRACTION_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "facts",
+        "document_dispositions",
+        "unresolved_document_ids",
+        "unresolved_research_notes",
+        "extraction_complete",
+    ],
+    "properties": {
+        "facts": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "document_id",
+                    "question_family_id",
+                    "subject_id",
+                    "subject",
+                    "business_segment",
+                    "product_family",
+                    "scope_business_segment",
+                    "scope_product_family",
+                    "scope_technology_family",
+                    "scope_transaction_type",
+                    "scope_economic_mechanism",
+                    "scope_confidence",
+                    "economic_mechanism",
+                    "mechanism_scope_id",
+                    "predicate",
+                    "predicate_family",
+                    "value",
+                    "normalized_object",
+                    "unit",
+                    "period",
+                    "direction",
+                    "current_lifecycle",
+                    "exact_quote",
+                    "material",
+                    "materiality",
+                    "materiality_rationale",
+                    "confidence",
+                    "question_family_tags",
+                    "primitive_tags",
+                ],
+                "properties": {
+                    "document_id": {"type": "string", "minLength": 1},
+                    "question_family_id": {"type": "string", "minLength": 1},
+                    "subject_id": {"type": "string", "minLength": 1},
+                    "subject": {"type": "string", "minLength": 1},
+                    "business_segment": {"type": "string", "minLength": 1},
+                    "product_family": {"type": "string", "minLength": 1},
+                    "scope_business_segment": {"type": "string", "minLength": 1},
+                    "scope_product_family": {"type": "string", "minLength": 1},
+                    "scope_technology_family": {"type": "string", "minLength": 1},
+                    "scope_transaction_type": {"type": "string", "minLength": 1},
+                    "scope_economic_mechanism": {"type": "string", "minLength": 1},
+                    "scope_confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1,
+                    },
+                    "economic_mechanism": {"type": "string", "minLength": 1},
+                    "mechanism_scope_id": {"type": "string", "minLength": 1},
+                    "predicate": {"type": "string", "minLength": 1},
+                    "predicate_family": {"type": "string", "minLength": 1},
+                    "value": {"type": "string", "minLength": 1},
+                    "normalized_object": {"type": "string", "minLength": 1},
+                    "unit": {"type": "string"},
+                    "period": {"type": "string", "minLength": 1},
+                    "direction": {
+                        "type": "string",
+                        "enum": ["POSITIVE", "COUNTER", "NEUTRAL", "RESOLUTION"],
+                    },
+                    "current_lifecycle": {
+                        "type": "string",
+                        "enum": ["OPEN", "CURRENT", "RESOLVED", "SUPERSEDED"],
+                    },
+                    "exact_quote": {"type": "string", "minLength": 1},
+                    "material": {"type": "boolean"},
+                    "materiality": {
+                        "type": "string",
+                        "enum": ["CRITICAL", "NONCRITICAL"],
+                    },
+                    "materiality_rationale": {"type": "string", "minLength": 1},
+                    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+                    "question_family_tags": _STRING_ARRAY,
+                    "primitive_tags": _STRING_ARRAY,
+                },
+            },
+        },
+        "document_dispositions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": ["document_id", "status", "rationale"],
+                "properties": {
+                    "document_id": {"type": "string", "minLength": 1},
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "FACTS_EXTRACTED",
+                            "NO_MATERIAL_FACT",
+                            "WRONG_TARGET_OR_SEGMENT",
+                            "UNREADABLE",
+                        ],
+                    },
+                    "rationale": {"type": "string", "minLength": 1},
+                },
+            },
+        },
+        "unresolved_document_ids": _STRING_ARRAY,
+        "unresolved_research_notes": _STRING_ARRAY,
+        "extraction_complete": {"type": "boolean"},
     },
 }
 
@@ -572,6 +691,7 @@ _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "CALIBRATION_JUDGE": COMPONENT_JUDGE_SCHEMA,
     "SOURCE_QUERY_GENERATION": SOURCE_QUERY_GENERATION_SCHEMA,
     "SOURCE_CANDIDATE_RANKING": SOURCE_CANDIDATE_RANKING_SCHEMA,
+    "EVIDENCE_FACT_EXTRACTION": EVIDENCE_FACT_EXTRACTION_SCHEMA,
     "RESEARCH_SUPERVISOR_REVIEW": RESEARCH_SUPERVISOR_SCHEMA,
     "SEMANTIC_SATURATION_REVIEW": SEMANTIC_SATURATION_REVIEW_SCHEMA,
     "CLAIM_COMPONENT_IMPACT_MAPPING": CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA,
@@ -855,6 +975,12 @@ def _component_memo_from_response(
     counter = _ids(response, "counter_fact_ids")
     resolution = _ids(response, "resolution_fact_ids")
     _require_ids_exist((*positive, *counter, *resolution), facts, "fact")
+    for fact_id in (*positive, *counter, *resolution):
+        allowed = facts[fact_id].allowed_component_ids
+        if allowed and plan.component_id not in allowed:
+            raise ValueError(
+                f"fact is outside deterministic component mechanism scope: {fact_id}"
+            )
     for fact_id in positive:
         if facts[fact_id].direction != EvidenceDirection.POSITIVE.value:
             raise ValueError(f"positive_fact_ids has wrong direction: {fact_id}")
@@ -936,6 +1062,7 @@ def _coerce_fact(row: EvidenceFact | Mapping[str, Any]) -> EvidenceFact:
         "corroborating_independence_groups",
         "question_family_tags",
         "primitive_tags",
+        "allowed_component_ids",
     ):
         if key in payload:
             payload[key] = tuple(payload[key] or ())
@@ -1105,6 +1232,14 @@ def _pass_instruction(pass_name: str) -> str:
         return (
             "Assess every discovery candidate for material relevance to the supplied "
             "research objectives. Snippets are discovery metadata only, never evidence."
+        )
+    if pass_name == "EVIDENCE_FACT_EXTRACTION":
+        return (
+            "Extract every material economic fact and counterfact from the supplied full "
+            "documents. Cite an exact quote that occurs in the cited document, keep issuer, "
+            "business segment, product, period, direction, and lifecycle explicit, and account "
+            "for every document with one disposition. Tags are retrieval context only. Never "
+            "infer absence from silence and never use snippets, future outcomes, score, or Stage."
         )
     if pass_name == "RESEARCH_SUPERVISOR_REVIEW":
         return (

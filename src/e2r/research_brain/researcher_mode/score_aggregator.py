@@ -1027,6 +1027,10 @@ def _validated_fact_inputs(
     available = referenced & set(facts)
     if any(facts[fact_id].target_id != memo.target_id for fact_id in available):
         reasons.append("EVIDENCE_FACT_TARGET_MISMATCH")
+    for fact_id in sorted(available):
+        allowed = facts[fact_id].allowed_component_ids
+        if allowed and memo.component_id not in allowed:
+            reasons.append(f"EVIDENCE_FACT_COMPONENT_SCOPE_MISMATCH:{fact_id}")
     as_of_values = {facts[fact_id].as_of_date for fact_id in available}
     if len(as_of_values) > 1:
         reasons.append("EVIDENCE_FACT_AS_OF_SNAPSHOT_MIXED")

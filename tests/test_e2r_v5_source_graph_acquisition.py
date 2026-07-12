@@ -158,7 +158,11 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             component_id="eps_fcf_explosion",
             researcher_role="EPSFCFResearcher",
             component_max_points=20.0,
-            research_questions=("earnings conversion",),
+            research_questions=(
+                "earnings conversion",
+                "counter capacity expansion",
+                "superseding customer terms",
+            ),
             source_route_hints=("issuer_ir",),
             counter_route_hints=("earnings_counter",),
             structured_metric_requirements=(),
@@ -171,6 +175,11 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             documents=(),
             research_plans=(plan,),
             source_coverage=(),
+        )
+        self.assertEqual(len(graph.open_objectives), 1)
+        self.assertIn(
+            "not independent checklist gates",
+            graph.open_objectives[0].research_objective,
         )
         families = graph.open_objectives[0].preferred_source_families
         self.assertEqual(families[0], "ISSUER_PRESENTATION")

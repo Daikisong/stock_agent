@@ -212,6 +212,7 @@ class EvidenceFact:
     corroborating_independence_groups: tuple[str, ...] = ()
     question_family_tags: tuple[str, ...] = ()
     primitive_tags: tuple[str, ...] = ()
+    allowed_component_ids: tuple[str, ...] = ()
     schema_version: str = "e2r_evidence_fact_v1"
 
     def __post_init__(self) -> None:
@@ -243,6 +244,13 @@ class EvidenceFact:
             self.question_family_tags, "question_family_tags", allow_empty=True
         )
         _require_unique_texts(self.primitive_tags, "primitive_tags", allow_empty=True)
+        _require_unique_texts(
+            self.allowed_component_ids, "allowed_component_ids", allow_empty=True
+        )
+        if set(self.allowed_component_ids) - set(CANONICAL_COMPONENT_ORDER):
+            raise ValueError(
+                "EvidenceFact allowed_component_ids contains unknown component"
+            )
 
     def to_dict(self) -> Mapping[str, Any]:
         return _json_safe(asdict(self))

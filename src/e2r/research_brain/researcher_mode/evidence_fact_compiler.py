@@ -213,6 +213,7 @@ class _PreparedClaim:
     confidence: float
     question_family_tags: tuple[str, ...]
     primitive_tags: tuple[str, ...]
+    allowed_component_ids: tuple[str, ...]
     supersedes_fact_ids: tuple[str, ...]
     resolves_fact_ids: tuple[str, ...]
     material_claim: bool
@@ -354,6 +355,7 @@ class EvidenceFactCompiler:
                         {value for row in claims for value in row.primitive_tags}
                     )
                 ),
+                allowed_component_ids=primary.allowed_component_ids,
             )
             facts.append(fact)
             seen_groups: set[str] = set()
@@ -535,6 +537,7 @@ def _prepare_claim(
         confidence=confidence,
         question_family_tags=_strings(claim.get("question_family_tags")),
         primitive_tags=_strings(claim.get("primitive_tags")),
+        allowed_component_ids=_strings(claim.get("allowed_component_ids")),
         supersedes_fact_ids=_strings(claim.get("supersedes_fact_ids")),
         resolves_fact_ids=_strings(claim.get("resolves_fact_ids")),
         material_claim=material,

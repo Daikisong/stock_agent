@@ -175,23 +175,28 @@ class SourceGraphExplorer:
                     )
                 )
             )
-            for question in plan.research_questions:
-                payload = {
-                    "target_id": target_id,
-                    "as_of_date": as_of_date,
-                    "component_id": plan.component_id,
-                    "question": question,
-                    "preferred": preferred,
-                }
-                objectives.append(
-                    SourceResearchObjective(
-                        objective_id=stable_intelligence_id("SGOBJ", payload),
-                        component_id=plan.component_id,
-                        research_objective=question,
-                        preferred_source_families=preferred,
-                        counter_or_supersession_required=True,
-                    )
+            payload = {
+                "target_id": target_id,
+                "as_of_date": as_of_date,
+                "component_id": plan.component_id,
+                "research_questions": list(plan.research_questions),
+                "preferred": preferred,
+            }
+            objectives.append(
+                SourceResearchObjective(
+                    objective_id=stable_intelligence_id("SGOBJ", payload),
+                    component_id=plan.component_id,
+                    research_objective=(
+                        "Investigate the component's full current economic mechanism, "
+                        "including material positive evidence, counterevidence, and "
+                        "supersession. The following research questions are semantic "
+                        "investigation hints, not independent checklist gates: "
+                        + "; ".join(plan.research_questions)
+                    ),
+                    preferred_source_families=preferred,
+                    counter_or_supersession_required=True,
                 )
+            )
         return self.build_graph(
             target_id=target_id,
             as_of_date=as_of_date,

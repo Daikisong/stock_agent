@@ -22,6 +22,10 @@ from .schemas import (
     EvidenceFact,
 )
 from .research_question_seed_catalog import ResearchQuestionSeed
+from .structured_financial_engine import (
+    PHASE86_COMPONENT_ROLE_COMPATIBILITY,
+    PHASE86_REQUIRED_ROLES_BY_COMPONENT,
+)
 
 
 COMPONENT_RESEARCHER_ROLE_BY_COMPONENT: Mapping[str, str] = {
@@ -163,8 +167,30 @@ def _resolve_component_contract(
     }
     if any(value <= 0 for value in maxima.values()):
         raise ValueError("all component maxima must be positive")
+    structured_role_ids = {
+        *(
+            role
+            for values in PHASE86_REQUIRED_ROLES_BY_COMPONENT.values()
+            for role in values
+        ),
+        *PHASE86_COMPONENT_ROLE_COMPATIBILITY,
+        *(
+            role
+            for values in PHASE86_COMPONENT_ROLE_COMPATIBILITY.values()
+            for role in values
+        ),
+    }
     requirements = (
-        contract.component_required_evidence_roles if contract is not None else {}
+        {
+            component_id: tuple(
+                role
+                for role in roles
+                if role in structured_role_ids
+            )
+            for component_id, roles in contract.component_required_evidence_roles.items()
+        }
+        if contract is not None
+        else {}
     )
     return maxima, requirements
 

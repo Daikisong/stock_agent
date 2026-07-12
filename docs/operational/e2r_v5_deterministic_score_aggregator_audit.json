@@ -18,7 +18,7 @@
     "tiny_impact_cap_multiplication": false,
     "version": "e2r_v5_component_consensus_v2"
   },
-  "audit_hash": "d1b7c298153e6409352d380420ec526db4e721ffc92d96497693a7b65496da23",
+  "audit_hash": "445217facd852b1de798a376ed7161054428a3e3d6ff1c2c5063c32998bd64de",
   "canary_counts": {
     "component_decisions": 7,
     "components": 7,

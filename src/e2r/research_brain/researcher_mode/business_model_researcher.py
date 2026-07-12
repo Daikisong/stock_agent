@@ -203,6 +203,7 @@ def _coerce_fact(row: EvidenceFact | Mapping[str, Any]) -> EvidenceFact:
         "corroborating_independence_groups",
         "question_family_tags",
         "primitive_tags",
+        "allowed_component_ids",
     ):
         if key in payload:
             payload[key] = tuple(payload[key] or ())
