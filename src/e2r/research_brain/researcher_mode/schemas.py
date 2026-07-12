@@ -93,8 +93,50 @@ class HistoricalResearchJudgment:
         }
 
 
+@dataclass(frozen=True)
+class ComponentAnchor:
+    anchor_id: str
+    archetype_id: str
+    component_id: str
+    economic_fact_patterns: tuple[str, ...]
+    role: str
+    score_band: str
+    points_lower: float
+    points_mid: float
+    points_upper: float
+    max_points: float
+    source_backed_case_ids: tuple[str, ...]
+    source_proxy_guard_case_ids: tuple[str, ...]
+    source_score_anchor_ids: tuple[str, ...]
+    confidence: str
+    usable_as_exact_anchor: bool
+    usable_as_ordinal_anchor: bool
+    company_name_conditioned: bool = False
+    target_symbol_conditioned: bool = False
+    schema_version: str = "e2r_component_anchor_v1"
+
+    def __post_init__(self) -> None:
+        AnchorConfidence(self.confidence)
+        if not self.anchor_id or not self.archetype_id or not self.component_id:
+            raise ValueError("component anchor identity is required")
+        if not 0.0 <= self.points_lower <= self.points_mid <= self.points_upper <= self.max_points:
+            raise ValueError("component anchor point band is invalid")
+        if self.usable_as_exact_anchor and (
+            self.confidence != AnchorConfidence.HIGH.value
+            or not self.source_backed_case_ids
+            or self.source_proxy_guard_case_ids
+        ):
+            raise ValueError("exact component anchors require source-backed HIGH lineage")
+        if self.company_name_conditioned or self.target_symbol_conditioned:
+            raise ValueError("component anchors must be economic-fact based")
+
+    def to_dict(self) -> Mapping[str, Any]:
+        return asdict(self)
+
+
 __all__ = [
     "AnchorConfidence",
+    "ComponentAnchor",
     "HistoricalResearchJudgment",
     "HistoricalScoreSchemaType",
 ]

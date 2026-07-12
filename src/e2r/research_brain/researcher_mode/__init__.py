@@ -18,8 +18,16 @@ from .historical_atlas import (
     compile_historical_judgment_atlas_from_semantic,
     write_historical_judgment_atlas,
 )
+from .component_anchor_atlas import (
+    C06_MANDATORY_ANCHOR_FAMILIES,
+    COMPONENT_ANCHOR_PASS,
+    compile_component_anchor_atlas,
+    compile_component_anchor_atlas_from_files,
+    write_component_anchor_atlas,
+)
 from .schemas import (
     AnchorConfidence,
+    ComponentAnchor,
     HistoricalResearchJudgment,
     HistoricalScoreSchemaType,
 )
@@ -31,10 +39,16 @@ __all__ = [
     "ATLAS_OUTPUT_FILES",
     "ATLAS_PASS",
     "AnchorConfidence",
+    "C06_MANDATORY_ANCHOR_FAMILIES",
+    "COMPONENT_ANCHOR_PASS",
+    "ComponentAnchor",
     "HistoricalJudgmentAtlasResult",
     "HistoricalResearchJudgment",
     "HistoricalScoreSchemaType",
     "compile_historical_judgment_atlas",
     "compile_historical_judgment_atlas_from_semantic",
+    "compile_component_anchor_atlas",
+    "compile_component_anchor_atlas_from_files",
+    "write_component_anchor_atlas",
     "write_historical_judgment_atlas",
 ]
