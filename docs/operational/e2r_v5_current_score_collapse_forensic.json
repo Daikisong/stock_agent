@@ -1,0 +1,158 @@
+{
+  "audited_base_commit": "7f2fabe29dae193dacb02bb9fbdc69b82ffdfeba",
+  "conclusion": "The current score scale is not merely conservative: broad component judgment is downstream of bounded question closure, exact primitive mapping, and chained fractional caps. Market expectation, valuation, and FCF research aperture is materially incomplete.",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "canonical_lane_missing_count": 0,
+    "future_architecture_missing_count": 0,
+    "mandatory_target_baseline_missing_count": 0,
+    "parallel_authority_lineage_missing_count": 0,
+    "required_scope_missing_count": 0,
+    "score_collapse_lineage_missing_count": 0
+  },
+  "question_family_budget_summary": {
+    "bounded_routes_exhausted_stop_count": 13,
+    "max_candidates_values": [
+      30
+    ],
+    "max_fetches_values": [
+      6
+    ],
+    "max_queries_values": [
+      3
+    ],
+    "question_family_count": 13,
+    "v5_research_completion_authority_allowed": false
+  },
+  "root_causes": [
+    {
+      "cause_id": "FIXED_LOW_RESEARCH_LIMITS",
+      "effect": "A transport limit can terminate the checklist before broad component research saturates.",
+      "path": "src/e2r/research_brain/dossier/orchestrator.py",
+      "source_line": 39,
+      "source_sha256": "832e813f81480b7ffd6bd92565558384645951903e9b5c1a3acdbbab5e3e91df",
+      "symbol": "max_research_iterations: int = 12",
+      "symbol_found": true
+    },
+    {
+      "cause_id": "QUESTION_TASK_BOUNDED_EXHAUSTION",
+      "effect": "Thirteen question families use max_queries=3/max_fetches=6 and can close on bounded route exhaustion.",
+      "path": "configs/e2r_full_thesis_question_families_v1.json",
+      "source_line": 22,
+      "source_sha256": "2b47ef4b0365544297f0934e8e60cb0b53a20a9580869741d2401f2d3b843d0d",
+      "symbol": "BOUNDED_ROUTES_EXHAUSTED",
+      "symbol_found": true
+    },
+    {
+      "cause_id": "KEYWORD_CLOSURE_SCORE_GATE",
+      "effect": "Keyword groups choose SUPPORTED_SCORING/PARTIALLY_SUPPORTED_SCORING/EVALUATED_ABSENT.",
+      "path": "src/e2r/research_brain/scoring/question_impact_contract.py",
+      "source_line": 42,
+      "source_sha256": "d1e4fc930b039b598171b7a9a6de073f5bcc0b7c0b77b2dd6009c721a0364e19",
+      "symbol": "required_keyword_groups",
+      "symbol_found": true
+    },
+    {
+      "cause_id": "QUESTION_CLOSURE_COMPONENT_DEPENDENCY",
+      "effect": "Question closure feeds semantic reconciliation, terminal evidence, component assessment, and full validity.",
+      "path": "src/e2r/research_brain/dossier/scoring_pipeline.py",
+      "source_line": 461,
+      "source_sha256": "1bd971386ee3ce6938d62d68dd3cf487dc460b7116695905fb6303d78dbdb0c1",
+      "symbol": "compile_question_closures_v2(",
+      "symbol_found": true
+    },
+    {
+      "cause_id": "EXACT_PRIMITIVE_SUBCRITERION_GATE",
+      "effect": "An impact without an allowed primitive/question subcriterion is unmapped and cannot open the broad component.",
+      "path": "src/e2r/research_brain/scoring/component_scoring_model.py",
+      "source_line": 253,
+      "source_sha256": "18c464cc3d6c2a878729fa216f057215fbb13751e68ca4df9c901fd5a176a091",
+      "symbol": "_resolve_subcriterion(component, impact)",
+      "symbol_found": true
+    },
+    {
+      "cause_id": "CHAINED_FRACTION_UNDERCREDIT",
+      "effect": "Economic strength is repeatedly bounded before tiny subcriterion multiplication, collapsing strong-anchor-equivalent evidence.",
+      "path": "src/e2r/research_brain/scoring/impact_validator.py",
+      "source_line": 233,
+      "source_sha256": "6897e2f78ad8e9f5d2fd2e77cd7886a429c48e84d447d239fe0c9ed8bcedc4be",
+      "symbol": "min(raw, causal, source, temporal, support_cap)",
+      "symbol_found": true
+    },
+    {
+      "cause_id": "VALUATION_REVISION_APERTURE_COLLAPSE",
+      "effect": "Market expectation and valuation depend on one narrow family instead of structured price, consensus, peer, and scenario research.",
+      "path": "src/e2r/research_brain/dossier/scoring_pipeline.py",
+      "source_line": 61,
+      "source_sha256": "1bd971386ee3ce6938d62d68dd3cf487dc460b7116695905fb6303d78dbdb0c1",
+      "symbol": "\"market_mispricing\": (\"medium_term_revision_consensus\",)",
+      "symbol_found": true
+    },
+    {
+      "cause_id": "SMALL_GOLD_BENCHMARK_FALSE_COMPLETENESS",
+      "effect": "Nine matched facts cannot prove complete seven-component research recall.",
+      "path": "docs/operational/e2r_research_quality_gold_audit.json",
+      "source_line": 133,
+      "source_sha256": "1f1a6ab2fb0226d11a41cfe3e3a9b8b0c8f90f5b18e8dbac518ab3115544231b",
+      "symbol": "\"gold_fact_count\": 9",
+      "symbol_found": true
+    }
+  ],
+  "schema_version": "e2r_v5_phase80_forensics_v1",
+  "status": "V5_PHASE80_WHOLE_REPO_FORENSIC_PASS",
+  "target_baselines": [
+    {
+      "accepted_claim_count": 18,
+      "as_of_date": "2026-07-11",
+      "canonical_stage": "0",
+      "company_name": "삼성전자",
+      "component_score_vector": {
+        "bottleneck_pricing": 3.55125,
+        "capital_allocation": 0.825,
+        "earnings_visibility": 4.157904,
+        "eps_fcf_explosion": 5.625823,
+        "information_confidence": 4.0,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.0
+      },
+      "component_subcriterion_count": 26,
+      "decision_status": "FINAL",
+      "evidence_document_count": 1,
+      "full_e2r_score": 18.159977,
+      "full_score_valid": true,
+      "score_type": "FULL_E2R_100",
+      "target_id": "005930",
+      "validated_impact_count": 37,
+      "zero_components": [
+        "market_mispricing",
+        "valuation_rerating"
+      ]
+    },
+    {
+      "accepted_claim_count": 33,
+      "as_of_date": "2026-07-11",
+      "canonical_stage": "0",
+      "company_name": "SK하이닉스",
+      "component_score_vector": {
+        "bottleneck_pricing": 5.130446,
+        "capital_allocation": 0.6,
+        "earnings_visibility": 2.75,
+        "eps_fcf_explosion": 6.440063,
+        "information_confidence": 4.0,
+        "market_mispricing": 0.0,
+        "valuation_rerating": 0.2
+      },
+      "component_subcriterion_count": 26,
+      "decision_status": "FINAL",
+      "evidence_document_count": 2,
+      "full_e2r_score": 19.120509,
+      "full_score_valid": true,
+      "score_type": "FULL_E2R_100",
+      "target_id": "000660",
+      "validated_impact_count": 115,
+      "zero_components": [
+        "market_mispricing"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "audited_base_commit": "7f2fabe29dae193dacb02bb9fbdc69b82ffdfeba",
+  "authorities": [
+    {
+      "authority_id": "LEGACY_FEATURE_SCORER",
+      "caller": "KoreaLiveLiteRunner",
+      "path": "src/e2r/research/free_web_research_runner.py",
+      "production_reachable": true,
+      "source_line": 569,
+      "source_sha256": "db3630a4c5e0e1ad35394546c6f5444c07bb93942b4f52d8e4b89758c0bf7b0b",
+      "symbol": "score = feature_result.score()",
+      "symbol_found": true,
+      "v5_disposition": "RETRIEVAL_ONLY_SCORE_RETIRED"
+    },
+    {
+      "authority_id": "RESEARCH_BRAIN_V3_SCORER",
+      "caller": "v3 daily shadow CLI",
+      "path": "src/e2r/research_brain/v3_scoring_stage.py",
+      "production_reachable": true,
+      "source_line": 106,
+      "source_sha256": "ded836b48b5fff7ff156af345f8c8a1150ee5a51e2330732c9706209b01dfeb5",
+      "symbol": "snapshot = DeterministicScorer().score(payload)",
+      "symbol_found": true,
+      "v5_disposition": "COMPATIBILITY_ONLY"
+    },
+    {
+      "authority_id": "RESEARCH_BRAIN_V4_SCORER",
+      "caller": "v4 production shadow and census",
+      "path": "src/e2r/research_brain/v4_scoring_stage.py",
+      "production_reachable": true,
+      "source_line": 110,
+      "source_sha256": "905223a2d467f6214931eda9b57b93ba9e86216cad20f60b3ac18375b0f3dc4e",
+      "symbol": "snapshot = DeterministicScorer().score(payload)",
+      "symbol_found": true,
+      "v5_disposition": "MATERIALIZATION_INPUT_ONLY"
+    },
+    {
+      "authority_id": "DOSSIER_COMPONENT_SCORER",
+      "caller": "dossier scoring CLI",
+      "path": "src/e2r/research_brain/dossier/scoring_pipeline.py",
+      "production_reachable": true,
+      "source_line": 523,
+      "source_sha256": "1bd971386ee3ce6938d62d68dd3cf487dc460b7116695905fb6303d78dbdb0c1",
+      "symbol": "score = ResearchCalibratedComponentScorer().score(",
+      "symbol_found": true,
+      "v5_disposition": "REPLACED_BY_RESEARCHER_MODE"
+    },
+    {
+      "authority_id": "CENSUS_DIRECT_SCORER",
+      "caller": "census v4",
+      "path": "src/e2r/census/census_runner_v4.py",
+      "production_reachable": true,
+      "source_line": 2182,
+      "source_sha256": "614a38febd0ac1412dd07479b754811591227d8998d604778b2ee1213e9bea88",
+      "symbol": "snapshot = DeterministicScorer().score(payload)",
+      "symbol_found": true,
+      "v5_disposition": "BASELINE_ONLY"
+    },
+    {
+      "authority_id": "OFFICIAL_LIVE_SHADOW_SCORER",
+      "caller": "official live shadow",
+      "path": "src/e2r/production/official_live_shadow.py",
+      "production_reachable": true,
+      "source_line": 1031,
+      "source_sha256": "2cefdbcb182ec6bab003b69368af337dec03fe26813e222f2047a85b35dc8880",
+      "symbol": "snapshot = DeterministicScorer().score(payload)",
+      "symbol_found": true,
+      "v5_disposition": "BASELINE_ONLY"
+    }
+  ],
+  "canonical_future_architecture": {
+    "canonical_namespace": "e2r.research_brain.researcher_mode",
+    "historical_role": "blind-safe ordinal/component anchor atlas; future outcome evaluator isolated",
+    "legacy_role": "retrieval aperture and structured connector donor only",
+    "question_contract_role": "research seed / false-positive guard / explanation tag / source hint",
+    "single_current_scoring_authority": "Researcher Mode FinalComponentDecision + deterministic ScoreAggregator",
+    "stage_authority": "deterministic StageCourt fed only by finalized seven-component decisions"
+  },
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "canonical_lane_missing_count": 0,
+    "future_architecture_missing_count": 0,
+    "mandatory_target_baseline_missing_count": 0,
+    "parallel_authority_lineage_missing_count": 0,
+    "required_scope_missing_count": 0,
+    "score_collapse_lineage_missing_count": 0
+  },
+  "legacy_retrieval_capabilities_to_port": [
+    "LLM/sector-aware broad query expansion",
+    "Naver API discovery transport",
+    "full page and public PDF fetch",
+    "document cache and content dedupe",
+    "theme and score-gap query feedback",
+    "OpenDART detail and structured financial collection",
+    "CompanyGuide consensus/revision and Naver Finance structured snapshots"
+  ],
+  "legacy_scoring_capabilities_to_discard": [
+    "parser field direct score mutation",
+    "feature-field rewrite after search",
+    "keyword-only risk or positive score",
+    "input-order dependent score mutation",
+    "legacy score and Stage as Researcher Mode authority"
+  ],
+  "production_reachable_parallel_score_authority_count": 6,
+  "schema_version": "e2r_v5_phase80_forensics_v1",
+  "status": "V5_PHASE80_WHOLE_REPO_FORENSIC_PASS"
+}
