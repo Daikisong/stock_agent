@@ -961,9 +961,78 @@ def load_source_graph_checkpoint(path: str | Path) -> Mapping[str, Any]:
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
     if not isinstance(payload, Mapping):
         raise ValueError("source graph checkpoint must be an object")
-    expected = _checkpoint_hash(payload)
-    if payload.get("checkpoint_hash") != expected:
+    return validate_source_graph_checkpoint(payload)
+
+
+def validate_source_graph_checkpoint(
+    checkpoint: Mapping[str, Any],
+    *,
+    target_id: str | None = None,
+    as_of_date: str | None = None,
+) -> Mapping[str, Any]:
+    """Validate an in-memory Source Graph checkpoint before downstream use."""
+
+    payload = dict(checkpoint)
+    expected_hash = _checkpoint_hash(payload)
+    if payload.get("checkpoint_hash") != expected_hash:
         raise ValueError("source graph checkpoint hash mismatch")
+    required = ("checkpoint_id", "target_id", "as_of_date", "epoch")
+    if any(payload.get(key) in {None, ""} for key in required):
+        raise ValueError("source graph checkpoint identity is incomplete")
+    if isinstance(payload["epoch"], bool) or int(payload["epoch"]) <= 0:
+        raise ValueError("source graph checkpoint epoch must be positive")
+    if any(
+        bool(payload.get(key))
+        for key in (
+            "production_score_authority",
+            "parser_field_direct_score_authority",
+            "snippet_evidence_allowed",
+            "transport_budget_can_complete_research",
+        )
+    ):
+        raise ValueError("source graph checkpoint violates Evidence OS authority")
+    cutoff = date.fromisoformat(str(payload["as_of_date"]))
+    expected_id = stable_intelligence_id(
+        "SGCHECK",
+        {
+            "target_id": payload["target_id"],
+            "as_of_date": payload["as_of_date"],
+            "epoch": payload["epoch"],
+            "checkpoint_hash": expected_hash,
+        },
+    )
+    if payload.get("checkpoint_id") != expected_id:
+        raise ValueError("source graph checkpoint id mismatch")
+    if target_id is not None and str(payload["target_id"]) != target_id:
+        raise ValueError("source graph checkpoint target mismatch")
+    if as_of_date is not None and str(payload["as_of_date"]) != as_of_date:
+        raise ValueError("source graph checkpoint as_of mismatch")
+    documents = tuple(payload.get("evidence_documents") or ())
+    document_ids = [
+        str(row.get("document_id") or row.get("source_id") or "")
+        for row in documents
+    ]
+    if any(not value for value in document_ids) or len(document_ids) != len(
+        set(document_ids)
+    ):
+        raise ValueError("source graph document ids must be unique and non-empty")
+    query_ids = [
+        str(row.get("query_id") or "")
+        for row in payload.get("generated_queries") or ()
+    ]
+    if any(not value for value in query_ids) or len(query_ids) != len(set(query_ids)):
+        raise ValueError("source graph query ids must be unique and non-empty")
+    for row in documents:
+        if row.get("target_id") not in {None, "", payload["target_id"]}:
+            raise ValueError("cross-target document found in source graph checkpoint")
+        observed = str(
+            row.get("published_at")
+            or row.get("publication_date")
+            or row.get("observed_at")
+            or ""
+        )[:10]
+        if observed and date.fromisoformat(observed) > cutoff:
+            raise ValueError("future document found in source graph checkpoint")
     return payload
 
 
@@ -1832,5 +1901,6 @@ __all__ = [
     "SourceGraphNode",
     "SourceResearchObjective",
     "load_source_graph_checkpoint",
+    "validate_source_graph_checkpoint",
     "write_source_graph_acquisition_run",
 ]

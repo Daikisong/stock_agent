@@ -1,0 +1,53 @@
+{
+  "audit_hash": "8cdcae787cf34314f2fde9d185e3c92cbde6636d376e0fe298aa6db4c81c60d9",
+  "checkpoint_fields": [
+    "changed_component_memos",
+    "documents",
+    "epoch",
+    "gold_critical_fact_miss_count",
+    "new_facts",
+    "next_actions",
+    "queries",
+    "unresolved_material_questions"
+  ],
+  "checkpoint_resume_required": true,
+  "counter_and_supersession_proof_required": true,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "checkpoint_output_file_missing_count": 0,
+    "checkpoint_required_field_missing_count": 0,
+    "deterministic_query_fallback_marker_count": 0,
+    "duplicate_prompt_certified_count": 0,
+    "failure_class_missing_count": 0,
+    "fixed_max_rounds_parameter_count": 0,
+    "provider_schema_forbidden_field_count": 0,
+    "provider_schema_open_object_count": 0,
+    "required_module_missing_count": 0,
+    "semantic_reviewer_role_mismatch_count": 0,
+    "source_checkpoint_validator_missing_count": 0,
+    "target_name_condition_count": 0,
+    "three_provider_review_certification_failure_count": 0,
+    "zero_result_completion_flag_accepted_count": 0
+  },
+  "deterministic_fallback_query_allowed": false,
+  "fixed_round_completion_allowed": false,
+  "llm_generates_query_direction": true,
+  "output_files": {
+    "checkpoint": "research_epoch_checkpoint.json",
+    "saturation_certificate": "semantic_saturation_certificate.json",
+    "saturation_reviews": "semantic_saturation_reviews.jsonl",
+    "supervisor_review": "research_supervisor_review.json"
+  },
+  "parser_failure_equals_source_absence": false,
+  "provider_backed_reviews_required": true,
+  "schema_version": "e2r_v5_semantic_research_saturation_audit_v1",
+  "semantic_reviewer_roles": [
+    "RESEARCH_SUPERVISOR_A",
+    "RESEARCH_SUPERVISOR_B",
+    "INDEPENDENT_COMPLETENESS_REVIEWER"
+  ],
+  "status": "V5_PHASE87_CHECKPOINT_RESUME_SEMANTIC_SATURATION_PASS",
+  "structured_data_required": true,
+  "transport_budget_certifies_saturation": false,
+  "zero_search_result_certifies_saturation": false
+}

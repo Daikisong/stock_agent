@@ -304,6 +304,179 @@ SOURCE_CANDIDATE_RANKING_SCHEMA: Mapping[str, Any] = {
     },
 }
 
+RESEARCH_SUPERVISOR_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "component_findings",
+        "missing_material_facts",
+        "failure_assessments",
+        "new_source_family_directions",
+        "query_direction_briefs",
+        "unresolved_material_questions",
+        "next_actions",
+        "counter_and_supersession_checked",
+        "structured_data_complete",
+        "component_memos_sufficient",
+        "reasonable_positive_routes_remaining",
+        "ready_for_independent_saturation_review",
+        "rationale",
+    ],
+    "properties": {
+        "component_findings": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "component_id",
+                    "memo_sufficient",
+                    "missing_fact_needs",
+                    "rationale",
+                ],
+                "properties": {
+                    "component_id": {"type": "string", "minLength": 1},
+                    "memo_sufficient": {"type": "boolean"},
+                    "missing_fact_needs": _STRING_ARRAY,
+                    "rationale": {"type": "string", "minLength": 1},
+                },
+            },
+        },
+        "missing_material_facts": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "component_id",
+                    "fact_need",
+                    "why_material",
+                    "direction",
+                ],
+                "properties": {
+                    "component_id": {"type": "string", "minLength": 1},
+                    "fact_need": {"type": "string", "minLength": 1},
+                    "why_material": {"type": "string", "minLength": 1},
+                    "direction": {
+                        "type": "string",
+                        "enum": ["POSITIVE", "COUNTER", "RESOLUTION"],
+                    },
+                },
+            },
+        },
+        "failure_assessments": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "failure_id",
+                    "classification",
+                    "rationale",
+                    "retryable",
+                    "source_absence_claim_allowed",
+                ],
+                "properties": {
+                    "failure_id": {"type": "string", "minLength": 1},
+                    "classification": {
+                        "type": "string",
+                        "enum": [
+                            "PROVIDER_FAILURE",
+                            "AUTH_FAILURE",
+                            "RATE_LIMIT",
+                            "FETCH_FAILURE",
+                            "PARSER_EXTRACTOR_FAILURE",
+                            "IRRELEVANT_DOCUMENT",
+                            "DUPLICATE_QUERY",
+                            "FUTURE_LEAKAGE",
+                            "INSUFFICIENT_SEARCH",
+                            "SOURCE_ABSENCE_CANDIDATE",
+                        ],
+                    },
+                    "rationale": {"type": "string", "minLength": 1},
+                    "retryable": {"type": "boolean"},
+                    "source_absence_claim_allowed": {"type": "boolean"},
+                },
+            },
+        },
+        "new_source_family_directions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "objective_id",
+                    "source_family",
+                    "direction",
+                    "rationale",
+                    "counter_or_supersession",
+                ],
+                "properties": {
+                    "objective_id": {"type": "string", "minLength": 1},
+                    "source_family": {"type": "string", "minLength": 1},
+                    "direction": {"type": "string", "minLength": 1},
+                    "rationale": {"type": "string", "minLength": 1},
+                    "counter_or_supersession": {"type": "boolean"},
+                },
+            },
+        },
+        "query_direction_briefs": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "objective_id",
+                    "research_need",
+                    "avoid_repeating",
+                    "counter_or_supersession",
+                ],
+                "properties": {
+                    "objective_id": {"type": "string", "minLength": 1},
+                    "research_need": {"type": "string", "minLength": 1},
+                    "avoid_repeating": _STRING_ARRAY,
+                    "counter_or_supersession": {"type": "boolean"},
+                },
+            },
+        },
+        "unresolved_material_questions": _STRING_ARRAY,
+        "next_actions": _STRING_ARRAY,
+        "counter_and_supersession_checked": {"type": "boolean"},
+        "structured_data_complete": {"type": "boolean"},
+        "component_memos_sufficient": {"type": "boolean"},
+        "reasonable_positive_routes_remaining": {"type": "boolean"},
+        "ready_for_independent_saturation_review": {"type": "boolean"},
+        "rationale": {"type": "string", "minLength": 1},
+    },
+}
+
+SEMANTIC_SATURATION_REVIEW_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "approve",
+        "seven_component_memos_complete",
+        "material_positive_routes_reviewed",
+        "counter_and_supersession_routes_checked",
+        "structured_data_complete",
+        "new_source_family_directions_reviewed",
+        "reasonable_positive_routes_remaining",
+        "unresolved_material_questions",
+        "rationale",
+    ],
+    "properties": {
+        "approve": {"type": "boolean"},
+        "seven_component_memos_complete": {"type": "boolean"},
+        "material_positive_routes_reviewed": {"type": "boolean"},
+        "counter_and_supersession_routes_checked": {"type": "boolean"},
+        "structured_data_complete": {"type": "boolean"},
+        "new_source_family_directions_reviewed": {"type": "boolean"},
+        "reasonable_positive_routes_remaining": {"type": "boolean"},
+        "unresolved_material_questions": _STRING_ARRAY,
+        "rationale": {"type": "string", "minLength": 1},
+    },
+}
+
 _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "BUSINESS_MODEL_RESEARCH": BUSINESS_MODEL_RESEARCH_SCHEMA,
     "COMPONENT_RESEARCH": COMPONENT_RESEARCH_SCHEMA,
@@ -314,6 +487,8 @@ _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "CALIBRATION_JUDGE": COMPONENT_JUDGE_SCHEMA,
     "SOURCE_QUERY_GENERATION": SOURCE_QUERY_GENERATION_SCHEMA,
     "SOURCE_CANDIDATE_RANKING": SOURCE_CANDIDATE_RANKING_SCHEMA,
+    "RESEARCH_SUPERVISOR_REVIEW": RESEARCH_SUPERVISOR_SCHEMA,
+    "SEMANTIC_SATURATION_REVIEW": SEMANTIC_SATURATION_REVIEW_SCHEMA,
 }
 
 
@@ -845,6 +1020,19 @@ def _pass_instruction(pass_name: str) -> str:
             "Assess every discovery candidate for material relevance to the supplied "
             "research objectives. Snippets are discovery metadata only, never evidence."
         )
+    if pass_name == "RESEARCH_SUPERVISOR_REVIEW":
+        return (
+            "Review every component memo, fact gap, structured-data gap, prior query/source "
+            "failure, and counter route. Classify parser/extractor failure separately from "
+            "source absence. Suggest semantic source/query directions; do not write literal "
+            "fallback query templates and never treat zero results or a budget limit as completion."
+        )
+    if pass_name == "SEMANTIC_SATURATION_REVIEW":
+        return (
+            "Independently decide whether any reasonable material-positive, counter, "
+            "supersession, structured-data, or new-source-family route remains. Zero search "
+            "results and transport limits are never saturation proof."
+        )
     if pass_name == "COMPONENT_ANALYST_JUDGE":
         return "Act as the positive analyst judge for exactly one component."
     if pass_name == "COMPONENT_SKEPTIC_JUDGE":
@@ -868,6 +1056,8 @@ __all__ = [
     "RED_TEAM_RESEARCH_SCHEMA",
     "SOURCE_CANDIDATE_RANKING_SCHEMA",
     "SOURCE_QUERY_GENERATION_SCHEMA",
+    "RESEARCH_SUPERVISOR_SCHEMA",
+    "SEMANTIC_SATURATION_REVIEW_SCHEMA",
     "SYNTHESIS_REVIEW_SCHEMA",
     "StructuredResearchProvider",
     "ValuationResearcher",

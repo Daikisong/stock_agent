@@ -1508,6 +1508,231 @@ def write_phase86_structured_financial_engine_audit(
     return destination
 
 
+PHASE87_SCHEMA_VERSION = "e2r_v5_semantic_research_saturation_audit_v1"
+PHASE87_PASS = "V5_PHASE87_CHECKPOINT_RESUME_SEMANTIC_SATURATION_PASS"
+PHASE87_AUDIT_PATH = (
+    "docs/operational/e2r_v5_semantic_research_saturation_audit.json"
+)
+
+
+def compile_phase87_semantic_research_saturation_audit(
+    repo_root: str | Path,
+) -> Mapping[str, Any]:
+    """Audit checkpoint-resume and semantic, provider-backed completion gates."""
+
+    import inspect
+    from dataclasses import fields
+
+    from .component_researcher import (
+        RESEARCH_SUPERVISOR_SCHEMA,
+        SEMANTIC_SATURATION_REVIEW_SCHEMA,
+    )
+    from .research_epoch import RESEARCH_EPOCH_OUTPUT_FILES, ResearchEpochCheckpoint, ResearchEpochRunner
+    from .research_supervisor import SUPERVISOR_FAILURE_CLASSES
+    from .saturation import (
+        SATURATION_REVIEW_ROLES,
+        SaturationReview,
+        SemanticSaturationCertifier,
+    )
+    from .source_graph_explorer import validate_source_graph_checkpoint
+
+    root = Path(repo_root).resolve()
+    module_paths = (
+        "src/e2r/research_brain/researcher_mode/research_supervisor.py",
+        "src/e2r/research_brain/researcher_mode/saturation.py",
+        "src/e2r/research_brain/researcher_mode/research_epoch.py",
+    )
+    missing_modules = [value for value in module_paths if not (root / value).is_file()]
+    source_text = "\n".join(
+        (root / value).read_text(encoding="utf-8")
+        for value in module_paths
+        if (root / value).is_file()
+    )
+    required_checkpoint_fields = {
+        "epoch",
+        "queries",
+        "documents",
+        "new_facts",
+        "changed_component_memos",
+        "unresolved_material_questions",
+        "next_actions",
+        "gold_critical_fact_miss_count",
+    }
+    checkpoint_fields = {field.name for field in fields(ResearchEpochCheckpoint)}
+    expected_roles = {
+        "RESEARCH_SUPERVISOR_A",
+        "RESEARCH_SUPERVISOR_B",
+        "INDEPENDENT_COMPLETENESS_REVIEWER",
+    }
+    required_failure_classes = {
+        "PARSER_EXTRACTOR_FAILURE",
+        "SOURCE_ABSENCE_CANDIDATE",
+        "PROVIDER_FAILURE",
+        "INSUFFICIENT_SEARCH",
+    }
+    schemas = (RESEARCH_SUPERVISOR_SCHEMA, SEMANTIC_SATURATION_REVIEW_SCHEMA)
+    forbidden_schema_fields = {
+        "score",
+        "total_score",
+        "stage",
+        "final_stage",
+        "future_outcome",
+        "mfe",
+        "mae",
+    }
+    certified_reviews = tuple(
+        SaturationReview(
+            review_id=f"PHASE87-{role}",
+            reviewer_role=role,
+            approve=True,
+            seven_component_memos_complete=True,
+            material_positive_routes_reviewed=True,
+            counter_and_supersession_routes_checked=True,
+            structured_data_complete=True,
+            new_source_family_directions_reviewed=True,
+            unresolved_material_questions=(),
+            gold_critical_fact_miss_count=0,
+            rationale="independent semantic completeness canary",
+            checkpoint_id="PHASE87-CHECKPOINT",
+            epoch=1,
+            provider_name=f"PHASE87-{role}-PROVIDER",
+            prompt_hash=f"PHASE87-{role}-PROMPT",
+            provider_backed=True,
+        )
+        for role in SATURATION_REVIEW_ROLES
+    )
+    certified = SemanticSaturationCertifier().certify(
+        certified_reviews,
+        expected_checkpoint_id="PHASE87-CHECKPOINT",
+        require_provider_reviews=True,
+    )
+    duplicate_prompt_reviews = tuple(
+        SaturationReview(
+            **{
+                **row.to_dict(),
+                "prompt_hash": "DUPLICATE-PROMPT",
+            }
+        )
+        for row in certified_reviews
+    )
+    duplicate_prompt = SemanticSaturationCertifier().certify(
+        duplicate_prompt_reviews,
+        expected_checkpoint_id="PHASE87-CHECKPOINT",
+        require_provider_reviews=True,
+    )
+    zero_result_flag_rejected = False
+    try:
+        SaturationReview(
+            **{
+                **certified_reviews[0].to_dict(),
+                "review_id": "PHASE87-ZERO-RESULT-CANARY",
+                "zero_search_result_treated_as_saturation": True,
+            }
+        )
+    except ValueError:
+        zero_result_flag_rejected = True
+    run_parameters = inspect.signature(ResearchEpochRunner.run_epoch).parameters
+    forbidden_target_tokens = ("005930", "000660", "삼성전자", "SK하이닉스")
+    critical = {
+        "required_module_missing_count": len(missing_modules),
+        "fixed_max_rounds_parameter_count": int("max_rounds" in run_parameters),
+        "checkpoint_required_field_missing_count": len(
+            required_checkpoint_fields - checkpoint_fields
+        ),
+        "semantic_reviewer_role_mismatch_count": int(
+            set(SATURATION_REVIEW_ROLES) != expected_roles
+        ),
+        "failure_class_missing_count": len(
+            required_failure_classes - set(SUPERVISOR_FAILURE_CLASSES)
+        ),
+        "provider_schema_open_object_count": sum(
+            schema.get("additionalProperties") is not False for schema in schemas
+        ),
+        "provider_schema_forbidden_field_count": sum(
+            len(forbidden_schema_fields & set(schema.get("properties") or {}))
+            for schema in schemas
+        ),
+        "source_checkpoint_validator_missing_count": int(
+            not callable(validate_source_graph_checkpoint)
+        ),
+        "three_provider_review_certification_failure_count": int(
+            not certified.semantic_saturation_certified
+        ),
+        "duplicate_prompt_certified_count": int(
+            duplicate_prompt.semantic_saturation_certified
+        ),
+        "zero_result_completion_flag_accepted_count": int(
+            not zero_result_flag_rejected
+        ),
+        "checkpoint_output_file_missing_count": len(
+            {
+                "checkpoint",
+                "supervisor_review",
+                "saturation_reviews",
+                "saturation_certificate",
+            }
+            - set(RESEARCH_EPOCH_OUTPUT_FILES)
+        ),
+        "deterministic_query_fallback_marker_count": sum(
+            marker in source_text
+            for marker in (
+                "fallback_query_templates =",
+                "if component_id ==",
+                "if archetype_id ==",
+                "if missing_slot ==",
+            )
+        ),
+        "target_name_condition_count": sum(
+            token in source_text for token in forbidden_target_tokens
+        ),
+    }
+    return {
+        "schema_version": PHASE87_SCHEMA_VERSION,
+        "status": (
+            PHASE87_PASS
+            if sum(critical.values()) == 0
+            else "V5_PHASE87_CHECKPOINT_RESUME_SEMANTIC_SATURATION_FAIL"
+        ),
+        "critical_counts": critical,
+        "critical_count_sum": sum(critical.values()),
+        "checkpoint_fields": sorted(required_checkpoint_fields),
+        "output_files": dict(RESEARCH_EPOCH_OUTPUT_FILES),
+        "semantic_reviewer_roles": list(SATURATION_REVIEW_ROLES),
+        "fixed_round_completion_allowed": False,
+        "zero_search_result_certifies_saturation": False,
+        "transport_budget_certifies_saturation": False,
+        "provider_backed_reviews_required": True,
+        "counter_and_supersession_proof_required": True,
+        "parser_failure_equals_source_absence": False,
+        "structured_data_required": True,
+        "checkpoint_resume_required": True,
+        "llm_generates_query_direction": True,
+        "deterministic_fallback_query_allowed": False,
+        "audit_hash": _stable_hash(
+            {
+                "critical": critical,
+                "checkpoint_fields": sorted(required_checkpoint_fields),
+                "roles": SATURATION_REVIEW_ROLES,
+                "outputs": RESEARCH_EPOCH_OUTPUT_FILES,
+            }
+        ),
+    }
+
+
+def write_phase87_semantic_research_saturation_audit(
+    *, repo_root: str | Path, output_path: str | Path | None = None
+) -> Path:
+    root = Path(repo_root).resolve()
+    destination = Path(output_path or root / PHASE87_AUDIT_PATH)
+    if not destination.is_absolute():
+        destination = root / destination
+    write_json(
+        destination,
+        compile_phase87_semantic_research_saturation_audit(root),
+    )
+    return destination
+
+
 __all__ = [
     "PHASE80_ARTIFACT_PATHS",
     "PHASE80_PASS",
@@ -1522,12 +1747,17 @@ __all__ = [
     "PHASE86_AUDIT_PATH",
     "PHASE86_PASS",
     "PHASE86_SCHEMA_VERSION",
+    "PHASE87_AUDIT_PATH",
+    "PHASE87_PASS",
+    "PHASE87_SCHEMA_VERSION",
     "compile_phase80_forensics",
     "compile_phase84_researcher_mode_audit",
     "compile_phase85_source_graph_acquisition_audit",
     "compile_phase86_structured_financial_engine_audit",
+    "compile_phase87_semantic_research_saturation_audit",
     "write_phase80_forensics",
     "write_phase84_researcher_mode_audit",
     "write_phase85_source_graph_acquisition_audit",
     "write_phase86_structured_financial_engine_audit",
+    "write_phase87_semantic_research_saturation_audit",
 ]
