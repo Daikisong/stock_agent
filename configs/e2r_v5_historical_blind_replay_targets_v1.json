@@ -1,0 +1,25 @@
+{
+  "schema_version": "e2r_v5_historical_blind_replay_target_registry_v1",
+  "registry_id": "e2r_v5_phase91_source_backed_holdouts_v1",
+  "evaluator_only": true,
+  "provider_input_allowed": false,
+  "selection_policy": "source-backed full-vector high/mid/low exact anchors plus source-backed C06 partial-vector canaries",
+  "targets": [
+    {"blind_case_id": "HBR-001", "judgment_id": "HJDG-fb4a0b4ba531cb52e178f25b"},
+    {"blind_case_id": "HBR-002", "judgment_id": "HJDG-3ce4304498c067d15d21b3a4"},
+    {"blind_case_id": "HBR-003", "judgment_id": "HJDG-424c3a0c8f3e7e98e7810b3d"},
+    {"blind_case_id": "HBR-004", "judgment_id": "HJDG-c89cff04aff6de5cad39eebc"},
+    {"blind_case_id": "HBR-005", "judgment_id": "HJDG-9e00f528d3eee85cbfae199f"},
+    {"blind_case_id": "HBR-006", "judgment_id": "HJDG-5fd9ff82fa7320718e1c5d29"},
+    {"blind_case_id": "HBR-007", "judgment_id": "HJDG-d2ff909220ddcc9bc54e0b99"},
+    {"blind_case_id": "HBR-008", "judgment_id": "HJDG-a38eb57157720a02a69489e4"},
+    {"blind_case_id": "HBR-009", "judgment_id": "HJDG-27a918b9ad5b88bd29a605f5"},
+    {"blind_case_id": "HBR-010", "judgment_id": "HJDG-121579ba4ef51d4b742aaf5a"},
+    {"blind_case_id": "HBR-011", "judgment_id": "HJDG-f64fb9d044e8d8e4bbe38e07"},
+    {"blind_case_id": "HBR-012", "judgment_id": "HJDG-a22943363fe6b51b01b9c393"},
+    {"blind_case_id": "HBR-013", "judgment_id": "HJDG-380865d3e21c5a353dfc262e"},
+    {"blind_case_id": "HBR-014", "judgment_id": "HJDG-308bd971d8ae026aa21bcbcd"},
+    {"blind_case_id": "HBR-015", "judgment_id": "HJDG-751cc1075adffd68b96a12f4"},
+    {"blind_case_id": "HBR-016", "judgment_id": "HJDG-adbd57719c1970b96cb18c1c"}
+  ]
+}
