@@ -1,4 +1,10 @@
-"""Question family별 claim·primitive·component 성공 의미를 계약화한다."""
+"""Legacy QuestionImpactContract compatibility adapter.
+
+E2R v5 uses :mod:`e2r.research_brain.researcher_mode.research_question_seed_catalog`
+for research seeds.  This module remains for frozen replay and Phase 58~79
+compatibility only; its keyword closure cannot authorize a production score,
+component completion, absence, or final Stage.
+"""
 
 from __future__ import annotations
 
@@ -44,6 +50,21 @@ class QuestionImpactContract:
     partial_keywords: tuple[str, ...]
     counter_keywords: tuple[str, ...]
     contract_hash: str
+    production_score_authority: bool = False
+    component_completion_authority: bool = False
+    absence_authority: bool = False
+    final_stage_authority: bool = False
+
+    def __post_init__(self) -> None:
+        if any(
+            (
+                self.production_score_authority,
+                self.component_completion_authority,
+                self.absence_authority,
+                self.final_stage_authority,
+            )
+        ):
+            raise ValueError("QuestionImpactContract is compatibility-only in E2R v5")
 
     def to_dict(self) -> Mapping[str, Any]:
         return asdict(self)
@@ -241,6 +262,12 @@ def compile_question_closures_v2(
             "next_action": prior.get("next_action"),
             "source_task_id": prior.get("source_task_id"),
             "target_id": prior.get("target_id"),
+            "compatibility_adapter": True,
+            "production_score_authority": False,
+            "component_completion_authority": False,
+            "absence_authority": False,
+            "final_stage_authority": False,
+            "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY",
         }
         if status not in QUESTION_CLOSURE_STATUSES:
             raise ValueError("unknown question closure v2 status")
@@ -335,6 +362,18 @@ def audit_question_impact_contracts(
         "question_supported_by_non_scoring_claim_count": non_scoring_as_scoring,
         "question_contract_missing_count": len(
             expected_questions ^ set(contracts)
+        ),
+        "production_score_authority_count": sum(
+            contract.production_score_authority for contract in contracts.values()
+        ),
+        "component_completion_authority_count": sum(
+            contract.component_completion_authority for contract in contracts.values()
+        ),
+        "absence_authority_count": sum(
+            contract.absence_authority for contract in contracts.values()
+        ),
+        "final_stage_authority_count": sum(
+            contract.final_stage_authority for contract in contracts.values()
         ),
     }
     critical_sum = sum(critical.values())

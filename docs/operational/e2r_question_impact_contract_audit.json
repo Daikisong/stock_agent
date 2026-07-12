@@ -2,6 +2,7 @@
   "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
   "contracts": {
     "asp_pricing_actual": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "memory, DRAM, or HBM",
         "ASP or realized pricing"
@@ -16,6 +17,7 @@
         "actual_earnings_conversion"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "5417b35f9d07e529c70824b729d0ed7cef2089edad1faa53390715564fa91e17",
       "counter_keywords": [
         "asp decline",
@@ -25,6 +27,7 @@
       "counter_predicates": [
         "ASP decline"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "asp",
         "average selling price",
@@ -45,6 +48,7 @@
       "partial_support_predicates": [
         "pricing commentary without quantified actual"
       ],
+      "production_score_authority": false,
       "question_family_id": "asp_pricing_actual",
       "required_counter_routes": [
         "pricing_counter"
@@ -73,6 +77,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "capacity_constraint_presold_status": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "HBM or memory scope",
         "capacity constraint, sold-out, pre-sold, or demand exceeds supply"
@@ -90,6 +95,7 @@
         "capacity_supply_response"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "90ecd06662c06263d60c45df2c9de63eb63c27825a78fe98a8c2de61a1b384d2",
       "counter_keywords": [
         "oversupply",
@@ -101,6 +107,7 @@
         "new supply removes constraint",
         "oversupply"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "capacity constraint",
         "sold out",
@@ -123,6 +130,7 @@
       "partial_support_predicates": [
         "demand exceeds supply without booked period"
       ],
+      "production_score_authority": false,
       "question_family_id": "capacity_constraint_presold_status",
       "required_counter_routes": [
         "capacity_counter",
@@ -155,6 +163,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "capex_supply_oversupply": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "memory or HBM attribution",
         "capex, capacity, investment, supply, or oversupply"
@@ -169,6 +178,7 @@
         "hbm_capacity_constraint"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "4a313a74e5f00297821ed8945c6c4f09ad038cfd7d6866a4a0e0e3a5591aa040",
       "counter_keywords": [
         "oversupply",
@@ -179,6 +189,7 @@
       "counter_predicates": [
         "capacity expansion or oversupply weakens scarcity"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "memory capex",
         "hbm capacity",
@@ -201,6 +212,7 @@
       "partial_support_predicates": [
         "mixed-segment capex with memory reference"
       ],
+      "production_score_authority": false,
       "question_family_id": "capex_supply_oversupply",
       "required_counter_routes": [
         "capacity_counter"
@@ -232,6 +244,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "conventional_memory_drag": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "conventional memory product",
         "weakness, drag, decline, or inventory risk"
@@ -245,6 +258,7 @@
         "conventional_memory_drag"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "664a031ac2869e6cf8cecbfb66d055afc51f3723a58c7415792282a6c04a11c9",
       "counter_keywords": [
         "recovery",
@@ -255,6 +269,7 @@
       "counter_predicates": [
         "conventional memory recovery resolves drag"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "drag",
         "weakness",
@@ -275,6 +290,7 @@
       "partial_support_predicates": [
         "mixed memory conditions"
       ],
+      "production_score_authority": false,
       "question_family_id": "conventional_memory_drag",
       "required_counter_routes": [
         "memory_recovery_supersession"
@@ -303,6 +319,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "current_customer_allocation_commitment": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "HBM or memory product",
         "customer allocation, booking, commitment, or supply contract"
@@ -318,6 +335,7 @@
         "revenue_visibility_contract"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "b80468fb03ba048a11c47e5d52ef5b0e544c06b833ca996296e0ffda44ab21e2",
       "counter_keywords": [
         "cancel",
@@ -329,6 +347,7 @@
         "allocation cancelled",
         "customer commitment withdrawn"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "booking",
         "committed",
@@ -353,6 +372,7 @@
       "partial_support_predicates": [
         "customer schedule or non-binding allocation discussion"
       ],
+      "production_score_authority": false,
       "question_family_id": "current_customer_allocation_commitment",
       "required_counter_routes": [
         "counter_supersession"
@@ -384,6 +404,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "customer_concentration_dependency": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "HBM or memory customer",
         "concentration, dependency, named allocation, or customer share"
@@ -398,6 +419,7 @@
         "revenue_visibility_contract"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "a073ccc69e2f5cf532c6872c66ce9f5450c345e4934637fbdcb6c32febc2fd2f",
       "counter_keywords": [
         "customer loss",
@@ -408,6 +430,7 @@
       "counter_predicates": [
         "customer loss or dependency increase"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "concentration",
         "dependency",
@@ -429,6 +452,7 @@
       "partial_support_predicates": [
         "named HBM customers without concentration share"
       ],
+      "production_score_authority": false,
       "question_family_id": "customer_concentration_dependency",
       "required_counter_routes": [
         "customer_counter",
@@ -461,6 +485,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "hbm_ai_memory_revenue_mix": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "HBM or AI memory",
         "revenue, sales, shipment, or mix attribution"
@@ -474,6 +499,7 @@
         "shipment_or_revenue_mix"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "cda3f2f0101022656dac6a02ddf2e36ea52cd7a0661b69570bcb7fc88c2ef0cd",
       "counter_keywords": [
         "decline",
@@ -484,6 +510,7 @@
       "counter_predicates": [
         "HBM mix declined"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "revenue mix",
         "sales mix",
@@ -507,6 +534,7 @@
       "partial_support_predicates": [
         "HBM sales increased without quantified mix"
       ],
+      "production_score_authority": false,
       "question_family_id": "hbm_ai_memory_revenue_mix",
       "required_counter_routes": [
         "mix_counter"
@@ -534,6 +562,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "margin_fcf_conversion": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "HBM or memory attribution",
         "margin, FCF, cash flow, or profit conversion"
@@ -548,6 +577,7 @@
         "actual_earnings_conversion"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "6b63ecec211aea06ad5b38fdff6809634b688d04febda9385748b1a038195ebf",
       "counter_keywords": [
         "cash burn",
@@ -558,6 +588,7 @@
       "counter_predicates": [
         "cash burn or margin compression"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "margin",
         "fcf",
@@ -577,6 +608,7 @@
       "partial_support_predicates": [
         "operating profit only"
       ],
+      "production_score_authority": false,
       "question_family_id": "margin_fcf_conversion",
       "required_counter_routes": [
         "cash_counter"
@@ -606,6 +638,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "medium_term_revision_consensus": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "HBM or memory attribution",
         "estimate, guidance, revision, consensus, expectation gap, or current/forward earnings multiple"
@@ -623,6 +656,7 @@
         "current_valuation_vs_earnings"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "b88d4156a85b44d3a9d2759475d18dfadd28da5569f38457116c8968cb00b6a8",
       "counter_keywords": [
         "downward",
@@ -636,6 +670,7 @@
         "downward revision",
         "favorable scenario already reflected in current expectations or valuation"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "estimate",
         "guidance",
@@ -669,6 +704,7 @@
         "qualitative outlook without estimate",
         "valuation multiple without a complete HBM earnings bridge"
       ],
+      "production_score_authority": false,
       "question_family_id": "medium_term_revision_consensus",
       "required_counter_routes": [
         "revision_counter"
@@ -705,6 +741,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "qualification_pass_lag_reopen": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "HBM qualification state",
         "customer test or approval status"
@@ -717,6 +754,7 @@
         "qualification_state"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "978182bb7015e6a2227b8cd01c5226122b8b8d71ed412fcdf6ea962e8a0ad611",
       "counter_keywords": [
         "fail",
@@ -728,6 +766,7 @@
       "counter_predicates": [
         "qualification failed or delayed"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "qualified",
         "qualification passed",
@@ -748,6 +787,7 @@
       "partial_support_predicates": [
         "qualification in progress"
       ],
+      "production_score_authority": false,
       "question_family_id": "qualification_pass_lag_reopen",
       "required_counter_routes": [
         "qualification_counter",
@@ -775,6 +815,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "revenue_operating_profit_conversion": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "HBM or memory attribution",
         "revenue, sales, operating profit, or margin"
@@ -789,6 +830,7 @@
         "shipment_or_revenue_mix"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "c9bc1022a8df715b5ffd99467b10dc97ac9d0624c3d73ad2d0804b2764f30b94",
       "counter_keywords": [
         "loss",
@@ -799,6 +841,7 @@
       "counter_predicates": [
         "profit or margin deterioration"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "operating profit",
         "operating margin",
@@ -819,6 +862,7 @@
       "partial_support_predicates": [
         "revenue conversion without profit attribution"
       ],
+      "production_score_authority": false,
       "question_family_id": "revenue_operating_profit_conversion",
       "required_counter_routes": [
         "earnings_counter"
@@ -849,6 +893,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "shipment_mass_production_generation": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "HBM product",
         "shipment or mass production"
@@ -864,6 +909,7 @@
         "package_substrate_sympathy"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "47fd0cd4efebbbf489346335b17f152cb3577fcc7ff3745da2c3051b67f4bdb0",
       "counter_keywords": [
         "delay",
@@ -874,6 +920,7 @@
       "counter_predicates": [
         "shipment delayed or production stopped"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "commercial shipment",
         "commercially shipped",
@@ -901,6 +948,7 @@
       "partial_support_predicates": [
         "sample shipment or planned production"
       ],
+      "production_score_authority": false,
       "question_family_id": "shipment_mass_production_generation",
       "required_counter_routes": [
         "execution_counter"
@@ -925,6 +973,7 @@
       "terminal_absence_policy": "REQUIRE_ADEQUATE_SEARCH"
     },
     "valuation_market_expectation": {
+      "absence_authority": false,
       "accepted_claim_predicates": [
         "attributable consensus or market expectation",
         "current or forward earnings multiple with period and denominator"
@@ -939,6 +988,7 @@
         "current_valuation_vs_earnings"
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+      "component_completion_authority": false,
       "contract_hash": "428597045042603fd97ea3276a9c8831776591ebf801273c19ca92f73e252c83",
       "counter_keywords": [
         "priced in",
@@ -950,6 +1000,7 @@
       "counter_predicates": [
         "favorable HBM scenario already reflected in expectations or valuation"
       ],
+      "final_stage_authority": false,
       "full_support_keywords": [
         "consensus gap",
         "expectation gap",
@@ -983,6 +1034,7 @@
         "estimate direction without complete consensus dispersion",
         "current valuation multiple with incomplete HBM earnings attribution"
       ],
+      "production_score_authority": false,
       "question_family_id": "valuation_market_expectation",
       "required_counter_routes": [
         "expectation_counter",
@@ -1019,12 +1071,17 @@
   },
   "critical_count_sum": 0,
   "critical_counts": {
+    "absence_authority_count": 0,
+    "component_completion_authority_count": 0,
+    "final_stage_authority_count": 0,
+    "production_score_authority_count": 0,
     "question_contract_missing_count": 0,
     "question_supported_by_non_scoring_claim_count": 0,
     "question_supported_by_wrong_mechanism_count": 0
   },
   "projected_question_closures": [
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-bde852da0c3e6c274de3",
         "MAP-59035c4a5849bf202825"
@@ -1043,23 +1100,29 @@
       "candidate_eligibility_decision_ids": [
         "ELIG-d57e8c8782ceb7ce2387e860"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-464ca5cde1b30c363997"
       ],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "b80468fb03ba048a11c47e5d52ef5b0e544c06b833ca996296e0ffda44ab21e2",
       "question_family_id": "current_customer_allocation_commitment",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-c07c6754de6164a19856599b",
       "status": "SUPPORTED_NON_SCORING",
       "supporting_claim_ids": [],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-7dea3578c65473599f04",
         "MAP-45470baa5740e6f3d050"
@@ -1081,11 +1144,14 @@
         "ELIG-8266c822fbeb28cd8c5abdc9",
         "ELIG-48534f33af46f9217888ff37"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-8266c822fbeb28cd8c5abdc9"
       ],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [
         "CLM-e0a7f204219f352da273"
@@ -1093,6 +1159,7 @@
       "partial_supporting_claim_ids": [
         "CLM-47103baa9b99062ef88a"
       ],
+      "production_score_authority": false,
       "question_contract_hash": "90ecd06662c06263d60c45df2c9de63eb63c27825a78fe98a8c2de61a1b384d2",
       "question_family_id": "capacity_constraint_presold_status",
       "search_exhaustion_proof": [
@@ -1107,9 +1174,11 @@
       "supporting_claim_ids": [
         "CLM-47103baa9b99062ef88a"
       ],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
         "earnings_visibility",
@@ -1120,12 +1189,16 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "978182bb7015e6a2227b8cd01c5226122b8b8d71ed412fcdf6ea962e8a0ad611",
       "question_family_id": "qualification_pass_lag_reopen",
       "search_exhaustion_proof": [
@@ -1137,9 +1210,11 @@
       "source_task_id": "DST-fe5a2434f74e70c162a6166c",
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-1cbc1247614b5842d1da",
         "MAP-b475ab850f97b828666a",
@@ -1202,6 +1277,8 @@
         "ELIG-0fb6404865a7a6c38d4a63cd",
         "ELIG-3bbf7f78526059707c56f30a"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-ade70cd4a832921efdd01ee0",
@@ -1210,6 +1287,7 @@
         "ELIG-8fd4fbaae95a150d0211d832"
       ],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-db034d8f03ce72819564",
@@ -1233,6 +1311,7 @@
         "CLM-90533c9daf13fefd691c",
         "CLM-3fe807708c2eee9d9908"
       ],
+      "production_score_authority": false,
       "question_contract_hash": "47fd0cd4efebbbf489346335b17f152cb3577fcc7ff3745da2c3051b67f4bdb0",
       "question_family_id": "shipment_mass_production_generation",
       "search_exhaustion_proof": [],
@@ -1244,9 +1323,11 @@
         "CLM-33685f026d180edb6417",
         "CLM-79444b89b7d92a3930ab"
       ],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-b475ab850f97b828666a",
         "MAP-2a4be93ff23de87ae7f9",
@@ -1270,12 +1351,15 @@
         "ELIG-0fb6404865a7a6c38d4a63cd",
         "ELIG-78879650ab628278387d33e5"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-7a4c58f4c7d6d8b06ec00dec",
         "ELIG-d3852c630790065f99f18a79"
       ],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-db034d8f03ce72819564",
@@ -1286,6 +1370,7 @@
         "CLM-13d3c5605df791dcf819",
         "CLM-1982ea2aca36ebef450e"
       ],
+      "production_score_authority": false,
       "question_contract_hash": "cda3f2f0101022656dac6a02ddf2e36ea52cd7a0661b69570bcb7fc88c2ef0cd",
       "question_family_id": "hbm_ai_memory_revenue_mix",
       "search_exhaustion_proof": [],
@@ -1295,9 +1380,11 @@
         "CLM-13d3c5605df791dcf819",
         "CLM-1982ea2aca36ebef450e"
       ],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-e863845ae693ee78dfd5",
         "MAP-665ebec2381a187d711d"
@@ -1316,16 +1403,20 @@
         "ELIG-2fce4ee33a7d391b466d8a2e",
         "ELIG-5405821d8ef9510565c9cf31"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-2fce4ee33a7d391b466d8a2e"
       ],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-8a6484cd91e4ef637201"
       ],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "5417b35f9d07e529c70824b729d0ed7cef2089edad1faa53390715564fa91e17",
       "question_family_id": "asp_pricing_actual",
       "search_exhaustion_proof": [],
@@ -1334,9 +1425,11 @@
       "supporting_claim_ids": [
         "CLM-48f304f4471c4d575cec"
       ],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-665ebec2381a187d711d",
         "MAP-b475ab850f97b828666a",
@@ -1363,12 +1456,15 @@
         "ELIG-0fb6404865a7a6c38d4a63cd",
         "ELIG-78879650ab628278387d33e5"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-7a4c58f4c7d6d8b06ec00dec",
         "ELIG-d3852c630790065f99f18a79"
       ],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-8a6484cd91e4ef637201",
@@ -1380,6 +1476,7 @@
         "CLM-13d3c5605df791dcf819",
         "CLM-1982ea2aca36ebef450e"
       ],
+      "production_score_authority": false,
       "question_contract_hash": "c9bc1022a8df715b5ffd99467b10dc97ac9d0624c3d73ad2d0804b2764f30b94",
       "question_family_id": "revenue_operating_profit_conversion",
       "search_exhaustion_proof": [],
@@ -1389,9 +1486,11 @@
         "CLM-13d3c5605df791dcf819",
         "CLM-1982ea2aca36ebef450e"
       ],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-665ebec2381a187d711d"
       ],
@@ -1408,14 +1507,18 @@
       "candidate_eligibility_decision_ids": [
         "ELIG-5405821d8ef9510565c9cf31"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [
         "CLM-8a6484cd91e4ef637201"
       ],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "6b63ecec211aea06ad5b38fdff6809634b688d04febda9385748b1a038195ebf",
       "question_family_id": "margin_fcf_conversion",
       "search_exhaustion_proof": [
@@ -1428,9 +1531,11 @@
       "source_task_id": "DST-3e152ac95b54cae4a7906296",
       "status": "SUPPORTED_NON_SCORING",
       "supporting_claim_ids": [],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
         "earnings_visibility",
@@ -1446,12 +1551,16 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "b88d4156a85b44d3a9d2759475d18dfadd28da5569f38457116c8968cb00b6a8",
       "question_family_id": "medium_term_revision_consensus",
       "search_exhaustion_proof": [
@@ -1464,9 +1573,11 @@
       "source_task_id": "DST-561e3223ec26b26773ce1cb2",
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
         "market_mispricing",
@@ -1479,21 +1590,27 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": null,
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "428597045042603fd97ea3276a9c8831776591ebf801273c19ca92f73e252c83",
       "question_family_id": "valuation_market_expectation",
       "search_exhaustion_proof": [],
       "source_task_id": null,
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
         "eps_fcf_explosion",
@@ -1505,12 +1622,16 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "664a031ac2869e6cf8cecbfb66d055afc51f3723a58c7415792282a6c04a11c9",
       "question_family_id": "conventional_memory_drag",
       "search_exhaustion_proof": [
@@ -1522,9 +1643,11 @@
       "source_task_id": "DST-f691249572a2f2b686eb2108",
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-7dea3578c65473599f04",
         "MAP-45470baa5740e6f3d050"
@@ -1543,11 +1666,14 @@
         "ELIG-8266c822fbeb28cd8c5abdc9",
         "ELIG-48534f33af46f9217888ff37"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-8266c822fbeb28cd8c5abdc9"
       ],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-e0a7f204219f352da273"
@@ -1555,6 +1681,7 @@
       "partial_supporting_claim_ids": [
         "CLM-47103baa9b99062ef88a"
       ],
+      "production_score_authority": false,
       "question_contract_hash": "4a313a74e5f00297821ed8945c6c4f09ad038cfd7d6866a4a0e0e3a5591aa040",
       "question_family_id": "capex_supply_oversupply",
       "search_exhaustion_proof": [],
@@ -1563,9 +1690,11 @@
       "supporting_claim_ids": [
         "CLM-47103baa9b99062ef88a"
       ],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-bde852da0c3e6c274de3",
         "MAP-59035c4a5849bf202825"
@@ -1583,23 +1712,29 @@
       "candidate_eligibility_decision_ids": [
         "ELIG-d57e8c8782ceb7ce2387e860"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-464ca5cde1b30c363997"
       ],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "a073ccc69e2f5cf532c6872c66ce9f5450c345e4934637fbdcb6c32febc2fd2f",
       "question_family_id": "customer_concentration_dependency",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-30da4e08297f803c97635a66",
       "status": "SUPPORTED_NON_SCORING",
       "supporting_claim_ids": [],
-      "target_id": "005930"
+      "target_id": "005930",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
         "earnings_visibility",
@@ -1613,12 +1748,16 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "b80468fb03ba048a11c47e5d52ef5b0e544c06b833ca996296e0ffda44ab21e2",
       "question_family_id": "current_customer_allocation_commitment",
       "search_exhaustion_proof": [
@@ -1630,9 +1769,11 @@
       "source_task_id": "DST-77d919df10ef19547c5a5f52",
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-7d5174b2b26a4ed69d50",
         "MAP-5eadca3a032f80903ee8"
@@ -1654,11 +1795,14 @@
         "ELIG-01809387c78c08c1993ab405",
         "ELIG-3ce44bc98745eccf945e1acb"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-01809387c78c08c1993ab405"
       ],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-95da73592de9afc97446"
@@ -1666,6 +1810,7 @@
       "partial_supporting_claim_ids": [
         "CLM-85a8e1ec74fd4c208401"
       ],
+      "production_score_authority": false,
       "question_contract_hash": "90ecd06662c06263d60c45df2c9de63eb63c27825a78fe98a8c2de61a1b384d2",
       "question_family_id": "capacity_constraint_presold_status",
       "search_exhaustion_proof": [],
@@ -1674,9 +1819,11 @@
       "supporting_claim_ids": [
         "CLM-85a8e1ec74fd4c208401"
       ],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
         "earnings_visibility",
@@ -1687,12 +1834,16 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "978182bb7015e6a2227b8cd01c5226122b8b8d71ed412fcdf6ea962e8a0ad611",
       "question_family_id": "qualification_pass_lag_reopen",
       "search_exhaustion_proof": [
@@ -1704,9 +1855,11 @@
       "source_task_id": "DST-c946668d608066da52f50b99",
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-853a02dea0fa8e8402de",
         "MAP-72165dd86b8b17e77d32",
@@ -1738,6 +1891,8 @@
         "ELIG-f02b97d999ef35e8d998a473",
         "ELIG-23e091c3726567e206929a3d"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-25bb283870ed1c97a3f24b24",
@@ -1747,6 +1902,7 @@
         "ELIG-01809387c78c08c1993ab405"
       ],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-15ee8897fe8ae2155f25",
@@ -1760,6 +1916,7 @@
         "CLM-c35e896dc619cf663b61",
         "CLM-85a8e1ec74fd4c208401"
       ],
+      "production_score_authority": false,
       "question_contract_hash": "47fd0cd4efebbbf489346335b17f152cb3577fcc7ff3745da2c3051b67f4bdb0",
       "question_family_id": "shipment_mass_production_generation",
       "search_exhaustion_proof": [],
@@ -1772,9 +1929,11 @@
         "CLM-c35e896dc619cf663b61",
         "CLM-85a8e1ec74fd4c208401"
       ],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-853a02dea0fa8e8402de",
         "MAP-72165dd86b8b17e77d32",
@@ -1798,12 +1957,15 @@
         "ELIG-f02b97d999ef35e8d998a473",
         "ELIG-23e091c3726567e206929a3d"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-25bb283870ed1c97a3f24b24",
         "ELIG-294a8582c9b1ac0bc1361d44"
       ],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-15ee8897fe8ae2155f25",
@@ -1814,6 +1976,7 @@
         "CLM-81cdb44f9ea4a488a790",
         "CLM-c35e896dc619cf663b61"
       ],
+      "production_score_authority": false,
       "question_contract_hash": "cda3f2f0101022656dac6a02ddf2e36ea52cd7a0661b69570bcb7fc88c2ef0cd",
       "question_family_id": "hbm_ai_memory_revenue_mix",
       "search_exhaustion_proof": [],
@@ -1823,9 +1986,11 @@
         "CLM-81cdb44f9ea4a488a790",
         "CLM-c35e896dc619cf663b61"
       ],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-c8d1b1c6b59c2bcba2fe",
         "MAP-0e7cb036b82509dac524",
@@ -1846,9 +2011,12 @@
         "ELIG-e8efeeba74530e9fcfe1c5a0",
         "ELIG-f169dee905259f29aca81250"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [
         "CLM-15ee8897fe8ae2155f25",
@@ -1856,6 +2024,7 @@
         "CLM-b0012c7f76d639aed2da"
       ],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "5417b35f9d07e529c70824b729d0ed7cef2089edad1faa53390715564fa91e17",
       "question_family_id": "asp_pricing_actual",
       "search_exhaustion_proof": [
@@ -1868,9 +2037,11 @@
       "source_task_id": "DST-ac6fb7910ee62f87e3569ae8",
       "status": "SUPPORTED_NON_SCORING",
       "supporting_claim_ids": [],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-853a02dea0fa8e8402de",
         "MAP-c8d1b1c6b59c2bcba2fe",
@@ -1900,12 +2071,15 @@
         "ELIG-f169dee905259f29aca81250",
         "ELIG-23e091c3726567e206929a3d"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-25bb283870ed1c97a3f24b24",
         "ELIG-294a8582c9b1ac0bc1361d44"
       ],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-15ee8897fe8ae2155f25",
@@ -1918,6 +2092,7 @@
         "CLM-81cdb44f9ea4a488a790",
         "CLM-c35e896dc619cf663b61"
       ],
+      "production_score_authority": false,
       "question_contract_hash": "c9bc1022a8df715b5ffd99467b10dc97ac9d0624c3d73ad2d0804b2764f30b94",
       "question_family_id": "revenue_operating_profit_conversion",
       "search_exhaustion_proof": [],
@@ -1927,9 +2102,11 @@
         "CLM-81cdb44f9ea4a488a790",
         "CLM-c35e896dc619cf663b61"
       ],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-c8d1b1c6b59c2bcba2fe",
         "MAP-0e7cb036b82509dac524",
@@ -1953,9 +2130,12 @@
         "ELIG-e97f40918f6adf7a353c2193",
         "ELIG-f169dee905259f29aca81250"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-15ee8897fe8ae2155f25",
@@ -1964,15 +2144,18 @@
         "CLM-b0012c7f76d639aed2da"
       ],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "6b63ecec211aea06ad5b38fdff6809634b688d04febda9385748b1a038195ebf",
       "question_family_id": "margin_fcf_conversion",
       "search_exhaustion_proof": [],
       "source_task_id": "DST-b6ea859526c1fabd382754a9",
       "status": "SUPPORTED_NON_SCORING",
       "supporting_claim_ids": [],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
         "earnings_visibility",
@@ -1988,12 +2171,16 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "b88d4156a85b44d3a9d2759475d18dfadd28da5569f38457116c8968cb00b6a8",
       "question_family_id": "medium_term_revision_consensus",
       "search_exhaustion_proof": [
@@ -2006,9 +2193,11 @@
       "source_task_id": "DST-67ec38e7c44a26f938470560",
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
         "market_mispricing",
@@ -2021,21 +2210,27 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": null,
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "428597045042603fd97ea3276a9c8831776591ebf801273c19ca92f73e252c83",
       "question_family_id": "valuation_market_expectation",
       "search_exhaustion_proof": [],
       "source_task_id": null,
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
         "eps_fcf_explosion",
@@ -2047,12 +2242,16 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "664a031ac2869e6cf8cecbfb66d055afc51f3723a58c7415792282a6c04a11c9",
       "question_family_id": "conventional_memory_drag",
       "search_exhaustion_proof": [
@@ -2064,9 +2263,11 @@
       "source_task_id": "DST-8cc593ffcecf957cea626b0d",
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [
         "MAP-7d5174b2b26a4ed69d50",
         "MAP-5eadca3a032f80903ee8"
@@ -2085,11 +2286,14 @@
         "ELIG-01809387c78c08c1993ab405",
         "ELIG-3ce44bc98745eccf945e1acb"
       ],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [
         "ELIG-01809387c78c08c1993ab405"
       ],
       "failure_class": null,
+      "final_stage_authority": false,
       "next_action": "RUN_LLM_IMPACT_ADJUDICATION",
       "non_scoring_claim_ids": [
         "CLM-95da73592de9afc97446"
@@ -2097,6 +2301,7 @@
       "partial_supporting_claim_ids": [
         "CLM-85a8e1ec74fd4c208401"
       ],
+      "production_score_authority": false,
       "question_contract_hash": "4a313a74e5f00297821ed8945c6c4f09ad038cfd7d6866a4a0e0e3a5591aa040",
       "question_family_id": "capex_supply_oversupply",
       "search_exhaustion_proof": [],
@@ -2105,9 +2310,11 @@
       "supporting_claim_ids": [
         "CLM-85a8e1ec74fd4c208401"
       ],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     },
     {
+      "absence_authority": false,
       "accepted_mapping_ids": [],
       "allowed_component_ids": [
         "earnings_visibility",
@@ -2120,12 +2327,16 @@
       ],
       "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
       "candidate_eligibility_decision_ids": [],
+      "compatibility_adapter": true,
+      "component_completion_authority": false,
       "counter_claim_ids": [],
       "eligibility_decision_ids": [],
       "failure_class": "SOURCE_EXHAUSTED",
+      "final_stage_authority": false,
       "next_action": "QUESTION_TERMINAL_NO_QUALIFYING_CURRENT_CLAIM",
       "non_scoring_claim_ids": [],
       "partial_supporting_claim_ids": [],
+      "production_score_authority": false,
       "question_contract_hash": "a073ccc69e2f5cf532c6872c66ce9f5450c345e4934637fbdcb6c32febc2fd2f",
       "question_family_id": "customer_concentration_dependency",
       "search_exhaustion_proof": [
@@ -2136,7 +2347,8 @@
       "source_task_id": "DST-a0e3c7ddd9663ba385be8745",
       "status": "EVALUATED_ABSENT",
       "supporting_claim_ids": [],
-      "target_id": "000660"
+      "target_id": "000660",
+      "v5_role": "RESEARCH_SEED_GUARD_EXPLANATION_ONLY"
     }
   ],
   "question_contract_count": 13,

@@ -68,6 +68,12 @@ COMPONENT_QUESTION_FAMILIES = {
     ),
 }
 
+# Phase 58~79 compatibility path.  E2R v5 current scoring is owned only by
+# e2r.research_brain.researcher_mode and never treats this pipeline's question
+# closures as production component or Stage authority.
+V5_PRODUCTION_SCORE_AUTHORITY = False
+V5_FINAL_STAGE_AUTHORITY = False
+
 
 def run_dossier_scoring_pipeline(
     *,
@@ -681,6 +687,10 @@ def run_dossier_scoring_pipeline(
         "score_type": score.score_type,
         "canonical_stage": decision.canonical_stage,
         "decision_status": decision.decision_status,
+        "v5_compatibility_adapter": True,
+        "production_score_authority": V5_PRODUCTION_SCORE_AUTHORITY,
+        "final_stage_authority": V5_FINAL_STAGE_AUTHORITY,
+        "canonical_replacement": "e2r.research_brain.researcher_mode",
         "critical_counts": critical,
         "critical_count_sum": sum(critical.values()),
     }
@@ -1058,4 +1068,9 @@ def _read_jsonl(path: Path) -> tuple[Mapping[str, Any], ...]:
         return tuple(json.loads(line) for line in handle if line.strip())
 
 
-__all__ = ["COMPONENT_QUESTION_FAMILIES", "run_dossier_scoring_pipeline"]
+__all__ = [
+    "COMPONENT_QUESTION_FAMILIES",
+    "V5_FINAL_STAGE_AUTHORITY",
+    "V5_PRODUCTION_SCORE_AUTHORITY",
+    "run_dossier_scoring_pipeline",
+]

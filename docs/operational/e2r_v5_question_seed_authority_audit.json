@@ -1,0 +1,890 @@
+{
+  "archetype_count": 1,
+  "catalog": {
+    "final_stage_authority": false,
+    "production_score_authority": false,
+    "schema_version": "e2r_research_question_seed_catalog_v1",
+    "seeds": [
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "bottleneck_pricing",
+          "eps_fcf_explosion",
+          "information_confidence"
+        ],
+        "counter_route_hints": [
+          "pricing_counter"
+        ],
+        "false_positive_guard_hints": [
+          "ASP decline",
+          "asp decline",
+          "price decline",
+          "가격 하락",
+          "raw commodity headline",
+          "unattributed company revenue"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "Memory/HBM realized or contracted ASP and pricing",
+        "primitive_tags": [
+          "memory_price_increase_mentioned",
+          "actual_earnings_conversion"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "asp_pricing_actual",
+        "research_predicates": [
+          "memory, DRAM, or HBM",
+          "ASP or realized pricing",
+          "pricing commentary without quantified actual",
+          "raw commodity headline",
+          "unattributed company revenue"
+        ],
+        "retrieval_keyword_hints": [
+          "asp",
+          "average selling price",
+          "realized price",
+          "contracted price",
+          "판매가격",
+          "%",
+          "pricing environment",
+          "가격 환경",
+          "hbm",
+          "memory",
+          "dram",
+          "메모리",
+          "d램",
+          "pricing",
+          "price",
+          "가격"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-5417b35f9d07e529c70824b7",
+        "source_route_hints": [
+          "official_filing",
+          "issuer_earnings"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "earnings_visibility",
+          "bottleneck_pricing",
+          "valuation_rerating",
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "counter_route_hints": [
+          "capacity_counter",
+          "supersession"
+        ],
+        "false_positive_guard_hints": [
+          "new supply removes constraint",
+          "oversupply",
+          "supply expansion",
+          "공급과잉",
+          "증설",
+          "capacity specification only"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "HBM/memory capacity constraint, sold-out, or pre-sold status",
+        "primitive_tags": [
+          "hbm_capacity_constraint",
+          "hbm_capacity_pre_sold",
+          "capacity_supply_response"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "capacity_constraint_presold_status",
+        "research_predicates": [
+          "HBM or memory scope",
+          "capacity constraint, sold-out, pre-sold, or demand exceeds supply",
+          "demand exceeds supply without booked period",
+          "capacity specification only"
+        ],
+        "retrieval_keyword_hints": [
+          "capacity constraint",
+          "sold out",
+          "sold-out",
+          "pre-sold",
+          "fully booked",
+          "capa locked",
+          "완판",
+          "예약",
+          "잠김",
+          "demand exceeds supply",
+          "수요가 공급을 초과",
+          "hbm",
+          "memory",
+          "dram",
+          "메모리",
+          "d램",
+          "capacity",
+          "supply",
+          "capa",
+          "공급"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-90ecd06662c06263d60c45df",
+        "source_route_hints": [
+          "issuer_ir",
+          "trusted_independent"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "capital_allocation",
+          "bottleneck_pricing",
+          "earnings_visibility"
+        ],
+        "counter_route_hints": [
+          "capacity_counter"
+        ],
+        "false_positive_guard_hints": [
+          "capacity expansion or oversupply weakens scarcity",
+          "oversupply",
+          "capacity expansion",
+          "공급과잉",
+          "증설",
+          "unrelated Foundry/display capex"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "Memory/HBM capex, supply response, and oversupply counter",
+        "primitive_tags": [
+          "capacity_supply_response",
+          "hbm_capacity_constraint"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "capex_supply_oversupply",
+        "research_predicates": [
+          "memory or HBM attribution",
+          "capex, capacity, investment, supply, or oversupply",
+          "mixed-segment capex with memory reference",
+          "unrelated Foundry/display capex"
+        ],
+        "retrieval_keyword_hints": [
+          "memory capex",
+          "hbm capacity",
+          "memory capacity",
+          "hbm supply",
+          "memory supply",
+          "메모리 투자",
+          "hbm 증설",
+          "메모리 증설",
+          "mixed segment",
+          "ds",
+          "복수 부문",
+          "hbm",
+          "memory",
+          "dram",
+          "메모리",
+          "d램",
+          "capex",
+          "capacity",
+          "invest",
+          "supply",
+          "oversupply",
+          "capa",
+          "투자",
+          "증설",
+          "공급"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-4a313a74e5f00297821ed894",
+        "source_route_hints": [
+          "official_filing",
+          "issuer_ir"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "eps_fcf_explosion",
+          "earnings_visibility",
+          "bottleneck_pricing"
+        ],
+        "counter_route_hints": [
+          "memory_recovery_supersession"
+        ],
+        "false_positive_guard_hints": [
+          "conventional memory recovery resolves drag",
+          "recovery",
+          "rebound",
+          "회복",
+          "반등",
+          "generic industry headline"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "Conventional DRAM/NAND drag on HBM-linked economics",
+        "primitive_tags": [
+          "conventional_memory_drag"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "conventional_memory_drag",
+        "research_predicates": [
+          "conventional memory product",
+          "weakness, drag, decline, or inventory risk",
+          "mixed memory conditions",
+          "generic industry headline"
+        ],
+        "retrieval_keyword_hints": [
+          "drag",
+          "weakness",
+          "decline",
+          "inventory risk",
+          "부진",
+          "감소",
+          "재고 위험",
+          "mixed",
+          "혼조",
+          "dram",
+          "nand",
+          "conventional memory",
+          "범용 메모리",
+          "weak",
+          "inventory",
+          "재고"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-664a031ac2869e6cf8cecbfb",
+        "source_route_hints": [
+          "issuer_earnings",
+          "trusted_independent"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "earnings_visibility",
+          "bottleneck_pricing",
+          "valuation_rerating",
+          "information_confidence"
+        ],
+        "counter_route_hints": [
+          "counter_supersession"
+        ],
+        "false_positive_guard_hints": [
+          "allocation cancelled",
+          "customer commitment withdrawn",
+          "cancel",
+          "withdraw",
+          "취소",
+          "철회",
+          "generic customer name",
+          "Foundry contract",
+          "product profile"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "HBM/memory customer allocation, booking, committed volume",
+        "primitive_tags": [
+          "customer_preorder_or_allocation",
+          "revenue_visibility_contract"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "current_customer_allocation_commitment",
+        "research_predicates": [
+          "HBM or memory product",
+          "customer allocation, booking, commitment, or supply contract",
+          "customer schedule or non-binding allocation discussion",
+          "generic customer name",
+          "Foundry contract",
+          "product profile"
+        ],
+        "retrieval_keyword_hints": [
+          "booking",
+          "committed",
+          "preorder",
+          "supply contract",
+          "배정",
+          "예약",
+          "공급계약",
+          "customer schedule",
+          "customer requirement",
+          "고객 일정",
+          "고객 요구",
+          "hbm",
+          "memory",
+          "dram",
+          "메모리",
+          "d램",
+          "allocation",
+          "commit"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-b80468fb03ba048a11c47e5d",
+        "source_route_hints": [
+          "issuer_ir",
+          "official_filing",
+          "customer_official"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "earnings_visibility",
+          "information_confidence",
+          "bottleneck_pricing"
+        ],
+        "counter_route_hints": [
+          "customer_counter",
+          "supersession"
+        ],
+        "false_positive_guard_hints": [
+          "customer loss or dependency increase",
+          "customer loss",
+          "dependency",
+          "고객 이탈",
+          "의존",
+          "generic company customer list",
+          "Foundry customer"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "HBM/memory customer concentration and dependency",
+        "primitive_tags": [
+          "customer_preorder_or_allocation",
+          "revenue_visibility_contract"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "customer_concentration_dependency",
+        "research_predicates": [
+          "HBM or memory customer",
+          "concentration, dependency, named allocation, or customer share",
+          "named HBM customers without concentration share",
+          "generic company customer list",
+          "Foundry customer"
+        ],
+        "retrieval_keyword_hints": [
+          "concentration",
+          "dependency",
+          "customer share",
+          "의존",
+          "집중",
+          "고객 비중",
+          "named customer",
+          "major customer",
+          "주요 고객",
+          "hbm",
+          "memory",
+          "dram",
+          "메모리",
+          "d램",
+          "customer",
+          "allocation",
+          "고객",
+          "배정"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-a073ccc69e2f5cf532c6872c",
+        "source_route_hints": [
+          "official_filing",
+          "issuer_ir",
+          "customer_official"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "earnings_visibility",
+          "eps_fcf_explosion",
+          "information_confidence"
+        ],
+        "counter_route_hints": [
+          "mix_counter"
+        ],
+        "false_positive_guard_hints": [
+          "HBM mix declined",
+          "decline",
+          "decrease",
+          "감소",
+          "하락",
+          "total company revenue",
+          "product profile or mass production only"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "HBM or AI-memory shipment and revenue mix",
+        "primitive_tags": [
+          "shipment_or_revenue_mix"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "hbm_ai_memory_revenue_mix",
+        "research_predicates": [
+          "HBM or AI memory",
+          "revenue, sales, shipment, or mix attribution",
+          "HBM sales increased without quantified mix",
+          "total company revenue",
+          "product profile or mass production only"
+        ],
+        "retrieval_keyword_hints": [
+          "revenue mix",
+          "sales mix",
+          "shipment mix",
+          "revenue contribution",
+          "%",
+          "매출 비중",
+          "판매 비중",
+          "출하 비중",
+          "increased sales",
+          "sales growth",
+          "판매 증가",
+          "hbm",
+          "ai memory",
+          "revenue",
+          "sales",
+          "mix",
+          "shipment",
+          "매출",
+          "비중",
+          "판매",
+          "출하"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-cda3f2f0101022656dac6a02",
+        "source_route_hints": [
+          "issuer_earnings",
+          "official_filing"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "eps_fcf_explosion",
+          "capital_allocation",
+          "information_confidence"
+        ],
+        "counter_route_hints": [
+          "cash_counter"
+        ],
+        "false_positive_guard_hints": [
+          "cash burn or margin compression",
+          "cash burn",
+          "compression",
+          "현금 소진",
+          "마진 하락",
+          "total profit without memory attribution"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "HBM/memory margin, FCF, and cash conversion",
+        "primitive_tags": [
+          "margin_fcf_conversion",
+          "actual_earnings_conversion"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "margin_fcf_conversion",
+        "research_predicates": [
+          "HBM or memory attribution",
+          "margin, FCF, cash flow, or profit conversion",
+          "operating profit only",
+          "total profit without memory attribution"
+        ],
+        "retrieval_keyword_hints": [
+          "margin",
+          "fcf",
+          "free cash flow",
+          "cash flow",
+          "마진",
+          "현금흐름",
+          "operating profit",
+          "영업이익",
+          "hbm",
+          "memory",
+          "dram",
+          "메모리",
+          "d램",
+          "profit",
+          "이익"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-6b63ecec211aea06ad5b38fd",
+        "source_route_hints": [
+          "official_filing",
+          "issuer_earnings"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "earnings_visibility",
+          "market_mispricing",
+          "valuation_rerating",
+          "eps_fcf_explosion",
+          "information_confidence"
+        ],
+        "counter_route_hints": [
+          "revision_counter"
+        ],
+        "false_positive_guard_hints": [
+          "downward revision",
+          "favorable scenario already reflected in current expectations or valuation",
+          "downward",
+          "cut",
+          "priced in",
+          "already reflected",
+          "하향",
+          "선반영",
+          "target price only",
+          "raw price momentum",
+          "historical outcome"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "Current medium-term HBM/memory estimate revision, consensus expectation, and valuation-to-earnings bridge",
+        "primitive_tags": [
+          "medium_term_revision_visibility",
+          "market_expectation_gap",
+          "current_valuation_vs_earnings"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "medium_term_revision_consensus",
+        "research_predicates": [
+          "HBM or memory attribution",
+          "estimate, guidance, revision, consensus, expectation gap, or current/forward earnings multiple",
+          "qualitative outlook without estimate",
+          "valuation multiple without a complete HBM earnings bridge",
+          "target price only",
+          "raw price momentum",
+          "historical outcome"
+        ],
+        "retrieval_keyword_hints": [
+          "estimate",
+          "guidance",
+          "revision",
+          "consensus",
+          "expectation gap",
+          "valuation multiple",
+          "earnings multiple",
+          "p/e",
+          "가이던스",
+          "추정",
+          "컨센서스",
+          "기대 격차",
+          "밸류에이션",
+          "outlook",
+          "target price",
+          "valuation",
+          "전망",
+          "목표주가",
+          "hbm",
+          "memory",
+          "dram",
+          "메모리",
+          "d램",
+          "expectation",
+          "multiple",
+          "기대"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-b88d4156a85b44d3a9d27594",
+        "source_route_hints": [
+          "financial_revision",
+          "issuer_guidance"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "earnings_visibility",
+          "information_confidence"
+        ],
+        "counter_route_hints": [
+          "qualification_counter",
+          "supersession"
+        ],
+        "false_positive_guard_hints": [
+          "qualification failed or delayed",
+          "fail",
+          "delay",
+          "lag",
+          "미통과",
+          "지연",
+          "product sample without qualification status"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "HBM customer qualification pass, lag, failure, or reopen",
+        "primitive_tags": [
+          "qualification_state"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "qualification_pass_lag_reopen",
+        "research_predicates": [
+          "HBM qualification state",
+          "customer test or approval status",
+          "qualification in progress",
+          "product sample without qualification status"
+        ],
+        "retrieval_keyword_hints": [
+          "qualified",
+          "qualification passed",
+          "approved",
+          "approval completed",
+          "인증 완료",
+          "승인 완료",
+          "통과",
+          "in progress",
+          "진행 중",
+          "hbm",
+          "qualification",
+          "approval",
+          "test",
+          "인증",
+          "승인",
+          "테스트"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-978182bb7015e6a2227b8cd0",
+        "source_route_hints": [
+          "issuer_ir",
+          "customer_official",
+          "trusted_independent"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "eps_fcf_explosion",
+          "earnings_visibility",
+          "information_confidence"
+        ],
+        "counter_route_hints": [
+          "earnings_counter"
+        ],
+        "false_positive_guard_hints": [
+          "profit or margin deterioration",
+          "loss",
+          "decline",
+          "적자",
+          "감소",
+          "total company revenue without memory attribution"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "HBM/memory revenue and operating-profit conversion",
+        "primitive_tags": [
+          "actual_earnings_conversion",
+          "shipment_or_revenue_mix"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "revenue_operating_profit_conversion",
+        "research_predicates": [
+          "HBM or memory attribution",
+          "revenue, sales, operating profit, or margin",
+          "revenue conversion without profit attribution",
+          "total company revenue without memory attribution"
+        ],
+        "retrieval_keyword_hints": [
+          "operating profit",
+          "operating margin",
+          "영업이익",
+          "영업이익률",
+          "마진",
+          "revenue",
+          "sales",
+          "매출",
+          "판매",
+          "hbm",
+          "memory",
+          "dram",
+          "메모리",
+          "d램",
+          "margin"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-c9bc1022a8df715b5ffd9946",
+        "source_route_hints": [
+          "issuer_earnings",
+          "official_filing"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "earnings_visibility",
+          "eps_fcf_explosion",
+          "information_confidence"
+        ],
+        "counter_route_hints": [
+          "execution_counter"
+        ],
+        "false_positive_guard_hints": [
+          "shipment delayed or production stopped",
+          "delay",
+          "stopped",
+          "지연",
+          "중단",
+          "HBM specification only",
+          "NAND, SOCAMM, or LPDDR shipment"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "HBM shipment, commercial shipment, or mass production generation",
+        "primitive_tags": [
+          "shipment_or_revenue_mix",
+          "hbm_product_profile",
+          "package_substrate_sympathy"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "shipment_mass_production_generation",
+        "research_predicates": [
+          "HBM product",
+          "shipment or mass production",
+          "sample shipment or planned production",
+          "HBM specification only",
+          "NAND, SOCAMM, or LPDDR shipment"
+        ],
+        "retrieval_keyword_hints": [
+          "commercial shipment",
+          "commercially shipped",
+          "began mass production",
+          "has begun mass production",
+          "mass-produced",
+          "shipped commercial",
+          "양산 출하",
+          "양산을 시작",
+          "상업 출하",
+          "sample",
+          "plan",
+          "expected",
+          "샘플",
+          "계획",
+          "예정",
+          "hbm",
+          "shipment",
+          "shipped",
+          "mass production",
+          "commercial",
+          "출하",
+          "양산"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-47fd0cd4efebbbf489346335",
+        "source_route_hints": [
+          "issuer_newsroom",
+          "issuer_ir"
+        ]
+      },
+      {
+        "absence_authority": false,
+        "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+        "component_completion_authority": false,
+        "component_topic_hints": [
+          "market_mispricing",
+          "valuation_rerating",
+          "information_confidence"
+        ],
+        "counter_route_hints": [
+          "expectation_counter",
+          "valuation_counter"
+        ],
+        "false_positive_guard_hints": [
+          "favorable HBM scenario already reflected in expectations or valuation",
+          "priced in",
+          "already reflected",
+          "premium valuation",
+          "선반영",
+          "고평가",
+          "raw price momentum",
+          "target price without earnings bridge",
+          "multiple without earnings period",
+          "historical outcome"
+        ],
+        "final_stage_authority": false,
+        "mechanism_scope": "Current HBM/memory market-expectation gap and current/forward valuation-to-earnings bridge",
+        "primitive_tags": [
+          "market_expectation_gap",
+          "current_valuation_vs_earnings"
+        ],
+        "production_score_authority": false,
+        "question_family_id": "valuation_market_expectation",
+        "research_predicates": [
+          "attributable consensus or market expectation",
+          "current or forward earnings multiple with period and denominator",
+          "estimate direction without complete consensus dispersion",
+          "current valuation multiple with incomplete HBM earnings attribution",
+          "raw price momentum",
+          "target price without earnings bridge",
+          "multiple without earnings period",
+          "historical outcome"
+        ],
+        "retrieval_keyword_hints": [
+          "consensus gap",
+          "expectation gap",
+          "earnings multiple",
+          "forward p/e",
+          "current p/e",
+          "valuation multiple",
+          "컨센서스 격차",
+          "기대 격차",
+          "이익 배수",
+          "밸류에이션",
+          "consensus",
+          "expectation",
+          "valuation",
+          "multiple",
+          "컨센서스",
+          "기대",
+          "배수",
+          "hbm",
+          "memory",
+          "dram",
+          "메모리",
+          "d램",
+          "p/e",
+          "pbr"
+        ],
+        "schema_version": "e2r_research_question_seed_v1",
+        "seed_id": "RQSEED-428597045042603fd97ea327",
+        "source_route_hints": [
+          "financial_revision",
+          "official_filing",
+          "trusted_independent"
+        ]
+      }
+    ]
+  },
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "keyword_absence_authority_count": 0,
+    "keyword_positive_scoring_authority_count": 0,
+    "legacy_dossier_final_stage_authority_count": 0,
+    "legacy_dossier_production_authority_count": 0,
+    "question_closure_required_for_component_score_count": 0,
+    "question_seed_component_completion_authority_count": 0,
+    "question_seed_final_stage_authority_count": 0,
+    "seed_catalog_missing_count": 0
+  },
+  "future_namespace_question_closure_calls": [],
+  "future_namespace_question_closure_imports": [],
+  "legacy_compatibility": {
+    "QuestionImpactContract": {
+      "absence_authority": false,
+      "component_completion_authority": false,
+      "final_stage_authority": false,
+      "production_score_authority": false
+    },
+    "dossier_scoring_pipeline": {
+      "final_stage_authority": false,
+      "production_score_authority": false
+    }
+  },
+  "schema_version": "e2r_v5_research_question_seed_authority_audit_v1",
+  "seed_count": 13,
+  "status": "RESEARCH_QUESTION_SEED_AUTHORITY_PASS"
+}
