@@ -1128,10 +1128,26 @@ def _pass_instruction(pass_name: str) -> str:
             "units express duplicate-credit accounting, not component points or stage authority."
         )
     if pass_name == "COMPONENT_ANALYST_JUDGE":
-        return "Act as the positive analyst judge for exactly one component."
+        return (
+            "Act as the independent positive analyst for exactly one broad component. "
+            "Derive proposed component points and an allowed range from current support facts, "
+            "economic strength, duration, and cash conversion. Account for every supplied "
+            "positive component fact and compare the case with at least one nearest blind "
+            "historical anchor. Explain both why the score is not higher and why it is not lower."
+        )
     if pass_name == "COMPONENT_SKEPTIC_JUDGE":
-        return "Act as the independent skeptic judge for exactly one component."
-    return "Calibrate exactly one component against blind historical anchors."
+        return (
+            "Act as the independent skeptic for exactly one broad component. Review every "
+            "supplied counterfact and explicitly reflect business phase, valuation, customer "
+            "or supplier concentration, and uncertainty in proposed component points and the "
+            "allowed range. Compare with a nearest blind anchor and explain both bounds."
+        )
+    return (
+        "Act as the independent calibration judge for exactly one broad component. Compare "
+        "the current support and counter fact shape with usable blind historical anchors, "
+        "validate the component point scale and allowed range, and explain why the proposal "
+        "is neither above nor below the selected anchor-calibrated band."
+    )
 
 
 __all__ = [

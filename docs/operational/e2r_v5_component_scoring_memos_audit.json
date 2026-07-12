@@ -1,0 +1,95 @@
+{
+  "analyst_uses_current_evidence_and_positive_thesis": true,
+  "audit_hash": "36fb4baa1e247a3666bd280a3a5df7beac2d16cad1210103e55fe11c91fd3574",
+  "calibration_uses_blind_historical_anchors": true,
+  "canary_counts": {
+    "components": 7,
+    "distinct_judge_call_ids": 21,
+    "distinct_prompt_hashes": 21,
+    "distinct_response_hashes": 21,
+    "judge_memos": 21,
+    "provider_calls": 21
+  },
+  "component_ids": [
+    "eps_fcf_explosion",
+    "earnings_visibility",
+    "bottleneck_pricing",
+    "market_mispricing",
+    "valuation_rerating",
+    "capital_allocation",
+    "information_confidence"
+  ],
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "component_max_violation_count": 0,
+    "component_roster_mismatch_count": 0,
+    "component_scoring_run_critical_count": 0,
+    "judge_bound_explanation_missing_count": 0,
+    "judge_memo_count_mismatch_count": 0,
+    "judge_prompt_independence_missing_count": 0,
+    "judge_required_lineage_missing_count": 0,
+    "judge_role_roster_mismatch_count": 0,
+    "judge_schema_field_mismatch_count": 0,
+    "judge_schema_forbidden_field_count": 0,
+    "judge_schema_open_count": 0,
+    "llm_total_score_output_not_blocked_count": 0,
+    "output_file_contract_mismatch_count": 0,
+    "prior_researcher_score_band_exposure_count": 0,
+    "provider_call_count_mismatch_count": 0,
+    "required_module_missing_count": 0,
+    "reused_prompt_independence_not_blocked_count": 0,
+    "role_review_dimension_missing_count": 0,
+    "run_total_or_stage_output_field_count": 0,
+    "target_name_condition_count": 0,
+    "tiny_impact_cap_multiplication_marker_count": 0
+  },
+  "judge_response_fields": [
+    "allowed_range",
+    "anchor_comparisons",
+    "counter_fact_ids",
+    "disagreements",
+    "nearest_anchor_ids",
+    "proposed_points",
+    "rationale",
+    "support_fact_ids",
+    "why_not_higher",
+    "why_not_lower"
+  ],
+  "judge_review_dimensions_by_role": {
+    "ANALYST": [
+      "CURRENT_ECONOMIC_STRENGTH",
+      "POSITIVE_THESIS",
+      "DURATION_AND_CASH_CONVERSION"
+    ],
+    "CALIBRATION_JUDGE": [
+      "HISTORICAL_ANCHOR_COMPARABILITY",
+      "COMPONENT_SCORE_SCALE",
+      "ALLOWED_RANGE_DISCIPLINE"
+    ],
+    "SKEPTIC": [
+      "COUNTEREVIDENCE",
+      "BUSINESS_PHASE",
+      "VALUATION",
+      "CONCENTRATION",
+      "UNCERTAINTY"
+    ]
+  },
+  "judge_roles": [
+    "ANALYST",
+    "SKEPTIC",
+    "CALIBRATION_JUDGE"
+  ],
+  "llm_stage_authority": false,
+  "llm_total_score_authority": false,
+  "output_files": {
+    "audit": "component_scoring_memo_audit.json",
+    "component_memos": "component_scoring_memos.jsonl",
+    "judge_memos": "component_judge_scoring_memos.jsonl",
+    "run": "component_scoring_memo_run.json"
+  },
+  "prior_component_score_band_exposed_to_judges": false,
+  "schema_version": "e2r_v5_component_scoring_memos_audit_v1",
+  "skeptic_reviews_counter_phase_valuation_concentration_uncertainty": true,
+  "status": "V5_PHASE89_INDEPENDENT_COMPONENT_SCORING_MEMOS_PASS",
+  "tiny_impact_cap_multiplication_used": false
+}

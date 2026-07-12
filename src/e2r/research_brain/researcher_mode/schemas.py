@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from dataclasses import asdict, dataclass
 from datetime import date
@@ -514,8 +515,15 @@ class SynthesisMemo:
 @dataclass(frozen=True)
 class ComponentJudgeDecision:
     judge_id: str
+    judge_call_id: str
     memo_id: str
+    component_id: str
+    component_max_points: float
     role: str
+    pass_name: str
+    prompt_hash: str
+    response_hash: str
+    provider_name: str
     anchor_comparisons: tuple[str, ...]
     proposed_points: float
     allowed_range: tuple[float, float]
@@ -526,22 +534,60 @@ class ComponentJudgeDecision:
     nearest_anchor_ids: tuple[str, ...]
     why_not_higher: str
     why_not_lower: str
-    schema_version: str = "e2r_component_judge_decision_v1"
+    production_total_score_authority: bool = False
+    production_stage_authority: bool = False
+    schema_version: str = "e2r_component_judge_decision_v2"
 
     def __post_init__(self) -> None:
         for value, label in (
             (self.judge_id, "judge_id"),
+            (self.judge_call_id, "judge_call_id"),
             (self.memo_id, "memo_id"),
+            (self.pass_name, "pass_name"),
+            (self.prompt_hash, "prompt_hash"),
+            (self.response_hash, "response_hash"),
+            (self.provider_name, "provider_name"),
             (self.rationale, "rationale"),
             (self.why_not_higher, "why_not_higher"),
             (self.why_not_lower, "why_not_lower"),
         ):
             _require_text(value, label)
+        _require_component(self.component_id)
         ComponentJudgeRole(self.role)
+        expected_pass = {
+            ComponentJudgeRole.ANALYST.value: "COMPONENT_ANALYST_JUDGE",
+            ComponentJudgeRole.SKEPTIC.value: "COMPONENT_SKEPTIC_JUDGE",
+            ComponentJudgeRole.CALIBRATION_JUDGE.value: "CALIBRATION_JUDGE",
+        }[self.role]
+        if self.pass_name != expected_pass:
+            raise ValueError("judge role and provider pass do not match")
+        if len(self.prompt_hash) != 64 or len(self.response_hash) != 64:
+            raise ValueError("judge prompt and response hashes must be sha256")
+        try:
+            int(self.prompt_hash, 16)
+            int(self.response_hash, 16)
+        except ValueError as exc:
+            raise ValueError("judge prompt and response hashes must be hexadecimal") from exc
+        if isinstance(self.component_max_points, bool):
+            raise ValueError("component_max_points must be numeric")
+        _require_positive(self.component_max_points, "component_max_points")
         if len(self.allowed_range) != 2:
             raise ValueError("allowed_range must have lower and upper points")
+        if isinstance(self.proposed_points, bool) or any(
+            isinstance(value, bool) for value in self.allowed_range
+        ):
+            raise ValueError("judge point fields must be numeric")
         lower, upper = (float(value) for value in self.allowed_range)
-        if lower < 0 or upper < lower or not lower <= float(self.proposed_points) <= upper:
+        proposed = float(self.proposed_points)
+        maximum = float(self.component_max_points)
+        if not all(math.isfinite(value) for value in (lower, proposed, upper, maximum)):
+            raise ValueError("judge point fields must be finite")
+        if (
+            lower < 0
+            or upper < lower
+            or upper > maximum
+            or not lower <= proposed <= upper
+        ):
             raise ValueError("judge proposed points must be inside allowed_range")
         for values, label in (
             (self.anchor_comparisons, "anchor_comparisons"),
@@ -551,6 +597,12 @@ class ComponentJudgeDecision:
             (self.nearest_anchor_ids, "nearest_anchor_ids"),
         ):
             _require_unique_texts(values, label, allow_empty=True)
+        if not self.anchor_comparisons or not self.nearest_anchor_ids:
+            raise ValueError("every judge memo requires a nearest-anchor comparison")
+        if proposed > 0 and not self.support_fact_ids:
+            raise ValueError("positive proposed points require support facts")
+        if self.production_total_score_authority or self.production_stage_authority:
+            raise ValueError("component judges cannot decide total score or Stage")
 
     def to_dict(self) -> Mapping[str, Any]:
         return _json_safe(asdict(self))
@@ -599,11 +651,17 @@ class FinalComponentDecision:
 
 _FORBIDDEN_RESEARCH_KEYS = {
     "stage",
+    "canonical_stage",
     "final_stage",
+    "stage_override",
     "reported_stage",
     "expected_stage",
     "expected_score",
     "expected_points",
+    "total_score",
+    "total_points",
+    "aggregate_score",
+    "investment_recommendation",
     "future_outcome",
     "future_outcome_ref",
     "mfe",
@@ -657,7 +715,14 @@ def _is_forbidden_research_key(key: str) -> bool:
         return True
     return any(
         normalized.startswith(prefix)
-        for prefix in ("mfe_", "mae_", "future_outcome_", "expected_score_")
+        for prefix in (
+            "mfe_",
+            "mae_",
+            "future_outcome_",
+            "expected_score_",
+            "total_score_",
+            "total_points_",
+        )
     )
 
 

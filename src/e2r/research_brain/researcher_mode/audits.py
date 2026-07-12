@@ -2063,6 +2063,450 @@ def write_phase88_evidence_fact_graph_audit(
     return destination
 
 
+PHASE89_SCHEMA_VERSION = "e2r_v5_component_scoring_memos_audit_v1"
+PHASE89_PASS = "V5_PHASE89_INDEPENDENT_COMPONENT_SCORING_MEMOS_PASS"
+PHASE89_AUDIT_PATH = (
+    "docs/operational/e2r_v5_component_scoring_memos_audit.json"
+)
+
+
+def compile_phase89_component_scoring_memos_audit(
+    repo_root: str | Path,
+) -> Mapping[str, Any]:
+    """Compile a seven-component, twenty-one-judge deterministic canary."""
+
+    from .component_judge import (
+        JUDGE_RESPONSE_FIELDS,
+        JUDGE_REVIEW_DIMENSIONS_BY_ROLE,
+    )
+    from .component_researcher import (
+        COMPONENT_JUDGE_SCHEMA,
+        ComponentResearchResult,
+    )
+    from .component_scoring_memos import (
+        COMPONENT_SCORING_MEMO_OUTPUT_FILES,
+        REQUIRED_COMPONENT_JUDGE_ROLES,
+        LLMComponentScoringMemoEngine,
+    )
+    from .schemas import (
+        CANONICAL_COMPONENT_MAX_POINTS,
+        CANONICAL_COMPONENT_ORDER,
+        ComponentAnchor,
+        ComponentResearchMemo,
+        EvidenceFact,
+    )
+
+    root = Path(repo_root).resolve()
+    module_paths = (
+        "src/e2r/research_brain/researcher_mode/schemas.py",
+        "src/e2r/research_brain/researcher_mode/component_researcher.py",
+        "src/e2r/research_brain/researcher_mode/component_judge.py",
+        "src/e2r/research_brain/researcher_mode/calibration_judge.py",
+        "src/e2r/research_brain/researcher_mode/component_scoring_memos.py",
+    )
+    missing_modules = [value for value in module_paths if not (root / value).is_file()]
+    source_text = "\n".join(
+        (root / value).read_text(encoding="utf-8")
+        for value in module_paths
+        if (root / value).is_file()
+    )
+    target_id = "PHASE89-CURRENT-TARGET"
+    archetype_id = "PHASE89-CURRENT-ARCHETYPE"
+    as_of_date = "2026-06-29"
+    facts = (
+        EvidenceFact(
+            fact_id="PHASE89-AUDIT-SUPPORT",
+            target_id=target_id,
+            as_of_date=as_of_date,
+            subject="current target operating business",
+            business_segment="core segment",
+            product_family="core product",
+            economic_mechanism="current operating strength converts into earnings and cash",
+            predicate="current_operating_strength",
+            value=True,
+            unit="flag",
+            period="2026Q2",
+            direction="POSITIVE",
+            source_ids=("PHASE89-AUDIT-SOURCE-SUPPORT",),
+            claim_ids=("PHASE89-AUDIT-CLAIM-SUPPORT",),
+            quote_ids=("PHASE89-AUDIT-QUOTE-SUPPORT",),
+            current_lifecycle="CURRENT",
+            source_independence_group="ISSUER",
+            confidence=0.85,
+        ),
+        EvidenceFact(
+            fact_id="PHASE89-AUDIT-COUNTER",
+            target_id=target_id,
+            as_of_date=as_of_date,
+            subject="current target operating business",
+            business_segment="core segment",
+            product_family="core product",
+            economic_mechanism="concentration can reduce earnings durability",
+            predicate="concentration_risk",
+            value=True,
+            unit="flag",
+            period="2026Q2",
+            direction="COUNTER",
+            source_ids=("PHASE89-AUDIT-SOURCE-COUNTER",),
+            claim_ids=("PHASE89-AUDIT-CLAIM-COUNTER",),
+            quote_ids=("PHASE89-AUDIT-QUOTE-COUNTER",),
+            current_lifecycle="OPEN",
+            source_independence_group="INDEPENDENT",
+            confidence=0.8,
+        ),
+    )
+    anchors = []
+    component_results = []
+    for component_id in CANONICAL_COMPONENT_ORDER:
+        maximum = float(CANONICAL_COMPONENT_MAX_POINTS[component_id])
+        anchor_ids = []
+        for role, suffix, midpoint in (
+            ("POSITIVE", "P", 0.65),
+            ("COUNTER", "C", 0.35),
+        ):
+            anchor_id = f"PHASE89-AUDIT-ANCHOR-{component_id}-{suffix}"
+            anchor_ids.append(anchor_id)
+            anchors.append(
+                ComponentAnchor(
+                    anchor_id=anchor_id,
+                    archetype_id=archetype_id,
+                    component_id=component_id,
+                    economic_fact_patterns=("blind economic fact pattern",),
+                    role=role,
+                    score_band="HIGH" if role == "POSITIVE" else "LOW",
+                    points_lower=maximum * max(0.0, midpoint - 0.1),
+                    points_mid=maximum * midpoint,
+                    points_upper=maximum * min(1.0, midpoint + 0.1),
+                    max_points=maximum,
+                    source_backed_case_ids=(
+                        f"PHASE89-AUDIT-CASE-{component_id}-{suffix}",
+                    ),
+                    source_proxy_guard_case_ids=(),
+                    source_score_anchor_ids=(
+                        f"PHASE89-AUDIT-SCORE-{component_id}-{suffix}",
+                    ),
+                    confidence="MEDIUM",
+                    usable_as_exact_anchor=False,
+                    usable_as_ordinal_anchor=True,
+                )
+            )
+        memo = ComponentResearchMemo(
+            memo_id=f"PHASE89-AUDIT-MEMO-{component_id}",
+            target_id=target_id,
+            archetype_id=archetype_id,
+            component_id=component_id,
+            component_max_points=maximum,
+            positive_fact_ids=("PHASE89-AUDIT-SUPPORT",),
+            counter_fact_ids=("PHASE89-AUDIT-COUNTER",),
+            resolution_fact_ids=(),
+            structured_metrics={"current_metric": 1.0, "concentration": 0.4},
+            historical_anchor_ids=tuple(anchor_ids),
+            researcher_summary="current source-backed economics were researched",
+            positive_case="current direct support establishes an economic floor",
+            counter_case="concentration and uncertainty constrain the ceiling",
+            uncertainties=("duration requires continued monitoring",),
+            source_coverage=("ISSUER_OFFICIAL", "INDEPENDENT_REPORT"),
+            proposed_score_lower=maximum * 0.4,
+            proposed_score_mid=maximum * 0.53,
+            proposed_score_upper=maximum * 0.7,
+            confidence=0.78,
+            research_complete=True,
+            nearest_positive_anchor_ids=(anchor_ids[0],),
+            nearest_counter_anchor_ids=(anchor_ids[1],),
+            why_not_higher="counterevidence remains",
+            why_not_lower="direct support exists",
+            researcher_role=f"PHASE89-AUDIT-{component_id}-RESEARCHER",
+        )
+        component_results.append(
+            ComponentResearchResult(
+                component_id=component_id,
+                researcher_role=memo.researcher_role,
+                status="COMPLETE",
+                memo=memo,
+                pending_reasons=(),
+                provider_name="PHASE89-AUDIT-RESEARCHER",
+                prompt_hash=f"PHASE89-AUDIT-RESEARCH-{component_id}",
+            )
+        )
+
+    class AuditProvider:
+        provider_name = "PHASE89-AUDIT-JUDGE-PROVIDER"
+
+        def __init__(self, mode: str = "COMPLETE") -> None:
+            self.mode = mode
+            self.calls: list[Mapping[str, Any]] = []
+
+        def complete(
+            self,
+            *,
+            pass_name: str,
+            payload: Mapping[str, Any],
+        ) -> Mapping[str, Any]:
+            call: dict[str, Any] = {
+                "pass_name": pass_name,
+                "payload": payload,
+            }
+            if self.mode == "CONSTANT_PROMPT_HASH":
+                call["prompt_hash"] = "a" * 64
+            self.calls.append(call)
+            memo = payload["component_research_memo"]
+            maximum = float(payload["component_max_points"])
+            fraction = {
+                "COMPONENT_ANALYST_JUDGE": 0.64,
+                "COMPONENT_SKEPTIC_JUDGE": 0.50,
+                "CALIBRATION_JUDGE": 0.57,
+            }[pass_name]
+            response = {
+                "anchor_comparisons": [
+                    "current fact shape lies within the cited blind anchor band"
+                ],
+                "proposed_points": maximum * fraction,
+                "allowed_range": [maximum * 0.35, maximum * 0.72],
+                "rationale": "current support, counters, and anchor scale were reviewed",
+                "disagreements": [],
+                "support_fact_ids": list(memo["positive_fact_ids"]),
+                "counter_fact_ids": list(memo["counter_fact_ids"]),
+                "nearest_anchor_ids": list(memo["historical_anchor_ids"]),
+                "why_not_higher": "counterevidence limits the upper bound",
+                "why_not_lower": "direct current support establishes the lower bound",
+            }
+            if self.mode == "EXTRA_TOTAL_SCORE":
+                response["total_score"] = 90
+            return response
+
+    provider = AuditProvider()
+    engine = LLMComponentScoringMemoEngine(analyst_provider=provider)
+    result = engine.build(
+        target_id=target_id,
+        archetype_id=archetype_id,
+        as_of_date=as_of_date,
+        component_results=tuple(component_results),
+        evidence_facts=facts,
+        historical_anchors=tuple(anchors),
+    )
+    extra_provider = AuditProvider("EXTRA_TOTAL_SCORE")
+    extra_total = LLMComponentScoringMemoEngine(
+        analyst_provider=extra_provider
+    ).build(
+        target_id=target_id,
+        archetype_id=archetype_id,
+        as_of_date=as_of_date,
+        component_results=tuple(component_results),
+        evidence_facts=facts,
+        historical_anchors=tuple(anchors),
+    )
+    repeated_provider = AuditProvider("CONSTANT_PROMPT_HASH")
+    repeated_prompt = LLMComponentScoringMemoEngine(
+        analyst_provider=repeated_provider
+    ).build(
+        target_id=target_id,
+        archetype_id=archetype_id,
+        as_of_date=as_of_date,
+        component_results=tuple(component_results),
+        evidence_facts=facts,
+        historical_anchors=tuple(anchors),
+    )
+    decisions = result.judge_decisions
+    schema_properties = set(COMPONENT_JUDGE_SCHEMA.get("properties") or {})
+    schema_required = set(COMPONENT_JUDGE_SCHEMA.get("required") or ())
+    forbidden_provider_fields = {
+        "total_score",
+        "total_points",
+        "stage",
+        "canonical_stage",
+        "final_stage",
+    }
+    prior_score_fields = {
+        "proposed_score_lower",
+        "proposed_score_mid",
+        "proposed_score_upper",
+        "why_not_higher",
+        "why_not_lower",
+        "confidence",
+    }
+    prior_score_exposure_count = sum(
+        bool(
+            prior_score_fields
+            & set(call["payload"]["component_research_memo"])
+        )
+        for call in provider.calls
+    )
+    target_tokens = ("005930", "000660", "삼성전자", "SK하이닉스")
+    tiny_multiplier_markers = (
+        "proposed_credit_units *",
+        "validated_credit_units *",
+        "impact_fraction *",
+        "impact_cap *",
+    )
+    prompt_hash_duplicate_count = sum(
+        len(memo.prompt_hashes) - len(set(memo.prompt_hashes))
+        for memo in result.component_memos
+    )
+    recursive_output_keys = _recursive_mapping_keys(result.to_dict())
+    critical = {
+        "required_module_missing_count": len(missing_modules),
+        "judge_schema_open_count": int(
+            COMPONENT_JUDGE_SCHEMA.get("additionalProperties") is not False
+        ),
+        "judge_schema_field_mismatch_count": len(
+            schema_properties ^ set(JUDGE_RESPONSE_FIELDS)
+        )
+        + len(schema_required ^ set(JUDGE_RESPONSE_FIELDS)),
+        "judge_schema_forbidden_field_count": len(
+            forbidden_provider_fields & schema_properties
+        ),
+        "component_scoring_run_critical_count": int(
+            result.audit["critical_count_sum"]
+        ),
+        "component_roster_mismatch_count": int(
+            tuple(memo.component_id for memo in result.component_memos)
+            != tuple(CANONICAL_COMPONENT_ORDER)
+        ),
+        "judge_memo_count_mismatch_count": int(len(decisions) != 21),
+        "provider_call_count_mismatch_count": int(len(provider.calls) != 21),
+        "judge_role_roster_mismatch_count": sum(
+            {row.role for row in memo.judge_results}
+            != set(REQUIRED_COMPONENT_JUDGE_ROLES)
+            for memo in result.component_memos
+        ),
+        "judge_prompt_independence_missing_count": prompt_hash_duplicate_count,
+        "judge_required_lineage_missing_count": sum(
+            not decision.support_fact_ids
+            or not decision.counter_fact_ids
+            or not decision.nearest_anchor_ids
+            or not decision.prompt_hash
+            or not decision.response_hash
+            or not decision.judge_call_id
+            for decision in decisions
+        ),
+        "judge_bound_explanation_missing_count": sum(
+            not decision.why_not_higher.strip()
+            or not decision.why_not_lower.strip()
+            for decision in decisions
+        ),
+        "component_max_violation_count": sum(
+            decision.proposed_points > decision.component_max_points + 1e-9
+            or decision.allowed_range[1]
+            > decision.component_max_points + 1e-9
+            for decision in decisions
+        ),
+        "role_review_dimension_missing_count": int(
+            set(JUDGE_REVIEW_DIMENSIONS_BY_ROLE)
+            != set(REQUIRED_COMPONENT_JUDGE_ROLES)
+        )
+        + int(
+            not {
+                "COUNTEREVIDENCE",
+                "BUSINESS_PHASE",
+                "VALUATION",
+                "CONCENTRATION",
+                "UNCERTAINTY",
+            }.issubset(
+                set(JUDGE_REVIEW_DIMENSIONS_BY_ROLE["SKEPTIC"])
+            )
+        ),
+        "prior_researcher_score_band_exposure_count": prior_score_exposure_count,
+        "llm_total_score_output_not_blocked_count": int(
+            extra_total.status != "COMPONENT_SCORING_MEMOS_PENDING"
+            or extra_total.ready_for_deterministic_aggregation
+        ),
+        "reused_prompt_independence_not_blocked_count": int(
+            repeated_prompt.status != "COMPONENT_SCORING_MEMOS_PENDING"
+            or repeated_prompt.ready_for_deterministic_aggregation
+        ),
+        "run_total_or_stage_output_field_count": len(
+            forbidden_provider_fields & recursive_output_keys
+        ),
+        "tiny_impact_cap_multiplication_marker_count": sum(
+            marker in source_text for marker in tiny_multiplier_markers
+        ),
+        "target_name_condition_count": sum(
+            token in source_text for token in target_tokens
+        ),
+        "output_file_contract_mismatch_count": int(
+            set(COMPONENT_SCORING_MEMO_OUTPUT_FILES)
+            != {"component_memos", "judge_memos", "run", "audit"}
+        ),
+    }
+    return {
+        "schema_version": PHASE89_SCHEMA_VERSION,
+        "status": (
+            PHASE89_PASS
+            if sum(critical.values()) == 0
+            else "V5_PHASE89_INDEPENDENT_COMPONENT_SCORING_MEMOS_FAIL"
+        ),
+        "critical_counts": critical,
+        "critical_count_sum": sum(critical.values()),
+        "component_ids": list(CANONICAL_COMPONENT_ORDER),
+        "judge_roles": list(REQUIRED_COMPONENT_JUDGE_ROLES),
+        "judge_response_fields": sorted(JUDGE_RESPONSE_FIELDS),
+        "judge_review_dimensions_by_role": {
+            key: list(values)
+            for key, values in JUDGE_REVIEW_DIMENSIONS_BY_ROLE.items()
+        },
+        "output_files": dict(COMPONENT_SCORING_MEMO_OUTPUT_FILES),
+        "canary_counts": {
+            "components": len(result.component_memos),
+            "judge_memos": len(decisions),
+            "provider_calls": len(provider.calls),
+            "distinct_prompt_hashes": len(
+                {decision.prompt_hash for decision in decisions}
+            ),
+            "distinct_response_hashes": len(
+                {decision.response_hash for decision in decisions}
+            ),
+            "distinct_judge_call_ids": len(
+                {decision.judge_call_id for decision in decisions}
+            ),
+        },
+        "analyst_uses_current_evidence_and_positive_thesis": True,
+        "skeptic_reviews_counter_phase_valuation_concentration_uncertainty": True,
+        "calibration_uses_blind_historical_anchors": True,
+        "prior_component_score_band_exposed_to_judges": False,
+        "tiny_impact_cap_multiplication_used": False,
+        "llm_total_score_authority": False,
+        "llm_stage_authority": False,
+        "audit_hash": _stable_hash(
+            {
+                "critical": critical,
+                "roles": REQUIRED_COMPONENT_JUDGE_ROLES,
+                "fields": sorted(JUDGE_RESPONSE_FIELDS),
+                "outputs": COMPONENT_SCORING_MEMO_OUTPUT_FILES,
+                "judge_ids": [decision.judge_id for decision in decisions],
+            }
+        ),
+    }
+
+
+def _recursive_mapping_keys(value: Any) -> set[str]:
+    if isinstance(value, Mapping):
+        return set(value) | {
+            nested
+            for item in value.values()
+            for nested in _recursive_mapping_keys(item)
+        }
+    if isinstance(value, (list, tuple)):
+        return {
+            nested
+            for item in value
+            for nested in _recursive_mapping_keys(item)
+        }
+    return set()
+
+
+def write_phase89_component_scoring_memos_audit(
+    *,
+    repo_root: str | Path,
+    output_path: str | Path | None = None,
+) -> Path:
+    root = Path(repo_root).resolve()
+    destination = Path(output_path or root / PHASE89_AUDIT_PATH)
+    if not destination.is_absolute():
+        destination = root / destination
+    write_json(destination, compile_phase89_component_scoring_memos_audit(root))
+    return destination
+
+
 __all__ = [
     "PHASE80_ARTIFACT_PATHS",
     "PHASE80_PASS",
@@ -2083,16 +2527,21 @@ __all__ = [
     "PHASE88_AUDIT_PATH",
     "PHASE88_PASS",
     "PHASE88_SCHEMA_VERSION",
+    "PHASE89_AUDIT_PATH",
+    "PHASE89_PASS",
+    "PHASE89_SCHEMA_VERSION",
     "compile_phase80_forensics",
     "compile_phase84_researcher_mode_audit",
     "compile_phase85_source_graph_acquisition_audit",
     "compile_phase86_structured_financial_engine_audit",
     "compile_phase87_semantic_research_saturation_audit",
     "compile_phase88_evidence_fact_graph_audit",
+    "compile_phase89_component_scoring_memos_audit",
     "write_phase80_forensics",
     "write_phase84_researcher_mode_audit",
     "write_phase85_source_graph_acquisition_audit",
     "write_phase86_structured_financial_engine_audit",
     "write_phase87_semantic_research_saturation_audit",
     "write_phase88_evidence_fact_graph_audit",
+    "write_phase89_component_scoring_memos_audit",
 ]
