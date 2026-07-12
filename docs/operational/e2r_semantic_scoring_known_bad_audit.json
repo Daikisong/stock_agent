@@ -1,0 +1,340 @@
+{
+  "case_count": 35,
+  "cases": [
+    {
+      "case_id": "KB-01",
+      "detector_ids": [
+        "tests.test_partial_bridge_nonzero_policy.PartialBridgeNonzeroPolicyTests.test_partial_bridge_has_research_backed_nonzero_cap"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "PARTIAL_BRIDGE cap 누락이 조용히 0점",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-02",
+      "detector_ids": [
+        "tests.test_risk_direction_policy.RiskDirectionPolicyTests.test_risk_open_is_counter_only_and_nonzero"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "RISK_OPEN cap 누락이 조용히 0점",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-03",
+      "detector_ids": [
+        "tests.test_risk_direction_policy.RiskDirectionPolicyTests.test_risk_resolved_releases_but_does_not_keep_penalty"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "RISK_RESOLVED cap 누락이 조용히 0점",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-04",
+      "detector_ids": [
+        "tests.test_no_silent_zero_cap.NoSilentZeroCapTests.test_unknown_source_family_is_hard_error_not_zero_credit"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "source family cap 누락이 조용히 0점",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-05",
+      "detector_ids": [
+        "tests.test_no_silent_zero_cap.NoSilentZeroCapTests.test_unknown_temporal_scope_is_hard_error_not_zero_credit"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "temporal cap 누락이 조용히 0점",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-06",
+      "detector_ids": [
+        "tests.test_semantic_closure_reconciler.SemanticClosureReconcilerTests.test_supported_scoring_without_credit_is_pipeline_error"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "SUPPORTED 질문이 zero-credit",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-07",
+      "detector_ids": [
+        "tests.test_semantic_closure_reconciler.SemanticClosureReconcilerTests.test_partially_supported_scoring_without_credit_is_pipeline_error"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "PARTIALLY_SUPPORTED 질문이 zero-credit",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-08",
+      "detector_ids": [
+        "tests.test_semantic_closure_reconciler.SemanticClosureReconcilerTests.test_supported_question_cannot_be_reconciled_as_verified_absent"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "SUPPORTED 질문이 VERIFIED_ABSENT",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-09",
+      "detector_ids": [
+        "tests.test_semantic_closure_reconciler.SemanticClosureReconcilerTests.test_positive_claim_cannot_be_reconciled_as_verified_absent"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "positive claim이 VERIFIED_ABSENT",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-10",
+      "detector_ids": [
+        "tests.test_semantic_closure_reconciler.SemanticClosureReconcilerTests.test_internal_rejection_cannot_be_relabelled_as_absence"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "internal rejection이 absence로 위장",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-11",
+      "detector_ids": [
+        "tests.test_semantic_closure_reconciler.SemanticClosureReconcilerTests.test_absence_never_masks_provider_or_search_failure"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "provider failure가 absence",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-12",
+      "detector_ids": [
+        "tests.test_absence_requires_adequate_search.AbsenceRequiresAdequateSearchTests.test_budget_exhaustion_is_pending_never_absence"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "budget exhaustion이 absence",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-13",
+      "detector_ids": [
+        "tests.test_foundry_not_hbm_allocation.FoundryNotHBMAllocationTests.test_tesla_foundry_claim_stays_global_but_c06_impact_is_rerouted"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "Foundry Tesla claim이 HBM allocation 지원",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-14",
+      "detector_ids": [
+        "tests.test_business_mechanism_scope.BusinessMechanismScopeTests.test_same_issuer_wrong_segment_is_rejected_and_rerouted"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "same issuer wrong segment score",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-15",
+      "detector_ids": [
+        "tests.test_business_mechanism_scope.BusinessMechanismScopeTests.test_adjacent_substrate_cannot_be_target_hbm_capacity"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "adjacent substrate가 target HBM capacity",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-16",
+      "detector_ids": [
+        "tests.test_claim_eligibility_decision.ClaimEligibilityDecisionTests.test_operational_eligibility_audit_ignores_legacy_boolean_for_scoring"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "accepted claim eligibility boolean 모순",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-17",
+      "detector_ids": [
+        "tests.test_claim_many_to_many_impacts.ClaimManyToManyImpactTests.test_component_score_requires_explicit_eligibility_decision"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "component score without eligibility decision",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-18",
+      "detector_ids": [
+        "tests.test_counter_component_math.CounterComponentMathTests.test_open_counter_blocks_finalization_and_preserves_both_planes"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "support+counter인데 counter 무시",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-19",
+      "detector_ids": [
+        "tests.test_counter_component_math.CounterComponentMathTests.test_capacity_counter_in_another_subcriterion_caps_same_component"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "capacity expansion counter가 bottleneck에 0",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-20",
+      "detector_ids": [
+        "tests.test_counter_component_math.CounterComponentMathTests.test_linked_resolution_releases_penalty_without_erasing_history"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "risk resolved가 계속 감점",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-21",
+      "detector_ids": [
+        "tests.test_fact_cluster_dedupe.FactClusterDedupeTests.test_same_economic_fact_across_claims_and_documents_gets_one_credit"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "같은 fact 여러 claim 중복 credit",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-22",
+      "detector_ids": [
+        "tests.test_document_cluster_credit_cap.DocumentClusterCreditCapTests.test_same_document_claim_fragments_do_not_stack_information_confidence"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "같은 document 여러 claim 정보신뢰도 중복",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-23",
+      "detector_ids": [
+        "tests.test_agentic_evidence_os.AgenticEvidenceOSTests.test_twenty_reuters_reposts_count_as_one_source_family"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "repost 여러 문서 중복 credit",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-24",
+      "detector_ids": [
+        "tests.test_stagecourt_event_separation.StageCourtEventSeparationTests.test_claim_count_and_event_overlay_never_change_full_thesis_stage"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "claim 수만으로 company_event_score 60",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-25",
+      "detector_ids": [
+        "tests.test_atomic_stagecourt_component_trace.AtomicStageCourtComponentTraceTests.test_accepted_claim_is_not_implicitly_a_high_quality_event"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "any claim이 high_quality_company_event",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-26",
+      "detector_ids": [
+        "tests.test_stagecourt_event_separation.StageCourtEventSeparationTests.test_explicit_quality_contract_creates_overlay_only"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "full-thesis Stage에 daily event overlay 주입",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-27",
+      "detector_ids": [
+        "tests.test_gold_research_blindness.GoldResearchBlindnessTests.test_same_source_may_be_rediscovered_but_cannot_be_a_seed"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "gold URL production seed 주입",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-28",
+      "detector_ids": [
+        "tests.test_gold_research_blindness.GoldResearchBlindnessTests.test_isolated_lanes_pass_without_gold_input_leakage"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "gold fact production prompt 누수",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-29",
+      "detector_ids": [
+        "tests.test_gold_research_blindness.GoldResearchBlindnessTests.test_critical_gold_miss_cannot_pass_on_raw_source_count"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "critical gold material fact miss인데 PASS",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-30",
+      "detector_ids": [
+        "tests.test_frozen_52f09f3_repair.Frozen52f09f3RepairTests.test_same_documents_claims_and_provenance_are_byte_identical"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "frozen corpus bug를 새 문서로 가림",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-31",
+      "detector_ids": [
+        "tests.test_claim_eligibility_decision.ClaimEligibilityDecisionTests.test_source_proxy_can_stay_ledgered_but_not_score"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "source proxy score",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-32",
+      "detector_ids": [
+        "tests.test_historical_current_mode_separation.HistoricalCurrentModeSeparationTest.test_historical_prompt_is_blind_and_source_proxy_never_scores"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "historical outcome prompt leak",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-33",
+      "detector_ids": [
+        "tests.test_atomic_stagecourt_component_trace.AtomicStageCourtComponentTraceTests.test_score_impact_lineage_mismatch_is_rejected"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "Stage/score/impact/component trace mismatch",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-34",
+      "detector_ids": [
+        "tests.test_full_score_validity_v2.FullScoreValidityV2Tests.test_invalid_semantics_preserve_verified_score_and_interval"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "full_score_valid인데 semantic reconciliation fail",
+      "status": "PASS"
+    },
+    {
+      "case_id": "KB-35",
+      "detector_ids": [
+        "tests.test_meaningful_scoring_readiness_v3.MeaningfulScoringReadinessV3Tests.test_each_required_semantic_counter_blocks_report_only_pass"
+      ],
+      "failed_detector_ids": [],
+      "mutation": "report-only readiness 승격",
+      "status": "PASS"
+    }
+  ],
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "case_count_mismatch": 0,
+    "case_id_roster_mismatch": 0,
+    "duplicate_case_id_count": 0,
+    "failed_case_count": 0,
+    "unittest_error_count": 0,
+    "unittest_failure_count": 0,
+    "unittest_run_count_mismatch": 0
+  },
+  "detector_lineage": {
+    "case_registry_hash": "d00944ceedc692958067ca42f6c4286d8b77e6cd8221d2e2a65bbd6a92ac8996",
+    "executed_detector_count": 35,
+    "passed_detector_count": 35,
+    "unique_detector_count": 35
+  },
+  "required_case_count": 35,
+  "runner_output": "",
+  "schema_version": "e2r_semantic_scoring_known_bad_v2",
+  "status": "SEMANTIC_SCORING_KNOWN_BAD_PASS"
+}

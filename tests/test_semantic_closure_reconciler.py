@@ -94,6 +94,102 @@ class SemanticClosureReconcilerTests(unittest.TestCase):
             0,
         )
 
+    def test_partially_supported_scoring_without_credit_is_pipeline_error(
+        self,
+    ) -> None:
+        result = self._reconcile(
+            closures=(
+                {
+                    "question_family_id": "revenue_operating_profit_conversion",
+                    "status": "PARTIALLY_SUPPORTED_SCORING",
+                    "partial_supporting_claim_ids": ["C-PARTIAL-ZERO"],
+                },
+            ),
+            claims=(self._claim("C-PARTIAL-ZERO"),),
+            mappings=(
+                self._mapping("C-PARTIAL-ZERO", "actual_earnings_conversion"),
+            ),
+            eligibility=(self._eligibility("C-PARTIAL-ZERO", True),),
+        )
+        row = self._row(result, "revenue_operating_profit_conversion")
+        self.assertEqual(row.reconciled_closure_status, "SCORING_PIPELINE_ERROR")
+        self.assertIn("PARTIAL_SUPPORT_WITHOUT_BOUNDED_CREDIT", row.error_codes)
+        self.assertEqual(
+            result.audit["critical_counts"][
+                "partially_supported_question_zero_credit_count"
+            ],
+            1,
+        )
+
+    def test_supported_question_cannot_be_reconciled_as_verified_absent(
+        self,
+    ) -> None:
+        result = self._reconcile(
+            closures=(
+                {
+                    "question_family_id": "current_customer_allocation_commitment",
+                    "status": "SUPPORTED_SCORING",
+                    "supporting_claim_ids": ["C-SUPPORTED-ABSENT"],
+                },
+            ),
+            claims=(self._claim("C-SUPPORTED-ABSENT"),),
+            mappings=(
+                self._mapping(
+                    "C-SUPPORTED-ABSENT", "customer_preorder_or_allocation"
+                ),
+            ),
+            eligibility=(self._eligibility("C-SUPPORTED-ABSENT", True),),
+            assessments=(
+                {
+                    "component_id": "earnings_visibility",
+                    "status": "VERIFIED_ABSENT_AFTER_SEARCH",
+                },
+            ),
+        )
+        row = self._row(result, "current_customer_allocation_commitment")
+        self.assertEqual(row.reconciled_closure_status, "SCORING_PIPELINE_ERROR")
+        self.assertEqual(
+            result.audit["critical_counts"][
+                "supported_question_absent_component_count"
+            ],
+            1,
+        )
+
+    def test_positive_claim_cannot_be_reconciled_as_verified_absent(
+        self,
+    ) -> None:
+        result = self._reconcile(
+            closures=(
+                {
+                    "question_family_id": "qualification_pass_lag_reopen",
+                    "status": "EVALUATED_ABSENT",
+                    "supporting_claim_ids": ["C-POSITIVE-ABSENT"],
+                    "search_exhaustion_proof": ["SEARCH-QUALIFICATION"],
+                    "failure_class": "SOURCE_EXHAUSTED",
+                },
+            ),
+            claims=(self._claim("C-POSITIVE-ABSENT"),),
+            mappings=(
+                self._mapping("C-POSITIVE-ABSENT", "qualification_state"),
+            ),
+            eligibility=(self._eligibility("C-POSITIVE-ABSENT", True),),
+            assessments=(
+                {
+                    "component_id": "earnings_visibility",
+                    "status": "VERIFIED_ABSENT_AFTER_SEARCH",
+                },
+            ),
+        )
+        row = self._row(result, "qualification_pass_lag_reopen")
+        self.assertEqual(row.reconciled_closure_status, "SCORING_PIPELINE_ERROR")
+        self.assertIn("ABSENCE_HAS_POSITIVE_SCORING_LINEAGE", row.error_codes)
+        self.assertEqual(
+            result.audit["critical_counts"][
+                "positive_claim_absent_component_count"
+            ],
+            1,
+        )
+
     def test_absence_never_masks_provider_or_search_failure(self) -> None:
         provider = self._reconcile(
             closures=(

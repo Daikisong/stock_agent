@@ -13,7 +13,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output",
-        default="docs/operational/e2r_evidence_to_score_known_bad_audit.json",
+        default="docs/operational/e2r_semantic_scoring_known_bad_audit.json",
     )
     args = parser.parse_args()
     audit = compile_evidence_to_score_known_bad_audit()

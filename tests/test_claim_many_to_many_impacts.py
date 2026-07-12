@@ -70,6 +70,34 @@ class ClaimManyToManyImpactTests(unittest.TestCase):
         )
         self.assertEqual(result.audit["critical_counts"]["duplicate_economic_credit_count"],1)
 
+    def test_component_score_requires_explicit_eligibility_decision(self) -> None:
+        result = ClaimImpactLedgerBuilder().build(
+            proposals=(
+                proposal(
+                    "IMP-NO-ELIGIBILITY",
+                    "MAP-1",
+                    "memory_price_increase_mentioned",
+                    "bottleneck_pricing",
+                ),
+            ),
+            accepted_current_claims=self.claims,
+            claim_provenance=self.provenance,
+            source_task_satisfaction=(),
+            claim_eligibility_decisions=(
+                {
+                    "claim_id": "ANOTHER-CLAIM",
+                    "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    "eligibility_decision_id": "ELIG-ANOTHER",
+                    "component_scoring_eligibility": True,
+                },
+            ),
+        )
+        self.assertEqual(result.validated_impacts, ())
+        self.assertEqual(
+            result.rejected_impacts[0]["reason"],
+            "ELIGIBILITY_DECISION_MISSING",
+        )
+
     def test_operational_contract_audit_has_zero_critical_counts(self) -> None:
         audit = json.loads(
             (self.ROOT / "docs/operational/e2r_claim_impact_ledger_audit.json").read_text()
