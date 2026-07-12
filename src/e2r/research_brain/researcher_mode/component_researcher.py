@@ -1,0 +1,794 @@
+"""Provider-backed component researchers for canonical E2R v5 Researcher Mode."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from dataclasses import dataclass, field
+from datetime import date
+from pathlib import Path
+from typing import Any, Mapping, Protocol, Sequence
+
+from e2r.research_brain.intelligence_schema import stable_intelligence_id
+from e2r.research_brain.planning.provider_transport import (
+    CodexStructuredProviderTransport,
+    StructuredProviderRejected,
+    StructuredProviderUnavailable,
+)
+
+from .component_research_planner import (
+    COMPONENT_RESEARCHER_ROLE_BY_COMPONENT,
+)
+from .schemas import (
+    BusinessModelMemo,
+    ComponentAnchor,
+    ComponentResearchMemo,
+    ComponentResearchPlan,
+    EvidenceDirection,
+    EvidenceFact,
+    EvidenceLifecycle,
+    assert_blind_research_output,
+    scrub_blind_research_payload,
+)
+
+
+class StructuredResearchProvider(Protocol):
+    provider_name: str
+
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]: ...
+
+
+@dataclass(frozen=True)
+class ComponentResearchResult:
+    component_id: str
+    researcher_role: str
+    status: str
+    memo: ComponentResearchMemo | None
+    pending_reasons: tuple[str, ...]
+    provider_name: str
+    prompt_hash: str | None = None
+
+    def __post_init__(self) -> None:
+        if self.status not in {"COMPLETE", "PENDING"}:
+            raise ValueError("unknown component research status")
+        if self.status == "COMPLETE" and (
+            self.memo is None or not self.memo.research_complete
+        ):
+            raise ValueError("COMPLETE result requires a complete memo")
+        if self.status == "PENDING" and not self.pending_reasons:
+            raise ValueError("PENDING result requires a reason")
+
+    def to_dict(self) -> Mapping[str, Any]:
+        return {
+            "component_id": self.component_id,
+            "researcher_role": self.researcher_role,
+            "status": self.status,
+            "memo": self.memo.to_dict() if self.memo else None,
+            "pending_reasons": list(self.pending_reasons),
+            "provider_name": self.provider_name,
+            "prompt_hash": self.prompt_hash,
+        }
+
+
+_STRING_ARRAY: Mapping[str, Any] = {
+    "type": "array",
+    "items": {"type": "string", "minLength": 1},
+    "uniqueItems": True,
+}
+
+BUSINESS_MODEL_RESEARCH_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "business_model_summary",
+        "revenue_engines",
+        "cost_and_cash_drivers",
+        "capacity_and_supply_constraints",
+        "customer_and_channel_dependencies",
+        "fact_ids",
+        "source_ids",
+        "uncertainties",
+        "confidence",
+        "research_complete",
+    ],
+    "properties": {
+        "business_model_summary": {"type": "string", "minLength": 1},
+        "revenue_engines": {**_STRING_ARRAY, "minItems": 1},
+        "cost_and_cash_drivers": _STRING_ARRAY,
+        "capacity_and_supply_constraints": _STRING_ARRAY,
+        "customer_and_channel_dependencies": _STRING_ARRAY,
+        "fact_ids": _STRING_ARRAY,
+        "source_ids": _STRING_ARRAY,
+        "uncertainties": _STRING_ARRAY,
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "research_complete": {"type": "boolean"},
+    },
+}
+
+COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "positive_fact_ids",
+        "counter_fact_ids",
+        "resolution_fact_ids",
+        "structured_metrics",
+        "historical_anchor_ids",
+        "nearest_positive_anchor_ids",
+        "nearest_counter_anchor_ids",
+        "researcher_summary",
+        "positive_case",
+        "counter_case",
+        "uncertainties",
+        "source_coverage",
+        "proposed_score_lower",
+        "proposed_score_mid",
+        "proposed_score_upper",
+        "why_not_higher",
+        "why_not_lower",
+        "confidence",
+        "research_complete",
+    ],
+    "properties": {
+        "positive_fact_ids": _STRING_ARRAY,
+        "counter_fact_ids": _STRING_ARRAY,
+        "resolution_fact_ids": _STRING_ARRAY,
+        "structured_metrics": {"type": "object"},
+        "historical_anchor_ids": _STRING_ARRAY,
+        "nearest_positive_anchor_ids": _STRING_ARRAY,
+        "nearest_counter_anchor_ids": _STRING_ARRAY,
+        "researcher_summary": {"type": "string", "minLength": 1},
+        "positive_case": {"type": "string", "minLength": 1},
+        "counter_case": {"type": "string", "minLength": 1},
+        "uncertainties": _STRING_ARRAY,
+        "source_coverage": _STRING_ARRAY,
+        "proposed_score_lower": {"type": "number", "minimum": 0},
+        "proposed_score_mid": {"type": "number", "minimum": 0},
+        "proposed_score_upper": {"type": "number", "minimum": 0},
+        "why_not_higher": {"type": "string", "minLength": 1},
+        "why_not_lower": {"type": "string", "minLength": 1},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "research_complete": {"type": "boolean"},
+    },
+}
+
+RED_TEAM_RESEARCH_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "reviewed_component_ids",
+        "challenged_fact_ids",
+        "counter_fact_ids",
+        "resolved_challenges",
+        "unresolved_challenges",
+        "recommended_research_directions",
+        "source_coverage",
+        "confidence",
+        "review_complete",
+    ],
+    "properties": {
+        "reviewed_component_ids": _STRING_ARRAY,
+        "challenged_fact_ids": _STRING_ARRAY,
+        "counter_fact_ids": _STRING_ARRAY,
+        "resolved_challenges": _STRING_ARRAY,
+        "unresolved_challenges": _STRING_ARRAY,
+        "recommended_research_directions": _STRING_ARRAY,
+        "source_coverage": _STRING_ARRAY,
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "review_complete": {"type": "boolean"},
+    },
+}
+
+SYNTHESIS_REVIEW_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "component_memo_ids",
+        "cross_component_support",
+        "cross_component_tensions",
+        "unresolved_material_questions",
+        "synthesis_summary",
+        "confidence",
+        "synthesis_complete",
+    ],
+    "properties": {
+        "component_memo_ids": {**_STRING_ARRAY, "minItems": 1},
+        "cross_component_support": _STRING_ARRAY,
+        "cross_component_tensions": _STRING_ARRAY,
+        "unresolved_material_questions": _STRING_ARRAY,
+        "synthesis_summary": {"type": "string", "minLength": 1},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "synthesis_complete": {"type": "boolean"},
+    },
+}
+
+COMPONENT_JUDGE_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "anchor_comparisons",
+        "proposed_points",
+        "allowed_range",
+        "rationale",
+        "disagreements",
+        "support_fact_ids",
+        "counter_fact_ids",
+        "nearest_anchor_ids",
+        "why_not_higher",
+        "why_not_lower",
+    ],
+    "properties": {
+        "anchor_comparisons": _STRING_ARRAY,
+        "proposed_points": {"type": "number", "minimum": 0},
+        "allowed_range": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {"type": "number", "minimum": 0},
+        },
+        "rationale": {"type": "string", "minLength": 1},
+        "disagreements": _STRING_ARRAY,
+        "support_fact_ids": _STRING_ARRAY,
+        "counter_fact_ids": _STRING_ARRAY,
+        "nearest_anchor_ids": _STRING_ARRAY,
+        "why_not_higher": {"type": "string", "minLength": 1},
+        "why_not_lower": {"type": "string", "minLength": 1},
+    },
+}
+
+_PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
+    "BUSINESS_MODEL_RESEARCH": BUSINESS_MODEL_RESEARCH_SCHEMA,
+    "COMPONENT_RESEARCH": COMPONENT_RESEARCH_SCHEMA,
+    "RED_TEAM_RESEARCH": RED_TEAM_RESEARCH_SCHEMA,
+    "SYNTHESIS_REVIEW": SYNTHESIS_REVIEW_SCHEMA,
+    "COMPONENT_ANALYST_JUDGE": COMPONENT_JUDGE_SCHEMA,
+    "COMPONENT_SKEPTIC_JUDGE": COMPONENT_JUDGE_SCHEMA,
+    "CALIBRATION_JUDGE": COMPONENT_JUDGE_SCHEMA,
+}
+
+
+@dataclass
+class CodexResearcherProvider:
+    """Default structured Codex provider for open-ended research judgments."""
+
+    transport: CodexStructuredProviderTransport
+    provider_name: str = "CODEX_STRUCTURED_RESEARCHER_MODE"
+    calls: list[Mapping[str, Any]] = field(default_factory=list)
+
+    @classmethod
+    def default(
+        cls,
+        *,
+        working_directory: str | Path | None = None,
+        timeout_seconds: float = 300.0,
+    ) -> "CodexResearcherProvider":
+        return cls(
+            CodexStructuredProviderTransport(
+                working_directory=working_directory or Path.cwd(),
+                timeout_seconds=timeout_seconds,
+                extra_args=("--ignore-user-config", "--ignore-rules"),
+            )
+        )
+
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        if pass_name not in _PROVIDER_SCHEMAS:
+            raise ValueError(f"unsupported researcher pass: {pass_name}")
+        safe_payload = scrub_blind_research_payload(payload)
+        instruction = _pass_instruction(pass_name)
+        prompt = "\n".join(
+            (
+                "You are an independent E2R 2.0 research analyst.",
+                "Use only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.",
+                "Read the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.",
+                "Cite only ids present in the input. Do not invent facts, sources, metrics, or anchors.",
+                "Never output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.",
+                instruction,
+                "Return exactly one JSON object matching the supplied schema.",
+                json.dumps(safe_payload, ensure_ascii=False, sort_keys=True),
+            )
+        )
+        prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+        response = self.transport.complete(
+            prompt=prompt,
+            output_schema=_PROVIDER_SCHEMAS[pass_name],
+            schema_name=f"e2r_v5_{pass_name.lower()}",
+        )
+        assert_blind_research_output(response.payload)
+        self.calls.append(
+            {
+                "pass_name": pass_name,
+                "prompt_hash": prompt_hash,
+                "payload": safe_payload,
+                "response": dict(response.payload),
+            }
+        )
+        return response.payload
+
+
+class ComponentResearcher:
+    component_id: str
+    researcher_role: str
+
+    def __init__(
+        self,
+        *,
+        provider: StructuredResearchProvider,
+        component_id: str | None = None,
+        researcher_role: str | None = None,
+    ) -> None:
+        resolved_component = component_id or getattr(self, "component_id", "")
+        if resolved_component not in COMPONENT_RESEARCHER_ROLE_BY_COMPONENT:
+            raise ValueError("ComponentResearcher requires a canonical component")
+        expected_role = COMPONENT_RESEARCHER_ROLE_BY_COMPONENT[resolved_component]
+        resolved_role = researcher_role or getattr(self, "researcher_role", expected_role)
+        if resolved_role != expected_role:
+            raise ValueError("researcher role does not match component")
+        self.provider = provider
+        self.component_id = resolved_component
+        self.researcher_role = resolved_role
+
+    def research(
+        self,
+        *,
+        plan: ComponentResearchPlan,
+        business_model: BusinessModelMemo,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        historical_anchors: Sequence[ComponentAnchor | Mapping[str, Any]],
+        source_coverage: Sequence[str | Mapping[str, Any]],
+        source_claims: Sequence[Mapping[str, Any]] = (),
+        source_documents: Sequence[Mapping[str, Any]] = (),
+        structured_metrics: Mapping[str, Any] | None = None,
+    ) -> ComponentResearchResult:
+        if plan.component_id != self.component_id or plan.researcher_role != self.researcher_role:
+            raise ValueError("research plan was assigned to the wrong researcher")
+        if (
+            plan.target_id != business_model.target_id
+            or plan.archetype_id != business_model.archetype_id
+        ):
+            raise ValueError("business model and component plan target mismatch")
+        facts = tuple(_coerce_fact(row) for row in evidence_facts)
+        _validate_current_facts(facts, plan.target_id, business_model.as_of_date)
+        fact_by_id = {row.fact_id: row for row in facts}
+        if set(fact_by_id) - set(plan.candidate_fact_ids):
+            raise ValueError("component plan does not expose every current fact")
+        anchors = tuple(
+            _blind_anchor(row)
+            for row in historical_anchors
+            if _field(row, "archetype_id") == plan.archetype_id
+            and _field(row, "component_id") == plan.component_id
+        )
+        anchor_by_id = {str(row["anchor_id"]): row for row in anchors}
+        if set(anchor_by_id) - set(plan.candidate_anchor_ids):
+            raise ValueError("component plan does not expose every matching anchor")
+        metric_input = scrub_blind_research_payload(dict(structured_metrics or {}))
+        _assert_rows_as_of(source_claims, business_model.as_of_date)
+        _assert_rows_as_of(source_documents, business_model.as_of_date)
+        coverage_rows = scrub_blind_research_payload(
+            [_coverage_payload(row) for row in source_coverage]
+        )
+        coverage_labels = _coverage_labels(source_coverage)
+        payload = scrub_blind_research_payload(
+            {
+                "researcher_role": self.researcher_role,
+                "target_id": plan.target_id,
+                "as_of_date": business_model.as_of_date,
+                "archetype_id": plan.archetype_id,
+                "component_id": plan.component_id,
+                "component_max_points": plan.component_max_points,
+                "research_plan": plan.to_dict(),
+                "target_business_model": business_model.to_dict(),
+                "current_evidence_fact_graph": [row.to_dict() for row in facts],
+                "current_counterfacts": [
+                    row.to_dict()
+                    for row in facts
+                    if row.direction == EvidenceDirection.COUNTER.value
+                    and row.current_lifecycle
+                    not in {
+                        EvidenceLifecycle.RESOLVED.value,
+                        EvidenceLifecycle.SUPERSEDED.value,
+                    }
+                ],
+                "historical_component_anchors": list(anchors),
+                "source_coverage": coverage_rows,
+                "source_claims": list(source_claims),
+                "source_documents": list(source_documents),
+                "structured_metrics": metric_input,
+            }
+        )
+        try:
+            response = self.provider.complete(
+                pass_name="COMPONENT_RESEARCH", payload=payload
+            )
+        except (
+            StructuredProviderUnavailable,
+            StructuredProviderRejected,
+            TimeoutError,
+            OSError,
+            RuntimeError,
+        ) as exc:
+            return _pending_result(self, "PROVIDER_ERROR", exc)
+        prompt_hash = _provider_prompt_hash(self.provider)
+        try:
+            memo = _component_memo_from_response(
+                response=response,
+                plan=plan,
+                facts=fact_by_id,
+                anchors=anchor_by_id,
+                coverage_labels=coverage_labels,
+                structured_metrics=metric_input,
+            )
+        except (KeyError, TypeError, ValueError) as exc:
+            return _pending_result(
+                self,
+                "INVALID_PROVIDER_OUTPUT",
+                exc,
+                prompt_hash=prompt_hash,
+            )
+        pending = []
+        if not memo.research_complete:
+            pending.append("RESEARCHER_DECLARED_INCOMPLETE")
+        missing_structured = set(plan.structured_metric_requirements) - set(
+            memo.structured_metrics
+        )
+        if missing_structured:
+            pending.append(
+                "STRUCTURED_METRICS_MISSING:" + ",".join(sorted(missing_structured))
+            )
+        if memo.research_complete and not memo.source_coverage:
+            pending.append("SOURCE_COVERAGE_EMPTY")
+        if pending:
+            return ComponentResearchResult(
+                component_id=self.component_id,
+                researcher_role=self.researcher_role,
+                status="PENDING",
+                memo=memo,
+                pending_reasons=tuple(pending),
+                provider_name=_provider_name(self.provider),
+                prompt_hash=prompt_hash,
+            )
+        return ComponentResearchResult(
+            component_id=self.component_id,
+            researcher_role=self.researcher_role,
+            status="COMPLETE",
+            memo=memo,
+            pending_reasons=(),
+            provider_name=_provider_name(self.provider),
+            prompt_hash=prompt_hash,
+        )
+
+
+class EPSFCFResearcher(ComponentResearcher):
+    component_id = "eps_fcf_explosion"
+    researcher_role = "EPSFCFResearcher"
+
+
+class EarningsVisibilityResearcher(ComponentResearcher):
+    component_id = "earnings_visibility"
+    researcher_role = "EarningsVisibilityResearcher"
+
+
+class BottleneckPricingResearcher(ComponentResearcher):
+    component_id = "bottleneck_pricing"
+    researcher_role = "BottleneckPricingResearcher"
+
+
+class MarketExpectationResearcher(ComponentResearcher):
+    component_id = "market_mispricing"
+    researcher_role = "MarketExpectationResearcher"
+
+
+class ValuationResearcher(ComponentResearcher):
+    component_id = "valuation_rerating"
+    researcher_role = "ValuationResearcher"
+
+
+class CapitalAllocationResearcher(ComponentResearcher):
+    component_id = "capital_allocation"
+    researcher_role = "CapitalAllocationResearcher"
+
+
+class InformationConfidenceResearcher(ComponentResearcher):
+    component_id = "information_confidence"
+    researcher_role = "InformationConfidenceResearcher"
+
+
+def build_component_researchers(
+    provider: StructuredResearchProvider,
+) -> tuple[ComponentResearcher, ...]:
+    return (
+        EPSFCFResearcher(provider=provider),
+        EarningsVisibilityResearcher(provider=provider),
+        BottleneckPricingResearcher(provider=provider),
+        MarketExpectationResearcher(provider=provider),
+        ValuationResearcher(provider=provider),
+        CapitalAllocationResearcher(provider=provider),
+        InformationConfidenceResearcher(provider=provider),
+    )
+
+
+def _component_memo_from_response(
+    *,
+    response: Mapping[str, Any],
+    plan: ComponentResearchPlan,
+    facts: Mapping[str, EvidenceFact],
+    anchors: Mapping[str, Mapping[str, Any]],
+    coverage_labels: set[str],
+    structured_metrics: Mapping[str, Any],
+) -> ComponentResearchMemo:
+    if not isinstance(response, Mapping):
+        raise TypeError("component researcher response must be an object")
+    assert_blind_research_output(response)
+    positive = _ids(response, "positive_fact_ids")
+    counter = _ids(response, "counter_fact_ids")
+    resolution = _ids(response, "resolution_fact_ids")
+    _require_ids_exist((*positive, *counter, *resolution), facts, "fact")
+    for fact_id in positive:
+        if facts[fact_id].direction != EvidenceDirection.POSITIVE.value:
+            raise ValueError(f"positive_fact_ids has wrong direction: {fact_id}")
+    for fact_id in counter:
+        if facts[fact_id].direction != EvidenceDirection.COUNTER.value:
+            raise ValueError(f"counter_fact_ids has wrong direction: {fact_id}")
+    for fact_id in resolution:
+        fact = facts[fact_id]
+        if fact.direction != EvidenceDirection.RESOLUTION.value and fact.current_lifecycle != EvidenceLifecycle.RESOLVED.value:
+            raise ValueError(f"resolution_fact_ids has wrong lifecycle: {fact_id}")
+    historical = _ids(response, "historical_anchor_ids")
+    nearest_positive = _ids(response, "nearest_positive_anchor_ids")
+    nearest_counter = _ids(response, "nearest_counter_anchor_ids")
+    _require_ids_exist(
+        (*historical, *nearest_positive, *nearest_counter), anchors, "anchor"
+    )
+    if not set((*nearest_positive, *nearest_counter)).issubset(historical):
+        raise ValueError("nearest anchors must also be historical_anchor_ids")
+    for anchor_id in nearest_positive:
+        if str(anchors[anchor_id].get("role")) != "POSITIVE":
+            raise ValueError("nearest positive anchor has the wrong role")
+    for anchor_id in nearest_counter:
+        if str(anchors[anchor_id].get("role")) != "COUNTER":
+            raise ValueError("nearest counter anchor has the wrong role")
+    returned_metrics = response.get("structured_metrics")
+    if not isinstance(returned_metrics, Mapping):
+        raise TypeError("structured_metrics must be an object")
+    unknown_metrics = set(returned_metrics) - set(structured_metrics)
+    if unknown_metrics:
+        raise ValueError(f"researcher invented structured metrics: {sorted(unknown_metrics)}")
+    for key, value in returned_metrics.items():
+        if scrub_blind_research_payload(value) != structured_metrics[key]:
+            raise ValueError(f"structured metric value changed without lineage: {key}")
+    coverage = _ids(response, "source_coverage")
+    if set(coverage) - coverage_labels:
+        raise ValueError("researcher cited source coverage not present in input")
+    payload = {
+        "plan_id": plan.plan_id,
+        "response": scrub_blind_research_payload(response),
+    }
+    return ComponentResearchMemo(
+        memo_id=stable_intelligence_id("CRMEMO", payload),
+        target_id=plan.target_id,
+        archetype_id=plan.archetype_id,
+        component_id=plan.component_id,
+        component_max_points=plan.component_max_points,
+        positive_fact_ids=positive,
+        counter_fact_ids=counter,
+        resolution_fact_ids=resolution,
+        structured_metrics=dict(returned_metrics),
+        historical_anchor_ids=historical,
+        researcher_summary=str(response["researcher_summary"]),
+        positive_case=str(response["positive_case"]),
+        counter_case=str(response["counter_case"]),
+        uncertainties=_ids(response, "uncertainties"),
+        source_coverage=coverage,
+        proposed_score_lower=float(response["proposed_score_lower"]),
+        proposed_score_mid=float(response["proposed_score_mid"]),
+        proposed_score_upper=float(response["proposed_score_upper"]),
+        confidence=float(response["confidence"]),
+        research_complete=bool(response["research_complete"]),
+        nearest_positive_anchor_ids=nearest_positive,
+        nearest_counter_anchor_ids=nearest_counter,
+        why_not_higher=str(response["why_not_higher"]),
+        why_not_lower=str(response["why_not_lower"]),
+        researcher_role=plan.researcher_role,
+    )
+
+
+def _coerce_fact(row: EvidenceFact | Mapping[str, Any]) -> EvidenceFact:
+    if isinstance(row, EvidenceFact):
+        return row
+    fields = EvidenceFact.__dataclass_fields__
+    payload = {key: row[key] for key in fields if key in row}
+    for key in (
+        "source_ids",
+        "claim_ids",
+        "quote_ids",
+        "corroborating_independence_groups",
+        "question_family_tags",
+        "primitive_tags",
+    ):
+        if key in payload:
+            payload[key] = tuple(payload[key] or ())
+    return EvidenceFact(**payload)
+
+
+def _validate_current_facts(
+    facts: Sequence[EvidenceFact], target_id: str, as_of_date: str
+) -> None:
+    ids = [row.fact_id for row in facts]
+    if len(ids) != len(set(ids)):
+        raise ValueError("EvidenceFact ids must be unique")
+    for row in facts:
+        if row.target_id != target_id:
+            raise ValueError("cross-target EvidenceFact exposure is forbidden")
+        if row.as_of_date != as_of_date:
+            raise ValueError("EvidenceFact as_of_date must match the research run")
+
+
+def _blind_anchor(row: ComponentAnchor | Mapping[str, Any]) -> Mapping[str, Any]:
+    if isinstance(row, ComponentAnchor):
+        value = row.to_dict()
+    else:
+        value = dict(row)
+    if value.get("company_name_conditioned") or value.get("target_symbol_conditioned"):
+        raise ValueError("target-conditioned historical anchors are forbidden")
+    allowed = {
+        "anchor_id",
+        "archetype_id",
+        "component_id",
+        "economic_fact_patterns",
+        "role",
+        "score_band",
+        "points_lower",
+        "points_mid",
+        "points_upper",
+        "max_points",
+        "confidence",
+        "usable_as_exact_anchor",
+        "usable_as_ordinal_anchor",
+    }
+    return scrub_blind_research_payload(
+        {key: value[key] for key in allowed if key in value}
+    )
+
+
+def _assert_rows_as_of(rows: Sequence[Mapping[str, Any]], as_of_date: str) -> None:
+    cutoff = date.fromisoformat(as_of_date)
+    for row in rows:
+        raw = next(
+            (
+                str(row.get(key)).strip()
+                for key in (
+                    "published_at",
+                    "publication_date",
+                    "filed_at",
+                    "observed_at",
+                )
+                if row.get(key)
+            ),
+            "",
+        )
+        if not raw:
+            continue
+        try:
+            observed = date.fromisoformat(raw[:10])
+        except ValueError as exc:
+            raise ValueError(f"invalid source date: {raw}") from exc
+        if observed > cutoff:
+            raise ValueError(
+                f"future source exposure is forbidden: {observed.isoformat()} > {as_of_date}"
+            )
+
+
+def _coverage_payload(row: str | Mapping[str, Any]) -> Any:
+    return row if isinstance(row, str) else dict(row)
+
+
+def _coverage_labels(rows: Sequence[str | Mapping[str, Any]]) -> set[str]:
+    labels = set()
+    for row in rows:
+        if isinstance(row, str):
+            label = row
+        else:
+            label = str(
+                row.get("coverage_id")
+                or row.get("source_family")
+                or row.get("route_id")
+                or ""
+            )
+        if label.strip():
+            labels.add(label.strip())
+    return labels
+
+
+def _ids(response: Mapping[str, Any], key: str) -> tuple[str, ...]:
+    value = response[key]
+    if isinstance(value, str) or not isinstance(value, Sequence):
+        raise TypeError(f"{key} must be an array")
+    result = tuple(str(item).strip() for item in value)
+    if any(not item for item in result) or len(result) != len(set(result)):
+        raise ValueError(f"{key} must contain unique nonempty ids")
+    return result
+
+
+def _require_ids_exist(
+    ids: Sequence[str], rows: Mapping[str, Any], lineage_name: str
+) -> None:
+    missing = set(ids) - set(rows)
+    if missing:
+        raise ValueError(
+            f"researcher cited unknown {lineage_name} ids: {sorted(missing)}"
+        )
+
+
+def _field(row: Any, key: str) -> Any:
+    return row.get(key) if isinstance(row, Mapping) else getattr(row, key)
+
+
+def _provider_name(provider: StructuredResearchProvider) -> str:
+    return str(getattr(provider, "provider_name", provider.__class__.__name__))
+
+
+def _provider_prompt_hash(provider: StructuredResearchProvider) -> str | None:
+    calls = getattr(provider, "calls", ())
+    if calls and isinstance(calls[-1], Mapping):
+        value = calls[-1].get("prompt_hash")
+        return str(value) if value else None
+    return None
+
+
+def _pending_result(
+    researcher: ComponentResearcher,
+    code: str,
+    error: Exception,
+    *,
+    prompt_hash: str | None = None,
+) -> ComponentResearchResult:
+    detail = " ".join(str(error).split())[-500:] or error.__class__.__name__
+    return ComponentResearchResult(
+        component_id=researcher.component_id,
+        researcher_role=researcher.researcher_role,
+        status="PENDING",
+        memo=None,
+        pending_reasons=(f"{code}:{detail}",),
+        provider_name=_provider_name(researcher.provider),
+        prompt_hash=prompt_hash,
+    )
+
+
+def _pass_instruction(pass_name: str) -> str:
+    if pass_name == "BUSINESS_MODEL_RESEARCH":
+        return "Explain how revenue, cost, cash conversion, capacity, and customer dependencies work before component scoring."
+    if pass_name == "COMPONENT_RESEARCH":
+        return "Write one component memo with a bounded point range, nearest positive/counter anchors, both-side reasoning, and explicit uncertainty."
+    if pass_name == "RED_TEAM_RESEARCH":
+        return "Challenge every material thesis independently, distinguish current counters from resolved history, and identify new research directions."
+    if pass_name == "SYNTHESIS_REVIEW":
+        return "Synthesize cross-component support and tension without calculating total points or Stage."
+    if pass_name == "COMPONENT_ANALYST_JUDGE":
+        return "Act as the positive analyst judge for exactly one component."
+    if pass_name == "COMPONENT_SKEPTIC_JUDGE":
+        return "Act as the independent skeptic judge for exactly one component."
+    return "Calibrate exactly one component against blind historical anchors."
+
+
+__all__ = [
+    "BUSINESS_MODEL_RESEARCH_SCHEMA",
+    "BottleneckPricingResearcher",
+    "CapitalAllocationResearcher",
+    "CodexResearcherProvider",
+    "COMPONENT_JUDGE_SCHEMA",
+    "COMPONENT_RESEARCH_SCHEMA",
+    "ComponentResearchResult",
+    "ComponentResearcher",
+    "EPSFCFResearcher",
+    "EarningsVisibilityResearcher",
+    "InformationConfidenceResearcher",
+    "MarketExpectationResearcher",
+    "RED_TEAM_RESEARCH_SCHEMA",
+    "SYNTHESIS_REVIEW_SCHEMA",
+    "StructuredResearchProvider",
+    "ValuationResearcher",
+    "build_component_researchers",
+]

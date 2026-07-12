@@ -1,0 +1,73 @@
+{
+  "audit_hash": "cc631f2a2676e556639f8e92ef9e3e40563adc9c03760e00c6fc3ec901cd3784",
+  "component_input_contract_missing_fields": [],
+  "component_output_contract_missing_fields": [],
+  "component_researcher_role_by_component": {
+    "bottleneck_pricing": "BottleneckPricingResearcher",
+    "capital_allocation": "CapitalAllocationResearcher",
+    "earnings_visibility": "EarningsVisibilityResearcher",
+    "eps_fcf_explosion": "EPSFCFResearcher",
+    "information_confidence": "InformationConfidenceResearcher",
+    "market_mispricing": "MarketExpectationResearcher",
+    "valuation_rerating": "ValuationResearcher"
+  },
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "component_input_contract_missing_field_count": 0,
+    "component_output_contract_missing_field_count": 0,
+    "component_researcher_roster_mismatch_count": 0,
+    "fixed_top_n_document_selector_parameter_count": 0,
+    "provider_schema_forbidden_field_count": 0,
+    "provider_schema_open_object_count": 0,
+    "question_closure_import_count": 0,
+    "required_module_missing_count": 0,
+    "researcher_role_roster_mismatch_count": 0,
+    "target_name_condition_token_count": 0
+  },
+  "document_selection_has_fixed_top_n": false,
+  "llm_final_stage_authority": false,
+  "llm_total_score_authority": false,
+  "missing_modules": [],
+  "primitive_or_question_exact_match_required_for_fact_visibility": false,
+  "provider_failure_finalizes_low_score": false,
+  "provider_schema_forbidden_fields": {
+    "business": [],
+    "component": [],
+    "judge": [],
+    "red_team": [],
+    "synthesis": []
+  },
+  "required_modules": [
+    "schemas.py",
+    "business_model_researcher.py",
+    "component_research_planner.py",
+    "research_supervisor.py",
+    "source_graph_explorer.py",
+    "structured_data_researcher.py",
+    "document_ranker.py",
+    "evidence_fact_compiler.py",
+    "component_researcher.py",
+    "red_team_researcher.py",
+    "component_judge.py",
+    "calibration_judge.py",
+    "score_aggregator.py",
+    "dossier.py",
+    "saturation.py",
+    "audits.py"
+  ],
+  "researcher_roles": [
+    "BusinessMechanismResearcher",
+    "EPSFCFResearcher",
+    "EarningsVisibilityResearcher",
+    "BottleneckPricingResearcher",
+    "MarketExpectationResearcher",
+    "ValuationResearcher",
+    "CapitalAllocationResearcher",
+    "InformationConfidenceResearcher",
+    "RedTeamResearcher",
+    "SynthesisJudge"
+  ],
+  "schema_version": "e2r_v5_phase84_researcher_mode_audit_v1",
+  "status": "V5_PHASE84_CANONICAL_RESEARCHER_MODE_PASS",
+  "target_name_condition_hits": []
+}

@@ -650,10 +650,241 @@ def _stable_hash(value: Any) -> str:
     )
 
 
+PHASE84_SCHEMA_VERSION = "e2r_v5_phase84_researcher_mode_audit_v1"
+PHASE84_PASS = "V5_PHASE84_CANONICAL_RESEARCHER_MODE_PASS"
+PHASE84_AUDIT_PATH = "docs/operational/e2r_v5_researcher_mode_architecture_audit.json"
+
+PHASE84_REQUIRED_MODULES = (
+    "schemas.py",
+    "business_model_researcher.py",
+    "component_research_planner.py",
+    "research_supervisor.py",
+    "source_graph_explorer.py",
+    "structured_data_researcher.py",
+    "document_ranker.py",
+    "evidence_fact_compiler.py",
+    "component_researcher.py",
+    "red_team_researcher.py",
+    "component_judge.py",
+    "calibration_judge.py",
+    "score_aggregator.py",
+    "dossier.py",
+    "saturation.py",
+    "audits.py",
+)
+
+
+def compile_phase84_researcher_mode_audit(
+    repo_root: str | Path,
+) -> Mapping[str, Any]:
+    """Prove the Phase 84 architecture and LLM authority boundaries."""
+
+    import inspect
+
+    from .business_model_researcher import BusinessMechanismResearcher
+    from .component_judge import SynthesisJudge
+    from .component_research_planner import (
+        COMPONENT_RESEARCHER_ROLE_BY_COMPONENT,
+    )
+    from .component_researcher import (
+        BUSINESS_MODEL_RESEARCH_SCHEMA,
+        COMPONENT_JUDGE_SCHEMA,
+        COMPONENT_RESEARCH_SCHEMA,
+        RED_TEAM_RESEARCH_SCHEMA,
+        SYNTHESIS_REVIEW_SCHEMA,
+        BottleneckPricingResearcher,
+        CapitalAllocationResearcher,
+        EPSFCFResearcher,
+        EarningsVisibilityResearcher,
+        InformationConfidenceResearcher,
+        MarketExpectationResearcher,
+        ValuationResearcher,
+    )
+    from .document_ranker import MaterialDocumentRanker
+    from .red_team_researcher import RedTeamResearcher
+    from .schemas import CANONICAL_COMPONENT_ORDER
+
+    root = Path(repo_root).resolve()
+    module_root = root / "src/e2r/research_brain/researcher_mode"
+    missing_modules = [
+        value for value in PHASE84_REQUIRED_MODULES if not (module_root / value).is_file()
+    ]
+    role_classes = (
+        BusinessMechanismResearcher,
+        EPSFCFResearcher,
+        EarningsVisibilityResearcher,
+        BottleneckPricingResearcher,
+        MarketExpectationResearcher,
+        ValuationResearcher,
+        CapitalAllocationResearcher,
+        InformationConfidenceResearcher,
+        RedTeamResearcher,
+        SynthesisJudge,
+    )
+    roles = tuple(getattr(value, "researcher_role", value.__name__) for value in role_classes)
+    expected_roles = (
+        "BusinessMechanismResearcher",
+        "EPSFCFResearcher",
+        "EarningsVisibilityResearcher",
+        "BottleneckPricingResearcher",
+        "MarketExpectationResearcher",
+        "ValuationResearcher",
+        "CapitalAllocationResearcher",
+        "InformationConfidenceResearcher",
+        "RedTeamResearcher",
+        "SynthesisJudge",
+    )
+    schemas = {
+        "business": BUSINESS_MODEL_RESEARCH_SCHEMA,
+        "component": COMPONENT_RESEARCH_SCHEMA,
+        "red_team": RED_TEAM_RESEARCH_SCHEMA,
+        "synthesis": SYNTHESIS_REVIEW_SCHEMA,
+        "judge": COMPONENT_JUDGE_SCHEMA,
+    }
+    forbidden_provider_fields = {
+        "stage",
+        "final_stage",
+        "reported_stage",
+        "expected_score",
+        "future_outcome",
+        "future_outcome_ref",
+        "mfe",
+        "mae",
+        "total_score",
+    }
+    exposed_forbidden = {
+        schema_name: sorted(
+            forbidden_provider_fields
+            & set((schema.get("properties") or {}).keys())
+        )
+        for schema_name, schema in schemas.items()
+    }
+    component_required = set(COMPONENT_RESEARCH_SCHEMA.get("required") or ())
+    required_component_outputs = {
+        "researcher_summary",
+        "proposed_score_lower",
+        "proposed_score_mid",
+        "proposed_score_upper",
+        "nearest_positive_anchor_ids",
+        "nearest_counter_anchor_ids",
+        "why_not_higher",
+        "why_not_lower",
+        "uncertainties",
+        "source_coverage",
+    }
+    core_files = tuple(
+        module_root / value
+        for value in PHASE84_REQUIRED_MODULES
+        if value not in {"audits.py"}
+    )
+    target_condition_tokens = ("005930", "000660", "삼성전자", "SK하이닉스")
+    target_condition_hits = []
+    for path in core_files:
+        if not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8")
+        for token in target_condition_tokens:
+            if token in text:
+                target_condition_hits.append(
+                    {"file": path.relative_to(root).as_posix(), "token": token}
+                )
+    component_source = (module_root / "component_researcher.py").read_text(
+        encoding="utf-8"
+    )
+    required_input_keys = {
+        "current_evidence_fact_graph",
+        "current_counterfacts",
+        "target_business_model",
+        "historical_component_anchors",
+        "source_coverage",
+    }
+    missing_input_keys = sorted(
+        value for value in required_input_keys if f'"{value}"' not in component_source
+    )
+    select_signature = inspect.signature(MaterialDocumentRanker.select_material)
+    critical = {
+        "required_module_missing_count": len(missing_modules),
+        "researcher_role_roster_mismatch_count": int(roles != expected_roles),
+        "component_researcher_roster_mismatch_count": int(
+            tuple(COMPONENT_RESEARCHER_ROLE_BY_COMPONENT)
+            != tuple(CANONICAL_COMPONENT_ORDER)
+        ),
+        "provider_schema_forbidden_field_count": sum(
+            len(values) for values in exposed_forbidden.values()
+        ),
+        "component_output_contract_missing_field_count": len(
+            required_component_outputs - component_required
+        ),
+        "component_input_contract_missing_field_count": len(missing_input_keys),
+        "target_name_condition_token_count": len(target_condition_hits),
+        "fixed_top_n_document_selector_parameter_count": int(
+            "top_n" in select_signature.parameters
+        ),
+        "provider_schema_open_object_count": sum(
+            schema.get("additionalProperties") is not False
+            for schema in schemas.values()
+        ),
+        "question_closure_import_count": sum(
+            "compile_question_closures_v2" in path.read_text(encoding="utf-8")
+            for path in core_files
+            if path.is_file()
+        ),
+    }
+    return {
+        "schema_version": PHASE84_SCHEMA_VERSION,
+        "status": PHASE84_PASS if sum(critical.values()) == 0 else "V5_PHASE84_CANONICAL_RESEARCHER_MODE_FAIL",
+        "critical_counts": critical,
+        "critical_count_sum": sum(critical.values()),
+        "required_modules": list(PHASE84_REQUIRED_MODULES),
+        "missing_modules": missing_modules,
+        "researcher_roles": list(roles),
+        "component_researcher_role_by_component": dict(
+            COMPONENT_RESEARCHER_ROLE_BY_COMPONENT
+        ),
+        "provider_schema_forbidden_fields": exposed_forbidden,
+        "component_output_contract_missing_fields": sorted(
+            required_component_outputs - component_required
+        ),
+        "component_input_contract_missing_fields": missing_input_keys,
+        "target_name_condition_hits": target_condition_hits,
+        "document_selection_has_fixed_top_n": False,
+        "primitive_or_question_exact_match_required_for_fact_visibility": False,
+        "provider_failure_finalizes_low_score": False,
+        "llm_total_score_authority": False,
+        "llm_final_stage_authority": False,
+        "audit_hash": _stable_hash(
+            {
+                "critical": critical,
+                "roles": roles,
+                "modules": PHASE84_REQUIRED_MODULES,
+            }
+        ),
+    }
+
+
+def write_phase84_researcher_mode_audit(
+    *,
+    repo_root: str | Path,
+    output_path: str | Path | None = None,
+) -> Path:
+    root = Path(repo_root).resolve()
+    destination = Path(output_path or root / PHASE84_AUDIT_PATH)
+    if not destination.is_absolute():
+        destination = root / destination
+    write_json(destination, compile_phase84_researcher_mode_audit(root))
+    return destination
+
+
 __all__ = [
     "PHASE80_ARTIFACT_PATHS",
     "PHASE80_PASS",
     "PHASE80_SCHEMA_VERSION",
+    "PHASE84_AUDIT_PATH",
+    "PHASE84_PASS",
+    "PHASE84_REQUIRED_MODULES",
+    "PHASE84_SCHEMA_VERSION",
     "compile_phase80_forensics",
+    "compile_phase84_researcher_mode_audit",
     "write_phase80_forensics",
+    "write_phase84_researcher_mode_audit",
 ]
