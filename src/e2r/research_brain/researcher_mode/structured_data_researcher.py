@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from datetime import date
+import math
 from typing import Any, Mapping, Sequence
 
 
@@ -22,6 +23,12 @@ class StructuredMetricRecord:
     observed_at: str
     record_kind: str
     confidence: float
+    available_at: str | None = None
+    dataset: str = "GENERIC"
+    provenance: str = "OBSERVED"
+    input_record_ids: tuple[str, ...] = ()
+    metadata: Mapping[str, Any] = field(default_factory=dict)
+    score_authority: bool = False
     schema_version: str = "e2r_structured_metric_record_v1"
 
     def __post_init__(self) -> None:
@@ -40,6 +47,11 @@ class StructuredMetricRecord:
         observed = date.fromisoformat(self.observed_at[:10])
         if observed > cutoff:
             raise ValueError("structured metric leaks future observations")
+        available = date.fromisoformat((self.available_at or self.observed_at)[:10])
+        if available < observed:
+            raise ValueError("structured metric available_at cannot precede observed_at")
+        if available > cutoff:
+            raise ValueError("structured metric leaks future availability")
         if not self.source_ids:
             raise ValueError("structured metric requires source lineage")
         if len(self.source_ids) != len(set(self.source_ids)):
@@ -48,6 +60,37 @@ class StructuredMetricRecord:
             raise ValueError("structured metric requires evidence roles")
         if not 0 <= float(self.confidence) <= 1:
             raise ValueError("structured metric confidence is invalid")
+        if isinstance(self.value, float) and not math.isfinite(self.value):
+            raise ValueError("structured metric value must be finite")
+        if self.dataset not in {
+            "GENERIC",
+            "FINANCIAL",
+            "CONSENSUS_REVISION",
+            "VALUATION",
+        }:
+            raise ValueError("unknown structured metric dataset")
+        if self.provenance not in {
+            "OBSERVED",
+            "STRUCTURED_EXTRACTED",
+            "DERIVED",
+            "DETERMINISTIC_SCENARIO",
+        }:
+            raise ValueError("unknown structured metric provenance")
+        if len(self.input_record_ids) != len(set(self.input_record_ids)):
+            raise ValueError("structured metric input record ids must be unique")
+        if self.provenance in {"DERIVED", "DETERMINISTIC_SCENARIO"} and not self.input_record_ids:
+            raise ValueError("derived structured metric requires input lineage")
+        if self.score_authority:
+            raise ValueError("structured metric records cannot directly assign score")
+        if bool(self.metadata.get("snippet_only")):
+            raise ValueError("snippet-only data cannot become a structured metric")
+        if self.dataset == "VALUATION" and bool(
+            self.metadata.get("generic_article_claim")
+        ):
+            raise ValueError("generic article claims cannot become valuation records")
+        object.__setattr__(self, "available_at", self.available_at or self.observed_at)
+        object.__setattr__(self, "input_record_ids", tuple(self.input_record_ids))
+        object.__setattr__(self, "metadata", dict(self.metadata))
 
     def to_dict(self) -> Mapping[str, Any]:
         return asdict(self)

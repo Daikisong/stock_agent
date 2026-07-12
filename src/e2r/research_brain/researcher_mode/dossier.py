@@ -27,6 +27,7 @@ from .schemas import (
     ComponentResearchPlan,
     EvidenceFact,
 )
+from .structured_financial_engine import StructuredEngineResult
 
 
 @dataclass(frozen=True)
@@ -109,9 +110,19 @@ class CanonicalResearchDossierBuilder:
         source_documents: Sequence[Mapping[str, Any]],
         source_coverage: Sequence[str | Mapping[str, Any]],
         structured_metrics_by_component: Mapping[str, Mapping[str, Any]] | None = None,
+        structured_engine_result: StructuredEngineResult | None = None,
         component_max_points: Mapping[str, float] | None = None,
         structured_metric_requirements: Mapping[str, Sequence[str]] | None = None,
     ) -> ResearcherModeDossier:
+        if structured_metrics_by_component is not None and structured_engine_result is not None:
+            raise ValueError(
+                "provide structured metrics or structured engine result, not both"
+            )
+        if structured_engine_result is not None and (
+            structured_engine_result.target_id != target_id
+            or structured_engine_result.as_of_date != as_of_date
+        ):
+            raise ValueError("structured engine result target/as_of mismatch")
         facts = tuple(_coerce_fact(row) for row in evidence_facts)
         plans = self.planner.plan(
             target_id=target_id,
@@ -146,7 +157,15 @@ class CanonicalResearchDossierBuilder:
                 synthesis_result=None,
                 pending_reasons=business_result.pending_reasons,
             )
-        metrics = structured_metrics_by_component or {}
+        if structured_engine_result is not None:
+            plan_requirements = {
+                row.component_id: row.structured_metric_requirements for row in plans
+            }
+            metrics = structured_engine_result.to_component_structured_metrics(
+                plan_requirements
+            )
+        else:
+            metrics = structured_metrics_by_component or {}
         plan_by_component = {row.component_id: row for row in plans}
         component_results = tuple(
             researcher.research(

@@ -1,0 +1,141 @@
+{
+  "as_of_date_guarded": true,
+  "audit_hash": "bb7d4cb6fb5bdd03009a142a16e13e28917a54d7c2c011f8bb053b34adac5858",
+  "canonical_source_routes": [
+    "COMPANYGUIDE",
+    "PUBLIC_BROKER_REPORT",
+    "ISSUER_GUIDANCE",
+    "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+    "KRX_PRICE_MARKET_CAP"
+  ],
+  "component_researcher_structured_bridge": true,
+  "connector_gap_finalizes_zero_component": false,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "canonical_route_roster_mismatch_count": 0,
+    "component_payload_score_authority_count": 0,
+    "component_researcher_structured_bridge_missing_count": 0,
+    "deep_researched_canary_valuation_route_not_attempted_count": 0,
+    "derived_fcf_missing_count": 0,
+    "deterministic_scenario_missing_count": 0,
+    "direct_score_authority_count": 0,
+    "fallback_after_provider_error_missing_count": 0,
+    "fcf_component_zero_solely_due_missing_parser_count": 0,
+    "future_record_count": 0,
+    "generic_article_valuation_guard_failure_count": 0,
+    "issuer_forward_guidance_record_missing_count": 0,
+    "output_filename_mismatch_count": 0,
+    "own_historical_band_missing_count": 0,
+    "peer_band_missing_count": 0,
+    "revision_component_zero_solely_due_connector_gap_count": 0,
+    "segment_contribution_record_missing_count": 0,
+    "target_name_condition_count": 0,
+    "target_price_counted_as_earnings_revision_count": 0
+  },
+  "deterministic_scenario_is_observed_fact": false,
+  "generic_article_claim_is_valuation_record": false,
+  "output_files": {
+    "CONSENSUS_REVISION": "consensus_revision_records.jsonl",
+    "FINANCIAL": "structured_financial_records.jsonl",
+    "VALUATION": "valuation_records.jsonl"
+  },
+  "record_counts": {
+    "consensus_revision_records": 16,
+    "structured_financial_records": 29,
+    "valuation_records": 46
+  },
+  "schema_version": "e2r_v5_phase86_structured_financial_engine_audit_v1",
+  "source_attempts": [
+    {
+      "accepted_record_count": 18,
+      "capabilities": [
+        "CONSENSUS",
+        "REVISION",
+        "VALUATION"
+      ],
+      "error": null,
+      "input_row_count": 6,
+      "rejection_count": 0,
+      "route_name": "COMPANYGUIDE",
+      "schema_version": "e2r_structured_source_attempt_v1",
+      "score_authority": false,
+      "source_ids": [
+        "SRC-COMPANYGUIDE"
+      ],
+      "status": "FETCHED"
+    },
+    {
+      "accepted_record_count": 0,
+      "capabilities": [
+        "CONSENSUS",
+        "REVISION",
+        "VALUATION"
+      ],
+      "error": "RuntimeError: fixture provider failure proving fallback continuation",
+      "input_row_count": 0,
+      "rejection_count": 0,
+      "route_name": "PUBLIC_BROKER_REPORT",
+      "schema_version": "e2r_structured_source_attempt_v1",
+      "score_authority": false,
+      "source_ids": [],
+      "status": "PROVIDER_ERROR"
+    },
+    {
+      "accepted_record_count": 12,
+      "capabilities": [
+        "FINANCIAL",
+        "GUIDANCE"
+      ],
+      "error": null,
+      "input_row_count": 8,
+      "rejection_count": 0,
+      "route_name": "ISSUER_GUIDANCE",
+      "schema_version": "e2r_structured_source_attempt_v1",
+      "score_authority": false,
+      "source_ids": [
+        "SRC-ISSUER-GUIDANCE"
+      ],
+      "status": "FETCHED"
+    },
+    {
+      "accepted_record_count": 12,
+      "capabilities": [
+        "FINANCIAL",
+        "FCF",
+        "VALUATION",
+        "SCENARIO"
+      ],
+      "error": null,
+      "input_row_count": 2,
+      "rejection_count": 0,
+      "route_name": "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+      "schema_version": "e2r_structured_source_attempt_v1",
+      "score_authority": false,
+      "source_ids": [
+        "SRC-DART"
+      ],
+      "status": "FETCHED"
+    },
+    {
+      "accepted_record_count": 0,
+      "capabilities": [
+        "PRICE",
+        "MARKET_CAP",
+        "MARKET_REACTION",
+        "VALUATION"
+      ],
+      "error": null,
+      "input_row_count": 90,
+      "rejection_count": 0,
+      "route_name": "KRX_PRICE_MARKET_CAP",
+      "schema_version": "e2r_structured_source_attempt_v1",
+      "score_authority": false,
+      "source_ids": [
+        "SRC-KRX"
+      ],
+      "status": "FETCHED"
+    }
+  ],
+  "status": "V5_PHASE86_STRUCTURED_FINANCIAL_ENGINE_PASS",
+  "target_price_only_separated_from_earnings_revision": true
+}

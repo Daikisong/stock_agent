@@ -1068,6 +1068,446 @@ def write_phase85_source_graph_acquisition_audit(
     return destination
 
 
+PHASE86_SCHEMA_VERSION = "e2r_v5_phase86_structured_financial_engine_audit_v1"
+PHASE86_PASS = "V5_PHASE86_STRUCTURED_FINANCIAL_ENGINE_PASS"
+PHASE86_AUDIT_PATH = "docs/operational/e2r_v5_structured_financial_engine_audit.json"
+
+
+def compile_phase86_structured_financial_engine_audit(
+    repo_root: str | Path,
+) -> Mapping[str, Any]:
+    """Run a deterministic canary through all Phase 86 arithmetic boundaries."""
+
+    from datetime import date, datetime, timedelta
+
+    from e2r.models import (
+        ConsensusRevision,
+        ConsensusSnapshot,
+        FinancialActual,
+        PriceBar,
+    )
+
+    from .structured_data_researcher import StructuredMetricRecord
+    from .structured_financial_engine import (
+        CANONICAL_STRUCTURED_SOURCE_ROUTES,
+        ForwardGuidanceObservation,
+        PeerValuationObservation,
+        SegmentFinancialObservation,
+        STRUCTURED_FINANCIAL_OUTPUT_FILES,
+        StructuredFinancialConsensusValuationEngine,
+        StructuredSourcePayload,
+    )
+    from .structured_source_routes import InMemoryStructuredSourceRoute
+
+    root = Path(repo_root).resolve()
+    cutoff = date(2026, 6, 29)
+    target_id = "PHASE86_CANARY"
+    symbol = "PHASE86"
+
+    def seed(
+        metric_id: str,
+        value: float,
+        role: str,
+        *,
+        period: str = "FY2025",
+        dataset: str = "FINANCIAL",
+    ) -> StructuredMetricRecord:
+        return StructuredMetricRecord(
+            record_id=f"SEED-{metric_id}-{period}",
+            target_id=target_id,
+            as_of_date=cutoff.isoformat(),
+            metric_id=metric_id,
+            value=value,
+            unit="CURRENCY" if "pe" not in metric_id else "MULTIPLE",
+            period=period,
+            evidence_roles=(role,),
+            source_ids=("SRC-ISSUER-GUIDANCE",),
+            source_route="ISSUER_GUIDANCE",
+            observed_at="2026-06-20",
+            record_kind="ISSUER_STRUCTURED_GUIDANCE",
+            confidence=0.95,
+            dataset=dataset,
+            provenance="STRUCTURED_EXTRACTED",
+            metadata={"structured_source": True},
+        )
+
+    actuals = (
+        FinancialActual(
+            symbol=symbol,
+            fiscal_year=2024,
+            fiscal_quarter=None,
+            period_end=date(2024, 12, 31),
+            reported_at=datetime(2025, 3, 15),
+            as_of_date=cutoff,
+            source="OpenDART single account",
+            sales=100.0,
+            operating_profit=20.0,
+            net_income=12.0,
+            cashflow_from_operations=18.0,
+            capex=8.0,
+        ),
+        FinancialActual(
+            symbol=symbol,
+            fiscal_year=2025,
+            fiscal_quarter=None,
+            period_end=date(2025, 12, 31),
+            reported_at=datetime(2026, 3, 15),
+            as_of_date=cutoff,
+            source="OpenDART single account",
+            sales=130.0,
+            operating_profit=32.0,
+            net_income=21.0,
+            cashflow_from_operations=30.0,
+            capex=11.0,
+        ),
+    )
+    snapshots = (
+        ConsensusSnapshot(
+            symbol=symbol,
+            date=date(2026, 1, 5),
+            fiscal_year=2026,
+            as_of_date=cutoff,
+            source="CompanyGuide",
+            op_e=38.0,
+            eps_e=10.0,
+            fcf_e=22.0,
+            bps_e=45.0,
+            per_e=11.0,
+            pbr_e=2.0,
+            parsed_fields={"ebitda_e": 44.0},
+        ),
+        ConsensusSnapshot(
+            symbol=symbol,
+            date=date(2026, 6, 20),
+            fiscal_year=2026,
+            as_of_date=cutoff,
+            source="CompanyGuide",
+            op_e=48.0,
+            eps_e=13.0,
+            fcf_e=29.0,
+            bps_e=50.0,
+            per_e=12.0,
+            pbr_e=2.2,
+            parsed_fields={"ebitda_e": 54.0},
+        ),
+    )
+    target_revision = ConsensusRevision(
+        symbol=symbol,
+        date=date(2026, 6, 20),
+        fiscal_year=2026,
+        as_of_date=cutoff,
+        target_price_revision_1m=8.0,
+        source="CompanyGuide",
+        parsed_fields={"target_price_only": True},
+    )
+    price_rows = []
+    for index in range(45):
+        row_date = date(2026, 5, 1) + timedelta(days=index)
+        price_rows.extend(
+            (
+                PriceBar(
+                    symbol=symbol,
+                    date=row_date,
+                    open=100.0 + index,
+                    high=102.0 + index,
+                    low=99.0 + index,
+                    close=101.0 + index,
+                    adj_close=101.0 + index,
+                    volume=1_000,
+                    trading_value=100_000.0,
+                    market_cap=1_000.0 + index * 10,
+                    source="KRX",
+                    as_of_date=cutoff,
+                ),
+                PriceBar(
+                    symbol="PHASE86-BENCHMARK",
+                    date=row_date,
+                    open=100.0 + index * 0.2,
+                    high=101.0 + index * 0.2,
+                    low=99.0 + index * 0.2,
+                    close=100.0 + index * 0.2,
+                    adj_close=100.0 + index * 0.2,
+                    volume=1_000,
+                    trading_value=100_000.0,
+                    market_cap=10_000.0,
+                    source="KRX",
+                    as_of_date=cutoff,
+                ),
+            )
+        )
+    issuer_records = (
+        seed("cash_and_equivalents", 40.0, "BALANCE_SHEET_CASH"),
+        seed("total_debt", 15.0, "BALANCE_SHEET_DEBT"),
+        seed("forward_ebitda", 54.0, "FORWARD_EBITDA", period="FY2026E"),
+        seed("historical_forward_pe", 8.0, "VALUATION_HISTORY", period="FY2023"),
+        seed("historical_forward_pe", 10.0, "VALUATION_HISTORY", period="FY2024"),
+        seed("historical_forward_pe", 14.0, "VALUATION_HISTORY", period="FY2025"),
+    )
+    segment_observations = (
+        SegmentFinancialObservation(
+            target_id=target_id,
+            as_of_date=cutoff.isoformat(),
+            segment_id="CORE_SEGMENT",
+            metric_id="revenue",
+            value=80.0,
+            total_company_value=130.0,
+            unit="CURRENCY",
+            period="FY2025",
+            observed_at="2026-03-15",
+            available_at="2026-03-15",
+            source_ids=("SRC-ISSUER-GUIDANCE",),
+            source_route="ISSUER_GUIDANCE",
+        ),
+    )
+    guidance_observations = (
+        ForwardGuidanceObservation(
+            target_id=target_id,
+            as_of_date=cutoff.isoformat(),
+            metric_id="revenue",
+            unit="CURRENCY",
+            period="FY2026E",
+            observed_at="2026-06-20",
+            available_at="2026-06-20",
+            source_ids=("SRC-ISSUER-GUIDANCE",),
+            source_route="ISSUER_GUIDANCE",
+            low_value=145.0,
+            high_value=155.0,
+        ),
+    )
+    peers = tuple(
+        PeerValuationObservation(
+            peer_id=f"PEER-{index}",
+            as_of_date=cutoff.isoformat(),
+            metric_id="forward_pe",
+            value=value,
+            unit="MULTIPLE",
+            observed_at="2026-06-20",
+            source_ids=(f"SRC-PEER-{index}",),
+            source_route="COMPANYGUIDE",
+        )
+        for index, value in enumerate((9.0, 11.0, 13.0), start=1)
+    )
+    routes = (
+        InMemoryStructuredSourceRoute(
+            "COMPANYGUIDE",
+            StructuredSourcePayload(
+                route_name="COMPANYGUIDE",
+                source_ids=("SRC-COMPANYGUIDE",),
+                consensus_snapshots=snapshots,
+                consensus_revisions=(target_revision,),
+                peer_valuations=peers,
+            ),
+        ),
+        InMemoryStructuredSourceRoute(
+            "PUBLIC_BROKER_REPORT",
+            StructuredSourcePayload(route_name="PUBLIC_BROKER_REPORT"),
+            provider_error="fixture provider failure proving fallback continuation",
+        ),
+        InMemoryStructuredSourceRoute(
+            "ISSUER_GUIDANCE",
+            StructuredSourcePayload(
+                route_name="ISSUER_GUIDANCE",
+                source_ids=("SRC-ISSUER-GUIDANCE",),
+                structured_records=issuer_records,
+                segment_observations=segment_observations,
+                guidance_observations=guidance_observations,
+            ),
+        ),
+        InMemoryStructuredSourceRoute(
+            "DART_ACTUALS_DETERMINISTIC_SCENARIO",
+            StructuredSourcePayload(
+                route_name="DART_ACTUALS_DETERMINISTIC_SCENARIO",
+                source_ids=("SRC-DART",),
+                financial_actuals=actuals,
+            ),
+        ),
+        InMemoryStructuredSourceRoute(
+            "KRX_PRICE_MARKET_CAP",
+            StructuredSourcePayload(
+                route_name="KRX_PRICE_MARKET_CAP",
+                source_ids=("SRC-KRX",),
+                price_bars=tuple(price_rows),
+            ),
+        ),
+    )
+    result = StructuredFinancialConsensusValuationEngine().research(
+        target_id=target_id,
+        symbol=symbol,
+        company_name="Phase 86 Canary",
+        as_of_date=cutoff,
+        routes=routes,
+        deep_researched_canary=True,
+    )
+    by_metric = {row.metric_id: row for row in result.records}
+    target_rows = [
+        row
+        for row in result.records
+        if "target_price" in row.metric_id
+        or row.metadata.get("revision_family") == "TARGET_PRICE"
+    ]
+    engine_path = root / "src/e2r/research_brain/researcher_mode/structured_financial_engine.py"
+    route_path = root / "src/e2r/research_brain/researcher_mode/structured_source_routes.py"
+    dossier_path = root / "src/e2r/research_brain/researcher_mode/dossier.py"
+    engine_text = engine_path.read_text(encoding="utf-8")
+    route_text = route_path.read_text(encoding="utf-8")
+    dossier_text = dossier_path.read_text(encoding="utf-8")
+    forbidden_target_tokens = ("005930", "000660", "삼성전자", "SK하이닉스")
+    generic_article_guard_failed = 0
+    try:
+        StructuredMetricRecord(
+            record_id="UNSAFE",
+            target_id=target_id,
+            as_of_date=cutoff.isoformat(),
+            metric_id="forward_pe",
+            value=10.0,
+            unit="MULTIPLE",
+            period="CURRENT",
+            evidence_roles=("FORWARD_PE",),
+            source_ids=("NEWS",),
+            source_route="GENERAL_WEB",
+            observed_at=cutoff.isoformat(),
+            record_kind="VALUATION_CLAIM",
+            confidence=0.5,
+            dataset="VALUATION",
+            metadata={"generic_article_claim": True},
+        )
+        generic_article_guard_failed = 1
+    except ValueError:
+        pass
+    attempt_by_route = {row.route_name: row for row in result.source_attempts}
+    component_payloads = result.to_component_structured_metrics(
+        {
+            "eps_fcf_explosion": ("CASH_CONVERSION",),
+            "market_mispricing": ("EARNINGS_REVISION",),
+            "valuation_rerating": ("CURRENT_VALUATION",),
+        }
+    )
+    critical = {
+        "canonical_route_roster_mismatch_count": int(
+            tuple(attempt_by_route) != CANONICAL_STRUCTURED_SOURCE_ROUTES
+        ),
+        "output_filename_mismatch_count": int(
+            set(STRUCTURED_FINANCIAL_OUTPUT_FILES.values())
+            != {
+                "structured_financial_records.jsonl",
+                "consensus_revision_records.jsonl",
+                "valuation_records.jsonl",
+            }
+        ),
+        "fallback_after_provider_error_missing_count": int(
+            attempt_by_route["PUBLIC_BROKER_REPORT"].status != "PROVIDER_ERROR"
+            or attempt_by_route["KRX_PRICE_MARKET_CAP"].status != "FETCHED"
+        ),
+        "deep_researched_canary_valuation_route_not_attempted_count": result.deep_researched_canary_valuation_route_not_attempted_count,
+        "revision_component_zero_solely_due_connector_gap_count": result.revision_component_zero_solely_due_connector_gap_count,
+        "fcf_component_zero_solely_due_missing_parser_count": result.fcf_component_zero_solely_due_missing_parser_count,
+        "derived_fcf_missing_count": int(
+            "free_cash_flow" not in by_metric
+            or by_metric["free_cash_flow"].provenance != "DERIVED"
+        ),
+        "segment_contribution_record_missing_count": int(
+            not any(
+                "SEGMENT_CONTRIBUTION" in row.evidence_roles
+                for row in result.records
+            )
+        ),
+        "issuer_forward_guidance_record_missing_count": int(
+            not any("FORWARD_GUIDANCE" in row.evidence_roles for row in result.records)
+        ),
+        "target_price_counted_as_earnings_revision_count": sum(
+            "EPS_REVISION" in row.evidence_roles
+            or "OPERATING_PROFIT_REVISION" in row.evidence_roles
+            for row in target_rows
+        ),
+        "generic_article_valuation_guard_failure_count": generic_article_guard_failed,
+        "deterministic_scenario_missing_count": int(
+            not any(
+                row.provenance == "DETERMINISTIC_SCENARIO"
+                and "SCENARIO_SENSITIVITY" in row.evidence_roles
+                for row in result.records
+            )
+        ),
+        "own_historical_band_missing_count": int(
+            not any("OWN_HISTORICAL_BAND" in row.evidence_roles for row in result.records)
+        ),
+        "peer_band_missing_count": int(
+            not any("PEER_BAND" in row.evidence_roles for row in result.records)
+        ),
+        "future_record_count": sum(
+            date.fromisoformat(row.observed_at[:10]) > cutoff
+            or date.fromisoformat((row.available_at or row.observed_at)[:10]) > cutoff
+            for row in result.records
+        ),
+        "direct_score_authority_count": sum(row.score_authority for row in result.records)
+        + int(result.score_authority),
+        "component_researcher_structured_bridge_missing_count": sum(
+            key not in component_payloads[component_id]
+            for component_id, key in (
+                ("eps_fcf_explosion", "CASH_CONVERSION"),
+                ("market_mispricing", "EARNINGS_REVISION"),
+                ("valuation_rerating", "CURRENT_VALUATION"),
+            )
+        )
+        + int("structured_engine_result" not in dossier_text),
+        "component_payload_score_authority_count": sum(
+            bool(value.get("score_authority"))
+            for payload in component_payloads.values()
+            for value in payload.values()
+            if isinstance(value, Mapping)
+        ),
+        "target_name_condition_count": sum(
+            token in (engine_text + route_text) for token in forbidden_target_tokens
+        ),
+    }
+    return {
+        "schema_version": PHASE86_SCHEMA_VERSION,
+        "status": PHASE86_PASS
+        if sum(critical.values()) == 0
+        else "V5_PHASE86_STRUCTURED_FINANCIAL_ENGINE_FAIL",
+        "critical_counts": critical,
+        "critical_count_sum": sum(critical.values()),
+        "canonical_source_routes": list(CANONICAL_STRUCTURED_SOURCE_ROUTES),
+        "source_attempts": json.loads(
+            json.dumps(
+                [row.to_dict() for row in result.source_attempts],
+                ensure_ascii=False,
+                default=str,
+            )
+        ),
+        "output_files": dict(STRUCTURED_FINANCIAL_OUTPUT_FILES),
+        "record_counts": {
+            "structured_financial_records": len(result.financial_records),
+            "consensus_revision_records": len(result.consensus_revision_records),
+            "valuation_records": len(result.valuation_records),
+        },
+        "target_price_only_separated_from_earnings_revision": True,
+        "connector_gap_finalizes_zero_component": False,
+        "generic_article_claim_is_valuation_record": False,
+        "deterministic_scenario_is_observed_fact": False,
+        "component_researcher_structured_bridge": True,
+        "as_of_date_guarded": True,
+        "audit_hash": _stable_hash(
+            {
+                "critical": critical,
+                "routes": CANONICAL_STRUCTURED_SOURCE_ROUTES,
+                "outputs": STRUCTURED_FINANCIAL_OUTPUT_FILES,
+                "record_ids": [row.record_id for row in result.records],
+            }
+        ),
+    }
+
+
+def write_phase86_structured_financial_engine_audit(
+    *, repo_root: str | Path, output_path: str | Path | None = None
+) -> Path:
+    root = Path(repo_root).resolve()
+    destination = Path(output_path or root / PHASE86_AUDIT_PATH)
+    if not destination.is_absolute():
+        destination = root / destination
+    write_json(destination, compile_phase86_structured_financial_engine_audit(root))
+    return destination
+
+
 __all__ = [
     "PHASE80_ARTIFACT_PATHS",
     "PHASE80_PASS",
@@ -1079,10 +1519,15 @@ __all__ = [
     "PHASE85_AUDIT_PATH",
     "PHASE85_PASS",
     "PHASE85_SCHEMA_VERSION",
+    "PHASE86_AUDIT_PATH",
+    "PHASE86_PASS",
+    "PHASE86_SCHEMA_VERSION",
     "compile_phase80_forensics",
     "compile_phase84_researcher_mode_audit",
     "compile_phase85_source_graph_acquisition_audit",
+    "compile_phase86_structured_financial_engine_audit",
     "write_phase80_forensics",
     "write_phase84_researcher_mode_audit",
     "write_phase85_source_graph_acquisition_audit",
+    "write_phase86_structured_financial_engine_audit",
 ]
