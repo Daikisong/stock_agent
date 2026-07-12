@@ -1,0 +1,22 @@
+{
+  "schema_version": "e2r_v5_full_thesis_gold_coverage_v1",
+  "benchmark_mode": "PRIVATE_POST_RUN_FULL_THESIS_GOLD",
+  "as_of_date": "2026-07-12",
+  "production_visibility_during_gold_research": false,
+  "questions": [
+    {"question_family_id":"GQC-005930-EPS","target_id":"005930","component_id":"eps_fcf_explosion","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-005930-VIS","target_id":"005930","component_id":"earnings_visibility","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-005930-BOT","target_id":"005930","component_id":"bottleneck_pricing","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-005930-MKT","target_id":"005930","component_id":"market_mispricing","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-005930-VAL","target_id":"005930","component_id":"valuation_rerating","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-005930-CAP","target_id":"005930","component_id":"capital_allocation","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-005930-INF","target_id":"005930","component_id":"information_confidence","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-000660-EPS","target_id":"000660","component_id":"eps_fcf_explosion","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-000660-VIS","target_id":"000660","component_id":"earnings_visibility","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-000660-BOT","target_id":"000660","component_id":"bottleneck_pricing","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-000660-MKT","target_id":"000660","component_id":"market_mispricing","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-000660-VAL","target_id":"000660","component_id":"valuation_rerating","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-000660-CAP","target_id":"000660","component_id":"capital_allocation","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"},
+    {"question_family_id":"GQC-000660-INF","target_id":"000660","component_id":"information_confidence","evaluation":"SUPPORT_AND_COUNTER_EVIDENCE_FOUND"}
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": "e2r_v5_full_thesis_gold_manifest_v1",
+  "benchmark_id": "E2R-V5-FULL-THESIS-GOLD-2026-07-12",
+  "benchmark_mode": "PRIVATE_POST_RUN_FULL_THESIS_GOLD",
+  "as_of_date": "2026-07-12",
+  "gold_research_completed_at": "2026-07-12T23:40:00+09:00",
+  "evaluation_only": true,
+  "production_visibility": false,
+  "comparison_timing": "POST_RUN_ONLY",
+  "production_query_authority": false,
+  "production_score_authority": false,
+  "production_stage_authority": false,
+  "clean_rerun_required_after_research_fix": true,
+  "target_ids": ["005930", "000660"],
+  "targets": [
+    {"target_id": "005930", "target_name": "삼성전자"},
+    {"target_id": "000660", "target_name": "SK하이닉스"}
+  ],
+  "component_ids": [
+    "eps_fcf_explosion",
+    "earnings_visibility",
+    "bottleneck_pricing",
+    "market_mispricing",
+    "valuation_rerating",
+    "capital_allocation",
+    "information_confidence"
+  ],
+  "red_team_topic_id": "red_team_counter_thesis",
+  "required_source_families": [
+    "DART",
+    "ISSUER_IR",
+    "EARNINGS_RELEASE",
+    "CONFERENCE_CALL_MATERIAL",
+    "NEWSROOM",
+    "CUSTOMER_OFFICIAL",
+    "TRUSTED_MEDIA",
+    "NAVER_WEB_DISCOVERY",
+    "PUBLIC_REPORT",
+    "STRUCTURED_CONSENSUS_VALUATION"
+  ],
+  "outputs": {
+    "pre_gold_production_isolation": "pre_gold_production_isolation.json",
+    "query_ledger": "gold_query_ledger.jsonl",
+    "source_map": "gold_source_map.jsonl",
+    "material_facts": "gold_material_facts.jsonl",
+    "counterfacts": "gold_counterfacts.jsonl",
+    "component_memos": "gold_component_memos.jsonl",
+    "question_coverage": "gold_question_coverage.json"
+  },
+  "post_run_recall_contract": {
+    "critical_material_fact_recall_min": 1.0,
+    "counter_supersession_recall_min": 1.0,
+    "all_material_fact_recall_min": 0.95,
+    "component_research_topic_coverage_min": 1.0
+  },
+  "phase93_scope_note": "이 파일은 비공개 사후평가 답안지다. Production clean run이 끝나기 전에는 열거나 입력으로 주입하지 않는다."
+}

@@ -1,0 +1,161 @@
+{
+  "as_of_date": "2026-07-12",
+  "benchmark_mode": "PRIVATE_POST_RUN_FULL_THESIS_GOLD",
+  "component_count_per_target": 7,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "gold_authority_leakage_count": 0,
+    "gold_fact_leaked_into_production_prompt_count": 0,
+    "gold_output_file_missing_count": 0,
+    "gold_query_leaked_into_production_count": 0,
+    "gold_source_injected_into_production_count": 0,
+    "nine_fact_false_completeness_count": 0,
+    "production_lane_gold_visibility_count": 0,
+    "target_component_topic_missing_count": 0
+  },
+  "gold_authority_leakage_paths": [],
+  "gold_component_memo_count": 14,
+  "gold_component_research_topic_coverage": 1.0,
+  "gold_counter_supersession_fact_count": 14,
+  "gold_fact_count": 28,
+  "gold_lane_role": "EVALUATION_ONLY_PRIVATE_POST_RUN",
+  "gold_query_count": 32,
+  "gold_source_count": 21,
+  "lane_isolation": {
+    "clean_rerun_required_after_research_fix": true,
+    "comparison_timing": "POST_RUN_ONLY",
+    "gold_expected_score_or_stage_exists": false,
+    "gold_fact_injection_allowed": false,
+    "gold_query_injection_allowed": false,
+    "gold_url_injection_allowed": false,
+    "gold_visibility_during_production": false,
+    "leakage_audit": {
+      "fact_leak_input_ids": [],
+      "gold_fact_leaked_into_production_prompt_count": 0,
+      "gold_query_leaked_into_production_count": 0,
+      "gold_source_injected_into_production_count": 0,
+      "production_lane_gold_visibility_count": 0,
+      "proof_source": "TRACKED_PRE_GOLD_FINGERPRINT_SNAPSHOT",
+      "query_leak_input_ids": [],
+      "source_injection_input_ids": []
+    }
+  },
+  "legacy_nine_fact_audit_is_authoritative": false,
+  "per_target": {
+    "000660": {
+      "component_ids": [
+        "bottleneck_pricing",
+        "capital_allocation",
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "information_confidence",
+        "market_mispricing",
+        "valuation_rerating"
+      ],
+      "component_memo_count": 7,
+      "counter_supersession_fact_count": 7,
+      "critical_fact_count": 9,
+      "material_fact_count": 14,
+      "observed_source_families": [
+        "CONFERENCE_CALL_MATERIAL",
+        "CUSTOMER_OFFICIAL",
+        "DART",
+        "EARNINGS_RELEASE",
+        "ISSUER_IR",
+        "NAVER_WEB_DISCOVERY",
+        "NEWSROOM",
+        "PUBLIC_REPORT",
+        "STRUCTURED_CONSENSUS_VALUATION",
+        "TRUSTED_MEDIA"
+      ],
+      "query_count": 16,
+      "source_count": 11,
+      "target_name": "SK하이닉스"
+    },
+    "005930": {
+      "component_ids": [
+        "bottleneck_pricing",
+        "capital_allocation",
+        "earnings_visibility",
+        "eps_fcf_explosion",
+        "information_confidence",
+        "market_mispricing",
+        "valuation_rerating"
+      ],
+      "component_memo_count": 7,
+      "counter_supersession_fact_count": 7,
+      "critical_fact_count": 9,
+      "material_fact_count": 14,
+      "observed_source_families": [
+        "CONFERENCE_CALL_MATERIAL",
+        "CUSTOMER_OFFICIAL",
+        "DART",
+        "EARNINGS_RELEASE",
+        "ISSUER_IR",
+        "NAVER_WEB_DISCOVERY",
+        "NEWSROOM",
+        "PUBLIC_REPORT",
+        "STRUCTURED_CONSENSUS_VALUATION",
+        "TRUSTED_MEDIA"
+      ],
+      "query_count": 16,
+      "source_count": 10,
+      "target_name": "삼성전자"
+    }
+  },
+  "phase": 93,
+  "phase93_scope_truth": {
+    "benchmark_corpus_complete": true,
+    "phase94_clean_rerun_required": true,
+    "post_run_recall_attested": false,
+    "production_readiness_claimed": false
+  },
+  "post_run_comparison": {
+    "all_material_fact_recall": null,
+    "component_research_topic_coverage": null,
+    "counter_supersession_recall": null,
+    "critical_material_fact_recall": null,
+    "current_baseline_is_phase94_clean_rerun": false,
+    "current_baseline_production_as_of_date": "2026-07-11",
+    "gold_as_of_date": "2026-07-12",
+    "pending_reason": "2026-07-12 Gold를 숨긴 Phase 94 clean production rerun이 아직 없다.",
+    "status": "PENDING_PHASE94_CLEAN_PRODUCTION_RERUN",
+    "thresholds": {
+      "all_material_fact_recall_min": 0.95,
+      "component_research_topic_coverage_min": 1.0,
+      "counter_supersession_recall_min": 1.0,
+      "critical_material_fact_recall_min": 1.0
+    }
+  },
+  "production_lane_role": "INDEPENDENT_CLEAN_RESEARCHER_RUN",
+  "reproducibility": {
+    "gold_output_sha256": {
+      "component_memos": "da1ee327d1539d93c5181df7efc335322c7d2dfab7d8907e6ef07b7b14a5e6a9",
+      "counterfacts": "5bdb67b2262ce25cfda1b717b899dac0aef7bc83319aa1598dcf33535f6285ce",
+      "manifest": "5774ec752faeb5eb38ef0e507afc015f3d32d9379258182d99f9cd969bac6fef",
+      "material_facts": "7e496fd37b082be05def79f6e6139e6ae5a62421b8c16ab500f7fafee5214743",
+      "pre_gold_production_isolation": "47cb4efd675e44f7b4bda7b1ab7ffe4df7e25b72bf9745985a53b2f26b2f66ea",
+      "query_ledger": "1a3acced5bdf4ff5b4d6130e571c6c284634b58c9badd1812e5ff84300e7db3e",
+      "question_coverage": "e23ff2bfa6103edc3a8cfecc219ac7ad714ba185fcbaf32ab10c4bc2ead74064",
+      "source_map": "7c5691d7cc72d826ded0a17930dc27ed29b99f244ab626b1d158ddd483c2b50b"
+    },
+    "gold_payload_sha256": "e2046016668e3c541df825ad3e73a2a26bb65a0af9c9b535db6bac2f41065d96",
+    "gold_root": "data/benchmark_labels/e2r_v5_full_thesis_gold_2026-07-12"
+  },
+  "required_source_families": [
+    "DART",
+    "ISSUER_IR",
+    "EARNINGS_RELEASE",
+    "CONFERENCE_CALL_MATERIAL",
+    "NEWSROOM",
+    "CUSTOMER_OFFICIAL",
+    "TRUSTED_MEDIA",
+    "NAVER_WEB_DISCOVERY",
+    "PUBLIC_REPORT",
+    "STRUCTURED_CONSENSUS_VALUATION"
+  ],
+  "schema_version": "e2r_v5_full_thesis_gold_research_recall_v1",
+  "status": "V5_PHASE93_FULL_THESIS_GOLD_BENCHMARK_READY",
+  "supersedes_for_full_thesis_recall": "docs/operational/e2r_research_quality_gold_audit.json",
+  "target_count": 2
+}

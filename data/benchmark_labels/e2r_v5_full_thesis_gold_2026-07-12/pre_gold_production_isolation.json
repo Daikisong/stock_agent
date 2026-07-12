@@ -1,0 +1,28 @@
+{
+  "schema_version": "e2r_v5_pre_gold_production_isolation_v1",
+  "baseline_run_id": "E2R-BLIND-2026-07-11-PRE-PHASE93-GOLD",
+  "production_as_of_date": "2026-07-11",
+  "target_ids": ["005930", "000660"],
+  "baseline_completed_before_gold_research": true,
+  "gold_visibility": false,
+  "gold_research_was_not_input_to_baseline": true,
+  "production_input_manifest_sha256": "90c382f689bee1438c66c0bc2014bbe3c0870ad6bb89332ede246f860ad7b4e9",
+  "production_lane_manifest_sha256": "ccf0ed9fa561cfbf81613f3d31d8ecd30550bd911952ba643b88497c73d416dc",
+  "production_input_count": 372,
+  "input_type_counts": {"CONFIG": 2, "PROMPT_CONTEXT": 2, "QUERY": 368},
+  "origin_counts": {"CANONICAL_CONFIG": 2, "CANONICAL_PIPELINE": 2, "LLM_PLANNER": 368},
+  "input_fingerprint_set_sha256": "4df2ed75d42ece0e66bae8ccab57ff499164657fc8610557f3898051366a1d7d",
+  "gold_query_set_sha256": "c70bdc6e8290be2697f1ccbab01e688c0f60753f0719dbd193c1c8ae89edf1b4",
+  "gold_source_url_set_sha256": "a624d433fc3684f4ce1f3a589f7dc0b709e6ae82e6f4fb63d62febcc36377fe0",
+  "gold_fact_id_set_sha256": "29a0d39a3a5cef8d66383a529449c9ac1809b680dccb1dea9087afdb7195fc92",
+  "gold_fact_statement_set_sha256": "5aee2d59c9b0fb6fdabdbb77d8ab2bb07aef84cf0c4a0828812e3ac117957aad",
+  "exact_overlap_counts": {
+    "gold_source_injected_into_production_count": 0,
+    "gold_query_leaked_into_production_count": 0,
+    "gold_fact_leaked_into_production_prompt_count": 0,
+    "production_lane_gold_visibility_count": 0
+  },
+  "snapshot_role": "HASH_ONLY_PRE_GOLD_ISOLATION_PROOF",
+  "contains_production_query_text": false,
+  "contains_gold_query_or_url_seed": false
+}

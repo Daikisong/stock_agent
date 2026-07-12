@@ -28,7 +28,7 @@ class GoldMaterialFactRecallTests(unittest.TestCase):
         operational = json.loads(
             (
                 self.ROOT
-                / "docs/operational/e2r_research_quality_gold_audit.json"
+                / "docs/operational/e2r_v5_gold_research_recall.json"
             ).read_text(encoding="utf-8")
         )
         fixture = self.ROOT / "tests/fixtures/semantic_scoring_v2/blind_benchmark"
@@ -37,17 +37,18 @@ class GoldMaterialFactRecallTests(unittest.TestCase):
             production_root=fixture / "production",
         ).audit
 
-        self.assertEqual(
-            operational["benchmark_mode"],
-            "LIVE_SAMSUNG_HYNIX_POST_RUN_BLIND_GOLD",
-        )
+        self.assertEqual(operational["benchmark_mode"], "PRIVATE_POST_RUN_FULL_THESIS_GOLD")
         self.assertEqual(operational["critical_count_sum"], 0)
-        self.assertEqual(operational["gold_fact_count"], 9)
+        self.assertGreater(operational["gold_fact_count"], 9)
+        self.assertEqual(operational["gold_component_memo_count"], 14)
+        self.assertEqual(set(operational["per_target"]), {"005930", "000660"})
         self.assertEqual(
-            {row["target_id"] for row in operational["comparisons"]},
-            {"005930", "000660"},
+            operational["post_run_comparison"]["status"],
+            "PENDING_PHASE94_CLEAN_PRODUCTION_RERUN",
         )
-        self.assertGreaterEqual(operational["noncritical_fact_recall"], 0.9)
+        self.assertFalse(
+            operational["phase93_scope_truth"]["post_run_recall_attested"]
+        )
         self.assertNotEqual(operational, controlled)
 
     def test_benchmark_writes_target_specific_dossier_leaves(self) -> None:
