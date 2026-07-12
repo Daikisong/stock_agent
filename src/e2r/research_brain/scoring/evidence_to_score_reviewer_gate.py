@@ -302,7 +302,11 @@ def _reviewer_g(root: Path) -> Mapping[str, Any]:
     critical = {
         "fresh_generalization_failure": int(fresh.get("critical_count_sum") != 0),
         "committed_generalization_leaf_mismatch": int(fresh != artifact),
-        "generalization_case_roster_mismatch": len(required ^ set(fresh.get("cases", {}))),
+        # 필수 canary가 모두 포함됐는지를 본다. Phase가 확장되어 새 canary가
+        # 추가되는 것은 실패가 아니며, 필수 canary 누락만 실패다.
+        "generalization_case_roster_mismatch": len(
+            required - set(fresh.get("cases", {}))
+        ),
         "source_proxy_score_count": int(fresh.get("source_proxy_score_count") or 0),
         "future_outcome_leakage_count": int(fresh.get("future_outcome_leakage_count") or 0),
         "target_specific_branch_count": int(fresh.get("target_specific_branch_count") or 0),

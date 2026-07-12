@@ -260,10 +260,10 @@
         "docs/operational/e2r_evidence_to_score_generalization_audit.json"
       ],
       "leaf_sha256": {
-        "docs/operational/e2r_evidence_to_score_generalization_audit.json": "8971537895e7382383637509c01145014690b53665a50657dc7ec5307c224e51"
+        "docs/operational/e2r_evidence_to_score_generalization_audit.json": "8dafdfdad1e3c82a1ba8fc2e8fb96a1fae325667d1663995cceeaa1af1207ad4"
       },
       "observations": {
-        "case_count": 6,
+        "case_count": 13,
         "fresh_status": "EVIDENCE_TO_SCORE_GENERALIZATION_PASS"
       },
       "reviewer_id": "G",
