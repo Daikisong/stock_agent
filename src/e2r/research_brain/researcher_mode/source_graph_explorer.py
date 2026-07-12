@@ -226,6 +226,7 @@ class SourceGraphExplorer:
             query_id = str(query.get("query_id") or "").strip()
             if not query_id:
                 continue
+            shadow_only = bool(query.get("shadow_only"))
             node_id = stable_intelligence_id(
                 "SGNODE", {"query_id": query_id, "as_of_date": as_of_date}
             )
@@ -233,7 +234,7 @@ class SourceGraphExplorer:
             nodes.append(
                 SourceGraphNode(
                     node_id=node_id,
-                    node_type="LLM_QUERY",
+                    node_type="SHADOW_QUERY" if shadow_only else "LLM_QUERY",
                     source_family="DISCOVERY",
                     target_id=target_id,
                     as_of_date=as_of_date,
@@ -245,6 +246,13 @@ class SourceGraphExplorer:
                         "generator_kind": query.get("generator_kind"),
                         "prompt_hash": query.get("prompt_hash"),
                         "response_hash": query.get("response_hash"),
+                        "shadow_only": shadow_only,
+                        "production_execution_allowed": bool(
+                            query.get("production_execution_allowed", not shadow_only)
+                        ),
+                        "query_template_authority": bool(
+                            query.get("query_template_authority", False)
+                        ),
                         "score_authority": False,
                     },
                 )

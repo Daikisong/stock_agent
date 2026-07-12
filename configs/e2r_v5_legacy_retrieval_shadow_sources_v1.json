@@ -1,0 +1,45 @@
+{
+  "schema_version": "e2r_v5_legacy_retrieval_shadow_source_config_v1",
+  "evaluation_only": true,
+  "frozen_shadow_not_production_readiness_evidence": true,
+  "production_query_template_authority": false,
+  "page_fetch_cache_root": "data/cache/page_fetch",
+  "required_target_ids": [
+    "005930",
+    "000660"
+  ],
+  "targets": [
+    {
+      "target_id": "005930",
+      "target_name": "삼성전자",
+      "as_of_date": "2026-06-28",
+      "legacy_run_root": "output/0621_agentic_live_smoke/005930_after_cp199_cash_bridge_quorum_signal/korea_live_lite",
+      "canonical_claims_path": "output/evidence_to_score_v2/live_2026-07-11/005930/accepted_current_claims.jsonl",
+      "legacy_initial_queries": [
+        "삼성전자 수주잔고",
+        "삼성전자 최근 뉴스 실적 전망",
+        "삼성전자 영업이익 컨센서스 상회",
+        "삼성전자 목표주가 상향 EPS 상향",
+        "삼성전자 매출 성장 마진 OPM",
+        "삼성전자 AI 데이터센터 HBM 반도체 클라우드"
+      ],
+      "legacy_initial_queries_are_historical_fixture_only": true
+    },
+    {
+      "target_id": "000660",
+      "target_name": "SK하이닉스",
+      "as_of_date": "2026-06-28",
+      "legacy_run_root": "output/0621_agentic_live_smoke/000660_after_cp198_fresh_bounded_live_smoke/korea_live_lite",
+      "canonical_claims_path": "output/evidence_to_score_v2/live_2026-07-11/000660/accepted_current_claims.jsonl",
+      "legacy_initial_queries": [
+        "SK하이닉스 수주잔고",
+        "SK하이닉스 최근 뉴스 실적 전망",
+        "SK하이닉스 영업이익 컨센서스 상회",
+        "SK하이닉스 목표주가 상향 EPS 상향",
+        "SK하이닉스 매출 성장 마진 OPM",
+        "SK하이닉스 AI 데이터센터 HBM 반도체 클라우드"
+      ],
+      "legacy_initial_queries_are_historical_fixture_only": true
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "canonical_baseline_is_retrospective_as_of_filtered": true,
+  "canonical_final_score_or_stage_changed": false,
+  "canonical_semantic_revalidation_required": true,
+  "capability_runtime_proof": {
+    "document_ranker": "ResearcherDocumentRanker",
+    "document_ranker_present": true,
+    "naver_discovery_provider": "NaverFreeSearchProvider",
+    "naver_discovery_provider_present": true,
+    "page_fetcher": "PageFetcher",
+    "page_fetcher_present": true,
+    "query_expansion_llm_owned": true,
+    "score_gap_context_parameter_present": true,
+    "theme_context_parameter_present": true
+  },
+  "capability_transfers": [
+    {
+      "canonical_destination": "ResearcherSourceQueryPlanner",
+      "capability_id": "QUERY_EXPANSION",
+      "legacy_observation": "theme expansion and score-gap follow-up queries",
+      "transfer_mode": "failure/context feedback; new literal query remains LLM-generated"
+    },
+    {
+      "canonical_destination": "NaverFreeSearchProvider",
+      "capability_id": "NAVER_DISCOVERY",
+      "legacy_observation": "Naver search result aperture",
+      "transfer_mode": "discovery candidate only; snippet cannot become evidence"
+    },
+    {
+      "canonical_destination": "ResearcherDocumentRanker",
+      "capability_id": "DOCUMENT_RANKER",
+      "legacy_observation": "material document selection",
+      "transfer_mode": "LLM semantic ranking with every candidate accounted"
+    },
+    {
+      "canonical_destination": "PageFetcher",
+      "capability_id": "PAGE_FETCH",
+      "legacy_observation": "selected page/PDF body fetch",
+      "transfer_mode": "full body and content hash required before evidence eligibility"
+    },
+    {
+      "canonical_destination": "ResearcherSourceGraphAcquirer.theme_context",
+      "capability_id": "THEME_BRIDGE",
+      "legacy_observation": "theme route missing-information feedback",
+      "transfer_mode": "semantic context only; no target-specific query template"
+    },
+    {
+      "canonical_destination": "ResearcherSourceGraphAcquirer.score_gap_context",
+      "capability_id": "SCORE_GAP_FEEDBACK",
+      "legacy_observation": "failed gate and unresolved evidence feedback",
+      "transfer_mode": "failure reason only; retry query remains LLM-owned"
+    }
+  ],
+  "classification_counts": {
+    "CANONICAL_NEW_FACT": 50,
+    "LEGACY_DUPLICATE_NOISE": 1266,
+    "LEGACY_UNSAFE_FACT": 494,
+    "LEGACY_VALID_FACT_MISSED_BY_CANONICAL": 508
+  },
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "canonical_runtime_bridge_missing_count": 0,
+    "capability_transfer_missing_count": 0,
+    "classification_schema_missing_count": 0,
+    "classification_unrepresented_count": 0,
+    "deterministic_fallback_query_production_transfer_count": 0,
+    "frozen_shadow_misrepresented_as_production_evidence_count": 0,
+    "future_or_cross_target_valid_fact_count": 0,
+    "legacy_literal_query_production_transfer_count": 0,
+    "legacy_score_or_stage_authority_leakage_count": 0,
+    "legacy_unsafe_fact_score_credit_count": 0,
+    "legacy_valid_recall_threshold_failure_count": 0,
+    "literal_donor_query_in_production_feedback_count": 0,
+    "production_score_authority_count": 0,
+    "query_accounting_mismatch_count": 0,
+    "required_artifact_missing_count": 0,
+    "required_target_missing_count": 0,
+    "retrospective_canonical_baseline_disclosure_missing_count": 0,
+    "safe_fact_production_score_eligible_count": 0,
+    "shadow_snapshot_rebuild_mismatch_count": 0,
+    "snapshot_schema_mismatch_count": 0,
+    "source_config_snapshot_hash_mismatch_count": 0,
+    "source_graph_score_authority_count": 0,
+    "unexpected_target_count": 0,
+    "unknown_classification_count": 0,
+    "valid_fact_not_in_canonical_graph_count": 0,
+    "valid_fact_without_full_document_count": 0
+  },
+  "evaluation_mode": "FROZEN_KOREA_LIVE_LITE_SHADOW_RETRIEVAL",
+  "fact_match_method": "conservative exact economic fingerprint; semantic equivalence is not inferred",
+  "frozen_observation_is_production_readiness_evidence": false,
+  "legacy_mapping_authority_used": false,
+  "legacy_score_used": false,
+  "legacy_stage_used": false,
+  "metric_values": {
+    "canonical_recalled_legacy_valid_material_fact_count": 508,
+    "legacy_unsafe_fact_score_credit": 0.0,
+    "legacy_valid_material_fact_count": 508,
+    "legacy_valid_material_fact_recall": 1.0
+  },
+  "safe_legacy_facts_are_production_score_evidence": false,
+  "schema_version": "e2r_v5_legacy_retrieval_aperture_parity_v1",
+  "score_authority_leakage_paths": [],
+  "shadow_snapshot_rebuild_error": null,
+  "snapshot_sha256": "5321f6be2592e8771e45e0439205116279a20c2435af1bcef0fb487ad8e059c7",
+  "source_config_sha256": "266069d676d96dbee7338bcb3938a628ad2bf202824bc5f91d92027faa1c5c6d",
+  "status": "V5_PHASE92_LEGACY_RETRIEVAL_APERTURE_PARITY_PASS",
+  "target_comparisons": [
+    {
+      "as_of_date": "2026-06-28",
+      "canonical_new_fact_count": 17,
+      "canonical_recalled_legacy_valid_material_fact_count": 202,
+      "canonical_semantic_revalidation_required_count": 202,
+      "comparison_match_method": "target + normalized predicate + normalized value exact economic fingerprint",
+      "counterfact_candidate_count": 43,
+      "counterfact_classification_counts": {
+        "CANONICAL_NEW_FACT": 2,
+        "LEGACY_DUPLICATE_NOISE": 38,
+        "LEGACY_VALID_FACT_MISSED_BY_CANONICAL": 3
+      },
+      "covered_source_families": [
+        "CONSENSUS_REVISION",
+        "FINANCIAL_STATEMENTS",
+        "KIND_KRX",
+        "NAVER_DISCOVERY",
+        "OPENDART",
+        "PUBLIC_BROKER_PDF",
+        "VALUATION_MULTIPLES"
+      ],
+      "document_count": 97,
+      "document_ledger_sha256": "e73aafa25348ecb331f5dc6d48b388a310cc009e601f85650215616198ca1025",
+      "fact_classification_counts": {
+        "CANONICAL_NEW_FACT": 17,
+        "LEGACY_DUPLICATE_NOISE": 461,
+        "LEGACY_UNSAFE_FACT": 296,
+        "LEGACY_VALID_FACT_MISSED_BY_CANONICAL": 202
+      },
+      "fact_comparison_ledger_sha256": "39863af6b1abac78d999efff4cfcdcd6bd1d12dc27085d98f6184d20ea376386",
+      "full_document_verified_count": 50,
+      "generated_query_count": 20,
+      "generated_query_origin_counts": {
+        "LEGACY_DETERMINISTIC_TARGETED_SMOKE": 6,
+        "LEGACY_LLM_SCORE_GAP_FEEDBACK": 7,
+        "LEGACY_LLM_THEME_EXPANSION": 7
+      },
+      "legacy_unsafe_fact_count": 296,
+      "legacy_unsafe_fact_score_credit": 0.0,
+      "legacy_valid_material_fact_count": 202,
+      "legacy_valid_material_fact_recall": 1.0,
+      "literal_donor_query_in_production_feedback_count": 0,
+      "material_document_read_count": 19,
+      "production_feedback_hash": "dac345c3380116878e7dad44b125ad062467841fd24f6241a6ad0ea395a0eda6",
+      "recall_definition": "valid fact full-source document is present in the non-scoring canonical shadow graph",
+      "search_result_accounting": {
+        "final_fetched_document_count": 102,
+        "final_query_count": 20,
+        "final_ranked_search_result_count": 1250,
+        "initial_query_count": 6,
+        "material_document_read_count": 19,
+        "maximum_ranked_search_result_count": 1250
+      },
+      "search_result_ledger_sha256": "7a51872e11daedbc7356c2731bdad6bc82d234c6ab0cead48a6c39fa54857cf0",
+      "search_result_observation_count": 1244,
+      "selected_material_document_count": 19,
+      "selected_material_full_document_gap_count": 5,
+      "selected_material_full_document_verified_count": 14,
+      "semantic_equivalence_requires_canonical_revalidation": true,
+      "shadow_source_artifact_hashes": {
+        "canonical_claims": "ff2fb1e55a515001dcf47e83bc890d7e328134bf47c2ae37eac11e03cb0d2f6c",
+        "evidence": "03f031df72eb27ed10e4554e50a07820d4d9e558c922ab072722a063b6d6f402",
+        "phase_log": "6cbebd280bf53b2ec469b52dc859264fa2ab2e53b23a32d3fd7a935a4fe30bf4",
+        "run_log": "d250e84a1b073538fb4fd616d6fc5defc83c99f66ffd1730dec563e34cc4b6fc"
+      },
+      "source_graph_node_type_counts": {
+        "DOCUMENT": 50,
+        "SEARCH_CANDIDATE": 1244,
+        "SHADOW_QUERY": 20
+      },
+      "source_graph_score_authority": false,
+      "target_id": "005930",
+      "target_name": "삼성전자"
+    },
+    {
+      "as_of_date": "2026-06-28",
+      "canonical_new_fact_count": 33,
+      "canonical_recalled_legacy_valid_material_fact_count": 306,
+      "canonical_semantic_revalidation_required_count": 306,
+      "comparison_match_method": "target + normalized predicate + normalized value exact economic fingerprint",
+      "counterfact_candidate_count": 97,
+      "counterfact_classification_counts": {
+        "CANONICAL_NEW_FACT": 3,
+        "LEGACY_DUPLICATE_NOISE": 59,
+        "LEGACY_VALID_FACT_MISSED_BY_CANONICAL": 35
+      },
+      "covered_source_families": [
+        "CONSENSUS_REVISION",
+        "FINANCIAL_STATEMENTS",
+        "KIND_KRX",
+        "NAVER_DISCOVERY",
+        "OPENDART",
+        "PUBLIC_BROKER_PDF",
+        "VALUATION_MULTIPLES"
+      ],
+      "document_count": 102,
+      "document_ledger_sha256": "d1028cbc91ca90c81395a418e6f65a3c739520d6c4587e814b294718108a89f8",
+      "fact_classification_counts": {
+        "CANONICAL_NEW_FACT": 33,
+        "LEGACY_DUPLICATE_NOISE": 805,
+        "LEGACY_UNSAFE_FACT": 198,
+        "LEGACY_VALID_FACT_MISSED_BY_CANONICAL": 306
+      },
+      "fact_comparison_ledger_sha256": "a74e36ed489ec728a6adc4b7a8ca38c580689b0c4ff8d4bbeb08e9fb33d7b5e6",
+      "full_document_verified_count": 59,
+      "generated_query_count": 25,
+      "generated_query_origin_counts": {
+        "LEGACY_DETERMINISTIC_TARGETED_SMOKE": 6,
+        "LEGACY_LLM_SCORE_GAP_FEEDBACK": 2,
+        "LEGACY_LLM_THEME_EXPANSION": 17
+      },
+      "legacy_unsafe_fact_count": 198,
+      "legacy_unsafe_fact_score_credit": 0.0,
+      "legacy_valid_material_fact_count": 306,
+      "legacy_valid_material_fact_recall": 1.0,
+      "literal_donor_query_in_production_feedback_count": 0,
+      "material_document_read_count": 14,
+      "production_feedback_hash": "15181f8ed48d5960d5dfe7de034687970c0774c33bf52e968b871d1f42306caa",
+      "recall_definition": "valid fact full-source document is present in the non-scoring canonical shadow graph",
+      "search_result_accounting": {
+        "final_fetched_document_count": 81,
+        "final_query_count": 25,
+        "final_ranked_search_result_count": 1667,
+        "initial_query_count": 6,
+        "material_document_read_count": 14,
+        "maximum_ranked_search_result_count": 1769
+      },
+      "search_result_ledger_sha256": "d608093d00612248403e201d86cd81fcce46d835e0edde6df2fe7fd27e8a4281",
+      "search_result_observation_count": 1800,
+      "selected_material_document_count": 14,
+      "selected_material_full_document_gap_count": 3,
+      "selected_material_full_document_verified_count": 11,
+      "semantic_equivalence_requires_canonical_revalidation": true,
+      "shadow_source_artifact_hashes": {
+        "canonical_claims": "83ef3680726f944b89aabaa32e10581bf9df8dc2d5398102a4b3fc18140c1488",
+        "evidence": "abe261f57530975e598200da12e76c1939e66e64b773e5b0ae49de4c09bfb301",
+        "phase_log": "de483495c6c49f21f3ea98b59c327162b140bf0a552e947397d287c05764d705",
+        "run_log": "07240e2cc7fb40b5f445b21399fd9bca31f1dfd1e846d89ec0ed0adcda68a704"
+      },
+      "source_graph_node_type_counts": {
+        "DOCUMENT": 59,
+        "SEARCH_CANDIDATE": 1800,
+        "SHADOW_QUERY": 25
+      },
+      "source_graph_score_authority": false,
+      "target_id": "000660",
+      "target_name": "SK하이닉스"
+    }
+  ],
+  "thresholds": {
+    "legacy_unsafe_fact_score_credit_max": 0.0,
+    "legacy_valid_material_fact_recall_min": 0.95
+  }
+}
