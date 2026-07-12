@@ -1,0 +1,664 @@
+{
+  "as_of_date": "2026-07-11",
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "before_after_metrics_missing_count": 0,
+    "focused_test_failed_count": 0,
+    "forbidden_repair_action_count": 0,
+    "frozen_rerun_failure_count": 0,
+    "generalization_failure_count": 0,
+    "gold_comparison_failure_count": 0,
+    "iteration_count_over_max": 0,
+    "iteration_sequence_gap": 0,
+    "known_bad_failure_count": 0,
+    "live_rerun_failure_count": 0,
+    "repair_commit_missing_count": 0,
+    "root_cause_path_not_changed_count": 0,
+    "search_adequacy_failure_count": 0,
+    "unittest_error_count": 0,
+    "unittest_failure_count": 0,
+    "unittest_run_count_mismatch": 0,
+    "unknown_failure_class_count": 0,
+    "unresolved_external_provider_blocker_count": 0,
+    "unresolved_iteration_count": 0
+  },
+  "detector_lineage": {
+    "executed_detector_count": 17,
+    "passed_detector_count": 17,
+    "unique_detector_count": 17
+  },
+  "external_provider_blockers": [],
+  "final_failure_status": {
+    "COUNTER_EFFECT_IGNORED": "RESOLVED",
+    "DOCUMENT_DUPLICATE_CREDIT": "RESOLVED",
+    "ELIGIBILITY_CONTRADICTION": "RESOLVED",
+    "EVENT_STAGE_INJECTION": "RESOLVED",
+    "EVIDENCE_SEARCH_INADEQUATE": "RESOLVED",
+    "EXTERNAL_PROVIDER_BLOCKER": "NOT_OBSERVED",
+    "FACT_DUPLICATE_CREDIT": "RESOLVED",
+    "FULL_SCORE_INVALID": "RESOLVED",
+    "GOLD_MATERIAL_FACT_MISSED": "RESOLVED",
+    "POSITIVE_IMPACT_ERASED": "RESOLVED",
+    "QUESTION_COMPONENT_INCONSISTENCY": "RESOLVED",
+    "SCORING_SCHEMA_INCOMPLETE": "RESOLVED",
+    "SILENT_ZERO_CAP": "RESOLVED",
+    "STAGE_TRACE_MISMATCH": "RESOLVED",
+    "WRONG_MECHANISM_SCOPE": "RESOLVED"
+  },
+  "final_replay_snapshot": {
+    "frozen_critical_count_sum": 0,
+    "frozen_new_document_count": 0,
+    "frozen_status": "FROZEN_52F09F3_REPAIR_PASS",
+    "generalization_critical_count_sum": 0,
+    "generalization_status": "EVIDENCE_TO_SCORE_GENERALIZATION_PASS",
+    "gold_critical_fact_recall": 1.0,
+    "gold_leakage_count": 0,
+    "gold_noncritical_fact_recall": 1.0,
+    "gold_status": "BLIND_RESEARCH_QUALITY_PASS",
+    "known_bad_case_count": 35,
+    "known_bad_status": "SEMANTIC_SCORING_KNOWN_BAD_PASS",
+    "leaf_hashes": {
+      "docs/operational/e2r_evidence_search_adequacy_audit.json": "9c4c0859c48523e754ad08dd207843772d46b9e037f7f2b4c22bb94bc1b18938",
+      "docs/operational/e2r_evidence_to_score_generalization_audit.json": "8dafdfdad1e3c82a1ba8fc2e8fb96a1fae325667d1663995cceeaa1af1207ad4",
+      "docs/operational/e2r_frozen_52f09f3_repair_audit.json": "69b65e0d16783773f66b2d00976e7518935cddecff9e5ac7e140a968588f2e04",
+      "docs/operational/e2r_research_quality_gold_audit.json": "1f1a6ab2fb0226d11a41cfe3e3a9b8b0c8f90f5b18e8dbac518ab3115544231b",
+      "docs/operational/e2r_semantic_scoring_known_bad_audit.json": "0056772e06689d9b70aa0c41156cf5449fe3bc4ba0d1372992fa6aa7e1037f07",
+      "output/evidence_to_score_v2/live_2026-07-11/000660/accepted_current_claims.jsonl": "83ef3680726f944b89aabaa32e10581bf9df8dc2d5398102a4b3fc18140c1488",
+      "output/evidence_to_score_v2/live_2026-07-11/000660/atomic_stage_decision.json": "3cee92c2be88606ee44fe42604988a537a89b8734c1eeb30a7bba840c3ada7a6",
+      "output/evidence_to_score_v2/live_2026-07-11/000660/claim_impacts_validated.jsonl": "92174257d8991672cbe7db3e6673bad1d9920e80b3724e2f44381005a6479366",
+      "output/evidence_to_score_v2/live_2026-07-11/000660/component_score_vector.json": "da0e220edf9cd56a2bc30f0ca7b18eb1143cdb99a4edd109faca6ac4137b6c19",
+      "output/evidence_to_score_v2/live_2026-07-11/000660/component_subcriteria.jsonl": "7cd232b008183d4146a18e3e932700872dc70805d5514750f9eb7c8f65a7e342",
+      "output/evidence_to_score_v2/live_2026-07-11/005930/accepted_current_claims.jsonl": "ff2fb1e55a515001dcf47e83bc890d7e328134bf47c2ae37eac11e03cb0d2f6c",
+      "output/evidence_to_score_v2/live_2026-07-11/005930/atomic_stage_decision.json": "cb408ca367fcc4f093e93441137ff2e6d7cbe08c5678f64525660e70a9de22e2",
+      "output/evidence_to_score_v2/live_2026-07-11/005930/claim_impacts_validated.jsonl": "647d02cb6539f310eab65e0e1d5af2179e9bd459dc270b6c39e103e1f5f5284a",
+      "output/evidence_to_score_v2/live_2026-07-11/005930/component_score_vector.json": "6a8de5649506856feef36e91d964751f519b7029d27594f465862578261f46d5",
+      "output/evidence_to_score_v2/live_2026-07-11/005930/component_subcriteria.jsonl": "39e93414c0a1b3f719d8d90b70eecc6a6eaf7848fe59759e22df613079c952c4"
+    },
+    "live_status": "LIVE_SEMANTIC_SCORING_PASS",
+    "live_targets": {
+      "000660": {
+        "accepted_claim_count": 33,
+        "canonical_stage": "0",
+        "decision_status": "FINAL",
+        "full_e2r_score": 19.120509,
+        "full_score_valid": true,
+        "material_nonterminal_components": [],
+        "score_type": "FULL_E2R_100",
+        "subcriterion_count": 26,
+        "validated_impact_count": 115
+      },
+      "005930": {
+        "accepted_claim_count": 18,
+        "canonical_stage": "0",
+        "decision_status": "FINAL",
+        "full_e2r_score": 18.159977,
+        "full_score_valid": true,
+        "material_nonterminal_components": [],
+        "score_type": "FULL_E2R_100",
+        "subcriterion_count": 26,
+        "validated_impact_count": 37
+      }
+    },
+    "live_valid_target_count": 2,
+    "search_critical_count_sum": 0,
+    "search_question_count": 26,
+    "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7"
+  },
+  "forbidden_actions": {
+    "expected_score_hardcode_count": 0,
+    "fixture_as_live_count": 0,
+    "gold_source_injection_count": 0,
+    "report_only_repair_count": 0,
+    "synthetic_claim_promotion_count": 0,
+    "threshold_relaxation_count": 0
+  },
+  "iteration_count": 12,
+  "iterations": [
+    {
+      "after_metrics": {
+        "all_archetype_schema_total": 36,
+        "missing_scoring_policy_count": 0,
+        "silent_zero_default_count": 0
+      },
+      "before_metrics": {
+        "counter_missing_cap_zero_count": 1,
+        "missing_support_type_count": 3,
+        "positive_missing_cap_zero_count": 9
+      },
+      "failed_focused_tests": [],
+      "failure_class": "SILENT_ZERO_CAP",
+      "focused_tests": [
+        "tests.test_scoring_schema_totality.ScoringSchemaTotalityTests.test_operational_totality_audit_has_no_critical_count",
+        "tests.test_partial_bridge_nonzero_policy.PartialBridgeNonzeroPolicyTests.test_partial_bridge_has_research_backed_nonzero_cap"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 1,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_semantic_scoring_v2_forensic_baseline.md",
+      "patch_commit": "ad568c7af2ccf0c35554b1fec15f79ba03a001bf",
+      "patch_commit_subject": "Phase 59 scoring cap 전수성과 silent-zero 금지 구현",
+      "related_failure_classes": [
+        "SCORING_SCHEMA_INCOMPLETE"
+      ],
+      "repair": "누락 cap을 0점 기본값으로 처리하지 않고 total policy 또는 hard error로 바꿨다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "configs/e2r_scoring_policy_v2.json:support_type_policies",
+      "root_cause_path_changed_by_commit": true,
+      "target": "all archetypes"
+    },
+    {
+      "after_metrics": {
+        "cross_business_question_closure_count": 0,
+        "foundry_hbm_scope_violation_count": 0
+      },
+      "before_metrics": {
+        "cross_business_question_closure_count": 22
+      },
+      "failed_focused_tests": [],
+      "failure_class": "WRONG_MECHANISM_SCOPE",
+      "focused_tests": [
+        "tests.test_business_mechanism_scope.BusinessMechanismScopeTests.test_same_issuer_wrong_segment_is_rejected_and_rerouted",
+        "tests.test_foundry_not_hbm_allocation.FoundryNotHBMAllocationTests.test_tesla_foundry_claim_stays_global_but_c06_impact_is_rerouted"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 2,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_semantic_scoring_v2_forensic_baseline.md",
+      "patch_commit": "ad55168e02edb2aec0adf9309d70fe472801b6fb",
+      "patch_commit_subject": "Phase 60 동일 회사 내 사업부·제품 메커니즘 scope 검증 구현",
+      "related_failure_classes": [],
+      "repair": "issuer가 같아도 Foundry·기판·메모리 메커니즘을 분리하고 잘못된 impact를 reroute했다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "src/e2r/research_brain/scoring/business_mechanism_scope.py:MechanismScopeValidator",
+      "root_cause_path_changed_by_commit": true,
+      "target": "005930 and all archetypes"
+    },
+    {
+      "after_metrics": {
+        "component_score_without_eligibility_decision_count": 0,
+        "implicit_stage_event_eligibility_count": 0
+      },
+      "before_metrics": {
+        "legacy_boolean_contradiction_count": 39
+      },
+      "failed_focused_tests": [],
+      "failure_class": "ELIGIBILITY_CONTRADICTION",
+      "focused_tests": [
+        "tests.test_claim_eligibility_decision.ClaimEligibilityDecisionTests.test_accepted_claim_does_not_automatically_enter_every_plane"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 3,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_claim_eligibility_audit.json",
+      "patch_commit": "9ad5938c8df8863d052362b3d820727cbd21c09e",
+      "patch_commit_subject": "Phase 61 claim 장부·질문·점수·Stage eligibility 분리",
+      "related_failure_classes": [],
+      "repair": "accepted 하나로 모든 plane을 열던 boolean을 목적별 deterministic decision으로 분리했다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "src/e2r/research_brain/scoring/claim_eligibility.py:compile_claim_eligibility_decisions",
+      "root_cause_path_changed_by_commit": true,
+      "target": "claim scoring planes"
+    },
+    {
+      "after_metrics": {
+        "gold_leakage_count": 0,
+        "post_run_blind_gold_lane_count": 1
+      },
+      "before_metrics": {
+        "post_run_blind_gold_lane_count": 0
+      },
+      "failed_focused_tests": [],
+      "failure_class": "GOLD_MATERIAL_FACT_MISSED",
+      "focused_tests": [
+        "tests.test_gold_research_blindness.GoldResearchBlindnessTests.test_isolated_lanes_pass_without_gold_input_leakage"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 4,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_research_quality_gold_audit.json",
+      "patch_commit": "b2cb36d2c10ec5f6c755e5a3c86585af4f73cfbc",
+      "patch_commit_subject": "Phase 63 독립 deep-research 기준과 운영 조사 recall 검증 구현",
+      "related_failure_classes": [],
+      "repair": "production이 보지 못하는 사후 gold lane과 material-fact 비교를 추가했다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "src/e2r/research_brain/research_quality/blind_benchmark.py:compile_blind_benchmark",
+      "root_cause_path_changed_by_commit": true,
+      "target": "005930 and 000660 gold lane"
+    },
+    {
+      "after_metrics": {
+        "inadequate_absence_count": 0,
+        "question_level_adequacy_leaf_count": 26
+      },
+      "before_metrics": {
+        "question_level_adequacy_leaf_count": 0
+      },
+      "failed_focused_tests": [],
+      "failure_class": "EVIDENCE_SEARCH_INADEQUATE",
+      "focused_tests": [
+        "tests.test_absence_requires_adequate_search.AbsenceRequiresAdequateSearchTests.test_budget_exhaustion_is_pending_never_absence"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 5,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_evidence_search_adequacy_audit.json",
+      "patch_commit": "116650aae74134033e992f446bd6a5436e29763b",
+      "patch_commit_subject": "Phase 64 question별 source saturation과 research-grade 문서선택 구현",
+      "related_failure_classes": [],
+      "repair": "provider 실패·budget 소진·미조사를 absence와 분리하고 route별 search proof를 남겼다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "src/e2r/research_brain/research_quality/search_adequacy.py:compile_search_adequacy",
+      "root_cause_path_changed_by_commit": true,
+      "target": "question-family acquisition"
+    },
+    {
+      "after_metrics": {
+        "positive_impact_zeroed_by_missing_cap_count": 0,
+        "same_document_duplicate_credit_count": 0,
+        "same_fact_duplicate_credit_count": 0
+      },
+      "before_metrics": {
+        "positive_impact_zeroed_by_missing_cap_count": 9,
+        "same_document_duplicate_credit_count": 22
+      },
+      "failed_focused_tests": [],
+      "failure_class": "POSITIVE_IMPACT_ERASED",
+      "focused_tests": [
+        "tests.test_fact_cluster_dedupe.FactClusterDedupeTests.test_same_economic_fact_across_claims_and_documents_gets_one_credit",
+        "tests.test_document_cluster_credit_cap.DocumentClusterCreditCapTests.test_same_document_claim_fragments_do_not_stack_information_confidence"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 6,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_semantic_scoring_v2_forensic_baseline.md",
+      "patch_commit": "9dbe92b395ab8274e505bb1ac491908b0277828c",
+      "patch_commit_subject": "Phase 67 silent-zero 제거와 fact·document 중복점수 차단",
+      "related_failure_classes": [
+        "FACT_DUPLICATE_CREDIT",
+        "DOCUMENT_DUPLICATE_CREDIT"
+      ],
+      "repair": "유효 impact를 cap 누락으로 지우지 않고 fact/document cluster 단위로 중복 credit만 억제했다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "src/e2r/research_brain/scoring/impact_validator.py:ImpactValidator.validate",
+      "root_cause_path_changed_by_commit": true,
+      "target": "frozen Samsung/Hynix impact ledger"
+    },
+    {
+      "after_metrics": {
+        "counter_impact_ignored_count": 0,
+        "resolution_penalty_retained_count": 0
+      },
+      "before_metrics": {
+        "support_counter_component_counter_effect_zero_count": 1
+      },
+      "failed_focused_tests": [],
+      "failure_class": "COUNTER_EFFECT_IGNORED",
+      "focused_tests": [
+        "tests.test_counter_component_math.CounterComponentMathTests.test_capacity_counter_in_another_subcriterion_caps_same_component"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 7,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_counter_component_audit.json",
+      "patch_commit": "5045fd98878ba485193fd042c7c2f67adf29c570",
+      "patch_commit_subject": "Phase 69 support·counter·resolution을 component 점수에 동시 반영",
+      "related_failure_classes": [],
+      "repair": "support와 counter를 동시에 보존하고 연결된 resolution만 이전 감점을 해제하게 했다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "src/e2r/research_brain/scoring/counter_component_math.py:compile_counter_component_math",
+      "root_cause_path_changed_by_commit": true,
+      "target": "component support/counter plane"
+    },
+    {
+      "after_metrics": {
+        "positive_claim_absent_component_count": 0,
+        "supported_question_zero_credit_count": 0
+      },
+      "before_metrics": {
+        "question_component_contradiction_count": 8
+      },
+      "failed_focused_tests": [],
+      "failure_class": "QUESTION_COMPONENT_INCONSISTENCY",
+      "focused_tests": [
+        "tests.test_semantic_closure_reconciler.SemanticClosureReconcilerTests.test_supported_scoring_without_credit_is_pipeline_error"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 8,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_question_component_reconciliation_audit.json",
+      "patch_commit": "2966a47051868919b9881c0a2fc6b95425557659",
+      "patch_commit_subject": "Phase 70 질문·claim·impact·component semantic closure 원자검증",
+      "related_failure_classes": [],
+      "repair": "SUPPORTED 문구와 실제 nonzero bounded credit를 같은 lineage에서 원자 대조했다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "src/e2r/research_brain/scoring/semantic_closure_reconciler.py:SemanticClosureReconciler.reconcile",
+      "root_cause_path_changed_by_commit": true,
+      "target": "question/claim/impact/component chain"
+    },
+    {
+      "after_metrics": {
+        "claim_count_event_boost_count": 0,
+        "event_overlay_stage_injection_count": 0
+      },
+      "before_metrics": {
+        "accepted_claim_event_score_injection_count": 2
+      },
+      "failed_focused_tests": [],
+      "failure_class": "EVENT_STAGE_INJECTION",
+      "focused_tests": [
+        "tests.test_stagecourt_event_separation.StageCourtEventSeparationTests.test_claim_count_and_event_overlay_never_change_full_thesis_stage"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 9,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_stagecourt_event_separation_audit.json",
+      "patch_commit": "77a866c7ec18a10c9bd20fe829b0ce5f2b3ddd08",
+      "patch_commit_subject": "Phase 71 full-thesis Stage와 daily event overlay 완전 분리",
+      "related_failure_classes": [],
+      "repair": "daily event overlay는 모니터링 plane에만 남기고 full-thesis Stage 입력에서 제거했다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "src/e2r/research_brain/scoring/stagecourt_event_separation.py:audit_stagecourt_event_separation",
+      "root_cause_path_changed_by_commit": true,
+      "target": "deterministic StageCourt"
+    },
+    {
+      "after_metrics": {
+        "full_score_valid_with_semantic_failure_count": 0,
+        "semantic_full_score_gate_count": 13,
+        "stage_trace_mismatch_count": 0
+      },
+      "before_metrics": {
+        "semantic_full_score_gate_count": 0
+      },
+      "failed_focused_tests": [],
+      "failure_class": "FULL_SCORE_INVALID",
+      "focused_tests": [
+        "tests.test_full_score_validity_v2.FullScoreValidityV2Tests.test_invalid_semantics_preserve_verified_score_and_interval",
+        "tests.test_atomic_stagecourt_component_trace.AtomicStageCourtComponentTraceTests.test_score_impact_lineage_mismatch_is_rejected"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 10,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_full_score_validity_v2_audit.json",
+      "patch_commit": "d120dd1ed460a0193f780cf5d78183e176726757",
+      "patch_commit_subject": "Phase 72 semantic 일관성을 포함한 full score validity v2 구현",
+      "related_failure_classes": [
+        "STAGE_TRACE_MISMATCH"
+      ],
+      "repair": "semantic gate가 하나라도 실패하면 raw 참고점수는 보존하되 full score와 Stage 확정을 막았다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "src/e2r/research_brain/scoring/full_score_validity.py:compile_full_score_validity_evidence_v2",
+      "root_cause_path_changed_by_commit": true,
+      "target": "full score and Stage trace"
+    },
+    {
+      "after_metrics": {
+        "foundry_hbm_scope_violation_count": 0,
+        "new_document_count": 0,
+        "partial_bridge_missing_cap_zero_count": 0
+      },
+      "before_metrics": {
+        "foundry_hbm_cross_wire_present": 1,
+        "partial_bridge_missing_cap_zero_present": 1
+      },
+      "failed_focused_tests": [],
+      "failure_class": "POSITIVE_IMPACT_ERASED",
+      "focused_tests": [
+        "tests.test_frozen_52f09f3_repair.Frozen52f09f3RepairTests.test_no_silent_zero_or_semantic_internal_error_remains"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 11,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "docs/operational/e2r_frozen_52f09f3_repair_audit.json",
+      "patch_commit": "126975022add8aa075c88007385ac83e64230333",
+      "patch_commit_subject": "Phase 74 동일 corpus에서 하이닉스 0점 소거와 삼성 사업부 오매핑 수리 증명",
+      "related_failure_classes": [
+        "WRONG_MECHANISM_SCOPE",
+        "COUNTER_EFFECT_IGNORED"
+      ],
+      "repair": "문서를 추가하지 않고 같은 corpus에서 Hynix nonzero effect와 Samsung Foundry 제외를 재컴파일했다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "configs/e2r_frozen_52f09f3_repair_v1.json:target repair contracts",
+      "root_cause_path_changed_by_commit": true,
+      "target": "frozen 52f09f3 Samsung/Hynix corpus"
+    },
+    {
+      "after_metrics": {
+        "critical_gold_material_fact_miss_count": 0,
+        "live_full_score_valid_target_count": 2,
+        "search_adequacy_critical_count_sum": 0
+      },
+      "before_metrics": {
+        "live_full_score_valid_target_count": 0
+      },
+      "failed_focused_tests": [],
+      "failure_class": "GOLD_MATERIAL_FACT_MISSED",
+      "focused_tests": [
+        "tests.test_samsung_hynix_semantic_scoring_v2.SamsungHynixSemanticScoringV2Tests.test_both_live_dossiers_are_full_deterministic_terminal_scores",
+        "tests.test_gold_material_fact_recall.GoldMaterialFactRecallTests.test_operational_audit_is_live_samsung_hynix_not_fixture"
+      ],
+      "frozen_corpus_rerun": {
+        "critical_count_sum": 0,
+        "new_document_count": 0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "FROZEN_52F09F3_REPAIR_PASS"
+      },
+      "gold_comparison": {
+        "critical_count_sum": 0,
+        "critical_fact_recall": 1.0,
+        "noncritical_fact_recall": 1.0,
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "BLIND_RESEARCH_QUALITY_PASS"
+      },
+      "iteration": 12,
+      "live_production_rerun": {
+        "snapshot_id": "1ccb2b66c3c3e2ebebe75b16003dd6c20adcfd56d375c1d1107474d8b83ee7c7",
+        "status": "LIVE_SEMANTIC_SCORING_PASS",
+        "target_count": 2,
+        "valid_target_count": 2
+      },
+      "metric_source": "output/evidence_to_score_v2/live_2026-07-11",
+      "patch_commit": "37ff52e3b5627e513f6e1d6e155e1dae476d569d",
+      "patch_commit_subject": "Phase 75 삼성전자·하이닉스 blind deep-research와 semantic scoring 재검증",
+      "related_failure_classes": [
+        "EVIDENCE_SEARCH_INADEQUATE"
+      ],
+      "repair": "blind production을 다시 실행해 두 종목 모두 terminal FULL_E2R_100과 gold recall 1.0을 확인했다.",
+      "resolved_unresolved": "RESOLVED",
+      "root_cause_file_function_config": "configs/e2r_agentic_evidence_contracts_v2.json:C06 semantic evidence aliases",
+      "root_cause_path_changed_by_commit": true,
+      "target": "live 005930 and 000660"
+    }
+  ],
+  "max_iterations": 12,
+  "runner_output": "",
+  "schema_version": "e2r_semantic_scoring_self_repair_v1",
+  "status": "SELF_REPAIR_RESOLVED"
+}
