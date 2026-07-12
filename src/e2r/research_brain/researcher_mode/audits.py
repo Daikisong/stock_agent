@@ -1733,6 +1733,336 @@ def write_phase87_semantic_research_saturation_audit(
     return destination
 
 
+PHASE88_SCHEMA_VERSION = "e2r_v5_evidence_fact_graph_claim_utilization_audit_v1"
+PHASE88_PASS = "V5_PHASE88_EVIDENCE_FACT_GRAPH_CLAIM_UTILIZATION_PASS"
+PHASE88_AUDIT_PATH = (
+    "docs/operational/e2r_v5_evidence_fact_graph_claim_utilization_audit.json"
+)
+
+
+def compile_phase88_evidence_fact_graph_audit(
+    repo_root: str | Path,
+) -> Mapping[str, Any]:
+    """Compile a deterministic claim→fact→component→utilization canary."""
+
+    from .claim_utilization import (
+        CLAIM_UTILIZATION_STATUSES,
+        COMPONENT_MECHANISM_IDS_BY_COMPONENT,
+        ClaimComponentImpactProposal,
+        ClaimTerminalDisposition,
+    )
+    from .component_researcher import CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA
+    from .evidence_fact_compiler import EvidenceFactCompiler
+    from .evidence_fact_graph import (
+        EVIDENCE_FACT_GRAPH_OUTPUT_FILES,
+        EvidenceFactGraphEngine,
+    )
+    from .schemas import CANONICAL_COMPONENT_ORDER
+
+    root = Path(repo_root).resolve()
+    module_paths = (
+        "src/e2r/research_brain/researcher_mode/evidence_fact_compiler.py",
+        "src/e2r/research_brain/researcher_mode/claim_utilization.py",
+        "src/e2r/research_brain/researcher_mode/claim_impact_mapper.py",
+        "src/e2r/research_brain/researcher_mode/evidence_fact_graph.py",
+    )
+    missing_modules = [value for value in module_paths if not (root / value).is_file()]
+    source_text = "\n".join(
+        (root / value).read_text(encoding="utf-8")
+        for value in module_paths
+        if (root / value).is_file()
+    )
+    target_id = "PHASE88-CURRENT-TARGET"
+    as_of_date = "2026-06-29"
+    base = {
+        "accepted_by_evidence_os": True,
+        "target_id": target_id,
+        "as_of_date": as_of_date,
+        "subject": "current target business",
+        "business_segment": "core segment",
+        "product_family": "core product",
+        "economic_mechanism": "capacity allocation converts into earnings and cash",
+        "predicate": "allocation_and_cash_conversion_confirmed",
+        "value": True,
+        "unit": "flag",
+        "period": "2026Q2",
+        "direction": "POSITIVE",
+        "current_lifecycle": "CURRENT",
+        "published_at": "2026-06-20",
+        "material": True,
+    }
+    claims = (
+        {
+            **base,
+            "claim_id": "PHASE88-PRIMARY",
+            "source_id": "PHASE88-SOURCE-ISSUER-1",
+            "source_independence_group": "ISSUER",
+            "confidence": 0.9,
+            "question_family_tags": ["phase88_question"],
+            "primitive_tags": ["phase88_primitive"],
+        },
+        {
+            **base,
+            "claim_id": "PHASE88-CORROBORATION",
+            "source_id": "PHASE88-SOURCE-INDEPENDENT",
+            "source_independence_group": "INDEPENDENT",
+            "confidence": 0.8,
+        },
+        {
+            **base,
+            "claim_id": "PHASE88-DUPLICATE",
+            "source_id": "PHASE88-SOURCE-ISSUER-2",
+            "source_independence_group": "ISSUER",
+            "confidence": 0.7,
+        },
+        {
+            **base,
+            "claim_id": "PHASE88-PROFILE",
+            "predicate": "business_profile_only",
+            "value": "profile",
+            "economic_mechanism": "profile context without direct component credit",
+            "source_id": "PHASE88-SOURCE-PROFILE",
+            "source_independence_group": "ISSUER_PROFILE",
+            "confidence": 0.8,
+        },
+    )
+    preliminary = EvidenceFactCompiler().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        accepted_claims=claims,
+    )
+    fact_by_claim = {
+        link.claim_id: next(
+            fact for fact in preliminary.facts if fact.fact_id == link.fact_id
+        )
+        for link in preliminary.claim_fact_links
+    }
+    primary_fact = fact_by_claim["PHASE88-PRIMARY"]
+    profile_fact = fact_by_claim["PHASE88-PROFILE"]
+    proposals = (
+        ClaimComponentImpactProposal(
+            impact_id="PHASE88-IMPACT-EPS",
+            claim_id="PHASE88-PRIMARY",
+            fact_id=primary_fact.fact_id,
+            component_id="eps_fcf_explosion",
+            direction="SUPPORT",
+            component_mechanism_id="EARNINGS_CONVERSION",
+            fact_economic_mechanism=primary_fact.economic_mechanism,
+            proposed_credit_units=0.8,
+            rationale="direct earnings conversion mechanism",
+        ),
+        ClaimComponentImpactProposal(
+            impact_id="PHASE88-IMPACT-VISIBILITY",
+            claim_id="PHASE88-PRIMARY",
+            fact_id=primary_fact.fact_id,
+            component_id="earnings_visibility",
+            direction="SUPPORT",
+            component_mechanism_id="REVENUE_VISIBILITY",
+            fact_economic_mechanism=primary_fact.economic_mechanism,
+            proposed_credit_units=0.8,
+            rationale="same claim has a distinct visibility mechanism",
+        ),
+    )
+    result = EvidenceFactGraphEngine().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        material_claims=claims,
+        impact_proposals=proposals,
+        explicit_dispositions=(
+            ClaimTerminalDisposition(
+                disposition_id="PHASE88-DISPOSITION-PROFILE",
+                claim_id="PHASE88-PROFILE",
+                fact_id=profile_fact.fact_id,
+                status="PROFILE_ONLY",
+                rationale="profile context is retained without component credit",
+            ),
+        ),
+    )
+    missing_use = EvidenceFactGraphEngine().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        material_claims=(claims[3],),
+        impact_proposals=(),
+    )
+    future_claim = {
+        **claims[3],
+        "claim_id": "PHASE88-FUTURE",
+        "published_at": "2026-06-30",
+    }
+    future = EvidenceFactGraphEngine().compile(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        material_claims=(future_claim,),
+        impact_proposals=(),
+    )
+    primary_links = [
+        row
+        for row in result.fact_compilation.claim_fact_links
+        if row.fact_id == primary_fact.fact_id
+    ]
+    primary_utilization = {
+        row.claim_id: row.status
+        for row in result.claim_utilization.utilization_decisions
+    }
+    expected_statuses = {
+        "SCORED_SUPPORT",
+        "SCORED_COUNTER",
+        "CONFIDENCE_ONLY",
+        "PROFILE_ONLY",
+        "WRONG_MECHANISM",
+        "DUPLICATE_FACT",
+        "SUPERSEDED",
+        "REJECTED_WITH_REASON",
+    }
+    forbidden_target_tokens = ("005930", "000660", "삼성전자", "SK하이닉스")
+    critical = {
+        "required_module_missing_count": len(missing_modules),
+        "utilization_status_roster_mismatch_count": int(
+            set(CLAIM_UTILIZATION_STATUSES) != expected_statuses
+        ),
+        "component_mechanism_contract_missing_count": len(
+            set(CANONICAL_COMPONENT_ORDER)
+            - set(COMPONENT_MECHANISM_IDS_BY_COMPONENT)
+        ),
+        "component_mechanism_contract_roster_mismatch_count": int(
+            set(COMPONENT_MECHANISM_IDS_BY_COMPONENT)
+            != set(CANONICAL_COMPONENT_ORDER)
+        ),
+        "impact_mapper_schema_open_count": int(
+            CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA.get("additionalProperties")
+            is not False
+        ),
+        "impact_mapper_schema_score_stage_field_count": len(
+            {"score", "total_score", "stage", "final_stage"}
+            & set(CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA.get("properties") or {})
+        ),
+        "canary_graph_critical_count": int(result.audit["critical_count_sum"]),
+        "accepted_claim_without_fact_count": (
+            result.fact_compilation.accepted_claim_without_fact_count
+        ),
+        "same_fact_not_deduped_count": int(
+            len({row.fact_id for row in primary_links}) != 1
+        ),
+        "independent_confidence_not_improved_count": int(
+            primary_fact.confidence
+            <= max(row.claim_confidence for row in primary_links)
+        ),
+        "corroboration_scored_count": int(
+            primary_utilization.get("PHASE88-CORROBORATION")
+            != "CONFIDENCE_ONLY"
+        ),
+        "same_group_duplicate_scored_count": int(
+            primary_utilization.get("PHASE88-DUPLICATE") != "DUPLICATE_FACT"
+        ),
+        "many_component_impact_missing_count": int(
+            len(result.claim_utilization.validated_impacts) != 2
+        ),
+        "claim_credit_cap_violation_count": int(
+            sum(
+                row.validated_credit_units
+                for row in result.claim_utilization.validated_impacts
+            )
+            > 1.0 + 1e-9
+        ),
+        "silent_material_claim_not_blocked_count": int(
+            missing_use.status != "EVIDENCE_FACT_GRAPH_PENDING"
+            or missing_use.claim_utilization.audit["critical_counts"][
+                "material_claim_without_terminal_utilization_count"
+            ]
+            != 1
+        ),
+        "future_accepted_claim_not_blocked_count": int(
+            future.status != "EVIDENCE_FACT_GRAPH_PENDING"
+            or future.fact_compilation.accepted_claim_without_fact_count != 1
+        ),
+        "tag_score_gateway_count": int(
+            result.audit["critical_counts"][
+                "question_or_primitive_tag_score_gateway_count"
+            ]
+        ),
+        "output_file_missing_count": len(
+            {
+                "facts",
+                "claim_fact_links",
+                "graph_nodes",
+                "graph_edges",
+                "validated_impacts",
+                "claim_utilization",
+                "audit",
+            }
+            - set(EVIDENCE_FACT_GRAPH_OUTPUT_FILES)
+        ),
+        "target_name_condition_count": sum(
+            token in source_text for token in forbidden_target_tokens
+        ),
+        "deterministic_impact_fallback_marker_count": sum(
+            marker in source_text
+            for marker in (
+                "fallback_impact_templates =",
+                "if primitive_id ==",
+                "if question_family_id ==",
+            )
+        ),
+    }
+    return {
+        "schema_version": PHASE88_SCHEMA_VERSION,
+        "status": (
+            PHASE88_PASS
+            if sum(critical.values()) == 0
+            else "V5_PHASE88_EVIDENCE_FACT_GRAPH_CLAIM_UTILIZATION_FAIL"
+        ),
+        "critical_counts": critical,
+        "critical_count_sum": sum(critical.values()),
+        "claim_utilization_statuses": list(CLAIM_UTILIZATION_STATUSES),
+        "component_mechanism_ids_by_component": {
+            key: list(value)
+            for key, value in COMPONENT_MECHANISM_IDS_BY_COMPONENT.items()
+        },
+        "output_files": dict(EVIDENCE_FACT_GRAPH_OUTPUT_FILES),
+        "canary_counts": {
+            "claims": result.fact_compilation.input_claim_count,
+            "facts": len(result.facts),
+            "validated_impacts": len(
+                result.claim_utilization.validated_impacts
+            ),
+            "utilization_rows": len(
+                result.claim_utilization.utilization_decisions
+            ),
+            "nodes": len(result.nodes),
+            "edges": len(result.edges),
+        },
+        "same_economic_fact_points_once": True,
+        "independent_corroboration_improves_confidence": True,
+        "many_to_many_component_impacts_allowed": True,
+        "component_mechanism_validated": True,
+        "semantic_impact_mapping_owned_by_llm": True,
+        "claim_total_credit_cap_validated": True,
+        "question_family_score_gateway": False,
+        "primitive_score_gateway": False,
+        "production_score_authority": False,
+        "audit_hash": _stable_hash(
+            {
+                "critical": critical,
+                "statuses": CLAIM_UTILIZATION_STATUSES,
+                "mechanisms": COMPONENT_MECHANISM_IDS_BY_COMPONENT,
+                "outputs": EVIDENCE_FACT_GRAPH_OUTPUT_FILES,
+                "canary_fact_ids": [row.fact_id for row in result.facts],
+            }
+        ),
+    }
+
+
+def write_phase88_evidence_fact_graph_audit(
+    *, repo_root: str | Path, output_path: str | Path | None = None
+) -> Path:
+    root = Path(repo_root).resolve()
+    destination = Path(output_path or root / PHASE88_AUDIT_PATH)
+    if not destination.is_absolute():
+        destination = root / destination
+    write_json(destination, compile_phase88_evidence_fact_graph_audit(root))
+    return destination
+
+
 __all__ = [
     "PHASE80_ARTIFACT_PATHS",
     "PHASE80_PASS",
@@ -1750,14 +2080,19 @@ __all__ = [
     "PHASE87_AUDIT_PATH",
     "PHASE87_PASS",
     "PHASE87_SCHEMA_VERSION",
+    "PHASE88_AUDIT_PATH",
+    "PHASE88_PASS",
+    "PHASE88_SCHEMA_VERSION",
     "compile_phase80_forensics",
     "compile_phase84_researcher_mode_audit",
     "compile_phase85_source_graph_acquisition_audit",
     "compile_phase86_structured_financial_engine_audit",
     "compile_phase87_semantic_research_saturation_audit",
+    "compile_phase88_evidence_fact_graph_audit",
     "write_phase80_forensics",
     "write_phase84_researcher_mode_audit",
     "write_phase85_source_graph_acquisition_audit",
     "write_phase86_structured_financial_engine_audit",
     "write_phase87_semantic_research_saturation_audit",
+    "write_phase88_evidence_fact_graph_audit",
 ]

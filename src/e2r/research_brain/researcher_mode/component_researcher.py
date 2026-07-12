@@ -477,6 +477,91 @@ SEMANTIC_SATURATION_REVIEW_SCHEMA: Mapping[str, Any] = {
     },
 }
 
+CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "impact_proposals",
+        "non_scoring_dispositions",
+        "mapping_complete",
+        "unresolved_claim_ids",
+        "rationale",
+    ],
+    "properties": {
+        "impact_proposals": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "claim_id",
+                    "fact_id",
+                    "component_id",
+                    "direction",
+                    "component_mechanism_id",
+                    "fact_economic_mechanism",
+                    "proposed_credit_units",
+                    "rationale",
+                ],
+                "properties": {
+                    "claim_id": {"type": "string", "minLength": 1},
+                    "fact_id": {"type": "string", "minLength": 1},
+                    "component_id": {"type": "string", "minLength": 1},
+                    "direction": {
+                        "type": "string",
+                        "enum": ["SUPPORT", "COUNTER"],
+                    },
+                    "component_mechanism_id": {
+                        "type": "string",
+                        "minLength": 1,
+                    },
+                    "fact_economic_mechanism": {
+                        "type": "string",
+                        "minLength": 1,
+                    },
+                    "proposed_credit_units": {
+                        "type": "number",
+                        "exclusiveMinimum": 0,
+                        "maximum": 1,
+                    },
+                    "rationale": {"type": "string", "minLength": 1},
+                },
+            },
+        },
+        "non_scoring_dispositions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "claim_id",
+                    "fact_id",
+                    "status",
+                    "rationale",
+                    "component_ids",
+                ],
+                "properties": {
+                    "claim_id": {"type": "string", "minLength": 1},
+                    "fact_id": {"type": "string", "minLength": 1},
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "PROFILE_ONLY",
+                            "WRONG_MECHANISM",
+                            "REJECTED_WITH_REASON",
+                        ],
+                    },
+                    "rationale": {"type": "string", "minLength": 1},
+                    "component_ids": _STRING_ARRAY,
+                },
+            },
+        },
+        "mapping_complete": {"type": "boolean"},
+        "unresolved_claim_ids": _STRING_ARRAY,
+        "rationale": {"type": "string", "minLength": 1},
+    },
+}
+
 _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "BUSINESS_MODEL_RESEARCH": BUSINESS_MODEL_RESEARCH_SCHEMA,
     "COMPONENT_RESEARCH": COMPONENT_RESEARCH_SCHEMA,
@@ -489,6 +574,7 @@ _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "SOURCE_CANDIDATE_RANKING": SOURCE_CANDIDATE_RANKING_SCHEMA,
     "RESEARCH_SUPERVISOR_REVIEW": RESEARCH_SUPERVISOR_SCHEMA,
     "SEMANTIC_SATURATION_REVIEW": SEMANTIC_SATURATION_REVIEW_SCHEMA,
+    "CLAIM_COMPONENT_IMPACT_MAPPING": CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA,
 }
 
 
@@ -1033,6 +1119,14 @@ def _pass_instruction(pass_name: str) -> str:
             "supersession, structured-data, or new-source-family route remains. Zero search "
             "results and transport limits are never saturation proof."
         )
+    if pass_name == "CLAIM_COMPONENT_IMPACT_MAPPING":
+        return (
+            "Map each primary current EvidenceFact claim to every component whose distinct "
+            "economic mechanism it supports or counters. Use component mechanism ids from "
+            "the supplied contract. Explicitly dispose of every other primary material claim; "
+            "question-family and primitive tags are context only, never score gateways. Credit "
+            "units express duplicate-credit accounting, not component points or stage authority."
+        )
     if pass_name == "COMPONENT_ANALYST_JUDGE":
         return "Act as the positive analyst judge for exactly one component."
     if pass_name == "COMPONENT_SKEPTIC_JUDGE":
@@ -1058,6 +1152,7 @@ __all__ = [
     "SOURCE_QUERY_GENERATION_SCHEMA",
     "RESEARCH_SUPERVISOR_SCHEMA",
     "SEMANTIC_SATURATION_REVIEW_SCHEMA",
+    "CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA",
     "SYNTHESIS_REVIEW_SCHEMA",
     "StructuredResearchProvider",
     "ValuationResearcher",

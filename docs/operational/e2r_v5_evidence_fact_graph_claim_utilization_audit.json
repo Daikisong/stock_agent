@@ -1,0 +1,101 @@
+{
+  "audit_hash": "b3b0cae15626175104cd882c409d0aaad4c9edf708a5a57b1ecb2898f7eca005",
+  "canary_counts": {
+    "claims": 4,
+    "edges": 24,
+    "facts": 2,
+    "nodes": 20,
+    "utilization_rows": 4,
+    "validated_impacts": 2
+  },
+  "claim_total_credit_cap_validated": true,
+  "claim_utilization_statuses": [
+    "SCORED_SUPPORT",
+    "SCORED_COUNTER",
+    "CONFIDENCE_ONLY",
+    "PROFILE_ONLY",
+    "WRONG_MECHANISM",
+    "DUPLICATE_FACT",
+    "SUPERSEDED",
+    "REJECTED_WITH_REASON"
+  ],
+  "component_mechanism_ids_by_component": {
+    "bottleneck_pricing": [
+      "STRUCTURAL_SCARCITY",
+      "PRICING_POWER",
+      "CAPACITY_LOCK_OR_SHORTAGE"
+    ],
+    "capital_allocation": [
+      "CAPITAL_ALLOCATION",
+      "BALANCE_SHEET_CHANGE",
+      "CAPEX_RETURN_DISCIPLINE"
+    ],
+    "earnings_visibility": [
+      "REVENUE_VISIBILITY",
+      "CONTRACT_DURABILITY",
+      "BACKLOG_OR_CAPACITY_VISIBILITY"
+    ],
+    "eps_fcf_explosion": [
+      "EARNINGS_CONVERSION",
+      "FREE_CASH_FLOW_CONVERSION",
+      "GROWTH_MAGNITUDE"
+    ],
+    "information_confidence": [
+      "SOURCE_DIRECTNESS",
+      "INDEPENDENT_CORROBORATION",
+      "DISCLOSURE_QUALITY"
+    ],
+    "market_mispricing": [
+      "EXPECTATION_GAP",
+      "EARNINGS_REVISION",
+      "SURPRISE_OR_RELATIVE_REACTION"
+    ],
+    "valuation_rerating": [
+      "VALUATION_MULTIPLE",
+      "DURATION_RERATING",
+      "FORWARD_CASH_YIELD"
+    ]
+  },
+  "component_mechanism_validated": true,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "accepted_claim_without_fact_count": 0,
+    "canary_graph_critical_count": 0,
+    "claim_credit_cap_violation_count": 0,
+    "component_mechanism_contract_missing_count": 0,
+    "component_mechanism_contract_roster_mismatch_count": 0,
+    "corroboration_scored_count": 0,
+    "deterministic_impact_fallback_marker_count": 0,
+    "future_accepted_claim_not_blocked_count": 0,
+    "impact_mapper_schema_open_count": 0,
+    "impact_mapper_schema_score_stage_field_count": 0,
+    "independent_confidence_not_improved_count": 0,
+    "many_component_impact_missing_count": 0,
+    "output_file_missing_count": 0,
+    "required_module_missing_count": 0,
+    "same_fact_not_deduped_count": 0,
+    "same_group_duplicate_scored_count": 0,
+    "silent_material_claim_not_blocked_count": 0,
+    "tag_score_gateway_count": 0,
+    "target_name_condition_count": 0,
+    "utilization_status_roster_mismatch_count": 0
+  },
+  "independent_corroboration_improves_confidence": true,
+  "many_to_many_component_impacts_allowed": true,
+  "output_files": {
+    "audit": "evidence_fact_graph_audit.json",
+    "claim_fact_links": "claim_fact_links.jsonl",
+    "claim_utilization": "claim_utilization.jsonl",
+    "facts": "evidence_facts.jsonl",
+    "graph_edges": "evidence_fact_graph_edges.jsonl",
+    "graph_nodes": "evidence_fact_graph_nodes.jsonl",
+    "validated_impacts": "claim_component_impacts.jsonl"
+  },
+  "primitive_score_gateway": false,
+  "production_score_authority": false,
+  "question_family_score_gateway": false,
+  "same_economic_fact_points_once": true,
+  "schema_version": "e2r_v5_evidence_fact_graph_claim_utilization_audit_v1",
+  "semantic_impact_mapping_owned_by_llm": true,
+  "status": "V5_PHASE88_EVIDENCE_FACT_GRAPH_CLAIM_UTILIZATION_PASS"
+}
