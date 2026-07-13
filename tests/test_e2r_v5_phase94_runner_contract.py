@@ -536,7 +536,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                         "missing_roles_by_component": {
                             "eps_fcf_explosion": ["FORWARD_GUIDANCE"],
                             "market_mispricing": [],
-                            "valuation_rerating": [],
+                            "valuation_rerating": ["DURABLE_VISIBILITY"],
                         },
                         "covered_roles_by_component": {
                             "eps_fcf_explosion": ["FREE_CASH_FLOW"]
@@ -610,18 +610,47 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertNotIn(
             "OBJECTIVE-eps_fcf_explosion", context["resolved_objective_ids"]
         )
+        self.assertNotIn(
+            "OBJECTIVE-valuation_rerating", context["resolved_objective_ids"]
+        )
         self.assertEqual(
             set(context["resolved_objective_ids"]),
             {
                 f"OBJECTIVE-{component_id}"
                 for component_id in CANONICAL_COMPONENT_ORDER
-                if component_id != "eps_fcf_explosion"
+                if component_id
+                not in {"eps_fcf_explosion", "valuation_rerating"}
             },
         )
         structured_gap = context["structured_gap_context"]
         self.assertEqual(
             structured_gap["missing_roles_by_component"],
-            {"eps_fcf_explosion": ["FORWARD_GUIDANCE"]},
+            {
+                "eps_fcf_explosion": ["FORWARD_GUIDANCE"],
+                "valuation_rerating": ["DURABLE_VISIBILITY"],
+            },
+        )
+        resolution = structured_gap["missing_role_resolution_contracts"]
+        guidance = resolution["eps_fcf_explosion"]["FORWARD_GUIDANCE"]
+        durable = resolution["valuation_rerating"]["DURABLE_VISIBILITY"]
+        self.assertEqual(
+            guidance["llm_fact_extractable_roles"], ["FORWARD_GUIDANCE"]
+        )
+        self.assertEqual(
+            durable["accepted_engine_evidence_roles"],
+            ["DURABLE_VISIBILITY", "FORWARD_GUIDANCE"],
+        )
+        self.assertEqual(
+            durable["llm_fact_extractable_roles"], ["FORWARD_GUIDANCE"]
+        )
+        allowed = durable["fact_materialization_contracts"][
+            "FORWARD_GUIDANCE"
+        ]["allowed_source_families"]
+        self.assertIn("ISSUER_EARNINGS_RELEASE", allowed)
+        self.assertNotIn("PUBLIC_BROKER_PDF", allowed)
+        self.assertTrue(
+            durable["fact_materialization_contracts"]["FORWARD_GUIDANCE"]
+            ["third_party_estimate_is_not_substitutable"]
         )
         self.assertEqual(structured_gap["query_generation_owner"], "LLM")
         self.assertFalse(structured_gap["deterministic_fallback_query_allowed"])

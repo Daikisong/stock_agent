@@ -1839,7 +1839,12 @@ def _pass_instruction(pass_name: str) -> str:
         return (
             "Generate literal target-scoped discovery queries from the current facts, "
             "missing information, source failures, and open objectives. Do not reuse an "
-            "executed query and do not supply a deterministic fallback template."
+            "executed query and do not supply a deterministic fallback template. When "
+            "score_gap_context supplies missing_role_resolution_contracts, follow the "
+            "accepted evidence roles, allowed source families, and validation conditions "
+            "literally. Semantically adjacent evidence from an ineligible source is not "
+            "progress; for example, a third-party estimate cannot replace an issuer-only "
+            "requirement. The LLM still owns every literal query."
         )
     if pass_name == "SOURCE_CANDIDATE_RANKING":
         return (

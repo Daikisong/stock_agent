@@ -42,6 +42,7 @@ from .official_source_materializer import (
     write_official_source_materialization,
 )
 from .current_structured_materializer import (
+    FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS,
     CurrentStructuredMaterializationResult,
     CurrentStructuredSourceMaterializer,
 )
@@ -69,6 +70,7 @@ from .source_graph_explorer import (
 )
 from .structured_data_researcher import StructuredMetricRecord
 from .structured_financial_engine import (
+    PHASE86_COMPONENT_ROLE_COMPATIBILITY,
     PHASE86_REQUIRED_ROLES_BY_COMPONENT,
     StructuredEngineResult,
     StructuredFinancialConsensusValuationEngine,
@@ -1190,6 +1192,11 @@ def _load_prior_research_context(
                     for component_id, roles in missing_by_component.items()
                     if roles
                 },
+                "missing_role_resolution_contracts": (
+                    _structured_gap_resolution_contracts(
+                        missing_by_component
+                    )
+                ),
                 "covered_roles_by_component": structured.get(
                     "covered_roles_by_component"
                 )
@@ -1261,6 +1268,43 @@ def _load_prior_research_context(
         "resolved_objective_ids": resolved_objective_ids,
         "research_epoch": epoch_context,
     }
+
+
+def _structured_gap_resolution_contracts(
+    missing_roles_by_component: Mapping[str, Sequence[str]],
+) -> Mapping[str, Mapping[str, Mapping[str, Any]]]:
+    """Project deterministic role eligibility without synthesizing a query."""
+
+    result: dict[str, dict[str, Mapping[str, Any]]] = {}
+    for component_id, requirements in missing_roles_by_component.items():
+        component_contracts: dict[str, Mapping[str, Any]] = {}
+        for requirement in requirements:
+            accepted_roles = tuple(
+                dict.fromkeys(
+                    (
+                        str(requirement),
+                        *PHASE86_COMPONENT_ROLE_COMPATIBILITY.get(
+                            str(requirement), ()
+                        ),
+                    )
+                )
+            )
+            fact_contracts = {
+                role: dict(FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS[role])
+                for role in accepted_roles
+                if role in FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS
+            }
+            component_contracts[str(requirement)] = {
+                "accepted_engine_evidence_roles": list(accepted_roles),
+                "llm_fact_extractable_roles": list(fact_contracts),
+                "fact_materialization_contracts": fact_contracts,
+                "semantically_adjacent_ineligible_evidence_closes_gap": False,
+                "literal_query_generation_owner": "LLM",
+                "deterministic_fallback_query_allowed": False,
+            }
+        if component_contracts:
+            result[str(component_id)] = component_contracts
+    return result
 
 
 def _tree_hash(root: Path) -> str:

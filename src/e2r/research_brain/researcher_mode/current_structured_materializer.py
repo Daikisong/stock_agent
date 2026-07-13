@@ -95,6 +95,43 @@ _FACT_STRUCTURED_ROLES = frozenset(
     {"SEGMENT_CONTRIBUTION", "QOQ_GROWTH", "FORWARD_GUIDANCE"}
 )
 
+# Public discovery contract: this tells the LLM what kind of source-backed
+# observation the deterministic structured engine can actually accept.  It
+# deliberately contains no literal query, issuer name, sector name, or points.
+FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS: Mapping[
+    str, Mapping[str, Any]
+] = {
+    "SEGMENT_CONTRIBUTION": {
+        "allowed_source_families": tuple(
+            sorted(_ISSUER_STRUCTURED_SOURCE_FAMILIES)
+        ),
+        "exact_quote_required": True,
+        "machine_numeric_value_required": True,
+        "specific_business_segment_required": True,
+        "point_value_required": True,
+        "issuer_source_required": True,
+    },
+    "QOQ_GROWTH": {
+        "allowed_source_families": tuple(
+            sorted(_QOQ_STRUCTURED_SOURCE_FAMILIES)
+        ),
+        "exact_quote_required": True,
+        "machine_numeric_value_required": True,
+        "point_percent_required": True,
+        "current_lifecycle_required": True,
+    },
+    "FORWARD_GUIDANCE": {
+        "allowed_source_families": tuple(
+            sorted(_ISSUER_STRUCTURED_SOURCE_FAMILIES)
+        ),
+        "exact_quote_required": True,
+        "machine_numeric_point_or_range_required": True,
+        "period_must_be_forward_from_source_availability_date": True,
+        "issuer_source_required": True,
+        "third_party_estimate_is_not_substitutable": True,
+    },
+}
+
 CURRENT_STRUCTURED_OUTPUT_FILES: Mapping[str, str] = {
     "fetch_attempts": "current_structured_fetch_attempts.jsonl",
     "payload_manifest": "current_structured_payload_manifest.jsonl",
@@ -2587,6 +2624,7 @@ def _int(value: Any) -> int | None:
 
 __all__ = [
     "CURRENT_STRUCTURED_OUTPUT_FILES",
+    "FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS",
     "CurrentStructuredFetchAttempt",
     "CurrentStructuredMaterializationResult",
     "CurrentStructuredSourceMaterializer",
