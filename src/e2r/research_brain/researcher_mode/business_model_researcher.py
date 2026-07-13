@@ -22,8 +22,8 @@ from .schemas import (
 from .prompt_projection import (
     citable_fact_id_by_row_index,
     project_citable_evidence_facts,
-    project_source_claims,
-    project_source_document_table,
+    project_source_claim_profile,
+    project_source_document_profile,
     resolve_citable_fact_row_indices,
 )
 
@@ -95,8 +95,8 @@ class BusinessMechanismResearcher:
                     for key, value in fact_projection.items()
                     if key != "facts"
                 },
-                "source_claims": project_source_claims(source_claims),
-                "source_documents": project_source_document_table(
+                "source_claims": project_source_claim_profile(source_claims),
+                "source_documents": project_source_document_profile(
                     source_documents
                 ),
                 "source_coverage": list(source_coverage),

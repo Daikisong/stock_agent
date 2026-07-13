@@ -169,6 +169,7 @@ class ScriptedResearchProvider:
 class SchemaRecordingTransport:
     def __init__(self) -> None:
         self.output_schema: Mapping[str, Any] | None = None
+        self.prompt: str | None = None
         self.call_count = 0
 
     def complete(self, *, prompt, output_schema, schema_name):
@@ -176,8 +177,9 @@ class SchemaRecordingTransport:
             StructuredProviderResponse,
         )
 
-        del prompt, schema_name
+        del schema_name
         self.call_count += 1
+        self.prompt = prompt
         self.output_schema = output_schema
         return StructuredProviderResponse(
             payload={
@@ -251,6 +253,12 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         )
 
         self.assertIsNotNone(transport.output_schema)
+        self.assertIsNotNone(transport.prompt)
+        self.assertIn("if it is a loss-accounted profile", transport.prompt or "")
+        self.assertNotIn(
+            "decode source_claims.claims with source_claims.claim_fields",
+            (transport.prompt or "").casefold(),
+        )
         self.assertNotIn("uniqueItems", _recursive_keys(transport.output_schema))
         for pass_name, schema in _PROVIDER_SCHEMAS.items():
             with self.subTest(pass_name=pass_name):
@@ -649,6 +657,89 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
                 "source_coverage",
             }.issubset(component_payload)
         )
+
+    def test_large_dossier_keeps_every_fact_but_compacts_repeated_lineage(self) -> None:
+        provider = ScriptedResearchProvider()
+        facts = tuple(
+            _fact(
+                f"FACT-{index:04d}",
+                "POSITIVE" if index % 2 == 0 else "COUNTER",
+                "CURRENT" if index % 2 == 0 else "OPEN",
+            )
+            for index in range(1_200)
+        )
+        claims = tuple(
+            {
+                "claim_id": f"CLAIM-FACT-{index:04d}",
+                "document_id": "SRC-1",
+                "source_ids": ("SRC-1",),
+                "exact_quote": f"검증된 현재 사실 원문 {index}",
+                "source_family": "ISSUER_DISCLOSURE",
+                "source_tier": "PRIMARY",
+                "published_at": "2026-06-20",
+                "available_at": "2026-06-20",
+                "structured_evidence_roles": (),
+            }
+            for index in range(1_200)
+        )
+        dossier = CanonicalResearchDossierBuilder(
+            provider=provider, research_seeds=()
+        ).build(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=facts,
+            historical_anchors=self.anchors,
+            source_claims=claims,
+            source_documents=(
+                {
+                    "document_id": "SRC-1",
+                    "canonical_url": "https://issuer.example.com/current.pdf",
+                    "title": "현재 공식 원문",
+                    "source_family": "ISSUER_DISCLOSURE",
+                    "source_provider": "OFFICIAL",
+                    "published_at": "2026-06-20",
+                    "available_at": "2026-06-20",
+                    "content_type": "application/pdf",
+                    "content_hash": "a" * 64,
+                    "evidence_eligible": True,
+                    "content_text": "이미 사실 추출을 마친 원문 " * 20_000,
+                },
+            ),
+            source_coverage=("ISSUER_OFFICIAL",),
+            structured_metrics_by_component={key: {} for key in self.maxima},
+            component_max_points=self.maxima,
+            structured_metric_requirements={key: () for key in self.maxima},
+        )
+
+        self.assertEqual(dossier.status, "RESEARCH_MEMOS_COMPLETE")
+        research_calls = tuple(
+            call
+            for call in provider.calls
+            if call["pass_name"]
+            in {"BUSINESS_MODEL_RESEARCH", "COMPONENT_RESEARCH", "RED_TEAM_RESEARCH"}
+        )
+        self.assertEqual(len(research_calls), 9)
+        for call in research_calls:
+            payload = call["payload"]
+            projection = payload["current_evidence_fact_projection"]
+            self.assertEqual(projection["fact_count"], 1_200)
+            self.assertFalse(projection["fixed_top_n_used"])
+            self.assertTrue(
+                projection["every_fact_lineage_accounted_by_count_and_hash"]
+            )
+            self.assertEqual(payload["source_claims"]["record_count"], 1_200)
+            self.assertTrue(
+                payload["source_claims"][
+                    "every_record_accounted_by_hash_and_group_count"
+                ]
+            )
+            self.assertNotIn("claims", payload["source_claims"])
+            self.assertNotIn("documents", payload["source_documents"])
+            self.assertLess(
+                len(json.dumps(payload, ensure_ascii=False, sort_keys=True)),
+                500_000,
+            )
 
     def test_fabricated_fact_or_stage_output_becomes_pending_not_low_score(self) -> None:
         class FabricatingProvider(ScriptedResearchProvider):

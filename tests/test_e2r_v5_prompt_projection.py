@@ -15,7 +15,9 @@ from e2r.research_brain.researcher_mode.prompt_projection import (
     project_source_documents,
     project_source_document_table,
     project_source_graph_checkpoint,
+    project_source_claim_profile,
     project_source_claims,
+    project_source_document_profile,
     project_structured_records,
     project_supervisor_evidence_facts,
     project_supervisor_failures,
@@ -299,6 +301,23 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertNotIn(
             "question_family_tags", citable_projection["fact_fields"]
         )
+        for repeated_lineage_field in (
+            "source_ids",
+            "claim_ids",
+            "quote_ids",
+            "corroborating_independence_groups",
+        ):
+            self.assertNotIn(
+                repeated_lineage_field, citable_projection["fact_fields"]
+            )
+        self.assertTrue(
+            citable_projection[
+                "every_fact_lineage_accounted_by_count_and_hash"
+            ]
+        )
+        self.assertEqual(citable_projection["source_id_roster"]["count"], 1_000)
+        self.assertEqual(citable_projection["claim_id_roster"]["count"], 1_000)
+        self.assertEqual(citable_projection["quote_id_roster"]["count"], 1_000)
         self.assertLess(
             len(json.dumps(citable_projection, ensure_ascii=False, sort_keys=True)),
             len(json.dumps(facts, ensure_ascii=False, sort_keys=True)),
@@ -337,6 +356,74 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertLess(
             len(json.dumps(claim_projection, ensure_ascii=False, sort_keys=True)),
             len(json.dumps(claims, ensure_ascii=False, sort_keys=True)) // 2,
+        )
+        claim_profile = project_source_claim_profile(claims)
+        self.assertEqual(claim_profile["record_count"], 1_000)
+        self.assertTrue(
+            claim_profile["every_record_accounted_by_hash_and_group_count"]
+        )
+        self.assertTrue(
+            claim_profile["every_exact_quote_accounted_by_count_and_hash"]
+        )
+        self.assertNotIn(
+            "원문 인용 999",
+            json.dumps(claim_profile, ensure_ascii=False, sort_keys=True),
+        )
+
+        documents = tuple(
+            {
+                "document_id": f"DOC-{index:04d}",
+                "canonical_url": f"https://example.com/{index}",
+                "title": f"공식 문서 {index}",
+                "content_hash": hashlib.sha256(str(index).encode()).hexdigest(),
+                "source_family": "ISSUER_DISCLOSURE",
+                "source_provider": "OFFICIAL",
+                "published_at": "2026-07-10",
+                "available_at": "2026-07-10",
+                "content_type": "application/pdf",
+                "evidence_eligible": True,
+                "query_ids": (f"QUERY-{index:04d}",),
+                "objective_ids": (f"OBJECTIVE-{index % 7}",),
+                "content_text": "이미 사실 추출이 끝난 긴 원문 " * 100,
+            }
+            for index in range(1_000)
+        )
+        document_profile = project_source_document_profile(documents)
+        self.assertEqual(document_profile["record_count"], 1_000)
+        self.assertTrue(
+            document_profile["every_record_accounted_by_hash_and_group_count"]
+        )
+        self.assertEqual(document_profile["canonical_url_roster"]["count"], 1_000)
+        self.assertNotIn(
+            "이미 사실 추출이 끝난 긴 원문",
+            json.dumps(document_profile, ensure_ascii=False, sort_keys=True),
+        )
+        compact_research_context = {
+            "facts": citable_projection,
+            "claims": claim_profile,
+            "documents": document_profile,
+        }
+        raw_research_context = {
+            "facts": facts,
+            "claims": claims,
+            "documents": documents,
+        }
+        self.assertLess(
+            len(
+                json.dumps(
+                    compact_research_context,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+            ),
+            len(
+                json.dumps(
+                    raw_research_context,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+            )
+            // 3,
         )
 
         failures = tuple(

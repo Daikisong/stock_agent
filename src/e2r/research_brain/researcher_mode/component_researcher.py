@@ -33,8 +33,8 @@ from .schemas import (
 from .prompt_projection import (
     citable_fact_id_by_row_index,
     project_citable_evidence_facts,
-    project_source_claims,
-    project_source_document_table,
+    project_source_claim_profile,
+    project_source_document_profile,
     resolve_citable_fact_row_indices,
 )
 
@@ -804,7 +804,7 @@ class CodexResearcherProvider:
                 "Use only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.",
                 "Read the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.",
                 "For loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.",
-                "Decode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields, and decode source_claims.claims with source_claims.claim_fields.",
+                "Decode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete citable fact rows for claim meaning.",
                 "When the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.",
                 "Cite only ids present in the input. Do not invent facts, sources, metrics, or anchors.",
                 "Never output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.",
@@ -1323,8 +1323,10 @@ class ComponentResearcher:
                 ],
                 "historical_component_anchors": list(anchors),
                 "source_coverage": coverage_rows,
-                "source_claims": project_source_claims(citable_source_claims),
-                "source_documents": project_source_document_table(
+                "source_claims": project_source_claim_profile(
+                    citable_source_claims
+                ),
+                "source_documents": project_source_document_profile(
                     source_documents
                 ),
                 "structured_metric_rows": structured_metric_rows,

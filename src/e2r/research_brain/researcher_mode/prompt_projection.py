@@ -1,10 +1,11 @@
 """Loss-accounted prompt projections for already-validated research artifacts.
 
 Fact extraction is the only phase that needs full document bodies.  Later LLM
-passes consume verified facts, exact accepted quotes, document manifests, and
-deterministic summaries of every structured record.  The complete artifacts
-remain on disk; these projections are prompt-transport representations, never
-research-completion caps or score authorities.
+passes consume verified economic facts plus loss-accounted claim/document
+profiles and deterministic summaries of every structured record.  Exact quotes,
+full lineage, and complete artifacts remain on disk; these projections are
+prompt-transport representations, never research-completion caps or score
+authorities.
 """
 
 from __future__ import annotations
@@ -121,14 +122,14 @@ _CITABLE_FACT_PROMPT_FIELDS = (
     "unit",
     "period",
     "direction",
-    "source_ids",
-    "claim_ids",
-    "quote_ids",
     "current_lifecycle",
-    "source_independence_group",
     "confidence",
-    "corroborating_independence_groups",
     "structured_evidence_roles",
+)
+
+_CITABLE_FACT_DERIVED_FIELDS = (
+    "source_independence_group_index",
+    "corroborating_independence_group_count",
 )
 
 _SOURCE_CLAIM_PROMPT_FIELDS = (
@@ -950,7 +951,16 @@ def project_peer_selection_context(
 def project_citable_evidence_facts(
     rows: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
-    """Keep every citable fact id and semantic/source lineage for memo writers."""
+    """Keep every citable fact while encoding repeated lineage only once.
+
+    A provider cites the immutable ``fact_row_index`` and deterministic code
+    resolves that row back to the exact fact id.  Repeating source, claim, and
+    quote id arrays inside every semantic row made large current dossiers exceed
+    the model context even though those complete relations were already stored
+    in the Evidence Fact ledger.  The prompt therefore keeps every economic
+    observation and fact id, dictionary-encodes its source group, and accounts
+    for every omitted relation by count/hash.  This is not a top-N selection.
+    """
 
     payloads = tuple(_record_dict(row) for row in rows)
     ordered = tuple(
@@ -962,21 +972,74 @@ def project_citable_evidence_facts(
             ),
         )
     )
-    fact_fields = ("fact_row_index", *_CITABLE_FACT_PROMPT_FIELDS)
+    source_group_dictionary = tuple(
+        sorted(
+            {
+                str(row.get("source_independence_group") or "")
+                for row in ordered
+                if str(row.get("source_independence_group") or "").strip()
+            }
+        )
+    )
+    source_group_index = {
+        value: index for index, value in enumerate(source_group_dictionary)
+    }
+    fact_fields = (
+        "fact_row_index",
+        *_CITABLE_FACT_PROMPT_FIELDS,
+        *_CITABLE_FACT_DERIVED_FIELDS,
+    )
     facts = [
-        [index, *(row.get(key) for key in _CITABLE_FACT_PROMPT_FIELDS)]
+        [
+            index,
+            *(row.get(key) for key in _CITABLE_FACT_PROMPT_FIELDS),
+            source_group_index.get(
+                str(row.get("source_independence_group") or ""), -1
+            ),
+            len(
+                {
+                    str(value)
+                    for value in row.get("corroborating_independence_groups")
+                    or ()
+                    if str(value).strip()
+                }
+            ),
+        ]
         for index, row in enumerate(ordered)
     ]
     fact_id_index = fact_fields.index("fact_id")
     fact_ids = [str(row[fact_id_index] or "") for row in facts]
     return {
-        "schema_version": "e2r_v5_citable_fact_prompt_projection_v2",
+        "schema_version": "e2r_v5_citable_fact_prompt_projection_v3",
         "fact_count": len(ordered),
         "fact_roster_hash": _stable_hash(ordered),
         "fact_fields": list(fact_fields),
         "facts": facts,
         "every_fact_id_preserved": (
             len(set(fact_ids)) == len(ordered) and all(fact_ids)
+        ),
+        "source_independence_group_dictionary": list(
+            source_group_dictionary
+        ),
+        "source_id_roster": _project_text_roster(
+            source_id
+            for row in ordered
+            for source_id in row.get("source_ids") or ()
+        ),
+        "claim_id_roster": _project_text_roster(
+            claim_id
+            for row in ordered
+            for claim_id in row.get("claim_ids") or ()
+        ),
+        "quote_id_roster": _project_text_roster(
+            quote_id
+            for row in ordered
+            for quote_id in row.get("quote_ids") or ()
+        ),
+        "corroborating_independence_group_roster": _project_text_roster(
+            value
+            for row in ordered
+            for value in row.get("corroborating_independence_groups") or ()
         ),
         "target_id_coverage": _relation_coverage(ordered, "target_id"),
         "as_of_date_coverage": _relation_coverage(ordered, "as_of_date"),
@@ -1007,6 +1070,8 @@ def project_citable_evidence_facts(
             ]
         ),
         "advisory_tags_are_not_score_gates": True,
+        "every_fact_lineage_accounted_by_count_and_hash": True,
+        "repeated_lineage_arrays_omitted_from_semantic_rows": True,
         "full_fact_records_persisted_outside_prompt": True,
         "fixed_top_n_used": False,
         "prompt_projection_is_research_cap": False,
@@ -1110,6 +1175,123 @@ def project_source_claims(
         "prompt_projection_is_research_cap": False,
         "score_authority": False,
     }
+
+
+def project_source_claim_profile(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Account for all accepted claims after their facts have been compiled.
+
+    Later research passes reason over the complete citable fact table.  Replaying
+    every claim id, document id, and exact quote beside the same fact narrative
+    duplicates prompt text.  This profile preserves the source/date/role state
+    of every claim and hashes every exact quote and lineage roster; full claim
+    rows remain in ``material_fact_claims.jsonl`` for deterministic citation.
+    """
+
+    payloads = tuple(dict(row) for row in rows)
+    projection = dict(
+        _project_state_collection(
+            payloads,
+            collection_name="citable_source_claim_profile",
+            identity_fields=("claim_id",),
+            group_fields=(
+                "source_family",
+                "source_tier",
+                "published_at",
+                "available_at",
+            ),
+            relation_fields=(),
+            group_relation_fields=("structured_evidence_roles",),
+            numeric_fields=(),
+        )
+    )
+    exact_quotes = tuple(str(row.get("exact_quote") or "") for row in payloads)
+    projection.update(
+        {
+            "schema_version": "e2r_v5_citable_source_claim_profile_v1",
+            "claim_id_roster": _project_text_roster(
+                row.get("claim_id") for row in payloads
+            ),
+            "document_id_roster": _project_text_roster(
+                row.get("document_id") for row in payloads
+            ),
+            "source_id_roster": _project_text_roster(
+                source_id
+                for row in payloads
+                for source_id in row.get("source_ids") or ()
+            ),
+            "exact_quote_roster": _project_text_roster(exact_quotes),
+            "exact_quote_character_count": sum(map(len, exact_quotes)),
+            "every_exact_quote_accounted_by_count_and_hash": True,
+            "exact_quote_text_persisted_outside_prompt": True,
+            "fact_semantics_are_in_citable_evidence_fact_graph": True,
+            "full_claim_records_persisted_outside_prompt": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        }
+    )
+    return projection
+
+
+def project_source_document_profile(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Account for every source document without replaying body-free manifests."""
+
+    payloads = tuple(dict(row) for row in rows)
+    projection = dict(
+        _project_state_collection(
+            payloads,
+            collection_name="citable_source_document_profile",
+            identity_fields=("document_id",),
+            group_fields=(
+                "source_family",
+                "source_provider",
+                "published_at",
+                "available_at",
+                "content_type",
+                "evidence_eligible",
+            ),
+            relation_fields=(),
+            group_relation_fields=(),
+            numeric_fields=(),
+        )
+    )
+    projection.update(
+        {
+            "schema_version": "e2r_v5_citable_source_document_profile_v1",
+            "document_id_roster": _project_text_roster(
+                row.get("document_id") for row in payloads
+            ),
+            "canonical_url_roster": _project_text_roster(
+                row.get("canonical_url") or row.get("url") for row in payloads
+            ),
+            "title_roster": _project_text_roster(
+                row.get("title") for row in payloads
+            ),
+            "content_hash_roster": _project_text_roster(
+                row.get("content_hash") for row in payloads
+            ),
+            "query_id_roster": _project_text_roster(
+                query_id
+                for row in payloads
+                for query_id in row.get("query_ids") or ()
+            ),
+            "objective_id_roster": _project_text_roster(
+                objective_id
+                for row in payloads
+                for objective_id in row.get("objective_ids") or ()
+            ),
+            "document_bodies_already_consumed_by_fact_extraction": True,
+            "full_document_records_persisted_outside_prompt": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        }
+    )
+    return projection
 
 
 def project_supervisor_failures(
@@ -1524,6 +1706,8 @@ __all__ = [
     "project_source_documents",
     "project_source_graph_checkpoint",
     "project_source_claims",
+    "project_source_claim_profile",
+    "project_source_document_profile",
     "project_source_document_table",
     "project_structured_records",
     "project_structured_result",
