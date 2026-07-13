@@ -99,6 +99,7 @@ class Phase94IntegrationOfficialMaterializer:
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeTargetRunner,
     _historical_anchors,
+    _load_prior_research_context,
     _structured_result_from_official,
 )
 
@@ -424,6 +425,164 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ["example.com"],
             )
             self.assertFalse((result.output_root / "gold_fact_comparison.jsonl").exists())
+
+            runner.run_checkpoint(
+                config=config,
+                target=CurrentResearchTarget(
+                    symbol="CURRENT-TARGET",
+                    company_name="Current Corp",
+                    official_domains=("example.com",),
+                ),
+                repo_root=self.ROOT,
+            )
+            resumed_query_payload = [
+                row["payload"]
+                for row in provider.calls
+                if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+            ][-1]
+            self.assertTrue(
+                resumed_query_payload["score_gap_context"][
+                    "prior_structured_source_gap"
+                ]["missing_roles_by_component"]
+            )
+            self.assertEqual(
+                resumed_query_payload["score_gap_context"][
+                    "prior_structured_source_gap"
+                ]["query_generation_owner"],
+                "LLM",
+            )
+
+    def test_structured_role_gap_keeps_component_objective_open_for_llm_search(
+        self,
+    ) -> None:
+        target_id = "CURRENT-TARGET"
+        as_of_date = "2026-06-29"
+        objectives = tuple(
+            {
+                "objective_id": f"OBJECTIVE-{component_id}",
+                "component_id": component_id,
+            }
+            for component_id in CANONICAL_COMPONENT_ORDER
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "component_research_memos.jsonl").write_text(
+                "\n".join(
+                    json.dumps(
+                        {
+                            "component_id": component_id,
+                            "research_complete": True,
+                        }
+                    )
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "structured_engine_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "status": "SOURCE_PENDING",
+                        "missing_roles_by_component": {
+                            "eps_fcf_explosion": ["FORWARD_GUIDANCE"],
+                            "market_mispricing": [],
+                            "valuation_rerating": [],
+                        },
+                        "covered_roles_by_component": {
+                            "eps_fcf_explosion": ["FREE_CASH_FLOW"]
+                        },
+                        "component_disposition_by_component": {
+                            "eps_fcf_explosion": "PROVIDER_SOURCE_PENDING"
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "current_structured_materialization.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "pending_reasons": [
+                            "STRUCTURED_ROLE_MISSING:eps_fcf_explosion:FORWARD_GUIDANCE"
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "current_structured_materialization_audit.json").write_text(
+                json.dumps(
+                    {
+                        "issuer_fact_materialization": {
+                            "guidance_observation_count": 0,
+                            "issuer_source_required_for_segment_and_guidance": True,
+                        }
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        "checkpoint_id": "EPOCH-1",
+                        "epoch": 1,
+                        "status": "NEXT_RESEARCH_REQUIRED",
+                        "unresolved_material_questions": [
+                            "issuer forward guidance source is missing"
+                        ],
+                        "next_actions": ["generate a new source query with the LLM"],
+                        "supervisor_review": {
+                            "review_id": "SUPERVISOR-1",
+                            "epoch": 1,
+                            "status": "NEXT_RESEARCH_REQUIRED",
+                            "structured_data_complete": False,
+                            "query_direction_briefs": [
+                                {
+                                    "objective_id": "OBJECTIVE-eps_fcf_explosion",
+                                    "research_need": "numeric issuer outlook",
+                                    "avoid_repeating": [],
+                                    "counter_or_supersession": False,
+                                }
+                            ],
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=objectives,
+            )
+
+        self.assertNotIn(
+            "OBJECTIVE-eps_fcf_explosion", context["resolved_objective_ids"]
+        )
+        self.assertEqual(
+            set(context["resolved_objective_ids"]),
+            {
+                f"OBJECTIVE-{component_id}"
+                for component_id in CANONICAL_COMPONENT_ORDER
+                if component_id != "eps_fcf_explosion"
+            },
+        )
+        structured_gap = context["structured_gap_context"]
+        self.assertEqual(
+            structured_gap["missing_roles_by_component"],
+            {"eps_fcf_explosion": ["FORWARD_GUIDANCE"]},
+        )
+        self.assertEqual(structured_gap["query_generation_owner"], "LLM")
+        self.assertFalse(structured_gap["deterministic_fallback_query_allowed"])
+        self.assertEqual(
+            context["supervisor_gap_context"]["query_direction_briefs"][0][
+                "research_need"
+            ],
+            "numeric issuer outlook",
+        )
 
 
 if __name__ == "__main__":

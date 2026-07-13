@@ -274,6 +274,12 @@ class CurrentResearcherModeTargetRunner:
                 "prior_fact_extraction_feedback": list(
                     prior_context["research_gap_feedback"]
                 ),
+                "prior_structured_source_gap": dict(
+                    prior_context["structured_gap_context"]
+                ),
+                "prior_supervisor_gap": dict(
+                    prior_context["supervisor_gap_context"]
+                ),
                 "prior_research_epoch": prior_context["research_epoch"],
             },
             resolved_objective_ids=prior_context["resolved_objective_ids"],
@@ -298,6 +304,12 @@ class CurrentResearcherModeTargetRunner:
                 ),
                 "prior_fact_extraction_feedback": list(
                     prior_context["research_gap_feedback"]
+                ),
+                "prior_structured_source_gap": dict(
+                    prior_context["structured_gap_context"]
+                ),
+                "prior_supervisor_gap": dict(
+                    prior_context["supervisor_gap_context"]
                 ),
             },
             **prior_fact,
@@ -1077,12 +1089,79 @@ def _load_prior_research_context(
         for row in _read_jsonl(root / "component_research_memos.jsonl")
         if row.get("research_complete") is True
     }
+    structured_gap_context: Mapping[str, Any] = {}
+    structured_missing_components: set[str] = set()
+    structured_path = root / "structured_engine_result.json"
+    materialization_path = root / "current_structured_materialization.json"
+    materialization_audit_path = (
+        root / "current_structured_materialization_audit.json"
+    )
+    if structured_path.is_file():
+        structured = _read_json(structured_path)
+        if (
+            str(structured.get("target_id") or "") == target_id
+            and str(structured.get("as_of_date") or "") == as_of_date
+        ):
+            missing_by_component = {
+                str(component_id): tuple(
+                    str(role)
+                    for role in roles or ()
+                    if str(role).strip()
+                )
+                for component_id, roles in (
+                    structured.get("missing_roles_by_component") or {}
+                ).items()
+                if isinstance(roles, (list, tuple))
+            }
+            structured_missing_components = {
+                component_id
+                for component_id, roles in missing_by_component.items()
+                if roles
+            }
+            materialization = (
+                _read_json(materialization_path)
+                if materialization_path.is_file()
+                else {}
+            )
+            materialization_audit = (
+                _read_json(materialization_audit_path)
+                if materialization_audit_path.is_file()
+                else {}
+            )
+            structured_gap_context = {
+                "status": structured.get("status"),
+                "missing_roles_by_component": {
+                    component_id: list(roles)
+                    for component_id, roles in missing_by_component.items()
+                    if roles
+                },
+                "covered_roles_by_component": structured.get(
+                    "covered_roles_by_component"
+                )
+                or {},
+                "component_disposition_by_component": structured.get(
+                    "component_disposition_by_component"
+                )
+                or {},
+                "pending_reasons": list(
+                    materialization.get("pending_reasons") or ()
+                ),
+                "issuer_fact_materialization": (
+                    materialization_audit.get("issuer_fact_materialization")
+                    or {}
+                ),
+                "query_generation_owner": "LLM",
+                "deterministic_fallback_query_allowed": False,
+            }
     resolved_objective_ids = tuple(
         str(row["objective_id"])
         for row in objectives
         if str(row.get("component_id") or "") in complete_components
+        and str(row.get("component_id") or "")
+        not in structured_missing_components
     )
     epoch_context = None
+    supervisor_gap_context: Mapping[str, Any] = {}
     epoch_path = root / "research_epoch_checkpoint.json"
     if epoch_path.is_file():
         epoch = _read_json(epoch_path)
@@ -1095,10 +1174,35 @@ def _load_prior_research_context(
             ),
             "next_actions": epoch.get("next_actions"),
         }
+        supervisor = epoch.get("supervisor_review") or {}
+        if isinstance(supervisor, Mapping):
+            supervisor_gap_context = {
+                key: supervisor.get(key)
+                for key in (
+                    "review_id",
+                    "epoch",
+                    "status",
+                    "unresolved_material_questions",
+                    "missing_material_facts",
+                    "failure_assessments",
+                    "new_source_family_directions",
+                    "query_direction_briefs",
+                    "source_family_gaps",
+                    "parser_or_extractor_failures",
+                    "next_actions",
+                    "counter_and_supersession_checked",
+                    "structured_data_complete",
+                    "component_memos_sufficient",
+                    "reasonable_positive_routes_remaining",
+                )
+                if key in supervisor
+            }
     return {
         "facts": facts,
         "business_model": business_model,
         "research_gap_feedback": feedback,
+        "structured_gap_context": structured_gap_context,
+        "supervisor_gap_context": supervisor_gap_context,
         "resolved_objective_ids": resolved_objective_ids,
         "research_epoch": epoch_context,
     }
