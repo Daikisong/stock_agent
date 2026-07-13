@@ -311,6 +311,40 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             self.assertEqual(provider.response_cache_audit()["provider_error_count"], 2)
             self.assertEqual(list(Path(directory).glob("*.json")), [])
 
+    def test_codex_provider_evicts_only_downstream_semantically_invalid_response(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            payload = {"target_id": TARGET, "as_of_date": AS_OF_DATE}
+            first_transport = SchemaRecordingTransport()
+            first = CodexResearcherProvider(  # type: ignore[arg-type]
+                transport=first_transport
+            )
+            first.configure_response_cache(directory)
+            first.complete(pass_name="SOURCE_QUERY_GENERATION", payload=payload)
+
+            event = first.invalidate_last_response_cache(
+                "nearest anchors must also be historical_anchor_ids"
+            )
+
+            self.assertEqual(event["status"], "INVALID_RESPONSE_CACHE_DELETED")
+            self.assertEqual(list(Path(directory).glob("*.json")), [])
+            audit = first.response_cache_audit()
+            self.assertEqual(audit["downstream_semantic_invalidation_count"], 1)
+            self.assertEqual(audit["downstream_semantic_cache_delete_count"], 1)
+            self.assertEqual(
+                audit["downstream_semantic_cache_delete_failure_count"], 0
+            )
+
+            resumed_transport = SchemaRecordingTransport()
+            resumed = CodexResearcherProvider(  # type: ignore[arg-type]
+                transport=resumed_transport
+            )
+            resumed.configure_response_cache(directory)
+            resumed.complete(pass_name="SOURCE_QUERY_GENERATION", payload=payload)
+            self.assertEqual(resumed_transport.call_count, 1)
+            self.assertFalse(resumed.calls[-1]["cache_hit"])
+
     def test_component_research_resolves_metric_ids_to_immutable_input_values(self) -> None:
         provider = ScriptedResearchProvider()
         plans = ComponentResearchPlanner().plan(
@@ -349,6 +383,70 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         self.assertEqual(
             result.memo.structured_metrics,  # type: ignore[union-attr]
             {"FCF_ACTUALS": metric},
+        )
+
+    def test_component_semantic_validation_retries_once_without_code_repair(
+        self,
+    ) -> None:
+        class CorrectingProvider(ScriptedResearchProvider):
+            def __init__(self) -> None:
+                super().__init__()
+                self.invalidated_reasons: list[str] = []
+
+            def invalidate_last_response_cache(self, reason: str):
+                self.invalidated_reasons.append(reason)
+                return {"status": "FIXTURE_INVALIDATED"}
+
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                if (
+                    pass_name == "COMPONENT_RESEARCH"
+                    and "component_research_validation_retry_context"
+                    not in payload
+                ):
+                    response["historical_anchor_ids"] = list(
+                        response["nearest_counter_anchor_ids"]
+                    )
+                return response
+
+        provider = CorrectingProvider()
+        business = BusinessMechanismResearcher(provider=provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=self._plans()[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        component_calls = [
+            row for row in provider.calls
+            if row["pass_name"] == "COMPONENT_RESEARCH"
+        ]
+        retry_context = component_calls[-1]["payload"][
+            "component_research_validation_retry_context"
+        ]
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(len(component_calls), 2)
+        self.assertEqual(len(provider.invalidated_reasons), 1)
+        self.assertIn("nearest anchors", provider.invalidated_reasons[0])
+        self.assertIn("nearest anchors", retry_context["validation_error"])
+        self.assertNotEqual(
+            retry_context["rejected_response"]["historical_anchor_ids"],
+            result.memo.historical_anchor_ids,  # type: ignore[union-attr]
         )
 
     def test_planner_builds_seven_open_ended_plans_and_exposes_every_fact(self) -> None:

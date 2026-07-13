@@ -48,6 +48,9 @@ class Phase94IntegrationProvider:
             "transport_call_count": len(self.calls),
             "cache_hit_count": 0,
             "cache_invalid_or_unreadable_count": 0,
+            "downstream_semantic_invalidation_count": 0,
+            "downstream_semantic_cache_delete_count": 0,
+            "downstream_semantic_cache_delete_failure_count": 0,
         }
 
     def complete(self, *, pass_name, payload):

@@ -554,6 +554,9 @@ class CurrentResearcherModeTargetRunner:
                         "provider_error_count",
                         "prompt_transport_rejected_count",
                         "cache_invalid_or_unreadable_count",
+                        "downstream_semantic_invalidation_count",
+                        "downstream_semantic_cache_delete_count",
+                        "downstream_semantic_cache_delete_failure_count",
                     )
                 }
                 if provider_cache_audit is not None

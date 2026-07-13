@@ -772,7 +772,9 @@ class CodexResearcherProvider:
     provider_name: str = "CODEX_STRUCTURED_RESEARCHER_MODE"
     calls: list[Mapping[str, Any]] = field(default_factory=list)
     response_cache_directory: Path | None = None
+    cache_invalidations: list[Mapping[str, Any]] = field(default_factory=list)
     _response_cache_call_start_index: int = 0
+    _response_cache_invalidation_start_index: int = 0
 
     @classmethod
     def default(
@@ -932,14 +934,80 @@ class CodexResearcherProvider:
         cache_root.mkdir(parents=True, exist_ok=True)
         self.response_cache_directory = cache_root
         self._response_cache_call_start_index = len(self.calls)
+        self._response_cache_invalidation_start_index = len(
+            self.cache_invalidations
+        )
+
+    def invalidate_last_response_cache(self, reason: str) -> Mapping[str, Any]:
+        """Evict only the last response after downstream semantic rejection.
+
+        Transport/schema success is not enough to make a response reusable.  A
+        component parser can still reject cross-field relations that JSON Schema
+        cannot express, such as nearest anchors being a subset of cited anchors.
+        """
+
+        clean_reason = " ".join(str(reason).split())[-500:] or "unknown reason"
+        latest = self.calls[-1] if self.calls else None
+        event: dict[str, Any] = {
+            "reason": clean_reason,
+            "pass_name": None,
+            "prompt_hash": None,
+            "cache_key": None,
+            "cache_entry_existed": False,
+            "cache_entry_deleted": False,
+            "status": "NO_ELIGIBLE_RESPONSE",
+        }
+        if not isinstance(latest, Mapping) or latest.get("status") != "COMPLETE":
+            self.cache_invalidations.append(event)
+            return dict(event)
+        pass_name = str(latest.get("pass_name") or "")
+        cache_key = str(latest.get("cache_key") or "")
+        event.update(
+            {
+                "pass_name": pass_name or None,
+                "prompt_hash": latest.get("prompt_hash"),
+                "cache_key": cache_key or None,
+            }
+        )
+        if not pass_name or not cache_key:
+            self.cache_invalidations.append(event)
+            return dict(event)
+        path = self._cache_path(pass_name=pass_name, cache_key=cache_key)
+        if path is None:
+            event["status"] = "CACHE_DISABLED"
+            self.cache_invalidations.append(event)
+            return dict(event)
+        try:
+            existed = path.is_file()
+            event["cache_entry_existed"] = existed
+            path.unlink(missing_ok=True)
+            event["cache_entry_deleted"] = existed and not path.exists()
+            event["status"] = (
+                "INVALID_RESPONSE_CACHE_DELETED"
+                if event["cache_entry_deleted"]
+                else "CACHE_ENTRY_ALREADY_ABSENT"
+            )
+        except OSError as exc:
+            event["status"] = "CACHE_DELETE_FAILED"
+            event["delete_error"] = (
+                f"{exc.__class__.__name__}:"
+                + (" ".join(str(exc).split())[-500:] or "no detail")
+            )
+        self.cache_invalidations.append(event)
+        return dict(event)
 
     def response_cache_audit(self) -> Mapping[str, Any]:
         events = tuple(self.calls[self._response_cache_call_start_index :])
         cache_events = tuple(row for row in events if row.get("cache_key"))
+        invalidations = tuple(
+            self.cache_invalidations[
+                self._response_cache_invalidation_start_index :
+            ]
+        )
         cache_root = self.response_cache_directory
         return {
             "schema_version": (
-                "e2r_v5_research_provider_response_cache_audit_v1"
+                "e2r_v5_research_provider_response_cache_audit_v2"
             ),
             "status": (
                 "RESEARCH_PROVIDER_RESPONSE_CACHE_ACTIVE"
@@ -971,6 +1039,18 @@ class CodexResearcherProvider:
                 row.get("cache_read_status") == "INVALID_OR_UNREADABLE"
                 for row in cache_events
             ),
+            "downstream_semantic_invalidation_count": len(invalidations),
+            "downstream_semantic_cache_delete_count": sum(
+                row.get("status") == "INVALID_RESPONSE_CACHE_DELETED"
+                for row in invalidations
+            ),
+            "downstream_semantic_cache_delete_failure_count": sum(
+                row.get("status") == "CACHE_DELETE_FAILED"
+                for row in invalidations
+            ),
+            "downstream_semantic_invalidations": [
+                dict(row) for row in invalidations
+            ],
             "cache_entry_count": (
                 len(tuple(cache_root.glob("*.json")))
                 if cache_root is not None
@@ -1250,39 +1330,74 @@ class ComponentResearcher:
                 "structured_metric_rows": structured_metric_rows,
             }
         )
-        try:
-            response = self.provider.complete(
-                pass_name="COMPONENT_RESEARCH", payload=payload
-            )
-        except (
-            StructuredProviderUnavailable,
-            StructuredProviderRejected,
-            TimeoutError,
-            OSError,
-            RuntimeError,
-        ) as exc:
-            return _pending_result(self, "PROVIDER_ERROR", exc)
-        prompt_hash = _provider_prompt_hash(self.provider)
-        try:
-            memo = _component_memo_from_response(
-                response=response,
-                plan=plan,
-                facts=fact_by_id,
-                anchors=anchor_by_id,
-                coverage_labels=coverage_labels,
-                structured_metrics=metric_input,
-                structured_metric_id_by_row_index=(
-                    structured_metric_id_by_row_index
-                ),
-                fact_id_by_row_index=fact_id_by_row_index,
-            )
-        except (KeyError, TypeError, ValueError) as exc:
-            return _pending_result(
-                self,
-                "INVALID_PROVIDER_OUTPUT",
-                exc,
-                prompt_hash=prompt_hash,
-            )
+        attempt_payload = payload
+        validation_retry_used = False
+        while True:
+            try:
+                response = self.provider.complete(
+                    pass_name="COMPONENT_RESEARCH",
+                    payload=attempt_payload,
+                )
+            except (
+                StructuredProviderUnavailable,
+                StructuredProviderRejected,
+                TimeoutError,
+                OSError,
+                RuntimeError,
+            ) as exc:
+                return _pending_result(
+                    self,
+                    "PROVIDER_ERROR",
+                    exc,
+                    prompt_hash=_provider_prompt_hash(self.provider),
+                )
+            prompt_hash = _provider_prompt_hash(self.provider)
+            try:
+                memo = _component_memo_from_response(
+                    response=response,
+                    plan=plan,
+                    facts=fact_by_id,
+                    anchors=anchor_by_id,
+                    coverage_labels=coverage_labels,
+                    structured_metrics=metric_input,
+                    structured_metric_id_by_row_index=(
+                        structured_metric_id_by_row_index
+                    ),
+                    fact_id_by_row_index=fact_id_by_row_index,
+                )
+            except (KeyError, TypeError, ValueError) as exc:
+                _invalidate_provider_response_cache(self.provider, exc)
+                if validation_retry_used:
+                    return _pending_result(
+                        self,
+                        "INVALID_PROVIDER_OUTPUT",
+                        exc,
+                        prompt_hash=prompt_hash,
+                    )
+                validation_retry_used = True
+                attempt_payload = scrub_blind_research_payload(
+                    {
+                        **payload,
+                        "component_research_validation_retry_context": {
+                            "validation_error": (
+                                " ".join(str(exc).split())[-500:]
+                                or exc.__class__.__name__
+                            ),
+                            "rejected_response": response,
+                            "instruction": (
+                                "Rewrite the complete component memo. Use only "
+                                "supplied fact row indices, structured metric row "
+                                "indices, coverage labels, and anchor ids. Every "
+                                "nearest anchor must also appear in "
+                                "historical_anchor_ids and must match its positive "
+                                "or counter role. Do not let deterministic code "
+                                "repair or invent any citation."
+                            ),
+                        },
+                    }
+                )
+                continue
+            break
         pending = []
         if not memo.research_complete:
             pending.append("RESEARCHER_DECLARED_INCOMPLETE")
@@ -1664,6 +1779,25 @@ def _provider_prompt_hash(provider: StructuredResearchProvider) -> str | None:
         value = calls[-1].get("prompt_hash")
         return str(value) if value else None
     return None
+
+
+def _invalidate_provider_response_cache(
+    provider: StructuredResearchProvider,
+    error: Exception,
+) -> None:
+    invalidate = getattr(provider, "invalidate_last_response_cache", None)
+    if not callable(invalidate):
+        return
+    reason = (
+        f"{error.__class__.__name__}:"
+        + (" ".join(str(error).split())[-500:] or "no detail")
+    )
+    try:
+        invalidate(reason=reason)
+    except (OSError, TypeError, ValueError, RuntimeError):
+        # Cache audit failures must never turn a rejected memo into an accepted
+        # memo or suppress the bounded LLM correction attempt.
+        return
 
 
 def _pending_result(
