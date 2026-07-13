@@ -1,0 +1,182 @@
+{
+  "as_of_date": "2026-07-13",
+  "canonical_l5_materialization_contract": {
+    "current_fact_roster_must_match_checkpoint": true,
+    "fixed_round_zero_result_or_transport_completion_allowed": false,
+    "required_leaves": [
+      "RESEARCH_MEMOS_COMPLETE",
+      "SEMANTIC_SATURATION_CERTIFIED_WITH_THREE_PROVIDER_REVIEWS",
+      "DETERMINISTIC_SCORE_COMPLETE",
+      "FINAL_DETERMINISTIC_STAGECOURT"
+    ],
+    "seven_component_vector_must_reconcile": true,
+    "target_archetype_as_of_must_match": true
+  },
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "delta_reopen_scope_mismatch_count": 0,
+    "full_universe_row_mismatch_count": 0,
+    "integration_audit_critical_count": 0,
+    "query_authority_mismatch_count": 0,
+    "score_or_stage_authority_leak_count": 0,
+    "selective_deep_mismatch_count": 0,
+    "transport_cap_completed_l5_count": 0
+  },
+  "daily_census_rows": [
+    {
+      "as_of_date": "2026-07-13",
+      "assessment_id": "DASSESS-016ab871588273d203bc11e3",
+      "current_score": 70.0,
+      "current_stage": "2",
+      "daily_assessment_event_ids": [
+        "EVENT-DELTA-CONTRACT"
+      ],
+      "direct_investment_recommendation": false,
+      "dossier_id": "DOSSIER-01a70ad3e2da1cca4a636171",
+      "dossier_version": 1,
+      "full_thesis_status": "DELTA_RESEARCH_REQUIRED",
+      "maximum_depth": "L3_RESEARCH_BRAIN",
+      "next_action": "REFRESH_AFFECTED_COMPONENTS",
+      "pending_reasons": [
+        "REOPENED_COMPONENT_RESEARCH_AND_JUDGMENT_REQUIRED",
+        "DETERMINISTIC_RESCORE_AND_STAGECOURT_REQUIRED"
+      ],
+      "raw_reference_score": null,
+      "researcher_candidate": true,
+      "researcher_candidate_id": "RCAND-31b2a37569de8cc63168d2cb",
+      "score_display_status": "LAST_EFFECTIVE_PENDING_DELTA",
+      "target_id": "PHASE97-TARGET-A",
+      "target_name": "Target 0"
+    },
+    {
+      "as_of_date": "2026-07-13",
+      "assessment_id": "DASSESS-d0992c47cfb8b6ae5cde7ea7",
+      "current_score": null,
+      "current_stage": null,
+      "daily_assessment_event_ids": [],
+      "direct_investment_recommendation": false,
+      "dossier_id": null,
+      "dossier_version": null,
+      "full_thesis_status": "NOT_OPEN",
+      "maximum_depth": "L1_BASELINE",
+      "next_action": "OBSERVE_DAILY_ASSESSMENT",
+      "pending_reasons": [],
+      "raw_reference_score": null,
+      "researcher_candidate": false,
+      "researcher_candidate_id": null,
+      "score_display_status": "NO_CURRENT_SCORE",
+      "target_id": "PHASE97-TARGET-B",
+      "target_name": "Target 1"
+    },
+    {
+      "as_of_date": "2026-07-13",
+      "assessment_id": "DASSESS-5a34025857d2e0a886152f03",
+      "current_score": null,
+      "current_stage": null,
+      "daily_assessment_event_ids": [],
+      "direct_investment_recommendation": false,
+      "dossier_id": null,
+      "dossier_version": null,
+      "full_thesis_status": "BUDGET_CHECKPOINT_PENDING",
+      "maximum_depth": "L4_ACQUISITION",
+      "next_action": "RESUME_NEXT_BOUNDED_CHECKPOINT",
+      "pending_reasons": [
+        "bounded_checkpoint_exhausted"
+      ],
+      "raw_reference_score": null,
+      "researcher_candidate": true,
+      "researcher_candidate_id": "RCAND-f7f309973dcfb0c930eb3a66",
+      "score_display_status": "NO_CURRENT_SCORE",
+      "target_id": "PHASE97-TARGET-C",
+      "target_name": "Target 2"
+    }
+  ],
+  "delta_example": {
+    "as_of_date": "2026-07-13",
+    "changed_fact_ids": [
+      "FACT-DELTA-CONTRACT"
+    ],
+    "component_rejudge_ids": [
+      "earnings_visibility"
+    ],
+    "delta_id": "DDELTA-79862a490d71a391d70e07c5",
+    "deterministic_query_synthesis": false,
+    "deterministic_rescore_required": true,
+    "event_ids": [
+      "EVENT-DELTA-CONTRACT"
+    ],
+    "llm_score_authority": false,
+    "llm_stage_authority": false,
+    "new_canonical_stage": null,
+    "new_score_value": null,
+    "pending_reasons": [
+      "REOPENED_COMPONENT_RESEARCH_AND_JUDGMENT_REQUIRED",
+      "DETERMINISTIC_RESCORE_AND_STAGECOURT_REQUIRED"
+    ],
+    "prior_canonical_stage": "2",
+    "prior_dossier_id": "DOSSIER-01a70ad3e2da1cca4a636171",
+    "prior_score_value": 70.0,
+    "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+    "red_team_reopen": true,
+    "reopened_component_ids": [
+      "earnings_visibility"
+    ],
+    "retired_fact_ids": [],
+    "reused_component_ids": [
+      "eps_fcf_explosion",
+      "bottleneck_pricing",
+      "market_mispricing",
+      "valuation_rerating",
+      "capital_allocation",
+      "information_confidence"
+    ],
+    "score_delta": null,
+    "source_refresh_objectives": [
+      {
+        "checkpoint_bounded": true,
+        "component_id": "earnings_visibility",
+        "general_web_requires_official_gap": true,
+        "literal_query": null,
+        "official_first": true,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "reason_event_ids": [
+          "EVENT-DELTA-CONTRACT"
+        ],
+        "reason_fact_ids": [
+          "FACT-DELTA-CONTRACT"
+        ],
+        "transport_budget_is_completion": false
+      }
+    ],
+    "status": "DELTA_RESEARCH_REQUIRED",
+    "synthesis_reopen": true,
+    "target_id": "PHASE97-TARGET-A"
+  },
+  "dossier_persistence_contract": {
+    "affected_component_memos_reopened": true,
+    "contiguous_previous_dossier_lineage_required": true,
+    "score_delta_after_deterministic_rescore_only": true,
+    "unchanged_component_memos_reused": true,
+    "versioned": true
+  },
+  "operational_model": {
+    "L0": "full universe membership",
+    "L1": "full universe cheap baseline",
+    "L2": "bounded official light",
+    "L3": "selected Researcher Mode planning",
+    "L4": "bounded official-first Source Graph acquisition checkpoint",
+    "L5": "semantic-saturation-certified full research dossier"
+  },
+  "production_safety": {
+    "arbitrary_cap_can_complete_l5": false,
+    "general_web_requires_recorded_official_gap": true,
+    "literal_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+    "official_first": true,
+    "provider_or_source_failure_becomes_low_score": false,
+    "score_authority": "DETERMINISTIC_SCORE_AGGREGATOR",
+    "source_tasks_bounded_per_checkpoint": true,
+    "stage_authority": "DETERMINISTIC_STAGECOURT"
+  },
+  "schema_version": "e2r_v5_phase97_daily_census_integration_audit_v1",
+  "status": "V5_PHASE97_DAILY_CENSUS_RESEARCHER_INTEGRATION_PASS"
+}
