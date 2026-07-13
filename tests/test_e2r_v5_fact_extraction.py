@@ -12,6 +12,9 @@ from e2r.research_brain.researcher_mode import (
     production_material_fact_rows,
     write_researcher_fact_extraction_result,
 )
+from e2r.research_brain.planning.provider_transport import (
+    StructuredProviderUnavailable,
+)
 
 
 TARGET = "CURRENT-TARGET"
@@ -250,6 +253,46 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(result.facts, ())
         self.assertNotIn("score", result.to_dict())
         self.assertNotIn("stage", result.to_dict())
+
+    def test_transport_wide_provider_failure_opens_one_call_circuit_breaker(self) -> None:
+        class UnavailableProvider:
+            provider_name = "UNAVAILABLE_PROVIDER"
+
+            def __init__(self) -> None:
+                self.call_count = 0
+
+            def complete(self, *, pass_name, payload):
+                del pass_name, payload
+                self.call_count += 1
+                raise StructuredProviderUnavailable(
+                    "ERROR: You've hit your usage limit. try again later"
+                )
+
+        provider = UnavailableProvider()
+        result = ResearcherEvidenceFactExtractor(
+            provider=provider,
+            documents_per_call=1,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=tuple(
+                _document(f"DOC-{index}", "ISSUER_PRESENTATION", f"ISSUER:{index}")
+                for index in range(3)
+            ),
+            open_objectives=(),
+        )
+
+        self.assertEqual(provider.call_count, 1)
+        self.assertTrue(result.audit["provider_circuit_breaker_open"])
+        self.assertEqual(
+            result.audit["critical_counts"]["unaccounted_document_count"],
+            3,
+        )
+        self.assertEqual(len(result.provider_calls), 1)
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
 
     def test_wrong_business_segment_is_terminal_and_cannot_enter_fact_graph(self) -> None:
         result = ResearcherEvidenceFactExtractor(

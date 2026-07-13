@@ -349,6 +349,51 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             _semantic_signature(first), _semantic_signature(changed_failure)
         )
 
+    def test_no_progress_signature_normalizes_usage_limit_transport_noise(self) -> None:
+        def result(*, reset_time: str, temp_name: str):
+            usage_error = (
+                "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                "StructuredProviderUnavailable:command used "
+                f"/tmp/e2r_structured_provider_{temp_name}/output.json; "
+                "ERROR: You've hit your usage limit. "
+                f"try again at {reset_time}"
+            )
+            return SimpleNamespace(
+                source_graph=SimpleNamespace(
+                    status="CANDIDATE_RANKING_PENDING",
+                    checkpoint={
+                        "generated_queries": [],
+                        "search_candidates": [],
+                        "query_failures": [],
+                    },
+                    evidence_documents=(),
+                ),
+                fact_extraction=SimpleNamespace(
+                    status="FACT_EXTRACTION_PENDING",
+                    pending_reasons=(usage_error,),
+                    facts=(),
+                ),
+                dossier=SimpleNamespace(component_results=()),
+                structured_result=SimpleNamespace(status="SOURCE_PENDING", records=()),
+                score_aggregation=SimpleNamespace(
+                    status="SCORE_PENDING",
+                    pending_reasons=(usage_error,),
+                ),
+                research_epoch=SimpleNamespace(
+                    supervisor_review=SimpleNamespace(status="PROVIDER_PENDING")
+                ),
+            )
+
+        first = result(
+            reset_time="Jul 20th, 2026 3:58 AM",
+            temp_name="abc123",
+        )
+        second = result(
+            reset_time="Jul 21st, 2026 4:59 AM",
+            temp_name="different456",
+        )
+        self.assertEqual(_semantic_signature(first), _semantic_signature(second))
+
     def test_unstructured_roles_are_not_misclassified_as_structured_metrics(self) -> None:
         plans = ComponentResearchPlanner().plan(
             target_id="CURRENT",

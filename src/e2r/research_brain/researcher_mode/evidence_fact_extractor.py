@@ -247,6 +247,7 @@ class ResearcherEvidenceFactExtractor:
             for row in prepared
             if str(row["document_id"]) not in set(prior_disposition_ids)
         )
+        provider_circuit_breaker_open = False
         for batch in _document_batches(
             remaining,
             max_documents=self.documents_per_call,
@@ -355,6 +356,16 @@ class ResearcherEvidenceFactExtractor:
                             validation_retry_used=validation_retry_used,
                         )
                     )
+                    # ``StructuredProviderUnavailable`` is a transport-wide
+                    # failure, not a document-specific semantic rejection.
+                    # Retrying the same unavailable provider once per remaining
+                    # document only burns time and can make a no-progress
+                    # checkpoint look active.  Preserve the exact first
+                    # blocker, leave every untouched document unaccounted, and
+                    # let checkpoint/resume retry after the provider recovers.
+                    provider_circuit_breaker_open = isinstance(
+                        exc, StructuredProviderUnavailable
+                    )
                     break
                 response_hash = stable_intelligence_id(
                     "FACTRESP", scrub_blind_research_payload(response)
@@ -439,6 +450,8 @@ class ResearcherEvidenceFactExtractor:
                     )
                 )
                 break
+            if provider_circuit_breaker_open:
+                break
         compilation = EvidenceFactCompiler().compile(
             target_id=target_id,
             as_of_date=as_of_date,
@@ -497,6 +510,7 @@ class ResearcherEvidenceFactExtractor:
             "transport_chunk_size": self.documents_per_call,
             "transport_character_bound": self.max_document_chars_per_call,
             "transport_chunk_is_completion_cap": False,
+            "provider_circuit_breaker_open": provider_circuit_breaker_open,
             "accepted_material_claim_count": len(claims),
             "compiled_fact_count": len(compilation.facts),
             "counterfact_count": sum(

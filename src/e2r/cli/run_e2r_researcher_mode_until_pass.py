@@ -6,6 +6,7 @@ import argparse
 from datetime import date, timedelta
 import json
 from pathlib import Path
+import re
 
 from e2r.production.metadata import stable_hash, write_json
 from e2r.research_brain.researcher_mode import (
@@ -252,7 +253,9 @@ def _semantic_signature(result) -> str:
                     str(row.get("query_id") or ""),
                     str(row.get("candidate_id") or ""),
                     str(row.get("failure_stage") or ""),
-                    str(row.get("failure_reason") or ""),
+                    _semantic_failure_reason(
+                        str(row.get("failure_reason") or "")
+                    ),
                     bool(row.get("alternate_route_required")),
                 )
                 for row in source.get("query_failures") or ()
@@ -264,11 +267,19 @@ def _semantic_signature(result) -> str:
             "source_graph_status": result.source_graph.status,
             "fact_extraction_status": result.fact_extraction.status,
             "fact_extraction_pending": sorted(
-                result.fact_extraction.pending_reasons
+                _semantic_failure_reason(reason)
+                for reason in result.fact_extraction.pending_reasons
             ),
             "fact_ids": sorted(row.fact_id for row in result.fact_extraction.facts),
             "component_states": [
-                (row.component_id, row.status, tuple(row.pending_reasons))
+                (
+                    row.component_id,
+                    row.status,
+                    tuple(
+                        _semantic_failure_reason(reason)
+                        for reason in row.pending_reasons
+                    ),
+                )
                 for row in result.dossier.component_results
             ],
             "structured_status": result.structured_result.status,
@@ -276,10 +287,50 @@ def _semantic_signature(result) -> str:
                 row.record_id for row in result.structured_result.records
             ),
             "aggregation_status": result.score_aggregation.status,
-            "aggregation_pending": list(result.score_aggregation.pending_reasons),
+            "aggregation_pending": [
+                _semantic_failure_reason(reason)
+                for reason in result.score_aggregation.pending_reasons
+            ],
             "supervisor_status": result.research_epoch.supervisor_review.status,
         }
     )
+
+
+def _semantic_failure_reason(reason: str) -> str:
+    """Remove transport noise that cannot represent new research semantics."""
+
+    value = " ".join(str(reason).split())
+    folded = value.casefold()
+    prefix = value.split(":", 2)[:2]
+    stable_prefix = ":".join(prefix)
+    if "usage limit" in folded or "purchase more credits" in folded:
+        return f"{stable_prefix}:PROVIDER_USAGE_LIMIT"
+    if "timed out" in folded or "timeouterror" in folded:
+        return f"{stable_prefix}:PROVIDER_TIMEOUT"
+    if any(
+        marker in folded
+        for marker in (
+            "missing credential",
+            "missing api key",
+            "api_key is required",
+            "authentication failed",
+        )
+    ):
+        return f"{stable_prefix}:PROVIDER_CREDENTIAL_MISSING"
+    # Provider transports create a fresh temporary directory on each call.
+    # Its name and a retry timestamp are runtime noise, not evidence progress.
+    value = re.sub(
+        r"/tmp/e2r_structured_provider_[^/\s]+",
+        "/tmp/e2r_structured_provider_<TMP>",
+        value,
+    )
+    value = re.sub(
+        r"try again at [A-Za-z]{3} \d{1,2}(?:st|nd|rd|th), \d{4} [0-9: ]+[AP]M",
+        "try again at <PROVIDER_RESET_TIME>",
+        value,
+        flags=re.IGNORECASE,
+    )
+    return value
 
 
 if __name__ == "__main__":
