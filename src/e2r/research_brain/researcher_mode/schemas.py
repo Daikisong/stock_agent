@@ -391,7 +391,8 @@ class ComponentResearchMemo:
     why_not_higher: str
     why_not_lower: str
     researcher_role: str
-    schema_version: str = "e2r_component_research_memo_v1"
+    context_fact_ids: tuple[str, ...] = ()
+    schema_version: str = "e2r_component_research_memo_v2"
 
     def __post_init__(self) -> None:
         for value, label in (
@@ -420,6 +421,7 @@ class ComponentResearchMemo:
             (self.positive_fact_ids, "positive_fact_ids"),
             (self.counter_fact_ids, "counter_fact_ids"),
             (self.resolution_fact_ids, "resolution_fact_ids"),
+            (self.context_fact_ids, "context_fact_ids"),
             (self.historical_anchor_ids, "historical_anchor_ids"),
             (self.uncertainties, "uncertainties"),
             (self.source_coverage, "source_coverage"),
@@ -431,8 +433,13 @@ class ComponentResearchMemo:
             set(self.positive_fact_ids),
             set(self.counter_fact_ids),
             set(self.resolution_fact_ids),
+            set(self.context_fact_ids),
         )
-        if any(fact_sets[left] & fact_sets[right] for left, right in ((0, 1), (0, 2), (1, 2))):
+        if any(
+            fact_sets[left] & fact_sets[right]
+            for left in range(len(fact_sets))
+            for right in range(left + 1, len(fact_sets))
+        ):
             raise ValueError("memo fact direction lists must be disjoint")
         if not set(self.nearest_positive_anchor_ids).issubset(
             self.historical_anchor_ids

@@ -140,18 +140,18 @@ class RedTeamResearcher:
                 fact_id_by_row_index=fact_id_by_row_index,
                 label="challenged_fact_row_indices",
             )
-            counters = resolve_citable_fact_row_indices(
-                response["counter_fact_row_indices"],
-                fact_id_by_row_index=fact_id_by_row_index,
-                label="counter_fact_row_indices",
+            counters = tuple(
+                fact_id
+                for fact_id in challenged
+                if fact_by_id[fact_id].direction == "COUNTER"
+                and fact_by_id[fact_id].current_lifecycle
+                not in {"RESOLVED", "SUPERSEDED"}
             )
             cited_coverage = _strings(response, "source_coverage")
             if set(reviewed) - set(memo_by_component):
                 raise ValueError("red team cited an unresearched component")
             if set((*challenged, *counters)) - set(fact_by_id):
                 raise ValueError("red team cited an unknown EvidenceFact")
-            if any(fact_by_id[fact_id].direction != "COUNTER" for fact_id in counters):
-                raise ValueError("red-team counter_fact_ids must be COUNTER facts")
             if set(cited_coverage) - coverage_labels:
                 raise ValueError("red team cited unknown source coverage")
             # The ids are intentionally included in the identity even though

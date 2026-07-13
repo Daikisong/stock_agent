@@ -83,9 +83,7 @@ class ScriptedResearchProvider:
             counter_anchors = [row["anchor_id"] for row in anchors if row["role"] == "COUNTER"]
             maximum = float(payload["component_max_points"])
             response: dict[str, Any] = {
-                "positive_fact_row_indices": positive[:1],
-                "counter_fact_row_indices": counter[:1],
-                "resolution_fact_row_indices": [],
+                "selected_fact_row_indices": [*positive[:1], *counter[:1]],
                 "structured_metric_ids": list(payload["structured_metrics"]),
                 "historical_anchor_ids": [*positive_anchors[:1], *counter_anchors[:1]],
                 "nearest_positive_anchor_ids": positive_anchors[:1],
@@ -118,7 +116,6 @@ class ScriptedResearchProvider:
                     row["component_id"] for row in payload["component_research_memos"]
                 ],
                 "challenged_fact_row_indices": counters[:1],
-                "counter_fact_row_indices": counters[:1],
                 "resolved_challenges": ["source와 lifecycle을 대조함"],
                 "unresolved_challenges": [],
                 "recommended_research_directions": [],
@@ -385,6 +382,53 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             ["every_input_fact_accounted"]
         )
 
+    def test_component_fact_direction_is_resolved_from_immutable_fact_graph(self) -> None:
+        class SelectAllFactsProvider(ScriptedResearchProvider):
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(super().complete(pass_name=pass_name, payload=payload))
+                if pass_name == "COMPONENT_RESEARCH":
+                    response["selected_fact_row_indices"] = [
+                        row["fact_row_index"]
+                        for row in _projected_fact_rows(payload)
+                    ]
+                return response
+
+        provider = SelectAllFactsProvider()
+        neutral = _fact("FACT-NEUTRAL", "NEUTRAL", "OPEN")
+        facts = (*self.facts, neutral)
+        plans = ComponentResearchPlanner().plan(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            evidence_facts=facts,
+            historical_anchors=self.anchors,
+            research_seeds=(),
+            component_max_points=self.maxima,
+            structured_metric_requirements={key: () for key in self.maxima},
+        )
+        business = BusinessMechanismResearcher(provider=provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=plans[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(result.memo.context_fact_ids, ("FACT-NEUTRAL",))  # type: ignore[union-attr]
+        self.assertNotIn("FACT-NEUTRAL", result.memo.counter_fact_ids)  # type: ignore[union-attr]
+
     def test_provider_payload_is_blind_and_contains_all_required_research_inputs(self) -> None:
         provider = ScriptedResearchProvider()
         builder = CanonicalResearchDossierBuilder(provider=provider, research_seeds=())
@@ -443,7 +487,7 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             def complete(self, *, pass_name: str, payload: Mapping[str, Any]) -> Mapping[str, Any]:
                 result = dict(super().complete(pass_name=pass_name, payload=payload))
                 if pass_name == "COMPONENT_RESEARCH":
-                    result["positive_fact_row_indices"] = [999_999]
+                    result["selected_fact_row_indices"] = [999_999]
                 return result
 
         for provider in (FabricatingProvider(), ScriptedResearchProvider(inject_stage=True)):

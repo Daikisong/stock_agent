@@ -120,9 +120,7 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "type": "object",
     "additionalProperties": False,
     "required": [
-        "positive_fact_row_indices",
-        "counter_fact_row_indices",
-        "resolution_fact_row_indices",
+        "selected_fact_row_indices",
         "structured_metric_ids",
         "historical_anchor_ids",
         "nearest_positive_anchor_ids",
@@ -141,9 +139,7 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
         "research_complete",
     ],
     "properties": {
-        "positive_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
-        "counter_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
-        "resolution_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
+        "selected_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
         "structured_metric_ids": _STRING_ARRAY,
         "historical_anchor_ids": _STRING_ARRAY,
         "nearest_positive_anchor_ids": _STRING_ARRAY,
@@ -169,7 +165,6 @@ RED_TEAM_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "required": [
         "reviewed_component_ids",
         "challenged_fact_row_indices",
-        "counter_fact_row_indices",
         "resolved_challenges",
         "unresolved_challenges",
         "recommended_research_directions",
@@ -180,7 +175,6 @@ RED_TEAM_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "properties": {
         "reviewed_component_ids": _STRING_ARRAY,
         "challenged_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
-        "counter_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
         "resolved_challenges": _STRING_ARRAY,
         "unresolved_challenges": _STRING_ARRAY,
         "recommended_research_directions": _STRING_ARRAY,
@@ -1128,38 +1122,45 @@ def _component_memo_from_response(
     if not isinstance(response, Mapping):
         raise TypeError("component researcher response must be an object")
     assert_blind_research_output(response)
-    positive = resolve_citable_fact_row_indices(
-        response["positive_fact_row_indices"],
+    selected = resolve_citable_fact_row_indices(
+        response["selected_fact_row_indices"],
         fact_id_by_row_index=fact_id_by_row_index,
-        label="positive_fact_row_indices",
+        label="selected_fact_row_indices",
     )
-    counter = resolve_citable_fact_row_indices(
-        response["counter_fact_row_indices"],
-        fact_id_by_row_index=fact_id_by_row_index,
-        label="counter_fact_row_indices",
-    )
-    resolution = resolve_citable_fact_row_indices(
-        response["resolution_fact_row_indices"],
-        fact_id_by_row_index=fact_id_by_row_index,
-        label="resolution_fact_row_indices",
-    )
-    _require_ids_exist((*positive, *counter, *resolution), facts, "fact")
-    for fact_id in (*positive, *counter, *resolution):
+    _require_ids_exist(selected, facts, "fact")
+    for fact_id in selected:
         allowed = facts[fact_id].allowed_component_ids
         if allowed and plan.component_id not in allowed:
             raise ValueError(
                 f"fact is outside deterministic component mechanism scope: {fact_id}"
             )
-    for fact_id in positive:
-        if facts[fact_id].direction != EvidenceDirection.POSITIVE.value:
-            raise ValueError(f"positive_fact_ids has wrong direction: {fact_id}")
-    for fact_id in counter:
-        if facts[fact_id].direction != EvidenceDirection.COUNTER.value:
-            raise ValueError(f"counter_fact_ids has wrong direction: {fact_id}")
-    for fact_id in resolution:
-        fact = facts[fact_id]
-        if fact.direction != EvidenceDirection.RESOLUTION.value and fact.current_lifecycle != EvidenceLifecycle.RESOLVED.value:
-            raise ValueError(f"resolution_fact_ids has wrong lifecycle: {fact_id}")
+    resolution = tuple(
+        fact_id
+        for fact_id in selected
+        if facts[fact_id].direction == EvidenceDirection.RESOLUTION.value
+        or facts[fact_id].current_lifecycle
+        in {
+            EvidenceLifecycle.RESOLVED.value,
+            EvidenceLifecycle.SUPERSEDED.value,
+        }
+    )
+    positive = tuple(
+        fact_id
+        for fact_id in selected
+        if fact_id not in resolution
+        and facts[fact_id].direction == EvidenceDirection.POSITIVE.value
+    )
+    counter = tuple(
+        fact_id
+        for fact_id in selected
+        if fact_id not in resolution
+        and facts[fact_id].direction == EvidenceDirection.COUNTER.value
+    )
+    context = tuple(
+        fact_id
+        for fact_id in selected
+        if fact_id not in {*positive, *counter, *resolution}
+    )
     historical = _ids(response, "historical_anchor_ids")
     nearest_positive = _ids(response, "nearest_positive_anchor_ids")
     nearest_counter = _ids(response, "nearest_counter_anchor_ids")
@@ -1191,6 +1192,7 @@ def _component_memo_from_response(
         "resolved_positive_fact_ids": positive,
         "resolved_counter_fact_ids": counter,
         "resolved_resolution_fact_ids": resolution,
+        "resolved_context_fact_ids": context,
         "resolved_structured_metrics": returned_metrics,
     }
     return ComponentResearchMemo(
@@ -1202,6 +1204,7 @@ def _component_memo_from_response(
         positive_fact_ids=positive,
         counter_fact_ids=counter,
         resolution_fact_ids=resolution,
+        context_fact_ids=context,
         structured_metrics=dict(returned_metrics),
         historical_anchor_ids=historical,
         researcher_summary=str(response["researcher_summary"]),
