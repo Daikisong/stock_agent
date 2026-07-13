@@ -607,11 +607,31 @@ class ResearcherSourceGraphAcquirer:
         allowed_hosts = {
             _normalized_host(value) for value in official_domain_allowlist if value
         }
+        _annotate_candidate_source_hints(
+            candidates,
+            official_hosts=allowed_hosts,
+        )
+        _close_non_authority_candidate_reference_routes(candidates)
+        _reopen_authority_link_extraction_candidates(
+            candidates,
+            rejected_documents=rejected_rows,
+        )
         checkpoint_candidate_start_count = len(candidates)
         checkpoint_candidate_limit = (
             checkpoint_candidate_start_count + config.max_candidates_per_checkpoint
         )
         deferred_reference_count = 0
+        # A rejected/tiny official landing page can still point directly to
+        # the original transcript.  Preserve those candidate-level routes
+        # before using the checkpoint budget on broader document citations.
+        for parent_candidate in tuple(candidates):
+            deferred_reference_count += _enqueue_candidate_discovery_references(
+                candidates,
+                parent_candidate=parent_candidate,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                max_total_candidates=checkpoint_candidate_limit,
+            )
         for document in tuple(evidence_documents):
             deferred_reference_count += _enqueue_reference_candidates(
                 candidates,
@@ -621,14 +641,6 @@ class ResearcherSourceGraphAcquirer:
                 default_objective_ids=tuple(
                     str(row["objective_id"]) for row in unresolved_objectives
                 ),
-                max_total_candidates=checkpoint_candidate_limit,
-            )
-        for parent_candidate in tuple(candidates):
-            deferred_reference_count += _enqueue_candidate_discovery_references(
-                candidates,
-                parent_candidate=parent_candidate,
-                target_id=target_id,
-                as_of_date=as_of_date,
                 max_total_candidates=checkpoint_candidate_limit,
             )
         if deferred_reference_count:
@@ -1597,6 +1609,7 @@ def _execute_search_query(
                 "requested_source_families": list(
                     dict.fromkeys(requested_source_families)
                 ),
+                "direct_search_discovery": True,
                 "query_lineage_valid": result.query in {None, query},
                 "discovery_only": True,
                 "snippet_discovery_only": True,
@@ -1652,6 +1665,10 @@ def _merge_search_candidates(
                 )
             )
         )
+        existing["direct_search_discovery"] = bool(
+            existing.get("direct_search_discovery")
+            or row.get("direct_search_discovery")
+        )
 
 
 def _enqueue_reference_candidates(
@@ -1668,10 +1685,28 @@ def _enqueue_reference_candidates(
     requested_source_families = tuple(
         document.get("requested_source_families") or ()
     )
-    for raw_url in document.get("referenced_urls") or ():
+    document_source_family = str(document.get("source_family") or "")
+    document_text = str(
+        document.get("content_text")
+        or document.get("full_text")
+        or document.get("content")
+        or ""
+    )
+    authority_backed_document = (
+        document_source_family in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+    )
+    for raw_url in _ordered_reference_urls(
+        document.get("referenced_urls") or (),
+        parent_url=str(document.get("canonical_url") or document.get("url") or ""),
+    ):
         url = str(raw_url).strip()
         normalized = _normalize_url(url)
         if not normalized or not _is_http_url(url):
+            continue
+        if not authority_backed_document and url not in document_text:
+            # HTML navigation hrefs are stripped from fetched text.  A
+            # non-official document can expand only a URL it explicitly cites
+            # in its retained body, not every menu/share link on the page.
             continue
         existing = by_url.get(normalized)
         objective_ids = tuple(
@@ -1767,6 +1802,8 @@ def _enqueue_candidate_discovery_references(
     parent_id = str(parent_candidate.get("candidate_id") or "").strip()
     if not parent_id:
         return 0
+    if not _candidate_reference_expansion_authority(parent_candidate):
+        return 0
     parent_url = _normalize_url(str(parent_candidate.get("url") or ""))
     by_url = {str(row.get("normalized_url")): row for row in candidates}
     objective_ids = tuple(parent_candidate.get("objective_ids") or ())
@@ -1775,7 +1812,10 @@ def _enqueue_candidate_discovery_references(
         parent_candidate.get("requested_source_families") or ()
     )
     deferred_count = 0
-    for raw_url in parent_candidate.get("discovered_referenced_urls") or ():
+    for raw_url in _ordered_reference_urls(
+        parent_candidate.get("discovered_referenced_urls") or (),
+        parent_url=str(parent_candidate.get("url") or ""),
+    ):
         url = str(raw_url).strip()
         normalized = _normalize_url(url)
         if (
@@ -1845,6 +1885,8 @@ def _enqueue_candidate_discovery_references(
             "query_lineage_valid": True,
             "graph_expansion_parent_candidate_ids": [parent_id],
             "reference_discovery_only": True,
+            "reference_expansion_parent_authority_verified": True,
+            "reference_expansion_policy": "VERIFIED_OFFICIAL_PARENT_ONLY",
             "discovery_only": True,
             "snippet_discovery_only": True,
             "snippet_evidence_eligible": False,
@@ -1881,6 +1923,20 @@ def _fetch_candidate_document(
         reason = f"PAGE_FETCH_PROVIDER_ERROR:{type(exc).__name__}:{exc}"
         rejection = _candidate_rejection(candidate, reason, retryable=True)
         return _fetch_record(fetch_id, candidate, "FETCH_FAILED", reason), None, rejection
+    page_referenced_urls = tuple(
+        str(value).rstrip(".,);]")
+        for value in getattr(result, "referenced_urls", ())
+        if str(value).strip()
+    )
+    candidate["discovered_page_referenced_urls"] = list(
+        dict.fromkeys(page_referenced_urls)
+    )
+    candidate["discovered_text_referenced_urls"] = []
+    candidate["discovered_referenced_urls"] = [
+        value
+        for value in dict.fromkeys(page_referenced_urls)
+        if _normalize_url(value) != _normalize_url(url)
+    ]
     if not result.ok or not str(result.text or "").strip():
         reason = "SNIPPET_ONLY_FULL_FETCH_REQUIRED:" + str(
             result.reason or "empty full document"
@@ -1889,20 +1945,23 @@ def _fetch_candidate_document(
         rejection = _candidate_rejection(candidate, reason, retryable=retryable)
         return _fetch_record(fetch_id, candidate, "FETCH_FAILED", reason), None, rejection
     text = str(result.text or "").strip()
+    text_referenced_urls = tuple(
+        value.rstrip(".,);]")
+        for value in re.findall(r"https?://[^\s<>\"']+", text)
+    )
     referenced_urls = tuple(
         dict.fromkeys(
             (
-                *(
-                    str(value).rstrip(".,);]")
-                    for value in getattr(result, "referenced_urls", ())
-                    if str(value).strip()
-                ),
-                *(
-                    value.rstrip(".,);]")
-                    for value in re.findall(r"https?://[^\s<>\"']+", text)
-                ),
+                *page_referenced_urls,
+                *text_referenced_urls,
             )
         )
+    )
+    candidate["discovered_page_referenced_urls"] = list(
+        dict.fromkeys(page_referenced_urls)
+    )
+    candidate["discovered_text_referenced_urls"] = list(
+        dict.fromkeys(text_referenced_urls)
     )
     candidate["discovered_referenced_urls"] = [
         value
@@ -1984,6 +2043,18 @@ def _fetch_candidate_document(
     source_family = _classify_source_family(
         candidate, url=url, official_hosts=official_hosts
     )
+    evidence_reference_urls = tuple(
+        dict.fromkeys(
+            (
+                *text_referenced_urls,
+                *(
+                    page_referenced_urls
+                    if source_family in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+                    else ()
+                ),
+            )
+        )
+    )
     existing = content_hash_to_document.get(content_hash)
     if existing is not None:
         if isinstance(existing, dict):
@@ -2015,7 +2086,7 @@ def _fetch_candidate_document(
                 dict.fromkeys(
                     (
                         *existing.get("referenced_urls", ()),
-                        *candidate.get("discovered_referenced_urls", ()),
+                        *evidence_reference_urls,
                     )
                 )
             )
@@ -2116,7 +2187,7 @@ def _fetch_candidate_document(
         "verified_official_discovery_urls": (
             [url] if source_family in SOURCE_FAMILY_CLASSES["OFFICIAL"] else []
         ),
-        "referenced_urls": list(candidate["discovered_referenced_urls"]),
+        "referenced_urls": list(evidence_reference_urls),
         "referenced_document_ids": [],
         "full_fetch_performed": True,
         "snippet_only": False,
@@ -2358,6 +2429,128 @@ def _annotate_candidate_source_hints(
             url=url,
             official_hosts=official_hosts,
         )
+
+
+def _candidate_reference_expansion_authority(
+    candidate: Mapping[str, Any],
+) -> bool:
+    return bool(candidate.get("verified_official_domain_candidate")) or str(
+        candidate.get("candidate_source_family_hint") or ""
+    ) in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+
+
+def _ordered_reference_urls(
+    values: Sequence[Any],
+    *,
+    parent_url: str,
+) -> tuple[str, ...]:
+    """Prioritize document and delegated routes without dropping any link."""
+
+    unique = tuple(
+        dict.fromkeys(str(value).strip() for value in values if str(value).strip())
+    )
+    parent_host = _normalized_host(parent_url)
+
+    def priority(item: tuple[int, str]) -> tuple[int, int]:
+        index, url = item
+        parts = urlsplit(url)
+        if parts.path.casefold().endswith(".pdf"):
+            return (0, index)
+        host = _normalized_host(url)
+        if host and parent_host and host != parent_host:
+            return (1, index)
+        return (2, index)
+
+    return tuple(url for _, url in sorted(enumerate(unique), key=priority))
+
+
+def _close_non_authority_candidate_reference_routes(
+    candidates: Sequence[dict[str, Any]],
+) -> int:
+    """Close menu/link discoveries whose fetched parent is not authoritative.
+
+    Direct search results and links explicitly cited by accepted documents are
+    untouched.  This only migrates pure page-link candidates such as portal
+    navigation that an older checkpoint may already contain.
+    """
+
+    by_id = {
+        str(row.get("candidate_id") or ""): row
+        for row in candidates
+        if row.get("candidate_id")
+    }
+    closed = 0
+    for candidate in candidates:
+        if not candidate.get("reference_discovery_only"):
+            continue
+        if candidate.get("direct_search_discovery"):
+            continue
+        if candidate.get("graph_expansion_parent_document_ids"):
+            continue
+        parent_ids = tuple(
+            str(value)
+            for value in candidate.get(
+                "graph_expansion_parent_candidate_ids"
+            ) or ()
+            if str(value).strip()
+        )
+        if not parent_ids:
+            continue
+        parents = tuple(by_id[value] for value in parent_ids if value in by_id)
+        if any(_candidate_reference_expansion_authority(row) for row in parents):
+            continue
+        if candidate.get("ranking_status") != "PENDING":
+            continue
+        candidate["ranking_status"] = "NOT_MATERIAL"
+        candidate["fetch_status"] = (
+            "REFERENCE_DISCOVERY_REJECTED_UNVERIFIED_PARENT"
+        )
+        candidate["reference_expansion_rejection_reason"] = (
+            "PARENT_PAGE_NOT_VERIFIED_OFFICIAL_SOURCE_ROUTE"
+        )
+        candidate["reference_expansion_parent_authority_verified"] = False
+        closed += 1
+    return closed
+
+
+def _reopen_authority_link_extraction_candidates(
+    candidates: Sequence[dict[str, Any]],
+    *,
+    rejected_documents: Sequence[Mapping[str, Any]],
+) -> int:
+    """Retry old empty-HTML failures once under link-preserving fetch semantics."""
+
+    empty_html_candidate_ids = {
+        str(row.get("candidate_id") or "")
+        for row in rejected_documents
+        if "live_fetch_unreadable_text:empty_extracted_text"
+        in str(row.get("rejection_reason") or "")
+    }
+    reopened = 0
+    for candidate in candidates:
+        candidate_id = str(candidate.get("candidate_id") or "")
+        if candidate_id not in empty_html_candidate_ids:
+            continue
+        if not _candidate_reference_expansion_authority(candidate):
+            continue
+        if candidate.get("ranking_status") != "MATERIAL":
+            continue
+        if candidate.get("fetch_status") != "FETCH_REJECTED":
+            continue
+        if candidate.get("discovered_referenced_urls"):
+            continue
+        if candidate.get("link_preserving_fetch_retry_attempted"):
+            continue
+        candidate["fetch_status"] = "MATERIAL_PENDING_FETCH"
+        candidate["link_preserving_fetch_retry_attempted"] = True
+        candidate["link_preserving_fetch_retry_reason"] = (
+            "PRIOR_EMPTY_HTML_FETCH_PRECEDED_REFERENCE_PRESERVATION"
+        )
+        candidate["link_preserving_fetch_policy_version"] = (
+            "e2r_v5_verified_authority_link_preservation_v1"
+        )
+        reopened += 1
+    return reopened
 
 
 def _source_independence_group(url: str, source_family: str) -> str:

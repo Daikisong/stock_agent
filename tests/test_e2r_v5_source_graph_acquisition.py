@@ -202,9 +202,18 @@ class SelectiveRetryFailureFetcher:
 
 
 class ReferencedRouteFetcher:
-    def __init__(self, *, parent_url: str, child_url: str) -> None:
+    def __init__(
+        self,
+        *,
+        parent_url: str,
+        child_url: str,
+        parent_text: str = "Current Corp official redirect",
+        parent_ok: bool = True,
+    ) -> None:
         self.parent_url = parent_url
         self.child_url = child_url
+        self.parent_text = parent_text
+        self.parent_ok = parent_ok
         self.calls: list[str] = []
 
     def fetch(self, url, *, as_of_date):
@@ -212,10 +221,15 @@ class ReferencedRouteFetcher:
         if url == self.parent_url:
             return FetchResult(
                 url=url,
-                ok=True,
-                text="Current Corp official redirect",
+                ok=self.parent_ok,
+                text=self.parent_text if self.parent_ok else None,
                 content_type="text/html",
                 fetched_at=datetime(2026, 6, 20, 8),
+                reason=(
+                    None
+                    if self.parent_ok
+                    else "live_fetch_unreadable_text:empty_extracted_text"
+                ),
                 referenced_urls=(self.child_url,),
             )
         if url == self.child_url:
@@ -923,6 +937,162 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             ["ISSUER_PRESENTATION"],
         )
         self.assertEqual(len(search.calls), 1)
+
+    def test_unverified_page_navigation_is_not_graph_expanded(self) -> None:
+        provider = SourceBrainProvider()
+        parent_url = "https://media.example.net/article"
+        navigation_url = "https://www.naver.com"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {QUERY: (_result("Current Corp media page", parent_url),)}
+            ),
+            fetcher=ReferencedRouteFetcher(
+                parent_url=parent_url,
+                child_url=navigation_url,
+                parent_text=_document_text("accepted-media-page-with-menu-link"),
+            ),
+        )
+        self.assertEqual(len(run.evidence_documents), 1)
+        self.assertFalse(
+            any(
+                row.get("url") == navigation_url
+                for row in run.checkpoint["search_candidates"]
+            )
+        )
+
+    def test_failed_official_frame_page_still_discovers_linked_route(self) -> None:
+        provider = SourceBrainProvider(
+            source_families=("ISSUER_PRESENTATION",),
+        )
+        parent_url = "https://ir.example.com/frameset"
+        child_url = "https://ir.example.com/transcript.pdf"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {QUERY: (_result("Current Corp official frameset", parent_url),)}
+            ),
+            fetcher=ReferencedRouteFetcher(
+                parent_url=parent_url,
+                child_url=child_url,
+                parent_ok=False,
+            ),
+            official_domains=("example.com",),
+        )
+        child = next(
+            row
+            for row in run.checkpoint["search_candidates"]
+            if row.get("url") == child_url
+        )
+        self.assertEqual(child["ranking_status"], "PENDING")
+        self.assertEqual(
+            child["graph_expansion_parent_candidate_ids"],
+            [
+                next(
+                    row["candidate_id"]
+                    for row in run.checkpoint["search_candidates"]
+                    if row.get("url") == parent_url
+                )
+            ],
+        )
+
+    def test_stale_unverified_reference_route_closes_without_llm_ranking(self) -> None:
+        candidates = [
+            {
+                "candidate_id": "PARENT",
+                "candidate_source_family_hint": "GENERAL_WEB_DISCOVERY",
+                "verified_official_domain_candidate": False,
+            },
+            {
+                "candidate_id": "STALE-NAVIGATION",
+                "reference_discovery_only": True,
+                "graph_expansion_parent_candidate_ids": ["PARENT"],
+                "ranking_status": "PENDING",
+                "fetch_status": "NOT_STARTED",
+            },
+            {
+                "candidate_id": "DIRECT-SEARCH",
+                "reference_discovery_only": True,
+                "direct_search_discovery": True,
+                "graph_expansion_parent_candidate_ids": ["PARENT"],
+                "ranking_status": "PENDING",
+                "fetch_status": "NOT_STARTED",
+            },
+        ]
+        closed = source_graph_module._close_non_authority_candidate_reference_routes(
+            candidates
+        )
+        self.assertEqual(closed, 1)
+        self.assertEqual(candidates[1]["ranking_status"], "NOT_MATERIAL")
+        self.assertEqual(
+            candidates[1]["fetch_status"],
+            "REFERENCE_DISCOVERY_REJECTED_UNVERIFIED_PARENT",
+        )
+        self.assertEqual(candidates[2]["ranking_status"], "PENDING")
+
+    def test_official_link_budget_prioritizes_pdf_and_delegated_host(self) -> None:
+        parent = {
+            "candidate_id": "OFFICIAL-PARENT",
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "url": "https://www.example.com/ir/events",
+            "verified_official_domain_candidate": True,
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "objective_ids": ["OBJECTIVE-1"],
+            "query_ids": ["QUERY-1"],
+            "requested_source_families": ["ISSUER_PRESENTATION"],
+            "discovered_referenced_urls": [
+                "https://www.example.com/menu",
+                "https://delegated.example.net/webcast",
+                "https://www.example.com/files/earnings.pdf?download=1",
+            ],
+        }
+        candidates = [parent]
+        deferred = source_graph_module._enqueue_candidate_discovery_references(
+            candidates,
+            parent_candidate=parent,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            max_total_candidates=3,
+        )
+        self.assertEqual(deferred, 1)
+        self.assertEqual(
+            [row["url"] for row in candidates[1:]],
+            [
+                "https://www.example.com/files/earnings.pdf?download=1",
+                "https://delegated.example.net/webcast",
+            ],
+        )
+
+    def test_old_official_empty_html_failure_reopens_exactly_once(self) -> None:
+        candidate = {
+            "candidate_id": "OFFICIAL-EMPTY-HTML",
+            "verified_official_domain_candidate": True,
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+        }
+        rejected = (
+            {
+                "candidate_id": "OFFICIAL-EMPTY-HTML",
+                "rejection_reason": (
+                    "SNIPPET_ONLY_FULL_FETCH_REQUIRED:"
+                    "live_fetch_unreadable_text:empty_extracted_text"
+                ),
+            },
+        )
+        first = source_graph_module._reopen_authority_link_extraction_candidates(
+            [candidate],
+            rejected_documents=rejected,
+        )
+        second = source_graph_module._reopen_authority_link_extraction_candidates(
+            [candidate],
+            rejected_documents=rejected,
+        )
+        self.assertEqual(first, 1)
+        self.assertEqual(second, 0)
+        self.assertEqual(candidate["fetch_status"], "MATERIAL_PENDING_FETCH")
+        self.assertTrue(candidate["link_preserving_fetch_retry_attempted"])
 
     def test_ranker_receives_requested_family_and_verified_official_hint(self) -> None:
         provider = SourceBrainProvider(

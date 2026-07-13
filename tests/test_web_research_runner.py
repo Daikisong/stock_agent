@@ -826,6 +826,37 @@ OPM 개선폭 6%
             )
             urlopen.assert_not_called()
 
+    def test_page_fetcher_preserves_links_from_empty_frameset_failure(self):
+        html = """
+        <html>
+          <frameset>
+            <frame src="./conference/main.php">
+            <frame src="https://media.example.com/script.pdf">
+          </frameset>
+        </html>
+        """
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=_FakeHTTPResponse(html),
+        ):
+            result = PageFetcher(live_enabled=True).fetch(
+                "https://ir.example.com/entry.php",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertFalse(result.ok)
+        self.assertEqual(
+            result.reason,
+            "live_fetch_unreadable_text:empty_extracted_text",
+        )
+        self.assertEqual(
+            result.referenced_urls,
+            (
+                "https://ir.example.com/conference/main.php",
+                "https://media.example.com/script.pdf",
+            ),
+        )
+
     def test_page_fetcher_live_extracts_pdf_text_and_uses_cache(self):
         extractor = _FakePDFExtractor("HBM 완판과 고객 물량 배정")
         with tempfile.TemporaryDirectory() as tmpdir:

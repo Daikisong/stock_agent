@@ -221,9 +221,12 @@ class PageFetcher:
             return FetchResult(
                 url=url,
                 ok=False,
+                text=text,
                 content_type=content_type,
                 fetched_at=fetched_at,
                 reason=f"live_fetch_unreadable_text:{unreadable}",
+                referenced_urls=referenced_urls,
+                response_last_modified_at=response_last_modified_at,
             )
         text = text[: self.max_text_chars]
         source_path = _write_cache(
@@ -457,7 +460,7 @@ class _HTMLTextExtractor(HTMLParser):
             content = attrs_by_name.get("content")
             if meta_key and content and meta_key.lower() in self._META_KEYS:
                 self._parts.append(content)
-        if tag in {"a", "iframe", "source"}:
+        if tag in {"a", "frame", "iframe", "source"}:
             attrs_by_name = {
                 key.lower(): value for key, value in attrs if key and value
             }
