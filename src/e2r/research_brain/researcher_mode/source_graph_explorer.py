@@ -859,9 +859,10 @@ class ResearcherSourceGraphAcquirer:
                 in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
                 and not set(row.get("objective_ids") or ()).issubset(resolved)
             ),
-            key=lambda row: (
-                -float(row.get("material_priority") or 0.0),
-                str(row.get("candidate_id")),
+            key=lambda row: _pending_material_fetch_priority(
+                row,
+                as_of_date=cutoff,
+                official_first_required=config.official_first_required,
             ),
         )
         fetch_batch = pending_fetch[: config.max_fetches_per_checkpoint]
@@ -2440,6 +2441,57 @@ def _candidate_reference_expansion_authority(
     return bool(candidate.get("verified_official_domain_candidate")) or str(
         candidate.get("candidate_source_family_hint") or ""
     ) in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+
+
+def _pending_material_fetch_priority(
+    candidate: Mapping[str, Any],
+    *,
+    as_of_date: date,
+    official_first_required: bool,
+) -> tuple[Any, ...]:
+    """Order a bounded fetch queue without dropping lower-ranked candidates.
+
+    An append-only candidate ledger can contain years of equally material
+    documents.  LLM material scores alone then let an older 1.00 candidate
+    repeatedly sit ahead of a current 0.99 issuer original.  Production daily
+    is official-first, so authority and direct-document routes come first;
+    within that generic lane, the latest period available by ``as_of_date``
+    comes before the LLM material score.  No company, sector, archetype, or
+    missing-slot identifier participates in this ordering.
+    """
+
+    material_priority = -float(candidate.get("material_priority") or 0.0)
+    candidate_id = str(candidate.get("candidate_id") or "")
+    if not official_first_required:
+        return (0, 0, 0, material_priority, candidate_id)
+
+    url = str(candidate.get("url") or "")
+    content_type = str(candidate.get("content_type") or "").casefold()
+    path = urlsplit(url).path.casefold()
+    direct_document = (
+        "pdf" in content_type
+        or path.endswith(
+            (
+                ".pdf",
+                ".doc",
+                ".docx",
+                ".xls",
+                ".xlsx",
+                ".ppt",
+                ".pptx",
+            )
+        )
+    )
+    return (
+        0 if _candidate_reference_expansion_authority(candidate) else 1,
+        0 if direct_document else 1,
+        -_candidate_reference_period_ordinal(
+            candidate,
+            as_of_date=as_of_date,
+        ),
+        material_priority,
+        candidate_id,
+    )
 
 
 def _ordered_reference_urls(

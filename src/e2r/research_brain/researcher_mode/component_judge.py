@@ -238,73 +238,115 @@ class ComponentJudge:
                 "required_judge_output_fields": sorted(JUDGE_RESPONSE_FIELDS),
             }
         )
-        fallback_prompt_hash = _canonical_hash(
-            {"pass_name": pass_name, "payload": payload}
-        )
-        try:
-            response = self.provider.complete(pass_name=pass_name, payload=payload)
-        except (
-            StructuredProviderUnavailable,
-            StructuredProviderRejected,
-            TimeoutError,
-            OSError,
-            RuntimeError,
-        ) as exc:
+        attempt_payload = payload
+        validation_retry_used = False
+        while True:
+            fallback_prompt_hash = _canonical_hash(
+                {"pass_name": pass_name, "payload": attempt_payload}
+            )
+            try:
+                response = self.provider.complete(
+                    pass_name=pass_name,
+                    payload=attempt_payload,
+                )
+            except (
+                StructuredProviderUnavailable,
+                StructuredProviderRejected,
+                TimeoutError,
+                OSError,
+                RuntimeError,
+            ) as exc:
+                prompt_hash = _provider_prompt_hash(
+                    self.provider,
+                    pass_name=pass_name,
+                    fallback=fallback_prompt_hash,
+                )
+                return self._pending(
+                    memo=memo,
+                    pass_name=pass_name,
+                    code="PROVIDER_ERROR",
+                    error=exc,
+                    prompt_hash=prompt_hash,
+                    judge_call_id=_judge_call_id(
+                        memo=memo,
+                        role=self.role,
+                        pass_name=pass_name,
+                        provider_name=self._provider_name,
+                        prompt_hash=prompt_hash,
+                    ),
+                )
             prompt_hash = _provider_prompt_hash(
                 self.provider,
                 pass_name=pass_name,
                 fallback=fallback_prompt_hash,
             )
-            return self._pending(
-                memo=memo,
-                pass_name=pass_name,
-                code="PROVIDER_ERROR",
-                error=exc,
-                prompt_hash=prompt_hash,
-                judge_call_id=_judge_call_id(
-                    memo=memo,
-                    role=self.role,
-                    pass_name=pass_name,
-                    provider_name=self._provider_name,
-                    prompt_hash=prompt_hash,
-                ),
-            )
-        prompt_hash = _provider_prompt_hash(
-            self.provider,
-            pass_name=pass_name,
-            fallback=fallback_prompt_hash,
-        )
-        response_hash = _canonical_hash(response)
-        judge_call_id = _judge_call_id(
-            memo=memo,
-            role=self.role,
-            pass_name=pass_name,
-            provider_name=self._provider_name,
-            prompt_hash=prompt_hash,
-        )
-        try:
-            decision = _decision_from_response(
-                response=response,
+            response_hash = _canonical_hash(response)
+            judge_call_id = _judge_call_id(
                 memo=memo,
                 role=self.role,
                 pass_name=pass_name,
-                facts=facts,
-                anchors=anchors,
                 provider_name=self._provider_name,
                 prompt_hash=prompt_hash,
-                response_hash=response_hash,
-                judge_call_id=judge_call_id,
             )
-        except (KeyError, TypeError, ValueError) as exc:
-            return self._pending(
-                memo=memo,
-                pass_name=pass_name,
-                code="INVALID_PROVIDER_OUTPUT",
-                error=exc,
-                prompt_hash=prompt_hash,
-                response_hash=response_hash,
-                judge_call_id=judge_call_id,
-            )
+            try:
+                decision = _decision_from_response(
+                    response=response,
+                    memo=memo,
+                    role=self.role,
+                    pass_name=pass_name,
+                    facts=facts,
+                    anchors=anchors,
+                    provider_name=self._provider_name,
+                    prompt_hash=prompt_hash,
+                    response_hash=response_hash,
+                    judge_call_id=judge_call_id,
+                )
+            except (KeyError, TypeError, ValueError) as exc:
+                _invalidate_provider_response_cache(self.provider, exc)
+                if validation_retry_used:
+                    return self._pending(
+                        memo=memo,
+                        pass_name=pass_name,
+                        code="INVALID_PROVIDER_OUTPUT",
+                        error=exc,
+                        prompt_hash=prompt_hash,
+                        response_hash=response_hash,
+                        judge_call_id=judge_call_id,
+                    )
+                validation_retry_used = True
+                attempt_payload = scrub_blind_research_payload(
+                    {
+                        **payload,
+                        "judge_validation_retry_context": {
+                            "validation_error": _clean_error(exc),
+                            "rejected_response": response,
+                            "allowed_support_fact_ids": list(
+                                memo.positive_fact_ids
+                            ),
+                            "allowed_counter_fact_ids": list(
+                                memo.counter_fact_ids
+                            ),
+                            "allowed_nearest_anchor_ids": list(
+                                memo.historical_anchor_ids
+                            ),
+                            "required_output_fields": sorted(
+                                JUDGE_RESPONSE_FIELDS
+                            ),
+                            "instruction": (
+                                "Rewrite the complete judge response. Cite only "
+                                "the exact supplied allowed fact and anchor ids; "
+                                "do not invent, coerce, drop, or deterministically "
+                                "repair citations. The analyst must account for "
+                                "every allowed support fact, the skeptic must "
+                                "account for every allowed counter fact, and every "
+                                "judge must compare at least one usable allowed "
+                                "nearest anchor. Return only the closed schema."
+                            ),
+                        },
+                    }
+                )
+                continue
+            break
         return ComponentJudgeResult(
             component_id=memo.component_id,
             memo_id=memo.memo_id,
@@ -713,6 +755,28 @@ def _provider_prompt_hash(
             if call.get("pass_name") == pass_name and call.get("prompt_hash"):
                 return str(call["prompt_hash"])
     return fallback
+
+
+def _invalidate_provider_response_cache(
+    provider: StructuredResearchProvider,
+    error: Exception,
+) -> None:
+    """Evict a semantically invalid response before one bounded LLM rewrite."""
+
+    invalidate = getattr(provider, "invalidate_last_response_cache", None)
+    if not callable(invalidate):
+        return
+    reason = f"{error.__class__.__name__}:{_clean_error(error)}"
+    try:
+        invalidate(reason=reason)
+    except (OSError, TypeError, ValueError, RuntimeError):
+        # Cache audit failure cannot make a rejected response valid or suppress
+        # the bounded correction attempt.
+        return
+
+
+def _clean_error(error: Exception) -> str:
+    return " ".join(str(error).split())[-500:] or error.__class__.__name__
 
 
 def _judge_call_id(

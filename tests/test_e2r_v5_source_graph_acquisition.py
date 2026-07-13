@@ -627,6 +627,65 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             loaded = load_source_graph_checkpoint(paths["checkpoint"])
             self.assertEqual(loaded["checkpoint_hash"], run3.checkpoint["checkpoint_hash"])
 
+    def test_bounded_fetch_prioritizes_current_official_original_over_old_higher_score(
+        self,
+    ) -> None:
+        provider = SourceBrainProvider(
+            source_families=("ISSUER_PRESENTATION",),
+        )
+        old_url = "https://ir.example.com/2023Q1/earnings-script.pdf"
+        current_url = "https://ir.example.com/2026Q1/earnings-script.pdf"
+        rows = (
+            _result(
+                "Current Corp 2023 Q1 earnings script",
+                old_url,
+                rank=1,
+                published="2023-04-27",
+            ),
+            _result(
+                "Current Corp 2026 Q1 earnings script",
+                current_url,
+                rank=2,
+                published="2026-04-30",
+            ),
+        )
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider({QUERY: rows}),
+            fetcher=PageFetcher(
+                fixture_text_by_url={
+                    old_url: _document_text("old-official-original"),
+                    current_url: _document_text("current-official-original"),
+                }
+            ),
+            config=SourceGraphAcquisitionConfig(
+                mode="TEST",
+                max_candidates_per_checkpoint=2,
+                max_fetches_per_checkpoint=1,
+            ),
+            official_domains=("ir.example.com",),
+        )
+
+        self.assertEqual(
+            [row["canonical_url"] for row in run.evidence_documents],
+            [current_url],
+        )
+        by_url = {
+            row["url"]: row for row in run.checkpoint["search_candidates"]
+        }
+        self.assertEqual(
+            by_url[current_url]["fetch_status"],
+            "FULL_DOCUMENT_FETCHED",
+        )
+        self.assertEqual(
+            by_url[old_url]["fetch_status"],
+            "MATERIAL_PENDING_FETCH",
+        )
+        self.assertGreater(
+            by_url[old_url]["material_priority"],
+            by_url[current_url]["material_priority"],
+        )
+
     def test_checkpoint_resume_quarantines_previously_accepted_unreadable_pdf_text(
         self,
     ) -> None:
@@ -754,6 +813,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             search=RecordingSearchProvider({QUERY: rows}),
             fetcher=PageFetcher(
                 fixture_text_by_url={row.url: same_text for row in rows}
+            ),
+            config=SourceGraphAcquisitionConfig(
+                mode="TEST",
+                official_first_required=False,
             ),
             official_domains=("example.com",),
         )

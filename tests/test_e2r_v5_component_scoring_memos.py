@@ -81,6 +81,14 @@ class Phase89JudgeProvider:
             response["support_fact_ids"] = []
         if self.mode == "SKEPTIC_OMITS_COUNTER" and pass_name == "COMPONENT_SKEPTIC_JUDGE":
             response["counter_fact_ids"] = []
+        if (
+            self.mode == "OUTSIDE_FACT_THEN_VALID"
+            and "judge_validation_retry_context" not in payload
+        ):
+            response["support_fact_ids"] = [
+                *response["support_fact_ids"],
+                "FACT-OUTSIDE-COMPONENT-MEMO",
+            ]
         return response
 
 
@@ -244,6 +252,38 @@ class E2RV5ComponentScoringMemoTests(unittest.TestCase):
                     for memo in result.component_memos
                     for row in memo.judge_results
                 )
+            )
+
+    def test_invalid_judge_citation_is_returned_to_llm_for_one_clean_rewrite(
+        self,
+    ) -> None:
+        provider = Phase89JudgeProvider("OUTSIDE_FACT_THEN_VALID")
+        result = _run(provider)
+
+        self.assertEqual(result.status, "COMPONENT_SCORING_MEMOS_COMPLETE")
+        self.assertEqual(len(result.judge_decisions), 21)
+        self.assertEqual(len(provider.calls), 42)
+        retry_calls = [
+            row
+            for row in provider.calls
+            if "judge_validation_retry_context" in row["payload"]
+        ]
+        self.assertEqual(len(retry_calls), 21)
+        for call in retry_calls:
+            context = call["payload"]["judge_validation_retry_context"]
+            memo = call["payload"]["component_research_memo"]
+            self.assertIn("outside the component memo", context["validation_error"])
+            self.assertEqual(
+                context["allowed_support_fact_ids"],
+                memo["positive_fact_ids"],
+            )
+            self.assertEqual(
+                context["allowed_counter_fact_ids"],
+                memo["counter_fact_ids"],
+            )
+            self.assertEqual(
+                context["allowed_nearest_anchor_ids"],
+                memo["historical_anchor_ids"],
             )
 
     def test_reused_prompt_hash_cannot_prove_three_judge_independence(self) -> None:
