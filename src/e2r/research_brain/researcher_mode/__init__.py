@@ -225,6 +225,7 @@ from .source_graph_explorer import (
     SourceResearchObjective,
     load_source_graph_checkpoint,
     validate_source_graph_checkpoint,
+    validated_quarantined_document_ids,
     write_source_graph_acquisition_run,
 )
 from .source_query_planner import (
@@ -633,6 +634,7 @@ __all__ = [
     "write_claim_impact_mapping_result",
     "write_component_scoring_memo_run",
     "validate_source_graph_checkpoint",
+    "validated_quarantined_document_ids",
     "write_research_epoch_run",
     "write_structured_financial_outputs",
     "CompanyGuideStructuredRoute",

@@ -887,6 +887,7 @@ def _supervisor_source_graph_payload(checkpoint: Mapping[str, Any]) -> Mapping[s
         "fetch_records",
         "evidence_documents",
         "rejected_documents",
+        "quarantined_documents",
         "resolved_objective_ids",
         "provider_failures",
         "transport_budget_can_complete_research",

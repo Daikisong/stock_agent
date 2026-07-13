@@ -24,6 +24,7 @@ from .saturation import (
     SemanticSaturationReviewer,
 )
 from .schemas import EvidenceFact
+from .source_graph_explorer import validated_quarantined_document_ids
 
 
 RESEARCH_EPOCH_OUTPUT_FILES: Mapping[str, str] = {
@@ -469,7 +470,12 @@ def _research_epoch_state(
         raise ValueError("research epoch component results must be unique")
     if prior and not prior_query_ids.issubset(query_by_id):
         raise ValueError("resumed Source Graph lost cumulative query lineage")
-    if prior and not prior_document_ids.issubset(document_by_id):
+    quarantined_document_ids = validated_quarantined_document_ids(
+        source_graph_checkpoint
+    )
+    if prior and not prior_document_ids.issubset(
+        set(document_by_id) | set(quarantined_document_ids)
+    ):
         raise ValueError("resumed Source Graph lost cumulative document lineage")
     current_fact_ids = set(fact_by_id)
     retired_this_epoch = prior_current_fact_ids - current_fact_ids

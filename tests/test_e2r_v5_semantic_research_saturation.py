@@ -33,6 +33,7 @@ from e2r.research_brain.researcher_mode import (
     compile_phase87_semantic_research_saturation_audit,
     load_research_epoch_checkpoint,
     validate_source_graph_checkpoint,
+    validated_quarantined_document_ids,
     write_research_epoch_run,
 )
 
@@ -484,6 +485,51 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
                     prior_checkpoint=first.checkpoint,
                 )
             )
+        with self.assertRaisesRegex(ValueError, "lost cumulative document lineage"):
+            runner.run_epoch(
+                **_epoch_inputs(
+                    source_checkpoint=_source_checkpoint(with_document=False),
+                    prior_checkpoint=first.checkpoint,
+                )
+            )
+
+    def test_explicit_unreadable_document_quarantine_preserves_cumulative_lineage(
+        self,
+    ) -> None:
+        runner = ResearchEpochRunner(
+            supervisor=ResearchSupervisor(
+                provider=Phase87SupervisorProvider("GAP")
+            ),
+            saturation_reviewers=(),
+        )
+        first = runner.run_epoch(
+            **_epoch_inputs(source_checkpoint=_source_checkpoint())
+        )
+        source_checkpoint = _source_checkpoint(quarantine_document=True)
+
+        self.assertEqual(
+            validated_quarantined_document_ids(source_checkpoint), {"DOC-1"}
+        )
+        malformed_quarantine = dict(source_checkpoint)
+        malformed_quarantine["rejected_documents"] = []
+        with self.assertRaisesRegex(ValueError, "lacks matching rejection"):
+            validated_quarantined_document_ids(malformed_quarantine)
+        resumed = runner.run_epoch(
+            **_epoch_inputs(
+                source_checkpoint=source_checkpoint,
+                prior_checkpoint=first.checkpoint,
+            )
+        )
+
+        self.assertEqual(resumed.checkpoint.cumulative_document_ids, ("DOC-1",))
+        self.assertEqual(resumed.checkpoint.documents, ())
+        supervisor_source_graph = runner.supervisor.provider.calls[-1]["payload"][
+            "source_graph_checkpoint"
+        ]
+        self.assertEqual(
+            supervisor_source_graph["quarantined_documents"][0]["document_id"],
+            "DOC-1",
+        )
 
     def test_prior_checkpoint_files_round_trip_and_keep_pending_reviewer_errors(self) -> None:
         reviewers = tuple(
@@ -804,8 +850,12 @@ def _source_checkpoint(
     zero_results: bool = False,
     extra_epoch: bool = False,
     with_queries: bool = True,
+    with_document: bool = True,
+    quarantine_document: bool = False,
     document_date: str = "2026-06-20",
 ) -> Mapping[str, Any]:
+    if quarantine_document and not with_document:
+        raise ValueError("quarantine_document already removes the active document")
     if zero_results:
         queries = [
             {
@@ -859,7 +909,7 @@ def _source_checkpoint(
                 "source_family": "ISSUER_PRESENTATION",
                 "full_text": "source-backed current evidence and counter evidence",
             }
-        ]
+        ] if with_document and not quarantine_document else []
         failures = []
     if extra_epoch:
         queries.append(
@@ -898,7 +948,51 @@ def _source_checkpoint(
         "candidate_materiality_decisions": [],
         "fetch_records": [],
         "evidence_documents": documents,
-        "rejected_documents": [],
+        "rejected_documents": (
+            [
+                {
+                    "schema_version": "e2r_v5_source_graph_rejection_v1",
+                    "rejection_id": "REJECT-DOC-1",
+                    "candidate_id": "CAND-DOC-1",
+                    "document_id": "DOC-1",
+                    "url": "https://issuer.example.com/unreadable.pdf",
+                    "query_ids": ["Q-COUNTER"],
+                    "objective_ids": [OBJECTIVE_ID],
+                    "rejection_reason": (
+                        "UNREADABLE_FULL_DOCUMENT_TEXT:"
+                        "excessive_control_characters:90/100"
+                    ),
+                    "retryable": False,
+                    "content_hash": "a" * 64,
+                    "evidence_eligible": False,
+                    "accepted_claim_ids": [],
+                    "score_authority": False,
+                }
+            ]
+            if quarantine_document
+            else []
+        ),
+        "quarantined_documents": (
+            [
+                {
+                    "schema_version": "e2r_v5_source_graph_quarantine_v1",
+                    "document_id": "DOC-1",
+                    "candidate_id": "CAND-DOC-1",
+                    "url": "https://issuer.example.com/unreadable.pdf",
+                    "content_hash": "a" * 64,
+                    "query_ids": ["Q-COUNTER"],
+                    "objective_ids": [OBJECTIVE_ID],
+                    "quarantine_reason": (
+                        "UNREADABLE_FULL_DOCUMENT_TEXT:"
+                        "excessive_control_characters:90/100"
+                    ),
+                    "evidence_eligible": False,
+                    "score_authority": False,
+                }
+            ]
+            if quarantine_document
+            else []
+        ),
         "resolved_objective_ids": [],
         "pending_reasons": [],
         "source_graph": {},

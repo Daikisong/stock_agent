@@ -1090,6 +1090,7 @@ def validate_source_graph_checkpoint(
         set(document_ids)
     ):
         raise ValueError("source graph document ids must be unique and non-empty")
+    validated_quarantined_document_ids(payload)
     query_ids = [
         str(row.get("query_id") or "")
         for row in payload.get("generated_queries") or ()
@@ -1108,6 +1109,59 @@ def validate_source_graph_checkpoint(
         if observed and date.fromisoformat(observed) > cutoff:
             raise ValueError("future document found in source graph checkpoint")
     return payload
+
+
+def validated_quarantined_document_ids(
+    checkpoint: Mapping[str, Any],
+) -> frozenset[str]:
+    """Validate explicit evidence demotion without erasing document lineage."""
+
+    active_ids = {
+        str(row.get("document_id") or row.get("source_id") or "")
+        for row in checkpoint.get("evidence_documents") or ()
+        if str(row.get("document_id") or row.get("source_id") or "")
+    }
+    rows = tuple(checkpoint.get("quarantined_documents") or ())
+    ids = [str(row.get("document_id") or "").strip() for row in rows]
+    if any(not value for value in ids) or len(ids) != len(set(ids)):
+        raise ValueError("quarantined source document ids must be unique and non-empty")
+    if active_ids & set(ids):
+        raise ValueError("quarantined source document cannot remain evidence-active")
+    rejections = tuple(checkpoint.get("rejected_documents") or ())
+    allowed_reason_prefixes = ("UNREADABLE_FULL_DOCUMENT_TEXT:",)
+    for row in rows:
+        document_id = str(row.get("document_id") or "").strip()
+        candidate_id = str(row.get("candidate_id") or "").strip()
+        content_hash = str(row.get("content_hash") or "").strip()
+        url = str(row.get("url") or "").strip()
+        reason = str(row.get("quarantine_reason") or "").strip()
+        if (
+            row.get("schema_version") != "e2r_v5_source_graph_quarantine_v1"
+            or not candidate_id
+            or not re.fullmatch(r"[0-9a-f]{64}", content_hash)
+            or not _is_http_url(url)
+            or not reason.startswith(allowed_reason_prefixes)
+            or row.get("evidence_eligible") is not False
+            or row.get("score_authority") is not False
+        ):
+            raise ValueError("invalid quarantined source document lineage")
+        matching_rejections = tuple(
+            rejection
+            for rejection in rejections
+            if str(rejection.get("document_id") or "") == document_id
+            and str(rejection.get("candidate_id") or "") == candidate_id
+            and str(rejection.get("content_hash") or "") == content_hash
+            and str(rejection.get("rejection_reason") or "") == reason
+        )
+        if not matching_rejections or any(
+            rejection.get("accepted_claim_ids")
+            or rejection.get("retryable") is not False
+            or rejection.get("evidence_eligible") is not False
+            or rejection.get("score_authority") is not False
+            for rejection in matching_rejections
+        ):
+            raise ValueError("quarantined source document lacks matching rejection")
+    return frozenset(ids)
 
 
 def _objective_dict(
@@ -1329,6 +1383,9 @@ def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
     kept: list[dict[str, Any]] = []
     reasons: list[str] = []
     quarantine_rows = list(state.setdefault("quarantined_documents", []))
+    for row in quarantine_rows:
+        row.setdefault("target_id", state.get("target_id"))
+        row.setdefault("as_of_date", state.get("as_of_date"))
     rejected_rows = state.setdefault("rejected_documents", [])
     query_failures = state.setdefault("query_failures", [])
     for raw_document in documents:
@@ -1389,6 +1446,8 @@ def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
             {
                 "schema_version": "e2r_v5_source_graph_quarantine_v1",
                 "document_id": document_id,
+                "target_id": state.get("target_id"),
+                "as_of_date": state.get("as_of_date"),
                 "candidate_id": candidate_payload.get("candidate_id"),
                 "url": url,
                 "content_hash": document.get("content_hash"),
@@ -2123,5 +2182,6 @@ __all__ = [
     "SourceResearchObjective",
     "load_source_graph_checkpoint",
     "validate_source_graph_checkpoint",
+    "validated_quarantined_document_ids",
     "write_source_graph_acquisition_run",
 ]
