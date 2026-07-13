@@ -69,6 +69,7 @@ from .source_graph_explorer import (
 )
 from .structured_data_researcher import StructuredMetricRecord
 from .structured_financial_engine import (
+    PHASE86_REQUIRED_ROLES_BY_COMPONENT,
     StructuredEngineResult,
     StructuredFinancialConsensusValuationEngine,
     StructuredSourcePayload,
@@ -324,6 +325,19 @@ class CurrentResearcherModeTargetRunner:
                 if row.direction == EvidenceDirection.COUNTER.value
             ),
         )
+        required_structured_roles = {
+            plan.component_id: tuple(
+                dict.fromkeys(
+                    (
+                        *PHASE86_REQUIRED_ROLES_BY_COMPONENT.get(
+                            plan.component_id, ()
+                        ),
+                        *plan.structured_metric_requirements,
+                    )
+                )
+            )
+            for plan in initial_plans
+        }
         structured_materialization = self.structured_materializer.materialize(
             target_id=target.target_id,
             target_name=target.company_name,
@@ -337,6 +351,7 @@ class CurrentResearcherModeTargetRunner:
             evidence_facts=fact_extraction.facts,
             source_claims=fact_extraction.material_claims,
             source_documents=source_graph.evidence_documents,
+            required_roles_by_component=required_structured_roles,
         )
         structured = structured_materialization.engine_result
         write_structured_financial_outputs(structured, root)

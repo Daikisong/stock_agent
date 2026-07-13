@@ -728,11 +728,25 @@ class StructuredFinancialConsensusValuationEngine:
         }
         covered_roles = {role for row in compiled for role in row.evidence_roles}
         covered_by_component = {
-            component_id: tuple(sorted(set(required) & covered_roles))
+            component_id: tuple(
+                sorted(
+                    role
+                    for role in set(required)
+                    if _structured_requirement_is_covered(role, covered_roles)
+                )
+            )
             for component_id, required in requirements.items()
         }
         missing_by_component = {
-            component_id: tuple(sorted(set(required) - covered_roles))
+            component_id: tuple(
+                sorted(
+                    role
+                    for role in set(required)
+                    if not _structured_requirement_is_covered(
+                        role, covered_roles
+                    )
+                )
+            )
             for component_id, required in requirements.items()
         }
         pending = any(missing_by_component.values())
@@ -3375,6 +3389,17 @@ def _quantile(values: Sequence[float], probability: float) -> float:
 
 def _clamp(value: float, lower: float, upper: float) -> float:
     return min(upper, max(lower, float(value)))
+
+
+def _structured_requirement_is_covered(
+    requirement: str,
+    covered_roles: set[str],
+) -> bool:
+    compatible_roles = {
+        requirement,
+        *PHASE86_COMPONENT_ROLE_COMPATIBILITY.get(requirement, ()),
+    }
+    return bool(compatible_roles & covered_roles)
 
 
 def _route_confidence(route_name: str) -> float:

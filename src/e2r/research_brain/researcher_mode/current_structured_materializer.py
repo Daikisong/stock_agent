@@ -311,6 +311,7 @@ class CurrentStructuredSourceMaterializer:
         evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]] = (),
         source_claims: Sequence[Mapping[str, Any]] = (),
         source_documents: Sequence[Mapping[str, Any]] = (),
+        required_roles_by_component: Mapping[str, Sequence[str]] | None = None,
     ) -> CurrentStructuredMaterializationResult:
         cutoff = date.fromisoformat(as_of_date)
         trading_date = date.fromisoformat(latest_trading_snapshot_date)
@@ -385,6 +386,7 @@ class CurrentStructuredSourceMaterializer:
             company_name=target_name,
             as_of_date=cutoff,
             routes=routes,
+            required_roles_by_component=required_roles_by_component,
             deep_researched_canary=True,
         )
         pending = tuple(
@@ -457,6 +459,12 @@ class CurrentStructuredSourceMaterializer:
                 engine.consensus_revision_records
             ),
             "valuation_record_count": len(engine.valuation_records),
+            "required_roles_by_component": {
+                component_id: list(roles)
+                for component_id, roles in (
+                    required_roles_by_component or {}
+                ).items()
+            },
             "issuer_fact_materialization": issuer_fact_audit,
             "peer_selection": peer_selection_audit,
             "fixed_transport_count_is_completion": False,

@@ -319,6 +319,54 @@ class E2RV5StructuredFinancialEngineTests(unittest.TestCase):
             result.revision_component_zero_solely_due_connector_gap_count, 0
         )
 
+    def test_contract_alias_requires_its_compatible_structured_role(self) -> None:
+        requirements = {
+            "valuation_rerating": ("DURABLE_VISIBILITY",),
+        }
+        missing = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(),
+            required_roles_by_component=requirements,
+        )
+        self.assertEqual(
+            missing.missing_roles_by_component["valuation_rerating"],
+            ("DURABLE_VISIBILITY",),
+        )
+
+        covered = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                route(
+                    "ISSUER_GUIDANCE",
+                    structured_records=(
+                        metric(
+                            "issuer_forward_guidance",
+                            1.0,
+                            "FORWARD_GUIDANCE",
+                        ),
+                    ),
+                ),
+            ),
+            required_roles_by_component=requirements,
+        )
+        self.assertEqual(covered.status, "COMPLETE")
+        self.assertEqual(
+            covered.covered_roles_by_component["valuation_rerating"],
+            ("DURABLE_VISIBILITY",),
+        )
+        self.assertIn(
+            "DURABLE_VISIBILITY",
+            covered.to_component_structured_metrics(requirements)[
+                "valuation_rerating"
+            ],
+        )
+
     def test_structured_result_feeds_component_researcher_roles_without_points(self) -> None:
         result = self._run(
             route(

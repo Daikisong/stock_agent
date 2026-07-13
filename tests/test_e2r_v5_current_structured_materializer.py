@@ -338,10 +338,24 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
                 evidence_facts=facts,
                 source_claims=claims,
                 source_documents=documents,
+                required_roles_by_component={
+                    "eps_fcf_explosion": ("FORWARD_GUIDANCE",),
+                    "valuation_rerating": ("DURABLE_VISIBILITY",),
+                },
             )
         self.assertIn(
             "FORWARD_GUIDANCE",
             result.engine_result.missing_roles_by_component["eps_fcf_explosion"],
+        )
+        self.assertIn(
+            "DURABLE_VISIBILITY",
+            result.engine_result.missing_roles_by_component[
+                "valuation_rerating"
+            ],
+        )
+        self.assertEqual(
+            result.audit["required_roles_by_component"]["valuation_rerating"],
+            ["DURABLE_VISIBILITY"],
         )
         self.assertEqual(
             result.audit["issuer_fact_materialization"]["rejection_counts"],

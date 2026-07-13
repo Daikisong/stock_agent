@@ -118,7 +118,11 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
 
 
 class Phase94IntegrationStructuredMaterializer:
+    def __init__(self):
+        self.calls = []
+
     def materialize(self, **kwargs):
+        self.calls.append(kwargs)
         engine = _structured_result_from_official(
             target=CurrentResearchTarget(
                 symbol=kwargs["target_id"], company_name=kwargs["target_name"]
@@ -360,10 +364,11 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             search_provider=EmptySearchProvider(),
             page_fetcher=PageFetcher(fixture_text_by_url={}),
         )
+        structured_materializer = Phase94IntegrationStructuredMaterializer()
         runner = CurrentResearcherModeTargetRunner(
             provider=provider,
             official_materializer=Phase94IntegrationOfficialMaterializer(),
-            structured_materializer=Phase94IntegrationStructuredMaterializer(),
+            structured_materializer=structured_materializer,
             source_acquirer=acquirer,
             fact_extractor=ResearcherEvidenceFactExtractor(
                 provider=provider,
@@ -444,6 +449,17 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ["example.com"],
             )
             self.assertFalse((result.output_root / "gold_fact_comparison.jsonl").exists())
+            structured_requirements = structured_materializer.calls[-1][
+                "required_roles_by_component"
+            ]
+            self.assertIn(
+                "FORWARD_GUIDANCE",
+                structured_requirements["eps_fcf_explosion"],
+            )
+            self.assertIn(
+                "DURABLE_VISIBILITY",
+                structured_requirements["valuation_rerating"],
+            )
             self.assertEqual(
                 provider.response_cache_directories[-1],
                 result.output_root / "research_provider_response_cache",
