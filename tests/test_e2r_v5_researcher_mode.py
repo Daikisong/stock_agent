@@ -84,7 +84,10 @@ class ScriptedResearchProvider:
             maximum = float(payload["component_max_points"])
             response: dict[str, Any] = {
                 "selected_fact_row_indices": [*positive[:1], *counter[:1]],
-                "structured_metric_ids": list(payload["structured_metrics"]),
+                "structured_metric_row_indices": [
+                    row["structured_metric_row_index"]
+                    for row in payload["structured_metric_rows"]
+                ],
                 "historical_anchor_ids": [*positive_anchors[:1], *counter_anchors[:1]],
                 "nearest_positive_anchor_ids": positive_anchors[:1],
                 "nearest_counter_anchor_ids": counter_anchors[:1],

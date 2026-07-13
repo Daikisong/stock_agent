@@ -340,6 +340,27 @@ class CurrentResearcherModeTargetRunner:
         structured = structured_materialization.engine_result
         write_structured_financial_outputs(structured, root)
         write_json(root / "structured_engine_result.json", structured.to_dict())
+        research_source_coverage = tuple(
+            sorted(
+                {
+                    *(
+                        str(row.get("source_family") or "")
+                        for row in source_graph.evidence_documents
+                        if row.get("source_family")
+                    ),
+                    *(
+                        str(row.source_route)
+                        for row in structured.records
+                        if str(row.source_route).strip()
+                    ),
+                    *(
+                        str(row.route_name)
+                        for row in structured.source_attempts
+                        if row.accepted_record_count > 0
+                    ),
+                }
+            )
+        )
         dossier = CanonicalResearchDossierBuilder(provider=self.provider).build(
             target_id=target.target_id,
             archetype_id=config.archetype_id,
@@ -348,15 +369,7 @@ class CurrentResearcherModeTargetRunner:
             historical_anchors=anchors,
             source_claims=fact_extraction.material_claims,
             source_documents=source_graph.evidence_documents,
-            source_coverage=tuple(
-                sorted(
-                    {
-                        str(row.get("source_family") or "")
-                        for row in source_graph.evidence_documents
-                        if row.get("source_family")
-                    }
-                )
-            ),
+            source_coverage=research_source_coverage,
             structured_engine_result=structured,
         )
         _write_dossier(root, dossier)

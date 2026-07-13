@@ -121,7 +121,7 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "additionalProperties": False,
     "required": [
         "selected_fact_row_indices",
-        "structured_metric_ids",
+        "structured_metric_row_indices",
         "historical_anchor_ids",
         "nearest_positive_anchor_ids",
         "nearest_counter_anchor_ids",
@@ -140,7 +140,7 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
     ],
     "properties": {
         "selected_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
-        "structured_metric_ids": _STRING_ARRAY,
+        "structured_metric_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
         "historical_anchor_ids": _STRING_ARRAY,
         "nearest_positive_anchor_ids": _STRING_ARRAY,
         "nearest_counter_anchor_ids": _STRING_ARRAY,
@@ -897,6 +897,18 @@ class ComponentResearcher:
         if set(anchor_by_id) - set(plan.candidate_anchor_ids):
             raise ValueError("component plan does not expose every matching anchor")
         metric_input = scrub_blind_research_payload(dict(structured_metrics or {}))
+        structured_metric_id_by_row_index = {
+            index: metric_id
+            for index, metric_id in enumerate(sorted(metric_input))
+        }
+        structured_metric_rows = [
+            {
+                "structured_metric_row_index": row_index,
+                "structured_requirement_id": metric_id,
+                "immutable_source_backed_value": metric_input[metric_id],
+            }
+            for row_index, metric_id in structured_metric_id_by_row_index.items()
+        ]
         _assert_rows_as_of(source_claims, business_model.as_of_date)
         _assert_rows_as_of(source_documents, business_model.as_of_date)
         coverage_rows = scrub_blind_research_payload(
@@ -994,7 +1006,7 @@ class ComponentResearcher:
                 "source_documents": project_source_document_table(
                     source_documents
                 ),
-                "structured_metrics": metric_input,
+                "structured_metric_rows": structured_metric_rows,
             }
         )
         try:
@@ -1018,6 +1030,9 @@ class ComponentResearcher:
                 anchors=anchor_by_id,
                 coverage_labels=coverage_labels,
                 structured_metrics=metric_input,
+                structured_metric_id_by_row_index=(
+                    structured_metric_id_by_row_index
+                ),
                 fact_id_by_row_index=fact_id_by_row_index,
             )
         except (KeyError, TypeError, ValueError) as exc:
@@ -1117,6 +1132,7 @@ def _component_memo_from_response(
     anchors: Mapping[str, Mapping[str, Any]],
     coverage_labels: set[str],
     structured_metrics: Mapping[str, Any],
+    structured_metric_id_by_row_index: Mapping[int, str],
     fact_id_by_row_index: Mapping[int, str],
 ) -> ComponentResearchMemo:
     if not isinstance(response, Mapping):
@@ -1175,10 +1191,10 @@ def _component_memo_from_response(
     for anchor_id in nearest_counter:
         if str(anchors[anchor_id].get("role")) != "COUNTER":
             raise ValueError("nearest counter anchor has the wrong role")
-    returned_metric_ids = _ids(response, "structured_metric_ids")
-    unknown_metrics = set(returned_metric_ids) - set(structured_metrics)
-    if unknown_metrics:
-        raise ValueError(f"researcher invented structured metrics: {sorted(unknown_metrics)}")
+    returned_metric_ids = _resolve_structured_metric_row_indices(
+        response["structured_metric_row_indices"],
+        structured_metric_id_by_row_index=structured_metric_id_by_row_index,
+    )
     returned_metrics = {
         key: structured_metrics[key]
         for key in returned_metric_ids
@@ -1344,6 +1360,35 @@ def _ids(response: Mapping[str, Any], key: str) -> tuple[str, ...]:
     return result
 
 
+def _resolve_structured_metric_row_indices(
+    value: Any,
+    *,
+    structured_metric_id_by_row_index: Mapping[int, str],
+) -> tuple[str, ...]:
+    if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
+        raise TypeError("structured_metric_row_indices must be an array")
+    indices: list[int] = []
+    for item in value:
+        if isinstance(item, bool) or not isinstance(item, int) or item < 0:
+            raise TypeError(
+                "structured_metric_row_indices must contain non-negative integers"
+            )
+        indices.append(item)
+    if len(indices) != len(set(indices)):
+        raise ValueError(
+            "structured_metric_row_indices must not contain duplicates"
+        )
+    unknown = sorted(set(indices) - set(structured_metric_id_by_row_index))
+    if unknown:
+        raise ValueError(
+            "researcher selected unknown structured metric row indices: "
+            f"{unknown}"
+        )
+    return tuple(
+        structured_metric_id_by_row_index[index] for index in indices
+    )
+
+
 def _require_ids_exist(
     ids: Sequence[str], rows: Mapping[str, Any], lineage_name: str
 ) -> None:
@@ -1396,8 +1441,10 @@ def _pass_instruction(pass_name: str) -> str:
         return (
             "Write one component memo with a bounded point range, nearest "
             "positive/counter anchors, both-side reasoning, and explicit uncertainty. "
-            "Return structured_metric_ids as the identifiers of supplied "
-            "structured_metrics used in the memo; never copy, alter, or invent their values."
+            "Return structured_metric_row_indices using only the explicit row numbers "
+            "from structured_metric_rows. The deterministic engine will restore the "
+            "immutable requirement ids and values; never copy a nested record metric_id "
+            "or invent a value."
         )
     if pass_name == "RED_TEAM_RESEARCH":
         return "Challenge every material thesis independently, distinguish current counters from resolved history, and identify new research directions."

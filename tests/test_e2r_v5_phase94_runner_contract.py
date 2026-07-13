@@ -413,6 +413,12 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             self.assertFalse(
                 audit["completion_gates"]["source_graph_checkpoint_ready"]
             )
+            component_payload = next(
+                row["payload"]
+                for row in provider.calls
+                if row["pass_name"] == "COMPONENT_RESEARCH"
+            )
+            self.assertIn("COMPANYGUIDE", component_payload["source_coverage"])
             query_payload = next(
                 row["payload"]
                 for row in provider.calls
