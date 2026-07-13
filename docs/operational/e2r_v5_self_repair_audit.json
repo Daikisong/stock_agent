@@ -1,0 +1,431 @@
+{
+  "canary_completion_blockers": [
+    "LIVE_RESEARCH_CHECKPOINT_PENDING:005930",
+    "LIVE_RESEARCH_NOT_STARTED:000660",
+    "CODEX_PROVIDER_USAGE_LIMIT_UNTIL_2026-07-20T03:58:00+09:00"
+  ],
+  "canary_goal_complete": false,
+  "clean_rerun": {
+    "outcome_hash": "e72962d576c49d4d8ec7e1544b6c952c169b985ab68e8f03883bebedf5cf124f",
+    "passed_count": 23,
+    "same_evidence_replay_variance": 0,
+    "test_count": 23
+  },
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "clean_rerun_failure_count": 0,
+    "clean_rerun_test_count_mismatch": 0,
+    "deterministic_query_synthesis_count": 0,
+    "duplicate_failure_class_count": 0,
+    "failure_class_count_mismatch": 0,
+    "failure_class_roster_mismatch": 0,
+    "focused_test_failure_count": 0,
+    "focused_test_run_count_mismatch": 0,
+    "gold_injection_count": 0,
+    "identical_query_retry_count": 0,
+    "same_evidence_replay_variance_count": 0,
+    "unresolved_internal_cluster_count": 0
+  },
+  "failure_class_count": 12,
+  "failure_classes": [
+    "RESEARCH_APERTURE_TOO_NARROW",
+    "MATERIAL_FACT_MISSED",
+    "COUNTERFACT_MISSED",
+    "STRUCTURED_DATA_MISSING",
+    "DOCUMENT_RANKER_FAILURE",
+    "CLAIM_EXTRACTION_FAILURE",
+    "COMPONENT_JUDGMENT_UNDERCREDIT",
+    "COMPONENT_JUDGMENT_OVERCREDIT",
+    "ANCHOR_MISMATCH",
+    "SCORE_SCALE_COLLAPSE",
+    "STAGE_MISMATCH",
+    "TARGET_SPECIFIC_OVERFIT"
+  ],
+  "fixed_iteration_cap_used": false,
+  "focused_test_run": {
+    "outcome_hash": "e72962d576c49d4d8ec7e1544b6c952c169b985ab68e8f03883bebedf5cf124f",
+    "passed_count": 23,
+    "test_count": 23
+  },
+  "live_canaries": {
+    "blockers": [
+      "LIVE_RESEARCH_CHECKPOINT_PENDING:005930",
+      "LIVE_RESEARCH_NOT_STARTED:000660",
+      "CODEX_PROVIDER_USAGE_LIMIT_UNTIL_2026-07-20T03:58:00+09:00"
+    ],
+    "canary_goal_complete": false,
+    "provider_usage_limit_detected": true,
+    "target_registry_path": "configs/e2r_targeted_live_smoke_v1.json",
+    "targets": [
+      {
+        "company_name": "삼성전자",
+        "component_memo_count": 0,
+        "counterfact_count": 404,
+        "document_count": 287,
+        "fact_count": 1494,
+        "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
+        "production_research_complete": false,
+        "score_valid": false,
+        "stage_final": false,
+        "status": "RESEARCH_CHECKPOINT_PENDING",
+        "target_id": "005930"
+      },
+      {
+        "company_name": "SK하이닉스",
+        "manifest_path": null,
+        "production_research_complete": false,
+        "score_valid": false,
+        "stage_final": false,
+        "status": "LIVE_RESEARCH_NOT_STARTED",
+        "target_id": "000660"
+      }
+    ]
+  },
+  "production_readiness_authority": false,
+  "query_safety": {
+    "deterministic_query_synthesis": false,
+    "gold_url_score_or_expected_output_allowed": false,
+    "identical_query_retry_allowed": false,
+    "literal_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+    "provider_failure_policy": "TRY_ALTERNATE_PUBLIC_ROUTE_THEN_EXACT_PENDING_BLOCKER"
+  },
+  "repair_clusters": [
+    {
+      "audit_layer": "EVIDENCE_RECALL",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-cee82a3fbc8510c5affc",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "RESEARCH_APERTURE_TOO_NARROW",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_legacy_retrieval_aperture.E2RV5LegacyRetrievalApertureTests.test_acceptance_recall_is_above_threshold",
+        "tests.test_e2r_v5_all_archetype_generalization.E2RV5AllArchetypeGeneralizationTests.test_source_graph_is_broad_but_literal_queries_remain_llm_owned"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/legacy_retrieval_aperture.py",
+          "src/e2r/research_brain/researcher_mode/source_graph_explorer.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE_AND_PROMPT"
+      },
+      "root_cause_file_function_config": "researcher_mode/legacy_retrieval_aperture.py::compile_legacy_retrieval_aperture; source_graph_explorer.py::ResearcherSourceGraphAcquirer"
+    },
+    {
+      "audit_layer": "EVIDENCE_RECALL",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-f0696f773f720b101629",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "MATERIAL_FACT_MISSED",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_full_thesis_gold_benchmark.E2RV5FullThesisGoldBenchmarkTests.test_controlled_independent_post_run_meets_all_recall_gates",
+        "tests.test_e2r_v5_full_thesis_gold_benchmark.E2RV5FullThesisGoldBenchmarkTests.test_critical_fact_miss_fails_post_run_gate"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/full_thesis_gold_benchmark.py",
+          "src/e2r/research_brain/researcher_mode/evidence_fact_extractor.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE_AND_PROMPT"
+      },
+      "root_cause_file_function_config": "researcher_mode/full_thesis_gold_benchmark.py::audit_full_thesis_gold_recall; evidence_fact_extractor.py::production_material_fact_rows"
+    },
+    {
+      "audit_layer": "EVIDENCE_RECALL",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-464c1301771a8484532f",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "COUNTERFACT_MISSED",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_full_thesis_gold_benchmark.E2RV5FullThesisGoldBenchmarkTests.test_counterfact_miss_fails_counter_and_topic_gates",
+        "tests.test_e2r_v5_full_thesis_gold_benchmark.E2RV5FullThesisGoldBenchmarkTests.test_every_component_has_source_backed_support_and_counter"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/red_team_researcher.py",
+          "src/e2r/research_brain/researcher_mode/full_thesis_gold_benchmark.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE_AND_PROMPT"
+      },
+      "root_cause_file_function_config": "researcher_mode/red_team_researcher.py::RedTeamResearcher; full_thesis_gold_benchmark.py::counterfact gate"
+    },
+    {
+      "audit_layer": "EVIDENCE_RECALL",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-575164f04b398cffa987",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "STRUCTURED_DATA_MISSING",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_structured_financial_engine.E2RV5StructuredFinancialEngineTests.test_connector_gap_is_pending_and_never_zero_component",
+        "tests.test_e2r_v5_structured_financial_engine.E2RV5StructuredFinancialEngineTests.test_valuation_uses_price_forward_and_balance_sheet_records"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/structured_financial_engine.py",
+          "src/e2r/research_brain/researcher_mode/current_structured_materializer.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE_AND_PROMPT"
+      },
+      "root_cause_file_function_config": "researcher_mode/structured_financial_engine.py::StructuredFinancialConsensusValuationEngine; current_structured_materializer.py::CurrentStructuredSourceMaterializer"
+    },
+    {
+      "audit_layer": "EVIDENCE_RECALL",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-a007b059091ddd5a9563",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "DOCUMENT_RANKER_FAILURE",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests.test_document_ranker_has_no_top_n_and_snippet_is_not_evidence",
+        "tests.test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests.test_incomplete_materiality_ranking_fetches_nothing_and_stays_pending"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/document_ranker.py",
+          "src/e2r/research_brain/researcher_mode/source_graph_explorer.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE_AND_PROMPT"
+      },
+      "root_cause_file_function_config": "researcher_mode/document_ranker.py::ResearcherDocumentRanker; source_graph_explorer.py::material candidate accounting"
+    },
+    {
+      "audit_layer": "EVIDENCE_RECALL",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-494ba7ce4d56d0d0ee2d",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "CLAIM_EXTRACTION_FAILURE",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_fact_extraction.E2RV5FactExtractionTests.test_invalid_exact_quote_is_reprompted_with_the_rejected_proposal",
+        "tests.test_e2r_v5_fact_extraction.E2RV5FactExtractionTests.test_wrong_business_segment_is_terminal_and_cannot_enter_fact_graph"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/evidence_fact_extractor.py",
+          "src/e2r/research_brain/researcher_mode/evidence_fact_compiler.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "PARSER"
+      },
+      "root_cause_file_function_config": "researcher_mode/evidence_fact_extractor.py::ResearcherEvidenceFactExtractor; evidence_fact_compiler.py::EvidenceFactCompiler"
+    },
+    {
+      "audit_layer": "COMPONENT_PARITY",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-95efe24c1cdc88d78aa8",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "COMPONENT_JUDGMENT_UNDERCREDIT",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_deterministic_score_aggregator.E2RV5DeterministicScoreAggregatorTests.test_strong_high_anchor_equivalent_evidence_does_not_collapse_to_one_to_three_points"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/component_judge.py",
+          "src/e2r/research_brain/researcher_mode/score_aggregator.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE_AND_PROMPT"
+      },
+      "root_cause_file_function_config": "researcher_mode/component_judge.py::ComponentJudge; score_aggregator.py::DeterministicScoreAggregator.aggregate_component"
+    },
+    {
+      "audit_layer": "COMPONENT_PARITY",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-92fb8dfbd3b5c34998a3",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "COMPONENT_JUDGMENT_OVERCREDIT",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_evidence_fact_graph.E2RV5EvidenceFactGraphTests.test_one_claim_can_feed_multiple_components_but_total_credit_is_capped",
+        "tests.test_e2r_v5_evidence_fact_graph.E2RV5EvidenceFactGraphTests.test_corroborating_or_same_group_duplicate_claim_cannot_score_again"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/evidence_fact_graph.py",
+          "src/e2r/research_brain/researcher_mode/claim_utilization.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE"
+      },
+      "root_cause_file_function_config": "researcher_mode/evidence_fact_graph.py::EvidenceFactGraphEngine; claim_utilization.py::ClaimUtilizationLedgerBuilder"
+    },
+    {
+      "audit_layer": "COMPONENT_PARITY",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-ed0f07d0dfa51e6842bd",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "ANCHOR_MISMATCH",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_component_scoring_memos.E2RV5ComponentScoringMemoTests.test_missing_or_incompatible_anchor_blocks_calibration",
+        "tests.test_e2r_v5_component_anchor_atlas.E2RV5ComponentAnchorAtlasTests.test_all_registry_components_have_ordinal_anchor_or_explicit_gap"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/component_anchor_atlas.py",
+          "src/e2r/research_brain/researcher_mode/calibration_judge.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE_AND_PROMPT"
+      },
+      "root_cause_file_function_config": "researcher_mode/component_anchor_atlas.py::compile_component_anchor_atlas; calibration_judge.py::CalibrationJudge"
+    },
+    {
+      "audit_layer": "SCORE_SCALE",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-057a411f72e528280b0a",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "SCORE_SCALE_COLLAPSE",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_historical_blind_replay.E2RV5HistoricalBlindReplayTests.test_dynamic_range_audit_fails_when_high_mid_low_all_collapse_to_twenty",
+        "tests.test_e2r_v5_historical_blind_replay.E2RV5HistoricalBlindReplayTests.test_dynamic_range_canary_contains_historical_high_mid_and_low"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/historical_blind_replay.py",
+          "src/e2r/research_brain/researcher_mode/score_aggregator.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE_AND_PROMPT"
+      },
+      "root_cause_file_function_config": "researcher_mode/historical_blind_replay.py::audit_dynamic_range; score_aggregator.py::DeterministicScoreAggregator"
+    },
+    {
+      "audit_layer": "STAGE",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-77ab5803c8b6f0d9d9ca",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "STAGE_MISMATCH",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_stagecourt.E2RV5StageCourtTests.test_daily_event_overlay_cannot_change_canonical_stage",
+        "tests.test_e2r_v5_stagecourt.E2RV5StageCourtTests.test_hard_break_requires_open_official_target_mechanism_claim"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/stagecourt.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE"
+      },
+      "root_cause_file_function_config": "researcher_mode/stagecourt.py::ResearcherStageCourt; canonical deterministic stage gates"
+    },
+    {
+      "audit_layer": "GENERALIZATION",
+      "clean_rerun_status": "PASS",
+      "cluster_id": "PHASE99-042973e6d550e257565b",
+      "failed_clean_rerun_test_ids": [],
+      "failed_focused_test_ids": [],
+      "failure_class": "TARGET_SPECIFIC_OVERFIT",
+      "final_status": "VERIFIED_REPAIRED",
+      "focused_test_ids": [
+        "tests.test_e2r_v5_all_archetype_generalization.E2RV5AllArchetypeGeneralizationTests.test_complete_registry_enters_the_same_seven_component_path",
+        "tests.test_e2r_v5_full_thesis_gold_benchmark.E2RV5FullThesisGoldBenchmarkTests.test_generic_validator_contains_no_canary_target_branch"
+      ],
+      "focused_test_status": "PASS",
+      "initial_status": "DETECTED",
+      "patch": {
+        "changed_files": [
+          "src/e2r/research_brain/researcher_mode/generalization.py",
+          "src/e2r/research_brain/researcher_mode/current_researcher_mode.py"
+        ],
+        "gold_url_or_score_injected": false,
+        "identical_query_retry": false,
+        "literal_query": null,
+        "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+        "repair_kind": "CODE_AND_PROMPT"
+      },
+      "root_cause_file_function_config": "researcher_mode/generalization.py::compile_all_archetype_generalization; runtime branch scanner"
+    }
+  ],
+  "runner_output": "",
+  "schema_version": "e2r_v5_phase99_self_repair_v1",
+  "scope": "INTERNAL_REPAIR_ACCEPTANCE_WITH_SEPARATE_LIVE_CANARY_TRUTH",
+  "self_repair_loop_order": [
+    "RUN",
+    "EVIDENCE_RECALL_AUDIT",
+    "COMPONENT_PARITY_AUDIT",
+    "SCORE_SCALE_AUDIT",
+    "STAGE_AUDIT",
+    "ROOT_CAUSE_CLUSTER",
+    "CODE_PROMPT_SOURCE_PARSER_PATCH",
+    "FOCUSED_TESTS",
+    "CLEAN_RERUN"
+  ],
+  "status": "PHASE99_INTERNAL_SELF_REPAIR_PASS"
+}

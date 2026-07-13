@@ -198,6 +198,24 @@ from .capability_regression import (
     compile_phase98_capability_regression_audit,
     write_phase98_capability_regression_audit,
 )
+from .self_repair import (
+    DEFAULT_PHASE99_AUDIT_PATH,
+    DEFAULT_PHASE99_SUMMARY_PATH,
+    PARITY_FAILURE_CLASSES,
+    PHASE99_FAIL,
+    PHASE99_PASS,
+    PUBLIC_RESEARCH_ROUTES,
+    REPAIR_CLUSTER_SPECS,
+    SELF_REPAIR_LOOP_ORDER,
+    AlternatePublicRoutePlan,
+    FailureClusterRepairSpec,
+    RepairQueryValidation,
+    compile_phase99_self_repair_audit,
+    plan_alternate_public_routes,
+    render_phase99_self_repair_summary,
+    validate_llm_repair_queries,
+    write_phase99_self_repair_artifacts,
+)
 from .document_ranker import (
     CandidateRankingResult,
     DocumentRelevanceDecision,
