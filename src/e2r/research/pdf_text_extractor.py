@@ -5,8 +5,40 @@ from __future__ import annotations
 from dataclasses import dataclass
 from io import BytesIO
 import logging
+import math
 from pathlib import Path
 from typing import Mapping
+import unicodedata
+
+
+_ALLOWED_TEXT_CONTROLS = frozenset("\n\r\t\f")
+
+
+def extracted_text_unreadable_reason(text: str) -> str | None:
+    """Return a stable reason when extracted text is not human-readable.
+
+    PDF libraries can report a successful extraction even when a custom font
+    maps most glyphs to C0 control characters.  Korean and other non-Latin
+    scripts remain valid; only characters that cannot represent ordinary
+    document text (or a large number of Unicode replacement markers) are
+    rejected here.
+    """
+
+    if not text.strip():
+        return "empty_extracted_text"
+    length = len(text)
+    minimum_bad_characters = max(8, math.ceil(length * 0.02))
+    control_count = sum(
+        unicodedata.category(character) == "Cc"
+        and character not in _ALLOWED_TEXT_CONTROLS
+        for character in text
+    )
+    if control_count >= minimum_bad_characters:
+        return f"excessive_control_characters:{control_count}/{length}"
+    replacement_count = text.count("\ufffd")
+    if replacement_count >= minimum_bad_characters:
+        return f"excessive_unicode_replacement_characters:{replacement_count}/{length}"
+    return None
 
 
 @dataclass(frozen=True)
@@ -40,42 +72,76 @@ class PDFTextExtractor:
         return self.extract_text_from_bytes(path.read_bytes())
 
     def extract_text_from_bytes(self, payload: bytes) -> PDFTextExtractionResult:
+        failures: list[str] = []
+        available_extractors: list[str] = []
         try:
             import fitz  # type: ignore
-
-            document = fitz.open(stream=payload, filetype="pdf")
-            text = "\n".join(page.get_text() for page in document)
-            return PDFTextExtractionResult(ok=True, text=text, extractor="pymupdf")
         except ImportError:
             pass
-        except Exception as exc:  # pragma: no cover - depends on optional library internals
-            return PDFTextExtractionResult(ok=False, reason=f"PyMuPDF extraction failed: {exc}", extractor="pymupdf")
+        else:
+            available_extractors.append("pymupdf")
+            try:
+                with fitz.open(stream=payload, filetype="pdf") as document:
+                    text = "\n".join(page.get_text() for page in document)
+                unreadable = extracted_text_unreadable_reason(text)
+                if unreadable is None:
+                    return PDFTextExtractionResult(
+                        ok=True, text=text, extractor="pymupdf"
+                    )
+                failures.append(f"pymupdf_unreadable:{unreadable}")
+            except Exception as exc:  # pragma: no cover - optional library internals
+                failures.append(f"pymupdf_failed:{type(exc).__name__}:{exc}")
 
         try:
             import pdfplumber  # type: ignore
-
-            with pdfplumber.open(BytesIO(payload)) as pdf:
-                text = "\n".join(page.extract_text() or "" for page in pdf.pages)
-            return PDFTextExtractionResult(ok=True, text=text, extractor="pdfplumber")
         except ImportError:
             pass
-        except Exception as exc:  # pragma: no cover - depends on optional library internals
-            return PDFTextExtractionResult(ok=False, reason=f"pdfplumber extraction failed: {exc}", extractor="pdfplumber")
+        else:
+            available_extractors.append("pdfplumber")
+            try:
+                with pdfplumber.open(BytesIO(payload)) as pdf:
+                    text = "\n".join(page.extract_text() or "" for page in pdf.pages)
+                unreadable = extracted_text_unreadable_reason(text)
+                if unreadable is None:
+                    return PDFTextExtractionResult(
+                        ok=True, text=text, extractor="pdfplumber"
+                    )
+                failures.append(f"pdfplumber_unreadable:{unreadable}")
+            except Exception as exc:  # pragma: no cover - optional library internals
+                failures.append(f"pdfplumber_failed:{type(exc).__name__}:{exc}")
 
         try:
             from pypdf import PdfReader  # type: ignore
-
-            logging.getLogger("pypdf").setLevel(logging.ERROR)
-            reader = PdfReader(BytesIO(payload))
-            text = "\n".join(page.extract_text() or "" for page in reader.pages)
-            return PDFTextExtractionResult(ok=True, text=text, extractor="pypdf")
         except ImportError:
+            pass
+        else:
+            available_extractors.append("pypdf")
+            try:
+                logging.getLogger("pypdf").setLevel(logging.ERROR)
+                reader = PdfReader(BytesIO(payload))
+                text = "\n".join(page.extract_text() or "" for page in reader.pages)
+                unreadable = extracted_text_unreadable_reason(text)
+                if unreadable is None:
+                    return PDFTextExtractionResult(
+                        ok=True, text=text, extractor="pypdf"
+                    )
+                failures.append(f"pypdf_unreadable:{unreadable}")
+            except Exception as exc:  # pragma: no cover - optional library internals
+                failures.append(f"pypdf_failed:{type(exc).__name__}:{exc}")
+
+        if failures:
             return PDFTextExtractionResult(
                 ok=False,
-                reason="PDF extraction requires PyMuPDF, pdfplumber, pypdf, or a local .txt fixture",
+                reason=";".join(failures),
+                extractor=available_extractors[-1],
             )
-        except Exception as exc:  # pragma: no cover - depends on optional library internals
-            return PDFTextExtractionResult(ok=False, reason=f"pypdf extraction failed: {exc}", extractor="pypdf")
+        return PDFTextExtractionResult(
+            ok=False,
+            reason=(
+                "PDF extraction requires PyMuPDF, pdfplumber, pypdf, "
+                "or a local .txt fixture"
+            ),
+        )
 
     def _fixture_text(self, key: str) -> str | None:
         if not self.fixture_text_by_path:
@@ -95,4 +161,8 @@ def _path_exists(value: str) -> bool:
         return False
 
 
-__all__ = ["PDFTextExtractionResult", "PDFTextExtractor"]
+__all__ = [
+    "PDFTextExtractionResult",
+    "PDFTextExtractor",
+    "extracted_text_unreadable_reason",
+]

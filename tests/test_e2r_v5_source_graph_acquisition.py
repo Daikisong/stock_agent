@@ -11,6 +11,7 @@ from typing import Any, Mapping, Sequence
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
 from e2r.research.page_fetcher import FetchResult, PageFetcher
 from e2r.research.search_provider import SearchResult
+import e2r.research_brain.researcher_mode.source_graph_explorer as source_graph_module
 from e2r.research_brain.researcher_mode import (
     PHASE85_PASS,
     ComponentResearchPlan,
@@ -550,6 +551,55 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             paths = write_source_graph_acquisition_run(run3, output_root=directory)
             loaded = load_source_graph_checkpoint(paths["checkpoint"])
             self.assertEqual(loaded["checkpoint_hash"], run3.checkpoint["checkpoint_hash"])
+
+    def test_checkpoint_resume_quarantines_previously_accepted_unreadable_pdf_text(
+        self,
+    ) -> None:
+        provider = SourceBrainProvider()
+        url = "https://broker.example.com/custom-font.pdf"
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp custom font report", url),)}
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={url: _document_text("initial-readable-document")}
+        )
+        first = self._run(provider=provider, search=search, fetcher=fetcher)
+        self.assertEqual(len(first.evidence_documents), 1)
+
+        stale_state = json.loads(json.dumps(first.checkpoint))
+        stale_state.pop("checkpoint_id")
+        stale_state.pop("checkpoint_hash")
+        broken_text = ("Current Corp 2026-06-20 " + ("\x01\x0f\x11" * 50)) * 20
+        stale_document = stale_state["evidence_documents"][0]
+        stale_document["content_text"] = broken_text
+        stale_document["content_hash"] = hashlib.sha256(
+            broken_text.encode("utf-8")
+        ).hexdigest()
+        stale_checkpoint = source_graph_module._finalize_checkpoint(stale_state)
+
+        resumed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=stale_checkpoint,
+        )
+
+        self.assertEqual(resumed.evidence_documents, ())
+        self.assertEqual(resumed.audit["critical_counts"]["unreadable_evidence_document_count"], 0)
+        self.assertEqual(len(resumed.checkpoint["quarantined_documents"]), 1)
+        quarantine = resumed.checkpoint["quarantined_documents"][0]
+        self.assertEqual(quarantine["document_id"], stale_document["document_id"])
+        self.assertIn("excessive_control_characters", quarantine["quarantine_reason"])
+        candidate = resumed.checkpoint["search_candidates"][0]
+        self.assertEqual(candidate["fetch_status"], "FETCH_REJECTED_UNREADABLE_TEXT")
+        self.assertTrue(candidate["alternate_route_required"])
+        self.assertTrue(
+            any(
+                row.get("failure_stage")
+                == "FULL_DOCUMENT_READABILITY_VALIDATION"
+                for row in resumed.checkpoint["query_failures"]
+            )
+        )
 
     def test_candidate_transport_budget_defers_next_query_instead_of_dropping_it(self) -> None:
         second_query = "Current Corp counter evidence cancellation terms"

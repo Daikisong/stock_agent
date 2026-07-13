@@ -12,7 +12,10 @@ from pathlib import Path
 from urllib import error, parse, request
 from typing import Mapping
 
-from e2r.research.pdf_text_extractor import PDFTextExtractor
+from e2r.research.pdf_text_extractor import (
+    PDFTextExtractor,
+    extracted_text_unreadable_reason,
+)
 
 
 @dataclass(frozen=True)
@@ -50,18 +53,37 @@ class PageFetcher:
             value = self.fixture_text_by_url[url]
             if isinstance(value, Path) or (isinstance(value, str) and _path_exists(value)):
                 path = Path(value)
+                text = path.read_text(encoding="utf-8")
+                unreadable = extracted_text_unreadable_reason(text)
+                if unreadable is not None:
+                    return FetchResult(
+                        url=url,
+                        ok=False,
+                        fetched_at=fetched_at,
+                        reason=f"unreadable_fixture_text:{unreadable}",
+                        source_path=str(path),
+                    )
                 return FetchResult(
                     url=url,
                     ok=True,
-                    text=path.read_text(encoding="utf-8"),
+                    text=text,
                     content_type="text/plain",
                     fetched_at=fetched_at,
                     source_path=str(path),
                 )
+            text = str(value)
+            unreadable = extracted_text_unreadable_reason(text)
+            if unreadable is not None:
+                return FetchResult(
+                    url=url,
+                    ok=False,
+                    fetched_at=fetched_at,
+                    reason=f"unreadable_fixture_text:{unreadable}",
+                )
             return FetchResult(
                 url=url,
                 ok=True,
-                text=str(value),
+                text=text,
                 content_type="text/plain",
                 fetched_at=fetched_at,
             )
@@ -88,7 +110,8 @@ class PageFetcher:
         if cache_path is not None and cache_path.exists():
             try:
                 cached_text = cache_path.read_text(encoding="utf-8")
-                if cached_text.strip():
+                unreadable = extracted_text_unreadable_reason(cached_text)
+                if unreadable is None:
                     return FetchResult(
                         url=url,
                         ok=True,
@@ -145,6 +168,15 @@ class PageFetcher:
                     fetched_at=fetched_at,
                     reason=f"live_pdf_text_extraction_failed:{reason}",
                 )
+            unreadable = extracted_text_unreadable_reason(extraction.text or "")
+            if unreadable is not None:
+                return FetchResult(
+                    url=url,
+                    ok=False,
+                    content_type=content_type or "application/pdf",
+                    fetched_at=fetched_at,
+                    reason=f"live_pdf_text_extraction_failed:{unreadable}",
+                )
             text = (extraction.text or "")[: self.max_text_chars]
             source_path = _write_cache(cache_path, text)
             return FetchResult(
@@ -158,13 +190,14 @@ class PageFetcher:
 
         decoded = body.decode(charset, errors="replace")
         text = _text_from_response(decoded, content_type)
-        if not text.strip():
+        unreadable = extracted_text_unreadable_reason(text)
+        if unreadable is not None:
             return FetchResult(
                 url=url,
                 ok=False,
                 content_type=content_type,
                 fetched_at=fetched_at,
-                reason="live_fetch_empty_text",
+                reason=f"live_fetch_unreadable_text:{unreadable}",
             )
         text = text[: self.max_text_chars]
         source_path = _write_cache(cache_path, text)

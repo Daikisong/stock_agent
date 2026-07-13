@@ -19,6 +19,7 @@ from e2r.research import (
     WebResearchInput,
     WebResearchRunner,
     extract_e2r_text_fields,
+    extracted_text_unreadable_reason,
 )
 from e2r.research.query_planner import QueryPlan, QuerySpec
 from e2r.staging import StageClassificationInput, StageClassifier
@@ -753,6 +754,17 @@ OPM 개선폭 6%
             self.assertTrue(result.ok)
             self.assertIn("목표주가", result.text)
 
+    def test_extracted_text_readability_keeps_korean_and_rejects_control_glyphs(self):
+        normal = "삼성전자 HBM 매출과 현금흐름이 개선됐다.\n" * 20
+        broken = ("삼성전자 HBM " + ("\x01\x0f\x11" * 20) + "\n") * 20
+
+        self.assertIsNone(extracted_text_unreadable_reason(normal))
+        self.assertTrue(
+            extracted_text_unreadable_reason(broken).startswith(
+                "excessive_control_characters:"
+            )
+        )
+
     def test_page_fetcher_live_fetches_html_text_and_uses_cache(self):
         html = """
         <html>
@@ -809,6 +821,24 @@ OPM 개선폭 6%
             self.assertEqual(extractor.payload_count, 1)
             urlopen.assert_not_called()
             urlopen.assert_not_called()
+
+    def test_page_fetcher_rejects_pdf_extractor_false_success_with_control_glyphs(self):
+        extractor = _FakePDFExtractor(("삼성전자" + ("\x01" * 40)) * 20)
+        fetcher = PageFetcher(live_enabled=True, pdf_text_extractor=extractor)
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=_FakeHTTPResponse(
+                "%PDF-1.4 fixture", content_type="application/pdf"
+            ),
+        ):
+            result = fetcher.fetch(
+                "https://broker.example.com/broken.pdf",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertFalse(result.ok)
+        self.assertIn("excessive_control_characters", result.reason)
+        self.assertEqual(extractor.payload_count, 1)
 
     def test_page_fetcher_live_pdf_uses_pdf_body_cap_not_html_body_cap(self):
         extractor = _FakePDFExtractor("삼성전자 HBM 고객 물량 배정")

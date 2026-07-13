@@ -5,7 +5,11 @@ from .free_web_research_runner import FreeWebResearchInput, FreeWebResearchRunne
 from .manual_source_provider import ManualSource, ManualSourceProvider
 from .naver_search_provider import NaverFreeSearchProvider
 from .page_fetcher import FetchResult, PageFetcher
-from .pdf_text_extractor import PDFTextExtractionResult, PDFTextExtractor
+from .pdf_text_extractor import (
+    PDFTextExtractionResult,
+    PDFTextExtractor,
+    extracted_text_unreadable_reason,
+)
 from .query_planner import QueryPlan, QueryPlanner, QuerySpec
 from .report_parser import ReportParseResult, parse_research_report_file, parse_research_report_text
 from .search_budget import ResearchLayer, SearchBudget, SearchBudgetDecision, SearchBudgetTracker
@@ -55,6 +59,7 @@ __all__ = [
     "WebResearchRunner",
     "classify_search_result",
     "extract_e2r_text_fields",
+    "extracted_text_unreadable_reason",
     "is_search_snippet_only",
     "news_item_from_search_snippet",
     "parse_research_report_file",

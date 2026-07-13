@@ -19,6 +19,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from e2r.production.metadata import write_json, write_jsonl
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
 from e2r.research.page_fetcher import PageFetcher
+from e2r.research.pdf_text_extractor import extracted_text_unreadable_reason
 from e2r.research.publication_date import infer_publication_date
 from e2r.research.search_provider import SearchProvider, SearchResult
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
@@ -578,11 +579,12 @@ class ResearcherSourceGraphAcquirer:
             search_provider=search_provider,
             page_fetcher=page_fetcher,
         )
+        checkpoint_quarantine_reasons = _quarantine_unreadable_documents(state)
         unresolved_objectives = tuple(
             row for row in objectives if str(row["objective_id"]) not in resolved
         )
         query_generation: SourceQueryGenerationResult | None = None
-        pending_reasons: list[str] = []
+        pending_reasons: list[str] = list(checkpoint_quarantine_reasons)
         generated_rows = state["generated_queries"]
         candidates = state["search_candidates"]
         ranking_rows = state["candidate_materiality_decisions"]
@@ -1165,6 +1167,7 @@ def _new_acquisition_state(
         "fetch_records": [],
         "evidence_documents": [],
         "rejected_documents": [],
+        "quarantined_documents": [],
         "resolved_objective_ids": [],
         "pending_reasons": [],
         "source_graph": {},
@@ -1299,6 +1302,125 @@ def _validate_provider_mode(
         or bool(page_fetcher.fixture_text_by_url)
     ):
         raise ValueError("production source graph requires live PageFetcher")
+
+
+def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
+    """Remove unreadable legacy documents when a checkpoint is resumed.
+
+    Older checkpoints may contain PDF text that an extractor reported as a
+    success even though it consists mostly of control characters.  Keeping the
+    row would make every later fact-extraction epoch retry an impossible input.
+    The document is therefore removed from evidence authority while its URL,
+    content hash, query lineage, and rejection reason remain auditable.
+    """
+
+    documents = list(state.get("evidence_documents") or ())
+    candidates = list(state.get("search_candidates") or ())
+    candidate_by_document_id = {
+        str(row.get("document_id") or ""): row
+        for row in candidates
+        if row.get("document_id")
+    }
+    candidate_by_url = {
+        _normalize_url(str(row.get("url") or "")): row
+        for row in candidates
+        if row.get("url")
+    }
+    kept: list[dict[str, Any]] = []
+    reasons: list[str] = []
+    quarantine_rows = list(state.setdefault("quarantined_documents", []))
+    rejected_rows = state.setdefault("rejected_documents", [])
+    query_failures = state.setdefault("query_failures", [])
+    for raw_document in documents:
+        document = dict(raw_document)
+        content = str(
+            document.get("content_text")
+            or document.get("full_text")
+            or document.get("content")
+            or ""
+        )
+        unreadable = extracted_text_unreadable_reason(content)
+        if unreadable is None:
+            kept.append(document)
+            continue
+        document_id = str(document.get("document_id") or "")
+        url = str(document.get("canonical_url") or document.get("url") or "")
+        rejection_reason = f"UNREADABLE_FULL_DOCUMENT_TEXT:{unreadable}"
+        candidate = candidate_by_document_id.get(document_id) or candidate_by_url.get(
+            _normalize_url(url)
+        )
+        candidate_payload: Mapping[str, Any] = candidate or {
+            "candidate_id": stable_intelligence_id(
+                "SGCANDQUARANTINE",
+                {
+                    "target_id": state.get("target_id"),
+                    "as_of_date": state.get("as_of_date"),
+                    "document_id": document_id,
+                    "url": url,
+                },
+            ),
+            "url": url,
+            "query_ids": list(document.get("query_ids") or ()),
+            "objective_ids": list(document.get("objective_ids") or ()),
+        }
+        if candidate is not None:
+            candidate["fetch_status"] = "FETCH_REJECTED_UNREADABLE_TEXT"
+            candidate["last_fetch_failure_reason"] = rejection_reason
+            candidate["alternate_route_required"] = True
+            candidate["quarantined_document_id"] = document_id
+        rejection = dict(
+            _candidate_rejection(
+                candidate_payload,
+                rejection_reason,
+                retryable=False,
+                content_hash=str(document.get("content_hash") or "") or None,
+            )
+        )
+        rejection.update(
+            {
+                "document_id": document_id,
+                "quarantined_on_checkpoint_resume": True,
+                "evidence_eligible": False,
+                "alternate_route_required": True,
+            }
+        )
+        rejected_rows.append(rejection)
+        quarantine_rows.append(
+            {
+                "schema_version": "e2r_v5_source_graph_quarantine_v1",
+                "document_id": document_id,
+                "candidate_id": candidate_payload.get("candidate_id"),
+                "url": url,
+                "content_hash": document.get("content_hash"),
+                "query_ids": list(document.get("query_ids") or ()),
+                "objective_ids": list(document.get("objective_ids") or ()),
+                "quarantine_reason": rejection_reason,
+                "evidence_eligible": False,
+                "score_authority": False,
+            }
+        )
+        query_failures.append(
+            {
+                "query_id": str(
+                    next(iter(document.get("query_ids") or ()), "CHECKPOINT_VALIDATION")
+                ),
+                "objective_id": str(
+                    next(iter(document.get("objective_ids") or ()), "UNKNOWN_OBJECTIVE")
+                ),
+                "candidate_id": candidate_payload.get("candidate_id"),
+                "document_id": document_id,
+                "url": url,
+                "failure_stage": "FULL_DOCUMENT_READABILITY_VALIDATION",
+                "failure_reason": rejection_reason,
+                "alternate_route_required": True,
+            }
+        )
+        reasons.append(rejection_reason)
+    state["evidence_documents"] = kept
+    state["quarantined_documents"] = _dedupe_mapping_rows(
+        quarantine_rows, key_fields=("document_id", "quarantine_reason")
+    )
+    return tuple(dict.fromkeys(reasons))
 
 
 def _execute_search_query(
@@ -1502,6 +1624,20 @@ def _fetch_candidate_document(
         return _fetch_record(fetch_id, candidate, "FETCH_FAILED", reason), None, rejection
     text = str(result.text or "").strip()
     content_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    unreadable = extracted_text_unreadable_reason(text)
+    if unreadable is not None:
+        reason = f"UNREADABLE_FULL_DOCUMENT_TEXT:{unreadable}"
+        rejection = _candidate_rejection(
+            candidate,
+            reason,
+            retryable=False,
+            content_hash=content_hash,
+        )
+        return (
+            _fetch_record(fetch_id, candidate, "REJECTED", reason, content_hash),
+            None,
+            rejection,
+        )
     if len(text) < min_chars:
         reason = "FULL_DOCUMENT_CONTENT_TOO_SMALL"
         rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
@@ -1713,6 +1849,19 @@ def _audit_acquisition_run(
                 and str(row.get("source_family") or "").upper() not in SOURCE_FAMILY_CLASSES["OFFICIAL"]
             )
             for row in documents
+        ),
+        "unreadable_evidence_document_count": sum(
+            extracted_text_unreadable_reason(
+                str(
+                    row.get("content_text")
+                    or row.get("full_text")
+                    or row.get("content")
+                    or ""
+                )
+            )
+            is not None
+            for row in documents
+            if row.get("evidence_eligible") is True
         ),
         "parser_direct_score_authority_count": sum(
             bool(row.get("parser_field_direct_score_authority"))
