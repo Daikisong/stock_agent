@@ -24,8 +24,11 @@ from .schemas import (
 )
 from .source_query_planner import CANONICAL_SOURCE_FAMILIES
 from .prompt_projection import (
+    project_counter_route_proof,
+    project_evidence_facts,
     project_source_graph_checkpoint,
     project_structured_result,
+    project_supervisor_failures,
 )
 from .source_graph_explorer import validate_source_graph_checkpoint
 from .structured_data_researcher import StructuredResearchResult
@@ -352,6 +355,7 @@ class ResearchSupervisor:
                 reviewer_role=self.reviewer_role,
                 provider_name="UNCONFIGURED",
             )
+        failure_projection = project_supervisor_failures(failures)
         payload = scrub_blind_research_payload(
             {
                 "reviewer_role": self.reviewer_role,
@@ -365,13 +369,18 @@ class ResearchSupervisor:
                 "structured_result": (
                     project_structured_result(structured_result)
                 ),
-                "current_evidence_fact_graph": [row.to_dict() for row in facts],
+                "current_evidence_fact_graph": project_evidence_facts(facts),
                 "source_graph_checkpoint": _supervisor_source_graph_payload(
                     source_graph_checkpoint
                 ),
                 "open_research_objectives": list(open_objectives),
-                "prior_query_source_failures": list(failures),
-                "counter_and_supersession_route_proof": list(
+                "prior_query_source_failures": failure_projection["failures"],
+                "prior_query_source_failure_projection": {
+                    key: value
+                    for key, value in failure_projection.items()
+                    if key != "failures"
+                },
+                "counter_and_supersession_route_proof": project_counter_route_proof(
                     counter_and_supersession_route_proof
                 ),
                 "prior_supervisor_review": (

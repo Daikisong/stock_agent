@@ -31,6 +31,7 @@ from e2r.research_brain.scoring.business_mechanism_scope import (
 )
 
 from .component_researcher import StructuredResearchProvider
+from .prompt_projection import project_evidence_facts
 from .evidence_fact_compiler import EvidenceFactCompiler, FactCompilationResult
 from .schemas import (
     CANONICAL_COMPONENT_ORDER,
@@ -267,7 +268,9 @@ class ResearcherEvidenceFactExtractor:
                     "archetype_hypothesis": archetype_id,
                     "as_of_date": as_of_date,
                     "open_research_objectives": [dict(row) for row in open_objectives],
-                    "current_evidence_facts": [dict(row) for row in current_facts],
+                    "current_evidence_facts": project_evidence_facts(
+                        current_facts
+                    ),
                     "score_gap_context": dict(score_gap_context or {}),
                     "normalization_contract": {
                         "question_family_id": "stable semantic research-question family, not a query string",

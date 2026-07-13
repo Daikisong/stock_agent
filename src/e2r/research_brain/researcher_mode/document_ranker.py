@@ -14,6 +14,7 @@ from e2r.research_brain.planning.provider_transport import (
 )
 
 from .component_researcher import StructuredResearchProvider
+from .prompt_projection import project_evidence_facts
 from .schemas import ComponentResearchPlan
 from .schemas import assert_blind_research_output, scrub_blind_research_payload
 
@@ -148,7 +149,9 @@ class ResearcherDocumentRanker:
                     }
                     for row in candidates
                 ],
-                "current_evidence_fact_graph": list(current_evidence_facts),
+                "current_evidence_fact_graph": project_evidence_facts(
+                    current_evidence_facts
+                ),
                 "target_business_model": target_business_model,
                 "source_coverage": list(source_coverage),
             }

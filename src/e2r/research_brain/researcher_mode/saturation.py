@@ -19,6 +19,7 @@ from .research_supervisor import ResearchSupervisorReview
 from .schemas import CANONICAL_COMPONENT_ORDER, assert_blind_research_output, scrub_blind_research_payload
 from .source_graph_explorer import validate_source_graph_checkpoint
 from .prompt_projection import (
+    project_research_epoch_checkpoint,
     project_source_graph_checkpoint,
     project_structured_result,
 )
@@ -215,7 +216,9 @@ class SemanticSaturationReviewer:
         payload = scrub_blind_research_payload(
             {
                 "reviewer_role": self.reviewer_role,
-                "research_epoch_checkpoint": dict(checkpoint),
+                "research_epoch_checkpoint": project_research_epoch_checkpoint(
+                    checkpoint
+                ),
                 "supervisor_review": supervisor_review.to_dict(),
                 "component_results": [row.to_dict() for row in component_results],
                 "red_team_result": (

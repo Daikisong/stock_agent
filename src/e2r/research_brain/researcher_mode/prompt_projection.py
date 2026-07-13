@@ -17,19 +17,16 @@ from typing import Any, Mapping, Sequence
 
 
 _DOCUMENT_MANIFEST_FIELDS = (
-    "schema_version",
     "document_id",
     "full_source_document_id",
     "target_id",
     "as_of_date",
     "canonical_url",
-    "discovery_urls",
     "title",
     "source_family",
     "source_provider",
     "published_at",
     "available_at",
-    "fetched_at",
     "content_type",
     "content_hash",
     "full_source_content_hash",
@@ -37,16 +34,127 @@ _DOCUMENT_MANIFEST_FIELDS = (
     "chunk_index",
     "chunk_count",
     "all_chunks_preserved",
-    "query_ids",
-    "objective_ids",
     "source_independence_group",
-    "referenced_urls",
-    "referenced_document_ids",
     "full_fetch_performed",
     "full_source_fetch_performed",
     "snippet_only",
     "snippet_used_as_document",
     "evidence_eligible",
+)
+
+_DOCUMENT_RELATION_FIELDS = (
+    "discovery_urls",
+    "query_ids",
+    "objective_ids",
+    "referenced_urls",
+    "referenced_document_ids",
+)
+
+_DOCUMENT_TABLE_FIELDS = (
+    *_DOCUMENT_MANIFEST_FIELDS,
+    "source_manifest_hash",
+    "content_transport",
+    "content_chars",
+    "content_hash_recomputed",
+)
+
+_GENERATED_QUERY_PROMPT_FIELDS = (
+    "query_id",
+    "objective_id",
+    "literal_query",
+    "rationale",
+    "source_families",
+    "official_gap_reasons",
+    "execution_status",
+    "search_result_count",
+    "counter_or_supersession_search",
+    "provider_errors",
+)
+
+_FACT_GROUP_FIELDS = (
+    "business_segment",
+    "product_family",
+    "direction",
+    "current_lifecycle",
+)
+
+_FACT_OBSERVATION_FIELDS = (
+    "subject",
+    "economic_mechanism",
+    "predicate",
+    "value",
+    "unit",
+    "period",
+    "confidence",
+    "structured_evidence_roles",
+)
+
+_CITABLE_FACT_PROMPT_FIELDS = (
+    "fact_id",
+    "subject",
+    "business_segment",
+    "product_family",
+    "economic_mechanism",
+    "predicate",
+    "value",
+    "unit",
+    "period",
+    "direction",
+    "source_ids",
+    "claim_ids",
+    "quote_ids",
+    "current_lifecycle",
+    "source_independence_group",
+    "confidence",
+    "corroborating_independence_groups",
+    "structured_evidence_roles",
+)
+
+_SOURCE_CLAIM_PROMPT_FIELDS = (
+    "claim_id",
+    "document_id",
+    "source_ids",
+    "canonical_url",
+    "exact_quote",
+    "source_family",
+    "source_tier",
+    "published_at",
+    "available_at",
+    "materiality",
+    "materiality_rationale",
+    "accepted",
+    "accepted_by_evidence_os",
+    "structured_evidence_roles",
+)
+
+_FAILURE_PROMPT_FIELDS = (
+    "failure_id",
+    "failure_kind",
+    "failure_stage",
+    "failure_reason",
+    "reason",
+    "rejection_reason",
+    "provider_error",
+    "objective_id",
+    "objective_ids",
+    "query_id",
+    "query_ids",
+    "candidate_id",
+    "rejection_id",
+    "literal_query",
+    "source_family",
+    "retryable",
+    "alternate_route_required",
+    "absence_eligible",
+    "zero_result_only",
+    "resolved",
+    "resolved_by",
+    "parser_extractor_verified",
+    "provider_transport_verified",
+    "attempted_source_families",
+    "full_fetch_attempted",
+    "snippet_used_as_document",
+    "accepted_claim_ids",
 )
 
 
@@ -69,6 +177,7 @@ def project_source_documents(
         }
         projected.update(
             {
+                "source_manifest_hash": _stable_hash(row),
                 "content_transport": "OMITTED_AFTER_VERIFIED_FACT_EXTRACTION",
                 "content_chars": len(content),
                 "content_hash_recomputed": (
@@ -85,16 +194,539 @@ def project_source_documents(
     return tuple(output)
 
 
+def project_source_document_table(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Encode every body-free document manifest under one shared field legend."""
+
+    payloads = tuple(dict(row) for row in rows)
+    ordered = tuple(
+        sorted(
+            payloads,
+            key=lambda row: (
+                str(row.get("document_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    manifests = project_source_documents(ordered)
+    documents = [
+        [row.get(field) for field in _DOCUMENT_TABLE_FIELDS]
+        for row in manifests
+    ]
+    document_id_index = _DOCUMENT_TABLE_FIELDS.index("document_id")
+    return {
+        "schema_version": "e2r_v5_source_document_prompt_table_v1",
+        "document_count": len(ordered),
+        "document_roster_hash": _stable_hash(ordered),
+        "document_fields": list(_DOCUMENT_TABLE_FIELDS),
+        "documents": documents,
+        "every_document_id_preserved": (
+            len(
+                {
+                    str(row[document_id_index] or "") for row in documents
+                }
+            )
+            == len(ordered)
+            and all(str(row[document_id_index] or "").strip() for row in documents)
+        ),
+        "relation_coverage": {
+            field: _relation_coverage(ordered, field)
+            for field in _DOCUMENT_RELATION_FIELDS
+        },
+        "full_document_bodies_omitted_after_fact_extraction": True,
+        "full_document_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
 def project_source_graph_checkpoint(
     checkpoint: Mapping[str, Any], *, keys: Sequence[str]
 ) -> Mapping[str, Any]:
     output = {key: checkpoint.get(key) for key in keys if key in checkpoint}
+    if "generated_queries" in output:
+        output["generated_queries"] = project_generated_queries(
+            tuple(output.get("generated_queries") or ())
+        )
+    collection_specs = {
+        "query_failures": (
+            ("failure_id", "query_id"),
+            (
+                "failure_stage",
+                "failure_reason",
+                "alternate_route_required",
+                "absence_eligible",
+                "zero_result_only",
+            ),
+            ("objective_id", "query_id"),
+            (),
+        ),
+        "provider_failures": (
+            ("failure_id",),
+            (
+                "failure_stage",
+                "failure_reason",
+                "retryable",
+                "absence_eligible",
+                "zero_result_only",
+            ),
+            ("objective_id", "query_id"),
+            (),
+        ),
+        "search_candidates": (
+            ("candidate_id",),
+            (
+                "ranking_status",
+                "fetch_status",
+                "source",
+                "query_lineage_valid",
+            ),
+            (
+                "objective_ids",
+                "query_ids",
+                "is_disclosure",
+                "is_news",
+                "is_pdf",
+                "is_report_domain",
+            ),
+            ("material_priority", "rank"),
+        ),
+        "candidate_materiality_decisions": (
+            ("decision_id", "candidate_id"),
+            (
+                "material_relevance",
+                "evidence_eligible",
+                "snippet_discovery_only",
+                "score_authority",
+            ),
+            ("objective_ids",),
+            ("priority",),
+        ),
+        "fetch_records": (
+            ("fetch_id", "candidate_id"),
+            (
+                "disposition",
+                "provider_error",
+                "full_fetch_attempted",
+                "snippet_used_as_document",
+                "score_authority",
+            ),
+            ("objective_ids", "query_ids"),
+            (),
+        ),
+        "rejected_documents": (
+            ("rejection_id", "candidate_id"),
+            (
+                "rejection_reason",
+                "retryable",
+                "snippet_used_as_document",
+                "score_authority",
+            ),
+            ("objective_ids", "query_ids", "accepted_claim_ids"),
+            (),
+        ),
+    }
+    for key, (
+        identity_fields,
+        group_fields,
+        relation_fields,
+        numeric_fields,
+    ) in collection_specs.items():
+        if key not in output:
+            continue
+        output[key] = _project_state_collection(
+            tuple(output.get(key) or ()),
+            collection_name=key,
+            identity_fields=identity_fields,
+            group_fields=group_fields,
+            relation_fields=relation_fields,
+            numeric_fields=numeric_fields,
+        )
     if "evidence_documents" in output:
         documents = tuple(output.get("evidence_documents") or ())
         output["evidence_documents"] = list(project_source_documents(documents))
         output["evidence_document_count"] = len(documents)
         output["evidence_document_manifest_hash"] = _stable_hash(documents)
+        output["evidence_document_relation_coverage"] = {
+            field: _relation_coverage(documents, field)
+            for field in _DOCUMENT_RELATION_FIELDS
+        }
         output["full_document_bodies_omitted_after_fact_extraction"] = True
+    output["source_graph_prompt_projection"] = {
+        "schema_version": "e2r_v5_source_graph_prompt_projection_v2",
+        "complete_artifact_persisted_outside_prompt": True,
+        "every_projected_collection_hash_accounted": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+    return output
+
+
+def project_generated_queries(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Keep every literal query while dropping repeated provider transport data."""
+
+    payloads = tuple(dict(row) for row in rows)
+    ordered = tuple(
+        sorted(
+            payloads,
+            key=lambda row: (
+                str(row.get("query_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    queries = [
+        [row.get(key) for key in _GENERATED_QUERY_PROMPT_FIELDS]
+        for row in ordered
+    ]
+    literal_query_index = _GENERATED_QUERY_PROMPT_FIELDS.index("literal_query")
+    return {
+        "schema_version": "e2r_v5_generated_query_prompt_projection_v1",
+        "query_count": len(ordered),
+        "query_roster_hash": _stable_hash(ordered),
+        "query_fields": list(_GENERATED_QUERY_PROMPT_FIELDS),
+        "queries": queries,
+        "every_literal_query_preserved": all(
+            str(row[literal_query_index] or "").strip() for row in queries
+        ),
+        "full_query_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def project_evidence_facts(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Keep every economic fact and lineage while compressing advisory tags.
+
+    Question-family and primitive tags are extraction context rather than score
+    gates.  Their complete coverage and the raw fact roster hash remain in the
+    projection, while each fact keeps the economic mechanism, value, lifecycle,
+    structured role, and source/claim/quote lineage used by the supervisor.
+    """
+
+    payloads = tuple(_record_dict(row) for row in rows)
+    ordered = tuple(
+        sorted(
+            payloads,
+            key=lambda row: (
+                str(row.get("fact_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    groups: dict[tuple[str, ...], list[Mapping[str, Any]]] = {}
+    for row in ordered:
+        key = tuple(str(row.get(field) or "") for field in _FACT_GROUP_FIELDS)
+        groups.setdefault(key, []).append(row)
+
+    semantic_groups = []
+    for key in sorted(groups):
+        grouped_rows = groups[key]
+        observation_counts: dict[str, int] = {}
+        for row in grouped_rows:
+            observation = {
+                field: row[field]
+                for field in _FACT_OBSERVATION_FIELDS
+                if field in row
+            }
+            encoded = json.dumps(
+                observation,
+                ensure_ascii=False,
+                sort_keys=True,
+                default=str,
+            )
+            observation_counts[encoded] = observation_counts.get(encoded, 0) + 1
+        observations = []
+        for encoded, count in sorted(observation_counts.items()):
+            observation = json.loads(encoded)
+            observations.append(
+                [
+                    *(observation.get(field) for field in _FACT_OBSERVATION_FIELDS),
+                    count,
+                ]
+            )
+        semantic_groups.append(
+            {
+                "state": {
+                    field: key[index]
+                    for index, field in enumerate(_FACT_GROUP_FIELDS)
+                },
+                "fact_count": len(grouped_rows),
+                "fact_roster_hash": _stable_hash(grouped_rows),
+                "fact_id_roster": _project_text_roster(
+                    row.get("fact_id") for row in grouped_rows
+                ),
+                "source_id_roster": _project_text_roster(
+                    source_id
+                    for row in grouped_rows
+                    for source_id in row.get("source_ids") or ()
+                ),
+                "claim_id_roster": _project_text_roster(
+                    claim_id
+                    for row in grouped_rows
+                    for claim_id in row.get("claim_ids") or ()
+                ),
+                "quote_id_roster": _project_text_roster(
+                    quote_id
+                    for row in grouped_rows
+                    for quote_id in row.get("quote_ids") or ()
+                ),
+                "source_independence_group_coverage": _relation_coverage(
+                    grouped_rows, "source_independence_group"
+                ),
+                "corroborating_independence_group_coverage": _relation_coverage(
+                    grouped_rows, "corroborating_independence_groups"
+                ),
+                "allowed_component_coverage": _relation_coverage(
+                    grouped_rows, "allowed_component_ids"
+                ),
+                "semantic_observation_count": sum(observation_counts.values()),
+                "semantic_observations": observations,
+                "advisory_tag_roster_hash": _stable_hash(
+                    [
+                        {
+                            "fact_id": row.get("fact_id"),
+                            "question_family_tags": sorted(
+                                str(value)
+                                for value in row.get("question_family_tags") or ()
+                            ),
+                            "primitive_tags": sorted(
+                                str(value)
+                                for value in row.get("primitive_tags") or ()
+                            ),
+                        }
+                        for row in grouped_rows
+                    ]
+                ),
+            }
+        )
+    return {
+        "schema_version": "e2r_v5_evidence_fact_prompt_projection_v1",
+        "fact_count": len(ordered),
+        "fact_roster_hash": _stable_hash(ordered),
+        "target_id_coverage": _relation_coverage(ordered, "target_id"),
+        "as_of_date_coverage": _relation_coverage(ordered, "as_of_date"),
+        "semantic_group_count": len(semantic_groups),
+        "semantic_observation_fields": [
+            *_FACT_OBSERVATION_FIELDS,
+            "fact_count",
+        ],
+        "question_family_tag_coverage": _relation_coverage(
+            ordered, "question_family_tags"
+        ),
+        "primitive_tag_coverage": _relation_coverage(ordered, "primitive_tags"),
+        "semantic_fact_groups": semantic_groups,
+        "every_fact_accounted_by_hash_and_group_count": (
+            sum(row["fact_count"] for row in semantic_groups) == len(ordered)
+        ),
+        "every_semantic_observation_accounted": all(
+            row["semantic_observation_count"] == row["fact_count"]
+            for row in semantic_groups
+        ),
+        "every_fact_accounted_by_hash": True,
+        "advisory_tags_are_not_score_gates": True,
+        "full_fact_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def project_citable_evidence_facts(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Keep every citable fact id and semantic/source lineage for memo writers."""
+
+    payloads = tuple(_record_dict(row) for row in rows)
+    ordered = tuple(
+        sorted(
+            payloads,
+            key=lambda row: (
+                str(row.get("fact_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    facts = [
+        {
+            key: row[key]
+            for key in _CITABLE_FACT_PROMPT_FIELDS
+            if key in row
+        }
+        for row in ordered
+    ]
+    fact_ids = [str(row.get("fact_id") or "") for row in facts]
+    return {
+        "schema_version": "e2r_v5_citable_fact_prompt_projection_v1",
+        "fact_count": len(ordered),
+        "fact_roster_hash": _stable_hash(ordered),
+        "facts": facts,
+        "every_fact_id_preserved": (
+            len(set(fact_ids)) == len(ordered) and all(fact_ids)
+        ),
+        "target_id_coverage": _relation_coverage(ordered, "target_id"),
+        "as_of_date_coverage": _relation_coverage(ordered, "as_of_date"),
+        "allowed_component_coverage": _relation_coverage(
+            ordered, "allowed_component_ids"
+        ),
+        "question_family_tag_roster_hash": _stable_hash(
+            [
+                (
+                    row.get("fact_id"),
+                    sorted(
+                        str(value)
+                        for value in row.get("question_family_tags") or ()
+                    ),
+                )
+                for row in ordered
+            ]
+        ),
+        "primitive_tag_roster_hash": _stable_hash(
+            [
+                (
+                    row.get("fact_id"),
+                    sorted(
+                        str(value) for value in row.get("primitive_tags") or ()
+                    ),
+                )
+                for row in ordered
+            ]
+        ),
+        "advisory_tags_are_not_score_gates": True,
+        "full_fact_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def project_source_claims(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Keep exact quotes and claim/document/source ids without fact duplication."""
+
+    payloads = tuple(dict(row) for row in rows)
+    ordered = tuple(
+        sorted(
+            payloads,
+            key=lambda row: (
+                str(row.get("claim_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    claims = [
+        [row.get(key) for key in _SOURCE_CLAIM_PROMPT_FIELDS]
+        for row in ordered
+    ]
+    claim_id_index = _SOURCE_CLAIM_PROMPT_FIELDS.index("claim_id")
+    exact_quote_index = _SOURCE_CLAIM_PROMPT_FIELDS.index("exact_quote")
+    return {
+        "schema_version": "e2r_v5_source_claim_prompt_projection_v1",
+        "claim_count": len(ordered),
+        "claim_roster_hash": _stable_hash(ordered),
+        "claim_fields": list(_SOURCE_CLAIM_PROMPT_FIELDS),
+        "claims": claims,
+        "every_claim_id_and_exact_quote_preserved": all(
+            str(row[claim_id_index] or "").strip()
+            and str(row[exact_quote_index] or "").strip()
+            for row in claims
+        ),
+        "fact_semantics_are_in_current_evidence_fact_graph": True,
+        "full_claim_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def project_supervisor_failures(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Keep one compact classification row for every prior failure id."""
+
+    payloads = tuple(dict(row) for row in rows)
+    ordered = tuple(
+        sorted(
+            payloads,
+            key=lambda row: (
+                str(row.get("failure_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    failures = [
+        {
+            key: row[key]
+            for key in _FAILURE_PROMPT_FIELDS
+            if key in row
+        }
+        for row in ordered
+    ]
+    return {
+        "schema_version": "e2r_v5_supervisor_failure_prompt_projection_v1",
+        "failure_count": len(ordered),
+        "failure_roster_hash": _stable_hash(ordered),
+        "failures": failures,
+        "every_failure_id_preserved": len(
+            {
+                str(row.get("failure_id") or "") for row in failures
+            }
+        )
+        == len(ordered),
+        "full_failure_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def project_counter_route_proof(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Summarize all verified counter-query routes already present in the ledger."""
+
+    return _project_state_collection(
+        rows,
+        collection_name="counter_and_supersession_route_proof",
+        identity_fields=("query_id",),
+        group_fields=(
+            "execution_status",
+            "counter_or_supersession_search",
+        ),
+        relation_fields=("objective_id", "source_families", "query_id"),
+        numeric_fields=("search_result_count",),
+    )
+
+
+def project_research_epoch_checkpoint(
+    checkpoint: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Remove repeated document bodies from an already-persisted epoch delta."""
+
+    output = dict(checkpoint)
+    if "documents" in output:
+        documents = tuple(output.get("documents") or ())
+        output["documents"] = list(project_source_documents(documents))
+        output["document_delta_count"] = len(documents)
+        output["document_delta_manifest_hash"] = _stable_hash(documents)
+        output["full_document_bodies_omitted_after_fact_extraction"] = True
+    output["research_epoch_prompt_projection"] = {
+        "schema_version": "e2r_v5_research_epoch_prompt_projection_v1",
+        "complete_checkpoint_persisted_outside_prompt": True,
+        "document_delta_hash_accounted": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
     return output
 
 
@@ -150,16 +782,17 @@ def project_structured_records(
             "evidence_roles": list(key[5]),
             "record_count": len(rows),
             "record_roster_hash": _stable_hash(rows),
-            "source_ids": sorted(
-                {
-                    str(source_id)
-                    for row in rows
-                    for source_id in row.get("source_ids") or ()
-                }
+            "source_id_roster": _project_text_roster(
+                source_id
+                for row in rows
+                for source_id in row.get("source_ids") or ()
             ),
             "earliest_record": _record_snapshot(chronological[0]),
-            "latest_record": _record_snapshot(chronological[-1]),
         }
+        if chronological[-1] == chronological[0]:
+            summary["latest_record_same_as_earliest"] = True
+        else:
+            summary["latest_record"] = _record_snapshot(chronological[-1])
         if numeric_values:
             summary["numeric_distribution"] = {
                 "count": len(numeric_values),
@@ -218,23 +851,142 @@ def _record_dict(value: Any) -> Mapping[str, Any]:
 def _record_snapshot(row: Mapping[str, Any]) -> Mapping[str, Any]:
     fields = (
         "record_id",
-        "metric_id",
         "value",
-        "unit",
         "period",
-        "evidence_roles",
-        "source_ids",
-        "source_route",
         "observed_at",
         "available_at",
-        "record_kind",
         "confidence",
-        "dataset",
         "provenance",
-        "input_record_ids",
         "metadata",
     )
-    return {key: row[key] for key in fields if key in row}
+    output = {key: row[key] for key in fields if key in row}
+    if row.get("input_record_ids"):
+        output["input_record_id_roster"] = _project_text_roster(
+            row.get("input_record_ids") or ()
+        )
+    return output
+
+
+def _project_text_roster(values: Sequence[Any] | Any) -> Mapping[str, Any]:
+    if isinstance(values, (str, bytes)):
+        raw_values = (values,)
+    else:
+        try:
+            raw_values = tuple(values)
+        except TypeError:
+            raw_values = (values,)
+    ordered = tuple(
+        sorted({str(value) for value in raw_values if str(value)})
+    )
+    return {
+        "count": len(ordered),
+        "roster_hash": _stable_hash(ordered),
+    }
+
+
+def _project_state_collection(
+    rows: Sequence[Mapping[str, Any]],
+    *,
+    collection_name: str,
+    identity_fields: Sequence[str],
+    group_fields: Sequence[str],
+    relation_fields: Sequence[str],
+    numeric_fields: Sequence[str],
+) -> Mapping[str, Any]:
+    """Account for every state row through deterministic groups and hashes.
+
+    Candidate and fetch ledgers can grow without bound across resumed research
+    epochs.  Their full rows remain in the Source Graph checkpoint.  Later LLM
+    passes need semantic state coverage and failure context, not thousands of
+    repeated snippets and URLs.  This projection therefore groups *all* rows;
+    it never selects a top-N subset.
+    """
+
+    payloads = tuple(dict(row) for row in rows)
+    ordered = tuple(
+        sorted(
+            payloads,
+            key=lambda row: (
+                tuple(str(row.get(key) or "") for key in identity_fields),
+                _stable_hash(row),
+            ),
+        )
+    )
+    groups: dict[tuple[Any, ...], list[Mapping[str, Any]]] = {}
+    for row in ordered:
+        key = tuple(_group_value(row.get(field)) for field in group_fields)
+        groups.setdefault(key, []).append(row)
+
+    semantic_groups = []
+    for key in sorted(groups, key=lambda value: tuple(map(str, value))):
+        grouped_rows = groups[key]
+        state = {
+            field: key[index] for index, field in enumerate(group_fields)
+        }
+        numeric_distributions = {}
+        for field in numeric_fields:
+            values = [
+                float(row[field])
+                for row in grouped_rows
+                if _finite_number(row.get(field))
+            ]
+            if values:
+                numeric_distributions[field] = {
+                    "count": len(values),
+                    "minimum": min(values),
+                    "median": median(values),
+                    "maximum": max(values),
+                }
+        semantic_groups.append(
+            {
+                "state": state,
+                "record_count": len(grouped_rows),
+                "record_roster_hash": _stable_hash(grouped_rows),
+                "numeric_distributions": numeric_distributions,
+            }
+        )
+
+    relation_coverage = {
+        field: _relation_coverage(ordered, field) for field in relation_fields
+    }
+    return {
+        "schema_version": "e2r_v5_source_graph_collection_projection_v1",
+        "collection_name": collection_name,
+        "record_count": len(ordered),
+        "record_roster_hash": _stable_hash(ordered),
+        "semantic_group_count": len(semantic_groups),
+        "semantic_groups": semantic_groups,
+        "relation_coverage": relation_coverage,
+        "every_record_accounted_by_hash_and_group_count": (
+            sum(row["record_count"] for row in semantic_groups) == len(ordered)
+        ),
+        "full_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def _relation_coverage(
+    rows: Sequence[Mapping[str, Any]], field: str
+) -> Mapping[str, int]:
+    counts: dict[str, int] = {}
+    for row in rows:
+        value = row.get(field)
+        values = value if isinstance(value, (list, tuple, set)) else (value,)
+        for item in values:
+            text = str(item or "").strip()
+            if text:
+                counts[text] = counts.get(text, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def _group_value(value: Any) -> Any:
+    if isinstance(value, Mapping):
+        return _stable_hash(value)
+    if isinstance(value, (list, tuple, set)):
+        return tuple(sorted(str(item) for item in value))
+    return value
 
 
 def _finite_number(value: Any) -> bool:
@@ -251,8 +1003,16 @@ def _stable_hash(value: Any) -> str:
 
 
 __all__ = [
+    "project_counter_route_proof",
+    "project_citable_evidence_facts",
+    "project_evidence_facts",
+    "project_generated_queries",
+    "project_research_epoch_checkpoint",
     "project_source_documents",
     "project_source_graph_checkpoint",
+    "project_source_claims",
+    "project_source_document_table",
     "project_structured_records",
     "project_structured_result",
+    "project_supervisor_failures",
 ]

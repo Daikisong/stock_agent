@@ -30,7 +30,11 @@ from .schemas import (
     assert_blind_research_output,
     scrub_blind_research_payload,
 )
-from .prompt_projection import project_source_documents
+from .prompt_projection import (
+    project_citable_evidence_facts,
+    project_source_claims,
+    project_source_document_table,
+)
 
 
 class StructuredResearchProvider(Protocol):
@@ -793,6 +797,7 @@ class CodexResearcherProvider:
                 "You are an independent E2R 2.0 research analyst.",
                 "Use only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.",
                 "Read the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.",
+                "For loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.",
                 "Cite only ids present in the input. Do not invent facts, sources, metrics, or anchors.",
                 "Never output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.",
                 instruction,
@@ -897,6 +902,7 @@ class ComponentResearcher:
             [_coverage_payload(row) for row in source_coverage]
         )
         coverage_labels = _coverage_labels(source_coverage)
+        fact_projection = project_citable_evidence_facts(facts)
         payload = scrub_blind_research_payload(
             {
                 "researcher_role": self.researcher_role,
@@ -907,9 +913,17 @@ class ComponentResearcher:
                 "component_max_points": plan.component_max_points,
                 "research_plan": plan.to_dict(),
                 "target_business_model": business_model.to_dict(),
-                "current_evidence_fact_graph": [row.to_dict() for row in facts],
+                "current_evidence_fact_graph": fact_projection["facts"],
+                "current_evidence_fact_projection": {
+                    key: value
+                    for key, value in fact_projection.items()
+                    if key != "facts"
+                },
                 "current_counterfacts": [
-                    row.to_dict()
+                    {
+                        "fact_id": row.fact_id,
+                        "current_lifecycle": row.current_lifecycle,
+                    }
                     for row in facts
                     if row.direction == EvidenceDirection.COUNTER.value
                     and row.current_lifecycle
@@ -920,8 +934,10 @@ class ComponentResearcher:
                 ],
                 "historical_component_anchors": list(anchors),
                 "source_coverage": coverage_rows,
-                "source_claims": list(source_claims),
-                "source_documents": list(project_source_documents(source_documents)),
+                "source_claims": project_source_claims(source_claims),
+                "source_documents": project_source_document_table(
+                    source_documents
+                ),
                 "structured_metrics": metric_input,
             }
         )

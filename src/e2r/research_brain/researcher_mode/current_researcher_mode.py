@@ -420,9 +420,10 @@ class CurrentResearcherModeTargetRunner:
             evidence_facts=fact_extraction.facts,
             source_graph_checkpoint=source_graph.checkpoint,
             open_objectives=objective_rows,
-            prior_failures=tuple(
-                source_graph.checkpoint.get("query_failures") or ()
-            ),
+            # ResearchSupervisor collects every query/provider/document failure
+            # from this same Source Graph checkpoint.  Passing query_failures a
+            # second time creates duplicate semantic failures with new ids.
+            prior_failures=(),
             counter_and_supersession_route_proof=counter_route_proof,
             prior_checkpoint=prior_epoch,
             # Gold is private during production.  One means "not yet verified",

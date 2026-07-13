@@ -23,7 +23,11 @@ from .schemas import (
     assert_blind_research_output,
     scrub_blind_research_payload,
 )
-from .prompt_projection import project_source_documents
+from .prompt_projection import (
+    project_citable_evidence_facts,
+    project_source_claims,
+    project_source_document_table,
+)
 
 
 @dataclass(frozen=True)
@@ -90,6 +94,7 @@ class RedTeamResearcher:
         ]
         anchor_ids = {str(row["anchor_id"]) for row in anchor_rows}
         coverage_labels = _coverage_labels(source_coverage)
+        fact_projection = project_citable_evidence_facts(evidence_facts)
         payload = scrub_blind_research_payload(
             {
                 "researcher_role": self.researcher_role,
@@ -98,11 +103,18 @@ class RedTeamResearcher:
                 "archetype_id": business_model.archetype_id,
                 "target_business_model": business_model.to_dict(),
                 "component_research_memos": [row.to_dict() for row in component_memos],
-                "current_evidence_fact_graph": [row.to_dict() for row in evidence_facts],
+                "current_evidence_fact_graph": fact_projection["facts"],
+                "current_evidence_fact_projection": {
+                    key: value
+                    for key, value in fact_projection.items()
+                    if key != "facts"
+                },
                 "historical_component_anchors": anchor_rows,
                 "source_coverage": list(source_coverage),
-                "source_claims": list(source_claims),
-                "source_documents": list(project_source_documents(source_documents)),
+                "source_claims": project_source_claims(source_claims),
+                "source_documents": project_source_document_table(
+                    source_documents
+                ),
             }
         )
         try:
