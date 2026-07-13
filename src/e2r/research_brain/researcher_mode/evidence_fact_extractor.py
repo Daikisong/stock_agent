@@ -157,7 +157,7 @@ class ResearcherEvidenceFactExtractor:
         self,
         *,
         provider: StructuredResearchProvider,
-        documents_per_call: int = 3,
+        documents_per_call: int = 1,
         max_document_chars_per_call: int = 220_000,
     ) -> None:
         if isinstance(documents_per_call, bool) or documents_per_call <= 0:

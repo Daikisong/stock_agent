@@ -798,6 +798,7 @@ class CodexResearcherProvider:
                 "Use only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.",
                 "Read the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.",
                 "For loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.",
+                "Decode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields, and decode source_claims.claims with source_claims.claim_fields.",
                 "Cite only ids present in the input. Do not invent facts, sources, metrics, or anchors.",
                 "Never output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.",
                 instruction,

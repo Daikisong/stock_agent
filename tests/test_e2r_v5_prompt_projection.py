@@ -268,9 +268,15 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertEqual(citable_projection["fact_count"], 1_000)
         self.assertEqual(len(citable_projection["facts"]), 1_000)
         self.assertTrue(citable_projection["every_fact_id_preserved"])
-        self.assertEqual(citable_projection["facts"][0]["fact_id"], "FACT-0000")
+        first_fact = dict(
+            zip(
+                citable_projection["fact_fields"],
+                citable_projection["facts"][0],
+            )
+        )
+        self.assertEqual(first_fact["fact_id"], "FACT-0000")
         self.assertNotIn(
-            "question_family_tags", citable_projection["facts"][0]
+            "question_family_tags", citable_projection["fact_fields"]
         )
         self.assertLess(
             len(json.dumps(citable_projection, ensure_ascii=False, sort_keys=True)),

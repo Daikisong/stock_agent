@@ -114,16 +114,11 @@ _SOURCE_CLAIM_PROMPT_FIELDS = (
     "claim_id",
     "document_id",
     "source_ids",
-    "canonical_url",
     "exact_quote",
     "source_family",
     "source_tier",
     "published_at",
     "available_at",
-    "materiality",
-    "materiality_rationale",
-    "accepted",
-    "accepted_by_evidence_os",
     "structured_evidence_roles",
 )
 
@@ -558,18 +553,16 @@ def project_citable_evidence_facts(
         )
     )
     facts = [
-        {
-            key: row[key]
-            for key in _CITABLE_FACT_PROMPT_FIELDS
-            if key in row
-        }
+        [row.get(key) for key in _CITABLE_FACT_PROMPT_FIELDS]
         for row in ordered
     ]
-    fact_ids = [str(row.get("fact_id") or "") for row in facts]
+    fact_id_index = _CITABLE_FACT_PROMPT_FIELDS.index("fact_id")
+    fact_ids = [str(row[fact_id_index] or "") for row in facts]
     return {
-        "schema_version": "e2r_v5_citable_fact_prompt_projection_v1",
+        "schema_version": "e2r_v5_citable_fact_prompt_projection_v2",
         "fact_count": len(ordered),
         "fact_roster_hash": _stable_hash(ordered),
+        "fact_fields": list(_CITABLE_FACT_PROMPT_FIELDS),
         "facts": facts,
         "every_fact_id_preserved": (
             len(set(fact_ids)) == len(ordered) and all(fact_ids)
@@ -632,7 +625,7 @@ def project_source_claims(
     claim_id_index = _SOURCE_CLAIM_PROMPT_FIELDS.index("claim_id")
     exact_quote_index = _SOURCE_CLAIM_PROMPT_FIELDS.index("exact_quote")
     return {
-        "schema_version": "e2r_v5_source_claim_prompt_projection_v1",
+        "schema_version": "e2r_v5_source_claim_prompt_projection_v2",
         "claim_count": len(ordered),
         "claim_roster_hash": _stable_hash(ordered),
         "claim_fields": list(_SOURCE_CLAIM_PROMPT_FIELDS),
@@ -643,6 +636,8 @@ def project_source_claims(
             for row in claims
         ),
         "fact_semantics_are_in_current_evidence_fact_graph": True,
+        "canonical_urls_are_in_source_documents": True,
+        "acceptance_and_materiality_state_accounted_by_claim_roster_hash": True,
         "full_claim_records_persisted_outside_prompt": True,
         "fixed_top_n_used": False,
         "prompt_projection_is_research_cap": False,

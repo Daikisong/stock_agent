@@ -54,7 +54,7 @@ class ScriptedResearchProvider:
         if self.fail:
             raise RuntimeError("simulated provider outage")
         if pass_name == "BUSINESS_MODEL_RESEARCH":
-            facts = payload["current_evidence_fact_graph"]
+            facts = _projected_fact_rows(payload)
             source_ids = sorted(
                 {source_id for row in facts for source_id in row["source_ids"]}
             )
@@ -71,7 +71,7 @@ class ScriptedResearchProvider:
                 "research_complete": True,
             }
         if pass_name == "COMPONENT_RESEARCH":
-            facts = payload["current_evidence_fact_graph"]
+            facts = _projected_fact_rows(payload)
             positive = [row["fact_id"] for row in facts if row["direction"] == "POSITIVE"]
             counter = [row["fact_id"] for row in facts if row["direction"] == "COUNTER"]
             anchors = payload["historical_component_anchors"]
@@ -103,7 +103,7 @@ class ScriptedResearchProvider:
                 response["stage"] = "3-Green"
             return response
         if pass_name == "RED_TEAM_RESEARCH":
-            facts = payload["current_evidence_fact_graph"]
+            facts = _projected_fact_rows(payload)
             counters = [row["fact_id"] for row in facts if row["direction"] == "COUNTER"]
             return {
                 "reviewed_component_ids": [
@@ -675,6 +675,14 @@ def _recursive_keys(value: Any) -> set[str]:
     if isinstance(value, (list, tuple)):
         return {nested for item in value for nested in _recursive_keys(item)}
     return set()
+
+
+def _projected_fact_rows(payload: Mapping[str, Any]) -> tuple[Mapping[str, Any], ...]:
+    fields = payload["current_evidence_fact_projection"]["fact_fields"]
+    return tuple(
+        dict(zip(fields, row))
+        for row in payload["current_evidence_fact_graph"]
+    )
 
 
 def _open_schema_object_paths(

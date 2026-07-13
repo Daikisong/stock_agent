@@ -114,7 +114,6 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         provider = FactProvider()
         result = ResearcherEvidenceFactExtractor(
             provider=provider,
-            documents_per_call=1,
         ).extract(
             target_id=TARGET,
             target_name=TARGET_NAME,
