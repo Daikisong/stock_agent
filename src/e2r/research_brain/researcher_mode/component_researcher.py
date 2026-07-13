@@ -909,8 +909,34 @@ class ComponentResearcher:
             [_coverage_payload(row) for row in source_coverage]
         )
         coverage_labels = _coverage_labels(source_coverage)
-        fact_projection = project_citable_evidence_facts(facts)
+        citable_facts = tuple(
+            row
+            for row in facts
+            if not row.allowed_component_ids
+            or self.component_id in row.allowed_component_ids
+        )
+        excluded_facts = tuple(
+            row
+            for row in facts
+            if row.allowed_component_ids
+            and self.component_id not in row.allowed_component_ids
+        )
+        fact_projection = project_citable_evidence_facts(citable_facts)
         fact_id_by_row_index = citable_fact_id_by_row_index(fact_projection)
+        citable_claim_ids = {
+            claim_id for row in citable_facts for claim_id in row.claim_ids
+        }
+        citable_source_claims = tuple(
+            row
+            for row in source_claims
+            if str(row.get("claim_id") or "") in citable_claim_ids
+        )
+        excluded_fact_ids = sorted(row.fact_id for row in excluded_facts)
+        excluded_source_claim_ids = sorted(
+            str(row.get("claim_id") or "")
+            for row in source_claims
+            if str(row.get("claim_id") or "") not in citable_claim_ids
+        )
         payload = scrub_blind_research_payload(
             {
                 "researcher_role": self.researcher_role,
@@ -927,12 +953,40 @@ class ComponentResearcher:
                     for key, value in fact_projection.items()
                     if key != "facts"
                 },
+                "component_fact_scope_projection": {
+                    "input_fact_count": len(facts),
+                    "citable_fact_count": len(citable_facts),
+                    "non_citable_fact_count": len(excluded_facts),
+                    "non_citable_fact_roster_hash": hashlib.sha256(
+                        json.dumps(excluded_fact_ids).encode("utf-8")
+                    ).hexdigest(),
+                    "input_source_claim_count": len(source_claims),
+                    "citable_source_claim_count": len(citable_source_claims),
+                    "non_citable_source_claim_count": len(
+                        excluded_source_claim_ids
+                    ),
+                    "non_citable_source_claim_roster_hash": hashlib.sha256(
+                        json.dumps(excluded_source_claim_ids).encode("utf-8")
+                    ).hexdigest(),
+                    "every_input_fact_accounted": (
+                        len(citable_facts) + len(excluded_facts) == len(facts)
+                    ),
+                    "every_input_source_claim_accounted": (
+                        len(citable_source_claims)
+                        + len(excluded_source_claim_ids)
+                        == len(source_claims)
+                    ),
+                    "filter_basis": "PREEXISTING_DETERMINISTIC_ALLOWED_COMPONENT_IDS",
+                    "fixed_top_n_used": False,
+                    "prompt_projection_is_research_cap": False,
+                    "score_authority": False,
+                },
                 "current_counterfacts": [
                     {
                         "fact_id": row.fact_id,
                         "current_lifecycle": row.current_lifecycle,
                     }
-                    for row in facts
+                    for row in citable_facts
                     if row.direction == EvidenceDirection.COUNTER.value
                     and row.current_lifecycle
                     not in {
@@ -942,7 +996,7 @@ class ComponentResearcher:
                 ],
                 "historical_component_anchors": list(anchors),
                 "source_coverage": coverage_rows,
-                "source_claims": project_source_claims(source_claims),
+                "source_claims": project_source_claims(citable_source_claims),
                 "source_documents": project_source_document_table(
                     source_documents
                 ),

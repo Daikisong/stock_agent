@@ -332,6 +332,59 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         self.assertGreater(result.memo.proposed_score_mid, 0)  # type: ignore[union-attr]
         self.assertEqual(self.facts[0].primitive_tags, ())
 
+    def test_component_prompt_excludes_only_prevalidated_non_citable_scope(self) -> None:
+        provider = ScriptedResearchProvider()
+        restricted = _fact(
+            "FACT-CORPORATE-ONLY",
+            "POSITIVE",
+            "CURRENT",
+            allowed_component_ids=("capital_allocation", "information_confidence"),
+        )
+        facts = (*self.facts, restricted)
+        plans = ComponentResearchPlanner().plan(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            evidence_facts=facts,
+            historical_anchors=self.anchors,
+            research_seeds=(),
+            component_max_points=self.maxima,
+            structured_metric_requirements={key: () for key in self.maxima},
+        )
+        business = BusinessMechanismResearcher(provider=provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=plans[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        component_payload = provider.calls[-1]["payload"]
+        visible_ids = {
+            row["fact_id"] for row in _projected_fact_rows(component_payload)
+        }
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertIn("FACT-CORPORATE-ONLY", plans[0].candidate_fact_ids)
+        self.assertNotIn("FACT-CORPORATE-ONLY", visible_ids)
+        self.assertEqual(
+            component_payload["component_fact_scope_projection"]
+            ["non_citable_fact_count"],
+            1,
+        )
+        self.assertTrue(
+            component_payload["component_fact_scope_projection"]
+            ["every_input_fact_accounted"]
+        )
+
     def test_provider_payload_is_blind_and_contains_all_required_research_inputs(self) -> None:
         provider = ScriptedResearchProvider()
         builder = CanonicalResearchDossierBuilder(provider=provider, research_seeds=())
@@ -621,6 +674,7 @@ def _fact(
     *,
     predicate: str = "capacity_allocation_confirmed",
     primitive_tags: tuple[str, ...] = (),
+    allowed_component_ids: tuple[str, ...] = (),
 ) -> EvidenceFact:
     return EvidenceFact(
         fact_id=fact_id,
@@ -642,6 +696,7 @@ def _fact(
         source_independence_group="ISSUER",
         confidence=0.8,
         primitive_tags=primitive_tags,
+        allowed_component_ids=allowed_component_ids,
     )
 
 
