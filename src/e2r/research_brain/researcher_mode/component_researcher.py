@@ -1347,7 +1347,9 @@ def _pass_instruction(pass_name: str) -> str:
     if pass_name == "RESEARCH_SUPERVISOR_REVIEW":
         return (
             "Review every component memo, fact gap, structured-data gap, prior query/source "
-            "failure, and counter route. Classify parser/extractor failure separately from "
+            "failure, and counter route. Prior failures may be loss-accounted semantic groups; "
+            "classify each group failure_id exactly once and apply it to all member_failure_ids. "
+            "Classify parser/extractor failure separately from "
             "source absence. Suggest semantic source/query directions; do not write literal "
             "fallback query templates and never treat zero results or a budget limit as completion."
         )

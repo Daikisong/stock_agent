@@ -127,21 +127,13 @@ _SOURCE_CLAIM_PROMPT_FIELDS = (
     "structured_evidence_roles",
 )
 
-_FAILURE_PROMPT_FIELDS = (
-    "failure_id",
+_FAILURE_GROUP_FIELDS = (
     "failure_kind",
     "failure_stage",
     "failure_reason",
     "reason",
     "rejection_reason",
     "provider_error",
-    "objective_id",
-    "objective_ids",
-    "query_id",
-    "query_ids",
-    "candidate_id",
-    "rejection_id",
-    "literal_query",
     "source_family",
     "retryable",
     "alternate_route_required",
@@ -154,6 +146,16 @@ _FAILURE_PROMPT_FIELDS = (
     "attempted_source_families",
     "full_fetch_attempted",
     "snippet_used_as_document",
+)
+
+_FAILURE_RELATION_FIELDS = (
+    "objective_id",
+    "objective_ids",
+    "query_id",
+    "query_ids",
+    "candidate_id",
+    "rejection_id",
+    "literal_query",
     "accepted_claim_ids",
 )
 
@@ -651,7 +653,13 @@ def project_source_claims(
 def project_supervisor_failures(
     rows: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
-    """Keep one compact classification row for every prior failure id."""
+    """Group equivalent failures for one LLM judgment, retaining every id.
+
+    The provider classifies each semantic group exactly once.  The supervisor
+    deterministically expands that judgment back to every member failure id
+    before readiness checks, so grouping is neither a failure drop nor a
+    completion shortcut.
+    """
 
     payloads = tuple(dict(row) for row in rows)
     ordered = tuple(
@@ -663,25 +671,61 @@ def project_supervisor_failures(
             ),
         )
     )
-    failures = [
-        {
-            key: row[key]
-            for key in _FAILURE_PROMPT_FIELDS
-            if key in row
+    grouped: dict[tuple[Any, ...], list[Mapping[str, Any]]] = {}
+    for row in ordered:
+        key = tuple(_group_value(row.get(field)) for field in _FAILURE_GROUP_FIELDS)
+        grouped.setdefault(key, []).append(row)
+    failures = []
+    failure_group_members: dict[str, list[str]] = {}
+    for key in sorted(grouped, key=lambda value: tuple(map(str, value))):
+        grouped_rows = grouped[key]
+        state = {
+            field: key[index]
+            for index, field in enumerate(_FAILURE_GROUP_FIELDS)
+            if key[index] not in {None, "", ()}
         }
-        for row in ordered
-    ]
+        member_ids = sorted(
+            str(row.get("failure_id") or "") for row in grouped_rows
+        )
+        group_id = "FAILGROUP-" + _stable_hash(
+            {
+                "state": state,
+                "member_failure_ids": member_ids,
+            }
+        )[:24]
+        failure_group_members[group_id] = member_ids
+        failures.append(
+            {
+                "failure_id": group_id,
+                **state,
+                "member_failure_count": len(member_ids),
+                "member_failure_ids": member_ids,
+                "relation_coverage": {
+                    field: _relation_coverage(grouped_rows, field)
+                    for field in _FAILURE_RELATION_FIELDS
+                },
+                "member_failure_roster_hash": _stable_hash(grouped_rows),
+            }
+        )
+    original_ids = {
+        str(row.get("failure_id") or "") for row in ordered
+    }
+    projected_ids = {
+        failure_id
+        for member_ids in failure_group_members.values()
+        for failure_id in member_ids
+    }
     return {
         "schema_version": "e2r_v5_supervisor_failure_prompt_projection_v1",
         "failure_count": len(ordered),
         "failure_roster_hash": _stable_hash(ordered),
+        "failure_group_count": len(failures),
+        "failure_group_members": failure_group_members,
         "failures": failures,
-        "every_failure_id_preserved": len(
-            {
-                str(row.get("failure_id") or "") for row in failures
-            }
-        )
-        == len(ordered),
+        "every_failure_id_preserved": (
+            original_ids == projected_ids and len(original_ids) == len(ordered)
+        ),
+        "provider_assesses_each_group_once_then_code_expands_to_members": True,
         "full_failure_records_persisted_outside_prompt": True,
         "fixed_top_n_used": False,
         "prompt_projection_is_research_cap": False,

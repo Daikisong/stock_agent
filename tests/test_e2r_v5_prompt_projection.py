@@ -329,7 +329,12 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         )
         failure_projection = project_supervisor_failures(failures)
         self.assertEqual(failure_projection["failure_count"], 1_000)
-        self.assertEqual(len(failure_projection["failures"]), 1_000)
+        self.assertEqual(failure_projection["failure_group_count"], 1)
+        self.assertEqual(len(failure_projection["failures"]), 1)
+        self.assertEqual(
+            failure_projection["failures"][0]["member_failure_count"],
+            1_000,
+        )
         self.assertTrue(failure_projection["every_failure_id_preserved"])
         self.assertNotIn("content_hash", failure_projection["failures"][0])
         self.assertLess(

@@ -406,6 +406,12 @@ class ResearchSupervisor:
                 structured_result=structured_result,
                 objective_ids=objective_ids,
                 failure_by_id=failure_by_id,
+                failure_group_members={
+                    str(group_id): tuple(str(value) for value in member_ids)
+                    for group_id, member_ids in failure_projection[
+                        "failure_group_members"
+                    ].items()
+                },
                 counter_route_proof_complete=counter_route_proof_complete,
                 source_graph_zero_result_only=source_graph_zero_result_only,
                 source_graph_research_pending=source_graph_research_pending,
@@ -568,6 +574,7 @@ def _review_from_provider_response(
     structured_result: Any | None,
     objective_ids: set[str],
     failure_by_id: Mapping[str, Mapping[str, Any]],
+    failure_group_members: Mapping[str, Sequence[str]],
     counter_route_proof_complete: bool,
     source_graph_zero_result_only: bool,
     source_graph_research_pending: bool,
@@ -597,7 +604,7 @@ def _review_from_provider_response(
         )
         for row in _mapping_rows(response, "missing_material_facts")
     )
-    assessments = tuple(
+    group_assessments = tuple(
         SupervisorFailureAssessment(
             failure_id=str(row["failure_id"]),
             classification=str(row["classification"]),
@@ -609,11 +616,29 @@ def _review_from_provider_response(
         )
         for row in _mapping_rows(response, "failure_assessments")
     )
-    assessment_ids = [row.failure_id for row in assessments]
+    assessment_ids = [row.failure_id for row in group_assessments]
     if len(assessment_ids) != len(set(assessment_ids)) or set(assessment_ids) != set(
+        failure_group_members
+    ):
+        raise ValueError(
+            "supervisor must assess every supplied failure group exactly once"
+        )
+    assessments = tuple(
+        SupervisorFailureAssessment(
+            failure_id=member_failure_id,
+            classification=group.classification,
+            rationale=group.rationale,
+            retryable=group.retryable,
+            source_absence_claim_allowed=group.source_absence_claim_allowed,
+        )
+        for group in group_assessments
+        for member_failure_id in failure_group_members[group.failure_id]
+    )
+    expanded_ids = [row.failure_id for row in assessments]
+    if len(expanded_ids) != len(set(expanded_ids)) or set(expanded_ids) != set(
         failure_by_id
     ):
-        raise ValueError("supervisor must assess every supplied failure exactly once")
+        raise ValueError("failure-group expansion lost or duplicated a failure id")
     for row in assessments:
         source = failure_by_id[row.failure_id]
         if row.classification == "SOURCE_ABSENCE_CANDIDATE" or row.source_absence_claim_allowed:

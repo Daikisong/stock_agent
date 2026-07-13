@@ -348,6 +348,38 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             absence_review.failure_assessments[0].source_absence_claim_allowed
         )
 
+    def test_equivalent_failure_group_judgment_expands_to_every_original_id(self) -> None:
+        provider = Phase87SupervisorProvider("PARSER")
+        failure_ids = tuple(f"FAIL-PARSER-{index}" for index in range(100))
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **_supervisor_inputs(
+                prior_failures=tuple(
+                    {
+                        "failure_id": failure_id,
+                        "failure_kind": "QUERY_FAILURE",
+                        "failure_stage": "PARSER",
+                        "failure_reason": "PDF_PARSER_TABLE_EXTRACTION_FAILED",
+                        "absence_eligible": False,
+                        "zero_result_only": False,
+                    }
+                    for failure_id in failure_ids
+                )
+            )
+        )
+        supplied_groups = provider.calls[-1]["payload"][
+            "prior_query_source_failures"
+        ]
+        self.assertEqual(len(supplied_groups), 1)
+        self.assertEqual(supplied_groups[0]["member_failure_count"], 100)
+        self.assertEqual(
+            {row.failure_id for row in review.failure_assessments},
+            set(failure_ids),
+        )
+        self.assertEqual(
+            set(review.parser_or_extractor_failures),
+            set(failure_ids),
+        )
+
     def test_zero_result_alone_cannot_be_relabelled_as_source_absence(self) -> None:
         provider = Phase87SupervisorProvider("ABSENCE")
         review = ResearchSupervisor(provider=provider).review_epoch(
