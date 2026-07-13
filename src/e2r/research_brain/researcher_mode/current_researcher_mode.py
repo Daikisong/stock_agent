@@ -650,6 +650,10 @@ def load_current_research_targets(
     *,
     symbols: Sequence[str],
     registry_path: str | Path = "configs/e2r_targeted_live_smoke_v1.json",
+    as_of_date: str | date | None = None,
+    official_domain_registry_path: str | Path = (
+        "configs/e2r_issuer_official_domains_v1.json"
+    ),
 ) -> tuple[CurrentResearchTarget, ...]:
     payload = _read_json(Path(registry_path))
     rows = payload.get("mandatory_targets") or payload.get("targets") or ()
@@ -663,15 +667,95 @@ def load_current_research_targets(
         raise ValueError(
             "target registry does not contain symbols: " + ",".join(missing)
         )
+    cutoff = (
+        as_of_date
+        if isinstance(as_of_date, date)
+        else date.fromisoformat(as_of_date)
+        if as_of_date is not None
+        else None
+    )
+    verified_domains = (
+        _verified_official_domains_by_symbol(
+            path=Path(official_domain_registry_path),
+            symbols=symbols,
+            as_of_date=cutoff,
+        )
+        if cutoff is not None
+        else {}
+    )
     return tuple(
         CurrentResearchTarget(
             symbol=symbol,
             company_name=str(by_symbol[symbol]["company_name"]),
             aliases=tuple(by_symbol[symbol].get("aliases") or ()),
-            official_domains=tuple(by_symbol[symbol].get("official_domains") or ()),
+            official_domains=tuple(
+                dict.fromkeys(
+                    (
+                        *by_symbol[symbol].get("official_domains", ()),
+                        *verified_domains.get(symbol, ()),
+                    )
+                )
+            ),
         )
         for symbol in symbols
     )
+
+
+def _verified_official_domains_by_symbol(
+    *,
+    path: Path,
+    symbols: Sequence[str],
+    as_of_date: date,
+) -> Mapping[str, tuple[str, ...]]:
+    """Load only issuer-domain authorities that were valid by the cutoff."""
+
+    if not path.is_file():
+        return {}
+    payload = _read_json(path)
+    entries = payload.get("entries") or ()
+    if not isinstance(entries, Sequence) or isinstance(entries, (str, bytes)):
+        raise ValueError(f"official domain registry entries must be an array: {path}")
+    requested = {str(symbol).zfill(6) for symbol in symbols}
+    domains: dict[str, list[str]] = {symbol: [] for symbol in requested}
+    for entry in entries:
+        if not isinstance(entry, Mapping):
+            continue
+        symbol = str(entry.get("symbol") or "").zfill(6)
+        if symbol not in requested:
+            continue
+        if str(entry.get("status") or "ACTIVE").strip().upper() != "ACTIVE":
+            continue
+        valid_from = _registry_date(entry.get("valid_from"))
+        verified_as_of = _registry_date(entry.get("verified_as_of"))
+        valid_to = _registry_date(entry.get("valid_to"))
+        if valid_from is None or verified_as_of is None:
+            continue
+        if valid_from > as_of_date or verified_as_of > as_of_date:
+            continue
+        if valid_to is not None and valid_to < as_of_date:
+            continue
+        host = str(entry.get("host") or "").strip().casefold()
+        host = host.removeprefix("https://").removeprefix("http://")
+        host = host.split("/", 1)[0].split(":", 1)[0].removeprefix("www.")
+        source_url = str(entry.get("source_url") or "").strip()
+        source_anchor = str(entry.get("source_anchor_text") or "").strip()
+        if not host or not source_url.startswith("https://") or not source_anchor:
+            continue
+        domains[symbol].append(host)
+    return {
+        symbol: tuple(dict.fromkeys(values))
+        for symbol, values in domains.items()
+        if values
+    }
+
+
+def _registry_date(value: Any) -> date | None:
+    if value in (None, ""):
+        return None
+    try:
+        return date.fromisoformat(str(value)[:10])
+    except ValueError:
+        return None
 
 
 def _historical_anchors(

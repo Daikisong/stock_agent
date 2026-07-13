@@ -14,6 +14,18 @@
       "status": "ACTIVE"
     },
     {
+      "entry_id": "issuer-domain-005930-irsvc-transcript-20260712",
+      "symbol": "005930",
+      "company_name": "삼성전자",
+      "host": "irsvc.teletogether.com",
+      "source_class": "IssuerIRService",
+      "source_url": "https://www.samsung.com/sec/ir/financial-information/earnings-release/",
+      "source_anchor_text": "삼성전자 공식 실적발표 페이지의 2026년 1분기 컨퍼런스콜 청취 링크가 연결하는 위임 IR 서비스",
+      "valid_from": "2026-04-30",
+      "verified_as_of": "2026-07-12",
+      "status": "ACTIVE"
+    },
+    {
       "entry_id": "issuer-domain-000660-skhynix-parent-20260515",
       "symbol": "000660",
       "company_name": "SK하이닉스",

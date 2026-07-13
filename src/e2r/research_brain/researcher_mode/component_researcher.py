@@ -1844,12 +1844,29 @@ def _pass_instruction(pass_name: str) -> str:
             "accepted evidence roles, allowed source families, and validation conditions "
             "literally. Semantically adjacent evidence from an ineligible source is not "
             "progress; for example, a third-party estimate cannot replace an issuer-only "
-            "requirement. The LLM still owns every literal query."
+            "requirement. The default web discovery backend is token-oriented Naver "
+            "search: make each literal query a short natural-language request for one "
+            "claim or one source route. Keep cutoff dates, evidence eligibility rules, "
+            "long quoted phrases, and multi-claim instructions in the rationale rather "
+            "than stuffing them into the literal query; a relevant fiscal period or year "
+            "may still be part of the query. After a zero-result or irrelevant "
+            "result, materially change the vocabulary and relax site, path, and exact-quote "
+            "constraints instead of repeating the same query. An issuer landing page may "
+            "lead to a presentation, transcript, or delegated IR asset, so generate a "
+            "route that can discover the landing page as well as the final document. The "
+            "LLM still owns every literal query."
         )
     if pass_name == "SOURCE_CANDIDATE_RANKING":
         return (
             "Assess every discovery candidate for material relevance to the supplied "
-            "research objectives. Snippets are discovery metadata only, never evidence."
+            "research objectives. Snippets are discovery metadata only, never evidence. "
+            "Use requested_source_families, verified_official_domain_candidate, and "
+            "candidate_source_family_hint as discovery provenance. When an objective "
+            "requires an issuer source, prioritize an eligible verified issuer-domain "
+            "candidate over a third-party retelling even when the issuer snippet is sparse. "
+            "A landing page, redirect page, or document referenced by an already fetched "
+            "page may be materially relevant as a route to the full original source; do "
+            "not reject it merely because it is not yet evidence."
         )
     if pass_name == "EVIDENCE_FACT_EXTRACTION":
         return (

@@ -42,10 +42,12 @@ class SourceBrainProvider:
         self,
         *,
         queries: Sequence[str] = (QUERY,),
+        source_families: Sequence[str] = ("NAVER_DISCOVERY",),
         material_titles: Sequence[str] = (),
         omit_last_ranking: bool = False,
     ) -> None:
         self.queries = tuple(queries)
+        self.source_families = tuple(source_families)
         self.material_titles = tuple(material_titles)
         self.omit_last_ranking = omit_last_ranking
         self.calls: list[Mapping[str, Any]] = []
@@ -61,7 +63,7 @@ class SourceBrainProvider:
                     {
                         "objective_id": objective_id,
                         "literal_query": query,
-                        "source_families": ["NAVER_DISCOVERY"],
+                        "source_families": list(self.source_families),
                         "rationale": "현재 gap을 원문 source에서 확인한다.",
                         "counter_or_supersession_search": False,
                     }
@@ -197,6 +199,65 @@ class SelectiveRetryFailureFetcher:
                 ),
             )
         return self.delegate.fetch(url, as_of_date=as_of_date)
+
+
+class ReferencedRouteFetcher:
+    def __init__(self, *, parent_url: str, child_url: str) -> None:
+        self.parent_url = parent_url
+        self.child_url = child_url
+        self.calls: list[str] = []
+
+    def fetch(self, url, *, as_of_date):
+        self.calls.append(url)
+        if url == self.parent_url:
+            return FetchResult(
+                url=url,
+                ok=True,
+                text="Current Corp official redirect",
+                content_type="text/html",
+                fetched_at=datetime(2026, 6, 20, 8),
+                referenced_urls=(self.child_url,),
+            )
+        if url == self.child_url:
+            return FetchResult(
+                url=url,
+                ok=True,
+                text=_document_text("linked-official-transcript"),
+                content_type="application/pdf",
+                fetched_at=datetime(2026, 6, 20, 8),
+                response_last_modified_at=datetime(2026, 5, 11, 2, 39, 25),
+            )
+        return FetchResult(url=url, ok=False, reason="fixture URL missing")
+
+
+class LastModifiedFetcher:
+    def __init__(
+        self,
+        *,
+        url: str,
+        text: str | None = None,
+        last_modified_at: datetime = datetime(2026, 5, 11, 2, 39, 25),
+    ) -> None:
+        self.url = url
+        self.text = text
+        self.last_modified_at = last_modified_at
+
+    def fetch(self, url, *, as_of_date):
+        if url != self.url:
+            return FetchResult(url=url, ok=False, reason="fixture URL missing")
+        return FetchResult(
+            url=url,
+            ok=True,
+            text=self.text
+            or (
+                "Current Corp disclosed current earnings, capacity, cash conversion, "
+                "customer allocation, and counter evidence. "
+                + "source-backed unlabelled detail " * 12
+            ),
+            content_type="application/pdf",
+            fetched_at=datetime(2026, 6, 20, 8),
+            response_last_modified_at=self.last_modified_at,
+        )
 
 
 class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
@@ -663,6 +724,36 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         }
         self.assertEqual(dispositions, {"FULL_DOCUMENT_FETCHED", "DUPLICATE_CONTENT"})
 
+    def test_duplicate_bytes_from_verified_issuer_upgrade_provenance_once(self) -> None:
+        provider = SourceBrainProvider(
+            source_families=("ISSUER_PRESENTATION",),
+        )
+        mirror_url = "https://independent.example.net/report"
+        issuer_url = "https://ir.example.com/report"
+        rows = (
+            _result("Current Corp mirror", mirror_url, rank=1),
+            _result("Current Corp issuer original", issuer_url, rank=2),
+        )
+        same_text = _document_text("same-issuer-content")
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider({QUERY: rows}),
+            fetcher=PageFetcher(
+                fixture_text_by_url={row.url: same_text for row in rows}
+            ),
+            official_domains=("example.com",),
+        )
+        self.assertEqual(len(run.evidence_documents), 1)
+        document = run.evidence_documents[0]
+        self.assertEqual(document["canonical_url"], issuer_url)
+        self.assertEqual(document["source_family"], "ISSUER_NEWSROOM")
+        self.assertTrue(document["official_provenance_upgrade"])
+        self.assertEqual(
+            document["source_family_observations"],
+            ["GENERAL_WEB_DISCOVERY", "ISSUER_NEWSROOM"],
+        )
+        self.assertEqual(document["verified_official_discovery_urls"], [issuer_url])
+
     def test_incomplete_materiality_ranking_fetches_nothing_and_stays_pending(self) -> None:
         provider = SourceBrainProvider(omit_last_ranking=True)
         rows = (
@@ -776,6 +867,161 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(len(second.evidence_documents), 2)
         self.assertEqual(len(search.calls), 1)
 
+    def test_rejected_parent_still_discovers_and_fetches_linked_original(self) -> None:
+        provider = SourceBrainProvider(
+            source_families=("ISSUER_PRESENTATION",),
+        )
+        parent_url = "https://ir.example.com/redirect"
+        child_url = "https://ir.example.com/2026q1-transcript.pdf"
+        fetcher = ReferencedRouteFetcher(
+            parent_url=parent_url,
+            child_url=child_url,
+        )
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp official call", parent_url),)}
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            official_domains=("example.com",),
+        )
+        child_candidate = next(
+            row
+            for row in first.checkpoint["search_candidates"]
+            if row.get("url") == child_url
+        )
+        self.assertEqual(child_candidate["ranking_status"], "PENDING")
+        self.assertTrue(child_candidate["graph_expansion_parent_candidate_ids"])
+        self.assertIn(
+            "REFERENCES_URL",
+            {row.relationship for row in first.source_graph.edges},
+        )
+        self.assertTrue(
+            any(
+                row.get("rejection_reason") == "FULL_DOCUMENT_CONTENT_TOO_SMALL"
+                for row in first.checkpoint["rejected_documents"]
+            )
+        )
+
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=first.checkpoint,
+            official_domains=("example.com",),
+        )
+        linked_document = next(
+            row
+            for row in second.evidence_documents
+            if row.get("canonical_url") == child_url
+        )
+        self.assertEqual(linked_document["source_family"], "ISSUER_NEWSROOM")
+        self.assertEqual(
+            linked_document["requested_source_families"],
+            ["ISSUER_PRESENTATION"],
+        )
+        self.assertEqual(len(search.calls), 1)
+
+    def test_ranker_receives_requested_family_and_verified_official_hint(self) -> None:
+        provider = SourceBrainProvider(
+            source_families=("ISSUER_PRESENTATION",),
+        )
+        url = "https://ir.example.com/2026q1.pdf"
+        self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {QUERY: (_result("Current Corp issuer presentation", url),)}
+            ),
+            fetcher=PageFetcher(
+                fixture_text_by_url={url: _document_text("issuer-presentation")}
+            ),
+            official_domains=("example.com",),
+        )
+        ranking_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+        candidate = ranking_payload["discovery_candidates"][0]
+        self.assertEqual(
+            candidate["requested_source_families"],
+            ["ISSUER_PRESENTATION"],
+        )
+        self.assertTrue(candidate["verified_official_domain_candidate"])
+        self.assertEqual(
+            candidate["candidate_source_family_hint"],
+            "ISSUER_NEWSROOM",
+        )
+
+    def test_http_last_modified_verifies_missing_search_result_date(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/undated-transcript.pdf"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result(
+                            "Current Corp undated transcript",
+                            url,
+                            published=None,
+                        ),
+                    )
+                }
+            ),
+            fetcher=LastModifiedFetcher(url=url),
+        )
+        document = next(
+            row
+            for row in run.evidence_documents
+            if row.get("canonical_url") == url
+        )
+        self.assertEqual(document["published_at"], "2026-05-11")
+        self.assertEqual(document["publication_date_source"], "HTTP_LAST_MODIFIED")
+        self.assertEqual(
+            document["response_last_modified_at"],
+            "2026-05-11T02:39:25",
+        )
+
+    def test_old_http_header_cannot_mask_future_labelled_publication_date(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/future-transcript.pdf"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result(
+                            "Current Corp transcript",
+                            url,
+                            published=None,
+                        ),
+                    )
+                }
+            ),
+            fetcher=LastModifiedFetcher(
+                url=url,
+                text=(
+                    "Published 2026-07-02\nCurrent Corp disclosed current earnings, "
+                    "capacity, cash conversion, customer allocation, and counter "
+                    "evidence. "
+                    + "source-backed detail " * 12
+                ),
+            ),
+        )
+        self.assertFalse(
+            any(row.get("canonical_url") == url for row in run.evidence_documents)
+        )
+        self.assertTrue(
+            any(
+                row.get("rejection_reason")
+                == "FUTURE_DOCUMENT_AFTER_FULL_FETCH"
+                for row in run.checkpoint["rejected_documents"]
+            )
+        )
+
     def _run(
         self,
         *,
@@ -786,6 +1032,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         checkpoint: Mapping[str, Any] | None = None,
         official_gaps: Mapping[str, Sequence[str]] | None = None,
         official_documents: Sequence[Mapping[str, Any]] = (),
+        official_domains: Sequence[str] = (),
     ):
         return ResearcherSourceGraphAcquirer(
             query_provider=provider,
@@ -808,6 +1055,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 else {"OBJECTIVE-1": ("official source gap recorded",)}
             ),
             prior_checkpoint=checkpoint,
+            official_domain_allowlist=official_domains,
         )
 
 
@@ -826,7 +1074,7 @@ def _result(
     url: str,
     *,
     rank: int = 1,
-    published: str = "2026-06-20",
+    published: str | None = "2026-06-20",
     query: str = QUERY,
 ) -> SearchResult:
     return SearchResult(
@@ -834,7 +1082,7 @@ def _result(
         url=url,
         snippet=f"{TARGET_NAME} full report discovery metadata",
         source="fixture-search",
-        published_at=datetime.fromisoformat(published),
+        published_at=(datetime.fromisoformat(published) if published else None),
         query=query,
         rank=rank,
         is_news="reuters" in url,

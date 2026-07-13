@@ -60,6 +60,7 @@ def main(argv: list[str] | None = None) -> int:
     targets = load_current_research_targets(
         symbols=symbols,
         registry_path=args.target_registry,
+        as_of_date=args.as_of_date,
     )
     trading_date = (
         args.latest_trading_snapshot_date

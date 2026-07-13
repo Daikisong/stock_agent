@@ -4,13 +4,15 @@ from __future__ import annotations
 
 import hashlib
 import html
+import json
 import re
 from dataclasses import dataclass
 from datetime import date, datetime
+from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib import error, parse, request
-from typing import Mapping
+from typing import Any, Mapping
 
 from e2r.research.pdf_text_extractor import (
     PDFTextExtractor,
@@ -29,6 +31,8 @@ class FetchResult:
     fetched_at: datetime | None = None
     reason: str | None = None
     source_path: str | None = None
+    referenced_urls: tuple[str, ...] = ()
+    response_last_modified_at: datetime | None = None
 
 
 @dataclass(frozen=True)
@@ -112,6 +116,7 @@ class PageFetcher:
                 cached_text = cache_path.read_text(encoding="utf-8")
                 unreadable = extracted_text_unreadable_reason(cached_text)
                 if unreadable is None:
+                    cache_metadata = _read_cache_metadata(cache_path)
                     return FetchResult(
                         url=url,
                         ok=True,
@@ -119,6 +124,14 @@ class PageFetcher:
                         content_type="text/plain",
                         fetched_at=fetched_at,
                         source_path=str(cache_path),
+                        referenced_urls=tuple(
+                            str(value)
+                            for value in cache_metadata.get("referenced_urls", ())
+                            if str(value).strip()
+                        ),
+                        response_last_modified_at=_cached_datetime(
+                            cache_metadata.get("response_last_modified_at")
+                        ),
                     )
             except OSError:
                 pass
@@ -135,6 +148,7 @@ class PageFetcher:
             )
             with request.urlopen(req, timeout=self.timeout_seconds) as response:
                 content_type = _content_type(response)
+                response_last_modified_at = _response_last_modified_at(response)
                 pdf_like = _looks_like_pdf_url(url) or "pdf" in content_type.lower()
                 body_limit = max(1, self.max_pdf_body_bytes if pdf_like else self.max_body_bytes)
                 body = response.read(body_limit + 1)
@@ -178,7 +192,11 @@ class PageFetcher:
                     reason=f"live_pdf_text_extraction_failed:{unreadable}",
                 )
             text = (extraction.text or "")[: self.max_text_chars]
-            source_path = _write_cache(cache_path, text)
+            source_path = _write_cache(
+                cache_path,
+                text,
+                response_last_modified_at=response_last_modified_at,
+            )
             return FetchResult(
                 url=url,
                 ok=True,
@@ -186,10 +204,18 @@ class PageFetcher:
                 content_type=content_type or "application/pdf",
                 fetched_at=fetched_at,
                 source_path=source_path,
+                response_last_modified_at=response_last_modified_at,
             )
 
         decoded = body.decode(charset, errors="replace")
-        text = _text_from_response(decoded, content_type)
+        if "html" in content_type.lower() or _looks_like_html(decoded):
+            text, referenced_urls = _html_text_and_references(
+                decoded,
+                base_url=url,
+            )
+        else:
+            text = _normalize_text(decoded)
+            referenced_urls = ()
         unreadable = extracted_text_unreadable_reason(text)
         if unreadable is not None:
             return FetchResult(
@@ -200,7 +226,12 @@ class PageFetcher:
                 reason=f"live_fetch_unreadable_text:{unreadable}",
             )
         text = text[: self.max_text_chars]
-        source_path = _write_cache(cache_path, text)
+        source_path = _write_cache(
+            cache_path,
+            text,
+            referenced_urls=referenced_urls,
+            response_last_modified_at=response_last_modified_at,
+        )
         return FetchResult(
             url=url,
             ok=True,
@@ -208,6 +239,8 @@ class PageFetcher:
             content_type=content_type,
             fetched_at=fetched_at,
             source_path=source_path,
+            referenced_urls=referenced_urls,
+            response_last_modified_at=response_last_modified_at,
         )
 
 
@@ -238,15 +271,60 @@ def _cache_path(cache_directory: str | Path | None, url: str, as_of_date: date) 
     return Path(cache_directory) / as_of_date.isoformat() / f"{digest}.txt"
 
 
-def _write_cache(cache_path: Path | None, text: str) -> str | None:
+def _write_cache(
+    cache_path: Path | None,
+    text: str,
+    *,
+    referenced_urls: tuple[str, ...] = (),
+    response_last_modified_at: datetime | None = None,
+) -> str | None:
     if cache_path is None:
         return None
     try:
         cache_path.parent.mkdir(parents=True, exist_ok=True)
         cache_path.write_text(text, encoding="utf-8")
+        _cache_metadata_path(cache_path).write_text(
+            json.dumps(
+                {
+                    "referenced_urls": list(referenced_urls),
+                    "response_last_modified_at": (
+                        response_last_modified_at.isoformat()
+                        if response_last_modified_at is not None
+                        else None
+                    ),
+                },
+                ensure_ascii=False,
+                sort_keys=True,
+            ),
+            encoding="utf-8",
+        )
     except OSError:
         return None
     return str(cache_path)
+
+
+def _cache_metadata_path(cache_path: Path) -> Path:
+    return cache_path.with_suffix(cache_path.suffix + ".metadata.json")
+
+
+def _read_cache_metadata(cache_path: Path) -> Mapping[str, Any]:
+    metadata_path = _cache_metadata_path(cache_path)
+    if not metadata_path.is_file():
+        return {}
+    try:
+        value = json.loads(metadata_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return value if isinstance(value, Mapping) else {}
+
+
+def _cached_datetime(value: Any) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(str(value))
+    except ValueError:
+        return None
 
 
 def _content_type(response: object) -> str:
@@ -268,13 +346,53 @@ def _charset(response: object) -> str | None:
     return match.group(1) if match else None
 
 
+def _response_last_modified_at(response: object) -> datetime | None:
+    headers = getattr(response, "headers", None)
+    if headers is None or not hasattr(headers, "get"):
+        return None
+    value = headers.get("Last-Modified") or headers.get("last-modified")
+    if not value:
+        return None
+    try:
+        return parsedate_to_datetime(str(value))
+    except (TypeError, ValueError, OverflowError):
+        return None
+
+
 def _text_from_response(decoded: str, content_type: str) -> str:
     if "html" in content_type.lower() or _looks_like_html(decoded):
-        parser = _HTMLTextExtractor()
-        parser.feed(decoded)
-        parser.close()
-        return parser.text()
+        return _html_text_and_references(decoded, base_url="")[0]
     return _normalize_text(decoded)
+
+
+def _html_text_and_references(
+    decoded: str,
+    *,
+    base_url: str,
+) -> tuple[str, tuple[str, ...]]:
+    parser = _HTMLTextExtractor(base_url=base_url)
+    parser.feed(decoded)
+    parser.close()
+    raw_redirects = re.findall(
+        r"(?:window\s*\.\s*)?(?:top\s*\.\s*)?location"
+        r"(?:\s*\.\s*href)?\s*=\s*['\"]([^'\"]+)['\"]",
+        decoded,
+        flags=re.IGNORECASE,
+    )
+    references = tuple(
+        dict.fromkeys(
+            (
+                *parser.referenced_urls(),
+                *(
+                    resolved
+                    for value in raw_redirects
+                    for resolved in (_resolved_http_url(base_url, value),)
+                    if resolved is not None
+                ),
+            )
+        )
+    )
+    return parser.text(), references
 
 
 def _looks_like_html(text: str) -> bool:
@@ -321,9 +439,11 @@ class _HTMLTextExtractor(HTMLParser):
         "twitter:title",
     }
 
-    def __init__(self) -> None:
+    def __init__(self, *, base_url: str = "") -> None:
         super().__init__(convert_charrefs=True)
+        self._base_url = base_url
         self._parts: list[str] = []
+        self._referenced_urls: list[str] = []
         self._skip_depth = 0
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
@@ -337,6 +457,17 @@ class _HTMLTextExtractor(HTMLParser):
             content = attrs_by_name.get("content")
             if meta_key and content and meta_key.lower() in self._META_KEYS:
                 self._parts.append(content)
+        if tag in {"a", "iframe", "source"}:
+            attrs_by_name = {
+                key.lower(): value for key, value in attrs if key and value
+            }
+            for attribute in ("href", "src"):
+                resolved = _resolved_http_url(
+                    self._base_url,
+                    attrs_by_name.get(attribute),
+                )
+                if resolved is not None:
+                    self._referenced_urls.append(resolved)
         if tag in self._BLOCK_TAGS:
             self._parts.append("\n")
 
@@ -356,6 +487,20 @@ class _HTMLTextExtractor(HTMLParser):
 
     def text(self) -> str:
         return _normalize_text("\n".join(self._parts))
+
+    def referenced_urls(self) -> tuple[str, ...]:
+        return tuple(dict.fromkeys(self._referenced_urls))
+
+
+def _resolved_http_url(base_url: str, value: str | None) -> str | None:
+    raw = str(value or "").strip()
+    if not raw or raw.startswith(("#", "data:", "javascript:", "mailto:", "tel:")):
+        return None
+    resolved = parse.urljoin(base_url, raw)
+    parts = parse.urlsplit(resolved)
+    if parts.scheme not in {"http", "https"} or not parts.netloc:
+        return None
+    return parse.urlunsplit((parts.scheme, parts.netloc, parts.path, parts.query, ""))
 
 
 def _normalize_text(text: str) -> str:

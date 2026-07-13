@@ -770,16 +770,30 @@ OPM 개선폭 6%
         <html>
           <head>
             <meta name="description" content="NAVER AI 클라우드 매출 성장률 40%">
-            <script>window.secret = "ignore me";</script>
+            <script>
+              window.secret = "ignore me";
+              window.location.href = "./conference";
+            </script>
           </head>
           <body>
-            <article><h1>NAVER 데이터센터</h1><p>엔비디아 GPU 인프라 투자와 AI 매출 성장률 40%</p></article>
+            <article>
+              <h1>NAVER 데이터센터</h1>
+              <p>엔비디아 GPU 인프라 투자와 AI 매출 성장률 40%</p>
+              <a href="/ir/earnings.pdf?quarter=1">실적발표 PDF</a>
+              <iframe src="//media.example.com/transcript.pdf"></iframe>
+            </article>
           </body>
         </html>
         """
         with tempfile.TemporaryDirectory() as tmpdir:
             fetcher = PageFetcher(live_enabled=True, cache_directory=tmpdir)
-            with patch("e2r.research.page_fetcher.request.urlopen", return_value=_FakeHTTPResponse(html)):
+            with patch(
+                "e2r.research.page_fetcher.request.urlopen",
+                return_value=_FakeHTTPResponse(
+                    html,
+                    last_modified="Mon, 11 May 2026 02:39:25 GMT",
+                ),
+            ):
                 first = fetcher.fetch("https://example.com/naver-ai", as_of_date=date(2026, 6, 8))
 
             self.assertTrue(first.ok)
@@ -787,12 +801,30 @@ OPM 개선폭 6%
             self.assertIn("NAVER 데이터센터", first.text)
             self.assertNotIn("ignore me", first.text)
             self.assertIsNotNone(first.source_path)
+            self.assertEqual(
+                first.referenced_urls,
+                (
+                    "https://example.com/ir/earnings.pdf?quarter=1",
+                    "https://media.example.com/transcript.pdf",
+                    "https://example.com/conference",
+                ),
+            )
+            self.assertEqual(
+                first.response_last_modified_at.isoformat(),
+                "2026-05-11T02:39:25+00:00",
+            )
 
             with patch("e2r.research.page_fetcher.request.urlopen") as urlopen:
                 second = fetcher.fetch("https://example.com/naver-ai", as_of_date=date(2026, 6, 8))
 
             self.assertTrue(second.ok)
             self.assertEqual(second.text, first.text)
+            self.assertEqual(second.referenced_urls, first.referenced_urls)
+            self.assertEqual(
+                second.response_last_modified_at,
+                first.response_last_modified_at,
+            )
+            urlopen.assert_not_called()
 
     def test_page_fetcher_live_extracts_pdf_text_and_uses_cache(self):
         extractor = _FakePDFExtractor("HBM 완판과 고객 물량 배정")
@@ -1630,10 +1662,17 @@ class _SingleQueryPlanner:
 
 
 class _FakeHTTPResponse:
-    def __init__(self, body: str, content_type: str = "text/html; charset=utf-8") -> None:
+    def __init__(
+        self,
+        body: str,
+        content_type: str = "text/html; charset=utf-8",
+        last_modified: str | None = None,
+    ) -> None:
         self._body = body.encode("utf-8")
         self.headers = Message()
         self.headers["Content-Type"] = content_type
+        if last_modified is not None:
+            self.headers["Last-Modified"] = last_modified
 
     def __enter__(self):
         return self

@@ -209,10 +209,37 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 CurrentResearcherModeConfig(**invalid)
 
     def test_target_registry_resolves_master_canaries_without_runner_branch(self) -> None:
-        targets = load_current_research_targets(symbols=("005930", "000660"))
+        targets = load_current_research_targets(
+            symbols=("005930", "000660"),
+            as_of_date="2026-07-12",
+        )
         self.assertEqual(
             [(row.symbol, row.company_name) for row in targets],
             [("005930", "삼성전자"), ("000660", "SK하이닉스")],
+        )
+        self.assertEqual(
+            targets[0].official_domains,
+            (
+                "news.samsung.com",
+                "samsung.com",
+                "irsvc.teletogether.com",
+            ),
+        )
+        self.assertEqual(
+            targets[1].official_domains,
+            (
+                "news.skhynix.com",
+                "skhynix.com",
+                "news.skhynix.co.kr",
+            ),
+        )
+        before_delegated_service_verification = load_current_research_targets(
+            symbols=("005930",),
+            as_of_date="2026-07-11",
+        )[0]
+        self.assertNotIn(
+            "irsvc.teletogether.com",
+            before_delegated_service_verification.official_domains,
         )
         runner_source = inspect.getsource(CurrentResearcherModeTargetRunner)
         self.assertNotIn("005930", runner_source)

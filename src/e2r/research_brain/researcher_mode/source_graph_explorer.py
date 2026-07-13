@@ -10,7 +10,7 @@ import hashlib
 import json
 import re
 from dataclasses import asdict, dataclass
-from datetime import date
+from datetime import date, datetime
 from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -302,6 +302,19 @@ class SourceGraphExplorer:
                             "DISCOVERED",
                         )
                     )
+        for candidate in discovery_candidates:
+            child_id = str(candidate.get("candidate_id") or "").strip()
+            child_node_id = candidate_node_ids.get(child_id)
+            if child_node_id is None:
+                continue
+            for parent_id in candidate.get(
+                "graph_expansion_parent_candidate_ids"
+            ) or ():
+                parent_node_id = candidate_node_ids.get(str(parent_id))
+                if parent_node_id is not None:
+                    edges.append(
+                        _edge(parent_node_id, child_node_id, "REFERENCES_URL")
+                    )
         for row in documents:
             document_id = str(
                 row.get("document_id") or row.get("source_id") or ""
@@ -591,8 +604,16 @@ class ResearcherSourceGraphAcquirer:
         fetch_rows = state["fetch_records"]
         rejected_rows = state["rejected_documents"]
         evidence_documents = state["evidence_documents"]
+        allowed_hosts = {
+            _normalized_host(value) for value in official_domain_allowlist if value
+        }
+        checkpoint_candidate_start_count = len(candidates)
+        checkpoint_candidate_limit = (
+            checkpoint_candidate_start_count + config.max_candidates_per_checkpoint
+        )
+        deferred_reference_count = 0
         for document in tuple(evidence_documents):
-            _enqueue_reference_candidates(
+            deferred_reference_count += _enqueue_reference_candidates(
                 candidates,
                 document=document,
                 target_id=target_id,
@@ -600,6 +621,20 @@ class ResearcherSourceGraphAcquirer:
                 default_objective_ids=tuple(
                     str(row["objective_id"]) for row in unresolved_objectives
                 ),
+                max_total_candidates=checkpoint_candidate_limit,
+            )
+        for parent_candidate in tuple(candidates):
+            deferred_reference_count += _enqueue_candidate_discovery_references(
+                candidates,
+                parent_candidate=parent_candidate,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                max_total_candidates=checkpoint_candidate_limit,
+            )
+        if deferred_reference_count:
+            pending_reasons.append(
+                "REFERENCE_DISCOVERY_TRANSPORT_BUDGET_CHECKPOINT:"
+                + str(deferred_reference_count)
             )
         query_failures = [*state["query_failures"], *prior_query_failures]
         for row in generated_rows:
@@ -676,7 +711,6 @@ class ResearcherSourceGraphAcquirer:
             ]
         query_budget = config.max_queries_per_checkpoint
         query_calls = 0
-        checkpoint_candidate_start_count = len(candidates)
         for query_row in pending_query_rows:
             if query_calls >= query_budget:
                 pending_reasons.append("QUERY_TRANSPORT_BUDGET_CHECKPOINT")
@@ -712,6 +746,11 @@ class ResearcherSourceGraphAcquirer:
                 query=literal_query,
                 query_id=str(query_row["query_id"]),
                 objective_id=objective_id,
+                requested_source_families=tuple(
+                    str(value)
+                    for value in query_row.get("source_families") or ()
+                    if str(value).strip()
+                ),
                 target_id=target_id,
                 as_of_date=cutoff,
                 max_results=min(
@@ -751,6 +790,10 @@ class ResearcherSourceGraphAcquirer:
             )
         state["query_failures"] = _dedupe_mapping_rows(
             query_failures, key_fields=("query_id", "failure_reason")
+        )
+        _annotate_candidate_source_hints(
+            candidates,
+            official_hosts=allowed_hosts,
         )
         pending_rank = [
             row
@@ -814,9 +857,6 @@ class ResearcherSourceGraphAcquirer:
             for row in evidence_documents
             if row.get("content_hash")
         }
-        allowed_hosts = {
-            _normalized_host(value) for value in official_domain_allowlist if value
-        }
         for candidate in fetch_batch:
             candidate["full_fetch_attempt_count"] = (
                 int(candidate.get("full_fetch_attempt_count") or 0) + 1
@@ -834,6 +874,18 @@ class ResearcherSourceGraphAcquirer:
                 content_hash_to_document=content_hash_to_document,
             )
             fetch_rows.append(fetch_record)
+            deferred_reference_count = _enqueue_candidate_discovery_references(
+                candidates,
+                parent_candidate=candidate,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                max_total_candidates=checkpoint_candidate_limit,
+            )
+            if deferred_reference_count:
+                pending_reasons.append(
+                    "REFERENCE_DISCOVERY_TRANSPORT_BUDGET_CHECKPOINT:"
+                    + str(deferred_reference_count)
+                )
             if rejection is not None:
                 rejection_reason = str(rejection["rejection_reason"])
                 repeated_identical_failure = any(
@@ -901,13 +953,19 @@ class ResearcherSourceGraphAcquirer:
                 continue
             evidence_documents.append(document)
             content_hash_to_document[str(document["content_hash"])] = document
-            _enqueue_reference_candidates(
+            deferred_reference_count = _enqueue_reference_candidates(
                 candidates,
                 document=document,
                 target_id=target_id,
                 as_of_date=as_of_date,
                 default_objective_ids=tuple(candidate.get("objective_ids") or ()),
+                max_total_candidates=checkpoint_candidate_limit,
             )
+            if deferred_reference_count:
+                pending_reasons.append(
+                    "REFERENCE_DISCOVERY_TRANSPORT_BUDGET_CHECKPOINT:"
+                    + str(deferred_reference_count)
+                )
             candidate["fetch_status"] = "FULL_DOCUMENT_FETCHED"
             candidate["document_id"] = document["document_id"]
         state["query_failures"] = _dedupe_mapping_rows(
@@ -1488,6 +1546,7 @@ def _execute_search_query(
     query: str,
     query_id: str,
     objective_id: str,
+    requested_source_families: Sequence[str],
     target_id: str,
     as_of_date: date,
     max_results: int,
@@ -1535,6 +1594,9 @@ def _execute_search_query(
                 "is_disclosure": result.is_disclosure,
                 "query_ids": [query_id],
                 "objective_ids": [objective_id],
+                "requested_source_families": list(
+                    dict.fromkeys(requested_source_families)
+                ),
                 "query_lineage_valid": result.query in {None, query},
                 "discovery_only": True,
                 "snippet_discovery_only": True,
@@ -1582,6 +1644,14 @@ def _merge_search_candidates(
                 (*existing.get("objective_ids", ()), *row.get("objective_ids", ()))
             )
         )
+        existing["requested_source_families"] = list(
+            dict.fromkeys(
+                (
+                    *existing.get("requested_source_families", ()),
+                    *row.get("requested_source_families", ()),
+                )
+            )
+        )
 
 
 def _enqueue_reference_candidates(
@@ -1591,8 +1661,13 @@ def _enqueue_reference_candidates(
     target_id: str,
     as_of_date: str,
     default_objective_ids: Sequence[str],
-) -> None:
+    max_total_candidates: int | None = None,
+) -> int:
     by_url = {str(row.get("normalized_url")): row for row in candidates}
+    deferred_count = 0
+    requested_source_families = tuple(
+        document.get("requested_source_families") or ()
+    )
     for raw_url in document.get("referenced_urls") or ():
         url = str(raw_url).strip()
         normalized = _normalize_url(url)
@@ -1610,6 +1685,28 @@ def _enqueue_reference_candidates(
             existing["query_ids"] = list(
                 dict.fromkeys((*existing.get("query_ids", ()), *query_ids))
             )
+            existing["requested_source_families"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("requested_source_families", ()),
+                        *requested_source_families,
+                    )
+                )
+            )
+            existing["graph_expansion_parent_document_ids"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("graph_expansion_parent_document_ids", ()),
+                        document.get("document_id"),
+                    )
+                )
+            )
+            continue
+        if (
+            max_total_candidates is not None
+            and len(candidates) >= max_total_candidates
+        ):
+            deferred_count += 1
             continue
         candidate_id = stable_intelligence_id(
             "SGCAND",
@@ -1637,6 +1734,7 @@ def _enqueue_reference_candidates(
             "is_disclosure": False,
             "query_ids": list(query_ids),
             "objective_ids": list(objective_ids),
+            "requested_source_families": list(requested_source_families),
             "query_lineage_valid": True,
             "graph_expansion_parent_document_ids": [document.get("document_id")],
             "discovery_only": True,
@@ -1648,6 +1746,115 @@ def _enqueue_reference_candidates(
         }
         candidates.append(row)
         by_url[normalized] = row
+    return deferred_count
+
+
+def _enqueue_candidate_discovery_references(
+    candidates: list[dict[str, Any]],
+    *,
+    parent_candidate: Mapping[str, Any],
+    target_id: str,
+    as_of_date: str,
+    max_total_candidates: int | None = None,
+) -> int:
+    """Keep fetched-page links as discovery even when the page is not evidence.
+
+    An unknown publication date or a tiny JavaScript redirect page must not
+    become evidence.  Its explicit links can still be ranked and fully fetched
+    on a later checkpoint, preserving the parent candidate lineage.
+    """
+
+    parent_id = str(parent_candidate.get("candidate_id") or "").strip()
+    if not parent_id:
+        return 0
+    parent_url = _normalize_url(str(parent_candidate.get("url") or ""))
+    by_url = {str(row.get("normalized_url")): row for row in candidates}
+    objective_ids = tuple(parent_candidate.get("objective_ids") or ())
+    query_ids = tuple(parent_candidate.get("query_ids") or ())
+    requested_source_families = tuple(
+        parent_candidate.get("requested_source_families") or ()
+    )
+    deferred_count = 0
+    for raw_url in parent_candidate.get("discovered_referenced_urls") or ():
+        url = str(raw_url).strip()
+        normalized = _normalize_url(url)
+        if (
+            not normalized
+            or normalized == parent_url
+            or not _is_http_url(url)
+        ):
+            continue
+        existing = by_url.get(normalized)
+        if existing is not None:
+            existing["objective_ids"] = list(
+                dict.fromkeys((*existing.get("objective_ids", ()), *objective_ids))
+            )
+            existing["query_ids"] = list(
+                dict.fromkeys((*existing.get("query_ids", ()), *query_ids))
+            )
+            existing["requested_source_families"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("requested_source_families", ()),
+                        *requested_source_families,
+                    )
+                )
+            )
+            existing["graph_expansion_parent_candidate_ids"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("graph_expansion_parent_candidate_ids", ()),
+                        parent_id,
+                    )
+                )
+            )
+            continue
+        if (
+            max_total_candidates is not None
+            and len(candidates) >= max_total_candidates
+        ):
+            deferred_count += 1
+            continue
+        candidate_id = stable_intelligence_id(
+            "SGCAND",
+            {
+                "target_id": target_id,
+                "as_of_date": as_of_date,
+                "normalized_url": normalized,
+            },
+        )
+        row = {
+            "schema_version": "e2r_v5_search_candidate_v1",
+            "candidate_id": candidate_id,
+            "target_id": target_id,
+            "as_of_date": as_of_date,
+            "url": url,
+            "normalized_url": normalized,
+            "title": f"Referenced by candidate {parent_id}",
+            "snippet": None,
+            "source": _normalized_host(url),
+            "published_at": None,
+            "rank": 0,
+            "is_pdf": urlsplit(url).path.casefold().endswith(".pdf"),
+            "is_report_domain": False,
+            "is_news": "news" in _normalized_host(url),
+            "is_disclosure": False,
+            "query_ids": list(query_ids),
+            "objective_ids": list(objective_ids),
+            "requested_source_families": list(requested_source_families),
+            "query_lineage_valid": True,
+            "graph_expansion_parent_candidate_ids": [parent_id],
+            "reference_discovery_only": True,
+            "discovery_only": True,
+            "snippet_discovery_only": True,
+            "snippet_evidence_eligible": False,
+            "score_authority": False,
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+        }
+        candidates.append(row)
+        by_url[normalized] = row
+    return deferred_count
 
 
 def _fetch_candidate_document(
@@ -1682,6 +1889,26 @@ def _fetch_candidate_document(
         rejection = _candidate_rejection(candidate, reason, retryable=retryable)
         return _fetch_record(fetch_id, candidate, "FETCH_FAILED", reason), None, rejection
     text = str(result.text or "").strip()
+    referenced_urls = tuple(
+        dict.fromkeys(
+            (
+                *(
+                    str(value).rstrip(".,);]")
+                    for value in getattr(result, "referenced_urls", ())
+                    if str(value).strip()
+                ),
+                *(
+                    value.rstrip(".,);]")
+                    for value in re.findall(r"https?://[^\s<>\"']+", text)
+                ),
+            )
+        )
+    )
+    candidate["discovered_referenced_urls"] = [
+        value
+        for value in referenced_urls
+        if _normalize_url(value) != _normalize_url(url)
+    ]
     content_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
     unreadable = extracted_text_unreadable_reason(text)
     if unreadable is not None:
@@ -1702,8 +1929,20 @@ def _fetch_candidate_document(
         rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
         return _fetch_record(fetch_id, candidate, "REJECTED", reason, content_hash), None, rejection
     explicit = _parse_date(candidate.get("published_at"))
-    published = infer_publication_date(
-        explicit=explicit,
+    response_last_modified_at = getattr(
+        result,
+        "response_last_modified_at",
+        None,
+    )
+    response_last_modified = (
+        response_last_modified_at.date()
+        if isinstance(response_last_modified_at, datetime)
+        else response_last_modified_at
+        if isinstance(response_last_modified_at, date)
+        else None
+    )
+    content_inferred_date = infer_publication_date(
+        explicit=None,
         metadata_parts=(
             url,
             str(candidate.get("title") or ""),
@@ -1712,6 +1951,19 @@ def _fetch_candidate_document(
         document_text=text,
         as_of_date=as_of_date,
     )
+    if explicit is not None:
+        published = explicit
+    elif response_last_modified is not None:
+        # Last-Modified is useful for otherwise undated issuer assets, but it
+        # must not hide a later date explicitly carried by the URL/title/body.
+        # Taking the later verified date is conservative against future leak.
+        published = max(
+            value
+            for value in (response_last_modified, content_inferred_date)
+            if value is not None
+        )
+    else:
+        published = content_inferred_date
     if published is None and require_date_verified:
         reason = "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH"
         rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
@@ -1729,6 +1981,9 @@ def _fetch_candidate_document(
         reason = "WRONG_SUBJECT_FULL_DOCUMENT"
         rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
         return _fetch_record(fetch_id, candidate, "REJECTED", reason, content_hash), None, rejection
+    source_family = _classify_source_family(
+        candidate, url=url, official_hosts=official_hosts
+    )
     existing = content_hash_to_document.get(content_hash)
     if existing is not None:
         if isinstance(existing, dict):
@@ -1748,6 +2003,56 @@ def _fetch_candidate_document(
             existing["discovery_urls"] = list(
                 dict.fromkeys((*existing.get("discovery_urls", ()), url))
             )
+            existing["requested_source_families"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("requested_source_families", ()),
+                        *candidate.get("requested_source_families", ()),
+                    )
+                )
+            )
+            existing["referenced_urls"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("referenced_urls", ()),
+                        *candidate.get("discovered_referenced_urls", ()),
+                    )
+                )
+            )
+            existing_family = str(existing.get("source_family") or "")
+            existing["source_family_observations"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get(
+                            "source_family_observations",
+                            (existing_family,) if existing_family else (),
+                        ),
+                        source_family,
+                    )
+                )
+            )
+            if source_family in SOURCE_FAMILY_CLASSES["OFFICIAL"]:
+                existing["verified_official_discovery_urls"] = list(
+                    dict.fromkeys(
+                        (
+                            *existing.get("verified_official_discovery_urls", ()),
+                            url,
+                        )
+                    )
+                )
+                if existing_family not in SOURCE_FAMILY_CLASSES["OFFICIAL"]:
+                    # The bytes remain one economic document, but a successful
+                    # fetch from a verified issuer route upgrades provenance.
+                    # This is source verification, not duplicate score credit.
+                    existing["source_family_before_official_verification"] = (
+                        existing_family or None
+                    )
+                    existing["source_family"] = source_family
+                    existing["canonical_url"] = url
+                    existing["source_independence_group"] = (
+                        _source_independence_group(url, source_family)
+                    )
+                    existing["official_provenance_upgrade"] = True
         record = _fetch_record(
             fetch_id,
             candidate,
@@ -1757,8 +2062,18 @@ def _fetch_candidate_document(
         )
         record["existing_document_id"] = existing.get("document_id")
         return record, existing, None
-    source_family = _classify_source_family(
-        candidate, url=url, official_hosts=official_hosts
+    publication_date_source = (
+        "SEARCH_RESULT"
+        if explicit is not None
+        else "HTTP_LAST_MODIFIED_AND_DOCUMENT_INFERENCE_MAX"
+        if (
+            response_last_modified is not None
+            and content_inferred_date is not None
+            and content_inferred_date != response_last_modified
+        )
+        else "HTTP_LAST_MODIFIED"
+        if response_last_modified is not None
+        else "DOCUMENT_CONTENT_INFERENCE"
     )
     document_id = stable_intelligence_id(
         "SGDOC",
@@ -1767,13 +2082,6 @@ def _fetch_candidate_document(
             "content_hash": content_hash,
             "published_at": published.isoformat() if published else None,
         },
-    )
-    referenced_urls = tuple(
-        dict.fromkeys(
-            value.rstrip(".,);]")
-            for value in re.findall(r"https?://[^\s<>\"']+", text)
-            if _normalize_url(value) != _normalize_url(url)
-        )
     )
     fetched_at = result.fetched_at.isoformat() if result.fetched_at else as_of_date.isoformat()
     document = {
@@ -1785,17 +2093,30 @@ def _fetch_candidate_document(
         "discovery_urls": [url],
         "title": candidate.get("title"),
         "source_family": source_family,
+        "source_family_observations": [source_family],
         "source_provider": type(page_fetcher).__name__,
         "published_at": published.isoformat() if published else None,
         "available_at": published.isoformat() if published else None,
+        "publication_date_source": publication_date_source,
+        "response_last_modified_at": (
+            response_last_modified_at.isoformat()
+            if isinstance(response_last_modified_at, (date, datetime))
+            else None
+        ),
         "fetched_at": fetched_at,
         "content_type": result.content_type,
         "content_hash": content_hash,
         "content_text": text,
         "query_ids": list(candidate.get("query_ids") or ()),
         "objective_ids": list(candidate.get("objective_ids") or ()),
+        "requested_source_families": list(
+            candidate.get("requested_source_families") or ()
+        ),
         "source_independence_group": _source_independence_group(url, source_family),
-        "referenced_urls": list(referenced_urls),
+        "verified_official_discovery_urls": (
+            [url] if source_family in SOURCE_FAMILY_CLASSES["OFFICIAL"] else []
+        ),
+        "referenced_urls": list(candidate["discovered_referenced_urls"]),
         "referenced_document_ids": [],
         "full_fetch_performed": True,
         "snippet_only": False,
@@ -2001,7 +2322,7 @@ def _classify_source_family(
         return "OPENDART"
     if "kind.krx.co.kr" in host or host.endswith("krx.co.kr"):
         return "KIND_KRX"
-    if host in official_hosts:
+    if _host_is_official(host, official_hosts):
         return "ISSUER_NEWSROOM"
     if "reuters.com" in host:
         return "REUTERS"
@@ -2010,6 +2331,33 @@ def _classify_source_family(
     if candidate.get("is_news"):
         return "TRUSTED_BUSINESS_MEDIA"
     return "GENERAL_WEB_DISCOVERY"
+
+
+def _host_is_official(host: str, official_hosts: set[str]) -> bool:
+    return any(
+        host == official_host or host.endswith("." + official_host)
+        for official_host in official_hosts
+        if official_host
+    )
+
+
+def _annotate_candidate_source_hints(
+    candidates: Sequence[dict[str, Any]],
+    *,
+    official_hosts: set[str],
+) -> None:
+    for candidate in candidates:
+        url = str(candidate.get("url") or "")
+        host = _normalized_host(url)
+        candidate["verified_official_domain_candidate"] = _host_is_official(
+            host,
+            official_hosts,
+        )
+        candidate["candidate_source_family_hint"] = _classify_source_family(
+            candidate,
+            url=url,
+            official_hosts=official_hosts,
+        )
 
 
 def _source_independence_group(url: str, source_family: str) -> str:

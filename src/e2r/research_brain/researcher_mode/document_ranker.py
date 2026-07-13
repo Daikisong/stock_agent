@@ -143,8 +143,26 @@ class ResearcherDocumentRanker:
                         "snippet": row.get("snippet"),
                         "source": row.get("source"),
                         "published_at": row.get("published_at"),
+                        "is_pdf": bool(row.get("is_pdf")),
+                        "is_news": bool(row.get("is_news")),
+                        "is_disclosure": bool(row.get("is_disclosure")),
                         "query_ids": list(row.get("query_ids") or ()),
                         "objective_ids": list(row.get("objective_ids") or ()),
+                        "requested_source_families": list(
+                            row.get("requested_source_families") or ()
+                        ),
+                        "verified_official_domain_candidate": bool(
+                            row.get("verified_official_domain_candidate")
+                        ),
+                        "candidate_source_family_hint": row.get(
+                            "candidate_source_family_hint"
+                        ),
+                        "graph_expansion_parent_document_ids": list(
+                            row.get("graph_expansion_parent_document_ids") or ()
+                        ),
+                        "graph_expansion_parent_candidate_ids": list(
+                            row.get("graph_expansion_parent_candidate_ids") or ()
+                        ),
                         "snippet_discovery_only": True,
                     }
                     for row in candidates
