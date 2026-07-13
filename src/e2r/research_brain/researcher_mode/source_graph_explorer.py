@@ -2502,12 +2502,18 @@ def _candidate_reference_period_ordinal(
     *,
     as_of_date: date,
 ) -> int:
+    discovered_references = tuple(
+        str(value)
+        for value in candidate.get("discovered_referenced_urls") or ()
+        if str(value).strip()
+    )
     explicit = _parse_date(candidate.get("published_at"))
     inferred = infer_publication_date(
         explicit=explicit,
         metadata_parts=(
             str(candidate.get("url") or ""),
             str(candidate.get("title") or ""),
+            *discovered_references,
         ),
         as_of_date=as_of_date,
     )
@@ -2518,6 +2524,7 @@ def _candidate_reference_period_ordinal(
         (
             str(candidate.get("url") or ""),
             str(candidate.get("title") or ""),
+            *discovered_references,
         )
     )
     matches = []

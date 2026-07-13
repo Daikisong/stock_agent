@@ -1085,7 +1085,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         current_parent = {
             **old_parent,
             "candidate_id": "CURRENT-OFFICIAL-PARENT",
-            "url": "https://ir.example.com/2026Q1/entry",
+            "url": "https://ir.example.com/event?id=current",
             "query_ids": ["QUERY-CURRENT"],
             "discovered_referenced_urls": [
                 "https://ir.example.com/current/2026Q1/transcript"
