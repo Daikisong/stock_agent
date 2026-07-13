@@ -118,7 +118,7 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
         "positive_fact_ids",
         "counter_fact_ids",
         "resolution_fact_ids",
-        "structured_metrics",
+        "structured_metric_ids",
         "historical_anchor_ids",
         "nearest_positive_anchor_ids",
         "nearest_counter_anchor_ids",
@@ -139,7 +139,7 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
         "positive_fact_ids": _STRING_ARRAY,
         "counter_fact_ids": _STRING_ARRAY,
         "resolution_fact_ids": _STRING_ARRAY,
-        "structured_metrics": {"type": "object"},
+        "structured_metric_ids": _STRING_ARRAY,
         "historical_anchor_ids": _STRING_ARRAY,
         "nearest_positive_anchor_ids": _STRING_ARRAY,
         "nearest_counter_anchor_ids": _STRING_ARRAY,
@@ -1098,21 +1098,21 @@ def _component_memo_from_response(
     for anchor_id in nearest_counter:
         if str(anchors[anchor_id].get("role")) != "COUNTER":
             raise ValueError("nearest counter anchor has the wrong role")
-    returned_metrics = response.get("structured_metrics")
-    if not isinstance(returned_metrics, Mapping):
-        raise TypeError("structured_metrics must be an object")
-    unknown_metrics = set(returned_metrics) - set(structured_metrics)
+    returned_metric_ids = _ids(response, "structured_metric_ids")
+    unknown_metrics = set(returned_metric_ids) - set(structured_metrics)
     if unknown_metrics:
         raise ValueError(f"researcher invented structured metrics: {sorted(unknown_metrics)}")
-    for key, value in returned_metrics.items():
-        if scrub_blind_research_payload(value) != structured_metrics[key]:
-            raise ValueError(f"structured metric value changed without lineage: {key}")
+    returned_metrics = {
+        key: structured_metrics[key]
+        for key in returned_metric_ids
+    }
     coverage = _ids(response, "source_coverage")
     if set(coverage) - coverage_labels:
         raise ValueError("researcher cited source coverage not present in input")
     payload = {
         "plan_id": plan.plan_id,
         "response": scrub_blind_research_payload(response),
+        "resolved_structured_metrics": returned_metrics,
     }
     return ComponentResearchMemo(
         memo_id=stable_intelligence_id("CRMEMO", payload),
@@ -1311,7 +1311,12 @@ def _pass_instruction(pass_name: str) -> str:
     if pass_name == "BUSINESS_MODEL_RESEARCH":
         return "Explain how revenue, cost, cash conversion, capacity, and customer dependencies work before component scoring."
     if pass_name == "COMPONENT_RESEARCH":
-        return "Write one component memo with a bounded point range, nearest positive/counter anchors, both-side reasoning, and explicit uncertainty."
+        return (
+            "Write one component memo with a bounded point range, nearest "
+            "positive/counter anchors, both-side reasoning, and explicit uncertainty. "
+            "Return structured_metric_ids as the identifiers of supplied "
+            "structured_metrics used in the memo; never copy, alter, or invent their values."
+        )
     if pass_name == "RED_TEAM_RESEARCH":
         return "Challenge every material thesis independently, distinguish current counters from resolved history, and identify new research directions."
     if pass_name == "SYNTHESIS_REVIEW":

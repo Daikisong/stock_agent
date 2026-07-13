@@ -30,6 +30,7 @@ from e2r.research_brain.researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.component_researcher import (
     CodexResearcherProvider,
+    _PROVIDER_SCHEMAS,
 )
 
 
@@ -81,7 +82,7 @@ class ScriptedResearchProvider:
                 "positive_fact_ids": positive[:1],
                 "counter_fact_ids": counter[:1],
                 "resolution_fact_ids": [],
-                "structured_metrics": dict(payload["structured_metrics"]),
+                "structured_metric_ids": list(payload["structured_metrics"]),
                 "historical_anchor_ids": [*positive_anchors[:1], *counter_anchors[:1]],
                 "nearest_positive_anchor_ids": positive_anchors[:1],
                 "nearest_counter_anchor_ids": counter_anchors[:1],
@@ -230,6 +231,50 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
 
         self.assertIsNotNone(transport.output_schema)
         self.assertNotIn("uniqueItems", _recursive_keys(transport.output_schema))
+        for pass_name, schema in _PROVIDER_SCHEMAS.items():
+            with self.subTest(pass_name=pass_name):
+                self.assertEqual(_open_schema_object_paths(schema), ())
+                self.assertEqual(_object_property_requirement_gaps(schema), ())
+
+    def test_component_research_resolves_metric_ids_to_immutable_input_values(self) -> None:
+        provider = ScriptedResearchProvider()
+        plans = ComponentResearchPlanner().plan(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            research_seeds=(),
+            component_max_points=self.maxima,
+            structured_metric_requirements={
+                key: (("FCF_ACTUALS",) if key == "eps_fcf_explosion" else ())
+                for key in self.maxima
+            },
+        )
+        business = BusinessMechanismResearcher(provider=provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+        metric = {"value": 1250.0, "unit": "KRW_BN", "period": "2026Q2"}
+
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=plans[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+            structured_metrics={"FCF_ACTUALS": metric},
+        )
+
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(
+            result.memo.structured_metrics,  # type: ignore[union-attr]
+            {"FCF_ACTUALS": metric},
+        )
 
     def test_planner_builds_seven_open_ended_plans_and_exposes_every_fact(self) -> None:
         plans = ComponentResearchPlanner().plan(
@@ -630,6 +675,44 @@ def _recursive_keys(value: Any) -> set[str]:
     if isinstance(value, (list, tuple)):
         return {nested for item in value for nested in _recursive_keys(item)}
     return set()
+
+
+def _open_schema_object_paths(
+    value: Any, path: tuple[str, ...] = ()
+) -> tuple[str, ...]:
+    paths: list[str] = []
+    if isinstance(value, Mapping):
+        if (
+            value.get("type") == "object"
+            and value.get("additionalProperties") is not False
+        ):
+            paths.append("/".join(path) or "<root>")
+        for key, child in value.items():
+            paths.extend(_open_schema_object_paths(child, (*path, str(key))))
+    elif isinstance(value, (list, tuple)):
+        for index, child in enumerate(value):
+            paths.extend(_open_schema_object_paths(child, (*path, str(index))))
+    return tuple(paths)
+
+
+def _object_property_requirement_gaps(
+    value: Any, path: tuple[str, ...] = ()
+) -> tuple[str, ...]:
+    gaps: list[str] = []
+    if isinstance(value, Mapping):
+        if value.get("type") == "object":
+            properties = set((value.get("properties") or {}).keys())
+            required = set(value.get("required") or ())
+            if properties != required:
+                gaps.append("/".join(path) or "<root>")
+        for key, child in value.items():
+            gaps.extend(_object_property_requirement_gaps(child, (*path, str(key))))
+    elif isinstance(value, (list, tuple)):
+        for index, child in enumerate(value):
+            gaps.extend(
+                _object_property_requirement_gaps(child, (*path, str(index)))
+            )
+    return tuple(gaps)
 
 
 def _saturation_review(role: str) -> SaturationReview:
