@@ -10,13 +10,16 @@ from e2r.research_brain.researcher_mode.prompt_projection import (
     project_citable_evidence_facts,
     project_evidence_facts,
     project_generated_queries,
+    project_peer_selection_context,
     project_research_epoch_checkpoint,
     project_source_documents,
     project_source_document_table,
     project_source_graph_checkpoint,
     project_source_claims,
     project_structured_records,
+    project_supervisor_evidence_facts,
     project_supervisor_failures,
+    project_supervisor_source_graph_checkpoint,
     resolve_citable_fact_row_indices,
 )
 from e2r.research_brain.researcher_mode import StructuredMetricRecord
@@ -375,6 +378,162 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             ),
             1_000_000,
         )
+
+    def test_supervisor_and_peer_projections_scale_without_dropping_ledgers(self):
+        facts = tuple(
+            {
+                "fact_id": f"FACT-{index:04d}",
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": "2026-07-12",
+                "subject": f"현재 회사 제품군 {index % 9}",
+                "business_segment": f"사업부 {index % 4}",
+                "product_family": f"제품군 {index % 11}",
+                "economic_mechanism": (
+                    f"검증된 경제 메커니즘 {index} " + "상세 설명 " * 20
+                ),
+                "predicate": f"ECONOMIC_PREDICATE_{index:04d}",
+                "value": index,
+                "unit": "KRW",
+                "period": f"2026Q{index % 4 + 1}",
+                "direction": "COUNTER" if index % 7 == 0 else "POSITIVE",
+                "current_lifecycle": "OPEN" if index % 5 == 0 else "CURRENT",
+                "confidence": 0.9,
+                "source_ids": (f"SRC-{index:04d}",),
+                "claim_ids": (f"CLAIM-{index:04d}",),
+                "quote_ids": (f"QUOTE-{index:04d}",),
+                "source_independence_group": f"GROUP-{index % 13}",
+                "structured_evidence_roles": ("FORWARD_GUIDANCE",),
+                "allowed_component_ids": ("earnings_visibility",),
+            }
+            for index in range(1_000)
+        )
+        claims = tuple(
+            {
+                "claim_id": f"CLAIM-{index:04d}",
+                "subject": f"현재 회사 제품군 {index % 9}",
+                "business_segment": f"사업부 {index % 4}",
+                "product_family": f"제품군 {index % 11}",
+                "economic_mechanism": (
+                    f"검증된 경제 메커니즘 {index} " + "상세 설명 " * 20
+                ),
+                "predicate": f"ECONOMIC_PREDICATE_{index:04d}",
+                "direction": "COUNTER" if index % 7 == 0 else "POSITIVE",
+                "source_family": "ISSUER_PRESENTATION",
+                "exact_quote": f"원문 인용 {index} " + "직접 근거 " * 20,
+            }
+            for index in range(1_000)
+        )
+
+        supervisor_facts = project_supervisor_evidence_facts(facts)
+        peer_context = project_peer_selection_context(facts, claims)
+        self.assertEqual(supervisor_facts["record_count"], 1_000)
+        self.assertTrue(
+            supervisor_facts[
+                "every_record_accounted_by_hash_and_group_count"
+            ]
+        )
+        self.assertTrue(
+            all(
+                group["relation_coverage"]["predicate"]
+                for group in supervisor_facts["semantic_groups"]
+            )
+        )
+        self.assertTrue(
+            peer_context[
+                "every_fact_and_claim_accounted_by_hash_and_group_count"
+            ]
+        )
+        self.assertTrue(
+            all(
+                group["relation_coverage"]["predicate"]
+                for group in peer_context["evidence_business_profile"][
+                    "semantic_groups"
+                ]
+            )
+        )
+        self.assertFalse(supervisor_facts["fixed_top_n_used"])
+        self.assertFalse(peer_context["fixed_top_n_used"])
+        supervisor_encoded = json.dumps(
+            supervisor_facts, ensure_ascii=False, sort_keys=True
+        )
+        peer_encoded = json.dumps(peer_context, ensure_ascii=False, sort_keys=True)
+        self.assertLess(len(supervisor_encoded), 250_000)
+        self.assertLess(len(peer_encoded), 250_000)
+        self.assertNotIn("검증된 경제 메커니즘 999", supervisor_encoded)
+        self.assertNotIn("원문 인용 999", peer_encoded)
+
+        checkpoint = {
+            "checkpoint_id": "CHECKPOINT",
+            "epoch": 200,
+            "generated_queries": [
+                {
+                    "query_id": f"QUERY-{index:04d}",
+                    "objective_id": f"OBJECTIVE-{index % 7}",
+                    "literal_query": f"현재 회사 원문 탐색 {index} " + "검색어 " * 20,
+                    "rationale": f"미충족 경제 사실 탐색 {index}",
+                    "source_families": ["ISSUER_PRESENTATION"],
+                    "execution_status": "SEARCH_EXECUTED",
+                    "search_result_count": 100,
+                    "counter_or_supersession_search": index % 2 == 0,
+                }
+                for index in range(1_000)
+            ],
+            "search_candidates": [
+                {
+                    "candidate_id": f"CANDIDATE-{index:04d}",
+                    "url": f"https://issuer.example/{index}",
+                    "title": f"공식 자료 {index}",
+                    "snippet": "발견 메타데이터 " * 20,
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "FULL_DOCUMENT_FETCHED",
+                    "candidate_source_family_hint": "ISSUER_PRESENTATION",
+                    "verified_official_domain_candidate": True,
+                    "objective_ids": [f"OBJECTIVE-{index % 7}"],
+                    "requested_source_families": ["ISSUER_PRESENTATION"],
+                    "material_priority": 0.9,
+                }
+                for index in range(1_000)
+            ],
+            "evidence_documents": [
+                {
+                    "document_id": f"DOC-{index:04d}",
+                    "canonical_url": f"https://issuer.example/{index}.pdf",
+                    "content_hash": hashlib.sha256(str(index).encode()).hexdigest(),
+                    "source_family": "ISSUER_PRESENTATION",
+                    "source_provider": "PageFetcher",
+                    "publication_date_source": "HTTP_LAST_MODIFIED",
+                    "published_at": "2026-07-10",
+                    "full_fetch_performed": True,
+                    "snippet_only": False,
+                    "evidence_eligible": True,
+                    "objective_ids": [f"OBJECTIVE-{index % 7}"],
+                    "query_ids": [f"QUERY-{index:04d}"],
+                    "source_independence_group": "ISSUER_PRESENTATION:issuer.example",
+                    "verified_official_discovery_urls": [
+                        f"https://issuer.example/{index}.pdf"
+                    ],
+                }
+                for index in range(1_000)
+            ],
+            "transport_budget_can_complete_research": False,
+            "semantic_saturation_certified": False,
+        }
+        supervisor_source = project_supervisor_source_graph_checkpoint(checkpoint)
+        source_encoded = json.dumps(
+            supervisor_source, ensure_ascii=False, sort_keys=True
+        )
+        self.assertEqual(
+            supervisor_source["generated_queries"]["record_count"], 1_000
+        )
+        self.assertEqual(
+            supervisor_source["search_candidates"]["record_count"], 1_000
+        )
+        self.assertEqual(
+            supervisor_source["evidence_documents"]["record_count"], 1_000
+        )
+        self.assertLess(len(source_encoded), 250_000)
+        self.assertNotIn("현재 회사 원문 탐색 999", source_encoded)
+        self.assertNotIn("https://issuer.example/999.pdf", source_encoded)
 
     def test_research_epoch_projection_keeps_delta_lineage_without_bodies(self):
         text = "full fetched source body " * 20_000

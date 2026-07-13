@@ -25,10 +25,10 @@ from .schemas import (
 from .source_query_planner import CANONICAL_SOURCE_FAMILIES
 from .prompt_projection import (
     project_counter_route_proof,
-    project_evidence_facts,
-    project_source_graph_checkpoint,
     project_structured_result,
+    project_supervisor_evidence_facts,
     project_supervisor_failures,
+    project_supervisor_source_graph_checkpoint,
 )
 from .source_graph_explorer import validate_source_graph_checkpoint
 from .structured_data_researcher import StructuredResearchResult
@@ -356,6 +356,9 @@ class ResearchSupervisor:
                 provider_name="UNCONFIGURED",
             )
         failure_projection = project_supervisor_failures(failures)
+        failure_prompt_projection = _supervisor_failure_prompt_projection(
+            failure_projection
+        )
         payload = scrub_blind_research_payload(
             {
                 "reviewer_role": self.reviewer_role,
@@ -369,15 +372,19 @@ class ResearchSupervisor:
                 "structured_result": (
                     project_structured_result(structured_result)
                 ),
-                "current_evidence_fact_graph": project_evidence_facts(facts),
+                "current_evidence_fact_graph": project_supervisor_evidence_facts(
+                    facts
+                ),
                 "source_graph_checkpoint": _supervisor_source_graph_payload(
                     source_graph_checkpoint
                 ),
                 "open_research_objectives": list(open_objectives),
-                "prior_query_source_failures": failure_projection["failures"],
+                "prior_query_source_failures": failure_prompt_projection[
+                    "failures"
+                ],
                 "prior_query_source_failure_projection": {
                     key: value
-                    for key, value in failure_projection.items()
+                    for key, value in failure_prompt_projection.items()
                     if key != "failures"
                 },
                 "counter_and_supersession_route_proof": project_counter_route_proof(
@@ -877,23 +884,68 @@ def _validate_current_inputs(
 
 
 def _supervisor_source_graph_payload(checkpoint: Mapping[str, Any]) -> Mapping[str, Any]:
-    keys = (
-        "checkpoint_id",
-        "epoch",
-        "generated_queries",
-        "query_failures",
-        "search_candidates",
-        "candidate_materiality_decisions",
-        "fetch_records",
-        "evidence_documents",
-        "rejected_documents",
-        "quarantined_documents",
-        "resolved_objective_ids",
-        "provider_failures",
-        "transport_budget_can_complete_research",
-        "semantic_saturation_certified",
-    )
-    return project_source_graph_checkpoint(checkpoint, keys=keys)
+    return project_supervisor_source_graph_checkpoint(checkpoint)
+
+
+def _supervisor_failure_prompt_projection(
+    projection: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Keep provider-classifiable failure groups without repeated member ids.
+
+    The complete group-to-member expansion remains in deterministic memory and
+    is passed separately to output validation.  The provider only classifies a
+    semantic group id once, so replaying hundreds of opaque member ids and old
+    literal queries wastes context without changing its judgment.  Every
+    omitted relation and member roster is hash-accounted here.
+    """
+
+    failures = []
+    for raw in projection.get("failures") or ():
+        row = dict(raw)
+        member_ids = tuple(str(value) for value in row.pop("member_failure_ids", ()))
+        relation_coverage = dict(row.pop("relation_coverage", {}) or {})
+        visible_relations = {
+            key: value
+            for key, value in relation_coverage.items()
+            if key in {"objective_id", "objective_ids"}
+        }
+        row["relation_coverage"] = visible_relations
+        row["omitted_relation_coverage_hash"] = _stable_payload_hash(
+            {
+                key: value
+                for key, value in relation_coverage.items()
+                if key not in visible_relations
+            }
+        )
+        row["member_failure_count"] = int(
+            row.get("member_failure_count") or len(member_ids)
+        )
+        row["member_failure_roster_hash"] = str(
+            row.get("member_failure_roster_hash")
+            or _stable_payload_hash(member_ids)
+        )
+        failures.append(row)
+
+    group_members = projection.get("failure_group_members") or {}
+    return {
+        "schema_version": "e2r_v5_supervisor_failure_prompt_projection_v2",
+        "failure_count": projection.get("failure_count", 0),
+        "failure_group_count": projection.get("failure_group_count", 0),
+        "failure_roster_hash": projection.get("failure_roster_hash"),
+        "failure_group_member_mapping_hash": _stable_payload_hash(group_members),
+        "failures": failures,
+        "every_failure_id_preserved_by_group_roster_hash": True,
+        "provider_assesses_each_group_once_then_code_expands_to_members": True,
+        "full_failure_records_and_member_mapping_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def _stable_payload_hash(value: Any) -> str:
+    encoded = json.dumps(value, ensure_ascii=False, sort_keys=True, default=str)
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
 
 
 def _normalize_failure(row: Mapping[str, Any]) -> Mapping[str, Any]:

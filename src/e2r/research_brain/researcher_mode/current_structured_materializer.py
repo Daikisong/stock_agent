@@ -32,6 +32,7 @@ from e2r.sources.company_guide import CompanyGuideConnector
 
 from .component_researcher import StructuredResearchProvider
 from .official_source_materializer import OfficialSourceMaterializationResult
+from .prompt_projection import project_peer_selection_context
 from .schemas import EvidenceFact, assert_blind_research_output
 from .structured_data_researcher import StructuredMetricRecord
 from .structured_financial_engine import (
@@ -1001,17 +1002,30 @@ class CurrentStructuredSourceMaterializer:
                 ),
                 base_audit,
             )
+        peer_selection_context = project_peer_selection_context(
+            tuple(_fact_mapping(row) for row in evidence_facts),
+            tuple(dict(row) for row in source_claims),
+        )
         payload = {
             "target_id": target_id,
             "target_name": target_name,
             "as_of_date": cutoff.isoformat(),
             "missing_structured_role": "PEER_BAND",
-            "current_evidence_facts": [
-                _peer_fact_context(row) for row in evidence_facts
+            "current_evidence_facts": peer_selection_context[
+                "evidence_business_profile"
             ],
-            "source_backed_claim_context": [
-                _peer_claim_context(row) for row in source_claims
+            "source_backed_claim_context": peer_selection_context[
+                "source_claim_business_profile"
             ],
+            "peer_selection_context_accounting": {
+                key: value
+                for key, value in peer_selection_context.items()
+                if key
+                not in {
+                    "evidence_business_profile",
+                    "source_claim_business_profile",
+                }
+            },
             "selection_constraints": {
                 "listing_market": "KOREA",
                 "minimum_peer_count": 2,
@@ -1958,46 +1972,6 @@ def _period_end(period: str) -> date | None:
         except ValueError:
             return None
     return None
-
-
-def _peer_fact_context(
-    value: EvidenceFact | Mapping[str, Any],
-) -> Mapping[str, Any]:
-    row = _fact_mapping(value)
-    allowed = (
-        "fact_id",
-        "subject",
-        "business_segment",
-        "product_family",
-        "economic_mechanism",
-        "predicate",
-        "value",
-        "unit",
-        "period",
-        "direction",
-        "current_lifecycle",
-        "confidence",
-        "source_ids",
-    )
-    return {key: row[key] for key in allowed if key in row}
-
-
-def _peer_claim_context(row: Mapping[str, Any]) -> Mapping[str, Any]:
-    allowed = (
-        "claim_id",
-        "subject",
-        "business_segment",
-        "product_family",
-        "economic_mechanism",
-        "predicate",
-        "value",
-        "unit",
-        "period",
-        "direction",
-        "source_family",
-        "exact_quote",
-    )
-    return {key: row[key] for key in allowed if key in row}
 
 
 def _validated_peer_proposals(

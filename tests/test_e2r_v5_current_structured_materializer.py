@@ -410,6 +410,22 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         self.assertEqual(len(peer_provider.calls), 1)
         provider_payload = json.dumps(peer_provider.calls[0]["payload"], sort_keys=True)
         self.assertNotIn("suggested_queries", provider_payload)
+        fact_profile = peer_provider.calls[0]["payload"]["current_evidence_facts"]
+        claim_profile = peer_provider.calls[0]["payload"][
+            "source_backed_claim_context"
+        ]
+        self.assertEqual(fact_profile["collection_name"], "peer_selection_evidence_facts")
+        self.assertEqual(claim_profile["collection_name"], "peer_selection_source_claims")
+        self.assertTrue(
+            peer_provider.calls[0]["payload"][
+                "peer_selection_context_accounting"
+            ]["every_fact_and_claim_accounted_by_hash_and_group_count"]
+        )
+        self.assertFalse(
+            peer_provider.calls[0]["payload"][
+                "peer_selection_context_accounting"
+            ]["fixed_top_n_used"]
+        )
         self.assertFalse(
             peer_provider.calls[0]["payload"]["selection_constraints"][
                 "score_or_stage_authority"

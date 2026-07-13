@@ -89,6 +89,27 @@ _FACT_OBSERVATION_FIELDS = (
     "structured_evidence_roles",
 )
 
+_SUPERVISOR_FACT_GROUP_FIELDS = (
+    "business_segment",
+    "product_family",
+    "direction",
+    "current_lifecycle",
+)
+
+_PEER_FACT_GROUP_FIELDS = (
+    "business_segment",
+    "product_family",
+    "direction",
+    "current_lifecycle",
+)
+
+_PEER_CLAIM_GROUP_FIELDS = (
+    "business_segment",
+    "product_family",
+    "direction",
+    "source_family",
+)
+
 _CITABLE_FACT_PROMPT_FIELDS = (
     "fact_id",
     "subject",
@@ -362,6 +383,218 @@ def project_source_graph_checkpoint(
     return output
 
 
+def project_supervisor_source_graph_checkpoint(
+    checkpoint: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Project an unbounded Source Graph into complete semantic state groups.
+
+    The canonical checkpoint keeps every query, candidate, fetch, rejection,
+    and document.  A supervisor does not need every URL/title repeated after
+    facts have already been extracted; it needs coverage, dispositions,
+    failures, and proof that all ledger rows were accounted.  Literal queries
+    and document identities therefore remain in deterministic roster hashes,
+    never a fixed sample.
+    """
+
+    output = {
+        key: checkpoint.get(key)
+        for key in (
+            "checkpoint_id",
+            "epoch",
+            "quarantined_documents",
+            "resolved_objective_ids",
+            "transport_budget_can_complete_research",
+            "semantic_saturation_certified",
+        )
+        if key in checkpoint
+    }
+    collection_specs = {
+        "query_failures": (
+            ("failure_id", "query_id"),
+            (
+                "failure_stage",
+                "alternate_route_required",
+                "absence_eligible",
+                "zero_result_only",
+            ),
+            ("objective_id",),
+            (),
+            ("failure_reason",),
+        ),
+        "provider_failures": (
+            ("failure_id",),
+            (
+                "failure_stage",
+                "retryable",
+                "absence_eligible",
+                "zero_result_only",
+            ),
+            ("objective_id",),
+            (),
+            ("failure_reason",),
+        ),
+        "search_candidates": (
+            ("candidate_id",),
+            (
+                "ranking_status",
+                "fetch_status",
+                "candidate_source_family_hint",
+                "verified_official_domain_candidate",
+            ),
+            ("objective_ids", "requested_source_families"),
+            ("material_priority", "rank"),
+            ("url", "title", "snippet"),
+        ),
+        "candidate_materiality_decisions": (
+            ("decision_id", "candidate_id"),
+            (
+                "material_relevance",
+                "evidence_eligible",
+                "snippet_discovery_only",
+                "score_authority",
+            ),
+            ("objective_ids",),
+            ("priority",),
+            ("rationale",),
+        ),
+        "fetch_records": (
+            ("fetch_id", "candidate_id"),
+            (
+                "disposition",
+                "full_fetch_attempted",
+                "snippet_used_as_document",
+                "score_authority",
+            ),
+            ("objective_ids",),
+            (),
+            ("provider_error", "error"),
+        ),
+        "rejected_documents": (
+            ("rejection_id", "candidate_id"),
+            (
+                "retryable",
+                "snippet_used_as_document",
+                "score_authority",
+            ),
+            ("objective_ids", "accepted_claim_ids"),
+            (),
+            ("rejection_reason",),
+        ),
+    }
+    for key, (
+        identity_fields,
+        group_fields,
+        relation_fields,
+        numeric_fields,
+        hashed_text_fields,
+    ) in collection_specs.items():
+        rows = tuple(dict(row) for row in checkpoint.get(key) or ())
+        projection = dict(
+            _project_state_collection(
+                rows,
+                collection_name=f"supervisor_{key}",
+                identity_fields=identity_fields,
+                group_fields=group_fields,
+                relation_fields=relation_fields,
+                numeric_fields=numeric_fields,
+            )
+        )
+        projection["omitted_text_rosters"] = {
+            field: _project_text_roster(row.get(field) for row in rows)
+            for field in hashed_text_fields
+        }
+        output[key] = projection
+
+    queries = tuple(
+        dict(row) for row in checkpoint.get("generated_queries") or ()
+    )
+    query_projection = dict(
+        _project_state_collection(
+            queries,
+            collection_name="supervisor_generated_queries",
+            identity_fields=("query_id",),
+            group_fields=(
+                "execution_status",
+                "counter_or_supersession_search",
+            ),
+            relation_fields=(
+                "objective_id",
+                "source_families",
+                "official_gap_reasons",
+                "provider_errors",
+            ),
+            numeric_fields=("search_result_count",),
+        )
+    )
+    query_projection.update(
+        {
+            "literal_query_roster": _project_text_roster(
+                row.get("literal_query") for row in queries
+            ),
+            "query_rationale_roster": _project_text_roster(
+                row.get("rationale") for row in queries
+            ),
+            "every_literal_query_accounted_by_hash": True,
+        }
+    )
+    output["generated_queries"] = query_projection
+
+    documents = tuple(
+        dict(row) for row in checkpoint.get("evidence_documents") or ()
+    )
+    document_projection = dict(
+        _project_state_collection(
+            documents,
+            collection_name="supervisor_evidence_documents",
+            identity_fields=("document_id",),
+            group_fields=(
+                "source_family",
+                "source_provider",
+                "publication_date_source",
+                "full_fetch_performed",
+                "snippet_only",
+                "evidence_eligible",
+            ),
+            relation_fields=(
+                "objective_ids",
+                "query_ids",
+                "source_independence_group",
+                "published_at",
+            ),
+            numeric_fields=(),
+        )
+    )
+    document_projection.update(
+        {
+            "document_id_roster": _project_text_roster(
+                row.get("document_id") for row in documents
+            ),
+            "canonical_url_roster": _project_text_roster(
+                row.get("canonical_url") for row in documents
+            ),
+            "content_hash_roster": _project_text_roster(
+                row.get("content_hash") for row in documents
+            ),
+            "verified_official_discovery_url_roster": _project_text_roster(
+                value
+                for row in documents
+                for value in row.get("verified_official_discovery_urls") or ()
+            ),
+            "full_document_bodies_omitted_after_fact_extraction": True,
+        }
+    )
+    output["evidence_documents"] = document_projection
+    output["source_graph_prompt_projection"] = {
+        "schema_version": "e2r_v5_supervisor_source_graph_projection_v1",
+        "complete_artifact_persisted_outside_prompt": True,
+        "every_query_document_and_state_row_accounted": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+    return output
+
+
 def project_generated_queries(
     rows: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
@@ -531,6 +764,183 @@ def project_evidence_facts(
         "every_fact_accounted_by_hash": True,
         "advisory_tags_are_not_score_gates": True,
         "full_fact_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def project_supervisor_evidence_facts(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Account for the complete fact graph without replaying every narrative.
+
+    Component researchers receive the citable fact table and write the detailed
+    synthesis.  The later supervisor needs the complete semantic coverage and
+    lineage accounting, but not one copy of each already-persisted narrative,
+    value, and source id.  This groups every fact and hashes every omitted
+    observation; it never selects a top-N subset or authorizes a score.
+    """
+
+    payloads = tuple(_record_dict(row) for row in rows)
+    projection = dict(
+        _project_state_collection(
+            payloads,
+            collection_name="supervisor_evidence_fact_graph",
+            identity_fields=("fact_id",),
+            group_fields=_SUPERVISOR_FACT_GROUP_FIELDS,
+            relation_fields=(),
+            group_relation_fields=(
+                "predicate",
+                "structured_evidence_roles",
+                "allowed_component_ids",
+                "source_independence_group",
+                "corroborating_independence_groups",
+            ),
+            numeric_fields=("confidence",),
+        )
+    )
+    projection.update(
+        {
+            "schema_version": "e2r_v5_supervisor_fact_prompt_projection_v1",
+            "fact_id_roster": _project_text_roster(
+                row.get("fact_id") for row in payloads
+            ),
+            "source_id_roster": _project_text_roster(
+                source_id
+                for row in payloads
+                for source_id in row.get("source_ids") or ()
+            ),
+            "claim_id_roster": _project_text_roster(
+                claim_id
+                for row in payloads
+                for claim_id in row.get("claim_ids") or ()
+            ),
+            "quote_id_roster": _project_text_roster(
+                quote_id
+                for row in payloads
+                for quote_id in row.get("quote_ids") or ()
+            ),
+            "subject_roster": _project_text_roster(
+                row.get("subject") for row in payloads
+            ),
+            "economic_mechanism_roster": _project_text_roster(
+                row.get("economic_mechanism") for row in payloads
+            ),
+            "value_observation_roster": _project_text_roster(
+                json.dumps(
+                    {
+                        "value": row.get("value"),
+                        "unit": row.get("unit"),
+                        "period": row.get("period"),
+                    },
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    default=str,
+                )
+                for row in payloads
+            ),
+            "question_family_tag_roster": _project_text_roster(
+                value
+                for row in payloads
+                for value in row.get("question_family_tags") or ()
+            ),
+            "primitive_tag_roster": _project_text_roster(
+                value
+                for row in payloads
+                for value in row.get("primitive_tags") or ()
+            ),
+            "all_narrative_and_value_observations_accounted_by_hash": True,
+            "full_fact_records_persisted_outside_prompt": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        }
+    )
+    return projection
+
+
+def project_peer_selection_context(
+    evidence_facts: Sequence[Mapping[str, Any]],
+    source_claims: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Build a complete business-profile projection for LLM peer direction.
+
+    Peer selection needs the issuer's business/product/economic-driver profile,
+    while deterministic connectors supply all valuation numbers afterward.
+    Repeating every fact and its matching source claim can exceed the provider
+    context window without adding a second economic observation.  Both ledgers
+    remain fully accounted by semantic groups, counts, and roster hashes.
+    """
+
+    facts = tuple(_record_dict(row) for row in evidence_facts)
+    claims = tuple(_record_dict(row) for row in source_claims)
+    fact_profile = dict(
+        _project_state_collection(
+            facts,
+            collection_name="peer_selection_evidence_facts",
+            identity_fields=("fact_id",),
+            group_fields=_PEER_FACT_GROUP_FIELDS,
+            relation_fields=(),
+            group_relation_fields=(
+                "predicate",
+                "structured_evidence_roles",
+                "source_independence_group",
+            ),
+            numeric_fields=("confidence",),
+        )
+    )
+    fact_profile.update(
+        {
+            "subject_roster": _project_text_roster(
+                row.get("subject") for row in facts
+            ),
+            "economic_mechanism_roster": _project_text_roster(
+                row.get("economic_mechanism") for row in facts
+            ),
+            "fact_id_roster": _project_text_roster(
+                row.get("fact_id") for row in facts
+            ),
+        }
+    )
+    claim_profile = dict(
+        _project_state_collection(
+            claims,
+            collection_name="peer_selection_source_claims",
+            identity_fields=("claim_id",),
+            group_fields=_PEER_CLAIM_GROUP_FIELDS,
+            relation_fields=(),
+            group_relation_fields=("predicate",),
+            numeric_fields=(),
+        )
+    )
+    claim_profile.update(
+        {
+            "subject_roster": _project_text_roster(
+                row.get("subject") for row in claims
+            ),
+            "economic_mechanism_roster": _project_text_roster(
+                row.get("economic_mechanism") for row in claims
+            ),
+            "exact_quote_roster": _project_text_roster(
+                row.get("exact_quote") for row in claims
+            ),
+            "claim_id_roster": _project_text_roster(
+                row.get("claim_id") for row in claims
+            ),
+        }
+    )
+    return {
+        "schema_version": "e2r_v5_peer_selection_context_projection_v1",
+        "evidence_business_profile": fact_profile,
+        "source_claim_business_profile": claim_profile,
+        "every_fact_and_claim_accounted_by_hash_and_group_count": (
+            fact_profile["every_record_accounted_by_hash_and_group_count"]
+            and claim_profile["every_record_accounted_by_hash_and_group_count"]
+        ),
+        "full_fact_and_claim_records_persisted_outside_prompt": True,
+        "llm_selects_peer_direction_only": True,
+        "structured_values_supplied_after_selection": True,
         "fixed_top_n_used": False,
         "prompt_projection_is_research_cap": False,
         "score_authority": False,
@@ -988,6 +1398,7 @@ def _project_state_collection(
     group_fields: Sequence[str],
     relation_fields: Sequence[str],
     numeric_fields: Sequence[str],
+    group_relation_fields: Sequence[str] = (),
 ) -> Mapping[str, Any]:
     """Account for every state row through deterministic groups and hashes.
 
@@ -1033,14 +1444,18 @@ def _project_state_collection(
                     "median": median(values),
                     "maximum": max(values),
                 }
-        semantic_groups.append(
-            {
-                "state": state,
-                "record_count": len(grouped_rows),
-                "record_roster_hash": _stable_hash(grouped_rows),
-                "numeric_distributions": numeric_distributions,
+        semantic_group = {
+            "state": state,
+            "record_count": len(grouped_rows),
+            "record_roster_hash": _stable_hash(grouped_rows),
+            "numeric_distributions": numeric_distributions,
+        }
+        if group_relation_fields:
+            semantic_group["relation_coverage"] = {
+                field: _relation_coverage(grouped_rows, field)
+                for field in group_relation_fields
             }
-        )
+        semantic_groups.append(semantic_group)
 
     relation_coverage = {
         field: _relation_coverage(ordered, field) for field in relation_fields
@@ -1104,6 +1519,7 @@ __all__ = [
     "project_citable_evidence_facts",
     "project_evidence_facts",
     "project_generated_queries",
+    "project_peer_selection_context",
     "project_research_epoch_checkpoint",
     "project_source_documents",
     "project_source_graph_checkpoint",
@@ -1111,6 +1527,8 @@ __all__ = [
     "project_source_document_table",
     "project_structured_records",
     "project_structured_result",
+    "project_supervisor_evidence_facts",
     "project_supervisor_failures",
+    "project_supervisor_source_graph_checkpoint",
     "resolve_citable_fact_row_indices",
 ]

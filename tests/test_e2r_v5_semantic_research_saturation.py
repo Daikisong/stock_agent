@@ -372,6 +372,20 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         ]
         self.assertEqual(len(supplied_groups), 1)
         self.assertEqual(supplied_groups[0]["member_failure_count"], 100)
+        self.assertNotIn("member_failure_ids", supplied_groups[0])
+        failure_projection = provider.calls[-1]["payload"][
+            "prior_query_source_failure_projection"
+        ]
+        self.assertIn("failure_group_member_mapping_hash", failure_projection)
+        self.assertTrue(
+            failure_projection[
+                "every_failure_id_preserved_by_group_roster_hash"
+            ]
+        )
+        self.assertLess(
+            len(json.dumps(provider.calls[-1]["payload"], ensure_ascii=False)),
+            100_000,
+        )
         self.assertEqual(
             {row.failure_id for row in review.failure_assessments},
             set(failure_ids),
@@ -523,12 +537,24 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
 
         self.assertEqual(resumed.checkpoint.cumulative_document_ids, ("DOC-1",))
         self.assertEqual(resumed.checkpoint.documents, ())
-        supervisor_source_graph = runner.supervisor.provider.calls[-1]["payload"][
-            "source_graph_checkpoint"
-        ]
+        supervisor_payload = runner.supervisor.provider.calls[-1]["payload"]
+        supervisor_source_graph = supervisor_payload["source_graph_checkpoint"]
         self.assertEqual(
             supervisor_source_graph["quarantined_documents"][0]["document_id"],
             "DOC-1",
+        )
+        self.assertEqual(
+            supervisor_source_graph["source_graph_prompt_projection"][
+                "schema_version"
+            ],
+            "e2r_v5_supervisor_source_graph_projection_v1",
+        )
+        self.assertEqual(
+            supervisor_payload["current_evidence_fact_graph"]["record_count"],
+            1,
+        )
+        self.assertFalse(
+            supervisor_payload["current_evidence_fact_graph"]["fixed_top_n_used"]
         )
 
     def test_prior_checkpoint_files_round_trip_and_keep_pending_reviewer_errors(self) -> None:

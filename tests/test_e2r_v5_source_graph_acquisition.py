@@ -4,7 +4,7 @@ import hashlib
 import json
 import tempfile
 import unittest
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -1062,6 +1062,51 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 "https://www.example.com/files/earnings.pdf?download=1",
                 "https://delegated.example.net/webcast",
             ],
+        )
+
+    def test_reference_parent_budget_prioritizes_current_period_over_append_order(
+        self,
+    ) -> None:
+        old_parent = {
+            "candidate_id": "OLD-OFFICIAL-PARENT",
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "url": "https://ir.example.com/2023Q1/entry",
+            "verified_official_domain_candidate": True,
+            "candidate_source_family_hint": "ISSUER_PRESENTATION",
+            "material_priority": 1.0,
+            "objective_ids": ["OBJECTIVE-1"],
+            "query_ids": ["QUERY-OLD"],
+            "requested_source_families": ["ISSUER_PRESENTATION"],
+            "discovered_referenced_urls": [
+                "https://ir.example.com/archive/2023Q1/transcript"
+            ],
+        }
+        current_parent = {
+            **old_parent,
+            "candidate_id": "CURRENT-OFFICIAL-PARENT",
+            "url": "https://ir.example.com/2026Q1/entry",
+            "query_ids": ["QUERY-CURRENT"],
+            "discovered_referenced_urls": [
+                "https://ir.example.com/current/2026Q1/transcript"
+            ],
+        }
+        candidates = [old_parent, current_parent]
+        for parent in source_graph_module._ordered_candidate_reference_parents(
+            candidates,
+            as_of_date=date(2026, 7, 12),
+        ):
+            source_graph_module._enqueue_candidate_discovery_references(
+                candidates,
+                parent_candidate=parent,
+                target_id=TARGET,
+                as_of_date=AS_OF_DATE,
+                max_total_candidates=3,
+            )
+        self.assertEqual(len(candidates), 3)
+        self.assertEqual(
+            candidates[-1]["url"],
+            "https://ir.example.com/current/2026Q1/transcript",
         )
 
     def test_old_official_empty_html_failure_reopens_exactly_once(self) -> None:

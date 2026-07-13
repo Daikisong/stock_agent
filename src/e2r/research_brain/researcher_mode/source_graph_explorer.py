@@ -624,7 +624,10 @@ class ResearcherSourceGraphAcquirer:
         # A rejected/tiny official landing page can still point directly to
         # the original transcript.  Preserve those candidate-level routes
         # before using the checkpoint budget on broader document citations.
-        for parent_candidate in tuple(candidates):
+        for parent_candidate in _ordered_candidate_reference_parents(
+            candidates,
+            as_of_date=cutoff,
+        ):
             deferred_reference_count += _enqueue_candidate_discovery_references(
                 candidates,
                 parent_candidate=parent_candidate,
@@ -2462,6 +2465,81 @@ def _ordered_reference_urls(
         return (2, index)
 
     return tuple(url for _, url in sorted(enumerate(unique), key=priority))
+
+
+def _ordered_candidate_reference_parents(
+    candidates: Sequence[Mapping[str, Any]],
+    *,
+    as_of_date: date,
+) -> tuple[Mapping[str, Any], ...]:
+    """Prioritize current official reference routes across resumed checkpoints.
+
+    Candidate ledgers are append-only, so insertion order increasingly favors
+    old landing pages.  When each checkpoint can transport only a bounded
+    number of newly discovered links, a current transcript parent must not sit
+    behind years of older event pages.  The ordering uses only generic source
+    metadata/URL periods and material priority; it never names a company,
+    sector, archetype, or missing score slot, and it drops no parent.
+    """
+
+    def priority(candidate: Mapping[str, Any]) -> tuple[Any, ...]:
+        has_references = bool(candidate.get("discovered_referenced_urls"))
+        return (
+            0 if has_references else 1,
+            -_candidate_reference_period_ordinal(
+                candidate,
+                as_of_date=as_of_date,
+            ),
+            -float(candidate.get("material_priority") or 0.0),
+            str(candidate.get("candidate_id") or ""),
+        )
+
+    return tuple(sorted(candidates, key=priority))
+
+
+def _candidate_reference_period_ordinal(
+    candidate: Mapping[str, Any],
+    *,
+    as_of_date: date,
+) -> int:
+    explicit = _parse_date(candidate.get("published_at"))
+    inferred = infer_publication_date(
+        explicit=explicit,
+        metadata_parts=(
+            str(candidate.get("url") or ""),
+            str(candidate.get("title") or ""),
+        ),
+        as_of_date=as_of_date,
+    )
+    if inferred is not None and inferred <= as_of_date:
+        return inferred.year * 12 + inferred.month
+
+    metadata = " ".join(
+        (
+            str(candidate.get("url") or ""),
+            str(candidate.get("title") or ""),
+        )
+    )
+    matches = []
+    patterns = (
+        r"(?i)(?<!\d)(20\d{2})[\s_./-]*Q([1-4])(?!\d)",
+        r"(?i)(?<!\d)(20\d{2})[\s_./-]*([1-4])Q(?!\d)",
+        r"(?<!\d)(20\d{2})\s*년\s*([1-4])\s*분기",
+    )
+    for pattern in patterns:
+        for match in re.finditer(pattern, metadata):
+            year, quarter = map(int, match.groups())
+            if year > as_of_date.year:
+                continue
+            if year == as_of_date.year and quarter > (as_of_date.month - 1) // 3 + 1:
+                continue
+            matches.append(year * 4 + quarter)
+    if matches:
+        # Month-scale ordinals keep full dates and quarter metadata comparable.
+        quarter_ordinal = max(matches)
+        year, quarter = divmod(quarter_ordinal - 1, 4)
+        return year * 12 + quarter * 3 + 1
+    return 0
 
 
 def _close_non_authority_candidate_reference_routes(
