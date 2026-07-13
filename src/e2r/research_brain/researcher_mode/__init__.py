@@ -187,6 +187,17 @@ from .daily_census_integration import (
     write_daily_census_researcher_integration,
     write_phase97_daily_census_integration_audit,
 )
+from .capability_regression import (
+    DEFAULT_PHASE98_OUTPUT_PATH,
+    KNOWN_BAD_CASES,
+    PHASE98_CASES,
+    PHASE98_FAIL,
+    PHASE98_PASS,
+    POSITIVE_CAPABILITY_CASES,
+    CapabilityRegressionCase,
+    compile_phase98_capability_regression_audit,
+    write_phase98_capability_regression_audit,
+)
 from .document_ranker import (
     CandidateRankingResult,
     DocumentRelevanceDecision,

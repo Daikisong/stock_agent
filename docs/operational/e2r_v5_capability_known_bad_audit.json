@@ -1,0 +1,302 @@
+{
+  "case_count": 27,
+  "cases": [
+    {
+      "case_id": "POS-01",
+      "case_type": "POSITIVE_CAPABILITY",
+      "detector_ids": [
+        "tests.test_e2r_v5_phase98_capability_regression.E2RV5Phase98PositiveCapabilityTests.test_hbm_sold_out_mix_and_record_profit_score_three_material_components"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "HBM sold-out, revenue mix, and record profit produce material visibility, bottleneck, and EPS points",
+      "status": "PASS"
+    },
+    {
+      "case_id": "POS-02",
+      "case_type": "POSITIVE_CAPABILITY",
+      "detector_ids": [
+        "tests.test_e2r_v5_phase98_capability_regression.E2RV5Phase98PositiveCapabilityTests.test_official_asp_and_actual_profit_score_pricing_and_eps"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "official ASP and actual profit produce pricing and EPS points",
+      "status": "PASS"
+    },
+    {
+      "case_id": "POS-03",
+      "case_type": "POSITIVE_CAPABILITY",
+      "detector_ids": [
+        "tests.test_e2r_v5_phase98_capability_regression.E2RV5Phase98PositiveCapabilityTests.test_named_customer_order_scores_visibility_and_information_quality"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "named-customer order produces visibility and customer-quality confidence points",
+      "status": "PASS"
+    },
+    {
+      "case_id": "POS-04",
+      "case_type": "POSITIVE_CAPABILITY",
+      "detector_ids": [
+        "tests.test_e2r_v5_phase98_capability_regression.E2RV5Phase98PositiveCapabilityTests.test_public_valuation_and_forward_eps_score_valuation"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "public valuation and forward EPS produce nonzero valuation points",
+      "status": "PASS"
+    },
+    {
+      "case_id": "POS-05",
+      "case_type": "POSITIVE_CAPABILITY",
+      "detector_ids": [
+        "tests.test_e2r_v5_phase98_capability_regression.E2RV5Phase98PositiveCapabilityTests.test_upward_consensus_revision_scores_mispricing_and_visibility"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "upward consensus revision produces mispricing and visibility points",
+      "status": "PASS"
+    },
+    {
+      "case_id": "POS-06",
+      "case_type": "POSITIVE_CAPABILITY",
+      "detector_ids": [
+        "tests.test_e2r_v5_phase98_capability_regression.E2RV5Phase98PositiveCapabilityTests.test_capacity_expansion_counter_reduces_net_bottleneck_score"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "counter capacity expansion can reduce the net bottleneck score",
+      "status": "PASS"
+    },
+    {
+      "case_id": "POS-07",
+      "case_type": "POSITIVE_CAPABILITY",
+      "detector_ids": [
+        "tests.test_e2r_v5_phase98_capability_regression.E2RV5Phase98PositiveCapabilityTests.test_independent_corroboration_raises_confidence_not_points"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "independent corroboration raises confidence without duplicating economic points",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-01",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_census_v4_all_archetype_replay_matrix.CensusV4AllArchetypeReplayMatrixTests.test_c28_source_backed_semantic_replay_passes_security_keyword_guard"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "keyword-only text is promoted to support",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-02",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_absence_requires_adequate_search.AbsenceRequiresAdequateSearchTests.test_absence_provider_pending_and_evidence_found_are_distinct"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "no extracted claim is relabelled as verified absence",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-03",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests.test_provider_outage_is_research_pending_without_score_or_stage"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "provider failure becomes a zero score",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-04",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests.test_component_research_accepts_material_fact_without_exact_primitive"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "missing an exact primitive zeros the entire component",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-05",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_e2r_v5_all_archetype_generalization.E2RV5AllArchetypeGeneralizationTests.test_source_proxy_is_never_an_exact_current_score_anchor"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "a source proxy is used as the current exact score",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-06",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_foundry_not_hbm_allocation.FoundryNotHBMAllocationTests.test_tesla_foundry_claim_stays_global_but_c06_impact_is_rerouted"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "a Foundry fact is credited as HBM evidence",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-07",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_business_mechanism_scope.BusinessMechanismScopeTests.test_same_issuer_wrong_segment_is_rejected_and_rerouted"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "same issuer but wrong segment receives target-segment credit",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-08",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_unified_known_bad_suite.UnifiedKnownBadSuiteTest.test_semantic_and_claim_mutations_are_detected"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "industry-wide demand is promoted to an issuer-specific order",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-09",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_unified_known_bad_suite.UnifiedKnownBadSuiteTest.test_semantic_and_claim_mutations_are_detected"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "customer capacity is promoted to target-company capacity",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-10",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_census_v4_known_bad_regression.CensusV4KnownBadRegressionTests.test_old_risk_resolved_case_is_required_known_bad"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "an old resolved risk remains a current penalty",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-11",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_c06_qualification_lag_guard.C06QualificationLagGuardTests.test_qualification_counter_does_not_force_hard_4c"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "qualification lag alone forces hard Stage 4C",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-12",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_e2r_v5_evidence_fact_graph.E2RV5EvidenceFactGraphTests.test_same_economic_fact_gets_one_fact_and_independent_confidence_gain"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "duplicate claims for one economic fact stack points",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-13",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_stagecourt_event_separation.StageCourtEventSeparationTests.test_claim_count_and_event_overlay_never_change_full_thesis_stage"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "claim count or event overlay boosts canonical Stage",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-14",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_e2r_v5_historical_blind_replay.E2RV5HistoricalBlindReplayTests.test_provider_receives_no_historical_score_stage_or_outcome"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "future outcome leaks into historical replay research",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-15",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_e2r_v5_historical_blind_replay.E2RV5HistoricalBlindReplayTests.test_partial_historical_vector_is_not_used_as_total_proxy"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "historical total or partial vector is copied into the current score",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-16",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests.test_fixed_round_zero_result_and_transport_flags_are_rejected"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "a low fixed cap is treated as semantic saturation",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-17",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_e2r_v5_full_thesis_gold_benchmark.E2RV5FullThesisGoldBenchmarkTests.test_gold_seed_url_injection_fails_post_run_gate"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "Gold benchmark URLs are injected into production discovery",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-18",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_e2r_v5_historical_blind_replay.E2RV5HistoricalBlindReplayTests.test_dynamic_range_audit_fails_when_high_mid_low_all_collapse_to_twenty"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "high, middle, and low historical cases all collapse below 30",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-19",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_e2r_v5_deterministic_score_aggregator.E2RV5DeterministicScoreAggregatorTests.test_strong_high_anchor_equivalent_evidence_does_not_collapse_to_one_to_three_points"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "strong anchor-equivalent evidence is undercredited to one-to-three points",
+      "status": "PASS"
+    },
+    {
+      "case_id": "BAD-20",
+      "case_type": "SEMANTIC_KNOWN_BAD",
+      "detector_ids": [
+        "tests.test_atomic_stagecourt_component_trace.AtomicStageCourtComponentTraceTests.test_score_impact_lineage_mismatch_is_rejected",
+        "tests.test_e2r_v5_daily_census_integration.E2RV5DailyCensusIntegrationTests.test_l5_materializer_rejects_transport_completion_and_vector_tamper"
+      ],
+      "failed_detector_ids": [],
+      "requirement": "a current score changes without fact and judge lineage",
+      "status": "PASS"
+    }
+  ],
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "case_id_roster_mismatch": 0,
+    "duplicate_case_id_count": 0,
+    "failed_case_count": 0,
+    "known_bad_case_count_mismatch": 0,
+    "positive_case_count_mismatch": 0,
+    "unittest_error_count": 0,
+    "unittest_failure_count": 0,
+    "unittest_run_count_mismatch": 0
+  },
+  "detector_lineage": {
+    "executed_detector_count": 27,
+    "passed_detector_count": 27,
+    "registry_hash": "0a1df0ef9d3f5e5a7eb75172ad42d15a46b43a81061c5fb5c0a7fd4977a7851a",
+    "unique_detector_count": 27
+  },
+  "known_bad_case_count": 20,
+  "positive_case_count": 7,
+  "production_readiness_authority": false,
+  "required_known_bad_case_count": 20,
+  "required_positive_case_count": 7,
+  "runner_output": "",
+  "schema_version": "e2r_v5_phase98_capability_regression_v1",
+  "status": "PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS",
+  "test_mode_only": true
+}
