@@ -31,9 +31,11 @@ from .schemas import (
     scrub_blind_research_payload,
 )
 from .prompt_projection import (
+    citable_fact_id_by_row_index,
     project_citable_evidence_facts,
     project_source_claims,
     project_source_document_table,
+    resolve_citable_fact_row_indices,
 )
 
 
@@ -82,6 +84,11 @@ _STRING_ARRAY: Mapping[str, Any] = {
     "items": {"type": "string", "minLength": 1},
 }
 
+_NONNEGATIVE_INTEGER_ARRAY: Mapping[str, Any] = {
+    "type": "array",
+    "items": {"type": "integer", "minimum": 0},
+}
+
 BUSINESS_MODEL_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "type": "object",
     "additionalProperties": False,
@@ -91,8 +98,7 @@ BUSINESS_MODEL_RESEARCH_SCHEMA: Mapping[str, Any] = {
         "cost_and_cash_drivers",
         "capacity_and_supply_constraints",
         "customer_and_channel_dependencies",
-        "fact_ids",
-        "source_ids",
+        "fact_row_indices",
         "uncertainties",
         "confidence",
         "research_complete",
@@ -103,8 +109,7 @@ BUSINESS_MODEL_RESEARCH_SCHEMA: Mapping[str, Any] = {
         "cost_and_cash_drivers": _STRING_ARRAY,
         "capacity_and_supply_constraints": _STRING_ARRAY,
         "customer_and_channel_dependencies": _STRING_ARRAY,
-        "fact_ids": _STRING_ARRAY,
-        "source_ids": _STRING_ARRAY,
+        "fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
         "uncertainties": _STRING_ARRAY,
         "confidence": {"type": "number", "minimum": 0, "maximum": 1},
         "research_complete": {"type": "boolean"},
@@ -115,9 +120,9 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "type": "object",
     "additionalProperties": False,
     "required": [
-        "positive_fact_ids",
-        "counter_fact_ids",
-        "resolution_fact_ids",
+        "positive_fact_row_indices",
+        "counter_fact_row_indices",
+        "resolution_fact_row_indices",
         "structured_metric_ids",
         "historical_anchor_ids",
         "nearest_positive_anchor_ids",
@@ -136,9 +141,9 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
         "research_complete",
     ],
     "properties": {
-        "positive_fact_ids": _STRING_ARRAY,
-        "counter_fact_ids": _STRING_ARRAY,
-        "resolution_fact_ids": _STRING_ARRAY,
+        "positive_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
+        "counter_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
+        "resolution_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
         "structured_metric_ids": _STRING_ARRAY,
         "historical_anchor_ids": _STRING_ARRAY,
         "nearest_positive_anchor_ids": _STRING_ARRAY,
@@ -163,8 +168,8 @@ RED_TEAM_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "additionalProperties": False,
     "required": [
         "reviewed_component_ids",
-        "challenged_fact_ids",
-        "counter_fact_ids",
+        "challenged_fact_row_indices",
+        "counter_fact_row_indices",
         "resolved_challenges",
         "unresolved_challenges",
         "recommended_research_directions",
@@ -174,8 +179,8 @@ RED_TEAM_RESEARCH_SCHEMA: Mapping[str, Any] = {
     ],
     "properties": {
         "reviewed_component_ids": _STRING_ARRAY,
-        "challenged_fact_ids": _STRING_ARRAY,
-        "counter_fact_ids": _STRING_ARRAY,
+        "challenged_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
+        "counter_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
         "resolved_challenges": _STRING_ARRAY,
         "unresolved_challenges": _STRING_ARRAY,
         "recommended_research_directions": _STRING_ARRAY,
@@ -799,6 +804,7 @@ class CodexResearcherProvider:
                 "Read the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.",
                 "For loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.",
                 "Decode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields, and decode source_claims.claims with source_claims.claim_fields.",
+                "When the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.",
                 "Cite only ids present in the input. Do not invent facts, sources, metrics, or anchors.",
                 "Never output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.",
                 instruction,
@@ -904,6 +910,7 @@ class ComponentResearcher:
         )
         coverage_labels = _coverage_labels(source_coverage)
         fact_projection = project_citable_evidence_facts(facts)
+        fact_id_by_row_index = citable_fact_id_by_row_index(fact_projection)
         payload = scrub_blind_research_payload(
             {
                 "researcher_role": self.researcher_role,
@@ -963,6 +970,7 @@ class ComponentResearcher:
                 anchors=anchor_by_id,
                 coverage_labels=coverage_labels,
                 structured_metrics=metric_input,
+                fact_id_by_row_index=fact_id_by_row_index,
             )
         except (KeyError, TypeError, ValueError) as exc:
             return _pending_result(
@@ -1061,13 +1069,26 @@ def _component_memo_from_response(
     anchors: Mapping[str, Mapping[str, Any]],
     coverage_labels: set[str],
     structured_metrics: Mapping[str, Any],
+    fact_id_by_row_index: Mapping[int, str],
 ) -> ComponentResearchMemo:
     if not isinstance(response, Mapping):
         raise TypeError("component researcher response must be an object")
     assert_blind_research_output(response)
-    positive = _ids(response, "positive_fact_ids")
-    counter = _ids(response, "counter_fact_ids")
-    resolution = _ids(response, "resolution_fact_ids")
+    positive = resolve_citable_fact_row_indices(
+        response["positive_fact_row_indices"],
+        fact_id_by_row_index=fact_id_by_row_index,
+        label="positive_fact_row_indices",
+    )
+    counter = resolve_citable_fact_row_indices(
+        response["counter_fact_row_indices"],
+        fact_id_by_row_index=fact_id_by_row_index,
+        label="counter_fact_row_indices",
+    )
+    resolution = resolve_citable_fact_row_indices(
+        response["resolution_fact_row_indices"],
+        fact_id_by_row_index=fact_id_by_row_index,
+        label="resolution_fact_row_indices",
+    )
     _require_ids_exist((*positive, *counter, *resolution), facts, "fact")
     for fact_id in (*positive, *counter, *resolution):
         allowed = facts[fact_id].allowed_component_ids
@@ -1113,6 +1134,9 @@ def _component_memo_from_response(
     payload = {
         "plan_id": plan.plan_id,
         "response": scrub_blind_research_payload(response),
+        "resolved_positive_fact_ids": positive,
+        "resolved_counter_fact_ids": counter,
+        "resolved_resolution_fact_ids": resolution,
         "resolved_structured_metrics": returned_metrics,
     }
     return ComponentResearchMemo(

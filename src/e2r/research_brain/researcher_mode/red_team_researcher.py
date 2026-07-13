@@ -24,9 +24,11 @@ from .schemas import (
     scrub_blind_research_payload,
 )
 from .prompt_projection import (
+    citable_fact_id_by_row_index,
     project_citable_evidence_facts,
     project_source_claims,
     project_source_document_table,
+    resolve_citable_fact_row_indices,
 )
 
 
@@ -95,6 +97,7 @@ class RedTeamResearcher:
         anchor_ids = {str(row["anchor_id"]) for row in anchor_rows}
         coverage_labels = _coverage_labels(source_coverage)
         fact_projection = project_citable_evidence_facts(evidence_facts)
+        fact_id_by_row_index = citable_fact_id_by_row_index(fact_projection)
         payload = scrub_blind_research_payload(
             {
                 "researcher_role": self.researcher_role,
@@ -132,8 +135,16 @@ class RedTeamResearcher:
         try:
             assert_blind_research_output(response)
             reviewed = _strings(response, "reviewed_component_ids")
-            challenged = _strings(response, "challenged_fact_ids")
-            counters = _strings(response, "counter_fact_ids")
+            challenged = resolve_citable_fact_row_indices(
+                response["challenged_fact_row_indices"],
+                fact_id_by_row_index=fact_id_by_row_index,
+                label="challenged_fact_row_indices",
+            )
+            counters = resolve_citable_fact_row_indices(
+                response["counter_fact_row_indices"],
+                fact_id_by_row_index=fact_id_by_row_index,
+                label="counter_fact_row_indices",
+            )
             cited_coverage = _strings(response, "source_coverage")
             if set(reviewed) - set(memo_by_component):
                 raise ValueError("red team cited an unresearched component")
@@ -153,6 +164,8 @@ class RedTeamResearcher:
                         "memo_ids": sorted(row.memo_id for row in component_memos),
                         "anchor_ids": sorted(anchor_ids),
                         "response": scrub_blind_research_payload(response),
+                        "resolved_challenged_fact_ids": challenged,
+                        "resolved_counter_fact_ids": counters,
                     },
                 ),
                 target_id=business_model.target_id,

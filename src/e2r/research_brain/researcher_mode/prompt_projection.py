@@ -552,17 +552,18 @@ def project_citable_evidence_facts(
             ),
         )
     )
+    fact_fields = ("fact_row_index", *_CITABLE_FACT_PROMPT_FIELDS)
     facts = [
-        [row.get(key) for key in _CITABLE_FACT_PROMPT_FIELDS]
-        for row in ordered
+        [index, *(row.get(key) for key in _CITABLE_FACT_PROMPT_FIELDS)]
+        for index, row in enumerate(ordered)
     ]
-    fact_id_index = _CITABLE_FACT_PROMPT_FIELDS.index("fact_id")
+    fact_id_index = fact_fields.index("fact_id")
     fact_ids = [str(row[fact_id_index] or "") for row in facts]
     return {
         "schema_version": "e2r_v5_citable_fact_prompt_projection_v2",
         "fact_count": len(ordered),
         "fact_roster_hash": _stable_hash(ordered),
-        "fact_fields": list(_CITABLE_FACT_PROMPT_FIELDS),
+        "fact_fields": list(fact_fields),
         "facts": facts,
         "every_fact_id_preserved": (
             len(set(fact_ids)) == len(ordered) and all(fact_ids)
@@ -601,6 +602,62 @@ def project_citable_evidence_facts(
         "prompt_projection_is_research_cap": False,
         "score_authority": False,
     }
+
+
+def citable_fact_id_by_row_index(
+    projection: Mapping[str, Any],
+) -> Mapping[int, str]:
+    """Recover exact fact ids from the provider-facing row table."""
+
+    fields = tuple(str(value) for value in projection.get("fact_fields") or ())
+    try:
+        row_index_column = fields.index("fact_row_index")
+        fact_id_column = fields.index("fact_id")
+    except ValueError as exc:
+        raise ValueError("citable fact projection lacks row index or fact id") from exc
+    result: dict[int, str] = {}
+    for row in projection.get("facts") or ():
+        if isinstance(row, (str, bytes)) or not isinstance(row, Sequence):
+            raise TypeError("citable fact projection row must be an array")
+        if len(row) != len(fields):
+            raise ValueError("citable fact projection row width mismatch")
+        row_index = row[row_index_column]
+        fact_id = str(row[fact_id_column] or "").strip()
+        if (
+            isinstance(row_index, bool)
+            or not isinstance(row_index, int)
+            or row_index < 0
+            or not fact_id
+            or row_index in result
+        ):
+            raise ValueError("citable fact projection row identity is invalid")
+        result[row_index] = fact_id
+    if len(result) != int(projection.get("fact_count") or 0):
+        raise ValueError("citable fact projection row count mismatch")
+    return result
+
+
+def resolve_citable_fact_row_indices(
+    value: Any,
+    *,
+    fact_id_by_row_index: Mapping[int, str],
+    label: str,
+) -> tuple[str, ...]:
+    """Map provider-selected row numbers to exact immutable fact ids."""
+
+    if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
+        raise TypeError(f"{label} must be an array")
+    indices: list[int] = []
+    for item in value:
+        if isinstance(item, bool) or not isinstance(item, int) or item < 0:
+            raise TypeError(f"{label} must contain non-negative integers")
+        indices.append(item)
+    if len(indices) != len(set(indices)):
+        raise ValueError(f"{label} must not contain duplicate row indices")
+    unknown = sorted(set(indices) - set(fact_id_by_row_index))
+    if unknown:
+        raise ValueError(f"{label} contains unknown fact row indices: {unknown}")
+    return tuple(fact_id_by_row_index[index] for index in indices)
 
 
 def project_source_claims(
@@ -1042,6 +1099,7 @@ def _stable_hash(value: Any) -> str:
 
 
 __all__ = [
+    "citable_fact_id_by_row_index",
     "project_counter_route_proof",
     "project_citable_evidence_facts",
     "project_evidence_facts",
@@ -1054,4 +1112,5 @@ __all__ = [
     "project_structured_records",
     "project_structured_result",
     "project_supervisor_failures",
+    "resolve_citable_fact_row_indices",
 ]

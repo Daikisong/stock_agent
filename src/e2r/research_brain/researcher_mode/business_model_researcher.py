@@ -20,9 +20,11 @@ from .schemas import (
     scrub_blind_research_payload,
 )
 from .prompt_projection import (
+    citable_fact_id_by_row_index,
     project_citable_evidence_facts,
     project_source_claims,
     project_source_document_table,
+    resolve_citable_fact_row_indices,
 )
 
 
@@ -79,19 +81,8 @@ class BusinessMechanismResearcher:
         fact_by_id = {row.fact_id: row for row in facts}
         if len(fact_by_id) != len(facts):
             raise ValueError("EvidenceFact ids must be unique")
-        source_ids = {
-            source_id for row in facts for source_id in row.source_ids
-        }
-        for row in (*source_claims, *source_documents):
-            source_id = str(
-                row.get("source_id")
-                or row.get("document_id")
-                or row.get("evidence_id")
-                or ""
-            ).strip()
-            if source_id:
-                source_ids.add(source_id)
         fact_projection = project_citable_evidence_facts(facts)
+        fact_id_by_row_index = citable_fact_id_by_row_index(fact_projection)
         payload = scrub_blind_research_payload(
             {
                 "researcher_role": self.researcher_role,
@@ -125,14 +116,20 @@ class BusinessMechanismResearcher:
             return self._pending("PROVIDER_ERROR", exc)
         try:
             assert_blind_research_output(response)
-            cited_facts = _unique_strings(response["fact_ids"], "fact_ids")
-            cited_sources = _unique_strings(response["source_ids"], "source_ids")
-            unknown_facts = set(cited_facts) - set(fact_by_id)
-            unknown_sources = set(cited_sources) - source_ids
-            if unknown_facts:
-                raise ValueError(f"unknown fact ids: {sorted(unknown_facts)}")
-            if unknown_sources:
-                raise ValueError(f"unknown source ids: {sorted(unknown_sources)}")
+            cited_facts = resolve_citable_fact_row_indices(
+                response["fact_row_indices"],
+                fact_id_by_row_index=fact_id_by_row_index,
+                label="fact_row_indices",
+            )
+            cited_sources = tuple(
+                sorted(
+                    {
+                        source_id
+                        for fact_id in cited_facts
+                        for source_id in fact_by_id[fact_id].source_ids
+                    }
+                )
+            )
             memo = BusinessModelMemo(
                 memo_id=stable_intelligence_id(
                     "BMMEMO",
@@ -141,6 +138,8 @@ class BusinessMechanismResearcher:
                         "archetype_id": archetype_id,
                         "as_of_date": as_of_date,
                         "response": scrub_blind_research_payload(response),
+                        "resolved_fact_ids": cited_facts,
+                        "resolved_source_ids": cited_sources,
                     },
                 ),
                 target_id=target_id,

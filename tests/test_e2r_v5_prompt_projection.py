@@ -5,6 +5,7 @@ import json
 import unittest
 
 from e2r.research_brain.researcher_mode.prompt_projection import (
+    citable_fact_id_by_row_index,
     project_counter_route_proof,
     project_citable_evidence_facts,
     project_evidence_facts,
@@ -16,6 +17,7 @@ from e2r.research_brain.researcher_mode.prompt_projection import (
     project_source_claims,
     project_structured_records,
     project_supervisor_failures,
+    resolve_citable_fact_row_indices,
 )
 from e2r.research_brain.researcher_mode import StructuredMetricRecord
 
@@ -274,7 +276,23 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
                 citable_projection["facts"][0],
             )
         )
+        self.assertEqual(first_fact["fact_row_index"], 0)
         self.assertEqual(first_fact["fact_id"], "FACT-0000")
+        fact_id_by_row_index = citable_fact_id_by_row_index(citable_projection)
+        self.assertEqual(
+            resolve_citable_fact_row_indices(
+                [0, 999],
+                fact_id_by_row_index=fact_id_by_row_index,
+                label="selected_fact_row_indices",
+            ),
+            ("FACT-0000", "FACT-0999"),
+        )
+        with self.assertRaisesRegex(ValueError, "unknown fact row indices"):
+            resolve_citable_fact_row_indices(
+                [1_000],
+                fact_id_by_row_index=fact_id_by_row_index,
+                label="selected_fact_row_indices",
+            )
         self.assertNotIn(
             "question_family_tags", citable_projection["fact_fields"]
         )

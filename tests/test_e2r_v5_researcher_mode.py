@@ -55,33 +55,37 @@ class ScriptedResearchProvider:
             raise RuntimeError("simulated provider outage")
         if pass_name == "BUSINESS_MODEL_RESEARCH":
             facts = _projected_fact_rows(payload)
-            source_ids = sorted(
-                {source_id for row in facts for source_id in row["source_ids"]}
-            )
             return {
                 "business_model_summary": "설비와 고객 수요가 매출·현금 전환을 결정한다.",
                 "revenue_engines": ["제품 출하와 가격"],
                 "cost_and_cash_drivers": ["원가와 설비투자"],
                 "capacity_and_supply_constraints": ["가용 생산능력"],
                 "customer_and_channel_dependencies": ["고객 승인과 배정"],
-                "fact_ids": [row["fact_id"] for row in facts],
-                "source_ids": source_ids,
+                "fact_row_indices": [row["fact_row_index"] for row in facts],
                 "uncertainties": [],
                 "confidence": 0.8,
                 "research_complete": True,
             }
         if pass_name == "COMPONENT_RESEARCH":
             facts = _projected_fact_rows(payload)
-            positive = [row["fact_id"] for row in facts if row["direction"] == "POSITIVE"]
-            counter = [row["fact_id"] for row in facts if row["direction"] == "COUNTER"]
+            positive = [
+                row["fact_row_index"]
+                for row in facts
+                if row["direction"] == "POSITIVE"
+            ]
+            counter = [
+                row["fact_row_index"]
+                for row in facts
+                if row["direction"] == "COUNTER"
+            ]
             anchors = payload["historical_component_anchors"]
             positive_anchors = [row["anchor_id"] for row in anchors if row["role"] == "POSITIVE"]
             counter_anchors = [row["anchor_id"] for row in anchors if row["role"] == "COUNTER"]
             maximum = float(payload["component_max_points"])
             response: dict[str, Any] = {
-                "positive_fact_ids": positive[:1],
-                "counter_fact_ids": counter[:1],
-                "resolution_fact_ids": [],
+                "positive_fact_row_indices": positive[:1],
+                "counter_fact_row_indices": counter[:1],
+                "resolution_fact_row_indices": [],
                 "structured_metric_ids": list(payload["structured_metrics"]),
                 "historical_anchor_ids": [*positive_anchors[:1], *counter_anchors[:1]],
                 "nearest_positive_anchor_ids": positive_anchors[:1],
@@ -104,13 +108,17 @@ class ScriptedResearchProvider:
             return response
         if pass_name == "RED_TEAM_RESEARCH":
             facts = _projected_fact_rows(payload)
-            counters = [row["fact_id"] for row in facts if row["direction"] == "COUNTER"]
+            counters = [
+                row["fact_row_index"]
+                for row in facts
+                if row["direction"] == "COUNTER"
+            ]
             return {
                 "reviewed_component_ids": [
                     row["component_id"] for row in payload["component_research_memos"]
                 ],
-                "challenged_fact_ids": counters[:1],
-                "counter_fact_ids": counters[:1],
+                "challenged_fact_row_indices": counters[:1],
+                "counter_fact_row_indices": counters[:1],
                 "resolved_challenges": ["source와 lifecycle을 대조함"],
                 "unresolved_challenges": [],
                 "recommended_research_directions": [],
@@ -382,7 +390,7 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             def complete(self, *, pass_name: str, payload: Mapping[str, Any]) -> Mapping[str, Any]:
                 result = dict(super().complete(pass_name=pass_name, payload=payload))
                 if pass_name == "COMPONENT_RESEARCH":
-                    result["positive_fact_ids"] = ["FACT-INVENTED"]
+                    result["positive_fact_row_indices"] = [999_999]
                 return result
 
         for provider in (FabricatingProvider(), ScriptedResearchProvider(inject_stage=True)):
