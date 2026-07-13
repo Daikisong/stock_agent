@@ -291,6 +291,14 @@ def _semantic_signature(result) -> str:
                 _semantic_failure_reason(reason)
                 for reason in result.score_aggregation.pending_reasons
             ],
+            "stagecourt_status": getattr(
+                getattr(result, "stagecourt", None),
+                "decision",
+                None,
+            ).status
+            if getattr(getattr(result, "stagecourt", None), "decision", None)
+            is not None
+            else "LEGACY_STAGECOURT_NOT_PRESENT",
             "supervisor_status": result.research_epoch.supervisor_review.status,
         }
     )

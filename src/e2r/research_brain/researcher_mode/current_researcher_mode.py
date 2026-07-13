@@ -60,6 +60,11 @@ from .score_aggregator import (
     DeterministicScoreAggregator,
     write_deterministic_score_aggregation_run,
 )
+from .stagecourt import (
+    ResearcherStageCourt,
+    ResearcherStageCourtRun,
+    write_researcher_stagecourt_run,
+)
 from .source_graph_explorer import (
     ResearcherSourceGraphAcquirer,
     SourceGraphAcquisitionConfig,
@@ -145,6 +150,7 @@ class CurrentResearcherTargetRun:
     dossier: ResearcherModeDossier
     scoring_memos: ComponentScoringMemoRun
     score_aggregation: DeterministicScoreAggregationRun
+    stagecourt: ResearcherStageCourtRun
     research_epoch: ResearchEpochRun
     component_memo_rows: tuple[Mapping[str, Any], ...]
     production_input_rows: tuple[Mapping[str, Any], ...]
@@ -489,7 +495,7 @@ class CurrentResearcherModeTargetRunner:
             target=target,
             source_graph=source_graph,
         )
-        gates = _completion_gates(
+        research_gates = _completion_gates(
             source_graph=source_graph,
             fact_extraction=fact_extraction,
             dossier=dossier,
@@ -497,27 +503,42 @@ class CurrentResearcherModeTargetRunner:
             aggregation=aggregation,
             epoch=epoch,
         )
+        research_complete_for_stagecourt = all(
+            bool(value) for value in research_gates.values()
+        )
+        stagecourt_run = ResearcherStageCourt(provider=self.provider).decide(
+            target_id=target.target_id,
+            archetype_id=config.archetype_id,
+            as_of_date=config.as_of_date,
+            score_aggregation=aggregation,
+            material_claims=fact_extraction.material_claims,
+            claim_fact_links=tuple(
+                row.to_dict()
+                for row in fact_extraction.fact_compilation.claim_fact_links
+            ),
+            source_documents=source_graph.evidence_documents,
+            structured_records=structured.records,
+            research_complete=research_complete_for_stagecourt,
+            counter_thesis_complete=bool(
+                research_gates["counter_thesis_complete"]
+            ),
+        )
+        write_researcher_stagecourt_run(stagecourt_run, root)
+        # Preserve the old handoff filename for readers while the Phase 95
+        # atomic decision and trace are now the canonical Stage authority.
+        write_json(root / "stagecourt.json", stagecourt_run.decision.to_dict())
+        gates = {
+            **research_gates,
+            "deterministic_stagecourt_final": (
+                stagecourt_run.decision.status == "FINAL"
+            ),
+        }
         production_complete = all(bool(value) for value in gates.values())
         status = (
             "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
             if production_complete
             else "RESEARCH_CHECKPOINT_PENDING"
         )
-        stagecourt = {
-            "schema_version": "e2r_v5_phase94_stagecourt_handoff_v1",
-            "status": (
-                "READY_FOR_PHASE95_STAGECOURT"
-                if aggregation.ready_for_stagecourt and production_complete
-                else "RESEARCH_IN_PROGRESS"
-            ),
-            "target_id": target.target_id,
-            "as_of_date": config.as_of_date,
-            "score_valid": aggregation.score_valid,
-            "final_stage_authority": False,
-            "canonical_stage": None,
-            "reason": "Phase 95 deterministic StageCourt integration is the final Stage authority.",
-        }
-        write_json(root / "stagecourt.json", stagecourt)
         audit = {
             "schema_version": CURRENT_RESEARCHER_MODE_SCHEMA_VERSION,
             "status": status,
@@ -591,6 +612,7 @@ class CurrentResearcherModeTargetRunner:
             dossier=dossier,
             scoring_memos=scoring_memos,
             score_aggregation=aggregation,
+            stagecourt=stagecourt_run,
             research_epoch=epoch,
             component_memo_rows=component_memo_rows,
             production_input_rows=input_rows,

@@ -697,6 +697,42 @@ CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA: Mapping[str, Any] = {
     },
 }
 
+STAGE_GATE_FACT_MAPPING_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "mappings",
+        "unresolved_material_questions",
+        "mapping_complete",
+    ],
+    "properties": {
+        "mappings": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "primitive_id",
+                    "direction",
+                    "claim_ids",
+                    "semantic_rationale",
+                ],
+                "properties": {
+                    "primitive_id": {"type": "string", "minLength": 1},
+                    "direction": {
+                        "type": "string",
+                        "enum": ["SUPPORT", "COUNTER"],
+                    },
+                    "claim_ids": {**_STRING_ARRAY, "minItems": 1},
+                    "semantic_rationale": {"type": "string", "minLength": 1},
+                },
+            },
+        },
+        "unresolved_material_questions": _STRING_ARRAY,
+        "mapping_complete": {"type": "boolean"},
+    },
+}
+
 STRUCTURED_PEER_SELECTION_SCHEMA: Mapping[str, Any] = {
     "type": "object",
     "additionalProperties": False,
@@ -755,6 +791,7 @@ _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "RESEARCH_SUPERVISOR_REVIEW": RESEARCH_SUPERVISOR_SCHEMA,
     "SEMANTIC_SATURATION_REVIEW": SEMANTIC_SATURATION_REVIEW_SCHEMA,
     "CLAIM_COMPONENT_IMPACT_MAPPING": CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA,
+    "STAGE_GATE_FACT_MAPPING": STAGE_GATE_FACT_MAPPING_SCHEMA,
     "STRUCTURED_PEER_SELECTION": STRUCTURED_PEER_SELECTION_SCHEMA,
 }
 
@@ -1910,6 +1947,14 @@ def _pass_instruction(pass_name: str) -> str:
             "question-family and primitive tags are context only, never score gateways. Credit "
             "units express duplicate-credit accounting, not component points or stage authority."
         )
+    if pass_name == "STAGE_GATE_FACT_MAPPING":
+        return (
+            "Map only source-backed material claim ids to exact configured Evidence Contract "
+            "primitive ids. SUPPORT means a current positive mechanism and COUNTER means a "
+            "current thesis risk. Primitive names are semantic labels, never score or Stage "
+            "authority. Review every supplied claim, report unresolved material questions, "
+            "and never calculate points, total score, canonical Stage, or an investment action."
+        )
     if pass_name == "STRUCTURED_PEER_SELECTION":
         return (
             "Select two to five Korean-listed economic peers for structured valuation. "
@@ -1961,6 +2006,7 @@ __all__ = [
     "SOURCE_QUERY_GENERATION_SCHEMA",
     "RESEARCH_SUPERVISOR_SCHEMA",
     "SEMANTIC_SATURATION_REVIEW_SCHEMA",
+    "STAGE_GATE_FACT_MAPPING_SCHEMA",
     "CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA",
     "SYNTHESIS_REVIEW_SCHEMA",
     "StructuredResearchProvider",
