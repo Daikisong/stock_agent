@@ -280,6 +280,21 @@ class ResearcherEvidenceFactExtractor:
                         "generic_company_allowed_components": list(scope_contract.generic_company_allowed_components),
                         "forbidden_business_segments": list(scope_contract.forbidden_business_segments),
                         "forbidden_product_families": list(scope_contract.forbidden_product_families),
+                        "issuer_wide_fact_encoding": {
+                            "scope_business_segment": "CORPORATE_GENERIC",
+                            "scope_product_family": "CORPORATE_GENERIC",
+                            "scope_technology_family": "CORPORATE_GENERIC",
+                            "scope_transaction_type": "GENERIC_INFORMATION",
+                            "scope_economic_mechanism": "INFORMATION_ONLY",
+                            "allowed_only_for_components": list(
+                                scope_contract.generic_company_allowed_components
+                            ),
+                            "instruction": (
+                                "Use these exact scope tokens for issuer-wide liquidity, "
+                                "capital allocation, funding, governance, or information-quality "
+                                "facts that are not attributable to the archetype business segment."
+                            ),
+                        },
                     },
                     "full_documents": [_document_prompt_row(row) for row in batch],
                 }
@@ -373,6 +388,9 @@ class ResearcherEvidenceFactExtractor:
         if compilation.status != "FACT_COMPILATION_COMPLETE":
             pending.append(compilation.status)
         pending = list(dict.fromkeys(pending))
+        research_gap_feedback.extend(
+            f"FACT_EXTRACTION_RETRY_CONTEXT:{reason}" for reason in pending
+        )
         critical_counts = {
             "snippet_or_non_full_document_input_count": sum(
                 bool(row.get("snippet_only"))
@@ -888,6 +906,13 @@ def _accepted_claim(
             dict.fromkeys(
                 str(value).strip()
                 for value in proposal.get("primitive_tags") or ()
+                if str(value).strip()
+            )
+        ),
+        "structured_evidence_roles": list(
+            dict.fromkeys(
+                str(value).strip()
+                for value in proposal.get("structured_evidence_roles") or ()
                 if str(value).strip()
             )
         ),

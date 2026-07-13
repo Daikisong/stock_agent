@@ -47,6 +47,7 @@ class ResearchEpochCheckpoint:
     queries: tuple[Mapping[str, Any], ...]
     documents: tuple[Mapping[str, Any], ...]
     new_facts: tuple[Mapping[str, Any], ...]
+    retired_facts: tuple[Mapping[str, Any], ...]
     changed_component_memos: tuple[Mapping[str, Any], ...]
     unresolved_material_questions: tuple[str, ...]
     next_actions: tuple[str, ...]
@@ -56,6 +57,8 @@ class ResearchEpochCheckpoint:
     cumulative_query_ids: tuple[str, ...]
     cumulative_document_ids: tuple[str, ...]
     cumulative_fact_ids: tuple[str, ...]
+    current_fact_ids: tuple[str, ...]
+    retired_fact_ids: tuple[str, ...]
     component_memo_hashes: Mapping[str, str]
     semantic_saturation_certified: bool
     gold_critical_fact_miss_count: int
@@ -63,7 +66,7 @@ class ResearchEpochCheckpoint:
     zero_search_result_treated_as_saturation: bool = False
     transport_budget_treated_as_completion: bool = False
     production_score_authority: bool = False
-    schema_version: str = "e2r_research_epoch_checkpoint_v1"
+    schema_version: str = "e2r_research_epoch_checkpoint_v2"
 
     def __post_init__(self) -> None:
         if not self.target_id.strip():
@@ -151,6 +154,25 @@ class ResearchEpochCheckpoint:
             raise ValueError("checkpoint document ids must be unique")
         if len(self.cumulative_fact_ids) != len(set(self.cumulative_fact_ids)):
             raise ValueError("checkpoint fact ids must be unique")
+        if len(self.current_fact_ids) != len(set(self.current_fact_ids)):
+            raise ValueError("checkpoint current fact ids must be unique")
+        if len(self.retired_fact_ids) != len(set(self.retired_fact_ids)):
+            raise ValueError("checkpoint retired fact ids must be unique")
+        if not set(self.current_fact_ids).issubset(self.cumulative_fact_ids):
+            raise ValueError("current fact ids must belong to cumulative lineage")
+        if not set(self.retired_fact_ids).issubset(self.cumulative_fact_ids):
+            raise ValueError("retired fact ids must belong to cumulative lineage")
+        if set(self.current_fact_ids) & set(self.retired_fact_ids):
+            raise ValueError("current and retired fact ids must be disjoint")
+        retired_delta_ids = [
+            str(row.get("fact_id") or "") for row in self.retired_facts
+        ]
+        if (
+            any(not value for value in retired_delta_ids)
+            or len(retired_delta_ids) != len(set(retired_delta_ids))
+            or not set(retired_delta_ids).issubset(self.retired_fact_ids)
+        ):
+            raise ValueError("retired fact delta requires explicit lineage")
         if self.checkpoint_hash != _research_checkpoint_hash(self.to_dict()):
             raise ValueError("research epoch checkpoint hash mismatch")
         if self.checkpoint_id != _research_checkpoint_id(self.to_dict()):
@@ -168,6 +190,8 @@ class ResearchEpochCheckpoint:
                 self.unresolved_material_questions
             ),
             "next_actions": list(self.next_actions),
+            "current_fact_ids": list(self.current_fact_ids),
+            "retired_fact_ids": list(self.retired_fact_ids),
             "supervisor": dict(self.supervisor_review),
             "saturation_reviews": list(self.saturation_reviews),
             "saturation_certificate": (
@@ -433,6 +457,8 @@ def _research_epoch_state(
     prior_query_ids = set(prior.cumulative_query_ids if prior else ())
     prior_document_ids = set(prior.cumulative_document_ids if prior else ())
     prior_fact_ids = set(prior.cumulative_fact_ids if prior else ())
+    prior_current_fact_ids = set(prior.current_fact_ids if prior else ())
+    prior_retired_fact_ids = set(prior.retired_fact_ids if prior else ())
     current_memo_hashes: dict[str, str] = dict(
         prior.component_memo_hashes if prior else {}
     )
@@ -445,8 +471,11 @@ def _research_epoch_state(
         raise ValueError("resumed Source Graph lost cumulative query lineage")
     if prior and not prior_document_ids.issubset(document_by_id):
         raise ValueError("resumed Source Graph lost cumulative document lineage")
-    if prior and not prior_fact_ids.issubset(fact_by_id):
-        raise ValueError("resumed research epoch lost cumulative fact lineage")
+    current_fact_ids = set(fact_by_id)
+    retired_this_epoch = prior_current_fact_ids - current_fact_ids
+    retired_fact_ids = (
+        prior_retired_fact_ids | retired_this_epoch
+    ) - current_fact_ids
     for result in sorted(component_results, key=lambda row: row.component_id):
         if result.memo is None:
             continue
@@ -456,7 +485,7 @@ def _research_epoch_state(
         if prior_memo_hashes.get(result.component_id) != memo_hash:
             changed_memos.append(memo)
     state = {
-        "schema_version": "e2r_research_epoch_checkpoint_v1",
+        "schema_version": "e2r_research_epoch_checkpoint_v2",
         "target_id": target_id,
         "as_of_date": as_of_date,
         "epoch": epoch,
@@ -479,6 +508,16 @@ def _research_epoch_state(
             fact_by_id[row_id]
             for row_id in sorted(set(fact_by_id) - prior_fact_ids)
         ],
+        "retired_facts": [
+            {
+                "fact_id": fact_id,
+                "reason": "FACT_EXTRACTION_REVISED_OR_SUPERSEDED",
+                "retired_in_epoch": epoch,
+                "prior_checkpoint_id": prior.checkpoint_id if prior else None,
+                "production_score_authority": False,
+            }
+            for fact_id in sorted(retired_this_epoch)
+        ],
         "changed_component_memos": changed_memos,
         "unresolved_material_questions": list(
             supervisor_review.unresolved_material_questions
@@ -492,6 +531,8 @@ def _research_epoch_state(
             set(document_by_id) | prior_document_ids
         ),
         "cumulative_fact_ids": sorted(set(fact_by_id) | prior_fact_ids),
+        "current_fact_ids": sorted(current_fact_ids),
+        "retired_fact_ids": sorted(retired_fact_ids),
         "component_memo_hashes": current_memo_hashes,
         "semantic_saturation_certified": False,
         "gold_critical_fact_miss_count": gold_critical_fact_miss_count,
@@ -505,10 +546,14 @@ def _research_epoch_state(
 
 def _checkpoint_from_mapping(payload: Mapping[str, Any]) -> ResearchEpochCheckpoint:
     values = dict(payload)
+    legacy_current_fact_ids_missing = "current_fact_ids" not in values
+    legacy_retired_fact_ids_missing = "retired_fact_ids" not in values
+    legacy_retired_facts_missing = "retired_facts" not in values
     for key in (
         "queries",
         "documents",
         "new_facts",
+        "retired_facts",
         "changed_component_memos",
         "saturation_reviews",
     ):
@@ -517,6 +562,8 @@ def _checkpoint_from_mapping(payload: Mapping[str, Any]) -> ResearchEpochCheckpo
         "cumulative_query_ids",
         "cumulative_document_ids",
         "cumulative_fact_ids",
+        "current_fact_ids",
+        "retired_fact_ids",
         "unresolved_material_questions",
         "next_actions",
     ):
@@ -524,6 +571,12 @@ def _checkpoint_from_mapping(payload: Mapping[str, Any]) -> ResearchEpochCheckpo
     values["component_memo_hashes"] = dict(
         values.get("component_memo_hashes") or {}
     )
+    if legacy_current_fact_ids_missing:
+        values["current_fact_ids"] = tuple(values.get("cumulative_fact_ids") or ())
+    if legacy_retired_fact_ids_missing:
+        values["retired_fact_ids"] = ()
+    if legacy_retired_facts_missing:
+        values["retired_facts"] = ()
     values["supervisor_review"] = _json_safe(
         values.get("supervisor_review") or {}
     )
@@ -543,6 +596,11 @@ def _coerce_checkpoint(
 
 
 def _research_checkpoint_id(state: Mapping[str, Any]) -> str:
+    legacy_projection_fields = (
+        {"retired_facts", "current_fact_ids", "retired_fact_ids"}
+        if state.get("schema_version") == "e2r_research_epoch_checkpoint_v1"
+        else set()
+    )
     identity = {
         key: value
         for key, value in state.items()
@@ -557,13 +615,21 @@ def _research_checkpoint_id(state: Mapping[str, Any]) -> str:
             "unresolved_material_questions",
             "next_actions",
         }
+        | legacy_projection_fields
     }
     return stable_intelligence_id("REPOCH", identity)
 
 
 def _research_checkpoint_hash(payload: Mapping[str, Any]) -> str:
+    legacy_projection_fields = (
+        {"retired_facts", "current_fact_ids", "retired_fact_ids"}
+        if payload.get("schema_version") == "e2r_research_epoch_checkpoint_v1"
+        else set()
+    )
     values = {
-        key: value for key, value in payload.items() if key != "checkpoint_hash"
+        key: value
+        for key, value in payload.items()
+        if key != "checkpoint_hash" and key not in legacy_projection_fields
     }
     return _stable_hash(values)
 

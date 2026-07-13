@@ -18,6 +18,10 @@ from .red_team_researcher import RedTeamResearchResult
 from .research_supervisor import ResearchSupervisorReview
 from .schemas import CANONICAL_COMPONENT_ORDER, assert_blind_research_output, scrub_blind_research_payload
 from .source_graph_explorer import validate_source_graph_checkpoint
+from .prompt_projection import (
+    project_source_graph_checkpoint,
+    project_structured_result,
+)
 
 
 SATURATION_REVIEW_ROLES = (
@@ -218,7 +222,7 @@ class SemanticSaturationReviewer:
                     red_team_result.to_dict() if red_team_result else None
                 ),
                 "structured_result": (
-                    structured_result.to_dict() if structured_result else None
+                    project_structured_result(structured_result)
                 ),
                 "source_graph_checkpoint": _saturation_source_graph_payload(
                     source_graph_checkpoint
@@ -460,9 +464,9 @@ def _review_from_response(
 def _saturation_source_graph_payload(
     checkpoint: Mapping[str, Any],
 ) -> Mapping[str, Any]:
-    return {
-        key: checkpoint.get(key)
-        for key in (
+    return project_source_graph_checkpoint(
+        checkpoint,
+        keys=(
             "checkpoint_id",
             "epoch",
             "generated_queries",
@@ -473,9 +477,8 @@ def _saturation_source_graph_payload(
             "resolved_objective_ids",
             "transport_budget_can_complete_research",
             "semantic_saturation_certified",
-        )
-        if key in checkpoint
-    }
+        ),
+    )
 
 
 def _string_tuple(value: Any) -> tuple[str, ...]:

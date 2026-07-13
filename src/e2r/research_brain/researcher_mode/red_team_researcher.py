@@ -23,6 +23,7 @@ from .schemas import (
     assert_blind_research_output,
     scrub_blind_research_payload,
 )
+from .prompt_projection import project_source_documents
 
 
 @dataclass(frozen=True)
@@ -101,7 +102,7 @@ class RedTeamResearcher:
                 "historical_component_anchors": anchor_rows,
                 "source_coverage": list(source_coverage),
                 "source_claims": list(source_claims),
-                "source_documents": list(source_documents),
+                "source_documents": list(project_source_documents(source_documents)),
             }
         )
         try:

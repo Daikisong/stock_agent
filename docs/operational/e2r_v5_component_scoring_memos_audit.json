@@ -1,6 +1,6 @@
 {
   "analyst_uses_current_evidence_and_positive_thesis": true,
-  "audit_hash": "60586275396ed9be7474223551eb7400b1b908d73ee7f3ace97351ce200fc071",
+  "audit_hash": "fa48df8840e883510fefe5845d9835066fce7ec96c865690dbc607277df23e5c",
   "calibration_uses_blind_historical_anchors": true,
   "canary_counts": {
     "components": 7,

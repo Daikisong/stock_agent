@@ -14,6 +14,7 @@ from e2r.research import EmptySearchProvider, PageFetcher
 from e2r.research_brain.researcher_mode import (
     CANONICAL_COMPONENT_ORDER,
     ComponentResearchPlanner,
+    CurrentStructuredMaterializationResult,
     CurrentResearcherModeConfig,
     CurrentResearchTarget,
     SourceGraphExplorer,
@@ -94,7 +95,37 @@ class Phase94IntegrationOfficialMaterializer:
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeTargetRunner,
     _historical_anchors,
+    _structured_result_from_official,
 )
+
+
+class Phase94IntegrationStructuredMaterializer:
+    def materialize(self, **kwargs):
+        engine = _structured_result_from_official(
+            target=CurrentResearchTarget(
+                symbol=kwargs["target_id"], company_name=kwargs["target_name"]
+            ),
+            as_of_date=kwargs["as_of_date"],
+            official=kwargs["official"],
+        )
+        pending = tuple(
+            f"STRUCTURED_ROLE_MISSING:{component_id}:{role}"
+            for component_id, roles in engine.missing_roles_by_component.items()
+            for role in roles
+        )
+        return CurrentStructuredMaterializationResult(
+            target_id=kwargs["target_id"],
+            as_of_date=kwargs["as_of_date"],
+            latest_trading_snapshot_date=kwargs[
+                "latest_trading_snapshot_date"
+            ],
+            status="SOURCE_PENDING",
+            engine_result=engine,
+            fetch_attempts=(),
+            payload_manifest=(),
+            pending_reasons=pending,
+            audit={"status": "FIXTURE_SOURCE_PENDING"},
+        )
 
 
 class E2RV5Phase94RunnerContractTests(unittest.TestCase):
@@ -265,6 +296,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         runner = CurrentResearcherModeTargetRunner(
             provider=provider,
             official_materializer=Phase94IntegrationOfficialMaterializer(),
+            structured_materializer=Phase94IntegrationStructuredMaterializer(),
             source_acquirer=acquirer,
             fact_extractor=ResearcherEvidenceFactExtractor(
                 provider=provider,

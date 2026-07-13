@@ -77,6 +77,7 @@ class FactProvider:
                     "confidence": 0.8,
                     "question_family_tags": ["cash_conversion"],
                     "primitive_tags": [],
+                    "structured_evidence_roles": [],
                 }
                 for row in documents
             ],
@@ -159,6 +160,12 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertIn(
             "EXACT_QUOTE_NOT_IN_FULL_DOCUMENT",
             result.pending_reasons[0],
+        )
+        self.assertTrue(
+            any(
+                row.startswith("FACT_EXTRACTION_RETRY_CONTEXT:")
+                for row in result.research_gap_feedback
+            )
         )
 
     def test_snippet_and_future_document_are_rejected_before_llm(self) -> None:

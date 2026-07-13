@@ -19,6 +19,7 @@ from .schemas import (
     assert_blind_research_output,
     scrub_blind_research_payload,
 )
+from .prompt_projection import project_source_documents
 
 
 @dataclass(frozen=True)
@@ -94,7 +95,7 @@ class BusinessMechanismResearcher:
                 "as_of_date": as_of_date,
                 "current_evidence_fact_graph": [row.to_dict() for row in facts],
                 "source_claims": list(source_claims),
-                "source_documents": list(source_documents),
+                "source_documents": list(project_source_documents(source_documents)),
                 "source_coverage": list(source_coverage),
             }
         )
@@ -204,6 +205,7 @@ def _coerce_fact(row: EvidenceFact | Mapping[str, Any]) -> EvidenceFact:
         "question_family_tags",
         "primitive_tags",
         "allowed_component_ids",
+        "structured_evidence_roles",
     ):
         if key in payload:
             payload[key] = tuple(payload[key] or ())

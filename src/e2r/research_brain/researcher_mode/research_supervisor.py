@@ -23,6 +23,10 @@ from .schemas import (
     scrub_blind_research_payload,
 )
 from .source_query_planner import CANONICAL_SOURCE_FAMILIES
+from .prompt_projection import (
+    project_source_graph_checkpoint,
+    project_structured_result,
+)
 from .source_graph_explorer import validate_source_graph_checkpoint
 from .structured_data_researcher import StructuredResearchResult
 
@@ -359,7 +363,7 @@ class ResearchSupervisor:
                     red_team_result.to_dict() if red_team_result else None
                 ),
                 "structured_result": (
-                    structured_result.to_dict() if structured_result else None
+                    project_structured_result(structured_result)
                 ),
                 "current_evidence_fact_graph": [row.to_dict() for row in facts],
                 "source_graph_checkpoint": _supervisor_source_graph_payload(
@@ -854,7 +858,7 @@ def _supervisor_source_graph_payload(checkpoint: Mapping[str, Any]) -> Mapping[s
         "transport_budget_can_complete_research",
         "semantic_saturation_certified",
     )
-    return {key: checkpoint.get(key) for key in keys if key in checkpoint}
+    return project_source_graph_checkpoint(checkpoint, keys=keys)
 
 
 def _normalize_failure(row: Mapping[str, Any]) -> Mapping[str, Any]:
@@ -1101,6 +1105,7 @@ def _coerce_fact(row: EvidenceFact | Mapping[str, Any]) -> EvidenceFact:
         "question_family_tags",
         "primitive_tags",
         "allowed_component_ids",
+        "structured_evidence_roles",
     ):
         payload[key] = tuple(payload.get(key) or ())
     return EvidenceFact(**payload)

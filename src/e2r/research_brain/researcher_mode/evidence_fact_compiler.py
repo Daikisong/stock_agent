@@ -214,6 +214,7 @@ class _PreparedClaim:
     question_family_tags: tuple[str, ...]
     primitive_tags: tuple[str, ...]
     allowed_component_ids: tuple[str, ...]
+    structured_evidence_roles: tuple[str, ...]
     supersedes_fact_ids: tuple[str, ...]
     resolves_fact_ids: tuple[str, ...]
     material_claim: bool
@@ -356,6 +357,15 @@ class EvidenceFactCompiler:
                     )
                 ),
                 allowed_component_ids=primary.allowed_component_ids,
+                structured_evidence_roles=tuple(
+                    sorted(
+                        {
+                            value
+                            for row in claims
+                            for value in row.structured_evidence_roles
+                        }
+                    )
+                ),
             )
             facts.append(fact)
             seen_groups: set[str] = set()
@@ -538,6 +548,9 @@ def _prepare_claim(
         question_family_tags=_strings(claim.get("question_family_tags")),
         primitive_tags=_strings(claim.get("primitive_tags")),
         allowed_component_ids=_strings(claim.get("allowed_component_ids")),
+        structured_evidence_roles=_strings(
+            claim.get("structured_evidence_roles")
+        ),
         supersedes_fact_ids=_strings(claim.get("supersedes_fact_ids")),
         resolves_fact_ids=_strings(claim.get("resolves_fact_ids")),
         material_claim=material,

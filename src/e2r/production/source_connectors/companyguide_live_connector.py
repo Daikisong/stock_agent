@@ -44,7 +44,9 @@ class CompanyGuideLiveConnector:
         params = {"pGB": "1", "gicode": f"A{symbol}"}
         try:
             text, content_hash, canonical_url = _fetch_companyguide_main(symbol)
-            consensus = _parse_companyguide_consensus(text, as_of_date=as_of_date)
+            consensus = parse_companyguide_live_consensus_payload(
+                text, as_of_date=as_of_date
+            )
             consensus_date = _date_from_yyyy_slash(consensus.get("CONSENSUS_AS_OF_DATE")) if consensus else None
             score_usage = None
             if consensus and consensus_date and consensus_date > as_of_date:
@@ -96,36 +98,58 @@ def _utc_now() -> str:
     return datetime.utcnow().isoformat(timespec="seconds") + "Z"
 
 
-def _parse_companyguide_consensus(text: str, *, as_of_date: date) -> dict[str, Any]:
+def parse_companyguide_live_consensus_payload(
+    text: str, *, as_of_date: date
+) -> dict[str, Any]:
     block = _companyguide_consensus_block(text)
     if not block:
         return {}
     row_values = _first_table_row_values(block)
     if len(row_values) < 5:
         return {}
-    consensus_date = _companyguide_consensus_date(block) or as_of_date.strftime("%Y/%m/%d")
+    explicit_consensus_date = _companyguide_consensus_date(
+        block
+    ) or _companyguide_page_date(text)
+    consensus_date = explicit_consensus_date or as_of_date.strftime("%Y/%m/%d")
     payload: dict[str, Any] = {
         "CONSENSUS_AS_OF_DATE": consensus_date,
+        "CONSENSUS_DATE_VERIFIED": explicit_consensus_date is not None,
+        "COMPANY_NAME": _companyguide_company_name(text),
         "INVESTMENT_OPINION_SCORE": _number(row_values[0]),
         "TARGET_PRC": _number(row_values[1]),
         "EPS": _number(row_values[2]),
         "FORWARD_PER": _number(row_values[3]),
         "CONSENSUS_PROVIDER_COUNT": _number(row_values[4]),
         "score_anchor_text": block[:4000],
+        **_parse_companyguide_forward_fundamentals(text),
     }
     return {key: value for key, value in payload.items() if value not in (None, "")}
+
+
+# Compatibility alias for tests and older internal imports.
+_parse_companyguide_consensus = parse_companyguide_live_consensus_payload
 
 
 def _companyguide_consensus_block(text: str) -> str:
     marker = "투자의견 컨센서스"
     start = text.find(marker)
-    if start < 0:
-        return ""
-    table_start = text.find("<table", start)
-    table_end = text.find("</table>", table_start)
+    table_start = text.find("<table", start) if start >= 0 else -1
+    if table_start < 0:
+        match = re.search(
+            r'<table[^>]+id=["\']cTB15["\'][^>]*>',
+            text,
+            flags=re.IGNORECASE,
+        )
+        table_start = match.start() if match else -1
+    table_end = text.find("</table>", table_start) if table_start >= 0 else -1
     if table_start < 0 or table_end < 0:
         return ""
-    return text[start : table_end + len("</table>")]
+    # Keep the section heading and its explicit date together with the table.
+    # Older consumers use the heading as the semantic score anchor, while the
+    # point-in-time parser must read a date that commonly sits between the
+    # heading and the table rather than inside the table itself.
+    block_start = start if start >= 0 else table_start
+    return text[block_start : table_end + len("</table>")]
 
 
 def _companyguide_consensus_date(block: str) -> str | None:
@@ -135,12 +159,134 @@ def _companyguide_consensus_date(block: str) -> str | None:
     return None
 
 
+def _companyguide_page_date(text: str) -> str | None:
+    match = re.search(
+        r"\[\s*기준\s*:\s*([0-9]{4})[./-]([0-9]{2})[./-]([0-9]{2})\s*\]",
+        html.unescape(text),
+    )
+    if not match:
+        return None
+    return f"{match.group(1)}/{match.group(2)}/{match.group(3)}"
+
+
+def _companyguide_company_name(text: str) -> str | None:
+    match = re.search(
+        r"<title[^>]*>\s*(.*?)\s*-\s*기업(?:현황|정보)",
+        html.unescape(text),
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not match:
+        return None
+    value = _strip_html(match.group(1))
+    return value or None
+
+
 def _first_table_row_values(block: str) -> tuple[str, ...]:
     row_match = re.search(r"<tbody[^>]*>.*?<tr[^>]*>(.*?)</tr>", block, flags=re.IGNORECASE | re.DOTALL)
     if not row_match:
         return ()
     cells = re.findall(r"<td[^>]*>(.*?)</td>", row_match.group(1), flags=re.IGNORECASE | re.DOTALL)
     return tuple(_strip_html(cell) for cell in cells)
+
+
+def _parse_companyguide_forward_fundamentals(text: str) -> dict[str, Any]:
+    """Parse the dated Fwd. 12M column from CompanyGuide fundamentals.
+
+    This is deliberately limited to the structured fundamentals table.  It
+    does not infer values from narrative text or reuse the trailing actual
+    PER/PBR shown in the company header as forward valuation.
+    """
+
+    match = re.search(
+        r'<table[^>]+summary=["\'][^"\']*기업\s*펀더멘털\s*실적[^"\']*["\'][^>]*>'
+        r"(?P<body>.*?)</table>",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if not match:
+        return {}
+    table = match.group(0)
+    header_match = re.search(
+        r"<thead[^>]*>(?P<header>.*?)</thead>",
+        table,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    headers = (
+        tuple(
+            _strip_html(cell)
+            for cell in re.findall(
+                r"<th[^>]*>(.*?)</th>",
+                header_match.group("header") if header_match else "",
+                flags=re.IGNORECASE | re.DOTALL,
+            )
+        )
+        if header_match
+        else ()
+    )
+    forward_index = next(
+        (
+            index
+            for index, value in enumerate(headers)
+            if "Fwd" in value and "12M" in value
+        ),
+        None,
+    )
+    # Rows have one metric header followed by the dated actual, FY estimate,
+    # and Fwd. 12M estimate.  If the provider removes that explicit header we
+    # fail closed instead of silently treating another column as forward.
+    if forward_index is None or forward_index <= 0:
+        return {}
+    metric_keys = {
+        "PER": ("FORWARD_12M_PER", "MULTIPLE"),
+        "PBR": ("FORWARD_12M_PBR", "MULTIPLE"),
+        "EV/EBITDA": ("FORWARD_12M_EV_EBITDA", "MULTIPLE"),
+        "EPS": ("FORWARD_12M_EPS", "PER_SHARE"),
+        "BPS": ("FORWARD_12M_BPS", "PER_SHARE"),
+        "EBITDA": ("FORWARD_12M_EBITDA", "TOTAL_CURRENCY"),
+    }
+    parsed: dict[str, Any] = {}
+    for row_html in re.findall(
+        r"<tr[^>]*>(.*?)</tr>", table, flags=re.IGNORECASE | re.DOTALL
+    ):
+        cells = tuple(
+            _strip_html(cell)
+            for cell in re.findall(
+                r"<(?:th|td)[^>]*>(.*?)</(?:th|td)>",
+                row_html,
+                flags=re.IGNORECASE | re.DOTALL,
+            )
+        )
+        if len(cells) <= forward_index:
+            continue
+        metric = cells[0].replace(" ", "").upper()
+        definition = metric_keys.get(metric)
+        if definition is None:
+            continue
+        key, value_kind = definition
+        value = _fundamental_value(cells[forward_index], value_kind=value_kind)
+        if value is not None:
+            parsed[key] = value
+    if parsed:
+        parsed["FORWARD_FUNDAMENTALS_COLUMN"] = headers[forward_index]
+        parsed["FORWARD_FUNDAMENTALS_STRUCTURED"] = True
+    return parsed
+
+
+def _fundamental_value(value: str, *, value_kind: str) -> float | int | None:
+    parsed = _number(value)
+    if parsed is None:
+        return None
+    if value_kind == "TOTAL_CURRENCY":
+        normalized = value.replace(" ", "").lower()
+        if "조원" in normalized or normalized.endswith("조"):
+            parsed = float(parsed) * 1_000_000_000_000.0
+        elif "억원" in normalized or normalized.endswith("억"):
+            parsed = float(parsed) * 100_000_000.0
+        elif "백만원" in normalized:
+            parsed = float(parsed) * 1_000_000.0
+        elif "만원" in normalized:
+            parsed = float(parsed) * 10_000.0
+    return int(parsed) if float(parsed).is_integer() else float(parsed)
 
 
 def _strip_html(value: str) -> str:
@@ -184,4 +330,7 @@ def _fetch_companyguide_main(symbol: str) -> tuple[str, str, str]:
     return text, hashlib.sha256(response.content).hexdigest(), response.url
 
 
-__all__ = ["CompanyGuideLiveConnector"]
+__all__ = [
+    "CompanyGuideLiveConnector",
+    "parse_companyguide_live_consensus_payload",
+]

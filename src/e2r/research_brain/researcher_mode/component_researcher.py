@@ -30,6 +30,7 @@ from .schemas import (
     assert_blind_research_output,
     scrub_blind_research_payload,
 )
+from .prompt_projection import project_source_documents
 
 
 class StructuredResearchProvider(Protocol):
@@ -349,6 +350,7 @@ EVIDENCE_FACT_EXTRACTION_SCHEMA: Mapping[str, Any] = {
                     "confidence",
                     "question_family_tags",
                     "primitive_tags",
+                    "structured_evidence_roles",
                 ],
                 "properties": {
                     "document_id": {"type": "string", "minLength": 1},
@@ -393,6 +395,17 @@ EVIDENCE_FACT_EXTRACTION_SCHEMA: Mapping[str, Any] = {
                     "confidence": {"type": "number", "minimum": 0, "maximum": 1},
                     "question_family_tags": _STRING_ARRAY,
                     "primitive_tags": _STRING_ARRAY,
+                    "structured_evidence_roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "SEGMENT_CONTRIBUTION",
+                                "QOQ_GROWTH",
+                                "FORWARD_GUIDANCE",
+                            ],
+                        },
+                    },
                 },
             },
         },
@@ -681,6 +694,50 @@ CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA: Mapping[str, Any] = {
     },
 }
 
+STRUCTURED_PEER_SELECTION_SCHEMA: Mapping[str, Any] = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": [
+        "peers",
+        "selection_complete",
+        "unresolved_research_notes",
+        "selection_rationale",
+    ],
+    "properties": {
+        "peers": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 5,
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "peer_symbol",
+                    "peer_name",
+                    "shared_economic_drivers",
+                    "material_differences",
+                    "comparability_rationale",
+                    "confidence",
+                ],
+                "properties": {
+                    "peer_symbol": {
+                        "type": "string",
+                        "pattern": "^[0-9]{6}$",
+                    },
+                    "peer_name": {"type": "string", "minLength": 1},
+                    "shared_economic_drivers": {**_STRING_ARRAY, "minItems": 1},
+                    "material_differences": {**_STRING_ARRAY, "minItems": 1},
+                    "comparability_rationale": {"type": "string", "minLength": 1},
+                    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+                },
+            },
+        },
+        "selection_complete": {"type": "boolean"},
+        "unresolved_research_notes": _STRING_ARRAY,
+        "selection_rationale": {"type": "string", "minLength": 1},
+    },
+}
+
 _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "BUSINESS_MODEL_RESEARCH": BUSINESS_MODEL_RESEARCH_SCHEMA,
     "COMPONENT_RESEARCH": COMPONENT_RESEARCH_SCHEMA,
@@ -695,7 +752,10 @@ _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "RESEARCH_SUPERVISOR_REVIEW": RESEARCH_SUPERVISOR_SCHEMA,
     "SEMANTIC_SATURATION_REVIEW": SEMANTIC_SATURATION_REVIEW_SCHEMA,
     "CLAIM_COMPONENT_IMPACT_MAPPING": CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA,
+    "STRUCTURED_PEER_SELECTION": STRUCTURED_PEER_SELECTION_SCHEMA,
 }
+
+_CODEX_PROMPT_TRANSPORT_MAX_CHARS = 1_000_000
 
 
 @dataclass
@@ -741,6 +801,21 @@ class CodexResearcherProvider:
             )
         )
         prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+        if len(prompt) > _CODEX_PROMPT_TRANSPORT_MAX_CHARS:
+            self.calls.append(
+                {
+                    "pass_name": pass_name,
+                    "prompt_hash": prompt_hash,
+                    "prompt_chars": len(prompt),
+                    "payload": safe_payload,
+                    "response": None,
+                    "status": "PROMPT_TRANSPORT_REJECTED",
+                }
+            )
+            raise StructuredProviderRejected(
+                f"prompt_transport_too_large:{len(prompt)}:"
+                f"max={_CODEX_PROMPT_TRANSPORT_MAX_CHARS}"
+            )
         response = self.transport.complete(
             prompt=prompt,
             output_schema=_PROVIDER_SCHEMAS[pass_name],
@@ -751,8 +826,10 @@ class CodexResearcherProvider:
             {
                 "pass_name": pass_name,
                 "prompt_hash": prompt_hash,
+                "prompt_chars": len(prompt),
                 "payload": safe_payload,
                 "response": dict(response.payload),
+                "status": "COMPLETE",
             }
         )
         return response.payload
@@ -844,7 +921,7 @@ class ComponentResearcher:
                 "historical_component_anchors": list(anchors),
                 "source_coverage": coverage_rows,
                 "source_claims": list(source_claims),
-                "source_documents": list(source_documents),
+                "source_documents": list(project_source_documents(source_documents)),
                 "structured_metrics": metric_input,
             }
         )
@@ -1063,6 +1140,7 @@ def _coerce_fact(row: EvidenceFact | Mapping[str, Any]) -> EvidenceFact:
         "question_family_tags",
         "primitive_tags",
         "allowed_component_ids",
+        "structured_evidence_roles",
     ):
         if key in payload:
             payload[key] = tuple(payload[key] or ())
@@ -1238,8 +1316,17 @@ def _pass_instruction(pass_name: str) -> str:
             "Extract every material economic fact and counterfact from the supplied full "
             "documents. Cite an exact quote that occurs in the cited document, keep issuer, "
             "business segment, product, period, direction, and lifecycle explicit, and account "
-            "for every document with one disposition. Tags are retrieval context only. Never "
-            "infer absence from silence and never use snippets, future outcomes, score, or Stage."
+            "for every document with one disposition. Tag SEGMENT_CONTRIBUTION, QOQ_GROWTH, "
+            "or FORWARD_GUIDANCE only when the exact quote and value explicitly establish that "
+            "structured role; keep value as only the reported numeric point/range, unit separately, "
+            "and the time horizon in period. Otherwise return an empty structured_evidence_roles array. Tags "
+            "are extraction context only and never assign points. Read prior fact-extraction retry "
+            "context and correct the cited disposition/schema failure: FACTS_EXTRACTED is valid only "
+            "when that same document has at least one accepted fact proposal; otherwise use the "
+            "accurate non-fact disposition. Never "
+            "infer absence from silence. Copy exact_quote as a literal contiguous substring of "
+            "content_text without paraphrasing, punctuation edits, or whitespace normalization. "
+            "Never use snippets, future outcomes, score, or Stage."
         )
     if pass_name == "RESEARCH_SUPERVISOR_REVIEW":
         return (
@@ -1261,6 +1348,16 @@ def _pass_instruction(pass_name: str) -> str:
             "the supplied contract. Explicitly dispose of every other primary material claim; "
             "question-family and primitive tags are context only, never score gateways. Credit "
             "units express duplicate-credit accounting, not component points or stage authority."
+        )
+    if pass_name == "STRUCTURED_PEER_SELECTION":
+        return (
+            "Select two to five Korean-listed economic peers for structured valuation. "
+            "Use the supplied current business facts to match revenue model, cyclicality, "
+            "capital intensity, customer structure, and cash economics. Return the exact "
+            "six-digit listing symbol and company name so deterministic code can verify the "
+            "identity and fetch point-in-time structured multiples. Do not select by sector "
+            "label alone, do not invent valuation values, queries, scores, or Stage, and make "
+            "material differences explicit."
         )
     if pass_name == "COMPONENT_ANALYST_JUDGE":
         return (
@@ -1306,6 +1403,7 @@ __all__ = [
     "CLAIM_COMPONENT_IMPACT_MAPPING_SCHEMA",
     "SYNTHESIS_REVIEW_SCHEMA",
     "StructuredResearchProvider",
+    "STRUCTURED_PEER_SELECTION_SCHEMA",
     "ValuationResearcher",
     "build_component_researchers",
 ]

@@ -213,6 +213,7 @@ class EvidenceFact:
     question_family_tags: tuple[str, ...] = ()
     primitive_tags: tuple[str, ...] = ()
     allowed_component_ids: tuple[str, ...] = ()
+    structured_evidence_roles: tuple[str, ...] = ()
     schema_version: str = "e2r_evidence_fact_v1"
 
     def __post_init__(self) -> None:
@@ -247,10 +248,21 @@ class EvidenceFact:
         _require_unique_texts(
             self.allowed_component_ids, "allowed_component_ids", allow_empty=True
         )
+        _require_unique_texts(
+            self.structured_evidence_roles,
+            "structured_evidence_roles",
+            allow_empty=True,
+        )
         if set(self.allowed_component_ids) - set(CANONICAL_COMPONENT_ORDER):
             raise ValueError(
                 "EvidenceFact allowed_component_ids contains unknown component"
             )
+        if set(self.structured_evidence_roles) - {
+            "SEGMENT_CONTRIBUTION",
+            "QOQ_GROWTH",
+            "FORWARD_GUIDANCE",
+        }:
+            raise ValueError("EvidenceFact contains unknown structured evidence role")
 
     def to_dict(self) -> Mapping[str, Any]:
         return _json_safe(asdict(self))

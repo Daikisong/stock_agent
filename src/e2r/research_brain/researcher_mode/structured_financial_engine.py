@@ -26,6 +26,7 @@ from e2r.models import (
 from e2r.production.metadata import write_jsonl
 
 from .structured_data_researcher import StructuredMetricRecord
+from .prompt_projection import project_structured_records
 
 
 STRUCTURED_FINANCIAL_OUTPUT_FILES: Mapping[str, str] = {
@@ -479,6 +480,54 @@ class StructuredEngineResult:
             "score_authority": self.score_authority,
         }
 
+    def to_prompt_projection(self) -> Mapping[str, Any]:
+        """Account for every record without duplicating raw time series in prompts."""
+
+        record_projection = project_structured_records(self.records)
+        return {
+            "schema_version": "e2r_v5_structured_engine_prompt_projection_v1",
+            "target_id": self.target_id,
+            "symbol": self.symbol,
+            "as_of_date": self.as_of_date,
+            "status": self.status,
+            "record_projection": record_projection,
+            "records": [
+                {
+                    "transport_projection": True,
+                    "record_count": record_projection["record_count"],
+                    "record_roster_hash": record_projection[
+                        "record_roster_hash"
+                    ],
+                    "full_records_persisted_outside_prompt": True,
+                }
+            ],
+            "source_attempts": [row.to_dict() for row in self.source_attempts],
+            "rejections": [row.to_dict() for row in self.rejections],
+            "covered_roles_by_component": {
+                key: list(value)
+                for key, value in self.covered_roles_by_component.items()
+            },
+            "missing_roles_by_component": {
+                key: list(value)
+                for key, value in self.missing_roles_by_component.items()
+            },
+            "component_disposition_by_component": dict(
+                self.component_disposition_by_component
+            ),
+            "deep_researched_canary_valuation_route_not_attempted_count": (
+                self.deep_researched_canary_valuation_route_not_attempted_count
+            ),
+            "revision_component_zero_solely_due_connector_gap_count": (
+                self.revision_component_zero_solely_due_connector_gap_count
+            ),
+            "fcf_component_zero_solely_due_missing_parser_count": (
+                self.fcf_component_zero_solely_due_missing_parser_count
+            ),
+            "full_records_persisted_outside_prompt": True,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        }
+
     def to_component_structured_metrics(
         self,
         requirements_by_component: Mapping[str, Sequence[str]] | None = None,
@@ -498,7 +547,6 @@ class StructuredEngineResult:
         payloads: dict[str, dict[str, Any]] = {}
         for component_id, required_roles in requirements.items():
             component_payload: dict[str, Any] = {}
-            visible_records: dict[str, list[Mapping[str, Any]]] = {}
             for required_role in required_roles:
                 compatible = {
                     required_role,
@@ -513,21 +561,10 @@ class StructuredEngineResult:
                     continue
                 component_payload[required_role] = {
                     "evidence_role": required_role,
-                    "records": [row.to_dict() for row in matches],
+                    **project_structured_records(matches),
                     "source_pending": False,
                     "score_authority": False,
                 }
-                for row in matches:
-                    visible_records.setdefault(row.metric_id, []).append(row.to_dict())
-            for metric_id, rows in visible_records.items():
-                component_payload.setdefault(
-                    metric_id,
-                    {
-                        "metric_id": metric_id,
-                        "records": rows,
-                        "score_authority": False,
-                    },
-                )
             payloads[component_id] = component_payload
         return payloads
 
@@ -1599,6 +1636,35 @@ class StructuredFinancialConsensusValuationEngine:
             result.append(record)
             forward_inputs[metric_id] = record
 
+        # DART actuals can support an explicitly labelled deterministic
+        # forward scenario even when no provider publishes forward FCF.  Build
+        # the scenarios before valuation multiples so the base-scenario FCF
+        # can feed FCF yield instead of being generated too late to be used.
+        scenario_records = _scenario_records(
+            target_id=target_id,
+            cutoff=cutoff,
+            actuals=actuals,
+            current_price=current_price,
+            market_cap=market_cap,
+            existing=(*existing, *result),
+        )
+        result.extend(scenario_records)
+        if "forward_fcf" not in forward_inputs:
+            scenario_fcf = _latest_metric(
+                scenario_records, ("scenario_base_free_cash_flow",)
+            )
+            if scenario_fcf is not None:
+                forward_fcf_record = _copy_as_valuation_input(
+                    scenario_fcf,
+                    target_id=target_id,
+                    cutoff=cutoff,
+                    metric_id="forward_fcf",
+                    unit=scenario_fcf.unit,
+                    role="FORWARD_FCF",
+                )
+                result.append(forward_fcf_record)
+                forward_inputs["forward_fcf"] = forward_fcf_record
+
         net_debt = _latest_metric(existing, ("net_debt",))
         net_cash = _latest_metric(existing, ("net_cash",))
         if net_debt is None and net_cash is not None:
@@ -1751,16 +1817,6 @@ class StructuredFinancialConsensusValuationEngine:
                 target_id=target_id,
                 cutoff=cutoff,
                 peers=peers,
-                existing=(*existing, *result),
-            )
-        )
-        result.extend(
-            _scenario_records(
-                target_id=target_id,
-                cutoff=cutoff,
-                actuals=actuals,
-                current_price=current_price,
-                market_cap=market_cap,
                 existing=(*existing, *result),
             )
         )
@@ -2535,8 +2591,15 @@ def _metric_record(
         "source_route": source_route,
         "observed_at": observed_at,
         "record_kind": record_kind,
+        "evidence_roles": unique_roles,
+        "dataset": dataset,
         "provenance": provenance,
         "input_record_ids": unique_inputs,
+        # Two brokers may publish the same estimate on the same date.  Their
+        # records are still distinct observations and must not collide merely
+        # because the numeric value matches.  Metadata carries the broker,
+        # report/document id, scenario, peer id, and other semantic identity.
+        "metadata": dict(metadata or {}),
     }
     return StructuredMetricRecord(
         record_id=_stable_id("STRUCTURED", identity),

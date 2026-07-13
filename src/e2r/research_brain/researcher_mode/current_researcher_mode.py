@@ -41,6 +41,10 @@ from .official_source_materializer import (
     OfficialSourceMaterializationResult,
     write_official_source_materialization,
 )
+from .current_structured_materializer import (
+    CurrentStructuredMaterializationResult,
+    CurrentStructuredSourceMaterializer,
+)
 from .research_epoch import (
     ResearchEpochRun,
     ResearchEpochRunner,
@@ -133,6 +137,7 @@ class CurrentResearcherTargetRun:
     official_sources: OfficialSourceMaterializationResult
     source_graph: SourceGraphAcquisitionRun
     fact_extraction: ResearcherFactExtractionResult
+    structured_materialization: CurrentStructuredMaterializationResult
     structured_result: StructuredEngineResult
     dossier: ResearcherModeDossier
     scoring_memos: ComponentScoringMemoRun
@@ -152,6 +157,7 @@ class CurrentResearcherModeTargetRunner:
         *,
         provider: StructuredResearchProvider | None = None,
         official_materializer: CurrentOfficialSourceMaterializer | None = None,
+        structured_materializer: CurrentStructuredSourceMaterializer | None = None,
         source_acquirer: ResearcherSourceGraphAcquirer | None = None,
         fact_extractor: ResearcherEvidenceFactExtractor | None = None,
     ) -> None:
@@ -161,6 +167,10 @@ class CurrentResearcherModeTargetRunner:
         self.provider = effective_provider
         self.official_materializer = (
             official_materializer or CurrentOfficialSourceMaterializer()
+        )
+        self.structured_materializer = (
+            structured_materializer
+            or CurrentStructuredSourceMaterializer(peer_provider=effective_provider)
         )
         self.source_acquirer = source_acquirer or ResearcherSourceGraphAcquirer(
             query_provider=effective_provider
@@ -283,6 +293,9 @@ class CurrentResearcherModeTargetRunner:
                 "source_graph_pending_reasons": list(
                     source_graph.checkpoint.get("pending_reasons") or ()
                 ),
+                "prior_fact_extraction_feedback": list(
+                    prior_context["research_gap_feedback"]
+                ),
             },
             **prior_fact,
         )
@@ -295,11 +308,21 @@ class CurrentResearcherModeTargetRunner:
                 if row.direction == EvidenceDirection.COUNTER.value
             ),
         )
-        structured = _structured_result_from_official(
-            target=target,
+        structured_materialization = self.structured_materializer.materialize(
+            target_id=target.target_id,
+            target_name=target.company_name,
             as_of_date=config.as_of_date,
+            latest_trading_snapshot_date=(
+                config.latest_trading_snapshot_date or config.as_of_date
+            ),
             official=official,
+            output_root=root,
+            checkpoint_resume=config.checkpoint_resume,
+            evidence_facts=fact_extraction.facts,
+            source_claims=fact_extraction.material_claims,
+            source_documents=source_graph.evidence_documents,
         )
+        structured = structured_materialization.engine_result
         write_structured_financial_outputs(structured, root)
         write_json(root / "structured_engine_result.json", structured.to_dict())
         dossier = CanonicalResearchDossierBuilder(provider=self.provider).build(
@@ -460,6 +483,12 @@ class CurrentResearcherModeTargetRunner:
             "query_count": len(
                 source_graph.checkpoint.get("generated_queries") or ()
             ),
+            "structured_fetch_attempt_count": len(
+                structured_materialization.fetch_attempts
+            ),
+            "structured_pending_reasons": list(
+                structured_materialization.pending_reasons
+            ),
             "completion_gates": dict(gates),
             "production_research_complete": production_complete,
         }
@@ -482,6 +511,7 @@ class CurrentResearcherModeTargetRunner:
             official_sources=official,
             source_graph=source_graph,
             fact_extraction=fact_extraction,
+            structured_materialization=structured_materialization,
             structured_result=structured,
             dossier=dossier,
             scoring_memos=scoring_memos,
@@ -1014,7 +1044,17 @@ def _load_prior_research_context(
             str(extraction.get("target_id") or "") == target_id
             and str(extraction.get("as_of_date") or "") == as_of_date
         ):
-            feedback = tuple(extraction.get("research_gap_feedback") or ())
+            feedback = tuple(
+                dict.fromkeys(
+                    (
+                        *(extraction.get("research_gap_feedback") or ()),
+                        *(
+                            f"FACT_EXTRACTION_RETRY_CONTEXT:{reason}"
+                            for reason in extraction.get("pending_reasons") or ()
+                        ),
+                    )
+                )
+            )
     complete_components = {
         str(row.get("component_id") or "")
         for row in _read_jsonl(root / "component_research_memos.jsonl")

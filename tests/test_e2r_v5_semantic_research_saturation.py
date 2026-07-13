@@ -399,6 +399,34 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             provider.calls[-1]["payload"]["prior_supervisor_review"]
         )
 
+    def test_reextracted_fact_is_retired_with_lineage_instead_of_crashing_resume(self) -> None:
+        runner = ResearchEpochRunner(
+            supervisor=ResearchSupervisor(
+                provider=Phase87SupervisorProvider("GAP")
+            ),
+            saturation_reviewers=(),
+        )
+        first = runner.run_epoch(
+            **_epoch_inputs(source_checkpoint=_source_checkpoint())
+        )
+        second = runner.run_epoch(
+            **_epoch_inputs(
+                source_checkpoint=_source_checkpoint(extra_epoch=True),
+                facts=(_fact("FACT-2"),),
+                components=_components(fact_id="FACT-2"),
+                prior_checkpoint=first.checkpoint,
+            )
+        )
+        self.assertEqual(second.checkpoint.current_fact_ids, ("FACT-2",))
+        self.assertEqual(second.checkpoint.retired_fact_ids, ("FACT-1",))
+        self.assertEqual(
+            set(second.checkpoint.cumulative_fact_ids), {"FACT-1", "FACT-2"}
+        )
+        self.assertEqual(
+            second.checkpoint.retired_facts[0]["reason"],
+            "FACT_EXTRACTION_REVISED_OR_SUPERSEDED",
+        )
+
     def test_checkpoint_tampering_and_lost_cumulative_lineage_are_rejected(self) -> None:
         runner = ResearchEpochRunner(
             supervisor=ResearchSupervisor(
@@ -587,6 +615,7 @@ def _components(
     *,
     summary_suffix: str = "v1",
     change_only_first: bool = False,
+    fact_id: str = "FACT-1",
 ) -> tuple[ComponentResearchResult, ...]:
     rows = []
     for index, component_id in enumerate(CANONICAL_COMPONENT_ORDER):
@@ -598,7 +627,7 @@ def _components(
             archetype_id=ARCHETYPE,
             component_id=component_id,
             component_max_points=maximum,
-            positive_fact_ids=("FACT-1",),
+            positive_fact_ids=(fact_id,),
             counter_fact_ids=(),
             resolution_fact_ids=(),
             structured_metrics={"fixture_metric": 1.0},
