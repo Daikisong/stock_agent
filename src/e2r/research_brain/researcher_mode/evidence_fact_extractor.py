@@ -60,6 +60,7 @@ class FactExtractionRejection:
     document_id: str
     reason: str
     material_proposal: bool
+    proposed_exact_quote: str | None = None
     schema_version: str = "e2r_v5_fact_extraction_rejection_v1"
 
     def to_dict(self) -> Mapping[str, Any]:
@@ -79,6 +80,8 @@ class FactExtractionProviderCall:
     provider_name: str
     prompt_hash: str
     response_hash: str | None
+    provider_attempt_count: int = 1
+    validation_retry_used: bool = False
     schema_version: str = "e2r_v5_fact_extraction_provider_call_v1"
 
     def __post_init__(self) -> None:
@@ -86,6 +89,8 @@ class FactExtractionProviderCall:
             raise ValueError("unknown fact extraction provider-call status")
         if self.status == "PENDING" and not self.pending_reasons:
             raise ValueError("pending fact extraction call requires reasons")
+        if self.provider_attempt_count <= 0:
+            raise ValueError("fact extraction provider attempt count must be positive")
 
     def to_dict(self) -> Mapping[str, Any]:
         return {
@@ -299,54 +304,65 @@ class ResearcherEvidenceFactExtractor:
                     "full_documents": [_document_prompt_row(row) for row in batch],
                 }
             )
-            prompt_hash = stable_intelligence_id("FACTPROMPT", payload)
-            try:
-                response = self.provider.complete(
-                    pass_name="EVIDENCE_FACT_EXTRACTION", payload=payload
+            attempt_payload = payload
+            provider_attempt_count = 0
+            validation_retry_used = False
+            while True:
+                prompt_hash = stable_intelligence_id(
+                    "FACTPROMPT", attempt_payload
                 )
-                assert_blind_research_output(response)
-            except (
-                StructuredProviderUnavailable,
-                StructuredProviderRejected,
-                TimeoutError,
-                OSError,
-                RuntimeError,
-                KeyError,
-                TypeError,
-                ValueError,
-            ) as exc:
-                reason = (
-                    "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
-                    f"{type(exc).__name__}:{_clean_error(exc)}"
-                )
-                pending.append(reason)
-                calls.append(
-                    FactExtractionProviderCall(
-                        batch_id=batch_id,
-                        status="PENDING",
-                        document_ids=tuple(str(row["document_id"]) for row in batch),
-                        accepted_claim_ids=(),
-                        rejected_proposal_count=0,
-                        document_dispositions=(),
-                        pending_reasons=(reason,),
-                        research_gap_feedback=(),
-                        provider_name=provider_name,
-                        prompt_hash=prompt_hash,
-                        response_hash=None,
+                provider_attempt_count += 1
+                try:
+                    response = self.provider.complete(
+                        pass_name="EVIDENCE_FACT_EXTRACTION",
+                        payload=attempt_payload,
                     )
+                    assert_blind_research_output(response)
+                except (
+                    StructuredProviderUnavailable,
+                    StructuredProviderRejected,
+                    TimeoutError,
+                    OSError,
+                    RuntimeError,
+                    KeyError,
+                    TypeError,
+                    ValueError,
+                ) as exc:
+                    reason = (
+                        "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                        f"{type(exc).__name__}:{_clean_error(exc)}"
+                    )
+                    pending.append(reason)
+                    calls.append(
+                        FactExtractionProviderCall(
+                            batch_id=batch_id,
+                            status="PENDING",
+                            document_ids=tuple(
+                                str(row["document_id"]) for row in batch
+                            ),
+                            accepted_claim_ids=(),
+                            rejected_proposal_count=0,
+                            document_dispositions=(),
+                            pending_reasons=(reason,),
+                            research_gap_feedback=(),
+                            provider_name=provider_name,
+                            prompt_hash=prompt_hash,
+                            response_hash=None,
+                            provider_attempt_count=provider_attempt_count,
+                            validation_retry_used=validation_retry_used,
+                        )
+                    )
+                    break
+                response_hash = stable_intelligence_id(
+                    "FACTRESP", scrub_blind_research_payload(response)
                 )
-                continue
-            response_hash = stable_intelligence_id(
-                "FACTRESP", scrub_blind_research_payload(response)
-            )
-            (
-                batch_claims,
-                batch_rejections,
-                batch_dispositions,
-                batch_pending,
-                batch_feedback,
-            ) = (
-                _validate_response(
+                (
+                    batch_claims,
+                    batch_rejections,
+                    batch_dispositions,
+                    batch_pending,
+                    batch_feedback,
+                ) = _validate_response(
                     response,
                     batch_id=batch_id,
                     documents=batch,
@@ -357,29 +373,69 @@ class ResearcherEvidenceFactExtractor:
                     prompt_hash=prompt_hash,
                     response_hash=response_hash,
                 )
-            )
-            claims.extend(batch_claims)
-            rejections.extend(batch_rejections)
-            dispositions.extend(batch_dispositions)
-            pending.extend(batch_pending)
-            research_gap_feedback.extend(batch_feedback)
-            calls.append(
-                FactExtractionProviderCall(
-                    batch_id=batch_id,
-                    status="PENDING" if batch_pending else "COMPLETE",
-                    document_ids=tuple(str(row["document_id"]) for row in batch),
-                    accepted_claim_ids=tuple(
-                        str(row["claim_id"]) for row in batch_claims
-                    ),
-                    rejected_proposal_count=len(batch_rejections),
-                    document_dispositions=tuple(batch_dispositions),
-                    pending_reasons=tuple(batch_pending),
-                    research_gap_feedback=tuple(batch_feedback),
-                    provider_name=provider_name,
-                    prompt_hash=prompt_hash,
-                    response_hash=response_hash,
+                if batch_pending and not validation_retry_used:
+                    validation_retry_used = True
+                    attempt_payload = scrub_blind_research_payload(
+                        {
+                            **payload,
+                            "fact_extraction_retry_context": {
+                                "validation_errors": list(batch_pending),
+                                "rejected_proposals": [
+                                    {
+                                        "proposal_index": row.proposal_index,
+                                        "document_id": row.document_id,
+                                        "reason": row.reason,
+                                        "proposed_exact_quote": (
+                                            row.proposed_exact_quote
+                                        ),
+                                    }
+                                    for row in batch_rejections
+                                    if row.material_proposal
+                                    and not row.reason.startswith(
+                                        "MECHANISM_SCOPE_REJECTED"
+                                    )
+                                ],
+                                "required_document_ids": [
+                                    str(row["document_id"]) for row in batch
+                                ],
+                                "instruction": (
+                                    "Rewrite the complete batch. Every material "
+                                    "exact_quote must be copied as one literal "
+                                    "contiguous substring from that document's "
+                                    "content_text. Delete any unsupported proposal; "
+                                    "do not paraphrase or repair quotes in code."
+                                ),
+                            },
+                        }
+                    )
+                    continue
+                claims.extend(batch_claims)
+                rejections.extend(batch_rejections)
+                dispositions.extend(batch_dispositions)
+                pending.extend(batch_pending)
+                research_gap_feedback.extend(batch_feedback)
+                calls.append(
+                    FactExtractionProviderCall(
+                        batch_id=batch_id,
+                        status="PENDING" if batch_pending else "COMPLETE",
+                        document_ids=tuple(
+                            str(row["document_id"]) for row in batch
+                        ),
+                        accepted_claim_ids=tuple(
+                            str(row["claim_id"]) for row in batch_claims
+                        ),
+                        rejected_proposal_count=len(batch_rejections),
+                        document_dispositions=tuple(batch_dispositions),
+                        pending_reasons=tuple(batch_pending),
+                        research_gap_feedback=tuple(batch_feedback),
+                        provider_name=provider_name,
+                        prompt_hash=prompt_hash,
+                        response_hash=response_hash,
+                        provider_attempt_count=provider_attempt_count,
+                        validation_retry_used=validation_retry_used,
+                    )
                 )
-            )
+                break
         compilation = EvidenceFactCompiler().compile(
             target_id=target_id,
             as_of_date=as_of_date,
@@ -429,6 +485,12 @@ class ResearcherEvidenceFactExtractor:
             "as_of_date": as_of_date,
             "input_document_count": len(prepared),
             "provider_call_count": len(calls),
+            "provider_attempt_count": sum(
+                row.provider_attempt_count for row in calls
+            ),
+            "validation_retry_call_count": sum(
+                row.validation_retry_used for row in calls
+            ),
             "transport_chunk_size": self.documents_per_call,
             "transport_character_bound": self.max_document_chars_per_call,
             "transport_chunk_is_completion_cap": False,
@@ -670,6 +732,11 @@ def _validate_response(
                     document_id=document_id,
                     reason=reason,
                     material_proposal=material,
+                    proposed_exact_quote=(
+                        str(proposal.get("exact_quote") or "").strip() or None
+                        if isinstance(proposal, Mapping)
+                        else None
+                    ),
                 )
             )
             if material and not reason.startswith("MECHANISM_SCOPE_REJECTED"):
@@ -684,6 +751,9 @@ def _validate_response(
                     document_id=document_id,
                     reason="IMMATERIAL_PROPOSAL_TERMINAL",
                     material_proposal=False,
+                    proposed_exact_quote=(
+                        str(proposal.get("exact_quote") or "").strip() or None
+                    ),
                 )
             )
             continue
@@ -1027,6 +1097,8 @@ def _coerce_provider_call(
         response_hash=(
             str(row["response_hash"]) if row.get("response_hash") else None
         ),
+        provider_attempt_count=int(row.get("provider_attempt_count") or 1),
+        validation_retry_used=bool(row.get("validation_retry_used")),
     )
 
 
@@ -1041,6 +1113,11 @@ def _coerce_rejection(
         document_id=str(row.get("document_id") or ""),
         reason=str(row["reason"]),
         material_proposal=bool(row.get("material_proposal")),
+        proposed_exact_quote=(
+            str(row["proposed_exact_quote"])
+            if row.get("proposed_exact_quote")
+            else None
+        ),
     )
 
 

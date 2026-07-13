@@ -153,80 +153,74 @@ class ResearcherDocumentRanker:
                 "source_coverage": list(source_coverage),
             }
         )
-        prompt_hash = stable_intelligence_id("RANKPROMPT", payload)
-        try:
-            response = self.provider.complete(
-                pass_name="SOURCE_CANDIDATE_RANKING", payload=payload
+        attempt_payload = payload
+        prompt_hash = stable_intelligence_id("RANKPROMPT", attempt_payload)
+        response_hash = None
+        decisions: tuple[SourceCandidateMaterialityDecision, ...] = ()
+        ranking_complete = False
+        notes: tuple[str, ...] = ()
+        for attempt_index in range(2):
+            prompt_hash = stable_intelligence_id("RANKPROMPT", attempt_payload)
+            try:
+                response = self.provider.complete(
+                    pass_name="SOURCE_CANDIDATE_RANKING",
+                    payload=attempt_payload,
+                )
+            except (
+                StructuredProviderUnavailable,
+                StructuredProviderRejected,
+                TimeoutError,
+                OSError,
+                RuntimeError,
+            ) as exc:
+                return CandidateRankingResult(
+                    status="PENDING",
+                    decisions=(),
+                    pending_reasons=(f"RANKING_PROVIDER_ERROR:{_error_text(exc)}",),
+                    provider_name=_provider_name(self.provider),
+                    prompt_hash=prompt_hash,
+                    response_hash=None,
+                )
+            response_hash = stable_intelligence_id(
+                "RANKRESP", scrub_blind_research_payload(response)
             )
-        except (
-            StructuredProviderUnavailable,
-            StructuredProviderRejected,
-            TimeoutError,
-            OSError,
-            RuntimeError,
-        ) as exc:
-            return CandidateRankingResult(
-                status="PENDING",
-                decisions=(),
-                pending_reasons=(f"RANKING_PROVIDER_ERROR:{_error_text(exc)}",),
-                provider_name=_provider_name(self.provider),
-                prompt_hash=prompt_hash,
-                response_hash=None,
-            )
-        response_hash = stable_intelligence_id(
-            "RANKRESP", scrub_blind_research_payload(response)
-        )
-        try:
-            assert_blind_research_output(response)
-            raw_decisions = response["decisions"]
-            if isinstance(raw_decisions, (str, bytes)) or not isinstance(
-                raw_decisions, Sequence
-            ):
-                raise TypeError("candidate decisions must be an array")
-            decisions = []
-            seen = set()
-            for raw in raw_decisions:
-                if not isinstance(raw, Mapping):
-                    raise TypeError("candidate decision must be an object")
-                candidate_id = str(raw.get("candidate_id") or "")
-                if candidate_id not in candidate_by_id or candidate_id in seen:
-                    raise ValueError("candidate ranking has unknown or duplicate id")
-                seen.add(candidate_id)
-                cited_objectives = _unique_strings(raw.get("objective_ids"))
-                if set(cited_objectives) - objective_ids:
-                    raise ValueError("candidate ranking cited unknown objective")
-                decisions.append(
-                    SourceCandidateMaterialityDecision(
-                        decision_id=stable_intelligence_id(
-                            "MATDEC",
-                            {
-                                "candidate_id": candidate_id,
-                                "response": scrub_blind_research_payload(raw),
+            try:
+                decisions, ranking_complete, notes = _decode_candidate_ranking(
+                    response=response,
+                    candidate_by_id=candidate_by_id,
+                    objective_ids=objective_ids,
+                )
+            except (KeyError, TypeError, ValueError) as exc:
+                if attempt_index == 0:
+                    # Do not coerce, drop, or deterministically replace invalid
+                    # LLM decisions.  Return the exact contract failure and the
+                    # complete allowed-id roster to the LLM for a clean rewrite.
+                    attempt_payload = scrub_blind_research_payload(
+                        {
+                            **payload,
+                            "ranking_retry_context": {
+                                "validation_error": _error_text(exc),
+                                "required_candidate_ids": sorted(candidate_by_id),
+                                "required_objective_ids": sorted(objective_ids),
+                                "instruction": (
+                                    "Rewrite the complete decisions array using "
+                                    "each required candidate_id exactly once."
+                                ),
                             },
-                        ),
-                        candidate_id=candidate_id,
-                        material_relevance=bool(raw["material_relevance"]),
-                        priority=float(raw["priority"]),
-                        objective_ids=cited_objectives,
-                        rationale=str(raw["rationale"]),
+                        }
                     )
+                    continue
+                return CandidateRankingResult(
+                    status="PENDING",
+                    decisions=(),
+                    pending_reasons=(
+                        f"INVALID_RANKING_OUTPUT:{_error_text(exc)}",
+                    ),
+                    provider_name=_provider_name(self.provider),
+                    prompt_hash=prompt_hash,
+                    response_hash=response_hash,
                 )
-            ranking_complete = bool(response["ranking_complete"])
-            missing = set(candidate_by_id) - seen
-            if ranking_complete and missing:
-                raise ValueError(
-                    "complete candidate ranking omitted ids: " + ",".join(sorted(missing))
-                )
-            notes = _unique_strings(response.get("unresolved_notes"))
-        except (KeyError, TypeError, ValueError) as exc:
-            return CandidateRankingResult(
-                status="PENDING",
-                decisions=(),
-                pending_reasons=(f"INVALID_RANKING_OUTPUT:{_error_text(exc)}",),
-                provider_name=_provider_name(self.provider),
-                prompt_hash=prompt_hash,
-                response_hash=response_hash,
-            )
+            break
         if not ranking_complete:
             return CandidateRankingResult(
                 status="PENDING",
@@ -249,6 +243,61 @@ class ResearcherDocumentRanker:
             prompt_hash=prompt_hash,
             response_hash=response_hash,
         )
+
+
+def _decode_candidate_ranking(
+    *,
+    response: Mapping[str, Any],
+    candidate_by_id: Mapping[str, Mapping[str, Any]],
+    objective_ids: set[str],
+) -> tuple[
+    tuple[SourceCandidateMaterialityDecision, ...],
+    bool,
+    tuple[str, ...],
+]:
+    assert_blind_research_output(response)
+    raw_decisions = response["decisions"]
+    if isinstance(raw_decisions, (str, bytes)) or not isinstance(
+        raw_decisions, Sequence
+    ):
+        raise TypeError("candidate decisions must be an array")
+    decisions = []
+    seen = set()
+    for raw in raw_decisions:
+        if not isinstance(raw, Mapping):
+            raise TypeError("candidate decision must be an object")
+        candidate_id = str(raw.get("candidate_id") or "")
+        if candidate_id not in candidate_by_id or candidate_id in seen:
+            raise ValueError("candidate ranking has unknown or duplicate id")
+        seen.add(candidate_id)
+        cited_objectives = _unique_strings(raw.get("objective_ids"))
+        if set(cited_objectives) - objective_ids:
+            raise ValueError("candidate ranking cited unknown objective")
+        decisions.append(
+            SourceCandidateMaterialityDecision(
+                decision_id=stable_intelligence_id(
+                    "MATDEC",
+                    {
+                        "candidate_id": candidate_id,
+                        "response": scrub_blind_research_payload(raw),
+                    },
+                ),
+                candidate_id=candidate_id,
+                material_relevance=bool(raw["material_relevance"]),
+                priority=float(raw["priority"]),
+                objective_ids=cited_objectives,
+                rationale=str(raw["rationale"]),
+            )
+        )
+    ranking_complete = bool(response["ranking_complete"])
+    missing = set(candidate_by_id) - seen
+    if ranking_complete and missing:
+        raise ValueError(
+            "complete candidate ranking omitted ids: " + ",".join(sorted(missing))
+        )
+    return tuple(decisions), ranking_complete, _unique_strings(
+        response.get("unresolved_notes")
+    )
 
 
 class MaterialDocumentRanker:

@@ -5,9 +5,11 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 from e2r.cli.run_e2r_researcher_mode_until_pass import (
     _latest_calendar_trading_candidate,
+    _semantic_signature,
     build_parser,
 )
 from e2r.research import EmptySearchProvider, PageFetcher
@@ -33,8 +35,10 @@ class Phase94IntegrationProvider:
     def __init__(self) -> None:
         self.base = ScriptedResearchProvider()
         self.fact = FactProvider()
+        self.calls = []
 
     def complete(self, *, pass_name, payload):
+        self.calls.append({"pass_name": pass_name, "payload": payload})
         if pass_name == "SOURCE_QUERY_GENERATION":
             return {
                 "suggested_queries": [],
@@ -248,6 +252,55 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             "2026-07-10",
         )
 
+    def test_no_progress_signature_ignores_supervisor_prose_churn(self) -> None:
+        def result(*, question: str, failure_reason: str):
+            supervisor = SimpleNamespace(
+                status="NEXT_RESEARCH_REQUIRED",
+                unresolved_material_questions=(question,),
+                next_actions=(f"action for {question}",),
+            )
+            return SimpleNamespace(
+                source_graph=SimpleNamespace(
+                    status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+                    checkpoint={
+                        "generated_queries": [],
+                        "search_candidates": [],
+                        "query_failures": [
+                            {
+                                "query_id": "Q1",
+                                "candidate_id": "C1",
+                                "failure_stage": "FULL_DOCUMENT_FETCH",
+                                "failure_reason": failure_reason,
+                                "alternate_route_required": True,
+                            }
+                        ],
+                    },
+                    evidence_documents=(),
+                ),
+                fact_extraction=SimpleNamespace(
+                    status="FACT_EXTRACTION_COMPLETE",
+                    pending_reasons=(),
+                    facts=(),
+                ),
+                dossier=SimpleNamespace(component_results=()),
+                structured_result=SimpleNamespace(status="SOURCE_PENDING", records=()),
+                score_aggregation=SimpleNamespace(
+                    status="SCORE_PENDING", pending_reasons=("SOURCE_PENDING",)
+                ),
+                research_epoch=SimpleNamespace(supervisor_review=supervisor),
+            )
+
+        first = result(question="첫 번째 표현", failure_reason="TLS_FAILURE")
+        rephrased = result(question="같은 뜻의 두 번째 표현", failure_reason="TLS_FAILURE")
+        changed_failure = result(
+            question="같은 뜻의 세 번째 표현",
+            failure_reason="HTTP_503_FAILURE",
+        )
+        self.assertEqual(_semantic_signature(first), _semantic_signature(rephrased))
+        self.assertNotEqual(
+            _semantic_signature(first), _semantic_signature(changed_failure)
+        )
+
     def test_unstructured_roles_are_not_misclassified_as_structured_metrics(self) -> None:
         plans = ComponentResearchPlanner().plan(
             target_id="CURRENT",
@@ -352,6 +405,24 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             )
             self.assertFalse(audit["gold_visibility"])
             self.assertFalse(audit["completion_based_on_fixed_rounds"])
+            self.assertIn(
+                "source_graph_checkpoint_ready", audit["completion_gates"]
+            )
+            self.assertIn("fact_extraction_complete", audit["completion_gates"])
+            self.assertFalse(
+                audit["completion_gates"]["source_graph_checkpoint_ready"]
+            )
+            query_payload = next(
+                row["payload"]
+                for row in provider.calls
+                if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+            )
+            self.assertEqual(
+                query_payload["score_gap_context"][
+                    "verified_official_domain_allowlist"
+                ],
+                ["example.com"],
+            )
             self.assertFalse((result.output_root / "gold_fact_comparison.jsonl").exists())
 
 

@@ -246,9 +246,24 @@ def _semantic_signature(result) -> str:
                 )
                 for row in source.get("search_candidates") or ()
             ),
+            "source_failure_states": sorted(
+                (
+                    str(row.get("query_id") or ""),
+                    str(row.get("candidate_id") or ""),
+                    str(row.get("failure_stage") or ""),
+                    str(row.get("failure_reason") or ""),
+                    bool(row.get("alternate_route_required")),
+                )
+                for row in source.get("query_failures") or ()
+            ),
             "document_ids": sorted(
                 str(row.get("document_id") or "")
                 for row in result.source_graph.evidence_documents
+            ),
+            "source_graph_status": result.source_graph.status,
+            "fact_extraction_status": result.fact_extraction.status,
+            "fact_extraction_pending": sorted(
+                result.fact_extraction.pending_reasons
             ),
             "fact_ids": sorted(row.fact_id for row in result.fact_extraction.facts),
             "component_states": [
@@ -262,12 +277,6 @@ def _semantic_signature(result) -> str:
             "aggregation_status": result.score_aggregation.status,
             "aggregation_pending": list(result.score_aggregation.pending_reasons),
             "supervisor_status": result.research_epoch.supervisor_review.status,
-            "supervisor_questions": list(
-                result.research_epoch.supervisor_review.unresolved_material_questions
-            ),
-            "supervisor_actions": list(
-                result.research_epoch.supervisor_review.next_actions
-            ),
         }
     )
 

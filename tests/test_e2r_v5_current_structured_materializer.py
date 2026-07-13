@@ -116,6 +116,24 @@ class FixturePeerProvider:
         }
 
 
+class IncompleteThenCompletePeerProvider(FixturePeerProvider):
+    def __init__(self):
+        super().__init__()
+        self.attempt_count = 0
+
+    def complete(self, *, pass_name, payload):
+        self.attempt_count += 1
+        if self.attempt_count == 1:
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            return {
+                "peers": [],
+                "selection_complete": False,
+                "unresolved_research_notes": ["first response incomplete"],
+                "selection_rationale": "peer selection needs a clean rewrite",
+            }
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
 class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
     def test_companyguide_forward_fundamentals_keep_units_and_page_date(self):
         payload = parse_companyguide_live_consensus_payload(
@@ -409,6 +427,46 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         self.assertTrue(
             all(row.metadata["peer_count"] == 2 for row in peer_bands)
         )
+
+    def test_incomplete_peer_selection_is_reprompted_without_value_invention(self):
+        transport = FixtureStructuredTransport()
+        peer_provider = IncompleteThenCompletePeerProvider()
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+        audit = result.audit["peer_selection"]
+        self.assertEqual(peer_provider.attempt_count, 2)
+        self.assertEqual(audit["status"], "PEER_SELECTION_COMPLETE")
+        self.assertEqual(audit["provider_attempt_count"], 2)
+        self.assertTrue(audit["validation_retry_used"])
+        retry = peer_provider.calls[-1]["payload"][
+            "peer_selection_retry_context"
+        ]
+        self.assertIn("peer selection is incomplete", retry["validation_error"])
+        self.assertIn("do not invent", retry["instruction"])
 
 
 def _official():

@@ -268,6 +268,9 @@ class CurrentResearcherModeTargetRunner:
                 "official_source_status": official.status,
                 "official_pending_reasons": list(official.pending_reasons),
                 "completion_policy": "semantic saturation, never transport count",
+                "verified_official_domain_allowlist": list(
+                    target.official_domains
+                ),
                 "prior_fact_extraction_feedback": list(
                     prior_context["research_gap_feedback"]
                 ),
@@ -437,6 +440,8 @@ class CurrentResearcherModeTargetRunner:
             source_graph=source_graph,
         )
         gates = _completion_gates(
+            source_graph=source_graph,
+            fact_extraction=fact_extraction,
             dossier=dossier,
             structured=structured,
             aggregation=aggregation,
@@ -894,6 +899,8 @@ def _production_input_rows(
 
 def _completion_gates(
     *,
+    source_graph: SourceGraphAcquisitionRun,
+    fact_extraction: ResearcherFactExtractionResult,
     dossier: ResearcherModeDossier,
     structured: StructuredEngineResult,
     aggregation: DeterministicScoreAggregationRun,
@@ -914,6 +921,15 @@ def _completion_gates(
         not row.material_disagreement for row in aggregation.component_results
     )
     return {
+        "source_graph_checkpoint_ready": (
+            source_graph.status
+            in {"EPOCH_COMPLETE_REQUIRES_SUPERVISOR", "STOPPED_ON_RESOLUTION"}
+            and int(source_graph.audit.get("critical_count_sum") or 0) == 0
+        ),
+        "fact_extraction_complete": (
+            fact_extraction.status == "FACT_EXTRACTION_COMPLETE"
+            and int(fact_extraction.audit.get("critical_count_sum") or 0) == 0
+        ),
         "seven_component_research_complete": (
             len(complete_results) == len(CANONICAL_COMPONENT_ORDER)
         ),

@@ -935,6 +935,8 @@ class CurrentStructuredSourceMaterializer:
             "provider_prompt_hash": None,
             "provider_response_hash": None,
             "provider_cache_hit": False,
+            "provider_attempt_count": 0,
+            "validation_retry_used": False,
             "proposal_count": 0,
             "verified_peer_count": 0,
             "peer_observation_count": 0,
@@ -1000,14 +1002,44 @@ class CurrentStructuredSourceMaterializer:
                 response = None
         try:
             if response is None:
-                response = self.peer_provider.complete(
-                    pass_name="STRUCTURED_PEER_SELECTION", payload=payload
+                attempt_payload = payload
+                for attempt_index in range(2):
+                    base_audit["provider_attempt_count"] += 1
+                    response = self.peer_provider.complete(
+                        pass_name="STRUCTURED_PEER_SELECTION",
+                        payload=attempt_payload,
+                    )
+                    try:
+                        assert_blind_research_output(response)
+                        proposals = _validated_peer_proposals(
+                            response,
+                            target_id=target_id,
+                        )
+                    except (KeyError, TypeError, ValueError) as exc:
+                        if attempt_index == 0:
+                            base_audit["validation_retry_used"] = True
+                            attempt_payload = {
+                                **payload,
+                                "peer_selection_retry_context": {
+                                    "validation_error": " ".join(
+                                        str(exc).split()
+                                    )[-500:],
+                                    "instruction": (
+                                        "Rewrite the complete peer selection under "
+                                        "the original two-to-five peer contract; do "
+                                        "not invent any valuation values."
+                                    ),
+                                },
+                            }
+                            continue
+                        raise
+                    break
+            else:
+                assert_blind_research_output(response)
+                proposals = _validated_peer_proposals(
+                    response,
+                    target_id=target_id,
                 )
-            assert_blind_research_output(response)
-            proposals = _validated_peer_proposals(
-                response,
-                target_id=target_id,
-            )
             prompt_hash = cached_prompt_hash or _latest_provider_prompt_hash(
                 self.peer_provider, "STRUCTURED_PEER_SELECTION"
             )

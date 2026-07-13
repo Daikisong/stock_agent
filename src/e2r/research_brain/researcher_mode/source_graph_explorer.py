@@ -816,6 +816,9 @@ class ResearcherSourceGraphAcquirer:
             _normalized_host(value) for value in official_domain_allowlist if value
         }
         for candidate in fetch_batch:
+            candidate["full_fetch_attempt_count"] = (
+                int(candidate.get("full_fetch_attempt_count") or 0) + 1
+            )
             fetch_record, document, rejection = _fetch_candidate_document(
                 candidate=candidate,
                 target_id=target_id,
@@ -830,10 +833,62 @@ class ResearcherSourceGraphAcquirer:
             )
             fetch_rows.append(fetch_record)
             if rejection is not None:
+                rejection_reason = str(rejection["rejection_reason"])
+                repeated_identical_failure = any(
+                    str(row.get("candidate_id") or "")
+                    == str(candidate.get("candidate_id") or "")
+                    and str(row.get("rejection_reason") or "")
+                    == rejection_reason
+                    for row in rejected_rows
+                )
                 rejected_rows.append(rejection)
+                query_failures.append(
+                    {
+                        "query_id": str(
+                            next(iter(candidate.get("query_ids") or ()), "FETCH_ROUTE")
+                        ),
+                        "objective_id": str(
+                            next(
+                                iter(candidate.get("objective_ids") or ()),
+                                "UNKNOWN_OBJECTIVE",
+                            )
+                        ),
+                        "candidate_id": str(candidate.get("candidate_id") or ""),
+                        "url": str(candidate.get("url") or ""),
+                        "failure_stage": "FULL_DOCUMENT_FETCH",
+                        "failure_reason": rejection_reason,
+                        "alternate_route_required": bool(
+                            rejection.get("retryable")
+                            and repeated_identical_failure
+                        ),
+                    }
+                )
                 if rejection.get("retryable"):
-                    candidate["fetch_status"] = "FETCH_RETRY_PENDING"
-                    pending_reasons.append(str(rejection["rejection_reason"]))
+                    if repeated_identical_failure:
+                        # The transport failure may be externally retryable, but
+                        # another identical request with the same local route is
+                        # not new research.  Close only this candidate route and
+                        # return the exact failure to the LLM so that it can
+                        # choose another public URL/source family.  This is not
+                        # source absence and does not complete the objective.
+                        candidate["fetch_status"] = "FETCH_ROUTE_EXHAUSTED"
+                        candidate["same_fetch_failure_count"] = max(
+                            2,
+                            int(candidate.get("same_fetch_failure_count") or 1)
+                            + 1,
+                        )
+                        candidate["last_fetch_failure_reason"] = rejection_reason
+                        candidate["alternate_route_required"] = True
+                        pending_reasons.append(
+                            "REPEATED_IDENTICAL_FULL_FETCH_FAILURE_"
+                            "ALTERNATE_ROUTE_REQUIRED:"
+                            + rejection_reason
+                        )
+                    else:
+                        candidate["fetch_status"] = "FETCH_RETRY_PENDING"
+                        candidate["same_fetch_failure_count"] = 1
+                        candidate["last_fetch_failure_reason"] = rejection_reason
+                        pending_reasons.append(rejection_reason)
                 else:
                     candidate["fetch_status"] = "FETCH_REJECTED"
                 continue
@@ -853,6 +908,10 @@ class ResearcherSourceGraphAcquirer:
             )
             candidate["fetch_status"] = "FULL_DOCUMENT_FETCHED"
             candidate["document_id"] = document["document_id"]
+        state["query_failures"] = _dedupe_mapping_rows(
+            query_failures,
+            key_fields=("query_id", "candidate_id", "failure_reason"),
+        )
         all_documents = tuple(
             sorted(
                 (dict(row) for row in evidence_documents),

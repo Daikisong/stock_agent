@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
-from e2r.research.page_fetcher import PageFetcher
+from e2r.research.page_fetcher import FetchResult, PageFetcher
 from e2r.research.search_provider import SearchResult
 from e2r.research_brain.researcher_mode import (
     PHASE85_PASS,
@@ -29,6 +29,9 @@ TARGET = "CURRENT"
 TARGET_NAME = "Current Corp"
 AS_OF_DATE = "2026-06-29"
 QUERY = "Current Corp 2026 Q2 earnings call capacity allocation"
+ALTERNATE_QUERY = "Current Corp official mirror earnings call cash conversion"
+FAILED_URL = "https://tls.example.com/report.pdf"
+ALTERNATE_URL = "https://mirror.example.com/report"
 
 
 class SourceBrainProvider:
@@ -130,6 +133,71 @@ class AdaptiveSourceBrainProvider(SourceBrainProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class AlternateRouteSourceBrainProvider(SourceBrainProvider):
+    def __init__(self) -> None:
+        super().__init__(queries=())
+        self.query_call_count = 0
+
+    def complete(self, *, pass_name, payload):
+        if pass_name == "SOURCE_QUERY_GENERATION":
+            self.query_call_count += 1
+            self.queries = (
+                (QUERY,)
+                if self.query_call_count == 1
+                else (ALTERNATE_QUERY,)
+            )
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
+class InvalidThenCorrectRankingProvider(SourceBrainProvider):
+    def __init__(self) -> None:
+        super().__init__()
+        self.ranking_call_count = 0
+
+    def complete(self, *, pass_name, payload):
+        if pass_name == "SOURCE_CANDIDATE_RANKING":
+            self.ranking_call_count += 1
+            if self.ranking_call_count == 1:
+                self.calls.append({"pass_name": pass_name, "payload": payload})
+                return {
+                    "decisions": [
+                        {
+                            "candidate_id": "UNKNOWN-CANDIDATE",
+                            "material_relevance": True,
+                            "priority": 1.0,
+                            "objective_ids": ["OBJECTIVE-1"],
+                            "rationale": "잘못된 첫 응답",
+                        }
+                    ],
+                    "ranking_complete": True,
+                    "unresolved_notes": [],
+                }
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
+class SelectiveRetryFailureFetcher:
+    def __init__(self) -> None:
+        self.delegate = PageFetcher(
+            fixture_text_by_url={
+                ALTERNATE_URL: _document_text("alternate-public-route")
+            }
+        )
+        self.calls: list[str] = []
+
+    def fetch(self, url, *, as_of_date):
+        self.calls.append(url)
+        if url == FAILED_URL:
+            return FetchResult(
+                url=url,
+                ok=False,
+                reason=(
+                    "live_fetch_failed:URLError:"
+                    "certificate verify failed"
+                ),
+            )
+        return self.delegate.fetch(url, as_of_date=as_of_date)
+
+
 class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
 
@@ -217,6 +285,38 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertIn("DISCOVERED", relationships)
         self.assertIn("FULL_FETCH_OF", relationships)
         self.assertEqual(run.audit["critical_count_sum"], 0)
+
+    def test_invalid_candidate_ids_are_reprompted_without_deterministic_coercion(
+        self,
+    ) -> None:
+        provider = InvalidThenCorrectRankingProvider()
+        url = "https://example.com/retry-ranking"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {QUERY: (_result("Current Corp material", url),)}
+            ),
+            fetcher=PageFetcher(
+                fixture_text_by_url={url: _document_text("ranking-retry")}
+            ),
+        )
+        self.assertEqual(provider.ranking_call_count, 2)
+        self.assertEqual(len(run.evidence_documents), 1)
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        retry = ranking_payloads[-1]["ranking_retry_context"]
+        self.assertIn("unknown or duplicate id", retry["validation_error"])
+        self.assertEqual(
+            retry["required_candidate_ids"],
+            [run.checkpoint["search_candidates"][0]["candidate_id"]],
+        )
+        self.assertNotIn(
+            "UNKNOWN-CANDIDATE",
+            {row["candidate_id"] for row in run.checkpoint["candidate_materiality_decisions"]},
+        )
 
     def test_empty_or_duplicate_llm_query_is_pending_without_fallback(self) -> None:
         provider = SourceBrainProvider(queries=())
@@ -327,6 +427,73 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             any(reason.startswith("SNIPPET_ONLY_FULL_FETCH_REQUIRED") for reason in reasons)
         )
         self.assertEqual(run.audit["critical_counts"]["snippet_evidence_document_count"], 0)
+
+    def test_repeated_identical_fetch_failure_returns_to_llm_for_alternate_route(
+        self,
+    ) -> None:
+        provider = AlternateRouteSourceBrainProvider()
+        search = RecordingSearchProvider(
+            {
+                QUERY: (_result("Current Corp TLS report", FAILED_URL),),
+                ALTERNATE_QUERY: (
+                    _result(
+                        "Current Corp official mirror",
+                        ALTERNATE_URL,
+                        query=ALTERNATE_QUERY,
+                    ),
+                ),
+            }
+        )
+        fetcher = SelectiveRetryFailureFetcher()
+
+        first = self._run(provider=provider, search=search, fetcher=fetcher)
+        failed_candidate = first.checkpoint["search_candidates"][0]
+        self.assertEqual(failed_candidate["fetch_status"], "FETCH_RETRY_PENDING")
+
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=first.checkpoint,
+        )
+        failed_candidate = next(
+            row
+            for row in second.checkpoint["search_candidates"]
+            if row["url"] == FAILED_URL
+        )
+        self.assertEqual(failed_candidate["fetch_status"], "FETCH_ROUTE_EXHAUSTED")
+        self.assertTrue(failed_candidate["alternate_route_required"])
+        self.assertFalse(second.checkpoint["semantic_saturation_certified"])
+        self.assertTrue(
+            any(
+                row.get("alternate_route_required") is True
+                for row in second.checkpoint["query_failures"]
+            )
+        )
+
+        third = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=second.checkpoint,
+        )
+        self.assertEqual(provider.query_call_count, 2)
+        self.assertEqual([row[0] for row in search.calls], [QUERY, ALTERNATE_QUERY])
+        self.assertEqual(len(third.evidence_documents), 1)
+        self.assertEqual(
+            third.evidence_documents[0]["canonical_url"], ALTERNATE_URL
+        )
+        query_payload = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+        ][-1]
+        self.assertTrue(
+            any(
+                row.get("alternate_route_required") is True
+                for row in query_payload["prior_query_or_source_failures"]
+            )
+        )
 
     def test_checkpoint_resume_fetches_every_material_candidate_without_research_completion(self) -> None:
         provider = SourceBrainProvider()

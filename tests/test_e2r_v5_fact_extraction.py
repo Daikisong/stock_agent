@@ -103,6 +103,12 @@ class FactProvider:
             raise AssertionError(pass_name)
 
 
+class CorrectingQuoteFactProvider(FactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        self.bad_quote = "fact_extraction_retry_context" not in payload
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
 class E2RV5FactExtractionTests(unittest.TestCase):
     def test_every_full_document_is_processed_and_independent_sources_dedupe_fact(self) -> None:
         provider = FactProvider()
@@ -167,6 +173,37 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 for row in result.research_gap_feedback
             )
         )
+        self.assertEqual(len(provider.calls), 2)
+        self.assertEqual(
+            result.rejections[0].proposed_exact_quote, "quote not found"
+        )
+
+    def test_invalid_exact_quote_is_reprompted_with_the_rejected_proposal(self) -> None:
+        provider = CorrectingQuoteFactProvider()
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(_document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 2)
+        retry = provider.calls[-1]["payload"]["fact_extraction_retry_context"]
+        self.assertIn(
+            "EXACT_QUOTE_NOT_IN_FULL_DOCUMENT", retry["validation_errors"][0]
+        )
+        self.assertEqual(
+            retry["rejected_proposals"][0]["proposed_exact_quote"],
+            "quote not found",
+        )
+        self.assertEqual(result.rejections, ())
+        self.assertEqual(result.provider_calls[0].provider_attempt_count, 2)
+        self.assertTrue(result.provider_calls[0].validation_retry_used)
+        self.assertEqual(result.audit["validation_retry_call_count"], 1)
 
     def test_snippet_and_future_document_are_rejected_before_llm(self) -> None:
         provider = FactProvider()
