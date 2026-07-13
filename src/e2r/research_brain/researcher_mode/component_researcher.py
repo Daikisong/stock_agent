@@ -759,6 +759,9 @@ _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
 }
 
 _CODEX_PROMPT_TRANSPORT_MAX_CHARS = 1_000_000
+_RESEARCH_PROVIDER_RESPONSE_CACHE_SCHEMA_VERSION = (
+    "e2r_v5_research_provider_response_cache_v1"
+)
 
 
 @dataclass
@@ -768,6 +771,8 @@ class CodexResearcherProvider:
     transport: CodexStructuredProviderTransport
     provider_name: str = "CODEX_STRUCTURED_RESEARCHER_MODE"
     calls: list[Mapping[str, Any]] = field(default_factory=list)
+    response_cache_directory: Path | None = None
+    _response_cache_call_start_index: int = 0
 
     @classmethod
     def default(
@@ -807,6 +812,19 @@ class CodexResearcherProvider:
             )
         )
         prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+        schema_hash = _canonical_json_hash(_PROVIDER_SCHEMAS[pass_name])
+        cache_key = _canonical_json_hash(
+            {
+                "cache_schema_version": (
+                    _RESEARCH_PROVIDER_RESPONSE_CACHE_SCHEMA_VERSION
+                ),
+                "provider_name": self.provider_name,
+                "provider_identity": self._provider_identity(),
+                "pass_name": pass_name,
+                "prompt_hash": prompt_hash,
+                "output_schema_hash": schema_hash,
+            }
+        )
         if len(prompt) > _CODEX_PROMPT_TRANSPORT_MAX_CHARS:
             self.calls.append(
                 {
@@ -816,18 +834,80 @@ class CodexResearcherProvider:
                     "payload": safe_payload,
                     "response": None,
                     "status": "PROMPT_TRANSPORT_REJECTED",
+                    "cache_hit": False,
+                    "cache_key": cache_key,
+                    "cache_read_status": "NOT_ATTEMPTED",
+                    "output_schema_hash": schema_hash,
                 }
             )
             raise StructuredProviderRejected(
                 f"prompt_transport_too_large:{len(prompt)}:"
                 f"max={_CODEX_PROMPT_TRANSPORT_MAX_CHARS}"
             )
-        response = self.transport.complete(
-            prompt=prompt,
-            output_schema=_PROVIDER_SCHEMAS[pass_name],
-            schema_name=f"e2r_v5_{pass_name.lower()}",
+        cached_response, cache_read_status = self._read_cached_response(
+            cache_key=cache_key,
+            pass_name=pass_name,
+            prompt_hash=prompt_hash,
+            schema_hash=schema_hash,
         )
+        if cached_response is not None:
+            assert_blind_research_output(cached_response)
+            self.calls.append(
+                {
+                    "pass_name": pass_name,
+                    "prompt_hash": prompt_hash,
+                    "prompt_chars": len(prompt),
+                    "payload": safe_payload,
+                    "response": dict(cached_response),
+                    "status": "COMPLETE",
+                    "cache_hit": True,
+                    "cache_key": cache_key,
+                    "cache_read_status": cache_read_status,
+                    "output_schema_hash": schema_hash,
+                }
+            )
+            return cached_response
+        try:
+            response = self.transport.complete(
+                prompt=prompt,
+                output_schema=_PROVIDER_SCHEMAS[pass_name],
+                schema_name=f"e2r_v5_{pass_name.lower()}",
+            )
+        except (
+            StructuredProviderUnavailable,
+            StructuredProviderRejected,
+            TimeoutError,
+            OSError,
+            RuntimeError,
+        ) as exc:
+            self.calls.append(
+                {
+                    "pass_name": pass_name,
+                    "prompt_hash": prompt_hash,
+                    "prompt_chars": len(prompt),
+                    "payload": safe_payload,
+                    "response": None,
+                    "status": "PROVIDER_ERROR",
+                    "provider_error": (
+                        f"{exc.__class__.__name__}:"
+                        + (" ".join(str(exc).split())[-500:] or "no detail")
+                    ),
+                    "cache_hit": False,
+                    "cache_key": cache_key,
+                    "cache_read_status": cache_read_status,
+                    "cache_write_status": "NOT_WRITTEN",
+                    "output_schema_hash": schema_hash,
+                }
+            )
+            raise
         assert_blind_research_output(response.payload)
+        cache_write_status = self._write_cached_response(
+            cache_key=cache_key,
+            pass_name=pass_name,
+            prompt_hash=prompt_hash,
+            schema_hash=schema_hash,
+            response=response.payload,
+        )
         self.calls.append(
             {
                 "pass_name": pass_name,
@@ -836,9 +916,170 @@ class CodexResearcherProvider:
                 "payload": safe_payload,
                 "response": dict(response.payload),
                 "status": "COMPLETE",
+                "cache_hit": False,
+                "cache_key": cache_key,
+                "cache_read_status": cache_read_status,
+                "cache_write_status": cache_write_status,
+                "output_schema_hash": schema_hash,
             }
         )
         return response.payload
+
+    def configure_response_cache(self, directory: str | Path) -> None:
+        """Bind one target checkpoint cache without weakening prompt validation."""
+
+        cache_root = Path(directory)
+        cache_root.mkdir(parents=True, exist_ok=True)
+        self.response_cache_directory = cache_root
+        self._response_cache_call_start_index = len(self.calls)
+
+    def response_cache_audit(self) -> Mapping[str, Any]:
+        events = tuple(self.calls[self._response_cache_call_start_index :])
+        cache_events = tuple(row for row in events if row.get("cache_key"))
+        cache_root = self.response_cache_directory
+        return {
+            "schema_version": (
+                "e2r_v5_research_provider_response_cache_audit_v1"
+            ),
+            "status": (
+                "RESEARCH_PROVIDER_RESPONSE_CACHE_ACTIVE"
+                if cache_root is not None
+                else "RESEARCH_PROVIDER_RESPONSE_CACHE_DISABLED"
+            ),
+            "provider_name": self.provider_name,
+            "cache_directory": str(cache_root) if cache_root is not None else None,
+            "logical_call_count": len(events),
+            "successful_call_count": sum(
+                row.get("status") == "COMPLETE" for row in events
+            ),
+            "provider_error_count": sum(
+                row.get("status") == "PROVIDER_ERROR" for row in events
+            ),
+            "prompt_transport_rejected_count": sum(
+                row.get("status") == "PROMPT_TRANSPORT_REJECTED"
+                for row in events
+            ),
+            "transport_call_count": sum(
+                not bool(row.get("cache_hit"))
+                and row.get("status") != "PROMPT_TRANSPORT_REJECTED"
+                for row in cache_events
+            ),
+            "cache_hit_count": sum(
+                bool(row.get("cache_hit")) for row in cache_events
+            ),
+            "cache_invalid_or_unreadable_count": sum(
+                row.get("cache_read_status") == "INVALID_OR_UNREADABLE"
+                for row in cache_events
+            ),
+            "cache_entry_count": (
+                len(tuple(cache_root.glob("*.json")))
+                if cache_root is not None
+                else 0
+            ),
+            "prompt_and_schema_hash_required": True,
+            "provider_identity_hash_required": True,
+            "failed_provider_response_cached": False,
+        }
+
+    def _provider_identity(self) -> Mapping[str, Any]:
+        return {
+            "transport_class": self.transport.__class__.__qualname__,
+            "codex_command": getattr(self.transport, "codex_command", None),
+            "model": getattr(self.transport, "model", None),
+            "profile": getattr(self.transport, "profile", None),
+            "extra_args": list(getattr(self.transport, "extra_args", ()) or ()),
+        }
+
+    def _cache_path(self, *, pass_name: str, cache_key: str) -> Path | None:
+        if self.response_cache_directory is None:
+            return None
+        return self.response_cache_directory / (
+            f"{pass_name.lower()}-{cache_key}.json"
+        )
+
+    def _read_cached_response(
+        self,
+        *,
+        cache_key: str,
+        pass_name: str,
+        prompt_hash: str,
+        schema_hash: str,
+    ) -> tuple[Mapping[str, Any] | None, str]:
+        path = self._cache_path(pass_name=pass_name, cache_key=cache_key)
+        if path is None:
+            return None, "DISABLED"
+        if not path.is_file():
+            return None, "MISS"
+        try:
+            cached = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(cached, Mapping):
+                raise ValueError("cache entry must be an object")
+            response = cached.get("response")
+            if not isinstance(response, Mapping):
+                raise ValueError("cache response must be an object")
+            expected = {
+                "schema_version": (
+                    _RESEARCH_PROVIDER_RESPONSE_CACHE_SCHEMA_VERSION
+                ),
+                "cache_key": cache_key,
+                "provider_name": self.provider_name,
+                "provider_identity": self._provider_identity(),
+                "pass_name": pass_name,
+                "prompt_hash": prompt_hash,
+                "output_schema_hash": schema_hash,
+            }
+            if any(cached.get(key) != value for key, value in expected.items()):
+                raise ValueError("cache identity or input hash mismatch")
+            if cached.get("response_hash") != _canonical_json_hash(response):
+                raise ValueError("cache response hash mismatch")
+            assert_blind_research_output(response)
+        except (OSError, UnicodeError, json.JSONDecodeError, TypeError, ValueError):
+            return None, "INVALID_OR_UNREADABLE"
+        return dict(response), "HIT"
+
+    def _write_cached_response(
+        self,
+        *,
+        cache_key: str,
+        pass_name: str,
+        prompt_hash: str,
+        schema_hash: str,
+        response: Mapping[str, Any],
+    ) -> str:
+        path = self._cache_path(pass_name=pass_name, cache_key=cache_key)
+        if path is None:
+            return "DISABLED"
+        value = {
+            "schema_version": _RESEARCH_PROVIDER_RESPONSE_CACHE_SCHEMA_VERSION,
+            "cache_key": cache_key,
+            "provider_name": self.provider_name,
+            "provider_identity": self._provider_identity(),
+            "pass_name": pass_name,
+            "prompt_hash": prompt_hash,
+            "output_schema_hash": schema_hash,
+            "response_hash": _canonical_json_hash(response),
+            "response": dict(response),
+        }
+        temporary = path.with_suffix(path.suffix + ".tmp")
+        try:
+            temporary.write_text(
+                json.dumps(
+                    value,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            temporary.replace(path)
+        except (OSError, UnicodeError, TypeError, ValueError):
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError:
+                pass
+            return "WRITE_FAILED"
+        return "WRITTEN"
 
 
 class ComponentResearcher:
@@ -1401,6 +1642,16 @@ def _require_ids_exist(
 
 def _field(row: Any, key: str) -> Any:
     return row.get(key) if isinstance(row, Mapping) else getattr(row, key)
+
+
+def _canonical_json_hash(value: Any) -> str:
+    encoded = json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
 
 
 def _provider_name(provider: StructuredResearchProvider) -> str:

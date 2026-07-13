@@ -36,6 +36,19 @@ class Phase94IntegrationProvider:
         self.base = ScriptedResearchProvider()
         self.fact = FactProvider()
         self.calls = []
+        self.response_cache_directories = []
+
+    def configure_response_cache(self, directory):
+        self.response_cache_directories.append(Path(directory))
+
+    def response_cache_audit(self):
+        return {
+            "status": "FIXTURE_PROVIDER_CACHE_INTERFACE_ACTIVE",
+            "logical_call_count": len(self.calls),
+            "transport_call_count": len(self.calls),
+            "cache_hit_count": 0,
+            "cache_invalid_or_unreadable_count": 0,
+        }
 
     def complete(self, *, pass_name, payload):
         self.calls.append({"pass_name": pass_name, "payload": payload})
@@ -431,6 +444,16 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ["example.com"],
             )
             self.assertFalse((result.output_root / "gold_fact_comparison.jsonl").exists())
+            self.assertEqual(
+                provider.response_cache_directories[-1],
+                result.output_root / "research_provider_response_cache",
+            )
+            self.assertTrue(
+                (
+                    result.output_root
+                    / "research_provider_response_cache_audit.json"
+                ).is_file()
+            )
 
             runner.run_checkpoint(
                 config=config,

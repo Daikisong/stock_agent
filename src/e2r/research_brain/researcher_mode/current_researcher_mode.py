@@ -188,6 +188,7 @@ class CurrentResearcherModeTargetRunner:
     ) -> CurrentResearcherTargetRun:
         root = Path(config.output_root) / target.symbol
         root.mkdir(parents=True, exist_ok=True)
+        _configure_provider_response_cache(self.provider, root)
         anchors = _historical_anchors(
             repo_root=repo_root,
             archetype_id=config.archetype_id,
@@ -457,6 +458,12 @@ class CurrentResearcherModeTargetRunner:
             gold_critical_fact_miss_count=1,
         )
         write_research_epoch_run(epoch, root)
+        provider_cache_audit = _provider_response_cache_audit(self.provider)
+        if provider_cache_audit is not None:
+            write_json(
+                root / "research_provider_response_cache_audit.json",
+                provider_cache_audit,
+            )
         component_memo_rows = _production_component_memo_rows(
             target=target,
             dossier=dossier,
@@ -519,6 +526,23 @@ class CurrentResearcherModeTargetRunner:
             ),
             "structured_pending_reasons": list(
                 structured_materialization.pending_reasons
+            ),
+            "provider_response_cache": (
+                {
+                    key: provider_cache_audit.get(key)
+                    for key in (
+                        "status",
+                        "logical_call_count",
+                        "successful_call_count",
+                        "transport_call_count",
+                        "cache_hit_count",
+                        "provider_error_count",
+                        "prompt_transport_rejected_count",
+                        "cache_invalid_or_unreadable_count",
+                    )
+                }
+                if provider_cache_audit is not None
+                else {"status": "PROVIDER_CACHE_INTERFACE_UNAVAILABLE"}
             ),
             "completion_gates": dict(gates),
             "production_research_complete": production_complete,
@@ -1232,6 +1256,27 @@ def _tree_hash(root: Path) -> str:
             if path.is_file() and path.name != "target_run_manifest.json"
         ]
     )
+
+
+def _configure_provider_response_cache(
+    provider: StructuredResearchProvider,
+    root: Path,
+) -> None:
+    configure = getattr(provider, "configure_response_cache", None)
+    if callable(configure):
+        configure(root / "research_provider_response_cache")
+
+
+def _provider_response_cache_audit(
+    provider: StructuredResearchProvider,
+) -> Mapping[str, Any] | None:
+    audit = getattr(provider, "response_cache_audit", None)
+    if not callable(audit):
+        return None
+    value = audit()
+    if not isinstance(value, Mapping):
+        raise TypeError("provider response cache audit must be an object")
+    return dict(value)
 
 
 def _read_json(path: Path) -> Mapping[str, Any]:

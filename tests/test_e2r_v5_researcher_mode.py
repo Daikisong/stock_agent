@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import inspect
 import json
+import tempfile
 import unittest
 from pathlib import Path
 from typing import Any, Mapping
@@ -168,6 +169,7 @@ class ScriptedResearchProvider:
 class SchemaRecordingTransport:
     def __init__(self) -> None:
         self.output_schema: Mapping[str, Any] | None = None
+        self.call_count = 0
 
     def complete(self, *, prompt, output_schema, schema_name):
         from e2r.research_brain.planning.provider_transport import (
@@ -175,6 +177,7 @@ class SchemaRecordingTransport:
         )
 
         del prompt, schema_name
+        self.call_count += 1
         self.output_schema = output_schema
         return StructuredProviderResponse(
             payload={
@@ -186,6 +189,16 @@ class SchemaRecordingTransport:
             stderr="",
             returncode=0,
         )
+
+
+class FailingRecordingTransport:
+    def __init__(self) -> None:
+        self.call_count = 0
+
+    def complete(self, *, prompt, output_schema, schema_name):
+        del prompt, output_schema, schema_name
+        self.call_count += 1
+        raise RuntimeError("fixture provider failure")
 
 
 class E2RV5ResearcherModeTests(unittest.TestCase):
@@ -243,6 +256,60 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             with self.subTest(pass_name=pass_name):
                 self.assertEqual(_open_schema_object_paths(schema), ())
                 self.assertEqual(_object_property_requirement_gaps(schema), ())
+
+    def test_codex_provider_reuses_only_exact_prompt_and_schema_checkpoint(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            payload = {"target_id": TARGET, "as_of_date": AS_OF_DATE}
+            first_transport = SchemaRecordingTransport()
+            first = CodexResearcherProvider(  # type: ignore[arg-type]
+                transport=first_transport
+            )
+            first.configure_response_cache(directory)
+
+            first.complete(pass_name="SOURCE_QUERY_GENERATION", payload=payload)
+            first.complete(pass_name="SOURCE_QUERY_GENERATION", payload=payload)
+
+            self.assertEqual(first_transport.call_count, 1)
+            self.assertFalse(first.calls[0]["cache_hit"])
+            self.assertTrue(first.calls[1]["cache_hit"])
+            self.assertEqual(first.response_cache_audit()["cache_hit_count"], 1)
+
+            resumed_transport = SchemaRecordingTransport()
+            resumed = CodexResearcherProvider(  # type: ignore[arg-type]
+                transport=resumed_transport
+            )
+            resumed.configure_response_cache(directory)
+            resumed.complete(pass_name="SOURCE_QUERY_GENERATION", payload=payload)
+            self.assertEqual(resumed_transport.call_count, 0)
+            self.assertTrue(resumed.calls[-1]["cache_hit"])
+
+            resumed.complete(
+                pass_name="SOURCE_QUERY_GENERATION",
+                payload={**payload, "as_of_date": "2026-06-30"},
+            )
+            self.assertEqual(resumed_transport.call_count, 1)
+            self.assertFalse(resumed.calls[-1]["cache_hit"])
+
+    def test_codex_provider_never_caches_failed_response(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            transport = FailingRecordingTransport()
+            provider = CodexResearcherProvider(  # type: ignore[arg-type]
+                transport=transport
+            )
+            provider.configure_response_cache(directory)
+            for _ in range(2):
+                with self.assertRaisesRegex(RuntimeError, "fixture provider failure"):
+                    provider.complete(
+                        pass_name="SOURCE_QUERY_GENERATION",
+                        payload={"target_id": TARGET, "as_of_date": AS_OF_DATE},
+                    )
+
+            self.assertEqual(transport.call_count, 2)
+            self.assertEqual(provider.response_cache_audit()["cache_hit_count"], 0)
+            self.assertEqual(provider.response_cache_audit()["provider_error_count"], 2)
+            self.assertEqual(list(Path(directory).glob("*.json")), [])
 
     def test_component_research_resolves_metric_ids_to_immutable_input_values(self) -> None:
         provider = ScriptedResearchProvider()
