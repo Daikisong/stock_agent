@@ -20,6 +20,7 @@ from e2r.research_brain.runtime.scoring_contracts import (
 )
 
 from .component_anchor_atlas import compile_component_anchor_atlas_from_files
+from .canary_leaf_contract import materialize_canary_checkpoint_leaves
 from .component_research_planner import ComponentResearchPlanner
 from .component_researcher import CodexResearcherProvider, StructuredResearchProvider
 from .component_scoring_memos import (
@@ -533,6 +534,21 @@ class CurrentResearcherModeTargetRunner:
                 stagecourt_run.decision.status == "FINAL"
             ),
         }
+        production_complete_before_leaf_contract = all(
+            bool(value) for value in gates.values()
+        )
+        leaf_contract = materialize_canary_checkpoint_leaves(
+            root,
+            target_id=target.target_id,
+            as_of_date=config.as_of_date,
+            production_research_complete=production_complete_before_leaf_contract,
+        )
+        gates = {
+            **gates,
+            "master_canary_leaf_contract": (
+                int(leaf_contract["critical_count_sum"]) == 0
+            ),
+        }
         production_complete = all(bool(value) for value in gates.values())
         status = (
             "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
@@ -585,6 +601,11 @@ class CurrentResearcherModeTargetRunner:
                 if provider_cache_audit is not None
                 else {"status": "PROVIDER_CACHE_INTERFACE_UNAVAILABLE"}
             ),
+            "canary_leaf_contract": {
+                "status": leaf_contract["status"],
+                "critical_count_sum": leaf_contract["critical_count_sum"],
+                "audit_path": "canary_leaf_contract_audit.json",
+            },
             "completion_gates": dict(gates),
             "production_research_complete": production_complete,
         }

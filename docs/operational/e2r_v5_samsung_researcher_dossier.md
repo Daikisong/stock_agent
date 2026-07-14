@@ -15,16 +15,17 @@
 
 ## Leaf presence
 
-- `research_epoch_checkpoint.json`: `present`
-- `generated_queries.jsonl`: `present`
-- `source_graph.json`: `present`
-- `source_graph_evidence_documents.jsonl`: `present`
+- `research_epochs.jsonl`: `present`
+- `query_ledger.jsonl`: `present`
+- `source_graph.jsonl`: `present`
+- `documents.jsonl`: `present`
 - `evidence_facts.jsonl`: `present`
 - `counterfacts.jsonl`: `present`
 - `component_research_memos.jsonl`: `present`
-- `judge_decisions.jsonl`: `present`
-- `anchor_comparisons.jsonl`: `present`
-- `component_decisions.jsonl`: `present`
-- `deterministic_total_score.json`: `present`
+- `component_judge_decisions.jsonl`: `present`
+- `historical_anchor_comparisons.jsonl`: `present`
+- `final_component_decisions.jsonl`: `present`
+- `score_vector.json`: `present`
 - `atomic_stage_decision.json`: `missing`
 - `stagecourt_trace.json`: `missing`
+- `gold_fact_comparison.jsonl`: `missing`

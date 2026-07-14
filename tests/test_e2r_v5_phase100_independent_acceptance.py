@@ -15,6 +15,9 @@ from e2r.research_brain.researcher_mode.independent_acceptance import (
     validate_full_test_evidence,
     verification_tree_hash,
 )
+from e2r.research_brain.researcher_mode.canary_leaf_contract import (
+    CANARY_MASTER_LEAF_FILES,
+)
 
 
 class E2RV5Phase100IndependentAcceptanceTests(unittest.TestCase):
@@ -60,6 +63,21 @@ class E2RV5Phase100IndependentAcceptanceTests(unittest.TestCase):
                 for row in targets
             )
         )
+
+    def test_live_canary_reviewer_uses_exact_master_leaf_and_real_tree_hash(self) -> None:
+        reviewer = next(row for row in self.gate["reviewers"] if row["reviewer_id"] == "F")
+        targets = reviewer["recomputed_metrics"]["targets"]
+        for row in targets:
+            self.assertEqual(
+                set(row["leaf_presence"]),
+                set(CANARY_MASTER_LEAF_FILES.values()),
+            )
+            if row["output_root"]:
+                self.assertTrue(row["actual_output_tree_hash"])
+                self.assertEqual(
+                    row["output_tree_hash_matches"],
+                    row["output_tree_hash"] == row["actual_output_tree_hash"],
+                )
 
     def test_component_calibration_recomputes_historical_thresholds(self) -> None:
         calibration = self.bundle["component_score_calibration"]
@@ -229,7 +247,12 @@ class E2RV5Phase100IndependentAcceptanceTests(unittest.TestCase):
         self.assertIn(FINAL_NOT_READY_LABEL, readiness)
         self.assertIn("PHASE94_CLEAN_GOLD_RECALL_COMPARISON_PENDING", readiness)
         self.assertIn("LIVE_CANARY_DOSSIER_INCOMPLETE", readiness)
+        self.assertIn("CANARY_LEAF_CONTRACT_PENDING", readiness)
         self.assertIn("FINAL_STAGECOURT_PENDING", readiness)
+        self.assertIn(
+            "CODEX_PROVIDER_USAGE_LIMIT_UNTIL_2026-07-20T03:58:00+09:00",
+            readiness,
+        )
         self.assertIn(f"`{FINAL_READY_LABEL}`는", readiness)
         self.assertNotIn(f"exact verdict: `{FINAL_READY_LABEL}`", readiness)
 

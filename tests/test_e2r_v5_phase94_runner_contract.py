@@ -489,6 +489,17 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 "total_score.json",
                 "stagecourt.json",
                 "current_researcher_mode_audit.json",
+                "research_epochs.jsonl",
+                "query_ledger.jsonl",
+                "source_graph.jsonl",
+                "documents.jsonl",
+                "component_judge_decisions.jsonl",
+                "historical_anchor_comparisons.jsonl",
+                "final_component_decisions.jsonl",
+                "score_vector.json",
+                "atomic_stage_decision.json",
+                "stagecourt_trace.json",
+                "canary_leaf_contract_audit.json",
             }
             files = {path.name for path in result.output_root.iterdir() if path.is_file()}
             self.assertTrue(expected.issubset(files))
@@ -524,6 +535,20 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ["example.com"],
             )
             self.assertFalse((result.output_root / "gold_fact_comparison.jsonl").exists())
+            leaf_audit = json.loads(
+                (result.output_root / "canary_leaf_contract_audit.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(leaf_audit["critical_count_sum"], 0)
+            self.assertTrue(result.completion_gates["master_canary_leaf_contract"])
+            score_vector = json.loads(
+                (result.output_root / "score_vector.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertFalse(score_vector["score_valid"])
+            self.assertIsNone(score_vector["component_score_vector"])
             structured_requirements = structured_materializer.calls[-1][
                 "required_roles_by_component"
             ]

@@ -53,6 +53,14 @@ from .component_anchor_atlas import (
     compile_component_anchor_atlas_from_files,
     write_component_anchor_atlas,
 )
+from .canary_leaf_contract import (
+    CANARY_LEAF_CONTRACT_SCHEMA_VERSION,
+    CANARY_MASTER_LEAF_FILES,
+    audit_canary_leaf_contract,
+    canary_output_tree_hash,
+    materialize_canary_checkpoint_leaves,
+    write_canary_post_run_gold_comparison,
+)
 from .schemas import (
     AnchorConfidence,
     BusinessModelMemo,
@@ -450,6 +458,8 @@ from .full_thesis_gold_benchmark import (
 
 __all__ = [
     "AGGREGATOR_CONFIG",
+    "CANARY_LEAF_CONTRACT_SCHEMA_VERSION",
+    "CANARY_MASTER_LEAF_FILES",
     "DEFAULT_COMPONENT_CALIBRATION_PATH",
     "DEFAULT_FINAL_READINESS_PATH",
     "DEFAULT_FULL_TEST_EVIDENCE_PATH",
@@ -465,6 +475,10 @@ __all__ = [
     "validate_full_test_evidence",
     "verification_tree_hash",
     "write_phase100_acceptance_artifacts",
+    "audit_canary_leaf_contract",
+    "canary_output_tree_hash",
+    "materialize_canary_checkpoint_leaves",
+    "write_canary_post_run_gold_comparison",
     "PHASE80_ARTIFACT_PATHS",
     "PHASE84_AUDIT_PATH",
     "PHASE84_PASS",

@@ -20,6 +20,11 @@ from typing import Any, Callable, Mapping, Sequence
 
 from e2r.production.metadata import stable_hash, write_json, write_text
 
+from .canary_leaf_contract import (
+    CANARY_MASTER_LEAF_FILES,
+    canary_output_tree_hash,
+)
+
 
 SCHEMA_VERSION = "e2r_v5_phase100_independent_acceptance_v1"
 REVIEWER_GATE_PASS = "E2R_V5_INDEPENDENT_REVIEWER_GATE_PASS"
@@ -467,25 +472,20 @@ def _canary_rows(root: Path) -> tuple[Mapping[str, Any], ...]:
         manifest = _read_json(manifest_path) if manifest_path else {}
         output_root = manifest_path.parent if manifest_path else None
         cache = manifest.get("provider_response_cache") or {}
-        leaf_names = (
-            "research_epoch_checkpoint.json",
-            "generated_queries.jsonl",
-            "source_graph.json",
-            "source_graph_evidence_documents.jsonl",
-            "evidence_facts.jsonl",
-            "counterfacts.jsonl",
-            "component_research_memos.jsonl",
-            "judge_decisions.jsonl",
-            "anchor_comparisons.jsonl",
-            "component_decisions.jsonl",
-            "deterministic_total_score.json",
-            "atomic_stage_decision.json",
-            "stagecourt_trace.json",
-        )
+        leaf_names = tuple(CANARY_MASTER_LEAF_FILES.values())
         leaf_presence = {
             name: bool(output_root and (output_root / name).is_file())
             for name in leaf_names
         }
+        manifest_output_tree_hash = str(manifest.get("output_tree_hash") or "")
+        actual_output_tree_hash = (
+            canary_output_tree_hash(output_root) if output_root else ""
+        )
+        leaf_contract = (
+            _read_json(output_root / "canary_leaf_contract_audit.json")
+            if output_root
+            else {}
+        )
         rows.append(
             {
                 "target_id": target_id,
@@ -503,7 +503,18 @@ def _canary_rows(root: Path) -> tuple[Mapping[str, Any], ...]:
                 "counterfact_count": int(manifest.get("counterfact_count") or 0),
                 "component_memo_count": int(manifest.get("component_memo_count") or 0),
                 "query_count": int(manifest.get("query_count") or 0),
-                "output_tree_hash": str(manifest.get("output_tree_hash") or ""),
+                "output_tree_hash": manifest_output_tree_hash,
+                "actual_output_tree_hash": actual_output_tree_hash,
+                "output_tree_hash_matches": bool(
+                    manifest_output_tree_hash
+                    and manifest_output_tree_hash == actual_output_tree_hash
+                ),
+                "canary_leaf_contract_status": leaf_contract.get("status"),
+                "canary_leaf_contract_critical_count": int(
+                    leaf_contract.get("critical_count_sum") or 0
+                )
+                if leaf_contract
+                else 1,
                 "provider_logical_call_count": int(cache.get("logical_call_count") or 0),
                 "provider_successful_call_count": int(cache.get("successful_call_count") or 0),
                 "provider_error_count": int(cache.get("provider_error_count") or 0),
@@ -523,12 +534,11 @@ def _target_specs(root: Path) -> tuple[Mapping[str, Any], ...]:
 def _canary_score_valid(output_root: Path | None) -> bool:
     if output_root is None:
         return False
-    total = _read_json(output_root / "deterministic_total_score.json")
-    score = total.get("score")
+    score = _read_json(output_root / CANARY_MASTER_LEAF_FILES["score_vector"])
     return bool(
-        total.get("status") == "COMPLETE"
-        and isinstance(score, Mapping)
+        score.get("status") == "COMPLETE"
         and score.get("score_valid") is True
+        and isinstance(score.get("component_score_vector"), Mapping)
     )
 
 
@@ -705,13 +715,22 @@ def _review_f(context: Mapping[str, Any], root: Path) -> Mapping[str, Any]:
             row["document_count"] <= 0 or row["fact_count"] <= 0 for row in rows
         ),
         "final_component_decision_missing_count": sum(
-            not row["leaf_presence"].get("component_decisions.jsonl") for row in rows
+            not row["leaf_presence"].get("final_component_decisions.jsonl")
+            for row in rows
+        ),
+        "master_leaf_contract_critical_count": sum(
+            row["canary_leaf_contract_critical_count"] for row in rows
         ),
     }
-    blockers = tuple(
+    blockers = [
         f"LIVE_CANARY_DOSSIER_INCOMPLETE:{row['target_id']}"
         for row in rows
         if not row["production_research_complete"]
+    ]
+    blockers.extend(
+        f"CANARY_LEAF_CONTRACT_PENDING:{row['target_id']}"
+        for row in rows
+        if row["canary_leaf_contract_critical_count"] > 0
     )
     return _custom_result(critical, {"targets": list(rows)}, blockers)
 
@@ -776,9 +795,15 @@ def _review_j(context: Mapping[str, Any], root: Path) -> Mapping[str, Any]:
             row["provider_successful_call_count"] <= 0 for row in rows
         ),
         "checkpoint_missing_count": sum(
-            not row["leaf_presence"].get("research_epoch_checkpoint.json") for row in rows
+            not row["leaf_presence"].get("research_epochs.jsonl") for row in rows
         ),
         "output_hash_missing_count": sum(not row["output_tree_hash"] for row in rows),
+        "output_hash_mismatch_count": sum(
+            not row["output_tree_hash_matches"] for row in rows
+        ),
+        "master_leaf_contract_critical_count": sum(
+            row["canary_leaf_contract_critical_count"] for row in rows
+        ),
         "current_full_test_evidence_missing_count": int(not full_test_valid),
         "capability_regression_critical_count": _base_document_critical(
             context["documents"]["phase98"]
@@ -798,6 +823,14 @@ def _review_j(context: Mapping[str, Any], root: Path) -> Mapping[str, Any]:
         for row in rows
         if not row["production_research_complete"]
     ]
+    blockers.extend(
+        str(blocker)
+        for blocker in context["documents"]["phase99"].get(
+            "canary_completion_blockers"
+        )
+        or ()
+        if str(blocker).strip()
+    )
     if not full_test_valid:
         blockers.append("CURRENT_FULL_TEST_EVIDENCE_MISSING_OR_STALE")
     return _custom_result(

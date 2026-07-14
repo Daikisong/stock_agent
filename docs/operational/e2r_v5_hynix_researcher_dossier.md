@@ -15,16 +15,17 @@
 
 ## Leaf presence
 
-- `research_epoch_checkpoint.json`: `missing`
-- `generated_queries.jsonl`: `missing`
-- `source_graph.json`: `missing`
-- `source_graph_evidence_documents.jsonl`: `missing`
+- `research_epochs.jsonl`: `missing`
+- `query_ledger.jsonl`: `missing`
+- `source_graph.jsonl`: `missing`
+- `documents.jsonl`: `missing`
 - `evidence_facts.jsonl`: `missing`
 - `counterfacts.jsonl`: `missing`
 - `component_research_memos.jsonl`: `missing`
-- `judge_decisions.jsonl`: `missing`
-- `anchor_comparisons.jsonl`: `missing`
-- `component_decisions.jsonl`: `missing`
-- `deterministic_total_score.json`: `missing`
+- `component_judge_decisions.jsonl`: `missing`
+- `historical_anchor_comparisons.jsonl`: `missing`
+- `final_component_decisions.jsonl`: `missing`
+- `score_vector.json`: `missing`
 - `atomic_stage_decision.json`: `missing`
 - `stagecourt_trace.json`: `missing`
+- `gold_fact_comparison.jsonl`: `missing`

@@ -15,6 +15,7 @@ from e2r.research_brain.researcher_mode import (
     CurrentResearcherModeTargetRunner,
     compare_phase93_gold_post_run,
     load_current_research_targets,
+    write_canary_post_run_gold_comparison,
     write_phase93_post_run_comparison,
     write_production_lane,
 )
@@ -128,6 +129,17 @@ def main(argv: list[str] | None = None) -> int:
             comparison_path=output_root / "gold_fact_comparison.jsonl",
             audit_path=output_root / "post_run_gold_recall_audit.json",
         )
+        for run in runs:
+            write_canary_post_run_gold_comparison(
+                run.output_root,
+                target_id=run.target.target_id,
+                as_of_date=config.as_of_date,
+                comparison_rows=tuple(
+                    row
+                    for row in comparison.comparisons
+                    if str(row.get("target_id") or "") == run.target.target_id
+                ),
+            )
         post_run_status = comparison.status
         gold_critical_fact_miss_count = comparison.audit["critical_counts"].get(
             "critical_material_fact_recall_below_threshold_count"
