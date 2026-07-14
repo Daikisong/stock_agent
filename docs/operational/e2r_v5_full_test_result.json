@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/home/eorb915/.local/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "exit_code": 0,
+  "finished_at": "2026-07-14T00:41:35.241488+00:00",
+  "full_discovery": true,
+  "log_path": "docs/operational/e2r_v5_full_test_result.log",
+  "log_sha256": "9b8734822a0bddceac4969bc71e65987a046d9bb28e0437f1847d4dca0859a46",
+  "schema_version": "e2r_v5_full_test_evidence_v1",
+  "started_at": "2026-07-14T00:32:27.922491+00:00",
+  "status": "PASS",
+  "test_count": 6260,
+  "unittest_runtime_seconds": 543.984,
+  "verification_tree_hash": "e44fff27e2c50c9819febb49ae32b51599bb7e0c160bbec6a2ed36ba86bdc935",
+  "verification_tree_stable_during_run": true,
+  "wall_runtime_seconds": 547.318997
+}

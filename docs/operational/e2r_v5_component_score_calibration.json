@@ -1,0 +1,46 @@
+{
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "aggregator_critical_count": 0,
+    "dynamic_range_collapse_count": 0,
+    "historical_replay_critical_count": 0,
+    "strong_anchor_equivalent_undercredit_count": 0
+  },
+  "dynamic_range": {
+    "collapsed_to_zero_twenty": false,
+    "group_boundaries": {
+      "collapse_upper_inclusive": 20.0,
+      "high_lower_inclusive": 70.0,
+      "low_upper_exclusive": 30.0
+    },
+    "group_counts": {
+      "HIGH": 6,
+      "LOW": 3,
+      "MID": 3
+    },
+    "historical_group_count": 3,
+    "reconstructed_total_max": 87.19999999999999,
+    "reconstructed_total_min": 6.9,
+    "reconstructed_total_span": 80.29999999999998
+  },
+  "historical_parity_metrics": {
+    "component_normalized_mae": 0.010129534843493639,
+    "critical_positive_counter_ordering": 1.0,
+    "false_positive_guard_accuracy": 1.0,
+    "spearman_rank_correlation": 1.0,
+    "stage_band_accuracy": 1.0,
+    "total_proxy_mae": 0.1383333333333292
+  },
+  "production_current_score_authority": false,
+  "schema_version": "e2r_v5_component_score_calibration_v1",
+  "status": "COMPONENT_SCORE_CALIBRATION_PASS",
+  "strong_anchor_equivalent_undercredit_count": 0,
+  "thresholds": {
+    "component_normalized_mae_max": 0.12,
+    "critical_positive_counter_ordering_min": 1.0,
+    "false_positive_guard_accuracy_min": 1.0,
+    "spearman_rank_correlation_min": 0.85,
+    "stage_band_accuracy_min": 0.9,
+    "total_proxy_mae_max": 8.0
+  }
+}

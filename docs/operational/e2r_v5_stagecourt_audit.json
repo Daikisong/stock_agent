@@ -1,0 +1,93 @@
+{
+  "canonical_stage_enum": [
+    "0",
+    "1",
+    "2",
+    "3-Green",
+    "3-Yellow",
+    "3-Red",
+    "4A",
+    "4B",
+    "4C",
+    "5"
+  ],
+  "critical_count_sum": 4,
+  "critical_counts": {
+    "canary_final_stage_missing_count": 2,
+    "canary_score_vector_missing_count": 2
+  },
+  "event_overlay_can_change_canonical_stage": false,
+  "llm_stage_authority": false,
+  "schema_version": "e2r_v5_stagecourt_acceptance_audit_v1",
+  "status": "FINAL_STAGECOURT_PENDING",
+  "targets": [
+    {
+      "company_name": "삼성전자",
+      "component_memo_count": 0,
+      "counterfact_count": 404,
+      "document_count": 287,
+      "fact_count": 1494,
+      "leaf_presence": {
+        "anchor_comparisons.jsonl": true,
+        "atomic_stage_decision.json": false,
+        "component_decisions.jsonl": true,
+        "component_research_memos.jsonl": true,
+        "counterfacts.jsonl": true,
+        "deterministic_total_score.json": true,
+        "evidence_facts.jsonl": true,
+        "generated_queries.jsonl": true,
+        "judge_decisions.jsonl": true,
+        "research_epoch_checkpoint.json": true,
+        "source_graph.json": true,
+        "source_graph_evidence_documents.jsonl": true,
+        "stagecourt_trace.json": false
+      },
+      "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
+      "output_root": "output/researcher_mode/c06/2026-07-12/005930",
+      "output_tree_hash": "177961ca5d4a5a6fe694528ff1a15ec54cbfbcc55f55ae0b9ff2bec78cf1d26d",
+      "production_research_complete": false,
+      "provider_error_count": 102,
+      "provider_logical_call_count": 102,
+      "provider_successful_call_count": 0,
+      "query_count": 193,
+      "score_valid": false,
+      "stage_final": false,
+      "status": "RESEARCH_CHECKPOINT_PENDING",
+      "target_id": "005930"
+    },
+    {
+      "company_name": "SK하이닉스",
+      "component_memo_count": 0,
+      "counterfact_count": 0,
+      "document_count": 0,
+      "fact_count": 0,
+      "leaf_presence": {
+        "anchor_comparisons.jsonl": false,
+        "atomic_stage_decision.json": false,
+        "component_decisions.jsonl": false,
+        "component_research_memos.jsonl": false,
+        "counterfacts.jsonl": false,
+        "deterministic_total_score.json": false,
+        "evidence_facts.jsonl": false,
+        "generated_queries.jsonl": false,
+        "judge_decisions.jsonl": false,
+        "research_epoch_checkpoint.json": false,
+        "source_graph.json": false,
+        "source_graph_evidence_documents.jsonl": false,
+        "stagecourt_trace.json": false
+      },
+      "manifest_path": null,
+      "output_root": null,
+      "output_tree_hash": "",
+      "production_research_complete": false,
+      "provider_error_count": 0,
+      "provider_logical_call_count": 0,
+      "provider_successful_call_count": 0,
+      "query_count": 0,
+      "score_valid": false,
+      "stage_final": false,
+      "status": "LIVE_RESEARCH_NOT_STARTED",
+      "target_id": "000660"
+    }
+  ]
+}

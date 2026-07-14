@@ -1,0 +1,739 @@
+{
+  "all_reviewers_independently_recomputed": true,
+  "blockers": [
+    "PHASE94_CLEAN_GOLD_RECALL_COMPARISON_PENDING",
+    "LIVE_CANARY_DOSSIER_INCOMPLETE:005930",
+    "LIVE_CANARY_DOSSIER_INCOMPLETE:000660",
+    "FINAL_STAGECOURT_PENDING:005930",
+    "FINAL_STAGECOURT_PENDING:000660",
+    "RUNTIME_NOT_COMPLETE:005930",
+    "RUNTIME_NOT_COMPLETE:000660"
+  ],
+  "critical_count_sum": 23,
+  "exact_verdict": "MEANINGFUL_E2R_RESEARCHER_PARITY_NOT_READY",
+  "failed_reviewers": [
+    "B",
+    "F",
+    "G",
+    "J"
+  ],
+  "one_critical_forces_failure": true,
+  "production_readiness_authority": false,
+  "reviewer_count": 10,
+  "reviewer_roster": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J"
+  ],
+  "reviewers": [
+    {
+      "blockers": [],
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "anchor_critical_count": 0,
+        "atlas_critical_count": 0,
+        "blind_replay_critical_count": 0,
+        "detector_error_count": 0,
+        "detector_failure_count": 0,
+        "detector_run_count_mismatch": 0,
+        "future_leakage_count": 0,
+        "missing_required_leaf_count": 0,
+        "registry_coverage_failure_count": 0
+      },
+      "detector_ids": [
+        "tests.test_e2r_v5_historical_judgment_atlas.E2RV5HistoricalJudgmentAtlasTests.test_operational_full_corpus_atlas_is_committed_pass",
+        "tests.test_e2r_v5_component_anchor_atlas.E2RV5ComponentAnchorAtlasTests.test_exact_anchors_are_source_backed_and_proxy_rows_are_guard_only",
+        "tests.test_e2r_v5_historical_blind_replay.E2RV5HistoricalBlindReplayTests.test_phase91_audit_is_reproducible_and_passes_every_threshold"
+      ],
+      "detector_pass_count": 3,
+      "detector_run_count": 3,
+      "recomputed_metrics": {
+        "component_normalized_mae": 0.010129534843493639,
+        "critical_positive_counter_ordering": 1.0,
+        "false_positive_guard_accuracy": 1.0,
+        "registry_coverage": 1.0,
+        "spearman_rank_correlation": 1.0,
+        "stage_band_accuracy": 1.0,
+        "total_proxy_mae": 0.1383333333333292
+      },
+      "required_leaves": [
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_historical_judgment_atlas_audit.json",
+          "sha256": "fa9f0ada57035ada7cc6aaf503f1ab98177cc2641c445cb417dafcc0562d935a"
+        },
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_component_anchor_atlas.json",
+          "sha256": "fdeb00310faa16c976f2e703e3dd939ca19d502ffe94481dd902a4777529664d"
+        },
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_historical_blind_replay.json",
+          "sha256": "c7ccc316af2aa9bec87fc331713036f5886e17c93c1ae36857ab0a6862a0cdef"
+        }
+      ],
+      "reviewer_id": "A",
+      "runner_output": "",
+      "scope": "research rows / score schemas / anchors",
+      "status": "PASS",
+      "title": "Historical Corpus Fidelity"
+    },
+    {
+      "blockers": [
+        "PHASE94_CLEAN_GOLD_RECALL_COMPARISON_PENDING"
+      ],
+      "critical_count_sum": 5,
+      "critical_counts": {
+        "all_material_fact_recall_threshold_failure_count": 1,
+        "component_research_topic_coverage_threshold_failure_count": 1,
+        "counter_supersession_recall_threshold_failure_count": 1,
+        "critical_material_fact_recall_threshold_failure_count": 1,
+        "current_material_fact_recall_missing_count": 1,
+        "detector_error_count": 0,
+        "detector_failure_count": 0,
+        "detector_run_count_mismatch": 0,
+        "gold_benchmark_critical_count": 0,
+        "legacy_recall_threshold_failure_count": 0,
+        "legacy_retrieval_critical_count": 0,
+        "missing_required_leaf_count": 0,
+        "source_graph_critical_count": 0
+      },
+      "detector_ids": [
+        "tests.test_e2r_v5_legacy_retrieval_aperture.E2RV5LegacyRetrievalApertureTests.test_acceptance_recall_is_above_threshold",
+        "tests.test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests.test_graph_keeps_official_structured_independent_and_reference_expansion",
+        "tests.test_e2r_v5_full_thesis_gold_benchmark.E2RV5FullThesisGoldBenchmarkTests.test_all_ten_public_source_families_exist_for_each_target"
+      ],
+      "detector_pass_count": 3,
+      "detector_run_count": 3,
+      "recomputed_metrics": {
+        "all_material_fact_recall": null,
+        "component_research_topic_coverage": null,
+        "counter_supersession_recall": null,
+        "critical_material_fact_recall": null,
+        "current_gold_comparison_status": "PENDING_PHASE94_CLEAN_PRODUCTION_RERUN",
+        "legacy_valid_material_fact_recall": 1.0,
+        "thresholds": {
+          "all_material_fact_recall_min": 0.95,
+          "component_research_topic_coverage_min": 1.0,
+          "counter_supersession_recall_min": 1.0,
+          "critical_material_fact_recall_min": 1.0
+        }
+      },
+      "required_leaves": [
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_legacy_retrieval_parity.json",
+          "sha256": "5aa01058185d570a20911135e83656567bdd64f50211c591978858777c9a4c75"
+        },
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_source_graph_acquisition_audit.json",
+          "sha256": "4a96815bc6a5923a108cb83fe08bcfa35d0b4b4eb93e6a757f5d86f9d47e629f"
+        },
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_gold_research_recall.json",
+          "sha256": "e8f69c420c456c2c8cbbc66d46587b8db96830427b4cf8f610fea36b065c4211"
+        }
+      ],
+      "reviewer_id": "B",
+      "runner_output": "",
+      "scope": "queries / source families / documents / material fact recall",
+      "status": "FAIL",
+      "title": "Research Aperture"
+    },
+    {
+      "blockers": [],
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "detector_error_count": 0,
+        "detector_failure_count": 0,
+        "detector_run_count_mismatch": 0,
+        "fact_graph_critical_count": 0,
+        "missing_required_leaf_count": 0
+      },
+      "detector_ids": [
+        "tests.test_e2r_v5_evidence_fact_graph.E2RV5EvidenceFactGraphTests.test_all_material_claims_end_in_exact_utilization_roster",
+        "tests.test_e2r_v5_evidence_fact_graph.E2RV5EvidenceFactGraphTests.test_same_economic_fact_gets_one_fact_and_independent_confidence_gain"
+      ],
+      "detector_pass_count": 2,
+      "detector_run_count": 2,
+      "recomputed_metrics": {
+        "material_claim_lost_count": 0,
+        "status": "V5_PHASE88_EVIDENCE_FACT_GRAPH_CLAIM_UTILIZATION_PASS"
+      },
+      "required_leaves": [
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_evidence_fact_graph_claim_utilization_audit.json",
+          "sha256": "2c042793314531664b102c9ddc1477db6eef014ff8376c5ecef4b4d25f958d13"
+        }
+      ],
+      "reviewer_id": "C",
+      "runner_output": "",
+      "scope": "scope / currentness / dedupe / utilization",
+      "status": "PASS",
+      "title": "Evidence Fact Graph"
+    },
+    {
+      "blockers": [],
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "component_memo_critical_count": 0,
+        "detector_error_count": 0,
+        "detector_failure_count": 0,
+        "detector_run_count_mismatch": 0,
+        "missing_required_leaf_count": 0,
+        "researcher_architecture_critical_count": 0
+      },
+      "detector_ids": [
+        "tests.test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests.test_phase84_modules_and_ten_roles_are_committed_and_audited",
+        "tests.test_e2r_v5_component_scoring_memos.E2RV5ComponentScoringMemoTests.test_each_judge_memo_has_exact_phase89_output_and_lineage"
+      ],
+      "detector_pass_count": 2,
+      "detector_run_count": 2,
+      "recomputed_metrics": {
+        "component_memo_status": "V5_PHASE89_INDEPENDENT_COMPONENT_SCORING_MEMOS_PASS",
+        "researcher_status": "V5_PHASE84_CANONICAL_RESEARCHER_MODE_PASS"
+      },
+      "required_leaves": [
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_researcher_mode_architecture_audit.json",
+          "sha256": "59486c5eddb6b8bdc4a9321a78a55d0c2cea4f7a7b1419cb6f788da1fac65d97"
+        },
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_component_scoring_memos_audit.json",
+          "sha256": "8a87ab8743f10d7efa42910f351d1917934c1db9c28de1b49f707bbd403771a6"
+        }
+      ],
+      "reviewer_id": "D",
+      "runner_output": "",
+      "scope": "positive / counter / why higher / why lower",
+      "status": "PASS",
+      "title": "Component Research Memos"
+    },
+    {
+      "blockers": [],
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "aggregator_critical_count": 0,
+        "component_mae_threshold_failure_count": 0,
+        "critical_guard_accuracy_failure_count": 0,
+        "detector_error_count": 0,
+        "detector_failure_count": 0,
+        "detector_run_count_mismatch": 0,
+        "dynamic_range_collapse_count": 0,
+        "false_positive_guard_accuracy_failure_count": 0,
+        "historical_parity_critical_count": 0,
+        "missing_required_leaf_count": 0,
+        "rank_threshold_failure_count": 0,
+        "stage_accuracy_failure_count": 0,
+        "strong_anchor_equivalent_undercredit_count": 0,
+        "total_mae_threshold_failure_count": 0
+      },
+      "detector_ids": [
+        "tests.test_e2r_v5_historical_blind_replay.E2RV5HistoricalBlindReplayTests.test_dynamic_range_canary_contains_historical_high_mid_and_low",
+        "tests.test_e2r_v5_historical_blind_replay.E2RV5HistoricalBlindReplayTests.test_critical_positive_counter_ordering_and_guards_are_perfect",
+        "tests.test_e2r_v5_deterministic_score_aggregator.E2RV5DeterministicScoreAggregatorTests.test_strong_high_anchor_equivalent_evidence_does_not_collapse_to_one_to_three_points"
+      ],
+      "detector_pass_count": 3,
+      "detector_run_count": 3,
+      "recomputed_metrics": {
+        "component_normalized_mae": 0.010129534843493639,
+        "critical_positive_counter_ordering": 1.0,
+        "false_positive_guard_accuracy": 1.0,
+        "spearman_rank_correlation": 1.0,
+        "stage_band_accuracy": 1.0,
+        "total_proxy_mae": 0.1383333333333292
+      },
+      "required_leaves": [
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_historical_blind_replay.json",
+          "sha256": "c7ccc316af2aa9bec87fc331713036f5886e17c93c1ae36857ab0a6862a0cdef"
+        },
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_deterministic_score_aggregator_audit.json",
+          "sha256": "1b7b8e92deb7ab5814df7f273f98ec25b127ab7fc86552fe94b57a78aefc4002"
+        }
+      ],
+      "reviewer_id": "E",
+      "runner_output": "",
+      "scope": "historical parity / dynamic range / monotonicity",
+      "status": "PASS",
+      "title": "Score Calibration"
+    },
+    {
+      "blockers": [
+        "LIVE_CANARY_DOSSIER_INCOMPLETE:005930",
+        "LIVE_CANARY_DOSSIER_INCOMPLETE:000660"
+      ],
+      "critical_count_sum": 7,
+      "critical_counts": {
+        "current_evidence_missing_count": 1,
+        "detector_error_count": 0,
+        "detector_failure_count": 0,
+        "detector_run_count_mismatch": 0,
+        "final_component_decision_missing_count": 1,
+        "incomplete_production_research_count": 2,
+        "missing_required_leaf_count": 0,
+        "missing_target_manifest_count": 1,
+        "seven_component_memo_incomplete_count": 2
+      },
+      "detector_ids": [
+        "tests.test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests.test_pending_checkpoint_writes_honest_full_dossier_without_gold",
+        "tests.test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests.test_target_registry_resolves_master_canaries_without_runner_branch"
+      ],
+      "detector_pass_count": 2,
+      "detector_run_count": 2,
+      "recomputed_metrics": {
+        "targets": [
+          {
+            "company_name": "삼성전자",
+            "component_memo_count": 0,
+            "counterfact_count": 404,
+            "document_count": 287,
+            "fact_count": 1494,
+            "leaf_presence": {
+              "anchor_comparisons.jsonl": true,
+              "atomic_stage_decision.json": false,
+              "component_decisions.jsonl": true,
+              "component_research_memos.jsonl": true,
+              "counterfacts.jsonl": true,
+              "deterministic_total_score.json": true,
+              "evidence_facts.jsonl": true,
+              "generated_queries.jsonl": true,
+              "judge_decisions.jsonl": true,
+              "research_epoch_checkpoint.json": true,
+              "source_graph.json": true,
+              "source_graph_evidence_documents.jsonl": true,
+              "stagecourt_trace.json": false
+            },
+            "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
+            "output_root": "output/researcher_mode/c06/2026-07-12/005930",
+            "output_tree_hash": "177961ca5d4a5a6fe694528ff1a15ec54cbfbcc55f55ae0b9ff2bec78cf1d26d",
+            "production_research_complete": false,
+            "provider_error_count": 102,
+            "provider_logical_call_count": 102,
+            "provider_successful_call_count": 0,
+            "query_count": 193,
+            "score_valid": false,
+            "stage_final": false,
+            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "target_id": "005930"
+          },
+          {
+            "company_name": "SK하이닉스",
+            "component_memo_count": 0,
+            "counterfact_count": 0,
+            "document_count": 0,
+            "fact_count": 0,
+            "leaf_presence": {
+              "anchor_comparisons.jsonl": false,
+              "atomic_stage_decision.json": false,
+              "component_decisions.jsonl": false,
+              "component_research_memos.jsonl": false,
+              "counterfacts.jsonl": false,
+              "deterministic_total_score.json": false,
+              "evidence_facts.jsonl": false,
+              "generated_queries.jsonl": false,
+              "judge_decisions.jsonl": false,
+              "research_epoch_checkpoint.json": false,
+              "source_graph.json": false,
+              "source_graph_evidence_documents.jsonl": false,
+              "stagecourt_trace.json": false
+            },
+            "manifest_path": null,
+            "output_root": null,
+            "output_tree_hash": "",
+            "production_research_complete": false,
+            "provider_error_count": 0,
+            "provider_logical_call_count": 0,
+            "provider_successful_call_count": 0,
+            "query_count": 0,
+            "score_valid": false,
+            "stage_final": false,
+            "status": "LIVE_RESEARCH_NOT_STARTED",
+            "target_id": "000660"
+          }
+        ]
+      },
+      "required_leaves": [
+        {
+          "exists": true,
+          "path": "configs/e2r_targeted_live_smoke_v1.json",
+          "sha256": "19646efe8b6b1ded08c624b8b64ad83acfbf42c2c6fd8c8d52a44a8be42e7b05"
+        }
+      ],
+      "reviewer_id": "F",
+      "runner_output": "",
+      "scope": "full seven-component dossier and current evidence for mandatory targets",
+      "status": "FAIL",
+      "title": "Live Canary Dossiers"
+    },
+    {
+      "blockers": [
+        "FINAL_STAGECOURT_PENDING:005930",
+        "FINAL_STAGECOURT_PENDING:000660"
+      ],
+      "critical_count_sum": 4,
+      "critical_counts": {
+        "canary_final_stagecourt_missing_count": 2,
+        "canary_score_valid_missing_count": 2,
+        "detector_error_count": 0,
+        "detector_failure_count": 0,
+        "detector_run_count_mismatch": 0,
+        "missing_required_leaf_count": 0
+      },
+      "detector_ids": [
+        "tests.test_e2r_v5_stagecourt.E2RV5StageCourtTests.test_daily_event_overlay_cannot_change_canonical_stage",
+        "tests.test_e2r_v5_stagecourt.E2RV5StageCourtTests.test_hard_break_requires_open_official_target_mechanism_claim"
+      ],
+      "detector_pass_count": 2,
+      "detector_run_count": 2,
+      "recomputed_metrics": {
+        "targets": [
+          {
+            "company_name": "삼성전자",
+            "component_memo_count": 0,
+            "counterfact_count": 404,
+            "document_count": 287,
+            "fact_count": 1494,
+            "leaf_presence": {
+              "anchor_comparisons.jsonl": true,
+              "atomic_stage_decision.json": false,
+              "component_decisions.jsonl": true,
+              "component_research_memos.jsonl": true,
+              "counterfacts.jsonl": true,
+              "deterministic_total_score.json": true,
+              "evidence_facts.jsonl": true,
+              "generated_queries.jsonl": true,
+              "judge_decisions.jsonl": true,
+              "research_epoch_checkpoint.json": true,
+              "source_graph.json": true,
+              "source_graph_evidence_documents.jsonl": true,
+              "stagecourt_trace.json": false
+            },
+            "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
+            "output_root": "output/researcher_mode/c06/2026-07-12/005930",
+            "output_tree_hash": "177961ca5d4a5a6fe694528ff1a15ec54cbfbcc55f55ae0b9ff2bec78cf1d26d",
+            "production_research_complete": false,
+            "provider_error_count": 102,
+            "provider_logical_call_count": 102,
+            "provider_successful_call_count": 0,
+            "query_count": 193,
+            "score_valid": false,
+            "stage_final": false,
+            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "target_id": "005930"
+          },
+          {
+            "company_name": "SK하이닉스",
+            "component_memo_count": 0,
+            "counterfact_count": 0,
+            "document_count": 0,
+            "fact_count": 0,
+            "leaf_presence": {
+              "anchor_comparisons.jsonl": false,
+              "atomic_stage_decision.json": false,
+              "component_decisions.jsonl": false,
+              "component_research_memos.jsonl": false,
+              "counterfacts.jsonl": false,
+              "deterministic_total_score.json": false,
+              "evidence_facts.jsonl": false,
+              "generated_queries.jsonl": false,
+              "judge_decisions.jsonl": false,
+              "research_epoch_checkpoint.json": false,
+              "source_graph.json": false,
+              "source_graph_evidence_documents.jsonl": false,
+              "stagecourt_trace.json": false
+            },
+            "manifest_path": null,
+            "output_root": null,
+            "output_tree_hash": "",
+            "production_research_complete": false,
+            "provider_error_count": 0,
+            "provider_logical_call_count": 0,
+            "provider_successful_call_count": 0,
+            "query_count": 0,
+            "score_valid": false,
+            "stage_final": false,
+            "status": "LIVE_RESEARCH_NOT_STARTED",
+            "target_id": "000660"
+          }
+        ]
+      },
+      "required_leaves": [],
+      "reviewer_id": "G",
+      "runner_output": "",
+      "scope": "score / Stage / risk / event separation",
+      "status": "FAIL",
+      "title": "StageCourt"
+    },
+    {
+      "blockers": [],
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "detector_error_count": 0,
+        "detector_failure_count": 0,
+        "detector_run_count_mismatch": 0,
+        "generalization_critical_count": 0,
+        "missing_required_leaf_count": 0
+      },
+      "detector_ids": [
+        "tests.test_e2r_v5_all_archetype_generalization.E2RV5AllArchetypeGeneralizationTests.test_complete_registry_enters_the_same_seven_component_path",
+        "tests.test_e2r_v5_full_thesis_gold_benchmark.E2RV5FullThesisGoldBenchmarkTests.test_generic_validator_contains_no_canary_target_branch"
+      ],
+      "detector_pass_count": 2,
+      "detector_run_count": 2,
+      "recomputed_metrics": {
+        "registry_archetype_count": 36,
+        "status": "V5_PHASE96_ALL_ARCHETYPE_RESEARCHER_GENERALIZATION_PASS",
+        "target_branch_scan": {
+          "finding_count": 0,
+          "findings": [],
+          "scanned_paths": [
+            "src/e2r/research_brain/researcher_mode/component_research_planner.py",
+            "src/e2r/research_brain/researcher_mode/source_graph_explorer.py",
+            "src/e2r/research_brain/researcher_mode/current_researcher_mode.py",
+            "src/e2r/research_brain/researcher_mode/stagecourt.py",
+            "src/e2r/research_brain/researcher_mode/generalization.py"
+          ],
+          "scanner": "PYTHON_AST_CONDITIONED_BRANCH_SCAN_V1"
+        }
+      },
+      "required_leaves": [
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_all_archetype_generalization.json",
+          "sha256": "5f2c491ed22533c4c5816a4eb55dac15fa2d96fd26ad82041e292a741ef8883b"
+        }
+      ],
+      "reviewer_id": "H",
+      "runner_output": "",
+      "scope": "all archetypes and no target branches",
+      "status": "PASS",
+      "title": "Generalization"
+    },
+    {
+      "blockers": [],
+      "critical_count_sum": 0,
+      "critical_counts": {
+        "daily_census_critical_count": 0,
+        "detector_error_count": 0,
+        "detector_failure_count": 0,
+        "detector_run_count_mismatch": 0,
+        "missing_required_leaf_count": 0
+      },
+      "detector_ids": [
+        "tests.test_e2r_v5_daily_census_integration.E2RV5DailyCensusIntegrationTests.test_every_universe_member_gets_assessment_but_deep_is_selective",
+        "tests.test_e2r_v5_daily_census_integration.E2RV5DailyCensusIntegrationTests.test_unchanged_full_thesis_is_reused_without_daily_deep_research",
+        "tests.test_e2r_v5_daily_census_integration.E2RV5DailyCensusIntegrationTests.test_completed_delta_computes_score_change_only_after_deterministic_update"
+      ],
+      "detector_pass_count": 3,
+      "detector_run_count": 3,
+      "recomputed_metrics": {
+        "operational_model": {
+          "L0": "full universe membership",
+          "L1": "full universe cheap baseline",
+          "L2": "bounded official light",
+          "L3": "selected Researcher Mode planning",
+          "L4": "bounded official-first Source Graph acquisition checkpoint",
+          "L5": "semantic-saturation-certified full research dossier"
+        },
+        "status": "V5_PHASE97_DAILY_CENSUS_RESEARCHER_INTEGRATION_PASS"
+      },
+      "required_leaves": [
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_daily_census_integration.json",
+          "sha256": "1c2f747215badd00ebc00c215f79fa1d80197208ba3f4aa064ab0afbe92037f9"
+        }
+      ],
+      "reviewer_id": "I",
+      "runner_output": "",
+      "scope": "selective deep / dossier reuse / delta refresh",
+      "status": "PASS",
+      "title": "Daily and Census"
+    },
+    {
+      "blockers": [
+        "RUNTIME_NOT_COMPLETE:005930",
+        "RUNTIME_NOT_COMPLETE:000660"
+      ],
+      "critical_count_sum": 7,
+      "critical_counts": {
+        "actual_fetch_missing_count": 1,
+        "actual_query_missing_count": 1,
+        "capability_regression_critical_count": 0,
+        "checkpoint_missing_count": 1,
+        "current_full_test_evidence_missing_count": 0,
+        "detector_error_count": 0,
+        "detector_failure_count": 0,
+        "detector_run_count_mismatch": 0,
+        "missing_required_leaf_count": 0,
+        "output_hash_missing_count": 1,
+        "provider_success_missing_count": 2,
+        "runtime_manifest_missing_count": 1,
+        "same_replay_variance_count": 0,
+        "self_repair_critical_count": 0
+      },
+      "detector_ids": [
+        "tests.test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests.test_checkpoint_resume_fetches_every_material_candidate_without_research_completion",
+        "tests.test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests.test_provider_outage_is_research_pending_without_score_or_stage"
+      ],
+      "detector_pass_count": 2,
+      "detector_run_count": 2,
+      "recomputed_metrics": {
+        "capability_regression_status": "PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS",
+        "expected_verification_tree_hash": "e44fff27e2c50c9819febb49ae32b51599bb7e0c160bbec6a2ed36ba86bdc935",
+        "full_test_evidence": {
+          "command": [
+            "/home/eorb915/.local/bin/python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "tests",
+            "-v"
+          ],
+          "exit_code": 0,
+          "finished_at": "2026-07-14T00:41:35.241488+00:00",
+          "full_discovery": true,
+          "log_path": "docs/operational/e2r_v5_full_test_result.log",
+          "log_sha256": "9b8734822a0bddceac4969bc71e65987a046d9bb28e0437f1847d4dca0859a46",
+          "schema_version": "e2r_v5_full_test_evidence_v1",
+          "started_at": "2026-07-14T00:32:27.922491+00:00",
+          "status": "PASS",
+          "test_count": 6260,
+          "unittest_runtime_seconds": 543.984,
+          "verification_tree_hash": "e44fff27e2c50c9819febb49ae32b51599bb7e0c160bbec6a2ed36ba86bdc935",
+          "verification_tree_stable_during_run": true,
+          "wall_runtime_seconds": 547.318997
+        },
+        "full_test_evidence_valid": true,
+        "full_test_evidence_validation": {
+          "checks": {
+            "command_is_full_discovery": true,
+            "exit_code_zero": true,
+            "full_discovery_true": true,
+            "log_exists": true,
+            "log_path_safe": true,
+            "log_reports_ok": true,
+            "log_sha256_matches": true,
+            "log_test_count_matches": true,
+            "status_pass": true,
+            "test_count_positive_integer": true,
+            "verification_tree_hash_matches": true,
+            "verification_tree_stable": true
+          },
+          "log_sha256": "9b8734822a0bddceac4969bc71e65987a046d9bb28e0437f1847d4dca0859a46",
+          "logged_test_count": 6260,
+          "reported_test_count": 6260,
+          "valid": true
+        },
+        "self_repair_status": "PHASE99_INTERNAL_SELF_REPAIR_PASS",
+        "targets": [
+          {
+            "company_name": "삼성전자",
+            "component_memo_count": 0,
+            "counterfact_count": 404,
+            "document_count": 287,
+            "fact_count": 1494,
+            "leaf_presence": {
+              "anchor_comparisons.jsonl": true,
+              "atomic_stage_decision.json": false,
+              "component_decisions.jsonl": true,
+              "component_research_memos.jsonl": true,
+              "counterfacts.jsonl": true,
+              "deterministic_total_score.json": true,
+              "evidence_facts.jsonl": true,
+              "generated_queries.jsonl": true,
+              "judge_decisions.jsonl": true,
+              "research_epoch_checkpoint.json": true,
+              "source_graph.json": true,
+              "source_graph_evidence_documents.jsonl": true,
+              "stagecourt_trace.json": false
+            },
+            "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
+            "output_root": "output/researcher_mode/c06/2026-07-12/005930",
+            "output_tree_hash": "177961ca5d4a5a6fe694528ff1a15ec54cbfbcc55f55ae0b9ff2bec78cf1d26d",
+            "production_research_complete": false,
+            "provider_error_count": 102,
+            "provider_logical_call_count": 102,
+            "provider_successful_call_count": 0,
+            "query_count": 193,
+            "score_valid": false,
+            "stage_final": false,
+            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "target_id": "005930"
+          },
+          {
+            "company_name": "SK하이닉스",
+            "component_memo_count": 0,
+            "counterfact_count": 0,
+            "document_count": 0,
+            "fact_count": 0,
+            "leaf_presence": {
+              "anchor_comparisons.jsonl": false,
+              "atomic_stage_decision.json": false,
+              "component_decisions.jsonl": false,
+              "component_research_memos.jsonl": false,
+              "counterfacts.jsonl": false,
+              "deterministic_total_score.json": false,
+              "evidence_facts.jsonl": false,
+              "generated_queries.jsonl": false,
+              "judge_decisions.jsonl": false,
+              "research_epoch_checkpoint.json": false,
+              "source_graph.json": false,
+              "source_graph_evidence_documents.jsonl": false,
+              "stagecourt_trace.json": false
+            },
+            "manifest_path": null,
+            "output_root": null,
+            "output_tree_hash": "",
+            "production_research_complete": false,
+            "provider_error_count": 0,
+            "provider_logical_call_count": 0,
+            "provider_successful_call_count": 0,
+            "query_count": 0,
+            "score_valid": false,
+            "stage_final": false,
+            "status": "LIVE_RESEARCH_NOT_STARTED",
+            "target_id": "000660"
+          }
+        ]
+      },
+      "required_leaves": [
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_self_repair_audit.json",
+          "sha256": "f195091dfd97fab568d3526309c566258507789c4d371f9d7435f6832b9b0c50"
+        },
+        {
+          "exists": true,
+          "path": "docs/operational/e2r_v5_capability_known_bad_audit.json",
+          "sha256": "15c98f65928b2b5da489bb9bb33c3406c9338675605810e49216c6f74248ad4b"
+        }
+      ],
+      "reviewer_id": "J",
+      "runner_output": "",
+      "scope": "actual LLM / query / fetch / provider / checkpoint / hash",
+      "status": "FAIL",
+      "title": "Runtime Honesty"
+    }
+  ],
+  "schema_version": "e2r_v5_phase100_independent_acceptance_v1",
+  "status": "E2R_V5_INDEPENDENT_REVIEWER_GATE_FAIL"
+}
