@@ -1,0 +1,34 @@
+name: NSLAB acquire Qwen2.5 0.5B semantic model 20260715
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  model:
+    if: github.head_ref == 'nslab-host-20220825-20260715t073900'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Download exact GGUF model
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p model
+          curl -fL --retry 5 --retry-all-errors --connect-timeout 30 \
+            'https://huggingface.co/bartowski/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/Qwen2.5-0.5B-Instruct-Q4_K_M.gguf?download=true' \
+            -o model/Qwen2.5-0.5B-Instruct-Q4_K_M.gguf
+          test $(stat -c%s model/Qwen2.5-0.5B-Instruct-Q4_K_M.gguf) -gt 350000000
+          sha256sum model/Qwen2.5-0.5B-Instruct-Q4_K_M.gguf > model/sha256.txt
+      - name: Upload model
+        uses: actions/upload-artifact@v4
+        with:
+          name: nslab-qwen25-05b-q4km-20260715
+          path: model/
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
