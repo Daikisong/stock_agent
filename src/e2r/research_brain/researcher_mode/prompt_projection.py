@@ -771,6 +771,132 @@ def project_evidence_facts(
     }
 
 
+def project_fact_extraction_evidence_context(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Compact every prior fact for the full-document extraction prompt.
+
+    A growing fact graph must not crowd the *new* full document out of the
+    provider context window.  Exact prior fact records are already persisted
+    and the deterministic compiler owns cross-document deduplication.  The
+    extractor therefore needs semantic state/coverage plus a loss-accounting
+    proof, not every old narrative, value, quote id, and source id replayed.
+
+    No fact is sampled or dropped: every row contributes to the ordered roster
+    hash, one semantic-state group, every aggregate coverage count, and the
+    hashed observation/lineage rosters below.
+    """
+
+    payloads = tuple(_record_dict(row) for row in rows)
+    ordered = tuple(
+        sorted(
+            payloads,
+            key=lambda row: (
+                str(row.get("fact_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    groups: dict[tuple[str, ...], list[Mapping[str, Any]]] = {}
+    for row in ordered:
+        key = tuple(str(row.get(field) or "") for field in _FACT_GROUP_FIELDS)
+        groups.setdefault(key, []).append(row)
+
+    semantic_state_groups = []
+    for key in sorted(groups):
+        grouped_rows = groups[key]
+        semantic_state_groups.append(
+            [
+                *key,
+                len(grouped_rows),
+                _stable_hash(grouped_rows),
+            ]
+        )
+
+    observation_rows = tuple(
+        {
+            field: row.get(field)
+            for field in _FACT_OBSERVATION_FIELDS
+            if field in row
+        }
+        for row in ordered
+    )
+    advisory_rows = tuple(
+        {
+            "fact_id": row.get("fact_id"),
+            "question_family_tags": tuple(
+                sorted(str(value) for value in row.get("question_family_tags") or ())
+            ),
+            "primitive_tags": tuple(
+                sorted(str(value) for value in row.get("primitive_tags") or ())
+            ),
+        }
+        for row in ordered
+    )
+    return {
+        "schema_version": "e2r_v5_fact_extraction_evidence_context_v1",
+        "fact_count": len(ordered),
+        "fact_roster_hash": _stable_hash(ordered),
+        "semantic_state_fields": [
+            *_FACT_GROUP_FIELDS,
+            "fact_count",
+            "fact_roster_hash",
+        ],
+        "semantic_state_group_count": len(semantic_state_groups),
+        "semantic_state_groups": semantic_state_groups,
+        "target_id_coverage": _relation_coverage(ordered, "target_id"),
+        "as_of_date_coverage": _relation_coverage(ordered, "as_of_date"),
+        "structured_evidence_role_coverage": _relation_coverage(
+            ordered, "structured_evidence_roles"
+        ),
+        "allowed_component_coverage": _relation_coverage(
+            ordered, "allowed_component_ids"
+        ),
+        "source_independence_group_coverage": _relation_coverage(
+            ordered, "source_independence_group"
+        ),
+        "corroborating_independence_group_coverage": _relation_coverage(
+            ordered, "corroborating_independence_groups"
+        ),
+        "predicate_roster": _project_text_roster(
+            row.get("predicate") for row in ordered
+        ),
+        "economic_mechanism_roster": _project_text_roster(
+            row.get("economic_mechanism") for row in ordered
+        ),
+        "fact_id_roster": _project_text_roster(
+            row.get("fact_id") for row in ordered
+        ),
+        "source_id_roster": _project_text_roster(
+            value
+            for row in ordered
+            for value in row.get("source_ids") or ()
+        ),
+        "claim_id_roster": _project_text_roster(
+            value
+            for row in ordered
+            for value in row.get("claim_ids") or ()
+        ),
+        "quote_id_roster": _project_text_roster(
+            value
+            for row in ordered
+            for value in row.get("quote_ids") or ()
+        ),
+        "semantic_observation_count": len(observation_rows),
+        "semantic_observation_roster_hash": _stable_hash(observation_rows),
+        "advisory_tag_roster_hash": _stable_hash(advisory_rows),
+        "every_fact_accounted_by_hash_and_group_count": (
+            sum(row[-2] for row in semantic_state_groups) == len(ordered)
+        ),
+        "every_semantic_observation_accounted_by_hash": True,
+        "cross_document_deduplication_owner": "DETERMINISTIC_EVIDENCE_FACT_COMPILER",
+        "full_fact_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
 def project_supervisor_evidence_facts(
     rows: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
@@ -1700,6 +1826,7 @@ __all__ = [
     "project_counter_route_proof",
     "project_citable_evidence_facts",
     "project_evidence_facts",
+    "project_fact_extraction_evidence_context",
     "project_generated_queries",
     "project_peer_selection_context",
     "project_research_epoch_checkpoint",

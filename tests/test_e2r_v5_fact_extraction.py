@@ -150,6 +150,74 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             paths = write_researcher_fact_extraction_result(result, directory)
             self.assertTrue(all(path.is_file() for path in paths.values()))
 
+    def test_large_prior_fact_graph_is_compact_while_full_document_is_verbatim(self) -> None:
+        provider = FactProvider()
+        document = dict(
+            _document("DOC-LARGE", "ISSUER_PRESENTATION", "ISSUER:current.example")
+        )
+        full_text = (
+            "Current Corp reported record operating cash flow in 2026Q1. "
+            + ("Full source evidence remains verbatim. " * 4_500)
+        )
+        document["content_text"] = full_text
+        document["content_hash"] = hashlib.sha256(
+            full_text.encode("utf-8")
+        ).hexdigest()
+        current_facts = tuple(
+            {
+                "fact_id": f"FACT-{index:04d}",
+                "target_id": TARGET,
+                "as_of_date": AS_OF_DATE,
+                "subject": "Current Corp memory business",
+                "business_segment": "MEMORY",
+                "product_family": "HBM",
+                "economic_mechanism": f"prior mechanism {index}",
+                "predicate": f"PRIOR_PREDICATE_{index}",
+                "value": index,
+                "unit": "qualitative",
+                "period": "2026Q1",
+                "direction": "POSITIVE",
+                "current_lifecycle": "CURRENT",
+                "confidence": 0.8,
+                "structured_evidence_roles": ("FORWARD_GUIDANCE",),
+                "allowed_component_ids": ("earnings_visibility",),
+                "source_ids": (f"SRC-{index:04d}",),
+                "claim_ids": (f"CLAIM-{index:04d}",),
+                "quote_ids": (f"QUOTE-{index:04d}",),
+                "source_independence_group": f"ISSUER:{index % 7}",
+            }
+            for index in range(1_000)
+        )
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            current_facts=current_facts,
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        payload = provider.calls[0]["payload"]
+        self.assertEqual(payload["full_documents"][0]["content_text"], full_text)
+        context = payload["current_evidence_facts"]
+        self.assertEqual(
+            context["schema_version"],
+            "e2r_v5_fact_extraction_evidence_context_v1",
+        )
+        self.assertEqual(context["fact_count"], 1_000)
+        self.assertTrue(context["every_fact_accounted_by_hash_and_group_count"])
+        accounting = result.audit["prompt_transport_accounting"]
+        self.assertTrue(accounting["full_document_content_preserved_verbatim"])
+        self.assertLess(accounting["current_fact_projection_chars"], 20_000)
+        self.assertGreater(
+            accounting["maximum_primary_payload_chars"],
+            len(full_text),
+        )
+
     def test_material_proposal_without_exact_quote_is_pending_not_evidence(self) -> None:
         provider = FactProvider(bad_quote=True)
         result = ResearcherEvidenceFactExtractor(provider=provider).extract(

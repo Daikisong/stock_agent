@@ -9,6 +9,7 @@ from e2r.research_brain.researcher_mode.prompt_projection import (
     project_counter_route_proof,
     project_citable_evidence_facts,
     project_evidence_facts,
+    project_fact_extraction_evidence_context,
     project_generated_queries,
     project_peer_selection_context,
     project_research_epoch_checkpoint,
@@ -270,6 +271,42 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         )
         self.assertEqual(
             len(fact_projection["question_family_tag_coverage"]), 1_000
+        )
+        extraction_context = project_fact_extraction_evidence_context(facts)
+        reversed_extraction_context = project_fact_extraction_evidence_context(
+            tuple(reversed(facts))
+        )
+        self.assertEqual(extraction_context, reversed_extraction_context)
+        self.assertEqual(extraction_context["fact_count"], 1_000)
+        self.assertEqual(extraction_context["semantic_state_group_count"], 1)
+        self.assertEqual(
+            extraction_context["semantic_state_groups"][0][-2],
+            1_000,
+        )
+        self.assertTrue(
+            extraction_context[
+                "every_fact_accounted_by_hash_and_group_count"
+            ]
+        )
+        self.assertEqual(
+            extraction_context["allowed_component_coverage"],
+            {"eps_fcf_explosion": 1_000, "visibility_durability": 1_000},
+        )
+        self.assertEqual(extraction_context["source_id_roster"]["count"], 1_000)
+        self.assertEqual(extraction_context["claim_id_roster"]["count"], 1_000)
+        self.assertEqual(extraction_context["quote_id_roster"]["count"], 1_000)
+        self.assertFalse(extraction_context["fixed_top_n_used"])
+        self.assertFalse(extraction_context["score_authority"])
+        self.assertNotIn("semantic_observations", extraction_context)
+        self.assertLess(
+            len(
+                json.dumps(
+                    extraction_context,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+            ),
+            20_000,
         )
         citable_projection = project_citable_evidence_facts(facts)
         self.assertEqual(citable_projection["fact_count"], 1_000)

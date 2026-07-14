@@ -31,7 +31,7 @@ from e2r.research_brain.scoring.business_mechanism_scope import (
 )
 
 from .component_researcher import StructuredResearchProvider
-from .prompt_projection import project_evidence_facts
+from .prompt_projection import project_fact_extraction_evidence_context
 from .evidence_fact_compiler import EvidenceFactCompiler, FactCompilationResult
 from .schemas import (
     CANONICAL_COMPONENT_ORDER,
@@ -248,6 +248,15 @@ class ResearcherEvidenceFactExtractor:
             if str(row["document_id"]) not in set(prior_disposition_ids)
         )
         provider_circuit_breaker_open = False
+        current_fact_prompt_context = project_fact_extraction_evidence_context(
+            current_facts
+        )
+        current_fact_prompt_context_chars = _json_character_count(
+            current_fact_prompt_context
+        )
+        max_primary_payload_chars = 0
+        max_attempt_payload_chars = 0
+        max_full_document_chars = 0
         for batch in _document_batches(
             remaining,
             max_documents=self.documents_per_call,
@@ -269,9 +278,7 @@ class ResearcherEvidenceFactExtractor:
                     "archetype_hypothesis": archetype_id,
                     "as_of_date": as_of_date,
                     "open_research_objectives": [dict(row) for row in open_objectives],
-                    "current_evidence_facts": project_evidence_facts(
-                        current_facts
-                    ),
+                    "current_evidence_facts": current_fact_prompt_context,
                     "score_gap_context": dict(score_gap_context or {}),
                     "normalization_contract": {
                         "question_family_id": "stable semantic research-question family, not a query string",
@@ -308,10 +315,31 @@ class ResearcherEvidenceFactExtractor:
                     "full_documents": [_document_prompt_row(row) for row in batch],
                 }
             )
+            prompt_documents = tuple(payload.get("full_documents") or ())
+            if len(prompt_documents) != len(batch) or any(
+                str(prompt_row.get("content_text") or "")
+                != str(source_row.get("content_text") or "")
+                for source_row, prompt_row in zip(batch, prompt_documents)
+            ):
+                raise ValueError(
+                    "fact extraction prompt must preserve every full document verbatim"
+                )
+            max_primary_payload_chars = max(
+                max_primary_payload_chars,
+                _json_character_count(payload),
+            )
+            max_full_document_chars = max(
+                max_full_document_chars,
+                *(len(str(row.get("content_text") or "")) for row in batch),
+            )
             attempt_payload = payload
             provider_attempt_count = 0
             validation_retry_used = False
             while True:
+                max_attempt_payload_chars = max(
+                    max_attempt_payload_chars,
+                    _json_character_count(attempt_payload),
+                )
                 prompt_hash = stable_intelligence_id(
                     "FACTPROMPT", attempt_payload
                 )
@@ -510,6 +538,23 @@ class ResearcherEvidenceFactExtractor:
             "transport_chunk_size": self.documents_per_call,
             "transport_character_bound": self.max_document_chars_per_call,
             "transport_chunk_is_completion_cap": False,
+            "prompt_transport_accounting": {
+                "current_fact_projection_schema_version": (
+                    current_fact_prompt_context["schema_version"]
+                ),
+                "current_fact_count": len(current_facts),
+                "current_fact_projection_chars": (
+                    current_fact_prompt_context_chars
+                ),
+                "maximum_full_document_chars": max_full_document_chars,
+                "maximum_primary_payload_chars": max_primary_payload_chars,
+                "maximum_attempt_payload_chars": max_attempt_payload_chars,
+                "full_document_content_preserved_verbatim": True,
+                "full_fact_records_persisted_outside_prompt": True,
+                "fixed_top_n_used": False,
+                "prompt_projection_is_research_cap": False,
+                "score_authority": False,
+            },
             "provider_circuit_breaker_open": provider_circuit_breaker_open,
             "accepted_material_claim_count": len(claims),
             "compiled_fact_count": len(compilation.facts),
@@ -1091,6 +1136,17 @@ def _source_tier(source_family: str) -> str:
 
 def _clean_error(error: Exception) -> str:
     return " ".join(str(error).split())[-800:] or type(error).__name__
+
+
+def _json_character_count(value: Any) -> int:
+    return len(
+        json.dumps(
+            value,
+            ensure_ascii=False,
+            sort_keys=True,
+            default=str,
+        )
+    )
 
 
 def _coerce_provider_call(
