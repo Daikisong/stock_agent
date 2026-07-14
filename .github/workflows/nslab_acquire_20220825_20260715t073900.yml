@@ -1,4 +1,4 @@
-name: NSLAB public-host fresh Raw acquire 20220825 20260715T073900
+name: NSLAB public-host fresh Raw acquire 20220825 20260715T083457
 
 on:
   pull_request:
@@ -14,116 +14,58 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Probe archival stores for exact Git blobs
-        id: probe
-        continue-on-error: true
+      - name: Download exact current-main Raw bytes
         shell: bash
         run: |
-          set -u
+          set -euo pipefail
           mkdir -p packet/inputs
+          STAMP=20260715T083457KST
+          curl -fL --retry 3 --retry-all-errors -H 'Cache-Control: no-cache, no-store, max-age=0' -H 'Pragma: no-cache' 'https://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/research_prompt.md?nslab_run=20260715T083457KST' -o packet/prompt_tmp.md
+          curl -fL --retry 3 --retry-all-errors -H 'Cache-Control: no-cache, no-store, max-age=0' -H 'Pragma: no-cache' 'https://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/csv/news_20220825.csv?nslab_run=20260715T083457KST' -o packet/news_20220825_tmp.csv
+          curl -fL --retry 3 --retry-all-errors -H 'Cache-Control: no-cache, no-store, max-age=0' -H 'Pragma: no-cache' 'https://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/example2.md?nslab_run=20260715T083457KST' -o packet/example2_tmp.md
           python - <<'PY'
-          import csv,hashlib,json,urllib.parse,urllib.request
+          import csv,hashlib,json
           from datetime import datetime
           from pathlib import Path
-
-          expected={
-            'prompt_git':'e33e16c05fddfcc92883fc99fb688871f45e1fc0',
-            'news_git':'4d661712d111788b3b8f2bb8756926adbcfa8ce4',
-            'example_git':'1f1c7e42d996143c830ae3d6ab664594914fa957',
-            'prompt_sha256':'b5ba21ce1f6e3a91dacf19e33e16d5db9dface141e90a67e78c8588ba1553029',
-            'prompt_bytes':430485,
-          }
-          urls={
-            'prompt':'https://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/research_prompt.md',
-            'news':'https://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/csv/news_20220825.csv',
-            'example':'https://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/example2.md',
-          }
-          def blob_sha(data): return hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
-          def get(url,timeout=60):
-              req=urllib.request.Request(url,headers={'User-Agent':'NSLAB-current-run/1.0','Accept':'*/*'})
-              with urllib.request.urlopen(req,timeout=timeout) as r: return r.read(),dict(r.headers),r.geturl()
-          attempts=[]; found={}
-
-          for label,sha in [('prompt',expected['prompt_git']),('news',expected['news_git']),('example',expected['example_git'])]:
-              candidates=[
-                ('swh_archive',f'https://archive.softwareheritage.org/api/1/content/sha1_git:{sha}/raw/'),
-                ('swh_api',f'https://api.softwareheritage.org/api/1/content/sha1_git:{sha}/raw/'),
-              ]
-              for source,url in candidates:
-                  try:
-                      data,headers,final=get(url,90)
-                      row={'label':label,'source':source,'url':url,'final_url':final,'byte_size':len(data),'sha256':hashlib.sha256(data).hexdigest(),'git_blob_sha':blob_sha(data),'content_type':headers.get('Content-Type')}
-                      if row['git_blob_sha']==sha:
-                          row['status']='EXACT_GIT_BLOB'; found[label]=(source,url,data); attempts.append(row); break
-                      row['status']='IDENTITY_MISMATCH'; attempts.append(row)
-                  except Exception as exc:
-                      attempts.append({'label':label,'source':source,'url':url,'status':'FETCH_FAILED','error':f'{type(exc).__name__}: {exc}'})
-              if label in found: continue
-              target=urls[label]
-              cdx_urls=[
-                'https://web.archive.org/cdx/search/cdx?'+urllib.parse.urlencode({'url':target,'output':'json','filter':'statuscode:200','filter':'collapse:digest','fl':'timestamp,original,statuscode,mimetype,digest,length','limit':'50','from':'2025'}),
-                'https://web.archive.org/cdx/search/cdx?'+urllib.parse.urlencode({'url':target.replace('/refs/heads/main/','/main/'),'output':'json','filter':'statuscode:200','filter':'collapse:digest','fl':'timestamp,original,statuscode,mimetype,digest,length','limit':'50','from':'2025'}),
-              ]
-              snapshots=[]
-              for cdx in cdx_urls:
-                  try:
-                      raw,headers,final=get(cdx,90); parsed=json.loads(raw.decode('utf-8'))
-                      if isinstance(parsed,list) and len(parsed)>1:
-                          headers_row=parsed[0]
-                          for vals in parsed[1:]: snapshots.append(dict(zip(headers_row,vals)))
-                      attempts.append({'label':label,'source':'wayback_cdx','url':cdx,'status':'CDX_OK','snapshot_count':max(0,len(parsed)-1) if isinstance(parsed,list) else 0})
-                  except Exception as exc:
-                      attempts.append({'label':label,'source':'wayback_cdx','url':cdx,'status':'FETCH_FAILED','error':f'{type(exc).__name__}: {exc}'})
-              for snap in snapshots:
-                  replay=f"https://web.archive.org/web/{snap['timestamp']}id_/{snap['original']}"
-                  try:
-                      data,headers,final=get(replay,120)
-                      row={'label':label,'source':'wayback_replay','url':replay,'final_url':final,'timestamp':snap.get('timestamp'),'byte_size':len(data),'sha256':hashlib.sha256(data).hexdigest(),'git_blob_sha':blob_sha(data),'content_type':headers.get('Content-Type')}
-                      if row['git_blob_sha']==sha:
-                          row['status']='EXACT_GIT_BLOB'; found[label]=('wayback_replay',replay,data); attempts.append(row); break
-                      row['status']='IDENTITY_MISMATCH'; attempts.append(row)
-                  except Exception as exc:
-                      attempts.append({'label':label,'source':'wayback_replay','url':replay,'status':'FETCH_FAILED','error':f'{type(exc).__name__}: {exc}'})
-              if label in found: continue
-              for target_variant in [target,target.replace('/refs/heads/main/','/main/')]:
-                  replay='https://web.archive.org/web/2id_/'+target_variant
-                  try:
-                      data,headers,final=get(replay,120)
-                      row={'label':label,'source':'wayback_latest','url':replay,'final_url':final,'byte_size':len(data),'sha256':hashlib.sha256(data).hexdigest(),'git_blob_sha':blob_sha(data),'content_type':headers.get('Content-Type')}
-                      if row['git_blob_sha']==sha:
-                          row['status']='EXACT_GIT_BLOB'; found[label]=('wayback_latest',replay,data); attempts.append(row); break
-                      row['status']='IDENTITY_MISMATCH'; attempts.append(row)
-                  except Exception as exc:
-                      attempts.append({'label':label,'source':'wayback_latest','url':replay,'status':'FETCH_FAILED','error':f'{type(exc).__name__}: {exc}'})
-
-          Path('packet/archive_attempts.json').write_text(json.dumps(attempts,ensure_ascii=False,indent=2,sort_keys=True)+'\n',encoding='utf-8')
-          if set(found)!= {'prompt','news','example'}:
-              Path('packet/status.json').write_text(json.dumps({'status':'ARCHIVE_INCOMPLETE','found':sorted(found)},indent=2)+'\n',encoding='utf-8')
-              raise SystemExit(17)
-
-          pb=found['prompt'][2]; nb=found['news'][2]; eb=found['example'][2]
-          assert hashlib.sha256(pb).hexdigest()==expected['prompt_sha256'] and len(pb)==expected['prompt_bytes']
           p=Path('packet'); prompt=p/'prompt_tmp.md'; news=p/'news_20220825_tmp.csv'; example=p/'example2_tmp.md'
-          prompt.write_bytes(pb); news.write_bytes(nb); example.write_bytes(eb)
+          pb=prompt.read_bytes(); nb=news.read_bytes(); eb=example.read_bytes()
           psha=hashlib.sha256(pb).hexdigest(); nsha=hashlib.sha256(nb).hexdigest(); esha=hashlib.sha256(eb).hexdigest()
-          text=pb.decode('utf-8'); assert text.splitlines()[0]=='# NSLAB GOLD PHASE MACHINE — DIRECT CSV RESEARCH RUNNER'; assert 'nslab.gold_phase_machine.direct_csv_research.locked' in text
+          assert psha=='b5ba21ce1f6e3a91dacf19e33e16d5db9dface141e90a67e78c8588ba1553029', psha
+          assert len(pb)==430485, len(pb)
+          text=pb.decode('utf-8')
+          assert text.splitlines()[0]=='# NSLAB GOLD PHASE MACHINE — DIRECT CSV RESEARCH RUNNER'
+          assert 'nslab.gold_phase_machine.direct_csv_research.locked' in text
           with news.open('r',encoding='utf-8-sig',newline='') as f: rows=list(csv.DictReader(f))
           assert rows and list(rows[0])==['page','row','date','time','title','body']
           times=[]; bad=[]
           for i,r in enumerate(rows,1):
               try: times.append(datetime.fromisoformat(f"{r['date']}T{r['time']}"))
               except Exception: bad.append(i)
-          stamp='20260715T073900KST'; pn=f'research_prompt_{stamp}_{psha[:8]}.md'; nn=f'news_20220825_{stamp}_{nsha[:8]}.csv'; en=f'example2_{stamp}_{esha[:8]}.md'
+          stamp='20260715T083457KST'
+          pn=f'research_prompt_{stamp}_{psha[:8]}.md'; nn=f'news_20220825_{stamp}_{nsha[:8]}.csv'; en=f'example2_{stamp}_{esha[:8]}.md'
           prompt.rename(p/'inputs'/pn); news.rename(p/'inputs'/nn); example.rename(p/'inputs'/en)
-          receipt={'schema_version':'nslab.current_run_raw_acquisition.v1','run_id':'nslab_run_20260715T073900KST_20220825','prompt_file':pn,'prompt_sha256':psha,'prompt_byte_size':len(pb),'prompt_git_blob_sha':blob_sha(pb),'news_file':nn,'news_sha256':nsha,'news_byte_size':len(nb),'news_git_blob_sha':blob_sha(nb),'example_file':en,'example_sha256':esha,'example_byte_size':len(eb),'example_git_blob_sha':blob_sha(eb),'csv_row_count':len(rows),'parsed_row_count':len(rows),'columns':list(rows[0]),'min_published_at':min(times).isoformat(),'max_published_at':max(times).isoformat(),'time_unverified_rows':bad,'control_char_count':sum(1 for ch in nb.decode('utf-8-sig') if ord(ch)<32 and ch not in '\n\r\t'),'raw_prompt_url_opened':urls['prompt'],'raw_csv_url_opened':urls['news'],'acquisition_method':{k:found[k][0] for k in found},'current_main_blob_identity_verified':True,'archive_attempts':attempts,'raw_bytes_acquired_at':'2026-07-15T07:39:00+09:00'}
+          receipt={
+            'schema_version':'nslab.current_run_raw_acquisition.v1',
+            'run_id':'nslab_run_20260715T083457KST_20220825',
+            'prompt_file':pn,'prompt_sha256':psha,'prompt_byte_size':len(pb),
+            'news_file':nn,'news_sha256':nsha,'news_byte_size':len(nb),
+            'example_file':en,'example_sha256':esha,'example_byte_size':len(eb),
+            'csv_row_count':len(rows),'parsed_row_count':len(rows),'columns':list(rows[0]),
+            'min_published_at':min(times).isoformat(),'max_published_at':max(times).isoformat(),
+            'time_unverified_rows':bad,
+            'control_char_count':sum(1 for ch in nb.decode('utf-8-sig') if ord(ch)<32 and ch not in '\n\r\t'),
+            'raw_prompt_url':'https://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/research_prompt.md',
+            'raw_csv_url':'https://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/csv/news_20220825.csv',
+            'acquisition_method':'web_raw_open_then_public_host_direct_raw_download',
+            'raw_bytes_acquired_at':'2026-07-15T08:34:57+09:00'
+          }
           (p/'acquisition_receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2,sort_keys=True)+'\n',encoding='utf-8')
-          (p/'status.json').write_text(json.dumps({'status':'ACQUIRED'},indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(receipt,ensure_ascii=False,sort_keys=True))
           PY
-      - name: Upload archive diagnostics or acquired packet
-        if: always()
+      - name: Upload fresh current-run packet
         uses: actions/upload-artifact@v4
         with:
-          name: nslab-archive-probe-20220825-20260715T073900
+          name: nslab-raw-20220825-20260715T083457
           path: packet/
           retention-days: 1
           compression-level: 0
