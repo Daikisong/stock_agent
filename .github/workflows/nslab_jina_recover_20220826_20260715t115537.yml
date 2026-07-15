@@ -1,10 +1,6 @@
 name: NSLAB recover exact current-main bytes via browser cache 20220826 20260715T115537
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/nslab_jina_recover_20220826_20260715t115537.yml'
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
 
@@ -14,76 +10,73 @@ permissions:
 
 jobs:
   recover:
-    if: github.event_name == 'push' || github.head_ref == 'nslab-jina-recover-20220826-20260715t115537'
+    if: github.head_ref == 'nslab-jina-recover-20220826-20260715t115537'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - name: Fetch browser-cache render and recover exact blobs
+      - name: Probe public caches for exact current-main Git blobs
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p packet/inputs
           python - <<'PY'
-          import hashlib,json,urllib.request
+          import concurrent.futures,hashlib,json,urllib.request
           from pathlib import Path
 
+          commits=['c8d7bbd8c1801d3e2edcaef1d3428e31a7e1f3a8','689157184fea6c34fd12d3b9936f19b51e834071','3482545097af6d644b569ebf2d22c68172e67a2a','71e98ddf2e84c28143c4cd9999f38472bb407ec2','8eb5e9ac6310d5756275e1313360c480bfdbda19','21602754bc1ec2362d9c9eebd14698a4af0e5fe5','0b07ad18a6a8d2aa0deedb4e8e1dc5df268e016a','c9a120ade9c0da3ee8fcdafed931af8581bb9367','481ef0840ffe9558653bb691c3f3267cf6d19d4a','a1a288491181872b6afc49c682adc3baefbf0c5e','87ca24c5a22a56b7c1a1db0b0a3397d93148dc58']
           targets={
-            'prompt':{
-              'url':'https://r.jina.ai/http://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/research_prompt.md',
-              'git':'e33e16c05fddfcc92883fc99fb688871f45e1fc0',
-              'sha256':'b5ba21ce1f6e3a91dacf19e33e16d5db9dface141e90a67e78c8588ba1553029',
-              'start':b'# NSLAB GOLD PHASE MACHINE'},
-            'news':{
-              'url':'https://r.jina.ai/http://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/csv/news_20220826.csv',
-              'git':'d55fcbe874b40ff48d4b7a6502bf1df06ddaa134',
-              'sha256':None,
-              'start':b'page,row,date,time,title,body'},
+            'prompt':('docs/research_prompt.md','e33e16c05fddfcc92883fc99fb688871f45e1fc0','b5ba21ce1f6e3a91dacf19e33e16d5db9dface141e90a67e78c8588ba1553029'),
+            'news':('docs/csv/news_20220826.csv','d55fcbe874b40ff48d4b7a6502bf1df06ddaa134',None),
           }
           def blob_sha(b): return hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
-          report={}; recovered={}
-          for name,t in targets.items():
-            req=urllib.request.Request(t['url'],headers={'User-Agent':'Mozilla/5.0','Accept':'text/plain,*/*'})
+          def urls(commit,path):
+            return [
+              ('raw_commit',f'https://raw.githubusercontent.com/Daikisong/new_bot/{commit}/{path}'),
+              ('media_commit',f'https://media.githubusercontent.com/media/Daikisong/new_bot/{commit}/{path}'),
+              ('github_raw_commit',f'https://github.com/Daikisong/new_bot/raw/{commit}/{path}'),
+              ('jsdelivr_commit',f'https://cdn.jsdelivr.net/gh/Daikisong/new_bot@{commit}/{path}'),
+              ('fastly_commit',f'https://fastly.jsdelivr.net/gh/Daikisong/new_bot@{commit}/{path}'),
+              ('gcore_commit',f'https://gcore.jsdelivr.net/gh/Daikisong/new_bot@{commit}/{path}'),
+              ('testingcf_commit',f'https://testingcf.jsdelivr.net/gh/Daikisong/new_bot@{commit}/{path}'),
+              ('rawgithack_commit',f'https://raw.githack.com/Daikisong/new_bot/{commit}/{path}'),
+              ('statically_commit',f'https://cdn.statically.io/gh/Daikisong/new_bot/{commit}/{path}'),
+              ('rawgitmirror_commit',f'https://raw.gitmirror.com/Daikisong/new_bot/{commit}/{path}'),
+              ('ghproxy_commit',f'https://ghproxy.net/https://raw.githubusercontent.com/Daikisong/new_bot/{commit}/{path}'),
+              ('ghfast_commit',f'https://ghfast.top/https://raw.githubusercontent.com/Daikisong/new_bot/{commit}/{path}'),
+            ]
+          def fetch(item):
+            label,name,commit,url,expected_git,expected_sha=item
             try:
-              with urllib.request.urlopen(req,timeout=180) as r: raw=r.read()
+              req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Accept':'*/*'})
+              with urllib.request.urlopen(req,timeout=25) as r: data=r.read()
+              row={'target':label,'source':name,'commit':commit,'url':url,'status':'FETCHED','bytes':len(data),'sha256':hashlib.sha256(data).hexdigest(),'git_blob_sha':blob_sha(data),'content_type':r.headers.get('Content-Type')}
+              if row['git_blob_sha']==expected_git and (expected_sha is None or row['sha256']==expected_sha): row['status']='EXACT'
+              return row,data
             except Exception as e:
-              report[name]={'status':'FETCH_FAILED','error':f'{type(e).__name__}: {e}'}; continue
-            Path(f'packet/{name}_jina_raw.bin').write_bytes(raw)
-            candidates=[('raw',raw)]
-            for marker in [b'Markdown Content:\n',b'Markdown Content:\r\n',t['start']]:
-              pos=raw.find(marker)
-              if pos>=0:
-                body=raw[pos+len(marker):] if marker.startswith(b'Markdown') else raw[pos:]
-                candidates.append((f'after_{marker[:20]!r}',body))
-            expanded=[]
-            for label,b in candidates:
-              expanded += [(label,b),(label+'_strip',b.strip()),(label+'_rstrip',b.rstrip()),(label+'_lf',b.replace(b'\r\n',b'\n'))]
-              if name=='news': expanded += [(label+'_bom',b'\xef\xbb\xbf'+b),(label+'_bom_lf',b'\xef\xbb\xbf'+b.replace(b'\r\n',b'\n'))]
-            seen=set(); rows=[]
-            for label,b in expanded:
-              for suffix_name,suffix in [('same',b''),('nl',b'\n'),('crlf',b'\r\n')]:
-                x=b+suffix; key=hashlib.sha256(x).hexdigest()
-                if key in seen: continue
-                seen.add(key)
-                row={'variant':label+'_'+suffix_name,'bytes':len(x),'sha256':key,'git_blob_sha':blob_sha(x)}; rows.append(row)
-                if row['git_blob_sha']==t['git'] and (t['sha256'] is None or key==t['sha256']):
-                  recovered[name]=x
-                  report[name]={'status':'EXACT_RECOVERED','variant':row['variant'],'bytes':len(x),'sha256':key,'git_blob_sha':row['git_blob_sha'],'raw_bytes':len(raw),'raw_prefix':raw[:300].decode('utf-8','replace')}
-                  break
-              if name in recovered: break
-            if name not in recovered:
-              report[name]={'status':'NO_EXACT_VARIANT','raw_bytes':len(raw),'raw_sha256':hashlib.sha256(raw).hexdigest(),'raw_git':blob_sha(raw),'raw_prefix':raw[:1000].decode('utf-8','replace'),'variants':rows[:80]}
+              return {'target':label,'source':name,'commit':commit,'url':url,'status':'FAILED','error':f'{type(e).__name__}: {e}'},None
+          jobs=[]
+          for label,(path,gitsha,sha256) in targets.items():
+            for commit in commits:
+              for name,url in urls(commit,path): jobs.append((label,name,commit,url,gitsha,sha256))
+          attempts=[]; found={}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=32) as ex:
+            for row,data in ex.map(fetch,jobs):
+              attempts.append(row)
+              if row.get('status')=='EXACT' and row['target'] not in found: found[row['target']]=(row,data)
+          Path('packet/cache_attempts.json').write_text(json.dumps(attempts,ensure_ascii=False,indent=2,sort_keys=True)+'\n',encoding='utf-8')
+          report={'found':{k:v[0] for k,v in found.items()},'attempt_count':len(attempts)}
           Path('packet/recovery_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2,sort_keys=True)+'\n',encoding='utf-8')
-          if set(recovered)==set(targets):
-            for name,b in recovered.items(): Path(f'packet/inputs/{name}_tmp').write_bytes(b)
+          if set(found)==set(targets):
+            for label,(row,data) in found.items(): Path(f'packet/inputs/{label}_tmp').write_bytes(data)
             Path('packet/status.json').write_text('{"status":"EXACT_RECOVERED"}\n',encoding='utf-8')
           else:
-            Path('packet/status.json').write_text(json.dumps({'status':'INCOMPLETE','recovered':sorted(recovered)},indent=2)+'\n',encoding='utf-8')
+            Path('packet/status.json').write_text(json.dumps({'status':'INCOMPLETE','found':sorted(found)},indent=2)+'\n',encoding='utf-8')
           PY
       - name: Upload recovery diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: nslab-jina-recover-20220826-20260715T115537
+          name: nslab-cache-recover-20220826-20260715T115537
           path: packet/
           retention-days: 1
           compression-level: 0
