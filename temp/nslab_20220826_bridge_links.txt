@@ -1,0 +1,2 @@
+https://r.jina.ai/http://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/csv/news_20220826.csv
+https://r.jina.ai/http://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/research_prompt.md
