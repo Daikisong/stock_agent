@@ -14,7 +14,11 @@ from e2r.research_brain.planning.provider_transport import (
 )
 
 from .component_researcher import StructuredResearchProvider
-from .prompt_projection import project_evidence_facts
+from .prompt_projection import (
+    project_fact_extraction_evidence_context,
+    project_query_planner_failures,
+    project_query_score_gap_context,
+)
 from .schemas import assert_blind_research_output, scrub_blind_research_payload
 
 
@@ -158,18 +162,22 @@ class ResearcherSourceQueryPlanner:
                 "target_aliases": list(target_aliases),
                 "as_of_date": as_of_date,
                 "open_research_objectives": list(open_objectives),
-                "current_evidence_fact_graph": project_evidence_facts(
+                "current_evidence_fact_graph": project_fact_extraction_evidence_context(
                     current_evidence_facts
                 ),
-                "current_counterfacts": project_evidence_facts(
+                "current_counterfacts": project_fact_extraction_evidence_context(
                     current_counterfacts
                 ),
                 "target_business_model": target_business_model,
                 "source_coverage": list(source_coverage),
-                "prior_query_or_source_failures": list(prior_query_failures),
+                "prior_query_or_source_failures": project_query_planner_failures(
+                    prior_query_failures
+                ),
                 "previously_executed_queries": list(previously_executed_queries),
                 "theme_context": dict(theme_context),
-                "score_gap_context": dict(score_gap_context),
+                "score_gap_context": project_query_score_gap_context(
+                    score_gap_context
+                ),
             }
         )
         prompt_hash = stable_intelligence_id("QUERYPROMPT", payload)

@@ -10,6 +10,7 @@ from e2r.research_brain.researcher_mode.canary_leaf_contract import (
     CANARY_MASTER_LEAF_FILES,
     canary_output_tree_hash,
     materialize_canary_checkpoint_leaves,
+    refresh_canary_target_manifest_hash,
     write_canary_post_run_gold_comparison,
 )
 
@@ -130,6 +131,33 @@ class E2RV5CanaryLeafContractTests(unittest.TestCase):
             self.assertEqual(
                 premature["critical_counts"]["premature_gold_comparison_count"],
                 1,
+            )
+
+    def test_runner_progress_leaf_rebinds_manifest_tree_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._write_pending_sources(root)
+            write_json(
+                root / "target_run_manifest.json",
+                {
+                    "target_id": self.TARGET_ID,
+                    "output_tree_hash": "BEFORE_PROGRESS",
+                },
+            )
+            write_json(
+                root / "until_pass_progress.json",
+                {
+                    "target_id": self.TARGET_ID,
+                    "status": "RESEARCH_CHECKPOINT_PENDING",
+                },
+            )
+
+            self.assertTrue(refresh_canary_target_manifest_hash(root))
+            manifest = json.loads(
+                (root / "target_run_manifest.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                manifest["output_tree_hash"], canary_output_tree_hash(root)
             )
 
     def test_missing_atomic_stage_leaf_keeps_contract_pending(self) -> None:

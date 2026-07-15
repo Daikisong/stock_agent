@@ -15,6 +15,7 @@ from e2r.research_brain.researcher_mode import (
     CurrentResearcherModeTargetRunner,
     compare_phase93_gold_post_run,
     load_current_research_targets,
+    refresh_canary_target_manifest_hash,
     write_canary_post_run_gold_comparison,
     write_phase93_post_run_comparison,
     write_production_lane,
@@ -215,6 +216,7 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
                 "completion_gates": dict(result.completion_gates),
             },
         )
+        refresh_canary_target_manifest_hash(progress_path.parent)
         if result.status == "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD":
             return result
         if signature in seen_signatures:
@@ -237,6 +239,7 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
                     ),
                 },
             )
+            refresh_canary_target_manifest_hash(progress_path.parent)
             return result
         seen_signatures.add(signature)
 

@@ -1205,10 +1205,174 @@ def project_citable_evidence_facts(
     }
 
 
+def project_current_decision_citable_facts(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Expose every current/open fact and hash-account for closed history.
+
+    Current Researcher Mode can accumulate thousands of superseded and resolved
+    facts across a long point-in-time backfill.  Replaying the full prose for
+    those closed states to every business/component/red-team pass both exceeds
+    the provider context window and risks letting obsolete evidence influence a
+    current decision.  Current/open rows remain individually citable and retain
+    every economic field through a lossless dictionary-encoded table.  Closed
+    rows are not sampled: every one contributes to deterministic state groups,
+    counts, and roster hashes, while its full immutable record remains in the
+    Evidence Fact ledger.
+    """
+
+    payloads = tuple(_record_dict(row) for row in rows)
+    ordered = tuple(
+        sorted(
+            payloads,
+            key=lambda row: (
+                str(row.get("fact_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    current_rows = tuple(
+        row
+        for row in ordered
+        if str(row.get("current_lifecycle") or "")
+        not in {"RESOLVED", "SUPERSEDED"}
+    )
+    closed_rows = tuple(
+        row
+        for row in ordered
+        if str(row.get("current_lifecycle") or "")
+        in {"RESOLVED", "SUPERSEDED"}
+    )
+    semantic_fields = tuple(
+        field for field in _CITABLE_FACT_PROMPT_FIELDS if field != "fact_id"
+    )
+    value_dictionaries: dict[str, list[Any]] = {}
+    value_indices: dict[str, Mapping[str, int]] = {}
+    for field in semantic_fields:
+        encoded_values = {
+            json.dumps(
+                row.get(field),
+                ensure_ascii=False,
+                sort_keys=True,
+                default=str,
+            )
+            for row in current_rows
+        }
+        ordered_values = sorted(encoded_values)
+        value_dictionaries[field] = [
+            json.loads(value) for value in ordered_values
+        ]
+        value_indices[field] = {
+            value: index for index, value in enumerate(ordered_values)
+        }
+    fact_fields = (
+        "fact_row_index",
+        *(f"{field}_dictionary_index" for field in semantic_fields),
+    )
+    facts = []
+    fact_ids = []
+    for row_index, row in enumerate(current_rows):
+        facts.append(
+            [
+                row_index,
+                *(
+                    value_indices[field][
+                        json.dumps(
+                            row.get(field),
+                            ensure_ascii=False,
+                            sort_keys=True,
+                            default=str,
+                        )
+                    ]
+                    for field in semantic_fields
+                ),
+            ]
+        )
+        fact_ids.append(str(row.get("fact_id") or ""))
+    closed_projection = _project_state_collection(
+        closed_rows,
+        collection_name="closed_evidence_fact_history",
+        identity_fields=("fact_id",),
+        group_fields=(
+            "business_segment",
+            "product_family",
+            "direction",
+            "current_lifecycle",
+            "allowed_component_ids",
+            "structured_evidence_roles",
+        ),
+        relation_fields=(),
+        numeric_fields=(),
+    )
+    return {
+        "schema_version": "e2r_v5_current_decision_citable_fact_projection_v1",
+        "input_fact_count": len(ordered),
+        "fact_count": len(current_rows),
+        "closed_fact_count": len(closed_rows),
+        "input_fact_roster_hash": _stable_hash(ordered),
+        "current_fact_roster_hash": _stable_hash(current_rows),
+        "closed_fact_roster_hash": _stable_hash(closed_rows),
+        "fact_fields": list(fact_fields),
+        "fact_value_dictionaries": value_dictionaries,
+        "facts": facts,
+        # Deterministic citation resolution needs this private roster, but each
+        # caller explicitly excludes it from the provider payload.
+        "fact_id_by_row_index": fact_ids,
+        "current_fact_id_roster": _project_text_roster(fact_ids),
+        "closed_fact_history": closed_projection,
+        "every_input_fact_accounted": (
+            len(current_rows) + len(closed_rows) == len(ordered)
+        ),
+        "every_current_fact_individually_citable": (
+            len(facts) == len(current_rows)
+            and all(fact_ids)
+            and len(set(fact_ids)) == len(fact_ids)
+        ),
+        "every_closed_fact_accounted_by_hash_and_group_count": (
+            closed_projection[
+                "every_record_accounted_by_hash_and_group_count"
+            ]
+        ),
+        "dictionary_encoding_is_lossless": True,
+        "closed_lifecycle_rows_cannot_drive_current_score": True,
+        "full_fact_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
 def citable_fact_id_by_row_index(
     projection: Mapping[str, Any],
 ) -> Mapping[int, str]:
     """Recover exact fact ids from the provider-facing row table."""
+
+    private_roster = projection.get("fact_id_by_row_index")
+    if private_roster is not None:
+        if isinstance(private_roster, (str, bytes)) or not isinstance(
+            private_roster, Sequence
+        ):
+            raise TypeError("private citable fact id roster must be an array")
+        result = {
+            index: str(fact_id or "").strip()
+            for index, fact_id in enumerate(private_roster)
+        }
+        if (
+            len(result) != int(projection.get("fact_count") or 0)
+            or any(not fact_id for fact_id in result.values())
+            or len(set(result.values())) != len(result)
+        ):
+            raise ValueError("private citable fact id roster is invalid")
+        row_indices = {
+            row[0]
+            for row in projection.get("facts") or ()
+            if isinstance(row, Sequence)
+            and not isinstance(row, (str, bytes))
+            and row
+        }
+        if row_indices != set(result):
+            raise ValueError("citable fact projection row count mismatch")
+        return result
 
     fields = tuple(str(value) for value in projection.get("fact_fields") or ())
     try:
@@ -1361,6 +1525,60 @@ def project_source_claim_profile(
     return projection
 
 
+def project_research_source_claim_profile(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Compact all claim provenance after exact facts have been compiled."""
+
+    payloads = tuple(dict(row) for row in rows)
+    projection = dict(
+        _project_state_collection(
+            payloads,
+            collection_name="research_source_claim_profile",
+            identity_fields=("claim_id",),
+            group_fields=(
+                "source_family",
+                "source_tier",
+                "structured_evidence_roles",
+            ),
+            relation_fields=(),
+            numeric_fields=(),
+        )
+    )
+    exact_quotes = tuple(str(row.get("exact_quote") or "") for row in payloads)
+    projection.update(
+        {
+            "schema_version": "e2r_v5_research_source_claim_profile_v1",
+            "claim_id_roster": _project_text_roster(
+                row.get("claim_id") for row in payloads
+            ),
+            "document_id_roster": _project_text_roster(
+                row.get("document_id") for row in payloads
+            ),
+            "source_id_roster": _project_text_roster(
+                source_id
+                for row in payloads
+                for source_id in row.get("source_ids") or ()
+            ),
+            "published_at_roster": _project_text_roster(
+                row.get("published_at") for row in payloads
+            ),
+            "available_at_roster": _project_text_roster(
+                row.get("available_at") for row in payloads
+            ),
+            "exact_quote_roster": _project_text_roster(exact_quotes),
+            "exact_quote_character_count": sum(map(len, exact_quotes)),
+            "every_exact_quote_accounted_by_count_and_hash": True,
+            "fact_semantics_are_in_current_citable_fact_rows": True,
+            "full_claim_records_persisted_outside_prompt": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        }
+    )
+    return projection
+
+
 def project_source_document_profile(
     rows: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
@@ -1399,6 +1617,68 @@ def project_source_document_profile(
             ),
             "content_hash_roster": _project_text_roster(
                 row.get("content_hash") for row in payloads
+            ),
+            "query_id_roster": _project_text_roster(
+                query_id
+                for row in payloads
+                for query_id in row.get("query_ids") or ()
+            ),
+            "objective_id_roster": _project_text_roster(
+                objective_id
+                for row in payloads
+                for objective_id in row.get("objective_ids") or ()
+            ),
+            "document_bodies_already_consumed_by_fact_extraction": True,
+            "full_document_records_persisted_outside_prompt": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        }
+    )
+    return projection
+
+
+def project_research_source_document_profile(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Compact all source provenance after document bodies were consumed."""
+
+    payloads = tuple(dict(row) for row in rows)
+    projection = dict(
+        _project_state_collection(
+            payloads,
+            collection_name="research_source_document_profile",
+            identity_fields=("document_id",),
+            group_fields=(
+                "source_family",
+                "source_provider",
+                "content_type",
+                "evidence_eligible",
+            ),
+            relation_fields=(),
+            numeric_fields=(),
+        )
+    )
+    projection.update(
+        {
+            "schema_version": "e2r_v5_research_source_document_profile_v1",
+            "document_id_roster": _project_text_roster(
+                row.get("document_id") for row in payloads
+            ),
+            "canonical_url_roster": _project_text_roster(
+                row.get("canonical_url") or row.get("url") for row in payloads
+            ),
+            "title_roster": _project_text_roster(
+                row.get("title") for row in payloads
+            ),
+            "content_hash_roster": _project_text_roster(
+                row.get("content_hash") for row in payloads
+            ),
+            "published_at_roster": _project_text_roster(
+                row.get("published_at") for row in payloads
+            ),
+            "available_at_roster": _project_text_roster(
+                row.get("available_at") for row in payloads
             ),
             "query_id_roster": _project_text_roster(
                 query_id
@@ -1500,6 +1780,144 @@ def project_supervisor_failures(
         "fixed_top_n_used": False,
         "prompt_projection_is_research_cap": False,
         "score_authority": False,
+    }
+
+
+def project_query_planner_failures(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Give the query LLM every failure state without opaque id inflation."""
+
+    ordered_inputs = sorted(
+        (dict(raw) for raw in rows),
+        key=lambda row: (
+            str(row.get("failure_id") or ""),
+            _stable_hash(row),
+        ),
+    )
+    normalized = []
+    identity_occurrences: dict[str, int] = {}
+    for raw in ordered_inputs:
+        row = dict(raw)
+        existing_id = str(row.get("failure_id") or "").strip()
+        identity_base = existing_id or "QUERYFAIL-" + _stable_hash(row)[:24]
+        occurrence = identity_occurrences.get(identity_base, 0)
+        identity_occurrences[identity_base] = occurrence + 1
+        row["failure_id"] = (
+            identity_base if occurrence == 0 else f"{identity_base}-{occurrence}"
+        )
+        normalized.append(row)
+    full_projection = project_supervisor_failures(normalized)
+    failures = []
+    for raw in full_projection.get("failures") or ():
+        row = dict(raw)
+        member_ids = tuple(str(value) for value in row.pop("member_failure_ids", ()))
+        relations = dict(row.pop("relation_coverage", {}) or {})
+        visible_relations = {
+            key: value
+            for key, value in relations.items()
+            if key in {"objective_id", "objective_ids", "query_id"}
+        }
+        row["relation_coverage"] = visible_relations
+        row["omitted_relation_coverage_hash"] = _stable_hash(
+            {
+                key: value
+                for key, value in relations.items()
+                if key not in visible_relations
+            }
+        )
+        row["member_failure_count"] = int(
+            row.get("member_failure_count") or len(member_ids)
+        )
+        row["member_failure_roster_hash"] = str(
+            row.get("member_failure_roster_hash")
+            or _stable_hash(member_ids)
+        )
+        failures.append(row)
+    return {
+        "schema_version": "e2r_v5_query_planner_failure_projection_v1",
+        "failure_count": full_projection["failure_count"],
+        "failure_group_count": full_projection["failure_group_count"],
+        "failure_roster_hash": full_projection["failure_roster_hash"],
+        "failure_group_member_mapping_hash": _stable_hash(
+            full_projection.get("failure_group_members") or {}
+        ),
+        "failures": failures,
+        "every_failure_accounted_by_group_count_and_hash": (
+            sum(int(row["member_failure_count"]) for row in failures)
+            == len(normalized)
+        ),
+        "full_failure_records_persisted_in_source_graph_checkpoint": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def project_query_score_gap_context(
+    context: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Remove duplicate ledgers while preserving LLM-authored gap semantics."""
+
+    output = dict(context)
+    feedback = output.get("prior_fact_extraction_feedback")
+    if isinstance(feedback, Sequence) and not isinstance(feedback, (str, bytes)):
+        feedback_rows = tuple(str(value) for value in feedback)
+        output["prior_fact_extraction_feedback"] = {
+            "schema_version": "e2r_v5_fact_gap_feedback_projection_v1",
+            "feedback_count": len(feedback_rows),
+            "feedback_roster_hash": _stable_hash(feedback_rows),
+            "feedback_kind_coverage": _relation_coverage(
+                (
+                    {
+                        "kind": value.split(":", 1)[0]
+                        if ":" in value
+                        else "UNCLASSIFIED"
+                    }
+                    for value in feedback_rows
+                ),
+                "kind",
+            ),
+            "supervisor_missing_facts_and_questions_remain_verbatim": True,
+            "full_feedback_records_persisted_outside_prompt": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        }
+    supervisor = output.get("prior_supervisor_gap")
+    if isinstance(supervisor, Mapping):
+        projected_supervisor = dict(supervisor)
+        failure_assessments = projected_supervisor.pop(
+            "failure_assessments", ()
+        )
+        if isinstance(failure_assessments, Sequence) and not isinstance(
+            failure_assessments, (str, bytes)
+        ):
+            projected_supervisor["failure_assessment_projection"] = (
+                project_query_planner_failures(failure_assessments)
+            )
+        parser_failures = projected_supervisor.pop(
+            "parser_or_extractor_failures", ()
+        )
+        if isinstance(parser_failures, Sequence) and not isinstance(
+            parser_failures, (str, bytes)
+        ):
+            projected_supervisor["parser_or_extractor_failure_roster"] = (
+                _project_text_roster(parser_failures)
+            )
+        output["prior_supervisor_gap"] = projected_supervisor
+    return {
+        **output,
+        "query_score_gap_projection_audit": {
+            "schema_version": "e2r_v5_query_score_gap_projection_v1",
+            "input_context_roster_hash": _stable_hash(context),
+            "llm_authored_missing_facts_questions_and_directions_preserved": True,
+            "duplicate_failure_ledgers_projected": True,
+            "full_gap_context_persisted_outside_prompt": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        },
     }
 
 
@@ -1825,15 +2243,20 @@ __all__ = [
     "citable_fact_id_by_row_index",
     "project_counter_route_proof",
     "project_citable_evidence_facts",
+    "project_current_decision_citable_facts",
     "project_evidence_facts",
     "project_fact_extraction_evidence_context",
     "project_generated_queries",
     "project_peer_selection_context",
+    "project_query_planner_failures",
+    "project_query_score_gap_context",
     "project_research_epoch_checkpoint",
     "project_source_documents",
     "project_source_graph_checkpoint",
     "project_source_claims",
     "project_source_claim_profile",
+    "project_research_source_claim_profile",
+    "project_research_source_document_profile",
     "project_source_document_profile",
     "project_source_document_table",
     "project_structured_records",

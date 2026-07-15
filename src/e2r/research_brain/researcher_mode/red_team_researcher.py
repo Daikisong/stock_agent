@@ -25,9 +25,9 @@ from .schemas import (
 )
 from .prompt_projection import (
     citable_fact_id_by_row_index,
-    project_citable_evidence_facts,
-    project_source_claim_profile,
-    project_source_document_profile,
+    project_current_decision_citable_facts,
+    project_research_source_claim_profile,
+    project_research_source_document_profile,
     resolve_citable_fact_row_indices,
 )
 
@@ -96,7 +96,7 @@ class RedTeamResearcher:
         ]
         anchor_ids = {str(row["anchor_id"]) for row in anchor_rows}
         coverage_labels = _coverage_labels(source_coverage)
-        fact_projection = project_citable_evidence_facts(evidence_facts)
+        fact_projection = project_current_decision_citable_facts(evidence_facts)
         fact_id_by_row_index = citable_fact_id_by_row_index(fact_projection)
         payload = scrub_blind_research_payload(
             {
@@ -110,12 +110,14 @@ class RedTeamResearcher:
                 "current_evidence_fact_projection": {
                     key: value
                     for key, value in fact_projection.items()
-                    if key != "facts"
+                    if key not in {"facts", "fact_id_by_row_index"}
                 },
                 "historical_component_anchors": anchor_rows,
                 "source_coverage": list(source_coverage),
-                "source_claims": project_source_claim_profile(source_claims),
-                "source_documents": project_source_document_profile(
+                "source_claims": project_research_source_claim_profile(
+                    source_claims
+                ),
+                "source_documents": project_research_source_document_profile(
                     source_documents
                 ),
             }

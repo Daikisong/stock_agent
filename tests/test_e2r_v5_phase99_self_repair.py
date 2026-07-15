@@ -127,13 +127,12 @@ class E2RV5Phase99SelfRepairTests(unittest.TestCase):
             for row in self.audit["live_canaries"]["targets"]
         }
         self.assertEqual(by_target["005930"]["status"], "RESEARCH_CHECKPOINT_PENDING")
-        self.assertEqual(by_target["000660"]["status"], "LIVE_RESEARCH_NOT_STARTED")
+        self.assertEqual(by_target["000660"]["status"], "RESEARCH_CHECKPOINT_PENDING")
         blockers = self.audit["canary_completion_blockers"]
         self.assertIn("LIVE_RESEARCH_CHECKPOINT_PENDING:005930", blockers)
-        self.assertIn("LIVE_RESEARCH_NOT_STARTED:000660", blockers)
-        self.assertIn(
-            "CODEX_PROVIDER_USAGE_LIMIT_UNTIL_2026-07-20T03:58:00+09:00",
-            blockers,
+        self.assertIn("LIVE_RESEARCH_CHECKPOINT_PENDING:000660", blockers)
+        self.assertFalse(
+            self.audit["live_canaries"]["provider_usage_limit_detected"]
         )
 
     def test_missing_live_manifests_are_exact_pending_not_fake_completion(self) -> None:

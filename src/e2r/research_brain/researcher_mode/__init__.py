@@ -59,6 +59,7 @@ from .canary_leaf_contract import (
     audit_canary_leaf_contract,
     canary_output_tree_hash,
     materialize_canary_checkpoint_leaves,
+    refresh_canary_target_manifest_hash,
     write_canary_post_run_gold_comparison,
 )
 from .schemas import (
@@ -478,6 +479,7 @@ __all__ = [
     "audit_canary_leaf_contract",
     "canary_output_tree_hash",
     "materialize_canary_checkpoint_leaves",
+    "refresh_canary_target_manifest_hash",
     "write_canary_post_run_gold_comparison",
     "PHASE80_ARTIFACT_PATHS",
     "PHASE84_AUDIT_PATH",

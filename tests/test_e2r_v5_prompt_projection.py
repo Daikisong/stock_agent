@@ -8,10 +8,13 @@ from e2r.research_brain.researcher_mode.prompt_projection import (
     citable_fact_id_by_row_index,
     project_counter_route_proof,
     project_citable_evidence_facts,
+    project_current_decision_citable_facts,
     project_evidence_facts,
     project_fact_extraction_evidence_context,
     project_generated_queries,
     project_peer_selection_context,
+    project_query_planner_failures,
+    project_query_score_gap_context,
     project_research_epoch_checkpoint,
     project_source_documents,
     project_source_document_table,
@@ -585,6 +588,128 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertLess(len(peer_encoded), 250_000)
         self.assertNotIn("검증된 경제 메커니즘 999", supervisor_encoded)
         self.assertNotIn("원문 인용 999", peer_encoded)
+
+    def test_current_research_and_query_contexts_scale_without_evidence_loss(self):
+        facts = tuple(
+            {
+                "fact_id": f"FACT-{index:04d}",
+                "subject": "현재 회사",
+                "business_segment": f"사업부-{index % 4}",
+                "product_family": f"제품군-{index % 9}",
+                "economic_mechanism": f"현금 전환 메커니즘-{index % 31}",
+                "predicate": f"PREDICATE-{index % 37}",
+                "value": index % 101,
+                "unit": "KRW",
+                "period": f"2026Q{index % 4 + 1}",
+                "direction": "COUNTER" if index % 7 == 0 else "POSITIVE",
+                "current_lifecycle": (
+                    "CURRENT" if index < 900 else "SUPERSEDED"
+                ),
+                "confidence": 0.9,
+                "structured_evidence_roles": ("FORWARD_GUIDANCE",),
+                "allowed_component_ids": ("earnings_visibility",),
+            }
+            for index in range(3_000)
+        )
+        projection = project_current_decision_citable_facts(facts)
+        self.assertEqual(projection["input_fact_count"], 3_000)
+        self.assertEqual(projection["fact_count"], 900)
+        self.assertEqual(projection["closed_fact_count"], 2_100)
+        self.assertTrue(projection["every_input_fact_accounted"])
+        self.assertTrue(projection["every_current_fact_individually_citable"])
+        self.assertTrue(
+            projection["every_closed_fact_accounted_by_hash_and_group_count"]
+        )
+        self.assertNotIn("fact_id", projection["fact_fields"])
+        fact_ids = citable_fact_id_by_row_index(projection)
+        self.assertEqual(len(fact_ids), 900)
+        self.assertEqual(fact_ids[0], "FACT-0000")
+        provider_projection_metadata = {
+            key: value
+            for key, value in projection.items()
+            if key not in {"facts", "fact_id_by_row_index"}
+        }
+        provider_projection = {
+            "current_evidence_fact_projection": provider_projection_metadata,
+            "current_evidence_fact_graph": projection["facts"],
+        }
+        self.assertNotIn("fact_id_by_row_index", provider_projection_metadata)
+        self.assertNotIn(
+            "FACT-0000",
+            json.dumps(provider_projection, ensure_ascii=False, sort_keys=True),
+        )
+        self.assertLess(
+            len(json.dumps(provider_projection, ensure_ascii=False, sort_keys=True)),
+            100_000,
+        )
+
+        failures = tuple(
+            {
+                "failure_stage": "SEARCH",
+                "failure_reason": f"FAILURE-{index % 3}",
+                "objective_id": f"OBJ-{index % 7}",
+                "query_id": f"QUERY-{index % 19}",
+                "alternate_route_required": index % 2 == 0,
+                "url": f"https://example.com/{index}",
+            }
+            for index in range(1_500)
+        )
+        failure_projection = project_query_planner_failures(failures)
+        self.assertEqual(
+            failure_projection,
+            project_query_planner_failures(tuple(reversed(failures))),
+        )
+        self.assertEqual(failure_projection["failure_count"], 1_500)
+        self.assertEqual(failure_projection["failure_group_count"], 6)
+        self.assertTrue(
+            failure_projection[
+                "every_failure_accounted_by_group_count_and_hash"
+            ]
+        )
+        gap_projection = project_query_score_gap_context(
+            {
+                "prior_fact_extraction_feedback": [
+                    f"MISSING_FACT:{index}" for index in range(1_000)
+                ],
+                "prior_supervisor_gap": {
+                    "missing_material_facts": ["공식 연간 가이던스"],
+                    "unresolved_material_questions": ["현금 전환 귀속"],
+                    "failure_assessments": list(failures),
+                    "parser_or_extractor_failures": [
+                        f"PARSER-{index}" for index in range(1_000)
+                    ],
+                },
+            }
+        )
+        self.assertEqual(
+            gap_projection["prior_fact_extraction_feedback"]["feedback_count"],
+            1_000,
+        )
+        self.assertEqual(
+            gap_projection["prior_supervisor_gap"][
+                "failure_assessment_projection"
+            ]["failure_count"],
+            1_500,
+        )
+        self.assertEqual(
+            gap_projection["prior_supervisor_gap"][
+                "missing_material_facts"
+            ],
+            ["공식 연간 가이던스"],
+        )
+        self.assertLess(
+            len(
+                json.dumps(
+                    {
+                        "failures": failure_projection,
+                        "gap": gap_projection,
+                    },
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+            ),
+            100_000,
+        )
 
         checkpoint = {
             "checkpoint_id": "CHECKPOINT",

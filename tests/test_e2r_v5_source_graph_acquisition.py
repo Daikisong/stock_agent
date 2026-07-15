@@ -467,10 +467,14 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             for call in provider.calls
             if call["pass_name"] == "SOURCE_QUERY_GENERATION"
         ][-1]
-        self.assertTrue(query_payload["prior_query_or_source_failures"])
-        self.assertIn(
-            "LLM_RETURNED_NO_NEW_VALID_QUERY",
-            query_payload["prior_query_or_source_failures"][0]["failure_reason"],
+        failure_projection = query_payload["prior_query_or_source_failures"]
+        self.assertGreater(failure_projection["failure_count"], 0)
+        self.assertTrue(
+            any(
+                "LLM_RETURNED_NO_NEW_VALID_QUERY"
+                in str(row.get("failure_reason") or "")
+                for row in failure_projection["failures"]
+            )
         )
         self.assertEqual(len(second.evidence_documents), 1)
 
@@ -567,7 +571,9 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertTrue(
             any(
                 row.get("alternate_route_required") is True
-                for row in query_payload["prior_query_or_source_failures"]
+                for row in query_payload["prior_query_or_source_failures"][
+                    "failures"
+                ]
             )
         )
 

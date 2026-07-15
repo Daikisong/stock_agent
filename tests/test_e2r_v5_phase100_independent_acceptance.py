@@ -247,12 +247,10 @@ class E2RV5Phase100IndependentAcceptanceTests(unittest.TestCase):
         self.assertIn(FINAL_NOT_READY_LABEL, readiness)
         self.assertIn("PHASE94_CLEAN_GOLD_RECALL_COMPARISON_PENDING", readiness)
         self.assertIn("LIVE_CANARY_DOSSIER_INCOMPLETE", readiness)
-        self.assertIn("CANARY_LEAF_CONTRACT_PENDING", readiness)
         self.assertIn("FINAL_STAGECOURT_PENDING", readiness)
-        self.assertIn(
-            "CODEX_PROVIDER_USAGE_LIMIT_UNTIL_2026-07-20T03:58:00+09:00",
-            readiness,
-        )
+        self.assertIn("LIVE_RESEARCH_CHECKPOINT_PENDING:005930", readiness)
+        self.assertIn("LIVE_RESEARCH_CHECKPOINT_PENDING:000660", readiness)
+        self.assertNotIn("CANARY_LEAF_CONTRACT_PENDING", readiness)
         self.assertIn(f"`{FINAL_READY_LABEL}`는", readiness)
         self.assertNotIn(f"exact verdict: `{FINAL_READY_LABEL}`", readiness)
 

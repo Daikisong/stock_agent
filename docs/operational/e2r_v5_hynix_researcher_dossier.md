@@ -1,12 +1,12 @@
 # SK하이닉스 E2R v5 Researcher Dossier
 
 - target_id: `000660`
-- status: `LIVE_RESEARCH_NOT_STARTED`
+- status: `RESEARCH_CHECKPOINT_PENDING`
 - production research complete: `false`
-- documents: `0`
-- evidence facts: `0`
-- counterfacts: `0`
-- complete component memos: `0` / `7`
+- documents: `131`
+- evidence facts: `782`
+- counterfacts: `138`
+- complete component memos: `7` / `7`
 - score valid: `false`
 - FINAL StageCourt: `false`
 
@@ -15,17 +15,17 @@
 
 ## Leaf presence
 
-- `research_epochs.jsonl`: `missing`
-- `query_ledger.jsonl`: `missing`
-- `source_graph.jsonl`: `missing`
-- `documents.jsonl`: `missing`
-- `evidence_facts.jsonl`: `missing`
-- `counterfacts.jsonl`: `missing`
-- `component_research_memos.jsonl`: `missing`
-- `component_judge_decisions.jsonl`: `missing`
-- `historical_anchor_comparisons.jsonl`: `missing`
-- `final_component_decisions.jsonl`: `missing`
-- `score_vector.json`: `missing`
-- `atomic_stage_decision.json`: `missing`
-- `stagecourt_trace.json`: `missing`
+- `research_epochs.jsonl`: `present`
+- `query_ledger.jsonl`: `present`
+- `source_graph.jsonl`: `present`
+- `documents.jsonl`: `present`
+- `evidence_facts.jsonl`: `present`
+- `counterfacts.jsonl`: `present`
+- `component_research_memos.jsonl`: `present`
+- `component_judge_decisions.jsonl`: `present`
+- `historical_anchor_comparisons.jsonl`: `present`
+- `final_component_decisions.jsonl`: `present`
+- `score_vector.json`: `present`
+- `atomic_stage_decision.json`: `present`
+- `stagecourt_trace.json`: `present`
 - `gold_fact_comparison.jsonl`: `missing`

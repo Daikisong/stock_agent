@@ -542,12 +542,16 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         )
 
         component_payload = provider.calls[-1]["payload"]
-        visible_ids = {
-            row["fact_id"] for row in _projected_fact_rows(component_payload)
-        }
+        visible_rows = _projected_fact_rows(component_payload)
         self.assertEqual(result.status, "COMPLETE")
         self.assertIn("FACT-CORPORATE-ONLY", plans[0].candidate_fact_ids)
-        self.assertNotIn("FACT-CORPORATE-ONLY", visible_ids)
+        self.assertEqual(len(visible_rows), len(facts) - 1)
+        self.assertNotIn(
+            "fact_id",
+            component_payload["current_evidence_fact_projection"][
+                "fact_fields"
+            ],
+        )
         self.assertEqual(
             component_payload["component_fact_scope_projection"]
             ["non_citable_fact_count"],
@@ -724,10 +728,14 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             payload = call["payload"]
             projection = payload["current_evidence_fact_projection"]
             self.assertEqual(projection["fact_count"], 1_200)
+            self.assertEqual(projection["input_fact_count"], 1_200)
+            self.assertEqual(projection["closed_fact_count"], 0)
             self.assertFalse(projection["fixed_top_n_used"])
             self.assertTrue(
-                projection["every_fact_lineage_accounted_by_count_and_hash"]
+                projection["every_current_fact_individually_citable"]
             )
+            self.assertTrue(projection["dictionary_encoding_is_lossless"])
+            self.assertNotIn("fact_id_by_row_index", projection)
             self.assertEqual(payload["source_claims"]["record_count"], 1_200)
             self.assertTrue(
                 payload["source_claims"][
@@ -1044,11 +1052,22 @@ def _recursive_keys(value: Any) -> set[str]:
 
 
 def _projected_fact_rows(payload: Mapping[str, Any]) -> tuple[Mapping[str, Any], ...]:
-    fields = payload["current_evidence_fact_projection"]["fact_fields"]
-    return tuple(
-        dict(zip(fields, row))
-        for row in payload["current_evidence_fact_graph"]
-    )
+    projection = payload["current_evidence_fact_projection"]
+    fields = projection["fact_fields"]
+    dictionaries = projection.get("fact_value_dictionaries") or {}
+    decoded_rows = []
+    for row in payload["current_evidence_fact_graph"]:
+        encoded = dict(zip(fields, row))
+        decoded: dict[str, Any] = {}
+        for field, value in encoded.items():
+            suffix = "_dictionary_index"
+            if field.endswith(suffix):
+                semantic_field = field[: -len(suffix)]
+                decoded[semantic_field] = dictionaries[semantic_field][value]
+            else:
+                decoded[field] = value
+        decoded_rows.append(decoded)
+    return tuple(decoded_rows)
 
 
 def _open_schema_object_paths(

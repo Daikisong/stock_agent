@@ -3,9 +3,9 @@
 - target_id: `005930`
 - status: `RESEARCH_CHECKPOINT_PENDING`
 - production research complete: `false`
-- documents: `287`
-- evidence facts: `1494`
-- counterfacts: `404`
+- documents: `463`
+- evidence facts: `3590`
+- counterfacts: `928`
 - complete component memos: `0` / `7`
 - score valid: `false`
 - FINAL StageCourt: `false`
@@ -26,6 +26,6 @@
 - `historical_anchor_comparisons.jsonl`: `present`
 - `final_component_decisions.jsonl`: `present`
 - `score_vector.json`: `present`
-- `atomic_stage_decision.json`: `missing`
-- `stagecourt_trace.json`: `missing`
+- `atomic_stage_decision.json`: `present`
+- `stagecourt_trace.json`: `present`
 - `gold_fact_comparison.jsonl`: `missing`

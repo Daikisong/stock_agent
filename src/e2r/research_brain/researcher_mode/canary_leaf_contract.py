@@ -225,6 +225,30 @@ def canary_output_tree_hash(output_root: str | Path) -> str:
     )
 
 
+def refresh_canary_target_manifest_hash(output_root: str | Path) -> bool:
+    """Rebind a target manifest after runner-owned progress leaves change.
+
+    ``run_checkpoint`` seals the research artifacts first.  The until-pass
+    runner then writes its progress/no-progress checkpoint in the same target
+    directory, so the manifest must be rebound after those runner-owned leaves
+    are durable as well.
+    """
+
+    root = Path(output_root)
+    path = root / "target_run_manifest.json"
+    manifest = _read_json(path)
+    if not manifest:
+        return False
+    write_json(
+        path,
+        {
+            **manifest,
+            "output_tree_hash": canary_output_tree_hash(root),
+        },
+    )
+    return True
+
+
 def _write_research_epochs(root: Path, *, target_id: str, as_of_date: str) -> None:
     checkpoint = _read_json(root / "research_epoch_checkpoint.json")
     if not checkpoint:
@@ -441,6 +465,7 @@ __all__ = [
     "CANARY_MASTER_LEAF_FILES",
     "audit_canary_leaf_contract",
     "canary_output_tree_hash",
+    "refresh_canary_target_manifest_hash",
     "materialize_canary_checkpoint_leaves",
     "write_canary_post_run_gold_comparison",
 ]
