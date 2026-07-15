@@ -1,0 +1,28 @@
+name: NSLAB private-action exact input export 20220825 20260715T090105
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  export:
+    if: github.head_ref == 'nslab-private-action-export-20220825-20260715t090105'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Export exact current-main private-repo inputs
+        uses: Daikisong/new_bot/.github/actions/nslab_export_20220825_20260715t090105@main
+        with:
+          output-dir: packet
+      - name: Upload fresh current-run packet
+        uses: actions/upload-artifact@v4
+        with:
+          name: nslab-currentrun-exact-inputs-20220825-20260715T090105
+          path: packet/
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
