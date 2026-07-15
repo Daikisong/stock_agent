@@ -6,6 +6,7 @@ import unittest
 
 from e2r.research_brain.researcher_mode.prompt_projection import (
     citable_fact_id_by_row_index,
+    project_candidate_ranking_evidence_context,
     project_counter_route_proof,
     project_citable_evidence_facts,
     project_current_decision_citable_facts,
@@ -642,6 +643,20 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             len(json.dumps(provider_projection, ensure_ascii=False, sort_keys=True)),
             100_000,
         )
+        ranking_projection = project_candidate_ranking_evidence_context(facts)
+        ranking_encoded = json.dumps(
+            ranking_projection, ensure_ascii=False, sort_keys=True
+        )
+        self.assertEqual(ranking_projection["input_fact_count"], 3_000)
+        self.assertEqual(ranking_projection["fact_count"], 900)
+        self.assertEqual(ranking_projection["closed_fact_count"], 2_100)
+        self.assertTrue(
+            ranking_projection["every_current_fact_individually_accounted"]
+        )
+        self.assertTrue(ranking_projection["every_input_fact_accounted"])
+        self.assertNotIn("fact_id_by_row_index", ranking_projection)
+        self.assertNotIn("FACT-0000", ranking_encoded)
+        self.assertLess(len(ranking_encoded), 100_000)
 
         failures = tuple(
             {

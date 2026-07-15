@@ -1239,6 +1239,61 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "ISSUER_NEWSROOM",
         )
 
+    def test_ranker_prompt_compacts_complete_large_fact_graph(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/large-fact-ranking"
+        facts = tuple(
+            {
+                "fact_id": f"FACT-{index:04d}",
+                "target_id": TARGET,
+                "as_of_date": AS_OF_DATE,
+                "subject": "현재 회사",
+                "business_segment": f"사업부-{index % 4}",
+                "product_family": f"제품군-{index % 9}",
+                "economic_mechanism": (
+                    f"서로 다른 경제 메커니즘 {index}: "
+                    + "계약·현금전환·CAPA·가격 지속성 검증 " * 12
+                ),
+                "predicate": f"PREDICATE-{index % 37}",
+                "value": index % 101,
+                "unit": "KRW",
+                "period": f"2026Q{index % 4 + 1}",
+                "direction": "COUNTER" if index % 7 == 0 else "POSITIVE",
+                "current_lifecycle": (
+                    "CURRENT" if index < 1_000 else "SUPERSEDED"
+                ),
+                "confidence": 0.9,
+                "structured_evidence_roles": ["FORWARD_GUIDANCE"],
+                "allowed_component_ids": ["eps_fcf_explosion"],
+            }
+            for index in range(3_000)
+        )
+        self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {QUERY: (_result("Current Corp material", url),)}
+            ),
+            fetcher=PageFetcher(
+                fixture_text_by_url={url: _document_text("large-fact-ranking")}
+            ),
+            current_evidence_facts=facts,
+        )
+        ranking_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+        projection = ranking_payload["current_evidence_fact_graph"]
+        encoded = json.dumps(ranking_payload, ensure_ascii=False, sort_keys=True)
+        self.assertEqual(projection["input_fact_count"], 3_000)
+        self.assertEqual(projection["fact_count"], 1_000)
+        self.assertEqual(projection["closed_fact_count"], 2_000)
+        self.assertTrue(projection["every_input_fact_accounted"])
+        self.assertTrue(projection["every_current_fact_individually_accounted"])
+        self.assertFalse(projection["fact_ids_exposed_to_candidate_ranker"])
+        self.assertNotIn("FACT-0000", encoded)
+        self.assertLess(len(encoded), 500_000)
+
     def test_http_last_modified_verifies_missing_search_result_date(self) -> None:
         provider = SourceBrainProvider()
         url = "https://example.com/undated-transcript.pdf"
@@ -1317,6 +1372,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         official_gaps: Mapping[str, Sequence[str]] | None = None,
         official_documents: Sequence[Mapping[str, Any]] = (),
         official_domains: Sequence[str] = (),
+        current_evidence_facts: Sequence[Mapping[str, Any]] = (),
     ):
         return ResearcherSourceGraphAcquirer(
             query_provider=provider,
@@ -1329,7 +1385,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             target_aliases=(),
             as_of_date=AS_OF_DATE,
             open_objectives=(_objective(),),
-            current_evidence_facts=(),
+            current_evidence_facts=current_evidence_facts,
             target_business_model=None,
             source_coverage=(),
             official_documents=official_documents,

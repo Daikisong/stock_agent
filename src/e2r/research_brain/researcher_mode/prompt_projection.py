@@ -1342,6 +1342,35 @@ def project_current_decision_citable_facts(
     }
 
 
+def project_candidate_ranking_evidence_context(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Account for the full fact graph without replaying closed narratives.
+
+    Candidate ranking decides which discovery metadata deserves a full fetch;
+    it never cites an EvidenceFact or assigns points.  Current/open facts keep
+    their complete economic fields in the lossless dictionary table, while
+    resolved/superseded history remains fully counted and hashed.  The private
+    row-to-fact-id roster used by component researchers is deliberately absent.
+    """
+
+    projection = dict(project_current_decision_citable_facts(rows))
+    projection.pop("fact_id_by_row_index", None)
+    projection.pop("every_current_fact_individually_citable", None)
+    projection.update(
+        {
+            "schema_version": "e2r_v5_candidate_ranking_fact_projection_v1",
+            "every_current_fact_individually_accounted": (
+                len(projection.get("facts") or ())
+                == int(projection.get("fact_count") or 0)
+            ),
+            "fact_ids_exposed_to_candidate_ranker": False,
+            "candidate_ranking_evidence_or_score_authority": False,
+        }
+    )
+    return projection
+
+
 def citable_fact_id_by_row_index(
     projection: Mapping[str, Any],
 ) -> Mapping[int, str]:
@@ -2241,6 +2270,7 @@ def _stable_hash(value: Any) -> str:
 
 __all__ = [
     "citable_fact_id_by_row_index",
+    "project_candidate_ranking_evidence_context",
     "project_counter_route_proof",
     "project_citable_evidence_facts",
     "project_current_decision_citable_facts",

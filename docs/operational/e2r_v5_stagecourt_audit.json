@@ -22,7 +22,7 @@
   "status": "FINAL_STAGECOURT_PENDING",
   "targets": [
     {
-      "actual_output_tree_hash": "e4349652eac0846f8ee5234723d30156d865258cd5c3760eb1df0066ed2077c4",
+      "actual_output_tree_hash": "9f765f06195058097441767e00defffa0ddd4312aeaeb0e1dbbb2aab3c785bf9",
       "canary_leaf_contract_critical_count": 0,
       "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
       "company_name": "삼성전자",
@@ -48,11 +48,11 @@
       },
       "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
       "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-      "output_tree_hash": "e4349652eac0846f8ee5234723d30156d865258cd5c3760eb1df0066ed2077c4",
-      "output_tree_hash_matches": true,
+      "output_tree_hash": "9ec7f3c4d33f9d3f917685ad621ae0fa447e8bb04191cef65825cf2afa1c5db9",
+      "output_tree_hash_matches": false,
       "production_research_complete": false,
       "provider_error_count": 0,
-      "provider_logical_call_count": 39,
+      "provider_logical_call_count": 40,
       "provider_successful_call_count": 39,
       "query_count": 193,
       "score_valid": false,
