@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 import json
 import tempfile
 import unittest
@@ -81,6 +82,18 @@ class Phase89JudgeProvider:
             response["support_fact_ids"] = []
         if self.mode == "SKEPTIC_OMITS_COUNTER" and pass_name == "COMPONENT_SKEPTIC_JUDGE":
             response["counter_fact_ids"] = []
+        if (
+            self.mode == "HONOR_EMPTY_SUPPORT_RULE"
+            and not payload["allowed_support_fact_ids"]
+        ):
+            empty_rule = payload["conditional_judge_rules"]["empty_support_plane"]
+            response["proposed_points"] = empty_rule["required_proposed_points"]
+            response["allowed_range"] = list(
+                empty_rule["required_allowed_range"]
+            )
+            response["support_fact_ids"] = list(
+                empty_rule["required_support_fact_ids"]
+            )
         if (
             self.mode == "OUTSIDE_FACT_THEN_VALID"
             and "judge_validation_retry_context" not in payload
@@ -372,6 +385,48 @@ class E2RV5ComponentScoringMemoTests(unittest.TestCase):
         self.assertEqual(
             set(provider.calls[0]["payload"]["required_judge_output_fields"]),
             set(JUDGE_RESPONSE_FIELDS),
+        )
+        payload = provider.calls[0]["payload"]
+        self.assertEqual(
+            payload["allowed_support_fact_ids"],
+            payload["component_research_memo"]["positive_fact_ids"],
+        )
+        self.assertEqual(
+            payload["conditional_judge_rules"]["empty_support_plane"],
+            {
+                "condition": "allowed_support_fact_ids is empty",
+                "required_proposed_points": 0,
+                "required_allowed_range": [0, 0],
+                "required_support_fact_ids": [],
+            },
+        )
+
+    def test_empty_support_plane_explicitly_requires_zero_score_contract(self) -> None:
+        rows = list(_component_results())
+        first = rows[0]
+        rows[0] = replace(
+            first,
+            memo=replace(first.memo, positive_fact_ids=()),
+        )
+        provider = Phase89JudgeProvider("HONOR_EMPTY_SUPPORT_RULE")
+
+        result = _run(provider, component_results=tuple(rows))
+
+        self.assertEqual(result.status, "COMPONENT_SCORING_MEMOS_COMPLETE")
+        first_decisions = [
+            row
+            for row in result.judge_decisions
+            if row.component_id == CANONICAL_COMPONENT_ORDER[0]
+        ]
+        self.assertEqual(len(first_decisions), 3)
+        self.assertTrue(
+            all(row.proposed_points == 0 for row in first_decisions)
+        )
+        self.assertTrue(
+            all(row.allowed_range == (0.0, 0.0) for row in first_decisions)
+        )
+        self.assertTrue(
+            all(not row.support_fact_ids for row in first_decisions)
         )
 
 

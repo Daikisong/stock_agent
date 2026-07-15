@@ -216,7 +216,7 @@
         {
           "exists": true,
           "path": "docs/operational/e2r_v5_component_scoring_memos_audit.json",
-          "sha256": "8a87ab8743f10d7efa42910f351d1917934c1db9c28de1b49f707bbd403771a6"
+          "sha256": "9050a396f44d69f5d569f440847f8126cbae02ee29bfa6cecaeafbcddf435037"
         }
       ],
       "reviewer_id": "D",
@@ -268,7 +268,7 @@
         {
           "exists": true,
           "path": "docs/operational/e2r_v5_deterministic_score_aggregator_audit.json",
-          "sha256": "1b7b8e92deb7ab5814df7f273f98ec25b127ab7fc86552fe94b57a78aefc4002"
+          "sha256": "e11da68984a787aa7f9719cccfd89c381072e995a02db6061fcf1cc43f6168d8"
         }
       ],
       "reviewer_id": "E",
@@ -304,14 +304,14 @@
       "recomputed_metrics": {
         "targets": [
           {
-            "actual_output_tree_hash": "9f765f06195058097441767e00defffa0ddd4312aeaeb0e1dbbb2aab3c785bf9",
+            "actual_output_tree_hash": "d54d38eca467cc0bc1dff807d6f0b6ac84b630688d9886a0cd24f66dfdf882a9",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
             "component_memo_count": 7,
-            "counterfact_count": 928,
-            "document_count": 463,
-            "fact_count": 3590,
+            "counterfact_count": 971,
+            "document_count": 489,
+            "fact_count": 3807,
             "leaf_presence": {
               "atomic_stage_decision.json": true,
               "component_judge_decisions.jsonl": true,
@@ -330,12 +330,12 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "9ec7f3c4d33f9d3f917685ad621ae0fa447e8bb04191cef65825cf2afa1c5db9",
+            "output_tree_hash": "153840e256ec9e22ea77ef47d87be33be0b0b251aeddb0cd5b8d3924de9a2c80",
             "output_tree_hash_matches": false,
             "production_research_complete": false,
             "provider_error_count": 0,
-            "provider_logical_call_count": 40,
-            "provider_successful_call_count": 39,
+            "provider_logical_call_count": 48,
+            "provider_successful_call_count": 48,
             "query_count": 193,
             "score_valid": false,
             "stage_final": false,
@@ -419,14 +419,14 @@
       "recomputed_metrics": {
         "targets": [
           {
-            "actual_output_tree_hash": "9f765f06195058097441767e00defffa0ddd4312aeaeb0e1dbbb2aab3c785bf9",
+            "actual_output_tree_hash": "d54d38eca467cc0bc1dff807d6f0b6ac84b630688d9886a0cd24f66dfdf882a9",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
             "component_memo_count": 7,
-            "counterfact_count": 928,
-            "document_count": 463,
-            "fact_count": 3590,
+            "counterfact_count": 971,
+            "document_count": 489,
+            "fact_count": 3807,
             "leaf_presence": {
               "atomic_stage_decision.json": true,
               "component_judge_decisions.jsonl": true,
@@ -445,12 +445,12 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "9ec7f3c4d33f9d3f917685ad621ae0fa447e8bb04191cef65825cf2afa1c5db9",
+            "output_tree_hash": "153840e256ec9e22ea77ef47d87be33be0b0b251aeddb0cd5b8d3924de9a2c80",
             "output_tree_hash_matches": false,
             "production_research_complete": false,
             "provider_error_count": 0,
-            "provider_logical_call_count": 40,
-            "provider_successful_call_count": 39,
+            "provider_logical_call_count": 48,
+            "provider_successful_call_count": 48,
             "query_count": 193,
             "score_valid": false,
             "stage_final": false,
@@ -626,7 +626,7 @@
       "detector_run_count": 2,
       "recomputed_metrics": {
         "capability_regression_status": "PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS",
-        "expected_verification_tree_hash": "ecbceeecd0b592ad7a3aa3878033e2cfb1ce76195ed0c33d5422f0f7391ce36b",
+        "expected_verification_tree_hash": "e8e0328f26a4a9d92e62a51db79241e47990cad21759c70853d0a8cea21fd8eb",
         "full_test_evidence": {
           "command": [
             "/home/eorb915/.local/bin/python",
@@ -675,14 +675,14 @@
         "self_repair_status": "PHASE99_INTERNAL_SELF_REPAIR_PASS",
         "targets": [
           {
-            "actual_output_tree_hash": "9f765f06195058097441767e00defffa0ddd4312aeaeb0e1dbbb2aab3c785bf9",
+            "actual_output_tree_hash": "d54d38eca467cc0bc1dff807d6f0b6ac84b630688d9886a0cd24f66dfdf882a9",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
             "component_memo_count": 7,
-            "counterfact_count": 928,
-            "document_count": 463,
-            "fact_count": 3590,
+            "counterfact_count": 971,
+            "document_count": 489,
+            "fact_count": 3807,
             "leaf_presence": {
               "atomic_stage_decision.json": true,
               "component_judge_decisions.jsonl": true,
@@ -701,12 +701,12 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "9ec7f3c4d33f9d3f917685ad621ae0fa447e8bb04191cef65825cf2afa1c5db9",
+            "output_tree_hash": "153840e256ec9e22ea77ef47d87be33be0b0b251aeddb0cd5b8d3924de9a2c80",
             "output_tree_hash_matches": false,
             "production_research_complete": false,
             "provider_error_count": 0,
-            "provider_logical_call_count": 40,
-            "provider_successful_call_count": 39,
+            "provider_logical_call_count": 48,
+            "provider_successful_call_count": 48,
             "query_count": 193,
             "score_valid": false,
             "stage_final": false,
@@ -758,7 +758,7 @@
         {
           "exists": true,
           "path": "docs/operational/e2r_v5_self_repair_audit.json",
-          "sha256": "880a8472a92f2b4c17e1fc4137d91bc97b888b49cafaaf4172a2e99e679218d4"
+          "sha256": "97ca005a4da165b4c916ecc5a71d301ee33189fddf9914159b13a1f51e05b80c"
         },
         {
           "exists": true,

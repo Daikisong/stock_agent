@@ -72,6 +72,19 @@ JUDGE_RESPONSE_FIELDS = frozenset(
     }
 )
 
+JUDGE_CONDITIONAL_SCORING_RULES: Mapping[str, Any] = {
+    "positive_points_require_support": (
+        "proposed_points greater than zero requires at least one exact id from "
+        "allowed_support_fact_ids in support_fact_ids"
+    ),
+    "empty_support_plane": {
+        "condition": "allowed_support_fact_ids is empty",
+        "required_proposed_points": 0,
+        "required_allowed_range": [0, 0],
+        "required_support_fact_ids": [],
+    },
+}
+
 
 @dataclass(frozen=True)
 class ComponentJudgeResult:
@@ -235,6 +248,10 @@ class ComponentJudge:
                     for anchor_id in memo.historical_anchor_ids
                     if anchor_id in anchors
                 ],
+                "allowed_support_fact_ids": list(memo.positive_fact_ids),
+                "allowed_counter_fact_ids": list(memo.counter_fact_ids),
+                "allowed_nearest_anchor_ids": list(memo.historical_anchor_ids),
+                "conditional_judge_rules": JUDGE_CONDITIONAL_SCORING_RULES,
                 "required_judge_output_fields": sorted(JUDGE_RESPONSE_FIELDS),
             }
         )
@@ -332,6 +349,9 @@ class ComponentJudge:
                             "required_output_fields": sorted(
                                 JUDGE_RESPONSE_FIELDS
                             ),
+                            "positive_score_constraint": (
+                                JUDGE_CONDITIONAL_SCORING_RULES
+                            ),
                             "instruction": (
                                 "Rewrite the complete judge response. Cite only "
                                 "the exact supplied allowed fact and anchor ids; "
@@ -340,7 +360,12 @@ class ComponentJudge:
                                 "every allowed support fact, the skeptic must "
                                 "account for every allowed counter fact, and every "
                                 "judge must compare at least one usable allowed "
-                                "nearest anchor. Return only the closed schema."
+                                "nearest anchor. When allowed_support_fact_ids is "
+                                "empty, return proposed_points=0, "
+                                "allowed_range=[0,0], and support_fact_ids=[]; "
+                                "never award positive points from structured "
+                                "metrics or prose without an allowed support fact. "
+                                "Return only the closed schema."
                             ),
                         },
                     }
