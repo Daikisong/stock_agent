@@ -45,8 +45,7 @@ jobs:
             except Exception as e:
               report[name]={'status':'FETCH_FAILED','error':f'{type(e).__name__}: {e}'}; continue
             Path(f'packet/{name}_jina_raw.bin').write_bytes(raw)
-            candidates=[]
-            candidates.append(('raw',raw))
+            candidates=[('raw',raw)]
             for marker in [b'Markdown Content:\n',b'Markdown Content:\r\n',t['start']]:
               pos=raw.find(marker)
               if pos>=0:
@@ -55,17 +54,14 @@ jobs:
             expanded=[]
             for label,b in candidates:
               expanded += [(label,b),(label+'_strip',b.strip()),(label+'_rstrip',b.rstrip()),(label+'_lf',b.replace(b'\r\n',b'\n'))]
-              if name=='news':
-                expanded += [(label+'_bom',b'\xef\xbb\xbf'+b),(label+'_bom_lf',b'\xef\xbb\xbf'+b.replace(b'\r\n',b'\n'))]
+              if name=='news': expanded += [(label+'_bom',b'\xef\xbb\xbf'+b),(label+'_bom_lf',b'\xef\xbb\xbf'+b.replace(b'\r\n',b'\n'))]
             seen=set(); rows=[]
             for label,b in expanded:
               for suffix_name,suffix in [('same',b''),('nl',b'\n'),('crlf',b'\r\n')]:
-                x=b+suffix
-                key=hashlib.sha256(x).hexdigest()
+                x=b+suffix; key=hashlib.sha256(x).hexdigest()
                 if key in seen: continue
                 seen.add(key)
-                row={'variant':label+'_'+suffix_name,'bytes':len(x),'sha256':key,'git_blob_sha':blob_sha(x)}
-                rows.append(row)
+                row={'variant':label+'_'+suffix_name,'bytes':len(x),'sha256':key,'git_blob_sha':blob_sha(x)}; rows.append(row)
                 if row['git_blob_sha']==t['git'] and (t['sha256'] is None or key==t['sha256']):
                   recovered[name]=x
                   report[name]={'status':'EXACT_RECOVERED','variant':row['variant'],'bytes':len(x),'sha256':key,'git_blob_sha':row['git_blob_sha'],'raw_bytes':len(raw),'raw_prefix':raw[:300].decode('utf-8','replace')}
@@ -89,3 +85,5 @@ jobs:
           retention-days: 1
           compression-level: 0
           if-no-files-found: error
+
+# trigger: 20260715T115900KST
