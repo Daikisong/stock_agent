@@ -243,9 +243,18 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 for row in result.research_gap_feedback
             )
         )
-        self.assertEqual(len(provider.calls), 2)
+        self.assertEqual(len(provider.calls), 3)
         self.assertEqual(
             result.rejections[0].proposed_exact_quote, "quote not found"
+        )
+        final_retry = provider.calls[-1]["payload"][
+            "fact_extraction_retry_context"
+        ]
+        self.assertEqual(final_retry["rewrite_attempt"], 2)
+        self.assertTrue(final_retry["must_not_repeat_rejected_proposals"])
+        self.assertEqual(
+            final_retry["prohibited_exact_quote_reuse"],
+            [{"document_id": "DOC-1", "exact_quote": "quote not found"}],
         )
 
     def test_invalid_exact_quote_is_reprompted_with_the_rejected_proposal(self) -> None:
@@ -269,6 +278,12 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(
             retry["rejected_proposals"][0]["proposed_exact_quote"],
             "quote not found",
+        )
+        self.assertEqual(retry["rewrite_attempt"], 1)
+        self.assertTrue(retry["must_not_repeat_rejected_proposals"])
+        self.assertEqual(
+            retry["prohibited_exact_quote_reuse"],
+            [{"document_id": "DOC-1", "exact_quote": "quote not found"}],
         )
         self.assertEqual(result.rejections, ())
         self.assertEqual(result.provider_calls[0].provider_attempt_count, 2)

@@ -335,6 +335,7 @@ class ResearcherEvidenceFactExtractor:
             attempt_payload = payload
             provider_attempt_count = 0
             validation_retry_used = False
+            validation_retry_count = 0
             while True:
                 max_attempt_payload_chars = max(
                     max_attempt_payload_chars,
@@ -415,33 +416,48 @@ class ResearcherEvidenceFactExtractor:
                     prompt_hash=prompt_hash,
                     response_hash=response_hash,
                 )
-                if batch_pending and not validation_retry_used:
+                if batch_pending and validation_retry_count < 2:
+                    validation_retry_count += 1
                     validation_retry_used = True
+                    rejected_material_proposals = [
+                        {
+                            "proposal_index": row.proposal_index,
+                            "document_id": row.document_id,
+                            "reason": row.reason,
+                            "proposed_exact_quote": row.proposed_exact_quote,
+                        }
+                        for row in batch_rejections
+                        if row.material_proposal
+                        and not row.reason.startswith("MECHANISM_SCOPE_REJECTED")
+                    ]
                     attempt_payload = scrub_blind_research_payload(
                         {
                             **payload,
                             "fact_extraction_retry_context": {
+                                "rewrite_attempt": validation_retry_count,
+                                "maximum_rewrite_attempts": 2,
                                 "validation_errors": list(batch_pending),
-                                "rejected_proposals": [
+                                "rejected_proposals": rejected_material_proposals,
+                                "must_not_repeat_rejected_proposals": True,
+                                "prohibited_exact_quote_reuse": [
                                     {
-                                        "proposal_index": row.proposal_index,
-                                        "document_id": row.document_id,
-                                        "reason": row.reason,
-                                        "proposed_exact_quote": (
-                                            row.proposed_exact_quote
-                                        ),
+                                        "document_id": row["document_id"],
+                                        "exact_quote": row["proposed_exact_quote"],
                                     }
-                                    for row in batch_rejections
-                                    if row.material_proposal
-                                    and not row.reason.startswith(
-                                        "MECHANISM_SCOPE_REJECTED"
-                                    )
+                                    for row in rejected_material_proposals
+                                    if row["reason"]
+                                    == "EXACT_QUOTE_NOT_IN_FULL_DOCUMENT"
+                                    and row["proposed_exact_quote"]
                                 ],
                                 "required_document_ids": [
                                     str(row["document_id"]) for row in batch
                                 ],
                                 "instruction": (
-                                    "Rewrite the complete batch. Every material "
+                                    "Rewrite the complete batch. Every listed rejected "
+                                    "proposal was deterministically invalid and must not "
+                                    "be repeated, paraphrased, whitespace-normalized, or "
+                                    "reused. Omit it unless a different literal substring "
+                                    "in the same document directly supports the fact. Every material "
                                     "exact_quote must be copied as one literal "
                                     "contiguous substring from that document's "
                                     "content_text. Delete any unsupported proposal; "
