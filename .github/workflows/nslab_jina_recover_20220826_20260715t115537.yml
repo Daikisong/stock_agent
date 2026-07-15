@@ -1,0 +1,91 @@
+name: NSLAB recover exact current-main bytes via browser cache 20220826 20260715T115537
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/nslab_jina_recover_20220826_20260715t115537.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Fetch browser-cache render and recover exact blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p packet/inputs
+          python - <<'PY'
+          import hashlib,json,urllib.request
+          from pathlib import Path
+
+          targets={
+            'prompt':{
+              'url':'https://r.jina.ai/http://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/research_prompt.md',
+              'git':'e33e16c05fddfcc92883fc99fb688871f45e1fc0',
+              'sha256':'b5ba21ce1f6e3a91dacf19e33e16d5db9dface141e90a67e78c8588ba1553029',
+              'start':b'# NSLAB GOLD PHASE MACHINE'},
+            'news':{
+              'url':'https://r.jina.ai/http://raw.githubusercontent.com/Daikisong/new_bot/refs/heads/main/docs/csv/news_20220826.csv',
+              'git':'d55fcbe874b40ff48d4b7a6502bf1df06ddaa134',
+              'sha256':None,
+              'start':b'page,row,date,time,title,body'},
+          }
+          def blob_sha(b): return hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+          report={}; recovered={}
+          for name,t in targets.items():
+            req=urllib.request.Request(t['url'],headers={'User-Agent':'Mozilla/5.0','Accept':'text/plain,*/*'})
+            try:
+              with urllib.request.urlopen(req,timeout=180) as r: raw=r.read()
+            except Exception as e:
+              report[name]={'status':'FETCH_FAILED','error':f'{type(e).__name__}: {e}'}; continue
+            Path(f'packet/{name}_jina_raw.bin').write_bytes(raw)
+            candidates=[]
+            candidates.append(('raw',raw))
+            for marker in [b'Markdown Content:\n',b'Markdown Content:\r\n',t['start']]:
+              pos=raw.find(marker)
+              if pos>=0:
+                body=raw[pos+len(marker):] if marker.startswith(b'Markdown') else raw[pos:]
+                candidates.append((f'after_{marker[:20]!r}',body))
+            expanded=[]
+            for label,b in candidates:
+              expanded += [(label,b),(label+'_strip',b.strip()),(label+'_rstrip',b.rstrip()),(label+'_lf',b.replace(b'\r\n',b'\n'))]
+              if name=='news':
+                expanded += [(label+'_bom',b'\xef\xbb\xbf'+b),(label+'_bom_lf',b'\xef\xbb\xbf'+b.replace(b'\r\n',b'\n'))]
+            seen=set(); rows=[]
+            for label,b in expanded:
+              for suffix_name,suffix in [('same',b''),('nl',b'\n'),('crlf',b'\r\n')]:
+                x=b+suffix
+                key=hashlib.sha256(x).hexdigest()
+                if key in seen: continue
+                seen.add(key)
+                row={'variant':label+'_'+suffix_name,'bytes':len(x),'sha256':key,'git_blob_sha':blob_sha(x)}
+                rows.append(row)
+                if row['git_blob_sha']==t['git'] and (t['sha256'] is None or key==t['sha256']):
+                  recovered[name]=x
+                  report[name]={'status':'EXACT_RECOVERED','variant':row['variant'],'bytes':len(x),'sha256':key,'git_blob_sha':row['git_blob_sha'],'raw_bytes':len(raw),'raw_prefix':raw[:300].decode('utf-8','replace')}
+                  break
+              if name in recovered: break
+            if name not in recovered:
+              report[name]={'status':'NO_EXACT_VARIANT','raw_bytes':len(raw),'raw_sha256':hashlib.sha256(raw).hexdigest(),'raw_git':blob_sha(raw),'raw_prefix':raw[:1000].decode('utf-8','replace'),'variants':rows[:80]}
+          Path('packet/recovery_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2,sort_keys=True)+'\n',encoding='utf-8')
+          if set(recovered)==set(targets):
+            for name,b in recovered.items(): Path(f'packet/inputs/{name}_tmp').write_bytes(b)
+            Path('packet/status.json').write_text('{"status":"EXACT_RECOVERED"}\n',encoding='utf-8')
+          else:
+            Path('packet/status.json').write_text(json.dumps({'status':'INCOMPLETE','recovered':sorted(recovered)},indent=2)+'\n',encoding='utf-8')
+          PY
+      - name: Upload recovery diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nslab-jina-recover-20220826-20260715T115537
+          path: packet/
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
