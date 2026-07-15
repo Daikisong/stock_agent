@@ -6,7 +6,7 @@
 - documents: `463`
 - evidence facts: `3590`
 - counterfacts: `928`
-- complete component memos: `0` / `7`
+- complete component memos: `7` / `7`
 - score valid: `false`
 - FINAL StageCourt: `false`
 

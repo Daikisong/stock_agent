@@ -349,6 +349,61 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             _semantic_signature(first), _semantic_signature(changed_failure)
         )
 
+    def test_no_progress_signature_tracks_supervisor_validation_failure_class(
+        self,
+    ) -> None:
+        def result(*, validation_error: str, prose: str):
+            return SimpleNamespace(
+                source_graph=SimpleNamespace(
+                    status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+                    checkpoint={
+                        "generated_queries": [],
+                        "search_candidates": [],
+                        "query_failures": [],
+                    },
+                    evidence_documents=(),
+                ),
+                fact_extraction=SimpleNamespace(
+                    status="FACT_EXTRACTION_COMPLETE",
+                    pending_reasons=(),
+                    facts=(),
+                ),
+                dossier=SimpleNamespace(component_results=()),
+                structured_result=SimpleNamespace(status="SOURCE_PENDING", records=()),
+                score_aggregation=SimpleNamespace(
+                    status="SCORE_PENDING", pending_reasons=("SOURCE_PENDING",)
+                ),
+                research_epoch=SimpleNamespace(
+                    supervisor_review=SimpleNamespace(
+                        status="NEXT_RESEARCH_REQUIRED",
+                        unresolved_material_questions=(
+                            "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                            f"StructuredProviderRejected:{validation_error}",
+                            prose,
+                        ),
+                        next_actions=(f"action for {prose}",),
+                    )
+                ),
+            )
+
+        first = result(
+            validation_error="component sufficiency contradicts current memos",
+            prose="첫 번째 설명",
+        )
+        rephrased = result(
+            validation_error="component sufficiency contradicts current memos",
+            prose="표현만 바꾼 두 번째 설명",
+        )
+        changed_validation = result(
+            validation_error="counter supersession completion lacks route proof",
+            prose="표현만 바꾼 세 번째 설명",
+        )
+        self.assertEqual(_semantic_signature(first), _semantic_signature(rephrased))
+        self.assertNotEqual(
+            _semantic_signature(first),
+            _semantic_signature(changed_validation),
+        )
+
     def test_no_progress_signature_normalizes_usage_limit_transport_noise(self) -> None:
         def result(*, reset_time: str, temp_name: str):
             usage_error = (
@@ -757,6 +812,131 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             ],
             "numeric issuer outlook",
         )
+
+    def test_score_and_supervisor_gaps_reopen_only_their_component_objectives(
+        self,
+    ) -> None:
+        target_id = "CURRENT-TARGET"
+        as_of_date = "2026-06-29"
+        unresolved = {"market_mispricing", "valuation_rerating"}
+        objectives = tuple(
+            {
+                "objective_id": f"OBJECTIVE-{component_id}",
+                "component_id": component_id,
+            }
+            for component_id in CANONICAL_COMPONENT_ORDER
+        )
+        requests = [
+            {
+                "request_id": f"REQUEST-{component_id}",
+                "component_id": component_id,
+                "reason_codes": ["UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT"],
+                "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
+                "deterministic_query_synthesis": False,
+            }
+            for component_id in sorted(unresolved)
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "component_research_memos.jsonl").write_text(
+                "\n".join(
+                    json.dumps(
+                        {
+                            "component_id": component_id,
+                            "research_complete": True,
+                        }
+                    )
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "deterministic_score_aggregation_run.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "status": "DETERMINISTIC_SCORE_RESEARCH_REQUIRED",
+                        "score_valid": False,
+                        "pending_reasons": [
+                            "EXACT_SEVEN_COMPONENT_DECISIONS_REQUIRED"
+                        ],
+                        "research_requests": requests,
+                        "component_results": [
+                            {
+                                "component_id": component_id,
+                                "status": (
+                                    "RESEARCH_REQUIRED"
+                                    if component_id in unresolved
+                                    else "COMPLETE"
+                                ),
+                                "pending_reasons": (
+                                    ["UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT"]
+                                    if component_id in unresolved
+                                    else []
+                                ),
+                            }
+                            for component_id in CANONICAL_COMPONENT_ORDER
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        "checkpoint_id": "EPOCH-2",
+                        "epoch": 2,
+                        "status": "NEXT_RESEARCH_REQUIRED",
+                        "supervisor_review": {
+                            "status": "NEXT_RESEARCH_REQUIRED",
+                            "component_status": {
+                                component_id: "COMPLETE"
+                                for component_id in CANONICAL_COMPONENT_ORDER
+                            },
+                            "missing_material_facts": [
+                                {
+                                    "component_id": "market_mispricing",
+                                    "direction": "COUNTER",
+                                }
+                            ],
+                            "query_direction_briefs": [
+                                {
+                                    "objective_id": "OBJECTIVE-valuation_rerating",
+                                    "counter_or_supersession": True,
+                                }
+                            ],
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=objectives,
+            )
+
+        self.assertEqual(
+            set(context["resolved_objective_ids"]),
+            {
+                f"OBJECTIVE-{component_id}"
+                for component_id in CANONICAL_COMPONENT_ORDER
+                if component_id not in unresolved
+            },
+        )
+        score_gap = context["score_gap_context"]
+        self.assertEqual(
+            set(score_gap["unresolved_component_ids"]), unresolved
+        )
+        self.assertEqual(len(score_gap["component_research_requests"]), 2)
+        self.assertEqual(
+            score_gap["next_query_generation_authority"],
+            "LLM_RESEARCH_SUPERVISOR",
+        )
+        self.assertFalse(score_gap["deterministic_query_synthesis"])
 
 
 if __name__ == "__main__":

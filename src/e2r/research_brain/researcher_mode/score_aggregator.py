@@ -1373,8 +1373,11 @@ def _run_input_reasons(
     historical_anchors: Sequence[ComponentAnchor | Mapping[str, Any]],
 ) -> tuple[str, ...]:
     reasons = []
-    if not scoring_memo_run.ready_for_deterministic_aggregation:
-        reasons.append("COMPONENT_SCORING_MEMO_RUN_NOT_READY")
+    # Run-level readiness is the conjunction of all seven component memos.  It
+    # must not be copied into every component: one pending memo would otherwise
+    # erase six independently complete component decisions.  Each component's
+    # readiness is checked in ``aggregate_run`` and the exact-seven total gate
+    # still keeps the overall score pending.
     fact_ids = [row.fact_id for row in evidence_facts]
     if len(fact_ids) != len(set(fact_ids)):
         reasons.append("RUN_DUPLICATE_EVIDENCE_FACT_ID")

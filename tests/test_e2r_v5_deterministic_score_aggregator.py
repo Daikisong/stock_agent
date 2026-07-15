@@ -123,6 +123,61 @@ class E2RV5DeterministicScoreAggregatorTests(unittest.TestCase):
         self.assertEqual(len(score.prompt_hashes), 21)  # type: ignore[union-attr]
         self.assertEqual(run.audit["critical_count_sum"], 0)
 
+    def test_one_pending_scoring_memo_does_not_poison_six_complete_components(self) -> None:
+        _, scoring_run, memos, facts, anchors = _aggregation_run()
+        pending_memo = replace(
+            scoring_run.component_memos[0],
+            status="PENDING",
+            judge_results=(),
+            pending_reasons=("FIXTURE_COMPONENT_RESEARCH_PENDING",),
+            ready_for_deterministic_aggregation=False,
+        )
+        component_memos = (pending_memo, *scoring_run.component_memos[1:])
+        critical_counts = {
+            **scoring_run.audit["critical_counts"],
+            "incomplete_component_scoring_memo_count": 1,
+            "judge_result_roster_mismatch_count": 1,
+        }
+        audit = {
+            **scoring_run.audit,
+            "status": "COMPONENT_SCORING_MEMO_AUDIT_FAIL",
+            "critical_counts": critical_counts,
+            "critical_count_sum": sum(critical_counts.values()),
+            "judge_memo_count": 18,
+            "complete_judge_memo_count": 18,
+        }
+        partial_run = replace(
+            scoring_run,
+            status="COMPONENT_SCORING_MEMOS_PENDING",
+            component_memos=component_memos,
+            audit=audit,
+            ready_for_deterministic_aggregation=False,
+        )
+
+        result = DeterministicScoreAggregator().aggregate_run(
+            scoring_memo_run=partial_run,
+            component_research_memos=memos,
+            evidence_facts=facts,
+            historical_anchors=anchors,
+        )
+
+        self.assertFalse(result.score_valid)
+        self.assertEqual(
+            [row.component_id for row in result.component_results if row.status == "COMPLETE"],
+            list(CANONICAL_COMPONENT_ORDER[1:]),
+        )
+        self.assertEqual(len(result.research_requests), 1)
+        self.assertEqual(
+            result.research_requests[0].component_id,
+            CANONICAL_COMPONENT_ORDER[0],
+        )
+        self.assertFalse(
+            any(
+                "COMPONENT_SCORING_MEMO_RUN_NOT_READY" in row.pending_reasons
+                for row in result.component_results
+            )
+        )
+
     def test_component_decision_has_every_required_phase90_lineage(self) -> None:
         run, _, _, _, _ = _aggregation_run()
         for result in run.component_results:

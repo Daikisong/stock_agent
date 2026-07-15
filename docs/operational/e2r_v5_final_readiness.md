@@ -2,7 +2,7 @@
 
 - exact verdict: `MEANINGFUL_E2R_RESEARCHER_PARITY_NOT_READY`
 - reviewer gate: `E2R_V5_INDEPENDENT_REVIEWER_GATE_FAIL`
-- reviewer critical sum: `13`
+- reviewer critical sum: `11`
 - failed reviewers: `B, F, G, J`
 
 ## Historical parity
@@ -23,7 +23,7 @@
 
 ## Current decisions
 
-- 삼성전자 (005930): memos `0/7`, score valid `false`, FINAL StageCourt `false`
+- 삼성전자 (005930): memos `7/7`, score valid `false`, FINAL StageCourt `false`
 - SK하이닉스 (000660): memos `7/7`, score valid `false`, FINAL StageCourt `false`
 
 ## Runtime

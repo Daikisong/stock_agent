@@ -7,6 +7,7 @@ from datetime import date, timedelta
 import json
 from pathlib import Path
 import re
+from typing import Any, Mapping
 
 from e2r.production.metadata import stable_hash, write_json
 from e2r.research_brain.researcher_mode import (
@@ -314,9 +315,82 @@ def _semantic_signature(result) -> str:
             if getattr(getattr(result, "stagecourt", None), "decision", None)
             is not None
             else "LEGACY_STAGECOURT_NOT_PRESENT",
-            "supervisor_status": result.research_epoch.supervisor_review.status,
+            "supervisor_state": _supervisor_semantic_state(
+                result.research_epoch.supervisor_review
+            ),
         }
     )
+
+
+def _supervisor_semantic_state(review: Any) -> Mapping[str, Any]:
+    """Keep deterministic supervisor progress while ignoring prose churn."""
+
+    def field(row: Any, key: str, default: Any = None) -> Any:
+        if isinstance(row, Mapping):
+            return row.get(key, default)
+        return getattr(row, key, default)
+
+    def rows(key: str) -> tuple[Any, ...]:
+        value = field(review, key, ())
+        return tuple(value) if isinstance(value, (list, tuple)) else ()
+
+    provider_or_output_errors = sorted(
+        _semantic_failure_reason(str(question))
+        for question in rows("unresolved_material_questions")
+        if str(question).startswith("SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:")
+    )
+    failure_states = [
+        (
+            str(field(row, "classification", "")),
+            bool(field(row, "retryable", False)),
+            bool(field(row, "source_absence_claim_allowed", False)),
+        )
+        for row in rows("failure_assessments")
+    ]
+    failure_state_counts = [
+        (*state, failure_states.count(state))
+        for state in sorted(set(failure_states))
+    ]
+    return {
+        "status": str(field(review, "status", "")),
+        "provider_or_output_errors": provider_or_output_errors,
+        "gates": {
+            key: field(review, key, None)
+            for key in (
+                "counter_and_supersession_checked",
+                "structured_data_complete",
+                "component_memos_sufficient",
+                "reasonable_positive_routes_remaining",
+                "ready_for_independent_saturation_review",
+            )
+        },
+        "missing_material_fact_states": sorted(
+            (
+                str(field(row, "component_id", "")),
+                str(field(row, "direction", "")),
+            )
+            for row in rows("missing_material_facts")
+        ),
+        "source_direction_states": sorted(
+            (
+                str(field(row, "objective_id", "")),
+                str(field(row, "source_family", "")),
+                bool(field(row, "counter_or_supersession", False)),
+            )
+            for row in rows("new_source_family_directions")
+        ),
+        "query_direction_states": sorted(
+            (
+                str(field(row, "objective_id", "")),
+                bool(field(row, "counter_or_supersession", False)),
+            )
+            for row in rows("query_direction_briefs")
+        ),
+        "source_family_gaps": sorted(
+            str(value) for value in rows("source_family_gaps")
+        ),
+        "failure_state_counts": failure_state_counts,
+    }
 
 
 def _semantic_failure_reason(reason: str) -> str:
