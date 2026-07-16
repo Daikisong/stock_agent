@@ -1584,6 +1584,15 @@ class ComponentResearcher:
                                 or exc.__class__.__name__
                             ),
                             "rejected_response": response,
+                            "expected_selected_fact_groundings": (
+                                _expected_selected_fact_grounding_rows(
+                                    response=response,
+                                    fact_id_by_row_index=(
+                                        fact_id_by_row_index
+                                    ),
+                                    facts=fact_by_id,
+                                )
+                            ),
                             "instruction": (
                                 "Rewrite the complete component memo. Use only "
                                 "supplied fact row indices, structured metric row "
@@ -1604,7 +1613,10 @@ class ComponentResearcher:
                                 "selected_fact_groundings row for every selected fact. "
                                 "Copy its decoded predicate and economic_mechanism "
                                 "exactly, and compact-JSON encode its decoded value and "
-                                "period. Cases, dispositions, and interpretations must "
+                                "period. The expected_selected_fact_groundings rows "
+                                "repeat those immutable source fields for correction; "
+                                "copy them exactly but write component_interpretation "
+                                "yourself. Cases, dispositions, and interpretations must "
                                 "match those immutable fields; omit a fact rather than "
                                 "turning it into a different comparison or mechanism. "
                                 "Do not let deterministic "
@@ -2094,12 +2106,7 @@ def _validate_selected_fact_groundings(
                 "selected fact grounding references an unavailable fact row"
             )
         fact = facts[fact_id]
-        expected = {
-            "source_predicate": fact.predicate,
-            "source_value_json": _canonical_fact_field_json(fact.value),
-            "source_period_json": _canonical_fact_field_json(fact.period),
-            "source_economic_mechanism": fact.economic_mechanism,
-        }
+        expected = _immutable_fact_grounding_fields(fact)
         for field, expected_value in expected.items():
             if str(grounding[field]) != str(expected_value):
                 raise ValueError(
@@ -2110,6 +2117,53 @@ def _validate_selected_fact_groundings(
             raise ValueError(
                 "selected fact grounding requires a component interpretation"
             )
+
+
+def _expected_selected_fact_grounding_rows(
+    *,
+    response: Any,
+    fact_id_by_row_index: Mapping[int, str],
+    facts: Mapping[str, EvidenceFact],
+) -> list[Mapping[str, Any]]:
+    """Focus a rejected rewrite on exact source fields without repairing it."""
+
+    if not isinstance(response, Mapping):
+        return []
+    selected = response.get("selected_fact_row_indices")
+    if isinstance(selected, (str, bytes)) or not isinstance(selected, Sequence):
+        return []
+    result: list[Mapping[str, Any]] = []
+    seen: set[int] = set()
+    for row_index in selected:
+        if (
+            isinstance(row_index, bool)
+            or not isinstance(row_index, int)
+            or row_index < 0
+            or row_index in seen
+        ):
+            continue
+        seen.add(row_index)
+        fact_id = fact_id_by_row_index.get(row_index)
+        if fact_id is None or fact_id not in facts:
+            continue
+        result.append(
+            {
+                "fact_row_index": row_index,
+                **_immutable_fact_grounding_fields(facts[fact_id]),
+            }
+        )
+    return result
+
+
+def _immutable_fact_grounding_fields(
+    fact: EvidenceFact,
+) -> Mapping[str, str]:
+    return {
+        "source_predicate": fact.predicate,
+        "source_value_json": _canonical_fact_field_json(fact.value),
+        "source_period_json": _canonical_fact_field_json(fact.period),
+        "source_economic_mechanism": fact.economic_mechanism,
+    }
 
 
 def _canonical_fact_field_json(value: Any) -> str:

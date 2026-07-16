@@ -614,6 +614,30 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         self.assertIn(
             "Copy its decoded predicate", retry_context["instruction"]
         )
+        expected_grounding = retry_context[
+            "expected_selected_fact_groundings"
+        ][0]
+        self.assertEqual(
+            expected_grounding["source_predicate"], self.facts[0].predicate
+        )
+        self.assertEqual(
+            expected_grounding["source_value_json"],
+            json.dumps(
+                self.facts[0].value,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ),
+        )
+        self.assertEqual(
+            expected_grounding["source_period_json"],
+            json.dumps(
+                self.facts[0].period,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ),
+        )
 
     def test_component_research_reselects_every_prior_fact_without_score_carry_forward(
         self,
