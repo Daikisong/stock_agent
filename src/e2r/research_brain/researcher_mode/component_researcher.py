@@ -89,6 +89,20 @@ _NONNEGATIVE_INTEGER_ARRAY: Mapping[str, Any] = {
     "items": {"type": "integer", "minimum": 0},
 }
 
+_PRIOR_FACT_DISPOSITION_ARRAY: Mapping[str, Any] = {
+    "type": "array",
+    "items": {
+        "type": "object",
+        "additionalProperties": False,
+        "required": ["fact_row_index", "disposition", "reason"],
+        "properties": {
+            "fact_row_index": {"type": "integer", "minimum": 0},
+            "disposition": {"type": "string", "enum": ["RETAIN", "OMIT"]},
+            "reason": {"type": "string", "minLength": 1},
+        },
+    },
+}
+
 BUSINESS_MODEL_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "type": "object",
     "additionalProperties": False,
@@ -121,6 +135,7 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "additionalProperties": False,
     "required": [
         "selected_fact_row_indices",
+        "prior_fact_dispositions",
         "structured_metric_row_indices",
         "historical_anchor_ids",
         "nearest_positive_anchor_ids",
@@ -140,6 +155,7 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
     ],
     "properties": {
         "selected_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
+        "prior_fact_dispositions": _PRIOR_FACT_DISPOSITION_ARRAY,
         "structured_metric_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
         "historical_anchor_ids": _STRING_ARRAY,
         "nearest_positive_anchor_ids": _STRING_ARRAY,
@@ -1232,6 +1248,7 @@ class ComponentResearcher:
         source_claims: Sequence[Mapping[str, Any]] = (),
         source_documents: Sequence[Mapping[str, Any]] = (),
         structured_metrics: Mapping[str, Any] | None = None,
+        prior_memo: ComponentResearchMemo | Mapping[str, Any] | None = None,
     ) -> ComponentResearchResult:
         if plan.component_id != self.component_id or plan.researcher_role != self.researcher_role:
             raise ValueError("research plan was assigned to the wrong researcher")
@@ -1287,6 +1304,12 @@ class ComponentResearcher:
         )
         fact_projection = project_current_decision_citable_facts(citable_facts)
         fact_id_by_row_index = citable_fact_id_by_row_index(fact_projection)
+        prior_memo_context = _project_prior_component_memo_context(
+            prior_memo=prior_memo,
+            plan=plan,
+            facts=fact_by_id,
+            fact_id_by_row_index=fact_id_by_row_index,
+        )
         citable_claim_ids = {
             claim_id for row in citable_facts for claim_id in row.claim_ids
         }
@@ -1358,6 +1381,7 @@ class ComponentResearcher:
                         EvidenceLifecycle.SUPERSEDED.value,
                     }
                 ],
+                "prior_component_memo_context": prior_memo_context,
                 "historical_component_anchors": list(anchors),
                 "source_coverage": coverage_rows,
                 "source_claims": project_research_source_claim_profile(
@@ -1403,6 +1427,7 @@ class ComponentResearcher:
                         structured_metric_id_by_row_index
                     ),
                     fact_id_by_row_index=fact_id_by_row_index,
+                    prior_memo_context=prior_memo_context,
                 )
             except (KeyError, TypeError, ValueError) as exc:
                 _invalidate_provider_response_cache(self.provider, exc)
@@ -1429,8 +1454,18 @@ class ComponentResearcher:
                                 "indices, coverage labels, and anchor ids. Every "
                                 "nearest anchor must also appear in "
                                 "historical_anchor_ids and must match its positive "
-                                "or counter role. Do not let deterministic code "
-                                "repair or invent any citation."
+                                "or counter role. Account for every row in "
+                                "prior_component_memo_context.current_fact_rows "
+                                "exactly once in prior_fact_dispositions. A RETAIN "
+                                "row must be selected and an OMIT row must include "
+                                "a semantic reason and remain unselected. Positive "
+                                "points require at least one selected current "
+                                "POSITIVE fact; neutral context and structured "
+                                "metrics with score_authority=false are not positive "
+                                "score evidence. If no positive fact qualifies, "
+                                "return a zero score range instead of narrating an "
+                                "unsupported positive score. Do not let deterministic "
+                                "code repair, retain, or invent any citation."
                             ),
                         },
                     }
@@ -1529,6 +1564,7 @@ def _component_memo_from_response(
     structured_metrics: Mapping[str, Any],
     structured_metric_id_by_row_index: Mapping[int, str],
     fact_id_by_row_index: Mapping[int, str],
+    prior_memo_context: Mapping[str, Any],
 ) -> ComponentResearchMemo:
     if not isinstance(response, Mapping):
         raise TypeError("component researcher response must be an object")
@@ -1537,6 +1573,13 @@ def _component_memo_from_response(
         response["selected_fact_row_indices"],
         fact_id_by_row_index=fact_id_by_row_index,
         label="selected_fact_row_indices",
+    )
+    _validate_prior_fact_dispositions(
+        response=response,
+        selected_fact_row_indices=tuple(
+            int(row) for row in response["selected_fact_row_indices"]
+        ),
+        prior_memo_context=prior_memo_context,
     )
     _require_ids_exist(selected, facts, "fact")
     for fact_id in selected:
@@ -1572,6 +1615,20 @@ def _component_memo_from_response(
         for fact_id in selected
         if fact_id not in {*positive, *counter, *resolution}
     )
+    proposed_score_range = tuple(
+        float(response[key])
+        for key in (
+            "proposed_score_lower",
+            "proposed_score_mid",
+            "proposed_score_upper",
+        )
+    )
+    if not positive and any(value > 0.0 for value in proposed_score_range):
+        raise ValueError(
+            "positive component score requires at least one selected current "
+            "POSITIVE EvidenceFact; neutral context and non-authoritative "
+            "structured metrics cannot support positive points"
+        )
     historical = _ids(response, "historical_anchor_ids")
     nearest_positive = _ids(response, "nearest_positive_anchor_ids")
     nearest_counter = _ids(response, "nearest_counter_anchor_ids")
@@ -1623,9 +1680,9 @@ def _component_memo_from_response(
         counter_case=str(response["counter_case"]),
         uncertainties=_ids(response, "uncertainties"),
         source_coverage=coverage,
-        proposed_score_lower=float(response["proposed_score_lower"]),
-        proposed_score_mid=float(response["proposed_score_mid"]),
-        proposed_score_upper=float(response["proposed_score_upper"]),
+        proposed_score_lower=proposed_score_range[0],
+        proposed_score_mid=proposed_score_range[1],
+        proposed_score_upper=proposed_score_range[2],
         confidence=float(response["confidence"]),
         research_complete=bool(response["research_complete"]),
         nearest_positive_anchor_ids=nearest_positive,
@@ -1634,6 +1691,139 @@ def _component_memo_from_response(
         why_not_lower=str(response["why_not_lower"]),
         researcher_role=plan.researcher_role,
     )
+
+
+def _project_prior_component_memo_context(
+    *,
+    prior_memo: ComponentResearchMemo | Mapping[str, Any] | None,
+    plan: ComponentResearchPlan,
+    facts: Mapping[str, EvidenceFact],
+    fact_id_by_row_index: Mapping[int, str],
+) -> Mapping[str, Any]:
+    """Project prior LLM selections into current blind row indices.
+
+    The prior memo is continuity context, never score authority.  Facts that no
+    longer exist in the current citable plane are represented only by a count
+    and roster hash so stale ids cannot be cited or deterministically carried.
+    """
+
+    empty = {
+        "available": False,
+        "score_authority": False,
+        "deterministic_fact_carry_forward": False,
+        "current_fact_rows": [],
+        "current_fact_row_count": 0,
+        "unavailable_prior_fact_count": 0,
+        "unavailable_prior_fact_roster_hash": hashlib.sha256(b"[]").hexdigest(),
+    }
+    if prior_memo is None:
+        return empty
+    for key, expected in (
+        ("target_id", plan.target_id),
+        ("archetype_id", plan.archetype_id),
+        ("component_id", plan.component_id),
+        ("researcher_role", plan.researcher_role),
+    ):
+        if str(_field(prior_memo, key) or "") != expected:
+            raise ValueError(f"prior component memo {key} mismatch")
+    fact_row_index_by_id = {
+        fact_id: row_index for row_index, fact_id in fact_id_by_row_index.items()
+    }
+    role_fields = (
+        ("POSITIVE", "positive_fact_ids"),
+        ("COUNTER", "counter_fact_ids"),
+        ("RESOLUTION", "resolution_fact_ids"),
+        ("CONTEXT", "context_fact_ids"),
+    )
+    seen: set[str] = set()
+    current_rows = []
+    unavailable = []
+    for prior_role, field_name in role_fields:
+        raw_ids = _field(prior_memo, field_name) or ()
+        if isinstance(raw_ids, str) or not isinstance(raw_ids, Sequence):
+            raise ValueError(f"prior component memo {field_name} must be an array")
+        for raw_fact_id in raw_ids:
+            fact_id = str(raw_fact_id).strip()
+            if not fact_id or fact_id in seen:
+                raise ValueError("prior component memo fact ids must be unique")
+            seen.add(fact_id)
+            row_index = fact_row_index_by_id.get(fact_id)
+            if row_index is None:
+                unavailable.append(fact_id)
+                continue
+            fact = facts[fact_id]
+            current_rows.append(
+                {
+                    "fact_row_index": row_index,
+                    "prior_role": prior_role,
+                    "current_direction": fact.direction,
+                    "current_lifecycle": fact.current_lifecycle,
+                }
+            )
+    unavailable.sort()
+    current_rows.sort(key=lambda row: int(row["fact_row_index"]))
+    return {
+        "available": True,
+        "score_authority": False,
+        "deterministic_fact_carry_forward": False,
+        "prior_research_complete": bool(
+            _field(prior_memo, "research_complete")
+        ),
+        "current_fact_rows": current_rows,
+        "current_fact_row_count": len(current_rows),
+        "unavailable_prior_fact_count": len(unavailable),
+        "unavailable_prior_fact_roster_hash": hashlib.sha256(
+            json.dumps(unavailable, separators=(",", ":")).encode("utf-8")
+        ).hexdigest(),
+    }
+
+
+def _validate_prior_fact_dispositions(
+    *,
+    response: Mapping[str, Any],
+    selected_fact_row_indices: Sequence[int],
+    prior_memo_context: Mapping[str, Any],
+) -> None:
+    value = response["prior_fact_dispositions"]
+    if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
+        raise TypeError("prior_fact_dispositions must be an array")
+    expected = {
+        int(row["fact_row_index"])
+        for row in prior_memo_context.get("current_fact_rows") or ()
+    }
+    dispositions: dict[int, str] = {}
+    for row in value:
+        if not isinstance(row, Mapping):
+            raise TypeError("prior fact disposition must be an object")
+        if set(row) != {"fact_row_index", "disposition", "reason"}:
+            raise ValueError("prior fact disposition fields are invalid")
+        row_index = row["fact_row_index"]
+        if isinstance(row_index, bool) or not isinstance(row_index, int) or row_index < 0:
+            raise TypeError("prior fact disposition row index must be non-negative")
+        disposition = str(row["disposition"])
+        if disposition not in {"RETAIN", "OMIT"}:
+            raise ValueError("prior fact disposition must be RETAIN or OMIT")
+        if not str(row["reason"]).strip():
+            raise ValueError("prior fact disposition requires a reason")
+        if row_index in dispositions:
+            raise ValueError("prior fact disposition row indices must be unique")
+        dispositions[row_index] = disposition
+    if set(dispositions) != expected:
+        raise ValueError(
+            "prior fact dispositions must account for every currently citable "
+            "prior fact row exactly once"
+        )
+    selected = set(selected_fact_row_indices)
+    retained = {
+        row_index
+        for row_index, disposition in dispositions.items()
+        if disposition == "RETAIN"
+    }
+    omitted = set(dispositions) - retained
+    if not retained.issubset(selected):
+        raise ValueError("RETAIN prior fact rows must be selected again")
+    if omitted & selected:
+        raise ValueError("OMIT prior fact rows cannot remain selected")
 
 
 def _coerce_fact(row: EvidenceFact | Mapping[str, Any]) -> EvidenceFact:
@@ -1865,6 +2055,14 @@ def _pass_instruction(pass_name: str) -> str:
         return (
             "Write one component memo with a bounded point range, nearest "
             "positive/counter anchors, both-side reasoning, and explicit uncertainty. "
+            "The prior_component_memo_context is non-authoritative continuity context. "
+            "Reassess every current prior fact row and account for it exactly once in "
+            "prior_fact_dispositions as RETAIN or OMIT with a semantic reason; RETAIN "
+            "rows must also appear in selected_fact_row_indices and OMIT rows must not. "
+            "This is an LLM reselection decision, never deterministic carry-forward. "
+            "A positive score range requires at least one selected current POSITIVE "
+            "EvidenceFact. Neutral context and structured metrics marked "
+            "score_authority=false cannot support positive points. "
             "Return structured_metric_row_indices using only the explicit row numbers "
             "from structured_metric_rows. The deterministic engine will restore the "
             "immutable requirement ids and values; never copy a nested record metric_id "

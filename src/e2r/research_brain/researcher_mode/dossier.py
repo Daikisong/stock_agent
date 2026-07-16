@@ -24,6 +24,7 @@ from .research_question_seed_catalog import (
 from .schemas import (
     CANONICAL_COMPONENT_ORDER,
     ComponentAnchor,
+    ComponentResearchMemo,
     ComponentResearchPlan,
     EvidenceFact,
 )
@@ -113,6 +114,9 @@ class CanonicalResearchDossierBuilder:
         structured_engine_result: StructuredEngineResult | None = None,
         component_max_points: Mapping[str, float] | None = None,
         structured_metric_requirements: Mapping[str, Sequence[str]] | None = None,
+        prior_component_memos_by_component: Mapping[
+            str, ComponentResearchMemo | Mapping[str, Any]
+        ] | None = None,
     ) -> ResearcherModeDossier:
         if structured_metrics_by_component is not None and structured_engine_result is not None:
             raise ValueError(
@@ -167,6 +171,15 @@ class CanonicalResearchDossierBuilder:
         else:
             metrics = structured_metrics_by_component or {}
         plan_by_component = {row.component_id: row for row in plans}
+        prior_component_memos = prior_component_memos_by_component or {}
+        unknown_prior_components = set(prior_component_memos) - set(
+            CANONICAL_COMPONENT_ORDER
+        )
+        if unknown_prior_components:
+            raise ValueError(
+                "prior component memos contain unknown components: "
+                f"{sorted(unknown_prior_components)}"
+            )
         component_results = tuple(
             researcher.research(
                 plan=plan_by_component[researcher.component_id],
@@ -177,6 +190,7 @@ class CanonicalResearchDossierBuilder:
                 source_claims=source_claims,
                 source_documents=source_documents,
                 structured_metrics=metrics.get(researcher.component_id, {}),
+                prior_memo=prior_component_memos.get(researcher.component_id),
             )
             for researcher in build_component_researchers(self.provider)
         )

@@ -24,7 +24,7 @@
 ## Current decisions
 
 - 삼성전자 (005930): memos `7/7`, score valid `false`, FINAL StageCourt `false`
-- SK하이닉스 (000660): memos `7/7`, score valid `false`, FINAL StageCourt `false`
+- SK하이닉스 (000660): memos `0/7`, score valid `false`, FINAL StageCourt `false`
 
 ## Runtime
 

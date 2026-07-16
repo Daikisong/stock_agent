@@ -392,6 +392,15 @@ class CurrentResearcherModeTargetRunner:
                 }
             )
         )
+        prior_component_memos = (
+            _load_prior_component_memos(
+                root=root,
+                target_id=target.target_id,
+                archetype_id=config.archetype_id,
+            )
+            if config.checkpoint_resume
+            else {}
+        )
         dossier = CanonicalResearchDossierBuilder(provider=self.provider).build(
             target_id=target.target_id,
             archetype_id=config.archetype_id,
@@ -402,6 +411,7 @@ class CurrentResearcherModeTargetRunner:
             source_documents=source_graph.evidence_documents,
             source_coverage=research_source_coverage,
             structured_engine_result=structured,
+            prior_component_memos_by_component=prior_component_memos,
         )
         _write_dossier(root, dossier)
         scoring_memos = LLMComponentScoringMemoEngine(
@@ -1593,6 +1603,32 @@ def _read_jsonl(path: Path) -> tuple[Mapping[str, Any], ...]:
         for value in (json.loads(line),)
         if isinstance(value, Mapping)
     )
+
+
+def _load_prior_component_memos(
+    *,
+    root: Path,
+    target_id: str,
+    archetype_id: str,
+) -> Mapping[str, Mapping[str, Any]]:
+    """Load same-target memos only as non-authoritative LLM continuity context."""
+
+    result: dict[str, Mapping[str, Any]] = {}
+    for row in _read_jsonl(root / "component_research_memos.jsonl"):
+        component_id = str(row.get("component_id") or "")
+        if (
+            component_id not in CANONICAL_COMPONENT_ORDER
+            or str(row.get("target_id") or "") != target_id
+            or str(row.get("archetype_id") or "") != archetype_id
+            or not str(row.get("researcher_role") or "").strip()
+            or not isinstance(row.get("positive_fact_ids"), list)
+            or not isinstance(row.get("counter_fact_ids"), list)
+            or not isinstance(row.get("resolution_fact_ids"), list)
+            or not isinstance(row.get("context_fact_ids", []), list)
+        ):
+            continue
+        result[component_id] = row
+    return result
 
 
 __all__ = [

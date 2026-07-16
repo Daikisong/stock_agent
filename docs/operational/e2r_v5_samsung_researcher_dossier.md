@@ -4,8 +4,8 @@
 - status: `RESEARCH_CHECKPOINT_PENDING`
 - production research complete: `false`
 - documents: `490`
-- evidence facts: `3815`
-- counterfacts: `971`
+- evidence facts: `3816`
+- counterfacts: `972`
 - complete component memos: `7` / `7`
 - score valid: `false`
 - FINAL StageCourt: `false`

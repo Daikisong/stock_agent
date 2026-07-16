@@ -635,6 +635,29 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ),
                 repo_root=self.ROOT,
             )
+            resumed_component_payloads = [
+                row["payload"]
+                for row in provider.calls
+                if row["pass_name"] == "COMPONENT_RESEARCH"
+            ][-len(CANONICAL_COMPONENT_ORDER):]
+            self.assertEqual(
+                len(resumed_component_payloads),
+                len(CANONICAL_COMPONENT_ORDER),
+            )
+            self.assertTrue(
+                all(
+                    payload["prior_component_memo_context"]["available"]
+                    for payload in resumed_component_payloads
+                )
+            )
+            self.assertTrue(
+                all(
+                    not payload["prior_component_memo_context"][
+                        "deterministic_fact_carry_forward"
+                    ]
+                    for payload in resumed_component_payloads
+                )
+            )
             resumed_query_payload = [
                 row["payload"]
                 for row in provider.calls

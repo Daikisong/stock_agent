@@ -85,6 +85,26 @@ class ScriptedResearchProvider:
             maximum = float(payload["component_max_points"])
             response: dict[str, Any] = {
                 "selected_fact_row_indices": [*positive[:1], *counter[:1]],
+                "prior_fact_dispositions": [
+                    {
+                        "fact_row_index": row["fact_row_index"],
+                        "disposition": (
+                            "RETAIN"
+                            if row["fact_row_index"]
+                            in {*positive[:1], *counter[:1]}
+                            else "OMIT"
+                        ),
+                        "reason": (
+                            "현재 컴포넌트 근거로 계속 유효함"
+                            if row["fact_row_index"]
+                            in {*positive[:1], *counter[:1]}
+                            else "이번 컴포넌트 점수의 직접 근거로는 약함"
+                        ),
+                    }
+                    for row in payload["prior_component_memo_context"][
+                        "current_fact_rows"
+                    ]
+                ],
                 "structured_metric_row_indices": [
                     row["structured_metric_row_index"]
                     for row in payload["structured_metric_rows"]
@@ -455,6 +475,159 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         self.assertNotEqual(
             retry_context["rejected_response"]["historical_anchor_ids"],
             result.memo.historical_anchor_ids,  # type: ignore[union-attr]
+        )
+
+    def test_component_research_reselects_every_prior_fact_without_score_carry_forward(
+        self,
+    ) -> None:
+        first_provider = ScriptedResearchProvider()
+        business = BusinessMechanismResearcher(provider=first_provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+        first = EPSFCFResearcher(provider=first_provider).research(
+            plan=self._plans()[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        resumed_provider = ScriptedResearchProvider()
+        resumed = EPSFCFResearcher(provider=resumed_provider).research(
+            plan=self._plans()[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+            prior_memo=first.memo,
+        )
+
+        payload = resumed_provider.calls[-1]["payload"]
+        context = payload["prior_component_memo_context"]
+        self.assertEqual(resumed.status, "COMPLETE")
+        self.assertTrue(context["available"])
+        self.assertFalse(context["score_authority"])
+        self.assertFalse(context["deterministic_fact_carry_forward"])
+        self.assertEqual(context["current_fact_row_count"], 2)
+        self.assertNotIn("fact_id", _recursive_keys(context))
+        self.assertEqual(
+            resumed.memo.positive_fact_ids,  # type: ignore[union-attr]
+            first.memo.positive_fact_ids,  # type: ignore[union-attr]
+        )
+        self.assertEqual(
+            resumed.memo.counter_fact_ids,  # type: ignore[union-attr]
+            first.memo.counter_fact_ids,  # type: ignore[union-attr]
+        )
+
+    def test_prior_fact_omission_requires_explicit_llm_disposition(self) -> None:
+        seed_provider = ScriptedResearchProvider()
+        business = BusinessMechanismResearcher(provider=seed_provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+        seed = EPSFCFResearcher(provider=seed_provider).research(
+            plan=self._plans()[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        class SilentDropProvider(ScriptedResearchProvider):
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                if pass_name == "COMPONENT_RESEARCH":
+                    response["prior_fact_dispositions"] = []
+                return response
+
+        provider = SilentDropProvider()
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=self._plans()[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+            prior_memo=seed.memo,
+        )
+
+        self.assertEqual(result.status, "PENDING")
+        self.assertIn(
+            "prior fact dispositions must account",
+            result.pending_reasons[0],
+        )
+        self.assertEqual(
+            len(
+                [
+                    row
+                    for row in provider.calls
+                    if row["pass_name"] == "COMPONENT_RESEARCH"
+                ]
+            ),
+            2,
+        )
+
+    def test_positive_score_without_positive_fact_is_rejected_and_rewritten(
+        self,
+    ) -> None:
+        class UnsupportedPositiveProvider(ScriptedResearchProvider):
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                if pass_name == "COMPONENT_RESEARCH":
+                    response["selected_fact_row_indices"] = [
+                        row["fact_row_index"]
+                        for row in _projected_fact_rows(payload)
+                        if row["direction"] == "NEUTRAL"
+                    ]
+                return response
+
+        provider = UnsupportedPositiveProvider()
+        business = BusinessMechanismResearcher(provider=provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=self._plans()[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        self.assertEqual(result.status, "PENDING")
+        self.assertIn(
+            "positive component score requires at least one selected current POSITIVE",
+            result.pending_reasons[0],
+        )
+        retry_payload = provider.calls[-1]["payload"]
+        self.assertIn(
+            "Positive points require at least one selected current POSITIVE fact",
+            retry_payload["component_research_validation_retry_context"][
+                "instruction"
+            ],
         )
 
     def test_planner_builds_seven_open_ended_plans_and_exposes_every_fact(self) -> None:
