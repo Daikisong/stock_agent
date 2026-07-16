@@ -214,6 +214,7 @@ class ResearcherDocumentRanker:
                     objective_ids=objective_ids,
                 )
             except (KeyError, TypeError, ValueError) as exc:
+                _invalidate_provider_response_cache(self.provider, exc)
                 if attempt_index == 0:
                     # Do not coerce, drop, or deterministically replace invalid
                     # LLM decisions.  Return the exact contract failure and the
@@ -476,6 +477,21 @@ def _provider_name(provider: StructuredResearchProvider) -> str:
 
 def _error_text(error: Exception) -> str:
     return " ".join(str(error).split())[-500:] or error.__class__.__name__
+
+
+def _invalidate_provider_response_cache(
+    provider: StructuredResearchProvider,
+    error: Exception,
+) -> None:
+    """Evict only the candidate response rejected by semantic validation."""
+
+    invalidate = getattr(provider, "invalidate_last_response_cache", None)
+    if not callable(invalidate):
+        return
+    try:
+        invalidate(reason=f"{error.__class__.__name__}:{_error_text(error)}")
+    except (OSError, TypeError, ValueError, RuntimeError):
+        return
 
 
 __all__ = [

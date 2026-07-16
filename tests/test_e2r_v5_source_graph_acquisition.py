@@ -156,6 +156,10 @@ class InvalidThenCorrectRankingProvider(SourceBrainProvider):
     def __init__(self) -> None:
         super().__init__()
         self.ranking_call_count = 0
+        self.invalidations: list[str] = []
+
+    def invalidate_last_response_cache(self, reason: str) -> None:
+        self.invalidations.append(reason)
 
     def complete(self, *, pass_name, payload):
         if pass_name == "SOURCE_CANDIDATE_RANKING":
@@ -377,6 +381,8 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             ),
         )
         self.assertEqual(provider.ranking_call_count, 2)
+        self.assertEqual(len(provider.invalidations), 1)
+        self.assertIn("unknown or duplicate id", provider.invalidations[0])
         self.assertEqual(len(run.evidence_documents), 1)
         ranking_payloads = [
             row["payload"]
