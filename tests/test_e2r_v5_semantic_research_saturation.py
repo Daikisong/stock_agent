@@ -217,6 +217,10 @@ class Phase87CorrectingSupervisorProvider(Phase87SupervisorProvider):
                         "counter_or_supersession": False,
                     }
                 ]
+            elif self.invalid_kind == "MISSING_FAILURE_GROUP":
+                response["failure_assessments"] = response[
+                    "failure_assessments"
+                ][:-1]
             return response
         context = payload["supervisor_validation_retry_context"]
         if self.invalid_kind == "COUNTER_WITHOUT_PROOF":
@@ -759,6 +763,47 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             review.status,
             "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
         )
+
+    def test_supervisor_missing_failure_group_gets_exact_roster_feedback(
+        self,
+    ) -> None:
+        provider = Phase87CorrectingSupervisorProvider(
+            "MISSING_FAILURE_GROUP"
+        )
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **_supervisor_inputs(
+                prior_failures=(
+                    {
+                        "failure_id": "FAIL-ONE",
+                        "failure_reason": "FETCH_TIMEOUT",
+                    },
+                    {
+                        "failure_id": "FAIL-TWO",
+                        "failure_reason": "HTTP_404",
+                    },
+                )
+            )
+        )
+        self.assertEqual(len(provider.calls), 2)
+        initial_payload = provider.calls[0]["payload"]
+        required = initial_payload["required_output_rosters"]
+        self.assertEqual(required["failure_group_count"], 2)
+        retry_context = provider.calls[1]["payload"][
+            "supervisor_validation_retry_context"
+        ]
+        self.assertEqual(
+            retry_context["required_failure_group_ids"],
+            required["failure_group_ids"],
+        )
+        diagnostics = retry_context[
+            "failure_assessment_roster_diagnostics"
+        ]
+        self.assertEqual(diagnostics["required_count"], 2)
+        self.assertEqual(diagnostics["received_count"], 1)
+        self.assertEqual(len(diagnostics["missing_failure_group_ids"]), 1)
+        self.assertEqual(diagnostics["extra_failure_group_ids"], [])
+        self.assertEqual(diagnostics["duplicate_failure_group_ids"], [])
+        self.assertEqual(len(review.failure_assessments), 2)
 
     def test_counter_route_requires_executed_source_graph_lineage(self) -> None:
         review = ResearchSupervisor(

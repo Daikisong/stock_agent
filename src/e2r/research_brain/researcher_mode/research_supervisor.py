@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import asdict, dataclass
 from datetime import date
 import hashlib
@@ -359,6 +360,12 @@ class ResearchSupervisor:
         failure_prompt_projection = _supervisor_failure_prompt_projection(
             failure_projection
         )
+        required_failure_group_ids = tuple(
+            sorted(
+                str(value)
+                for value in failure_projection["failure_group_members"]
+            )
+        )
         payload = scrub_blind_research_payload(
             {
                 "reviewer_role": self.reviewer_role,
@@ -386,6 +393,18 @@ class ResearchSupervisor:
                     key: value
                     for key, value in failure_prompt_projection.items()
                     if key != "failures"
+                },
+                "required_output_rosters": {
+                    "canonical_component_ids": list(CANONICAL_COMPONENT_ORDER),
+                    "failure_group_ids": list(required_failure_group_ids),
+                    "failure_group_count": len(required_failure_group_ids),
+                    "instruction": (
+                        "component_findings must contain every canonical component "
+                        "id exactly once. failure_assessments must contain every "
+                        "failure_group_id exactly once, with no omission, duplicate, "
+                        "or extra id. An empty failure_group_ids roster requires an "
+                        "empty failure_assessments array."
+                    ),
                 },
                 "counter_and_supersession_route_proof": project_counter_route_proof(
                     counter_and_supersession_route_proof
@@ -463,13 +482,17 @@ class ResearchSupervisor:
                 )
             except (KeyError, TypeError, ValueError) as exc:
                 _invalidate_provider_response_cache(self.provider, exc)
+                failure_roster_diagnostics = _failure_assessment_roster_diagnostics(
+                    response=response,
+                    required_failure_group_ids=required_failure_group_ids,
+                )
                 if validation_retry_used:
                     return _provider_pending_review(
                         epoch=epoch,
                         component_results=component_results,
                         reason=(
                             "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
-                            f"{type(exc).__name__}:{exc}"
+                            f"{type(exc).__name__}:{_clean_error(exc)}"
                         ),
                         reviewer_role=self.reviewer_role,
                         provider_name=str(
@@ -492,6 +515,12 @@ class ResearchSupervisor:
                             "allowed_objective_ids": sorted(objective_ids),
                             "canonical_component_ids": list(
                                 CANONICAL_COMPONENT_ORDER
+                            ),
+                            "required_failure_group_ids": list(
+                                required_failure_group_ids
+                            ),
+                            "failure_assessment_roster_diagnostics": (
+                                failure_roster_diagnostics
                             ),
                             "deterministic_current_state": {
                                 "structured_data_complete": (
@@ -524,8 +553,10 @@ class ResearchSupervisor:
                                 "false. Make component/readiness booleans agree with "
                                 "the current records and with the gaps, directions, "
                                 "unresolved questions, and next actions in the rewritten "
-                                "response. Do not invent evidence, queries, scores, or "
-                                "stages."
+                                "response. Copy every required_failure_group_id into "
+                                "failure_assessments exactly once; use the roster "
+                                "diagnostics to restore omissions and remove duplicates "
+                                "or extras. Do not invent evidence, queries, scores, or stages."
                             ),
                         },
                     }
@@ -709,8 +740,15 @@ def _review_from_provider_response(
     if len(assessment_ids) != len(set(assessment_ids)) or set(assessment_ids) != set(
         failure_group_members
     ):
+        expected_ids = set(failure_group_members)
+        received_ids = set(assessment_ids)
         raise ValueError(
-            "supervisor must assess every supplied failure group exactly once"
+            "supervisor failure assessment roster mismatch:"
+            f"expected_count={len(expected_ids)}:"
+            f"received_count={len(assessment_ids)}:"
+            f"missing_count={len(expected_ids - received_ids)}:"
+            f"extra_count={len(received_ids - expected_ids)}:"
+            f"duplicate_count={len(assessment_ids) - len(received_ids)}"
         )
     assessments = tuple(
         SupervisorFailureAssessment(
@@ -1456,6 +1494,43 @@ def _invalidate_provider_response_cache(
         # Cache audit failure cannot make the rejected response valid or block
         # the single provider correction attempt.
         return
+
+
+def _failure_assessment_roster_diagnostics(
+    *,
+    response: Mapping[str, Any],
+    required_failure_group_ids: Sequence[str],
+) -> Mapping[str, Any]:
+    """Return exact bounded roster feedback for one semantic rewrite."""
+
+    raw_rows = response.get("failure_assessments")
+    if isinstance(raw_rows, (str, bytes)) or not isinstance(raw_rows, Sequence):
+        received_ids: list[str] = []
+        response_array_valid = False
+    else:
+        received_ids = [
+            str(row.get("failure_id") or "")
+            for row in raw_rows
+            if isinstance(row, Mapping)
+        ]
+        response_array_valid = len(received_ids) == len(raw_rows)
+    required_ids = tuple(str(value) for value in required_failure_group_ids)
+    required_set = set(required_ids)
+    received_set = set(received_ids)
+    received_counts = Counter(received_ids)
+    duplicate_ids = sorted(
+        value for value, count in received_counts.items() if count > 1
+    )
+    return {
+        "required_count": len(required_ids),
+        "received_count": len(received_ids),
+        "missing_failure_group_ids": sorted(required_set - received_set),
+        "extra_failure_group_ids": sorted(received_set - required_set),
+        "duplicate_failure_group_ids": duplicate_ids,
+        "failure_assessments_array_was_valid": response_array_valid,
+        "received_failure_group_roster_hash": _stable_payload_hash(received_ids),
+        "required_failure_group_roster_hash": _stable_payload_hash(required_ids),
+    }
 
 
 def _clean_error(error: Exception) -> str:
