@@ -57,7 +57,7 @@
     "targets": [
       {
         "company_name": "삼성전자",
-        "component_memo_count": 7,
+        "component_memo_count": 0,
         "counterfact_count": 972,
         "document_count": 490,
         "fact_count": 3816,

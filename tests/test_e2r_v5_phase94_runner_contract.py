@@ -13,6 +13,7 @@ from e2r.cli.run_e2r_researcher_mode_until_pass import (
     build_parser,
 )
 from e2r.research import EmptySearchProvider, PageFetcher
+from e2r.production.metadata import stable_hash
 from e2r.research_brain.researcher_mode import (
     CANONICAL_COMPONENT_ORDER,
     ComponentResearchPlanner,
@@ -27,6 +28,9 @@ from e2r.research_brain.researcher_mode import (
 )
 from tests.test_e2r_v5_fact_extraction import FactProvider, _document
 from tests.test_e2r_v5_researcher_mode import ScriptedResearchProvider
+from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    _load_prior_component_memos,
+)
 
 
 class Phase94IntegrationProvider:
@@ -155,6 +159,85 @@ class Phase94IntegrationStructuredMaterializer:
 
 class E2RV5Phase94RunnerContractTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
+
+    def test_provider_outage_recovers_only_hash_bound_prior_memo_body(self) -> None:
+        memo = {
+            "target_id": "CURRENT-TARGET",
+            "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "component_id": "eps_fcf_explosion",
+            "researcher_role": "EPSFCFResearcher",
+            "positive_fact_ids": ["FACT-POS"],
+            "counter_fact_ids": ["FACT-COUNTER"],
+            "resolution_fact_ids": [],
+            "context_fact_ids": [],
+            "research_complete": True,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "research_epoch_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": "2026-06-29",
+                        "component_memo_hashes": {
+                            "eps_fcf_explosion": stable_hash(memo)
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "research_epochs.jsonl").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": "2026-06-29",
+                        "changed_component_memos": [memo],
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "component_research_memos.jsonl").write_text(
+                json.dumps(
+                    {
+                        "component_id": "eps_fcf_explosion",
+                        "research_status": "PENDING",
+                        "pending_reasons": ["PROVIDER_ERROR:usage limit"],
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            recovered = _load_prior_component_memos(
+                root=root,
+                target_id="CURRENT-TARGET",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                as_of_date="2026-06-29",
+            )
+            self.assertEqual(recovered, {"eps_fcf_explosion": memo})
+
+            tampered = {**memo, "positive_fact_ids": ["FACT-INVENTED"]}
+            (root / "research_epochs.jsonl").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": "2026-06-29",
+                        "changed_component_memos": [tampered],
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                _load_prior_component_memos(
+                    root=root,
+                    target_id="CURRENT-TARGET",
+                    archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    as_of_date="2026-06-29",
+                ),
+                {},
+            )
 
     def test_master_command_contract_exists_without_low_completion_options(self) -> None:
         parser = build_parser()

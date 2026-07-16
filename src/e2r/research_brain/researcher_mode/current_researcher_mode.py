@@ -397,6 +397,7 @@ class CurrentResearcherModeTargetRunner:
                 root=root,
                 target_id=target.target_id,
                 archetype_id=config.archetype_id,
+                as_of_date=config.as_of_date,
             )
             if config.checkpoint_resume
             else {}
@@ -1610,11 +1611,35 @@ def _load_prior_component_memos(
     root: Path,
     target_id: str,
     archetype_id: str,
+    as_of_date: str,
 ) -> Mapping[str, Mapping[str, Any]]:
-    """Load same-target memos only as non-authoritative LLM continuity context."""
+    """Load hash-bound checkpoint memos as non-authoritative continuity context.
+
+    A provider outage may overwrite the convenience JSONL with pending rows.
+    The append-only research epoch ledger still contains the prior memo bodies;
+    only bodies whose stable hash equals the active checkpoint hash are eligible
+    for recovery.
+    """
 
     result: dict[str, Mapping[str, Any]] = {}
-    for row in _read_jsonl(root / "component_research_memos.jsonl"):
+    checkpoint_hashes: dict[str, str] = {}
+    checkpoint_path = root / "research_epoch_checkpoint.json"
+    if checkpoint_path.is_file():
+        checkpoint = _read_json(checkpoint_path)
+        if (
+            str(checkpoint.get("target_id") or "") == target_id
+            and str(checkpoint.get("as_of_date") or "") == as_of_date
+        ):
+            checkpoint_hashes = {
+                str(component_id): str(memo_hash)
+                for component_id, memo_hash in (
+                    checkpoint.get("component_memo_hashes") or {}
+                ).items()
+                if str(component_id) in CANONICAL_COMPONENT_ORDER
+                and len(str(memo_hash)) == 64
+            }
+
+    def accept(row: Mapping[str, Any]) -> None:
         component_id = str(row.get("component_id") or "")
         if (
             component_id not in CANONICAL_COMPONENT_ORDER
@@ -1626,8 +1651,25 @@ def _load_prior_component_memos(
             or not isinstance(row.get("resolution_fact_ids"), list)
             or not isinstance(row.get("context_fact_ids", []), list)
         ):
-            continue
+            return
+        expected_hash = checkpoint_hashes.get(component_id)
+        if expected_hash and stable_hash(row) != expected_hash:
+            return
         result[component_id] = row
+
+    for epoch in _read_jsonl(root / "research_epochs.jsonl"):
+        if (
+            str(epoch.get("target_id") or "") != target_id
+            or str(epoch.get("as_of_date") or "") != as_of_date
+        ):
+            continue
+        changed_memos = epoch.get("changed_component_memos") or ()
+        if isinstance(changed_memos, list):
+            for row in changed_memos:
+                if isinstance(row, Mapping):
+                    accept(row)
+    for row in _read_jsonl(root / "component_research_memos.jsonl"):
+        accept(row)
     return result
 
 

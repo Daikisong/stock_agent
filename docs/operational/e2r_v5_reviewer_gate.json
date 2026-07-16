@@ -12,7 +12,7 @@
     "LIVE_RESEARCH_CHECKPOINT_PENDING:000660",
     "CURRENT_FULL_TEST_EVIDENCE_MISSING_OR_STALE"
   ],
-  "critical_count_sum": 12,
+  "critical_count_sum": 13,
   "exact_verdict": "MEANINGFUL_E2R_RESEARCHER_PARITY_NOT_READY",
   "failed_reviewers": [
     "B",
@@ -282,7 +282,7 @@
         "LIVE_CANARY_DOSSIER_INCOMPLETE:005930",
         "LIVE_CANARY_DOSSIER_INCOMPLETE:000660"
       ],
-      "critical_count_sum": 3,
+      "critical_count_sum": 4,
       "critical_counts": {
         "current_evidence_missing_count": 0,
         "detector_error_count": 0,
@@ -293,7 +293,7 @@
         "master_leaf_contract_critical_count": 0,
         "missing_required_leaf_count": 0,
         "missing_target_manifest_count": 0,
-        "seven_component_memo_incomplete_count": 1
+        "seven_component_memo_incomplete_count": 2
       },
       "detector_ids": [
         "tests.test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests.test_pending_checkpoint_writes_honest_full_dossier_without_gold",
@@ -304,11 +304,11 @@
       "recomputed_metrics": {
         "targets": [
           {
-            "actual_output_tree_hash": "03d57d2af7b83eb84703d12016a7fc16fa4fa29e1e243d5801ba747f79b28490",
+            "actual_output_tree_hash": "0d425b25db5e00c8b24c292d0a668757b370297feb99b9cb6c38c5502174172d",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
-            "component_memo_count": 7,
+            "component_memo_count": 0,
             "counterfact_count": 972,
             "document_count": 490,
             "fact_count": 3816,
@@ -330,12 +330,12 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "03d57d2af7b83eb84703d12016a7fc16fa4fa29e1e243d5801ba747f79b28490",
+            "output_tree_hash": "0d425b25db5e00c8b24c292d0a668757b370297feb99b9cb6c38c5502174172d",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
-            "provider_error_count": 0,
-            "provider_logical_call_count": 32,
-            "provider_successful_call_count": 32,
+            "provider_error_count": 9,
+            "provider_logical_call_count": 10,
+            "provider_successful_call_count": 1,
             "query_count": 193,
             "score_valid": false,
             "stage_final": false,
@@ -343,7 +343,7 @@
             "target_id": "005930"
           },
           {
-            "actual_output_tree_hash": "2561c155d7765f3e47505f61540fc4be6c5c7977f38fc8fd750fab38de001fe6",
+            "actual_output_tree_hash": "81b9184d9c573b4657c7f298792f98ff26dc75a7da65733b6e64e6b156210cd6",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "SK하이닉스",
@@ -369,7 +369,7 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/000660",
-            "output_tree_hash": "2561c155d7765f3e47505f61540fc4be6c5c7977f38fc8fd750fab38de001fe6",
+            "output_tree_hash": "81b9184d9c573b4657c7f298792f98ff26dc75a7da65733b6e64e6b156210cd6",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
             "provider_error_count": 5,
@@ -419,11 +419,11 @@
       "recomputed_metrics": {
         "targets": [
           {
-            "actual_output_tree_hash": "03d57d2af7b83eb84703d12016a7fc16fa4fa29e1e243d5801ba747f79b28490",
+            "actual_output_tree_hash": "0d425b25db5e00c8b24c292d0a668757b370297feb99b9cb6c38c5502174172d",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
-            "component_memo_count": 7,
+            "component_memo_count": 0,
             "counterfact_count": 972,
             "document_count": 490,
             "fact_count": 3816,
@@ -445,12 +445,12 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "03d57d2af7b83eb84703d12016a7fc16fa4fa29e1e243d5801ba747f79b28490",
+            "output_tree_hash": "0d425b25db5e00c8b24c292d0a668757b370297feb99b9cb6c38c5502174172d",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
-            "provider_error_count": 0,
-            "provider_logical_call_count": 32,
-            "provider_successful_call_count": 32,
+            "provider_error_count": 9,
+            "provider_logical_call_count": 10,
+            "provider_successful_call_count": 1,
             "query_count": 193,
             "score_valid": false,
             "stage_final": false,
@@ -458,7 +458,7 @@
             "target_id": "005930"
           },
           {
-            "actual_output_tree_hash": "2561c155d7765f3e47505f61540fc4be6c5c7977f38fc8fd750fab38de001fe6",
+            "actual_output_tree_hash": "81b9184d9c573b4657c7f298792f98ff26dc75a7da65733b6e64e6b156210cd6",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "SK하이닉스",
@@ -484,7 +484,7 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/000660",
-            "output_tree_hash": "2561c155d7765f3e47505f61540fc4be6c5c7977f38fc8fd750fab38de001fe6",
+            "output_tree_hash": "81b9184d9c573b4657c7f298792f98ff26dc75a7da65733b6e64e6b156210cd6",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
             "provider_error_count": 5,
@@ -626,7 +626,7 @@
       "detector_run_count": 2,
       "recomputed_metrics": {
         "capability_regression_status": "PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS",
-        "expected_verification_tree_hash": "96bf7a4858d90c4ff12e3fca6567256e0a0b3c89166bf0ac341ed9e17a947e17",
+        "expected_verification_tree_hash": "dc771108781e32696ea6d16bea7e61ce851c67284cfffa02fe2761edc450fd72",
         "full_test_evidence": {
           "command": [
             "/home/eorb915/.local/bin/python",
@@ -675,11 +675,11 @@
         "self_repair_status": "PHASE99_INTERNAL_SELF_REPAIR_PASS",
         "targets": [
           {
-            "actual_output_tree_hash": "03d57d2af7b83eb84703d12016a7fc16fa4fa29e1e243d5801ba747f79b28490",
+            "actual_output_tree_hash": "0d425b25db5e00c8b24c292d0a668757b370297feb99b9cb6c38c5502174172d",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
-            "component_memo_count": 7,
+            "component_memo_count": 0,
             "counterfact_count": 972,
             "document_count": 490,
             "fact_count": 3816,
@@ -701,12 +701,12 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "03d57d2af7b83eb84703d12016a7fc16fa4fa29e1e243d5801ba747f79b28490",
+            "output_tree_hash": "0d425b25db5e00c8b24c292d0a668757b370297feb99b9cb6c38c5502174172d",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
-            "provider_error_count": 0,
-            "provider_logical_call_count": 32,
-            "provider_successful_call_count": 32,
+            "provider_error_count": 9,
+            "provider_logical_call_count": 10,
+            "provider_successful_call_count": 1,
             "query_count": 193,
             "score_valid": false,
             "stage_final": false,
@@ -714,7 +714,7 @@
             "target_id": "005930"
           },
           {
-            "actual_output_tree_hash": "2561c155d7765f3e47505f61540fc4be6c5c7977f38fc8fd750fab38de001fe6",
+            "actual_output_tree_hash": "81b9184d9c573b4657c7f298792f98ff26dc75a7da65733b6e64e6b156210cd6",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "SK하이닉스",
@@ -740,7 +740,7 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/000660",
-            "output_tree_hash": "2561c155d7765f3e47505f61540fc4be6c5c7977f38fc8fd750fab38de001fe6",
+            "output_tree_hash": "81b9184d9c573b4657c7f298792f98ff26dc75a7da65733b6e64e6b156210cd6",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
             "provider_error_count": 5,
@@ -758,7 +758,7 @@
         {
           "exists": true,
           "path": "docs/operational/e2r_v5_self_repair_audit.json",
-          "sha256": "d4807c5b620c5e830bc899d69234d086b6a2868f0b0cd38b4aec8c6a627207fd"
+          "sha256": "38f8b4e60ab3d2a78add54efad81c12bddf9017143266febd54333f7db09206b"
         },
         {
           "exists": true,
