@@ -182,6 +182,38 @@ class InvalidThenCorrectRankingProvider(SourceBrainProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class SplitRecoveryRankingProvider(SourceBrainProvider):
+    def __init__(self) -> None:
+        super().__init__()
+        self.ranking_batch_sizes: list[int] = []
+        self.invalidations: list[str] = []
+
+    def invalidate_last_response_cache(self, reason: str) -> None:
+        self.invalidations.append(reason)
+
+    def complete(self, *, pass_name, payload):
+        if pass_name != "SOURCE_CANDIDATE_RANKING":
+            return super().complete(pass_name=pass_name, payload=payload)
+        self.calls.append({"pass_name": pass_name, "payload": payload})
+        rows = list(payload["discovery_candidates"])
+        self.ranking_batch_sizes.append(len(rows))
+        response_rows = rows[:-1] if len(rows) > 2 else rows
+        return {
+            "decisions": [
+                {
+                    "candidate_id": row["candidate_id"],
+                    "material_relevance": True,
+                    "priority": 1.0,
+                    "objective_ids": list(row["objective_ids"]),
+                    "rationale": "분할된 후보 roster를 모두 직접 검토했다.",
+                }
+                for row in response_rows
+            ],
+            "ranking_complete": True,
+            "unresolved_notes": [],
+        }
+
+
 class SelectiveRetryFailureFetcher:
     def __init__(self) -> None:
         self.delegate = PageFetcher(
@@ -398,6 +430,49 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertNotIn(
             "UNKNOWN-CANDIDATE",
             {row["candidate_id"] for row in run.checkpoint["candidate_materiality_decisions"]},
+        )
+
+    def test_repeated_large_roster_omission_splits_and_recombines_every_candidate(
+        self,
+    ) -> None:
+        provider = SplitRecoveryRankingProvider()
+        rows = tuple(
+            _result(
+                f"Current Corp split candidate {index}",
+                f"https://example.com/split-{index}",
+                rank=index + 1,
+            )
+            for index in range(4)
+        )
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider({QUERY: rows}),
+            fetcher=PageFetcher(
+                fixture_text_by_url={
+                    row.url: _document_text(f"split-{index}")
+                    for index, row in enumerate(rows)
+                }
+            ),
+        )
+        self.assertEqual(provider.ranking_batch_sizes, [4, 4, 2, 2])
+        self.assertEqual(len(provider.invalidations), 2)
+        self.assertEqual(len(run.checkpoint["candidate_materiality_decisions"]), 4)
+        self.assertEqual(len(run.evidence_documents), 4)
+        self.assertEqual(
+            {
+                row["candidate_id"]
+                for row in run.checkpoint["candidate_materiality_decisions"]
+            },
+            {
+                row["candidate_id"]
+                for row in run.checkpoint["search_candidates"]
+            },
+        )
+        self.assertFalse(
+            any(
+                "SEMANTIC_RANKING_SPLIT_PENDING" in reason
+                for reason in run.checkpoint["pending_reasons"]
+            )
         )
 
     def test_empty_or_duplicate_llm_query_is_pending_without_fallback(self) -> None:

@@ -234,6 +234,17 @@ class ResearcherDocumentRanker:
                         }
                     )
                     continue
+                if len(candidates) > 1:
+                    return self._rank_candidate_partitions(
+                        target_id=target_id,
+                        target_name=target_name,
+                        as_of_date=as_of_date,
+                        open_objectives=open_objectives,
+                        candidates=candidates,
+                        current_evidence_facts=current_evidence_facts,
+                        target_business_model=target_business_model,
+                        source_coverage=source_coverage,
+                    )
                 return CandidateRankingResult(
                     status="PENDING",
                     decisions=(),
@@ -266,6 +277,105 @@ class ResearcherDocumentRanker:
             provider_name=_provider_name(self.provider),
             prompt_hash=prompt_hash,
             response_hash=response_hash,
+        )
+
+    def _rank_candidate_partitions(
+        self,
+        *,
+        target_id: str,
+        target_name: str,
+        as_of_date: str,
+        open_objectives: Sequence[Mapping[str, Any]],
+        candidates: Sequence[Mapping[str, Any]],
+        current_evidence_facts: Sequence[Mapping[str, Any]],
+        target_business_model: Mapping[str, Any] | None,
+        source_coverage: Sequence[str | Mapping[str, Any]],
+    ) -> CandidateRankingResult:
+        """Losslessly split a roster only after two invalid full rewrites.
+
+        This is transport recovery, not top-N selection: both deterministic
+        halves are evaluated, every candidate id must reappear, and all
+        decisions are recombined before the caller advances the checkpoint.
+        """
+
+        midpoint = len(candidates) // 2
+        partitions = (tuple(candidates[:midpoint]), tuple(candidates[midpoint:]))
+        results = tuple(
+            self.rank_candidates(
+                target_id=target_id,
+                target_name=target_name,
+                as_of_date=as_of_date,
+                open_objectives=open_objectives,
+                candidates=partition,
+                current_evidence_facts=current_evidence_facts,
+                target_business_model=target_business_model,
+                source_coverage=source_coverage,
+            )
+            for partition in partitions
+            if partition
+        )
+        decisions = tuple(
+            sorted(
+                (decision for result in results for decision in result.decisions),
+                key=lambda row: (-row.priority, row.candidate_id),
+            )
+        )
+        expected_ids = {
+            str(candidate.get("candidate_id") or "") for candidate in candidates
+        }
+        received_ids = {decision.candidate_id for decision in decisions}
+        roster_complete = bool(
+            len(decisions) == len(received_ids)
+            and received_ids == expected_ids
+        )
+        all_complete = bool(
+            roster_complete
+            and results
+            and all(result.status == "COMPLETE" for result in results)
+        )
+        split_lineage = [
+            {
+                "prompt_hash": result.prompt_hash,
+                "response_hash": result.response_hash,
+                "status": result.status,
+                "decision_count": len(result.decisions),
+            }
+            for result in results
+        ]
+        if all_complete:
+            return CandidateRankingResult(
+                status="COMPLETE",
+                decisions=decisions,
+                pending_reasons=(),
+                provider_name=_provider_name(self.provider),
+                prompt_hash=stable_intelligence_id(
+                    "RANKPROMPT-SPLIT", split_lineage
+                ),
+                response_hash=stable_intelligence_id(
+                    "RANKRESP-SPLIT",
+                    [decision.to_dict() for decision in decisions],
+                ),
+            )
+        pending_reasons = ["SEMANTIC_RANKING_SPLIT_PENDING"]
+        if not roster_complete:
+            pending_reasons.append(
+                "SEMANTIC_RANKING_SPLIT_ROSTER_MISMATCH:"
+                f"expected={len(expected_ids)}:received={len(received_ids)}"
+            )
+        pending_reasons.extend(
+            f"PARTITION_{index}:{reason}"
+            for index, result in enumerate(results)
+            for reason in result.pending_reasons
+        )
+        return CandidateRankingResult(
+            status="PENDING",
+            decisions=decisions,
+            pending_reasons=tuple(pending_reasons),
+            provider_name=_provider_name(self.provider),
+            prompt_hash=stable_intelligence_id(
+                "RANKPROMPT-SPLIT-PENDING", split_lineage
+            ),
+            response_hash=None,
         )
 
 
