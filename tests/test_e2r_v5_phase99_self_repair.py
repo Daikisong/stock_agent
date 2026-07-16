@@ -16,6 +16,7 @@ from e2r.research_brain.researcher_mode.self_repair import (
     render_phase99_self_repair_summary,
     validate_llm_repair_queries,
 )
+from e2r.research_brain.researcher_mode import self_repair
 
 
 class E2RV5Phase99SelfRepairTests(unittest.TestCase):
@@ -131,9 +132,92 @@ class E2RV5Phase99SelfRepairTests(unittest.TestCase):
         blockers = self.audit["canary_completion_blockers"]
         self.assertIn("LIVE_RESEARCH_CHECKPOINT_PENDING:005930", blockers)
         self.assertIn("LIVE_RESEARCH_CHECKPOINT_PENDING:000660", blockers)
-        self.assertFalse(
-            self.audit["live_canaries"]["provider_usage_limit_detected"]
+        usage_limit = self.audit["live_canaries"]
+        usage_target_ids = usage_limit["provider_usage_limit_target_ids"]
+        self.assertEqual(
+            usage_limit["provider_usage_limit_detected"],
+            bool(usage_target_ids),
         )
+        self.assertEqual(
+            sorted(
+                blocker.split(":", 1)[1]
+                for blocker in blockers
+                if blocker.startswith("CODEX_PROVIDER_USAGE_LIMIT:")
+            ),
+            sorted(usage_target_ids),
+        )
+        self.assertTrue(set(usage_target_ids).issubset(by_target))
+
+    def test_usage_limit_audit_reads_current_leaf_and_never_embeds_reset_date(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            target = root / "output" / "researcher_mode" / "case" / "009999"
+            target.mkdir(parents=True)
+            manifest_path = target / "target_run_manifest.json"
+            manifest = {
+                "target_id": "009999",
+                "production_research_complete": False,
+                "provider_response_cache": {
+                    "provider_usage_limit_detected": True,
+                    "provider_usage_limit_reset_hints": [
+                        "Aug 3rd, 2031 7:09 PM"
+                    ],
+                },
+            }
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            (target / "research_supervisor_review.json").write_text(
+                json.dumps(
+                    {
+                        "status": "NEXT_RESEARCH_REQUIRED",
+                        "error": (
+                            "ERROR: You've hit your usage limit. "
+                            "try again at Aug 3rd, 2031 7:09 PM."
+                        ),
+                    }
+                ),
+                encoding="utf-8",
+            )
+            audit = self_repair._audit_active_provider_usage_limits(
+                root=root,
+                target_items=((manifest_path, manifest),),
+            )
+        self.assertTrue(audit["detected"])
+        self.assertEqual(audit["target_ids"], ["009999"])
+        self.assertEqual(audit["reset_hints"], ["Aug 3rd, 2031 7:09 PM"])
+        self.assertEqual(
+            audit["evidence_paths"],
+            [
+                "output/researcher_mode/case/009999/"
+                "target_run_manifest.json",
+                "output/researcher_mode/case/009999/"
+                "research_supervisor_review.json"
+            ],
+        )
+
+    def test_completed_target_ignores_historical_usage_limit_text(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            target = root / "target"
+            target.mkdir()
+            manifest_path = target / "target_run_manifest.json"
+            manifest = {
+                "target_id": "009999",
+                "production_research_complete": True,
+            }
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            (target / "research_supervisor_review.json").write_text(
+                "usage limit; try again at Jan 1st, 2030 1:00 AM",
+                encoding="utf-8",
+            )
+            audit = self_repair._audit_active_provider_usage_limits(
+                root=root,
+                target_items=((manifest_path, manifest),),
+            )
+        self.assertFalse(audit["detected"])
+        self.assertEqual(audit["target_ids"], [])
+        self.assertEqual(audit["reset_hints"], [])
 
     def test_missing_live_manifests_are_exact_pending_not_fake_completion(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

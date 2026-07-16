@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -815,6 +816,13 @@ _CODEX_PROMPT_TRANSPORT_MAX_CHARS = 1_000_000
 _RESEARCH_PROVIDER_RESPONSE_CACHE_SCHEMA_VERSION = (
     "e2r_v5_research_provider_response_cache_v1"
 )
+_PROVIDER_USAGE_LIMIT_RE = re.compile(r"\busage\s+limit\b", re.IGNORECASE)
+_PROVIDER_USAGE_LIMIT_RESET_RE = re.compile(
+    r"try\s+again\s+at\s+"
+    r"([A-Z][a-z]{2}\s+\d{1,2}(?:st|nd|rd|th),\s+\d{4}\s+"
+    r"\d{1,2}:\d{2}\s+(?:AM|PM))",
+    re.IGNORECASE,
+)
 
 
 @dataclass
@@ -828,6 +836,8 @@ class CodexResearcherProvider:
     cache_invalidations: list[Mapping[str, Any]] = field(default_factory=list)
     _response_cache_call_start_index: int = 0
     _response_cache_invalidation_start_index: int = 0
+    _terminal_provider_error: str | None = field(default=None, init=False)
+    _terminal_provider_reset_hint: str | None = field(default=None, init=False)
 
     @classmethod
     def default(
@@ -889,6 +899,7 @@ class CodexResearcherProvider:
                     "payload": safe_payload,
                     "response": None,
                     "status": "PROMPT_TRANSPORT_REJECTED",
+                    "transport_call_attempted": False,
                     "cache_hit": False,
                     "cache_key": cache_key,
                     "cache_read_status": "NOT_ATTEMPTED",
@@ -915,6 +926,7 @@ class CodexResearcherProvider:
                     "payload": safe_payload,
                     "response": dict(cached_response),
                     "status": "COMPLETE",
+                    "transport_call_attempted": False,
                     "cache_hit": True,
                     "cache_key": cache_key,
                     "cache_read_status": cache_read_status,
@@ -922,6 +934,32 @@ class CodexResearcherProvider:
                 }
             )
             return cached_response
+        if self._terminal_provider_error is not None:
+            circuit_error = (
+                "PROVIDER_USAGE_LIMIT_CIRCUIT_OPEN:"
+                f"{self._terminal_provider_error}"
+            )
+            self.calls.append(
+                {
+                    "pass_name": pass_name,
+                    "prompt_hash": prompt_hash,
+                    "prompt_chars": len(prompt),
+                    "payload": safe_payload,
+                    "response": None,
+                    "status": "PROVIDER_ERROR",
+                    "provider_error": circuit_error,
+                    "provider_failure_class": "USAGE_LIMIT",
+                    "provider_reset_hint": self._terminal_provider_reset_hint,
+                    "usage_limit_circuit_open": True,
+                    "transport_call_attempted": False,
+                    "cache_hit": False,
+                    "cache_key": cache_key,
+                    "cache_read_status": cache_read_status,
+                    "cache_write_status": "NOT_WRITTEN",
+                    "output_schema_hash": schema_hash,
+                }
+            )
+            raise StructuredProviderUnavailable(circuit_error)
         try:
             response = self.transport.complete(
                 prompt=prompt,
@@ -935,6 +973,12 @@ class CodexResearcherProvider:
             OSError,
             RuntimeError,
         ) as exc:
+            detail = _provider_error_detail(exc)
+            usage_limit = bool(_PROVIDER_USAGE_LIMIT_RE.search(detail))
+            reset_hint = _provider_usage_limit_reset_hint(detail)
+            if usage_limit:
+                self._terminal_provider_error = detail
+                self._terminal_provider_reset_hint = reset_hint
             self.calls.append(
                 {
                     "pass_name": pass_name,
@@ -943,10 +987,13 @@ class CodexResearcherProvider:
                     "payload": safe_payload,
                     "response": None,
                     "status": "PROVIDER_ERROR",
-                    "provider_error": (
-                        f"{exc.__class__.__name__}:"
-                        + (" ".join(str(exc).split())[-500:] or "no detail")
+                    "provider_error": f"{exc.__class__.__name__}:{detail}",
+                    "provider_failure_class": (
+                        "USAGE_LIMIT" if usage_limit else "OTHER"
                     ),
+                    "provider_reset_hint": reset_hint,
+                    "usage_limit_circuit_open": usage_limit,
+                    "transport_call_attempted": True,
                     "cache_hit": False,
                     "cache_key": cache_key,
                     "cache_read_status": cache_read_status,
@@ -971,6 +1018,7 @@ class CodexResearcherProvider:
                 "payload": safe_payload,
                 "response": dict(response.payload),
                 "status": "COMPLETE",
+                "transport_call_attempted": True,
                 "cache_hit": False,
                 "cache_key": cache_key,
                 "cache_read_status": cache_read_status,
@@ -1081,9 +1129,36 @@ class CodexResearcherProvider:
                 for row in events
             ),
             "transport_call_count": sum(
-                not bool(row.get("cache_hit"))
-                and row.get("status") != "PROMPT_TRANSPORT_REJECTED"
+                (
+                    bool(row.get("transport_call_attempted"))
+                    if "transport_call_attempted" in row
+                    else (
+                        not bool(row.get("cache_hit"))
+                        and row.get("status") != "PROMPT_TRANSPORT_REJECTED"
+                    )
+                )
                 for row in cache_events
+            ),
+            "provider_usage_limit_detected": any(
+                row.get("provider_failure_class") == "USAGE_LIMIT"
+                for row in events
+            ),
+            "provider_usage_limit_reset_hints": list(
+                dict.fromkeys(
+                    str(row.get("provider_reset_hint"))
+                    for row in events
+                    if str(row.get("provider_reset_hint") or "").strip()
+                )
+            ),
+            "provider_usage_limit_transport_error_count": sum(
+                row.get("provider_failure_class") == "USAGE_LIMIT"
+                and row.get("transport_call_attempted") is True
+                for row in events
+            ),
+            "provider_usage_limit_short_circuit_count": sum(
+                row.get("provider_failure_class") == "USAGE_LIMIT"
+                and row.get("transport_call_attempted") is False
+                for row in events
             ),
             "cache_hit_count": sum(
                 bool(row.get("cache_hit")) for row in cache_events
@@ -1213,6 +1288,15 @@ class CodexResearcherProvider:
                 pass
             return "WRITE_FAILED"
         return "WRITTEN"
+
+
+def _provider_error_detail(error: Exception) -> str:
+    return " ".join(str(error).split())[-500:] or "no detail"
+
+
+def _provider_usage_limit_reset_hint(value: str) -> str | None:
+    match = _PROVIDER_USAGE_LIMIT_RESET_RE.search(str(value))
+    return " ".join(match.group(1).split()) if match else None
 
 
 class ComponentResearcher:
@@ -2129,7 +2213,11 @@ def _pass_instruction(pass_name: str) -> str:
             "classify each group failure_id exactly once and apply it to all member_failure_ids. "
             "Classify parser/extractor failure separately from "
             "source absence. Suggest semantic source/query directions; do not write literal "
-            "fallback query templates and never treat zero results or a budget limit as completion."
+            "fallback query templates and never treat zero results or a budget limit as completion. "
+            "When supervisor_validation_retry_context is present, rewrite the entire response "
+            "once using its validation error, allowed objective ids, and deterministic current "
+            "state as authoritative correction feedback. Do not repeat the rejected semantic "
+            "contradiction and do not invent evidence, scores, or stages."
         )
     if pass_name == "SEMANTIC_SATURATION_REVIEW":
         return (

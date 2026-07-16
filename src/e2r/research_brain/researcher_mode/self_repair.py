@@ -348,8 +348,25 @@ _SPACE_RE = re.compile(r"\s+")
 _URL_RE = re.compile(r"https?://[^\s]+", re.IGNORECASE)
 _GOLD_MARKER_RE = re.compile(r"(?:^|[-_\s])gold(?:$|[-_\s])", re.IGNORECASE)
 _USAGE_LIMIT_RE = re.compile(
-    r"usage limit.*?Jul\s+20th,\s+2026\s+3:58\s+AM",
-    re.IGNORECASE | re.DOTALL,
+    r"\busage\s+limit\b",
+    re.IGNORECASE,
+)
+_USAGE_LIMIT_RESET_RE = re.compile(
+    r"try\s+again\s+at\s+"
+    r"([A-Z][a-z]{2}\s+\d{1,2}(?:st|nd|rd|th),\s+\d{4}\s+"
+    r"\d{1,2}:\d{2}\s+(?:AM|PM))",
+    re.IGNORECASE,
+)
+_ACTIVE_PROVIDER_DIAGNOSTIC_LEAVES = (
+    "target_run_manifest.json",
+    "component_research_memos.jsonl",
+    "component_judge_decisions.jsonl",
+    "business_model_memo.json",
+    "red_team_research.json",
+    "research_supervisor_review.json",
+    "research_epoch_checkpoint.json",
+    "stagecourt.json",
+    "until_pass_progress.json",
 )
 
 
@@ -630,6 +647,11 @@ def render_phase99_self_repair_summary(audit: Mapping[str, Any]) -> str:
                 for row in canaries.get("targets") or []
             ),
             f"- canary goal complete: `{str(bool(audit.get('canary_goal_complete'))).lower()}`",
+            f"- provider usage limit detected: `{str(bool(canaries.get('provider_usage_limit_detected'))).lower()}`",
+            *(
+                f"- provider reset hint: `{hint}`"
+                for hint in canaries.get("provider_usage_limit_reset_hints") or []
+            ),
             "- blockers:",
         ]
     )
@@ -699,13 +721,21 @@ def _audit_live_canaries(root: Path) -> Mapping[str, Any]:
             blockers.append(f"LIVE_RESEARCH_NOT_STARTED:{row['target_id']}")
         elif row["status"] != "PRODUCTION_RESEARCH_COMPLETE":
             blockers.append(f"LIVE_RESEARCH_CHECKPOINT_PENDING:{row['target_id']}")
-    joined = json.dumps(
-        [payload for _, payload in by_target.values()],
-        ensure_ascii=False,
-        sort_keys=True,
+    usage_limit = _audit_active_provider_usage_limits(
+        root=root,
+        target_items=tuple(
+            item
+            for item in (
+                by_target.get(str(spec.get("symbol") or ""))
+                for spec in target_specs
+            )
+            if item is not None
+        ),
     )
-    if _USAGE_LIMIT_RE.search(joined):
-        blockers.append("CODEX_PROVIDER_USAGE_LIMIT_UNTIL_2026-07-20T03:58:00+09:00")
+    blockers.extend(
+        f"CODEX_PROVIDER_USAGE_LIMIT:{target_id}"
+        for target_id in usage_limit["target_ids"]
+    )
     canary_goal_complete = bool(targets) and not blockers and all(
         row["production_research_complete"] for row in targets
     )
@@ -716,9 +746,81 @@ def _audit_live_canaries(root: Path) -> Mapping[str, Any]:
             else None
         ),
         "targets": list(targets),
-        "provider_usage_limit_detected": bool(_USAGE_LIMIT_RE.search(joined)),
+        "provider_usage_limit_detected": usage_limit["detected"],
+        "provider_usage_limit_target_ids": usage_limit["target_ids"],
+        "provider_usage_limit_reset_hints": usage_limit["reset_hints"],
+        "provider_usage_limit_evidence_paths": usage_limit["evidence_paths"],
         "blockers": list(dict.fromkeys(blockers)),
         "canary_goal_complete": canary_goal_complete,
+    }
+
+
+def _audit_active_provider_usage_limits(
+    *,
+    root: Path,
+    target_items: Sequence[tuple[Path, Mapping[str, Any]]],
+) -> Mapping[str, Any]:
+    """Read only current canary leaves, never stale append-only history.
+
+    A provider limit is operationally relevant only while the current target
+    manifest is incomplete.  The reset time is evidence copied from the
+    provider message, not a date embedded in deterministic code.
+    """
+
+    target_ids: list[str] = []
+    reset_hints: list[str] = []
+    evidence_paths: list[str] = []
+    for manifest_path, manifest in target_items:
+        if manifest.get("production_research_complete") is True:
+            continue
+        target_id = str(manifest.get("target_id") or "").strip()
+        target_directory = manifest_path.parent
+        target_detected = False
+        provider_cache = manifest.get("provider_response_cache")
+        if (
+            isinstance(provider_cache, Mapping)
+            and provider_cache.get("provider_usage_limit_detected") is True
+        ):
+            target_detected = True
+            try:
+                evidence_paths.append(str(manifest_path.relative_to(root)))
+            except ValueError:
+                evidence_paths.append(str(manifest_path))
+            reset_hints.extend(
+                " ".join(str(value).split())
+                for value in (
+                    provider_cache.get("provider_usage_limit_reset_hints") or ()
+                )
+                if str(value).strip()
+            )
+        for leaf_name in _ACTIVE_PROVIDER_DIAGNOSTIC_LEAVES:
+            path = target_directory / leaf_name
+            try:
+                text = path.read_text(encoding="utf-8")
+            except (OSError, UnicodeError):
+                continue
+            if not _USAGE_LIMIT_RE.search(text):
+                continue
+            target_detected = True
+            try:
+                relative = str(path.relative_to(root))
+            except ValueError:
+                relative = str(path)
+            evidence_paths.append(relative)
+            reset_hints.extend(
+                " ".join(match.group(1).split())
+                for match in _USAGE_LIMIT_RESET_RE.finditer(text)
+            )
+        if target_detected and target_id:
+            target_ids.append(target_id)
+    target_ids = list(dict.fromkeys(target_ids))
+    reset_hints = list(dict.fromkeys(reset_hints))
+    evidence_paths = list(dict.fromkeys(evidence_paths))
+    return {
+        "detected": bool(target_ids),
+        "target_ids": target_ids,
+        "reset_hints": reset_hints,
+        "evidence_paths": evidence_paths,
     }
 
 

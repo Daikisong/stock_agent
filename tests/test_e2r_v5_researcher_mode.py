@@ -223,6 +223,21 @@ class FailingRecordingTransport:
         raise RuntimeError("fixture provider failure")
 
 
+class UsageLimitAfterOneTransport(SchemaRecordingTransport):
+    def complete(self, *, prompt, output_schema, schema_name):
+        if self.call_count:
+            self.call_count += 1
+            raise RuntimeError(
+                "ERROR: You've hit your usage limit. "
+                "try again at Aug 3rd, 2031 7:09 PM."
+            )
+        return super().complete(
+            prompt=prompt,
+            output_schema=output_schema,
+            schema_name=schema_name,
+        )
+
+
 class E2RV5ResearcherModeTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
 
@@ -338,6 +353,54 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             self.assertEqual(provider.response_cache_audit()["cache_hit_count"], 0)
             self.assertEqual(provider.response_cache_audit()["provider_error_count"], 2)
             self.assertEqual(list(Path(directory).glob("*.json")), [])
+
+    def test_usage_limit_opens_transport_circuit_but_keeps_cache_readable(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            transport = UsageLimitAfterOneTransport()
+            provider = CodexResearcherProvider(  # type: ignore[arg-type]
+                transport=transport
+            )
+            provider.configure_response_cache(directory)
+            cached_payload = {"target_id": TARGET, "as_of_date": AS_OF_DATE}
+            provider.complete(
+                pass_name="SOURCE_QUERY_GENERATION",
+                payload=cached_payload,
+            )
+            with self.assertRaisesRegex(RuntimeError, "usage limit"):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload={**cached_payload, "target_id": "SECOND-TARGET"},
+                )
+            with self.assertRaisesRegex(
+                RuntimeError, "PROVIDER_USAGE_LIMIT_CIRCUIT_OPEN"
+            ):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload={**cached_payload, "target_id": "THIRD-TARGET"},
+                )
+
+            cached = provider.complete(
+                pass_name="SOURCE_QUERY_GENERATION",
+                payload=cached_payload,
+            )
+            self.assertEqual(cached["suggested_queries"], [])
+            self.assertEqual(transport.call_count, 2)
+            audit = provider.response_cache_audit()
+            self.assertTrue(audit["provider_usage_limit_detected"])
+            self.assertEqual(audit["transport_call_count"], 2)
+            self.assertEqual(
+                audit["provider_usage_limit_transport_error_count"], 1
+            )
+            self.assertEqual(
+                audit["provider_usage_limit_short_circuit_count"], 1
+            )
+            self.assertEqual(
+                audit["provider_usage_limit_reset_hints"],
+                ["Aug 3rd, 2031 7:09 PM"],
+            )
+            self.assertEqual(audit["cache_hit_count"], 1)
 
     def test_codex_provider_evicts_only_downstream_semantically_invalid_response(
         self,

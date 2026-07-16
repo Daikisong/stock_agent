@@ -391,63 +391,145 @@ class ResearchSupervisor:
                     counter_and_supersession_route_proof
                 ),
                 "prior_supervisor_review": (
-                    prior_review.to_dict()
-                    if isinstance(prior_review, ResearchSupervisorReview)
-                    else dict(prior_review)
+                    _prior_supervisor_review_prompt_projection(prior_review)
                     if prior_review
                     else None
                 ),
             }
         )
-        try:
-            response = self.provider.complete(
-                pass_name="RESEARCH_SUPERVISOR_REVIEW", payload=payload
-            )
-            assert_blind_research_output(response)
-            review = _review_from_provider_response(
-                response=response,
-                epoch=epoch,
-                reviewer_role=self.reviewer_role,
-                component_results=component_results,
-                red_team_result=red_team_result,
-                structured_result=structured_result,
-                objective_ids=objective_ids,
-                failure_by_id=failure_by_id,
-                failure_group_members={
-                    str(group_id): tuple(str(value) for value in member_ids)
-                    for group_id, member_ids in failure_projection[
-                        "failure_group_members"
-                    ].items()
-                },
-                counter_route_proof_complete=counter_route_proof_complete,
-                source_graph_zero_result_only=source_graph_zero_result_only,
-                source_graph_research_pending=source_graph_research_pending,
-                provider_name=str(
-                    getattr(self.provider, "provider_name", type(self.provider).__name__)
-                ),
-                prompt_hash=_provider_prompt_hash(self.provider, payload),
-            )
-            return review
-        except (
-            StructuredProviderUnavailable,
-            StructuredProviderRejected,
-            TimeoutError,
-            OSError,
-            RuntimeError,
-            KeyError,
-            TypeError,
-            ValueError,
-        ) as exc:
-            return _provider_pending_review(
-                epoch=epoch,
-                component_results=component_results,
-                reason=f"SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:{type(exc).__name__}:{exc}",
-                reviewer_role=self.reviewer_role,
-                provider_name=str(
-                    getattr(self.provider, "provider_name", type(self.provider).__name__)
-                ),
-                prompt_hash=_provider_prompt_hash(self.provider, payload),
-            )
+        attempt_payload = payload
+        validation_retry_used = False
+        while True:
+            try:
+                response = self.provider.complete(
+                    pass_name="RESEARCH_SUPERVISOR_REVIEW",
+                    payload=attempt_payload,
+                )
+            except (
+                StructuredProviderUnavailable,
+                StructuredProviderRejected,
+                TimeoutError,
+                OSError,
+                RuntimeError,
+            ) as exc:
+                return _provider_pending_review(
+                    epoch=epoch,
+                    component_results=component_results,
+                    reason=(
+                        "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                        f"{type(exc).__name__}:{_clean_error(exc)}"
+                    ),
+                    reviewer_role=self.reviewer_role,
+                    provider_name=str(
+                        getattr(
+                            self.provider,
+                            "provider_name",
+                            type(self.provider).__name__,
+                        )
+                    ),
+                    prompt_hash=_provider_prompt_hash(
+                        self.provider, attempt_payload
+                    ),
+                )
+            prompt_hash = _provider_prompt_hash(self.provider, attempt_payload)
+            try:
+                assert_blind_research_output(response)
+                return _review_from_provider_response(
+                    response=response,
+                    epoch=epoch,
+                    reviewer_role=self.reviewer_role,
+                    component_results=component_results,
+                    red_team_result=red_team_result,
+                    structured_result=structured_result,
+                    objective_ids=objective_ids,
+                    failure_by_id=failure_by_id,
+                    failure_group_members={
+                        str(group_id): tuple(str(value) for value in member_ids)
+                        for group_id, member_ids in failure_projection[
+                            "failure_group_members"
+                        ].items()
+                    },
+                    counter_route_proof_complete=counter_route_proof_complete,
+                    source_graph_zero_result_only=source_graph_zero_result_only,
+                    source_graph_research_pending=source_graph_research_pending,
+                    provider_name=str(
+                        getattr(
+                            self.provider,
+                            "provider_name",
+                            type(self.provider).__name__,
+                        )
+                    ),
+                    prompt_hash=prompt_hash,
+                )
+            except (KeyError, TypeError, ValueError) as exc:
+                _invalidate_provider_response_cache(self.provider, exc)
+                if validation_retry_used:
+                    return _provider_pending_review(
+                        epoch=epoch,
+                        component_results=component_results,
+                        reason=(
+                            "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                            f"{type(exc).__name__}:{exc}"
+                        ),
+                        reviewer_role=self.reviewer_role,
+                        provider_name=str(
+                            getattr(
+                                self.provider,
+                                "provider_name",
+                                type(self.provider).__name__,
+                            )
+                        ),
+                        prompt_hash=prompt_hash,
+                    )
+                validation_retry_used = True
+                red_team_complete = _red_team_complete(red_team_result)
+                attempt_payload = scrub_blind_research_payload(
+                    {
+                        **payload,
+                        "supervisor_validation_retry_context": {
+                            "validation_error": _clean_error(exc),
+                            "rejected_response": response,
+                            "allowed_objective_ids": sorted(objective_ids),
+                            "canonical_component_ids": list(
+                                CANONICAL_COMPONENT_ORDER
+                            ),
+                            "deterministic_current_state": {
+                                "structured_data_complete": (
+                                    _structured_data_complete(structured_result)
+                                ),
+                                "red_team_complete": red_team_complete,
+                                "counter_route_proof_complete": (
+                                    counter_route_proof_complete
+                                ),
+                                "counter_completion_may_be_true": bool(
+                                    counter_route_proof_complete
+                                    and red_team_complete
+                                ),
+                                "source_graph_zero_result_only": (
+                                    source_graph_zero_result_only
+                                ),
+                                "source_graph_research_pending": (
+                                    source_graph_research_pending
+                                ),
+                            },
+                            "instruction": (
+                                "Rewrite the complete supervisor response once. "
+                                "Treat validation_error and deterministic_current_state "
+                                "as authoritative correction feedback. Reference only "
+                                "allowed_objective_ids and assess every canonical "
+                                "component and supplied failure group exactly once. "
+                                "structured_data_complete must exactly match the "
+                                "deterministic value. counter_and_supersession_checked "
+                                "must be false when counter_completion_may_be_true is "
+                                "false. Make component/readiness booleans agree with "
+                                "the current records and with the gaps, directions, "
+                                "unresolved questions, and next actions in the rewritten "
+                                "response. Do not invent evidence, queries, scores, or "
+                                "stages."
+                            ),
+                        },
+                    }
+                )
 
     def review(
         self,
@@ -700,14 +782,7 @@ def _review_from_provider_response(
         and all(row.memo_sufficient for row in findings)
     )
     actual_structured_complete = _structured_data_complete(structured_result)
-    red_team_complete = bool(
-        red_team_result
-        and red_team_result.status == "COMPLETE"
-        and red_team_result.memo
-        and set(red_team_result.memo.reviewed_component_ids)
-        == set(CANONICAL_COMPONENT_ORDER)
-        and not red_team_result.memo.unresolved_challenges
-    )
+    red_team_complete = _red_team_complete(red_team_result)
     if component_sufficient != actual_component_sufficient:
         raise ValueError("supervisor component sufficiency contradicts current memos")
     if structured_complete != actual_structured_complete:
@@ -943,6 +1018,124 @@ def _supervisor_failure_prompt_projection(
     }
 
 
+def _prior_supervisor_review_prompt_projection(
+    review: ResearchSupervisorReview | Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Carry prior supervisor semantics without replaying expanded failures.
+
+    A provider judgment is expanded back to every original failure id before it
+    is persisted.  Feeding that expanded ledger into the next provider prompt
+    duplicates the already-grouped current failure projection and can exhaust
+    the context window.  The prior review therefore keeps its semantic states,
+    counts, and full-roster hashes in the prompt while the exact prior artifact
+    remains in the immutable epoch checkpoint.
+    """
+
+    payload = (
+        dict(review.to_dict())
+        if isinstance(review, ResearchSupervisorReview)
+        else dict(review)
+    )
+    assessments = tuple(
+        dict(row)
+        for row in payload.pop("failure_assessments", ()) or ()
+        if isinstance(row, Mapping)
+    )
+    parser_failure_ids = tuple(
+        str(value)
+        for value in payload.pop("parser_or_extractor_failures", ()) or ()
+    )
+    payload["unresolved_material_questions"] = [
+        _prior_supervisor_text_projection(value)
+        for value in payload.get("unresolved_material_questions") or ()
+    ]
+    payload["next_actions"] = [
+        _prior_supervisor_text_projection(value)
+        for value in payload.get("next_actions") or ()
+    ]
+    payload["rationale"] = _prior_supervisor_text_projection(
+        payload.get("rationale") or ""
+    )
+
+    grouped: dict[tuple[Any, ...], list[Mapping[str, Any]]] = {}
+    for row in assessments:
+        key = (
+            str(row.get("classification") or ""),
+            bool(row.get("retryable")),
+            bool(row.get("source_absence_claim_allowed")),
+            str(row.get("rationale") or ""),
+        )
+        grouped.setdefault(key, []).append(row)
+    assessment_groups = []
+    for key in sorted(grouped, key=lambda value: tuple(map(str, value))):
+        rows = grouped[key]
+        assessment_groups.append(
+            {
+                "classification": key[0],
+                "retryable": key[1],
+                "source_absence_claim_allowed": key[2],
+                "rationale": _prior_supervisor_text_projection(key[3]),
+                "assessment_count": len(rows),
+                "assessment_roster_hash": _stable_payload_hash(rows),
+            }
+        )
+    payload["failure_assessment_projection"] = {
+        "schema_version": "e2r_v5_prior_supervisor_failure_projection_v1",
+        "failure_assessment_count": len(assessments),
+        "semantic_group_count": len(assessment_groups),
+        "semantic_groups": assessment_groups,
+        "failure_assessment_roster_hash": _stable_payload_hash(assessments),
+        "every_assessment_accounted_by_group_count_and_hash": (
+            sum(row["assessment_count"] for row in assessment_groups)
+            == len(assessments)
+        ),
+        "full_failure_assessments_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+    payload["parser_or_extractor_failure_projection"] = {
+        "failure_count": len(parser_failure_ids),
+        "failure_roster_hash": _stable_payload_hash(parser_failure_ids),
+        "full_failure_ids_persisted_outside_prompt": True,
+    }
+    payload["prior_review_roster_hash"] = _stable_payload_hash(
+        review.to_dict()
+        if isinstance(review, ResearchSupervisorReview)
+        else dict(review)
+    )
+    payload["full_prior_review_persisted_outside_prompt"] = True
+    payload["fixed_top_n_used"] = False
+    payload["prompt_projection_is_research_cap"] = False
+    payload["score_authority"] = False
+    return payload
+
+
+def _prior_supervisor_text_projection(value: Any) -> str:
+    """Bound transport diagnostics while preserving normal research prose."""
+
+    text = " ".join(str(value).split())
+    if len(text) <= 2_000:
+        return text
+    folded = text.casefold()
+    if text.startswith("SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"):
+        marker = "PROVIDER_OUTPUT_ERROR"
+        if "context window" in folded or "ran out of room" in folded:
+            marker = "PROVIDER_CONTEXT_WINDOW_EXCEEDED"
+        elif "usage limit" in folded or "purchase more credits" in folded:
+            marker = "PROVIDER_USAGE_LIMIT"
+        elif "timed out" in folded or "timeouterror" in folded:
+            marker = "PROVIDER_TIMEOUT"
+        return (
+            f"SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:{marker}:"
+            f"DETAIL_CHARS={len(text)}:DETAIL_HASH={_stable_payload_hash(text)}"
+        )
+    return (
+        f"PRIOR_SUPERVISOR_TEXT_OMITTED_FROM_TRANSPORT:"
+        f"TEXT_CHARS={len(text)}:TEXT_HASH={_stable_payload_hash(text)}"
+    )
+
+
 def _stable_payload_hash(value: Any) -> str:
     encoded = json.dumps(value, ensure_ascii=False, sort_keys=True, default=str)
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
@@ -1030,6 +1223,17 @@ def _structured_data_complete(result: Any | None) -> bool:
         return False
     missing = getattr(result, "missing_roles_by_component", {}) or {}
     return not any(missing.values())
+
+
+def _red_team_complete(result: RedTeamResearchResult | None) -> bool:
+    return bool(
+        result
+        and result.status == "COMPLETE"
+        and result.memo
+        and set(result.memo.reviewed_component_ids)
+        == set(CANONICAL_COMPONENT_ORDER)
+        and not result.memo.unresolved_challenges
+    )
 
 
 def _counter_route_proof_complete(
@@ -1235,6 +1439,27 @@ def _provider_prompt_hash(
             return str(value)
     encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, default=str)
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+
+
+def _invalidate_provider_response_cache(
+    provider: StructuredResearchProvider,
+    error: Exception,
+) -> None:
+    """Evict one rejected response before the bounded semantic rewrite."""
+
+    invalidate = getattr(provider, "invalidate_last_response_cache", None)
+    if not callable(invalidate):
+        return
+    try:
+        invalidate(reason=f"{error.__class__.__name__}:{_clean_error(error)}")
+    except (OSError, TypeError, ValueError, RuntimeError):
+        # Cache audit failure cannot make the rejected response valid or block
+        # the single provider correction attempt.
+        return
+
+
+def _clean_error(error: Exception) -> str:
+    return " ".join(str(error).split())[-500:] or error.__class__.__name__
 
 
 __all__ = [

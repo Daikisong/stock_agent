@@ -193,6 +193,49 @@ class Phase87SupervisorProvider:
         }
 
 
+class Phase87CorrectingSupervisorProvider(Phase87SupervisorProvider):
+    def __init__(self, invalid_kind: str) -> None:
+        super().__init__("READY")
+        self.invalid_kind = invalid_kind
+        self.invalidations: list[str] = []
+
+    def invalidate_last_response_cache(self, reason: str) -> None:
+        self.invalidations.append(reason)
+
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        response = dict(super().complete(pass_name=pass_name, payload=payload))
+        if len(self.calls) == 1:
+            if self.invalid_kind == "UNKNOWN_OBJECTIVE":
+                response["new_source_family_directions"] = [
+                    {
+                        "objective_id": "OBJ-INVENTED",
+                        "source_family": "ISSUER_PRESENTATION",
+                        "direction": "허용되지 않은 목적을 참조한 잘못된 방향",
+                        "rationale": "검증 재시도 fixture",
+                        "counter_or_supersession": False,
+                    }
+                ]
+            return response
+        context = payload["supervisor_validation_retry_context"]
+        if self.invalid_kind == "COUNTER_WITHOUT_PROOF":
+            response.update(
+                {
+                    "counter_and_supersession_checked": False,
+                    "reasonable_positive_routes_remaining": True,
+                    "ready_for_independent_saturation_review": False,
+                    "next_actions": [
+                        "counter 및 supersession 실행 근거를 추가 조사한다."
+                    ],
+                    "rationale": "route proof가 없어 완료 상태를 교정했다.",
+                }
+            )
+        if not context["allowed_objective_ids"]:
+            raise AssertionError("retry context lost allowed objective ids")
+        return response
+
+
 class Phase87SaturationProvider:
     def __init__(self, name: str, *, unresolved: bool = False) -> None:
         self.provider_name = name
@@ -395,6 +438,88 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             set(failure_ids),
         )
 
+    def test_prior_supervisor_expanded_failure_history_is_loss_accounted_and_bounded(
+        self,
+    ) -> None:
+        provider = Phase87SupervisorProvider("GAP")
+        failure_assessments = [
+            {
+                "failure_id": f"PRIOR-FAIL-{index:05d}",
+                "classification": "PARSER_EXTRACTOR_FAILURE",
+                "rationale": "동일 파서 실패는 대체 원문 경로가 필요하다.",
+                "retryable": False,
+                "source_absence_claim_allowed": False,
+            }
+            for index in range(5_000)
+        ]
+        oversized_error = (
+            "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:StructuredProviderUnavailable:"
+            + "replayed failure ledger " * 5_000
+            + " Codex ran out of room in the model's context window"
+        )
+        ResearchSupervisor(provider=provider).review_epoch(
+            **_supervisor_inputs(),
+            prior_review={
+                "review_id": "PRIOR-REVIEW",
+                "epoch": 200,
+                "status": "NEXT_RESEARCH_REQUIRED",
+                "component_status": {
+                    component_id: "COMPLETE"
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                },
+                "unresolved_material_questions": [oversized_error],
+                "source_family_gaps": [],
+                "parser_or_extractor_failures": [
+                    row["failure_id"] for row in failure_assessments
+                ],
+                "next_actions": ["provider 입력을 의미 집계로 재구성한다."],
+                "failure_assessments": failure_assessments,
+                "rationale": oversized_error,
+            },
+        )
+        payload = provider.calls[-1]["payload"]
+        prior = payload["prior_supervisor_review"]
+        projection = prior["failure_assessment_projection"]
+        self.assertEqual(projection["failure_assessment_count"], 5_000)
+        self.assertEqual(projection["semantic_group_count"], 1)
+        self.assertTrue(
+            projection[
+                "every_assessment_accounted_by_group_count_and_hash"
+            ]
+        )
+        self.assertEqual(
+            prior["parser_or_extractor_failure_projection"]["failure_count"],
+            5_000,
+        )
+        encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+        self.assertLess(len(encoded), 150_000)
+        self.assertNotIn("PRIOR-FAIL-04999", encoded)
+        self.assertIn("PROVIDER_CONTEXT_WINDOW_EXCEEDED", encoded)
+        self.assertTrue(prior["full_prior_review_persisted_outside_prompt"])
+        self.assertFalse(prior["fixed_top_n_used"])
+
+    def test_supervisor_provider_error_is_bounded_before_checkpoint_persistence(
+        self,
+    ) -> None:
+        class OversizedErrorProvider(Phase87SupervisorProvider):
+            def complete(self, *, pass_name, payload):
+                self.calls.append({"pass_name": pass_name, "payload": payload})
+                raise RuntimeError(
+                    "echoed provider input " * 10_000
+                    + "CONTEXT_WINDOW_EXCEEDED"
+                )
+
+        review = ResearchSupervisor(
+            provider=OversizedErrorProvider("ERROR")
+        ).review_epoch(**_supervisor_inputs())
+        self.assertIn("SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR", review.rationale)
+        self.assertIn("CONTEXT_WINDOW_EXCEEDED", review.rationale)
+        self.assertLess(len(review.rationale), 700)
+        self.assertEqual(
+            review.unresolved_material_questions,
+            (review.rationale,),
+        )
+
     def test_zero_result_alone_cannot_be_relabelled_as_source_absence(self) -> None:
         provider = Phase87SupervisorProvider("ABSENCE")
         review = ResearchSupervisor(provider=provider).review_epoch(
@@ -594,9 +719,46 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             **_supervisor_inputs()
         )
         self.assertEqual(review.status, "NEXT_RESEARCH_REQUIRED")
+        self.assertEqual(len(provider.calls), 1)
         context = review.to_score_gap_context()
         self.assertEqual(context["query_direction_briefs"], [])
         self.assertNotIn("suggested_queries", context)
+
+    def test_supervisor_semantic_error_gets_one_bounded_correction(self) -> None:
+        provider = Phase87CorrectingSupervisorProvider(
+            "COUNTER_WITHOUT_PROOF"
+        )
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **_supervisor_inputs(counter_proof=())
+        )
+        self.assertEqual(len(provider.calls), 2)
+        self.assertEqual(len(provider.invalidations), 1)
+        retry_context = provider.calls[-1]["payload"][
+            "supervisor_validation_retry_context"
+        ]
+        self.assertIn("counter/supersession", retry_context["validation_error"])
+        deterministic = retry_context["deterministic_current_state"]
+        self.assertFalse(deterministic["counter_route_proof_complete"])
+        self.assertFalse(deterministic["counter_completion_may_be_true"])
+        self.assertFalse(review.counter_and_supersession_checked)
+        self.assertEqual(review.status, "NEXT_RESEARCH_REQUIRED")
+
+    def test_supervisor_unknown_objective_is_corrected_with_allowed_ids(self) -> None:
+        provider = Phase87CorrectingSupervisorProvider("UNKNOWN_OBJECTIVE")
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **_supervisor_inputs()
+        )
+        self.assertEqual(len(provider.calls), 2)
+        self.assertEqual(len(provider.invalidations), 1)
+        retry_context = provider.calls[-1]["payload"][
+            "supervisor_validation_retry_context"
+        ]
+        self.assertEqual(retry_context["allowed_objective_ids"], [OBJECTIVE_ID])
+        self.assertIn("unknown research objective", retry_context["validation_error"])
+        self.assertEqual(
+            review.status,
+            "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+        )
 
     def test_counter_route_requires_executed_source_graph_lineage(self) -> None:
         review = ResearchSupervisor(
