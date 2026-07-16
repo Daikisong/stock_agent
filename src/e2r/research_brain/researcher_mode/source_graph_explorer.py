@@ -670,8 +670,12 @@ class ResearcherSourceGraphAcquirer:
             and str(row.get("objective_id")) not in resolved
         ]
         pending_candidate_work = any(
-            row.get("ranking_status") == "PENDING"
-            or row.get("fetch_status") in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+            (
+                row.get("ranking_status") == "PENDING"
+                or row.get("fetch_status")
+                in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+            )
+            and not _candidate_scope_is_fully_resolved(row, resolved)
             for row in candidates
         )
         if unresolved_objectives and not pending_query_rows and not pending_candidate_work:
@@ -814,7 +818,7 @@ class ResearcherSourceGraphAcquirer:
             row
             for row in candidates
             if row.get("ranking_status") == "PENDING"
-            and not set(row.get("objective_ids") or ()).issubset(resolved)
+            and not _candidate_scope_is_fully_resolved(row, resolved)
         ]
         ranking_results: list[CandidateRankingResult] = []
         if pending_rank:
@@ -857,7 +861,7 @@ class ResearcherSourceGraphAcquirer:
                 for row in candidates
                 if row.get("fetch_status")
                 in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
-                and not set(row.get("objective_ids") or ()).issubset(resolved)
+                and not _candidate_scope_is_fully_resolved(row, resolved)
             ),
             key=lambda row: _pending_material_fetch_priority(
                 row,
@@ -1015,11 +1019,14 @@ class ResearcherSourceGraphAcquirer:
             row.get("execution_status") == "PENDING" for row in generated_rows
         )
         still_pending_rank = any(
-            row.get("ranking_status") == "PENDING" for row in candidates
+            row.get("ranking_status") == "PENDING"
+            and not _candidate_scope_is_fully_resolved(row, resolved)
+            for row in candidates
         )
         still_pending_fetch = any(
             row.get("fetch_status")
             in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+            and not _candidate_scope_is_fully_resolved(row, resolved)
             for row in candidates
         )
         if not unresolved_objectives:
@@ -2433,6 +2440,20 @@ def _annotate_candidate_source_hints(
             url=url,
             official_hosts=official_hosts,
         )
+
+
+def _candidate_scope_is_fully_resolved(
+    candidate: Mapping[str, Any],
+    resolved_objective_ids: set[str],
+) -> bool:
+    """Keep historical candidate state without blocking unrelated open work."""
+
+    candidate_objective_ids = {
+        str(value)
+        for value in candidate.get("objective_ids") or ()
+        if str(value).strip()
+    }
+    return candidate_objective_ids.issubset(resolved_objective_ids)
 
 
 def _candidate_reference_expansion_authority(

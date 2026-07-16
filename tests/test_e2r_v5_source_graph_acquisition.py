@@ -856,6 +856,90 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             any("INVALID_RANKING_OUTPUT" in reason for reason in run.checkpoint["pending_reasons"])
         )
 
+    def test_resolved_objective_pending_candidates_do_not_block_open_objective(
+        self,
+    ) -> None:
+        stale_provider = SourceBrainProvider(omit_last_ranking=True)
+        stale_urls = (
+            "https://example.com/stale-a",
+            "https://example.com/stale-b",
+        )
+        first = self._run(
+            provider=stale_provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: tuple(
+                        _result(f"Current Corp stale {index}", url)
+                        for index, url in enumerate(stale_urls)
+                    )
+                }
+            ),
+            fetcher=PageFetcher(fixture_text_by_url={}),
+        )
+        self.assertEqual(first.status, "CANDIDATE_RANKING_PENDING")
+        self.assertTrue(
+            all(
+                row["ranking_status"] == "PENDING"
+                for row in first.checkpoint["search_candidates"]
+            )
+        )
+
+        open_objective = SourceResearchObjective(
+            objective_id="OBJECTIVE-2",
+            component_id="earnings_visibility",
+            research_objective="forward revision and customer allocation",
+            preferred_source_families=("NAVER_DISCOVERY",),
+            counter_or_supersession_required=True,
+        )
+        provider = SourceBrainProvider(queries=(ALTERNATE_QUERY,))
+        search = RecordingSearchProvider(
+            {
+                ALTERNATE_QUERY: (
+                    _result(
+                        "Current Corp open objective report",
+                        ALTERNATE_URL,
+                        query=ALTERNATE_QUERY,
+                    ),
+                )
+            }
+        )
+        second = ResearcherSourceGraphAcquirer(
+            query_provider=provider,
+            search_provider=search,
+            page_fetcher=PageFetcher(
+                fixture_text_by_url={
+                    ALTERNATE_URL: _document_text("open-objective")
+                }
+            ),
+        ).acquire(
+            config=SourceGraphAcquisitionConfig(mode="TEST"),
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            as_of_date=AS_OF_DATE,
+            open_objectives=(_objective(), open_objective),
+            current_evidence_facts=(),
+            target_business_model=None,
+            source_coverage=(),
+            official_gap_reasons_by_objective={
+                "OBJECTIVE-1": ("official source gap recorded",),
+                "OBJECTIVE-2": ("official source gap recorded",),
+            },
+            resolved_objective_ids=("OBJECTIVE-1",),
+            prior_checkpoint=first.checkpoint,
+        )
+        self.assertEqual(search.calls, [(ALTERNATE_QUERY, AS_OF_DATE, 100)])
+        self.assertNotEqual(second.status, "CANDIDATE_RANKING_PENDING")
+        self.assertEqual(len(second.evidence_documents), 1)
+        stale_candidates = [
+            row
+            for row in second.checkpoint["search_candidates"]
+            if row.get("url") in stale_urls
+        ]
+        self.assertTrue(
+            all(row["ranking_status"] == "PENDING" for row in stale_candidates)
+        )
+
     def test_production_general_web_requires_recorded_official_gap(self) -> None:
         provider = SourceBrainProvider()
         naver = NoNetworkLiveNaver()
