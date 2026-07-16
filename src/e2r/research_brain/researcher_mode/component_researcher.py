@@ -104,6 +104,33 @@ _PRIOR_FACT_DISPOSITION_ARRAY: Mapping[str, Any] = {
     },
 }
 
+_SELECTED_FACT_GROUNDING_ARRAY: Mapping[str, Any] = {
+    "type": "array",
+    "items": {
+        "type": "object",
+        "additionalProperties": False,
+        "required": [
+            "fact_row_index",
+            "source_predicate",
+            "source_value_json",
+            "source_period_json",
+            "source_economic_mechanism",
+            "component_interpretation",
+        ],
+        "properties": {
+            "fact_row_index": {"type": "integer", "minimum": 0},
+            "source_predicate": {"type": "string", "minLength": 1},
+            "source_value_json": {"type": "string", "minLength": 1},
+            "source_period_json": {"type": "string", "minLength": 1},
+            "source_economic_mechanism": {
+                "type": "string",
+                "minLength": 1,
+            },
+            "component_interpretation": {"type": "string", "minLength": 1},
+        },
+    },
+}
+
 BUSINESS_MODEL_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "type": "object",
     "additionalProperties": False,
@@ -136,6 +163,7 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
     "additionalProperties": False,
     "required": [
         "selected_fact_row_indices",
+        "selected_fact_groundings",
         "prior_fact_dispositions",
         "structured_metric_row_indices",
         "historical_anchor_ids",
@@ -156,6 +184,7 @@ COMPONENT_RESEARCH_SCHEMA: Mapping[str, Any] = {
     ],
     "properties": {
         "selected_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
+        "selected_fact_groundings": _SELECTED_FACT_GROUNDING_ARRAY,
         "prior_fact_dispositions": _PRIOR_FACT_DISPOSITION_ARRAY,
         "structured_metric_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
         "historical_anchor_ids": _STRING_ARRAY,
@@ -1429,6 +1458,21 @@ class ComponentResearcher:
                     for key, value in fact_projection.items()
                     if key not in {"facts", "fact_id_by_row_index"}
                 },
+                "selected_fact_grounding_contract": {
+                    "required_for_every_selected_fact": True,
+                    "exactly_once": True,
+                    "source_predicate_copy_exactly": True,
+                    "source_economic_mechanism_copy_exactly": True,
+                    "source_value_json_encoding": (
+                        "compact JSON of the decoded source value"
+                    ),
+                    "source_period_json_encoding": (
+                        "compact JSON of the decoded source period"
+                    ),
+                    "component_cases_must_match_groundings": True,
+                    "unsupported_fact_action": "OMIT_AND_RESELECT",
+                    "deterministic_code_may_repair_interpretation": False,
+                },
                 "component_fact_scope_projection": {
                     "input_fact_count": len(facts),
                     "citable_fact_count": len(citable_facts),
@@ -1556,7 +1600,14 @@ class ComponentResearcher:
                                 "metrics with score_authority=false are not positive "
                                 "score evidence. If no positive fact qualifies, "
                                 "return a zero score range instead of narrating an "
-                                "unsupported positive score. Do not let deterministic "
+                                "unsupported positive score. Return exactly one "
+                                "selected_fact_groundings row for every selected fact. "
+                                "Copy its decoded predicate and economic_mechanism "
+                                "exactly, and compact-JSON encode its decoded value and "
+                                "period. Cases, dispositions, and interpretations must "
+                                "match those immutable fields; omit a fact rather than "
+                                "turning it into a different comparison or mechanism. "
+                                "Do not let deterministic "
                                 "code repair, retain, or invent any citation."
                             ),
                         },
@@ -1666,11 +1717,18 @@ def _component_memo_from_response(
         fact_id_by_row_index=fact_id_by_row_index,
         label="selected_fact_row_indices",
     )
+    selected_fact_row_indices = tuple(
+        int(row) for row in response["selected_fact_row_indices"]
+    )
+    _validate_selected_fact_groundings(
+        response=response,
+        selected_fact_row_indices=selected_fact_row_indices,
+        fact_id_by_row_index=fact_id_by_row_index,
+        facts=facts,
+    )
     _validate_prior_fact_dispositions(
         response=response,
-        selected_fact_row_indices=tuple(
-            int(row) for row in response["selected_fact_row_indices"]
-        ),
+        selected_fact_row_indices=selected_fact_row_indices,
         prior_memo_context=prior_memo_context,
     )
     _require_ids_exist(selected, facts, "fact")
@@ -1983,6 +2041,87 @@ def _validate_prior_fact_dispositions(
         raise ValueError("OMIT prior fact rows cannot remain selected")
 
 
+def _validate_selected_fact_groundings(
+    *,
+    response: Mapping[str, Any],
+    selected_fact_row_indices: Sequence[int],
+    fact_id_by_row_index: Mapping[int, str],
+    facts: Mapping[str, EvidenceFact],
+) -> None:
+    """Require the LLM to re-ground every selection in immutable fact fields."""
+
+    value = response["selected_fact_groundings"]
+    if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
+        raise TypeError("selected_fact_groundings must be an array")
+    expected_indices = set(selected_fact_row_indices)
+    groundings: dict[int, Mapping[str, Any]] = {}
+    expected_fields = {
+        "fact_row_index",
+        "source_predicate",
+        "source_value_json",
+        "source_period_json",
+        "source_economic_mechanism",
+        "component_interpretation",
+    }
+    for row in value:
+        if not isinstance(row, Mapping):
+            raise TypeError("selected fact grounding must be an object")
+        if set(row) != expected_fields:
+            raise ValueError("selected fact grounding fields are invalid")
+        row_index = row["fact_row_index"]
+        if (
+            isinstance(row_index, bool)
+            or not isinstance(row_index, int)
+            or row_index < 0
+        ):
+            raise TypeError(
+                "selected fact grounding row index must be non-negative"
+            )
+        if row_index in groundings:
+            raise ValueError(
+                "selected fact grounding row indices must be unique"
+            )
+        groundings[row_index] = row
+    if set(groundings) != expected_indices:
+        raise ValueError(
+            "selected fact groundings must account for every selected fact "
+            "row exactly once"
+        )
+    for row_index, grounding in groundings.items():
+        fact_id = fact_id_by_row_index.get(row_index)
+        if fact_id is None or fact_id not in facts:
+            raise ValueError(
+                "selected fact grounding references an unavailable fact row"
+            )
+        fact = facts[fact_id]
+        expected = {
+            "source_predicate": fact.predicate,
+            "source_value_json": _canonical_fact_field_json(fact.value),
+            "source_period_json": _canonical_fact_field_json(fact.period),
+            "source_economic_mechanism": fact.economic_mechanism,
+        }
+        for field, expected_value in expected.items():
+            if str(grounding[field]) != str(expected_value):
+                raise ValueError(
+                    f"selected fact grounding {field} mismatch for row "
+                    f"{row_index}"
+                )
+        if not str(grounding["component_interpretation"]).strip():
+            raise ValueError(
+                "selected fact grounding requires a component interpretation"
+            )
+
+
+def _canonical_fact_field_json(value: Any) -> str:
+    return json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+        default=str,
+    )
+
+
 def _coerce_fact(row: EvidenceFact | Mapping[str, Any]) -> EvidenceFact:
     if isinstance(row, EvidenceFact):
         return row
@@ -2222,6 +2361,13 @@ def _pass_instruction(pass_name: str) -> str:
             "feedback as diagnostic continuity, not score or Stage authority. Never "
             "reverse a selected fact's predicate or value to fit the thesis; omit it "
             "or narrate its actual economic meaning. "
+            "For every selected fact row, return exactly one selected_fact_groundings "
+            "row. Copy the decoded predicate and economic_mechanism exactly; encode "
+            "the decoded value and period as compact JSON strings. The positive_case, "
+            "counter_case, prior dispositions, and component_interpretation must all "
+            "remain consistent with those immutable groundings. If the real fact does "
+            "not support the component thesis, OMIT it instead of changing its "
+            "comparison basis, subject, period, predicate, value, or mechanism. "
             "A positive score range requires at least one selected current POSITIVE "
             "EvidenceFact. Neutral context and structured metrics marked "
             "score_authority=false cannot support positive points. "

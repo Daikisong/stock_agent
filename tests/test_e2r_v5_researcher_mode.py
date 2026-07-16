@@ -79,12 +79,16 @@ class ScriptedResearchProvider:
                 for row in facts
                 if row["direction"] == "COUNTER"
             ]
+            selected = [*positive[:1], *counter[:1]]
             anchors = payload["historical_component_anchors"]
             positive_anchors = [row["anchor_id"] for row in anchors if row["role"] == "POSITIVE"]
             counter_anchors = [row["anchor_id"] for row in anchors if row["role"] == "COUNTER"]
             maximum = float(payload["component_max_points"])
             response: dict[str, Any] = {
-                "selected_fact_row_indices": [*positive[:1], *counter[:1]],
+                "selected_fact_row_indices": selected,
+                "selected_fact_groundings": _selected_fact_groundings(
+                    payload, selected
+                ),
                 "prior_fact_dispositions": [
                     {
                         "fact_row_index": row["fact_row_index"],
@@ -540,6 +544,77 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             result.memo.historical_anchor_ids,  # type: ignore[union-attr]
         )
 
+    def test_component_fact_grounding_retries_predicate_drift(self) -> None:
+        class GroundingCorrectingProvider(ScriptedResearchProvider):
+            def __init__(self) -> None:
+                super().__init__()
+                self.invalidated_reasons: list[str] = []
+
+            def invalidate_last_response_cache(self, reason: str):
+                self.invalidated_reasons.append(reason)
+                return {"status": "FIXTURE_INVALIDATED"}
+
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                if (
+                    pass_name == "COMPONENT_RESEARCH"
+                    and "component_research_validation_retry_context"
+                    not in payload
+                ):
+                    groundings = [
+                        dict(row)
+                        for row in response["selected_fact_groundings"]
+                    ]
+                    groundings[0]["source_predicate"] = (
+                        "invented_peer_relative_underperformance"
+                    )
+                    response["selected_fact_groundings"] = groundings
+                return response
+
+        provider = GroundingCorrectingProvider()
+        business = BusinessMechanismResearcher(provider=provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=self._plans()[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        component_calls = [
+            row
+            for row in provider.calls
+            if row["pass_name"] == "COMPONENT_RESEARCH"
+        ]
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(len(component_calls), 2)
+        self.assertEqual(len(provider.invalidated_reasons), 1)
+        self.assertIn(
+            "source_predicate mismatch", provider.invalidated_reasons[0]
+        )
+        retry_context = component_calls[-1]["payload"][
+            "component_research_validation_retry_context"
+        ]
+        self.assertIn(
+            "source_predicate mismatch", retry_context["validation_error"]
+        )
+        self.assertIn(
+            "Copy its decoded predicate", retry_context["instruction"]
+        )
+
     def test_component_research_reselects_every_prior_fact_without_score_carry_forward(
         self,
     ) -> None:
@@ -655,11 +730,15 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
                     super().complete(pass_name=pass_name, payload=payload)
                 )
                 if pass_name == "COMPONENT_RESEARCH":
-                    response["selected_fact_row_indices"] = [
+                    selected = [
                         row["fact_row_index"]
                         for row in _projected_fact_rows(payload)
                         if row["direction"] == "NEUTRAL"
                     ]
+                    response["selected_fact_row_indices"] = selected
+                    response["selected_fact_groundings"] = (
+                        _selected_fact_groundings(payload, selected)
+                    )
                 return response
 
         provider = UnsupportedPositiveProvider()
@@ -805,10 +884,14 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             ) -> Mapping[str, Any]:
                 response = dict(super().complete(pass_name=pass_name, payload=payload))
                 if pass_name == "COMPONENT_RESEARCH":
-                    response["selected_fact_row_indices"] = [
+                    selected = [
                         row["fact_row_index"]
                         for row in _projected_fact_rows(payload)
                     ]
+                    response["selected_fact_row_indices"] = selected
+                    response["selected_fact_groundings"] = (
+                        _selected_fact_groundings(payload, selected)
+                    )
                 return response
 
         provider = SelectAllFactsProvider()
@@ -1337,6 +1420,35 @@ def _projected_fact_rows(payload: Mapping[str, Any]) -> tuple[Mapping[str, Any],
                 decoded[field] = value
         decoded_rows.append(decoded)
     return tuple(decoded_rows)
+
+
+def _selected_fact_groundings(
+    payload: Mapping[str, Any], selected: list[int]
+) -> list[Mapping[str, Any]]:
+    return [
+        {
+            "fact_row_index": row["fact_row_index"],
+            "source_predicate": row["predicate"],
+            "source_value_json": json.dumps(
+                row["value"],
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ),
+            "source_period_json": json.dumps(
+                row["period"],
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ),
+            "source_economic_mechanism": row["economic_mechanism"],
+            "component_interpretation": (
+                "원 predicate, value, period와 경제 메커니즘을 그대로 반영한다."
+            ),
+        }
+        for row in _projected_fact_rows(payload)
+        if row["fact_row_index"] in selected
+    ]
 
 
 def _open_schema_object_paths(
