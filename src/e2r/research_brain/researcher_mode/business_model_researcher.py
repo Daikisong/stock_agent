@@ -12,7 +12,10 @@ from e2r.research_brain.planning.provider_transport import (
     StructuredProviderUnavailable,
 )
 
-from .component_researcher import StructuredResearchProvider
+from .component_researcher import (
+    StructuredResearchProvider,
+    _invalidate_provider_response_cache,
+)
 from .schemas import (
     BusinessModelMemo,
     EvidenceFact,
@@ -104,74 +107,108 @@ class BusinessMechanismResearcher:
                 "source_coverage": list(source_coverage),
             }
         )
-        try:
-            response = self.provider.complete(
-                pass_name="BUSINESS_MODEL_RESEARCH", payload=payload
-            )
-        except (
-            StructuredProviderUnavailable,
-            StructuredProviderRejected,
-            TimeoutError,
-            OSError,
-            RuntimeError,
-        ) as exc:
-            return self._pending("PROVIDER_ERROR", exc)
-        try:
-            assert_blind_research_output(response)
-            cited_facts = resolve_citable_fact_row_indices(
-                response["fact_row_indices"],
-                fact_id_by_row_index=fact_id_by_row_index,
-                label="fact_row_indices",
-            )
-            cited_sources = tuple(
-                sorted(
+        attempt_payload = payload
+        validation_retry_used = False
+        while True:
+            try:
+                response = self.provider.complete(
+                    pass_name="BUSINESS_MODEL_RESEARCH",
+                    payload=attempt_payload,
+                )
+            except (
+                StructuredProviderUnavailable,
+                StructuredProviderRejected,
+                TimeoutError,
+                OSError,
+                RuntimeError,
+            ) as exc:
+                return self._pending("PROVIDER_ERROR", exc)
+            try:
+                assert_blind_research_output(response)
+                cited_facts = resolve_citable_fact_row_indices(
+                    response["fact_row_indices"],
+                    fact_id_by_row_index=fact_id_by_row_index,
+                    label="fact_row_indices",
+                )
+                cited_sources = tuple(
+                    sorted(
+                        {
+                            source_id
+                            for fact_id in cited_facts
+                            for source_id in fact_by_id[fact_id].source_ids
+                        }
+                    )
+                )
+                memo = BusinessModelMemo(
+                    memo_id=stable_intelligence_id(
+                        "BMMEMO",
+                        {
+                            "target_id": target_id,
+                            "archetype_id": archetype_id,
+                            "as_of_date": as_of_date,
+                            "response": scrub_blind_research_payload(response),
+                            "resolved_fact_ids": cited_facts,
+                            "resolved_source_ids": cited_sources,
+                        },
+                    ),
+                    target_id=target_id,
+                    archetype_id=archetype_id,
+                    as_of_date=as_of_date,
+                    business_model_summary=str(
+                        response["business_model_summary"]
+                    ),
+                    revenue_engines=_unique_strings(
+                        response["revenue_engines"], "revenue_engines"
+                    ),
+                    cost_and_cash_drivers=_unique_strings(
+                        response["cost_and_cash_drivers"],
+                        "cost_and_cash_drivers",
+                    ),
+                    capacity_and_supply_constraints=_unique_strings(
+                        response["capacity_and_supply_constraints"],
+                        "capacity_and_supply_constraints",
+                    ),
+                    customer_and_channel_dependencies=_unique_strings(
+                        response["customer_and_channel_dependencies"],
+                        "customer_and_channel_dependencies",
+                    ),
+                    fact_ids=cited_facts,
+                    source_ids=cited_sources,
+                    uncertainties=_unique_strings(
+                        response["uncertainties"], "uncertainties"
+                    ),
+                    confidence=float(response["confidence"]),
+                    research_complete=bool(response["research_complete"]),
+                )
+            except (KeyError, TypeError, ValueError) as exc:
+                _invalidate_provider_response_cache(self.provider, exc)
+                if validation_retry_used:
+                    return self._pending("INVALID_PROVIDER_OUTPUT", exc)
+                validation_retry_used = True
+                attempt_payload = scrub_blind_research_payload(
                     {
-                        source_id
-                        for fact_id in cited_facts
-                        for source_id in fact_by_id[fact_id].source_ids
+                        **payload,
+                        "business_model_validation_retry_context": {
+                            "validation_error": (
+                                " ".join(str(exc).split())[-500:]
+                                or exc.__class__.__name__
+                            ),
+                            "rejected_response": response,
+                            "instruction": (
+                                "Rewrite the complete business-model memo from "
+                                "the supplied current fact graph. If "
+                                "research_complete is true, select at least one "
+                                "source-backed current fact_row_index that directly "
+                                "supports the stated revenue, cost, cash, capacity, "
+                                "or customer mechanism. Never invent or repair a "
+                                "citation. If no qualifying fact exists, set "
+                                "research_complete=false and explain the uncertainty."
+                            ),
+                        },
                     }
                 )
-            )
-            memo = BusinessModelMemo(
-                memo_id=stable_intelligence_id(
-                    "BMMEMO",
-                    {
-                        "target_id": target_id,
-                        "archetype_id": archetype_id,
-                        "as_of_date": as_of_date,
-                        "response": scrub_blind_research_payload(response),
-                        "resolved_fact_ids": cited_facts,
-                        "resolved_source_ids": cited_sources,
-                    },
-                ),
-                target_id=target_id,
-                archetype_id=archetype_id,
-                as_of_date=as_of_date,
-                business_model_summary=str(response["business_model_summary"]),
-                revenue_engines=_unique_strings(
-                    response["revenue_engines"], "revenue_engines"
-                ),
-                cost_and_cash_drivers=_unique_strings(
-                    response["cost_and_cash_drivers"], "cost_and_cash_drivers"
-                ),
-                capacity_and_supply_constraints=_unique_strings(
-                    response["capacity_and_supply_constraints"],
-                    "capacity_and_supply_constraints",
-                ),
-                customer_and_channel_dependencies=_unique_strings(
-                    response["customer_and_channel_dependencies"],
-                    "customer_and_channel_dependencies",
-                ),
-                fact_ids=cited_facts,
-                source_ids=cited_sources,
-                uncertainties=_unique_strings(
-                    response["uncertainties"], "uncertainties"
-                ),
-                confidence=float(response["confidence"]),
-                research_complete=bool(response["research_complete"]),
-            )
-        except (KeyError, TypeError, ValueError) as exc:
-            return self._pending("INVALID_PROVIDER_OUTPUT", exc)
+                continue
+            break
         if not memo.research_complete:
             return BusinessModelResearchResult(
                 status="PENDING",

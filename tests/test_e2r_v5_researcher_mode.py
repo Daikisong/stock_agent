@@ -480,6 +480,63 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             {"FCF_ACTUALS": metric},
         )
 
+    def test_business_model_semantic_validation_retries_once(self) -> None:
+        class BusinessCorrectingProvider(ScriptedResearchProvider):
+            def __init__(self) -> None:
+                super().__init__()
+                self.invalidated_reasons: list[str] = []
+
+            def invalidate_last_response_cache(self, reason: str):
+                self.invalidated_reasons.append(reason)
+                return {"status": "FIXTURE_INVALIDATED"}
+
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                if (
+                    pass_name == "BUSINESS_MODEL_RESEARCH"
+                    and "business_model_validation_retry_context"
+                    not in payload
+                ):
+                    response["fact_row_indices"] = []
+                return response
+
+        provider = BusinessCorrectingProvider()
+        result = BusinessMechanismResearcher(provider=provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        calls = [
+            row
+            for row in provider.calls
+            if row["pass_name"] == "BUSINESS_MODEL_RESEARCH"
+        ]
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(len(provider.invalidated_reasons), 1)
+        self.assertIn(
+            "requires source-backed facts", provider.invalidated_reasons[0]
+        )
+        retry_context = calls[-1]["payload"][
+            "business_model_validation_retry_context"
+        ]
+        self.assertIn(
+            "requires source-backed facts", retry_context["validation_error"]
+        )
+        self.assertIn(
+            "select at least one source-backed current fact_row_index",
+            retry_context["instruction"],
+        )
+
     def test_component_semantic_validation_retries_once_without_code_repair(
         self,
     ) -> None:
