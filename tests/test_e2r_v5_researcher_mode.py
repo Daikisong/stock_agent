@@ -981,8 +981,8 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
                             "component_id": "market_mispricing",
                             "memo_sufficient": False,
                             "rationale": (
-                                "FACT-POS의 현재 방향과 메모 서술을 "
-                                "일치시켜야 한다"
+                                "이전 row 777과 FACT-POS의 현재 방향을 "
+                                "메모 서술과 일치시켜야 한다"
                             ),
                         }
                     ],
@@ -1032,6 +1032,8 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         self.assertFalse(feedback_context["score_authority"])
         self.assertFalse(feedback_context["stage_authority"])
         self.assertNotIn("FACT-POS", feedback_json)
+        self.assertNotIn("row 777", feedback_json)
+        self.assertIn("unavailable_prior_row", feedback_json)
         self.assertIn("current_fact_row_index=", feedback_json)
         self.assertFalse(
             component_payloads["earnings_visibility"]

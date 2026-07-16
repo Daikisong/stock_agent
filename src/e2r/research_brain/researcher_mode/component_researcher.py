@@ -1975,7 +1975,16 @@ def _project_prior_supervisor_feedback(
             return [project(item) for item in value]
         if not isinstance(value, str):
             return value
-        result = value
+        # Row indices are private to one prompt projection and can shift when
+        # new facts arrive.  Retire every prior raw row reference before
+        # translating stable fact ids into the current projection below.
+        result = re.sub(
+            r"\b(?:current_fact_row_index|fact_row_index|row)\s*"
+            r"(?:=|:)?\s*\d+(?!\d)",
+            "unavailable_prior_row",
+            value,
+            flags=re.IGNORECASE,
+        )
         for fact_id, row_index in sorted(
             fact_row_index_by_id.items(), key=lambda item: -len(item[0])
         ):
