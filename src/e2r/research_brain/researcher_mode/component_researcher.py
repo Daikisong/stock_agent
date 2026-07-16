@@ -1333,6 +1333,7 @@ class ComponentResearcher:
         source_documents: Sequence[Mapping[str, Any]] = (),
         structured_metrics: Mapping[str, Any] | None = None,
         prior_memo: ComponentResearchMemo | Mapping[str, Any] | None = None,
+        prior_supervisor_feedback: Mapping[str, Any] | None = None,
     ) -> ComponentResearchResult:
         if plan.component_id != self.component_id or plan.researcher_role != self.researcher_role:
             raise ValueError("research plan was assigned to the wrong researcher")
@@ -1392,6 +1393,10 @@ class ComponentResearcher:
             prior_memo=prior_memo,
             plan=plan,
             facts=fact_by_id,
+            fact_id_by_row_index=fact_id_by_row_index,
+        )
+        supervisor_feedback_context = _project_prior_supervisor_feedback(
+            feedback=prior_supervisor_feedback,
             fact_id_by_row_index=fact_id_by_row_index,
         )
         citable_claim_ids = {
@@ -1466,6 +1471,9 @@ class ComponentResearcher:
                     }
                 ],
                 "prior_component_memo_context": prior_memo_context,
+                "prior_supervisor_feedback_context": (
+                    supervisor_feedback_context
+                ),
                 "historical_component_anchors": list(anchors),
                 "source_coverage": coverage_rows,
                 "source_claims": project_research_source_claim_profile(
@@ -1862,6 +1870,71 @@ def _project_prior_component_memo_context(
     }
 
 
+def _project_prior_supervisor_feedback(
+    *,
+    feedback: Mapping[str, Any] | None,
+    fact_id_by_row_index: Mapping[int, str],
+) -> Mapping[str, Any]:
+    """Expose component-scoped supervisor diagnostics without stable fact ids.
+
+    A supervisor finding is continuity feedback for the next LLM rewrite.  It
+    is never score or Stage authority.  Current fact ids are translated back
+    into the same blind row indices used by the component prompt so the model
+    can correct a semantic contradiction without gaining a second citation
+    namespace or being allowed to cite stale facts.
+    """
+
+    if feedback is None:
+        return {
+            "available": False,
+            "score_authority": False,
+            "stage_authority": False,
+            "feedback": {},
+        }
+    if not isinstance(feedback, Mapping):
+        raise TypeError("prior supervisor feedback must be an object")
+    fact_row_index_by_id = {
+        fact_id: row_index
+        for row_index, fact_id in fact_id_by_row_index.items()
+    }
+
+    def project(value: Any) -> Any:
+        if isinstance(value, Mapping):
+            return {str(key): project(item) for key, item in value.items()}
+        if isinstance(value, (list, tuple)):
+            return [project(item) for item in value]
+        if not isinstance(value, str):
+            return value
+        result = value
+        for fact_id, row_index in sorted(
+            fact_row_index_by_id.items(), key=lambda item: -len(item[0])
+        ):
+            result = result.replace(
+                fact_id, f"current_fact_row_index={row_index}"
+            )
+        # A stale fact may remain in an old supervisor note after source
+        # retirement.  Keep the diagnostic meaning but never expose an
+        # unavailable citation id to the current component decision plane.
+        result = re.sub(
+            r"\bEFACT-[A-Za-z0-9]+\b",
+            "unavailable_prior_fact",
+            result,
+        )
+        return result
+
+    return {
+        "available": True,
+        "score_authority": False,
+        "stage_authority": False,
+        "instruction": (
+            "Treat this as diagnostic feedback for a full semantic rewrite. "
+            "Correct cited fact direction, predicate, value, and narrative "
+            "consistency; independently reselect current fact rows."
+        ),
+        "feedback": scrub_blind_research_payload(project(dict(feedback))),
+    }
+
+
 def _validate_prior_fact_dispositions(
     *,
     response: Mapping[str, Any],
@@ -2144,6 +2217,11 @@ def _pass_instruction(pass_name: str) -> str:
             "prior_fact_dispositions as RETAIN or OMIT with a semantic reason; RETAIN "
             "rows must also appear in selected_fact_row_indices and OMIT rows must not. "
             "This is an LLM reselection decision, never deterministic carry-forward. "
+            "When prior_supervisor_feedback_context.available is true, address its "
+            "component-specific semantic findings in a complete rewrite. Treat the "
+            "feedback as diagnostic continuity, not score or Stage authority. Never "
+            "reverse a selected fact's predicate or value to fit the thesis; omit it "
+            "or narrate its actual economic meaning. "
             "A positive score range requires at least one selected current POSITIVE "
             "EvidenceFact. Neutral context and structured metrics marked "
             "score_authority=false cannot support positive points. "

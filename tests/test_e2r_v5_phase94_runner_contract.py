@@ -118,6 +118,7 @@ class Phase94IntegrationOfficialMaterializer:
         )
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeTargetRunner,
+    _component_supervisor_feedback_by_component,
     _historical_anchors,
     _load_prior_research_context,
     _structured_result_from_official,
@@ -159,6 +160,57 @@ class Phase94IntegrationStructuredMaterializer:
 
 class E2RV5Phase94RunnerContractTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
+
+    def test_supervisor_feedback_routes_only_to_its_component_rewrite(self) -> None:
+        routed = _component_supervisor_feedback_by_component(
+            {
+                "review_id": "SUPERVISOR-150",
+                "epoch": 150,
+                "status": "NEXT_RESEARCH_REQUIRED",
+                "component_status": {
+                    component_id: "COMPLETE"
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                },
+                "component_findings": [
+                    {
+                        "component_id": "market_mispricing",
+                        "memo_sufficient": False,
+                        "rationale": "사실 방향과 서술이 모순된다",
+                    },
+                    {
+                        "component_id": "capital_allocation",
+                        "memo_sufficient": True,
+                        "rationale": "현재 메모는 충분하다",
+                    },
+                ],
+                "missing_material_facts": [
+                    {
+                        "component_id": "eps_fcf_explosion",
+                        "fact_need": "동일 기간 FCF",
+                    }
+                ],
+                "failure_assessments": [
+                    {"failure_type": "GLOBAL_PROVIDER_DIAGNOSTIC"}
+                ],
+            }
+        )
+
+        self.assertEqual(
+            set(routed), {"market_mispricing", "eps_fcf_explosion"}
+        )
+        self.assertEqual(
+            routed["market_mispricing"]["component_findings"][0][
+                "memo_sufficient"
+            ],
+            False,
+        )
+        self.assertEqual(
+            routed["eps_fcf_explosion"]["missing_material_facts"][0][
+                "fact_need"
+            ],
+            "동일 기간 FCF",
+        )
+        self.assertNotIn("failure_assessments", routed["market_mispricing"])
 
     def test_provider_outage_recovers_only_hash_bound_prior_memo_body(self) -> None:
         memo = {

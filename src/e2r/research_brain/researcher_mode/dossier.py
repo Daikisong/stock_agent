@@ -117,6 +117,9 @@ class CanonicalResearchDossierBuilder:
         prior_component_memos_by_component: Mapping[
             str, ComponentResearchMemo | Mapping[str, Any]
         ] | None = None,
+        prior_supervisor_feedback_by_component: Mapping[
+            str, Mapping[str, Any]
+        ] | None = None,
     ) -> ResearcherModeDossier:
         if structured_metrics_by_component is not None and structured_engine_result is not None:
             raise ValueError(
@@ -180,6 +183,15 @@ class CanonicalResearchDossierBuilder:
                 "prior component memos contain unknown components: "
                 f"{sorted(unknown_prior_components)}"
             )
+        supervisor_feedback = prior_supervisor_feedback_by_component or {}
+        unknown_feedback_components = set(supervisor_feedback) - set(
+            CANONICAL_COMPONENT_ORDER
+        )
+        if unknown_feedback_components:
+            raise ValueError(
+                "prior supervisor feedback contains unknown components: "
+                f"{sorted(unknown_feedback_components)}"
+            )
         component_results = tuple(
             researcher.research(
                 plan=plan_by_component[researcher.component_id],
@@ -191,6 +203,9 @@ class CanonicalResearchDossierBuilder:
                 source_documents=source_documents,
                 structured_metrics=metrics.get(researcher.component_id, {}),
                 prior_memo=prior_component_memos.get(researcher.component_id),
+                prior_supervisor_feedback=supervisor_feedback.get(
+                    researcher.component_id
+                ),
             )
             for researcher in build_component_researchers(self.provider)
         )

@@ -866,6 +866,21 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             structured_metrics_by_component={key: {} for key in self.maxima},
             component_max_points=self.maxima,
             structured_metric_requirements={key: () for key in self.maxima},
+            prior_supervisor_feedback_by_component={
+                "market_mispricing": {
+                    "review_id": "SUPERVISOR-7",
+                    "component_findings": [
+                        {
+                            "component_id": "market_mispricing",
+                            "memo_sufficient": False,
+                            "rationale": (
+                                "FACT-POS의 현재 방향과 메모 서술을 "
+                                "일치시켜야 한다"
+                            ),
+                        }
+                    ],
+                }
+            },
         )
         self.assertEqual(dossier.status, "RESEARCH_MEMOS_COMPLETE")
         self.assertEqual(len(dossier.component_results), 7)
@@ -896,6 +911,24 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
                 "historical_component_anchors",
                 "source_coverage",
             }.issubset(component_payload)
+        )
+        component_payloads = {
+            call["payload"]["component_id"]: call["payload"]
+            for call in provider.calls
+            if call["pass_name"] == "COMPONENT_RESEARCH"
+        }
+        feedback_context = component_payloads["market_mispricing"][
+            "prior_supervisor_feedback_context"
+        ]
+        feedback_json = json.dumps(feedback_context, ensure_ascii=False)
+        self.assertTrue(feedback_context["available"])
+        self.assertFalse(feedback_context["score_authority"])
+        self.assertFalse(feedback_context["stage_authority"])
+        self.assertNotIn("FACT-POS", feedback_json)
+        self.assertIn("current_fact_row_index=", feedback_json)
+        self.assertFalse(
+            component_payloads["earnings_visibility"]
+            ["prior_supervisor_feedback_context"]["available"]
         )
 
     def test_large_dossier_keeps_every_fact_but_compacts_repeated_lineage(self) -> None:

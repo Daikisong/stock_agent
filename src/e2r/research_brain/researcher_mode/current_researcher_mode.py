@@ -413,6 +413,11 @@ class CurrentResearcherModeTargetRunner:
             source_coverage=research_source_coverage,
             structured_engine_result=structured,
             prior_component_memos_by_component=prior_component_memos,
+            prior_supervisor_feedback_by_component=(
+                _component_supervisor_feedback_by_component(
+                    prior_context["supervisor_gap_context"]
+                )
+            ),
         )
         _write_dossier(root, dossier)
         scoring_memos = LLMComponentScoringMemoEngine(
@@ -1518,6 +1523,68 @@ def _load_prior_research_context(
         "resolved_objective_ids": resolved_objective_ids,
         "research_epoch": epoch_context,
     }
+
+
+def _component_supervisor_feedback_by_component(
+    context: Mapping[str, Any] | None,
+) -> Mapping[str, Mapping[str, Any]]:
+    """Route only actionable supervisor feedback to its component rewrite.
+
+    Search/extraction receives the complete supervisor context, but a component
+    researcher should see only findings and material-fact gaps assigned to its
+    own memo.  This keeps the rewrite prompt bounded and prevents an unrelated
+    component's thesis from leaking across the canonical research lanes.
+    """
+
+    if not context:
+        return {}
+    if not isinstance(context, Mapping):
+        raise TypeError("supervisor gap context must be an object")
+    component_status = context.get("component_status") or {}
+    if not isinstance(component_status, Mapping):
+        raise TypeError("supervisor component_status must be an object")
+    findings_by_component: dict[str, list[Mapping[str, Any]]] = {}
+    for finding in context.get("component_findings") or ():
+        if not isinstance(finding, Mapping):
+            continue
+        component_id = str(finding.get("component_id") or "")
+        if component_id in CANONICAL_COMPONENT_ORDER:
+            findings_by_component.setdefault(component_id, []).append(
+                dict(finding)
+            )
+    gaps_by_component: dict[str, list[Mapping[str, Any]]] = {}
+    for gap in context.get("missing_material_facts") or ():
+        if not isinstance(gap, Mapping):
+            continue
+        component_id = str(gap.get("component_id") or "")
+        if component_id in CANONICAL_COMPONENT_ORDER:
+            gaps_by_component.setdefault(component_id, []).append(dict(gap))
+
+    shared = {
+        key: context.get(key)
+        for key in ("review_id", "epoch", "status")
+        if key in context
+    }
+    result: dict[str, Mapping[str, Any]] = {}
+    for component_id in CANONICAL_COMPONENT_ORDER:
+        status = component_status.get(component_id)
+        findings = [
+            finding
+            for finding in findings_by_component.get(component_id, [])
+            if finding.get("memo_sufficient") is False
+            or str(status or "COMPLETE") != "COMPLETE"
+        ]
+        gaps = gaps_by_component.get(component_id, [])
+        if str(status or "COMPLETE") == "COMPLETE" and not findings and not gaps:
+            continue
+        result[component_id] = {
+            **shared,
+            "component_id": component_id,
+            "component_status": status,
+            "component_findings": findings,
+            "missing_material_facts": gaps,
+        }
+    return result
 
 
 def _structured_gap_resolution_contracts(
