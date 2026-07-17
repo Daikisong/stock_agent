@@ -9,16 +9,16 @@
     "-v"
   ],
   "exit_code": 0,
-  "finished_at": "2026-07-17T17:00:14.170949+00:00",
+  "finished_at": "2026-07-17T17:15:53.617034+00:00",
   "full_discovery": true,
   "log_path": "docs/operational/e2r_v5_full_test_result.log",
-  "log_sha256": "f0578da9dfd5c35609e6a26add1f06c50ebf4353280879d901aa1e6e5a64fa77",
+  "log_sha256": "08302fb42d9e599cad8d7d76cbdd312b8303cc73b16cbc6865c0f4c7faf344f0",
   "schema_version": "e2r_v5_full_test_evidence_v1",
-  "started_at": "2026-07-17T16:50:44.368417+00:00",
+  "started_at": "2026-07-17T17:07:13.894777+00:00",
   "status": "PASS",
-  "test_count": 6300,
-  "unittest_runtime_seconds": 566.521,
-  "verification_tree_hash": "38c82d1c7d6d6ef45ad5cbb9f9fa32d67a6cefe0c81a702456c66c707cb31c16",
+  "test_count": 6301,
+  "unittest_runtime_seconds": 516.445,
+  "verification_tree_hash": "f3cc24dbb9977541e72d390daebf9d9065341dd68966f3f0304319bdd58bbee9",
   "verification_tree_stable_during_run": true,
-  "wall_runtime_seconds": 569.802532
+  "wall_runtime_seconds": 519.722257
 }

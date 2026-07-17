@@ -144,6 +144,12 @@ _SOURCE_CLAIM_PROMPT_FIELDS = (
     "structured_evidence_roles",
 )
 
+_SOURCE_CLAIM_EXTRACTION_TRANSPORT_FIELDS = (
+    "provider_name",
+    "provider_prompt_hash",
+    "provider_response_hash",
+)
+
 _FAILURE_GROUP_FIELDS = (
     "failure_kind",
     "failure_stage",
@@ -1007,6 +1013,14 @@ def project_peer_selection_context(
 
     facts = tuple(_record_dict(row) for row in evidence_facts)
     claims = tuple(_record_dict(row) for row in source_claims)
+    semantic_claims = tuple(
+        {
+            key: value
+            for key, value in row.items()
+            if key not in _SOURCE_CLAIM_EXTRACTION_TRANSPORT_FIELDS
+        }
+        for row in claims
+    )
     fact_profile = dict(
         _project_state_collection(
             facts,
@@ -1037,7 +1051,7 @@ def project_peer_selection_context(
     )
     claim_profile = dict(
         _project_state_collection(
-            claims,
+            semantic_claims,
             collection_name="peer_selection_source_claims",
             identity_fields=("claim_id",),
             group_fields=_PEER_CLAIM_GROUP_FIELDS,
@@ -1049,21 +1063,25 @@ def project_peer_selection_context(
     claim_profile.update(
         {
             "subject_roster": _project_text_roster(
-                row.get("subject") for row in claims
+                row.get("subject") for row in semantic_claims
             ),
             "economic_mechanism_roster": _project_text_roster(
-                row.get("economic_mechanism") for row in claims
+                row.get("economic_mechanism") for row in semantic_claims
             ),
             "exact_quote_roster": _project_text_roster(
-                row.get("exact_quote") for row in claims
+                row.get("exact_quote") for row in semantic_claims
             ),
             "claim_id_roster": _project_text_roster(
-                row.get("claim_id") for row in claims
+                row.get("claim_id") for row in semantic_claims
+            ),
+            "extraction_transport_lineage_excluded_from_provider": True,
+            "excluded_extraction_transport_fields": list(
+                _SOURCE_CLAIM_EXTRACTION_TRANSPORT_FIELDS
             ),
         }
     )
     return {
-        "schema_version": "e2r_v5_peer_selection_context_projection_v1",
+        "schema_version": "e2r_v5_peer_selection_context_projection_v2",
         "evidence_business_profile": fact_profile,
         "source_claim_business_profile": claim_profile,
         "every_fact_and_claim_accounted_by_hash_and_group_count": (

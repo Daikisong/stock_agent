@@ -592,6 +592,57 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertNotIn("검증된 경제 메커니즘 999", supervisor_encoded)
         self.assertNotIn("원문 인용 999", peer_encoded)
 
+    def test_peer_selection_ignores_claim_extraction_transport_lineage(self):
+        fact = {
+            "fact_id": "FACT-1",
+            "subject": "현재 회사 메모리 사업",
+            "business_segment": "MEMORY",
+            "product_family": "HBM",
+            "economic_mechanism": "고객 배정이 매출 가시성을 만든다",
+            "predicate": "CUSTOMER_ALLOCATION_CONFIRMED",
+            "direction": "POSITIVE",
+            "current_lifecycle": "CURRENT",
+            "confidence": 0.9,
+        }
+        claim = {
+            "claim_id": "CLAIM-1",
+            "subject": "현재 회사 메모리 사업",
+            "business_segment": "MEMORY",
+            "product_family": "HBM",
+            "economic_mechanism": "고객 배정이 매출 가시성을 만든다",
+            "predicate": "CUSTOMER_ALLOCATION_CONFIRMED",
+            "direction": "POSITIVE",
+            "source_family": "ISSUER_PRESENTATION",
+            "exact_quote": "고객 배정 물량을 확보했다",
+            "provider_name": "FIRST_EXTRACTOR",
+            "provider_prompt_hash": "PROMPT-1",
+            "provider_response_hash": "RESPONSE-1",
+        }
+        reextracted_claim = {
+            **claim,
+            "provider_name": "SECOND_EXTRACTOR",
+            "provider_prompt_hash": "PROMPT-999",
+            "provider_response_hash": "RESPONSE-999",
+        }
+        first = project_peer_selection_context((fact,), (claim,))
+        second = project_peer_selection_context((fact,), (reextracted_claim,))
+        self.assertEqual(first, second)
+        self.assertTrue(
+            first["source_claim_business_profile"][
+                "extraction_transport_lineage_excluded_from_provider"
+            ]
+        )
+
+        changed_economics = {
+            **reextracted_claim,
+            "economic_mechanism": "가격 하락이 매출 가시성을 훼손한다",
+            "direction": "COUNTER",
+        }
+        self.assertNotEqual(
+            first,
+            project_peer_selection_context((fact,), (changed_economics,)),
+        )
+
     def test_current_research_and_query_contexts_scale_without_evidence_loss(self):
         facts = tuple(
             {
