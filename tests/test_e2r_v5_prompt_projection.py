@@ -860,6 +860,38 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertNotIn("https://issuer.example/999.pdf", source_encoded)
 
     def test_supervisor_source_graph_projection_ignores_checkpoint_lineage(self):
+        document = {
+            "document_id": "DOC-1",
+            "full_source_document_id": "DOC-1",
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": "2026-07-12",
+            "canonical_url": "https://issuer.example/current.pdf",
+            "title": "현재 발행사 원문",
+            "source_family": "ISSUER_PRESENTATION",
+            "source_provider": "FULL_FETCH",
+            "publication_date_source": "DOCUMENT_METADATA",
+            "published_at": "2026-06-20",
+            "available_at": "2026-06-20",
+            "content_type": "application/pdf",
+            "content_hash": "a" * 64,
+            "full_source_content_hash": "a" * 64,
+            "full_source_text_chars": 1_000,
+            "chunk_index": 0,
+            "chunk_count": 1,
+            "all_chunks_preserved": True,
+            "source_independence_group": "ISSUER:issuer.example",
+            "full_fetch_performed": True,
+            "full_source_fetch_performed": True,
+            "snippet_only": False,
+            "snippet_used_as_document": False,
+            "evidence_eligible": True,
+            "query_ids": ["QUERY-1"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "discovery_urls": ["https://search.example/first"],
+            "verified_official_discovery_urls": [
+                "https://official.example/first"
+            ],
+        }
         checkpoint = {
             "checkpoint_id": "CHECKPOINT-1",
             "epoch": 1,
@@ -870,7 +902,7 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             "rejected_documents": [],
             "query_failures": [],
             "provider_failures": [],
-            "evidence_documents": [],
+            "evidence_documents": [document],
             "quarantined_documents": [],
             "resolved_objective_ids": [],
             "transport_budget_can_complete_research": False,
@@ -880,10 +912,35 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             **checkpoint,
             "checkpoint_id": "CHECKPOINT-999",
             "epoch": 999,
+            "evidence_documents": [
+                {
+                    **document,
+                    "query_ids": ["QUERY-1", "QUERY-999"],
+                    "objective_ids": ["OBJECTIVE-1", "OBJECTIVE-999"],
+                    "discovery_urls": ["https://search.example/resumed"],
+                    "verified_official_discovery_urls": [
+                        "https://official.example/resumed"
+                    ],
+                }
+            ],
         }
         self.assertEqual(
             project_supervisor_source_graph_checkpoint(checkpoint),
             project_supervisor_source_graph_checkpoint(resumed),
+        )
+        changed_content = {
+            **resumed,
+            "evidence_documents": [
+                {
+                    **resumed["evidence_documents"][0],
+                    "content_hash": "b" * 64,
+                    "full_source_content_hash": "b" * 64,
+                }
+            ],
+        }
+        self.assertNotEqual(
+            project_supervisor_source_graph_checkpoint(checkpoint),
+            project_supervisor_source_graph_checkpoint(changed_content),
         )
 
     def test_query_gap_projection_ignores_checkpoint_lineage(self):

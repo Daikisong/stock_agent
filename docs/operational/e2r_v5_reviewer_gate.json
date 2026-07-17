@@ -628,7 +628,7 @@
       "detector_run_count": 2,
       "recomputed_metrics": {
         "capability_regression_status": "PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS",
-        "expected_verification_tree_hash": "f3cc24dbb9977541e72d390daebf9d9065341dd68966f3f0304319bdd58bbee9",
+        "expected_verification_tree_hash": "d6714935d0f3e78dafd9e2da5141e5102121462e283c07812581b71ecabf3e5b",
         "full_test_evidence": {
           "command": [
             "/home/eorb915/.local/bin/python",
@@ -640,18 +640,18 @@
             "-v"
           ],
           "exit_code": 0,
-          "finished_at": "2026-07-17T17:15:53.617034+00:00",
+          "finished_at": "2026-07-17T17:32:12.785317+00:00",
           "full_discovery": true,
           "log_path": "docs/operational/e2r_v5_full_test_result.log",
-          "log_sha256": "08302fb42d9e599cad8d7d76cbdd312b8303cc73b16cbc6865c0f4c7faf344f0",
+          "log_sha256": "8a348c427e30ba4226ca7930b21f36ef4f1beb8039a2fc5f11e0b1e70d0616cb",
           "schema_version": "e2r_v5_full_test_evidence_v1",
-          "started_at": "2026-07-17T17:07:13.894777+00:00",
+          "started_at": "2026-07-17T17:23:24.284939+00:00",
           "status": "PASS",
           "test_count": 6301,
-          "unittest_runtime_seconds": 516.445,
-          "verification_tree_hash": "f3cc24dbb9977541e72d390daebf9d9065341dd68966f3f0304319bdd58bbee9",
+          "unittest_runtime_seconds": 525.176,
+          "verification_tree_hash": "d6714935d0f3e78dafd9e2da5141e5102121462e283c07812581b71ecabf3e5b",
           "verification_tree_stable_during_run": true,
-          "wall_runtime_seconds": 519.722257
+          "wall_runtime_seconds": 528.500378
         },
         "full_test_evidence_valid": true,
         "full_test_evidence_validation": {
@@ -669,7 +669,7 @@
             "verification_tree_hash_matches": true,
             "verification_tree_stable": true
           },
-          "log_sha256": "08302fb42d9e599cad8d7d76cbdd312b8303cc73b16cbc6865c0f4c7faf344f0",
+          "log_sha256": "8a348c427e30ba4226ca7930b21f36ef4f1beb8039a2fc5f11e0b1e70d0616cb",
           "logged_test_count": 6301,
           "reported_test_count": 6301,
           "valid": true

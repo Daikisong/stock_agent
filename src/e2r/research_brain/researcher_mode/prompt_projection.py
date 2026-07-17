@@ -552,9 +552,17 @@ def project_supervisor_source_graph_checkpoint(
     documents = tuple(
         dict(row) for row in checkpoint.get("evidence_documents") or ()
     )
+    semantic_documents = tuple(
+        {
+            field: row.get(field)
+            for field in (*_DOCUMENT_MANIFEST_FIELDS, "publication_date_source")
+            if field in row
+        }
+        for row in documents
+    )
     document_projection = dict(
         _project_state_collection(
-            documents,
+            semantic_documents,
             collection_name="supervisor_evidence_documents",
             identity_fields=("document_id",),
             group_fields=(
@@ -565,12 +573,8 @@ def project_supervisor_source_graph_checkpoint(
                 "snippet_only",
                 "evidence_eligible",
             ),
-            relation_fields=(
-                "objective_ids",
-                "query_ids",
-                "source_independence_group",
-                "published_at",
-            ),
+            relation_fields=(),
+            group_relation_fields=("source_independence_group",),
             numeric_fields=(),
         )
     )
@@ -585,17 +589,25 @@ def project_supervisor_source_graph_checkpoint(
             "content_hash_roster": _project_text_roster(
                 row.get("content_hash") for row in documents
             ),
-            "verified_official_discovery_url_roster": _project_text_roster(
-                value
-                for row in documents
-                for value in row.get("verified_official_discovery_urls") or ()
-            ),
+            "acquisition_lineage_excluded_from_provider": True,
+            "semantic_document_fields": [
+                *_DOCUMENT_MANIFEST_FIELDS,
+                "publication_date_source",
+            ],
+            "excluded_acquisition_lineage_fields": [
+                *_DOCUMENT_RELATION_FIELDS,
+                "verified_official_discovery_urls",
+            ],
+            "full_acquisition_lineage_persisted_in_source_graph": True,
             "full_document_bodies_omitted_after_fact_extraction": True,
+            "every_semantic_document_accounted": (
+                len(semantic_documents) == len(documents)
+            ),
         }
     )
     output["evidence_documents"] = document_projection
     output["source_graph_prompt_projection"] = {
-        "schema_version": "e2r_v5_supervisor_source_graph_projection_v2",
+        "schema_version": "e2r_v5_supervisor_source_graph_projection_v3",
         "complete_artifact_persisted_outside_prompt": True,
         "every_query_document_and_state_row_accounted": True,
         "checkpoint_lineage_excluded_from_provider": True,
