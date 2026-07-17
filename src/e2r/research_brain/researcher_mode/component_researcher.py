@@ -1450,7 +1450,7 @@ class ComponentResearcher:
                 "archetype_id": plan.archetype_id,
                 "component_id": plan.component_id,
                 "component_max_points": plan.component_max_points,
-                "research_plan": plan.to_dict(),
+                "research_plan": _project_component_research_plan(plan),
                 "target_business_model": business_model.to_dict(),
                 "current_evidence_fact_graph": fact_projection["facts"],
                 "current_evidence_fact_projection": {
@@ -1938,6 +1938,46 @@ def _project_prior_component_memo_context(
             json.dumps(unavailable, separators=(",", ":")).encode("utf-8")
         ).hexdigest(),
     }
+
+
+def _project_component_research_plan(
+    plan: ComponentResearchPlan,
+) -> Mapping[str, Any]:
+    """Keep plan semantics without replaying the full stable fact-id roster.
+
+    The provider selects facts exclusively through the blind row indices in
+    ``current_evidence_fact_graph``.  Replaying thousands of stable fact ids in
+    ``research_plan.candidate_fact_ids`` therefore duplicates the same decision
+    plane, exposes a citation namespace the provider must not use, and can push
+    an otherwise valid component prompt beyond the model context window.
+
+    Deterministic code validates the complete plan roster before this
+    projection is built.  The prompt carries its exact count and ordered hash,
+    while the immutable full plan remains in the dossier.  No fact row is
+    sampled or removed from the provider's citable fact graph.
+    """
+
+    payload = dict(plan.to_dict())
+    candidate_fact_ids = tuple(
+        str(value) for value in payload.pop("candidate_fact_ids", ())
+    )
+    encoded_roster = json.dumps(
+        candidate_fact_ids,
+        ensure_ascii=False,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    payload["candidate_fact_roster_projection"] = {
+        "candidate_fact_count": len(candidate_fact_ids),
+        "candidate_fact_roster_hash": hashlib.sha256(encoded_roster).hexdigest(),
+        "provider_selection_namespace": "current_evidence_fact_graph.fact_row_index",
+        "candidate_fact_ids_exposed_to_provider": False,
+        "every_candidate_fact_accounted_by_count_and_hash": True,
+        "full_candidate_fact_roster_persisted_in_dossier": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+    return payload
 
 
 def _project_prior_supervisor_feedback(

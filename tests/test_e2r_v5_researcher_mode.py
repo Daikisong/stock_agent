@@ -480,6 +480,59 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             {"FCF_ACTUALS": metric},
         )
 
+    def test_component_research_plan_projects_fact_ids_without_losing_rows(self) -> None:
+        provider = ScriptedResearchProvider()
+        plans = ComponentResearchPlanner().plan(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            research_seeds=(),
+            component_max_points=self.maxima,
+        )
+        business = BusinessMechanismResearcher(provider=provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=plans[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        call = [
+            row for row in provider.calls if row["pass_name"] == "COMPONENT_RESEARCH"
+        ][-1]
+        payload = call["payload"]
+        plan_projection = payload["research_plan"]
+        roster = plan_projection["candidate_fact_roster_projection"]
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertNotIn("candidate_fact_ids", plan_projection)
+        self.assertEqual(
+            roster["candidate_fact_count"], len(plans[0].candidate_fact_ids)
+        )
+        self.assertFalse(roster["candidate_fact_ids_exposed_to_provider"])
+        self.assertTrue(roster["every_candidate_fact_accounted_by_count_and_hash"])
+        self.assertFalse(roster["fixed_top_n_used"])
+        self.assertEqual(
+            payload["current_evidence_fact_projection"]["fact_count"],
+            len(self.facts),
+        )
+        self.assertTrue(
+            payload["current_evidence_fact_projection"][
+                "every_current_fact_individually_citable"
+            ]
+        )
+        self.assertEqual(set(plans[0].candidate_fact_ids), {"FACT-POS", "FACT-COUNTER"})
+
     def test_business_model_semantic_validation_retries_once(self) -> None:
         class BusinessCorrectingProvider(ScriptedResearchProvider):
             def __init__(self) -> None:

@@ -32,7 +32,7 @@
 - SK하이닉스 (000660) status: `RESEARCH_CHECKPOINT_PENDING`
 - canary goal complete: `false`
 - provider usage limit detected: `true`
-- provider reset hint: `Jul 23rd, 2026 1:19 PM`
+- provider reset hint: `Jul 24th, 2026 9:23 AM`
 - blockers:
   - `LIVE_RESEARCH_CHECKPOINT_PENDING:005930`
   - `LIVE_RESEARCH_CHECKPOINT_PENDING:000660`

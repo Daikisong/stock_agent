@@ -23,13 +23,13 @@
 
 ## Current decisions
 
-- 삼성전자 (005930): memos `1/7`, score valid `false`, FINAL StageCourt `false`
+- 삼성전자 (005930): memos `0/7`, score valid `false`, FINAL StageCourt `false`
 - SK하이닉스 (000660): memos `0/7`, score valid `false`, FINAL StageCourt `false`
 
 ## Runtime
 
 - current full-test evidence: `PASS`
-- full-test count: `6290`
+- full-test count: `6291`
 - positive/known-bad capability audit: `PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS`
 - self-repair audit: `PHASE99_INTERNAL_SELF_REPAIR_PASS`
 - StageCourt acceptance: `FINAL_STAGECOURT_PENDING`
