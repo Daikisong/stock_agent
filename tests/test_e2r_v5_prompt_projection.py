@@ -16,6 +16,8 @@ from e2r.research_brain.researcher_mode.prompt_projection import (
     project_peer_selection_context,
     project_query_planner_failures,
     project_query_score_gap_context,
+    project_research_source_claim_profile,
+    project_research_source_document_profile,
     project_research_epoch_checkpoint,
     project_source_documents,
     project_source_document_table,
@@ -878,6 +880,95 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             first["query_score_gap_projection_audit"][
                 "checkpoint_lineage_excluded_from_provider"
             ]
+        )
+
+    def test_research_source_profiles_ignore_transport_lineage_only_churn(self):
+        claim = {
+            "claim_id": "CLAIM-1",
+            "document_id": "DOC-1",
+            "source_ids": ["SOURCE-1"],
+            "exact_quote": "현재 원문에 확인된 경제 사실",
+            "source_family": "ISSUER_PRESENTATION",
+            "source_tier": "TIER1",
+            "published_at": "2026-06-20",
+            "available_at": "2026-06-20",
+            "structured_evidence_roles": ["FORWARD_GUIDANCE"],
+            "provider_prompt_hash": "PROMPT-1",
+            "provider_response_hash": "RESPONSE-1",
+            "materiality_rationale": "첫 추출 설명",
+        }
+        reextracted_claim = {
+            **claim,
+            "provider_prompt_hash": "PROMPT-999",
+            "provider_response_hash": "RESPONSE-999",
+            "materiality_rationale": "재추출 설명",
+        }
+        self.assertEqual(
+            project_research_source_claim_profile((claim,)),
+            project_research_source_claim_profile((reextracted_claim,)),
+        )
+        changed_quote = {
+            **reextracted_claim,
+            "exact_quote": "경제적으로 다른 원문 사실",
+        }
+        self.assertNotEqual(
+            project_research_source_claim_profile((claim,)),
+            project_research_source_claim_profile((changed_quote,)),
+        )
+
+        document = {
+            "document_id": "DOC-1",
+            "full_source_document_id": "DOC-1",
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": "2026-06-29",
+            "canonical_url": "https://issuer.example/current.pdf",
+            "title": "현재 발행사 원문",
+            "source_family": "ISSUER_PRESENTATION",
+            "source_provider": "FULL_FETCH",
+            "published_at": "2026-06-20",
+            "available_at": "2026-06-20",
+            "content_type": "application/pdf",
+            "content_hash": "a" * 64,
+            "full_source_content_hash": "a" * 64,
+            "full_source_text_chars": 1_000,
+            "chunk_index": 0,
+            "chunk_count": 1,
+            "all_chunks_preserved": True,
+            "source_independence_group": "ISSUER:issuer.example",
+            "full_fetch_performed": True,
+            "full_source_fetch_performed": True,
+            "snippet_only": False,
+            "snippet_used_as_document": False,
+            "evidence_eligible": True,
+            "query_ids": ["QUERY-1"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "discovery_urls": ["https://search.example/first"],
+            "referenced_urls": ["https://issuer.example/reference-1"],
+            "fetched_at": "2026-06-21T00:00:00",
+        }
+        rediscovered_document = {
+            **document,
+            "query_ids": ["QUERY-1", "QUERY-999"],
+            "objective_ids": ["OBJECTIVE-1", "OBJECTIVE-999"],
+            "discovery_urls": [
+                "https://search.example/first",
+                "https://search.example/resumed",
+            ],
+            "referenced_urls": ["https://issuer.example/reference-999"],
+            "fetched_at": "2026-06-29T00:00:00",
+        }
+        self.assertEqual(
+            project_research_source_document_profile((document,)),
+            project_research_source_document_profile((rediscovered_document,)),
+        )
+        changed_content = {
+            **rediscovered_document,
+            "content_hash": "b" * 64,
+            "full_source_content_hash": "b" * 64,
+        }
+        self.assertNotEqual(
+            project_research_source_document_profile((document,)),
+            project_research_source_document_profile((changed_content,)),
         )
 
     def test_research_epoch_projection_keeps_delta_lineage_without_bodies(self):

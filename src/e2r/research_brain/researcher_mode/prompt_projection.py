@@ -1565,9 +1565,17 @@ def project_research_source_claim_profile(
     """Compact all claim provenance after exact facts have been compiled."""
 
     payloads = tuple(dict(row) for row in rows)
+    semantic_payloads = tuple(
+        {
+            field: row.get(field)
+            for field in _SOURCE_CLAIM_PROMPT_FIELDS
+            if field in row
+        }
+        for row in payloads
+    )
     projection = dict(
         _project_state_collection(
-            payloads,
+            semantic_payloads,
             collection_name="research_source_claim_profile",
             identity_fields=("claim_id",),
             group_fields=(
@@ -1582,7 +1590,7 @@ def project_research_source_claim_profile(
     exact_quotes = tuple(str(row.get("exact_quote") or "") for row in payloads)
     projection.update(
         {
-            "schema_version": "e2r_v5_research_source_claim_profile_v1",
+            "schema_version": "e2r_v5_research_source_claim_profile_v2",
             "claim_id_roster": _project_text_roster(
                 row.get("claim_id") for row in payloads
             ),
@@ -1604,6 +1612,8 @@ def project_research_source_claim_profile(
             "exact_quote_character_count": sum(map(len, exact_quotes)),
             "every_exact_quote_accounted_by_count_and_hash": True,
             "fact_semantics_are_in_current_citable_fact_rows": True,
+            "extraction_lineage_excluded_from_provider": True,
+            "semantic_claim_fields": list(_SOURCE_CLAIM_PROMPT_FIELDS),
             "full_claim_records_persisted_outside_prompt": True,
             "fixed_top_n_used": False,
             "prompt_projection_is_research_cap": False,
@@ -1678,9 +1688,17 @@ def project_research_source_document_profile(
     """Compact all source provenance after document bodies were consumed."""
 
     payloads = tuple(dict(row) for row in rows)
+    semantic_payloads = tuple(
+        {
+            field: row.get(field)
+            for field in _DOCUMENT_MANIFEST_FIELDS
+            if field in row
+        }
+        for row in payloads
+    )
     projection = dict(
         _project_state_collection(
-            payloads,
+            semantic_payloads,
             collection_name="research_source_document_profile",
             identity_fields=("document_id",),
             group_fields=(
@@ -1695,7 +1713,7 @@ def project_research_source_document_profile(
     )
     projection.update(
         {
-            "schema_version": "e2r_v5_research_source_document_profile_v1",
+            "schema_version": "e2r_v5_research_source_document_profile_v2",
             "document_id_roster": _project_text_roster(
                 row.get("document_id") for row in payloads
             ),
@@ -1714,17 +1732,12 @@ def project_research_source_document_profile(
             "available_at_roster": _project_text_roster(
                 row.get("available_at") for row in payloads
             ),
-            "query_id_roster": _project_text_roster(
-                query_id
-                for row in payloads
-                for query_id in row.get("query_ids") or ()
-            ),
-            "objective_id_roster": _project_text_roster(
-                objective_id
-                for row in payloads
-                for objective_id in row.get("objective_ids") or ()
-            ),
             "document_bodies_already_consumed_by_fact_extraction": True,
+            "acquisition_lineage_excluded_from_provider": True,
+            "semantic_document_fields": list(_DOCUMENT_MANIFEST_FIELDS),
+            "excluded_acquisition_lineage_fields": list(
+                _DOCUMENT_RELATION_FIELDS
+            ),
             "full_document_records_persisted_outside_prompt": True,
             "fixed_top_n_used": False,
             "prompt_projection_is_research_cap": False,
