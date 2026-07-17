@@ -1560,11 +1560,15 @@ def _component_supervisor_feedback_by_component(
         if component_id in CANONICAL_COMPONENT_ORDER:
             gaps_by_component.setdefault(component_id, []).append(dict(gap))
 
-    shared = {
-        key: context.get(key)
-        for key in ("review_id", "epoch", "status")
-        if key in context
-    }
+    # ``review_id`` and ``epoch`` are checkpoint lineage, not semantic rewrite
+    # instructions.  Including them here forces a fresh provider prompt on
+    # every resumed epoch even when the component finding and missing-fact
+    # roster are unchanged.  The complete values remain persisted in the
+    # supervisor checkpoint; the component provider receives only the stable
+    # semantic status so an exact prior response can be reused safely.
+    shared: dict[str, Any] = {}
+    if "status" in context:
+        shared["status"] = context.get("status")
     result: dict[str, Mapping[str, Any]] = {}
     for component_id in CANONICAL_COMPONENT_ORDER:
         status = component_status.get(component_id)

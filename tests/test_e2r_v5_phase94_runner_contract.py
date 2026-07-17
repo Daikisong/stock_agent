@@ -211,6 +211,42 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             "동일 기간 FCF",
         )
         self.assertNotIn("failure_assessments", routed["market_mispricing"])
+        self.assertNotIn("review_id", routed["market_mispricing"])
+        self.assertNotIn("epoch", routed["market_mispricing"])
+
+    def test_component_feedback_projection_ignores_checkpoint_only_churn(self) -> None:
+        semantic_context = {
+            "status": "NEXT_RESEARCH_REQUIRED",
+            "component_status": {
+                component_id: "COMPLETE"
+                for component_id in CANONICAL_COMPONENT_ORDER
+            },
+            "component_findings": [
+                {
+                    "component_id": "market_mispricing",
+                    "memo_sufficient": False,
+                    "rationale": "같은 사실 방향 모순을 다시 검토한다",
+                }
+            ],
+            "missing_material_facts": [],
+        }
+        first = _component_supervisor_feedback_by_component(
+            {
+                **semantic_context,
+                "review_id": "SUPERVISOR-206",
+                "epoch": 206,
+            }
+        )
+        second = _component_supervisor_feedback_by_component(
+            {
+                **semantic_context,
+                "review_id": "SUPERVISOR-207",
+                "epoch": 207,
+            }
+        )
+
+        self.assertEqual(first, second)
+        self.assertEqual(set(first), {"market_mispricing"})
 
     def test_provider_outage_recovers_only_hash_bound_prior_memo_body(self) -> None:
         memo = {

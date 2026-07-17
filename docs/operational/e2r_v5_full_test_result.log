@@ -1480,6 +1480,7 @@ test_cli_writer_emits_all_four_phase80_artifacts (test_e2r_v5_phase80_forensic.E
 test_committed_artifacts_capture_the_phase80_baseline (test_e2r_v5_phase80_forensic.E2RV5Phase80ForensicTests) ... ok
 test_parallel_score_authorities_have_file_and_line_lineage (test_e2r_v5_phase80_forensic.E2RV5Phase80ForensicTests) ... ok
 test_score_collapse_root_causes_use_current_leaf_metrics (test_e2r_v5_phase80_forensic.E2RV5Phase80ForensicTests) ... ok
+test_component_feedback_projection_ignores_checkpoint_only_churn (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_master_command_contract_exists_without_low_completion_options (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_missing_exact_archetype_anchors_use_generic_ordinal_guards (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_no_progress_signature_ignores_supervisor_prose_churn (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
@@ -2569,8 +2570,8 @@ test_research_memory_is_discovery_only (test_research_source_route_recovery.Rese
 test_source_route_patterns_exist_for_mandatory_required_primitives (test_research_source_route_recovery.ResearchSourceRouteRecoveryTests) ... ok
 test_balanced_candidate_selection_audit_prioritizes_missing_canaries (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... ok
 test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... ok
-test_cli_max_iterations_above_one_executes_next_runtime_manifest (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... backfill_plan=/tmp/tmprvmunsu3/backfill_plan.json
-{"as_of_date": "2026-07-01", "blockers": ["CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE"], "canonical_stage": "0", "command": "run_e2r_census_mode", "command_hashes": {"commit_hash": "b95fc13cc07611bd5017b910a1c57cb561551431", "config_hash": "457b61686be8ada34510692aa0397f98b22be4ba2ec1eedffbb89c018ecf1ab3", "corpus_hash": "f101882840c61f1d0250a3f50b2ad7307a834e15672ebc0a38776481e560d0b8", "dirty_status_hash": "a52f8f50d0b63b41cb1741cbdcde6ee4011960e57e12ad419784d474ee28fde4", "memory_hash": "98341bf8a27880cd5bee065340a3a16063986f74970b5899db4bca9f17336e12", "prompt_hash": "dd6dec8474b22578aab5a01e11d628641aa6302482936641159d4e244708ed7d", "recipe_hash": "0ba8645a35367b4b56d316fa5c08ed3a40bd53d93a5c3bc8683e3a869e134ba0", "repo_dirty": true, "source_hash": "ec499d62a33b3face216285f6771a93131e6977789c867fec3fba4f65e967ea9"}, "command_run_id": "COMMAND-2f1f23e7551d46a89589feee", "mode": "census_selective_deep", "output_paths": {"command_audit": "output/test_legacy_cli_lockout/command_run_reproducibility_audit.json", "command_manifest": "output/test_legacy_cli_lockout/command_run_manifest.json", "pending": "output/test_legacy_cli_lockout/current_operation_source_pending.json"}, "production_runtime_ready": false, "raw_reference_score": null, "schema_version": "e2r_current_operation_source_pending_v1", "score_valid": false, "status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY", "universe": "krx"}
+test_cli_max_iterations_above_one_executes_next_runtime_manifest (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... backfill_plan=/tmp/tmpug963gyv/backfill_plan.json
+{"as_of_date": "2026-07-01", "blockers": ["CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE"], "canonical_stage": "0", "command": "run_e2r_census_mode", "command_hashes": {"commit_hash": "6ebd0422d908cd8fac338ad255563d62b01a1bf5", "config_hash": "457b61686be8ada34510692aa0397f98b22be4ba2ec1eedffbb89c018ecf1ab3", "corpus_hash": "f101882840c61f1d0250a3f50b2ad7307a834e15672ebc0a38776481e560d0b8", "dirty_status_hash": "385ec390a63f214905b4e363175e862df8a1e983a4a7eef1cc60fbfc09451cdc", "memory_hash": "98341bf8a27880cd5bee065340a3a16063986f74970b5899db4bca9f17336e12", "prompt_hash": "dd6dec8474b22578aab5a01e11d628641aa6302482936641159d4e244708ed7d", "recipe_hash": "0ba8645a35367b4b56d316fa5c08ed3a40bd53d93a5c3bc8683e3a869e134ba0", "repo_dirty": true, "source_hash": "ec499d62a33b3face216285f6771a93131e6977789c867fec3fba4f65e967ea9"}, "command_run_id": "COMMAND-697216bb91258403561cc0db", "mode": "census_selective_deep", "output_paths": {"command_audit": "output/test_legacy_cli_lockout/command_run_reproducibility_audit.json", "command_manifest": "output/test_legacy_cli_lockout/command_run_manifest.json", "pending": "output/test_legacy_cli_lockout/current_operation_source_pending.json"}, "production_runtime_ready": false, "raw_reference_score": null, "schema_version": "e2r_current_operation_source_pending_v1", "score_valid": false, "status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY", "universe": "krx"}
 {"canonical_readiness_eligible": false, "canonical_ready_label_allowed": false, "command": "run_e2r_census_v3_until_pass", "reason": "legacy command requires explicit diagnostic opt-in", "replacement": "python -m e2r.cli.run_e2r_current_operation", "status": "LEGACY_DIAGNOSTIC_ONLY"}
 INVALID_PARTIAL_OUTPUT
 NOT_READY
@@ -2581,24 +2582,24 @@ ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 dry_run=True
-planned_searches=/tmp/tmptqu4f617/out/planned_searches.json
-summary=/tmp/tmptqu4f617/out/case_coverage_summary.md
-matrix=/tmp/tmptqu4f617/out/archetype_case_matrix.csv
-weights=/tmp/tmptqu4f617/out/recommended_score_weights.md
+planned_searches=/tmp/tmp5xh3u0ue/out/planned_searches.json
+summary=/tmp/tmp5xh3u0ue/out/case_coverage_summary.md
+matrix=/tmp/tmp5xh3u0ue/out/archetype_case_matrix.csv
+weights=/tmp/tmp5xh3u0ue/out/recommended_score_weights.md
 {
   "status": "NOT_READY",
   "paths": {
-    "summary": "/tmp/tmpd_ew61qd/out/summary.json"
+    "summary": "/tmp/tmpofs8q9cc/out/summary.json"
   }
 }
 {
-  "acceptance_report_path": "/home/eorb915/projects/stock_agent/output/tmpbzzumqi6/research_to_runtime_acceptance_report.md",
-  "all_archetype_next_attempt_plan_path": "/home/eorb915/projects/stock_agent/output/tmpbzzumqi6/all_archetype_next_runtime_attempt_plan_2026-07-05.json",
+  "acceptance_report_path": "/home/eorb915/projects/stock_agent/output/tmpk5ag4196/research_to_runtime_acceptance_report.md",
+  "all_archetype_next_attempt_plan_path": "/home/eorb915/projects/stock_agent/output/tmpk5ag4196/all_archetype_next_runtime_attempt_plan_2026-07-05.json",
   "all_archetype_next_attempt_plan_row_count": 36,
   "all_archetype_next_source_task_count": 126,
-  "all_archetype_runtime_execution_manifest_path": "/home/eorb915/projects/stock_agent/output/tmpbzzumqi6/all_archetype_runtime_execution_manifest_2026-07-05.json",
+  "all_archetype_runtime_execution_manifest_path": "/home/eorb915/projects/stock_agent/output/tmpk5ag4196/all_archetype_runtime_execution_manifest_2026-07-05.json",
   "all_archetype_runtime_execution_seed_event_count": 126,
-  "all_archetype_runtime_status_matrix_path": "/home/eorb915/projects/stock_agent/output/tmpbzzumqi6/all_archetype_runtime_status_matrix_2026-07-05.json",
+  "all_archetype_runtime_status_matrix_path": "/home/eorb915/projects/stock_agent/output/tmpk5ag4196/all_archetype_runtime_status_matrix_2026-07-05.json",
   "all_archetype_runtime_status_row_count": 36,
   "blockers": [
     "FULL_THESIS_ARCHETYPE_DIVERSITY_BELOW_MINIMUM",
@@ -2611,15 +2612,15 @@ weights=/tmp/tmptqu4f617/out/recommended_score_weights.md
   "legacy_internal_meaningful_pass": false,
   "mandatory_replay_accepted_claim_count": 6,
   "mandatory_replay_source_proxy_repair_task_count": 18,
-  "matrix_path": "/home/eorb915/projects/stock_agent/output/tmpbzzumqi6/research_to_runtime_parity_matrix_2026-07-05.json",
+  "matrix_path": "/home/eorb915/projects/stock_agent/output/tmpk5ag4196/research_to_runtime_parity_matrix_2026-07-05.json",
   "max_iterations_requested": 1,
   "mode": "full_thesis_balanced",
   "planner_bias_status": "PLANNER_ARCHETYPE_ROUTING_BIAS_PASS",
-  "readiness_verdict_path": "/home/eorb915/projects/stock_agent/output/tmpbzzumqi6/research_to_runtime_readiness_verdict.md",
+  "readiness_verdict_path": "/home/eorb915/projects/stock_agent/output/tmpk5ag4196/research_to_runtime_readiness_verdict.md",
   "research_case_count": 11501,
   "research_memory_card_count": 36,
   "research_memory_followup_task_count": 0,
-  "root_cause_path": "/home/eorb915/projects/stock_agent/output/tmpbzzumqi6/research_to_runtime_root_cause_2026-07-05.md",
+  "root_cause_path": "/home/eorb915/projects/stock_agent/output/tmpk5ag4196/research_to_runtime_root_cause_2026-07-05.md",
   "self_repair_enabled": false,
   "self_repair_history": [
     {
@@ -2640,7 +2641,7 @@ weights=/tmp/tmptqu4f617/out/recommended_score_weights.md
         "C24_BIO_TRIAL_DATA_EVENT_RISK",
         "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
       ],
-      "output_root": "/tmp/tmp5gcb5lq8/runtime",
+      "output_root": "/tmp/tmpjvbjoth4/runtime",
       "required_positive_missing_rate": 0.0
     }
   ],
@@ -2648,8 +2649,8 @@ weights=/tmp/tmptqu4f617/out/recommended_score_weights.md
   "self_repair_stop_reason": null,
   "source_route_pattern_count": 2049,
   "status": "LEGACY_DIAGNOSTIC_ONLY",
-  "summary_path": "/home/eorb915/projects/stock_agent/output/tmpbzzumqi6/research_to_runtime_parity_matrix_2026-07-05.md",
-  "v2_audit_path": "/home/eorb915/projects/stock_agent/output/tmpbzzumqi6/census_mode_v4_full_thesis_evidence_completion_audit_v2.json"
+  "summary_path": "/home/eorb915/projects/stock_agent/output/tmpk5ag4196/research_to_runtime_parity_matrix_2026-07-05.md",
+  "v2_audit_path": "/home/eorb915/projects/stock_agent/output/tmpk5ag4196/census_mode_v4_full_thesis_evidence_completion_audit_v2.json"
 }
 ok
 test_cli_stops_after_one_unready_runtime_without_repeated_attempt_flag (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... ok
@@ -6375,7 +6376,7 @@ test_worldex_audit_opinion_with_samsung_customer_mention_does_not_create_samsung
 test_zoom_like_one_off_demand_news_is_marked_one_off (test_web_research_runner.WebResearchRunnerTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 6291 tests in 515.957s
+Ran 6292 tests in 516.301s
 
 OK
 {

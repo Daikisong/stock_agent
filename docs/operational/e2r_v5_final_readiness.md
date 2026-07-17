@@ -29,7 +29,7 @@
 ## Runtime
 
 - current full-test evidence: `PASS`
-- full-test count: `6291`
+- full-test count: `6292`
 - positive/known-bad capability audit: `PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS`
 - self-repair audit: `PHASE99_INTERNAL_SELF_REPAIR_PASS`
 - StageCourt acceptance: `FINAL_STAGECOURT_PENDING`
