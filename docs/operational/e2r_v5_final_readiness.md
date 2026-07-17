@@ -23,13 +23,13 @@
 
 ## Current decisions
 
-- 삼성전자 (005930): memos `0/7`, score valid `false`, FINAL StageCourt `false`
+- 삼성전자 (005930): memos `1/7`, score valid `false`, FINAL StageCourt `false`
 - SK하이닉스 (000660): memos `0/7`, score valid `false`, FINAL StageCourt `false`
 
 ## Runtime
 
 - current full-test evidence: `PASS`
-- full-test count: `6277`
+- full-test count: `6290`
 - positive/known-bad capability audit: `PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS`
 - self-repair audit: `PHASE99_INTERNAL_SELF_REPAIR_PASS`
 - StageCourt acceptance: `FINAL_STAGECOURT_PENDING`
@@ -46,6 +46,8 @@
 - `RUNTIME_NOT_COMPLETE:000660`
 - `LIVE_RESEARCH_CHECKPOINT_PENDING:005930`
 - `LIVE_RESEARCH_CHECKPOINT_PENDING:000660`
+- `CODEX_PROVIDER_USAGE_LIMIT:005930`
+- `CODEX_PROVIDER_USAGE_LIMIT:000660`
 
 `MEANINGFUL_E2R_RESEARCHER_PARITY_READY`는 reviewer A~J가 전부 PASS이고 blocker가 0일 때만 선언한다.
 현재 문서는 투자 권고가 아니라 연구 시스템 readiness 감사다.

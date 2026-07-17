@@ -1493,6 +1493,7 @@ test_provider_outage_recovers_only_hash_bound_prior_memo_body (test_e2r_v5_phase
 test_score_and_supervisor_gaps_reopen_only_their_component_objectives (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_source_graph_has_one_full_thesis_objective_per_component (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_structured_role_gap_keeps_component_objective_open_for_llm_search (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
+test_supervisor_feedback_routes_only_to_its_component_rewrite (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_target_registry_resolves_master_canaries_without_runner_branch (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_unstructured_roles_are_not_misclassified_as_structured_metrics (test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests) ... ok
 test_committed_phase98_audit_is_reproducible (test_e2r_v5_phase98_capability_regression.E2RV5Phase98CapabilityRegressionAuditTests) ... ok
@@ -1506,12 +1507,14 @@ test_public_valuation_and_forward_eps_score_valuation (test_e2r_v5_phase98_capab
 test_upward_consensus_revision_scores_mispricing_and_visibility (test_e2r_v5_phase98_capability_regression.E2RV5Phase98PositiveCapabilityTests) ... ok
 test_clean_rerun_has_zero_same_evidence_variance (test_e2r_v5_phase99_self_repair.E2RV5Phase99SelfRepairTests) ... ok
 test_committed_audit_and_required_summary_are_reproducible (test_e2r_v5_phase99_self_repair.E2RV5Phase99SelfRepairTests) ... ok
+test_completed_target_ignores_historical_usage_limit_text (test_e2r_v5_phase99_self_repair.E2RV5Phase99SelfRepairTests) ... ok
 test_duplicate_query_returns_failure_context_to_llm_without_fallback (test_e2r_v5_phase99_self_repair.E2RV5Phase99SelfRepairTests) ... ok
 test_exact_twelve_failure_clusters_pass_focused_and_clean_rerun (test_e2r_v5_phase99_self_repair.E2RV5Phase99SelfRepairTests) ... ok
 test_live_canary_truth_stays_pending_despite_internal_pass (test_e2r_v5_phase99_self_repair.E2RV5Phase99SelfRepairTests) ... ok
 test_missing_live_manifests_are_exact_pending_not_fake_completion (test_e2r_v5_phase99_self_repair.E2RV5Phase99SelfRepairTests) ... ok
 test_novel_llm_query_is_validated_verbatim_but_gold_origin_is_rejected (test_e2r_v5_phase99_self_repair.E2RV5Phase99SelfRepairTests) ... ok
 test_provider_failure_tries_another_public_route_then_exactly_blocks (test_e2r_v5_phase99_self_repair.E2RV5Phase99SelfRepairTests) ... ok
+test_usage_limit_audit_reads_current_leaf_and_never_embeds_reset_date (test_e2r_v5_phase99_self_repair.E2RV5Phase99SelfRepairTests) ... ok
 test_all_structured_rows_are_hash_accounted_without_fixed_top_n (test_e2r_v5_prompt_projection.E2RV5PromptProjectionTests) ... ok
 test_current_research_and_query_contexts_scale_without_evidence_loss (test_e2r_v5_prompt_projection.E2RV5PromptProjectionTests) ... ok
 test_derived_structured_lineage_is_roster_projected_once (test_e2r_v5_prompt_projection.E2RV5PromptProjectionTests) ... ok
@@ -1525,11 +1528,13 @@ test_catalog_exposes_hints_but_no_claim_closure_method (test_e2r_v5_question_see
 test_legacy_closure_row_explicitly_declares_compatibility_only (test_e2r_v5_question_seed_authority.E2RV5QuestionSeedAuthorityTests) ... ok
 test_legacy_contracts_and_new_seeds_have_no_score_or_stage_authority (test_e2r_v5_question_seed_authority.E2RV5QuestionSeedAuthorityTests) ... ok
 test_operational_authority_audit_is_committed_pass (test_e2r_v5_question_seed_authority.E2RV5QuestionSeedAuthorityTests) ... ok
+test_business_model_semantic_validation_retries_once (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_codex_provider_evicts_only_downstream_semantically_invalid_response (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_codex_provider_never_caches_failed_response (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_codex_provider_reuses_only_exact_prompt_and_schema_checkpoint (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_codex_researcher_schema_uses_supported_strict_json_subset (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_component_fact_direction_is_resolved_from_immutable_fact_graph (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
+test_component_fact_grounding_retries_predicate_drift (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_component_prompt_excludes_only_prevalidated_non_citable_scope (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_component_research_accepts_material_fact_without_exact_primitive (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_component_research_reselects_every_prior_fact_without_score_carry_forward (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
@@ -1549,6 +1554,7 @@ test_provider_payload_is_blind_and_contains_all_required_research_inputs (test_e
 test_saturation_needs_three_independent_approvals (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_structured_connector_gap_is_pending_not_zero_score (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_three_judges_and_deterministic_aggregator_preserve_lineage (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
+test_usage_limit_opens_transport_circuit_but_keeps_cache_readable (test_e2r_v5_researcher_mode.E2RV5ResearcherModeTests) ... ok
 test_checkpoint_resume_records_only_deltas_and_returns_prior_review (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_checkpoint_tampering_and_lost_cumulative_lineage_are_rejected (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_complete_epoch_needs_three_provider_backed_independent_reviews (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
@@ -1561,11 +1567,16 @@ test_fixed_round_zero_result_and_transport_flags_are_rejected (test_e2r_v5_seman
 test_parser_failure_and_source_absence_are_distinct (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_phase87_audit_is_reproducible_and_complete (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_prior_checkpoint_files_round_trip_and_keep_pending_reviewer_errors (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
+test_prior_supervisor_expanded_failure_history_is_loss_accounted_and_bounded (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_provider_outage_is_pending_and_never_builds_fallback_query (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_provider_schemas_are_closed_and_have_no_score_or_stage (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_reextracted_fact_is_retired_with_lineage_instead_of_crashing_resume (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_source_checkpoint_hash_and_future_date_are_validated (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_structured_complete_label_without_records_cannot_open_saturation (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
+test_supervisor_missing_failure_group_gets_exact_roster_feedback (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
+test_supervisor_provider_error_is_bounded_before_checkpoint_persistence (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
+test_supervisor_semantic_error_gets_one_bounded_correction (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
+test_supervisor_unknown_objective_is_corrected_with_allowed_ids (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_zero_result_alone_cannot_be_relabelled_as_source_absence (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_zero_results_are_failure_context_not_semantic_saturation (test_e2r_v5_semantic_research_saturation.E2RV5SemanticResearchSaturationTests) ... ok
 test_bounded_fetch_prioritizes_current_official_original_over_old_higher_score (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
@@ -1594,6 +1605,8 @@ test_reference_parent_budget_prioritizes_current_period_over_append_order (test_
 test_reference_url_is_ranked_and_fetched_on_checkpoint_resume (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
 test_rejected_parent_still_discovers_and_fetches_linked_original (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
 test_repeated_identical_fetch_failure_returns_to_llm_for_alternate_route (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
+test_repeated_large_roster_omission_splits_and_recombines_every_candidate (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
+test_resolved_objective_pending_candidates_do_not_block_open_objective (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
 test_same_content_from_two_urls_is_one_economic_document (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
 test_seed_hint_prioritizes_but_does_not_narrow_broad_source_graph (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
 test_stale_unverified_reference_route_closes_without_llm_ranking (test_e2r_v5_source_graph_acquisition.E2RV5SourceGraphAcquisitionTests) ... ok
@@ -2555,8 +2568,8 @@ test_research_memory_is_discovery_only (test_research_source_route_recovery.Rese
 test_source_route_patterns_exist_for_mandatory_required_primitives (test_research_source_route_recovery.ResearchSourceRouteRecoveryTests) ... ok
 test_balanced_candidate_selection_audit_prioritizes_missing_canaries (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... ok
 test_cli_fail_flags_return_failure_for_current_c05_monoculture (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... ok
-test_cli_max_iterations_above_one_executes_next_runtime_manifest (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... backfill_plan=/tmp/tmpf92uq610/backfill_plan.json
-{"as_of_date": "2026-07-01", "blockers": ["CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE"], "canonical_stage": "0", "command": "run_e2r_census_mode", "command_hashes": {"commit_hash": "4b0eab6522098a3dafb74b0ab26592c354f13fbd", "config_hash": "457b61686be8ada34510692aa0397f98b22be4ba2ec1eedffbb89c018ecf1ab3", "corpus_hash": "f101882840c61f1d0250a3f50b2ad7307a834e15672ebc0a38776481e560d0b8", "dirty_status_hash": "67cc915c7b84e27ac3a1f017e9baf936efd21a2802c15fd084008a941c7f22cb", "memory_hash": "98341bf8a27880cd5bee065340a3a16063986f74970b5899db4bca9f17336e12", "prompt_hash": "dd6dec8474b22578aab5a01e11d628641aa6302482936641159d4e244708ed7d", "recipe_hash": "0ba8645a35367b4b56d316fa5c08ed3a40bd53d93a5c3bc8683e3a869e134ba0", "repo_dirty": true, "source_hash": "ec499d62a33b3face216285f6771a93131e6977789c867fec3fba4f65e967ea9"}, "command_run_id": "COMMAND-c3cb78f4a76f294766e11c58", "mode": "census_selective_deep", "output_paths": {"command_audit": "output/test_legacy_cli_lockout/command_run_reproducibility_audit.json", "command_manifest": "output/test_legacy_cli_lockout/command_run_manifest.json", "pending": "output/test_legacy_cli_lockout/current_operation_source_pending.json"}, "production_runtime_ready": false, "raw_reference_score": null, "schema_version": "e2r_current_operation_source_pending_v1", "score_valid": false, "status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY", "universe": "krx"}
+test_cli_max_iterations_above_one_executes_next_runtime_manifest (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... backfill_plan=/tmp/tmpmwlanau3/backfill_plan.json
+{"as_of_date": "2026-07-01", "blockers": ["CURRENT_KRX_UNIVERSE_AND_LIVE_SOURCE_INPUT_MANIFEST_UNAVAILABLE"], "canonical_stage": "0", "command": "run_e2r_census_mode", "command_hashes": {"commit_hash": "649c77670c24753e6f282031c25889ed838f513a", "config_hash": "457b61686be8ada34510692aa0397f98b22be4ba2ec1eedffbb89c018ecf1ab3", "corpus_hash": "f101882840c61f1d0250a3f50b2ad7307a834e15672ebc0a38776481e560d0b8", "dirty_status_hash": "e2f494883a661cd98a9ced02f0c1294c348b4cc106556b4564dfc49154d6fa3d", "memory_hash": "98341bf8a27880cd5bee065340a3a16063986f74970b5899db4bca9f17336e12", "prompt_hash": "dd6dec8474b22578aab5a01e11d628641aa6302482936641159d4e244708ed7d", "recipe_hash": "0ba8645a35367b4b56d316fa5c08ed3a40bd53d93a5c3bc8683e3a869e134ba0", "repo_dirty": true, "source_hash": "ec499d62a33b3face216285f6771a93131e6977789c867fec3fba4f65e967ea9"}, "command_run_id": "COMMAND-4bcafee55ae3342ee68d3d86", "mode": "census_selective_deep", "output_paths": {"command_audit": "output/test_legacy_cli_lockout/command_run_reproducibility_audit.json", "command_manifest": "output/test_legacy_cli_lockout/command_run_manifest.json", "pending": "output/test_legacy_cli_lockout/current_operation_source_pending.json"}, "production_runtime_ready": false, "raw_reference_score": null, "schema_version": "e2r_current_operation_source_pending_v1", "score_valid": false, "status": "EXTERNAL_SOURCE_BLOCKER_NOT_READY", "universe": "krx"}
 {"canonical_readiness_eligible": false, "canonical_ready_label_allowed": false, "command": "run_e2r_census_v3_until_pass", "reason": "legacy command requires explicit diagnostic opt-in", "replacement": "python -m e2r.cli.run_e2r_current_operation", "status": "LEGACY_DIAGNOSTIC_ONLY"}
 INVALID_PARTIAL_OUTPUT
 NOT_READY
@@ -2567,24 +2580,24 @@ ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 ANTI_FAKE_FULL_UNIVERSE_STATUS_PASS
 dry_run=True
-planned_searches=/tmp/tmp383ytwtz/out/planned_searches.json
-summary=/tmp/tmp383ytwtz/out/case_coverage_summary.md
-matrix=/tmp/tmp383ytwtz/out/archetype_case_matrix.csv
-weights=/tmp/tmp383ytwtz/out/recommended_score_weights.md
+planned_searches=/tmp/tmpw7_ha7ko/out/planned_searches.json
+summary=/tmp/tmpw7_ha7ko/out/case_coverage_summary.md
+matrix=/tmp/tmpw7_ha7ko/out/archetype_case_matrix.csv
+weights=/tmp/tmpw7_ha7ko/out/recommended_score_weights.md
 {
   "status": "NOT_READY",
   "paths": {
-    "summary": "/tmp/tmp7171ut66/out/summary.json"
+    "summary": "/tmp/tmp0katt8vp/out/summary.json"
   }
 }
 {
-  "acceptance_report_path": "/home/eorb915/projects/stock_agent/output/tmp7pmpyf66/research_to_runtime_acceptance_report.md",
-  "all_archetype_next_attempt_plan_path": "/home/eorb915/projects/stock_agent/output/tmp7pmpyf66/all_archetype_next_runtime_attempt_plan_2026-07-05.json",
+  "acceptance_report_path": "/home/eorb915/projects/stock_agent/output/tmp32b5g61_/research_to_runtime_acceptance_report.md",
+  "all_archetype_next_attempt_plan_path": "/home/eorb915/projects/stock_agent/output/tmp32b5g61_/all_archetype_next_runtime_attempt_plan_2026-07-05.json",
   "all_archetype_next_attempt_plan_row_count": 36,
   "all_archetype_next_source_task_count": 126,
-  "all_archetype_runtime_execution_manifest_path": "/home/eorb915/projects/stock_agent/output/tmp7pmpyf66/all_archetype_runtime_execution_manifest_2026-07-05.json",
+  "all_archetype_runtime_execution_manifest_path": "/home/eorb915/projects/stock_agent/output/tmp32b5g61_/all_archetype_runtime_execution_manifest_2026-07-05.json",
   "all_archetype_runtime_execution_seed_event_count": 126,
-  "all_archetype_runtime_status_matrix_path": "/home/eorb915/projects/stock_agent/output/tmp7pmpyf66/all_archetype_runtime_status_matrix_2026-07-05.json",
+  "all_archetype_runtime_status_matrix_path": "/home/eorb915/projects/stock_agent/output/tmp32b5g61_/all_archetype_runtime_status_matrix_2026-07-05.json",
   "all_archetype_runtime_status_row_count": 36,
   "blockers": [
     "FULL_THESIS_ARCHETYPE_DIVERSITY_BELOW_MINIMUM",
@@ -2597,15 +2610,15 @@ weights=/tmp/tmp383ytwtz/out/recommended_score_weights.md
   "legacy_internal_meaningful_pass": false,
   "mandatory_replay_accepted_claim_count": 6,
   "mandatory_replay_source_proxy_repair_task_count": 18,
-  "matrix_path": "/home/eorb915/projects/stock_agent/output/tmp7pmpyf66/research_to_runtime_parity_matrix_2026-07-05.json",
+  "matrix_path": "/home/eorb915/projects/stock_agent/output/tmp32b5g61_/research_to_runtime_parity_matrix_2026-07-05.json",
   "max_iterations_requested": 1,
   "mode": "full_thesis_balanced",
   "planner_bias_status": "PLANNER_ARCHETYPE_ROUTING_BIAS_PASS",
-  "readiness_verdict_path": "/home/eorb915/projects/stock_agent/output/tmp7pmpyf66/research_to_runtime_readiness_verdict.md",
+  "readiness_verdict_path": "/home/eorb915/projects/stock_agent/output/tmp32b5g61_/research_to_runtime_readiness_verdict.md",
   "research_case_count": 11501,
   "research_memory_card_count": 36,
   "research_memory_followup_task_count": 0,
-  "root_cause_path": "/home/eorb915/projects/stock_agent/output/tmp7pmpyf66/research_to_runtime_root_cause_2026-07-05.md",
+  "root_cause_path": "/home/eorb915/projects/stock_agent/output/tmp32b5g61_/research_to_runtime_root_cause_2026-07-05.md",
   "self_repair_enabled": false,
   "self_repair_history": [
     {
@@ -2626,7 +2639,7 @@ weights=/tmp/tmp383ytwtz/out/recommended_score_weights.md
         "C24_BIO_TRIAL_DATA_EVENT_RISK",
         "C28_SOFTWARE_SECURITY_CONTRACT_RETENTION"
       ],
-      "output_root": "/tmp/tmp21lk3bx0/runtime",
+      "output_root": "/tmp/tmpkbjxyawy/runtime",
       "required_positive_missing_rate": 0.0
     }
   ],
@@ -2634,8 +2647,8 @@ weights=/tmp/tmp383ytwtz/out/recommended_score_weights.md
   "self_repair_stop_reason": null,
   "source_route_pattern_count": 2049,
   "status": "LEGACY_DIAGNOSTIC_ONLY",
-  "summary_path": "/home/eorb915/projects/stock_agent/output/tmp7pmpyf66/research_to_runtime_parity_matrix_2026-07-05.md",
-  "v2_audit_path": "/home/eorb915/projects/stock_agent/output/tmp7pmpyf66/census_mode_v4_full_thesis_evidence_completion_audit_v2.json"
+  "summary_path": "/home/eorb915/projects/stock_agent/output/tmp32b5g61_/research_to_runtime_parity_matrix_2026-07-05.md",
+  "v2_audit_path": "/home/eorb915/projects/stock_agent/output/tmp32b5g61_/census_mode_v4_full_thesis_evidence_completion_audit_v2.json"
 }
 ok
 test_cli_stops_after_one_unready_runtime_without_repeated_attempt_flag (test_research_to_runtime_parity_goal4.ResearchToRuntimeParityGoal4Tests) ... ok
@@ -6361,7 +6374,7 @@ test_worldex_audit_opinion_with_samsung_customer_mention_does_not_create_samsung
 test_zoom_like_one_off_demand_news_is_marked_one_off (test_web_research_runner.WebResearchRunnerTests) ... ok
 
 ----------------------------------------------------------------------
-Ran 6277 tests in 539.836s
+Ran 6290 tests in 530.614s
 
 OK
 {
