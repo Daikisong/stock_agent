@@ -766,7 +766,25 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             question="같은 뜻의 세 번째 표현",
             failure_reason="HTTP_503_FAILURE",
         )
+        parser_noise_first = result(
+            question="파서 손상 첫 번째 표현",
+            failure_reason=(
+                "SNIPPET_ONLY_FULL_FETCH_REQUIRED:live_fetch_unreadable_text:"
+                "excessive_control_characters:10/100"
+            ),
+        )
+        parser_noise_second = result(
+            question="파서 손상 두 번째 표현",
+            failure_reason=(
+                "SNIPPET_ONLY_FULL_FETCH_REQUIRED:live_fetch_unreadable_text:"
+                "excessive_control_characters:200/2000"
+            ),
+        )
         self.assertEqual(_semantic_signature(first), _semantic_signature(rephrased))
+        self.assertEqual(
+            _semantic_signature(parser_noise_first),
+            _semantic_signature(parser_noise_second),
+        )
         self.assertNotEqual(
             _semantic_signature(first), _semantic_signature(changed_failure)
         )

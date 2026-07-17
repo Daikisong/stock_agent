@@ -303,7 +303,7 @@ def _semantic_signature(result) -> str:
                 set(
                     (
                         str(row.get("failure_stage") or ""),
-                        _semantic_failure_reason(
+                        _semantic_source_failure_reason(
                             str(row.get("failure_reason") or "")
                         ),
                         bool(row.get("alternate_route_required")),
@@ -459,6 +459,49 @@ def _semantic_failure_reason(reason: str) -> str:
         flags=re.IGNORECASE,
     )
     return value
+
+
+def _semantic_source_failure_reason(reason: str) -> str:
+    """Collapse per-document fetch/parser details into actionable classes."""
+
+    value = " ".join(str(reason).split())
+    folded = value.casefold()
+    if folded.startswith("unknown_source_family:"):
+        return "UNKNOWN_SOURCE_FAMILY"
+    if folded.startswith("target_scope_missing:"):
+        return "TARGET_SCOPE_MISSING"
+    if folded.startswith("query_provider_error:"):
+        if "usage limit" in folded or "purchase more credits" in folded:
+            return "QUERY_PROVIDER_ERROR:PROVIDER_USAGE_LIMIT"
+        if "at capacity" in folded:
+            return "QUERY_PROVIDER_ERROR:PROVIDER_CAPACITY"
+        return "QUERY_PROVIDER_ERROR"
+    for marker in (
+        "excessive_control_characters",
+        "excessive_unicode_replacement_characters",
+    ):
+        if marker in folded:
+            return folded[: folded.index(marker) + len(marker)].upper()
+    body_too_large = re.search(
+        r"(?:^|:)live_fetch_body_too_large:([^:]+)",
+        value,
+        flags=re.IGNORECASE,
+    )
+    if body_too_large is not None:
+        return f"LIVE_FETCH_BODY_TOO_LARGE:{body_too_large.group(1).casefold()}"
+    http_error = re.search(r"HTTP Error (\d{3})", value, flags=re.IGNORECASE)
+    if http_error is not None:
+        return f"HTTP_ERROR:{http_error.group(1)}"
+    if "certificate_verify_failed" in folded:
+        return "TLS_CERTIFICATE_VERIFY_FAILED"
+    if "handshake_failure" in folded:
+        return "TLS_HANDSHAKE_FAILURE"
+    if "connection reset" in folded:
+        return "CONNECTION_RESET"
+    if "remote end closed connection" in folded:
+        return "REMOTE_DISCONNECTED"
+    normalized = _semantic_failure_reason(value)
+    return re.sub(r":\d+/\d+(?=$|:)", ":<COUNT_RATIO>", normalized)
 
 
 if __name__ == "__main__":
