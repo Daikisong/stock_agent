@@ -6,9 +6,12 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 from e2r.cli.run_e2r_researcher_mode_until_pass import (
     _latest_calendar_trading_candidate,
+    _load_prior_no_progress_signature,
+    _run_target_until_semantic_terminal,
     _semantic_signature,
     build_parser,
 )
@@ -160,6 +163,214 @@ class Phase94IntegrationStructuredMaterializer:
 
 class E2RV5Phase94RunnerContractTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
+
+    def test_resumed_no_progress_runs_once_then_reuses_semantic_stop(self) -> None:
+        signature = "a" * 64
+        result = SimpleNamespace(
+            status="RESEARCH_CHECKPOINT_PENDING",
+            completion_gates={"source_graph_checkpoint_ready": False},
+        )
+
+        class Runner:
+            def __init__(self) -> None:
+                self.calls = 0
+
+            def run_checkpoint(self, **_kwargs):
+                self.calls += 1
+                return result
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target_root = root / "CURRENT-TARGET"
+            target_root.mkdir(parents=True)
+            no_progress_path = (
+                target_root / "semantic_no_progress_checkpoint.json"
+            )
+            no_progress_path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": (
+                            "e2r_v5_phase94_semantic_no_progress_v1"
+                        ),
+                        "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
+                        "target_id": "CURRENT-TARGET",
+                        "semantic_signature": signature,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            runner = Runner()
+            with (
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_signature",
+                    return_value=signature,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "refresh_canary_target_manifest_hash"
+                ),
+            ):
+                returned = _run_target_until_semantic_terminal(
+                    runner=runner,
+                    config=SimpleNamespace(output_root=str(root)),
+                    target=SimpleNamespace(target_id="CURRENT-TARGET"),
+                )
+
+            self.assertIs(returned, result)
+            self.assertEqual(runner.calls, 1)
+            self.assertEqual(
+                json.loads(no_progress_path.read_text(encoding="utf-8"))[
+                    "semantic_signature"
+                ],
+                signature,
+            )
+
+    def test_prior_no_progress_signature_is_strictly_target_bound(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "semantic_no_progress_checkpoint.json"
+            valid = {
+                "schema_version": "e2r_v5_phase94_semantic_no_progress_v1",
+                "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
+                "target_id": "CURRENT-TARGET",
+                "semantic_signature": "b" * 64,
+            }
+            path.write_text(json.dumps(valid), encoding="utf-8")
+            self.assertEqual(
+                _load_prior_no_progress_signature(
+                    path=path,
+                    target_id="CURRENT-TARGET",
+                ),
+                "b" * 64,
+            )
+            self.assertIsNone(
+                _load_prior_no_progress_signature(
+                    path=path,
+                    target_id="OTHER-TARGET",
+                )
+            )
+            path.write_text(
+                json.dumps({**valid, "semantic_signature": "not-a-sha"}),
+                encoding="utf-8",
+            )
+            self.assertIsNone(
+                _load_prior_no_progress_signature(
+                    path=path,
+                    target_id="CURRENT-TARGET",
+                )
+            )
+
+    def test_resumed_no_progress_allows_recovery_before_new_stop(self) -> None:
+        old_signature = "c" * 64
+        recovered_signature = "d" * 64
+        result = SimpleNamespace(
+            status="RESEARCH_CHECKPOINT_PENDING",
+            completion_gates={"source_graph_checkpoint_ready": False},
+        )
+
+        class Runner:
+            def __init__(self) -> None:
+                self.calls = 0
+
+            def run_checkpoint(self, **_kwargs):
+                self.calls += 1
+                return result
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target_root = root / "CURRENT-TARGET"
+            target_root.mkdir(parents=True)
+            no_progress_path = (
+                target_root / "semantic_no_progress_checkpoint.json"
+            )
+            no_progress_path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": (
+                            "e2r_v5_phase94_semantic_no_progress_v1"
+                        ),
+                        "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
+                        "target_id": "CURRENT-TARGET",
+                        "semantic_signature": old_signature,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            runner = Runner()
+            with (
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_signature",
+                    side_effect=(recovered_signature, recovered_signature),
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "refresh_canary_target_manifest_hash"
+                ),
+            ):
+                _run_target_until_semantic_terminal(
+                    runner=runner,
+                    config=SimpleNamespace(output_root=str(root)),
+                    target=SimpleNamespace(target_id="CURRENT-TARGET"),
+                )
+
+            self.assertEqual(runner.calls, 2)
+            self.assertEqual(
+                json.loads(no_progress_path.read_text(encoding="utf-8"))[
+                    "semantic_signature"
+                ],
+                recovered_signature,
+            )
+
+    def test_completed_resume_removes_stale_no_progress_leaf(self) -> None:
+        signature = "e" * 64
+        result = SimpleNamespace(
+            status="PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
+            completion_gates={"source_graph_checkpoint_ready": True},
+        )
+
+        class Runner:
+            def run_checkpoint(self, **_kwargs):
+                return result
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target_root = root / "CURRENT-TARGET"
+            target_root.mkdir(parents=True)
+            no_progress_path = (
+                target_root / "semantic_no_progress_checkpoint.json"
+            )
+            no_progress_path.write_text(
+                json.dumps(
+                    {
+                        "schema_version": (
+                            "e2r_v5_phase94_semantic_no_progress_v1"
+                        ),
+                        "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
+                        "target_id": "CURRENT-TARGET",
+                        "semantic_signature": signature,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with (
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_signature",
+                    return_value=signature,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "refresh_canary_target_manifest_hash"
+                ),
+            ):
+                _run_target_until_semantic_terminal(
+                    runner=Runner(),
+                    config=SimpleNamespace(output_root=str(root)),
+                    target=SimpleNamespace(target_id="CURRENT-TARGET"),
+                )
+
+            self.assertFalse(no_progress_path.exists())
 
     def test_supervisor_feedback_routes_only_to_its_component_rewrite(self) -> None:
         routed = _component_supervisor_feedback_by_component(

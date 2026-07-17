@@ -199,11 +199,24 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
     checkpoint/blocker, never research completion or source absence.
     """
 
-    seen_signatures: set[str] = set()
+    target_root = Path(config.output_root) / target.target_id
+    no_progress_path = target_root / "semantic_no_progress_checkpoint.json"
+    prior_no_progress_signature = _load_prior_no_progress_signature(
+        path=no_progress_path,
+        target_id=target.target_id,
+    )
+    # A resumed run still executes one real checkpoint so a recovered provider
+    # can make progress.  Seeding only the previously confirmed no-progress
+    # signature prevents a second identical provider-failure epoch afterward.
+    seen_signatures: set[str] = (
+        {prior_no_progress_signature}
+        if prior_no_progress_signature is not None
+        else set()
+    )
     while True:
         result = runner.run_checkpoint(config=config, target=target)
         signature = _semantic_signature(result)
-        progress_path = Path(config.output_root) / target.target_id / "until_pass_progress.json"
+        progress_path = target_root / "until_pass_progress.json"
         write_json(
             progress_path,
             {
@@ -219,12 +232,12 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
         )
         refresh_canary_target_manifest_hash(progress_path.parent)
         if result.status == "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD":
+            no_progress_path.unlink(missing_ok=True)
+            refresh_canary_target_manifest_hash(progress_path.parent)
             return result
         if signature in seen_signatures:
             write_json(
-                Path(config.output_root)
-                / target.target_id
-                / "semantic_no_progress_checkpoint.json",
+                no_progress_path,
                 {
                     "schema_version": "e2r_v5_phase94_semantic_no_progress_v1",
                     "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
@@ -242,7 +255,39 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
             )
             refresh_canary_target_manifest_hash(progress_path.parent)
             return result
+        if prior_no_progress_signature is not None and no_progress_path.exists():
+            # The provider or evidence state recovered.  The old pending leaf
+            # is current-state output, not append-only research lineage.
+            no_progress_path.unlink()
+            refresh_canary_target_manifest_hash(progress_path.parent)
+            prior_no_progress_signature = None
         seen_signatures.add(signature)
+
+
+def _load_prior_no_progress_signature(
+    *, path: Path, target_id: str
+) -> str | None:
+    """Load only a target-bound, explicitly confirmed semantic stop leaf."""
+
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return None
+    if not isinstance(payload, Mapping):
+        return None
+    if (
+        payload.get("schema_version")
+        != "e2r_v5_phase94_semantic_no_progress_v1"
+        or payload.get("status") != "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE"
+        or str(payload.get("target_id") or "") != target_id
+    ):
+        return None
+    signature = str(payload.get("semantic_signature") or "")
+    if re.fullmatch(r"[0-9a-f]{64}", signature) is None:
+        return None
+    return signature
 
 
 def _semantic_signature(result) -> str:
