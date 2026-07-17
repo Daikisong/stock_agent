@@ -33,6 +33,7 @@ from tests.test_e2r_v5_fact_extraction import FactProvider, _document
 from tests.test_e2r_v5_researcher_mode import ScriptedResearchProvider
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _load_prior_component_memos,
+    _same_lane_structured_cache_roots,
 )
 
 
@@ -163,6 +164,45 @@ class Phase94IntegrationStructuredMaterializer:
 
 class E2RV5Phase94RunnerContractTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
+
+    def test_same_lane_cache_roots_require_matching_target_manifest_and_date(self):
+        with tempfile.TemporaryDirectory() as directory:
+            lane = Path(directory)
+            valid = lane / "VALID"
+            wrong_date = lane / "WRONG-DATE"
+            missing_manifest = lane / "NO-MANIFEST"
+            current = lane / "CURRENT"
+            for root in (valid, wrong_date, missing_manifest, current):
+                (root / "structured_source_cache").mkdir(parents=True)
+            (valid / "target_run_manifest.json").write_text(
+                json.dumps(
+                    {"target_id": "VALID", "as_of_date": "2026-07-12"}
+                ),
+                encoding="utf-8",
+            )
+            (wrong_date / "target_run_manifest.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": "WRONG-DATE",
+                        "as_of_date": "2026-07-13",
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (current / "target_run_manifest.json").write_text(
+                json.dumps(
+                    {"target_id": "CURRENT", "as_of_date": "2026-07-12"}
+                ),
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                _same_lane_structured_cache_roots(
+                    lane,
+                    target_id="CURRENT",
+                    as_of_date="2026-07-12",
+                ),
+                (valid / "structured_source_cache",),
+            )
 
     def test_resumed_no_progress_runs_once_then_reuses_semantic_stop(self) -> None:
         signature = "a" * 64

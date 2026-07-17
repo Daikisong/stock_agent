@@ -367,6 +367,11 @@ class CurrentResearcherModeTargetRunner:
             source_claims=fact_extraction.material_claims,
             source_documents=source_graph.evidence_documents,
             required_roles_by_component=required_structured_roles,
+            shared_cache_roots=_same_lane_structured_cache_roots(
+                Path(config.output_root),
+                target_id=target.target_id,
+                as_of_date=config.as_of_date,
+            ),
         )
         structured = structured_materialization.engine_result
         write_structured_financial_outputs(structured, root)
@@ -1198,6 +1203,38 @@ def _load_official_checkpoint(
         pending_reasons=tuple(result.get("pending_reasons") or ()),
         audit=audit,
     )
+
+
+def _same_lane_structured_cache_roots(
+    lane_root: Path,
+    *,
+    target_id: str,
+    as_of_date: str,
+) -> tuple[Path, ...]:
+    """Return only target-bound caches from the same dated production lane."""
+
+    if not lane_root.is_dir():
+        return ()
+    roots: list[Path] = []
+    for child in sorted(lane_root.iterdir()):
+        if not child.is_dir() or child.name == target_id:
+            continue
+        cache_root = child / "structured_source_cache"
+        manifest_path = child / "target_run_manifest.json"
+        if not manifest_path.is_file():
+            continue
+        try:
+            manifest = _read_json(manifest_path)
+        except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
+            continue
+        if (
+            not cache_root.is_dir()
+            or str(manifest.get("target_id") or "") != child.name
+            or str(manifest.get("as_of_date") or "") != as_of_date
+        ):
+            continue
+        roots.append(cache_root)
+    return tuple(roots)
 
 
 def _load_fact_checkpoint(

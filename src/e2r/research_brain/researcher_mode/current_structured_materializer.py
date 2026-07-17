@@ -17,7 +17,7 @@ import math
 import os
 from pathlib import Path
 import re
-from typing import Any, Mapping, Protocol, Sequence
+from typing import Any, Callable, Mapping, Protocol, Sequence
 
 import requests
 
@@ -139,6 +139,10 @@ CURRENT_STRUCTURED_OUTPUT_FILES: Mapping[str, str] = {
     "result": "current_structured_materialization.json",
     "audit": "current_structured_materialization_audit.json",
 }
+
+_CURRENT_STRUCTURED_CACHE_SCHEMA_VERSION = (
+    "e2r_v5_current_structured_cache_v2"
+)
 
 
 @dataclass(frozen=True)
@@ -350,6 +354,7 @@ class CurrentStructuredSourceMaterializer:
         source_claims: Sequence[Mapping[str, Any]] = (),
         source_documents: Sequence[Mapping[str, Any]] = (),
         required_roles_by_component: Mapping[str, Sequence[str]] | None = None,
+        shared_cache_roots: Sequence[str | Path] = (),
     ) -> CurrentStructuredMaterializationResult:
         cutoff = date.fromisoformat(as_of_date)
         trading_date = date.fromisoformat(latest_trading_snapshot_date)
@@ -360,6 +365,13 @@ class CurrentStructuredSourceMaterializer:
         load_project_env()
         root = Path(output_root)
         cache_root = root / "structured_source_cache"
+        reusable_cache_roots = tuple(
+            dict.fromkeys(
+                candidate
+                for value in shared_cache_roots
+                if (candidate := Path(value)) != cache_root
+            )
+        )
         attempts: list[CurrentStructuredFetchAttempt] = []
         manifests: list[Mapping[str, Any]] = []
 
@@ -374,11 +386,13 @@ class CurrentStructuredSourceMaterializer:
         )
         companyguide_route = self._companyguide_route(
             target_id=target_id,
+            target_name=target_name,
             cutoff=cutoff,
             cache_root=cache_root,
             checkpoint_resume=checkpoint_resume,
             attempts=attempts,
             manifests=manifests,
+            shared_cache_roots=reusable_cache_roots,
         )
         price_route = self._price_route(
             target_id=target_id,
@@ -406,6 +420,7 @@ class CurrentStructuredSourceMaterializer:
             checkpoint_resume=checkpoint_resume,
             attempts=attempts,
             manifests=manifests,
+            shared_cache_roots=reusable_cache_roots,
         )
         routes = (
             companyguide_route,
@@ -630,11 +645,13 @@ class CurrentStructuredSourceMaterializer:
         self,
         *,
         target_id: str,
+        target_name: str,
         cutoff: date,
         cache_root: Path,
         checkpoint_resume: bool,
         attempts: list[CurrentStructuredFetchAttempt],
         manifests: list[Mapping[str, Any]],
+        shared_cache_roots: Sequence[Path] = (),
     ):
         snapshot = self._text(
             target_id=target_id,
@@ -649,6 +666,18 @@ class CurrentStructuredSourceMaterializer:
             headers={"User-Agent": "Mozilla/5.0 E2R-ResearcherMode/5.0"},
             attempts=attempts,
             manifests=manifests,
+            shared_cache_roots=shared_cache_roots,
+            shared_cache_keys=(
+                f"companyguide_snapshot_{target_id}",
+                f"companyguide_peer_snapshot_{target_id}",
+            ),
+            cached_response_validator=lambda response: (
+                _companyguide_cached_snapshot_is_point_in_time(
+                    response,
+                    cutoff=cutoff,
+                    expected_company_name=target_name,
+                )
+            ),
         )
         reports_payload = self._json(
             target_id=target_id,
@@ -960,6 +989,7 @@ class CurrentStructuredSourceMaterializer:
         checkpoint_resume: bool,
         attempts: list[CurrentStructuredFetchAttempt],
         manifests: list[Mapping[str, Any]],
+        shared_cache_roots: Sequence[Path] = (),
     ):
         provider_name = (
             str(
@@ -1154,6 +1184,18 @@ class CurrentStructuredSourceMaterializer:
                 headers={"User-Agent": "Mozilla/5.0 E2R-ResearcherMode/5.0"},
                 attempts=attempts,
                 manifests=manifests,
+                shared_cache_roots=shared_cache_roots,
+                shared_cache_keys=(
+                    f"companyguide_peer_snapshot_{symbol}",
+                    f"companyguide_snapshot_{symbol}",
+                ),
+                cached_response_validator=lambda response: (
+                    _companyguide_cached_snapshot_is_point_in_time(
+                        response,
+                        cutoff=cutoff,
+                        expected_company_name=str(proposal["peer_name"]),
+                    )
+                ),
             )
             if not text:
                 proposal_failures.append(f"{symbol}:SNAPSHOT_FETCH_FAILED")
@@ -1317,6 +1359,8 @@ class CurrentStructuredSourceMaterializer:
             cache_root=cache_root,
             checkpoint_resume=checkpoint_resume,
             response_kind="json",
+            request_url=url,
+            request_params=params,
             fetch=lambda: self.transport.get_json(
                 url=url,
                 params=params,
@@ -1373,12 +1417,21 @@ class CurrentStructuredSourceMaterializer:
         headers: Mapping[str, str],
         attempts: list[CurrentStructuredFetchAttempt],
         manifests: list[Mapping[str, Any]],
+        shared_cache_roots: Sequence[Path] = (),
+        shared_cache_keys: Sequence[str] = (),
+        cached_response_validator: Callable[[StructuredHTTPResponse], bool]
+        | None = None,
     ) -> str | None:
         response, cache_hit, error = self._response(
             cache_key=cache_key,
             cache_root=cache_root,
             checkpoint_resume=checkpoint_resume,
             response_kind="text",
+            request_url=url,
+            request_params=params,
+            shared_cache_roots=shared_cache_roots,
+            shared_cache_keys=shared_cache_keys,
+            cached_response_validator=cached_response_validator,
             fetch=lambda: self.transport.get_text(
                 url=url,
                 params=params,
@@ -1424,40 +1477,68 @@ class CurrentStructuredSourceMaterializer:
         cache_root: Path,
         checkpoint_resume: bool,
         response_kind: str,
-        fetch,
+        request_url: str,
+        request_params: Mapping[str, Any],
+        fetch: Callable[[], StructuredHTTPResponse],
+        shared_cache_roots: Sequence[Path] = (),
+        shared_cache_keys: Sequence[str] = (),
+        cached_response_validator: Callable[[StructuredHTTPResponse], bool]
+        | None = None,
     ) -> tuple[StructuredHTTPResponse | None, bool, str | None]:
         cache_path = cache_root / f"{cache_key}.json"
-        if checkpoint_resume and cache_path.is_file():
-            try:
-                cached = json.loads(cache_path.read_text(encoding="utf-8"))
-                value = StructuredHTTPResponse(
-                    status_code=int(cached["status_code"]),
-                    canonical_url=str(cached["canonical_url"]),
-                    provider_request_id=str(cached["provider_request_id"]),
-                    content_hash=str(cached["content_hash"]),
-                    payload=(
-                        dict(cached["payload"])
-                        if isinstance(cached.get("payload"), Mapping)
-                        else None
-                    ),
-                    text=(
-                        str(cached["text"])
-                        if cached.get("text") is not None
-                        else None
+        request_fingerprint = _structured_request_fingerprint(
+            response_kind=response_kind,
+            url=request_url,
+            params=request_params,
+        )
+        if checkpoint_resume:
+            candidates: list[Path] = [cache_path]
+            reusable_keys = tuple(
+                dict.fromkeys((cache_key, *shared_cache_keys))
+            )
+            for shared_root in shared_cache_roots:
+                candidates.extend(
+                    Path(shared_root) / f"{key}.json"
+                    for key in reusable_keys
+                )
+            seen_paths: set[Path] = set()
+            for candidate in candidates:
+                if candidate in seen_paths or not candidate.is_file():
+                    continue
+                seen_paths.add(candidate)
+                loaded = _load_structured_cache_response(
+                    candidate,
+                    response_kind=response_kind,
+                    request_url=request_url,
+                    request_fingerprint=request_fingerprint,
+                    legacy_identity_allowed=(
+                        candidate == cache_path
+                        or candidate.stem in reusable_keys
                     ),
                 )
-                serialized = (
-                    json.dumps(value.payload, ensure_ascii=False, sort_keys=True)
-                    if response_kind == "json"
-                    else value.text or ""
-                )
-                if hashlib.sha256(serialized.encode("utf-8")).hexdigest() != str(
-                    cached.get("cache_value_hash") or ""
-                ):
-                    raise ValueError("structured source cache hash mismatch")
+                if loaded is None:
+                    continue
+                value, cached = loaded
+                if cached_response_validator is not None:
+                    try:
+                        if not cached_response_validator(value):
+                            continue
+                    except (KeyError, TypeError, ValueError):
+                        continue
+                upgraded_cache = {
+                    **cached,
+                    "schema_version": (
+                        _CURRENT_STRUCTURED_CACHE_SCHEMA_VERSION
+                    ),
+                    "request_fingerprint": request_fingerprint,
+                }
+                if candidate != cache_path:
+                    upgraded_cache["shared_cache_reuse"] = True
+                    upgraded_cache["shared_cache_source_content_hash"] = (
+                        value.content_hash
+                    )
+                write_json(cache_path, upgraded_cache)
                 return value, True, None
-            except (KeyError, TypeError, ValueError, json.JSONDecodeError):
-                pass
         try:
             value = fetch()
         except Exception as exc:
@@ -1470,7 +1551,7 @@ class CurrentStructuredSourceMaterializer:
         write_json(
             cache_path,
             {
-                "schema_version": "e2r_v5_current_structured_cache_v1",
+                "schema_version": _CURRENT_STRUCTURED_CACHE_SCHEMA_VERSION,
                 "status_code": value.status_code,
                 "canonical_url": value.canonical_url,
                 "provider_request_id": value.provider_request_id,
@@ -1480,9 +1561,146 @@ class CurrentStructuredSourceMaterializer:
                 "cache_value_hash": hashlib.sha256(
                     serialized.encode("utf-8")
                 ).hexdigest(),
+                "request_fingerprint": request_fingerprint,
             },
         )
         return value, False, None
+
+
+def _structured_request_fingerprint(
+    *,
+    response_kind: str,
+    url: str,
+    params: Mapping[str, Any],
+) -> str:
+    """Hash source semantics without persisting API credentials.
+
+    The fingerprint lets two targets in the same dated production lane reuse
+    the exact same public structured snapshot.  Credential values are transport
+    details, not data identity, and must never enter the cache artifact.
+    """
+
+    safe_params = {
+        str(key): (
+            "<credential>"
+            if _request_parameter_is_credential(str(key))
+            else value
+        )
+        for key, value in sorted(params.items(), key=lambda row: str(row[0]))
+    }
+    return stable_hash(
+        {
+            "schema_version": "e2r_v5_structured_request_identity_v1",
+            "response_kind": response_kind,
+            "url": str(url).split("?", 1)[0].rstrip("/"),
+            "params": safe_params,
+        }
+    )
+
+
+def _request_parameter_is_credential(key: str) -> bool:
+    normalized = re.sub(r"[^a-z0-9]", "", key.casefold())
+    return normalized in {
+        "authkey",
+        "crtfckey",
+        "apikey",
+        "servicekey",
+        "token",
+    } or normalized.endswith(("apikey", "authkey", "token"))
+
+
+def _load_structured_cache_response(
+    path: Path,
+    *,
+    response_kind: str,
+    request_url: str,
+    request_fingerprint: str,
+    legacy_identity_allowed: bool,
+) -> tuple[StructuredHTTPResponse, Mapping[str, Any]] | None:
+    try:
+        cached = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(cached, Mapping):
+            return None
+        cached_fingerprint = str(cached.get("request_fingerprint") or "")
+        if cached_fingerprint:
+            if cached_fingerprint != request_fingerprint:
+                return None
+        elif not legacy_identity_allowed:
+            return None
+        expected_url = str(request_url).split("?", 1)[0].rstrip("/")
+        cached_url = str(cached["canonical_url"]).split("?", 1)[0].rstrip("/")
+        if cached_url != expected_url:
+            return None
+        value = StructuredHTTPResponse(
+            status_code=int(cached["status_code"]),
+            canonical_url=str(cached["canonical_url"]),
+            provider_request_id=str(cached["provider_request_id"]),
+            content_hash=str(cached["content_hash"]),
+            payload=(
+                dict(cached["payload"])
+                if isinstance(cached.get("payload"), Mapping)
+                else None
+            ),
+            text=(
+                str(cached["text"])
+                if cached.get("text") is not None
+                else None
+            ),
+        )
+        if response_kind == "json" and value.payload is None:
+            return None
+        if response_kind == "text" and value.text is None:
+            return None
+        serialized = (
+            json.dumps(value.payload, ensure_ascii=False, sort_keys=True)
+            if response_kind == "json"
+            else value.text or ""
+        )
+        if hashlib.sha256(serialized.encode("utf-8")).hexdigest() != str(
+            cached.get("cache_value_hash") or ""
+        ):
+            return None
+        return value, dict(cached)
+    except (
+        KeyError,
+        OSError,
+        TypeError,
+        UnicodeError,
+        ValueError,
+        json.JSONDecodeError,
+    ):
+        return None
+
+
+def _companyguide_cached_snapshot_is_point_in_time(
+    response: StructuredHTTPResponse,
+    *,
+    cutoff: date,
+    expected_company_name: str | None = None,
+) -> bool:
+    if not response.text:
+        return False
+    try:
+        parsed = parse_companyguide_live_consensus_payload(
+            response.text,
+            as_of_date=cutoff,
+        )
+        if parsed.get("CONSENSUS_DATE_VERIFIED") is not True:
+            return False
+        observed = date.fromisoformat(
+            str(parsed["CONSENSUS_AS_OF_DATE"]).replace("/", "-")[:10]
+        )
+    except (KeyError, TypeError, ValueError):
+        return False
+    if observed > cutoff:
+        return False
+    if expected_company_name is not None:
+        actual_name = str(parsed.get("COMPANY_NAME") or "").strip()
+        if not actual_name or _company_name_key(actual_name) != _company_name_key(
+            expected_company_name
+        ):
+            return False
+    return True
 
 
 def _issuer_fact_route(

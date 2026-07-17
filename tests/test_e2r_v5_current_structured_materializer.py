@@ -19,6 +19,9 @@ from e2r.research_brain.researcher_mode import (
     OfficialSourceMaterializationResult,
     StructuredHTTPResponse,
 )
+from e2r.research_brain.researcher_mode import (
+    current_structured_materializer as structured_materializer_module,
+)
 
 
 class FixtureStructuredTransport:
@@ -255,6 +258,126 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
             self.assertTrue(
                 all(row.observed_at[:10] <= "2026-07-12" for row in result.engine_result.records)
             )
+
+    def test_same_lane_cache_prefers_pre_cutoff_companyguide_snapshot(self):
+        url = "https://comp.wisereport.co.kr/company/c1010001.aspx"
+        with tempfile.TemporaryDirectory() as directory:
+            lane = Path(directory)
+            source_cache = lane / "SOURCE" / "structured_source_cache"
+            target_cache = lane / "TARGET" / "structured_source_cache"
+            source_cache.mkdir(parents=True)
+            target_cache.mkdir(parents=True)
+            pre_cutoff = _companyguide_html("2026.07.10")
+            future = _companyguide_html("2026.07.13")
+            _write_legacy_text_cache(
+                source_cache / "companyguide_snapshot_005930.json",
+                url=url,
+                text=pre_cutoff,
+            )
+            _write_legacy_text_cache(
+                target_cache / "companyguide_peer_snapshot_005930.json",
+                url=url,
+                text=future,
+            )
+            fetch_calls = []
+            response, cache_hit, error = CurrentStructuredSourceMaterializer()._response(
+                cache_key="companyguide_peer_snapshot_005930",
+                cache_root=target_cache,
+                checkpoint_resume=True,
+                response_kind="text",
+                request_url=url,
+                request_params={"cmp_cd": "005930", "cn": ""},
+                fetch=lambda: fetch_calls.append("unexpected"),
+                shared_cache_roots=(source_cache,),
+                shared_cache_keys=(
+                    "companyguide_peer_snapshot_005930",
+                    "companyguide_snapshot_005930",
+                ),
+                cached_response_validator=lambda value: (
+                    structured_materializer_module._companyguide_cached_snapshot_is_point_in_time(
+                        value,
+                        cutoff=date(2026, 7, 12),
+                    )
+                ),
+            )
+            self.assertTrue(cache_hit)
+            self.assertIsNone(error)
+            self.assertEqual(fetch_calls, [])
+            self.assertEqual(response.text, pre_cutoff)
+            self.assertFalse(
+                structured_materializer_module._companyguide_cached_snapshot_is_point_in_time(
+                    response,
+                    cutoff=date(2026, 7, 12),
+                    expected_company_name="A Different Company",
+                )
+            )
+            persisted = json.loads(
+                (
+                    target_cache / "companyguide_peer_snapshot_005930.json"
+                ).read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                persisted["schema_version"],
+                "e2r_v5_current_structured_cache_v2",
+            )
+            self.assertTrue(persisted["shared_cache_reuse"])
+            self.assertEqual(
+                persisted["shared_cache_source_content_hash"],
+                response.content_hash,
+            )
+
+    def test_shared_cache_request_fingerprint_blocks_other_symbol(self):
+        url = "https://comp.wisereport.co.kr/company/c1010001.aspx"
+        with tempfile.TemporaryDirectory() as directory:
+            lane = Path(directory)
+            source_cache = lane / "SOURCE" / "structured_source_cache"
+            target_cache = lane / "TARGET" / "structured_source_cache"
+            source_cache.mkdir(parents=True)
+            source_text = _companyguide_html("2026.07.10")
+            target_text = _companyguide_html("2026.07.11")
+            materializer = CurrentStructuredSourceMaterializer()
+            materializer._response(
+                cache_key="companyguide_snapshot_005930",
+                cache_root=source_cache,
+                checkpoint_resume=True,
+                response_kind="text",
+                request_url=url,
+                request_params={
+                    "cmp_cd": "005930",
+                    "serviceKey": "SHOULD-NOT-BE-PERSISTED",
+                },
+                fetch=lambda: _text_response(url, source_text),
+            )
+            fetch_calls = []
+
+            def fetch_target():
+                fetch_calls.append("called")
+                return _text_response(url, target_text)
+
+            response, cache_hit, error = materializer._response(
+                cache_key="companyguide_snapshot_000660",
+                cache_root=target_cache,
+                checkpoint_resume=True,
+                response_kind="text",
+                request_url=url,
+                request_params={
+                    "cmp_cd": "000660",
+                    "serviceKey": "A-DIFFERENT-SECRET",
+                },
+                fetch=fetch_target,
+                shared_cache_roots=(source_cache,),
+                shared_cache_keys=("companyguide_snapshot_005930",),
+            )
+            self.assertFalse(cache_hit)
+            self.assertIsNone(error)
+            self.assertEqual(fetch_calls, ["called"])
+            self.assertEqual(response.text, target_text)
+            cache_text = "\n".join(
+                path.read_text(encoding="utf-8")
+                for path in lane.rglob("*.json")
+            )
+            self.assertNotIn("SHOULD-NOT-BE-PERSISTED", cache_text)
+            self.assertNotIn("A-DIFFERENT-SECRET", cache_text)
 
     def test_verified_fact_claims_feed_segment_qoq_and_guidance_roles(self):
         transport = FixtureStructuredTransport()
@@ -497,6 +620,39 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         ]
         self.assertIn("peer selection is incomplete", retry["validation_error"])
         self.assertIn("do not invent", retry["instruction"])
+
+
+def _text_response(url: str, text: str) -> StructuredHTTPResponse:
+    content_hash = hashlib.sha256(text.encode()).hexdigest()
+    return StructuredHTTPResponse(
+        status_code=200,
+        canonical_url=url,
+        provider_request_id=f"FIXTURE-{content_hash[:20]}",
+        content_hash=content_hash,
+        text=text,
+    )
+
+
+def _write_legacy_text_cache(path: Path, *, url: str, text: str) -> None:
+    response = _text_response(url, text)
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": "e2r_v5_current_structured_cache_v1",
+                "status_code": response.status_code,
+                "canonical_url": response.canonical_url,
+                "provider_request_id": response.provider_request_id,
+                "content_hash": response.content_hash,
+                "payload": None,
+                "text": response.text,
+                "cache_value_hash": hashlib.sha256(text.encode()).hexdigest(),
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
 
 
 def _official():

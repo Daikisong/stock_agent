@@ -305,7 +305,7 @@
       "recomputed_metrics": {
         "targets": [
           {
-            "actual_output_tree_hash": "2ffbc9c8cc7255db38fa2cb4084c0aa9c1d22fcf8f68d88968acb0d2f2182ad2",
+            "actual_output_tree_hash": "a228fdedc101e0e117bbb6a003a8e9948b4eb6e3e8211d3d8922ac93757f8d5e",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
@@ -331,7 +331,7 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "2ffbc9c8cc7255db38fa2cb4084c0aa9c1d22fcf8f68d88968acb0d2f2182ad2",
+            "output_tree_hash": "a228fdedc101e0e117bbb6a003a8e9948b4eb6e3e8211d3d8922ac93757f8d5e",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
             "provider_error_count": 10,
@@ -344,7 +344,7 @@
             "target_id": "005930"
           },
           {
-            "actual_output_tree_hash": "261d91566532264f1ff973dd245f9ab0cd7da548dcca0bf3c009c341f2d66099",
+            "actual_output_tree_hash": "3ba5028278232aad28763008227b222100927f74860ccadb6f0f249f607c122d",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "SK하이닉스",
@@ -370,7 +370,7 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/000660",
-            "output_tree_hash": "261d91566532264f1ff973dd245f9ab0cd7da548dcca0bf3c009c341f2d66099",
+            "output_tree_hash": "3ba5028278232aad28763008227b222100927f74860ccadb6f0f249f607c122d",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
             "provider_error_count": 4,
@@ -420,7 +420,7 @@
       "recomputed_metrics": {
         "targets": [
           {
-            "actual_output_tree_hash": "2ffbc9c8cc7255db38fa2cb4084c0aa9c1d22fcf8f68d88968acb0d2f2182ad2",
+            "actual_output_tree_hash": "a228fdedc101e0e117bbb6a003a8e9948b4eb6e3e8211d3d8922ac93757f8d5e",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
@@ -446,7 +446,7 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "2ffbc9c8cc7255db38fa2cb4084c0aa9c1d22fcf8f68d88968acb0d2f2182ad2",
+            "output_tree_hash": "a228fdedc101e0e117bbb6a003a8e9948b4eb6e3e8211d3d8922ac93757f8d5e",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
             "provider_error_count": 10,
@@ -459,7 +459,7 @@
             "target_id": "005930"
           },
           {
-            "actual_output_tree_hash": "261d91566532264f1ff973dd245f9ab0cd7da548dcca0bf3c009c341f2d66099",
+            "actual_output_tree_hash": "3ba5028278232aad28763008227b222100927f74860ccadb6f0f249f607c122d",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "SK하이닉스",
@@ -485,7 +485,7 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/000660",
-            "output_tree_hash": "261d91566532264f1ff973dd245f9ab0cd7da548dcca0bf3c009c341f2d66099",
+            "output_tree_hash": "3ba5028278232aad28763008227b222100927f74860ccadb6f0f249f607c122d",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
             "provider_error_count": 4,
@@ -628,7 +628,7 @@
       "detector_run_count": 2,
       "recomputed_metrics": {
         "capability_regression_status": "PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS",
-        "expected_verification_tree_hash": "d6714935d0f3e78dafd9e2da5141e5102121462e283c07812581b71ecabf3e5b",
+        "expected_verification_tree_hash": "25a7918df3abc50146eb3a5832fa271d15049022e5d9a63835054bf73a3cfe93",
         "full_test_evidence": {
           "command": [
             "/home/eorb915/.local/bin/python",
@@ -640,18 +640,18 @@
             "-v"
           ],
           "exit_code": 0,
-          "finished_at": "2026-07-17T17:32:12.785317+00:00",
+          "finished_at": "2026-07-17T18:40:02.119836+00:00",
           "full_discovery": true,
           "log_path": "docs/operational/e2r_v5_full_test_result.log",
-          "log_sha256": "8a348c427e30ba4226ca7930b21f36ef4f1beb8039a2fc5f11e0b1e70d0616cb",
+          "log_sha256": "b71cc223b3e6fcd9e42a4f632bf8fe153ce261cb066789408b901f3d8bc361c9",
           "schema_version": "e2r_v5_full_test_evidence_v1",
-          "started_at": "2026-07-17T17:23:24.284939+00:00",
+          "started_at": "2026-07-17T18:31:27.320803+00:00",
           "status": "PASS",
-          "test_count": 6301,
-          "unittest_runtime_seconds": 525.176,
-          "verification_tree_hash": "d6714935d0f3e78dafd9e2da5141e5102121462e283c07812581b71ecabf3e5b",
+          "test_count": 6304,
+          "unittest_runtime_seconds": 511.577,
+          "verification_tree_hash": "25a7918df3abc50146eb3a5832fa271d15049022e5d9a63835054bf73a3cfe93",
           "verification_tree_stable_during_run": true,
-          "wall_runtime_seconds": 528.500378
+          "wall_runtime_seconds": 514.799033
         },
         "full_test_evidence_valid": true,
         "full_test_evidence_validation": {
@@ -669,15 +669,15 @@
             "verification_tree_hash_matches": true,
             "verification_tree_stable": true
           },
-          "log_sha256": "8a348c427e30ba4226ca7930b21f36ef4f1beb8039a2fc5f11e0b1e70d0616cb",
-          "logged_test_count": 6301,
-          "reported_test_count": 6301,
+          "log_sha256": "b71cc223b3e6fcd9e42a4f632bf8fe153ce261cb066789408b901f3d8bc361c9",
+          "logged_test_count": 6304,
+          "reported_test_count": 6304,
           "valid": true
         },
         "self_repair_status": "PHASE99_INTERNAL_SELF_REPAIR_PASS",
         "targets": [
           {
-            "actual_output_tree_hash": "2ffbc9c8cc7255db38fa2cb4084c0aa9c1d22fcf8f68d88968acb0d2f2182ad2",
+            "actual_output_tree_hash": "a228fdedc101e0e117bbb6a003a8e9948b4eb6e3e8211d3d8922ac93757f8d5e",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
@@ -703,7 +703,7 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "2ffbc9c8cc7255db38fa2cb4084c0aa9c1d22fcf8f68d88968acb0d2f2182ad2",
+            "output_tree_hash": "a228fdedc101e0e117bbb6a003a8e9948b4eb6e3e8211d3d8922ac93757f8d5e",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
             "provider_error_count": 10,
@@ -716,7 +716,7 @@
             "target_id": "005930"
           },
           {
-            "actual_output_tree_hash": "261d91566532264f1ff973dd245f9ab0cd7da548dcca0bf3c009c341f2d66099",
+            "actual_output_tree_hash": "3ba5028278232aad28763008227b222100927f74860ccadb6f0f249f607c122d",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "SK하이닉스",
@@ -742,7 +742,7 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/000660",
-            "output_tree_hash": "261d91566532264f1ff973dd245f9ab0cd7da548dcca0bf3c009c341f2d66099",
+            "output_tree_hash": "3ba5028278232aad28763008227b222100927f74860ccadb6f0f249f607c122d",
             "output_tree_hash_matches": true,
             "production_research_complete": false,
             "provider_error_count": 4,
