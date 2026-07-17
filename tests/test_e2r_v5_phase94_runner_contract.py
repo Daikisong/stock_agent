@@ -771,6 +771,101 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             _semantic_signature(first), _semantic_signature(changed_failure)
         )
 
+    def test_no_progress_signature_ignores_attempt_ids_without_new_facts(
+        self,
+    ) -> None:
+        def result(
+            *,
+            literal_query: str,
+            query_id: str,
+            candidate_id: str,
+            document_id: str,
+            fact_ids: tuple[str, ...] = (),
+            failure_count: int = 1,
+        ):
+            supervisor = SimpleNamespace(status="NEXT_RESEARCH_REQUIRED")
+            return SimpleNamespace(
+                source_graph=SimpleNamespace(
+                    status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+                    checkpoint={
+                        "generated_queries": [
+                            {
+                                "query_id": query_id,
+                                "literal_query": literal_query,
+                                "execution_status": "EXECUTED",
+                            }
+                        ],
+                        "search_candidates": [
+                            {
+                                "candidate_id": candidate_id,
+                                "ranking_status": "SELECTED",
+                                "fetch_status": "FAILED",
+                            }
+                        ],
+                        "query_failures": [
+                            {
+                                "query_id": f"{query_id}-{index}",
+                                "candidate_id": f"{candidate_id}-{index}",
+                                "failure_stage": "FULL_DOCUMENT_FETCH",
+                                "failure_reason": "TLS_FAILURE",
+                                "alternate_route_required": True,
+                            }
+                            for index in range(failure_count)
+                        ],
+                    },
+                    evidence_documents=(
+                        SimpleNamespace(document_id=document_id),
+                    ),
+                ),
+                fact_extraction=SimpleNamespace(
+                    status="FACT_EXTRACTION_COMPLETE",
+                    pending_reasons=(),
+                    facts=tuple(
+                        SimpleNamespace(fact_id=fact_id) for fact_id in fact_ids
+                    ),
+                ),
+                dossier=SimpleNamespace(component_results=()),
+                structured_result=SimpleNamespace(
+                    status="SOURCE_PENDING",
+                    records=(),
+                ),
+                score_aggregation=SimpleNamespace(
+                    status="SCORE_PENDING",
+                    pending_reasons=("SOURCE_PENDING",),
+                ),
+                research_epoch=SimpleNamespace(supervisor_review=supervisor),
+            )
+
+        first = result(
+            literal_query="첫 번째 표현의 동일 연구 질문",
+            query_id="Q1",
+            candidate_id="C1",
+            document_id="D1",
+        )
+        repeated_attempt = result(
+            literal_query="두 번째 표현의 동일 연구 질문",
+            query_id="Q2",
+            candidate_id="C2",
+            document_id="D2",
+            failure_count=2,
+        )
+        material_progress = result(
+            literal_query="세 번째 표현의 동일 연구 질문",
+            query_id="Q3",
+            candidate_id="C3",
+            document_id="D3",
+            fact_ids=("FACT-NEW",),
+        )
+
+        self.assertEqual(
+            _semantic_signature(first),
+            _semantic_signature(repeated_attempt),
+        )
+        self.assertNotEqual(
+            _semantic_signature(first),
+            _semantic_signature(material_progress),
+        )
+
     def test_no_progress_signature_tracks_supervisor_validation_failure_class(
         self,
     ) -> None:

@@ -294,36 +294,22 @@ def _semantic_signature(result) -> str:
     source = result.source_graph.checkpoint
     return stable_hash(
         {
-            "query_states": sorted(
-                (
-                    str(row.get("literal_query") or "").casefold(),
-                    str(row.get("execution_status") or ""),
-                )
-                for row in source.get("generated_queries") or ()
-            ),
-            "candidate_states": sorted(
-                (
-                    str(row.get("candidate_id") or ""),
-                    str(row.get("ranking_status") or ""),
-                    str(row.get("fetch_status") or ""),
-                )
-                for row in source.get("search_candidates") or ()
-            ),
+            # Query/candidate/document identifiers describe transport attempts,
+            # not research progress.  A planner can keep wording the same open
+            # objective differently and receive fresh candidate IDs without
+            # producing a new citable fact.  Counting those IDs makes the
+            # until-pass loop immortal even when every material gate is stable.
             "source_failure_states": sorted(
-                (
-                    str(row.get("query_id") or ""),
-                    str(row.get("candidate_id") or ""),
-                    str(row.get("failure_stage") or ""),
-                    _semantic_failure_reason(
-                        str(row.get("failure_reason") or "")
-                    ),
-                    bool(row.get("alternate_route_required")),
+                set(
+                    (
+                        str(row.get("failure_stage") or ""),
+                        _semantic_failure_reason(
+                            str(row.get("failure_reason") or "")
+                        ),
+                        bool(row.get("alternate_route_required")),
+                    )
+                    for row in source.get("query_failures") or ()
                 )
-                for row in source.get("query_failures") or ()
-            ),
-            "document_ids": sorted(
-                str(row.get("document_id") or "")
-                for row in result.source_graph.evidence_documents
             ),
             "source_graph_status": result.source_graph.status,
             "fact_extraction_status": result.fact_extraction.status,
