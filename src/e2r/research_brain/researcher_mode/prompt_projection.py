@@ -397,11 +397,14 @@ def project_supervisor_source_graph_checkpoint(
     never a fixed sample.
     """
 
+    # ``checkpoint_id`` and ``epoch`` are persistence lineage, not research
+    # evidence. Keeping them in the provider payload makes an otherwise
+    # identical semantic checkpoint miss the response cache on every epoch.
+    # The canonical Source Graph still retains and validates both fields before
+    # this projection is built.
     output = {
         key: checkpoint.get(key)
         for key in (
-            "checkpoint_id",
-            "epoch",
             "quarantined_documents",
             "resolved_objective_ids",
             "transport_budget_can_complete_research",
@@ -586,9 +589,11 @@ def project_supervisor_source_graph_checkpoint(
     )
     output["evidence_documents"] = document_projection
     output["source_graph_prompt_projection"] = {
-        "schema_version": "e2r_v5_supervisor_source_graph_projection_v1",
+        "schema_version": "e2r_v5_supervisor_source_graph_projection_v2",
         "complete_artifact_persisted_outside_prompt": True,
         "every_query_document_and_state_row_accounted": True,
+        "checkpoint_lineage_excluded_from_provider": True,
+        "excluded_checkpoint_lineage_fields": ["checkpoint_id", "epoch"],
         "fixed_top_n_used": False,
         "prompt_projection_is_research_cap": False,
         "score_authority": False,
@@ -1916,6 +1921,9 @@ def project_query_score_gap_context(
     supervisor = output.get("prior_supervisor_gap")
     if isinstance(supervisor, Mapping):
         projected_supervisor = dict(supervisor)
+        projected_supervisor.pop("review_id", None)
+        projected_supervisor.pop("supervisor_review_id", None)
+        projected_supervisor.pop("epoch", None)
         failure_assessments = projected_supervisor.pop(
             "failure_assessments", ()
         )
@@ -1935,11 +1943,26 @@ def project_query_score_gap_context(
                 _project_text_roster(parser_failures)
             )
         output["prior_supervisor_gap"] = projected_supervisor
+    prior_epoch = output.get("prior_research_epoch")
+    if isinstance(prior_epoch, Mapping):
+        projected_epoch = dict(prior_epoch)
+        projected_epoch.pop("checkpoint_id", None)
+        projected_epoch.pop("epoch", None)
+        output["prior_research_epoch"] = projected_epoch
+    semantic_context_hash = _stable_hash(output)
     return {
         **output,
         "query_score_gap_projection_audit": {
-            "schema_version": "e2r_v5_query_score_gap_projection_v1",
-            "input_context_roster_hash": _stable_hash(context),
+            "schema_version": "e2r_v5_query_score_gap_projection_v2",
+            "semantic_context_roster_hash": semantic_context_hash,
+            "checkpoint_lineage_excluded_from_provider": True,
+            "excluded_checkpoint_lineage_fields": [
+                "prior_research_epoch.checkpoint_id",
+                "prior_research_epoch.epoch",
+                "prior_supervisor_gap.review_id",
+                "prior_supervisor_gap.supervisor_review_id",
+                "prior_supervisor_gap.epoch",
+            ],
             "llm_authored_missing_facts_questions_and_directions_preserved": True,
             "duplicate_failure_ledgers_projected": True,
             "full_gap_context_persisted_outside_prompt": True,

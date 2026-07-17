@@ -369,7 +369,6 @@ class ResearchSupervisor:
         payload = scrub_blind_research_payload(
             {
                 "reviewer_role": self.reviewer_role,
-                "epoch": epoch,
                 "target_id": target_id,
                 "as_of_date": as_of_date,
                 "component_results": [row.to_dict() for row in component_results],
@@ -1074,6 +1073,11 @@ def _prior_supervisor_review_prompt_projection(
         if isinstance(review, ResearchSupervisorReview)
         else dict(review)
     )
+    # These fields bind the persisted review to one checkpoint but do not
+    # change its research judgment. Excluding them lets an unchanged semantic
+    # review reuse the provider response after checkpoint resume.
+    for key in ("review_id", "epoch", "prompt_hash"):
+        payload.pop(key, None)
     assessments = tuple(
         dict(row)
         for row in payload.pop("failure_assessments", ()) or ()
@@ -1137,11 +1141,13 @@ def _prior_supervisor_review_prompt_projection(
         "failure_roster_hash": _stable_payload_hash(parser_failure_ids),
         "full_failure_ids_persisted_outside_prompt": True,
     }
-    payload["prior_review_roster_hash"] = _stable_payload_hash(
-        review.to_dict()
-        if isinstance(review, ResearchSupervisorReview)
-        else dict(review)
-    )
+    payload["prior_review_semantic_hash"] = _stable_payload_hash(payload)
+    payload["checkpoint_lineage_excluded_from_provider"] = True
+    payload["excluded_checkpoint_lineage_fields"] = [
+        "review_id",
+        "epoch",
+        "prompt_hash",
+    ]
     payload["full_prior_review_persisted_outside_prompt"] = True
     payload["fixed_top_n_used"] = False
     payload["prompt_projection_is_research_cap"] = False

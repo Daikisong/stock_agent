@@ -795,9 +795,90 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertEqual(
             supervisor_source["evidence_documents"]["record_count"], 1_000
         )
+        self.assertNotIn("checkpoint_id", supervisor_source)
+        self.assertNotIn("epoch", supervisor_source)
+        self.assertTrue(
+            supervisor_source["source_graph_prompt_projection"][
+                "checkpoint_lineage_excluded_from_provider"
+            ]
+        )
         self.assertLess(len(source_encoded), 250_000)
         self.assertNotIn("현재 회사 원문 탐색 999", source_encoded)
         self.assertNotIn("https://issuer.example/999.pdf", source_encoded)
+
+    def test_supervisor_source_graph_projection_ignores_checkpoint_lineage(self):
+        checkpoint = {
+            "checkpoint_id": "CHECKPOINT-1",
+            "epoch": 1,
+            "generated_queries": [],
+            "search_candidates": [],
+            "candidate_materiality_decisions": [],
+            "fetch_records": [],
+            "rejected_documents": [],
+            "query_failures": [],
+            "provider_failures": [],
+            "evidence_documents": [],
+            "quarantined_documents": [],
+            "resolved_objective_ids": [],
+            "transport_budget_can_complete_research": False,
+            "semantic_saturation_certified": False,
+        }
+        resumed = {
+            **checkpoint,
+            "checkpoint_id": "CHECKPOINT-999",
+            "epoch": 999,
+        }
+        self.assertEqual(
+            project_supervisor_source_graph_checkpoint(checkpoint),
+            project_supervisor_source_graph_checkpoint(resumed),
+        )
+
+    def test_query_gap_projection_ignores_checkpoint_lineage(self):
+        context = {
+            "prior_research_epoch": {
+                "checkpoint_id": "REPOCH-1",
+                "epoch": 1,
+                "status": "NEXT_RESEARCH_REQUIRED",
+                "unresolved_material_questions": ["제품별 현금 전환"],
+                "next_actions": ["새 원천을 탐색한다"],
+            },
+            "prior_supervisor_gap": {
+                "review_id": "REVIEW-1",
+                "supervisor_review_id": "REVIEW-1",
+                "epoch": 1,
+                "status": "NEXT_RESEARCH_REQUIRED",
+                "missing_material_facts": ["제품별 FCF"],
+                "failure_assessments": [],
+                "parser_or_extractor_failures": [],
+            },
+        }
+        resumed = {
+            **context,
+            "prior_research_epoch": {
+                **context["prior_research_epoch"],
+                "checkpoint_id": "REPOCH-999",
+                "epoch": 999,
+            },
+            "prior_supervisor_gap": {
+                **context["prior_supervisor_gap"],
+                "review_id": "REVIEW-999",
+                "supervisor_review_id": "REVIEW-999",
+                "epoch": 999,
+            },
+        }
+        first = project_query_score_gap_context(context)
+        second = project_query_score_gap_context(resumed)
+        self.assertEqual(first, second)
+        self.assertNotIn("checkpoint_id", first["prior_research_epoch"])
+        self.assertNotIn("epoch", first["prior_research_epoch"])
+        self.assertNotIn("review_id", first["prior_supervisor_gap"])
+        self.assertNotIn("supervisor_review_id", first["prior_supervisor_gap"])
+        self.assertNotIn("epoch", first["prior_supervisor_gap"])
+        self.assertTrue(
+            first["query_score_gap_projection_audit"][
+                "checkpoint_lineage_excluded_from_provider"
+            ]
+        )
 
     def test_research_epoch_projection_keeps_delta_lineage_without_bodies(self):
         text = "full fetched source body " * 20_000

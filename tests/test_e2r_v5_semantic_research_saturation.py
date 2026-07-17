@@ -502,6 +502,41 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         self.assertTrue(prior["full_prior_review_persisted_outside_prompt"])
         self.assertFalse(prior["fixed_top_n_used"])
 
+    def test_supervisor_prompt_ignores_epoch_and_prior_review_lineage(self) -> None:
+        seed = ResearchSupervisor(
+            provider=Phase87SupervisorProvider("GAP")
+        ).review_epoch(**_supervisor_inputs())
+        first_prior = dict(seed.to_dict())
+        resumed_prior = {
+            **first_prior,
+            "review_id": "RESUMED-REVIEW-ID",
+            "epoch": 999,
+            "prompt_hash": "RESUMED-PROMPT-HASH",
+        }
+        provider = Phase87SupervisorProvider("GAP")
+        supervisor = ResearchSupervisor(provider=provider)
+        supervisor.review_epoch(
+            **_supervisor_inputs(),
+            prior_review=first_prior,
+        )
+        resumed_inputs = dict(_supervisor_inputs())
+        resumed_inputs["epoch"] = 999
+        supervisor.review_epoch(
+            **resumed_inputs,
+            prior_review=resumed_prior,
+        )
+        first_payload = provider.calls[-2]["payload"]
+        resumed_payload = provider.calls[-1]["payload"]
+        self.assertEqual(first_payload, resumed_payload)
+        self.assertNotIn("epoch", first_payload)
+        prior_projection = first_payload["prior_supervisor_review"]
+        self.assertNotIn("review_id", prior_projection)
+        self.assertNotIn("epoch", prior_projection)
+        self.assertNotIn("prompt_hash", prior_projection)
+        self.assertTrue(
+            prior_projection["checkpoint_lineage_excluded_from_provider"]
+        )
+
     def test_supervisor_provider_error_is_bounded_before_checkpoint_persistence(
         self,
     ) -> None:
@@ -676,7 +711,7 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             supervisor_source_graph["source_graph_prompt_projection"][
                 "schema_version"
             ],
-            "e2r_v5_supervisor_source_graph_projection_v1",
+            "e2r_v5_supervisor_source_graph_projection_v2",
         )
         self.assertEqual(
             supervisor_payload["current_evidence_fact_graph"]["record_count"],

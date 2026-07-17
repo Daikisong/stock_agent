@@ -628,7 +628,7 @@
       "detector_run_count": 2,
       "recomputed_metrics": {
         "capability_regression_status": "PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS",
-        "expected_verification_tree_hash": "b189d5e7e3fea978ff3be516e3884e9c69206472e5a43aa592f3d53cc7da1deb",
+        "expected_verification_tree_hash": "f0b825d4153b7b0e627f2f5dc3b65e2eb051396d436d090744153451cf710378",
         "full_test_evidence": {
           "command": [
             "/home/eorb915/.local/bin/python",
@@ -640,18 +640,18 @@
             "-v"
           ],
           "exit_code": 0,
-          "finished_at": "2026-07-17T16:05:31.561487+00:00",
+          "finished_at": "2026-07-17T16:26:02.389052+00:00",
           "full_discovery": true,
           "log_path": "docs/operational/e2r_v5_full_test_result.log",
-          "log_sha256": "70c75718ced99501b1f97e1102fa26bd5ced0e67dfc985850aa031539ff7b2c4",
+          "log_sha256": "cb2693f1ebce12e868ffc2eea1433c7514913264e618bbbcd8938e504d2c5193",
           "schema_version": "e2r_v5_full_test_evidence_v1",
-          "started_at": "2026-07-17T15:56:51.667711+00:00",
+          "started_at": "2026-07-17T16:17:17.854483+00:00",
           "status": "PASS",
-          "test_count": 6292,
-          "unittest_runtime_seconds": 516.301,
-          "verification_tree_hash": "b189d5e7e3fea978ff3be516e3884e9c69206472e5a43aa592f3d53cc7da1deb",
+          "test_count": 6295,
+          "unittest_runtime_seconds": 520.707,
+          "verification_tree_hash": "f0b825d4153b7b0e627f2f5dc3b65e2eb051396d436d090744153451cf710378",
           "verification_tree_stable_during_run": true,
-          "wall_runtime_seconds": 519.893776
+          "wall_runtime_seconds": 524.534569
         },
         "full_test_evidence_valid": true,
         "full_test_evidence_validation": {
@@ -669,9 +669,9 @@
             "verification_tree_hash_matches": true,
             "verification_tree_stable": true
           },
-          "log_sha256": "70c75718ced99501b1f97e1102fa26bd5ced0e67dfc985850aa031539ff7b2c4",
-          "logged_test_count": 6292,
-          "reported_test_count": 6292,
+          "log_sha256": "cb2693f1ebce12e868ffc2eea1433c7514913264e618bbbcd8938e504d2c5193",
+          "logged_test_count": 6295,
+          "reported_test_count": 6295,
           "valid": true
         },
         "self_repair_status": "PHASE99_INTERNAL_SELF_REPAIR_PASS",
