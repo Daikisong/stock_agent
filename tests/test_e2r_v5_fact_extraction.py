@@ -133,10 +133,43 @@ class CorrectingCompletionFactProvider(FactProvider):
         response["unresolved_research_notes"] = [
             "다른 원문에서 전체 thesis 근거를 계속 찾아야 한다."
         ]
-        response["extraction_complete"] = bool(
+        corrected = bool(
             retry
             and "local to this supplied batch" in str(retry.get("instruction") or "")
         )
+        response["unresolved_document_ids"] = (
+            [] if corrected else [payload["full_documents"][0]["document_id"]]
+        )
+        response["extraction_complete"] = corrected
+        return response
+
+
+class StructurallyCompleteFalseProvider(FactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(super().complete(pass_name=pass_name, payload=payload))
+        response["facts"] = []
+        response["document_dispositions"] = [
+            {
+                "document_id": row["document_id"],
+                "status": "NO_MATERIAL_FACT",
+                "rationale": "현재 전송 청크에는 material fact가 없다.",
+            }
+            for row in payload["full_documents"]
+        ]
+        response["unresolved_document_ids"] = []
+        response["unresolved_research_notes"] = [
+            "부모 문서의 나머지 전송 청크는 별도 배치에서 계속 처리한다."
+        ]
+        response["extraction_complete"] = False
+        return response
+
+
+class StructurallyIncompleteFalseProvider(StructurallyCompleteFalseProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(super().complete(pass_name=pass_name, payload=payload))
+        response["unresolved_document_ids"] = [
+            payload["full_documents"][0]["document_id"]
+        ]
         return response
 
 
@@ -619,6 +652,60 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 row.startswith("UNRESOLVED_RESEARCH_NOTE:")
                 for row in result.research_gap_feedback
             )
+        )
+
+    def test_false_completion_flag_is_reconciled_only_after_full_batch_accounting(self) -> None:
+        provider = StructurallyCompleteFalseProvider()
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(_document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 1)
+        self.assertEqual(result.audit["completion_flag_reconciled_count"], 1)
+        self.assertEqual(
+            result.audit["completion_flag_reconciliation_policy"],
+            "BATCH_DISPOSITIONS_COMPLETE_AND_NO_UNRESOLVED_DOCUMENT_IDS",
+        )
+        self.assertNotIn(
+            "LLM_DECLARED_FACT_EXTRACTION_INCOMPLETE", result.pending_reasons
+        )
+        self.assertTrue(
+            any(
+                row.startswith("UNRESOLVED_RESEARCH_NOTE:")
+                for row in result.research_gap_feedback
+            )
+        )
+
+    def test_false_completion_with_unresolved_document_stays_pending(self) -> None:
+        provider = StructurallyIncompleteFalseProvider()
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(_document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(len(provider.calls), 3)
+        self.assertEqual(result.audit["completion_flag_reconciled_count"], 0)
+        self.assertTrue(
+            any(
+                row.startswith("UNRESOLVED_DOCUMENT:DOC-1")
+                for row in result.pending_reasons
+            )
+        )
+        self.assertIn(
+            "LLM_DECLARED_FACT_EXTRACTION_INCOMPLETE", result.pending_reasons
         )
 
     def test_snippet_and_future_document_are_rejected_before_llm(self) -> None:

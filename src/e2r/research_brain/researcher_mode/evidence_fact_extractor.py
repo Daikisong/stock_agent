@@ -86,6 +86,7 @@ class FactExtractionProviderCall:
     response_hash: str | None
     provider_attempt_count: int = 1
     validation_retry_used: bool = False
+    completion_flag_reconciled: bool = False
     transport_chunk_ids: tuple[str, ...] = ()
     schema_version: str = "e2r_v5_fact_extraction_provider_call_v1"
 
@@ -444,6 +445,7 @@ class ResearcherEvidenceFactExtractor:
                     batch_dispositions,
                     batch_pending,
                     batch_feedback,
+                    batch_completion_flag_reconciled,
                 ) = _validate_response(
                     response,
                     batch_id=batch_id,
@@ -542,6 +544,9 @@ class ResearcherEvidenceFactExtractor:
                         response_hash=response_hash,
                         provider_attempt_count=provider_attempt_count,
                         validation_retry_used=validation_retry_used,
+                        completion_flag_reconciled=(
+                            batch_completion_flag_reconciled
+                        ),
                         transport_chunk_ids=batch_transport_chunk_ids,
                     )
                 )
@@ -611,6 +616,12 @@ class ResearcherEvidenceFactExtractor:
             ),
             "validation_retry_call_count": sum(
                 row.validation_retry_used for row in calls
+            ),
+            "completion_flag_reconciled_count": (
+                sum(row.completion_flag_reconciled for row in calls)
+            ),
+            "completion_flag_reconciliation_policy": (
+                "BATCH_DISPOSITIONS_COMPLETE_AND_NO_UNRESOLVED_DOCUMENT_IDS"
             ),
             "transport_chunk_size": self.documents_per_call,
             "transport_character_bound": self.max_document_chars_per_call,
@@ -1074,6 +1085,7 @@ def _validate_response(
     list[Mapping[str, Any]],
     list[str],
     list[str],
+    bool,
 ]:
     document_by_id = {str(row["document_id"]): row for row in documents}
     raw_facts = response.get("facts")
@@ -1228,7 +1240,19 @@ def _validate_response(
         for value in notes
         if str(value).strip()
     )
-    if response.get("extraction_complete") is not True:
+    batch_document_accounting_complete = (
+        set(disposition_ids) == expected_ids
+        and len(disposition_ids) == len(expected_ids)
+        and not unresolved_ids
+    )
+    completion_flag_reconciled = (
+        response.get("extraction_complete") is not True
+        and batch_document_accounting_complete
+    )
+    if (
+        response.get("extraction_complete") is not True
+        and not completion_flag_reconciled
+    ):
         pending.append("LLM_DECLARED_FACT_EXTRACTION_INCOMPLETE")
     return (
         claims,
@@ -1236,6 +1260,7 @@ def _validate_response(
         dispositions,
         list(dict.fromkeys(pending)),
         list(dict.fromkeys(feedback)),
+        completion_flag_reconciled,
     )
 
 
@@ -1525,6 +1550,9 @@ def _coerce_provider_call(
         ),
         provider_attempt_count=int(row.get("provider_attempt_count") or 1),
         validation_retry_used=bool(row.get("validation_retry_used")),
+        completion_flag_reconciled=bool(
+            row.get("completion_flag_reconciled")
+        ),
         transport_chunk_ids=tuple(row.get("transport_chunk_ids") or ()),
     )
 
