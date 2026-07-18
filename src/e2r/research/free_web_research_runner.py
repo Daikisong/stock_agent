@@ -9,7 +9,6 @@ from datetime import date, timedelta
 from pathlib import Path
 from time import sleep
 from typing import Any, Callable, Mapping, Protocol, Sequence
-from urllib.parse import unquote
 
 from e2r.agentic import (
     AgenticEvidenceProviderBundle,
@@ -72,6 +71,7 @@ from e2r.research.manual_source_provider import ManualSourceProvider
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
 from e2r.research.page_fetcher import PageFetcher
 from e2r.research.pdf_text_extractor import PDFTextExtractor
+from e2r.research.publication_date import infer_publication_date
 from e2r.research.query_planner import QueryPlan, QueryPlanner, QuerySpec
 from e2r.research.official_follow_up_provider import (
     CompositeFollowUpSourceProvider,
@@ -4074,117 +4074,17 @@ def _agentic_infer_document_published_at(
     ``future_source``.
     """
 
-    if search_result.published_at is not None:
-        return search_result.published_at.date()
-    metadata_text = " ".join(
-        item
-        for item in (
-            unquote(str(search_result.url or "")),
+    return infer_publication_date(
+        explicit=search_result.published_at,
+        metadata_parts=(
+            str(search_result.url or ""),
             str(search_result.title or ""),
             str(search_result.snippet or ""),
             str(search_result.source or ""),
-        )
-        if item
+        ),
+        document_text=str(document_text or ""),
+        as_of_date=as_of_date,
     )
-    candidates = _agentic_date_candidates_from_metadata(metadata_text, as_of_date=as_of_date)
-    if document_text:
-        candidates = (
-            *candidates,
-            *_agentic_publication_date_candidates_from_labeled_text(
-                document_text,
-                as_of_date=as_of_date,
-            ),
-        )
-    if not candidates:
-        return None
-    return max(candidates)
-
-
-def _agentic_date_candidates_from_metadata(text: str, *, as_of_date: date | None = None) -> tuple[date, ...]:
-    candidates: list[date] = []
-    for match in re.finditer(r"(?<!\d)(20\d{2})[./_-]([01]\d)[./_-]([0-3]\d)(?!\d)", text):
-        candidate = _agentic_valid_date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
-        if candidate is not None:
-            candidates.append(candidate)
-    for match in re.finditer(r"(?<!\d)(20\d{2})([01]\d)([0-3]\d)(?!\d)", text):
-        candidate = _agentic_valid_date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
-        if candidate is not None:
-            candidates.append(candidate)
-    for match in re.finditer(
-        r"(?i)(?:[/_-]|(?:article|view|news|data|html|ecn)[^0-9]{0,12})"
-        r"(20\d{2})([01]\d)([0-3]\d)(?=\d{2,18}(?:\D|$))",
-        text,
-    ):
-        candidate = _agentic_valid_date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
-        if candidate is not None:
-            candidates.append(candidate)
-    yy_upper_bound = (as_of_date.year + 1) % 100 if as_of_date is not None else 35
-    for match in re.finditer(r"(?<!\d)(\d{2})([01]\d)([0-3]\d)(?!\d)", text):
-        yy = int(match.group(1))
-        if yy > yy_upper_bound:
-            continue
-        candidate = _agentic_valid_date(2000 + yy, int(match.group(2)), int(match.group(3)))
-        if candidate is not None:
-            candidates.append(candidate)
-    return tuple(dict.fromkeys(candidates))
-
-
-def _agentic_publication_date_candidates_from_labeled_text(
-    text: str,
-    *,
-    as_of_date: date | None = None,
-) -> tuple[date, ...]:
-    """Return publication dates only from explicit article metadata labels."""
-
-    candidates: list[date] = []
-    for raw_line in str(text or "").splitlines()[:500]:
-        line = raw_line.strip()
-        if not line or not _agentic_has_publication_date_label(line):
-            continue
-        candidates.extend(_agentic_date_candidates_from_metadata(line, as_of_date=as_of_date))
-        for match in re.finditer(r"(?<!\d)(20\d{2})([01]\d)([0-3]\d)(?=\d{2,6}(?:\D|$))", line):
-            candidate = _agentic_valid_date(int(match.group(1)), int(match.group(2)), int(match.group(3)))
-            if candidate is not None:
-                candidates.append(candidate)
-    return tuple(dict.fromkeys(candidates))
-
-
-def _agentic_has_publication_date_label(line: str) -> bool:
-    normalized = re.sub(r"\s+", " ", str(line or "").strip()).lower()
-    if not normalized:
-        return False
-    korean_labels = (
-        "입력",
-        "등록",
-        "승인",
-        "발행",
-        "게시",
-        "보도",
-        "작성",
-        "최종수정",
-        "최종 수정",
-        "수정",
-        "기사입력",
-        "기사 입력",
-        "기사등록",
-        "기사 등록",
-    )
-    prefix = normalized[:32]
-    if any(label in prefix for label in korean_labels):
-        return True
-    return bool(
-        re.search(
-            r"(?i)^(?:published|posted|updated|publication\s+date|release\s+date|article\s+date|date)\b",
-            normalized,
-        )
-    )
-
-
-def _agentic_valid_date(year: int, month: int, day: int) -> date | None:
-    try:
-        return date(year, month, day)
-    except ValueError:
-        return None
 
 
 def _limit_agentic_document_inputs(

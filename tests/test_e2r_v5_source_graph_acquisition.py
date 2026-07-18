@@ -849,6 +849,181 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
+    def test_checkpoint_resume_refetches_stale_split_article_date(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/stale-split-article-date"
+        text = (
+            "입력\n2025-09-24 13:34\n"
+            "Current Corp disclosed HBM capacity, customer qualification, pricing, "
+            "cash conversion, and counter evidence in the full article. "
+            + "source-backed article detail " * 12
+            + "\n인터넷신문 등록번호\n등록일자 : 2016.04.26\n"
+        )
+        search = RecordingSearchProvider(
+            {
+                QUERY: (
+                    _result(
+                        "Current Corp HBM article",
+                        url,
+                        published=None,
+                    ),
+                )
+            }
+        )
+        fetcher = PageFetcher(fixture_text_by_url={url: text})
+        first = self._run(provider=provider, search=search, fetcher=fetcher)
+        self.assertEqual(first.evidence_documents[0]["published_at"], "2025-09-24")
+
+        stale_state = json.loads(json.dumps(first.checkpoint))
+        stale_state.pop("checkpoint_id")
+        stale_state.pop("checkpoint_hash")
+        stale_document = stale_state["evidence_documents"][0]
+        old_document_id = source_graph_module.stable_intelligence_id(
+            "SGDOC",
+            {
+                "target_id": TARGET,
+                "content_hash": stale_document["content_hash"],
+                "published_at": "2016-04-26",
+            },
+        )
+        stale_document["document_id"] = old_document_id
+        stale_document["published_at"] = "2016-04-26"
+        stale_document["available_at"] = "2016-04-26"
+        stale_document["publication_date_source"] = "DOCUMENT_CONTENT_INFERENCE"
+        stale_state["search_candidates"][0]["document_id"] = old_document_id
+        stale_checkpoint = source_graph_module._finalize_checkpoint(stale_state)
+
+        resumed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=stale_checkpoint,
+        )
+
+        self.assertEqual(len(resumed.evidence_documents), 1)
+        repaired = resumed.evidence_documents[0]
+        self.assertEqual(repaired["published_at"], "2025-09-24")
+        self.assertNotEqual(repaired["document_id"], old_document_id)
+        quarantine = resumed.checkpoint["quarantined_documents"][0]
+        self.assertEqual(quarantine["document_id"], old_document_id)
+        self.assertEqual(
+            quarantine["quarantine_reason"],
+            "STALE_PUBLICATION_DATE_INFERENCE:2016-04-26->2025-09-24",
+        )
+        self.assertTrue(quarantine["publication_date_refetch_required"])
+        self.assertEqual(
+            resumed.checkpoint["search_candidates"][0]["document_id"],
+            repaired["document_id"],
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            paths = write_source_graph_acquisition_run(resumed, output_root=directory)
+            loaded = load_source_graph_checkpoint(paths["checkpoint"])
+            self.assertEqual(
+                loaded["checkpoint_hash"],
+                resumed.checkpoint["checkpoint_hash"],
+            )
+
+    def test_checkpoint_resume_rejects_newly_detected_future_article(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/stale-future-article-date"
+        initial_text = (
+            "입력\n2025-09-24 13:34\n"
+            "Current Corp disclosed HBM capacity, customer qualification, pricing, "
+            "cash conversion, and counter evidence in the full article. "
+            + "source-backed article detail " * 12
+        )
+        future_text = (
+            "입력\n2026-07-02 09:30\n"
+            "Current Corp disclosed HBM capacity, customer qualification, pricing, "
+            "cash conversion, and counter evidence in the full article. "
+            + "source-backed future article detail " * 12
+            + "\n인터넷신문 등록번호\n등록일자 : 2016.04.26\n"
+        )
+        search = RecordingSearchProvider(
+            {
+                QUERY: (
+                    _result(
+                        "Current Corp HBM article",
+                        url,
+                        published=None,
+                    ),
+                )
+            }
+        )
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={url: initial_text}),
+        )
+        stale_state = json.loads(json.dumps(first.checkpoint))
+        stale_state.pop("checkpoint_id")
+        stale_state.pop("checkpoint_hash")
+        stale_document = stale_state["evidence_documents"][0]
+        stale_document["content_text"] = future_text
+        stale_document["content_hash"] = hashlib.sha256(
+            future_text.encode("utf-8")
+        ).hexdigest()
+        old_document_id = source_graph_module.stable_intelligence_id(
+            "SGDOC",
+            {
+                "target_id": TARGET,
+                "content_hash": stale_document["content_hash"],
+                "published_at": "2016-04-26",
+            },
+        )
+        stale_document["document_id"] = old_document_id
+        stale_document["published_at"] = "2016-04-26"
+        stale_document["available_at"] = "2016-04-26"
+        stale_document["publication_date_source"] = "DOCUMENT_CONTENT_INFERENCE"
+        stale_state["search_candidates"][0]["document_id"] = old_document_id
+        stale_checkpoint = source_graph_module._finalize_checkpoint(stale_state)
+
+        resumed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={url: future_text}),
+            checkpoint=stale_checkpoint,
+        )
+
+        self.assertEqual(resumed.evidence_documents, ())
+        self.assertEqual(
+            resumed.checkpoint["search_candidates"][0]["fetch_status"],
+            "FETCH_REJECTED",
+        )
+        self.assertTrue(
+            any(
+                row.get("rejection_reason")
+                == "FUTURE_DOCUMENT_AFTER_FULL_FETCH"
+                for row in resumed.checkpoint["rejected_documents"]
+            )
+        )
+        self.assertEqual(
+            resumed.checkpoint["quarantined_documents"][0]["document_id"],
+            old_document_id,
+        )
+
+    def test_prior_facts_from_quarantined_source_are_not_reused(self) -> None:
+        active_id = "SGDOC-" + "a" * 24
+        quarantined_id = "SGDOC-" + "b" * 24
+        facts = (
+            {"fact_id": "FACT-A", "source_ids": [active_id]},
+            {"fact_id": "FACT-B", "source_ids": [quarantined_id]},
+            {
+                "fact_id": "FACT-C",
+                "source_ids": [active_id, quarantined_id],
+            },
+        )
+
+        kept, invalidated = (
+            source_graph_module._filter_facts_to_active_source_documents(
+                facts,
+                ({"document_id": active_id},),
+            )
+        )
+
+        self.assertEqual([row["fact_id"] for row in kept], ["FACT-A"])
+        self.assertEqual(invalidated, 2)
+
     def test_candidate_transport_budget_defers_next_query_instead_of_dropping_it(self) -> None:
         second_query = "Current Corp counter evidence cancellation terms"
         provider = SourceBrainProvider(queries=(QUERY, second_query))
@@ -1811,6 +1986,82 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                     + "source-backed detail " * 12
                 ),
             ),
+        )
+        self.assertFalse(
+            any(row.get("canonical_url") == url for row in run.evidence_documents)
+        )
+        self.assertTrue(
+            any(
+                row.get("rejection_reason")
+                == "FUTURE_DOCUMENT_AFTER_FULL_FETCH"
+                for row in run.checkpoint["rejected_documents"]
+            )
+        )
+
+    def test_split_article_input_date_outranks_site_registration_footer(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/article-with-split-date"
+        text = (
+            "입력\n"
+            "2025-09-24 13:34\n"
+            "Current Corp disclosed HBM capacity, customer qualification, pricing, "
+            "cash conversion, and counter evidence in the full article. "
+            + "source-backed article detail " * 12
+            + "\n인터넷신문 등록번호\n등록일자 : 2016.04.26\n"
+            "발행일자 : 2016.04.01\n"
+        )
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result(
+                            "Current Corp HBM article",
+                            url,
+                            published=None,
+                        ),
+                    )
+                }
+            ),
+            fetcher=PageFetcher(fixture_text_by_url={url: text}),
+        )
+        document = next(
+            row
+            for row in run.evidence_documents
+            if row.get("canonical_url") == url
+        )
+        self.assertEqual(document["published_at"], "2025-09-24")
+        self.assertEqual(
+            document["publication_date_source"],
+            "DOCUMENT_CONTENT_INFERENCE",
+        )
+
+    def test_split_future_input_date_cannot_hide_behind_old_site_footer(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/future-article-with-split-date"
+        text = (
+            "입력\n"
+            "2026-07-02 09:30\n"
+            "Current Corp disclosed HBM capacity, customer qualification, pricing, "
+            "cash conversion, and counter evidence in the full article. "
+            + "source-backed future article detail " * 12
+            + "\n인터넷신문 등록번호\n등록일자 : 2016.04.26\n"
+            "발행일자 : 2016.04.01\n"
+        )
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result(
+                            "Current Corp future HBM article",
+                            url,
+                            published=None,
+                        ),
+                    )
+                }
+            ),
+            fetcher=PageFetcher(fixture_text_by_url={url: text}),
         )
         self.assertFalse(
             any(row.get("canonical_url") == url for row in run.evidence_documents)

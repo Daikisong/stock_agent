@@ -63,33 +63,60 @@ def _labelled_publication_dates(
     *,
     as_of_date: date | None,
 ) -> tuple[date, ...]:
-    candidates: list[date] = []
-    for raw_line in str(text or "").splitlines()[:500]:
+    strong_candidates: list[date] = []
+    fallback_candidates: list[date] = []
+    lines = str(text or "").splitlines()[:500]
+    for index, raw_line in enumerate(lines):
         line = raw_line.strip()
-        if not line or not _has_publication_label(line):
+        label_strength = _publication_label_strength(line)
+        if not line or label_strength is None:
             continue
-        candidates.extend(_date_candidates(line, as_of_date=as_of_date))
+        candidates = list(_date_candidates(line, as_of_date=as_of_date))
         for match in re.finditer(
             r"(?<!\d)(20\d{2})([01]\d)([0-3]\d)(?=\d{2,6}(?:\D|$))",
             line,
         ):
             _append_valid(candidates, *map(int, match.groups()))
-    return tuple(dict.fromkeys(candidates))
+        if not candidates:
+            # Many Korean news pages render the metadata label and value as
+            # separate DOM text nodes, for example ``입력\n2025-09-24 13:34``.
+            # The date is still explicit article metadata, not an arbitrary
+            # body date.  Inspect only the immediately following non-empty
+            # line so the label cannot capture a later body statistic.
+            for next_raw_line in lines[index + 1 : index + 3]:
+                next_line = next_raw_line.strip()
+                if not next_line:
+                    continue
+                candidates.extend(
+                    _date_candidates(next_line, as_of_date=as_of_date)
+                )
+                for match in re.finditer(
+                    r"(?<!\d)(20\d{2})([01]\d)([0-3]\d)(?=\d{2,6}(?:\D|$))",
+                    next_line,
+                ):
+                    _append_valid(candidates, *map(int, match.groups()))
+                break
+        destination = (
+            strong_candidates
+            if label_strength == "STRONG"
+            else fallback_candidates
+        )
+        destination.extend(candidates)
+    # Article-specific labels such as 입력/기사입력/Updated outrank generic
+    # footer labels such as 등록일자 or 발행일자.  Without this precedence a
+    # site's 2016 newspaper-registration date can overwrite a 2025 article
+    # date and corrupt relative periods such as "내년".
+    selected = strong_candidates or fallback_candidates
+    return tuple(dict.fromkeys(selected))
 
 
-def _has_publication_label(line: str) -> bool:
+def _publication_label_strength(line: str) -> str | None:
     normalized = re.sub(r"\s+", " ", line.strip()).lower()
     prefix = normalized[:32]
     if any(
         label in prefix
         for label in (
             "입력",
-            "등록",
-            "승인",
-            "발행",
-            "게시",
-            "보도",
-            "작성",
             "최종수정",
             "최종 수정",
             "수정",
@@ -99,13 +126,25 @@ def _has_publication_label(line: str) -> bool:
             "기사 등록",
         )
     ):
-        return True
-    return bool(
-        re.search(
-            r"(?i)^(?:published|posted|updated|publication\s+date|release\s+date|article\s+date|date)\b",
-            normalized,
+        return "STRONG"
+    if re.search(
+        r"(?i)^(?:published|posted|updated|publication\s+date|release\s+date|article\s+date|date)\b",
+        normalized,
+    ):
+        return "STRONG"
+    if any(
+        label in prefix
+        for label in (
+            "등록",
+            "승인",
+            "발행",
+            "게시",
+            "보도",
+            "작성",
         )
-    )
+    ):
+        return "FALLBACK"
+    return None
 
 
 def _append_valid(values: list[date], year: int, month: int, day: int) -> None:

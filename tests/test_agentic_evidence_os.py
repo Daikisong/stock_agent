@@ -823,6 +823,30 @@ class AgenticEvidenceOSTests(unittest.TestCase):
         self.assertTrue(rows)
         self.assertEqual(rows[0][0].published_at, date(2026, 6, 26))
 
+    def test_agentic_split_article_date_outranks_registration_footer(self):
+        result = SearchResult(
+            title="삼성전자 HBM 고객사 물량 배정",
+            url="https://example.com/news/articleView.html?idxno=87003",
+            source="fixture-news",
+            published_at=None,
+            is_news=True,
+        )
+
+        inferred = _agentic_infer_document_published_at(
+            result,
+            as_of_date=date(2026, 6, 26),
+            document_text=(
+                "입력\n"
+                "2025-09-24 13:34\n"
+                "삼성전자 HBM 고객사 물량 배정 본문\n"
+                "인터넷신문 등록번호\n"
+                "등록일자 : 2016.04.26\n"
+                "발행일자 : 2016.04.01\n"
+            ),
+        )
+
+        self.assertEqual(inferred, date(2025, 9, 24))
+
     def test_agentic_inferred_source_date_ignores_unlabelled_business_dates(self):
         result = SearchResult(
             title="삼성전자 HBM 고객 물량 배정",

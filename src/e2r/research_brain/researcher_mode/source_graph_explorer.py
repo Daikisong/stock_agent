@@ -67,6 +67,10 @@ SOURCE_FAMILY_CLASSES: Mapping[str, tuple[str, ...]] = {
     ),
 }
 
+PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION = (
+    "e2r_split_article_date_precedence_v1"
+)
+
 
 @dataclass(frozen=True)
 class SourceGraphNode:
@@ -606,17 +610,31 @@ class ResearcherSourceGraphAcquirer:
             search_provider=search_provider,
             page_fetcher=page_fetcher,
         )
-        checkpoint_quarantine_reasons = _quarantine_unreadable_documents(
-            state,
-            parser_repair_document_ids=(
-                _fact_parser_repair_document_ids(score_gap_context or {})
+        checkpoint_quarantine_reasons = (
+            *_quarantine_unreadable_documents(
+                state,
+                parser_repair_document_ids=(
+                    _fact_parser_repair_document_ids(score_gap_context or {})
+                ),
             ),
+            *_quarantine_stale_publication_dates(state),
+        )
+        facts, invalidated_prior_fact_count = (
+            _filter_facts_to_active_source_documents(
+                facts,
+                state.get("evidence_documents") or (),
+            )
         )
         unresolved_objectives = tuple(
             row for row in objectives if str(row["objective_id"]) not in resolved
         )
         query_generation: SourceQueryGenerationResult | None = None
         pending_reasons: list[str] = list(checkpoint_quarantine_reasons)
+        if invalidated_prior_fact_count:
+            pending_reasons.append(
+                "STALE_PRIOR_FACT_SOURCE_INVALIDATED:"
+                + str(invalidated_prior_fact_count)
+            )
         generated_rows = state["generated_queries"]
         candidates = state["search_candidates"]
         ranking_rows = state["candidate_materiality_decisions"]
@@ -1236,6 +1254,7 @@ def validated_quarantined_document_ids(
         "UNREADABLE_FULL_DOCUMENT_TEXT:",
         "INCOMPLETE_FULL_DOCUMENT_TEXT:",
         "STALE_PDF_READING_ORDER:",
+        "STALE_PUBLICATION_DATE_INFERENCE:",
     )
     for row in rows:
         document_id = str(row.get("document_id") or "").strip()
@@ -1262,7 +1281,11 @@ def validated_quarantined_document_ids(
             and str(rejection.get("rejection_reason") or "") == reason
         )
         repair_refetch_required = reason.startswith(
-            ("INCOMPLETE_FULL_DOCUMENT_TEXT:", "STALE_PDF_READING_ORDER:")
+            (
+                "INCOMPLETE_FULL_DOCUMENT_TEXT:",
+                "STALE_PDF_READING_ORDER:",
+                "STALE_PUBLICATION_DATE_INFERENCE:",
+            )
         )
         if not matching_rejections or any(
             rejection.get("accepted_claim_ids")
@@ -1648,6 +1671,202 @@ def _quarantine_unreadable_documents(
         quarantine_rows, key_fields=("document_id", "quarantine_reason")
     )
     return tuple(dict.fromkeys(reasons))
+
+
+def _quarantine_stale_publication_dates(
+    state: dict[str, Any],
+) -> tuple[str, ...]:
+    """Demote legacy rows whose article date changes under current semantics.
+
+    Some HTML pages split ``입력`` and its timestamp across adjacent text
+    nodes while keeping the publisher's old registration date on one line in
+    the footer.  Older checkpoints therefore accepted the footer date.  A
+    changed date alters both as-of eligibility and relative expressions such
+    as "올해/내년", so the old document identity and every derived fact must
+    be retired.  The original URL is reopened once and fetched under the new
+    semantics; this is a bounded parser repair, not a new LLM query.
+    """
+
+    cutoff = date.fromisoformat(str(state.get("as_of_date") or ""))
+    documents = list(state.get("evidence_documents") or ())
+    candidates = list(state.get("search_candidates") or ())
+    candidate_by_document_id = {
+        str(row.get("document_id") or ""): row
+        for row in candidates
+        if row.get("document_id")
+    }
+    candidate_by_url = {
+        _normalize_url(str(row.get("url") or "")): row
+        for row in candidates
+        if row.get("url")
+    }
+    kept: list[dict[str, Any]] = []
+    reasons: list[str] = []
+    quarantine_rows = list(state.setdefault("quarantined_documents", []))
+    rejected_rows = state.setdefault("rejected_documents", [])
+    query_failures = state.setdefault("query_failures", [])
+    for raw_document in documents:
+        document = dict(raw_document)
+        repair = _repaired_publication_date(document, cutoff=cutoff)
+        if repair is None:
+            kept.append(document)
+            continue
+        stored_date, repaired_date = repair
+        document_id = str(document.get("document_id") or "")
+        url = str(document.get("canonical_url") or document.get("url") or "")
+        reason = (
+            "STALE_PUBLICATION_DATE_INFERENCE:"
+            f"{stored_date.isoformat()}->{repaired_date.isoformat()}"
+        )
+        candidate = candidate_by_document_id.get(document_id) or candidate_by_url.get(
+            _normalize_url(url)
+        )
+        candidate_payload: Mapping[str, Any] = candidate or {
+            "candidate_id": stable_intelligence_id(
+                "SGCANDDATEQUARANTINE",
+                {
+                    "target_id": state.get("target_id"),
+                    "as_of_date": state.get("as_of_date"),
+                    "document_id": document_id,
+                    "url": url,
+                },
+            ),
+            "url": url,
+            "query_ids": list(document.get("query_ids") or ()),
+            "objective_ids": list(document.get("objective_ids") or ()),
+        }
+        if candidate is not None:
+            candidate["fetch_status"] = "MATERIAL_PENDING_FETCH"
+            candidate["last_fetch_failure_reason"] = reason
+            candidate["alternate_route_required"] = False
+            candidate["quarantined_document_id"] = document_id
+            candidate["publication_date_inference_refetch_required"] = True
+            candidate["publication_date_inference_policy_version"] = (
+                PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION
+            )
+            candidate.pop("document_id", None)
+        rejection = dict(
+            _candidate_rejection(
+                candidate_payload,
+                reason,
+                retryable=True,
+                content_hash=str(document.get("content_hash") or "") or None,
+            )
+        )
+        rejection.update(
+            {
+                "document_id": document_id,
+                "quarantined_on_checkpoint_resume": True,
+                "evidence_eligible": False,
+                "score_authority": False,
+                "publication_date_refetch_required": True,
+            }
+        )
+        rejected_rows.append(rejection)
+        quarantine_rows.append(
+            {
+                "schema_version": "e2r_v5_source_graph_quarantine_v1",
+                "document_id": document_id,
+                "target_id": state.get("target_id"),
+                "as_of_date": state.get("as_of_date"),
+                "candidate_id": candidate_payload.get("candidate_id"),
+                "url": url,
+                "content_hash": document.get("content_hash"),
+                "query_ids": list(document.get("query_ids") or ()),
+                "objective_ids": list(document.get("objective_ids") or ()),
+                "quarantine_reason": reason,
+                "evidence_eligible": False,
+                "score_authority": False,
+                "publication_date_refetch_required": True,
+                "stored_publication_date": stored_date.isoformat(),
+                "repaired_publication_date": repaired_date.isoformat(),
+                "publication_date_inference_policy_version": (
+                    PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION
+                ),
+            }
+        )
+        query_failures.append(
+            {
+                "query_id": str(
+                    next(iter(document.get("query_ids") or ()), "CHECKPOINT_VALIDATION")
+                ),
+                "objective_id": str(
+                    next(iter(document.get("objective_ids") or ()), "UNKNOWN_OBJECTIVE")
+                ),
+                "candidate_id": candidate_payload.get("candidate_id"),
+                "document_id": document_id,
+                "url": url,
+                "failure_stage": "PUBLICATION_DATE_VALIDATION",
+                "failure_reason": reason,
+                "alternate_route_required": False,
+                "publication_date_refetch_required": True,
+            }
+        )
+        reasons.append(reason)
+    state["evidence_documents"] = kept
+    state["quarantined_documents"] = _dedupe_mapping_rows(
+        quarantine_rows,
+        key_fields=("document_id",),
+    )
+    return tuple(dict.fromkeys(reasons))
+
+
+def _repaired_publication_date(
+    document: Mapping[str, Any],
+    *,
+    cutoff: date,
+) -> tuple[date, date] | None:
+    source = str(document.get("publication_date_source") or "")
+    if source not in {
+        "DOCUMENT_CONTENT_INFERENCE",
+        "HTTP_LAST_MODIFIED_AND_DOCUMENT_INFERENCE_MAX",
+    }:
+        return None
+    stored = _parse_date(document.get("published_at"))
+    if stored is None:
+        return None
+    inferred = infer_publication_date(
+        explicit=None,
+        metadata_parts=(
+            str(document.get("canonical_url") or document.get("url") or ""),
+            str(document.get("title") or ""),
+            str(document.get("source") or ""),
+            *(document.get("publication_metadata_parts") or ()),
+        ),
+        document_text=str(document.get("content_text") or ""),
+        as_of_date=cutoff,
+    )
+    if source == "HTTP_LAST_MODIFIED_AND_DOCUMENT_INFERENCE_MAX":
+        header_date = _parse_date(document.get("response_last_modified_at"))
+        values = tuple(value for value in (header_date, inferred) if value is not None)
+        inferred = max(values) if values else None
+    if inferred is None or inferred == stored:
+        return None
+    return stored, inferred
+
+
+def _filter_facts_to_active_source_documents(
+    facts: Sequence[Mapping[str, Any]],
+    documents: Sequence[Mapping[str, Any]],
+) -> tuple[tuple[Mapping[str, Any], ...], int]:
+    active_ids = {
+        str(row.get("document_id") or "")
+        for row in documents
+        if str(row.get("document_id") or "")
+    }
+    kept: list[Mapping[str, Any]] = []
+    invalidated = 0
+    for row in facts:
+        source_document_ids = {
+            str(value)
+            for value in row.get("source_ids") or ()
+            if str(value).startswith("SGDOC-")
+        }
+        if source_document_ids and not source_document_ids.issubset(active_ids):
+            invalidated += 1
+            continue
+        kept.append(row)
+    return tuple(kept), invalidated
 
 
 def _fact_parser_repair_document_ids(
