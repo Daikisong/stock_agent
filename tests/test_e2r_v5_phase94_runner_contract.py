@@ -722,7 +722,9 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             "2026-07-10",
         )
 
-    def test_no_progress_signature_ignores_supervisor_prose_churn(self) -> None:
+    def test_no_progress_signature_ignores_prose_and_source_transport_churn(
+        self,
+    ) -> None:
         def result(*, question: str, failure_reason: str):
             supervisor = SimpleNamespace(
                 status="NEXT_RESEARCH_REQUIRED",
@@ -785,7 +787,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             _semantic_signature(parser_noise_first),
             _semantic_signature(parser_noise_second),
         )
-        self.assertNotEqual(
+        self.assertEqual(
             _semantic_signature(first), _semantic_signature(changed_failure)
         )
 
