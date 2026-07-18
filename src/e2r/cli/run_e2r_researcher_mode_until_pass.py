@@ -216,6 +216,7 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
     while True:
         result = runner.run_checkpoint(config=config, target=target)
         signature = _semantic_signature(result)
+        semantic_state = _semantic_state(result)
         progress_path = target_root / "until_pass_progress.json"
         write_json(
             progress_path,
@@ -224,6 +225,10 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
                 "target_id": target.target_id,
                 "status": result.status,
                 "semantic_signature": signature,
+                "semantic_state_component_hashes": {
+                    key: stable_hash(value)
+                    for key, value in sorted(semantic_state.items())
+                },
                 "seen_semantic_state_count": len(seen_signatures) + 1,
                 "completion_based_on_fixed_rounds": False,
                 "transport_budget_treated_as_completion": False,
@@ -291,59 +296,61 @@ def _load_prior_no_progress_signature(
 
 
 def _semantic_signature(result) -> str:
-    return stable_hash(
-        {
-            # Query/candidate/document identifiers describe transport attempts,
-            # not research progress.  A planner can keep wording the same open
-            # objective differently and receive fresh candidate IDs without
-            # producing a new citable fact.  Counting those IDs makes the
-            # until-pass loop immortal even when every material gate is stable.
-            # Per-attempt source failures are transport diagnostics too.  The
-            # same URL can alternate between timeout, HTTP 403, unreadable
-            # text, and unknown publication date without changing any citable
-            # fact or research conclusion.  Material failure progress is
-            # already represented by source_graph_status, pending reasons, and
-            # the supervisor's deduplicated failure/gap state below.
-            "source_graph_status": result.source_graph.status,
-            "fact_extraction_status": result.fact_extraction.status,
-            "fact_extraction_pending": sorted(
-                _semantic_failure_reason(reason)
-                for reason in result.fact_extraction.pending_reasons
-            ),
-            "fact_ids": sorted(row.fact_id for row in result.fact_extraction.facts),
-            "component_states": [
-                (
-                    row.component_id,
-                    row.status,
-                    tuple(
-                        _semantic_failure_reason(reason)
-                        for reason in row.pending_reasons
-                    ),
-                )
-                for row in result.dossier.component_results
-            ],
-            "structured_status": result.structured_result.status,
-            "structured_record_ids": sorted(
-                row.record_id for row in result.structured_result.records
-            ),
-            "aggregation_status": result.score_aggregation.status,
-            "aggregation_pending": [
-                _semantic_failure_reason(reason)
-                for reason in result.score_aggregation.pending_reasons
-            ],
-            "stagecourt_status": getattr(
-                getattr(result, "stagecourt", None),
-                "decision",
-                None,
-            ).status
-            if getattr(getattr(result, "stagecourt", None), "decision", None)
-            is not None
-            else "LEGACY_STAGECOURT_NOT_PRESENT",
-            "supervisor_state": _supervisor_semantic_state(
-                result.research_epoch.supervisor_review
-            ),
-        }
-    )
+    return stable_hash(_semantic_state(result))
+
+
+def _semantic_state(result) -> Mapping[str, Any]:
+    return {
+        # Query/candidate/document identifiers describe transport attempts,
+        # not research progress.  A planner can keep wording the same open
+        # objective differently and receive fresh candidate IDs without
+        # producing a new citable fact.  Counting those IDs makes the
+        # until-pass loop immortal even when every material gate is stable.
+        # Per-attempt source failures are transport diagnostics too.  The
+        # same URL can alternate between timeout, HTTP 403, unreadable
+        # text, and unknown publication date without changing any citable
+        # fact or research conclusion.  Material failure progress is
+        # already represented by source_graph_status, pending reasons, and
+        # the supervisor's deduplicated failure/gap state below.
+        "source_graph_status": result.source_graph.status,
+        "fact_extraction_status": result.fact_extraction.status,
+        "fact_extraction_pending": sorted(
+            _semantic_failure_reason(reason)
+            for reason in result.fact_extraction.pending_reasons
+        ),
+        "fact_ids": sorted(row.fact_id for row in result.fact_extraction.facts),
+        "component_states": [
+            (
+                row.component_id,
+                row.status,
+                tuple(
+                    _semantic_failure_reason(reason)
+                    for reason in row.pending_reasons
+                ),
+            )
+            for row in result.dossier.component_results
+        ],
+        "structured_status": result.structured_result.status,
+        "structured_record_ids": sorted(
+            row.record_id for row in result.structured_result.records
+        ),
+        "aggregation_status": result.score_aggregation.status,
+        "aggregation_pending": [
+            _semantic_failure_reason(reason)
+            for reason in result.score_aggregation.pending_reasons
+        ],
+        "stagecourt_status": getattr(
+            getattr(result, "stagecourt", None),
+            "decision",
+            None,
+        ).status
+        if getattr(getattr(result, "stagecourt", None), "decision", None)
+        is not None
+        else "LEGACY_STAGECOURT_NOT_PRESENT",
+        "supervisor_state": _supervisor_semantic_state(
+            result.research_epoch.supervisor_review
+        ),
+    }
 
 
 def _supervisor_semantic_state(review: Any) -> Mapping[str, Any]:
@@ -422,6 +429,18 @@ def _semantic_failure_reason(reason: str) -> str:
     folded = value.casefold()
     prefix = value.split(":", 2)[:2]
     stable_prefix = ":".join(prefix)
+    if "prompt_transport_too_large" in folded:
+        return f"{stable_prefix}:PROMPT_TRANSPORT_TOO_LARGE"
+    if any(
+        marker in folded
+        for marker in (
+            "ran out of room in the model's context window",
+            "context window is too large",
+            "context length exceeded",
+            "maximum context length",
+        )
+    ):
+        return f"{stable_prefix}:PROVIDER_CONTEXT_WINDOW_EXHAUSTED"
     if "usage limit" in folded or "purchase more credits" in folded:
         return f"{stable_prefix}:PROVIDER_USAGE_LIMIT"
     if "timed out" in folded or "timeouterror" in folded:

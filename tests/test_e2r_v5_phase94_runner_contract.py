@@ -248,6 +248,11 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ),
                 patch(
                     "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_state",
+                    return_value={},
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
                     "refresh_canary_target_manifest_hash"
                 ),
             ):
@@ -345,6 +350,11 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ),
                 patch(
                     "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_state",
+                    return_value={},
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
                     "refresh_canary_target_manifest_hash"
                 ),
             ):
@@ -398,6 +408,11 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     "e2r.cli.run_e2r_researcher_mode_until_pass."
                     "_semantic_signature",
                     return_value=signature,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_state",
+                    return_value={},
                 ),
                 patch(
                     "e2r.cli.run_e2r_researcher_mode_until_pass."
@@ -1039,6 +1054,44 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             reset_time="Jul 21st, 2026 4:59 AM",
             temp_name="different456",
         )
+        self.assertEqual(_semantic_signature(first), _semantic_signature(second))
+
+    def test_no_progress_signature_normalizes_prompt_size_and_context_noise(
+        self,
+    ) -> None:
+        def result(*, prompt_size: int, context_detail: str):
+            pending = (
+                "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                "StructuredProviderRejected:prompt_transport_too_large:"
+                f"{prompt_size}:max=1000000",
+                "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                "StructuredProviderUnavailable:"
+                f"{context_detail} ERROR: Codex ran out of room in the "
+                "model's context window. tokens used 0",
+            )
+            return SimpleNamespace(
+                source_graph=SimpleNamespace(status="SOURCE_PENDING"),
+                fact_extraction=SimpleNamespace(
+                    status="FACT_EXTRACTION_PENDING",
+                    pending_reasons=pending,
+                    facts=(),
+                ),
+                dossier=SimpleNamespace(component_results=()),
+                structured_result=SimpleNamespace(
+                    status="SOURCE_PENDING",
+                    records=(),
+                ),
+                score_aggregation=SimpleNamespace(
+                    status="SCORE_PENDING",
+                    pending_reasons=pending,
+                ),
+                research_epoch=SimpleNamespace(
+                    supervisor_review=SimpleNamespace(status="PROVIDER_PENDING")
+                ),
+            )
+
+        first = result(prompt_size=1092391, context_detail="first prompt body")
+        second = result(prompt_size=1178622, context_detail="different prompt body")
         self.assertEqual(_semantic_signature(first), _semantic_signature(second))
 
     def test_unstructured_roles_are_not_misclassified_as_structured_metrics(self) -> None:
