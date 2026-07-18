@@ -501,6 +501,14 @@ class ResearcherEvidenceFactExtractor:
                                     "contiguous substring from that document's "
                                     "content_text. Delete any unsupported proposal; "
                                     "do not paraphrase or repair quotes in code."
+                                    " extraction_complete is local to this supplied batch, "
+                                    "not to the broader thesis or future research. Set it "
+                                    "to true when every required_document_id has exactly "
+                                    "one valid disposition and unresolved_document_ids is "
+                                    "empty, including when every disposition is "
+                                    "NO_MATERIAL_FACT. Put broader evidence gaps only in "
+                                    "unresolved_research_notes; those gaps alone must not "
+                                    "make extraction_complete false."
                                 ),
                             },
                         }

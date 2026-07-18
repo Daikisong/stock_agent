@@ -117,6 +117,29 @@ class CorrectingQuoteFactProvider(FactProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class CorrectingCompletionFactProvider(FactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(super().complete(pass_name=pass_name, payload=payload))
+        retry = payload.get("fact_extraction_retry_context")
+        response["facts"] = []
+        response["document_dispositions"] = [
+            {
+                "document_id": row["document_id"],
+                "status": "NO_MATERIAL_FACT",
+                "rationale": "이 전송 청크에는 material fact가 없다.",
+            }
+            for row in payload["full_documents"]
+        ]
+        response["unresolved_research_notes"] = [
+            "다른 원문에서 전체 thesis 근거를 계속 찾아야 한다."
+        ]
+        response["extraction_complete"] = bool(
+            retry
+            and "local to this supplied batch" in str(retry.get("instruction") or "")
+        )
+        return response
+
+
 class ChunkAwareFactProvider(FactProvider):
     def __init__(self, *, fail_chunk_index: int | None = None) -> None:
         super().__init__()
@@ -569,6 +592,34 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(result.provider_calls[0].provider_attempt_count, 2)
         self.assertTrue(result.provider_calls[0].validation_retry_used)
         self.assertEqual(result.audit["validation_retry_call_count"], 1)
+
+    def test_incomplete_flag_retry_distinguishes_batch_from_broader_research(self) -> None:
+        provider = CorrectingCompletionFactProvider()
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(_document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 2)
+        retry = provider.calls[-1]["payload"]["fact_extraction_retry_context"]
+        self.assertEqual(retry["rewrite_attempt"], 1)
+        self.assertIn("local to this supplied batch", retry["instruction"])
+        self.assertIn("NO_MATERIAL_FACT", retry["instruction"])
+        self.assertNotIn(
+            "LLM_DECLARED_FACT_EXTRACTION_INCOMPLETE", result.pending_reasons
+        )
+        self.assertTrue(
+            any(
+                row.startswith("UNRESOLVED_RESEARCH_NOTE:")
+                for row in result.research_gap_feedback
+            )
+        )
 
     def test_snippet_and_future_document_are_rejected_before_llm(self) -> None:
         provider = FactProvider()
