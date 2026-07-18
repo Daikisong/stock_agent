@@ -378,10 +378,6 @@ def _supervisor_semantic_state(review: Any) -> Mapping[str, Any]:
         )
         for row in rows("failure_assessments")
     ]
-    failure_state_counts = [
-        (*state, failure_states.count(state))
-        for state in sorted(set(failure_states))
-    ]
     return {
         "status": str(field(review, "status", "")),
         "provider_or_output_errors": provider_or_output_errors,
@@ -420,7 +416,9 @@ def _supervisor_semantic_state(review: Any) -> Mapping[str, Any]:
         "source_family_gaps": sorted(
             str(value) for value in rows("source_family_gaps")
         ),
-        "failure_state_counts": failure_state_counts,
+        # Recounting another document in an already-known failure class is an
+        # additional transport attempt, not a new research state.
+        "failure_states": sorted(set(failure_states)),
     }
 
 

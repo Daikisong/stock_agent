@@ -939,6 +939,61 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             _semantic_signature(changed_validation),
         )
 
+    def test_no_progress_signature_ignores_duplicate_supervisor_failures(
+        self,
+    ) -> None:
+        def result(*, failure_class: str, failure_count: int):
+            failure = {
+                "classification": failure_class,
+                "retryable": True,
+                "source_absence_claim_allowed": False,
+            }
+            supervisor = SimpleNamespace(
+                status="NEXT_RESEARCH_REQUIRED",
+                failure_assessments=tuple(
+                    dict(failure) for _ in range(failure_count)
+                ),
+            )
+            return SimpleNamespace(
+                source_graph=SimpleNamespace(
+                    status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+                    checkpoint={
+                        "generated_queries": [],
+                        "search_candidates": [],
+                        "query_failures": [],
+                    },
+                    evidence_documents=(),
+                ),
+                fact_extraction=SimpleNamespace(
+                    status="FACT_EXTRACTION_COMPLETE",
+                    pending_reasons=(),
+                    facts=(),
+                ),
+                dossier=SimpleNamespace(component_results=()),
+                structured_result=SimpleNamespace(
+                    status="SOURCE_PENDING",
+                    records=(),
+                ),
+                score_aggregation=SimpleNamespace(
+                    status="SCORE_PENDING",
+                    pending_reasons=("SOURCE_PENDING",),
+                ),
+                research_epoch=SimpleNamespace(supervisor_review=supervisor),
+            )
+
+        first = result(failure_class="FETCH_FAILURE", failure_count=1)
+        repeated = result(failure_class="FETCH_FAILURE", failure_count=20)
+        changed = result(failure_class="PARSER_EXTRACTOR_FAILURE", failure_count=1)
+
+        self.assertEqual(
+            _semantic_signature(first),
+            _semantic_signature(repeated),
+        )
+        self.assertNotEqual(
+            _semantic_signature(first),
+            _semantic_signature(changed),
+        )
+
     def test_no_progress_signature_normalizes_usage_limit_transport_noise(self) -> None:
         def result(*, reset_time: str, temp_name: str):
             usage_error = (
