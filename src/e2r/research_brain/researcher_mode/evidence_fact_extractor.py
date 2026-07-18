@@ -394,15 +394,16 @@ class ResearcherEvidenceFactExtractor:
                             validation_retry_used=validation_retry_used,
                         )
                     )
-                    # ``StructuredProviderUnavailable`` is a transport-wide
-                    # failure, not a document-specific semantic rejection.
-                    # Retrying the same unavailable provider once per remaining
-                    # document only burns time and can make a no-progress
-                    # checkpoint look active.  Preserve the exact first
-                    # blocker, leave every untouched document unaccounted, and
-                    # let checkpoint/resume retry after the provider recovers.
-                    provider_circuit_breaker_open = isinstance(
-                        exc, StructuredProviderUnavailable
+                    # Usage-limit / process-launch failures are transport-wide:
+                    # retrying them once per remaining document only burns time
+                    # and can make a no-progress checkpoint look active.  A CLI
+                    # timeout is different.  It can be caused by one unusually
+                    # large document, while the next document may complete
+                    # normally.  Preserve that batch as pending, continue the
+                    # queue, and let checkpoint/resume retry only the timed-out
+                    # document later.
+                    provider_circuit_breaker_open = (
+                        _is_transport_wide_provider_failure(exc)
                     )
                     break
                 response_hash = stable_intelligence_id(
@@ -1167,6 +1168,20 @@ def _source_tier(source_family: str) -> str:
 
 def _clean_error(error: Exception) -> str:
     return " ".join(str(error).split())[-800:] or type(error).__name__
+
+
+def _is_transport_wide_provider_failure(error: Exception) -> bool:
+    """Return whether later document calls cannot reasonably make progress.
+
+    The shared transport exposes both terminal provider failures and a
+    per-request CLI timeout as ``StructuredProviderUnavailable``.  A timeout
+    must leave only its own document pending because later, smaller documents
+    can still succeed in the same checkpoint.
+    """
+
+    if not isinstance(error, StructuredProviderUnavailable):
+        return False
+    return "codex_cli_timeout" not in _clean_error(error).casefold()
 
 
 def _json_character_count(value: Any) -> int:

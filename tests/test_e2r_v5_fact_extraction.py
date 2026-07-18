@@ -450,6 +450,53 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(len(result.provider_calls), 1)
         self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
 
+    def test_single_cli_timeout_leaves_only_that_document_pending(self) -> None:
+        class TimeoutThenHealthyProvider:
+            provider_name = "TIMEOUT_THEN_HEALTHY_PROVIDER"
+
+            def __init__(self) -> None:
+                self.call_count = 0
+                self.healthy = FactProvider()
+
+            def complete(self, *, pass_name, payload):
+                self.call_count += 1
+                if self.call_count == 1:
+                    raise StructuredProviderUnavailable("codex_cli_timeout")
+                return self.healthy.complete(pass_name=pass_name, payload=payload)
+
+        provider = TimeoutThenHealthyProvider()
+        result = ResearcherEvidenceFactExtractor(
+            provider=provider,
+            documents_per_call=1,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(
+                _document("DOC-TIMEOUT", "ISSUER_PRESENTATION", "ISSUER:timeout"),
+                _document("DOC-HEALTHY", "REUTERS", "REUTERS:healthy"),
+            ),
+            open_objectives=(),
+        )
+
+        self.assertEqual(provider.call_count, 2)
+        self.assertFalse(result.audit["provider_circuit_breaker_open"])
+        self.assertEqual(
+            result.audit["critical_counts"]["unaccounted_document_count"],
+            1,
+        )
+        self.assertEqual(
+            [row.status for row in result.provider_calls],
+            ["PENDING", "COMPLETE"],
+        )
+        self.assertEqual(
+            [row["document_id"] for row in result.document_dispositions],
+            ["DOC-HEALTHY"],
+        )
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+
     def test_wrong_business_segment_is_terminal_and_cannot_enter_fact_graph(self) -> None:
         result = ResearcherEvidenceFactExtractor(
             provider=FactProvider(wrong_scope=True)
