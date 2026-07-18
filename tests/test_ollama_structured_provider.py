@@ -20,6 +20,7 @@ from e2r.research_brain.planning.provider_transport import (
 )
 from e2r.research_brain.researcher_mode import (
     CodexResearcherProvider,
+    CurrentResearcherModeTargetRunner,
     OllamaResearcherProvider,
 )
 
@@ -165,12 +166,19 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 "--research-provider", "ollama",
                 "--ollama-model", "model-b",
                 "--ollama-context-length", "65536",
+                "--ollama-fact-document-chunk-chars", "90000",
             ]
         )
         provider = _build_research_provider(local_args)
         self.assertIsInstance(provider, OllamaResearcherProvider)
         self.assertEqual(provider.transport.model, "model-b")
         self.assertEqual(provider.transport.context_length, 65_536)
+        self.assertEqual(provider.fact_document_chunk_chars, 90_000)
+        runner = CurrentResearcherModeTargetRunner(provider=provider)
+        self.assertEqual(
+            runner.fact_extractor.max_document_chars_per_call,
+            90_000,
+        )
         provider.transport.model_digest = "b" * 64
         provider.transport.server_version = "0.32.1"
         manifest = _research_provider_manifest(provider)

@@ -1421,6 +1421,22 @@ class OllamaResearcherProvider(CodexResearcherProvider):
 
     transport: OllamaStructuredProviderTransport
     provider_name: str = "OLLAMA_STRUCTURED_RESEARCHER_MODE"
+    fact_document_chunk_chars: int = 100_000
+
+    def __post_init__(self) -> None:
+        if (
+            isinstance(self.fact_document_chunk_chars, bool)
+            or self.fact_document_chunk_chars < 10_000
+        ):
+            raise ValueError(
+                "Ollama fact document chunk size must be at least 10000"
+            )
+
+    def _provider_identity(self) -> Mapping[str, Any]:
+        return {
+            **super()._provider_identity(),
+            "fact_document_chunk_chars": self.fact_document_chunk_chars,
+        }
 
     @classmethod
     def default(
@@ -1432,13 +1448,14 @@ class OllamaResearcherProvider(CodexResearcherProvider):
         context_length: int = 262_144,
         max_output_tokens: int = 32_768,
         prompt_character_limit: int = 500_000,
+        fact_document_chunk_chars: int = 100_000,
         temperature: float = 0.0,
         seed: int = 42,
         think: bool = False,
         keep_alive: int | str = -1,
     ) -> "OllamaResearcherProvider":
         return cls(
-            OllamaStructuredProviderTransport(
+            transport=OllamaStructuredProviderTransport(
                 base_url=base_url,
                 model=model,
                 timeout_seconds=timeout_seconds,
@@ -1449,7 +1466,8 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                 seed=seed,
                 think=think,
                 keep_alive=keep_alive,
-            )
+            ),
+            fact_document_chunk_chars=fact_document_chunk_chars,
         )
 
 

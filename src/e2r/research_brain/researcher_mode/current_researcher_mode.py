@@ -186,7 +186,14 @@ class CurrentResearcherModeTargetRunner:
             query_provider=effective_provider
         )
         self.fact_extractor = fact_extractor or ResearcherEvidenceFactExtractor(
-            provider=effective_provider
+            provider=effective_provider,
+            max_document_chars_per_call=int(
+                getattr(
+                    effective_provider,
+                    "fact_document_chunk_chars",
+                    220_000,
+                )
+            ),
         )
 
     def run_checkpoint(

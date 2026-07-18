@@ -61,6 +61,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--ollama-context-length", type=int)
     parser.add_argument("--ollama-max-output-tokens", type=int)
     parser.add_argument("--ollama-prompt-character-limit", type=int)
+    parser.add_argument("--ollama-fact-document-chunk-chars", type=int)
     parser.add_argument("--ollama-timeout-seconds", type=float)
     return parser
 
@@ -224,6 +225,9 @@ def _build_research_provider(args: argparse.Namespace):
         prompt_character_limit=(
             args.ollama_prompt_character_limit or 500_000
         ),
+        fact_document_chunk_chars=(
+            args.ollama_fact_document_chunk_chars or 100_000
+        ),
     )
 
 
@@ -249,6 +253,9 @@ def _research_provider_manifest(provider) -> Mapping[str, Any]:
             "seed": getattr(transport, "seed", None),
             "think": getattr(transport, "think", None),
             "keep_alive": getattr(transport, "keep_alive", None),
+            "fact_document_chunk_chars": getattr(
+                provider, "fact_document_chunk_chars", None
+            ),
         }
         identity_error = (
             f"{type(exc).__name__}:"
