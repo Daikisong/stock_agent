@@ -411,13 +411,73 @@ def project_supervisor_source_graph_checkpoint(
     output = {
         key: checkpoint.get(key)
         for key in (
-            "quarantined_documents",
             "resolved_objective_ids",
             "transport_budget_can_complete_research",
             "semantic_saturation_certified",
         )
         if key in checkpoint
     }
+    quarantined_documents = tuple(
+        dict(row) for row in checkpoint.get("quarantined_documents") or ()
+    )
+    normalized_quarantines = tuple(
+        {
+            **row,
+            "quarantine_reason_class": (
+                str(row.get("quarantine_reason") or "UNSPECIFIED")
+                .split(":", 1)[0]
+                .strip()
+                or "UNSPECIFIED"
+            ),
+        }
+        for row in quarantined_documents
+    )
+    quarantine_projection = dict(
+        _project_state_collection(
+            normalized_quarantines,
+            collection_name="supervisor_quarantined_documents",
+            identity_fields=("document_id", "candidate_id"),
+            group_fields=(
+                "quarantine_reason_class",
+                "parser_refetch_required",
+                "evidence_eligible",
+                "score_authority",
+            ),
+            relation_fields=("objective_ids",),
+            numeric_fields=(),
+        )
+    )
+    quarantine_projection.update(
+        {
+            "document_id_roster": _project_text_roster(
+                row.get("document_id") for row in quarantined_documents
+            ),
+            "candidate_id_roster": _project_text_roster(
+                row.get("candidate_id") for row in quarantined_documents
+            ),
+            "query_id_roster": _project_text_roster(
+                query_id
+                for row in quarantined_documents
+                for query_id in row.get("query_ids") or ()
+            ),
+            "url_roster": _project_text_roster(
+                row.get("url") for row in quarantined_documents
+            ),
+            "content_hash_roster": _project_text_roster(
+                row.get("content_hash") for row in quarantined_documents
+            ),
+            "quarantine_reason_roster": _project_text_roster(
+                row.get("quarantine_reason") for row in quarantined_documents
+            ),
+            "full_quarantine_records_persisted_outside_prompt": True,
+            "every_quarantine_accounted_by_hash_and_group_count": (
+                quarantine_projection[
+                    "every_record_accounted_by_hash_and_group_count"
+                ]
+            ),
+        }
+    )
+    output["quarantined_documents"] = quarantine_projection
     collection_specs = {
         "query_failures": (
             ("failure_id", "query_id"),
@@ -607,7 +667,7 @@ def project_supervisor_source_graph_checkpoint(
     )
     output["evidence_documents"] = document_projection
     output["source_graph_prompt_projection"] = {
-        "schema_version": "e2r_v5_supervisor_source_graph_projection_v3",
+        "schema_version": "e2r_v5_supervisor_source_graph_projection_v4",
         "complete_artifact_persisted_outside_prompt": True,
         "every_query_document_and_state_row_accounted": True,
         "checkpoint_lineage_excluded_from_provider": True,
@@ -941,9 +1001,11 @@ def project_supervisor_evidence_facts(
             group_fields=_SUPERVISOR_FACT_GROUP_FIELDS,
             relation_fields=(),
             group_relation_fields=(
-                "predicate",
                 "structured_evidence_roles",
                 "allowed_component_ids",
+            ),
+            hashed_group_relation_fields=(
+                "predicate",
                 "source_independence_group",
                 "corroborating_independence_groups",
             ),
@@ -952,7 +1014,7 @@ def project_supervisor_evidence_facts(
     )
     projection.update(
         {
-            "schema_version": "e2r_v5_supervisor_fact_prompt_projection_v1",
+            "schema_version": "e2r_v5_supervisor_fact_prompt_projection_v2",
             "fact_id_roster": _project_text_roster(
                 row.get("fact_id") for row in payloads
             ),
@@ -1040,11 +1102,11 @@ def project_peer_selection_context(
             identity_fields=("fact_id",),
             group_fields=_PEER_FACT_GROUP_FIELDS,
             relation_fields=(),
-            group_relation_fields=(
+            hashed_group_relation_fields=(
                 "predicate",
-                "structured_evidence_roles",
                 "source_independence_group",
             ),
+            group_relation_fields=("structured_evidence_roles",),
             numeric_fields=("confidence",),
         )
     )
@@ -1068,7 +1130,7 @@ def project_peer_selection_context(
             identity_fields=("claim_id",),
             group_fields=_PEER_CLAIM_GROUP_FIELDS,
             relation_fields=(),
-            group_relation_fields=("predicate",),
+            hashed_group_relation_fields=("predicate",),
             numeric_fields=(),
         )
     )
@@ -2145,6 +2207,7 @@ def project_structured_records(
     ordered = tuple(
         sorted(payloads, key=lambda row: str(row.get("record_id") or ""))
     )
+    metadata_projection = _structured_metadata_projection(ordered)
     groups: dict[tuple[Any, ...], list[Mapping[str, Any]]] = {}
     for row in ordered:
         key = (
@@ -2207,14 +2270,29 @@ def project_structured_records(
                 "maximum": max(numeric_values),
             }
         if text_counts:
-            summary["categorical_value_counts"] = dict(sorted(text_counts.items()))
+            categorical_observations = tuple(
+                value
+                for value, count in sorted(text_counts.items())
+                for _ in range(count)
+            )
+            summary["categorical_value_projection"] = {
+                "observation_count": len(categorical_observations),
+                "distinct_value_roster": _project_text_roster(
+                    text_counts.keys()
+                ),
+                "observation_roster_hash": _stable_hash(
+                    categorical_observations
+                ),
+                "full_categorical_values_persisted_outside_prompt": True,
+            }
         summaries.append(summary)
     return {
-        "schema_version": "e2r_v5_structured_prompt_projection_v1",
+        "schema_version": "e2r_v5_structured_prompt_projection_v2",
         "record_count": len(ordered),
         "record_roster_hash": _stable_hash(ordered),
         "semantic_series_count": len(summaries),
         "semantic_series": summaries,
+        "metadata_projection": metadata_projection,
         "every_record_accounted_by_hash_and_series_count": True,
         "fixed_top_n_used": False,
         "prompt_projection_is_research_cap": False,
@@ -2256,14 +2334,12 @@ def _record_dict(value: Any) -> Mapping[str, Any]:
 
 def _record_snapshot(row: Mapping[str, Any]) -> Mapping[str, Any]:
     fields = (
-        "record_id",
         "value",
         "period",
         "observed_at",
         "available_at",
         "confidence",
         "provenance",
-        "metadata",
     )
     output = {key: row[key] for key in fields if key in row}
     if row.get("input_record_ids"):
@@ -2271,6 +2347,52 @@ def _record_snapshot(row: Mapping[str, Any]) -> Mapping[str, Any]:
             row.get("input_record_ids") or ()
         )
     return output
+
+
+def _structured_metadata_projection(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Hash-account all structured metadata once per record collection.
+
+    Structured metadata often contains a second copy of connector responses,
+    peer tables, or derivation diagnostics.  The canonical record keeps that
+    payload.  A later supervisor needs proof that every metadata payload was
+    preserved, plus the aggregate field/type shape; it does not need the same
+    payload repeated in both endpoint snapshots for every semantic series.
+    """
+
+    metadata_rows = tuple(
+        row.get("metadata") for row in rows if "metadata" in row
+    )
+    type_counts: dict[str, int] = {}
+    field_names = []
+    boolean_states = []
+    for metadata in metadata_rows:
+        if not isinstance(metadata, Mapping):
+            type_name = type(metadata).__name__
+            type_counts[type_name] = type_counts.get(type_name, 0) + 1
+            continue
+        for key, item in metadata.items():
+            field_names.append(str(key))
+            type_name = type(item).__name__
+            type_counts[type_name] = type_counts.get(type_name, 0) + 1
+            if isinstance(item, bool):
+                boolean_states.append((str(key), item))
+    return {
+        "metadata_record_count": len(metadata_rows),
+        "metadata_roster_hash": _stable_hash(metadata_rows),
+        "metadata_field_observation_count": len(field_names),
+        "metadata_distinct_field_count": len(set(field_names)),
+        "metadata_field_roster_hash": _stable_hash(
+            tuple(sorted(field_names))
+        ),
+        "metadata_value_type_counts": dict(sorted(type_counts.items())),
+        "metadata_boolean_field_count": len(boolean_states),
+        "metadata_boolean_state_hash": _stable_hash(
+            tuple(sorted(boolean_states))
+        ),
+        "full_metadata_persisted_outside_prompt": True,
+    }
 
 
 def _project_text_roster(values: Sequence[Any] | Any) -> Mapping[str, Any]:
@@ -2299,6 +2421,7 @@ def _project_state_collection(
     relation_fields: Sequence[str],
     numeric_fields: Sequence[str],
     group_relation_fields: Sequence[str] = (),
+    hashed_group_relation_fields: Sequence[str] = (),
 ) -> Mapping[str, Any]:
     """Account for every state row through deterministic groups and hashes.
 
@@ -2350,18 +2473,29 @@ def _project_state_collection(
             "record_roster_hash": _stable_hash(grouped_rows),
             "numeric_distributions": numeric_distributions,
         }
-        if group_relation_fields:
-            semantic_group["relation_coverage"] = {
+        if set(group_relation_fields) & set(hashed_group_relation_fields):
+            raise ValueError(
+                "group relation fields cannot be both expanded and hash-accounted"
+            )
+        if group_relation_fields or hashed_group_relation_fields:
+            relation_coverage = {
                 field: _relation_coverage(grouped_rows, field)
                 for field in group_relation_fields
             }
+            relation_coverage.update(
+                {
+                    field: _relation_roster_projection(grouped_rows, field)
+                    for field in hashed_group_relation_fields
+                }
+            )
+            semantic_group["relation_coverage"] = relation_coverage
         semantic_groups.append(semantic_group)
 
     relation_coverage = {
         field: _relation_coverage(ordered, field) for field in relation_fields
     }
     return {
-        "schema_version": "e2r_v5_source_graph_collection_projection_v1",
+        "schema_version": "e2r_v5_source_graph_collection_projection_v2",
         "collection_name": collection_name,
         "record_count": len(ordered),
         "record_roster_hash": _stable_hash(ordered),
@@ -2390,6 +2524,29 @@ def _relation_coverage(
             if text:
                 counts[text] = counts.get(text, 0) + 1
     return dict(sorted(counts.items()))
+
+
+def _relation_roster_projection(
+    rows: Sequence[Mapping[str, Any]], field: str
+) -> Mapping[str, Any]:
+    """Account for every relation value with counts and stable roster hashes."""
+
+    observations = []
+    for row in rows:
+        value = row.get(field)
+        values = value if isinstance(value, (list, tuple, set)) else (value,)
+        observations.extend(
+            str(item).strip() for item in values if str(item or "").strip()
+        )
+    ordered = tuple(sorted(observations))
+    distinct = tuple(sorted(set(ordered)))
+    return {
+        "observation_count": len(ordered),
+        "distinct_value_count": len(distinct),
+        "distinct_value_roster_hash": _stable_hash(distinct),
+        "observation_roster_hash": _stable_hash(ordered),
+        "full_relation_values_persisted_outside_prompt": True,
+    }
 
 
 def _group_value(value: Any) -> Any:

@@ -704,14 +704,25 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         supervisor_payload = runner.supervisor.provider.calls[-1]["payload"]
         supervisor_source_graph = supervisor_payload["source_graph_checkpoint"]
         self.assertEqual(
-            supervisor_source_graph["quarantined_documents"][0]["document_id"],
-            "DOC-1",
+            supervisor_source_graph["quarantined_documents"]["record_count"],
+            1,
+        )
+        self.assertEqual(
+            supervisor_source_graph["quarantined_documents"][
+                "document_id_roster"
+            ]["count"],
+            1,
+        )
+        self.assertTrue(
+            supervisor_source_graph["quarantined_documents"][
+                "every_quarantine_accounted_by_hash_and_group_count"
+            ]
         )
         self.assertEqual(
             supervisor_source_graph["source_graph_prompt_projection"][
                 "schema_version"
             ],
-            "e2r_v5_supervisor_source_graph_projection_v3",
+            "e2r_v5_supervisor_source_graph_projection_v4",
         )
         self.assertEqual(
             supervisor_payload["current_evidence_fact_graph"]["record_count"],

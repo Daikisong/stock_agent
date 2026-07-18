@@ -67,7 +67,51 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertFalse(first["fixed_top_n_used"])
         self.assertFalse(first["prompt_projection_is_research_cap"])
         self.assertNotIn("records", first)
+        self.assertEqual(
+            first["metadata_projection"]["metadata_record_count"],
+            1_000,
+        )
+        self.assertNotIn(
+            "metadata",
+            first["semantic_series"][0]["earliest_record"],
+        )
         self.assertLess(len(json.dumps(first, sort_keys=True)), 10_000)
+
+    def test_large_structured_metadata_is_hash_accounted_once(self):
+        rows = tuple(
+            StructuredMetricRecord(
+                record_id=f"ROW-METADATA-{index:04d}",
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-07-12",
+                metric_id="consensus_forward_eps",
+                value=float(index),
+                unit="KRW",
+                period=f"2026Q{index % 4 + 1}",
+                evidence_roles=("FORWARD_GUIDANCE",),
+                source_ids=("SRC-CONSENSUS",),
+                source_route="COMPANYGUIDE",
+                observed_at="2026-07-10",
+                available_at="2026-07-10",
+                record_kind="CONSENSUS",
+                confidence=0.9,
+                dataset="CONSENSUS_REVISION",
+                provenance="STRUCTURED_EXTRACTED",
+                metadata={
+                    "observed_fact": True,
+                    "connector_payload": "원본 메타데이터 " * 10_000,
+                },
+            )
+            for index in range(100)
+        )
+
+        projected = project_structured_records(rows)
+        encoded = json.dumps(projected, ensure_ascii=False, sort_keys=True)
+        metadata = projected["metadata_projection"]
+        self.assertEqual(metadata["metadata_record_count"], 100)
+        self.assertEqual(metadata["metadata_boolean_field_count"], 100)
+        self.assertTrue(metadata["full_metadata_persisted_outside_prompt"])
+        self.assertNotIn("원본 메타데이터", encoded)
+        self.assertLess(len(encoded), 10_000)
 
     def test_derived_structured_lineage_is_roster_projected_once(self):
         input_ids = tuple(f"INPUT-{index:05d}" for index in range(5_000))
@@ -569,6 +613,14 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             )
         )
         self.assertTrue(
+            all(
+                group["relation_coverage"]["predicate"][
+                    "full_relation_values_persisted_outside_prompt"
+                ]
+                for group in supervisor_facts["semantic_groups"]
+            )
+        )
+        self.assertTrue(
             peer_context[
                 "every_fact_and_claim_accounted_by_hash_and_group_count"
             ]
@@ -942,6 +994,54 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             project_supervisor_source_graph_checkpoint(checkpoint),
             project_supervisor_source_graph_checkpoint(changed_content),
         )
+
+    def test_supervisor_quarantine_projection_accounts_unbounded_rows(self):
+        checkpoint = {
+            "generated_queries": [],
+            "search_candidates": [],
+            "candidate_materiality_decisions": [],
+            "fetch_records": [],
+            "rejected_documents": [],
+            "query_failures": [],
+            "provider_failures": [],
+            "evidence_documents": [],
+            "quarantined_documents": [
+                {
+                    "document_id": f"DOC-{index:05d}",
+                    "candidate_id": f"CAND-{index:05d}",
+                    "query_ids": [f"QUERY-{index:05d}"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "url": (
+                        f"https://issuer.example/{index}/"
+                        + "very-long-discovery-path/" * 100
+                    ),
+                    "content_hash": f"{index:064x}",
+                    "quarantine_reason": (
+                        "UNREADABLE_FULL_DOCUMENT_TEXT:"
+                        + "connector detail " * 100
+                    ),
+                    "parser_refetch_required": True,
+                    "evidence_eligible": False,
+                    "score_authority": False,
+                }
+                for index in range(1_000)
+            ],
+            "resolved_objective_ids": [],
+            "transport_budget_can_complete_research": False,
+            "semantic_saturation_certified": False,
+        }
+
+        projected = project_supervisor_source_graph_checkpoint(checkpoint)
+        quarantine = projected["quarantined_documents"]
+        encoded = json.dumps(projected, ensure_ascii=False, sort_keys=True)
+        self.assertEqual(quarantine["record_count"], 1_000)
+        self.assertTrue(
+            quarantine["every_quarantine_accounted_by_hash_and_group_count"]
+        )
+        self.assertEqual(quarantine["document_id_roster"]["count"], 1_000)
+        self.assertNotIn("very-long-discovery-path", encoded)
+        self.assertNotIn("connector detail", encoded)
+        self.assertLess(len(encoded), 20_000)
 
     def test_query_gap_projection_ignores_checkpoint_lineage(self):
         context = {
