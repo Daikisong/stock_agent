@@ -847,6 +847,28 @@ class AgenticEvidenceOSTests(unittest.TestCase):
 
         self.assertEqual(inferred, date(2025, 9, 24))
 
+    def test_agentic_split_newswire_transmission_date_is_preserved(self):
+        result = SearchResult(
+            title="삼성전자 HBM 기사",
+            url="https://example.com/news/AKR20250707120000003",
+            source="fixture-news",
+            published_at=None,
+            is_news=True,
+        )
+
+        inferred = _agentic_infer_document_published_at(
+            result,
+            as_of_date=date(2026, 6, 26),
+            document_text=(
+                "송고\n"
+                "2025-07-08 05:01\n"
+                "삼성전자 HBM 고객사 물량 배정 본문\n"
+                "등록일자 : 2016.04.26\n"
+            ),
+        )
+
+        self.assertEqual(inferred, date(2025, 7, 8))
+
     def test_agentic_inferred_source_date_ignores_unlabelled_business_dates(self):
         result = SearchResult(
             title="삼성전자 HBM 고객 물량 배정",

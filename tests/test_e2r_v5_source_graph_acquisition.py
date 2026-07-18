@@ -2036,6 +2036,40 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "DOCUMENT_CONTENT_INFERENCE",
         )
 
+    def test_split_newswire_transmission_date_is_article_metadata(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/newswire-with-split-date"
+        text = (
+            "Current Corp HBM article\n"
+            "송고\n"
+            "2025-07-08 05:01\n"
+            "Current Corp disclosed HBM capacity, customer qualification, pricing, "
+            "cash conversion, and counter evidence in the full article. "
+            + "source-backed newswire detail " * 12
+            + "\n인터넷신문 등록번호\n등록일자 : 2016.04.26\n"
+        )
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result(
+                            "Current Corp HBM newswire",
+                            url,
+                            published=None,
+                        ),
+                    )
+                }
+            ),
+            fetcher=PageFetcher(fixture_text_by_url={url: text}),
+        )
+        document = next(
+            row
+            for row in run.evidence_documents
+            if row.get("canonical_url") == url
+        )
+        self.assertEqual(document["published_at"], "2025-07-08")
+
     def test_split_future_input_date_cannot_hide_behind_old_site_footer(self) -> None:
         provider = SourceBrainProvider()
         url = "https://example.com/future-article-with-split-date"

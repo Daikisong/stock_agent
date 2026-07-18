@@ -117,6 +117,7 @@ def _publication_label_strength(line: str) -> str | None:
         label in prefix
         for label in (
             "입력",
+            "송고",
             "최종수정",
             "최종 수정",
             "수정",
