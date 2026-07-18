@@ -20,6 +20,11 @@ from e2r.research.pdf_text_extractor import (
 )
 
 
+PUBLICATION_METADATA_SEMANTICS_VERSION = (
+    "e2r_page_fetch_publication_metadata_v1"
+)
+
+
 @dataclass(frozen=True)
 class FetchResult:
     """Fetched document text or a clear unavailable reason."""
@@ -33,6 +38,8 @@ class FetchResult:
     source_path: str | None = None
     referenced_urls: tuple[str, ...] = ()
     response_last_modified_at: datetime | None = None
+    publication_metadata_parts: tuple[str, ...] = ()
+    publication_metadata_semantics_version: str | None = None
 
 
 @dataclass(frozen=True)
@@ -117,22 +124,43 @@ class PageFetcher:
                 unreadable = extracted_text_unreadable_reason(cached_text)
                 if unreadable is None:
                     cache_metadata = _read_cache_metadata(cache_path)
-                    return FetchResult(
-                        url=url,
-                        ok=True,
-                        text=cached_text[: self.max_text_chars],
-                        content_type="text/plain",
-                        fetched_at=fetched_at,
-                        source_path=str(cache_path),
-                        referenced_urls=tuple(
-                            str(value)
-                            for value in cache_metadata.get("referenced_urls", ())
-                            if str(value).strip()
-                        ),
-                        response_last_modified_at=_cached_datetime(
-                            cache_metadata.get("response_last_modified_at")
-                        ),
-                    )
+                    if (
+                        cache_metadata.get(
+                            "publication_metadata_semantics_version"
+                        )
+                        == PUBLICATION_METADATA_SEMANTICS_VERSION
+                    ):
+                        return FetchResult(
+                            url=url,
+                            ok=True,
+                            text=cached_text[: self.max_text_chars],
+                            content_type=str(
+                                cache_metadata.get("content_type")
+                                or "text/plain"
+                            ),
+                            fetched_at=fetched_at,
+                            source_path=str(cache_path),
+                            referenced_urls=tuple(
+                                str(value)
+                                for value in cache_metadata.get(
+                                    "referenced_urls", ()
+                                )
+                                if str(value).strip()
+                            ),
+                            response_last_modified_at=_cached_datetime(
+                                cache_metadata.get("response_last_modified_at")
+                            ),
+                            publication_metadata_parts=tuple(
+                                str(value)
+                                for value in cache_metadata.get(
+                                    "publication_metadata_parts", ()
+                                )
+                                if str(value).strip()
+                            ),
+                            publication_metadata_semantics_version=(
+                                PUBLICATION_METADATA_SEMANTICS_VERSION
+                            ),
+                        )
             except OSError:
                 pass
 
@@ -195,6 +223,7 @@ class PageFetcher:
             source_path = _write_cache(
                 cache_path,
                 text,
+                content_type=content_type or "application/pdf",
                 response_last_modified_at=response_last_modified_at,
             )
             return FetchResult(
@@ -205,13 +234,20 @@ class PageFetcher:
                 fetched_at=fetched_at,
                 source_path=source_path,
                 response_last_modified_at=response_last_modified_at,
+                publication_metadata_semantics_version=(
+                    PUBLICATION_METADATA_SEMANTICS_VERSION
+                ),
             )
 
         decoded = body.decode(charset, errors="replace")
+        publication_metadata_parts: tuple[str, ...] = ()
         if "html" in content_type.lower() or _looks_like_html(decoded):
             text, referenced_urls = _html_text_and_references(
                 decoded,
                 base_url=url,
+            )
+            publication_metadata_parts = _html_publication_metadata_parts(
+                decoded
             )
         else:
             text = _normalize_text(decoded)
@@ -232,8 +268,10 @@ class PageFetcher:
         source_path = _write_cache(
             cache_path,
             text,
+            content_type=content_type,
             referenced_urls=referenced_urls,
             response_last_modified_at=response_last_modified_at,
+            publication_metadata_parts=publication_metadata_parts,
         )
         return FetchResult(
             url=url,
@@ -244,6 +282,10 @@ class PageFetcher:
             source_path=source_path,
             referenced_urls=referenced_urls,
             response_last_modified_at=response_last_modified_at,
+            publication_metadata_parts=publication_metadata_parts,
+            publication_metadata_semantics_version=(
+                PUBLICATION_METADATA_SEMANTICS_VERSION
+            ),
         )
 
 
@@ -278,8 +320,10 @@ def _write_cache(
     cache_path: Path | None,
     text: str,
     *,
+    content_type: str = "text/plain",
     referenced_urls: tuple[str, ...] = (),
     response_last_modified_at: datetime | None = None,
+    publication_metadata_parts: tuple[str, ...] = (),
 ) -> str | None:
     if cache_path is None:
         return None
@@ -289,11 +333,18 @@ def _write_cache(
         _cache_metadata_path(cache_path).write_text(
             json.dumps(
                 {
+                    "content_type": content_type,
                     "referenced_urls": list(referenced_urls),
                     "response_last_modified_at": (
                         response_last_modified_at.isoformat()
                         if response_last_modified_at is not None
                         else None
+                    ),
+                    "publication_metadata_parts": list(
+                        publication_metadata_parts
+                    ),
+                    "publication_metadata_semantics_version": (
+                        PUBLICATION_METADATA_SEMANTICS_VERSION
                     ),
                 },
                 ensure_ascii=False,
@@ -398,6 +449,13 @@ def _html_text_and_references(
     return parser.text(), references
 
 
+def _html_publication_metadata_parts(decoded: str) -> tuple[str, ...]:
+    parser = _HTMLPublicationMetadataExtractor()
+    parser.feed(decoded)
+    parser.close()
+    return parser.publication_metadata_parts()
+
+
 def _looks_like_html(text: str) -> bool:
     head = text[:500].lower()
     return "<html" in head or "<body" in head or "<!doctype html" in head
@@ -495,6 +553,152 @@ class _HTMLTextExtractor(HTMLParser):
         return tuple(dict.fromkeys(self._referenced_urls))
 
 
+class _HTMLPublicationMetadataExtractor(HTMLParser):
+    """Collect document-level publication metadata without body-date guessing."""
+
+    _META_KEYS = {
+        "articlepublishedtime",
+        "date",
+        "datepublished",
+        "pubdate",
+        "publishdate",
+    }
+    _SINGLE_BODY_CLASSES = {"single", "single-post", "singular"}
+    _PUBLISHED_ARTICLE_CLASSES = {"hentry", "status-publish"}
+    _DATE_CLASSES = {"date", "entry-date", "post-date", "published"}
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self._parts: list[str] = []
+        self._single_document_body = False
+        self._article_selected = False
+        self._article_depth = 0
+        self._date_capture_tag: str | None = None
+        self._date_capture_parts: list[str] = []
+        self._json_ld_parts: list[str] | None = None
+
+    def handle_starttag(
+        self,
+        tag: str,
+        attrs: list[tuple[str, str | None]],
+    ) -> None:
+        tag = tag.lower()
+        attrs_by_name = {
+            key.lower(): str(value)
+            for key, value in attrs
+            if key and value is not None
+        }
+        if tag == "script" and (
+            attrs_by_name.get("type", "").split(";", 1)[0].strip().lower()
+            == "application/ld+json"
+        ):
+            self._json_ld_parts = []
+            return
+        if tag == "meta":
+            key = (
+                attrs_by_name.get("property")
+                or attrs_by_name.get("name")
+                or attrs_by_name.get("itemprop")
+                or ""
+            )
+            content = attrs_by_name.get("content", "").strip()
+            normalized_key = re.sub(r"[^a-z0-9]", "", key.casefold())
+            if normalized_key in self._META_KEYS and content:
+                self._parts.append(f"HTML_META_{normalized_key}:{content}")
+            return
+        class_tokens = {
+            value.casefold()
+            for value in attrs_by_name.get("class", "").split()
+            if value.strip()
+        }
+        if tag == "body":
+            self._single_document_body = bool(
+                class_tokens & self._SINGLE_BODY_CLASSES
+                or any(value.startswith("single-") for value in class_tokens)
+            )
+        if tag == "article":
+            if self._article_depth:
+                self._article_depth += 1
+            elif (
+                self._single_document_body
+                and not self._article_selected
+                and class_tokens & self._PUBLISHED_ARTICLE_CLASSES
+            ):
+                self._article_selected = True
+                self._article_depth = 1
+        if not self._article_depth:
+            return
+        if tag == "time":
+            value = attrs_by_name.get("datetime", "").strip()
+            if value:
+                self._parts.append(f"SINGLE_ARTICLE_TIME:{value}")
+        if (
+            self._date_capture_tag is None
+            and class_tokens & self._DATE_CLASSES
+        ):
+            self._date_capture_tag = tag
+            self._date_capture_parts = []
+
+    def handle_endtag(self, tag: str) -> None:
+        tag = tag.lower()
+        if tag == "script" and self._json_ld_parts is not None:
+            self._parts.extend(
+                _json_ld_publication_metadata_parts(
+                    "".join(self._json_ld_parts)
+                )
+            )
+            self._json_ld_parts = None
+        if tag == self._date_capture_tag:
+            value = " ".join(self._date_capture_parts).strip()
+            if value:
+                self._parts.append(f"SINGLE_ARTICLE_DATE:{value}")
+            self._date_capture_tag = None
+            self._date_capture_parts = []
+        if tag == "article" and self._article_depth:
+            self._article_depth -= 1
+
+    def handle_data(self, data: str) -> None:
+        if self._json_ld_parts is not None:
+            self._json_ld_parts.append(data)
+        elif self._date_capture_tag is not None and data.strip():
+            self._date_capture_parts.append(data.strip())
+
+    def publication_metadata_parts(self) -> tuple[str, ...]:
+        return tuple(dict.fromkeys(value for value in self._parts if value))
+
+
+def _json_ld_publication_metadata_parts(payload: str) -> tuple[str, ...]:
+    values: list[str] = []
+    try:
+        decoded = json.loads(payload)
+    except json.JSONDecodeError:
+        for match in re.finditer(
+            r'(?i)["\']datePublished["\']\s*:\s*["\']([^"\']+)',
+            payload,
+        ):
+            values.append(match.group(1).strip())
+    else:
+        pending = [decoded]
+        while pending:
+            value = pending.pop()
+            if isinstance(value, Mapping):
+                for key, nested in value.items():
+                    if re.sub(r"[^a-z0-9]", "", str(key).casefold()) == (
+                        "datepublished"
+                    ):
+                        if isinstance(nested, (str, int, float)):
+                            values.append(str(nested).strip())
+                    elif isinstance(nested, (Mapping, list, tuple)):
+                        pending.append(nested)
+            elif isinstance(value, (list, tuple)):
+                pending.extend(value)
+    return tuple(
+        f"JSON_LD_DATE_PUBLISHED:{value}"
+        for value in dict.fromkeys(values)
+        if value
+    )
+
+
 def _resolved_http_url(base_url: str, value: str | None) -> str | None:
     raw = str(value or "").strip()
     if not raw or raw.startswith(("#", "data:", "javascript:", "mailto:", "tel:")):
@@ -512,4 +716,8 @@ def _normalize_text(text: str) -> str:
     return "\n".join(line for line in lines if line)
 
 
-__all__ = ["FetchResult", "PageFetcher"]
+__all__ = [
+    "FetchResult",
+    "PUBLICATION_METADATA_SEMANTICS_VERSION",
+    "PageFetcher",
+]

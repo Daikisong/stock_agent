@@ -18,6 +18,7 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from e2r.production.metadata import write_json, write_jsonl
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
+from e2r.research.page_fetcher import PUBLICATION_METADATA_SEMANTICS_VERSION
 from e2r.research.page_fetcher import PageFetcher
 from e2r.research.pdf_text_extractor import extracted_text_unreadable_reason
 from e2r.research.publication_date import infer_publication_date
@@ -613,6 +614,10 @@ class ResearcherSourceGraphAcquirer:
         )
         _close_non_authority_candidate_reference_routes(candidates)
         _reopen_authority_link_extraction_candidates(
+            candidates,
+            rejected_documents=rejected_rows,
+        )
+        _reopen_fetch_semantics_candidates(
             candidates,
             rejected_documents=rejected_rows,
         )
@@ -2011,12 +2016,23 @@ def _fetch_candidate_document(
         if isinstance(response_last_modified_at, date)
         else None
     )
+    publication_metadata_parts = tuple(
+        str(value)
+        for value in getattr(result, "publication_metadata_parts", ())
+        if str(value).strip()
+    )
+    publication_metadata_inferred_date = infer_publication_date(
+        explicit=None,
+        metadata_parts=publication_metadata_parts,
+        as_of_date=as_of_date,
+    )
     content_inferred_date = infer_publication_date(
         explicit=None,
         metadata_parts=(
             url,
             str(candidate.get("title") or ""),
             str(candidate.get("source") or ""),
+            *publication_metadata_parts,
         ),
         document_text=text,
         as_of_date=as_of_date,
@@ -2155,6 +2171,8 @@ def _fetch_candidate_document(
         )
         else "HTTP_LAST_MODIFIED"
         if response_last_modified is not None
+        else "FETCHED_PUBLICATION_METADATA"
+        if publication_metadata_inferred_date is not None
         else "DOCUMENT_CONTENT_INFERENCE"
     )
     document_id = stable_intelligence_id(
@@ -2184,6 +2202,12 @@ def _fetch_candidate_document(
             response_last_modified_at.isoformat()
             if isinstance(response_last_modified_at, (date, datetime))
             else None
+        ),
+        "publication_metadata_parts": list(publication_metadata_parts),
+        "publication_metadata_semantics_version": getattr(
+            result,
+            "publication_metadata_semantics_version",
+            None,
         ),
         "fetched_at": fetched_at,
         "content_type": result.content_type,
@@ -2707,6 +2731,66 @@ def _reopen_authority_link_extraction_candidates(
         candidate["link_preserving_fetch_policy_version"] = (
             "e2r_v5_verified_authority_link_preservation_v1"
         )
+        reopened += 1
+    return reopened
+
+
+def _reopen_fetch_semantics_candidates(
+    candidates: Sequence[dict[str, Any]],
+    *,
+    rejected_documents: Sequence[Mapping[str, Any]],
+) -> int:
+    """Retry one terminal fetch after a local parser semantics improvement.
+
+    Old checkpoints correctly made an unknown publication date or unreadable
+    PDF terminal under the capabilities available at that time.  New generic
+    HTML publication metadata and the pdfplumber fallback can change that local
+    result without changing the URL.  Each policy gets one auditable retry;
+    an identical outcome remains terminal and cannot create an infinite loop.
+    """
+
+    latest_reason_by_candidate: dict[str, str] = {}
+    for row in rejected_documents:
+        candidate_id = str(row.get("candidate_id") or "")
+        reason = str(row.get("rejection_reason") or "")
+        if candidate_id and reason:
+            latest_reason_by_candidate[candidate_id] = reason
+    reopened = 0
+    for candidate in candidates:
+        candidate_id = str(candidate.get("candidate_id") or "")
+        reason = latest_reason_by_candidate.get(candidate_id, "")
+        if candidate.get("ranking_status") != "MATERIAL":
+            continue
+        if candidate.get("fetch_status") not in {
+            "FETCH_REJECTED",
+            "FETCH_ROUTE_EXHAUSTED",
+        }:
+            continue
+        if reason == "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH":
+            flag = "publication_metadata_fetch_retry_attempted"
+            if candidate.get(flag):
+                continue
+            candidate[flag] = True
+            candidate["fetch_semantics_retry_reason"] = (
+                "PRIOR_UNKNOWN_DATE_PRECEDED_HTML_PUBLICATION_METADATA"
+            )
+            candidate["fetch_semantics_policy_version"] = (
+                PUBLICATION_METADATA_SEMANTICS_VERSION
+            )
+        elif "live_pdf_text_extraction_failed:" in reason:
+            flag = "pdf_fallback_fetch_retry_attempted"
+            if candidate.get(flag):
+                continue
+            candidate[flag] = True
+            candidate["fetch_semantics_retry_reason"] = (
+                "PRIOR_PDF_FAILURE_PRECEDED_PDFPLUMBER_FALLBACK"
+            )
+            candidate["fetch_semantics_policy_version"] = (
+                "e2r_pdf_text_fallback_v1"
+            )
+        else:
+            continue
+        candidate["fetch_status"] = "MATERIAL_PENDING_FETCH"
         reopened += 1
     return reopened
 

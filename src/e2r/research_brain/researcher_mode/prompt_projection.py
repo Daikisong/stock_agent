@@ -1931,12 +1931,57 @@ def project_query_planner_failures(
     }
 
 
+def _project_gap_reason_roster(
+    reasons: Sequence[str],
+    *,
+    field_name: str,
+) -> Mapping[str, Any]:
+    """Account for a repeated run-state reason ledger without replaying it."""
+
+    ordered = tuple(sorted(str(value) for value in reasons))
+    kind_rows = tuple(
+        {
+            "kind": (
+                value.split(":", 1)[0].strip()
+                if ":" in value
+                else value.strip()
+                if value.strip()
+                else "UNCLASSIFIED"
+            )
+        }
+        for value in ordered
+    )
+    return {
+        "schema_version": "e2r_v5_gap_reason_roster_projection_v1",
+        "field_name": field_name,
+        "reason_count": len(ordered),
+        "unique_reason_count": len(set(ordered)),
+        "reason_roster_hash": _stable_hash(ordered),
+        "reason_kind_coverage": _relation_coverage(kind_rows, "kind"),
+        "every_reason_accounted_by_hash_and_kind_count": (
+            sum(_relation_coverage(kind_rows, "kind").values()) == len(ordered)
+        ),
+        "full_reason_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
 def project_query_score_gap_context(
     context: Mapping[str, Any],
 ) -> Mapping[str, Any]:
     """Remove duplicate ledgers while preserving LLM-authored gap semantics."""
 
     output = dict(context)
+    for field in ("source_graph_pending_reasons",):
+        reasons = output.get(field)
+        if isinstance(reasons, Sequence) and not isinstance(reasons, (str, bytes)):
+            reason_rows = tuple(str(value) for value in reasons)
+            output[field] = _project_gap_reason_roster(
+                reason_rows,
+                field_name=field,
+            )
     feedback = output.get("prior_fact_extraction_feedback")
     if isinstance(feedback, Sequence) and not isinstance(feedback, (str, bytes)):
         feedback_rows = tuple(str(value) for value in feedback)
@@ -2006,6 +2051,40 @@ def project_query_score_gap_context(
                 "prior_supervisor_gap.supervisor_review_id",
                 "prior_supervisor_gap.epoch",
             ],
+            "llm_authored_missing_facts_questions_and_directions_preserved": True,
+            "duplicate_failure_ledgers_projected": True,
+            "full_gap_context_persisted_outside_prompt": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        },
+    }
+
+
+def project_fact_extraction_score_gap_context(
+    context: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Project persisted gap ledgers before replaying them for each new document.
+
+    The query planner and fact extractor need the same unresolved semantic facts,
+    questions, and route failures.  The extractor must not, however, repeat the
+    full append-only failure ledger beside every full document.  Reusing the
+    loss-accounted query projection keeps those semantics while the original
+    rows remain in their checkpoint artifacts.
+    """
+
+    projected = dict(project_query_score_gap_context(context))
+    query_audit = dict(
+        projected.pop("query_score_gap_projection_audit", {}) or {}
+    )
+    return {
+        **projected,
+        "fact_extraction_score_gap_projection_audit": {
+            "schema_version": "e2r_v5_fact_extraction_score_gap_projection_v1",
+            "semantic_context_roster_hash": _stable_hash(projected),
+            "shared_gap_projection_schema_version": query_audit.get(
+                "schema_version"
+            ),
             "llm_authored_missing_facts_questions_and_directions_preserved": True,
             "duplicate_failure_ledgers_projected": True,
             "full_gap_context_persisted_outside_prompt": True,
@@ -2342,6 +2421,7 @@ __all__ = [
     "project_current_decision_citable_facts",
     "project_evidence_facts",
     "project_fact_extraction_evidence_context",
+    "project_fact_extraction_score_gap_context",
     "project_generated_queries",
     "project_peer_selection_context",
     "project_query_planner_failures",

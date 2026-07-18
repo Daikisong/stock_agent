@@ -1,5 +1,6 @@
 from datetime import date, datetime
 from email.message import Message
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -825,6 +826,107 @@ OPM 개선폭 6%
                 first.response_last_modified_at,
             )
             urlopen.assert_not_called()
+
+    def test_page_fetcher_collects_document_level_publication_metadata(self):
+        html = """
+        <html>
+          <head>
+            <meta property="article:published_time" content="2026-04-07T07:45:00+09:00">
+            <script type="application/ld+json">
+              {"@type":"NewsArticle","datePublished":"2026-04-07T07:45:00+09:00"}
+            </script>
+          </head>
+          <body class="single single-post singular">
+            <article class="post status-publish hentry">
+              <span class="date">2026-04-07</span>
+              <p>Current Corp 공식 실적과 현금 전환 자료</p>
+            </article>
+          </body>
+        </html>
+        """
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=_FakeHTTPResponse(html),
+        ):
+            result = PageFetcher(live_enabled=True).fetch(
+                "https://issuer.example.com/news/current-results",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertTrue(result.ok)
+        self.assertIn(
+            "HTML_META_articlepublishedtime:2026-04-07T07:45:00+09:00",
+            result.publication_metadata_parts,
+        )
+        self.assertIn(
+            "JSON_LD_DATE_PUBLISHED:2026-04-07T07:45:00+09:00",
+            result.publication_metadata_parts,
+        )
+        self.assertIn(
+            "SINGLE_ARTICLE_DATE:2026-04-07",
+            result.publication_metadata_parts,
+        )
+        self.assertIsNotNone(result.publication_metadata_semantics_version)
+
+    def test_page_fetcher_does_not_treat_archive_listing_dates_as_page_date(self):
+        html = """
+        <html>
+          <body class="archive tag category">
+            <article class="post status-publish hentry">
+              <span class="date">2026-04-07</span><p>첫 게시물</p>
+            </article>
+            <article class="post status-publish hentry">
+              <span class="date">2026-03-01</span><p>둘째 게시물</p>
+            </article>
+          </body>
+        </html>
+        """
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=_FakeHTTPResponse(html),
+        ):
+            result = PageFetcher(live_enabled=True).fetch(
+                "https://issuer.example.com/tag/results",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertTrue(result.ok)
+        self.assertEqual(result.publication_metadata_parts, ())
+
+    def test_page_fetcher_refetches_cache_from_old_publication_semantics(self):
+        first_html = "<html><body><p>Current Corp 첫 본문</p></body></html>"
+        repaired_html = """
+        <html><head><meta name="date" content="2026-04-07"></head>
+        <body><p>Current Corp 보강 본문</p></body></html>
+        """
+        url = "https://issuer.example.com/news/cache-repair"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fetcher = PageFetcher(live_enabled=True, cache_directory=tmpdir)
+            with patch(
+                "e2r.research.page_fetcher.request.urlopen",
+                return_value=_FakeHTTPResponse(first_html),
+            ):
+                first = fetcher.fetch(url, as_of_date=date(2026, 6, 8))
+            metadata_path = Path(str(first.source_path) + ".metadata.json")
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+            metadata.pop("publication_metadata_semantics_version")
+            metadata_path.write_text(
+                json.dumps(metadata),
+                encoding="utf-8",
+            )
+
+            with patch(
+                "e2r.research.page_fetcher.request.urlopen",
+                return_value=_FakeHTTPResponse(repaired_html),
+            ) as urlopen:
+                repaired = fetcher.fetch(url, as_of_date=date(2026, 6, 8))
+
+        urlopen.assert_called_once()
+        self.assertIn("Current Corp 보강 본문", repaired.text)
+        self.assertEqual(
+            repaired.publication_metadata_parts,
+            ("HTML_META_date:2026-04-07",),
+        )
 
     def test_page_fetcher_preserves_links_from_empty_frameset_failure(self):
         html = """

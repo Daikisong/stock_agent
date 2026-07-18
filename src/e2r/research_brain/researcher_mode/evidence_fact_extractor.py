@@ -31,7 +31,10 @@ from e2r.research_brain.scoring.business_mechanism_scope import (
 )
 
 from .component_researcher import StructuredResearchProvider
-from .prompt_projection import project_fact_extraction_evidence_context
+from .prompt_projection import (
+    project_fact_extraction_evidence_context,
+    project_fact_extraction_score_gap_context,
+)
 from .evidence_fact_compiler import EvidenceFactCompiler, FactCompilationResult
 from .schemas import (
     CANONICAL_COMPONENT_ORDER,
@@ -254,6 +257,12 @@ class ResearcherEvidenceFactExtractor:
         current_fact_prompt_context_chars = _json_character_count(
             current_fact_prompt_context
         )
+        score_gap_prompt_context = project_fact_extraction_score_gap_context(
+            score_gap_context or {}
+        )
+        score_gap_prompt_context_chars = _json_character_count(
+            score_gap_prompt_context
+        )
         max_primary_payload_chars = 0
         max_attempt_payload_chars = 0
         max_full_document_chars = 0
@@ -279,7 +288,7 @@ class ResearcherEvidenceFactExtractor:
                     "as_of_date": as_of_date,
                     "open_research_objectives": [dict(row) for row in open_objectives],
                     "current_evidence_facts": current_fact_prompt_context,
-                    "score_gap_context": dict(score_gap_context or {}),
+                    "score_gap_context": score_gap_prompt_context,
                     "normalization_contract": {
                         "question_family_id": "stable semantic research-question family, not a query string",
                         "subject_id": "stable target business/product/mechanism subject",
@@ -562,6 +571,12 @@ class ResearcherEvidenceFactExtractor:
                 "current_fact_projection_chars": (
                     current_fact_prompt_context_chars
                 ),
+                "score_gap_projection_schema_version": (
+                    score_gap_prompt_context[
+                        "fact_extraction_score_gap_projection_audit"
+                    ]["schema_version"]
+                ),
+                "score_gap_projection_chars": score_gap_prompt_context_chars,
                 "maximum_full_document_chars": max_full_document_chars,
                 "maximum_primary_payload_chars": max_primary_payload_chars,
                 "maximum_attempt_payload_chars": max_attempt_payload_chars,

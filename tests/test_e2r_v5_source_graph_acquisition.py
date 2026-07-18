@@ -310,6 +310,33 @@ class LastModifiedFetcher:
         )
 
 
+class PublicationMetadataFetcher:
+    def __init__(self, *, url: str, published_at: str) -> None:
+        self.url = url
+        self.published_at = published_at
+
+    def fetch(self, url, *, as_of_date):
+        if url != self.url:
+            return FetchResult(url=url, ok=False, reason="fixture URL missing")
+        return FetchResult(
+            url=url,
+            ok=True,
+            text=(
+                "Current Corp disclosed current earnings, capacity, cash conversion, "
+                "customer allocation, and counter evidence. "
+                + "source-backed document detail " * 12
+            ),
+            content_type="text/html",
+            fetched_at=datetime(2026, 6, 20, 8),
+            publication_metadata_parts=(
+                f"JSON_LD_DATE_PUBLISHED:{self.published_at}",
+            ),
+            publication_metadata_semantics_version=(
+                "e2r_page_fetch_publication_metadata_v1"
+            ),
+        )
+
+
 class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
 
@@ -1373,6 +1400,76 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(candidate["fetch_status"], "MATERIAL_PENDING_FETCH")
         self.assertTrue(candidate["link_preserving_fetch_retry_attempted"])
 
+    def test_old_date_and_pdf_semantics_failures_reopen_exactly_once(self) -> None:
+        date_candidate = {
+            "candidate_id": "UNKNOWN-DATE",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+        }
+        pdf_candidate = {
+            "candidate_id": "UNREADABLE-PDF",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+        }
+        rejected = (
+            {
+                "candidate_id": "UNKNOWN-DATE",
+                "rejection_reason": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH",
+            },
+            {
+                "candidate_id": "UNREADABLE-PDF",
+                "rejection_reason": (
+                    "SNIPPET_ONLY_FULL_FETCH_REQUIRED:"
+                    "live_pdf_text_extraction_failed:pypdf_unreadable"
+                ),
+            },
+        )
+
+        first = source_graph_module._reopen_fetch_semantics_candidates(
+            [date_candidate, pdf_candidate],
+            rejected_documents=rejected,
+        )
+        date_candidate["fetch_status"] = "FETCH_REJECTED"
+        pdf_candidate["fetch_status"] = "FETCH_REJECTED"
+        second = source_graph_module._reopen_fetch_semantics_candidates(
+            [date_candidate, pdf_candidate],
+            rejected_documents=rejected,
+        )
+
+        self.assertEqual(first, 2)
+        self.assertEqual(second, 0)
+        self.assertTrue(
+            date_candidate["publication_metadata_fetch_retry_attempted"]
+        )
+        self.assertTrue(pdf_candidate["pdf_fallback_fetch_retry_attempted"])
+
+    def test_archive_like_unknown_date_retry_remains_one_time(self) -> None:
+        candidate = {
+            "candidate_id": "ARCHIVE-LIST",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+            "url": "https://issuer.example.com/tag/results",
+        }
+        rejected = (
+            {
+                "candidate_id": "ARCHIVE-LIST",
+                "rejection_reason": "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH",
+            },
+        )
+        self.assertEqual(
+            source_graph_module._reopen_fetch_semantics_candidates(
+                [candidate], rejected_documents=rejected
+            ),
+            1,
+        )
+        candidate["fetch_status"] = "FETCH_REJECTED"
+        self.assertEqual(
+            source_graph_module._reopen_fetch_semantics_candidates(
+                [candidate], rejected_documents=rejected
+            ),
+            0,
+        )
+
     def test_ranker_receives_requested_family_and_verified_official_hint(self) -> None:
         provider = SourceBrainProvider(
             source_families=("ISSUER_PRESENTATION",),
@@ -1487,6 +1584,74 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(
             document["response_last_modified_at"],
             "2026-05-11T02:39:25",
+        )
+
+    def test_fetched_publication_metadata_verifies_missing_search_date(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/current-results"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result(
+                            "Current Corp results",
+                            url,
+                            published=None,
+                        ),
+                    )
+                }
+            ),
+            fetcher=PublicationMetadataFetcher(
+                url=url,
+                published_at="2026-04-07T07:45:00+09:00",
+            ),
+        )
+        document = next(
+            row
+            for row in run.evidence_documents
+            if row.get("canonical_url") == url
+        )
+        self.assertEqual(document["published_at"], "2026-04-07")
+        self.assertEqual(
+            document["publication_date_source"],
+            "FETCHED_PUBLICATION_METADATA",
+        )
+        self.assertEqual(
+            document["publication_metadata_semantics_version"],
+            "e2r_page_fetch_publication_metadata_v1",
+        )
+
+    def test_future_fetched_publication_metadata_is_rejected(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/future-results"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result(
+                            "Current Corp results",
+                            url,
+                            published=None,
+                        ),
+                    )
+                }
+            ),
+            fetcher=PublicationMetadataFetcher(
+                url=url,
+                published_at="2026-06-30T07:45:00+09:00",
+            ),
+        )
+        self.assertFalse(
+            any(row.get("canonical_url") == url for row in run.evidence_documents)
+        )
+        self.assertTrue(
+            any(
+                row.get("rejection_reason")
+                == "FUTURE_DOCUMENT_AFTER_FULL_FETCH"
+                for row in run.checkpoint["rejected_documents"]
+            )
         )
 
     def test_old_http_header_cannot_mask_future_labelled_publication_date(self) -> None:

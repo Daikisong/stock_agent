@@ -218,6 +218,79 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             len(full_text),
         )
 
+    def test_large_gap_ledgers_are_projected_without_losing_semantic_questions(self) -> None:
+        provider = FactProvider()
+        failures = [
+            {
+                "failure_stage": "FULL_DOCUMENT_FETCH",
+                "failure_reason": f"FETCH_FAILURE_{index % 4}",
+                "objective_id": f"OBJECTIVE-{index % 7}",
+                "query_id": f"QUERY-{index % 31}",
+                "candidate_id": f"CANDIDATE-{index}",
+                "url": f"https://example.com/failure/{index}",
+                "retryable": index % 2 == 0,
+            }
+            for index in range(3_000)
+        ]
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(
+                _document("DOC-GAP", "ISSUER_PRESENTATION", "ISSUER"),
+            ),
+            open_objectives=(),
+            score_gap_context={
+                "source_graph_pending_reasons": [
+                    f"FULL_FETCH_TRANSPORT_BUDGET_CHECKPOINT:{index}"
+                    for index in range(2_000)
+                ],
+                "prior_fact_extraction_feedback": [
+                    f"FACT_EXTRACTION_RETRY_CONTEXT:{index}"
+                    for index in range(1_000)
+                ],
+                "prior_supervisor_gap": {
+                    "missing_material_facts": ["공식 연간 가이던스"],
+                    "unresolved_material_questions": ["현금 전환 귀속은 무엇인가?"],
+                    "failure_assessments": failures,
+                    "parser_or_extractor_failures": [
+                        f"PARSER-{index}" for index in range(1_000)
+                    ],
+                },
+            },
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        context = provider.calls[0]["payload"]["score_gap_context"]
+        self.assertEqual(
+            context["prior_supervisor_gap"]["missing_material_facts"],
+            ["공식 연간 가이던스"],
+        )
+        self.assertEqual(
+            context["prior_supervisor_gap"]["unresolved_material_questions"],
+            ["현금 전환 귀속은 무엇인가?"],
+        )
+        self.assertEqual(
+            context["prior_supervisor_gap"]["failure_assessment_projection"][
+                "failure_count"
+            ],
+            3_000,
+        )
+        self.assertEqual(
+            context["source_graph_pending_reasons"]["reason_count"],
+            2_000,
+        )
+        accounting = result.audit["prompt_transport_accounting"]
+        self.assertLess(accounting["score_gap_projection_chars"], 100_000)
+        self.assertLess(accounting["maximum_primary_payload_chars"], 1_000_000)
+        self.assertFalse(
+            context["fact_extraction_score_gap_projection_audit"][
+                "prompt_projection_is_research_cap"
+            ]
+        )
+
     def test_material_proposal_without_exact_quote_is_pending_not_evidence(self) -> None:
         provider = FactProvider(bad_quote=True)
         result = ResearcherEvidenceFactExtractor(provider=provider).extract(
