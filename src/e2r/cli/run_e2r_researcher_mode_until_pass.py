@@ -14,6 +14,7 @@ from e2r.research_brain.researcher_mode import (
     PHASE93_POST_RUN_PASS,
     CurrentResearcherModeConfig,
     CurrentResearcherModeTargetRunner,
+    OllamaResearcherProvider,
     compare_phase93_gold_post_run,
     load_current_research_targets,
     refresh_canary_target_manifest_hash,
@@ -49,6 +50,18 @@ def build_parser() -> argparse.ArgumentParser:
         default="configs/e2r_targeted_live_smoke_v1.json",
     )
     parser.add_argument("--latest-trading-snapshot-date")
+    parser.add_argument(
+        "--research-provider",
+        choices=("codex", "ollama"),
+        default="codex",
+        help="Structured LLM provider; Ollama is used only when explicitly selected.",
+    )
+    parser.add_argument("--ollama-base-url")
+    parser.add_argument("--ollama-model")
+    parser.add_argument("--ollama-context-length", type=int)
+    parser.add_argument("--ollama-max-output-tokens", type=int)
+    parser.add_argument("--ollama-prompt-character-limit", type=int)
+    parser.add_argument("--ollama-timeout-seconds", type=float)
     return parser
 
 
@@ -82,6 +95,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     output_root = Path(config.output_root)
     output_root.mkdir(parents=True, exist_ok=True)
+    provider = _build_research_provider(args)
+    runner = CurrentResearcherModeTargetRunner(provider=provider)
+    provider_manifest = _research_provider_manifest(runner.provider)
     # This manifest is closed before any target production call.  No Gold
     # module is touched until every production target reports completion.
     write_json(
@@ -102,9 +118,9 @@ def main(argv: list[str] | None = None) -> int:
             "latest_trading_snapshot_verification": (
                 "CALENDAR_CANDIDATE_PENDING_STRUCTURED_KRX_CONFIRMATION"
             ),
+            "research_provider": provider_manifest,
         },
     )
-    runner = CurrentResearcherModeTargetRunner()
     runs = tuple(
         _run_target_until_semantic_terminal(
             runner=runner,
@@ -178,11 +194,87 @@ def main(argv: list[str] | None = None) -> int:
         "gold_critical_fact_miss_count": gold_critical_fact_miss_count,
         "gold_visibility_during_production": False,
         "completion_based_on_fixed_rounds": False,
+        "research_provider": provider_manifest,
         "production_lane_manifest": str(paths["lane"]),
     }
     write_json(output_root / "phase94_run_summary.json", summary)
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
     return 0 if complete else 2
+
+
+def _build_research_provider(args: argparse.Namespace):
+    if args.research_provider == "codex":
+        ollama_options = {
+            key: value
+            for key, value in vars(args).items()
+            if key.startswith("ollama_") and value is not None
+        }
+        if ollama_options:
+            raise ValueError(
+                "Ollama options require --research-provider ollama:"
+                f" {sorted(ollama_options)}"
+            )
+        return None
+    return OllamaResearcherProvider.default(
+        base_url=args.ollama_base_url or "http://127.0.0.1:11434",
+        model=args.ollama_model or "qwen3.5:27b",
+        timeout_seconds=args.ollama_timeout_seconds or 900.0,
+        context_length=args.ollama_context_length or 262_144,
+        max_output_tokens=args.ollama_max_output_tokens or 32_768,
+        prompt_character_limit=(
+            args.ollama_prompt_character_limit or 500_000
+        ),
+    )
+
+
+def _research_provider_manifest(provider) -> Mapping[str, Any]:
+    transport = getattr(provider, "transport", None)
+    try:
+        identity = dict(provider._provider_identity())
+        identity_error = None
+    except (OSError, RuntimeError, TypeError, ValueError) as exc:
+        identity = {
+            "transport_class": (
+                type(transport).__qualname__ if transport is not None else None
+            ),
+            "model": getattr(transport, "model", None),
+            "context_length": getattr(transport, "context_length", None),
+            "max_output_tokens": getattr(
+                transport, "max_output_tokens", None
+            ),
+            "prompt_character_limit": getattr(
+                transport, "prompt_character_limit", None
+            ),
+            "temperature": getattr(transport, "temperature", None),
+            "seed": getattr(transport, "seed", None),
+            "think": getattr(transport, "think", None),
+            "keep_alive": getattr(transport, "keep_alive", None),
+        }
+        identity_error = (
+            f"{type(exc).__name__}:"
+            + (" ".join(str(exc).split())[-500:] or "no detail")
+        )
+    public_identity = {
+        key: value
+        for key, value in identity.items()
+        if key != "base_url"
+    }
+    return {
+        "provider_name": str(
+            getattr(provider, "provider_name", type(provider).__name__)
+        ),
+        "transport_class": (
+            type(transport).__qualname__ if transport is not None else None
+        ),
+        "provider_identity": public_identity,
+        "provider_identity_hash": stable_hash(identity),
+        "provider_identity_resolved": identity_error is None,
+        "provider_identity_error": identity_error,
+        "provider_selected_explicitly": isinstance(
+            provider, OllamaResearcherProvider
+        ),
+        "score_or_stage_authority": False,
+    }
 
 
 def _latest_calendar_trading_candidate(as_of_date: str) -> str:

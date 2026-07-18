@@ -13,6 +13,7 @@ from typing import Any, Mapping, Protocol, Sequence
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
 from e2r.research_brain.planning.provider_transport import (
     CodexStructuredProviderTransport,
+    OllamaStructuredProviderTransport,
     StructuredProviderRejected,
     StructuredProviderUnavailable,
 )
@@ -907,13 +908,42 @@ class CodexResearcherProvider:
         )
         prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
         schema_hash = _canonical_json_hash(_PROVIDER_SCHEMAS[pass_name])
+        try:
+            provider_identity = self._provider_identity()
+        except (
+            StructuredProviderUnavailable,
+            StructuredProviderRejected,
+            TimeoutError,
+            OSError,
+            RuntimeError,
+        ) as exc:
+            detail = _provider_error_detail(exc)
+            self.calls.append(
+                {
+                    "pass_name": pass_name,
+                    "prompt_hash": prompt_hash,
+                    "prompt_chars": len(prompt),
+                    "payload": safe_payload,
+                    "response": None,
+                    "status": "PROVIDER_ERROR",
+                    "provider_error": f"{exc.__class__.__name__}:{detail}",
+                    "provider_failure_class": "IDENTITY_RESOLUTION",
+                    "transport_call_attempted": True,
+                    "cache_hit": False,
+                    "cache_key": None,
+                    "cache_read_status": "NOT_ATTEMPTED",
+                    "cache_write_status": "NOT_WRITTEN",
+                    "output_schema_hash": schema_hash,
+                }
+            )
+            raise
         cache_key = _canonical_json_hash(
             {
                 "cache_schema_version": (
                     _RESEARCH_PROVIDER_RESPONSE_CACHE_SCHEMA_VERSION
                 ),
                 "provider_name": self.provider_name,
-                "provider_identity": self._provider_identity(),
+                "provider_identity": provider_identity,
                 "pass_name": pass_name,
                 "prompt_hash": prompt_hash,
                 "output_schema_hash": schema_hash,
@@ -1031,7 +1061,32 @@ class CodexResearcherProvider:
                 }
             )
             raise
-        assert_blind_research_output(response.payload)
+        try:
+            assert_blind_research_output(response.payload)
+        except (TypeError, ValueError) as exc:
+            detail = _provider_error_detail(exc)
+            self.calls.append(
+                {
+                    "pass_name": pass_name,
+                    "prompt_hash": prompt_hash,
+                    "prompt_chars": len(prompt),
+                    "payload": safe_payload,
+                    "response": None,
+                    "response_hash": _canonical_json_hash(response.payload),
+                    "status": "PROVIDER_OUTPUT_REJECTED",
+                    "provider_error": f"{exc.__class__.__name__}:{detail}",
+                    "provider_failure_class": "BLIND_OUTPUT_REJECTED",
+                    "transport_call_attempted": True,
+                    "cache_hit": False,
+                    "cache_key": cache_key,
+                    "cache_read_status": cache_read_status,
+                    "cache_write_status": "NOT_WRITTEN",
+                    "output_schema_hash": schema_hash,
+                }
+            )
+            raise StructuredProviderRejected(
+                f"blind_output_rejected:{detail}"
+            ) from exc
         cache_write_status = self._write_cached_response(
             cache_key=cache_key,
             pass_name=pass_name,
@@ -1153,6 +1208,10 @@ class CodexResearcherProvider:
             "provider_error_count": sum(
                 row.get("status") == "PROVIDER_ERROR" for row in events
             ),
+            "provider_output_rejected_count": sum(
+                row.get("status") == "PROVIDER_OUTPUT_REJECTED"
+                for row in events
+            ),
             "prompt_transport_rejected_count": sum(
                 row.get("status") == "PROMPT_TRANSPORT_REJECTED"
                 for row in events
@@ -1209,7 +1268,7 @@ class CodexResearcherProvider:
                 dict(row) for row in invalidations
             ],
             "cache_entry_count": (
-                len(tuple(cache_root.glob("*.json")))
+                self._matching_cache_entry_count()
                 if cache_root is not None
                 else 0
             ),
@@ -1218,7 +1277,44 @@ class CodexResearcherProvider:
             "failed_provider_response_cached": False,
         }
 
+    def _matching_cache_entry_count(self) -> int:
+        cache_root = self.response_cache_directory
+        if cache_root is None:
+            return 0
+        try:
+            identity = self._provider_identity()
+        except (
+            StructuredProviderUnavailable,
+            StructuredProviderRejected,
+            TimeoutError,
+            OSError,
+            RuntimeError,
+        ):
+            return 0
+        count = 0
+        for path in cache_root.glob("*.json"):
+            try:
+                row = json.loads(path.read_text(encoding="utf-8"))
+            except (
+                OSError,
+                UnicodeError,
+                json.JSONDecodeError,
+                TypeError,
+                ValueError,
+            ):
+                continue
+            if (
+                isinstance(row, Mapping)
+                and row.get("provider_name") == self.provider_name
+                and row.get("provider_identity") == identity
+            ):
+                count += 1
+        return count
+
     def _provider_identity(self) -> Mapping[str, Any]:
+        identity = getattr(self.transport, "provider_identity", None)
+        if callable(identity):
+            return dict(identity())
         return {
             "transport_class": self.transport.__class__.__qualname__,
             "codex_command": getattr(self.transport, "codex_command", None),
@@ -1317,6 +1413,44 @@ class CodexResearcherProvider:
                 pass
             return "WRITE_FAILED"
         return "WRITTEN"
+
+
+@dataclass
+class OllamaResearcherProvider(CodexResearcherProvider):
+    """Explicit Ollama-backed Researcher Mode provider with identical gates."""
+
+    transport: OllamaStructuredProviderTransport
+    provider_name: str = "OLLAMA_STRUCTURED_RESEARCHER_MODE"
+
+    @classmethod
+    def default(
+        cls,
+        *,
+        base_url: str = "http://127.0.0.1:11434",
+        model: str = "qwen3.5:27b",
+        timeout_seconds: float = 900.0,
+        context_length: int = 262_144,
+        max_output_tokens: int = 32_768,
+        prompt_character_limit: int = 500_000,
+        temperature: float = 0.0,
+        seed: int = 42,
+        think: bool = False,
+        keep_alive: int | str = -1,
+    ) -> "OllamaResearcherProvider":
+        return cls(
+            OllamaStructuredProviderTransport(
+                base_url=base_url,
+                model=model,
+                timeout_seconds=timeout_seconds,
+                context_length=context_length,
+                max_output_tokens=max_output_tokens,
+                prompt_character_limit=prompt_character_limit,
+                temperature=temperature,
+                seed=seed,
+                think=think,
+                keep_alive=keep_alive,
+            )
+        )
 
 
 def _provider_error_detail(error: Exception) -> str:
@@ -2614,6 +2748,7 @@ __all__ = [
     "EarningsVisibilityResearcher",
     "InformationConfidenceResearcher",
     "MarketExpectationResearcher",
+    "OllamaResearcherProvider",
     "RED_TEAM_RESEARCH_SCHEMA",
     "SOURCE_CANDIDATE_RANKING_SCHEMA",
     "SOURCE_QUERY_GENERATION_SCHEMA",
