@@ -606,19 +606,10 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
                 "every_record_accounted_by_hash_and_group_count"
             ]
         )
-        self.assertTrue(
-            all(
-                group["relation_coverage"]["predicate"]
-                for group in supervisor_facts["semantic_groups"]
-            )
-        )
-        self.assertTrue(
-            all(
-                group["relation_coverage"]["predicate"][
-                    "full_relation_values_persisted_outside_prompt"
-                ]
-                for group in supervisor_facts["semantic_groups"]
-            )
+        self.assertEqual(supervisor_facts["predicate_roster"]["count"], 1_000)
+        self.assertEqual(
+            supervisor_facts["source_independence_group_roster"]["count"],
+            13,
         )
         self.assertTrue(
             peer_context[
@@ -639,7 +630,7 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             supervisor_facts, ensure_ascii=False, sort_keys=True
         )
         peer_encoded = json.dumps(peer_context, ensure_ascii=False, sort_keys=True)
-        self.assertLess(len(supervisor_encoded), 250_000)
+        self.assertLess(len(supervisor_encoded), 100_000)
         self.assertLess(len(peer_encoded), 250_000)
         self.assertNotIn("검증된 경제 메커니즘 999", supervisor_encoded)
         self.assertNotIn("원문 인용 999", peer_encoded)

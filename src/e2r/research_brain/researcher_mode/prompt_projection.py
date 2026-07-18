@@ -1004,17 +1004,12 @@ def project_supervisor_evidence_facts(
                 "structured_evidence_roles",
                 "allowed_component_ids",
             ),
-            hashed_group_relation_fields=(
-                "predicate",
-                "source_independence_group",
-                "corroborating_independence_groups",
-            ),
             numeric_fields=("confidence",),
         )
     )
     projection.update(
         {
-            "schema_version": "e2r_v5_supervisor_fact_prompt_projection_v2",
+            "schema_version": "e2r_v5_supervisor_fact_prompt_projection_v3",
             "fact_id_roster": _project_text_roster(
                 row.get("fact_id") for row in payloads
             ),
@@ -1038,6 +1033,17 @@ def project_supervisor_evidence_facts(
             ),
             "economic_mechanism_roster": _project_text_roster(
                 row.get("economic_mechanism") for row in payloads
+            ),
+            "predicate_roster": _project_text_roster(
+                row.get("predicate") for row in payloads
+            ),
+            "source_independence_group_roster": _project_text_roster(
+                row.get("source_independence_group") for row in payloads
+            ),
+            "corroborating_independence_group_roster": _project_text_roster(
+                value
+                for row in payloads
+                for value in row.get("corroborating_independence_groups") or ()
             ),
             "value_observation_roster": _project_text_roster(
                 json.dumps(
