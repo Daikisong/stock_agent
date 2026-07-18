@@ -15,6 +15,7 @@ from urllib import error, parse, request
 from typing import Any, Mapping
 
 from e2r.research.pdf_text_extractor import (
+    PDF_TEXT_EXTRACTION_SEMANTICS_VERSION,
     PDFTextExtractor,
     extracted_text_unreadable_reason,
 )
@@ -23,6 +24,7 @@ from e2r.research.pdf_text_extractor import (
 PUBLICATION_METADATA_SEMANTICS_VERSION = (
     "e2r_page_fetch_publication_metadata_v1"
 )
+TEXT_CACHE_SEMANTICS_VERSION = "e2r_page_fetch_text_cache_v2"
 
 
 @dataclass(frozen=True)
@@ -40,6 +42,11 @@ class FetchResult:
     response_last_modified_at: datetime | None = None
     publication_metadata_parts: tuple[str, ...] = ()
     publication_metadata_semantics_version: str | None = None
+    text_complete: bool = True
+    original_text_chars: int | None = None
+    returned_text_chars: int | None = None
+    text_cache_semantics_version: str | None = None
+    text_extraction_semantics_version: str | None = None
 
 
 @dataclass(frozen=True)
@@ -53,7 +60,7 @@ class PageFetcher:
     pdf_text_extractor: PDFTextExtractor | None = None
     max_body_bytes: int = 2_000_000
     max_pdf_body_bytes: int = 25_000_000
-    max_text_chars: int = 200_000
+    max_text_chars: int | None = 200_000
     user_agent: str = (
         "Mozilla/5.0 (compatible; E2RResearchBot/0.1; +https://example.invalid/e2r)"
     )
@@ -124,20 +131,41 @@ class PageFetcher:
                 unreadable = extracted_text_unreadable_reason(cached_text)
                 if unreadable is None:
                     cache_metadata = _read_cache_metadata(cache_path)
+                    cached_content_type = str(
+                        cache_metadata.get("content_type") or "text/plain"
+                    )
+                    current_text_cache = (
+                        cache_metadata.get("text_cache_semantics_version")
+                        == TEXT_CACHE_SEMANTICS_VERSION
+                    )
+                    legacy_uncapped_cache = (
+                        not cache_metadata.get("text_cache_semantics_version")
+                        and len(cached_text) < 200_000
+                    )
+                    pdf_semantics_current = (
+                        "pdf" not in cached_content_type.casefold()
+                        or cache_metadata.get(
+                            "text_extraction_semantics_version"
+                        )
+                        == PDF_TEXT_EXTRACTION_SEMANTICS_VERSION
+                    )
                     if (
                         cache_metadata.get(
                             "publication_metadata_semantics_version"
                         )
                         == PUBLICATION_METADATA_SEMANTICS_VERSION
+                        and (current_text_cache or legacy_uncapped_cache)
+                        and pdf_semantics_current
                     ):
+                        returned_text, text_complete = _bounded_text(
+                            cached_text,
+                            self.max_text_chars,
+                        )
                         return FetchResult(
                             url=url,
                             ok=True,
-                            text=cached_text[: self.max_text_chars],
-                            content_type=str(
-                                cache_metadata.get("content_type")
-                                or "text/plain"
-                            ),
+                            text=returned_text,
+                            content_type=cached_content_type,
                             fetched_at=fetched_at,
                             source_path=str(cache_path),
                             referenced_urls=tuple(
@@ -160,6 +188,21 @@ class PageFetcher:
                             publication_metadata_semantics_version=(
                                 PUBLICATION_METADATA_SEMANTICS_VERSION
                             ),
+                            text_complete=text_complete,
+                            original_text_chars=len(cached_text),
+                            returned_text_chars=len(returned_text),
+                            text_cache_semantics_version=(
+                                TEXT_CACHE_SEMANTICS_VERSION
+                            ),
+                            text_extraction_semantics_version=(
+                                str(
+                                    cache_metadata.get(
+                                        "text_extraction_semantics_version"
+                                    )
+                                    or ""
+                                )
+                                or None
+                            ),
                         )
             except OSError:
                 pass
@@ -181,15 +224,26 @@ class PageFetcher:
                 body_limit = max(1, self.max_pdf_body_bytes if pdf_like else self.max_body_bytes)
                 body = response.read(body_limit + 1)
                 if len(body) > body_limit:
-                    if pdf_like:
-                        return FetchResult(
-                            url=url,
-                            ok=False,
-                            content_type=content_type or "application/pdf",
-                            fetched_at=fetched_at,
-                            reason=f"live_fetch_body_too_large:pdf:{body_limit}",
-                        )
-                    body = body[: self.max_body_bytes]
+                    return FetchResult(
+                        url=url,
+                        ok=False,
+                        content_type=(
+                            content_type or (
+                                "application/pdf" if pdf_like else "text/html"
+                            )
+                        ),
+                        fetched_at=fetched_at,
+                        reason=(
+                            "live_fetch_body_too_large:"
+                            f"{'pdf' if pdf_like else 'html'}:{body_limit}"
+                        ),
+                        text_complete=False,
+                        original_text_chars=None,
+                        returned_text_chars=0,
+                        text_cache_semantics_version=(
+                            TEXT_CACHE_SEMANTICS_VERSION
+                        ),
+                    )
                 charset = _charset(response) or "utf-8"
         except (error.HTTPError, error.URLError, TimeoutError, OSError, UnicodeError, ValueError) as exc:
             return FetchResult(
@@ -219,12 +273,23 @@ class PageFetcher:
                     fetched_at=fetched_at,
                     reason=f"live_pdf_text_extraction_failed:{unreadable}",
                 )
-            text = (extraction.text or "")[: self.max_text_chars]
+            full_text = extraction.text or ""
+            extraction_semantics_version = (
+                extraction.extraction_semantics_version
+                or PDF_TEXT_EXTRACTION_SEMANTICS_VERSION
+            )
+            text, text_complete = _bounded_text(
+                full_text,
+                self.max_text_chars,
+            )
             source_path = _write_cache(
                 cache_path,
-                text,
+                full_text,
                 content_type=content_type or "application/pdf",
                 response_last_modified_at=response_last_modified_at,
+                text_extraction_semantics_version=(
+                    extraction_semantics_version
+                ),
             )
             return FetchResult(
                 url=url,
@@ -236,6 +301,13 @@ class PageFetcher:
                 response_last_modified_at=response_last_modified_at,
                 publication_metadata_semantics_version=(
                     PUBLICATION_METADATA_SEMANTICS_VERSION
+                ),
+                text_complete=text_complete,
+                original_text_chars=len(full_text),
+                returned_text_chars=len(text),
+                text_cache_semantics_version=TEXT_CACHE_SEMANTICS_VERSION,
+                text_extraction_semantics_version=(
+                    extraction_semantics_version
                 ),
             )
 
@@ -264,10 +336,14 @@ class PageFetcher:
                 referenced_urls=referenced_urls,
                 response_last_modified_at=response_last_modified_at,
             )
-        text = text[: self.max_text_chars]
+        full_text = text
+        text, text_complete = _bounded_text(
+            full_text,
+            self.max_text_chars,
+        )
         source_path = _write_cache(
             cache_path,
-            text,
+            full_text,
             content_type=content_type,
             referenced_urls=referenced_urls,
             response_last_modified_at=response_last_modified_at,
@@ -286,6 +362,10 @@ class PageFetcher:
             publication_metadata_semantics_version=(
                 PUBLICATION_METADATA_SEMANTICS_VERSION
             ),
+            text_complete=text_complete,
+            original_text_chars=len(full_text),
+            returned_text_chars=len(text),
+            text_cache_semantics_version=TEXT_CACHE_SEMANTICS_VERSION,
         )
 
 
@@ -324,6 +404,7 @@ def _write_cache(
     referenced_urls: tuple[str, ...] = (),
     response_last_modified_at: datetime | None = None,
     publication_metadata_parts: tuple[str, ...] = (),
+    text_extraction_semantics_version: str | None = None,
 ) -> str | None:
     if cache_path is None:
         return None
@@ -346,6 +427,14 @@ def _write_cache(
                     "publication_metadata_semantics_version": (
                         PUBLICATION_METADATA_SEMANTICS_VERSION
                     ),
+                    "text_cache_semantics_version": (
+                        TEXT_CACHE_SEMANTICS_VERSION
+                    ),
+                    "text_complete": True,
+                    "original_text_chars": len(text),
+                    "text_extraction_semantics_version": (
+                        text_extraction_semantics_version
+                    ),
                 },
                 ensure_ascii=False,
                 sort_keys=True,
@@ -359,6 +448,16 @@ def _write_cache(
 
 def _cache_metadata_path(cache_path: Path) -> Path:
     return cache_path.with_suffix(cache_path.suffix + ".metadata.json")
+
+
+def _bounded_text(text: str, maximum_chars: int | None) -> tuple[str, bool]:
+    if maximum_chars is None:
+        return text, True
+    if isinstance(maximum_chars, bool) or maximum_chars <= 0:
+        raise ValueError("max_text_chars must be a positive integer or None")
+    if len(text) <= maximum_chars:
+        return text, True
+    return text[:maximum_chars], False
 
 
 def _read_cache_metadata(cache_path: Path) -> Mapping[str, Any]:
@@ -719,5 +818,6 @@ def _normalize_text(text: str) -> str:
 __all__ = [
     "FetchResult",
     "PUBLICATION_METADATA_SEMANTICS_VERSION",
+    "TEXT_CACHE_SEMANTICS_VERSION",
     "PageFetcher",
 ]

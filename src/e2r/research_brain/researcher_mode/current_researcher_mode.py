@@ -1253,16 +1253,22 @@ def _load_fact_checkpoint(
         str(row.get("document_id") or "") for row in source_graph.evidence_documents
     }
     all_calls = _read_jsonl(paths["provider_calls"])
-    completed_ids = {
+    completed_call_ids = {
         str(document_id)
         for row in all_calls
         if row.get("status") == "COMPLETE"
         for document_id in row.get("document_ids") or ()
         if str(document_id) in current_ids
     }
+    persisted_dispositions = _read_jsonl(paths["document_dispositions"])
+    completed_ids = completed_call_ids & {
+        str(row.get("document_id") or "")
+        for row in persisted_dispositions
+        if str(row.get("document_id") or "") in current_ids
+    }
     dispositions = tuple(
         row
-        for row in _read_jsonl(paths["document_dispositions"])
+        for row in persisted_dispositions
         if str(row.get("document_id") or "") in completed_ids
     )
     claims = tuple(

@@ -19,8 +19,12 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from e2r.production.metadata import write_json, write_jsonl
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
 from e2r.research.page_fetcher import PUBLICATION_METADATA_SEMANTICS_VERSION
+from e2r.research.page_fetcher import TEXT_CACHE_SEMANTICS_VERSION
 from e2r.research.page_fetcher import PageFetcher
-from e2r.research.pdf_text_extractor import extracted_text_unreadable_reason
+from e2r.research.pdf_text_extractor import (
+    PDF_TEXT_EXTRACTION_SEMANTICS_VERSION,
+    extracted_text_unreadable_reason,
+)
 from e2r.research.publication_date import infer_publication_date
 from e2r.research.search_provider import SearchProvider, SearchResult
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
@@ -587,13 +591,27 @@ class ResearcherSourceGraphAcquirer:
         page_fetcher = self.page_fetcher or PageFetcher(
             live_enabled=config.mode != SourceGraphAcquisitionMode.TEST.value,
             cache_directory=Path("output/researcher_parity/source_graph_cache"),
+            # Researcher Mode persists the complete fetched text.  Downstream
+            # provider calls may chunk it for transport, but a transport cap
+            # must never masquerade as a full evidence document.
+            max_text_chars=(
+                None
+                if config.mode
+                == SourceGraphAcquisitionMode.RESEARCH_BACKFILL.value
+                else 200_000
+            ),
         )
         _validate_provider_mode(
             config=config,
             search_provider=search_provider,
             page_fetcher=page_fetcher,
         )
-        checkpoint_quarantine_reasons = _quarantine_unreadable_documents(state)
+        checkpoint_quarantine_reasons = _quarantine_unreadable_documents(
+            state,
+            parser_repair_document_ids=(
+                _fact_parser_repair_document_ids(score_gap_context or {})
+            ),
+        )
         unresolved_objectives = tuple(
             row for row in objectives if str(row["objective_id"]) not in resolved
         )
@@ -1214,7 +1232,11 @@ def validated_quarantined_document_ids(
     if active_ids & set(ids):
         raise ValueError("quarantined source document cannot remain evidence-active")
     rejections = tuple(checkpoint.get("rejected_documents") or ())
-    allowed_reason_prefixes = ("UNREADABLE_FULL_DOCUMENT_TEXT:",)
+    allowed_reason_prefixes = (
+        "UNREADABLE_FULL_DOCUMENT_TEXT:",
+        "INCOMPLETE_FULL_DOCUMENT_TEXT:",
+        "STALE_PDF_READING_ORDER:",
+    )
     for row in rows:
         document_id = str(row.get("document_id") or "").strip()
         candidate_id = str(row.get("candidate_id") or "").strip()
@@ -1239,9 +1261,12 @@ def validated_quarantined_document_ids(
             and str(rejection.get("content_hash") or "") == content_hash
             and str(rejection.get("rejection_reason") or "") == reason
         )
+        repair_refetch_required = reason.startswith(
+            ("INCOMPLETE_FULL_DOCUMENT_TEXT:", "STALE_PDF_READING_ORDER:")
+        )
         if not matching_rejections or any(
             rejection.get("accepted_claim_ids")
-            or rejection.get("retryable") is not False
+            or rejection.get("retryable") is not repair_refetch_required
             or rejection.get("evidence_eligible") is not False
             or rejection.get("score_authority") is not False
             for rejection in matching_rejections
@@ -1442,10 +1467,18 @@ def _validate_provider_mode(
         or bool(page_fetcher.fixture_text_by_url)
     ):
         raise ValueError("production source graph requires live PageFetcher")
+    if page_fetcher.max_text_chars is None:
+        raise ValueError(
+            "production daily source graph requires a bounded PageFetcher"
+        )
 
 
-def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
-    """Remove unreadable legacy documents when a checkpoint is resumed.
+def _quarantine_unreadable_documents(
+    state: dict[str, Any],
+    *,
+    parser_repair_document_ids: Sequence[str] = (),
+) -> tuple[str, ...]:
+    """Remove unreadable or parser-stale documents on checkpoint resume.
 
     Older checkpoints may contain PDF text that an extractor reported as a
     success even though it consists mostly of control characters.  Keeping the
@@ -1474,6 +1507,11 @@ def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
         row.setdefault("as_of_date", state.get("as_of_date"))
     rejected_rows = state.setdefault("rejected_documents", [])
     query_failures = state.setdefault("query_failures", [])
+    parser_repair_ids = {
+        str(value).strip()
+        for value in parser_repair_document_ids
+        if str(value).strip()
+    }
     for raw_document in documents:
         document = dict(raw_document)
         content = str(
@@ -1483,12 +1521,41 @@ def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
             or ""
         )
         unreadable = extracted_text_unreadable_reason(content)
-        if unreadable is None:
+        document_id = str(document.get("document_id") or "")
+        legacy_text_cap = (
+            str(document.get("source_provider") or "") == "PageFetcher"
+            and len(content) == 200_000
+            and document.get("text_complete") is not True
+        )
+        document_is_pdf = (
+            bool(document.get("is_pdf"))
+            or "pdf" in str(document.get("content_type") or "").casefold()
+            or urlsplit(
+                str(document.get("canonical_url") or document.get("url") or "")
+            ).path.casefold().endswith(".pdf")
+        )
+        stale_pdf_reading_order = (
+            document_id in parser_repair_ids
+            and document_is_pdf
+            and document.get("text_extraction_semantics_version")
+            != PDF_TEXT_EXTRACTION_SEMANTICS_VERSION
+        )
+        if (
+            unreadable is None
+            and not legacy_text_cap
+            and not stale_pdf_reading_order
+        ):
             kept.append(document)
             continue
-        document_id = str(document.get("document_id") or "")
         url = str(document.get("canonical_url") or document.get("url") or "")
-        rejection_reason = f"UNREADABLE_FULL_DOCUMENT_TEXT:{unreadable}"
+        repair_refetch_required = legacy_text_cap or stale_pdf_reading_order
+        rejection_reason = (
+            "INCOMPLETE_FULL_DOCUMENT_TEXT:LEGACY_PAGE_FETCH_200000_CHAR_CAP"
+            if legacy_text_cap
+            else "STALE_PDF_READING_ORDER:EXACT_QUOTE_VALIDATION_FAILED"
+            if stale_pdf_reading_order
+            else f"UNREADABLE_FULL_DOCUMENT_TEXT:{unreadable}"
+        )
         candidate = candidate_by_document_id.get(document_id) or candidate_by_url.get(
             _normalize_url(url)
         )
@@ -1507,15 +1574,27 @@ def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
             "objective_ids": list(document.get("objective_ids") or ()),
         }
         if candidate is not None:
-            candidate["fetch_status"] = "FETCH_REJECTED_UNREADABLE_TEXT"
+            candidate["fetch_status"] = (
+                "MATERIAL_PENDING_FETCH"
+                if repair_refetch_required
+                else "FETCH_REJECTED_UNREADABLE_TEXT"
+            )
             candidate["last_fetch_failure_reason"] = rejection_reason
-            candidate["alternate_route_required"] = True
+            candidate["alternate_route_required"] = not repair_refetch_required
             candidate["quarantined_document_id"] = document_id
+            candidate.pop("document_id", None)
+            if repair_refetch_required:
+                candidate["parser_semantics_refetch_required"] = True
+                candidate["parser_semantics_policy_version"] = (
+                    PDF_TEXT_EXTRACTION_SEMANTICS_VERSION
+                    if stale_pdf_reading_order
+                    else TEXT_CACHE_SEMANTICS_VERSION
+                )
         rejection = dict(
             _candidate_rejection(
                 candidate_payload,
                 rejection_reason,
-                retryable=False,
+                retryable=repair_refetch_required,
                 content_hash=str(document.get("content_hash") or "") or None,
             )
         )
@@ -1524,7 +1603,8 @@ def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
                 "document_id": document_id,
                 "quarantined_on_checkpoint_resume": True,
                 "evidence_eligible": False,
-                "alternate_route_required": True,
+                "alternate_route_required": not repair_refetch_required,
+                "parser_refetch_required": repair_refetch_required,
             }
         )
         rejected_rows.append(rejection)
@@ -1542,6 +1622,7 @@ def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
                 "quarantine_reason": rejection_reason,
                 "evidence_eligible": False,
                 "score_authority": False,
+                "parser_refetch_required": repair_refetch_required,
             }
         )
         query_failures.append(
@@ -1557,7 +1638,8 @@ def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
                 "url": url,
                 "failure_stage": "FULL_DOCUMENT_READABILITY_VALIDATION",
                 "failure_reason": rejection_reason,
-                "alternate_route_required": True,
+                "alternate_route_required": not repair_refetch_required,
+                "parser_refetch_required": repair_refetch_required,
             }
         )
         reasons.append(rejection_reason)
@@ -1566,6 +1648,28 @@ def _quarantine_unreadable_documents(state: dict[str, Any]) -> tuple[str, ...]:
         quarantine_rows, key_fields=("document_id", "quarantine_reason")
     )
     return tuple(dict.fromkeys(reasons))
+
+
+def _fact_parser_repair_document_ids(
+    score_gap_context: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Recover document ids from exact-quote failures, never from gap names."""
+
+    pending: list[Any] = [score_gap_context]
+    document_ids: list[str] = []
+    pattern = re.compile(
+        r"MATERIAL_FACT_PROPOSAL_REJECTED:"
+        r"(SGDOC-[0-9a-f]+):EXACT_QUOTE_NOT_IN_FULL_DOCUMENT"
+    )
+    while pending:
+        value = pending.pop()
+        if isinstance(value, Mapping):
+            pending.extend(value.values())
+        elif isinstance(value, (list, tuple, set, frozenset)):
+            pending.extend(value)
+        elif isinstance(value, str):
+            document_ids.extend(pattern.findall(value))
+    return tuple(dict.fromkeys(document_ids))
 
 
 def _execute_search_query(
@@ -1961,6 +2065,27 @@ def _fetch_candidate_document(
         rejection = _candidate_rejection(candidate, reason, retryable=retryable)
         return _fetch_record(fetch_id, candidate, "FETCH_FAILED", reason), None, rejection
     text = str(result.text or "").strip()
+    if getattr(result, "text_complete", True) is not True:
+        returned_chars = int(
+            getattr(result, "returned_text_chars", None) or len(text)
+        )
+        original_chars = int(
+            getattr(result, "original_text_chars", None) or returned_chars
+        )
+        reason = (
+            "INCOMPLETE_FULL_DOCUMENT_TEXT:"
+            f"{returned_chars}/{original_chars}"
+        )
+        rejection = _candidate_rejection(
+            candidate,
+            reason,
+            retryable=True,
+        )
+        return (
+            _fetch_record(fetch_id, candidate, "FETCH_FAILED", reason),
+            None,
+            rejection,
+        )
     text_referenced_urls = tuple(
         value.rstrip(".,);]")
         for value in re.findall(r"https?://[^\s<>\"']+", text)
@@ -2207,6 +2332,23 @@ def _fetch_candidate_document(
         "publication_metadata_semantics_version": getattr(
             result,
             "publication_metadata_semantics_version",
+            None,
+        ),
+        "text_complete": getattr(result, "text_complete", True) is True,
+        "original_text_chars": int(
+            getattr(result, "original_text_chars", None) or len(text)
+        ),
+        "returned_text_chars": int(
+            getattr(result, "returned_text_chars", None) or len(text)
+        ),
+        "text_cache_semantics_version": getattr(
+            result,
+            "text_cache_semantics_version",
+            None,
+        ),
+        "text_extraction_semantics_version": getattr(
+            result,
+            "text_extraction_semantics_version",
             None,
         ),
         "fetched_at": fetched_at,

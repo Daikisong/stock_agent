@@ -86,6 +86,7 @@ class FactExtractionProviderCall:
     response_hash: str | None
     provider_attempt_count: int = 1
     validation_retry_used: bool = False
+    transport_chunk_ids: tuple[str, ...] = ()
     schema_version: str = "e2r_v5_fact_extraction_provider_call_v1"
 
     def __post_init__(self) -> None:
@@ -250,6 +251,18 @@ class ResearcherEvidenceFactExtractor:
             for row in prepared
             if str(row["document_id"]) not in set(prior_disposition_ids)
         )
+        transport_documents = tuple(
+            chunk
+            for document in remaining
+            for chunk in _document_transport_chunks(
+                document,
+                max_chars=self.max_document_chars_per_call,
+            )
+        )
+        split_chunk_ids_by_document = _split_chunk_ids_by_document(
+            transport_documents
+        )
+        pending_transport_chunk_ids: set[str] = set()
         provider_circuit_breaker_open = False
         current_fact_prompt_context = project_fact_extraction_evidence_context(
             current_facts
@@ -265,20 +278,30 @@ class ResearcherEvidenceFactExtractor:
         )
         max_primary_payload_chars = 0
         max_attempt_payload_chars = 0
-        max_full_document_chars = 0
+        max_full_document_chars = max(
+            (len(str(row.get("content_text") or "")) for row in prepared),
+            default=0,
+        )
+        max_transport_chunk_chars = 0
         for batch in _document_batches(
-            remaining,
+            transport_documents,
             max_documents=self.documents_per_call,
             max_chars=self.max_document_chars_per_call,
         ):
-            batch_id = stable_intelligence_id(
-                "FACTBATCH",
-                {
-                    "target_id": target_id,
-                    "as_of_date": as_of_date,
-                    "document_ids": [str(row["document_id"]) for row in batch],
-                },
-            )
+            batch_identity = {
+                "target_id": target_id,
+                "as_of_date": as_of_date,
+                "document_ids": [str(row["document_id"]) for row in batch],
+            }
+            batch_transport_chunk_ids = _batch_transport_chunk_ids(batch)
+            if any(
+                int(row.get("transport_chunk_count") or 1) > 1
+                for row in batch
+            ):
+                batch_identity["transport_chunk_ids"] = list(
+                    batch_transport_chunk_ids
+                )
+            batch_id = stable_intelligence_id("FACTBATCH", batch_identity)
             payload = scrub_blind_research_payload(
                 {
                     "target_id": target_id,
@@ -337,8 +360,8 @@ class ResearcherEvidenceFactExtractor:
                 max_primary_payload_chars,
                 _json_character_count(payload),
             )
-            max_full_document_chars = max(
-                max_full_document_chars,
+            max_transport_chunk_chars = max(
+                max_transport_chunk_chars,
                 *(len(str(row.get("content_text") or "")) for row in batch),
             )
             attempt_payload = payload
@@ -375,6 +398,9 @@ class ResearcherEvidenceFactExtractor:
                         f"{type(exc).__name__}:{_clean_error(exc)}"
                     )
                     pending.append(reason)
+                    pending_transport_chunk_ids.update(
+                        batch_transport_chunk_ids
+                    )
                     calls.append(
                         FactExtractionProviderCall(
                             batch_id=batch_id,
@@ -392,6 +418,9 @@ class ResearcherEvidenceFactExtractor:
                             response_hash=None,
                             provider_attempt_count=provider_attempt_count,
                             validation_retry_used=validation_retry_used,
+                            transport_chunk_ids=(
+                                batch_transport_chunk_ids
+                            ),
                         )
                     )
                     # Usage-limit / process-launch failures are transport-wide:
@@ -481,6 +510,10 @@ class ResearcherEvidenceFactExtractor:
                 rejections.extend(batch_rejections)
                 dispositions.extend(batch_dispositions)
                 pending.extend(batch_pending)
+                if batch_pending:
+                    pending_transport_chunk_ids.update(
+                        batch_transport_chunk_ids
+                    )
                 research_gap_feedback.extend(batch_feedback)
                 calls.append(
                     FactExtractionProviderCall(
@@ -501,11 +534,21 @@ class ResearcherEvidenceFactExtractor:
                         response_hash=response_hash,
                         provider_attempt_count=provider_attempt_count,
                         validation_retry_used=validation_retry_used,
+                        transport_chunk_ids=batch_transport_chunk_ids,
                     )
                 )
                 break
             if provider_circuit_breaker_open:
                 break
+        claims, dispositions, pending = _reconcile_transport_chunks(
+            claims=claims,
+            dispositions=dispositions,
+            pending=pending,
+            split_chunk_ids_by_document=split_chunk_ids_by_document,
+            pending_transport_chunk_ids=pending_transport_chunk_ids,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
         compilation = EvidenceFactCompiler().compile(
             target_id=target_id,
             as_of_date=as_of_date,
@@ -579,6 +622,14 @@ class ResearcherEvidenceFactExtractor:
                 ),
                 "score_gap_projection_chars": score_gap_prompt_context_chars,
                 "maximum_full_document_chars": max_full_document_chars,
+                "maximum_transport_chunk_chars": max_transport_chunk_chars,
+                "transport_character_bound_enforced": (
+                    max_transport_chunk_chars
+                    <= self.max_document_chars_per_call
+                ),
+                "split_document_count": len(split_chunk_ids_by_document),
+                "transport_chunk_count": len(transport_documents),
+                "every_full_document_covered_by_transport_chunks": True,
                 "maximum_primary_payload_chars": max_primary_payload_chars,
                 "maximum_attempt_payload_chars": max_attempt_payload_chars,
                 "full_document_content_preserved_verbatim": True,
@@ -706,6 +757,13 @@ def _document_batches(
     current_chars = 0
     for document in documents:
         chars = len(str(document.get("content_text") or ""))
+        if int(document.get("transport_chunk_count") or 1) > 1:
+            if current:
+                batches.append(tuple(current))
+                current = []
+                current_chars = 0
+            batches.append((document,))
+            continue
         if current and (
             len(current) >= max_documents or current_chars + chars > max_chars
         ):
@@ -757,7 +815,7 @@ def _validate_documents(
 
 
 def _document_prompt_row(row: Mapping[str, Any]) -> Mapping[str, Any]:
-    return {
+    payload = {
         "document_id": row["document_id"],
         "canonical_url": row["canonical_url"],
         "title": row.get("title"),
@@ -770,6 +828,225 @@ def _document_prompt_row(row: Mapping[str, Any]) -> Mapping[str, Any]:
         "full_fetch_performed": True,
         "snippet_used_as_document": False,
     }
+    if int(row.get("transport_chunk_count") or 1) > 1:
+        payload["transport_chunk"] = {
+            "transport_chunk_id": row["transport_chunk_id"],
+            "chunk_index": int(row["transport_chunk_index"]),
+            "chunk_count": int(row["transport_chunk_count"]),
+            "start_char": int(row["transport_chunk_start"]),
+            "end_char": int(row["transport_chunk_end"]),
+            "chunk_content_hash": row["transport_chunk_content_hash"],
+            "full_document_content_hash": row["content_hash"],
+            "full_document_text_chars": int(
+                row["full_document_text_chars"]
+            ),
+            "all_chunks_required_before_document_completion": True,
+            "instruction": (
+                "Inspect and dispose only this literal transport chunk. "
+                "NO_MATERIAL_FACT for one chunk does not prove that the "
+                "canonical parent document lacks a fact; deterministic code "
+                "aggregates the parent only after every chunk is complete."
+            ),
+        }
+    return payload
+
+
+def _document_transport_chunks(
+    document: Mapping[str, Any],
+    *,
+    max_chars: int,
+) -> tuple[Mapping[str, Any], ...]:
+    """Split one canonical document into overlapping literal transport chunks."""
+
+    text = str(document.get("content_text") or "")
+    if len(text) <= max_chars:
+        return (document,)
+    overlap = min(4_000, max(1_000, max_chars // 50))
+    ranges: list[tuple[int, int]] = []
+    start = 0
+    while start < len(text):
+        hard_end = min(len(text), start + max_chars)
+        end = hard_end
+        if hard_end < len(text):
+            minimum_boundary = start + int(max_chars * 0.80)
+            newline = text.rfind("\n", minimum_boundary, hard_end)
+            if newline >= minimum_boundary:
+                end = newline + 1
+        if end <= start:
+            end = hard_end
+        ranges.append((start, end))
+        if end >= len(text):
+            break
+        next_start = max(start + 1, end - overlap)
+        start = next_start
+    chunks: list[Mapping[str, Any]] = []
+    count = len(ranges)
+    for index, (chunk_start, chunk_end) in enumerate(ranges):
+        chunk_text = text[chunk_start:chunk_end]
+        chunk_id = stable_intelligence_id(
+            "FACTCHUNK",
+            {
+                "document_id": document["document_id"],
+                "content_hash": document["content_hash"],
+                "start": chunk_start,
+                "end": chunk_end,
+            },
+        )
+        chunks.append(
+            {
+                **dict(document),
+                "content_text": chunk_text,
+                "transport_chunk_id": chunk_id,
+                "transport_chunk_index": index,
+                "transport_chunk_count": count,
+                "transport_chunk_start": chunk_start,
+                "transport_chunk_end": chunk_end,
+                "transport_chunk_content_hash": hashlib.sha256(
+                    chunk_text.encode("utf-8")
+                ).hexdigest(),
+                "full_document_text_chars": len(text),
+            }
+        )
+    if (
+        not chunks
+        or chunks[0]["transport_chunk_start"] != 0
+        or chunks[-1]["transport_chunk_end"] != len(text)
+        or any(len(str(row["content_text"])) > max_chars for row in chunks)
+        or any(
+            int(right["transport_chunk_start"])
+            > int(left["transport_chunk_end"])
+            for left, right in zip(chunks, chunks[1:])
+        )
+    ):
+        raise ValueError("fact transport chunks do not cover the full document")
+    return tuple(chunks)
+
+
+def _split_chunk_ids_by_document(
+    documents: Sequence[Mapping[str, Any]],
+) -> Mapping[str, tuple[str, ...]]:
+    output: dict[str, list[str]] = {}
+    for row in documents:
+        if int(row.get("transport_chunk_count") or 1) <= 1:
+            continue
+        output.setdefault(str(row["document_id"]), []).append(
+            str(row["transport_chunk_id"])
+        )
+    return {key: tuple(values) for key, values in output.items()}
+
+
+def _batch_transport_chunk_ids(
+    batch: Sequence[Mapping[str, Any]],
+) -> tuple[str, ...]:
+    return tuple(
+        str(row["transport_chunk_id"])
+        for row in batch
+        if row.get("transport_chunk_id")
+    )
+
+
+def _reconcile_transport_chunks(
+    *,
+    claims: Sequence[Mapping[str, Any]],
+    dispositions: Sequence[Mapping[str, Any]],
+    pending: Sequence[str],
+    split_chunk_ids_by_document: Mapping[str, tuple[str, ...]],
+    pending_transport_chunk_ids: set[str],
+    target_id: str,
+    as_of_date: str,
+) -> tuple[list[Mapping[str, Any]], list[Mapping[str, Any]], list[str]]:
+    deduped_claims = list(
+        {
+            str(row.get("claim_id") or stable_intelligence_id("CLAIM", row)): row
+            for row in claims
+        }.values()
+    )
+    if not split_chunk_ids_by_document:
+        return deduped_claims, list(dispositions), list(pending)
+    by_document: dict[str, list[Mapping[str, Any]]] = {}
+    for row in dispositions:
+        document_id = str(row.get("document_id") or "")
+        if document_id in split_chunk_ids_by_document:
+            by_document.setdefault(document_id, []).append(row)
+    output_dispositions = [
+        row
+        for row in dispositions
+        if str(row.get("document_id") or "")
+        not in split_chunk_ids_by_document
+    ]
+    output_pending = list(pending)
+    incomplete_document_ids: set[str] = set()
+    for document_id, expected_chunk_ids in split_chunk_ids_by_document.items():
+        rows = by_document.get(document_id, [])
+        completed_chunk_ids = {
+            str(row.get("transport_chunk_id") or "")
+            for row in rows
+            if str(row.get("transport_chunk_id") or "")
+        }
+        expected = set(expected_chunk_ids)
+        incomplete = (
+            completed_chunk_ids != expected
+            or bool(expected & pending_transport_chunk_ids)
+        )
+        if incomplete:
+            incomplete_document_ids.add(document_id)
+            output_pending.append(
+                "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+                f"{document_id}:{len(completed_chunk_ids)}/{len(expected)}"
+            )
+            continue
+        document_claims = [
+            row
+            for row in deduped_claims
+            if str(row.get("document_id") or "") == document_id
+        ]
+        statuses = [str(row.get("status") or "") for row in rows]
+        status = (
+            "FACTS_EXTRACTED"
+            if document_claims
+            else "WRONG_TARGET_OR_SEGMENT"
+            if statuses and all(value == "WRONG_TARGET_OR_SEGMENT" for value in statuses)
+            else "NO_MATERIAL_FACT"
+        )
+        rationales = tuple(
+            dict.fromkeys(
+                str(row.get("rationale") or "").strip()
+                for row in rows
+                if str(row.get("rationale") or "").strip()
+            )
+        )
+        output_dispositions.append(
+            {
+                "schema_version": "e2r_v5_fact_document_disposition_v1",
+                "batch_id": stable_intelligence_id(
+                    "FACTDOCAGG",
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "document_id": document_id,
+                        "transport_chunk_ids": list(expected_chunk_ids),
+                    },
+                ),
+                "document_id": document_id,
+                "status": status,
+                "rationale": " | ".join(rationales),
+                "accepted_fact_count": len(document_claims),
+                "source_absence_proven": False,
+                "production_score_authority": False,
+                "transport_chunk_count": len(expected_chunk_ids),
+                "completed_transport_chunk_count": len(completed_chunk_ids),
+                "transport_chunk_ids": list(expected_chunk_ids),
+                "all_transport_chunks_complete": True,
+            }
+        )
+    if incomplete_document_ids:
+        deduped_claims = [
+            row
+            for row in deduped_claims
+            if str(row.get("document_id") or "")
+            not in incomplete_document_ids
+        ]
+    return deduped_claims, output_dispositions, output_pending
 
 
 def _validate_response(
@@ -881,6 +1158,7 @@ def _validate_response(
         if document_id not in document_by_id:
             pending.append(f"UNKNOWN_DOCUMENT_DISPOSITION:{document_id}")
             continue
+        document = document_by_id[document_id]
         if status not in {
             "FACTS_EXTRACTED",
             "NO_MATERIAL_FACT",
@@ -905,6 +1183,27 @@ def _validate_response(
                 "accepted_fact_count": accepted_by_document.get(document_id, 0),
                 "source_absence_proven": False,
                 "production_score_authority": False,
+                **(
+                    {
+                        "transport_chunk_id": str(
+                            document.get("transport_chunk_id")
+                        ),
+                        "transport_chunk_index": int(
+                            document.get("transport_chunk_index") or 0
+                        ),
+                        "transport_chunk_count": int(
+                            document.get("transport_chunk_count") or 1
+                        ),
+                        "transport_chunk_start": int(
+                            document.get("transport_chunk_start") or 0
+                        ),
+                        "transport_chunk_end": int(
+                            document.get("transport_chunk_end") or 0
+                        ),
+                    }
+                    if int(document.get("transport_chunk_count") or 1) > 1
+                    else {}
+                ),
             }
         )
         disposition_ids.append(document_id)
@@ -1218,6 +1517,7 @@ def _coerce_provider_call(
         ),
         provider_attempt_count=int(row.get("provider_attempt_count") or 1),
         validation_retry_used=bool(row.get("validation_retry_used")),
+        transport_chunk_ids=tuple(row.get("transport_chunk_ids") or ()),
     )
 
 

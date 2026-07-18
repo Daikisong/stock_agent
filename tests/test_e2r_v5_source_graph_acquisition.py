@@ -1079,6 +1079,24 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(naver.calls, [QUERY])
         self.assertEqual(len(resumed.checkpoint["generated_queries"]), 1)
 
+    def test_production_daily_rejects_unbounded_page_fetcher(self) -> None:
+        with self.assertRaisesRegex(ValueError, "bounded PageFetcher"):
+            self._run(
+                provider=SourceBrainProvider(),
+                search=NoNetworkLiveNaver(),
+                fetcher=PageFetcher(
+                    live_enabled=True,
+                    max_text_chars=None,
+                ),
+                config=SourceGraphAcquisitionConfig(
+                    mode="PRODUCTION_DAILY",
+                    max_queries_per_checkpoint=1,
+                    max_candidates_per_checkpoint=10,
+                    max_fetches_per_checkpoint=2,
+                ),
+                official_gaps={},
+            )
+
     def test_graph_keeps_official_structured_independent_and_reference_expansion(self) -> None:
         provider = SourceBrainProvider()
         web_url = "https://www.reuters.com/current-report"
@@ -1442,6 +1460,120 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             date_candidate["publication_metadata_fetch_retry_attempted"]
         )
         self.assertTrue(pdf_candidate["pdf_fallback_fetch_retry_attempted"])
+
+    def test_legacy_text_cap_document_is_quarantined_and_refetched_once(self) -> None:
+        content = "x" * 200_000
+        content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
+        candidate = {
+            "candidate_id": "CAPPED-CANDIDATE",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FULL_DOCUMENT_FETCHED",
+            "document_id": "SGDOC-capped",
+            "url": "https://issuer.example.com/capped.pdf",
+            "query_ids": ["QUERY-1"],
+            "objective_ids": ["OBJECTIVE-1"],
+        }
+        state = {
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "evidence_documents": [
+                {
+                    "document_id": "SGDOC-capped",
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "canonical_url": candidate["url"],
+                    "content_hash": content_hash,
+                    "content_text": content,
+                    "source_provider": "PageFetcher",
+                    "query_ids": ["QUERY-1"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                }
+            ],
+            "search_candidates": [candidate],
+            "quarantined_documents": [],
+            "rejected_documents": [],
+            "query_failures": [],
+        }
+
+        first = source_graph_module._quarantine_unreadable_documents(state)
+        second = source_graph_module._quarantine_unreadable_documents(state)
+
+        self.assertEqual(
+            first,
+            (
+                "INCOMPLETE_FULL_DOCUMENT_TEXT:"
+                "LEGACY_PAGE_FETCH_200000_CHAR_CAP",
+            ),
+        )
+        self.assertEqual(second, ())
+        self.assertEqual(state["evidence_documents"], [])
+        self.assertEqual(candidate["fetch_status"], "MATERIAL_PENDING_FETCH")
+        self.assertTrue(candidate["parser_semantics_refetch_required"])
+        self.assertEqual(
+            source_graph_module.validated_quarantined_document_ids(state),
+            frozenset({"SGDOC-capped"}),
+        )
+
+    def test_exact_quote_failure_reopens_only_the_named_stale_pdf(self) -> None:
+        document_id = "SGDOC-abcdef123456"
+        context = {
+            "nested": [
+                "MATERIAL_FACT_PROPOSAL_REJECTED:"
+                f"{document_id}:EXACT_QUOTE_NOT_IN_FULL_DOCUMENT"
+            ]
+        }
+        self.assertEqual(
+            source_graph_module._fact_parser_repair_document_ids(context),
+            (document_id,),
+        )
+        content = "Current Corp complete PDF text " * 20
+        content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
+        candidate = {
+            "candidate_id": "STALE-PDF-CANDIDATE",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FULL_DOCUMENT_FETCHED",
+            "document_id": document_id,
+            "url": "https://issuer.example.com/stale-reading-order.pdf",
+            "query_ids": ["QUERY-1"],
+            "objective_ids": ["OBJECTIVE-1"],
+        }
+        state = {
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "evidence_documents": [
+                {
+                    "document_id": document_id,
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "canonical_url": candidate["url"],
+                    "content_hash": content_hash,
+                    "content_text": content,
+                    "source_provider": "PageFetcher",
+                    "query_ids": ["QUERY-1"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                }
+            ],
+            "search_candidates": [candidate],
+            "quarantined_documents": [],
+            "rejected_documents": [],
+            "query_failures": [],
+        }
+
+        reasons = source_graph_module._quarantine_unreadable_documents(
+            state,
+            parser_repair_document_ids=(document_id,),
+        )
+
+        self.assertEqual(
+            reasons,
+            ("STALE_PDF_READING_ORDER:EXACT_QUOTE_VALIDATION_FAILED",),
+        )
+        self.assertEqual(state["evidence_documents"], [])
+        self.assertEqual(candidate["fetch_status"], "MATERIAL_PENDING_FETCH")
+        self.assertEqual(
+            source_graph_module.validated_quarantined_document_ids(state),
+            frozenset({document_id}),
+        )
 
     def test_archive_like_unknown_date_retry_remains_one_time(self) -> None:
         candidate = {

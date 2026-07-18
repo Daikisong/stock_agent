@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, Mapping
 
 from e2r.research_brain.researcher_mode import (
@@ -14,6 +16,9 @@ from e2r.research_brain.researcher_mode import (
 )
 from e2r.research_brain.planning.provider_transport import (
     StructuredProviderUnavailable,
+)
+from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    _load_fact_checkpoint,
 )
 
 
@@ -112,6 +117,33 @@ class CorrectingQuoteFactProvider(FactProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class ChunkAwareFactProvider(FactProvider):
+    def __init__(self, *, fail_chunk_index: int | None = None) -> None:
+        super().__init__()
+        self.fail_chunk_index = fail_chunk_index
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        document = payload["full_documents"][0]
+        chunk_index = int(
+            (document.get("transport_chunk") or {}).get("chunk_index") or 0
+        )
+        if self.fail_chunk_index == chunk_index:
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            raise StructuredProviderUnavailable("codex_cli_timeout")
+        response = dict(super().complete(pass_name=pass_name, payload=payload))
+        quote = "Current Corp reported record operating cash flow in 2026Q1."
+        if quote not in str(document.get("content_text") or ""):
+            response["facts"] = []
+            response["document_dispositions"] = [
+                {
+                    "document_id": document["document_id"],
+                    "status": "NO_MATERIAL_FACT",
+                    "rationale": "이 전송 청크에는 추가 material fact가 없다.",
+                }
+            ]
+        return response
+
+
 class E2RV5FactExtractionTests(unittest.TestCase):
     def test_every_full_document_is_processed_and_independent_sources_dedupe_fact(self) -> None:
         provider = FactProvider()
@@ -203,6 +235,8 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
         payload = provider.calls[0]["payload"]
         self.assertEqual(payload["full_documents"][0]["content_text"], full_text)
+        self.assertNotIn("transport_chunk", payload["full_documents"][0])
+        self.assertEqual(result.provider_calls[0].transport_chunk_ids, ())
         context = payload["current_evidence_facts"]
         self.assertEqual(
             context["schema_version"],
@@ -216,6 +250,179 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertGreater(
             accounting["maximum_primary_payload_chars"],
             len(full_text),
+        )
+
+    def test_long_document_chunks_cover_full_text_and_aggregate_one_disposition(self) -> None:
+        provider = ChunkAwareFactProvider()
+        document = dict(
+            _document("DOC-CHUNKED", "ISSUER_PRESENTATION", "ISSUER:current.example")
+        )
+        full_text = (
+            "Current Corp reported record operating cash flow in 2026Q1.\n"
+            + ("complete source body line\n" * 18_000)
+        )
+        document["content_text"] = full_text
+        document["content_hash"] = hashlib.sha256(
+            full_text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(
+            provider=provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertGreater(len(provider.calls), 1)
+        self.assertTrue(
+            all(
+                len(call["payload"]["full_documents"][0]["content_text"])
+                <= 100_000
+                for call in provider.calls
+            )
+        )
+        self.assertEqual(len(result.material_claims), 1)
+        self.assertEqual(len(result.document_dispositions), 1)
+        disposition = result.document_dispositions[0]
+        self.assertTrue(disposition["all_transport_chunks_complete"])
+        self.assertEqual(
+            disposition["completed_transport_chunk_count"],
+            disposition["transport_chunk_count"],
+        )
+        accounting = result.audit["prompt_transport_accounting"]
+        self.assertGreater(accounting["maximum_full_document_chars"], 100_000)
+        self.assertLessEqual(accounting["maximum_transport_chunk_chars"], 100_000)
+        self.assertTrue(accounting["transport_character_bound_enforced"])
+        self.assertTrue(
+            all(call.transport_chunk_ids for call in result.provider_calls)
+        )
+        self.assertTrue(
+            all(
+                call["payload"]["full_documents"][0]["transport_chunk"][
+                    "all_chunks_required_before_document_completion"
+                ]
+                for call in provider.calls
+            )
+        )
+
+    def test_one_chunk_timeout_keeps_parent_unaccounted_but_later_chunks_continue(self) -> None:
+        provider = ChunkAwareFactProvider(fail_chunk_index=1)
+        document = dict(
+            _document("DOC-CHUNK-PENDING", "ISSUER_PRESENTATION", "ISSUER:current.example")
+        )
+        full_text = (
+            "Current Corp reported record operating cash flow in 2026Q1.\n"
+            + ("complete source body line\n" * 12_000)
+        )
+        document["content_text"] = full_text
+        document["content_hash"] = hashlib.sha256(
+            full_text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(
+            provider=provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+
+        observed_indices = [
+            int(
+                (
+                    call["payload"]["full_documents"][0].get(
+                        "transport_chunk"
+                    )
+                    or {}
+                ).get("chunk_index")
+                or 0
+            )
+            for call in provider.calls
+        ]
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertIn(2, observed_indices)
+        self.assertEqual(result.material_claims, ())
+        self.assertEqual(result.document_dispositions, ())
+        self.assertEqual(
+            result.audit["critical_counts"]["unaccounted_document_count"],
+            1,
+        )
+        self.assertFalse(result.audit["provider_circuit_breaker_open"])
+
+    def test_checkpoint_resumes_only_documents_with_parent_disposition(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            rows_by_name = {
+                "material_fact_claims.jsonl": [
+                    {"claim_id": "CLAIM-PARTIAL", "document_id": "DOC-PARTIAL"},
+                    {"claim_id": "CLAIM-COMPLETE", "document_id": "DOC-COMPLETE"},
+                ],
+                "fact_document_dispositions.jsonl": [
+                    {"document_id": "DOC-COMPLETE", "status": "FACTS_EXTRACTED"},
+                ],
+                "fact_extraction_provider_calls.jsonl": [
+                    {
+                        "status": "COMPLETE",
+                        "document_ids": ["DOC-PARTIAL"],
+                        "transport_chunk_ids": ["CHUNK-0"],
+                    },
+                    {
+                        "status": "PENDING",
+                        "document_ids": ["DOC-PARTIAL"],
+                        "transport_chunk_ids": ["CHUNK-1"],
+                    },
+                    {
+                        "status": "COMPLETE",
+                        "document_ids": ["DOC-COMPLETE"],
+                    },
+                ],
+                "fact_extraction_rejections.jsonl": [
+                    {"document_id": "DOC-PARTIAL", "reason": "RETRY"},
+                    {"document_id": "DOC-COMPLETE", "reason": "TERMINAL"},
+                ],
+            }
+            for filename, rows in rows_by_name.items():
+                (root / filename).write_text(
+                    "".join(
+                        json.dumps(row, ensure_ascii=False) + "\n"
+                        for row in rows
+                    ),
+                    encoding="utf-8",
+                )
+            checkpoint = _load_fact_checkpoint(
+                root,
+                source_graph=SimpleNamespace(
+                    evidence_documents=(
+                        {"document_id": "DOC-PARTIAL"},
+                        {"document_id": "DOC-COMPLETE"},
+                    )
+                ),
+            )
+
+        self.assertEqual(
+            [row["document_id"] for row in checkpoint["prior_material_claims"]],
+            ["DOC-COMPLETE"],
+        )
+        self.assertEqual(
+            [row["document_id"] for row in checkpoint["prior_document_dispositions"]],
+            ["DOC-COMPLETE"],
+        )
+        self.assertEqual(len(checkpoint["prior_provider_calls"]), 1)
+        self.assertEqual(
+            [row["document_id"] for row in checkpoint["prior_rejections"]],
+            ["DOC-COMPLETE"],
         )
 
     def test_large_gap_ledgers_are_projected_without_losing_semantic_questions(self) -> None:

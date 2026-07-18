@@ -23,6 +23,7 @@ from e2r.research import (
     extracted_text_unreadable_reason,
 )
 from e2r.research.query_planner import QueryPlan, QuerySpec
+import e2r.research.pdf_text_extractor as pdf_text_module
 from e2r.staging import StageClassificationInput, StageClassifier
 
 
@@ -766,6 +767,57 @@ OPM 개선폭 6%
             )
         )
 
+    def test_pdfplumber_page_preserves_default_and_three_column_reading_orders(self):
+        page = _FakeThreeColumnPDFPage()
+
+        text = pdf_text_module._pdfplumber_page_text(page)
+        bounds = pdf_text_module._pdfplumber_column_bounds(page)
+
+        self.assertEqual(len(bounds), 3)
+        self.assertIn("왼쪽1 오른쪽1", text)
+        self.assertIn("왼쪽1\n왼쪽2\n가운데1\n가운데2\n오른쪽1\n오른쪽2", text)
+        self.assertIn("\f", text)
+
+    def test_page_fetcher_marks_bounded_text_incomplete_but_caches_full_text(self):
+        body = "Current Corp " + ("complete source text " * 80)
+        html = f"<html><body><article><p>{body}</p></article></body></html>"
+        url = "https://issuer.example.com/long-document"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            bounded = PageFetcher(
+                live_enabled=True,
+                cache_directory=tmpdir,
+                max_text_chars=80,
+            )
+            with patch(
+                "e2r.research.page_fetcher.request.urlopen",
+                return_value=_FakeHTTPResponse(html),
+            ):
+                first = bounded.fetch(url, as_of_date=date(2026, 6, 8))
+
+            self.assertTrue(first.ok)
+            self.assertFalse(first.text_complete)
+            self.assertEqual(first.returned_text_chars, 80)
+            self.assertGreater(first.original_text_chars, 80)
+            self.assertGreater(
+                len(Path(first.source_path).read_text(encoding="utf-8")),
+                80,
+            )
+
+            unbounded = PageFetcher(
+                live_enabled=True,
+                cache_directory=tmpdir,
+                max_text_chars=None,
+            )
+            with patch(
+                "e2r.research.page_fetcher.request.urlopen"
+            ) as urlopen:
+                second = unbounded.fetch(url, as_of_date=date(2026, 6, 8))
+
+            urlopen.assert_not_called()
+            self.assertTrue(second.text_complete)
+            self.assertEqual(second.text, body.strip())
+            self.assertEqual(second.original_text_chars, len(body.strip()))
+
     def test_page_fetcher_live_fetches_html_text_and_uses_cache(self):
         html = """
         <html>
@@ -1044,6 +1096,26 @@ OPM 개선폭 6%
         self.assertFalse(result.ok)
         self.assertEqual(result.reason, "live_fetch_body_too_large:pdf:20")
         self.assertEqual(extractor.payload_count, 0)
+
+    def test_page_fetcher_live_html_too_large_is_not_a_full_document(self):
+        html = "<html><body>" + ("Current Corp full source " * 20) + "</body></html>"
+        fetcher = PageFetcher(
+            live_enabled=True,
+            max_body_bytes=40,
+        )
+
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=_FakeHTTPResponse(html, content_type="text/html"),
+        ):
+            result = fetcher.fetch(
+                "https://issuer.example.com/oversized.html",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertFalse(result.ok)
+        self.assertFalse(result.text_complete)
+        self.assertEqual(result.reason, "live_fetch_body_too_large:html:40")
 
     def test_page_fetcher_percent_encodes_non_ascii_live_url(self):
         with patch("e2r.research.page_fetcher.request.urlopen", return_value=_FakeHTTPResponse("본문")) as urlopen:
@@ -1792,6 +1864,48 @@ class _SingleQueryPlanner:
                 ),
             ),
         )
+
+
+class _FakePDFColumn:
+    def __init__(self, text):
+        self._text = text
+
+    def extract_text(self):
+        return self._text
+
+
+class _FakeThreeColumnPDFPage:
+    width = 840.0
+    height = 600.0
+
+    def extract_text(self):
+        return "왼쪽1 오른쪽1\n왼쪽2 오른쪽2"
+
+    def extract_words(self, **_kwargs):
+        words = []
+        for row_index in range(12):
+            top = 50.0 + row_index * 35.0
+            for column_left in (40.0, 300.0, 560.0):
+                for word_index in range(6):
+                    left = column_left + word_index * 36.0
+                    words.append(
+                        {
+                            "x0": left,
+                            "x1": left + 30.0,
+                            "top": top,
+                            "bottom": top + 12.0,
+                            "text": "본문",
+                        }
+                    )
+        return words
+
+    def crop(self, bbox):
+        center = (bbox[0] + bbox[2]) / 2.0
+        if center < 280.0:
+            return _FakePDFColumn("왼쪽1\n왼쪽2")
+        if center < 550.0:
+            return _FakePDFColumn("가운데1\n가운데2")
+        return _FakePDFColumn("오른쪽1\n오른쪽2")
 
 
 class _FakeHTTPResponse:
