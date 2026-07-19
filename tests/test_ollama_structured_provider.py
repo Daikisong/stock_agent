@@ -446,17 +446,17 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             fact_document_chunk_chars=100_000,
         )
 
-        self.assertEqual(provider.semantic_prompt_chunk_chars, 49_152)
+        self.assertEqual(provider.semantic_prompt_chunk_chars, 24_576)
         runner = CurrentResearcherModeTargetRunner(provider=provider)
         self.assertEqual(
             runner.fact_extractor.max_document_chars_per_call,
-            49_152,
+            24_576,
         )
         self.assertEqual(
             provider._provider_identity()[
                 "effective_semantic_prompt_chunk_chars"
             ],
-            49_152,
+            24_576,
         )
 
     def test_incomplete_or_unaccounted_response_is_rejected(self) -> None:

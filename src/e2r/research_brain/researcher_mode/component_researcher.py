@@ -1479,7 +1479,7 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                     )
                 )
                 * 3
-                // 2,
+                // 4,
             ),
         )
 
@@ -3369,6 +3369,10 @@ def _pass_instruction(pass_name: str) -> str:
             "accurate non-fact disposition. Never "
             "infer absence from silence. Copy exact_quote as a literal contiguous substring of "
             "content_text without paraphrasing, punctuation edits, or whitespace normalization. "
+            "Return every distinct material fact exactly once. Repeated page headers, duplicated "
+            "body copies, overlapping transport text, and the same quote/economic mechanism do "
+            "not justify duplicate fact rows. This is lossless deduplication, not a top-N limit: "
+            "all distinct material facts and counterfacts still must be returned. "
             "Never use snippets, future outcomes, score, or Stage."
         )
     if pass_name == "RESEARCH_SUPERVISOR_REVIEW":
