@@ -144,6 +144,37 @@ class CorrectingCompletionFactProvider(FactProvider):
         return response
 
 
+class MixedValidInvalidThenDispositionProvider(FactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(super().complete(pass_name=pass_name, payload=payload))
+        response["facts"] = [dict(row) for row in response["facts"]]
+        retry = payload.get("fact_extraction_retry_context")
+        if retry is None:
+            invalid = dict(response["facts"][0])
+            invalid["normalized_object"] = "unsupported_duplicate_claim"
+            invalid["exact_quote"] = "quote not found"
+            response["facts"].append(invalid)
+            return response
+        response["facts"] = []
+        response["document_dispositions"] = [
+            {
+                "document_id": row["document_id"],
+                "status": (
+                    "NO_MATERIAL_FACT"
+                    if int(retry["rewrite_attempt"]) == 1
+                    else "FACTS_EXTRACTED"
+                ),
+                "rationale": (
+                    "첫 재작성에서 이미 검증된 사실을 잘못 누락했다."
+                    if int(retry["rewrite_attempt"]) == 1
+                    else "앞선 응답에서 검증된 사실을 보존한다."
+                ),
+            }
+            for row in payload["full_documents"]
+        ]
+        return response
+
+
 class StructurallyCompleteFalseProvider(FactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(super().complete(pass_name=pass_name, payload=payload))
@@ -625,6 +656,46 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(result.provider_calls[0].provider_attempt_count, 2)
         self.assertTrue(result.provider_calls[0].validation_retry_used)
         self.assertEqual(result.audit["validation_retry_call_count"], 1)
+
+    def test_valid_fact_is_preserved_while_invalid_sibling_is_rewritten(self) -> None:
+        provider = MixedValidInvalidThenDispositionProvider()
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(_document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 3)
+        self.assertEqual(len(result.material_claims), 1)
+        self.assertEqual(
+            result.material_claims[0]["exact_quote"],
+            "Current Corp reported record operating cash flow in 2026Q1.",
+        )
+        first_retry = provider.calls[1]["payload"][
+            "fact_extraction_retry_context"
+        ]
+        self.assertEqual(len(first_retry["previously_accepted_facts"]), 1)
+        self.assertIn(
+            "do not downgrade their document to NO_MATERIAL_FACT",
+            first_retry["instruction"],
+        )
+        second_retry = provider.calls[2]["payload"][
+            "fact_extraction_retry_context"
+        ]
+        self.assertIn(
+            "ACCEPTED_FACT_DISPOSITION_MISMATCH:DOC-1",
+            second_retry["validation_errors"],
+        )
+        self.assertEqual(len(second_retry["previously_accepted_facts"]), 1)
+        self.assertEqual(
+            result.document_dispositions[0]["status"],
+            "FACTS_EXTRACTED",
+        )
 
     def test_incomplete_flag_retry_distinguishes_batch_from_broader_research(self) -> None:
         provider = CorrectingCompletionFactProvider()

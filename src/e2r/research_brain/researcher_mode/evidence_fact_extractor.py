@@ -369,6 +369,7 @@ class ResearcherEvidenceFactExtractor:
             provider_attempt_count = 0
             validation_retry_used = False
             validation_retry_count = 0
+            previously_accepted_claims: dict[str, Mapping[str, Any]] = {}
             while True:
                 max_attempt_payload_chars = max(
                     max_attempt_payload_chars,
@@ -456,8 +457,21 @@ class ResearcherEvidenceFactExtractor:
                     provider_name=provider_name,
                     prompt_hash=prompt_hash,
                     response_hash=response_hash,
+                    previously_accepted_claim_counts={
+                        document_id: sum(
+                            1
+                            for claim in previously_accepted_claims.values()
+                            if str(claim.get("document_id") or "")
+                            == document_id
+                        )
+                        for document_id in {
+                            str(row["document_id"]) for row in batch
+                        }
+                    },
                 )
                 if batch_pending and validation_retry_count < 2:
+                    for claim in batch_claims:
+                        previously_accepted_claims[str(claim["claim_id"])] = claim
                     validation_retry_count += 1
                     validation_retry_used = True
                     rejected_material_proposals = [
@@ -480,6 +494,32 @@ class ResearcherEvidenceFactExtractor:
                                 "validation_errors": list(batch_pending),
                                 "rejected_proposals": rejected_material_proposals,
                                 "must_not_repeat_rejected_proposals": True,
+                                "previously_accepted_facts": [
+                                    {
+                                        "document_id": str(
+                                            claim["document_id"]
+                                        ),
+                                        "question_family_id": str(
+                                            claim["question_family_id"]
+                                        ),
+                                        "subject_id": str(claim["subject_id"]),
+                                        "predicate_family": str(
+                                            claim["predicate_family"]
+                                        ),
+                                        "normalized_object": str(
+                                            claim["normalized_object"]
+                                        ),
+                                        "period": str(claim["period"]),
+                                        "direction": str(claim["direction"]),
+                                        "current_lifecycle": str(
+                                            claim["current_lifecycle"]
+                                        ),
+                                        "exact_quote": str(
+                                            claim["exact_quote"]
+                                        ),
+                                    }
+                                    for claim in previously_accepted_claims.values()
+                                ],
                                 "prohibited_exact_quote_reuse": [
                                     {
                                         "document_id": row["document_id"],
@@ -497,7 +537,12 @@ class ResearcherEvidenceFactExtractor:
                                     "Rewrite the complete batch. Every listed rejected "
                                     "proposal was deterministically invalid and must not "
                                     "be repeated, paraphrased, whitespace-normalized, or "
-                                    "reused. Omit it unless a different literal substring "
+                                    "reused. Facts listed in previously_accepted_facts have "
+                                    "already passed deterministic validation: do not emit "
+                                    "them again and do not downgrade their document to "
+                                    "NO_MATERIAL_FACT. Use FACTS_EXTRACTED for every document "
+                                    "that has a previously accepted fact. Omit a rejected "
+                                    "proposal unless a different literal substring "
                                     "in the same document directly supports the fact. Every material "
                                     "exact_quote must be copied as one literal "
                                     "contiguous substring from that document's "
@@ -516,7 +561,14 @@ class ResearcherEvidenceFactExtractor:
                         }
                     )
                     continue
-                claims.extend(batch_claims)
+                combined_batch_claims = {
+                    **previously_accepted_claims,
+                    **{
+                        str(claim["claim_id"]): claim
+                        for claim in batch_claims
+                    },
+                }
+                claims.extend(combined_batch_claims.values())
                 rejections.extend(batch_rejections)
                 dispositions.extend(batch_dispositions)
                 pending.extend(batch_pending)
@@ -533,7 +585,7 @@ class ResearcherEvidenceFactExtractor:
                             str(row["document_id"]) for row in batch
                         ),
                         accepted_claim_ids=tuple(
-                            str(row["claim_id"]) for row in batch_claims
+                            combined_batch_claims
                         ),
                         rejected_proposal_count=len(batch_rejections),
                         document_dispositions=tuple(batch_dispositions),
@@ -1079,6 +1131,7 @@ def _validate_response(
     provider_name: str,
     prompt_hash: str,
     response_hash: str,
+    previously_accepted_claim_counts: Mapping[str, int] | None = None,
 ) -> tuple[
     list[Mapping[str, Any]],
     list[FactExtractionRejection],
@@ -1101,7 +1154,13 @@ def _validate_response(
     rejections: list[FactExtractionRejection] = []
     pending: list[str] = []
     feedback: list[str] = []
-    accepted_by_document: dict[str, int] = {}
+    accepted_by_document: dict[str, int] = {
+        str(document_id): int(count)
+        for document_id, count in (
+            previously_accepted_claim_counts or {}
+        ).items()
+        if str(document_id) in document_by_id and int(count) > 0
+    }
     for index, proposal in enumerate(raw_facts):
         document_id = (
             str(proposal.get("document_id") or "")
