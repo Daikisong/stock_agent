@@ -1438,6 +1438,28 @@ class OllamaResearcherProvider(CodexResearcherProvider):
             "fact_document_chunk_chars": self.fact_document_chunk_chars,
         }
 
+    @property
+    def semantic_prompt_chunk_chars(self) -> int:
+        """Conservative semantic payload target within the token reserve."""
+
+        return min(
+            self.fact_document_chunk_chars,
+            max(
+                10_000,
+                (
+                    int(getattr(self.transport, "context_length", 262_144))
+                    - int(
+                        getattr(
+                            self.transport,
+                            "max_output_tokens",
+                            32_768,
+                        )
+                    )
+                )
+                // 2,
+            ),
+        )
+
     def complete(
         self, *, pass_name: str, payload: Mapping[str, Any]
     ) -> Mapping[str, Any]:
@@ -1471,23 +1493,7 @@ class OllamaResearcherProvider(CodexResearcherProvider):
         chunks = _loss_accounted_fact_chunk_payloads(
             payload,
             pass_name=pass_name,
-            target_projection_chars=min(
-                self.fact_document_chunk_chars,
-                max(
-                    10_000,
-                    (
-                        int(getattr(self.transport, "context_length", 262_144))
-                        - int(
-                            getattr(
-                                self.transport,
-                                "max_output_tokens",
-                                32_768,
-                            )
-                        )
-                    )
-                    // 2,
-                ),
-            ),
+            target_projection_chars=self.semantic_prompt_chunk_chars,
         )
         if len(chunks) <= 1:
             return super().complete(pass_name=pass_name, payload=payload)

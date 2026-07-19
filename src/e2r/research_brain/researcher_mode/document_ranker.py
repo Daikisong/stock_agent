@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 from datetime import date
@@ -176,6 +177,30 @@ class ResearcherDocumentRanker:
                 "source_coverage": list(source_coverage),
             }
         )
+        partition_limit = _semantic_partition_character_limit(self.provider)
+        if (
+            partition_limit is not None
+            and len(candidates) > 1
+            and len(
+                json.dumps(
+                    payload,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                )
+            )
+            > partition_limit
+        ):
+            return self._rank_candidate_partitions(
+                target_id=target_id,
+                target_name=target_name,
+                as_of_date=as_of_date,
+                open_objectives=open_objectives,
+                candidates=candidates,
+                current_evidence_facts=current_evidence_facts,
+                target_business_model=target_business_model,
+                source_coverage=source_coverage,
+            )
         attempt_payload = payload
         prompt_hash = stable_intelligence_id("RANKPROMPT", attempt_payload)
         response_hash = None
@@ -583,6 +608,15 @@ def _unique_strings(value: Any) -> tuple[str, ...]:
 
 def _provider_name(provider: StructuredResearchProvider) -> str:
     return str(getattr(provider, "provider_name", provider.__class__.__name__))
+
+
+def _semantic_partition_character_limit(
+    provider: StructuredResearchProvider,
+) -> int | None:
+    value = getattr(provider, "semantic_prompt_chunk_chars", None)
+    if isinstance(value, bool) or not isinstance(value, int) or value < 10_000:
+        return None
+    return value
 
 
 def _error_text(error: Exception) -> str:

@@ -15,6 +15,7 @@ import e2r.research_brain.researcher_mode.source_graph_explorer as source_graph_
 from e2r.research_brain.researcher_mode import (
     PHASE85_PASS,
     ComponentResearchPlan,
+    ResearcherDocumentRanker,
     ResearcherSourceGraphAcquirer,
     ResearcherSourceQueryPlanner,
     SourceGraphAcquisitionConfig,
@@ -499,6 +500,73 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             any(
                 "SEMANTIC_RANKING_SPLIT_PENDING" in reason
                 for reason in run.checkpoint["pending_reasons"]
+            )
+        )
+
+    def test_ollama_sized_candidate_roster_is_partitioned_before_transport(
+        self,
+    ) -> None:
+        provider = SourceBrainProvider()
+        provider.semantic_prompt_chunk_chars = 10_000
+        candidates = tuple(
+            {
+                "candidate_id": f"CANDIDATE-{index}",
+                "title": f"Current Corp candidate {index}",
+                "url": f"https://example.com/candidate-{index}",
+                "snippet": "긴 검색 발견 메타데이터 " * 150,
+                "source": "fixture-search",
+                "published_at": "2026-06-20",
+                "is_pdf": False,
+                "is_news": False,
+                "is_disclosure": False,
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+                "requested_source_families": ["NAVER_DISCOVERY"],
+            }
+            for index in range(8)
+        )
+
+        result = ResearcherDocumentRanker(provider=provider).rank_candidates(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            open_objectives=[_objective().to_dict()],
+            candidates=candidates,
+            current_evidence_facts=(),
+            target_business_model=None,
+            source_coverage=(),
+        )
+
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(len(result.decisions), len(candidates))
+        emitted_ids = [
+            row["candidate_id"]
+            for payload in ranking_payloads
+            for row in payload["discovery_candidates"]
+        ]
+        self.assertEqual(
+            sorted(emitted_ids),
+            sorted(row["candidate_id"] for row in candidates),
+        )
+        self.assertEqual(len(emitted_ids), len(set(emitted_ids)))
+        self.assertGreater(len(ranking_payloads), 1)
+        self.assertTrue(
+            all(
+                len(
+                    json.dumps(
+                        payload,
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    )
+                )
+                <= provider.semantic_prompt_chunk_chars
+                for payload in ranking_payloads
             )
         )
 
