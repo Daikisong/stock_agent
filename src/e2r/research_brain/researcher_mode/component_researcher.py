@@ -1170,7 +1170,47 @@ class CodexResearcherProvider:
         try:
             existed = path.is_file()
             event["cache_entry_existed"] = existed
-            path.unlink(missing_ok=True)
+            if existed:
+                quarantine_root = path.parent / "_invalidated"
+                quarantine_root.mkdir(parents=True, exist_ok=True)
+                quarantine_path = quarantine_root / path.name
+                path.replace(quarantine_path)
+                reason_path = quarantine_root / (
+                    f"{path.stem}.reason.json"
+                )
+                reason_temporary = reason_path.with_suffix(
+                    reason_path.suffix + ".tmp"
+                )
+                reason_temporary.write_text(
+                    json.dumps(
+                        {
+                            "schema_version": (
+                                "e2r_v5_invalidated_provider_response_v1"
+                            ),
+                            "pass_name": pass_name,
+                            "prompt_hash": latest.get("prompt_hash"),
+                            "cache_key": cache_key,
+                            "reason": clean_reason,
+                            "quarantined_response_path": str(
+                                quarantine_path
+                            ),
+                            "production_score_authority": False,
+                            "reusable_provider_response": False,
+                        },
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        indent=2,
+                    )
+                    + "\n",
+                    encoding="utf-8",
+                )
+                reason_temporary.replace(reason_path)
+                event["quarantined_response_path"] = str(
+                    quarantine_path
+                )
+                event["quarantine_reason_path"] = str(reason_path)
+            else:
+                path.unlink(missing_ok=True)
             event["cache_entry_deleted"] = existed and not path.exists()
             event["status"] = (
                 "INVALID_RESPONSE_CACHE_DELETED"
@@ -1280,6 +1320,8 @@ class CodexResearcherProvider:
             "prompt_and_schema_hash_required": True,
             "provider_identity_hash_required": True,
             "failed_provider_response_cached": False,
+            "invalidated_response_quarantine_is_score_authority": False,
+            "invalidated_response_quarantine_is_reusable_cache": False,
         }
 
     def _matching_cache_entry_count(self) -> int:

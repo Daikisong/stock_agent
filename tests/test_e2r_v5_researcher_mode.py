@@ -424,11 +424,34 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
 
             self.assertEqual(event["status"], "INVALID_RESPONSE_CACHE_DELETED")
             self.assertEqual(list(Path(directory).glob("*.json")), [])
+            quarantine = Path(directory) / "_invalidated"
+            quarantined_responses = [
+                path
+                for path in quarantine.glob("*.json")
+                if not path.name.endswith(".reason.json")
+            ]
+            self.assertEqual(len(quarantined_responses), 1)
+            reason_paths = list(quarantine.glob("*.reason.json"))
+            self.assertEqual(len(reason_paths), 1)
+            reason = json.loads(reason_paths[0].read_text(encoding="utf-8"))
+            self.assertIn("nearest anchors", reason["reason"])
+            self.assertFalse(reason["production_score_authority"])
+            self.assertFalse(reason["reusable_provider_response"])
             audit = first.response_cache_audit()
             self.assertEqual(audit["downstream_semantic_invalidation_count"], 1)
             self.assertEqual(audit["downstream_semantic_cache_delete_count"], 1)
             self.assertEqual(
                 audit["downstream_semantic_cache_delete_failure_count"], 0
+            )
+            self.assertFalse(
+                audit[
+                    "invalidated_response_quarantine_is_score_authority"
+                ]
+            )
+            self.assertFalse(
+                audit[
+                    "invalidated_response_quarantine_is_reusable_cache"
+                ]
             )
 
             resumed_transport = SchemaRecordingTransport()
