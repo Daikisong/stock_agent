@@ -1275,7 +1275,11 @@ def _validate_response(
         ).items()
         if str(document_id) in document_by_id
     }
-    for index, proposal in enumerate(raw_facts):
+    for index, raw_proposal in enumerate(raw_facts):
+        proposal = _normalize_transport_fact_proposal(
+            raw_proposal,
+            document_by_id=document_by_id,
+        )
         document_id = (
             str(proposal.get("document_id") or "")
             if isinstance(proposal, Mapping)
@@ -1624,12 +1628,78 @@ def _accepted_claim(
         ),
         "allowed_component_ids": list(allowed_component_ids),
         "materiality_rationale": str(proposal["materiality_rationale"]).strip(),
+        "deterministic_field_normalizations": list(
+            dict.fromkeys(
+                str(value).strip()
+                for value in proposal.get(
+                    "deterministic_field_normalizations", ()
+                )
+                if str(value).strip()
+            )
+        ),
         "provider_name": provider_name,
         "provider_prompt_hash": prompt_hash,
         "provider_response_hash": response_hash,
         "llm_score_authority": False,
         "llm_stage_authority": False,
     }
+
+
+def _normalize_transport_fact_proposal(
+    proposal: Any,
+    *,
+    document_by_id: Mapping[str, Mapping[str, Any]],
+) -> Any:
+    """Repair only representation noise that can be proven deterministically.
+
+    The model occasionally wraps an otherwise literal source substring in one
+    extra pair of quotation marks or emits a probability as a percentage.  We
+    accept those forms only when stripping the wrapper produces an exact
+    contiguous substring of the cited document, and only when a confidence
+    value is within the conventional 0..100 percentage range.  No source text
+    or economic assertion is rewritten.
+    """
+
+    if not isinstance(proposal, Mapping):
+        return proposal
+    normalized = dict(proposal)
+    normalizations: list[str] = [
+        str(value).strip()
+        for value in proposal.get("deterministic_field_normalizations", ())
+        if str(value).strip()
+    ]
+    document_id = str(normalized.get("document_id") or "")
+    document = document_by_id.get(document_id)
+    quote = str(normalized.get("exact_quote") or "").strip()
+    content = str((document or {}).get("content_text") or "")
+    if quote and content and quote not in content:
+        quote_pairs = {
+            '"': '"',
+            "'": "'",
+            "`": "`",
+            "“": "”",
+            "‘": "’",
+        }
+        expected_closer = quote_pairs.get(quote[0])
+        if expected_closer is not None and quote.endswith(expected_closer):
+            inner = quote[1:-1].strip()
+            if inner and inner in content:
+                normalized["exact_quote"] = inner
+                normalizations.append("EXACT_QUOTE_OUTER_WRAPPER_STRIPPED")
+    for field in ("confidence", "scope_confidence"):
+        raw_value = normalized.get(field)
+        try:
+            numeric = float(raw_value)
+        except (TypeError, ValueError):
+            continue
+        if math.isfinite(numeric) and 1 < numeric <= 100:
+            normalized[field] = numeric / 100.0
+            normalizations.append(f"{field.upper()}_PERCENT_TO_PROBABILITY")
+    if normalizations:
+        normalized["deterministic_field_normalizations"] = list(
+            dict.fromkeys(normalizations)
+        )
+    return normalized
 
 
 def _allowed_components(

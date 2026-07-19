@@ -117,6 +117,17 @@ class CorrectingQuoteFactProvider(FactProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class WrappedQuotePercentConfidenceProvider(FactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(super().complete(pass_name=pass_name, payload=payload))
+        response["facts"] = [dict(row) for row in response["facts"]]
+        for fact in response["facts"]:
+            fact["exact_quote"] = f'"{fact["exact_quote"]}"'
+            fact["confidence"] = 100
+            fact["scope_confidence"] = "90"
+        return response
+
+
 class CorrectingCompletionFactProvider(FactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(super().complete(pass_name=pass_name, payload=payload))
@@ -687,6 +698,38 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(result.provider_calls[0].provider_attempt_count, 2)
         self.assertTrue(result.provider_calls[0].validation_retry_used)
         self.assertEqual(result.audit["validation_retry_call_count"], 1)
+
+    def test_literal_quote_wrapper_and_percent_confidence_are_normalized(self) -> None:
+        provider = WrappedQuotePercentConfidenceProvider()
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(_document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 1)
+        self.assertEqual(len(result.material_claims), 1)
+        claim = result.material_claims[0]
+        self.assertEqual(
+            claim["exact_quote"],
+            "Current Corp reported record operating cash flow in 2026Q1.",
+        )
+        self.assertEqual(claim["confidence"], 1.0)
+        self.assertEqual(claim["scope_confidence"], 0.9)
+        self.assertEqual(
+            claim["deterministic_field_normalizations"],
+            [
+                "EXACT_QUOTE_OUTER_WRAPPER_STRIPPED",
+                "CONFIDENCE_PERCENT_TO_PROBABILITY",
+                "SCOPE_CONFIDENCE_PERCENT_TO_PROBABILITY",
+            ],
+        )
+        self.assertEqual(result.rejections, ())
 
     def test_valid_fact_is_preserved_while_invalid_sibling_is_rewritten(self) -> None:
         provider = MixedValidInvalidThenDispositionProvider()
