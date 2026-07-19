@@ -14,6 +14,9 @@ from e2r.research_brain.researcher_mode import (
     production_material_fact_rows,
     write_researcher_fact_extraction_result,
 )
+from e2r.research_brain.researcher_mode.component_researcher import (
+    FACT_EXTRACTION_PAGE_FACT_LIMIT,
+)
 from e2r.research_brain.planning.provider_transport import (
     StructuredProviderUnavailable,
 )
@@ -125,6 +128,68 @@ class WrappedQuotePercentConfidenceProvider(FactProvider):
             fact["exact_quote"] = f'"{fact["exact_quote"]}"'
             fact["confidence"] = 100
             fact["scope_confidence"] = "90"
+        return response
+
+
+class PagedFactProvider(FactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(super().complete(pass_name=pass_name, payload=payload))
+        template = dict(response["facts"][0])
+        continuation = payload.get("fact_extraction_continuation_context")
+        start = FACT_EXTRACTION_PAGE_FACT_LIMIT if continuation else 0
+        stop = min(start + FACT_EXTRACTION_PAGE_FACT_LIMIT, 13)
+        response["facts"] = []
+        for index in range(start, stop):
+            fact = dict(template)
+            fact.update(
+                {
+                    "question_family_id": f"question_{index}",
+                    "subject_id": f"subject_{index}",
+                    "subject": f"Current Corp fact {index}",
+                    "predicate": f"reported material fact {index}",
+                    "predicate_family": f"predicate_{index}",
+                    "normalized_object": f"material_fact_{index}",
+                    "exact_quote": (
+                        f"Current Corp material fact number {index}."
+                    ),
+                }
+            )
+            response["facts"].append(fact)
+        more = stop < 13
+        document_id = payload["full_documents"][0]["document_id"]
+        response["document_dispositions"] = [
+            {
+                "document_id": document_id,
+                "status": "FACTS_EXTRACTED",
+                "rationale": "페이지별로 모든 고유 사실을 추출했다.",
+            }
+        ]
+        response["unresolved_document_ids"] = [document_id] if more else []
+        response["extraction_complete"] = not more
+        return response
+
+
+class BoundaryCompletePagedFactProvider(PagedFactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        document_id = payload["full_documents"][0]["document_id"]
+        if not payload.get("fact_extraction_continuation_context"):
+            response["facts"] = response["facts"][:FACT_EXTRACTION_PAGE_FACT_LIMIT]
+            response["unresolved_document_ids"] = []
+            response["extraction_complete"] = True
+        else:
+            response["facts"] = []
+            response["document_dispositions"] = [
+                {
+                    "document_id": document_id,
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": "마지막 빈 페이지로 추가 사실이 없음을 확인했다.",
+                }
+            ]
+            response["unresolved_document_ids"] = []
+            response["extraction_complete"] = True
         return response
 
 
@@ -731,6 +796,81 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         )
         self.assertEqual(result.rejections, ())
 
+    def test_fact_pages_continue_without_total_fact_cap(self) -> None:
+        provider = PagedFactProvider()
+        document = dict(
+            _document("DOC-PAGED", "ISSUER_PRESENTATION", "ISSUER")
+        )
+        text = "\n".join(
+            f"Current Corp material fact number {index}."
+            for index in range(13)
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 2)
+        self.assertEqual(len(result.material_claims), 13)
+        self.assertEqual(len(result.facts), 13)
+        continuation = provider.calls[1]["payload"][
+            "fact_extraction_continuation_context"
+        ]
+        self.assertEqual(continuation["page_number"], 2)
+        self.assertEqual(
+            len(continuation["previously_accepted_facts"]),
+            FACT_EXTRACTION_PAGE_FACT_LIMIT,
+        )
+        self.assertEqual(
+            result.audit["pagination_continuation_call_count"], 1
+        )
+        self.assertFalse(result.audit["fact_page_limit_is_total_fact_cap"])
+
+    def test_full_page_forces_empty_completion_page_even_if_llm_says_complete(
+        self,
+    ) -> None:
+        provider = BoundaryCompletePagedFactProvider()
+        document = dict(
+            _document("DOC-PAGED-BOUNDARY", "ISSUER_PRESENTATION", "ISSUER")
+        )
+        text = "\n".join(
+            f"Current Corp material fact number {index}."
+            for index in range(FACT_EXTRACTION_PAGE_FACT_LIMIT)
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 2)
+        self.assertEqual(
+            len(result.material_claims),
+            FACT_EXTRACTION_PAGE_FACT_LIMIT,
+        )
+        self.assertEqual(result.audit["maximum_pagination_page_count"], 2)
+
     def test_valid_fact_is_preserved_while_invalid_sibling_is_rewritten(self) -> None:
         provider = MixedValidInvalidThenDispositionProvider()
         result = ResearcherEvidenceFactExtractor(provider=provider).extract(
@@ -1105,6 +1245,12 @@ class E2RV5FactExtractionTests(unittest.TestCase):
 
     def test_fact_extraction_schema_uses_supported_json_subset(self) -> None:
         self.assertNotIn("uniqueItems", _recursive_keys(EVIDENCE_FACT_EXTRACTION_SCHEMA))
+        self.assertEqual(
+            EVIDENCE_FACT_EXTRACTION_SCHEMA["properties"]["facts"][
+                "maxItems"
+            ],
+            FACT_EXTRACTION_PAGE_FACT_LIMIT,
+        )
 
 
 def _document(

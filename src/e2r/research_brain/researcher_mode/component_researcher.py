@@ -91,6 +91,8 @@ _NONNEGATIVE_INTEGER_ARRAY: Mapping[str, Any] = {
     "items": {"type": "integer", "minimum": 0},
 }
 
+FACT_EXTRACTION_PAGE_FACT_LIMIT = 12
+
 _PRIOR_FACT_DISPOSITION_ARRAY: Mapping[str, Any] = {
     "type": "array",
     "items": {
@@ -367,6 +369,7 @@ EVIDENCE_FACT_EXTRACTION_SCHEMA: Mapping[str, Any] = {
     "properties": {
         "facts": {
             "type": "array",
+            "maxItems": FACT_EXTRACTION_PAGE_FACT_LIMIT,
             "items": {
                 "type": "object",
                 "additionalProperties": False,
@@ -3373,6 +3376,13 @@ def _pass_instruction(pass_name: str) -> str:
             "body copies, overlapping transport text, and the same quote/economic mechanism do "
             "not justify duplicate fact rows. This is lossless deduplication, not a top-N limit: "
             "all distinct material facts and counterfacts still must be returned. "
+            f"The facts array is one transport page of at most {FACT_EXTRACTION_PAGE_FACT_LIMIT} "
+            "new facts, never a total fact cap. If more distinct facts remain after this page, "
+            "set extraction_complete=false and list the affected document ids in "
+            "unresolved_document_ids. When fact_extraction_continuation_context is present, "
+            "return only the next facts not listed there. A page that reaches the page limit "
+            "must be followed by another page; an empty final page with the accurate document "
+            "disposition may certify that no distinct facts remain. "
             "Never use snippets, future outcomes, score, or Stage."
         )
     if pass_name == "RESEARCH_SUPERVISOR_REVIEW":

@@ -30,7 +30,10 @@ from e2r.research_brain.scoring.business_mechanism_scope import (
     load_mechanism_scope_contracts,
 )
 
-from .component_researcher import StructuredResearchProvider
+from .component_researcher import (
+    FACT_EXTRACTION_PAGE_FACT_LIMIT,
+    StructuredResearchProvider,
+)
 from .prompt_projection import (
     project_fact_extraction_evidence_context,
     project_fact_extraction_score_gap_context,
@@ -284,6 +287,8 @@ class ResearcherEvidenceFactExtractor:
             default=0,
         )
         max_transport_chunk_chars = 0
+        pagination_continuation_call_count = 0
+        maximum_pagination_page_count = 1
         for batch in _document_batches(
             transport_documents,
             max_documents=self.documents_per_call,
@@ -369,6 +374,7 @@ class ResearcherEvidenceFactExtractor:
             provider_attempt_count = 0
             validation_retry_used = False
             validation_retry_count = 0
+            pagination_page_number = 1
             previously_accepted_claims: dict[str, Mapping[str, Any]] = {}
             previously_rejected_material_quote_failures: dict[
                 tuple[str, str], FactExtractionRejection
@@ -498,6 +504,111 @@ class ResearcherEvidenceFactExtractor:
                         }
                     },
                 )
+                page_boundary_reached = (
+                    len(tuple(response.get("facts") or ()))
+                    >= FACT_EXTRACTION_PAGE_FACT_LIMIT
+                )
+                unresolved_page_ids = {
+                    str(value).strip()
+                    for value in response.get("unresolved_document_ids") or ()
+                    if str(value).strip()
+                }
+                required_page_ids = {
+                    str(row["document_id"]) for row in batch
+                }
+                pagination_only_pending = all(
+                    reason == "LLM_DECLARED_FACT_EXTRACTION_INCOMPLETE"
+                    or (
+                        reason.startswith("UNRESOLVED_DOCUMENT:")
+                        and reason.split(":", 1)[1] in required_page_ids
+                    )
+                    for reason in batch_pending
+                )
+                pagination_requested = (
+                    bool(batch_claims)
+                    and pagination_only_pending
+                    and (
+                        page_boundary_reached
+                        or (
+                            response.get("extraction_complete") is not True
+                            and bool(unresolved_page_ids)
+                            and unresolved_page_ids.issubset(
+                                required_page_ids
+                            )
+                        )
+                    )
+                )
+                if pagination_requested:
+                    for claim in batch_claims:
+                        previously_accepted_claims[
+                            str(claim["claim_id"])
+                        ] = claim
+                    pagination_page_number += 1
+                    pagination_continuation_call_count += 1
+                    maximum_pagination_page_count = max(
+                        maximum_pagination_page_count,
+                        pagination_page_number,
+                    )
+                    attempt_payload = scrub_blind_research_payload(
+                        {
+                            **payload,
+                            "fact_extraction_continuation_context": {
+                                "page_number": pagination_page_number,
+                                "page_fact_limit": (
+                                    FACT_EXTRACTION_PAGE_FACT_LIMIT
+                                ),
+                                "required_document_ids": sorted(
+                                    required_page_ids
+                                ),
+                                "previously_accepted_facts": [
+                                    {
+                                        "document_id": str(
+                                            claim["document_id"]
+                                        ),
+                                        "question_family_id": str(
+                                            claim["question_family_id"]
+                                        ),
+                                        "subject_id": str(
+                                            claim["subject_id"]
+                                        ),
+                                        "predicate_family": str(
+                                            claim["predicate_family"]
+                                        ),
+                                        "normalized_object": str(
+                                            claim["normalized_object"]
+                                        ),
+                                        "period": str(claim["period"]),
+                                        "direction": str(
+                                            claim["direction"]
+                                        ),
+                                        "current_lifecycle": str(
+                                            claim["current_lifecycle"]
+                                        ),
+                                        "exact_quote": str(
+                                            claim["exact_quote"]
+                                        ),
+                                    }
+                                    for claim in (
+                                        previously_accepted_claims.values()
+                                    )
+                                ],
+                                "instruction": (
+                                    "Continue the same supplied batch without "
+                                    "repeating any previously accepted fact or "
+                                    "exact quote. Return the next distinct page "
+                                    "of material facts. If more remain after "
+                                    "this page, keep extraction_complete false "
+                                    "and list the affected document ids. If no "
+                                    "distinct facts remain, return an empty facts "
+                                    "array, the accurate final disposition "
+                                    "(FACTS_EXTRACTED when prior accepted facts "
+                                    "exist), an empty unresolved_document_ids "
+                                    "array, and extraction_complete true."
+                                ),
+                            },
+                        }
+                    )
+                    continue
                 if batch_pending and validation_retry_count < 2:
                     for claim in batch_claims:
                         previously_accepted_claims[str(claim["claim_id"])] = claim
@@ -773,6 +884,14 @@ class ResearcherEvidenceFactExtractor:
             ),
             "completion_flag_reconciliation_policy": (
                 "BATCH_DISPOSITIONS_COMPLETE_AND_NO_UNRESOLVED_DOCUMENT_IDS"
+            ),
+            "fact_page_limit": FACT_EXTRACTION_PAGE_FACT_LIMIT,
+            "fact_page_limit_is_total_fact_cap": False,
+            "pagination_continuation_call_count": (
+                pagination_continuation_call_count
+            ),
+            "maximum_pagination_page_count": (
+                maximum_pagination_page_count
             ),
             "transport_chunk_size": self.documents_per_call,
             "transport_character_bound": self.max_document_chars_per_call,
