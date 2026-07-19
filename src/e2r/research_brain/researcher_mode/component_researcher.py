@@ -91,6 +91,7 @@ _NONNEGATIVE_INTEGER_ARRAY: Mapping[str, Any] = {
     "items": {"type": "integer", "minimum": 0},
 }
 
+CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT = 12
 FACT_EXTRACTION_PAGE_FACT_LIMIT = 12
 
 _PRIOR_FACT_DISPOSITION_ARRAY: Mapping[str, Any] = {
@@ -332,6 +333,7 @@ SOURCE_CANDIDATE_RANKING_SCHEMA: Mapping[str, Any] = {
     "properties": {
         "decisions": {
             "type": "array",
+            "maxItems": CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT,
             "items": {
                 "type": "object",
                 "additionalProperties": False,
@@ -1485,6 +1487,24 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                 // 10,
             ),
         )
+
+    @property
+    def candidate_ranking_prompt_chunk_chars(self) -> int:
+        """Keep ranking input broad without inheriting the fact-output bound."""
+
+        prompt_limit = int(
+            getattr(self.transport, "prompt_character_limit", 500_000)
+        )
+        return min(
+            prompt_limit,
+            max(100_000, self.semantic_prompt_chunk_chars * 8),
+        )
+
+    @property
+    def candidate_ranking_page_candidate_limit(self) -> int:
+        """Bound one response page while losslessly partitioning the roster."""
+
+        return CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT
 
     def complete(
         self, *, pass_name: str, payload: Mapping[str, Any]

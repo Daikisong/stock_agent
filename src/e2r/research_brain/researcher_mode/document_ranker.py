@@ -178,18 +178,29 @@ class ResearcherDocumentRanker:
             }
         )
         partition_limit = _semantic_partition_character_limit(self.provider)
+        candidate_count_limit = _candidate_partition_count_limit(
+            self.provider
+        )
         if (
-            partition_limit is not None
-            and len(candidates) > 1
-            and len(
-                json.dumps(
-                    payload,
-                    ensure_ascii=False,
-                    sort_keys=True,
-                    separators=(",", ":"),
+            len(candidates) > 1
+            and (
+                (
+                    candidate_count_limit is not None
+                    and len(candidates) > candidate_count_limit
+                )
+                or (
+                    partition_limit is not None
+                    and len(
+                        json.dumps(
+                            payload,
+                            ensure_ascii=False,
+                            sort_keys=True,
+                            separators=(",", ":"),
+                        )
+                    )
+                    > partition_limit
                 )
             )
-            > partition_limit
         ):
             return self._rank_candidate_partitions(
                 target_id=target_id,
@@ -626,8 +637,27 @@ def _provider_name(provider: StructuredResearchProvider) -> str:
 def _semantic_partition_character_limit(
     provider: StructuredResearchProvider,
 ) -> int | None:
-    value = getattr(provider, "semantic_prompt_chunk_chars", None)
+    value = getattr(
+        provider,
+        "candidate_ranking_prompt_chunk_chars",
+        None,
+    )
+    if value is None:
+        value = getattr(provider, "semantic_prompt_chunk_chars", None)
     if isinstance(value, bool) or not isinstance(value, int) or value < 10_000:
+        return None
+    return value
+
+
+def _candidate_partition_count_limit(
+    provider: StructuredResearchProvider,
+) -> int | None:
+    value = getattr(
+        provider,
+        "candidate_ranking_page_candidate_limit",
+        None,
+    )
+    if isinstance(value, bool) or not isinstance(value, int) or value < 1:
         return None
     return value
 

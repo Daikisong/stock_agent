@@ -662,6 +662,63 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
+    def test_candidate_count_pages_do_not_inherit_fact_chunk_limit(self) -> None:
+        provider = SourceBrainProvider()
+        provider.semantic_prompt_chunk_chars = 10_000
+        provider.candidate_ranking_prompt_chunk_chars = 100_000
+        provider.candidate_ranking_page_candidate_limit = 3
+        candidates = tuple(
+            {
+                "candidate_id": f"COUNT-CANDIDATE-{index}",
+                "title": f"Current Corp count candidate {index}",
+                "url": f"https://example.com/count-candidate-{index}",
+                "snippet": "lossless candidate roster",
+                "source": "fixture-search",
+                "published_at": "2026-06-20",
+                "is_pdf": False,
+                "is_news": False,
+                "is_disclosure": False,
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+                "requested_source_families": ["NAVER_DISCOVERY"],
+            }
+            for index in range(8)
+        )
+
+        result = ResearcherDocumentRanker(provider=provider).rank_candidates(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            open_objectives=[_objective().to_dict()],
+            candidates=candidates,
+            current_evidence_facts=(),
+            target_business_model=None,
+            source_coverage=(),
+        )
+
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(len(result.decisions), len(candidates))
+        self.assertGreater(len(ranking_payloads), 1)
+        self.assertTrue(
+            all(
+                len(payload["discovery_candidates"]) <= 3
+                for payload in ranking_payloads
+            )
+        )
+        self.assertEqual(
+            {
+                row["candidate_id"]
+                for payload in ranking_payloads
+                for row in payload["discovery_candidates"]
+            },
+            {row["candidate_id"] for row in candidates},
+        )
+
     def test_empty_or_duplicate_llm_query_is_pending_without_fallback(self) -> None:
         provider = SourceBrainProvider(queries=())
         search = RecordingSearchProvider({})

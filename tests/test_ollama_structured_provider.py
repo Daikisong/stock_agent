@@ -24,6 +24,8 @@ from e2r.research_brain.researcher_mode import (
     OllamaResearcherProvider,
 )
 from e2r.research_brain.researcher_mode.component_researcher import (
+    CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT,
+    SOURCE_CANDIDATE_RANKING_SCHEMA,
     _loss_accounted_fact_chunk_payloads,
 )
 from e2r.research_brain.researcher_mode.prompt_projection import (
@@ -418,6 +420,20 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self.assertEqual(provider.transport.context_length, 65_536)
         self.assertEqual(provider.fact_document_chunk_chars, 90_000)
         self.assertEqual(provider.semantic_prompt_chunk_chars, 10_000)
+        self.assertEqual(
+            provider.candidate_ranking_prompt_chunk_chars,
+            100_000,
+        )
+        self.assertEqual(
+            provider.candidate_ranking_page_candidate_limit,
+            12,
+        )
+        self.assertEqual(
+            SOURCE_CANDIDATE_RANKING_SCHEMA["properties"]["decisions"][
+                "maxItems"
+            ],
+            CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT,
+        )
         runner = CurrentResearcherModeTargetRunner(provider=provider)
         self.assertEqual(
             runner.fact_extractor.max_document_chars_per_call,
