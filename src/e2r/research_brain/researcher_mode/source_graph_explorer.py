@@ -25,7 +25,10 @@ from e2r.research.pdf_text_extractor import (
     PDF_TEXT_EXTRACTION_SEMANTICS_VERSION,
     extracted_text_unreadable_reason,
 )
-from e2r.research.publication_date import infer_publication_date
+from e2r.research.publication_date import (
+    infer_publication_date,
+    infer_source_locator_publication_date,
+)
 from e2r.research.search_provider import SearchProvider, SearchResult
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
 
@@ -687,6 +690,18 @@ class ResearcherSourceGraphAcquirer:
                 ),
                 max_total_candidates=checkpoint_candidate_limit,
             )
+        future_candidate_ids = _reject_future_candidate_metadata(
+            candidates,
+            rejected_rows,
+            cutoff=cutoff,
+        )
+        if future_candidate_ids:
+            ranking_rows[:] = [
+                row
+                for row in ranking_rows
+                if str(row.get("candidate_id") or "")
+                not in future_candidate_ids
+            ]
         if deferred_reference_count:
             pending_reasons.append(
                 "REFERENCE_DISCOVERY_TRANSPORT_BUDGET_CHECKPOINT:"
@@ -848,6 +863,23 @@ class ResearcherSourceGraphAcquirer:
                 search_result_rows,
                 cutoff=cutoff,
             )
+        newly_rejected_future_candidate_ids = (
+            _reject_future_candidate_metadata(
+                candidates,
+                rejected_rows,
+                cutoff=cutoff,
+            )
+        )
+        if newly_rejected_future_candidate_ids:
+            future_candidate_ids = frozenset(
+                (*future_candidate_ids, *newly_rejected_future_candidate_ids)
+            )
+            ranking_rows[:] = [
+                row
+                for row in ranking_rows
+                if str(row.get("candidate_id") or "")
+                not in future_candidate_ids
+            ]
         state["query_failures"] = _dedupe_mapping_rows(
             query_failures, key_fields=("query_id", "failure_reason")
         )
@@ -2008,6 +2040,75 @@ def _merge_search_candidates(
             existing.get("direct_search_discovery")
             or row.get("direct_search_discovery")
         )
+
+
+def _reject_future_candidate_metadata(
+    candidates: Sequence[dict[str, Any]],
+    rejected: list[dict[str, Any]],
+    *,
+    cutoff: date,
+) -> frozenset[str]:
+    """Quarantine future-dated source locators before any LLM sees them.
+
+    Some official systems encode the publication date in a document locator
+    while omitting a separate ``published_at`` field.  DART receipt numbers
+    are one example.  Such a URL may be discovered from a live landing page
+    after the historical ``as_of_date``.  Keep an auditable rejection ledger,
+    but never send the candidate to ranking or fetch it as historical evidence.
+    """
+
+    rejected_keys = {
+        (
+            str(row.get("candidate_id") or ""),
+            str(row.get("rejection_reason") or ""),
+        )
+        for row in rejected
+    }
+    rejected_candidate_ids: set[str] = set()
+    for candidate in candidates:
+        candidate_id = str(candidate.get("candidate_id") or "").strip()
+        if not candidate_id:
+            continue
+        inferred = (
+            _parse_date(candidate.get("published_at"))
+            or infer_source_locator_publication_date(
+                str(candidate.get("url") or "")
+            )
+        )
+        if inferred is None or inferred <= cutoff:
+            continue
+        reason = "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE"
+        candidate["published_at"] = inferred.isoformat()
+        candidate["publication_date_state"] = (
+            "REJECTED_FUTURE_SOURCE_LOCATOR"
+        )
+        candidate["publication_date_basis"] = (
+            "OFFICIAL_SOURCE_LOCATOR_METADATA"
+        )
+        candidate["future_candidate_rejected_before_llm"] = True
+        candidate["ranking_status"] = "REJECTED_FUTURE"
+        candidate["fetch_status"] = "FETCH_REJECTED"
+        for key in (
+            "materiality_decision_id",
+            "material_priority",
+            "materiality_rationale",
+            "document_id",
+        ):
+            candidate.pop(key, None)
+        rejection_key = (candidate_id, reason)
+        if rejection_key not in rejected_keys:
+            rejection = _candidate_rejection(
+                candidate,
+                reason,
+                retryable=False,
+            )
+            rejection["inferred_published_at"] = inferred.isoformat()
+            rejection["as_of_date"] = cutoff.isoformat()
+            rejection["future_candidate_rejected_before_llm"] = True
+            rejected.append(rejection)
+            rejected_keys.add(rejection_key)
+        rejected_candidate_ids.add(candidate_id)
+    return frozenset(rejected_candidate_ids)
 
 
 def _enqueue_reference_candidates(

@@ -10,6 +10,9 @@ from typing import Any, Mapping, Sequence
 
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
 from e2r.research.page_fetcher import FetchResult, PageFetcher
+from e2r.research.publication_date import (
+    infer_source_locator_publication_date,
+)
 from e2r.research.search_provider import SearchResult
 import e2r.research_brain.researcher_mode.source_graph_explorer as source_graph_module
 from e2r.research_brain.researcher_mode import (
@@ -373,6 +376,29 @@ class PublicationMetadataFetcher:
 class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
 
+    def test_source_locator_date_accepts_filing_route_not_certificate_expiry(
+        self,
+    ) -> None:
+        self.assertEqual(
+            infer_source_locator_publication_date(
+                "https://englishdart.fss.or.kr/dsbh001/main.do"
+                "?rcpNo=20260716000552"
+            ),
+            date(2026, 7, 16),
+        )
+        self.assertEqual(
+            infer_source_locator_publication_date(
+                "https://kind.krx.co.kr/external/2026/07/16/001066/"
+                "20260716002384/10001.htm"
+            ),
+            date(2026, 7, 16),
+        )
+        self.assertIsNone(
+            infer_source_locator_publication_date(
+                "https://issuer.example/certificate-20231015-20261014.pdf"
+            )
+        )
+
     def test_operational_phase85_audit_is_reproducible_and_complete(self) -> None:
         actual = compile_phase85_source_graph_acquisition_audit(self.ROOT)
         committed = json.loads(
@@ -730,6 +756,14 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                         "https://example.com/future",
                         published="2026-06-30",
                     ),
+                    _result(
+                        "Current Corp future DART locator",
+                        (
+                            "https://englishdart.fss.or.kr/dsbh001/main.do"
+                            "?rcpNo=20260716000552"
+                        ),
+                        published=None,
+                    ),
                     _result("Current Corp current", "https://example.com/missing"),
                 )
             }
@@ -745,6 +779,27 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             for row in run.checkpoint["rejected_documents"]
         }
         self.assertIn("FUTURE_SEARCH_RESULT", reasons)
+        self.assertIn("FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE", reasons)
+        future_locator = next(
+            row
+            for row in run.checkpoint["search_candidates"]
+            if "rcpNo=20260716000552" in str(row.get("url") or "")
+        )
+        self.assertEqual(future_locator["ranking_status"], "REJECTED_FUTURE")
+        self.assertEqual(future_locator["fetch_status"], "FETCH_REJECTED")
+        self.assertTrue(future_locator["future_candidate_rejected_before_llm"])
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertTrue(
+            all(
+                "20260716000552"
+                not in json.dumps(payload, ensure_ascii=False)
+                for payload in ranking_payloads
+            )
+        )
         self.assertTrue(
             any(reason.startswith("SNIPPET_ONLY_FULL_FETCH_REQUIRED") for reason in reasons)
         )
@@ -1468,6 +1523,75 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
         self.assertEqual(len(second.evidence_documents), 2)
         self.assertEqual(len(search.calls), 1)
+
+    def test_future_dart_reference_locator_is_rejected_before_resume_ranking(
+        self,
+    ) -> None:
+        provider = SourceBrainProvider(
+            source_families=("ISSUER_PRESENTATION",),
+        )
+        parent_url = "https://ir.example.com/redirect"
+        child_url = (
+            "https://englishdart.fss.or.kr/dsbh001/main.do"
+            "?rcpNo=20260716000552"
+        )
+        fetcher = ReferencedRouteFetcher(
+            parent_url=parent_url,
+            child_url=child_url,
+        )
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp official call", parent_url),)}
+        )
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            official_domains=("example.com",),
+        )
+        child_candidate = next(
+            row
+            for row in first.checkpoint["search_candidates"]
+            if row.get("url") == child_url
+        )
+        self.assertEqual(child_candidate["ranking_status"], "PENDING")
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=first.checkpoint,
+            official_domains=("example.com",),
+        )
+        child_candidate = next(
+            row
+            for row in second.checkpoint["search_candidates"]
+            if row.get("url") == child_url
+        )
+        self.assertEqual(child_candidate["ranking_status"], "REJECTED_FUTURE")
+        self.assertEqual(child_candidate["fetch_status"], "FETCH_REJECTED")
+        self.assertNotIn(child_url, fetcher.calls)
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertTrue(
+            all(
+                "20260716000552"
+                not in json.dumps(payload, ensure_ascii=False)
+                for payload in ranking_payloads
+            )
+        )
+        matching_rejections = [
+            row
+            for row in second.checkpoint["rejected_documents"]
+            if row.get("candidate_id") == child_candidate["candidate_id"]
+            and row.get("rejection_reason")
+            == "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE"
+        ]
+        self.assertEqual(len(matching_rejections), 1)
+        self.assertTrue(
+            matching_rejections[0]["future_candidate_rejected_before_llm"]
+        )
 
     def test_rejected_parent_still_discovers_and_fetches_linked_original(self) -> None:
         provider = SourceBrainProvider(

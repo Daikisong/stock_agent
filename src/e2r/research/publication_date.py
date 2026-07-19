@@ -35,8 +35,51 @@ def infer_publication_date(
     return max(candidates) if candidates else None
 
 
+def infer_source_locator_publication_date(locator: str) -> date | None:
+    """Return only a high-confidence publication date encoded by a URL route.
+
+    Unlike :func:`infer_publication_date`, this helper deliberately ignores
+    arbitrary filename dates.  A certificate filename may contain its future
+    expiry date, which is not the publication date.  Accepted locator forms
+    are named filing receipt parameters, date-segmented official routes, and
+    article/news/view routes whose identifier begins with YYYYMMDD.
+    """
+
+    text = unquote(str(locator or ""))
+    candidates: list[date] = []
+    for match in re.finditer(
+        r"(?i)(?:rcpno|rcept[_-]?no)\s*[=:/_-]\s*"
+        r"(20\d{2})([01]\d)([0-3]\d)(?=\d{2,18}(?:\D|$))",
+        text,
+    ):
+        _append_valid(candidates, *map(int, match.groups()))
+    for match in re.finditer(
+        r"/(20\d{2})/([01]\d)/([0-3]\d)(?:/|$)",
+        text,
+    ):
+        _append_valid(candidates, *map(int, match.groups()))
+    for match in re.finditer(
+        r"(?i)(?:article|view|news|data|html|ecn)[^?#]{0,96}?[/=_-]"
+        r"(20\d{2})([01]\d)([0-3]\d)(?=\d{2,18}(?:\D|$))",
+        text,
+    ):
+        _append_valid(candidates, *map(int, match.groups()))
+    return max(candidates) if candidates else None
+
+
 def _date_candidates(text: str, *, as_of_date: date | None) -> tuple[date, ...]:
     candidates: list[date] = []
+    # DART receipt numbers start with the filing date (YYYYMMDD) followed by
+    # a sequence number.  The trailing digits intentionally make the generic
+    # bare-date patterns reject them, so recognize only the named official
+    # locator parameter here.  This is source-protocol metadata, not a company
+    # or archetype-specific heuristic.
+    for match in re.finditer(
+        r"(?i)(?:rcpno|rcept[_-]?no)\s*[=:/_-]\s*"
+        r"(20\d{2})([01]\d)([0-3]\d)(?=\d{2,18}(?:\D|$))",
+        text,
+    ):
+        _append_valid(candidates, *map(int, match.groups()))
     for match in re.finditer(
         r"(?<!\d)(20\d{2})[./_-]([01]\d)[./_-]([0-3]\d)(?!\d)",
         text,
@@ -155,4 +198,7 @@ def _append_valid(values: list[date], year: int, month: int, day: int) -> None:
         return
 
 
-__all__ = ["infer_publication_date"]
+__all__ = [
+    "infer_publication_date",
+    "infer_source_locator_publication_date",
+]
