@@ -218,6 +218,37 @@ class IncompleteThenCorrectRankingProvider(SourceBrainProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class RepeatedIncompleteCompleteRosterProvider(SourceBrainProvider):
+    def __init__(self) -> None:
+        super().__init__()
+        self.ranking_call_count = 0
+        self.invalidations: list[str] = []
+
+    def invalidate_last_response_cache(self, reason: str) -> None:
+        self.invalidations.append(reason)
+
+    def complete(self, *, pass_name, payload):
+        if pass_name != "SOURCE_CANDIDATE_RANKING":
+            return super().complete(pass_name=pass_name, payload=payload)
+        self.ranking_call_count += 1
+        self.calls.append({"pass_name": pass_name, "payload": payload})
+        rows = list(payload["discovery_candidates"])
+        return {
+            "decisions": [
+                {
+                    "candidate_id": row["candidate_id"],
+                    "material_relevance": True,
+                    "priority": 1.0,
+                    "objective_ids": list(row["objective_ids"]),
+                    "rationale": "후보 분류는 끝났지만 원문 수집은 남았다.",
+                }
+                for row in rows
+            ],
+            "ranking_complete": False,
+            "unresolved_notes": ["원문 fetch와 증거 검증이 남아 있다."],
+        }
+
+
 class SplitRecoveryRankingProvider(SourceBrainProvider):
     def __init__(self) -> None:
         super().__init__()
@@ -550,6 +581,50 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(
             len(run.checkpoint["candidate_materiality_decisions"]),
             1,
+        )
+
+    def test_second_false_flag_is_reconciled_only_for_complete_roster(
+        self,
+    ) -> None:
+        provider = RepeatedIncompleteCompleteRosterProvider()
+        candidates = tuple(
+            {
+                "candidate_id": f"RECONCILE-CANDIDATE-{index}",
+                "title": f"Current Corp candidate {index}",
+                "url": f"https://example.com/reconcile-{index}",
+                "snippet": "discovery only",
+                "source": "fixture-search",
+                "published_at": "2026-06-20",
+                "is_pdf": False,
+                "is_news": False,
+                "is_disclosure": False,
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+                "requested_source_families": ["NAVER_DISCOVERY"],
+            }
+            for index in range(4)
+        )
+
+        result = ResearcherDocumentRanker(provider=provider).rank_candidates(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            open_objectives=[_objective().to_dict()],
+            candidates=candidates,
+            current_evidence_facts=(),
+            target_business_model=None,
+            source_coverage=(),
+        )
+
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(len(result.decisions), len(candidates))
+        self.assertTrue(result.completion_flag_reconciled)
+        self.assertEqual(provider.ranking_call_count, 2)
+        self.assertEqual(len(provider.invalidations), 1)
+        retry = provider.calls[-1]["payload"]["ranking_retry_context"]
+        self.assertIn(
+            "every discovery candidate was classified",
+            retry["instruction"],
         )
 
     def test_repeated_large_roster_omission_splits_and_recombines_every_candidate(

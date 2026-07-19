@@ -3369,6 +3369,11 @@ def _pass_instruction(pass_name: str) -> str:
         return (
             "Assess every discovery candidate for material relevance to the supplied "
             "research objectives. Snippets are discovery metadata only, never evidence. "
+            "ranking_complete is local to classifying every candidate in this supplied "
+            "transport roster exactly once; it does not mean the documents were fetched "
+            "or the broader research is complete. Put fetch or evidence gaps in "
+            "unresolved_notes while keeping ranking_complete=true after full roster "
+            "accounting. "
             "Use requested_source_families, verified_official_domain_candidate, and "
             "candidate_source_family_hint as discovery provenance. When an objective "
             "requires an issuer source, prioritize an eligible verified issuer-domain "

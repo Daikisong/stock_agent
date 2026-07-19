@@ -84,6 +84,7 @@ class CandidateRankingResult:
     provider_name: str
     prompt_hash: str
     response_hash: str | None
+    completion_flag_reconciled: bool = False
 
     def __post_init__(self) -> None:
         if self.status not in {"COMPLETE", "PENDING"}:
@@ -99,6 +100,7 @@ class CandidateRankingResult:
             "provider_name": self.provider_name,
             "prompt_hash": self.prompt_hash,
             "response_hash": self.response_hash,
+            "completion_flag_reconciled": self.completion_flag_reconciled,
         }
 
 
@@ -218,6 +220,7 @@ class ResearcherDocumentRanker:
         decisions: tuple[SourceCandidateMaterialityDecision, ...] = ()
         ranking_complete = False
         notes: tuple[str, ...] = ()
+        completion_flag_reconciled = False
         for attempt_index in range(2):
             prompt_hash = stable_intelligence_id("RANKPROMPT", attempt_payload)
             try:
@@ -250,11 +253,21 @@ class ResearcherDocumentRanker:
                     objective_ids=objective_ids,
                 )
                 if not ranking_complete:
-                    raise ValueError(
-                        "candidate ranking declared incomplete after candidate "
-                        "accounting"
-                        + (":" + " | ".join(notes) if notes else "")
+                    complete_roster = (
+                        len(decisions) == len(candidate_by_id)
+                        and {
+                            row.candidate_id for row in decisions
+                        } == set(candidate_by_id)
                     )
+                    if attempt_index == 1 and complete_roster:
+                        ranking_complete = True
+                        completion_flag_reconciled = True
+                    else:
+                        raise ValueError(
+                            "candidate ranking declared incomplete after candidate "
+                            "accounting"
+                            + (":" + " | ".join(notes) if notes else "")
+                        )
             except (KeyError, TypeError, ValueError) as exc:
                 _invalidate_provider_response_cache(self.provider, exc)
                 if attempt_index == 0:
@@ -326,6 +339,7 @@ class ResearcherDocumentRanker:
             provider_name=_provider_name(self.provider),
             prompt_hash=prompt_hash,
             response_hash=response_hash,
+            completion_flag_reconciled=completion_flag_reconciled,
         )
 
     def _rank_candidate_partitions(
@@ -404,6 +418,10 @@ class ResearcherDocumentRanker:
                     "RANKRESP-SPLIT",
                     [decision.to_dict() for decision in decisions],
                 ),
+                completion_flag_reconciled=any(
+                    result.completion_flag_reconciled
+                    for result in results
+                ),
             )
         pending_reasons = ["SEMANTIC_RANKING_SPLIT_PENDING"]
         if not roster_complete:
@@ -425,6 +443,10 @@ class ResearcherDocumentRanker:
                 "RANKPROMPT-SPLIT-PENDING", split_lineage
             ),
             response_hash=None,
+            completion_flag_reconciled=any(
+                result.completion_flag_reconciled
+                for result in results
+            ),
         )
 
 
