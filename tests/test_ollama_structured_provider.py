@@ -55,6 +55,9 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self,
     ) -> None:
         class ChunkAwareTransport:
+            context_length = 65_536
+            max_output_tokens = 32_768
+
             def __init__(self):
                 self.payloads = []
                 self.prompt_lengths = []
@@ -187,6 +190,18 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         ]
         self.assertEqual(emitted, list(range(len(facts))))
         self.assertEqual(len(emitted), len(set(emitted)))
+        self.assertTrue(
+            all(
+                len(
+                    json.dumps(
+                        chunk["current_evidence_fact_projection"],
+                        ensure_ascii=False,
+                    )
+                )
+                < 30_000
+                for chunk in chunk_payloads
+            )
+        )
         self.assertEqual(
             set(response["fact_row_indices"]),
             {

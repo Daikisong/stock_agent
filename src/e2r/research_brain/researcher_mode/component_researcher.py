@@ -1471,7 +1471,23 @@ class OllamaResearcherProvider(CodexResearcherProvider):
         chunks = _loss_accounted_fact_chunk_payloads(
             payload,
             pass_name=pass_name,
-            target_projection_chars=self.fact_document_chunk_chars,
+            target_projection_chars=min(
+                self.fact_document_chunk_chars,
+                max(
+                    10_000,
+                    (
+                        int(getattr(self.transport, "context_length", 262_144))
+                        - int(
+                            getattr(
+                                self.transport,
+                                "max_output_tokens",
+                                32_768,
+                            )
+                        )
+                    )
+                    // 2,
+                ),
+            ),
         )
         if len(chunks) <= 1:
             return super().complete(pass_name=pass_name, payload=payload)
