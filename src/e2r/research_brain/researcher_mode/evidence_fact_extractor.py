@@ -1387,7 +1387,9 @@ def _validate_response(
     }
     accepted_quotes_by_document = {
         str(document_id): frozenset(
-            str(value) for value in values if str(value)
+            _literal_quote_whitespace_identity(value)
+            for value in values
+            if str(value).strip()
         )
         for document_id, values in (
             previously_accepted_exact_quotes or {}
@@ -1413,7 +1415,7 @@ def _validate_response(
         if (
             material
             and proposed_exact_quote
-            and proposed_exact_quote
+            and _literal_quote_whitespace_identity(proposed_exact_quote)
             in accepted_quotes_by_document.get(document_id, frozenset())
         ):
             rejections.append(
@@ -1595,6 +1597,12 @@ def _validate_response(
         list(dict.fromkeys(feedback)),
         completion_flag_reconciled,
     )
+
+
+def _literal_quote_whitespace_identity(value: Any) -> str:
+    """Identify the same literal quote despite transport/OCR spacing only."""
+
+    return "".join(str(value).split()).casefold()
 
 
 def _proposal_rejection_reason(

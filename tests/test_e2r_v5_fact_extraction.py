@@ -193,6 +193,31 @@ class BoundaryCompletePagedFactProvider(PagedFactProvider):
         return response
 
 
+class WhitespaceVariantPagedFactProvider(PagedFactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        continuation = payload.get("fact_extraction_continuation_context")
+        if continuation:
+            duplicate = dict(response["facts"][0])
+            duplicate.update(
+                {
+                    "question_family_id": "question_0",
+                    "subject_id": "subject_0",
+                    "subject": "Current Corp fact 0",
+                    "predicate": "reported material fact 0",
+                    "predicate_family": "predicate_0",
+                    "normalized_object": "material_fact_0",
+                    "exact_quote": "CurrentCorpmaterialfactnumber0.",
+                }
+            )
+            response["facts"] = [duplicate]
+            response["unresolved_document_ids"] = []
+            response["extraction_complete"] = True
+        return response
+
+
 class CorrectingCompletionFactProvider(FactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(super().complete(pass_name=pass_name, payload=payload))
@@ -870,6 +895,45 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             FACT_EXTRACTION_PAGE_FACT_LIMIT,
         )
         self.assertEqual(result.audit["maximum_pagination_page_count"], 2)
+
+    def test_pagination_rejects_whitespace_only_quote_repetition(self) -> None:
+        provider = WhitespaceVariantPagedFactProvider()
+        document = dict(
+            _document("DOC-PAGED-SPACING", "ISSUER_PRESENTATION", "ISSUER")
+        )
+        text = "\n".join(
+            [
+                *(
+                    f"Current Corp material fact number {index}."
+                    for index in range(FACT_EXTRACTION_PAGE_FACT_LIMIT)
+                ),
+                "CurrentCorpmaterialfactnumber0.",
+            ]
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(
+            len(result.material_claims),
+            FACT_EXTRACTION_PAGE_FACT_LIMIT,
+        )
+        self.assertIn(
+            "PREVIOUSLY_ACCEPTED_EXACT_QUOTE_REPEATED",
+            {row.reason for row in result.rejections},
+        )
 
     def test_valid_fact_is_preserved_while_invalid_sibling_is_rewritten(self) -> None:
         provider = MixedValidInvalidThenDispositionProvider()
