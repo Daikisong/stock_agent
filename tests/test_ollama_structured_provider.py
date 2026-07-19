@@ -23,6 +23,12 @@ from e2r.research_brain.researcher_mode import (
     CurrentResearcherModeTargetRunner,
     OllamaResearcherProvider,
 )
+from e2r.research_brain.researcher_mode.component_researcher import (
+    _loss_accounted_fact_chunk_payloads,
+)
+from e2r.research_brain.researcher_mode.prompt_projection import (
+    project_current_decision_citable_facts,
+)
 
 
 class _FakeHTTPResponse:
@@ -45,6 +51,219 @@ class _FakeHTTPResponse:
 
 
 class OllamaStructuredProviderTests(unittest.TestCase):
+    def test_long_fact_plane_is_reviewed_in_disjoint_loss_accounted_chunks(
+        self,
+    ) -> None:
+        class ChunkAwareTransport:
+            def __init__(self):
+                self.payloads = []
+                self.prompt_lengths = []
+
+            def provider_identity(self):
+                return {
+                    "transport_class": "ChunkAwareTransport",
+                    "model": "test-model",
+                    "context_length": 262_144,
+                }
+
+            def complete(self, *, prompt, output_schema, schema_name):
+                del output_schema, schema_name
+                payload = json.loads(prompt.rsplit("\n", 1)[-1])
+                self.payloads.append(payload)
+                self.prompt_lengths.append(len(prompt))
+                chunk = payload.get("loss_accounted_fact_chunk")
+                if chunk:
+                    row_index = payload["current_evidence_fact_graph"][0][0]
+                    response = {
+                        "business_model_summary": (
+                            f"chunk {chunk['chunk_index']} mechanism review"
+                        ),
+                        "revenue_engines": ["chunk revenue mechanism"],
+                        "cost_and_cash_drivers": ["chunk cash mechanism"],
+                        "capacity_and_supply_constraints": [
+                            "chunk capacity mechanism"
+                        ],
+                        "customer_and_channel_dependencies": [
+                            "chunk customer mechanism"
+                        ],
+                        "fact_row_indices": [row_index],
+                        "uncertainties": ["chunk uncertainty"],
+                        "confidence": 0.7,
+                        "research_complete": True,
+                    }
+                else:
+                    partials = payload[
+                        "loss_accounted_fact_chunk_synthesis"
+                    ]["chunk_responses"]
+                    response = {
+                        "business_model_summary": "all chunks synthesized",
+                        "revenue_engines": ["all revenue mechanisms"],
+                        "cost_and_cash_drivers": ["all cash mechanisms"],
+                        "capacity_and_supply_constraints": [
+                            "all capacity mechanisms"
+                        ],
+                        "customer_and_channel_dependencies": [
+                            "all customer mechanisms"
+                        ],
+                        "fact_row_indices": [
+                            row["response"]["fact_row_indices"][0]
+                            for row in partials
+                        ],
+                        "uncertainties": ["cross-chunk uncertainty"],
+                        "confidence": 0.8,
+                        "research_complete": True,
+                    }
+                return StructuredProviderResponse(
+                    payload=response,
+                    raw_response=json.dumps(response),
+                    stderr="",
+                    returncode=0,
+                )
+
+        facts = [
+            {
+                "fact_id": f"EFACT-{index:04d}",
+                "target_id": "TEST",
+                "as_of_date": "2026-06-29",
+                "subject": "target memory business",
+                "business_segment": "MEMORY",
+                "product_family": "HBM",
+                "economic_mechanism": (
+                    f"fact {index} " + "긴 경제 메커니즘 " * 500
+                ),
+                "predicate": f"CURRENT_HBM_MECHANISM_{index}",
+                "value": index,
+                "unit": "units",
+                "period": "2026-06-29",
+                "direction": "POSITIVE" if index % 2 == 0 else "COUNTER",
+                "current_lifecycle": "CURRENT",
+                "confidence": 0.9,
+                "structured_evidence_roles": [],
+                "claim_ids": [f"CLAIM-{index:04d}"],
+                "source_ids": [f"DOC-{index:04d}"],
+                "source_independence_group": "issuer:test",
+                "corroborating_independence_groups": ["issuer:test"],
+                "allowed_component_ids": [],
+                "question_family_tags": [],
+                "primitive_tags": [],
+            }
+            for index in range(24)
+        ]
+        projection = project_current_decision_citable_facts(facts)
+        payload = {
+            "researcher_role": "BusinessMechanismResearcher",
+            "target_id": "TEST",
+            "archetype_id": "TEST_ARCHETYPE",
+            "as_of_date": "2026-06-29",
+            "current_evidence_fact_graph": projection["facts"],
+            "current_evidence_fact_projection": {
+                key: value
+                for key, value in projection.items()
+                if key not in {"facts", "fact_id_by_row_index"}
+            },
+            "source_claims": {},
+            "source_documents": {},
+            "source_coverage": ["ISSUER"],
+        }
+        transport = ChunkAwareTransport()
+        provider = OllamaResearcherProvider(
+            transport=transport,
+            fact_document_chunk_chars=10_000,
+        )
+
+        response = provider.complete(
+            pass_name="BUSINESS_MODEL_RESEARCH",
+            payload=payload,
+        )
+
+        chunk_payloads = [
+            row for row in transport.payloads if row.get("loss_accounted_fact_chunk")
+        ]
+        self.assertGreater(len(chunk_payloads), 1)
+        emitted = [
+            fact_row[0]
+            for chunk in chunk_payloads
+            for fact_row in chunk["current_evidence_fact_graph"]
+        ]
+        self.assertEqual(emitted, list(range(len(facts))))
+        self.assertEqual(len(emitted), len(set(emitted)))
+        self.assertEqual(
+            set(response["fact_row_indices"]),
+            {
+                chunk["current_evidence_fact_graph"][0][0]
+                for chunk in chunk_payloads
+            },
+        )
+        self.assertTrue(
+            transport.payloads[-1].get(
+                "loss_accounted_fact_chunk_synthesis"
+            )
+        )
+        self.assertTrue(all(length < 1_000_000 for length in transport.prompt_lengths))
+
+    def test_fact_chunk_dictionary_remap_preserves_every_decoded_value(
+        self,
+    ) -> None:
+        facts = [
+            {
+                "fact_id": f"EFACT-{index}",
+                "target_id": "TEST",
+                "as_of_date": "2026-06-29",
+                "subject": f"subject {index}",
+                "business_segment": "MEMORY",
+                "product_family": "HBM",
+                "economic_mechanism": f"mechanism {index} " + "x" * 4000,
+                "predicate": f"predicate_{index}",
+                "value": {"value": index},
+                "unit": "units",
+                "period": f"2026-Q{index + 1}",
+                "direction": "POSITIVE",
+                "current_lifecycle": "CURRENT",
+                "confidence": 0.8,
+                "structured_evidence_roles": [],
+                "claim_ids": [f"CLAIM-{index}"],
+                "source_ids": [f"DOC-{index}"],
+                "source_independence_group": "issuer:test",
+                "corroborating_independence_groups": ["issuer:test"],
+                "allowed_component_ids": [],
+                "question_family_tags": [],
+                "primitive_tags": [],
+            }
+            for index in range(4)
+        ]
+        projection = project_current_decision_citable_facts(facts)
+        payload = {
+            "current_evidence_fact_graph": projection["facts"],
+            "current_evidence_fact_projection": {
+                key: value
+                for key, value in projection.items()
+                if key not in {"facts", "fact_id_by_row_index"}
+            },
+        }
+        chunks = _loss_accounted_fact_chunk_payloads(
+            payload,
+            pass_name="BUSINESS_MODEL_RESEARCH",
+            target_projection_chars=10_000,
+        )
+        self.assertGreater(len(chunks), 1)
+        original_by_row = {
+            row[0]: row for row in projection["facts"]
+        }
+        fields = projection["fact_fields"]
+        for chunk in chunks:
+            local_projection = chunk["current_evidence_fact_projection"]
+            local_dictionaries = local_projection["fact_value_dictionaries"]
+            for local_row in chunk["current_evidence_fact_graph"]:
+                original = original_by_row[local_row[0]]
+                for position, field in enumerate(fields[1:], start=1):
+                    name = field[: -len("_dictionary_index")]
+                    self.assertEqual(
+                        local_dictionaries[name][local_row[position]],
+                        projection["fact_value_dictionaries"][name][
+                            original[position]
+                        ],
+                    )
+
     def test_transport_sends_schema_bound_non_thinking_request(self) -> None:
         schema = {
             "type": "object",

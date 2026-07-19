@@ -1438,6 +1438,160 @@ class OllamaResearcherProvider(CodexResearcherProvider):
             "fact_document_chunk_chars": self.fact_document_chunk_chars,
         }
 
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        """Review an oversized citable fact plane through exhaustive chunks.
+
+        A long-running backfill can leave thousands of CURRENT/OPEN facts.  A
+        single JSON prompt that repeats every decoded economic mechanism can
+        exceed the model context even when the canonical artifacts themselves
+        are valid.  Silently raising the character cap would let the model
+        truncate the beginning of the prompt.  For the three memo passes that
+        consume the citable fact table, split the table into disjoint,
+        dictionary-remapped chunks, review every chunk, and ask the same pass
+        for one final synthesis over all chunk responses.
+
+        The row index remains the global blind citation index throughout.  No
+        fact is ranked, sampled, or dropped, and deterministic callers still
+        validate the final response against the immutable full fact graph.
+        """
+
+        if pass_name not in {
+            "BUSINESS_MODEL_RESEARCH",
+            "COMPONENT_RESEARCH",
+            "RED_TEAM_RESEARCH",
+        }:
+            return super().complete(pass_name=pass_name, payload=payload)
+        if (
+            "loss_accounted_fact_chunk" in payload
+            or "loss_accounted_fact_chunk_synthesis" in payload
+        ):
+            return super().complete(pass_name=pass_name, payload=payload)
+        chunks = _loss_accounted_fact_chunk_payloads(
+            payload,
+            pass_name=pass_name,
+            target_projection_chars=self.fact_document_chunk_chars,
+        )
+        if len(chunks) <= 1:
+            return super().complete(pass_name=pass_name, payload=payload)
+
+        chunk_responses = []
+        for chunk in chunks:
+            allowed_indices = {
+                int(row[0])
+                for row in chunk.get("current_evidence_fact_graph") or ()
+            }
+            prior_indices = {
+                int(row["fact_row_index"])
+                for row in (
+                    (
+                        chunk.get("prior_component_memo_context") or {}
+                    ).get("current_fact_rows")
+                    or ()
+                )
+                if isinstance(row, Mapping)
+                and isinstance(row.get("fact_row_index"), int)
+            }
+            attempt_payload = chunk
+            validation_retry_used = False
+            while True:
+                response = super().complete(
+                    pass_name=pass_name,
+                    payload=attempt_payload,
+                )
+                try:
+                    _validate_loss_accounted_chunk_response(
+                        pass_name=pass_name,
+                        response=response,
+                        allowed_fact_row_indices=allowed_indices,
+                        prior_fact_row_indices=prior_indices,
+                    )
+                    break
+                except StructuredProviderRejected as exc:
+                    self.invalidate_last_response_cache(str(exc))
+                    if validation_retry_used:
+                        raise
+                    validation_retry_used = True
+                    attempt_payload = scrub_blind_research_payload(
+                        {
+                            **chunk,
+                            "loss_accounted_fact_chunk_validation_retry_context": {
+                                "validation_error": str(exc),
+                                "rejected_response": response,
+                                "allowed_fact_row_indices": sorted(
+                                    allowed_indices
+                                ),
+                                "required_prior_fact_row_indices": sorted(
+                                    prior_indices
+                                ),
+                                "instruction": (
+                                    "Rewrite the complete chunk response once. "
+                                    "Cite only allowed_fact_row_indices. For a "
+                                    "component chunk, return one exact grounding "
+                                    "per selected row and dispose every required "
+                                    "prior row exactly once. Do not invent evidence, "
+                                    "score, or Stage."
+                                ),
+                            },
+                        }
+                    )
+            chunk_meta = dict(chunk["loss_accounted_fact_chunk"])
+            chunk_responses.append(
+                {
+                    "chunk_index": chunk_meta["chunk_index"],
+                    "chunk_fact_count": chunk_meta["chunk_fact_count"],
+                    "chunk_fact_row_index_roster_hash": chunk_meta[
+                        "chunk_fact_row_index_roster_hash"
+                    ],
+                    "response": dict(response),
+                }
+            )
+
+        synthesis_payload = _loss_accounted_fact_chunk_synthesis_payload(
+            payload,
+            pass_name=pass_name,
+            chunks=chunks,
+            chunk_responses=chunk_responses,
+        )
+        attempt_payload = synthesis_payload
+        validation_retry_used = False
+        while True:
+            response = super().complete(
+                pass_name=pass_name,
+                payload=attempt_payload,
+            )
+            try:
+                _validate_loss_accounted_synthesis_response(
+                    pass_name=pass_name,
+                    response=response,
+                    chunk_responses=chunk_responses,
+                )
+                break
+            except StructuredProviderRejected as exc:
+                self.invalidate_last_response_cache(str(exc))
+                if validation_retry_used:
+                    raise
+                validation_retry_used = True
+                attempt_payload = scrub_blind_research_payload(
+                    {
+                        **synthesis_payload,
+                        "loss_accounted_fact_synthesis_validation_retry_context": {
+                            "validation_error": str(exc),
+                            "rejected_response": response,
+                            "instruction": (
+                                "Rewrite the complete synthesis once. Cite only "
+                                "fact rows already cited or selected in the chunk "
+                                "responses. For a component synthesis, copy exact "
+                                "groundings and prior dispositions from those "
+                                "responses. Review every chunk; do not invent "
+                                "evidence, total score, or Stage."
+                            ),
+                        },
+                    }
+                )
+        return response
+
     @classmethod
     def default(
         cls,
@@ -1469,6 +1623,488 @@ class OllamaResearcherProvider(CodexResearcherProvider):
             ),
             fact_document_chunk_chars=fact_document_chunk_chars,
         )
+
+
+_LOSS_ACCOUNTED_FACT_CHUNK_PASSES = {
+    "BUSINESS_MODEL_RESEARCH",
+    "COMPONENT_RESEARCH",
+    "RED_TEAM_RESEARCH",
+}
+_FACT_CHUNK_SYNTHESIS_ONLY_KEYS = {
+    "component_research_validation_retry_context",
+}
+
+
+def _loss_accounted_fact_chunk_payloads(
+    payload: Mapping[str, Any],
+    *,
+    pass_name: str,
+    target_projection_chars: int,
+) -> tuple[Mapping[str, Any], ...]:
+    """Partition every citable row once and remap only its local dictionaries."""
+
+    if pass_name not in _LOSS_ACCOUNTED_FACT_CHUNK_PASSES:
+        return (dict(payload),)
+    raw_rows = payload.get("current_evidence_fact_graph")
+    raw_projection = payload.get("current_evidence_fact_projection")
+    if (
+        not isinstance(raw_rows, Sequence)
+        or isinstance(raw_rows, (str, bytes))
+        or not isinstance(raw_projection, Mapping)
+    ):
+        return (dict(payload),)
+    rows = tuple(raw_rows)
+    if len(rows) < 2:
+        return (dict(payload),)
+    projection = dict(raw_projection)
+    fields = tuple(str(value) for value in projection.get("fact_fields") or ())
+    dictionaries = projection.get("fact_value_dictionaries")
+    if (
+        not fields
+        or fields[0] != "fact_row_index"
+        or not isinstance(dictionaries, Mapping)
+    ):
+        return (dict(payload),)
+    width = len(fields)
+    normalized_rows = []
+    row_indices = []
+    seen_indices: set[int] = set()
+    for raw in rows:
+        if (
+            not isinstance(raw, Sequence)
+            or isinstance(raw, (str, bytes))
+            or len(raw) != width
+            or isinstance(raw[0], bool)
+            or not isinstance(raw[0], int)
+            or raw[0] < 0
+        ):
+            raise ValueError("citable fact projection row is malformed")
+        row = tuple(raw)
+        row_index = int(row[0])
+        if row_index in seen_indices:
+            raise ValueError("citable fact projection row indices must be unique")
+        seen_indices.add(row_index)
+        row_indices.append(row_index)
+        normalized_rows.append(row)
+
+    target = max(10_000, int(target_projection_chars))
+    groups: list[list[tuple[Any, ...]]] = []
+    current: list[tuple[Any, ...]] = []
+    current_weight = 0
+    for row in normalized_rows:
+        weight = _citable_fact_row_transport_weight(
+            row,
+            fields=fields,
+            dictionaries=dictionaries,
+        )
+        if current and current_weight + weight > target:
+            groups.append(current)
+            current = []
+            current_weight = 0
+        current.append(row)
+        current_weight += weight
+    if current:
+        groups.append(current)
+    if len(groups) <= 1:
+        return (dict(payload),)
+
+    global_index_hash = _canonical_json_hash(row_indices)
+    chunks = []
+    for chunk_index, group in enumerate(groups):
+        projected_rows, projected = _remap_citable_fact_chunk(
+            group,
+            fields=fields,
+            dictionaries=dictionaries,
+            global_projection=projection,
+            global_fact_row_indices=row_indices,
+        )
+        allowed_indices = {int(row[0]) for row in projected_rows}
+        chunk_payload = {
+            key: value
+            for key, value in dict(payload).items()
+            if key not in _FACT_CHUNK_SYNTHESIS_ONLY_KEYS
+        }
+        chunk_payload["current_evidence_fact_graph"] = projected_rows
+        chunk_payload["current_evidence_fact_projection"] = projected
+        _filter_fact_row_context_for_chunk(chunk_payload, allowed_indices)
+        chunk_row_indices = sorted(allowed_indices)
+        chunk_payload["loss_accounted_fact_chunk"] = {
+            "schema_version": "e2r_v5_loss_accounted_fact_chunk_v1",
+            "pass_name": pass_name,
+            "chunk_index": chunk_index,
+            "chunk_count": len(groups),
+            "chunk_fact_count": len(group),
+            "chunk_fact_row_index_roster_hash": _canonical_json_hash(
+                chunk_row_indices
+            ),
+            "global_fact_count": len(normalized_rows),
+            "global_fact_row_index_roster_hash": global_index_hash,
+            "every_global_fact_assigned_to_exactly_one_chunk": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+            "instruction": (
+                "Review every supplied fact row in this chunk. The first value "
+                "is its immutable global fact_row_index. Treat research_complete "
+                "or review_complete as completion of this chunk only. Return the "
+                "normal pass schema and cite only rows in this chunk. Do not infer "
+                "global completeness, score, or Stage from one chunk."
+            ),
+        }
+        chunks.append(scrub_blind_research_payload(chunk_payload))
+
+    emitted = [
+        int(row[0])
+        for chunk in chunks
+        for row in chunk["current_evidence_fact_graph"]
+    ]
+    if emitted != row_indices or len(emitted) != len(set(emitted)):
+        raise ValueError("loss-accounted fact chunks changed the global row roster")
+    return tuple(chunks)
+
+
+def _citable_fact_row_transport_weight(
+    row: Sequence[Any],
+    *,
+    fields: Sequence[str],
+    dictionaries: Mapping[str, Any],
+) -> int:
+    """Conservatively charge repeated values so a chunk cannot grow silently."""
+
+    weight = len(json.dumps(row, ensure_ascii=False, separators=(",", ":")))
+    for position, field in enumerate(fields[1:], start=1):
+        if not field.endswith("_dictionary_index"):
+            raise ValueError("citable fact field is not dictionary encoded")
+        dictionary_name = field[: -len("_dictionary_index")]
+        values = dictionaries.get(dictionary_name)
+        index = row[position]
+        if (
+            not isinstance(values, Sequence)
+            or isinstance(values, (str, bytes))
+            or isinstance(index, bool)
+            or not isinstance(index, int)
+            or index < 0
+            or index >= len(values)
+        ):
+            raise ValueError("citable fact dictionary index is invalid")
+        weight += len(
+            json.dumps(
+                values[index],
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            )
+        )
+    return weight + 64
+
+
+def _remap_citable_fact_chunk(
+    rows: Sequence[Sequence[Any]],
+    *,
+    fields: Sequence[str],
+    dictionaries: Mapping[str, Any],
+    global_projection: Mapping[str, Any],
+    global_fact_row_indices: Sequence[int],
+) -> tuple[list[list[Any]], Mapping[str, Any]]:
+    local_dictionaries: dict[str, list[Any]] = {}
+    index_remaps: dict[str, Mapping[int, int]] = {}
+    for position, field in enumerate(fields[1:], start=1):
+        dictionary_name = field[: -len("_dictionary_index")]
+        global_values = dictionaries[dictionary_name]
+        used = sorted({int(row[position]) for row in rows})
+        local_dictionaries[dictionary_name] = [
+            global_values[index] for index in used
+        ]
+        index_remaps[dictionary_name] = {
+            global_index: local_index
+            for local_index, global_index in enumerate(used)
+        }
+    projected_rows = []
+    for row in rows:
+        projected_rows.append(
+            [
+                int(row[0]),
+                *(
+                    index_remaps[
+                        fields[position][: -len("_dictionary_index")]
+                    ][int(row[position])]
+                    for position in range(1, len(fields))
+                ),
+            ]
+        )
+    row_indices = [int(row[0]) for row in projected_rows]
+    projected = {
+        key: value
+        for key, value in dict(global_projection).items()
+        if key
+        not in {
+            "fact_value_dictionaries",
+            "fact_id_by_row_index",
+            "current_fact_id_roster",
+            "closed_fact_history",
+        }
+    }
+    projected.update(
+        {
+            "schema_version": (
+                "e2r_v5_current_decision_citable_fact_chunk_projection_v1"
+            ),
+            "input_fact_count": len(projected_rows),
+            "fact_count": len(projected_rows),
+            "closed_fact_count": 0,
+            "input_fact_roster_hash": _canonical_json_hash(row_indices),
+            "current_fact_roster_hash": _canonical_json_hash(row_indices),
+            "closed_fact_roster_hash": _canonical_json_hash([]),
+            "fact_value_dictionaries": local_dictionaries,
+            "every_input_fact_accounted": True,
+            "every_current_fact_individually_citable": True,
+            "global_fact_projection_accounting": (
+                _global_fact_projection_accounting(
+                    global_projection,
+                    global_fact_row_indices=global_fact_row_indices,
+                )
+            ),
+            "global_row_indices_preserved_in_chunk": True,
+            "full_fact_records_persisted_outside_prompt": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        }
+    )
+    return projected_rows, projected
+
+
+def _global_fact_projection_accounting(
+    projection: Mapping[str, Any],
+    *,
+    global_fact_row_indices: Sequence[int],
+) -> Mapping[str, Any]:
+    closed_history = projection.get("closed_fact_history")
+    return {
+        "schema_version": "e2r_v5_global_fact_projection_accounting_v1",
+        "input_fact_count": projection.get("input_fact_count"),
+        "current_fact_count": projection.get("fact_count"),
+        "closed_fact_count": projection.get("closed_fact_count"),
+        "input_fact_roster_hash": projection.get("input_fact_roster_hash"),
+        "current_fact_roster_hash": projection.get("current_fact_roster_hash"),
+        "closed_fact_roster_hash": projection.get("closed_fact_roster_hash"),
+        "global_fact_row_index_roster_hash": _canonical_json_hash(
+            list(global_fact_row_indices)
+        ),
+        "closed_fact_history_projection_hash": _canonical_json_hash(
+            closed_history
+        ),
+        "closed_history_persisted_outside_chunk_prompts": True,
+        "every_global_fact_partitioned_without_sampling": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def _filter_fact_row_context_for_chunk(
+    payload: dict[str, Any], allowed_indices: set[int]
+) -> None:
+    counters = payload.get("current_counterfacts")
+    if isinstance(counters, Sequence) and not isinstance(counters, (str, bytes)):
+        payload["current_counterfacts"] = [
+            row
+            for row in counters
+            if not isinstance(row, Mapping)
+            or not isinstance(row.get("fact_row_index"), int)
+            or int(row["fact_row_index"]) in allowed_indices
+        ]
+    prior = payload.get("prior_component_memo_context")
+    if isinstance(prior, Mapping):
+        projected = dict(prior)
+        rows = [
+            dict(row)
+            for row in projected.get("current_fact_rows") or ()
+            if isinstance(row, Mapping)
+            and isinstance(row.get("fact_row_index"), int)
+            and int(row["fact_row_index"]) in allowed_indices
+        ]
+        projected["current_fact_rows"] = rows
+        projected["current_fact_row_count"] = len(rows)
+        projected["chunk_scoped_current_fact_rows"] = True
+        payload["prior_component_memo_context"] = projected
+
+
+def _loss_accounted_fact_chunk_synthesis_payload(
+    payload: Mapping[str, Any],
+    *,
+    pass_name: str,
+    chunks: Sequence[Mapping[str, Any]],
+    chunk_responses: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    global_rows = tuple(payload.get("current_evidence_fact_graph") or ())
+    row_indices = [int(row[0]) for row in global_rows]
+    projection = dict(payload.get("current_evidence_fact_projection") or {})
+    synthesis_projection = {
+        "schema_version": "e2r_v5_fact_chunk_synthesis_projection_v1",
+        "fact_fields": list(projection.get("fact_fields") or ()),
+        "global_fact_projection_accounting": _global_fact_projection_accounting(
+            projection,
+            global_fact_row_indices=row_indices,
+        ),
+        "fact_semantics_transported_in_chunk_responses": True,
+        "full_fact_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+    result = dict(payload)
+    result["current_evidence_fact_graph"] = []
+    result["current_evidence_fact_projection"] = synthesis_projection
+    result["loss_accounted_fact_chunk_synthesis"] = {
+        "schema_version": "e2r_v5_loss_accounted_fact_chunk_synthesis_v1",
+        "pass_name": pass_name,
+        "chunk_count": len(chunks),
+        "global_fact_count": len(global_rows),
+        "global_fact_row_index_roster_hash": _canonical_json_hash(row_indices),
+        "chunk_partition_roster_hash": _canonical_json_hash(
+            [chunk["loss_accounted_fact_chunk"] for chunk in chunks]
+        ),
+        "chunk_responses": [dict(row) for row in chunk_responses],
+        "every_chunk_response_must_be_reviewed": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+        "instruction": (
+            "Synthesize every chunk response into exactly one normal pass "
+            "response. No chunk is a global conclusion. Cite only fact row "
+            "indices already cited or selected by at least one chunk response. "
+            "For COMPONENT_RESEARCH, copy selected fact groundings exactly from "
+            "the chunk responses, reconcile every prior fact disposition once, "
+            "and recalibrate one component range across all chunks. For "
+            "BUSINESS_MODEL_RESEARCH and RED_TEAM_RESEARCH, integrate all support, "
+            "counterevidence, dependencies, and uncertainties. Completion means "
+            "all chunk responses were reviewed; never output total score or Stage."
+        ),
+    }
+    return scrub_blind_research_payload(result)
+
+
+def _validate_loss_accounted_chunk_response(
+    *,
+    pass_name: str,
+    response: Mapping[str, Any],
+    allowed_fact_row_indices: set[int],
+    prior_fact_row_indices: set[int],
+) -> None:
+    cited = _response_fact_row_indices(pass_name, response)
+    if not cited.issubset(allowed_fact_row_indices):
+        raise StructuredProviderRejected(
+            "loss_accounted_fact_chunk_cited_outside_chunk"
+        )
+    if pass_name != "COMPONENT_RESEARCH":
+        return
+    grounding_indices = _mapping_fact_row_indices(
+        response.get("selected_fact_groundings") or ()
+    )
+    if grounding_indices != cited:
+        raise StructuredProviderRejected(
+            "loss_accounted_fact_chunk_grounding_roster_mismatch"
+        )
+    disposition_indices = _mapping_fact_row_indices(
+        response.get("prior_fact_dispositions") or ()
+    )
+    if disposition_indices != prior_fact_row_indices:
+        raise StructuredProviderRejected(
+            "loss_accounted_fact_chunk_prior_disposition_roster_mismatch"
+        )
+
+
+def _validate_loss_accounted_synthesis_response(
+    *,
+    pass_name: str,
+    response: Mapping[str, Any],
+    chunk_responses: Sequence[Mapping[str, Any]],
+) -> None:
+    allowed = set()
+    allowed_dispositions = set()
+    for row in chunk_responses:
+        partial = row.get("response") or {}
+        if isinstance(partial, Mapping):
+            allowed.update(_response_fact_row_indices(pass_name, partial))
+            if pass_name == "COMPONENT_RESEARCH":
+                allowed_dispositions.update(
+                    _mapping_fact_row_indices(
+                        partial.get("prior_fact_dispositions") or ()
+                    )
+                )
+    cited = _response_fact_row_indices(pass_name, response)
+    if not cited.issubset(allowed):
+        raise StructuredProviderRejected(
+            "loss_accounted_fact_synthesis_invented_fact_row"
+        )
+    if pass_name == "COMPONENT_RESEARCH":
+        grounding_indices = _mapping_fact_row_indices(
+            response.get("selected_fact_groundings") or ()
+        )
+        if grounding_indices != cited:
+            raise StructuredProviderRejected(
+                "loss_accounted_fact_synthesis_grounding_roster_mismatch"
+            )
+        dispositions = _mapping_fact_row_indices(
+            response.get("prior_fact_dispositions") or ()
+        )
+        if not dispositions.issubset(allowed_dispositions):
+            raise StructuredProviderRejected(
+                "loss_accounted_fact_synthesis_invented_prior_disposition"
+            )
+
+
+def _response_fact_row_indices(
+    pass_name: str, response: Mapping[str, Any]
+) -> set[int]:
+    field = {
+        "BUSINESS_MODEL_RESEARCH": "fact_row_indices",
+        "COMPONENT_RESEARCH": "selected_fact_row_indices",
+        "RED_TEAM_RESEARCH": "challenged_fact_row_indices",
+    }[pass_name]
+    values = response.get(field)
+    if not isinstance(values, Sequence) or isinstance(values, (str, bytes)):
+        raise StructuredProviderRejected(
+            f"loss_accounted_fact_response_missing_{field}"
+        )
+    output = set()
+    for value in values:
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise StructuredProviderRejected(
+                f"loss_accounted_fact_response_invalid_{field}"
+            )
+        if value in output:
+            raise StructuredProviderRejected(
+                f"loss_accounted_fact_response_duplicate_{field}"
+            )
+        output.add(value)
+    return output
+
+
+def _mapping_fact_row_indices(rows: Any) -> set[int]:
+    if not isinstance(rows, Sequence) or isinstance(rows, (str, bytes)):
+        raise StructuredProviderRejected(
+            "loss_accounted_fact_response_mapping_rows_invalid"
+        )
+    output = set()
+    for row in rows:
+        if (
+            not isinstance(row, Mapping)
+            or isinstance(row.get("fact_row_index"), bool)
+            or not isinstance(row.get("fact_row_index"), int)
+            or int(row["fact_row_index"]) < 0
+        ):
+            raise StructuredProviderRejected(
+                "loss_accounted_fact_response_mapping_row_invalid"
+            )
+        row_index = int(row["fact_row_index"])
+        if row_index in output:
+            raise StructuredProviderRejected(
+                "loss_accounted_fact_response_mapping_row_duplicate"
+            )
+        output.add(row_index)
+    return output
 
 
 def _provider_error_detail(error: Exception) -> str:
@@ -1570,6 +2206,10 @@ class ComponentResearcher:
         )
         fact_projection = project_current_decision_citable_facts(citable_facts)
         fact_id_by_row_index = citable_fact_id_by_row_index(fact_projection)
+        fact_row_index_by_id = {
+            fact_id: row_index
+            for row_index, fact_id in fact_id_by_row_index.items()
+        }
         prior_memo_context = _project_prior_component_memo_context(
             prior_memo=prior_memo,
             plan=plan,
@@ -1655,7 +2295,7 @@ class ComponentResearcher:
                 },
                 "current_counterfacts": [
                     {
-                        "fact_id": row.fact_id,
+                        "fact_row_index": fact_row_index_by_id[row.fact_id],
                         "current_lifecycle": row.current_lifecycle,
                     }
                     for row in citable_facts
