@@ -468,6 +468,20 @@ class ResearcherEvidenceFactExtractor:
                             str(row["document_id"]) for row in batch
                         }
                     },
+                    previously_accepted_exact_quotes={
+                        document_id: tuple(
+                            dict.fromkeys(
+                                str(claim.get("exact_quote") or "")
+                                for claim in previously_accepted_claims.values()
+                                if str(claim.get("document_id") or "")
+                                == document_id
+                                and str(claim.get("exact_quote") or "")
+                            )
+                        )
+                        for document_id in {
+                            str(row["document_id"]) for row in batch
+                        }
+                    },
                 )
                 if batch_pending and validation_retry_count < 2:
                     for claim in batch_claims:
@@ -1132,6 +1146,9 @@ def _validate_response(
     prompt_hash: str,
     response_hash: str,
     previously_accepted_claim_counts: Mapping[str, int] | None = None,
+    previously_accepted_exact_quotes: (
+        Mapping[str, Sequence[str]] | None
+    ) = None,
 ) -> tuple[
     list[Mapping[str, Any]],
     list[FactExtractionRejection],
@@ -1161,6 +1178,15 @@ def _validate_response(
         ).items()
         if str(document_id) in document_by_id and int(count) > 0
     }
+    accepted_quotes_by_document = {
+        str(document_id): frozenset(
+            str(value) for value in values if str(value)
+        )
+        for document_id, values in (
+            previously_accepted_exact_quotes or {}
+        ).items()
+        if str(document_id) in document_by_id
+    }
     for index, proposal in enumerate(raw_facts):
         document_id = (
             str(proposal.get("document_id") or "")
@@ -1168,6 +1194,28 @@ def _validate_response(
             else ""
         )
         material = bool(proposal.get("material")) if isinstance(proposal, Mapping) else False
+        proposed_exact_quote = (
+            str(proposal.get("exact_quote") or "").strip()
+            if isinstance(proposal, Mapping)
+            else ""
+        )
+        if (
+            material
+            and proposed_exact_quote
+            and proposed_exact_quote
+            in accepted_quotes_by_document.get(document_id, frozenset())
+        ):
+            rejections.append(
+                FactExtractionRejection(
+                    batch_id=batch_id,
+                    proposal_index=index,
+                    document_id=document_id,
+                    reason="PREVIOUSLY_ACCEPTED_EXACT_QUOTE_REPEATED",
+                    material_proposal=False,
+                    proposed_exact_quote=proposed_exact_quote,
+                )
+            )
+            continue
         reason = _proposal_rejection_reason(
             proposal,
             document_by_id=document_by_id,
