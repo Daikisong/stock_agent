@@ -370,6 +370,9 @@ class ResearcherEvidenceFactExtractor:
             validation_retry_used = False
             validation_retry_count = 0
             previously_accepted_claims: dict[str, Mapping[str, Any]] = {}
+            previously_rejected_material_quote_failures: dict[
+                tuple[str, str], FactExtractionRejection
+            ] = {}
             while True:
                 max_attempt_payload_chars = max(
                     max_attempt_payload_chars,
@@ -482,6 +485,18 @@ class ResearcherEvidenceFactExtractor:
                             str(row["document_id"]) for row in batch
                         }
                     },
+                    previously_rejected_material_quote_failure_counts={
+                        document_id: sum(
+                            1
+                            for rejection in (
+                                previously_rejected_material_quote_failures.values()
+                            )
+                            if rejection.document_id == document_id
+                        )
+                        for document_id in {
+                            str(row["document_id"]) for row in batch
+                        }
+                    },
                 )
                 if batch_pending and validation_retry_count < 2:
                     for claim in batch_claims:
@@ -499,6 +514,42 @@ class ResearcherEvidenceFactExtractor:
                         if row.material_proposal
                         and not row.reason.startswith("MECHANISM_SCOPE_REJECTED")
                     ]
+                    for rejection in batch_rejections:
+                        if (
+                            rejection.material_proposal
+                            and rejection.reason
+                            == "EXACT_QUOTE_NOT_IN_FULL_DOCUMENT"
+                            and rejection.proposed_exact_quote
+                        ):
+                            previously_rejected_material_quote_failures[
+                                (
+                                    rejection.document_id,
+                                    rejection.proposed_exact_quote,
+                                )
+                            ] = rejection
+                    retry_rejected_proposals = {
+                        (
+                            str(row["document_id"]),
+                            str(row["proposed_exact_quote"] or ""),
+                            str(row["reason"]),
+                        ): row
+                        for row in (
+                            *rejected_material_proposals,
+                            *(
+                                {
+                                    "proposal_index": row.proposal_index,
+                                    "document_id": row.document_id,
+                                    "reason": row.reason,
+                                    "proposed_exact_quote": (
+                                        row.proposed_exact_quote
+                                    ),
+                                }
+                                for row in (
+                                    previously_rejected_material_quote_failures.values()
+                                )
+                            ),
+                        )
+                    }
                     attempt_payload = scrub_blind_research_payload(
                         {
                             **payload,
@@ -506,7 +557,21 @@ class ResearcherEvidenceFactExtractor:
                                 "rewrite_attempt": validation_retry_count,
                                 "maximum_rewrite_attempts": 2,
                                 "validation_errors": list(batch_pending),
-                                "rejected_proposals": rejected_material_proposals,
+                                "rejected_proposals": list(
+                                    retry_rejected_proposals.values()
+                                ),
+                                "prior_material_quote_failures": [
+                                    {
+                                        "document_id": row.document_id,
+                                        "reason": row.reason,
+                                        "proposed_exact_quote": (
+                                            row.proposed_exact_quote
+                                        ),
+                                    }
+                                    for row in (
+                                        previously_rejected_material_quote_failures.values()
+                                    )
+                                ],
                                 "must_not_repeat_rejected_proposals": True,
                                 "previously_accepted_facts": [
                                     {
@@ -561,7 +626,12 @@ class ResearcherEvidenceFactExtractor:
                                     "exact_quote must be copied as one literal "
                                     "contiguous substring from that document's "
                                     "content_text. Delete any unsupported proposal; "
-                                    "do not paraphrase or repair quotes in code."
+                                    "do not paraphrase or repair quotes in code. If the "
+                                    "document contains semantically material content but "
+                                    "parser fragmentation or noise prevents a literal "
+                                    "quote, use UNREADABLE rather than NO_MATERIAL_FACT. "
+                                    "A prior material quote failure cannot be closed as "
+                                    "NO_MATERIAL_FACT merely because quote copying failed."
                                     " extraction_complete is local to this supplied batch, "
                                     "not to the broader thesis or future research. Set it "
                                     "to true when every required_document_id has exactly "
@@ -584,6 +654,10 @@ class ResearcherEvidenceFactExtractor:
                 }
                 claims.extend(combined_batch_claims.values())
                 rejections.extend(batch_rejections)
+                if batch_pending:
+                    rejections.extend(
+                        previously_rejected_material_quote_failures.values()
+                    )
                 dispositions.extend(batch_dispositions)
                 pending.extend(batch_pending)
                 if batch_pending:
@@ -627,6 +701,17 @@ class ResearcherEvidenceFactExtractor:
             pending_transport_chunk_ids=pending_transport_chunk_ids,
             target_id=target_id,
             as_of_date=as_of_date,
+        )
+        rejections = list(
+            {
+                (
+                    row.batch_id,
+                    row.document_id,
+                    row.reason,
+                    row.proposed_exact_quote,
+                ): row
+                for row in rejections
+            }.values()
         )
         compilation = EvidenceFactCompiler().compile(
             target_id=target_id,
@@ -1149,6 +1234,9 @@ def _validate_response(
     previously_accepted_exact_quotes: (
         Mapping[str, Sequence[str]] | None
     ) = None,
+    previously_rejected_material_quote_failure_counts: (
+        Mapping[str, int] | None
+    ) = None,
 ) -> tuple[
     list[Mapping[str, Any]],
     list[FactExtractionRejection],
@@ -1298,6 +1386,21 @@ def _validate_response(
             pending.append(f"FACTS_EXTRACTED_WITHOUT_ACCEPTED_FACT:{document_id}")
         if status != "FACTS_EXTRACTED" and accepted_by_document.get(document_id):
             pending.append(f"ACCEPTED_FACT_DISPOSITION_MISMATCH:{document_id}")
+        if (
+            status == "NO_MATERIAL_FACT"
+            and int(
+                (previously_rejected_material_quote_failure_counts or {}).get(
+                    document_id,
+                    0,
+                )
+            )
+            > 0
+            and not accepted_by_document.get(document_id)
+        ):
+            pending.append(
+                "NO_MATERIAL_FACT_CANNOT_CLOSE_PRIOR_MATERIAL_"
+                f"QUOTE_FAILURE:{document_id}"
+            )
         if status == "UNREADABLE":
             pending.append(f"UNREADABLE_FULL_DOCUMENT:{document_id}")
         dispositions.append(

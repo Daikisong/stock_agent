@@ -187,6 +187,25 @@ class RepeatsAcceptedFactOnRetryProvider(FactProvider):
         return response
 
 
+class QuoteFailureThenNoMaterialProvider(FactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        self.bad_quote = "fact_extraction_retry_context" not in payload
+        response = dict(super().complete(pass_name=pass_name, payload=payload))
+        if "fact_extraction_retry_context" in payload:
+            response["facts"] = []
+            response["document_dispositions"] = [
+                {
+                    "document_id": row["document_id"],
+                    "status": "NO_MATERIAL_FACT",
+                    "rationale": (
+                        "인용 실패를 이유로 material 문서를 무관 자료로 닫는다."
+                    ),
+                }
+                for row in payload["full_documents"]
+            ]
+        return response
+
+
 class StructurallyCompleteFalseProvider(FactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(super().complete(pass_name=pass_name, payload=payload))
@@ -734,6 +753,41 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             "fact_extraction_retry_context"
         ]
         self.assertEqual(len(retry["previously_accepted_facts"]), 1)
+
+    def test_quote_failure_cannot_be_relabelled_no_material_on_retry(self) -> None:
+        provider = QuoteFailureThenNoMaterialProvider()
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(_document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(len(provider.calls), 3)
+        self.assertIn(
+            "NO_MATERIAL_FACT_CANNOT_CLOSE_PRIOR_MATERIAL_"
+            "QUOTE_FAILURE:DOC-1",
+            result.pending_reasons,
+        )
+        self.assertEqual(result.material_claims, ())
+        self.assertEqual(result.facts, ())
+        self.assertEqual(
+            [row.reason for row in result.rejections],
+            ["EXACT_QUOTE_NOT_IN_FULL_DOCUMENT"],
+        )
+        final_retry = provider.calls[-1]["payload"][
+            "fact_extraction_retry_context"
+        ]
+        self.assertEqual(len(final_retry["prior_material_quote_failures"]), 1)
+        self.assertIn("use UNREADABLE", final_retry["instruction"])
+        self.assertIn(
+            "cannot be closed as NO_MATERIAL_FACT",
+            final_retry["instruction"],
+        )
 
     def test_incomplete_flag_retry_distinguishes_batch_from_broader_research(self) -> None:
         provider = CorrectingCompletionFactProvider()
