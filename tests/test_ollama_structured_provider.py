@@ -417,11 +417,11 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self.assertEqual(provider.transport.model, "model-b")
         self.assertEqual(provider.transport.context_length, 65_536)
         self.assertEqual(provider.fact_document_chunk_chars, 90_000)
-        self.assertEqual(provider.semantic_prompt_chunk_chars, 16_384)
+        self.assertEqual(provider.semantic_prompt_chunk_chars, 10_000)
         runner = CurrentResearcherModeTargetRunner(provider=provider)
         self.assertEqual(
             runner.fact_extractor.max_document_chars_per_call,
-            16_384,
+            10_000,
         )
         provider.transport.model_digest = "b" * 64
         provider.transport.server_version = "0.32.1"
@@ -436,7 +436,7 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             manifest["provider_identity"][
                 "effective_semantic_prompt_chunk_chars"
             ],
-            16_384,
+            10_000,
         )
 
     def test_fact_chunk_size_reserves_room_for_expansion_heavy_json(self) -> None:
@@ -446,17 +446,17 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             fact_document_chunk_chars=100_000,
         )
 
-        self.assertEqual(provider.semantic_prompt_chunk_chars, 24_576)
+        self.assertEqual(provider.semantic_prompt_chunk_chars, 10_000)
         runner = CurrentResearcherModeTargetRunner(provider=provider)
         self.assertEqual(
             runner.fact_extractor.max_document_chars_per_call,
-            24_576,
+            10_000,
         )
         self.assertEqual(
             provider._provider_identity()[
                 "effective_semantic_prompt_chunk_chars"
             ],
-            24_576,
+            10_000,
         )
 
     def test_incomplete_or_unaccounted_response_is_rejected(self) -> None:

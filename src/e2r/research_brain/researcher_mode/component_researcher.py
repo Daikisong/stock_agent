@@ -1479,7 +1479,7 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                     )
                 )
                 * 3
-                // 4,
+                // 10,
             ),
         )
 
