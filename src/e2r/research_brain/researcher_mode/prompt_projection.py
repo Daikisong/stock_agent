@@ -1448,30 +1448,75 @@ def project_current_decision_citable_facts(
 def project_candidate_ranking_evidence_context(
     rows: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
-    """Account for the full fact graph without replaying closed narratives.
+    """Account for every fact without replaying a second citable fact plane.
 
-    Candidate ranking decides which discovery metadata deserves a full fetch;
-    it never cites an EvidenceFact or assigns points.  Current/open facts keep
-    their complete economic fields in the lossless dictionary table, while
-    resolved/superseded history remains fully counted and hashed.  The private
-    row-to-fact-id roster used by component researchers is deliberately absent.
+    Candidate ranking chooses which *discovery metadata* deserves a full fetch.
+    It cannot cite facts or assign points, and receives the complete open
+    research objectives separately.  Replaying thousands of exact narratives,
+    predicates, and values here duplicates the later business/component passes
+    and can crowd the candidates themselves out of the context window.
+
+    Current/open and closed facts are therefore partitioned by lifecycle and
+    passed through the same exhaustive state/count/hash projection used as the
+    prior-fact context during full-document extraction.  Every economic
+    observation and lineage roster remains hash-accounted; no top-N fact is
+    selected.  Exact current narratives remain on disk and are reviewed through
+    the citable fact chunks in the memo passes.
     """
 
-    projection = dict(project_current_decision_citable_facts(rows))
-    projection.pop("fact_id_by_row_index", None)
-    projection.pop("every_current_fact_individually_citable", None)
-    projection.update(
-        {
-            "schema_version": "e2r_v5_candidate_ranking_fact_projection_v1",
-            "every_current_fact_individually_accounted": (
-                len(projection.get("facts") or ())
-                == int(projection.get("fact_count") or 0)
+    payloads = tuple(
+        sorted(
+            (_record_dict(row) for row in rows),
+            key=lambda row: (
+                str(row.get("fact_id") or ""),
+                _stable_hash(row),
             ),
-            "fact_ids_exposed_to_candidate_ranker": False,
-            "candidate_ranking_evidence_or_score_authority": False,
-        }
+        )
     )
-    return projection
+    current_rows = tuple(
+        row
+        for row in payloads
+        if str(row.get("current_lifecycle") or "")
+        not in {"RESOLVED", "SUPERSEDED"}
+    )
+    closed_rows = tuple(
+        row
+        for row in payloads
+        if str(row.get("current_lifecycle") or "")
+        in {"RESOLVED", "SUPERSEDED"}
+    )
+    current_profile = project_fact_extraction_evidence_context(current_rows)
+    closed_profile = project_fact_extraction_evidence_context(closed_rows)
+    return {
+        "schema_version": "e2r_v5_candidate_ranking_fact_projection_v2",
+        "input_fact_count": len(payloads),
+        "fact_count": len(current_rows),
+        "closed_fact_count": len(closed_rows),
+        "input_fact_roster_hash": _stable_hash(payloads),
+        "current_fact_roster_hash": _stable_hash(current_rows),
+        "closed_fact_roster_hash": _stable_hash(closed_rows),
+        "current_fact_profile": current_profile,
+        "closed_fact_profile": closed_profile,
+        "every_input_fact_accounted": (
+            len(current_rows) + len(closed_rows) == len(payloads)
+        ),
+        "every_current_fact_individually_accounted": bool(
+            current_profile["every_fact_accounted_by_hash_and_group_count"]
+            and int(current_profile["fact_count"]) == len(current_rows)
+        ),
+        "every_closed_fact_accounted": bool(
+            closed_profile["every_fact_accounted_by_hash_and_group_count"]
+            and int(closed_profile["fact_count"]) == len(closed_rows)
+        ),
+        "fact_ids_exposed_to_candidate_ranker": False,
+        "exact_fact_semantics_reviewed_in_later_citable_fact_chunks": True,
+        "open_research_objectives_are_candidate_ranking_semantic_authority": True,
+        "full_fact_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "candidate_ranking_evidence_or_score_authority": False,
+        "score_authority": False,
+    }
 
 
 def citable_fact_id_by_row_index(
