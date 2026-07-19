@@ -619,6 +619,52 @@ class ResearcherEvidenceFactExtractor:
                         previously_accepted_claims[str(claim["claim_id"])] = claim
                     validation_retry_count += 1
                     validation_retry_used = True
+                    response_fact_rows = tuple(response.get("facts") or ())
+                    scope_rejected_proposals = []
+                    for rejection in batch_rejections:
+                        if not (
+                            rejection.material_proposal
+                            and rejection.reason.startswith(
+                                "MECHANISM_SCOPE_REJECTED"
+                            )
+                        ):
+                            continue
+                        raw_proposal = (
+                            response_fact_rows[rejection.proposal_index]
+                            if 0 <= rejection.proposal_index < len(response_fact_rows)
+                            else {}
+                        )
+                        proposal = (
+                            raw_proposal
+                            if isinstance(raw_proposal, Mapping)
+                            else {}
+                        )
+                        scope_rejected_proposals.append(
+                            {
+                                "proposal_index": rejection.proposal_index,
+                                "document_id": rejection.document_id,
+                                "reason": rejection.reason,
+                                "exact_quote": rejection.proposed_exact_quote,
+                                "scope_business_segment": proposal.get(
+                                    "scope_business_segment"
+                                ),
+                                "scope_product_family": proposal.get(
+                                    "scope_product_family"
+                                ),
+                                "scope_technology_family": proposal.get(
+                                    "scope_technology_family"
+                                ),
+                                "scope_transaction_type": proposal.get(
+                                    "scope_transaction_type"
+                                ),
+                                "scope_economic_mechanism": proposal.get(
+                                    "scope_economic_mechanism"
+                                ),
+                                "normalized_object": proposal.get(
+                                    "normalized_object"
+                                ),
+                            }
+                        )
                     rejected_material_proposals = [
                         {
                             "proposal_index": row.proposal_index,
@@ -676,6 +722,10 @@ class ResearcherEvidenceFactExtractor:
                                 "rejected_proposals": list(
                                     retry_rejected_proposals.values()
                                 ),
+                                "scope_rejected_proposals": (
+                                    scope_rejected_proposals
+                                ),
+                                "must_not_repeat_invalid_scope_encoding": True,
                                 "prior_material_quote_failures": [
                                     {
                                         "document_id": row.document_id,
@@ -748,6 +798,18 @@ class ResearcherEvidenceFactExtractor:
                                     "quote, use UNREADABLE rather than NO_MATERIAL_FACT. "
                                     "A prior material quote failure cannot be closed as "
                                     "NO_MATERIAL_FACT merely because quote copying failed."
+                                    " For every scope_rejected_proposal, distinguish a "
+                                    "target-direct fact encoded with noncanonical scope "
+                                    "tokens from a genuinely wrong target or segment. For "
+                                    "a target-direct fact, preserve a literal exact quote "
+                                    "and rewrite every scope_* field using exactly one token "
+                                    "from its corresponding allowed_* list in "
+                                    "deterministic_mechanism_scope_contract; keep narrower "
+                                    "product, process, generation, or business-unit wording "
+                                    "in the descriptive fields. For a genuinely wrong-target "
+                                    "or wrong-segment proposal, omit it and return the accurate "
+                                    "terminal disposition. Never relabel a wrong-scope fact "
+                                    "merely to force it through the contract."
                                     " extraction_complete is local to this supplied batch, "
                                     "not to the broader thesis or future research. Set it "
                                     "to true when every required_document_id has exactly "

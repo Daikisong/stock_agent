@@ -256,6 +256,23 @@ class WrongFinalDispositionThenCorrectProvider(
         return response
 
 
+class NonCanonicalScopeThenCorrectProvider(FactProvider):
+    def __init__(self) -> None:
+        super().__init__()
+        self.invalidations: list[str] = []
+
+    def invalidate_last_response_cache(self, reason: str) -> None:
+        self.invalidations.append(reason)
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(super().complete(pass_name=pass_name, payload=payload))
+        if not payload.get("fact_extraction_retry_context"):
+            response["facts"] = [dict(row) for row in response["facts"]]
+            response["facts"][0]["scope_business_segment"] = "DS 부문 메모리"
+            response["facts"][0]["scope_product_family"] = "HBM3E"
+        return response
+
+
 class CorrectingCompletionFactProvider(FactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(super().complete(pass_name=pass_name, payload=payload))
@@ -1008,6 +1025,43 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             provider.invalidations[0],
         )
         self.assertEqual(len(provider.calls), 3)
+
+    def test_noncanonical_scope_tokens_are_returned_to_llm_for_rewrite(self) -> None:
+        provider = NonCanonicalScopeThenCorrectProvider()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(_document("DOC-SCOPE-REWRITE", "ISSUER_PRESENTATION", "ISSUER"),),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(result.material_claims), 1)
+        self.assertEqual(
+            result.material_claims[0]["scope_business_segment"],
+            "MEMORY",
+        )
+        self.assertEqual(result.material_claims[0]["scope_product_family"], "HBM")
+        self.assertEqual(len(provider.calls), 2)
+        retry_context = provider.calls[1]["payload"][
+            "fact_extraction_retry_context"
+        ]
+        self.assertTrue(
+            retry_context["must_not_repeat_invalid_scope_encoding"]
+        )
+        self.assertEqual(len(retry_context["scope_rejected_proposals"]), 1)
+        rejected_scope = retry_context["scope_rejected_proposals"][0]
+        self.assertIn("MECHANISM_SCOPE_REJECTED", rejected_scope["reason"])
+        self.assertEqual(
+            rejected_scope["scope_business_segment"],
+            "DS 부문 메모리",
+        )
+        self.assertEqual(rejected_scope["scope_product_family"], "HBM3E")
+        self.assertEqual(len(provider.invalidations), 1)
 
     def test_valid_fact_is_preserved_while_invalid_sibling_is_rewritten(self) -> None:
         provider = MixedValidInvalidThenDispositionProvider()
