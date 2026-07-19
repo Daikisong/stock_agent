@@ -609,6 +609,11 @@ class ResearcherEvidenceFactExtractor:
                         }
                     )
                     continue
+                if batch_pending:
+                    _invalidate_semantically_invalid_provider_response(
+                        self.provider,
+                        reasons=batch_pending,
+                    )
                 if batch_pending and validation_retry_count < 2:
                     for claim in batch_claims:
                         previously_accepted_claims[str(claim["claim_id"])] = claim
@@ -1603,6 +1608,23 @@ def _literal_quote_whitespace_identity(value: Any) -> str:
     """Identify the same literal quote despite transport/OCR spacing only."""
 
     return "".join(str(value).split()).casefold()
+
+
+def _invalidate_semantically_invalid_provider_response(
+    provider: StructuredResearchProvider,
+    *,
+    reasons: Sequence[str],
+) -> None:
+    invalidate = getattr(provider, "invalidate_last_response_cache", None)
+    if not callable(invalidate):
+        return
+    try:
+        invalidate(
+            "FACT_EXTRACTION_SEMANTIC_VALIDATION:"
+            + " | ".join(str(reason) for reason in reasons)
+        )
+    except (OSError, TypeError, ValueError, RuntimeError):
+        return
 
 
 def _proposal_rejection_reason(

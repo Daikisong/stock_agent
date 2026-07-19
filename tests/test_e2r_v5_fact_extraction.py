@@ -218,6 +218,44 @@ class WhitespaceVariantPagedFactProvider(PagedFactProvider):
         return response
 
 
+class WrongFinalDispositionThenCorrectProvider(
+    BoundaryCompletePagedFactProvider
+):
+    def __init__(self) -> None:
+        super().__init__()
+        self.invalidations: list[str] = []
+
+    def invalidate_last_response_cache(self, reason: str) -> None:
+        self.invalidations.append(reason)
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        document_id = payload["full_documents"][0]["document_id"]
+        if payload.get("fact_extraction_continuation_context"):
+            response["facts"] = []
+            response["document_dispositions"] = [
+                {
+                    "document_id": document_id,
+                    "status": "NO_MATERIAL_FACT",
+                    "rationale": "이전 사실을 잊은 잘못된 최종 처분이다.",
+                }
+            ]
+        elif payload.get("fact_extraction_retry_context"):
+            response["facts"] = []
+            response["document_dispositions"] = [
+                {
+                    "document_id": document_id,
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": "이전에 검증된 사실을 보존한 올바른 처분이다.",
+                }
+            ]
+            response["unresolved_document_ids"] = []
+            response["extraction_complete"] = True
+        return response
+
+
 class CorrectingCompletionFactProvider(FactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(super().complete(pass_name=pass_name, payload=payload))
@@ -934,6 +972,42 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             "PREVIOUSLY_ACCEPTED_EXACT_QUOTE_REPEATED",
             {row.reason for row in result.rejections},
         )
+
+    def test_invalid_final_disposition_is_evicted_before_retry(self) -> None:
+        provider = WrongFinalDispositionThenCorrectProvider()
+        document = dict(
+            _document("DOC-PAGED-EVICT", "ISSUER_PRESENTATION", "ISSUER")
+        )
+        text = "\n".join(
+            f"Current Corp material fact number {index}."
+            for index in range(FACT_EXTRACTION_PAGE_FACT_LIMIT)
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(
+            len(result.material_claims),
+            FACT_EXTRACTION_PAGE_FACT_LIMIT,
+        )
+        self.assertEqual(len(provider.invalidations), 1)
+        self.assertIn(
+            "ACCEPTED_FACT_DISPOSITION_MISMATCH",
+            provider.invalidations[0],
+        )
+        self.assertEqual(len(provider.calls), 3)
 
     def test_valid_fact_is_preserved_while_invalid_sibling_is_rewritten(self) -> None:
         provider = MixedValidInvalidThenDispositionProvider()
