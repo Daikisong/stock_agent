@@ -183,6 +183,38 @@ class InvalidThenCorrectRankingProvider(SourceBrainProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class IncompleteThenCorrectRankingProvider(SourceBrainProvider):
+    def __init__(self) -> None:
+        super().__init__()
+        self.ranking_call_count = 0
+        self.invalidations: list[str] = []
+
+    def invalidate_last_response_cache(self, reason: str) -> None:
+        self.invalidations.append(reason)
+
+    def complete(self, *, pass_name, payload):
+        if pass_name == "SOURCE_CANDIDATE_RANKING":
+            self.ranking_call_count += 1
+            if self.ranking_call_count == 1:
+                self.calls.append({"pass_name": pass_name, "payload": payload})
+                rows = list(payload["discovery_candidates"])
+                return {
+                    "decisions": [
+                        {
+                            "candidate_id": row["candidate_id"],
+                            "material_relevance": True,
+                            "priority": 1.0,
+                            "objective_ids": list(row["objective_ids"]),
+                            "rationale": "모든 후보를 분류했지만 완료 표시는 잘못 남겼다.",
+                        }
+                        for row in rows
+                    ],
+                    "ranking_complete": False,
+                    "unresolved_notes": ["후보가 증거로 충분하지 않을 수 있다."],
+                }
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
 class SplitRecoveryRankingProvider(SourceBrainProvider):
     def __init__(self) -> None:
         super().__init__()
@@ -458,6 +490,40 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertNotIn(
             "UNKNOWN-CANDIDATE",
             {row["candidate_id"] for row in run.checkpoint["candidate_materiality_decisions"]},
+        )
+
+    def test_complete_candidate_roster_with_false_completion_is_reprompted(
+        self,
+    ) -> None:
+        provider = IncompleteThenCorrectRankingProvider()
+        url = "https://example.com/incomplete-ranking"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {QUERY: (_result("Current Corp material", url),)}
+            ),
+            fetcher=PageFetcher(
+                fixture_text_by_url={url: _document_text("ranking-retry")}
+            ),
+        )
+        self.assertEqual(provider.ranking_call_count, 2)
+        self.assertEqual(len(provider.invalidations), 1)
+        self.assertIn("declared incomplete", provider.invalidations[0])
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        retry = ranking_payloads[-1]["ranking_retry_context"]
+        self.assertIn("declared incomplete", retry["validation_error"])
+        self.assertIn(
+            "every discovery candidate was classified",
+            retry["instruction"],
+        )
+        self.assertEqual(len(run.evidence_documents), 1)
+        self.assertEqual(
+            len(run.checkpoint["candidate_materiality_decisions"]),
+            1,
         )
 
     def test_repeated_large_roster_omission_splits_and_recombines_every_candidate(
@@ -1928,8 +1994,16 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertTrue(projection["every_input_fact_accounted"])
         self.assertTrue(projection["every_current_fact_individually_accounted"])
         self.assertFalse(projection["fact_ids_exposed_to_candidate_ranker"])
+        self.assertEqual(
+            projection["current_fact_profile"]["fact_count"],
+            1_000,
+        )
+        self.assertEqual(
+            projection["closed_fact_profile"]["fact_count"],
+            2_000,
+        )
         self.assertNotIn("FACT-0000", encoded)
-        self.assertLess(len(encoded), 500_000)
+        self.assertLess(len(encoded), 100_000)
 
     def test_http_last_modified_verifies_missing_search_result_date(self) -> None:
         provider = SourceBrainProvider()

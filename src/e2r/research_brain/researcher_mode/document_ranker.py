@@ -238,6 +238,12 @@ class ResearcherDocumentRanker:
                     candidate_by_id=candidate_by_id,
                     objective_ids=objective_ids,
                 )
+                if not ranking_complete:
+                    raise ValueError(
+                        "candidate ranking declared incomplete after candidate "
+                        "accounting"
+                        + (":" + " | ".join(notes) if notes else "")
+                    )
             except (KeyError, TypeError, ValueError) as exc:
                 _invalidate_provider_response_cache(self.provider, exc)
                 if attempt_index == 0:
@@ -253,7 +259,14 @@ class ResearcherDocumentRanker:
                                 "required_objective_ids": sorted(objective_ids),
                                 "instruction": (
                                     "Rewrite the complete decisions array using "
-                                    "each required candidate_id exactly once."
+                                    "each required candidate_id exactly once. "
+                                    "ranking_complete means every discovery "
+                                    "candidate was classified, not that every "
+                                    "candidate supplies sufficient evidence. Mark "
+                                    "irrelevant, future, or nonresolving candidates "
+                                    "material_relevance=false with a rationale, then "
+                                    "set ranking_complete=true after the full roster "
+                                    "is accounted."
                                 ),
                             },
                         }
