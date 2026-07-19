@@ -990,6 +990,7 @@ class CurrentStructuredSourceMaterializer:
         attempts: list[CurrentStructuredFetchAttempt],
         manifests: list[Mapping[str, Any]],
         shared_cache_roots: Sequence[Path] = (),
+        _structured_verification_retry_used: bool = False,
     ):
         provider_name = (
             str(
@@ -1013,6 +1014,9 @@ class CurrentStructuredSourceMaterializer:
             "provider_cache_hit": False,
             "provider_attempt_count": 0,
             "validation_retry_used": False,
+            "structured_verification_retry_used": (
+                _structured_verification_retry_used
+            ),
             "proposal_count": 0,
             "verified_peer_count": 0,
             "peer_observation_count": 0,
@@ -1316,6 +1320,98 @@ class CurrentStructuredSourceMaterializer:
             }
         )
         if not resolved:
+            if not _structured_verification_retry_used:
+                retry_payload = {
+                    **payload,
+                    "peer_selection_retry_context": {
+                        "validation_error": (
+                            "Structured source verification rejected the "
+                            "proposed peers or found no multiple shared by at "
+                            "least two verified peers."
+                        ),
+                        "proposal_failures": list(proposal_failures),
+                        "verified_peers": list(selected_rows),
+                        "common_metric_peer_counts": dict(common_counts),
+                        "rejected_proposals": [dict(row) for row in proposals],
+                        "instruction": (
+                            "Select a different complete set of two to five "
+                            "real Korean listed peers. Keep each six-digit "
+                            "symbol paired with its exact legal company name. "
+                            "Do not relabel a company, invent a listing vehicle, "
+                            "or supply valuation values; CompanyGuide will "
+                            "verify identity, date, and multiples again."
+                        ),
+                    },
+                }
+                try:
+                    base_audit["provider_attempt_count"] += 1
+                    retry_response = self.peer_provider.complete(
+                        pass_name="STRUCTURED_PEER_SELECTION",
+                        payload=retry_payload,
+                    )
+                    assert_blind_research_output(retry_response)
+                    _validated_peer_proposals(
+                        retry_response,
+                        target_id=target_id,
+                    )
+                    retry_prompt_hash = _latest_provider_prompt_hash(
+                        self.peer_provider,
+                        "STRUCTURED_PEER_SELECTION",
+                    )
+                    write_json(
+                        selection_cache_path,
+                        {
+                            "schema_version": "e2r_v5_peer_selection_cache_v1",
+                            "target_id": target_id,
+                            "as_of_date": cutoff.isoformat(),
+                            "selection_input_hash": selection_input_hash,
+                            "provider_name": provider_name,
+                            "provider_prompt_hash": retry_prompt_hash,
+                            "provider_response_hash": stable_hash(retry_response),
+                            "response": dict(retry_response),
+                            "production_score_authority": False,
+                        },
+                    )
+                except Exception as exc:
+                    base_audit["validation_retry_used"] = True
+                    base_audit["structured_verification_retry_used"] = True
+                    base_audit["pending_reason"] = (
+                        "PEER_SELECTION_VERIFICATION_RETRY_ERROR:"
+                        + " ".join(str(exc).split())[-500:]
+                    )
+                    return (
+                        UnavailableStructuredSourceRoute(
+                            "PEER_STRUCTURED",
+                            "peer verification feedback retry failed",
+                        ),
+                        base_audit,
+                    )
+                route, retry_audit = self._peer_route(
+                    target_id=target_id,
+                    target_name=target_name,
+                    cutoff=cutoff,
+                    evidence_facts=evidence_facts,
+                    source_claims=source_claims,
+                    cache_root=cache_root,
+                    checkpoint_resume=True,
+                    attempts=attempts,
+                    manifests=manifests,
+                    shared_cache_roots=shared_cache_roots,
+                    _structured_verification_retry_used=True,
+                )
+                retry_audit = dict(retry_audit)
+                retry_audit["provider_attempt_count"] = int(
+                    retry_audit.get("provider_attempt_count") or 0
+                ) + int(base_audit["provider_attempt_count"])
+                retry_audit["provider_cache_hit"] = bool(
+                    base_audit["provider_cache_hit"]
+                )
+                retry_audit["validation_retry_used"] = True
+                retry_audit["structured_verification_retry_used"] = True
+                retry_audit["initial_proposal_failures"] = list(
+                    proposal_failures
+                )
+                return route, retry_audit
             base_audit["pending_reason"] = "INSUFFICIENT_COMMON_PEER_MULTIPLES"
             return (
                 UnavailableStructuredSourceRoute(

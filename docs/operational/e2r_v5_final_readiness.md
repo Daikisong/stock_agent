@@ -2,7 +2,7 @@
 
 - exact verdict: `MEANINGFUL_E2R_RESEARCHER_PARITY_NOT_READY`
 - reviewer gate: `E2R_V5_INDEPENDENT_REVIEWER_GATE_FAIL`
-- reviewer critical sum: `10`
+- reviewer critical sum: `14`
 - failed reviewers: `B, F, G, J`
 
 ## Historical parity
@@ -23,8 +23,8 @@
 
 ## Current decisions
 
-- 삼성전자 (005930): memos `7/7`, score valid `false`, FINAL StageCourt `false`
-- SK하이닉스 (000660): memos `7/7`, score valid `false`, FINAL StageCourt `false`
+- 삼성전자 (005930): memos `0/7`, score valid `false`, FINAL StageCourt `false`
+- SK하이닉스 (000660): memos `0/7`, score valid `false`, FINAL StageCourt `false`
 
 ## Runtime
 
@@ -46,6 +46,8 @@
 - `RUNTIME_NOT_COMPLETE:000660`
 - `LIVE_RESEARCH_CHECKPOINT_PENDING:005930`
 - `LIVE_RESEARCH_CHECKPOINT_PENDING:000660`
+- `CODEX_PROVIDER_USAGE_LIMIT:005930`
+- `CODEX_PROVIDER_USAGE_LIMIT:000660`
 - `CURRENT_FULL_TEST_EVIDENCE_MISSING_OR_STALE`
 
 `MEANINGFUL_E2R_RESEARCHER_PARITY_READY`는 reviewer A~J가 전부 PASS이고 blocker가 0일 때만 선언한다.

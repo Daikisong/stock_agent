@@ -2970,7 +2970,7 @@ def _pending_material_fetch_priority(
     material_priority = -float(candidate.get("material_priority") or 0.0)
     candidate_id = str(candidate.get("candidate_id") or "")
     if not official_first_required:
-        return (0, 0, 0, material_priority, candidate_id)
+        return (0, 0, 0, 0, material_priority, candidate_id)
 
     url = str(candidate.get("url") or "")
     content_type = str(candidate.get("content_type") or "").casefold()
@@ -2991,6 +2991,10 @@ def _pending_material_fetch_priority(
     )
     return (
         0 if _candidate_reference_expansion_authority(candidate) else 1,
+        # A parser-semantics retry exists only because this exact material URL
+        # was terminal under an older local parser.  Close that finite repair
+        # before spending the same bounded epoch on unrelated backlog.
+        0 if candidate.get("fetch_semantics_retry_reason") else 1,
         0 if direct_document else 1,
         -_candidate_reference_period_ordinal(
             candidate,
@@ -3090,11 +3094,16 @@ def _candidate_reference_period_ordinal(
     patterns = (
         r"(?i)(?<!\d)(20\d{2})[\s_./-]*Q([1-4])(?!\d)",
         r"(?i)(?<!\d)(20\d{2})[\s_./-]*([1-4])Q(?!\d)",
+        r"(?i)(?<!\d)Q([1-4])[\s_./-]*(20\d{2})(?!\d)",
         r"(?<!\d)(20\d{2})\s*년\s*([1-4])\s*분기",
     )
     for pattern in patterns:
         for match in re.finditer(pattern, metadata):
-            year, quarter = map(int, match.groups())
+            first, second = map(int, match.groups())
+            if first in {1, 2, 3, 4} and second >= 2000:
+                quarter, year = first, second
+            else:
+                year, quarter = first, second
             if year > as_of_date.year:
                 continue
             if year == as_of_date.year and quarter > (as_of_date.month - 1) // 3 + 1:

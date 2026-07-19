@@ -1486,6 +1486,9 @@ class OllamaResearcherProvider(CodexResearcherProvider):
             "effective_semantic_prompt_chunk_chars": (
                 self.semantic_prompt_chunk_chars
             ),
+            "effective_memo_fact_prompt_chunk_chars": (
+                self.memo_fact_prompt_chunk_chars
+            ),
         }
 
     @property
@@ -1543,6 +1546,27 @@ class OllamaResearcherProvider(CodexResearcherProvider):
         )
 
     @property
+    def memo_fact_prompt_chunk_chars(self) -> int:
+        """Keep memo synthesis below the transport limit without tiny shards.
+
+        Fact extraction can expand one source character into many structured
+        JSON fields, so its 10k target is intentionally conservative.  Memo
+        passes do the opposite: they summarize an already structured fact
+        plane.  Reusing the extraction target there creates hundreds of small
+        responses and then repeats all of them in the final synthesis prompt.
+        Use a memo-specific lossless partition sized from the actual prompt
+        transport limit; every fact is still assigned to exactly one chunk.
+        """
+
+        prompt_limit = int(
+            getattr(self.transport, "prompt_character_limit", 500_000)
+        )
+        return min(
+            max(10_000, prompt_limit // 4),
+            max(100_000, self.semantic_prompt_chunk_chars * 8),
+        )
+
+    @property
     def candidate_ranking_page_candidate_limit(self) -> int:
         """Bound one response page while losslessly partitioning the roster."""
 
@@ -1581,7 +1605,7 @@ class OllamaResearcherProvider(CodexResearcherProvider):
         chunks = _loss_accounted_fact_chunk_payloads(
             payload,
             pass_name=pass_name,
-            target_projection_chars=self.semantic_prompt_chunk_chars,
+            target_projection_chars=self.memo_fact_prompt_chunk_chars,
         )
         if len(chunks) <= 1:
             return super().complete(pass_name=pass_name, payload=payload)

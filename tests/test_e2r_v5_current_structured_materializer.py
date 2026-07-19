@@ -137,6 +137,37 @@ class IncompleteThenCompletePeerProvider(FixturePeerProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class VerificationFailureThenCompletePeerProvider(FixturePeerProvider):
+    def __init__(self):
+        super().__init__()
+        self.attempt_count = 0
+
+    def complete(self, *, pass_name, payload):
+        self.attempt_count += 1
+        if self.attempt_count == 1:
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            return {
+                "peers": [
+                    {
+                        "peer_symbol": symbol,
+                        "peer_name": name,
+                        "shared_economic_drivers": ["same earnings cycle"],
+                        "material_differences": ["different product mix"],
+                        "comparability_rationale": "cycle economics overlap",
+                        "confidence": 0.8,
+                    }
+                    for symbol, name in (
+                        ("333333", "Relabelled Company"),
+                        ("444444", "Invented Listing Vehicle"),
+                    )
+                ],
+                "selection_complete": True,
+                "unresolved_research_notes": [],
+                "selection_rationale": "unverified first proposal",
+            }
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
 class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
     def test_companyguide_forward_fundamentals_keep_units_and_page_date(self):
         payload = parse_companyguide_live_consensus_payload(
@@ -620,6 +651,67 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         ]
         self.assertIn("peer selection is incomplete", retry["validation_error"])
         self.assertIn("do not invent", retry["instruction"])
+
+    def test_peer_page_verification_failures_are_fed_back_and_cache_replaced(self):
+        transport = FixtureStructuredTransport()
+        peer_provider = VerificationFailureThenCompletePeerProvider()
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+
+            cache = json.loads(
+                (
+                    Path(directory)
+                    / "structured_source_cache"
+                    / "peer_selection_005930.json"
+                ).read_text(encoding="utf-8")
+            )
+
+        audit = result.audit["peer_selection"]
+        self.assertEqual(peer_provider.attempt_count, 2)
+        self.assertEqual(audit["status"], "PEER_SELECTION_COMPLETE")
+        self.assertEqual(audit["provider_attempt_count"], 2)
+        self.assertTrue(audit["structured_verification_retry_used"])
+        self.assertIn(
+            "333333:COMPANY_IDENTITY_MISMATCH",
+            audit["initial_proposal_failures"],
+        )
+        retry = peer_provider.calls[-1]["payload"][
+            "peer_selection_retry_context"
+        ]
+        self.assertTrue(
+            any(
+                "COMPANY_IDENTITY_MISMATCH" in reason
+                for reason in retry["proposal_failures"]
+            )
+        )
+        self.assertEqual(
+            {row["peer_symbol"] for row in cache["response"]["peers"]},
+            {"111111", "222222"},
+        )
 
 
 def _text_response(url: str, text: str) -> StructuredHTTPResponse:

@@ -185,6 +185,8 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             row for row in transport.payloads if row.get("loss_accounted_fact_chunk")
         ]
         self.assertGreater(len(chunk_payloads), 1)
+        self.assertLessEqual(len(chunk_payloads), 3)
+        self.assertEqual(provider.memo_fact_prompt_chunk_chars, 100_000)
         emitted = [
             fact_row[0]
             for chunk in chunk_payloads
@@ -200,7 +202,7 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                         ensure_ascii=False,
                     )
                 )
-                < 30_000
+                < 150_000
                 for chunk in chunk_payloads
             )
         )
@@ -216,7 +218,7 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 "loss_accounted_fact_chunk_synthesis"
             )
         )
-        self.assertTrue(all(length < 1_000_000 for length in transport.prompt_lengths))
+        self.assertTrue(all(length < 500_000 for length in transport.prompt_lengths))
 
     def test_fact_chunk_dictionary_remap_preserves_every_decoded_value(
         self,
@@ -420,6 +422,7 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self.assertEqual(provider.transport.context_length, 65_536)
         self.assertEqual(provider.fact_document_chunk_chars, 90_000)
         self.assertEqual(provider.semantic_prompt_chunk_chars, 10_000)
+        self.assertEqual(provider.memo_fact_prompt_chunk_chars, 100_000)
         self.assertEqual(
             provider.candidate_ranking_prompt_chunk_chars,
             100_000,
@@ -463,6 +466,7 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         )
 
         self.assertEqual(provider.semantic_prompt_chunk_chars, 10_000)
+        self.assertEqual(provider.memo_fact_prompt_chunk_chars, 100_000)
         runner = CurrentResearcherModeTargetRunner(provider=provider)
         self.assertEqual(
             runner.fact_extractor.max_document_chars_per_call,
@@ -473,6 +477,12 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 "effective_semantic_prompt_chunk_chars"
             ],
             10_000,
+        )
+        self.assertEqual(
+            provider._provider_identity()[
+                "effective_memo_fact_prompt_chunk_chars"
+            ],
+            100_000,
         )
 
     def test_incomplete_or_unaccounted_response_is_rejected(self) -> None:

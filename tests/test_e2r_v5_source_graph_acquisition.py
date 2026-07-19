@@ -2026,6 +2026,38 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
         self.assertTrue(pdf_candidate["pdf_fallback_fetch_retry_attempted"])
 
+    def test_fetch_semantics_retry_closes_before_unrelated_official_backlog(
+        self,
+    ) -> None:
+        retry = {
+            "candidate_id": "CURRENT-SEMANTICS-RETRY",
+            "url": "https://issuer.example.com/q1-2026-results",
+            "verified_official_domain_candidate": True,
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "material_priority": 1.0,
+            "fetch_semantics_retry_reason": (
+                "PRIOR_UNKNOWN_DATE_PRECEDED_HTML_PUBLICATION_METADATA"
+            ),
+        }
+        unrelated = {
+            "candidate_id": "OLDER-OFFICIAL-BACKLOG",
+            "url": "https://issuer.example.com/2019/06/30/archive-results",
+            "verified_official_domain_candidate": True,
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "material_priority": 1.0,
+        }
+
+        ordered = sorted(
+            (unrelated, retry),
+            key=lambda row: source_graph_module._pending_material_fetch_priority(
+                row,
+                as_of_date=date(2026, 7, 12),
+                official_first_required=True,
+            ),
+        )
+
+        self.assertEqual(ordered[0]["candidate_id"], "CURRENT-SEMANTICS-RETRY")
+
     def test_legacy_text_cap_document_is_quarantined_and_refetched_once(self) -> None:
         content = "x" * 200_000
         content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
