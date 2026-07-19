@@ -190,8 +190,12 @@ class CurrentResearcherModeTargetRunner:
             max_document_chars_per_call=int(
                 getattr(
                     effective_provider,
-                    "fact_document_chunk_chars",
-                    220_000,
+                    "semantic_prompt_chunk_chars",
+                    getattr(
+                        effective_provider,
+                        "fact_document_chunk_chars",
+                        220_000,
+                    ),
                 )
             ),
         )

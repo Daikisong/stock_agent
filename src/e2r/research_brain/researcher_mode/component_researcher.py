@@ -1436,11 +1436,22 @@ class OllamaResearcherProvider(CodexResearcherProvider):
         return {
             **super()._provider_identity(),
             "fact_document_chunk_chars": self.fact_document_chunk_chars,
+            "effective_semantic_prompt_chunk_chars": (
+                self.semantic_prompt_chunk_chars
+            ),
         }
 
     @property
     def semantic_prompt_chunk_chars(self) -> int:
-        """Conservative semantic payload target within the token reserve."""
+        """Lossless chunk target bounded by both context and output reserve.
+
+        A source can fit in the context window yet still require more JSON
+        tokens than ``num_predict`` permits.  Fact extraction is especially
+        expansion-heavy because every quote carries scope and lineage fields.
+        Keep each literal source chunk small enough for the configured output
+        reserve; deterministic overlap accounting still covers the entire
+        canonical document.
+        """
 
         return min(
             self.fact_document_chunk_chars,
@@ -1456,6 +1467,18 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                         )
                     )
                 )
+                // 2,
+            ),
+            max(
+                10_000,
+                int(
+                    getattr(
+                        self.transport,
+                        "max_output_tokens",
+                        32_768,
+                    )
+                )
+                * 3
                 // 2,
             ),
         )
