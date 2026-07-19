@@ -239,6 +239,9 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 for key, value in projection.items()
                 if key not in {"facts", "fact_id_by_row_index"}
             },
+            "business_model_validation_retry_context": {
+                "validation_error": "final synthesis citation correction"
+            },
         }
         chunks = _loss_accounted_fact_chunk_payloads(
             payload,
@@ -246,6 +249,12 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             target_projection_chars=10_000,
         )
         self.assertGreater(len(chunks), 1)
+        self.assertTrue(
+            all(
+                "business_model_validation_retry_context" not in chunk
+                for chunk in chunks
+            )
+        )
         original_by_row = {
             row[0]: row for row in projection["facts"]
         }

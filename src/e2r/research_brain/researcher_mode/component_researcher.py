@@ -1631,6 +1631,7 @@ _LOSS_ACCOUNTED_FACT_CHUNK_PASSES = {
     "RED_TEAM_RESEARCH",
 }
 _FACT_CHUNK_SYNTHESIS_ONLY_KEYS = {
+    "business_model_validation_retry_context",
     "component_research_validation_retry_context",
 }
 
