@@ -1619,7 +1619,7 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                 ]
             )
             allowed_indices = {
-                int(row[0])
+                int(row["fact_row_index"])
                 for row in chunk.get("current_evidence_fact_graph") or ()
             }
             prior_indices = {
@@ -1874,8 +1874,29 @@ def _loss_accounted_fact_chunk_payloads(
             for key, value in dict(payload).items()
             if key not in _FACT_CHUNK_SYNTHESIS_ONLY_KEYS
         }
-        chunk_payload["current_evidence_fact_graph"] = projected_rows
-        chunk_payload["current_evidence_fact_projection"] = projected
+        # Keep the citation key structurally separate from dictionary-coded
+        # fact values.  With a bare numeric row such as ``[0, 12, 3, ...]``, a
+        # structured model can copy the whole encoded row into
+        # ``fact_row_indices`` even though only the first cell is a citation.
+        # Naming that cell removes the ambiguity without sampling, rewriting,
+        # or otherwise changing any fact semantics.
+        chunk_payload["current_evidence_fact_graph"] = [
+            {
+                "fact_row_index": int(row[0]),
+                "encoded_fact_values": list(row[1:]),
+            }
+            for row in projected_rows
+        ]
+        chunk_payload["current_evidence_fact_projection"] = {
+            **projected,
+            "chunk_fact_row_encoding": {
+                "schema_version": "e2r_v5_named_fact_row_encoding_v1",
+                "fact_row_index_field": "fact_row_index",
+                "encoded_fact_values_field": "encoded_fact_values",
+                "encoded_fact_value_fields": list(fields[1:]),
+                "citation_cell_is_not_part_of_encoded_fact_values": True,
+            },
+        }
         _filter_fact_row_context_for_chunk(
             chunk_payload,
             global_to_local=global_to_local,
@@ -1904,8 +1925,10 @@ def _loss_accounted_fact_chunk_payloads(
             "prompt_projection_is_research_cap": False,
             "score_authority": False,
             "instruction": (
-                "Review every supplied fact row in this chunk. The first value "
-                "is its chunk-local fact_row_index. Cite only that first value; "
+                "Review every supplied fact row in this chunk. Each row names "
+                "its chunk-local citation in fact_row_index; encoded_fact_values "
+                "align positionally with encoded_fact_value_fields and are never "
+                "citation indices. Cite only the named fact_row_index value; "
                 "deterministic transport restores its immutable global index. "
                 "Treat research_complete "
                 "or review_complete as completion of this chunk only. Return the "

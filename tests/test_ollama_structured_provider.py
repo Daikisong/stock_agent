@@ -78,7 +78,9 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 self.prompt_lengths.append(len(prompt))
                 chunk = payload.get("loss_accounted_fact_chunk")
                 if chunk:
-                    row_index = payload["current_evidence_fact_graph"][0][0]
+                    row_index = payload["current_evidence_fact_graph"][0][
+                        "fact_row_index"
+                    ]
                     response = {
                         "business_model_summary": (
                             f"chunk {chunk['chunk_index']} mechanism review"
@@ -285,15 +287,32 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         for chunk in chunks:
             local_projection = chunk["current_evidence_fact_projection"]
             local_dictionaries = local_projection["fact_value_dictionaries"]
+            self.assertEqual(
+                local_projection["chunk_fact_row_encoding"],
+                {
+                    "schema_version": "e2r_v5_named_fact_row_encoding_v1",
+                    "fact_row_index_field": "fact_row_index",
+                    "encoded_fact_values_field": "encoded_fact_values",
+                    "encoded_fact_value_fields": fields[1:],
+                    "citation_cell_is_not_part_of_encoded_fact_values": True,
+                },
+            )
             local_to_global = chunk["loss_accounted_fact_chunk"][
                 "global_fact_row_index_by_chunk_local_index"
             ]
             for local_row in chunk["current_evidence_fact_graph"]:
-                original = original_by_row[local_to_global[local_row[0]]]
+                self.assertEqual(
+                    set(local_row),
+                    {"fact_row_index", "encoded_fact_values"},
+                )
+                local_index = local_row["fact_row_index"]
+                original = original_by_row[local_to_global[local_index]]
                 for position, field in enumerate(fields[1:], start=1):
                     name = field[: -len("_dictionary_index")]
                     self.assertEqual(
-                        local_dictionaries[name][local_row[position]],
+                        local_dictionaries[name][
+                            local_row["encoded_fact_values"][position - 1]
+                        ],
                         projection["fact_value_dictionaries"][name][
                             original[position]
                         ],
