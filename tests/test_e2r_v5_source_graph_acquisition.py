@@ -1210,6 +1210,12 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "FACT_EXTRACTOR_REPORTED_UNREADABLE_FULL_DOCUMENT",
         )
         self.assertFalse(quarantine["parser_refetch_required"])
+        self.assertEqual(
+            source_graph_module.validate_source_graph_checkpoint(
+                resumed.checkpoint
+            )["checkpoint_id"],
+            resumed.checkpoint["checkpoint_id"],
+        )
 
     def test_checkpoint_resume_refetches_stale_split_article_date(self) -> None:
         provider = SourceBrainProvider()

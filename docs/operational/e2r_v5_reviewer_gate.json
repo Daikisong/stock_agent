@@ -628,7 +628,7 @@
       "detector_run_count": 2,
       "recomputed_metrics": {
         "capability_regression_status": "PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS",
-        "expected_verification_tree_hash": "c2114829c7b34523dc0058133dcb997c8a2d8199d6d1b7df81cce6c411c989fb",
+        "expected_verification_tree_hash": "34b446e1be61dacca1d862e1bd6432916dbe86060b32fbde5d93043b07c2f62c",
         "full_test_evidence": {
           "command": [
             "/home/eorb915/.local/bin/python",

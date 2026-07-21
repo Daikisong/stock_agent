@@ -1287,6 +1287,7 @@ def validated_quarantined_document_ids(
     rejections = tuple(checkpoint.get("rejected_documents") or ())
     allowed_reason_prefixes = (
         "UNREADABLE_FULL_DOCUMENT_TEXT:",
+        "FACT_EXTRACTOR_REPORTED_UNREADABLE_FULL_DOCUMENT",
         "INCOMPLETE_FULL_DOCUMENT_TEXT:",
         "STALE_PDF_READING_ORDER:",
         "STALE_PUBLICATION_DATE_INFERENCE:",
