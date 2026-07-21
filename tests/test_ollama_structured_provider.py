@@ -188,9 +188,11 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self.assertLessEqual(len(chunk_payloads), 3)
         self.assertEqual(provider.memo_fact_prompt_chunk_chars, 100_000)
         emitted = [
-            fact_row[0]
+            global_index
             for chunk in chunk_payloads
-            for fact_row in chunk["current_evidence_fact_graph"]
+            for global_index in chunk["loss_accounted_fact_chunk"][
+                "global_fact_row_index_by_chunk_local_index"
+            ]
         ]
         self.assertEqual(emitted, list(range(len(facts))))
         self.assertEqual(len(emitted), len(set(emitted)))
@@ -209,7 +211,9 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self.assertEqual(
             set(response["fact_row_indices"]),
             {
-                chunk["current_evidence_fact_graph"][0][0]
+                chunk["loss_accounted_fact_chunk"][
+                    "global_fact_row_index_by_chunk_local_index"
+                ][0]
                 for chunk in chunk_payloads
             },
         )
@@ -281,8 +285,11 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         for chunk in chunks:
             local_projection = chunk["current_evidence_fact_projection"]
             local_dictionaries = local_projection["fact_value_dictionaries"]
+            local_to_global = chunk["loss_accounted_fact_chunk"][
+                "global_fact_row_index_by_chunk_local_index"
+            ]
             for local_row in chunk["current_evidence_fact_graph"]:
-                original = original_by_row[local_row[0]]
+                original = original_by_row[local_to_global[local_row[0]]]
                 for position, field in enumerate(fields[1:], start=1):
                     name = field[: -len("_dictionary_index")]
                     self.assertEqual(

@@ -619,6 +619,9 @@ class ResearcherSourceGraphAcquirer:
                 parser_repair_document_ids=(
                     _fact_parser_repair_document_ids(score_gap_context or {})
                 ),
+                fact_unreadable_document_ids=(
+                    _fact_unreadable_document_ids(score_gap_context or {})
+                ),
             ),
             *_quarantine_stale_publication_dates(state),
         )
@@ -1532,6 +1535,7 @@ def _quarantine_unreadable_documents(
     state: dict[str, Any],
     *,
     parser_repair_document_ids: Sequence[str] = (),
+    fact_unreadable_document_ids: Sequence[str] = (),
 ) -> tuple[str, ...]:
     """Remove unreadable or parser-stale documents on checkpoint resume.
 
@@ -1567,6 +1571,11 @@ def _quarantine_unreadable_documents(
         for value in parser_repair_document_ids
         if str(value).strip()
     }
+    fact_unreadable_ids = {
+        str(value).strip()
+        for value in fact_unreadable_document_ids
+        if str(value).strip()
+    }
     for raw_document in documents:
         document = dict(raw_document)
         content = str(
@@ -1595,10 +1604,12 @@ def _quarantine_unreadable_documents(
             and document.get("text_extraction_semantics_version")
             != PDF_TEXT_EXTRACTION_SEMANTICS_VERSION
         )
+        fact_extractor_reported_unreadable = document_id in fact_unreadable_ids
         if (
             unreadable is None
             and not legacy_text_cap
             and not stale_pdf_reading_order
+            and not fact_extractor_reported_unreadable
         ):
             kept.append(document)
             continue
@@ -1609,6 +1620,8 @@ def _quarantine_unreadable_documents(
             if legacy_text_cap
             else "STALE_PDF_READING_ORDER:EXACT_QUOTE_VALIDATION_FAILED"
             if stale_pdf_reading_order
+            else "FACT_EXTRACTOR_REPORTED_UNREADABLE_FULL_DOCUMENT"
+            if fact_extractor_reported_unreadable
             else f"UNREADABLE_FULL_DOCUMENT_TEXT:{unreadable}"
         )
         candidate = candidate_by_document_id.get(document_id) or candidate_by_url.get(
@@ -1912,6 +1925,31 @@ def _fact_parser_repair_document_ids(
         r"MATERIAL_FACT_PROPOSAL_REJECTED:"
         r"(SGDOC-[0-9a-f]+):EXACT_QUOTE_NOT_IN_FULL_DOCUMENT"
     )
+    while pending:
+        value = pending.pop()
+        if isinstance(value, Mapping):
+            pending.extend(value.values())
+        elif isinstance(value, (list, tuple, set, frozenset)):
+            pending.extend(value)
+        elif isinstance(value, str):
+            document_ids.extend(pattern.findall(value))
+    return tuple(dict.fromkeys(document_ids))
+
+
+def _fact_unreadable_document_ids(
+    score_gap_context: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Recover documents the bounded fact extractor could not quote losslessly.
+
+    This is a source-authority transition, not quote repair.  Replaying the
+    identical body after the extractor has exhausted its rewrite attempts
+    cannot create citable evidence, so the document remains auditable in
+    quarantine but no longer blocks the fact-accounting denominator.
+    """
+
+    pending: list[Any] = [score_gap_context]
+    document_ids: list[str] = []
+    pattern = re.compile(r"UNREADABLE_FULL_DOCUMENT:(SGDOC-[0-9a-f]+)")
     while pending:
         value = pending.pop()
         if isinstance(value, Mapping):

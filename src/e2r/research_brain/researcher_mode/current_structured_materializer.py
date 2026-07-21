@@ -1207,6 +1207,15 @@ class CurrentStructuredSourceMaterializer:
             parsed = parse_companyguide_live_consensus_payload(
                 text, as_of_date=cutoff
             )
+            actual_name = str(parsed.get("COMPANY_NAME") or "").strip()
+            if not actual_name:
+                proposal_failures.append(f"{symbol}:COMPANY_IDENTITY_UNVERIFIED")
+                continue
+            if _company_name_key(actual_name) != _company_name_key(
+                proposal["peer_name"]
+            ):
+                proposal_failures.append(f"{symbol}:COMPANY_IDENTITY_MISMATCH")
+                continue
             if parsed.get("CONSENSUS_DATE_VERIFIED") is not True:
                 proposal_failures.append(f"{symbol}:SNAPSHOT_DATE_UNVERIFIED")
                 continue
@@ -1224,15 +1233,6 @@ class CurrentStructuredSourceMaterializer:
                     effective_date=observed.isoformat(),
                 )
                 proposal_failures.append(f"{symbol}:FUTURE_SNAPSHOT_REJECTED")
-                continue
-            actual_name = str(parsed.get("COMPANY_NAME") or "").strip()
-            if not actual_name:
-                proposal_failures.append(f"{symbol}:COMPANY_IDENTITY_UNVERIFIED")
-                continue
-            if _company_name_key(actual_name) != _company_name_key(
-                proposal["peer_name"]
-            ):
-                proposal_failures.append(f"{symbol}:COMPANY_IDENTITY_MISMATCH")
                 continue
             source_id = next(
                 (

@@ -13,6 +13,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import re
 from statistics import median
 from typing import Any, Mapping, Sequence
 
@@ -1913,7 +1914,10 @@ def project_supervisor_failures(
     )
     grouped: dict[tuple[Any, ...], list[Mapping[str, Any]]] = {}
     for row in ordered:
-        key = tuple(_group_value(row.get(field)) for field in _FAILURE_GROUP_FIELDS)
+        key = tuple(
+            _failure_group_value(field, row.get(field))
+            for field in _FAILURE_GROUP_FIELDS
+        )
         grouped.setdefault(key, []).append(row)
     failures = []
     failure_group_members: dict[str, list[str]] = {}
@@ -1971,6 +1975,37 @@ def project_supervisor_failures(
         "prompt_projection_is_research_cap": False,
         "score_authority": False,
     }
+
+
+def _failure_group_value(field: str, value: Any) -> Any:
+    """Collapse transport detail while preserving the class LLM must judge.
+
+    Full failure rows and ids stay outside the prompt and are deterministically
+    restored after the provider classifies each group.  Literal queries, URLs,
+    dates, and response excerpts do not change whether a failure is a timeout,
+    unreadable document, duplicate query, or another semantic failure class.
+    """
+
+    grouped = _group_value(value)
+    if field not in {
+        "failure_reason",
+        "reason",
+        "rejection_reason",
+        "provider_error",
+    } or not isinstance(grouped, str):
+        return grouped
+    text = " ".join(grouped.split())
+    if not text:
+        return text
+    prefix = text.split(":", 1)[0].strip()
+    if re.fullmatch(r"[A-Z][A-Z0-9_]+", prefix):
+        return prefix
+    if re.fullmatch(r"[A-Za-z][A-Za-z0-9_.]*(?:Error|Exception)", prefix):
+        return prefix
+    folded = text.casefold()
+    if "30x" in folded or "redirect" in folded or "object moved" in folded:
+        return "HTTP_REDIRECT_FAILURE"
+    return text
 
 
 def project_query_planner_failures(

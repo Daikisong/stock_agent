@@ -635,6 +635,69 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertNotIn("검증된 경제 메커니즘 999", supervisor_encoded)
         self.assertNotIn("원문 인용 999", peer_encoded)
 
+    def test_supervisor_failure_groups_ignore_literal_transport_detail(self):
+        failures = (
+            {
+                "failure_id": "FAIL-1",
+                "failure_kind": "DOCUMENT_REJECTION",
+                "failure_stage": "FULL_FETCH",
+                "failure_reason": (
+                    "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH:"
+                    "query=삼성전자 2026 HBM url=https://example.com/a"
+                ),
+                "objective_id": "OBJ-1",
+                "query_id": "QUERY-1",
+                "url": "https://example.com/a",
+            },
+            {
+                "failure_id": "FAIL-2",
+                "failure_kind": "DOCUMENT_REJECTION",
+                "failure_stage": "FULL_FETCH",
+                "failure_reason": (
+                    "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH:"
+                    "query=삼성전자 공급계약 url=https://example.com/b"
+                ),
+                "objective_id": "OBJ-2",
+                "query_id": "QUERY-2",
+                "url": "https://example.com/b",
+            },
+            {
+                "failure_id": "FAIL-3",
+                "failure_kind": "DOCUMENT_REJECTION",
+                "failure_stage": "FULL_FETCH",
+                "failure_reason": (
+                    "FUTURE_DOCUMENT_AFTER_FULL_FETCH:published_at=2026-07-20"
+                ),
+                "objective_id": "OBJ-3",
+                "query_id": "QUERY-3",
+                "url": "https://example.com/c",
+            },
+        )
+
+        projection = project_supervisor_failures(failures)
+
+        self.assertEqual(projection["failure_count"], 3)
+        self.assertEqual(projection["failure_group_count"], 2)
+        self.assertTrue(projection["every_failure_id_preserved"])
+        grouped = {
+            row["failure_reason"]: row
+            for row in projection["failures"]
+        }
+        same_class = grouped["UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH"]
+        self.assertEqual(same_class["member_failure_count"], 2)
+        self.assertEqual(
+            same_class["member_failure_ids"],
+            ["FAIL-1", "FAIL-2"],
+        )
+        self.assertEqual(
+            {
+                failure_id
+                for members in projection["failure_group_members"].values()
+                for failure_id in members
+            },
+            {"FAIL-1", "FAIL-2", "FAIL-3"},
+        )
+
     def test_peer_selection_ignores_claim_extraction_transport_lineage(self):
         fact = {
             "fact_id": "FACT-1",

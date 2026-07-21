@@ -36,7 +36,6 @@
 - blockers:
   - `LIVE_RESEARCH_CHECKPOINT_PENDING:005930`
   - `LIVE_RESEARCH_CHECKPOINT_PENDING:000660`
-  - `CODEX_PROVIDER_USAGE_LIMIT:005930`
   - `CODEX_PROVIDER_USAGE_LIMIT:000660`
 
 내부 자가수리 회귀 통과는 target registry의 live dossier 완료를 대신하지 않는다.

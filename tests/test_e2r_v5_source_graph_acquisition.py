@@ -1170,6 +1170,47 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
+    def test_fact_extractor_unreadable_feedback_quarantines_same_html_body(
+        self,
+    ) -> None:
+        provider = SourceBrainProvider()
+        url = "https://news.example.com/parser-fragmented"
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp fragmented article", url),)}
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={url: _document_text("fragmented-html")}
+        )
+        first = self._run(provider=provider, search=search, fetcher=fetcher)
+        document_id = first.evidence_documents[0]["document_id"]
+
+        resumed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=first.checkpoint,
+            score_gap_context={
+                "prior_fact_extraction_feedback": [
+                    f"FACT_EXTRACTION_RETRY_CONTEXT:UNREADABLE_FULL_DOCUMENT:{document_id}"
+                ]
+            },
+        )
+
+        self.assertNotIn(
+            document_id,
+            {row["document_id"] for row in resumed.evidence_documents},
+        )
+        quarantine = next(
+            row
+            for row in resumed.checkpoint["quarantined_documents"]
+            if row["document_id"] == document_id
+        )
+        self.assertEqual(
+            quarantine["quarantine_reason"],
+            "FACT_EXTRACTOR_REPORTED_UNREADABLE_FULL_DOCUMENT",
+        )
+        self.assertFalse(quarantine["parser_refetch_required"])
+
     def test_checkpoint_resume_refetches_stale_split_article_date(self) -> None:
         provider = SourceBrainProvider()
         url = "https://example.com/stale-split-article-date"
@@ -2550,6 +2591,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         official_documents: Sequence[Mapping[str, Any]] = (),
         official_domains: Sequence[str] = (),
         current_evidence_facts: Sequence[Mapping[str, Any]] = (),
+        score_gap_context: Mapping[str, Any] | None = None,
     ):
         return ResearcherSourceGraphAcquirer(
             query_provider=provider,
@@ -2571,6 +2613,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 if official_gaps is not None
                 else {"OBJECTIVE-1": ("official source gap recorded",)}
             ),
+            score_gap_context=score_gap_context,
             prior_checkpoint=checkpoint,
             official_domain_allowlist=official_domains,
         )

@@ -1612,6 +1612,12 @@ class OllamaResearcherProvider(CodexResearcherProvider):
 
         chunk_responses = []
         for chunk in chunks:
+            local_to_global = tuple(
+                int(value)
+                for value in chunk["loss_accounted_fact_chunk"][
+                    "global_fact_row_index_by_chunk_local_index"
+                ]
+            )
             allowed_indices = {
                 int(row[0])
                 for row in chunk.get("current_evidence_fact_graph") or ()
@@ -1670,6 +1676,11 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                             },
                         }
                     )
+            response = _restore_loss_accounted_chunk_global_indices(
+                pass_name=pass_name,
+                response=response,
+                local_to_global=local_to_global,
+            )
             chunk_meta = dict(chunk["loss_accounted_fact_chunk"])
             chunk_responses.append(
                 {
@@ -1846,7 +1857,7 @@ def _loss_accounted_fact_chunk_payloads(
     global_index_hash = _canonical_json_hash(row_indices)
     chunks = []
     for chunk_index, group in enumerate(groups):
-        projected_rows, projected = _remap_citable_fact_chunk(
+        projected_rows, projected, local_to_global = _remap_citable_fact_chunk(
             group,
             fields=fields,
             dictionaries=dictionaries,
@@ -1854,6 +1865,10 @@ def _loss_accounted_fact_chunk_payloads(
             global_fact_row_indices=row_indices,
         )
         allowed_indices = {int(row[0]) for row in projected_rows}
+        global_to_local = {
+            global_index: local_index
+            for local_index, global_index in enumerate(local_to_global)
+        }
         chunk_payload = {
             key: value
             for key, value in dict(payload).items()
@@ -1861,7 +1876,10 @@ def _loss_accounted_fact_chunk_payloads(
         }
         chunk_payload["current_evidence_fact_graph"] = projected_rows
         chunk_payload["current_evidence_fact_projection"] = projected
-        _filter_fact_row_context_for_chunk(chunk_payload, allowed_indices)
+        _filter_fact_row_context_for_chunk(
+            chunk_payload,
+            global_to_local=global_to_local,
+        )
         chunk_row_indices = sorted(allowed_indices)
         chunk_payload["loss_accounted_fact_chunk"] = {
             "schema_version": "e2r_v5_loss_accounted_fact_chunk_v1",
@@ -1870,7 +1888,14 @@ def _loss_accounted_fact_chunk_payloads(
             "chunk_count": len(groups),
             "chunk_fact_count": len(group),
             "chunk_fact_row_index_roster_hash": _canonical_json_hash(
+                list(local_to_global)
+            ),
+            "chunk_local_fact_row_index_roster_hash": _canonical_json_hash(
                 chunk_row_indices
+            ),
+            "citation_index_semantics": "CHUNK_LOCAL_FACT_ROW_INDEX",
+            "global_fact_row_index_by_chunk_local_index": list(
+                local_to_global
             ),
             "global_fact_count": len(normalized_rows),
             "global_fact_row_index_roster_hash": global_index_hash,
@@ -1880,7 +1905,9 @@ def _loss_accounted_fact_chunk_payloads(
             "score_authority": False,
             "instruction": (
                 "Review every supplied fact row in this chunk. The first value "
-                "is its immutable global fact_row_index. Treat research_complete "
+                "is its chunk-local fact_row_index. Cite only that first value; "
+                "deterministic transport restores its immutable global index. "
+                "Treat research_complete "
                 "or review_complete as completion of this chunk only. Return the "
                 "normal pass schema and cite only rows in this chunk. Do not infer "
                 "global completeness, score, or Stage from one chunk."
@@ -1889,9 +1916,11 @@ def _loss_accounted_fact_chunk_payloads(
         chunks.append(scrub_blind_research_payload(chunk_payload))
 
     emitted = [
-        int(row[0])
+        int(global_index)
         for chunk in chunks
-        for row in chunk["current_evidence_fact_graph"]
+        for global_index in chunk["loss_accounted_fact_chunk"][
+            "global_fact_row_index_by_chunk_local_index"
+        ]
     ]
     if emitted != row_indices or len(emitted) != len(set(emitted)):
         raise ValueError("loss-accounted fact chunks changed the global row roster")
@@ -1940,7 +1969,7 @@ def _remap_citable_fact_chunk(
     dictionaries: Mapping[str, Any],
     global_projection: Mapping[str, Any],
     global_fact_row_indices: Sequence[int],
-) -> tuple[list[list[Any]], Mapping[str, Any]]:
+) -> tuple[list[list[Any]], Mapping[str, Any], tuple[int, ...]]:
     local_dictionaries: dict[str, list[Any]] = {}
     index_remaps: dict[str, Mapping[int, int]] = {}
     for position, field in enumerate(fields[1:], start=1):
@@ -1955,10 +1984,11 @@ def _remap_citable_fact_chunk(
             for local_index, global_index in enumerate(used)
         }
     projected_rows = []
-    for row in rows:
+    local_to_global = tuple(int(row[0]) for row in rows)
+    for local_index, row in enumerate(rows):
         projected_rows.append(
             [
-                int(row[0]),
+                local_index,
                 *(
                     index_remaps[
                         fields[position][: -len("_dictionary_index")]
@@ -1999,14 +2029,15 @@ def _remap_citable_fact_chunk(
                     global_fact_row_indices=global_fact_row_indices,
                 )
             ),
-            "global_row_indices_preserved_in_chunk": True,
+            "global_row_indices_preserved_in_chunk": False,
+            "chunk_local_citation_indices_used": True,
             "full_fact_records_persisted_outside_prompt": True,
             "fixed_top_n_used": False,
             "prompt_projection_is_research_cap": False,
             "score_authority": False,
         }
     )
-    return projected_rows, projected
+    return projected_rows, projected, local_to_global
 
 
 def _global_fact_projection_accounting(
@@ -2038,31 +2069,79 @@ def _global_fact_projection_accounting(
 
 
 def _filter_fact_row_context_for_chunk(
-    payload: dict[str, Any], allowed_indices: set[int]
+    payload: dict[str, Any], *, global_to_local: Mapping[int, int]
 ) -> None:
     counters = payload.get("current_counterfacts")
     if isinstance(counters, Sequence) and not isinstance(counters, (str, bytes)):
         payload["current_counterfacts"] = [
-            row
+            {
+                **dict(row),
+                "fact_row_index": global_to_local[int(row["fact_row_index"])],
+            }
             for row in counters
-            if not isinstance(row, Mapping)
-            or not isinstance(row.get("fact_row_index"), int)
-            or int(row["fact_row_index"]) in allowed_indices
+            if isinstance(row, Mapping)
+            and isinstance(row.get("fact_row_index"), int)
+            and int(row["fact_row_index"]) in global_to_local
         ]
     prior = payload.get("prior_component_memo_context")
     if isinstance(prior, Mapping):
         projected = dict(prior)
         rows = [
-            dict(row)
+            {
+                **dict(row),
+                "fact_row_index": global_to_local[int(row["fact_row_index"])],
+            }
             for row in projected.get("current_fact_rows") or ()
             if isinstance(row, Mapping)
             and isinstance(row.get("fact_row_index"), int)
-            and int(row["fact_row_index"]) in allowed_indices
+            and int(row["fact_row_index"]) in global_to_local
         ]
         projected["current_fact_rows"] = rows
         projected["current_fact_row_count"] = len(rows)
         projected["chunk_scoped_current_fact_rows"] = True
         payload["prior_component_memo_context"] = projected
+
+
+def _restore_loss_accounted_chunk_global_indices(
+    *,
+    pass_name: str,
+    response: Mapping[str, Any],
+    local_to_global: Sequence[int],
+) -> Mapping[str, Any]:
+    """Restore intermediate chunk-local citations before global synthesis."""
+
+    def restore(value: Any) -> int:
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, int)
+            or value < 0
+            or value >= len(local_to_global)
+        ):
+            raise StructuredProviderRejected(
+                "loss_accounted_fact_chunk_local_index_out_of_range"
+            )
+        return int(local_to_global[value])
+
+    result = dict(response)
+    citation_field = {
+        "BUSINESS_MODEL_RESEARCH": "fact_row_indices",
+        "COMPONENT_RESEARCH": "selected_fact_row_indices",
+        "RED_TEAM_RESEARCH": "challenged_fact_row_indices",
+    }[pass_name]
+    result[citation_field] = [
+        restore(value) for value in result.get(citation_field) or ()
+    ]
+    if pass_name == "COMPONENT_RESEARCH":
+        for field in ("selected_fact_groundings", "prior_fact_dispositions"):
+            result[field] = [
+                {
+                    **dict(row),
+                    "fact_row_index": restore(row.get("fact_row_index")),
+                }
+                for row in result.get(field) or ()
+                if isinstance(row, Mapping)
+            ]
+    return result
 
 
 def _loss_accounted_fact_chunk_synthesis_payload(
