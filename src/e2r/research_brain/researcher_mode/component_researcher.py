@@ -847,6 +847,85 @@ _PROVIDER_SCHEMAS: Mapping[str, Mapping[str, Any]] = {
     "STRUCTURED_PEER_SELECTION": STRUCTURED_PEER_SELECTION_SCHEMA,
 }
 
+
+def _provider_output_schema(
+    *,
+    pass_name: str,
+    payload: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Bind a component chunk rewrite to exact immutable source strings.
+
+    A structured model can preserve the selected row number while changing one
+    space or attaching a different row's prose.  The retry already contains
+    the exact immutable fields for the rows it may retain.  Express those
+    values as JSON-schema enums so the model itself must emit a byte-exact
+    source binding.  No citation, interpretation, or score is repaired by
+    deterministic code.
+    """
+
+    base = _PROVIDER_SCHEMAS[pass_name]
+    if pass_name != "COMPONENT_RESEARCH":
+        return base
+    retry = payload.get(
+        "loss_accounted_fact_chunk_validation_retry_context"
+    )
+    if not isinstance(retry, Mapping):
+        return base
+    rows = retry.get("expected_selected_fact_groundings")
+    if (
+        not isinstance(rows, Sequence)
+        or isinstance(rows, (str, bytes))
+        or not rows
+    ):
+        return base
+    required_fields = (
+        "source_predicate",
+        "source_value_json",
+        "source_period_json",
+        "source_economic_mechanism",
+    )
+    row_indices: list[int] = []
+    values_by_field: dict[str, list[str]] = {
+        field: [] for field in required_fields
+    }
+    for row in rows:
+        if not isinstance(row, Mapping):
+            return base
+        row_index = row.get("fact_row_index")
+        if (
+            isinstance(row_index, bool)
+            or not isinstance(row_index, int)
+            or row_index < 0
+            or any(not str(row.get(field) or "") for field in required_fields)
+        ):
+            return base
+        row_indices.append(row_index)
+        for field in required_fields:
+            value = str(row[field])
+            if value not in values_by_field[field]:
+                values_by_field[field].append(value)
+    row_indices = list(dict.fromkeys(row_indices))
+    schema = json.loads(json.dumps(base, ensure_ascii=False))
+    properties = schema["properties"]
+    properties["selected_fact_row_indices"]["items"] = {
+        "type": "integer",
+        "enum": row_indices,
+    }
+    grounding_properties = properties["selected_fact_groundings"]["items"][
+        "properties"
+    ]
+    grounding_properties["fact_row_index"] = {
+        "type": "integer",
+        "enum": row_indices,
+    }
+    for field in required_fields:
+        grounding_properties[field] = {
+            "type": "string",
+            "enum": values_by_field[field],
+        }
+    return schema
+
+
 _CODEX_PROMPT_TRANSPORT_MAX_CHARS = 1_000_000
 _RESEARCH_PROVIDER_RESPONSE_CACHE_SCHEMA_VERSION = (
     "e2r_v5_research_provider_response_cache_v1"
@@ -895,6 +974,10 @@ class CodexResearcherProvider:
         if pass_name not in _PROVIDER_SCHEMAS:
             raise ValueError(f"unsupported researcher pass: {pass_name}")
         safe_payload = scrub_blind_research_payload(payload)
+        output_schema = _provider_output_schema(
+            pass_name=pass_name,
+            payload=safe_payload,
+        )
         instruction = _pass_instruction(pass_name)
         prompt = "\n".join(
             (
@@ -912,7 +995,7 @@ class CodexResearcherProvider:
             )
         )
         prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
-        schema_hash = _canonical_json_hash(_PROVIDER_SCHEMAS[pass_name])
+        schema_hash = _canonical_json_hash(output_schema)
         try:
             provider_identity = self._provider_identity()
         except (
@@ -1027,7 +1110,7 @@ class CodexResearcherProvider:
         try:
             response = self.transport.complete(
                 prompt=prompt,
-                output_schema=_PROVIDER_SCHEMAS[pass_name],
+                output_schema=output_schema,
                 schema_name=f"e2r_v5_{pass_name.lower()}",
             )
         except (

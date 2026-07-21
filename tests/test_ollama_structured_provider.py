@@ -64,6 +64,7 @@ class OllamaStructuredProviderTests(unittest.TestCase):
 
             def __init__(self):
                 self.payloads = []
+                self.output_schemas = []
                 self.prompt_lengths = []
 
             def provider_identity(self):
@@ -74,9 +75,10 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 }
 
             def complete(self, *, prompt, output_schema, schema_name):
-                del output_schema, schema_name
+                del schema_name
                 payload = json.loads(prompt.rsplit("\n", 1)[-1])
                 self.payloads.append(payload)
+                self.output_schemas.append(output_schema)
                 self.prompt_lengths.append(len(prompt))
                 chunk = payload.get("loss_accounted_fact_chunk")
                 if chunk:
@@ -436,6 +438,7 @@ class OllamaStructuredProviderTests(unittest.TestCase):
 
             def __init__(self):
                 self.payloads = []
+                self.output_schemas = []
 
             def provider_identity(self):
                 return {
@@ -511,9 +514,10 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 }
 
             def complete(self, *, prompt, output_schema, schema_name):
-                del output_schema, schema_name
+                del schema_name
                 payload = json.loads(prompt.rsplit("\n", 1)[-1])
                 self.payloads.append(payload)
+                self.output_schemas.append(output_schema)
                 chunk = payload.get("loss_accounted_fact_chunk")
                 if chunk:
                     retry = payload.get(
@@ -621,6 +625,26 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             "loss_accounted_fact_chunk_validation_retry_context"
         ]
         self.assertNotIn("rejected_response", retry_context)
+        retry_schema = next(
+            schema
+            for payload, schema in zip(
+                transport.payloads, transport.output_schemas
+            )
+            if payload.get(
+                "loss_accounted_fact_chunk_validation_retry_context"
+            )
+        )
+        grounding_properties = retry_schema["properties"][
+            "selected_fact_groundings"
+        ]["items"]["properties"]
+        self.assertEqual(
+            grounding_properties["source_economic_mechanism"]["enum"],
+            [
+                retry_context["expected_selected_fact_groundings"][0][
+                    "source_economic_mechanism"
+                ]
+            ],
+        )
         self.assertEqual(
             retry_context["expected_selected_fact_groundings"][0][
                 "source_predicate"
