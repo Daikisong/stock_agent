@@ -742,6 +742,10 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         synthesis_schema = _provider_output_schema(
             pass_name="COMPONENT_RESEARCH",
             payload={
+                "historical_component_anchors": [
+                    {"anchor_id": "ANCHOR-P", "role": "POSITIVE"},
+                    {"anchor_id": "ANCHOR-C", "role": "COUNTER"},
+                ],
                 "loss_accounted_fact_chunk_synthesis": {
                     "chunk_responses": [
                         {
@@ -770,6 +774,32 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 for row in synthesis_variants
             ],
             [7, 9],
+        )
+        synthesis_properties = synthesis_schema["properties"]
+        self.assertEqual(
+            synthesis_properties["historical_anchor_ids"],
+            {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "enum": ["ANCHOR-P", "ANCHOR-C"],
+                },
+                "minItems": 2,
+                "maxItems": 2,
+                "uniqueItems": True,
+            },
+        )
+        self.assertEqual(
+            synthesis_properties["nearest_positive_anchor_ids"]["items"][
+                "enum"
+            ],
+            ["ANCHOR-P"],
+        )
+        self.assertEqual(
+            synthesis_properties["nearest_counter_anchor_ids"]["items"][
+                "enum"
+            ],
+            ["ANCHOR-C"],
         )
 
     def test_transport_sends_schema_bound_non_thinking_request(self) -> None:

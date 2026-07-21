@@ -970,6 +970,64 @@ def _provider_output_schema(
             for row in normalized_rows
         ]
     }
+    synthesis = payload.get("loss_accounted_fact_chunk_synthesis")
+    anchors = payload.get("historical_component_anchors")
+    if (
+        isinstance(synthesis, Mapping)
+        and isinstance(anchors, Sequence)
+        and not isinstance(anchors, (str, bytes))
+    ):
+        anchor_rows = [row for row in anchors if isinstance(row, Mapping)]
+        anchor_ids = list(
+            dict.fromkeys(
+                str(row.get("anchor_id") or "").strip()
+                for row in anchor_rows
+                if str(row.get("anchor_id") or "").strip()
+            )
+        )
+        positive_anchor_ids = [
+            str(row["anchor_id"])
+            for row in anchor_rows
+            if str(row.get("anchor_id") or "") in anchor_ids
+            and str(row.get("role") or "") == "POSITIVE"
+        ]
+        counter_anchor_ids = [
+            str(row["anchor_id"])
+            for row in anchor_rows
+            if str(row.get("anchor_id") or "") in anchor_ids
+            and str(row.get("role") or "") == "COUNTER"
+        ]
+        properties["historical_anchor_ids"] = {
+            "type": "array",
+            "items": (
+                {"type": "string", "enum": anchor_ids}
+                if anchor_ids
+                else {"type": "string"}
+            ),
+            "minItems": len(anchor_ids),
+            "maxItems": len(anchor_ids),
+            "uniqueItems": True,
+        }
+        properties["nearest_positive_anchor_ids"] = {
+            "type": "array",
+            "items": (
+                {"type": "string", "enum": positive_anchor_ids}
+                if positive_anchor_ids
+                else {"type": "string"}
+            ),
+            **({} if positive_anchor_ids else {"maxItems": 0}),
+            "uniqueItems": True,
+        }
+        properties["nearest_counter_anchor_ids"] = {
+            "type": "array",
+            "items": (
+                {"type": "string", "enum": counter_anchor_ids}
+                if counter_anchor_ids
+                else {"type": "string"}
+            ),
+            **({} if counter_anchor_ids else {"maxItems": 0}),
+            "uniqueItems": True,
+        }
     return schema
 
 
