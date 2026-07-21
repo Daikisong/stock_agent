@@ -316,6 +316,27 @@ class _ParsedReportedNumeric:
     unit: str
 
 
+def _invalidate_structured_peer_response_cache(
+    provider: StructuredResearchProvider,
+    *,
+    proposal_failures: Sequence[str],
+) -> Mapping[str, Any] | None:
+    """Quarantine a schema-valid peer response rejected by source verification."""
+
+    invalidate = getattr(provider, "invalidate_last_response_cache", None)
+    if not callable(invalidate):
+        return None
+    reason = (
+        "STRUCTURED_PEER_SOURCE_VERIFICATION_REJECTED:"
+        + ",".join(str(value) for value in proposal_failures)
+    )[-500:]
+    try:
+        result = invalidate(reason=reason)
+    except (OSError, TypeError, ValueError, RuntimeError):
+        return None
+    return dict(result) if isinstance(result, Mapping) else None
+
+
 class CurrentStructuredSourceMaterializer:
     """Collect every canonical structured route and fail closed on gaps."""
 
@@ -1412,6 +1433,12 @@ class CurrentStructuredSourceMaterializer:
                     proposal_failures
                 )
                 return route, retry_audit
+            base_audit["provider_response_cache_invalidation"] = (
+                _invalidate_structured_peer_response_cache(
+                    self.peer_provider,
+                    proposal_failures=proposal_failures,
+                )
+            )
             base_audit["pending_reason"] = "INSUFFICIENT_COMMON_PEER_MULTIPLES"
             return (
                 UnavailableStructuredSourceRoute(
@@ -1431,6 +1458,7 @@ class CurrentStructuredSourceMaterializer:
             diagnostics=base_audit,
         )
         return InMemoryStructuredSourceRoute("PEER_STRUCTURED", route_payload), base_audit
+
 
     def _json(
         self,

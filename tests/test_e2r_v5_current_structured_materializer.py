@@ -168,6 +168,43 @@ class VerificationFailureThenCompletePeerProvider(FixturePeerProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class RepeatedVerificationFailurePeerProvider(FixturePeerProvider):
+    def __init__(self):
+        super().__init__()
+        self.attempt_count = 0
+        self.invalidations = []
+
+    def complete(self, *, pass_name, payload):
+        self.attempt_count += 1
+        if self.attempt_count <= 2:
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            return {
+                "peers": [
+                    {
+                        "peer_symbol": symbol,
+                        "peer_name": name,
+                        "shared_economic_drivers": ["same earnings cycle"],
+                        "material_differences": ["different product mix"],
+                        "comparability_rationale": "cycle economics overlap",
+                        "confidence": 0.8,
+                    }
+                    for symbol, name in (
+                        ("333333", "Relabelled Company"),
+                        ("444444", "Invented Listing Vehicle"),
+                    )
+                ],
+                "selection_complete": True,
+                "unresolved_research_notes": [],
+                "selection_rationale": "repeated unverified proposal",
+            }
+        return super().complete(pass_name=pass_name, payload=payload)
+
+    def invalidate_last_response_cache(self, reason):
+        event = {"status": "INVALIDATED", "reason": reason}
+        self.invalidations.append(event)
+        return event
+
+
 class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
     def test_companyguide_forward_fundamentals_keep_units_and_page_date(self):
         payload = parse_companyguide_live_consensus_payload(
@@ -711,6 +748,68 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         self.assertEqual(
             {row["peer_symbol"] for row in cache["response"]["peers"]},
             {"111111", "222222"},
+        )
+
+    def test_repeated_source_invalid_peer_response_is_not_reusable_cache(self):
+        transport = FixtureStructuredTransport()
+        peer_provider = RepeatedVerificationFailurePeerProvider()
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            first = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+            resumed = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+
+        first_audit = first.audit["peer_selection"]
+        self.assertEqual(first_audit["status"], "PEER_SELECTION_PENDING")
+        self.assertEqual(
+            first_audit["provider_response_cache_invalidation"]["status"],
+            "INVALIDATED",
+        )
+        self.assertIn(
+            "COMPANY_IDENTITY_MISMATCH",
+            peer_provider.invalidations[0]["reason"],
+        )
+        self.assertEqual(peer_provider.attempt_count, 3)
+        self.assertEqual(
+            resumed.audit["peer_selection"]["status"],
+            "PEER_SELECTION_COMPLETE",
         )
 
 

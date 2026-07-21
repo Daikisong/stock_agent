@@ -10,9 +10,10 @@
     "RUNTIME_NOT_COMPLETE:000660",
     "LIVE_RESEARCH_CHECKPOINT_PENDING:005930",
     "LIVE_RESEARCH_CHECKPOINT_PENDING:000660",
-    "CODEX_PROVIDER_USAGE_LIMIT:000660"
+    "CODEX_PROVIDER_USAGE_LIMIT:000660",
+    "CURRENT_FULL_TEST_EVIDENCE_MISSING_OR_STALE"
   ],
-  "critical_count_sum": 13,
+  "critical_count_sum": 14,
   "exact_verdict": "MEANINGFUL_E2R_RESEARCHER_PARITY_NOT_READY",
   "failed_reviewers": [
     "B",
@@ -304,7 +305,7 @@
       "recomputed_metrics": {
         "targets": [
           {
-            "actual_output_tree_hash": "531460d7a2afd192427c94e4bf6745406275ce4b0d66bce8b8e39f084861fa5e",
+            "actual_output_tree_hash": "e3285f421190f8018496df7cb78174ae93959507b6713bec27500f620374c267",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
@@ -419,7 +420,7 @@
       "recomputed_metrics": {
         "targets": [
           {
-            "actual_output_tree_hash": "531460d7a2afd192427c94e4bf6745406275ce4b0d66bce8b8e39f084861fa5e",
+            "actual_output_tree_hash": "e3285f421190f8018496df7cb78174ae93959507b6713bec27500f620374c267",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
@@ -597,15 +598,16 @@
         "RUNTIME_NOT_COMPLETE:000660",
         "LIVE_RESEARCH_CHECKPOINT_PENDING:005930",
         "LIVE_RESEARCH_CHECKPOINT_PENDING:000660",
-        "CODEX_PROVIDER_USAGE_LIMIT:000660"
+        "CODEX_PROVIDER_USAGE_LIMIT:000660",
+        "CURRENT_FULL_TEST_EVIDENCE_MISSING_OR_STALE"
       ],
-      "critical_count_sum": 2,
+      "critical_count_sum": 3,
       "critical_counts": {
         "actual_fetch_missing_count": 0,
         "actual_query_missing_count": 0,
         "capability_regression_critical_count": 0,
         "checkpoint_missing_count": 0,
-        "current_full_test_evidence_missing_count": 0,
+        "current_full_test_evidence_missing_count": 1,
         "detector_error_count": 0,
         "detector_failure_count": 0,
         "detector_run_count_mismatch": 0,
@@ -626,7 +628,7 @@
       "detector_run_count": 2,
       "recomputed_metrics": {
         "capability_regression_status": "PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS",
-        "expected_verification_tree_hash": "bb0219f1257892a1f5f5d4c4370fefd66a5c077560596db8214ba3d5e978728f",
+        "expected_verification_tree_hash": "c2114829c7b34523dc0058133dcb997c8a2d8199d6d1b7df81cce6c411c989fb",
         "full_test_evidence": {
           "command": [
             "/home/eorb915/.local/bin/python",
@@ -651,7 +653,7 @@
           "verification_tree_stable_during_run": true,
           "wall_runtime_seconds": 529.569069
         },
-        "full_test_evidence_valid": true,
+        "full_test_evidence_valid": false,
         "full_test_evidence_validation": {
           "checks": {
             "command_is_full_discovery": true,
@@ -664,18 +666,18 @@
             "log_test_count_matches": true,
             "status_pass": true,
             "test_count_positive_integer": true,
-            "verification_tree_hash_matches": true,
+            "verification_tree_hash_matches": false,
             "verification_tree_stable": true
           },
           "log_sha256": "012deedf1f17e4173a946ede2d93d99173b25750ca830537ab3f14969b0e3e43",
           "logged_test_count": 6371,
           "reported_test_count": 6371,
-          "valid": true
+          "valid": false
         },
         "self_repair_status": "PHASE99_INTERNAL_SELF_REPAIR_PASS",
         "targets": [
           {
-            "actual_output_tree_hash": "531460d7a2afd192427c94e4bf6745406275ce4b0d66bce8b8e39f084861fa5e",
+            "actual_output_tree_hash": "e3285f421190f8018496df7cb78174ae93959507b6713bec27500f620374c267",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
