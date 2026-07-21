@@ -886,6 +886,18 @@ def _provider_output_schema(
                 for grounding in response.get("selected_fact_groundings") or ()
                 if isinstance(grounding, Mapping)
             ]
+    if not rows and isinstance(
+        payload.get("loss_accounted_fact_chunk"), Mapping
+    ):
+        rows = [
+            {
+                "fact_row_index": row_index,
+                **grounding,
+            }
+            for row_index, grounding in (
+                _expected_component_chunk_fact_groundings(payload).items()
+            )
+        ]
     if (
         not isinstance(rows, Sequence)
         or isinstance(rows, (str, bytes))

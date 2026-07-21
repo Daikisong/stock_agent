@@ -626,6 +626,24 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             "loss_accounted_fact_chunk_validation_retry_context"
         ]
         self.assertNotIn("rejected_response", retry_context)
+        base_chunk_payload, base_chunk_schema = next(
+            (payload, schema)
+            for payload, schema in zip(
+                transport.payloads, transport.output_schemas
+            )
+            if payload.get("loss_accounted_fact_chunk")
+            and not payload.get(
+                "loss_accounted_fact_chunk_validation_retry_context"
+            )
+        )
+        self.assertEqual(
+            len(
+                base_chunk_schema["properties"][
+                    "selected_fact_groundings"
+                ]["items"]["anyOf"]
+            ),
+            len(base_chunk_payload["current_evidence_fact_graph"]),
+        )
         retry_schema = next(
             schema
             for payload, schema in zip(
