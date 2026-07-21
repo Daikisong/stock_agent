@@ -721,6 +721,39 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             },
         )
 
+        synthesis_schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload={
+                "loss_accounted_fact_chunk_synthesis": {
+                    "chunk_responses": [
+                        {
+                            "response": {
+                                "selected_fact_groundings": [
+                                    {
+                                        **row,
+                                        "component_interpretation": (
+                                            "chunk interpretation"
+                                        ),
+                                    }
+                                ]
+                            }
+                        }
+                        for row in expected_rows
+                    ]
+                }
+            },
+        )
+        synthesis_variants = synthesis_schema["properties"][
+            "selected_fact_groundings"
+        ]["items"]["anyOf"]
+        self.assertEqual(
+            [
+                row["properties"]["fact_row_index"]["enum"][0]
+                for row in synthesis_variants
+            ],
+            [7, 9],
+        )
+
     def test_transport_sends_schema_bound_non_thinking_request(self) -> None:
         schema = {
             "type": "object",

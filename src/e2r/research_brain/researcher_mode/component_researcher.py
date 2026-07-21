@@ -869,9 +869,23 @@ def _provider_output_schema(
     retry = payload.get(
         "loss_accounted_fact_chunk_validation_retry_context"
     )
-    if not isinstance(retry, Mapping):
-        return base
-    rows = retry.get("expected_selected_fact_groundings")
+    rows = (
+        retry.get("expected_selected_fact_groundings")
+        if isinstance(retry, Mapping)
+        else None
+    )
+    if not rows:
+        synthesis = payload.get("loss_accounted_fact_chunk_synthesis")
+        if isinstance(synthesis, Mapping):
+            rows = [
+                grounding
+                for chunk_response in synthesis.get("chunk_responses") or ()
+                if isinstance(chunk_response, Mapping)
+                for response in (chunk_response.get("response"),)
+                if isinstance(response, Mapping)
+                for grounding in response.get("selected_fact_groundings") or ()
+                if isinstance(grounding, Mapping)
+            ]
     if (
         not isinstance(rows, Sequence)
         or isinstance(rows, (str, bytes))
