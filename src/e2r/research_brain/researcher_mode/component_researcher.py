@@ -1661,12 +1661,19 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                     if validation_retry_used:
                         raise
                     validation_retry_used = True
+                    expected_retry_groundings = (
+                        _selected_expected_chunk_grounding_rows(
+                            response=response,
+                            expected_groundings=(
+                                expected_component_groundings
+                            ),
+                        )
+                    )
                     attempt_payload = scrub_blind_research_payload(
                         {
                             **chunk,
                             "loss_accounted_fact_chunk_validation_retry_context": {
                                 "validation_error": str(exc),
-                                "rejected_response": response,
                                 "allowed_fact_row_indices": sorted(
                                     allowed_indices
                                 ),
@@ -1674,15 +1681,19 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                                     prior_indices
                                 ),
                                 "expected_selected_fact_groundings": (
-                                    _selected_expected_chunk_grounding_rows(
-                                        response=response,
-                                        expected_groundings=(
-                                            expected_component_groundings
-                                        ),
-                                    )
+                                    expected_retry_groundings
+                                ),
+                                "rejected_selected_fact_row_indices": (
+                                    [
+                                        int(row["fact_row_index"])
+                                        for row in expected_retry_groundings
+                                    ]
                                 ),
                                 "instruction": (
-                                    "Rewrite the complete chunk response once. "
+                                    "Write the complete chunk response again from "
+                                    "the supplied source table, not from the prior "
+                                    "rejected answer, which is intentionally omitted "
+                                    "to prevent copying its bad row binding. "
                                     "Cite only allowed_fact_row_indices. For a "
                                     "component chunk, return one exact grounding "
                                     "per selected row by copying the immutable "

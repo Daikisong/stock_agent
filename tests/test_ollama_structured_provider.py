@@ -427,6 +427,211 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             expected_component_groundings=expected,
         )
 
+    def test_component_chunk_retry_omits_rejected_semantic_binding(
+        self,
+    ) -> None:
+        class SemanticRetryTransport:
+            context_length = 65_536
+            max_output_tokens = 32_768
+
+            def __init__(self):
+                self.payloads = []
+
+            def provider_identity(self):
+                return {
+                    "transport_class": "SemanticRetryTransport",
+                    "model": "test-model",
+                    "context_length": 65_536,
+                }
+
+            @staticmethod
+            def component_response(*, grounding):
+                row_index = grounding["fact_row_index"]
+                return {
+                    "researcher_summary": "component chunk review",
+                    "positive_case": "source-backed positive case",
+                    "counter_case": "bounded counter case",
+                    "selected_fact_row_indices": [row_index],
+                    "selected_fact_groundings": [grounding],
+                    "structured_metric_row_indices": [],
+                    "historical_anchor_ids": [],
+                    "nearest_positive_anchor_ids": [],
+                    "nearest_counter_anchor_ids": [],
+                    "prior_fact_dispositions": [],
+                    "proposed_score_lower": 0.0,
+                    "proposed_score_mid": 0.0,
+                    "proposed_score_upper": 0.0,
+                    "why_not_higher": "bounded evidence",
+                    "why_not_lower": "one current fact",
+                    "source_coverage": ["ISSUER"],
+                    "uncertainties": ["test uncertainty"],
+                    "confidence": 0.7,
+                    "research_complete": True,
+                }
+
+            @staticmethod
+            def decoded_grounding(payload, row_index):
+                projection = payload["current_evidence_fact_projection"]
+                fields = projection["chunk_fact_row_encoding"][
+                    "encoded_fact_value_fields"
+                ]
+                dictionaries = projection["fact_value_dictionaries"]
+                row = next(
+                    item
+                    for item in payload["current_evidence_fact_graph"]
+                    if item["fact_row_index"] == row_index
+                )
+                decoded = {
+                    field[: -len("_dictionary_index")]: dictionaries[
+                        field[: -len("_dictionary_index")]
+                    ][dictionary_index]
+                    for field, dictionary_index in zip(
+                        fields, row["encoded_fact_values"]
+                    )
+                }
+                return {
+                    "fact_row_index": row_index,
+                    "source_predicate": decoded["predicate"],
+                    "source_value_json": json.dumps(
+                        decoded["value"],
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    ),
+                    "source_period_json": json.dumps(
+                        decoded["period"],
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    ),
+                    "source_economic_mechanism": decoded[
+                        "economic_mechanism"
+                    ],
+                    "component_interpretation": "source-bound interpretation",
+                }
+
+            def complete(self, *, prompt, output_schema, schema_name):
+                del output_schema, schema_name
+                payload = json.loads(prompt.rsplit("\n", 1)[-1])
+                self.payloads.append(payload)
+                chunk = payload.get("loss_accounted_fact_chunk")
+                if chunk:
+                    retry = payload.get(
+                        "loss_accounted_fact_chunk_validation_retry_context"
+                    )
+                    selected_index = payload["current_evidence_fact_graph"][0][
+                        "fact_row_index"
+                    ]
+                    if retry:
+                        grounding = {
+                            **retry["expected_selected_fact_groundings"][0],
+                            "component_interpretation": (
+                                "fresh source-bound interpretation"
+                            ),
+                        }
+                    elif chunk["chunk_index"] == 0:
+                        other_index = payload["current_evidence_fact_graph"][1][
+                            "fact_row_index"
+                        ]
+                        grounding = self.decoded_grounding(
+                            payload, other_index
+                        )
+                        grounding["fact_row_index"] = selected_index
+                    else:
+                        grounding = self.decoded_grounding(
+                            payload, selected_index
+                        )
+                    response = self.component_response(grounding=grounding)
+                else:
+                    partials = payload[
+                        "loss_accounted_fact_chunk_synthesis"
+                    ]["chunk_responses"]
+                    groundings = [
+                        grounding
+                        for partial in partials
+                        for grounding in partial["response"][
+                            "selected_fact_groundings"
+                        ]
+                    ]
+                    response = self.component_response(
+                        grounding=groundings[0]
+                    )
+                    response["selected_fact_row_indices"] = [
+                        row["fact_row_index"] for row in groundings
+                    ]
+                    response["selected_fact_groundings"] = groundings
+                return StructuredProviderResponse(
+                    payload=response,
+                    raw_response=json.dumps(response),
+                    stderr="",
+                    returncode=0,
+                )
+
+        facts = [
+            {
+                "fact_id": f"EFACT-RETRY-{index}",
+                "target_id": "TEST",
+                "as_of_date": "2026-06-29",
+                "subject": "target memory business",
+                "business_segment": "MEMORY",
+                "product_family": "HBM",
+                "economic_mechanism": (
+                    f"retry mechanism {index} " + "x" * 40_000
+                ),
+                "predicate": f"RETRY_PREDICATE_{index}",
+                "value": {"point": index},
+                "unit": "units",
+                "period": f"2026-Q{index + 1}",
+                "direction": "POSITIVE",
+                "current_lifecycle": "CURRENT",
+                "confidence": 0.8,
+                "structured_evidence_roles": [],
+                "claim_ids": [f"CLAIM-RETRY-{index}"],
+                "source_ids": [f"DOC-RETRY-{index}"],
+                "source_independence_group": "issuer:test",
+                "corroborating_independence_groups": ["issuer:test"],
+                "allowed_component_ids": [],
+                "question_family_tags": [],
+                "primitive_tags": [],
+            }
+            for index in range(4)
+        ]
+        projection = project_current_decision_citable_facts(facts)
+        transport = SemanticRetryTransport()
+        provider = OllamaResearcherProvider(transport=transport)
+        response = provider.complete(
+            pass_name="COMPONENT_RESEARCH",
+            payload={
+                "current_evidence_fact_graph": projection["facts"],
+                "current_evidence_fact_projection": {
+                    key: value
+                    for key, value in projection.items()
+                    if key not in {"facts", "fact_id_by_row_index"}
+                },
+            },
+        )
+
+        retry_payloads = [
+            row
+            for row in transport.payloads
+            if row.get("loss_accounted_fact_chunk_validation_retry_context")
+        ]
+        self.assertEqual(len(retry_payloads), 1)
+        retry_context = retry_payloads[0][
+            "loss_accounted_fact_chunk_validation_retry_context"
+        ]
+        self.assertNotIn("rejected_response", retry_context)
+        self.assertEqual(
+            retry_context["expected_selected_fact_groundings"][0][
+                "source_predicate"
+            ],
+            "RETRY_PREDICATE_0",
+        )
+        self.assertEqual(
+            response["selected_fact_groundings"][0]["source_predicate"],
+            "RETRY_PREDICATE_0",
+        )
+
     def test_transport_sends_schema_bound_non_thinking_request(self) -> None:
         schema = {
             "type": "object",
