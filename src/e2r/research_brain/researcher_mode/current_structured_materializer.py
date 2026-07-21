@@ -1078,6 +1078,11 @@ class CurrentStructuredSourceMaterializer:
             tuple(_fact_mapping(row) for row in evidence_facts),
             tuple(dict(row) for row in source_claims),
         )
+        point_in_time_peer_roster = _point_in_time_peer_identity_roster(
+            listing_identity_roster,
+            cutoff=cutoff,
+            cache_roots=(cache_root, *shared_cache_roots),
+        )
         payload = {
             "target_id": target_id,
             "target_name": target_name,
@@ -1092,6 +1097,9 @@ class CurrentStructuredSourceMaterializer:
             "authoritative_listing_identity_roster": [
                 dict(row) for row in listing_identity_roster
             ],
+            "point_in_time_structured_peer_identity_roster": [
+                dict(row) for row in point_in_time_peer_roster
+            ],
             "listing_identity_roster_accounting": {
                 "provider_name": "KRX",
                 "snapshot_date": listing_snapshot_date.isoformat(),
@@ -1099,6 +1107,15 @@ class CurrentStructuredSourceMaterializer:
                 "identity_roster_hash": stable_hash(listing_identity_roster),
                 "complete_market_snapshot_used_without_top_n": True,
                 "identity_scope_only_not_score_or_stage_input": True,
+            },
+            "point_in_time_peer_roster_accounting": {
+                "cutoff_date": cutoff.isoformat(),
+                "available_identity_count": len(point_in_time_peer_roster),
+                "available_identity_roster_hash": stable_hash(
+                    point_in_time_peer_roster
+                ),
+                "availability_only_no_multiple_or_score_values_exposed": True,
+                "when_two_or_more_available_select_only_from_this_roster": True,
             },
             "peer_selection_context_accounting": {
                 key: value
@@ -1120,6 +1137,10 @@ class CurrentStructuredSourceMaterializer:
                 (
                     "peer_symbol_and_name_must_be_copied_exactly_from_"
                     "authoritative_listing_identity_roster"
+                ): True,
+                (
+                    "when_two_or_more_point_in_time_identities_are_available_"
+                    "select_only_from_point_in_time_structured_peer_identity_roster"
                 ): True,
                 "score_or_stage_authority": False,
             },
@@ -1871,6 +1892,71 @@ def _companyguide_cached_snapshot_is_point_in_time(
         ):
             return False
     return True
+
+
+def _point_in_time_peer_identity_roster(
+    listing_identity_roster: Sequence[Mapping[str, str]],
+    *,
+    cutoff: date,
+    cache_roots: Sequence[Path],
+) -> tuple[Mapping[str, str], ...]:
+    """Expose only identities with an already cached pre-cutoff source page.
+
+    No multiple or financial value enters the LLM prompt.  This is source
+    availability metadata so the open-ended peer selector does not repeatedly
+    choose identities whose only reachable CompanyGuide page is from the
+    future relative to ``cutoff``.
+    """
+
+    available: list[Mapping[str, str]] = []
+    for identity in listing_identity_roster:
+        symbol = str(identity.get("peer_symbol") or "").strip()
+        name = str(identity.get("peer_name") or "").strip()
+        if not symbol or not name:
+            continue
+        request_fingerprint = _structured_request_fingerprint(
+            response_kind="text",
+            url=_COMPANYGUIDE_SNAPSHOT_URL,
+            params={"cmp_cd": symbol, "cn": ""},
+        )
+        cache_keys = (
+            f"companyguide_peer_snapshot_{symbol}",
+            f"companyguide_snapshot_{symbol}",
+        )
+        found = False
+        for cache_root in cache_roots:
+            for cache_key in cache_keys:
+                path = Path(cache_root) / f"{cache_key}.json"
+                if not path.is_file():
+                    continue
+                loaded = _load_structured_cache_response(
+                    path,
+                    response_kind="text",
+                    request_url=_COMPANYGUIDE_SNAPSHOT_URL,
+                    request_fingerprint=request_fingerprint,
+                    legacy_identity_allowed=True,
+                )
+                if loaded is None:
+                    continue
+                response, _ = loaded
+                if _companyguide_cached_snapshot_is_point_in_time(
+                    response,
+                    cutoff=cutoff,
+                    expected_company_name=name,
+                ):
+                    found = True
+                    break
+            if found:
+                break
+        if found:
+            available.append(
+                {
+                    "peer_symbol": symbol,
+                    "peer_name": name,
+                    "point_in_time_snapshot_available": "YES",
+                }
+            )
+    return tuple(available)
 
 
 def _issuer_fact_route(

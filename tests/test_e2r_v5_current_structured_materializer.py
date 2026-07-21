@@ -353,6 +353,11 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
                 url=url,
                 text=future,
             )
+            _write_legacy_text_cache(
+                target_cache / "companyguide_peer_snapshot_111111.json",
+                url=url,
+                text=future,
+            )
             fetch_calls = []
             response, cache_hit, error = CurrentStructuredSourceMaterializer()._response(
                 cache_key="companyguide_peer_snapshot_005930",
@@ -398,6 +403,26 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
             self.assertEqual(
                 persisted["shared_cache_source_content_hash"],
                 response.content_hash,
+            )
+            available = (
+                structured_materializer_module._point_in_time_peer_identity_roster(
+                    (
+                        {"peer_symbol": "005930", "peer_name": "Current Corp"},
+                        {"peer_symbol": "111111", "peer_name": "Current Corp"},
+                    ),
+                    cutoff=date(2026, 7, 12),
+                    cache_roots=(target_cache, source_cache),
+                )
+            )
+            self.assertEqual(
+                available,
+                (
+                    {
+                        "peer_symbol": "005930",
+                        "peer_name": "Current Corp",
+                        "point_in_time_snapshot_available": "YES",
+                    },
+                ),
             )
 
     def test_shared_cache_request_fingerprint_blocks_other_symbol(self):
@@ -604,7 +629,23 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
                 source_claims=claims,
                 source_documents=documents,
             )
-        self.assertEqual(len(peer_provider.calls), 1)
+            stabilized = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+        self.assertEqual(len(peer_provider.calls), 2)
         provider_payload = json.dumps(peer_provider.calls[0]["payload"], sort_keys=True)
         self.assertNotIn("suggested_queries", provider_payload)
         fact_profile = peer_provider.calls[0]["payload"]["current_evidence_facts"]
@@ -647,7 +688,8 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         peer_audit = result.audit["peer_selection"]
         self.assertEqual(peer_audit["status"], "PEER_SELECTION_COMPLETE")
         self.assertEqual(peer_audit["verified_peer_count"], 2)
-        self.assertTrue(resumed.audit["peer_selection"]["provider_cache_hit"])
+        self.assertFalse(resumed.audit["peer_selection"]["provider_cache_hit"])
+        self.assertTrue(stabilized.audit["peer_selection"]["provider_cache_hit"])
         self.assertEqual(peer_audit["common_metric_peer_counts"]["forward_pe"], 2)
         peer_inputs = [
             row
