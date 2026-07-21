@@ -2121,6 +2121,10 @@ def _filter_fact_row_context_for_chunk(
         ]
         projected["current_fact_rows"] = rows
         projected["current_fact_row_count"] = len(rows)
+        projected["available"] = bool(rows)
+        projected["prior_fact_dispositions_required"] = bool(rows)
+        projected["required_prior_fact_disposition_count"] = len(rows)
+        projected["unavailable_prior_facts_are_hash_only_not_dispositions"] = True
         projected["chunk_scoped_current_fact_rows"] = True
         payload["prior_component_memo_context"] = projected
 
@@ -2902,6 +2906,9 @@ def _project_prior_component_memo_context(
         "available": False,
         "score_authority": False,
         "deterministic_fact_carry_forward": False,
+        "prior_fact_dispositions_required": False,
+        "required_prior_fact_disposition_count": 0,
+        "unavailable_prior_facts_are_hash_only_not_dispositions": True,
         "current_fact_rows": [],
         "current_fact_row_count": 0,
         "unavailable_prior_fact_count": 0,
@@ -2954,9 +2961,12 @@ def _project_prior_component_memo_context(
     unavailable.sort()
     current_rows.sort(key=lambda row: int(row["fact_row_index"]))
     return {
-        "available": True,
+        "available": bool(current_rows),
         "score_authority": False,
         "deterministic_fact_carry_forward": False,
+        "prior_fact_dispositions_required": bool(current_rows),
+        "required_prior_fact_disposition_count": len(current_rows),
+        "unavailable_prior_facts_are_hash_only_not_dispositions": True,
         "prior_research_complete": bool(
             _field(prior_memo, "research_complete")
         ),
@@ -3487,6 +3497,10 @@ def _pass_instruction(pass_name: str) -> str:
             "Reassess every current prior fact row and account for it exactly once in "
             "prior_fact_dispositions as RETAIN or OMIT with a semantic reason; RETAIN "
             "rows must also appear in selected_fact_row_indices and OMIT rows must not. "
+            "Only current_fact_rows require dispositions. When current_fact_rows is "
+            "empty or prior_fact_dispositions_required is false, return an empty "
+            "prior_fact_dispositions array; unavailable prior facts are hash-only "
+            "audit history and must never be assigned a current row index. "
             "This is an LLM reselection decision, never deterministic carry-forward. "
             "When prior_supervisor_feedback_context.available is true, address its "
             "component-specific semantic findings in a complete rewrite. Treat the "

@@ -267,6 +267,13 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             "business_model_validation_retry_context": {
                 "validation_error": "final synthesis citation correction"
             },
+            "prior_component_memo_context": {
+                "available": True,
+                "current_fact_rows": [],
+                "current_fact_row_count": 0,
+                "unavailable_prior_fact_count": 3,
+                "unavailable_prior_fact_roster_hash": "a" * 64,
+            },
         }
         chunks = _loss_accounted_fact_chunk_payloads(
             payload,
@@ -285,6 +292,19 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         }
         fields = projection["fact_fields"]
         for chunk in chunks:
+            prior_context = chunk["prior_component_memo_context"]
+            self.assertFalse(prior_context["available"])
+            self.assertFalse(
+                prior_context["prior_fact_dispositions_required"]
+            )
+            self.assertEqual(
+                prior_context["required_prior_fact_disposition_count"], 0
+            )
+            self.assertTrue(
+                prior_context[
+                    "unavailable_prior_facts_are_hash_only_not_dispositions"
+                ]
+            )
             local_projection = chunk["current_evidence_fact_projection"]
             local_dictionaries = local_projection["fact_value_dictionaries"]
             self.assertEqual(

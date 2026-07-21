@@ -32,6 +32,7 @@ from e2r.research_brain.researcher_mode import (
 from e2r.research_brain.researcher_mode.component_researcher import (
     CodexResearcherProvider,
     _PROVIDER_SCHEMAS,
+    _project_prior_component_memo_context,
 )
 
 
@@ -818,6 +819,22 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         self.assertEqual(
             resumed.memo.counter_fact_ids,  # type: ignore[union-attr]
             first.memo.counter_fact_ids,  # type: ignore[union-attr]
+        )
+        unavailable_context = _project_prior_component_memo_context(
+            prior_memo=first.memo,
+            plan=self._plans()[0],
+            facts={row.fact_id: row for row in self.facts},
+            fact_id_by_row_index={},
+        )
+        self.assertFalse(unavailable_context["available"])
+        self.assertFalse(
+            unavailable_context["prior_fact_dispositions_required"]
+        )
+        self.assertEqual(
+            unavailable_context["required_prior_fact_disposition_count"], 0
+        )
+        self.assertEqual(
+            unavailable_context["unavailable_prior_fact_count"], 2
         )
 
     def test_prior_fact_omission_requires_explicit_llm_disposition(self) -> None:
