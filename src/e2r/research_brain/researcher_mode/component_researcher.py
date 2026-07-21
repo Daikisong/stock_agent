@@ -1633,6 +1633,11 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                 if isinstance(row, Mapping)
                 and isinstance(row.get("fact_row_index"), int)
             }
+            expected_component_groundings = (
+                _expected_component_chunk_fact_groundings(chunk)
+                if pass_name == "COMPONENT_RESEARCH"
+                else {}
+            )
             attempt_payload = chunk
             validation_retry_used = False
             while True:
@@ -1646,6 +1651,9 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                         response=response,
                         allowed_fact_row_indices=allowed_indices,
                         prior_fact_row_indices=prior_indices,
+                        expected_component_groundings=(
+                            expected_component_groundings
+                        ),
                     )
                     break
                 except StructuredProviderRejected as exc:
@@ -1665,13 +1673,25 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                                 "required_prior_fact_row_indices": sorted(
                                     prior_indices
                                 ),
+                                "expected_selected_fact_groundings": (
+                                    _selected_expected_chunk_grounding_rows(
+                                        response=response,
+                                        expected_groundings=(
+                                            expected_component_groundings
+                                        ),
+                                    )
+                                ),
                                 "instruction": (
                                     "Rewrite the complete chunk response once. "
                                     "Cite only allowed_fact_row_indices. For a "
                                     "component chunk, return one exact grounding "
-                                    "per selected row and dispose every required "
-                                    "prior row exactly once. Do not invent evidence, "
-                                    "score, or Stage."
+                                    "per selected row by copying the immutable "
+                                    "fields in expected_selected_fact_groundings, "
+                                    "and dispose every required prior row exactly "
+                                    "once. If a selected row does not support the "
+                                    "component, omit it instead of attaching another "
+                                    "row's semantics. Do not invent evidence, score, "
+                                    "or Stage."
                                 ),
                             },
                         }
@@ -2232,6 +2252,7 @@ def _validate_loss_accounted_chunk_response(
     response: Mapping[str, Any],
     allowed_fact_row_indices: set[int],
     prior_fact_row_indices: set[int],
+    expected_component_groundings: Mapping[int, Mapping[str, Any]],
 ) -> None:
     cited = _response_fact_row_indices(pass_name, response)
     if not cited.issubset(allowed_fact_row_indices):
@@ -2247,6 +2268,31 @@ def _validate_loss_accounted_chunk_response(
         raise StructuredProviderRejected(
             "loss_accounted_fact_chunk_grounding_roster_mismatch"
         )
+    groundings = {
+        int(row["fact_row_index"]): row
+        for row in response.get("selected_fact_groundings") or ()
+        if isinstance(row, Mapping)
+        and isinstance(row.get("fact_row_index"), int)
+        and not isinstance(row.get("fact_row_index"), bool)
+    }
+    immutable_fields = (
+        "source_predicate",
+        "source_value_json",
+        "source_period_json",
+        "source_economic_mechanism",
+    )
+    for row_index, grounding in groundings.items():
+        expected = expected_component_groundings.get(row_index)
+        if expected is None:
+            raise StructuredProviderRejected(
+                "loss_accounted_fact_chunk_grounding_fact_row_unavailable"
+            )
+        for field in immutable_fields:
+            if str(grounding.get(field)) != str(expected[field]):
+                raise StructuredProviderRejected(
+                    "loss_accounted_fact_chunk_grounding_"
+                    f"{field}_mismatch"
+                )
     disposition_indices = _mapping_fact_row_indices(
         response.get("prior_fact_dispositions") or ()
     )
@@ -2254,6 +2300,106 @@ def _validate_loss_accounted_chunk_response(
         raise StructuredProviderRejected(
             "loss_accounted_fact_chunk_prior_disposition_roster_mismatch"
         )
+
+
+def _expected_component_chunk_fact_groundings(
+    chunk: Mapping[str, Any],
+) -> Mapping[int, Mapping[str, Any]]:
+    """Decode immutable grounding fields for each chunk-local fact row."""
+
+    projection = chunk.get("current_evidence_fact_projection")
+    rows = chunk.get("current_evidence_fact_graph")
+    if (
+        not isinstance(projection, Mapping)
+        or not isinstance(rows, Sequence)
+        or isinstance(rows, (str, bytes))
+    ):
+        raise ValueError("component fact chunk projection is unavailable")
+    encoding = projection.get("chunk_fact_row_encoding")
+    dictionaries = projection.get("fact_value_dictionaries")
+    if not isinstance(encoding, Mapping) or not isinstance(
+        dictionaries, Mapping
+    ):
+        raise ValueError("component fact chunk encoding is unavailable")
+    fields = tuple(
+        str(value)
+        for value in encoding.get("encoded_fact_value_fields") or ()
+    )
+    decoded_by_row: dict[int, Mapping[str, Any]] = {}
+    for row in rows:
+        if not isinstance(row, Mapping):
+            raise ValueError("component fact chunk row must be an object")
+        row_index = row.get("fact_row_index")
+        encoded_values = row.get("encoded_fact_values")
+        if (
+            isinstance(row_index, bool)
+            or not isinstance(row_index, int)
+            or row_index < 0
+            or not isinstance(encoded_values, Sequence)
+            or isinstance(encoded_values, (str, bytes))
+            or len(encoded_values) != len(fields)
+            or row_index in decoded_by_row
+        ):
+            raise ValueError("component fact chunk row encoding is invalid")
+        decoded: dict[str, Any] = {}
+        for field, dictionary_index in zip(fields, encoded_values):
+            if not field.endswith("_dictionary_index"):
+                raise ValueError("component fact chunk field is not encoded")
+            dictionary_name = field[: -len("_dictionary_index")]
+            dictionary = dictionaries.get(dictionary_name)
+            if (
+                not isinstance(dictionary, Sequence)
+                or isinstance(dictionary, (str, bytes))
+                or isinstance(dictionary_index, bool)
+                or not isinstance(dictionary_index, int)
+                or dictionary_index < 0
+                or dictionary_index >= len(dictionary)
+            ):
+                raise ValueError("component fact chunk dictionary index is invalid")
+            decoded[dictionary_name] = dictionary[dictionary_index]
+        required = {"predicate", "value", "period", "economic_mechanism"}
+        if not required.issubset(decoded):
+            raise ValueError("component fact chunk grounding fields are missing")
+        decoded_by_row[row_index] = {
+            "source_predicate": decoded["predicate"],
+            "source_value_json": _canonical_fact_field_json(decoded["value"]),
+            "source_period_json": _canonical_fact_field_json(decoded["period"]),
+            "source_economic_mechanism": decoded["economic_mechanism"],
+        }
+    return decoded_by_row
+
+
+def _selected_expected_chunk_grounding_rows(
+    *,
+    response: Any,
+    expected_groundings: Mapping[int, Mapping[str, Any]],
+) -> list[Mapping[str, Any]]:
+    """Expose exact selected source fields to the bounded chunk rewrite."""
+
+    if not isinstance(response, Mapping):
+        return []
+    selected = response.get("selected_fact_row_indices")
+    if isinstance(selected, (str, bytes)) or not isinstance(selected, Sequence):
+        return []
+    result = []
+    seen: set[int] = set()
+    for row_index in selected:
+        if (
+            isinstance(row_index, bool)
+            or not isinstance(row_index, int)
+            or row_index < 0
+            or row_index in seen
+            or row_index not in expected_groundings
+        ):
+            continue
+        seen.add(row_index)
+        result.append(
+            {
+                "fact_row_index": row_index,
+                **expected_groundings[row_index],
+            }
+        )
+    return result
 
 
 def _validate_loss_accounted_synthesis_response(

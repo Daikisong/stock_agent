@@ -26,7 +26,9 @@ from e2r.research_brain.researcher_mode import (
 from e2r.research_brain.researcher_mode.component_researcher import (
     CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT,
     SOURCE_CANDIDATE_RANKING_SCHEMA,
+    _expected_component_chunk_fact_groundings,
     _loss_accounted_fact_chunk_payloads,
+    _validate_loss_accounted_chunk_response,
 )
 from e2r.research_brain.researcher_mode.prompt_projection import (
     project_current_decision_citable_facts,
@@ -337,6 +339,93 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                             original[position]
                         ],
                     )
+
+    def test_component_chunk_rejects_semantics_copied_from_another_row(
+        self,
+    ) -> None:
+        facts = [
+            {
+                "fact_id": f"EFACT-{index}",
+                "target_id": "TEST",
+                "as_of_date": "2026-06-29",
+                "subject": "target memory business",
+                "business_segment": "MEMORY",
+                "product_family": "HBM",
+                "economic_mechanism": (
+                    f"immutable mechanism {index} " + "x" * 40_000
+                ),
+                "predicate": f"IMMUTABLE_PREDICATE_{index}",
+                "value": {"point": index},
+                "unit": "units",
+                "period": f"2026-Q{index + 1}",
+                "direction": "POSITIVE",
+                "current_lifecycle": "CURRENT",
+                "confidence": 0.8,
+                "structured_evidence_roles": [],
+                "claim_ids": [f"CLAIM-{index}"],
+                "source_ids": [f"DOC-{index}"],
+                "source_independence_group": "issuer:test",
+                "corroborating_independence_groups": ["issuer:test"],
+                "allowed_component_ids": [],
+                "question_family_tags": [],
+                "primitive_tags": [],
+            }
+            for index in range(4)
+        ]
+        projection = project_current_decision_citable_facts(facts)
+        chunks = _loss_accounted_fact_chunk_payloads(
+            {
+                "current_evidence_fact_graph": projection["facts"],
+                "current_evidence_fact_projection": {
+                    key: value
+                    for key, value in projection.items()
+                    if key not in {"facts", "fact_id_by_row_index"}
+                },
+            },
+            pass_name="COMPONENT_RESEARCH",
+            target_projection_chars=100_000,
+        )
+        self.assertGreater(len(chunks), 1)
+        expected = _expected_component_chunk_fact_groundings(chunks[0])
+        selected_index = min(expected)
+        other_index = next(index for index in expected if index != selected_index)
+        copied_from_other_row = {
+            "fact_row_index": selected_index,
+            **expected[other_index],
+            "component_interpretation": "wrong row semantics",
+        }
+        response = {
+            "selected_fact_row_indices": [selected_index],
+            "selected_fact_groundings": [copied_from_other_row],
+            "prior_fact_dispositions": [],
+        }
+
+        with self.assertRaisesRegex(
+            StructuredProviderRejected,
+            "loss_accounted_fact_chunk_grounding_source_predicate_mismatch",
+        ):
+            _validate_loss_accounted_chunk_response(
+                pass_name="COMPONENT_RESEARCH",
+                response=response,
+                allowed_fact_row_indices=set(expected),
+                prior_fact_row_indices=set(),
+                expected_component_groundings=expected,
+            )
+
+        response["selected_fact_groundings"] = [
+            {
+                "fact_row_index": selected_index,
+                **expected[selected_index],
+                "component_interpretation": "correct row semantics",
+            }
+        ]
+        _validate_loss_accounted_chunk_response(
+            pass_name="COMPONENT_RESEARCH",
+            response=response,
+            allowed_fact_row_indices=set(expected),
+            prior_fact_row_indices=set(),
+            expected_component_groundings=expected,
+        )
 
     def test_transport_sends_schema_bound_non_thinking_request(self) -> None:
         schema = {
