@@ -884,10 +884,7 @@ def _provider_output_schema(
         "source_period_json",
         "source_economic_mechanism",
     )
-    row_indices: list[int] = []
-    values_by_field: dict[str, list[str]] = {
-        field: [] for field in required_fields
-    }
+    normalized_rows: list[Mapping[str, Any]] = []
     for row in rows:
         if not isinstance(row, Mapping):
             return base
@@ -899,30 +896,54 @@ def _provider_output_schema(
             or any(not str(row.get(field) or "") for field in required_fields)
         ):
             return base
-        row_indices.append(row_index)
-        for field in required_fields:
-            value = str(row[field])
-            if value not in values_by_field[field]:
-                values_by_field[field].append(value)
-    row_indices = list(dict.fromkeys(row_indices))
+        normalized_rows.append(
+            {
+                "fact_row_index": row_index,
+                **{field: str(row[field]) for field in required_fields},
+            }
+        )
+    normalized_rows = list(
+        {
+            int(row["fact_row_index"]): row for row in normalized_rows
+        }.values()
+    )
+    row_indices = [int(row["fact_row_index"]) for row in normalized_rows]
     schema = json.loads(json.dumps(base, ensure_ascii=False))
     properties = schema["properties"]
     properties["selected_fact_row_indices"]["items"] = {
         "type": "integer",
         "enum": row_indices,
     }
-    grounding_properties = properties["selected_fact_groundings"]["items"][
-        "properties"
+    grounding_item = properties["selected_fact_groundings"]["items"]
+    component_interpretation_schema = grounding_item["properties"][
+        "component_interpretation"
     ]
-    grounding_properties["fact_row_index"] = {
-        "type": "integer",
-        "enum": row_indices,
+    properties["selected_fact_groundings"]["items"] = {
+        "anyOf": [
+            {
+                "type": "object",
+                "additionalProperties": False,
+                "required": list(grounding_item["required"]),
+                "properties": {
+                    "fact_row_index": {
+                        "type": "integer",
+                        "enum": [int(row["fact_row_index"])],
+                    },
+                    **{
+                        field: {
+                            "type": "string",
+                            "enum": [str(row[field])],
+                        }
+                        for field in required_fields
+                    },
+                    "component_interpretation": (
+                        component_interpretation_schema
+                    ),
+                },
+            }
+            for row in normalized_rows
+        ]
     }
-    for field in required_fields:
-        grounding_properties[field] = {
-            "type": "string",
-            "enum": values_by_field[field],
-        }
     return schema
 
 

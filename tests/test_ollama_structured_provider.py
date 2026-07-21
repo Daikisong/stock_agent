@@ -28,6 +28,7 @@ from e2r.research_brain.researcher_mode.component_researcher import (
     SOURCE_CANDIDATE_RANKING_SCHEMA,
     _expected_component_chunk_fact_groundings,
     _loss_accounted_fact_chunk_payloads,
+    _provider_output_schema,
     _validate_loss_accounted_chunk_response,
 )
 from e2r.research_brain.researcher_mode.prompt_projection import (
@@ -634,9 +635,19 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 "loss_accounted_fact_chunk_validation_retry_context"
             )
         )
-        grounding_properties = retry_schema["properties"][
+        grounding_variants = retry_schema["properties"][
             "selected_fact_groundings"
-        ]["items"]["properties"]
+        ]["items"]["anyOf"]
+        self.assertEqual(len(grounding_variants), 1)
+        grounding_properties = grounding_variants[0]["properties"]
+        self.assertEqual(
+            grounding_properties["fact_row_index"]["enum"],
+            [
+                retry_context["expected_selected_fact_groundings"][0][
+                    "fact_row_index"
+                ]
+            ],
+        )
         self.assertEqual(
             grounding_properties["source_economic_mechanism"]["enum"],
             [
@@ -654,6 +665,60 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self.assertEqual(
             response["selected_fact_groundings"][0]["source_predicate"],
             "RETRY_PREDICATE_0",
+        )
+
+    def test_component_retry_schema_binds_immutable_fields_by_row(self) -> None:
+        expected_rows = [
+            {
+                "fact_row_index": 7,
+                "source_predicate": "PREDICATE_7",
+                "source_value_json": '"VALUE_7"',
+                "source_period_json": '"PERIOD_7"',
+                "source_economic_mechanism": "MECHANISM_7",
+            },
+            {
+                "fact_row_index": 9,
+                "source_predicate": "PREDICATE_9",
+                "source_value_json": '"VALUE_9"',
+                "source_period_json": '"PERIOD_9"',
+                "source_economic_mechanism": "MECHANISM_9",
+            },
+        ]
+        schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload={
+                "loss_accounted_fact_chunk_validation_retry_context": {
+                    "expected_selected_fact_groundings": expected_rows,
+                }
+            },
+        )
+
+        variants = schema["properties"]["selected_fact_groundings"][
+            "items"
+        ]["anyOf"]
+        self.assertEqual(len(variants), 2)
+        actual = {
+            variant["properties"]["fact_row_index"]["enum"][0]: {
+                field: variant["properties"][field]["enum"][0]
+                for field in (
+                    "source_predicate",
+                    "source_value_json",
+                    "source_period_json",
+                    "source_economic_mechanism",
+                )
+            }
+            for variant in variants
+        }
+        self.assertEqual(
+            actual,
+            {
+                row["fact_row_index"]: {
+                    key: value
+                    for key, value in row.items()
+                    if key != "fact_row_index"
+                }
+                for row in expected_rows
+            },
         )
 
     def test_transport_sends_schema_bound_non_thinking_request(self) -> None:
