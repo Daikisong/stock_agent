@@ -415,7 +415,7 @@ class CurrentStructuredSourceMaterializer:
             manifests=manifests,
             shared_cache_roots=reusable_cache_roots,
         )
-        price_route = self._price_route(
+        price_route, listing_identity_roster = self._price_route(
             target_id=target_id,
             cutoff=cutoff,
             trading_date=trading_date,
@@ -437,6 +437,8 @@ class CurrentStructuredSourceMaterializer:
             cutoff=cutoff,
             evidence_facts=evidence_facts,
             source_claims=source_claims,
+            listing_identity_roster=listing_identity_roster,
+            listing_snapshot_date=trading_date,
             cache_root=cache_root,
             checkpoint_resume=checkpoint_resume,
             attempts=attempts,
@@ -820,6 +822,7 @@ class CurrentStructuredSourceMaterializer:
         manifests: list[Mapping[str, Any]],
     ):
         bars: list[PriceBar] = []
+        listing_identity_roster: tuple[Mapping[str, str], ...] = ()
         data_key = os.environ.get("DATA_GO_KR_SERVICE_KEY")
         if data_key:
             page = 1
@@ -914,6 +917,11 @@ class CurrentStructuredSourceMaterializer:
                 )
                 if target_row is None:
                     continue
+                listing_identity_roster = _krx_listing_identity_roster(
+                    payload,
+                    target_id=target_id,
+                    snapshot_date=trading_date,
+                )
                 bar = _krx_stock_bar(target_row, target_id=target_id, cutoff=cutoff)
                 if bar is not None:
                     bars.append(bar)
@@ -981,8 +989,12 @@ class CurrentStructuredSourceMaterializer:
             )
         )
         if not selected or not source_ids:
-            return UnavailableStructuredSourceRoute(
-                "KRX_PRICE_MARKET_CAP", "no point-in-time price history available"
+            return (
+                UnavailableStructuredSourceRoute(
+                    "KRX_PRICE_MARKET_CAP",
+                    "no point-in-time price history available",
+                ),
+                listing_identity_roster,
             )
         payload = StructuredSourcePayload(
             route_name="KRX_PRICE_MARKET_CAP",
@@ -996,7 +1008,10 @@ class CurrentStructuredSourceMaterializer:
                 "current_provider": "KRX",
             },
         )
-        return InMemoryStructuredSourceRoute("KRX_PRICE_MARKET_CAP", payload)
+        return (
+            InMemoryStructuredSourceRoute("KRX_PRICE_MARKET_CAP", payload),
+            listing_identity_roster,
+        )
 
     def _peer_route(
         self,
@@ -1006,6 +1021,8 @@ class CurrentStructuredSourceMaterializer:
         cutoff: date,
         evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
         source_claims: Sequence[Mapping[str, Any]],
+        listing_identity_roster: Sequence[Mapping[str, str]],
+        listing_snapshot_date: date,
         cache_root: Path,
         checkpoint_resume: bool,
         attempts: list[CurrentStructuredFetchAttempt],
@@ -1072,6 +1089,17 @@ class CurrentStructuredSourceMaterializer:
             "source_backed_claim_context": peer_selection_context[
                 "source_claim_business_profile"
             ],
+            "authoritative_listing_identity_roster": [
+                dict(row) for row in listing_identity_roster
+            ],
+            "listing_identity_roster_accounting": {
+                "provider_name": "KRX",
+                "snapshot_date": listing_snapshot_date.isoformat(),
+                "identity_count": len(listing_identity_roster),
+                "identity_roster_hash": stable_hash(listing_identity_roster),
+                "complete_market_snapshot_used_without_top_n": True,
+                "identity_scope_only_not_score_or_stage_input": True,
+            },
             "peer_selection_context_accounting": {
                 key: value
                 for key, value in peer_selection_context.items()
@@ -1089,6 +1117,10 @@ class CurrentStructuredSourceMaterializer:
                 "exclude_target_symbol": True,
                 "sector_label_alone_is_insufficient": True,
                 "structured_value_invention_forbidden": True,
+                (
+                    "peer_symbol_and_name_must_be_copied_exactly_from_"
+                    "authoritative_listing_identity_roster"
+                ): True,
                 "score_or_stage_authority": False,
             },
         }
@@ -1413,6 +1445,8 @@ class CurrentStructuredSourceMaterializer:
                     cutoff=cutoff,
                     evidence_facts=evidence_facts,
                     source_claims=source_claims,
+                    listing_identity_roster=listing_identity_roster,
+                    listing_snapshot_date=listing_snapshot_date,
                     cache_root=cache_root,
                     checkpoint_resume=True,
                     attempts=attempts,
@@ -1439,6 +1473,18 @@ class CurrentStructuredSourceMaterializer:
                     proposal_failures=proposal_failures,
                 )
             )
+            selection_cache_existed = selection_cache_path.is_file()
+            try:
+                selection_cache_path.unlink(missing_ok=True)
+                selection_cache_deleted = selection_cache_existed
+            except OSError:
+                selection_cache_deleted = False
+            base_audit["selection_route_cache_invalidation"] = {
+                "cache_path": str(selection_cache_path),
+                "cache_entry_existed": selection_cache_existed,
+                "cache_entry_deleted": selection_cache_deleted,
+                "reason": "STRUCTURED_PEER_SOURCE_VERIFICATION_REJECTED",
+            }
             base_audit["pending_reason"] = "INSUFFICIENT_COMMON_PEER_MULTIPLES"
             return (
                 UnavailableStructuredSourceRoute(
@@ -2751,6 +2797,51 @@ def _data_go_total_pages(payload: Mapping[str, Any], *, rows_per_page: int) -> i
     total = _int(body.get("totalCount")) or 0
     per_page = _int(body.get("numOfRows")) or rows_per_page
     return max(1, math.ceil(total / per_page)) if total > 0 and per_page > 0 else 1
+
+
+def _krx_listing_identity_roster(
+    payload: Mapping[str, Any],
+    *,
+    target_id: str,
+    snapshot_date: date,
+) -> tuple[Mapping[str, str], ...]:
+    """Project the complete point-in-time KRX symbol/name identity plane.
+
+    The roster gives the LLM valid identities to choose from; it does not rank
+    peers or provide valuation values.  CompanyGuide still verifies every
+    selected identity and multiple independently.
+    """
+
+    rows = payload.get("OutBlock_1") or ()
+    if not isinstance(rows, Sequence) or isinstance(rows, (str, bytes)):
+        return ()
+    expected_date = snapshot_date.strftime("%Y%m%d")
+    identities: dict[str, str] = {}
+    ambiguous: set[str] = set()
+    for row in rows:
+        if not isinstance(row, Mapping):
+            continue
+        if str(row.get("BAS_DD") or "") != expected_date:
+            continue
+        symbol = str(row.get("ISU_CD") or row.get("ISU_SRT_CD") or "").strip()
+        name = str(row.get("ISU_NM") or "").strip()
+        if (
+            symbol == target_id
+            or len(symbol) != 6
+            or not symbol.isdigit()
+            or not name
+        ):
+            continue
+        previous = identities.get(symbol)
+        if previous is not None and previous != name:
+            ambiguous.add(symbol)
+            continue
+        identities[symbol] = name
+    return tuple(
+        {"peer_symbol": symbol, "peer_name": identities[symbol]}
+        for symbol in sorted(identities)
+        if symbol not in ambiguous
+    )
 
 
 def _krx_stock_bar(

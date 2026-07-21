@@ -42,7 +42,13 @@ class FixtureStructuredTransport:
         elif "getstockpriceinfo" in url.casefold():
             payload = _data_go_payload()
         elif "/sto/" in url:
-            payload = {"OutBlock_1": [_krx_stock_row()]}
+            payload = {
+                "OutBlock_1": [
+                    _krx_stock_row(),
+                    _krx_stock_row(symbol="111111", name="Peer Alpha"),
+                    _krx_stock_row(symbol="222222", name="Peer Beta"),
+                ]
+            }
         elif "/idx/" in url:
             payload = {"OutBlock_1": [_krx_index_row(params["basDd"])]}
         else:
@@ -622,6 +628,20 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
                 "score_or_stage_authority"
             ]
         )
+        self.assertEqual(
+            peer_provider.calls[0]["payload"][
+                "authoritative_listing_identity_roster"
+            ],
+            [
+                {"peer_symbol": "111111", "peer_name": "Peer Alpha"},
+                {"peer_symbol": "222222", "peer_name": "Peer Beta"},
+            ],
+        )
+        self.assertTrue(
+            peer_provider.calls[0]["payload"][
+                "listing_identity_roster_accounting"
+            ]["complete_market_snapshot_used_without_top_n"]
+        )
         self.assertNotIn("current_score", provider_payload.casefold())
         self.assertNotIn("current_stage", provider_payload.casefold())
         peer_audit = result.audit["peer_selection"]
@@ -779,6 +799,12 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
                 source_claims=claims,
                 source_documents=documents,
             )
+            selection_cache_path = (
+                Path(directory)
+                / "structured_source_cache"
+                / "peer_selection_005930.json"
+            )
+            selection_cache_exists_after_first = selection_cache_path.exists()
             resumed = CurrentStructuredSourceMaterializer(
                 transport=transport,
                 price_lookback_days=400,
@@ -805,6 +831,12 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         self.assertIn(
             "COMPANY_IDENTITY_MISMATCH",
             peer_provider.invalidations[0]["reason"],
+        )
+        self.assertFalse(selection_cache_exists_after_first)
+        self.assertTrue(
+            first_audit["selection_route_cache_invalidation"][
+                "cache_entry_deleted"
+            ]
         )
         self.assertEqual(peer_provider.attempt_count, 3)
         self.assertEqual(
@@ -1083,11 +1115,11 @@ def _data_go_payload():
     }
 
 
-def _krx_stock_row():
+def _krx_stock_row(*, symbol: str = "005930", name: str = "Current Corp"):
     return {
         "BAS_DD": "20260710",
-        "ISU_CD": "005930",
-        "ISU_NM": "Current Corp",
+        "ISU_CD": symbol,
+        "ISU_NM": name,
         "TDD_CLSPRC": "121000",
         "TDD_OPNPRC": "120000",
         "TDD_HGPRC": "122000",
