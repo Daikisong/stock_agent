@@ -819,6 +819,49 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             ]
         )
 
+        chunk_schema = _provider_output_schema(
+            pass_name="RED_TEAM_RESEARCH",
+            payload={
+                "loss_accounted_fact_chunk": {"chunk_index": 12},
+                "current_evidence_fact_graph": [
+                    {"fact_row_index": 2},
+                    {"fact_row_index": 5},
+                ],
+            },
+        )
+        self.assertEqual(
+            chunk_schema["properties"]["challenged_fact_row_indices"][
+                "items"
+            ],
+            {"type": "integer", "enum": [2, 5]},
+        )
+
+        synthesis_schema = _provider_output_schema(
+            pass_name="RED_TEAM_RESEARCH",
+            payload={
+                "loss_accounted_fact_chunk_synthesis": {
+                    "chunk_responses": [
+                        {
+                            "response": {
+                                "challenged_fact_row_indices": [17, 23]
+                            }
+                        },
+                        {
+                            "response": {
+                                "challenged_fact_row_indices": [23, 31]
+                            }
+                        },
+                    ]
+                }
+            },
+        )
+        self.assertEqual(
+            synthesis_schema["properties"][
+                "challenged_fact_row_indices"
+            ]["items"],
+            {"type": "integer", "enum": [17, 23, 31]},
+        )
+
     def test_ollama_canonicalizes_only_duplicate_red_team_fact_rows(self) -> None:
         response = {
             "challenged_fact_row_indices": [37, 206, 206, 297],

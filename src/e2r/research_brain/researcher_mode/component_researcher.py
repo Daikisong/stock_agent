@@ -867,6 +867,38 @@ def _provider_output_schema(
     """
 
     base = _PROVIDER_SCHEMAS[pass_name]
+    if pass_name == "RED_TEAM_RESEARCH":
+        allowed_row_indices: list[int] = []
+        if isinstance(payload.get("loss_accounted_fact_chunk"), Mapping):
+            allowed_row_indices = [
+                int(row["fact_row_index"])
+                for row in payload.get("current_evidence_fact_graph") or ()
+                if isinstance(row, Mapping)
+                and isinstance(row.get("fact_row_index"), int)
+                and not isinstance(row.get("fact_row_index"), bool)
+            ]
+        synthesis = payload.get("loss_accounted_fact_chunk_synthesis")
+        if isinstance(synthesis, Mapping):
+            allowed_row_indices = [
+                int(row_index)
+                for chunk_response in synthesis.get("chunk_responses") or ()
+                if isinstance(chunk_response, Mapping)
+                for response in (chunk_response.get("response"),)
+                if isinstance(response, Mapping)
+                for row_index in response.get("challenged_fact_row_indices")
+                or ()
+                if isinstance(row_index, int)
+                and not isinstance(row_index, bool)
+            ]
+        allowed_row_indices = list(dict.fromkeys(allowed_row_indices))
+        if not allowed_row_indices:
+            return base
+        schema = json.loads(json.dumps(base, ensure_ascii=False))
+        schema["properties"]["challenged_fact_row_indices"]["items"] = {
+            "type": "integer",
+            "enum": allowed_row_indices,
+        }
+        return schema
     if pass_name != "COMPONENT_RESEARCH":
         return base
     retry = payload.get(
