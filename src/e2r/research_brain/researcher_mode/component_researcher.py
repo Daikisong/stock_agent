@@ -1068,11 +1068,25 @@ def _provider_output_schema(
         )
         disposition_schema = properties["prior_fact_dispositions"]
         if allowed_disposition_indices:
-            disposition_schema["items"]["properties"][
-                "fact_row_index"
-            ] = {
-                "type": "integer",
-                "enum": allowed_disposition_indices,
+            disposition_item = disposition_schema["items"]
+            disposition_variants = []
+            for row_index in allowed_disposition_indices:
+                variant = json.loads(
+                    json.dumps(disposition_item, ensure_ascii=False)
+                )
+                variant["properties"]["fact_row_index"] = {
+                    "type": "integer",
+                    "enum": [row_index],
+                }
+                disposition_variants.append(variant)
+            # ``uniqueItems`` is not enforced by every local grammar backend.
+            # Position-bind the complete prior roster as well, so duplicate
+            # row ids cannot satisfy the exact-once completion contract by
+            # merely filling the required array length.  RETAIN/OMIT and the
+            # semantic reason remain unconstrained model decisions.
+            disposition_schema["prefixItems"] = disposition_variants
+            disposition_schema["items"] = {
+                "anyOf": disposition_variants,
             }
             disposition_schema["minItems"] = len(
                 allowed_disposition_indices

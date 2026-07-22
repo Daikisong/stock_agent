@@ -787,9 +787,22 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         )
         synthesis_properties = synthesis_schema["properties"]
         self.assertEqual(
-            synthesis_properties["prior_fact_dispositions"]["items"]
-            ["properties"]["fact_row_index"],
-            {"type": "integer", "enum": [7, 9]},
+            [
+                row["properties"]["fact_row_index"]["enum"][0]
+                for row in synthesis_properties[
+                    "prior_fact_dispositions"
+                ]["prefixItems"]
+            ],
+            [7, 9],
+        )
+        self.assertEqual(
+            [
+                row["properties"]["fact_row_index"]["enum"][0]
+                for row in synthesis_properties[
+                    "prior_fact_dispositions"
+                ]["items"]["anyOf"]
+            ],
+            [7, 9],
         )
         self.assertEqual(
             synthesis_properties["prior_fact_dispositions"]["minItems"],
