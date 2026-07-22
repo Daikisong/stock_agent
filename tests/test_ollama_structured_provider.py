@@ -758,7 +758,16 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                                             "chunk interpretation"
                                         ),
                                     }
-                                ]
+                                ],
+                                "prior_fact_dispositions": [
+                                    {
+                                        "fact_row_index": row[
+                                            "fact_row_index"
+                                        ],
+                                        "disposition": "RETAIN",
+                                        "reason": "chunk disposition",
+                                    }
+                                ],
                             }
                         }
                         for row in expected_rows
@@ -777,6 +786,11 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             [7, 9],
         )
         synthesis_properties = synthesis_schema["properties"]
+        self.assertEqual(
+            synthesis_properties["prior_fact_dispositions"]["items"]
+            ["properties"]["fact_row_index"],
+            {"type": "integer", "enum": [7, 9]},
+        )
         self.assertEqual(
             synthesis_properties["research_complete"],
             {"type": "boolean", "enum": [True]},

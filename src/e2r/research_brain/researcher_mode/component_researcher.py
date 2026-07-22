@@ -1051,6 +1051,31 @@ def _provider_output_schema(
     }
     synthesis = payload.get("loss_accounted_fact_chunk_synthesis")
     if isinstance(synthesis, Mapping):
+        allowed_disposition_indices = list(
+            dict.fromkeys(
+                int(disposition["fact_row_index"])
+                for chunk_response in synthesis.get("chunk_responses") or ()
+                if isinstance(chunk_response, Mapping)
+                for response in (chunk_response.get("response"),)
+                if isinstance(response, Mapping)
+                for disposition in response.get("prior_fact_dispositions")
+                or ()
+                if isinstance(disposition, Mapping)
+                and isinstance(disposition.get("fact_row_index"), int)
+                and not isinstance(disposition.get("fact_row_index"), bool)
+                and int(disposition["fact_row_index"]) >= 0
+            )
+        )
+        disposition_schema = properties["prior_fact_dispositions"]
+        if allowed_disposition_indices:
+            disposition_schema["items"]["properties"][
+                "fact_row_index"
+            ] = {
+                "type": "integer",
+                "enum": allowed_disposition_indices,
+            }
+        else:
+            disposition_schema["maxItems"] = 0
         # At synthesis time all loss-accounted chunks are already present and
         # deterministic validation requires the model to review every one of
         # them.  ``research_complete`` therefore records review completion,
