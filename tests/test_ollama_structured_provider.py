@@ -971,6 +971,34 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self.assertEqual(roster["maxItems"], 2)
         self.assertTrue(roster["uniqueItems"])
 
+        chunk_schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload={
+                "loss_accounted_fact_chunk": {"chunk_index": 0},
+                "loss_accounted_fact_chunk_validation_retry_context": {
+                    "expected_selected_fact_groundings": [
+                        {
+                            "fact_row_index": 0,
+                            "source_predicate": "PREDICATE",
+                            "source_value_json": '"VALUE"',
+                            "source_period_json": '"PERIOD"',
+                            "source_economic_mechanism": "MECHANISM",
+                        }
+                    ]
+                },
+                "structured_metric_rows": [
+                    {"structured_metric_row_index": 0},
+                    {"structured_metric_row_index": 1},
+                ],
+            },
+        )
+        chunk_roster = chunk_schema["properties"][
+            "structured_metric_row_indices"
+        ]
+        self.assertNotIn("prefixItems", chunk_roster)
+        self.assertNotIn("minItems", chunk_roster)
+        self.assertNotIn("maxItems", chunk_roster)
+
     def test_red_team_schema_rejects_duplicate_challenged_fact_rows(self) -> None:
         schema = _provider_output_schema(
             pass_name="RED_TEAM_RESEARCH",

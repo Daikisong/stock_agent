@@ -950,6 +950,9 @@ def _provider_output_schema(
     if (
         isinstance(structured_metric_rows, Sequence)
         and not isinstance(structured_metric_rows, (str, bytes))
+        and not isinstance(
+            payload.get("loss_accounted_fact_chunk"), Mapping
+        )
     ):
         structured_metric_row_indices: list[int] = []
         valid_structured_metric_roster = True
@@ -4306,8 +4309,7 @@ def _pass_instruction(pass_name: str) -> str:
             "EvidenceFact. Neutral context and structured metrics marked "
             "score_authority=false cannot support positive points. "
             "Return structured_metric_row_indices using only the explicit row numbers "
-            "from structured_metric_rows and account for every supplied row exactly "
-            "once. The deterministic engine will restore the "
+            "from structured_metric_rows. The deterministic engine will restore the "
             "immutable requirement ids and values; never copy a nested record metric_id "
             "or invent a value."
         )
