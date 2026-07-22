@@ -1074,6 +1074,13 @@ def _provider_output_schema(
                 "type": "integer",
                 "enum": allowed_disposition_indices,
             }
+            disposition_schema["minItems"] = len(
+                allowed_disposition_indices
+            )
+            disposition_schema["maxItems"] = len(
+                allowed_disposition_indices
+            )
+            disposition_schema["uniqueItems"] = True
         else:
             disposition_schema["maxItems"] = 0
         # At synthesis time all loss-accounted chunks are already present and

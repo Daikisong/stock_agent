@@ -792,6 +792,19 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             {"type": "integer", "enum": [7, 9]},
         )
         self.assertEqual(
+            synthesis_properties["prior_fact_dispositions"]["minItems"],
+            2,
+        )
+        self.assertEqual(
+            synthesis_properties["prior_fact_dispositions"]["maxItems"],
+            2,
+        )
+        self.assertTrue(
+            synthesis_properties["prior_fact_dispositions"][
+                "uniqueItems"
+            ]
+        )
+        self.assertEqual(
             synthesis_properties["research_complete"],
             {"type": "boolean", "enum": [True]},
         )
