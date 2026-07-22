@@ -948,6 +948,8 @@ def _provider_output_schema(
     retry = payload.get(
         "loss_accounted_fact_chunk_validation_retry_context"
     )
+    if not isinstance(retry, Mapping):
+        retry = payload.get("component_research_validation_retry_context")
     rows = (
         retry.get("expected_selected_fact_groundings")
         if isinstance(retry, Mapping)
@@ -1023,32 +1025,81 @@ def _provider_output_schema(
     component_interpretation_schema = grounding_item["properties"][
         "component_interpretation"
     ]
-    properties["selected_fact_groundings"]["items"] = {
-        "anyOf": [
-            {
-                "type": "object",
-                "additionalProperties": False,
-                "required": list(grounding_item["required"]),
-                "properties": {
-                    "fact_row_index": {
-                        "type": "integer",
-                        "enum": [int(row["fact_row_index"])],
-                    },
-                    **{
-                        field: {
-                            "type": "string",
-                            "enum": [str(row[field])],
-                        }
-                        for field in required_fields
-                    },
-                    "component_interpretation": (
-                        component_interpretation_schema
-                    ),
+    grounding_variants = [
+        {
+            "type": "object",
+            "additionalProperties": False,
+            "required": list(grounding_item["required"]),
+            "properties": {
+                "fact_row_index": {
+                    "type": "integer",
+                    "enum": [int(row["fact_row_index"])],
                 },
-            }
-            for row in normalized_rows
-        ]
+                **{
+                    field: {
+                        "type": "string",
+                        "enum": [str(row[field])],
+                    }
+                    for field in required_fields
+                },
+                "component_interpretation": (
+                    component_interpretation_schema
+                ),
+            },
+        }
+        for row in normalized_rows
+    ]
+    properties["selected_fact_groundings"]["items"] = {
+        "anyOf": grounding_variants
     }
+    required_model_selected_indices: list[int] | None = None
+    required_model_selected = (
+        retry.get("required_model_selected_fact_row_indices")
+        if isinstance(retry, Mapping)
+        else None
+    )
+    if required_model_selected is not None:
+        if (
+            not isinstance(required_model_selected, Sequence)
+            or isinstance(required_model_selected, (str, bytes))
+            or not required_model_selected
+            or any(
+                isinstance(row_index, bool)
+                or not isinstance(row_index, int)
+                or row_index not in row_indices
+                for row_index in required_model_selected
+            )
+            or len(required_model_selected)
+            != len(set(required_model_selected))
+        ):
+            return base
+        required_model_selected_indices = [
+            int(row_index) for row_index in required_model_selected
+        ]
+        grounding_by_index = {
+            int(variant["properties"]["fact_row_index"]["enum"][0]): variant
+            for variant in grounding_variants
+        }
+        properties["selected_fact_row_indices"] = {
+            "type": "array",
+            "prefixItems": [
+                {"type": "integer", "enum": [row_index]}
+                for row_index in required_model_selected_indices
+            ],
+            "minItems": len(required_model_selected_indices),
+            "maxItems": len(required_model_selected_indices),
+            "uniqueItems": True,
+        }
+        properties["selected_fact_groundings"] = {
+            "type": "array",
+            "prefixItems": [
+                grounding_by_index[row_index]
+                for row_index in required_model_selected_indices
+            ],
+            "minItems": len(required_model_selected_indices),
+            "maxItems": len(required_model_selected_indices),
+            "uniqueItems": True,
+        }
     synthesis = payload.get("loss_accounted_fact_chunk_synthesis")
     chunk = payload.get("loss_accounted_fact_chunk")
     allowed_disposition_indices: list[int] | None = None
@@ -1097,12 +1148,24 @@ def _provider_output_schema(
                     "type": "integer",
                     "enum": [row_index],
                 }
+                if required_model_selected_indices is not None:
+                    variant["properties"]["disposition"] = {
+                        "type": "string",
+                        "enum": [
+                            "RETAIN"
+                            if row_index
+                            in required_model_selected_indices
+                            else "OMIT"
+                        ],
+                    }
                 disposition_variants.append(variant)
             # ``uniqueItems`` is not enforced by every local grammar backend.
             # Position-bind the complete prior roster as well, so duplicate
             # row ids cannot satisfy the exact-once completion contract by
-            # merely filling the required array length.  RETAIN/OMIT and the
-            # semantic reason remain unconstrained model decisions.
+            # merely filling the required array length. RETAIN/OMIT remains
+            # unconstrained on the normal path. A semantic retry may bind it
+            # to the rejected model's own selected/RETAIN decision so the
+            # model cannot express that same decision inconsistently again.
             disposition_schema["prefixItems"] = disposition_variants
             disposition_schema.pop("items", None)
             disposition_schema["minItems"] = len(
@@ -3166,15 +3229,48 @@ class ComponentResearcher:
                 disposition_selection_mismatches = (
                     _prior_disposition_selection_mismatches(response)
                 )
+                expected_retry_groundings = (
+                    _expected_selected_fact_grounding_rows(
+                        response=response,
+                        fact_id_by_row_index=fact_id_by_row_index,
+                        facts=fact_by_id,
+                        additional_row_indices=(
+                            disposition_selection_mismatches[
+                                "retained_not_selected_fact_row_indices"
+                            ]
+                        ),
+                    )
+                )
                 has_disposition_selection_mismatch = any(
                     disposition_selection_mismatches.values()
                 )
                 rejected_response_context = (
                     {
-                        "rejected_response_omitted_to_prevent_cross_array_error_copy": True,
+                        "rejected_response_omitted_to_prevent_"
+                        "cross_array_error_copy": True,
                     }
                     if has_disposition_selection_mismatch
                     else {"rejected_response": response}
+                )
+                retained_not_selected = disposition_selection_mismatches[
+                    "retained_not_selected_fact_row_indices"
+                ]
+                omitted_but_selected = disposition_selection_mismatches[
+                    "omitted_but_selected_fact_row_indices"
+                ]
+                model_selection_consistency_context = (
+                    {
+                        "required_model_selected_fact_row_indices": [
+                            int(row["fact_row_index"])
+                            for row in expected_retry_groundings
+                        ],
+                        "required_model_selection_source": (
+                            "REJECTED_LLM_SELECTED_UNION_REJECTED_LLM_RETAIN"
+                        ),
+                        "deterministic_selection_decision": False,
+                    }
+                    if retained_not_selected and not omitted_but_selected
+                    else {}
                 )
                 attempt_payload = scrub_blind_research_payload(
                     {
@@ -3186,20 +3282,10 @@ class ComponentResearcher:
                             ),
                             **rejected_response_context,
                             "expected_selected_fact_groundings": (
-                                _expected_selected_fact_grounding_rows(
-                                    response=response,
-                                    fact_id_by_row_index=(
-                                        fact_id_by_row_index
-                                    ),
-                                    facts=fact_by_id,
-                                    additional_row_indices=(
-                                        disposition_selection_mismatches[
-                                            "retained_not_selected_fact_row_indices"
-                                        ]
-                                    ),
-                                )
+                                expected_retry_groundings
                             ),
                             **disposition_selection_mismatches,
+                            **model_selection_consistency_context,
                             "instruction": (
                                 "Rewrite the complete component memo. Use only "
                                 "supplied fact row indices, structured metric row "
@@ -3213,13 +3299,19 @@ class ComponentResearcher:
                                 "a semantic reason and remain unselected. "
                                 "Resolve every row named in retained_not_selected_"
                                 "fact_row_indices or omitted_but_selected_fact_row_"
-                                "indices explicitly. For each mismatch, either keep "
-                                "RETAIN and include that row in both selected arrays, "
-                                "or keep it unselected and change its disposition to "
-                                "OMIT with your own semantic reason. The extra expected "
-                                "grounding rows only make both choices representable; "
-                                "they do not decide RETAIN or OMIT for you. Positive "
-                                "points require at least one selected current "
+                                "indices explicitly. "
+                                "When required_model_selected_fact_row_indices is "
+                                "present, your rejected response explicitly chose "
+                                "RETAIN for the added rows. Return that exact selected "
+                                "and grounding roster and keep prior dispositions "
+                                "consistent with it; this preserves your own evidence "
+                                "decision and only corrects its cross-array expression. "
+                                "When that required roster is absent, either keep RETAIN "
+                                "and include the row in both selected arrays, or keep it "
+                                "unselected and change it to OMIT with your own semantic "
+                                "reason. The expected grounding rows expose immutable "
+                                "source fields but never decide a score or Stage. "
+                                "Positive points require at least one selected current "
                                 "POSITIVE fact; neutral context and structured "
                                 "metrics with score_authority=false are not positive "
                                 "score evidence. If no positive fact qualifies, "

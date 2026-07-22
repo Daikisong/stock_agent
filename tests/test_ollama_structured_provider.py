@@ -842,6 +842,75 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 "uniqueItems"
             ]
         )
+        consistency_schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload={
+                "component_research_validation_retry_context": {
+                    "expected_selected_fact_groundings": expected_rows,
+                    "required_model_selected_fact_row_indices": [7],
+                },
+                "loss_accounted_fact_chunk_synthesis": {
+                    "chunk_responses": [
+                        {
+                            "response": {
+                                "selected_fact_groundings": [
+                                    {
+                                        **row,
+                                        "component_interpretation": (
+                                            "chunk interpretation"
+                                        ),
+                                    }
+                                ],
+                                "prior_fact_dispositions": [
+                                    {
+                                        "fact_row_index": row[
+                                            "fact_row_index"
+                                        ],
+                                        "disposition": "RETAIN",
+                                        "reason": "chunk disposition",
+                                    }
+                                ],
+                            }
+                        }
+                        for row in expected_rows
+                    ]
+                },
+            },
+        )
+        consistency_properties = consistency_schema["properties"]
+        self.assertEqual(
+            [
+                row["enum"][0]
+                for row in consistency_properties[
+                    "selected_fact_row_indices"
+                ]["prefixItems"]
+            ],
+            [7],
+        )
+        self.assertNotIn(
+            "items", consistency_properties["selected_fact_row_indices"]
+        )
+        self.assertEqual(
+            [
+                row["properties"]["fact_row_index"]["enum"][0]
+                for row in consistency_properties[
+                    "selected_fact_groundings"
+                ]["prefixItems"]
+            ],
+            [7],
+        )
+        self.assertNotIn(
+            "items", consistency_properties["selected_fact_groundings"]
+        )
+        self.assertEqual(
+            [
+                row["properties"]["disposition"]["enum"][0]
+                for row in consistency_properties[
+                    "prior_fact_dispositions"
+                ]["prefixItems"]
+            ],
+            ["RETAIN", "OMIT"],
+        )
         self.assertEqual(
             synthesis_properties["research_complete"],
             {"type": "boolean", "enum": [True]},

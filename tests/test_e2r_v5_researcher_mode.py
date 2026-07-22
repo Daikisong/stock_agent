@@ -773,7 +773,7 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             ),
         )
 
-    def test_component_retry_names_retain_selection_mismatch_and_keeps_both_choices_open(
+    def test_component_retry_preserves_llm_retain_decision_across_arrays(
         self,
     ) -> None:
         seed_provider = ScriptedResearchProvider()
@@ -862,8 +862,17 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
                 "rejected_response_omitted_to_prevent_cross_array_error_copy"
             ]
         )
+        self.assertEqual(
+            set(retry["required_model_selected_fact_row_indices"]),
+            expected_rows,
+        )
+        self.assertEqual(
+            retry["required_model_selection_source"],
+            "REJECTED_LLM_SELECTED_UNION_REJECTED_LLM_RETAIN",
+        )
+        self.assertFalse(retry["deterministic_selection_decision"])
         self.assertIn(
-            "both choices representable", retry["instruction"]
+            "cross-array expression", retry["instruction"]
         )
 
     def test_component_research_reselects_every_prior_fact_without_score_carry_forward(
