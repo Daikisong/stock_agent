@@ -224,7 +224,10 @@ RED_TEAM_RESEARCH_SCHEMA: Mapping[str, Any] = {
     ],
     "properties": {
         "reviewed_component_ids": _STRING_ARRAY,
-        "challenged_fact_row_indices": _NONNEGATIVE_INTEGER_ARRAY,
+        "challenged_fact_row_indices": {
+            **_NONNEGATIVE_INTEGER_ARRAY,
+            "uniqueItems": True,
+        },
         "resolved_challenges": _STRING_ARRAY,
         "unresolved_challenges": _STRING_ARRAY,
         "recommended_research_directions": _STRING_ARRAY,

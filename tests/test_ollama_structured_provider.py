@@ -806,6 +806,18 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             ["ANCHOR-C"],
         )
 
+    def test_red_team_schema_rejects_duplicate_challenged_fact_rows(self) -> None:
+        schema = _provider_output_schema(
+            pass_name="RED_TEAM_RESEARCH",
+            payload={},
+        )
+
+        self.assertTrue(
+            schema["properties"]["challenged_fact_row_indices"][
+                "uniqueItems"
+            ]
+        )
+
     def test_transport_sends_schema_bound_non_thinking_request(self) -> None:
         schema = {
             "type": "object",
