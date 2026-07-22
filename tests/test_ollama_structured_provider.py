@@ -740,6 +740,36 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             },
         )
 
+        chunk_schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload={
+                "loss_accounted_fact_chunk": {"chunk_index": 0},
+                "loss_accounted_fact_chunk_validation_retry_context": {
+                    "expected_selected_fact_groundings": expected_rows,
+                },
+                "prior_component_memo_context": {
+                    "current_fact_rows": [
+                        {"fact_row_index": row["fact_row_index"]}
+                        for row in expected_rows
+                    ]
+                },
+            },
+        )
+        chunk_dispositions = chunk_schema["properties"][
+            "prior_fact_dispositions"
+        ]
+        self.assertEqual(
+            [
+                row["properties"]["fact_row_index"]["enum"][0]
+                for row in chunk_dispositions["prefixItems"]
+            ],
+            [7, 9],
+        )
+        self.assertNotIn("items", chunk_dispositions)
+        self.assertEqual(chunk_dispositions["minItems"], 2)
+        self.assertEqual(chunk_dispositions["maxItems"], 2)
+        self.assertTrue(chunk_dispositions["uniqueItems"])
+
         synthesis_schema = _provider_output_schema(
             pass_name="COMPONENT_RESEARCH",
             payload={

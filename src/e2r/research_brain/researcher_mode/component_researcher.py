@@ -1050,6 +1050,8 @@ def _provider_output_schema(
         ]
     }
     synthesis = payload.get("loss_accounted_fact_chunk_synthesis")
+    chunk = payload.get("loss_accounted_fact_chunk")
+    allowed_disposition_indices: list[int] | None = None
     if isinstance(synthesis, Mapping):
         allowed_disposition_indices = list(
             dict.fromkeys(
@@ -1066,6 +1068,23 @@ def _provider_output_schema(
                 and int(disposition["fact_row_index"]) >= 0
             )
         )
+    elif isinstance(chunk, Mapping):
+        prior_context = payload.get("prior_component_memo_context")
+        allowed_disposition_indices = list(
+            dict.fromkeys(
+                int(row["fact_row_index"])
+                for row in (
+                    prior_context.get("current_fact_rows") or ()
+                    if isinstance(prior_context, Mapping)
+                    else ()
+                )
+                if isinstance(row, Mapping)
+                and isinstance(row.get("fact_row_index"), int)
+                and not isinstance(row.get("fact_row_index"), bool)
+                and int(row["fact_row_index"]) >= 0
+            )
+        )
+    if allowed_disposition_indices is not None:
         disposition_schema = properties["prior_fact_dispositions"]
         if allowed_disposition_indices:
             disposition_item = disposition_schema["items"]
@@ -1095,6 +1114,7 @@ def _provider_output_schema(
             disposition_schema["uniqueItems"] = True
         else:
             disposition_schema["maxItems"] = 0
+    if isinstance(synthesis, Mapping):
         # At synthesis time all loss-accounted chunks are already present and
         # deterministic validation requires the model to review every one of
         # them.  ``research_complete`` therefore records review completion,
