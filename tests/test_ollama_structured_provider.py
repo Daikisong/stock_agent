@@ -941,6 +941,36 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             ["ANCHOR-C"],
         )
 
+    def test_component_schema_requires_every_available_structured_metric_row(
+        self,
+    ) -> None:
+        schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload={
+                "structured_metric_rows": [
+                    {
+                        "structured_metric_row_index": 0,
+                        "structured_requirement_id": "CURRENT_VALUATION",
+                        "immutable_source_backed_value": {"record_count": 3},
+                    },
+                    {
+                        "structured_metric_row_index": 1,
+                        "structured_requirement_id": "DURABLE_VISIBILITY",
+                        "immutable_source_backed_value": {"record_count": 2},
+                    },
+                ]
+            },
+        )
+
+        roster = schema["properties"]["structured_metric_row_indices"]
+        self.assertEqual(
+            [row["enum"][0] for row in roster["prefixItems"]],
+            [0, 1],
+        )
+        self.assertEqual(roster["minItems"], 2)
+        self.assertEqual(roster["maxItems"], 2)
+        self.assertTrue(roster["uniqueItems"])
+
     def test_red_team_schema_rejects_duplicate_challenged_fact_rows(self) -> None:
         schema = _provider_output_schema(
             pass_name="RED_TEAM_RESEARCH",

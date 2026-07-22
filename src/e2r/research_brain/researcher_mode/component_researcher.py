@@ -945,6 +945,44 @@ def _provider_output_schema(
         return schema
     if pass_name != "COMPONENT_RESEARCH":
         return base
+    schema = json.loads(json.dumps(base, ensure_ascii=False))
+    structured_metric_rows = payload.get("structured_metric_rows")
+    if (
+        isinstance(structured_metric_rows, Sequence)
+        and not isinstance(structured_metric_rows, (str, bytes))
+    ):
+        structured_metric_row_indices: list[int] = []
+        valid_structured_metric_roster = True
+        for row in structured_metric_rows:
+            row_index = (
+                row.get("structured_metric_row_index")
+                if isinstance(row, Mapping)
+                else None
+            )
+            if (
+                isinstance(row_index, bool)
+                or not isinstance(row_index, int)
+                or row_index < 0
+                or row_index in structured_metric_row_indices
+            ):
+                valid_structured_metric_roster = False
+                break
+            structured_metric_row_indices.append(row_index)
+        if valid_structured_metric_roster:
+            schema["properties"]["structured_metric_row_indices"] = (
+                {
+                    "type": "array",
+                    "prefixItems": [
+                        {"type": "integer", "enum": [row_index]}
+                        for row_index in structured_metric_row_indices
+                    ],
+                    "minItems": len(structured_metric_row_indices),
+                    "maxItems": len(structured_metric_row_indices),
+                    "uniqueItems": True,
+                }
+                if structured_metric_row_indices
+                else {"type": "array", "enum": [[]]}
+            )
     retry = payload.get(
         "loss_accounted_fact_chunk_validation_retry_context"
     )
@@ -984,7 +1022,7 @@ def _provider_output_schema(
         or isinstance(rows, (str, bytes))
         or not rows
     ):
-        return base
+        return schema
     required_fields = (
         "source_predicate",
         "source_value_json",
@@ -994,7 +1032,7 @@ def _provider_output_schema(
     normalized_rows: list[Mapping[str, Any]] = []
     for row in rows:
         if not isinstance(row, Mapping):
-            return base
+            return schema
         row_index = row.get("fact_row_index")
         if (
             isinstance(row_index, bool)
@@ -1002,7 +1040,7 @@ def _provider_output_schema(
             or row_index < 0
             or any(not str(row.get(field) or "") for field in required_fields)
         ):
-            return base
+            return schema
         normalized_rows.append(
             {
                 "fact_row_index": row_index,
@@ -1015,7 +1053,6 @@ def _provider_output_schema(
         }.values()
     )
     row_indices = [int(row["fact_row_index"]) for row in normalized_rows]
-    schema = json.loads(json.dumps(base, ensure_ascii=False))
     properties = schema["properties"]
     properties["selected_fact_row_indices"]["items"] = {
         "type": "integer",
@@ -1072,7 +1109,7 @@ def _provider_output_schema(
             or len(required_model_selected)
             != len(set(required_model_selected))
         ):
-            return base
+            return schema
         required_model_selected_indices = [
             int(row_index) for row_index in required_model_selected
         ]
@@ -3216,6 +3253,19 @@ class ComponentResearcher:
                     fact_id_by_row_index=fact_id_by_row_index,
                     prior_memo_context=prior_memo_context,
                 )
+                omitted_available_structured_metrics = sorted(
+                    (
+                        set(plan.structured_metric_requirements)
+                        & set(metric_input)
+                    )
+                    - set(memo.structured_metrics)
+                )
+                if omitted_available_structured_metrics:
+                    raise ValueError(
+                        "researcher omitted available required structured "
+                        "metrics: "
+                        + ",".join(omitted_available_structured_metrics)
+                    )
             except (KeyError, TypeError, ValueError) as exc:
                 _invalidate_provider_response_cache(self.provider, exc)
                 if validation_retry_used:
@@ -3286,6 +3336,10 @@ class ComponentResearcher:
                             ),
                             **disposition_selection_mismatches,
                             **model_selection_consistency_context,
+                            "required_structured_metric_row_indices": [
+                                row["structured_metric_row_index"]
+                                for row in structured_metric_rows
+                            ],
                             "instruction": (
                                 "Rewrite the complete component memo. Use only "
                                 "supplied fact row indices, structured metric row "
@@ -3316,7 +3370,12 @@ class ComponentResearcher:
                                 "metrics with score_authority=false are not positive "
                                 "score evidence. If no positive fact qualifies, "
                                 "return a zero score range instead of narrating an "
-                                "unsupported positive score. Return exactly one "
+                                "unsupported positive score. Account for every "
+                                "supplied structured_metric_rows entry exactly once "
+                                "in structured_metric_row_indices. These rows are "
+                                "immutable source context required by the research "
+                                "plan, but they do not decide a score or Stage. "
+                                "Return exactly one "
                                 "selected_fact_groundings row for every selected fact. "
                                 "Copy its decoded predicate and economic_mechanism "
                                 "exactly, and compact-JSON encode its decoded value and "
@@ -4247,7 +4306,8 @@ def _pass_instruction(pass_name: str) -> str:
             "EvidenceFact. Neutral context and structured metrics marked "
             "score_authority=false cannot support positive points. "
             "Return structured_metric_row_indices using only the explicit row numbers "
-            "from structured_metric_rows. The deterministic engine will restore the "
+            "from structured_metric_rows and account for every supplied row exactly "
+            "once. The deterministic engine will restore the "
             "immutable requirement ids and values; never copy a nested record metric_id "
             "or invent a value."
         )

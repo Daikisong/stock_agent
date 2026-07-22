@@ -504,6 +504,87 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             {"FCF_ACTUALS": metric},
         )
 
+    def test_component_research_rewrites_when_available_required_metric_was_omitted(
+        self,
+    ) -> None:
+        class OmitFirstMetricProvider(ScriptedResearchProvider):
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                if (
+                    pass_name == "COMPONENT_RESEARCH"
+                    and not payload.get(
+                        "component_research_validation_retry_context"
+                    )
+                ):
+                    response["structured_metric_row_indices"] = [0]
+                return response
+
+        provider = OmitFirstMetricProvider()
+        plans = ComponentResearchPlanner().plan(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            research_seeds=(),
+            component_max_points=self.maxima,
+            structured_metric_requirements={
+                key: (
+                    ("CURRENT_VALUATION", "DURABLE_VISIBILITY")
+                    if key == "eps_fcf_explosion"
+                    else ()
+                )
+                for key in self.maxima
+            },
+        )
+        business = BusinessMechanismResearcher(provider=provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=plans[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+            structured_metrics={
+                "CURRENT_VALUATION": {"record_count": 3},
+                "DURABLE_VISIBILITY": {"record_count": 2},
+            },
+        )
+
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(
+            set(result.memo.structured_metrics),  # type: ignore[union-attr]
+            {"CURRENT_VALUATION", "DURABLE_VISIBILITY"},
+        )
+        component_calls = [
+            row
+            for row in provider.calls
+            if row["pass_name"] == "COMPONENT_RESEARCH"
+        ]
+        self.assertEqual(len(component_calls), 2)
+        retry = component_calls[-1]["payload"][
+            "component_research_validation_retry_context"
+        ]
+        self.assertEqual(
+            retry["required_structured_metric_row_indices"],
+            [0, 1],
+        )
+        self.assertIn(
+            "omitted available required structured metrics",
+            retry["validation_error"],
+        )
+
     def test_component_research_plan_projects_fact_ids_without_losing_rows(self) -> None:
         provider = ScriptedResearchProvider()
         plans = ComponentResearchPlanner().plan(
