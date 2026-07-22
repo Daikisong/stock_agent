@@ -773,6 +773,93 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             ),
         )
 
+    def test_component_retry_names_retain_selection_mismatch_and_keeps_both_choices_open(
+        self,
+    ) -> None:
+        seed_provider = ScriptedResearchProvider()
+        business = BusinessMechanismResearcher(provider=seed_provider).research(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            evidence_facts=self.facts,
+            source_claims=[],
+            source_documents=[],
+            source_coverage=["ISSUER_OFFICIAL"],
+        ).memo
+        seed = EPSFCFResearcher(provider=seed_provider).research(
+            plan=self._plans()[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+        )
+
+        class RetainSelectionCorrectingProvider(ScriptedResearchProvider):
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                if (
+                    pass_name == "COMPONENT_RESEARCH"
+                    and "component_research_validation_retry_context"
+                    not in payload
+                ):
+                    retained = [
+                        row["fact_row_index"]
+                        for row in response["prior_fact_dispositions"]
+                        if row["disposition"] == "RETAIN"
+                    ]
+                    missing = retained[-1]
+                    response["selected_fact_row_indices"] = [
+                        row
+                        for row in response["selected_fact_row_indices"]
+                        if row != missing
+                    ]
+                    response["selected_fact_groundings"] = [
+                        row
+                        for row in response["selected_fact_groundings"]
+                        if row["fact_row_index"] != missing
+                    ]
+                return response
+
+        provider = RetainSelectionCorrectingProvider()
+        result = EPSFCFResearcher(provider=provider).research(
+            plan=self._plans()[0],
+            business_model=business,  # type: ignore[arg-type]
+            evidence_facts=self.facts,
+            historical_anchors=self.anchors,
+            source_coverage=["ISSUER_OFFICIAL"],
+            prior_memo=seed.memo,
+        )
+
+        component_calls = [
+            row
+            for row in provider.calls
+            if row["pass_name"] == "COMPONENT_RESEARCH"
+        ]
+        retry = component_calls[-1]["payload"][
+            "component_research_validation_retry_context"
+        ]
+        mismatch_rows = retry[
+            "retained_not_selected_fact_row_indices"
+        ]
+        expected_rows = {
+            row["fact_row_index"]
+            for row in retry["expected_selected_fact_groundings"]
+        }
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(len(component_calls), 2)
+        self.assertEqual(len(mismatch_rows), 1)
+        self.assertTrue(set(mismatch_rows).issubset(expected_rows))
+        self.assertEqual(
+            retry["omitted_but_selected_fact_row_indices"], []
+        )
+        self.assertIn(
+            "both choices representable", retry["instruction"]
+        )
+
     def test_component_research_reselects_every_prior_fact_without_score_carry_forward(
         self,
     ) -> None:

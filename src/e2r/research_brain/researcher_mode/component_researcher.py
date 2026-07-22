@@ -3163,6 +3163,9 @@ class ComponentResearcher:
                         prompt_hash=prompt_hash,
                     )
                 validation_retry_used = True
+                disposition_selection_mismatches = (
+                    _prior_disposition_selection_mismatches(response)
+                )
                 attempt_payload = scrub_blind_research_payload(
                     {
                         **payload,
@@ -3179,8 +3182,14 @@ class ComponentResearcher:
                                         fact_id_by_row_index
                                     ),
                                     facts=fact_by_id,
+                                    additional_row_indices=(
+                                        disposition_selection_mismatches[
+                                            "retained_not_selected_fact_row_indices"
+                                        ]
+                                    ),
                                 )
                             ),
+                            **disposition_selection_mismatches,
                             "instruction": (
                                 "Rewrite the complete component memo. Use only "
                                 "supplied fact row indices, structured metric row "
@@ -3192,6 +3201,14 @@ class ComponentResearcher:
                                 "exactly once in prior_fact_dispositions. A RETAIN "
                                 "row must be selected and an OMIT row must include "
                                 "a semantic reason and remain unselected. Positive "
+                                "Resolve every row named in retained_not_selected_"
+                                "fact_row_indices or omitted_but_selected_fact_row_"
+                                "indices explicitly. For each mismatch, either keep "
+                                "RETAIN and include that row in both selected arrays, "
+                                "or keep it unselected and change its disposition to "
+                                "OMIT with your own semantic reason. The extra expected "
+                                "grounding rows only make both choices representable; "
+                                "they do not decide RETAIN or OMIT for you. Positive "
                                 "points require at least one selected current "
                                 "POSITIVE fact; neutral context and structured "
                                 "metrics with score_authority=false are not positive "
@@ -3767,6 +3784,7 @@ def _expected_selected_fact_grounding_rows(
     response: Any,
     fact_id_by_row_index: Mapping[int, str],
     facts: Mapping[str, EvidenceFact],
+    additional_row_indices: Sequence[int] = (),
 ) -> list[Mapping[str, Any]]:
     """Focus a rejected rewrite on exact source fields without repairing it."""
 
@@ -3777,7 +3795,7 @@ def _expected_selected_fact_grounding_rows(
         return []
     result: list[Mapping[str, Any]] = []
     seen: set[int] = set()
-    for row_index in selected:
+    for row_index in (*selected, *additional_row_indices):
         if (
             isinstance(row_index, bool)
             or not isinstance(row_index, int)
@@ -3796,6 +3814,60 @@ def _expected_selected_fact_grounding_rows(
             }
         )
     return result
+
+
+def _prior_disposition_selection_mismatches(
+    response: Any,
+) -> Mapping[str, list[int]]:
+    """Name cross-array contradictions without choosing their disposition."""
+
+    if not isinstance(response, Mapping):
+        return {
+            "retained_not_selected_fact_row_indices": [],
+            "omitted_but_selected_fact_row_indices": [],
+        }
+    selected_value = response.get("selected_fact_row_indices")
+    selected = {
+        int(row_index)
+        for row_index in (
+            selected_value
+            if isinstance(selected_value, Sequence)
+            and not isinstance(selected_value, (str, bytes))
+            else ()
+        )
+        if isinstance(row_index, int)
+        and not isinstance(row_index, bool)
+        and row_index >= 0
+    }
+    dispositions = response.get("prior_fact_dispositions")
+    rows = (
+        dispositions
+        if isinstance(dispositions, Sequence)
+        and not isinstance(dispositions, (str, bytes))
+        else ()
+    )
+    retained = {
+        int(row["fact_row_index"])
+        for row in rows
+        if isinstance(row, Mapping)
+        and isinstance(row.get("fact_row_index"), int)
+        and not isinstance(row.get("fact_row_index"), bool)
+        and int(row["fact_row_index"]) >= 0
+        and str(row.get("disposition") or "") == "RETAIN"
+    }
+    omitted = {
+        int(row["fact_row_index"])
+        for row in rows
+        if isinstance(row, Mapping)
+        and isinstance(row.get("fact_row_index"), int)
+        and not isinstance(row.get("fact_row_index"), bool)
+        and int(row["fact_row_index"]) >= 0
+        and str(row.get("disposition") or "") == "OMIT"
+    }
+    return {
+        "retained_not_selected_fact_row_indices": sorted(retained - selected),
+        "omitted_but_selected_fact_row_indices": sorted(omitted & selected),
+    }
 
 
 def _immutable_fact_grounding_fields(
