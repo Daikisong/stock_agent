@@ -221,6 +221,22 @@ class Phase87CorrectingSupervisorProvider(Phase87SupervisorProvider):
                 response["failure_assessments"] = response[
                     "failure_assessments"
                 ][:-1]
+            elif self.invalid_kind == "SOURCE_ABSENCE_WITHOUT_PROOF":
+                response["failure_assessments"][0].update(
+                    {
+                        "classification": "SOURCE_ABSENCE_CANDIDATE",
+                        "retryable": False,
+                        "source_absence_claim_allowed": True,
+                    }
+                )
+            elif self.invalid_kind == "ABSENCE_PERMISSION_CLASS_MISMATCH":
+                response["failure_assessments"][0].update(
+                    {
+                        "classification": "PARSER_EXTRACTOR_FAILURE",
+                        "retryable": True,
+                        "source_absence_claim_allowed": True,
+                    }
+                )
             return response
         context = payload["supervisor_validation_retry_context"]
         if self.invalid_kind == "COUNTER_WITHOUT_PROOF":
@@ -850,6 +866,87 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         self.assertEqual(diagnostics["extra_failure_group_ids"], [])
         self.assertEqual(diagnostics["duplicate_failure_group_ids"], [])
         self.assertEqual(len(review.failure_assessments), 2)
+
+    def test_supervisor_absence_proof_failure_gets_exact_group_feedback(
+        self,
+    ) -> None:
+        provider = Phase87CorrectingSupervisorProvider(
+            "SOURCE_ABSENCE_WITHOUT_PROOF"
+        )
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **_supervisor_inputs(
+                prior_failures=(
+                    {
+                        "failure_id": "FAIL-NO-ABSENCE-PROOF",
+                        "failure_reason": "FETCH_TIMEOUT",
+                        "absence_eligible": False,
+                        "zero_result_only": False,
+                        "parser_extractor_verified": False,
+                        "provider_transport_verified": True,
+                    },
+                )
+            )
+        )
+
+        self.assertEqual(len(provider.calls), 2)
+        diagnostics = provider.calls[1]["payload"][
+            "supervisor_validation_retry_context"
+        ]["failure_assessment_roster_diagnostics"]
+        required_ids = provider.calls[0]["payload"][
+            "required_output_rosters"
+        ]["failure_group_ids"]
+        self.assertEqual(
+            diagnostics["source_absence_proof_invalid_group_ids"],
+            required_ids,
+        )
+        self.assertEqual(
+            diagnostics["source_absence_proof_valid_group_ids"], []
+        )
+        self.assertFalse(
+            review.failure_assessments[0].source_absence_claim_allowed
+        )
+        self.assertNotEqual(
+            review.failure_assessments[0].classification,
+            "SOURCE_ABSENCE_CANDIDATE",
+        )
+
+    def test_supervisor_absence_permission_class_mismatch_is_identified(
+        self,
+    ) -> None:
+        provider = Phase87CorrectingSupervisorProvider(
+            "ABSENCE_PERMISSION_CLASS_MISMATCH"
+        )
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **_supervisor_inputs(
+                prior_failures=(
+                    {
+                        "failure_id": "FAIL-PARSER-PERMISSION",
+                        "failure_reason": "PDF_PARSER_TABLE_EXTRACTION_FAILED",
+                        "absence_eligible": False,
+                    },
+                )
+            )
+        )
+
+        diagnostics = provider.calls[1]["payload"][
+            "supervisor_validation_retry_context"
+        ]["failure_assessment_roster_diagnostics"]
+        required_ids = provider.calls[0]["payload"][
+            "required_output_rosters"
+        ]["failure_group_ids"]
+        self.assertEqual(
+            diagnostics[
+                "source_absence_permission_class_mismatch_group_ids"
+            ],
+            required_ids,
+        )
+        self.assertEqual(
+            review.failure_assessments[0].classification,
+            "PARSER_EXTRACTOR_FAILURE",
+        )
+        self.assertFalse(
+            review.failure_assessments[0].source_absence_claim_allowed
+        )
 
     def test_counter_route_requires_executed_source_graph_lineage(self) -> None:
         review = ResearchSupervisor(

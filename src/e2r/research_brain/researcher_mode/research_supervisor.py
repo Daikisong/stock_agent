@@ -484,6 +484,15 @@ class ResearchSupervisor:
                 failure_roster_diagnostics = _failure_assessment_roster_diagnostics(
                     response=response,
                     required_failure_group_ids=required_failure_group_ids,
+                    failure_by_id=failure_by_id,
+                    failure_group_members={
+                        str(group_id): tuple(
+                            str(value) for value in member_ids
+                        )
+                        for group_id, member_ids in failure_projection[
+                            "failure_group_members"
+                        ].items()
+                    },
                 )
                 if validation_retry_used:
                     return _provider_pending_review(
@@ -555,7 +564,15 @@ class ResearchSupervisor:
                                 "response. Copy every required_failure_group_id into "
                                 "failure_assessments exactly once; use the roster "
                                 "diagnostics to restore omissions and remove duplicates "
-                                "or extras. Do not invent evidence, queries, scores, or stages."
+                                "or extras. For every id listed in "
+                                "source_absence_proof_invalid_group_ids, set "
+                                "source_absence_claim_allowed=false and choose a "
+                                "non-SOURCE_ABSENCE_CANDIDATE classification from the "
+                                "supplied failure state. source_absence_claim_allowed=true "
+                                "is valid only when the classification is exactly "
+                                "SOURCE_ABSENCE_CANDIDATE and the id is listed in "
+                                "source_absence_proof_valid_group_ids; otherwise it must "
+                                "be false. Do not invent evidence, queries, scores, or stages."
                             ),
                         },
                     }
@@ -1506,8 +1523,17 @@ def _failure_assessment_roster_diagnostics(
     *,
     response: Mapping[str, Any],
     required_failure_group_ids: Sequence[str],
+    failure_by_id: Mapping[str, Mapping[str, Any]],
+    failure_group_members: Mapping[str, Sequence[str]],
 ) -> Mapping[str, Any]:
-    """Return exact bounded roster feedback for one semantic rewrite."""
+    """Return exact bounded roster and absence-proof rewrite feedback.
+
+    Failure classification remains provider-owned.  These diagnostics expose
+    the deterministic validation boundary that rejected the prior answer, so
+    the one allowed rewrite knows which semantic groups cannot lawfully claim
+    source absence and does not carry an incompatible permission boolean into
+    a non-absence classification.
+    """
 
     raw_rows = response.get("failure_assessments")
     if isinstance(raw_rows, (str, bytes)) or not isinstance(raw_rows, Sequence):
@@ -1524,9 +1550,40 @@ def _failure_assessment_roster_diagnostics(
     required_set = set(required_ids)
     received_set = set(received_ids)
     received_counts = Counter(received_ids)
+    response_by_id = {
+        str(row.get("failure_id") or ""): row
+        for row in raw_rows or ()
+        if isinstance(row, Mapping)
+        and str(row.get("failure_id") or "").strip()
+    }
     duplicate_ids = sorted(
         value for value, count in received_counts.items() if count > 1
     )
+    absence_proof_valid_ids = []
+    absence_proof_invalid_ids = []
+    permission_class_mismatch_ids = []
+    for group_id in required_ids:
+        member_ids = tuple(
+            str(value) for value in failure_group_members.get(group_id) or ()
+        )
+        proof_valid = bool(member_ids) and all(
+            member_id in failure_by_id
+            and _source_absence_proof_valid(failure_by_id[member_id])
+            for member_id in member_ids
+        )
+        (
+            absence_proof_valid_ids
+            if proof_valid
+            else absence_proof_invalid_ids
+        ).append(group_id)
+        prior_row = response_by_id.get(group_id)
+        if (
+            isinstance(prior_row, Mapping)
+            and prior_row.get("source_absence_claim_allowed") is True
+            and str(prior_row.get("classification") or "")
+            != "SOURCE_ABSENCE_CANDIDATE"
+        ):
+            permission_class_mismatch_ids.append(group_id)
     return {
         "required_count": len(required_ids),
         "received_count": len(received_ids),
@@ -1536,6 +1593,11 @@ def _failure_assessment_roster_diagnostics(
         "failure_assessments_array_was_valid": response_array_valid,
         "received_failure_group_roster_hash": _stable_payload_hash(received_ids),
         "required_failure_group_roster_hash": _stable_payload_hash(required_ids),
+        "source_absence_proof_valid_group_ids": absence_proof_valid_ids,
+        "source_absence_proof_invalid_group_ids": absence_proof_invalid_ids,
+        "source_absence_permission_class_mismatch_group_ids": (
+            permission_class_mismatch_ids
+        ),
     }
 
 
