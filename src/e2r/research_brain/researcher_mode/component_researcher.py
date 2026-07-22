@@ -1085,9 +1085,7 @@ def _provider_output_schema(
             # merely filling the required array length.  RETAIN/OMIT and the
             # semantic reason remain unconstrained model decisions.
             disposition_schema["prefixItems"] = disposition_variants
-            disposition_schema["items"] = {
-                "anyOf": disposition_variants,
-            }
+            disposition_schema.pop("items", None)
             disposition_schema["minItems"] = len(
                 allowed_disposition_indices
             )
