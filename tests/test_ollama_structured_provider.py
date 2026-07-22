@@ -896,9 +896,15 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 "enum": [["EFACT-C1", "EFACT-C2"]],
             },
         )
-        self.assertNotIn(
-            "enum",
+        self.assertEqual(
             skeptic_schema["properties"]["support_fact_ids"],
+            {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "enum": ["EFACT-P1"],
+                },
+            },
         )
 
         empty_analyst_schema = _provider_output_schema(
@@ -908,6 +914,18 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self.assertEqual(
             empty_analyst_schema["properties"]["support_fact_ids"]["enum"],
             [[]],
+        )
+
+        empty_skeptic_schema = _provider_output_schema(
+            pass_name="COMPONENT_SKEPTIC_JUDGE",
+            payload={
+                "allowed_support_fact_ids": [],
+                "allowed_counter_fact_ids": ["EFACT-C1"],
+            },
+        )
+        self.assertEqual(
+            empty_skeptic_schema["properties"]["support_fact_ids"],
+            {"type": "array", "enum": [[]]},
         )
 
     def test_ollama_canonicalizes_only_duplicate_red_team_fact_rows(self) -> None:

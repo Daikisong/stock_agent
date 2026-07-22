@@ -893,6 +893,23 @@ def _provider_output_schema(
             "type": "array",
             "enum": [required_ids],
         }
+        if pass_name == "COMPONENT_SKEPTIC_JUDGE":
+            allowed_support_ids = [
+                str(value)
+                for value in payload.get("allowed_support_fact_ids") or ()
+                if isinstance(value, str) and value.strip()
+            ]
+            schema["properties"]["support_fact_ids"] = (
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": allowed_support_ids,
+                    },
+                }
+                if allowed_support_ids
+                else {"type": "array", "enum": [[]]}
+            )
         return schema
     if pass_name == "RED_TEAM_RESEARCH":
         allowed_row_indices: list[int] = []
