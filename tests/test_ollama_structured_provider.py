@@ -26,6 +26,7 @@ from e2r.research_brain.researcher_mode import (
 from e2r.research_brain.researcher_mode.component_researcher import (
     CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT,
     SOURCE_CANDIDATE_RANKING_SCHEMA,
+    _canonicalize_ollama_red_team_fact_set,
     _expected_component_chunk_fact_groundings,
     _loss_accounted_fact_chunk_payloads,
     _provider_output_schema,
@@ -816,6 +817,30 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             schema["properties"]["challenged_fact_row_indices"][
                 "uniqueItems"
             ]
+        )
+
+    def test_ollama_canonicalizes_only_duplicate_red_team_fact_rows(self) -> None:
+        response = {
+            "challenged_fact_row_indices": [37, 206, 206, 297],
+            "review_complete": True,
+        }
+
+        self.assertEqual(
+            _canonicalize_ollama_red_team_fact_set(
+                pass_name="RED_TEAM_RESEARCH",
+                response=response,
+            ),
+            {
+                "challenged_fact_row_indices": [37, 206, 297],
+                "review_complete": True,
+            },
+        )
+        self.assertIs(
+            _canonicalize_ollama_red_team_fact_set(
+                pass_name="COMPONENT_RESEARCH",
+                response=response,
+            ),
+            response,
         )
 
     def test_transport_sends_schema_bound_non_thinking_request(self) -> None:

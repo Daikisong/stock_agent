@@ -1802,14 +1802,26 @@ class OllamaResearcherProvider(CodexResearcherProvider):
             "loss_accounted_fact_chunk" in payload
             or "loss_accounted_fact_chunk_synthesis" in payload
         ):
-            return super().complete(pass_name=pass_name, payload=payload)
+            return _canonicalize_ollama_red_team_fact_set(
+                pass_name=pass_name,
+                response=super().complete(
+                    pass_name=pass_name,
+                    payload=payload,
+                ),
+            )
         chunks = _loss_accounted_fact_chunk_payloads(
             payload,
             pass_name=pass_name,
             target_projection_chars=self.memo_fact_prompt_chunk_chars,
         )
         if len(chunks) <= 1:
-            return super().complete(pass_name=pass_name, payload=payload)
+            return _canonicalize_ollama_red_team_fact_set(
+                pass_name=pass_name,
+                response=super().complete(
+                    pass_name=pass_name,
+                    payload=payload,
+                ),
+            )
 
         chunk_responses = []
         for chunk in chunks:
@@ -1845,6 +1857,10 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                 response = super().complete(
                     pass_name=pass_name,
                     payload=attempt_payload,
+                )
+                response = _canonicalize_ollama_red_team_fact_set(
+                    pass_name=pass_name,
+                    response=response,
                 )
                 try:
                     _validate_loss_accounted_chunk_response(
@@ -1938,6 +1954,10 @@ class OllamaResearcherProvider(CodexResearcherProvider):
                 pass_name=pass_name,
                 payload=attempt_payload,
             )
+            response = _canonicalize_ollama_red_team_fact_set(
+                pass_name=pass_name,
+                response=response,
+            )
             try:
                 _validate_loss_accounted_synthesis_response(
                     pass_name=pass_name,
@@ -2000,6 +2020,43 @@ class OllamaResearcherProvider(CodexResearcherProvider):
             ),
             fact_document_chunk_chars=fact_document_chunk_chars,
         )
+
+
+def _canonicalize_ollama_red_team_fact_set(
+    *,
+    pass_name: str,
+    response: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Canonicalize a set-valued citation field Ollama cannot constrain.
+
+    Ollama's JSON grammar currently accepts duplicate array items even when
+    the supplied schema declares ``uniqueItems``.  Repeating the same integer
+    citation does not add or remove a red-team challenge, so retain its first
+    occurrence and let the existing range/scope validators check everything
+    else.  No other pass or response field is changed.
+    """
+
+    if pass_name != "RED_TEAM_RESEARCH":
+        return response
+    values = response.get("challenged_fact_row_indices")
+    if not isinstance(values, Sequence) or isinstance(values, (str, bytes)):
+        return response
+    seen: set[int] = set()
+    canonical = []
+    for value in values:
+        if (
+            not isinstance(value, bool)
+            and isinstance(value, int)
+            and value in seen
+        ):
+            continue
+        canonical.append(value)
+        if not isinstance(value, bool) and isinstance(value, int):
+            seen.add(value)
+    return {
+        **dict(response),
+        "challenged_fact_row_indices": canonical,
+    }
 
 
 _LOSS_ACCOUNTED_FACT_CHUNK_PASSES = {
