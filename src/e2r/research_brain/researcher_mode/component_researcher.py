@@ -971,6 +971,16 @@ def _provider_output_schema(
         ]
     }
     synthesis = payload.get("loss_accounted_fact_chunk_synthesis")
+    if isinstance(synthesis, Mapping):
+        # At synthesis time all loss-accounted chunks are already present and
+        # deterministic validation requires the model to review every one of
+        # them.  ``research_complete`` therefore records review completion,
+        # not whether the economic thesis is certain.  Keep uncertainty in
+        # ``uncertainties`` instead of letting it reopen a fully reviewed leaf.
+        properties["research_complete"] = {
+            "type": "boolean",
+            "enum": [True],
+        }
     anchors = payload.get("historical_component_anchors")
     if (
         isinstance(synthesis, Mapping)

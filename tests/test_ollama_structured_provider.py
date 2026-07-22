@@ -777,6 +777,10 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         )
         synthesis_properties = synthesis_schema["properties"]
         self.assertEqual(
+            synthesis_properties["research_complete"],
+            {"type": "boolean", "enum": [True]},
+        )
+        self.assertEqual(
             synthesis_properties["historical_anchor_ids"],
             {
                 "type": "array",
