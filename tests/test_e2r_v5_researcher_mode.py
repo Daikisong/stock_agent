@@ -856,6 +856,12 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         self.assertEqual(
             retry["omitted_but_selected_fact_row_indices"], []
         )
+        self.assertNotIn("rejected_response", retry)
+        self.assertTrue(
+            retry[
+                "rejected_response_omitted_to_prevent_cross_array_error_copy"
+            ]
+        )
         self.assertIn(
             "both choices representable", retry["instruction"]
         )

@@ -3166,6 +3166,16 @@ class ComponentResearcher:
                 disposition_selection_mismatches = (
                     _prior_disposition_selection_mismatches(response)
                 )
+                has_disposition_selection_mismatch = any(
+                    disposition_selection_mismatches.values()
+                )
+                rejected_response_context = (
+                    {
+                        "rejected_response_omitted_to_prevent_cross_array_error_copy": True,
+                    }
+                    if has_disposition_selection_mismatch
+                    else {"rejected_response": response}
+                )
                 attempt_payload = scrub_blind_research_payload(
                     {
                         **payload,
@@ -3174,7 +3184,7 @@ class ComponentResearcher:
                                 " ".join(str(exc).split())[-500:]
                                 or exc.__class__.__name__
                             ),
-                            "rejected_response": response,
+                            **rejected_response_context,
                             "expected_selected_fact_groundings": (
                                 _expected_selected_fact_grounding_rows(
                                     response=response,
@@ -3200,7 +3210,7 @@ class ComponentResearcher:
                                 "prior_component_memo_context.current_fact_rows "
                                 "exactly once in prior_fact_dispositions. A RETAIN "
                                 "row must be selected and an OMIT row must include "
-                                "a semantic reason and remain unselected. Positive "
+                                "a semantic reason and remain unselected. "
                                 "Resolve every row named in retained_not_selected_"
                                 "fact_row_indices or omitted_but_selected_fact_row_"
                                 "indices explicitly. For each mismatch, either keep "
