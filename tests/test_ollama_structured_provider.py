@@ -862,6 +862,54 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             {"type": "integer", "enum": [17, 23, 31]},
         )
 
+    def test_judge_schema_binds_the_role_required_complete_fact_roster(self) -> None:
+        analyst_schema = _provider_output_schema(
+            pass_name="COMPONENT_ANALYST_JUDGE",
+            payload={
+                "allowed_support_fact_ids": ["EFACT-P1", "EFACT-P2"],
+                "allowed_counter_fact_ids": ["EFACT-C1"],
+            },
+        )
+        self.assertEqual(
+            analyst_schema["properties"]["support_fact_ids"],
+            {
+                "type": "array",
+                "enum": [["EFACT-P1", "EFACT-P2"]],
+            },
+        )
+        self.assertNotIn(
+            "enum",
+            analyst_schema["properties"]["counter_fact_ids"],
+        )
+
+        skeptic_schema = _provider_output_schema(
+            pass_name="COMPONENT_SKEPTIC_JUDGE",
+            payload={
+                "allowed_support_fact_ids": ["EFACT-P1"],
+                "allowed_counter_fact_ids": ["EFACT-C1", "EFACT-C2"],
+            },
+        )
+        self.assertEqual(
+            skeptic_schema["properties"]["counter_fact_ids"],
+            {
+                "type": "array",
+                "enum": [["EFACT-C1", "EFACT-C2"]],
+            },
+        )
+        self.assertNotIn(
+            "enum",
+            skeptic_schema["properties"]["support_fact_ids"],
+        )
+
+        empty_analyst_schema = _provider_output_schema(
+            pass_name="COMPONENT_ANALYST_JUDGE",
+            payload={"allowed_support_fact_ids": []},
+        )
+        self.assertEqual(
+            empty_analyst_schema["properties"]["support_fact_ids"]["enum"],
+            [[]],
+        )
+
     def test_ollama_canonicalizes_only_duplicate_red_team_fact_rows(self) -> None:
         response = {
             "challenged_fact_row_indices": [37, 206, 206, 297],

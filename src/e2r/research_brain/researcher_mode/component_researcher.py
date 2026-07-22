@@ -862,11 +862,38 @@ def _provider_output_schema(
     space or attaching a different row's prose.  The retry already contains
     the exact immutable fields for the rows it may retain.  Express those
     values as JSON-schema enums so the model itself must emit a byte-exact
-    source binding.  No citation, interpretation, or score is repaired by
-    deterministic code.
+    source binding.  Judge roles likewise have an explicit completeness
+    contract: the analyst must account for the whole supplied positive roster
+    and the skeptic for the whole supplied counter roster.  Bind only that
+    role-required roster as one exact array so summarization cannot silently
+    drop a member before the existing semantic completeness check runs.  No
+    citation, interpretation, or score is repaired by deterministic code.
     """
 
     base = _PROVIDER_SCHEMAS[pass_name]
+    required_judge_roster = {
+        "COMPONENT_ANALYST_JUDGE": (
+            "allowed_support_fact_ids",
+            "support_fact_ids",
+        ),
+        "COMPONENT_SKEPTIC_JUDGE": (
+            "allowed_counter_fact_ids",
+            "counter_fact_ids",
+        ),
+    }.get(pass_name)
+    if required_judge_roster is not None:
+        payload_field, response_field = required_judge_roster
+        required_ids = [
+            str(value)
+            for value in payload.get(payload_field) or ()
+            if isinstance(value, str) and value.strip()
+        ]
+        schema = json.loads(json.dumps(base, ensure_ascii=False))
+        schema["properties"][response_field] = {
+            "type": "array",
+            "enum": [required_ids],
+        }
+        return schema
     if pass_name == "RED_TEAM_RESEARCH":
         allowed_row_indices: list[int] = []
         if isinstance(payload.get("loss_accounted_fact_chunk"), Mapping):
