@@ -31,6 +31,7 @@ from e2r.research_brain.researcher_mode.component_researcher import (
     _loss_accounted_fact_chunk_payloads,
     _provider_output_schema,
     _validate_loss_accounted_chunk_response,
+    _validate_loss_accounted_synthesis_response,
 )
 from e2r.research_brain.researcher_mode.prompt_projection import (
     project_current_decision_citable_facts,
@@ -230,7 +231,75 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 "loss_accounted_fact_chunk_synthesis"
             )
         )
+        synthesis_roster = transport.output_schemas[-1]["properties"][
+            "fact_row_indices"
+        ]
+        synthesis_chunk_responses = transport.payloads[-1][
+            "loss_accounted_fact_chunk_synthesis"
+        ]["chunk_responses"]
+        self.assertEqual(
+            [row["enum"] for row in synthesis_roster["prefixItems"]],
+            [
+                row["response"]["fact_row_indices"]
+                for row in synthesis_chunk_responses
+                if row["response"]["fact_row_indices"]
+            ],
+        )
+        self.assertEqual(
+            synthesis_roster["minItems"],
+            len(synthesis_roster["prefixItems"]),
+        )
         self.assertTrue(all(length < 500_000 for length in transport.prompt_lengths))
+
+        class BoundedCodexResearcherProvider(CodexResearcherProvider):
+            @property
+            def memo_fact_prompt_chunk_chars(self) -> int:
+                return 100_000
+
+        codex_transport = ChunkAwareTransport()
+        codex_provider = BoundedCodexResearcherProvider(
+            transport=codex_transport  # type: ignore[arg-type]
+        )
+        codex_response = codex_provider.complete(
+            pass_name="BUSINESS_MODEL_RESEARCH",
+            payload=payload,
+        )
+        codex_chunks = [
+            row
+            for row in codex_transport.payloads
+            if row.get("loss_accounted_fact_chunk")
+        ]
+        self.assertGreater(len(codex_chunks), 1)
+        self.assertEqual(
+            [
+                global_index
+                for chunk in codex_chunks
+                for global_index in chunk["loss_accounted_fact_chunk"][
+                    "global_fact_row_index_by_chunk_local_index"
+                ]
+            ],
+            list(range(len(facts))),
+        )
+        self.assertTrue(
+            codex_transport.payloads[-1].get(
+                "loss_accounted_fact_chunk_synthesis"
+            )
+        )
+        self.assertEqual(
+            set(codex_response["fact_row_indices"]),
+            {
+                chunk["loss_accounted_fact_chunk"][
+                    "global_fact_row_index_by_chunk_local_index"
+                ][0]
+                for chunk in codex_chunks
+            },
+        )
+        self.assertTrue(
+            all(
+                length < 1_000_000
+                for length in codex_transport.prompt_lengths
+            )
+        )
 
     def test_fact_chunk_dictionary_remap_preserves_every_decoded_value(
         self,
@@ -721,8 +790,6 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 field: variant["properties"][field]["enum"][0]
                 for field in (
                     "source_predicate",
-                    "source_value_json",
-                    "source_period_json",
                     "source_economic_mechanism",
                 )
             }
@@ -734,10 +801,24 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 row["fact_row_index"]: {
                     key: value
                     for key, value in row.items()
-                    if key != "fact_row_index"
+                    if key
+                    in {
+                        "source_predicate",
+                        "source_economic_mechanism",
+                    }
                 }
                 for row in expected_rows
             },
+        )
+        self.assertTrue(
+            all(
+                "enum" not in variant["properties"][field]
+                for variant in variants
+                for field in (
+                    "source_value_json",
+                    "source_period_json",
+                )
+            )
         )
 
         chunk_schema = _provider_output_schema(
@@ -765,10 +846,16 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             ],
             [7, 9],
         )
-        self.assertNotIn("items", chunk_dispositions)
+        self.assertEqual(
+            [
+                row["properties"]["fact_row_index"]["enum"][0]
+                for row in chunk_dispositions["items"]["anyOf"]
+            ],
+            [7, 9],
+        )
         self.assertEqual(chunk_dispositions["minItems"], 2)
         self.assertEqual(chunk_dispositions["maxItems"], 2)
-        self.assertTrue(chunk_dispositions["uniqueItems"])
+        self.assertNotIn("uniqueItems", chunk_dispositions)
 
         synthesis_schema = _provider_output_schema(
             pass_name="COMPONENT_RESEARCH",
@@ -825,9 +912,14 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             ],
             [7, 9],
         )
-        self.assertNotIn(
-            "items",
-            synthesis_properties["prior_fact_dispositions"],
+        self.assertEqual(
+            [
+                row["properties"]["fact_row_index"]["enum"][0]
+                for row in synthesis_properties[
+                    "prior_fact_dispositions"
+                ]["items"]["anyOf"]
+            ],
+            [7, 9],
         )
         self.assertEqual(
             synthesis_properties["prior_fact_dispositions"]["minItems"],
@@ -837,10 +929,9 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             synthesis_properties["prior_fact_dispositions"]["maxItems"],
             2,
         )
-        self.assertTrue(
-            synthesis_properties["prior_fact_dispositions"][
-                "uniqueItems"
-            ]
+        self.assertNotIn(
+            "uniqueItems",
+            synthesis_properties["prior_fact_dispositions"],
         )
         consistency_schema = _provider_output_schema(
             pass_name="COMPONENT_RESEARCH",
@@ -887,8 +978,9 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             ],
             [7],
         )
-        self.assertNotIn(
-            "items", consistency_properties["selected_fact_row_indices"]
+        self.assertEqual(
+            consistency_properties["selected_fact_row_indices"]["items"],
+            {"type": "integer", "enum": [7, 9]},
         )
         self.assertEqual(
             [
@@ -899,8 +991,14 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             ],
             [7],
         )
-        self.assertNotIn(
-            "items", consistency_properties["selected_fact_groundings"]
+        self.assertEqual(
+            [
+                row["properties"]["fact_row_index"]["enum"][0]
+                for row in consistency_properties[
+                    "selected_fact_groundings"
+                ]["items"]["anyOf"]
+            ],
+            [7, 9],
         )
         self.assertEqual(
             [
@@ -925,7 +1023,6 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 },
                 "minItems": 2,
                 "maxItems": 2,
-                "uniqueItems": True,
             },
         )
         self.assertEqual(
@@ -969,7 +1066,11 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         )
         self.assertEqual(roster["minItems"], 2)
         self.assertEqual(roster["maxItems"], 2)
-        self.assertTrue(roster["uniqueItems"])
+        self.assertEqual(
+            roster["items"],
+            {"type": "integer", "enum": [0, 1]},
+        )
+        self.assertNotIn("uniqueItems", roster)
 
         chunk_schema = _provider_output_schema(
             pass_name="COMPONENT_RESEARCH",
@@ -1008,11 +1109,26 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 "loss_accounted_fact_chunk_synthesis": {
                     "chunk_responses": [
                         {
+                            "chunk_index": 0,
                             "response": {
-                                "fact_row_indices": [3],
+                                "fact_row_indices": [3, 5],
                                 "research_complete": False,
                             }
-                        }
+                        },
+                        {
+                            "chunk_index": 1,
+                            "response": {
+                                "fact_row_indices": [11, 13],
+                                "research_complete": True,
+                            },
+                        },
+                        {
+                            "chunk_index": 2,
+                            "response": {
+                                "fact_row_indices": [],
+                                "research_complete": False,
+                            },
+                        },
                     ]
                 }
             },
@@ -1021,6 +1137,19 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             synthesis_schema["properties"]["research_complete"],
             {"type": "boolean", "enum": [True]},
         )
+        fact_roster = synthesis_schema["properties"]["fact_row_indices"]
+        self.assertEqual(
+            [row["enum"] for row in fact_roster["prefixItems"]],
+            [[3, 5], [11, 13]],
+        )
+        self.assertEqual(
+            fact_roster["items"],
+            {"type": "integer", "enum": [3, 5, 11, 13]},
+        )
+        self.assertEqual(fact_roster["minItems"], 2)
+        self.assertNotIn("uniqueItems", fact_roster)
+        self.assertNotIn("contains", fact_roster)
+        self.assertNotIn("allOf", fact_roster)
 
         chunk_schema = _provider_output_schema(
             pass_name="BUSINESS_MODEL_RESEARCH",
@@ -1033,16 +1162,61 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             {"type": "boolean"},
         )
 
+    def test_business_model_synthesis_validator_rejects_first_chunk_copy(
+        self,
+    ) -> None:
+        chunk_responses = [
+            {
+                "chunk_index": 0,
+                "response": {"fact_row_indices": [3, 5]},
+            },
+            {
+                "chunk_index": 1,
+                "response": {"fact_row_indices": [11, 13]},
+            },
+            {
+                "chunk_index": 2,
+                "response": {"fact_row_indices": []},
+            },
+        ]
+
+        with self.assertRaisesRegex(
+            StructuredProviderRejected,
+            (
+                "loss_accounted_business_model_synthesis_"
+                "chunk_coverage_mismatch:1"
+            ),
+        ):
+            _validate_loss_accounted_synthesis_response(
+                pass_name="BUSINESS_MODEL_RESEARCH",
+                response={"fact_row_indices": [3, 5]},
+                chunk_responses=chunk_responses,
+            )
+
+        _validate_loss_accounted_synthesis_response(
+            pass_name="BUSINESS_MODEL_RESEARCH",
+            response={"fact_row_indices": [5, 13]},
+            chunk_responses=chunk_responses,
+        )
+        with self.assertRaisesRegex(
+            StructuredProviderRejected,
+            "loss_accounted_fact_response_duplicate_fact_row_indices",
+        ):
+            _validate_loss_accounted_synthesis_response(
+                pass_name="BUSINESS_MODEL_RESEARCH",
+                response={"fact_row_indices": [5, 13, 13]},
+                chunk_responses=chunk_responses,
+            )
+
     def test_red_team_schema_rejects_duplicate_challenged_fact_rows(self) -> None:
         schema = _provider_output_schema(
             pass_name="RED_TEAM_RESEARCH",
             payload={},
         )
 
-        self.assertTrue(
-            schema["properties"]["challenged_fact_row_indices"][
-                "uniqueItems"
-            ]
+        self.assertNotIn(
+            "uniqueItems",
+            schema["properties"]["challenged_fact_row_indices"],
         )
 
         chunk_schema = _provider_output_schema(
@@ -1087,6 +1261,20 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             ]["items"],
             {"type": "integer", "enum": [17, 23, 31]},
         )
+        with self.assertRaisesRegex(
+            StructuredProviderRejected,
+            (
+                "loss_accounted_fact_response_duplicate_"
+                "challenged_fact_row_indices"
+            ),
+        ):
+            _validate_loss_accounted_chunk_response(
+                pass_name="RED_TEAM_RESEARCH",
+                response={"challenged_fact_row_indices": [2, 2]},
+                allowed_fact_row_indices={2, 5},
+                prior_fact_row_indices=set(),
+                expected_component_groundings={},
+            )
 
     def test_judge_schema_binds_the_role_required_complete_fact_roster(self) -> None:
         analyst_schema = _provider_output_schema(
@@ -1100,7 +1288,16 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             analyst_schema["properties"]["support_fact_ids"],
             {
                 "type": "array",
-                "enum": [["EFACT-P1", "EFACT-P2"]],
+                "prefixItems": [
+                    {"type": "string", "enum": ["EFACT-P1"]},
+                    {"type": "string", "enum": ["EFACT-P2"]},
+                ],
+                "items": {
+                    "type": "string",
+                    "enum": ["EFACT-P1", "EFACT-P2"],
+                },
+                "minItems": 2,
+                "maxItems": 2,
             },
         )
         self.assertNotIn(
@@ -1119,7 +1316,16 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             skeptic_schema["properties"]["counter_fact_ids"],
             {
                 "type": "array",
-                "enum": [["EFACT-C1", "EFACT-C2"]],
+                "prefixItems": [
+                    {"type": "string", "enum": ["EFACT-C1"]},
+                    {"type": "string", "enum": ["EFACT-C2"]},
+                ],
+                "items": {
+                    "type": "string",
+                    "enum": ["EFACT-C1", "EFACT-C2"],
+                },
+                "minItems": 2,
+                "maxItems": 2,
             },
         )
         self.assertEqual(
@@ -1138,8 +1344,12 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             payload={"allowed_support_fact_ids": []},
         )
         self.assertEqual(
-            empty_analyst_schema["properties"]["support_fact_ids"]["enum"],
-            [[]],
+            empty_analyst_schema["properties"]["support_fact_ids"],
+            {
+                "type": "array",
+                "items": {"type": "string"},
+                "maxItems": 0,
+            },
         )
 
         empty_skeptic_schema = _provider_output_schema(
@@ -1151,7 +1361,11 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         )
         self.assertEqual(
             empty_skeptic_schema["properties"]["support_fact_ids"],
-            {"type": "array", "enum": [[]]},
+            {
+                "type": "array",
+                "items": {"type": "string"},
+                "maxItems": 0,
+            },
         )
 
     def test_ollama_canonicalizes_only_duplicate_red_team_fact_rows(self) -> None:

@@ -885,6 +885,39 @@ def _provider_output_schema(
             "type": "boolean",
             "enum": [True],
         }
+        chunk_fact_row_sets = (
+            _business_model_synthesis_chunk_fact_row_sets(payload)
+        )
+        if chunk_fact_row_sets:
+            allowed_fact_row_indices = list(
+                dict.fromkeys(
+                    row_index
+                    for _, row_indices in chunk_fact_row_sets
+                    for row_index in row_indices
+                )
+            )
+            # ``contains``/``allOf`` is not accepted by every local or Codex
+            # strict-schema backend.  Position-bind one model-selected
+            # representative per nonempty chunk instead.  Each enum contains
+            # the complete selection made by that chunk's LLM response, so
+            # deterministic code chooses no economic fact.  The model remains
+            # free to choose any member of each enum and may append further
+            # selected rows from the loss-accounted union.
+            schema["properties"]["fact_row_indices"] = {
+                "type": "array",
+                "prefixItems": [
+                    {
+                        "type": "integer",
+                        "enum": list(row_indices),
+                    }
+                    for _, row_indices in chunk_fact_row_sets
+                ],
+                "items": {
+                    "type": "integer",
+                    "enum": allowed_fact_row_indices,
+                },
+                "minItems": len(chunk_fact_row_sets),
+            }
         return schema
     required_judge_roster = {
         "COMPONENT_ANALYST_JUDGE": (
@@ -904,10 +937,27 @@ def _provider_output_schema(
             if isinstance(value, str) and value.strip()
         ]
         schema = json.loads(json.dumps(base, ensure_ascii=False))
-        schema["properties"][response_field] = {
-            "type": "array",
-            "enum": [required_ids],
-        }
+        schema["properties"][response_field] = (
+            {
+                "type": "array",
+                "prefixItems": [
+                    {"type": "string", "enum": [fact_id]}
+                    for fact_id in required_ids
+                ],
+                "items": {
+                    "type": "string",
+                    "enum": required_ids,
+                },
+                "minItems": len(required_ids),
+                "maxItems": len(required_ids),
+            }
+            if required_ids
+            else {
+                "type": "array",
+                "items": {"type": "string"},
+                "maxItems": 0,
+            }
+        )
         if pass_name == "COMPONENT_SKEPTIC_JUDGE":
             allowed_support_ids = [
                 str(value)
@@ -923,7 +973,11 @@ def _provider_output_schema(
                     },
                 }
                 if allowed_support_ids
-                else {"type": "array", "enum": [[]]}
+                else {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "maxItems": 0,
+                }
             )
         return schema
     if pass_name == "RED_TEAM_RESEARCH":
@@ -950,13 +1004,16 @@ def _provider_output_schema(
                 and not isinstance(row_index, bool)
             ]
         allowed_row_indices = list(dict.fromkeys(allowed_row_indices))
-        if not allowed_row_indices:
-            return base
         schema = json.loads(json.dumps(base, ensure_ascii=False))
-        schema["properties"]["challenged_fact_row_indices"]["items"] = {
-            "type": "integer",
-            "enum": allowed_row_indices,
-        }
+        challenged_schema = schema["properties"][
+            "challenged_fact_row_indices"
+        ]
+        challenged_schema.pop("uniqueItems", None)
+        if allowed_row_indices:
+            challenged_schema["items"] = {
+                "type": "integer",
+                "enum": allowed_row_indices,
+            }
         return schema
     if pass_name != "COMPONENT_RESEARCH":
         return base
@@ -994,12 +1051,19 @@ def _provider_output_schema(
                         {"type": "integer", "enum": [row_index]}
                         for row_index in structured_metric_row_indices
                     ],
+                    "items": {
+                        "type": "integer",
+                        "enum": structured_metric_row_indices,
+                    },
                     "minItems": len(structured_metric_row_indices),
                     "maxItems": len(structured_metric_row_indices),
-                    "uniqueItems": True,
                 }
                 if structured_metric_row_indices
-                else {"type": "array", "enum": [[]]}
+                else {
+                    "type": "array",
+                    "items": {"type": "integer", "minimum": 0},
+                    "maxItems": 0,
+                }
             )
     retry = payload.get(
         "loss_accounted_fact_chunk_validation_retry_context"
@@ -1091,10 +1155,20 @@ def _provider_output_schema(
                     "enum": [int(row["fact_row_index"])],
                 },
                 **{
-                    field: {
-                        "type": "string",
-                        "enum": [str(row[field])],
-                    }
+                    field: (
+                        json.loads(
+                            json.dumps(
+                                grounding_item["properties"][field],
+                                ensure_ascii=False,
+                            )
+                        )
+                        if field
+                        in {"source_value_json", "source_period_json"}
+                        else {
+                            "type": "string",
+                            "enum": [str(row[field])],
+                        }
+                    )
                     for field in required_fields
                 },
                 "component_interpretation": (
@@ -1141,9 +1215,12 @@ def _provider_output_schema(
                 {"type": "integer", "enum": [row_index]}
                 for row_index in required_model_selected_indices
             ],
+            "items": {
+                "type": "integer",
+                "enum": row_indices,
+            },
             "minItems": len(required_model_selected_indices),
             "maxItems": len(required_model_selected_indices),
-            "uniqueItems": True,
         }
         properties["selected_fact_groundings"] = {
             "type": "array",
@@ -1151,9 +1228,9 @@ def _provider_output_schema(
                 grounding_by_index[row_index]
                 for row_index in required_model_selected_indices
             ],
+            "items": {"anyOf": grounding_variants},
             "minItems": len(required_model_selected_indices),
             "maxItems": len(required_model_selected_indices),
-            "uniqueItems": True,
         }
     synthesis = payload.get("loss_accounted_fact_chunk_synthesis")
     chunk = payload.get("loss_accounted_fact_chunk")
@@ -1222,14 +1299,15 @@ def _provider_output_schema(
             # to the rejected model's own selected/RETAIN decision so the
             # model cannot express that same decision inconsistently again.
             disposition_schema["prefixItems"] = disposition_variants
-            disposition_schema.pop("items", None)
+            disposition_schema["items"] = {
+                "anyOf": disposition_variants,
+            }
             disposition_schema["minItems"] = len(
                 allowed_disposition_indices
             )
             disposition_schema["maxItems"] = len(
                 allowed_disposition_indices
             )
-            disposition_schema["uniqueItems"] = True
         else:
             disposition_schema["maxItems"] = 0
     if isinstance(synthesis, Mapping):
@@ -1277,7 +1355,6 @@ def _provider_output_schema(
             ),
             "minItems": len(anchor_ids),
             "maxItems": len(anchor_ids),
-            "uniqueItems": True,
         }
         properties["nearest_positive_anchor_ids"] = {
             "type": "array",
@@ -1287,7 +1364,6 @@ def _provider_output_schema(
                 else {"type": "string"}
             ),
             **({} if positive_anchor_ids else {"maxItems": 0}),
-            "uniqueItems": True,
         }
         properties["nearest_counter_anchor_ids"] = {
             "type": "array",
@@ -1297,7 +1373,6 @@ def _provider_output_schema(
                 else {"type": "string"}
             ),
             **({} if counter_anchor_ids else {"maxItems": 0}),
-            "uniqueItems": True,
         }
     return schema
 
@@ -1344,7 +1419,221 @@ class CodexResearcherProvider:
             )
         )
 
+    @property
+    def memo_fact_prompt_chunk_chars(self) -> int:
+        """Keep Codex memo fact chunks comfortably below its prompt gate."""
+
+        return 250_000
+
+    def _normalize_loss_accounted_response(
+        self,
+        *,
+        pass_name: str,
+        response: Mapping[str, Any],
+    ) -> Mapping[str, Any]:
+        del pass_name
+        return response
+
     def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        """Review every fact through a shared loss-accounted chunk contract."""
+
+        if pass_name not in _LOSS_ACCOUNTED_FACT_CHUNK_PASSES:
+            return self._complete_single_payload(
+                pass_name=pass_name,
+                payload=payload,
+            )
+        if (
+            "loss_accounted_fact_chunk" in payload
+            or "loss_accounted_fact_chunk_synthesis" in payload
+        ):
+            return self._normalize_loss_accounted_response(
+                pass_name=pass_name,
+                response=self._complete_single_payload(
+                    pass_name=pass_name,
+                    payload=payload,
+                ),
+            )
+        chunks = _loss_accounted_fact_chunk_payloads(
+            payload,
+            pass_name=pass_name,
+            target_projection_chars=self.memo_fact_prompt_chunk_chars,
+        )
+        if len(chunks) <= 1:
+            return self._normalize_loss_accounted_response(
+                pass_name=pass_name,
+                response=self._complete_single_payload(
+                    pass_name=pass_name,
+                    payload=payload,
+                ),
+            )
+
+        chunk_responses = []
+        for chunk in chunks:
+            local_to_global = tuple(
+                int(value)
+                for value in chunk["loss_accounted_fact_chunk"][
+                    "global_fact_row_index_by_chunk_local_index"
+                ]
+            )
+            allowed_indices = {
+                int(row["fact_row_index"])
+                for row in chunk.get("current_evidence_fact_graph") or ()
+            }
+            prior_indices = {
+                int(row["fact_row_index"])
+                for row in (
+                    (
+                        chunk.get("prior_component_memo_context") or {}
+                    ).get("current_fact_rows")
+                    or ()
+                )
+                if isinstance(row, Mapping)
+                and isinstance(row.get("fact_row_index"), int)
+            }
+            expected_component_groundings = (
+                _expected_component_chunk_fact_groundings(chunk)
+                if pass_name == "COMPONENT_RESEARCH"
+                else {}
+            )
+            attempt_payload = chunk
+            validation_retry_used = False
+            while True:
+                response = self._normalize_loss_accounted_response(
+                    pass_name=pass_name,
+                    response=self._complete_single_payload(
+                        pass_name=pass_name,
+                        payload=attempt_payload,
+                    ),
+                )
+                try:
+                    _validate_loss_accounted_chunk_response(
+                        pass_name=pass_name,
+                        response=response,
+                        allowed_fact_row_indices=allowed_indices,
+                        prior_fact_row_indices=prior_indices,
+                        expected_component_groundings=(
+                            expected_component_groundings
+                        ),
+                    )
+                    break
+                except StructuredProviderRejected as exc:
+                    self.invalidate_last_response_cache(str(exc))
+                    if validation_retry_used:
+                        raise
+                    validation_retry_used = True
+                    expected_retry_groundings = (
+                        _selected_expected_chunk_grounding_rows(
+                            response=response,
+                            expected_groundings=(
+                                expected_component_groundings
+                            ),
+                        )
+                    )
+                    attempt_payload = scrub_blind_research_payload(
+                        {
+                            **chunk,
+                            "loss_accounted_fact_chunk_validation_retry_context": {
+                                "validation_error": str(exc),
+                                "allowed_fact_row_indices": sorted(
+                                    allowed_indices
+                                ),
+                                "required_prior_fact_row_indices": sorted(
+                                    prior_indices
+                                ),
+                                "expected_selected_fact_groundings": (
+                                    expected_retry_groundings
+                                ),
+                                "rejected_selected_fact_row_indices": (
+                                    [
+                                        int(row["fact_row_index"])
+                                        for row in expected_retry_groundings
+                                    ]
+                                ),
+                                "instruction": (
+                                    "Write the complete chunk response again from "
+                                    "the supplied source table, not from the prior "
+                                    "rejected answer, which is intentionally omitted "
+                                    "to prevent copying its bad row binding. "
+                                    "Cite only allowed_fact_row_indices. For a "
+                                    "component chunk, return one exact grounding "
+                                    "per selected row by copying the immutable "
+                                    "fields in expected_selected_fact_groundings, "
+                                    "and dispose every required prior row exactly "
+                                    "once. If a selected row does not support the "
+                                    "component, omit it instead of attaching another "
+                                    "row's semantics. Do not invent evidence, score, "
+                                    "or Stage."
+                                ),
+                            },
+                        }
+                    )
+            response = _restore_loss_accounted_chunk_global_indices(
+                pass_name=pass_name,
+                response=response,
+                local_to_global=local_to_global,
+            )
+            chunk_meta = dict(chunk["loss_accounted_fact_chunk"])
+            chunk_responses.append(
+                {
+                    "chunk_index": chunk_meta["chunk_index"],
+                    "chunk_fact_count": chunk_meta["chunk_fact_count"],
+                    "chunk_fact_row_index_roster_hash": chunk_meta[
+                        "chunk_fact_row_index_roster_hash"
+                    ],
+                    "response": dict(response),
+                }
+            )
+
+        synthesis_payload = _loss_accounted_fact_chunk_synthesis_payload(
+            payload,
+            pass_name=pass_name,
+            chunks=chunks,
+            chunk_responses=chunk_responses,
+        )
+        attempt_payload = synthesis_payload
+        validation_retry_used = False
+        while True:
+            response = self._normalize_loss_accounted_response(
+                pass_name=pass_name,
+                response=self._complete_single_payload(
+                    pass_name=pass_name,
+                    payload=attempt_payload,
+                ),
+            )
+            try:
+                _validate_loss_accounted_synthesis_response(
+                    pass_name=pass_name,
+                    response=response,
+                    chunk_responses=chunk_responses,
+                )
+                break
+            except StructuredProviderRejected as exc:
+                self.invalidate_last_response_cache(str(exc))
+                if validation_retry_used:
+                    raise
+                validation_retry_used = True
+                attempt_payload = scrub_blind_research_payload(
+                    {
+                        **synthesis_payload,
+                        "loss_accounted_fact_synthesis_validation_retry_context": {
+                            "validation_error": str(exc),
+                            "rejected_response": response,
+                            "instruction": (
+                                "Rewrite the complete synthesis once. Cite only "
+                                "fact rows already cited or selected in the chunk "
+                                "responses. For a component synthesis, copy exact "
+                                "groundings and prior dispositions from those "
+                                "responses. Review every chunk; do not invent "
+                                "evidence, total score, or Stage."
+                            ),
+                        },
+                    }
+                )
+        return response
+
+    def _complete_single_payload(
         self, *, pass_name: str, payload: Mapping[str, Any]
     ) -> Mapping[str, Any]:
         if pass_name not in _PROVIDER_SCHEMAS:
@@ -2031,221 +2320,16 @@ class OllamaResearcherProvider(CodexResearcherProvider):
 
         return CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT
 
-    def complete(
-        self, *, pass_name: str, payload: Mapping[str, Any]
+    def _normalize_loss_accounted_response(
+        self,
+        *,
+        pass_name: str,
+        response: Mapping[str, Any],
     ) -> Mapping[str, Any]:
-        """Review an oversized citable fact plane through exhaustive chunks.
-
-        A long-running backfill can leave thousands of CURRENT/OPEN facts.  A
-        single JSON prompt that repeats every decoded economic mechanism can
-        exceed the model context even when the canonical artifacts themselves
-        are valid.  Silently raising the character cap would let the model
-        truncate the beginning of the prompt.  For the three memo passes that
-        consume the citable fact table, split the table into disjoint,
-        dictionary-remapped chunks, review every chunk, and ask the same pass
-        for one final synthesis over all chunk responses.
-
-        The row index remains the global blind citation index throughout.  No
-        fact is ranked, sampled, or dropped, and deterministic callers still
-        validate the final response against the immutable full fact graph.
-        """
-
-        if pass_name not in {
-            "BUSINESS_MODEL_RESEARCH",
-            "COMPONENT_RESEARCH",
-            "RED_TEAM_RESEARCH",
-        }:
-            return super().complete(pass_name=pass_name, payload=payload)
-        if (
-            "loss_accounted_fact_chunk" in payload
-            or "loss_accounted_fact_chunk_synthesis" in payload
-        ):
-            return _canonicalize_ollama_red_team_fact_set(
-                pass_name=pass_name,
-                response=super().complete(
-                    pass_name=pass_name,
-                    payload=payload,
-                ),
-            )
-        chunks = _loss_accounted_fact_chunk_payloads(
-            payload,
+        return _canonicalize_ollama_red_team_fact_set(
             pass_name=pass_name,
-            target_projection_chars=self.memo_fact_prompt_chunk_chars,
+            response=response,
         )
-        if len(chunks) <= 1:
-            return _canonicalize_ollama_red_team_fact_set(
-                pass_name=pass_name,
-                response=super().complete(
-                    pass_name=pass_name,
-                    payload=payload,
-                ),
-            )
-
-        chunk_responses = []
-        for chunk in chunks:
-            local_to_global = tuple(
-                int(value)
-                for value in chunk["loss_accounted_fact_chunk"][
-                    "global_fact_row_index_by_chunk_local_index"
-                ]
-            )
-            allowed_indices = {
-                int(row["fact_row_index"])
-                for row in chunk.get("current_evidence_fact_graph") or ()
-            }
-            prior_indices = {
-                int(row["fact_row_index"])
-                for row in (
-                    (
-                        chunk.get("prior_component_memo_context") or {}
-                    ).get("current_fact_rows")
-                    or ()
-                )
-                if isinstance(row, Mapping)
-                and isinstance(row.get("fact_row_index"), int)
-            }
-            expected_component_groundings = (
-                _expected_component_chunk_fact_groundings(chunk)
-                if pass_name == "COMPONENT_RESEARCH"
-                else {}
-            )
-            attempt_payload = chunk
-            validation_retry_used = False
-            while True:
-                response = super().complete(
-                    pass_name=pass_name,
-                    payload=attempt_payload,
-                )
-                response = _canonicalize_ollama_red_team_fact_set(
-                    pass_name=pass_name,
-                    response=response,
-                )
-                try:
-                    _validate_loss_accounted_chunk_response(
-                        pass_name=pass_name,
-                        response=response,
-                        allowed_fact_row_indices=allowed_indices,
-                        prior_fact_row_indices=prior_indices,
-                        expected_component_groundings=(
-                            expected_component_groundings
-                        ),
-                    )
-                    break
-                except StructuredProviderRejected as exc:
-                    self.invalidate_last_response_cache(str(exc))
-                    if validation_retry_used:
-                        raise
-                    validation_retry_used = True
-                    expected_retry_groundings = (
-                        _selected_expected_chunk_grounding_rows(
-                            response=response,
-                            expected_groundings=(
-                                expected_component_groundings
-                            ),
-                        )
-                    )
-                    attempt_payload = scrub_blind_research_payload(
-                        {
-                            **chunk,
-                            "loss_accounted_fact_chunk_validation_retry_context": {
-                                "validation_error": str(exc),
-                                "allowed_fact_row_indices": sorted(
-                                    allowed_indices
-                                ),
-                                "required_prior_fact_row_indices": sorted(
-                                    prior_indices
-                                ),
-                                "expected_selected_fact_groundings": (
-                                    expected_retry_groundings
-                                ),
-                                "rejected_selected_fact_row_indices": (
-                                    [
-                                        int(row["fact_row_index"])
-                                        for row in expected_retry_groundings
-                                    ]
-                                ),
-                                "instruction": (
-                                    "Write the complete chunk response again from "
-                                    "the supplied source table, not from the prior "
-                                    "rejected answer, which is intentionally omitted "
-                                    "to prevent copying its bad row binding. "
-                                    "Cite only allowed_fact_row_indices. For a "
-                                    "component chunk, return one exact grounding "
-                                    "per selected row by copying the immutable "
-                                    "fields in expected_selected_fact_groundings, "
-                                    "and dispose every required prior row exactly "
-                                    "once. If a selected row does not support the "
-                                    "component, omit it instead of attaching another "
-                                    "row's semantics. Do not invent evidence, score, "
-                                    "or Stage."
-                                ),
-                            },
-                        }
-                    )
-            response = _restore_loss_accounted_chunk_global_indices(
-                pass_name=pass_name,
-                response=response,
-                local_to_global=local_to_global,
-            )
-            chunk_meta = dict(chunk["loss_accounted_fact_chunk"])
-            chunk_responses.append(
-                {
-                    "chunk_index": chunk_meta["chunk_index"],
-                    "chunk_fact_count": chunk_meta["chunk_fact_count"],
-                    "chunk_fact_row_index_roster_hash": chunk_meta[
-                        "chunk_fact_row_index_roster_hash"
-                    ],
-                    "response": dict(response),
-                }
-            )
-
-        synthesis_payload = _loss_accounted_fact_chunk_synthesis_payload(
-            payload,
-            pass_name=pass_name,
-            chunks=chunks,
-            chunk_responses=chunk_responses,
-        )
-        attempt_payload = synthesis_payload
-        validation_retry_used = False
-        while True:
-            response = super().complete(
-                pass_name=pass_name,
-                payload=attempt_payload,
-            )
-            response = _canonicalize_ollama_red_team_fact_set(
-                pass_name=pass_name,
-                response=response,
-            )
-            try:
-                _validate_loss_accounted_synthesis_response(
-                    pass_name=pass_name,
-                    response=response,
-                    chunk_responses=chunk_responses,
-                )
-                break
-            except StructuredProviderRejected as exc:
-                self.invalidate_last_response_cache(str(exc))
-                if validation_retry_used:
-                    raise
-                validation_retry_used = True
-                attempt_payload = scrub_blind_research_payload(
-                    {
-                        **synthesis_payload,
-                        "loss_accounted_fact_synthesis_validation_retry_context": {
-                            "validation_error": str(exc),
-                            "rejected_response": response,
-                            "instruction": (
-                                "Rewrite the complete synthesis once. Cite only "
-                                "fact rows already cited or selected in the chunk "
-                                "responses. For a component synthesis, copy exact "
-                                "groundings and prior dispositions from those "
-                                "responses. Review every chunk; do not invent "
-                                "evidence, total score, or Stage."
-                            ),
-                        },
-                    }
-                )
-        return response
 
     @classmethod
     def default(
@@ -2929,6 +3013,65 @@ def _selected_expected_chunk_grounding_rows(
     return result
 
 
+def _business_model_synthesis_chunk_fact_row_sets(
+    payload: Mapping[str, Any],
+) -> tuple[tuple[int, tuple[int, ...]], ...]:
+    """Return each nonempty chunk's own model-selected global fact rows.
+
+    The fact rows were selected independently inside each chunk and restored
+    to immutable global indices before synthesis.  This helper preserves that
+    complete choice set; it never picks a representative on the model's
+    behalf.  The existing chunk-response validator remains the authority for
+    malformed or duplicate row indices.
+    """
+
+    synthesis = payload.get("loss_accounted_fact_chunk_synthesis")
+    if not isinstance(synthesis, Mapping):
+        return ()
+    raw_chunks = synthesis.get("chunk_responses")
+    if (
+        not isinstance(raw_chunks, Sequence)
+        or isinstance(raw_chunks, (str, bytes))
+    ):
+        return ()
+    result: list[tuple[int, tuple[int, ...]]] = []
+    globally_seen: set[int] = set()
+    for ordinal, raw_chunk in enumerate(raw_chunks):
+        if not isinstance(raw_chunk, Mapping):
+            continue
+        raw_chunk_index = raw_chunk.get("chunk_index", ordinal)
+        chunk_index = (
+            int(raw_chunk_index)
+            if isinstance(raw_chunk_index, int)
+            and not isinstance(raw_chunk_index, bool)
+            and raw_chunk_index >= 0
+            else ordinal
+        )
+        response = raw_chunk.get("response")
+        if not isinstance(response, Mapping):
+            continue
+        selected = tuple(
+            sorted(
+                _response_fact_row_indices(
+                    "BUSINESS_MODEL_RESEARCH",
+                    response,
+                )
+            )
+        )
+        if not selected:
+            continue
+        # Loss-accounted chunks are disjoint by construction.  Preserve only
+        # that invariant here; a duplicated global row cannot be used to make
+        # two chunks appear represented by one final citation.
+        if globally_seen.intersection(selected):
+            raise ValueError(
+                "business-model synthesis chunk fact rows must be disjoint"
+            )
+        globally_seen.update(selected)
+        result.append((chunk_index, selected))
+    return tuple(result)
+
+
 def _validate_loss_accounted_synthesis_response(
     *,
     pass_name: str,
@@ -2952,6 +3095,29 @@ def _validate_loss_accounted_synthesis_response(
         raise StructuredProviderRejected(
             "loss_accounted_fact_synthesis_invented_fact_row"
         )
+    if pass_name == "BUSINESS_MODEL_RESEARCH":
+        missing_chunk_indices = [
+            chunk_index
+            for chunk_index, row_indices in (
+                _business_model_synthesis_chunk_fact_row_sets(
+                    {
+                        "loss_accounted_fact_chunk_synthesis": {
+                            "chunk_responses": chunk_responses,
+                        }
+                    }
+                )
+            )
+            if cited.isdisjoint(row_indices)
+        ]
+        if missing_chunk_indices:
+            raise StructuredProviderRejected(
+                "loss_accounted_business_model_synthesis_"
+                "chunk_coverage_mismatch:"
+                + ",".join(
+                    str(chunk_index)
+                    for chunk_index in missing_chunk_indices
+                )
+            )
     if pass_name == "COMPONENT_RESEARCH":
         grounding_indices = _mapping_fact_row_indices(
             response.get("selected_fact_groundings") or ()
