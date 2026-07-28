@@ -11,8 +11,15 @@ from unittest.mock import patch
 from e2r.cli.run_e2r_researcher_mode_until_pass import (
     _latest_calendar_trading_candidate,
     _load_prior_no_progress_signature,
+    _load_prior_source_transport_work_state,
+    _result_source_transport_work_state,
     _run_target_until_semantic_terminal,
     _semantic_signature,
+    _source_transport_advanced,
+    _source_transport_chain_is_valid,
+    _source_transport_snapshot,
+    _source_transport_work_state,
+    _source_transport_work_summary,
     build_parser,
 )
 from e2r.research import EmptySearchProvider, PageFetcher
@@ -27,14 +34,68 @@ from e2r.research_brain.researcher_mode import (
     OfficialSourceMaterializationResult,
     ResearcherEvidenceFactExtractor,
     ResearcherSourceGraphAcquirer,
+    SourceGraphAcquisitionConfig,
+    write_source_graph_acquisition_run,
     load_current_research_targets,
 )
 from tests.test_e2r_v5_fact_extraction import FactProvider, _document
 from tests.test_e2r_v5_researcher_mode import ScriptedResearchProvider
+from tests.test_e2r_v5_source_graph_acquisition import SourceBrainProvider
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    _source_checkpoint_is_ready_for_readonly_replay,
     _load_prior_component_memos,
     _same_lane_structured_cache_roots,
 )
+from e2r.research_brain.researcher_mode.source_graph_explorer import (
+    _finalize_checkpoint,
+)
+
+AS_OF_DATE = "2026-06-29"
+
+
+def _phase94_source_checkpoint(
+    *,
+    epoch: int,
+    resumed_from_checkpoint_id: str | None = None,
+    generated_queries=(),
+    search_candidates=(),
+):
+    return _finalize_checkpoint(
+        {
+            "schema_version": "e2r_v5_source_graph_checkpoint_v1",
+            "target_id": "CURRENT-TARGET",
+            "target_name": "Current Corp",
+            "as_of_date": AS_OF_DATE,
+            "mode": "TEST",
+            "epoch": epoch,
+            "status": "CANDIDATE_RANKING_PENDING",
+            "resumed_from_checkpoint_id": resumed_from_checkpoint_id,
+            "production_score_authority": False,
+            "parser_field_direct_score_authority": False,
+            "snippet_evidence_allowed": False,
+            "transport_budget_can_complete_research": False,
+            "generated_queries": list(generated_queries),
+            "search_candidates": list(search_candidates),
+            "evidence_documents": [],
+            "rejected_documents": [],
+            "quarantined_documents": [],
+        }
+    )
+
+
+def _bound_no_progress_payload(
+    signature: str,
+    checkpoint,
+):
+    snapshot = _source_transport_snapshot(checkpoint)
+    return {
+        "schema_version": "e2r_v5_phase94_semantic_no_progress_v1",
+        "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
+        "target_id": "CURRENT-TARGET",
+        "as_of_date": AS_OF_DATE,
+        "source_checkpoint_binding": snapshot["checkpoint_binding"],
+        "semantic_signature": signature,
+    }
 
 
 class Phase94IntegrationProvider:
@@ -206,6 +267,8 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
 
     def test_resumed_no_progress_runs_once_then_reuses_semantic_stop(self) -> None:
         signature = "a" * 64
+        checkpoint = _phase94_source_checkpoint(epoch=1)
+        snapshot = _source_transport_snapshot(checkpoint)
         result = SimpleNamespace(
             status="RESEARCH_CHECKPOINT_PENDING",
             completion_gates={"source_graph_checkpoint_ready": False},
@@ -227,16 +290,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 target_root / "semantic_no_progress_checkpoint.json"
             )
             no_progress_path.write_text(
-                json.dumps(
-                    {
-                        "schema_version": (
-                            "e2r_v5_phase94_semantic_no_progress_v1"
-                        ),
-                        "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
-                        "target_id": "CURRENT-TARGET",
-                        "semantic_signature": signature,
-                    }
-                ),
+                json.dumps(_bound_no_progress_payload(signature, checkpoint)),
                 encoding="utf-8",
             )
             runner = Runner()
@@ -253,12 +307,25 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ),
                 patch(
                     "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_load_prior_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_result_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
                     "refresh_canary_target_manifest_hash"
                 ),
             ):
                 returned = _run_target_until_semantic_terminal(
                     runner=runner,
-                    config=SimpleNamespace(output_root=str(root)),
+                    config=SimpleNamespace(
+                        output_root=str(root),
+                        as_of_date=AS_OF_DATE,
+                    ),
                     target=SimpleNamespace(target_id="CURRENT-TARGET"),
                 )
 
@@ -271,20 +338,19 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 signature,
             )
 
-    def test_prior_no_progress_signature_is_strictly_target_bound(self) -> None:
+    def test_prior_no_progress_signature_requires_exact_source_binding(self) -> None:
+        checkpoint = _phase94_source_checkpoint(epoch=1)
+        binding = _source_transport_snapshot(checkpoint)["checkpoint_binding"]
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "semantic_no_progress_checkpoint.json"
-            valid = {
-                "schema_version": "e2r_v5_phase94_semantic_no_progress_v1",
-                "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
-                "target_id": "CURRENT-TARGET",
-                "semantic_signature": "b" * 64,
-            }
+            valid = _bound_no_progress_payload("b" * 64, checkpoint)
             path.write_text(json.dumps(valid), encoding="utf-8")
             self.assertEqual(
                 _load_prior_no_progress_signature(
                     path=path,
                     target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint_binding=binding,
                 ),
                 "b" * 64,
             )
@@ -292,6 +358,41 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 _load_prior_no_progress_signature(
                     path=path,
                     target_id="OTHER-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint_binding=binding,
+                )
+            )
+            self.assertIsNone(
+                _load_prior_no_progress_signature(
+                    path=path,
+                    target_id="CURRENT-TARGET",
+                    as_of_date="2026-06-28",
+                    source_checkpoint_binding=binding,
+                )
+            )
+            self.assertIsNone(
+                _load_prior_no_progress_signature(
+                    path=path,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint_binding={
+                        **binding,
+                        "epoch": binding["epoch"] + 1,
+                    },
+                )
+            )
+            legacy = {
+                key: value
+                for key, value in valid.items()
+                if key not in {"as_of_date", "source_checkpoint_binding"}
+            }
+            path.write_text(json.dumps(legacy), encoding="utf-8")
+            self.assertIsNone(
+                _load_prior_no_progress_signature(
+                    path=path,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint_binding=binding,
                 )
             )
             path.write_text(
@@ -302,12 +403,16 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 _load_prior_no_progress_signature(
                     path=path,
                     target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                    source_checkpoint_binding=binding,
                 )
             )
 
     def test_resumed_no_progress_allows_recovery_before_new_stop(self) -> None:
         old_signature = "c" * 64
         recovered_signature = "d" * 64
+        checkpoint = _phase94_source_checkpoint(epoch=1)
+        snapshot = _source_transport_snapshot(checkpoint)
         result = SimpleNamespace(
             status="RESEARCH_CHECKPOINT_PENDING",
             completion_gates={"source_graph_checkpoint_ready": False},
@@ -330,14 +435,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             )
             no_progress_path.write_text(
                 json.dumps(
-                    {
-                        "schema_version": (
-                            "e2r_v5_phase94_semantic_no_progress_v1"
-                        ),
-                        "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
-                        "target_id": "CURRENT-TARGET",
-                        "semantic_signature": old_signature,
-                    }
+                    _bound_no_progress_payload(old_signature, checkpoint)
                 ),
                 encoding="utf-8",
             )
@@ -355,12 +453,25 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ),
                 patch(
                     "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_load_prior_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_result_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
                     "refresh_canary_target_manifest_hash"
                 ),
             ):
                 _run_target_until_semantic_terminal(
                     runner=runner,
-                    config=SimpleNamespace(output_root=str(root)),
+                    config=SimpleNamespace(
+                        output_root=str(root),
+                        as_of_date=AS_OF_DATE,
+                    ),
                     target=SimpleNamespace(target_id="CURRENT-TARGET"),
                 )
 
@@ -372,8 +483,135 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 recovered_signature,
             )
 
+    def test_readonly_source_replay_allows_one_advance_before_stale_stop(
+        self,
+    ) -> None:
+        signature = "f" * 64
+        checkpoint = _phase94_source_checkpoint(epoch=1)
+        advanced_checkpoint = _phase94_source_checkpoint(
+            epoch=2,
+            resumed_from_checkpoint_id=checkpoint["checkpoint_id"],
+        )
+        snapshot = _source_transport_snapshot(checkpoint)
+        advanced_snapshot = _source_transport_snapshot(advanced_checkpoint)
+        replayed = SimpleNamespace(
+            status="RESEARCH_CHECKPOINT_PENDING",
+            completion_gates={"source_graph_checkpoint_ready": True},
+            audit={"source_checkpoint_readonly_replayed": True},
+        )
+        advanced = SimpleNamespace(
+            status="RESEARCH_CHECKPOINT_PENDING",
+            completion_gates={"source_graph_checkpoint_ready": True},
+            audit={"source_checkpoint_readonly_replayed": False},
+        )
+
+        class Runner:
+            def __init__(self) -> None:
+                self.modes = []
+
+            def run_checkpoint(self, **kwargs):
+                self.modes.append(kwargs["source_resume_mode"])
+                return replayed if len(self.modes) == 1 else advanced
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target_root = root / "CURRENT-TARGET"
+            target_root.mkdir(parents=True)
+            (target_root / "semantic_no_progress_checkpoint.json").write_text(
+                json.dumps(_bound_no_progress_payload(signature, checkpoint)),
+                encoding="utf-8",
+            )
+            runner = Runner()
+            with (
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_signature",
+                    return_value=signature,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_state",
+                    return_value={},
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_load_prior_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_result_source_transport_work_state",
+                    side_effect=(snapshot, advanced_snapshot),
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "refresh_canary_target_manifest_hash"
+                ),
+            ):
+                returned = _run_target_until_semantic_terminal(
+                    runner=runner,
+                    config=SimpleNamespace(
+                        output_root=str(root),
+                        as_of_date=AS_OF_DATE,
+                    ),
+                    target=SimpleNamespace(target_id="CURRENT-TARGET"),
+                )
+
+        self.assertIs(returned, advanced)
+        self.assertEqual(
+            runner.modes,
+            ["REUSE_READY_CHECKPOINT", "ADVANCE"],
+        )
+
+    def test_readonly_source_replay_requires_terminal_source_work(self) -> None:
+        ready = {
+            "status": "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+            "generated_queries": [
+                {"execution_status": "SEARCH_EXECUTED"}
+            ],
+            "search_candidates": [
+                {
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "FULL_DOCUMENT_FETCHED",
+                }
+            ],
+        }
+        self.assertTrue(
+            _source_checkpoint_is_ready_for_readonly_replay(ready)
+        )
+        for mutation in (
+            {
+                "status": "CANDIDATE_RANKING_PENDING",
+            },
+            {
+                "generated_queries": [{"execution_status": "PENDING"}],
+            },
+            {
+                "search_candidates": [
+                    {
+                        "ranking_status": "PENDING",
+                        "fetch_status": "NOT_STARTED",
+                    }
+                ],
+            },
+            {
+                "search_candidates": [
+                    {
+                        "ranking_status": "MATERIAL",
+                        "fetch_status": "MATERIAL_PENDING_FETCH",
+                    }
+                ],
+            },
+        ):
+            candidate = {**ready, **mutation}
+            self.assertFalse(
+                _source_checkpoint_is_ready_for_readonly_replay(candidate)
+            )
+
     def test_completed_resume_removes_stale_no_progress_leaf(self) -> None:
         signature = "e" * 64
+        checkpoint = _phase94_source_checkpoint(epoch=1)
+        snapshot = _source_transport_snapshot(checkpoint)
         result = SimpleNamespace(
             status="PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
             completion_gates={"source_graph_checkpoint_ready": True},
@@ -391,16 +629,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 target_root / "semantic_no_progress_checkpoint.json"
             )
             no_progress_path.write_text(
-                json.dumps(
-                    {
-                        "schema_version": (
-                            "e2r_v5_phase94_semantic_no_progress_v1"
-                        ),
-                        "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
-                        "target_id": "CURRENT-TARGET",
-                        "semantic_signature": signature,
-                    }
-                ),
+                json.dumps(_bound_no_progress_payload(signature, checkpoint)),
                 encoding="utf-8",
             )
             with (
@@ -416,12 +645,25 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ),
                 patch(
                     "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_load_prior_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_result_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
                     "refresh_canary_target_manifest_hash"
                 ),
             ):
                 _run_target_until_semantic_terminal(
                     runner=Runner(),
-                    config=SimpleNamespace(output_root=str(root)),
+                    config=SimpleNamespace(
+                        output_root=str(root),
+                        as_of_date=AS_OF_DATE,
+                    ),
                     target=SimpleNamespace(target_id="CURRENT-TARGET"),
                 )
 
@@ -805,6 +1047,573 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertEqual(
             _semantic_signature(first), _semantic_signature(changed_failure)
         )
+
+    def test_source_transport_progress_recognizes_navigation_backlog_drain(
+        self,
+    ) -> None:
+        before_checkpoint = {
+            "generated_queries": [],
+            "search_candidates": [
+                *[
+                    {
+                        "candidate_id": f"RANK-{index}",
+                        "ranking_status": "PENDING",
+                        "fetch_status": "NOT_STARTED",
+                    }
+                    for index in range(38)
+                ],
+                *[
+                    {
+                        "candidate_id": f"FETCH-{index}",
+                        "ranking_status": "MATERIAL",
+                        "fetch_status": "MATERIAL_PENDING_FETCH",
+                    }
+                    for index in range(563)
+                ],
+            ],
+        }
+        after_checkpoint = {
+            "generated_queries": [],
+            "search_candidates": [
+                *[
+                    {
+                        "candidate_id": f"RANK-{index}",
+                        "ranking_status": (
+                            "NOT_MATERIAL" if index < 22 else "PENDING"
+                        ),
+                        "fetch_status": (
+                            "REFERENCE_DISCOVERY_REJECTED_NAVIGATION_ONLY"
+                            if index < 22
+                            else "NOT_STARTED"
+                        ),
+                    }
+                    for index in range(38)
+                ],
+                *[
+                    {
+                        "candidate_id": f"FETCH-{index}",
+                        "ranking_status": (
+                            "NOT_MATERIAL" if index < 252 else "MATERIAL"
+                        ),
+                        "fetch_status": (
+                            "REFERENCE_DISCOVERY_REJECTED_NAVIGATION_ONLY"
+                            if index < 252
+                            else "MATERIAL_PENDING_FETCH"
+                        ),
+                    }
+                    for index in range(563)
+                ],
+            ],
+        }
+        before = _source_transport_work_state(before_checkpoint)
+        after = _source_transport_work_state(after_checkpoint)
+        bound_before_checkpoint = _phase94_source_checkpoint(
+            epoch=1,
+            search_candidates=before_checkpoint["search_candidates"],
+        )
+        bound_after_checkpoint = _phase94_source_checkpoint(
+            epoch=2,
+            resumed_from_checkpoint_id=(
+                bound_before_checkpoint["checkpoint_id"]
+            ),
+            search_candidates=after_checkpoint["search_candidates"],
+        )
+        bound_before = _source_transport_snapshot(bound_before_checkpoint)
+        bound_after = _source_transport_snapshot(bound_after_checkpoint)
+
+        self.assertEqual(
+            _source_transport_work_summary(before),
+            {
+                "pending_query_count": 0,
+                "pending_ranking_count": 38,
+                "pending_fetch_count": 563,
+                "state_hash": stable_hash(before),
+            },
+        )
+        self.assertEqual(
+            _source_transport_work_summary(after),
+            {
+                "pending_query_count": 0,
+                "pending_ranking_count": 16,
+                "pending_fetch_count": 311,
+                "state_hash": stable_hash(after),
+            },
+        )
+        self.assertTrue(_source_transport_advanced(before, after))
+        self.assertTrue(
+            _source_transport_chain_is_valid(
+                bound_before,
+                bound_after,
+                readonly_replayed=False,
+            )
+        )
+        self.assertTrue(
+            _source_transport_advanced(
+                bound_before["work_state"],
+                bound_after["work_state"],
+            )
+        )
+
+    def test_source_transport_progress_recognizes_each_forward_transition(
+        self,
+    ) -> None:
+        transitions = (
+            (
+                {
+                    "generated_queries": [
+                        {"query_id": "QUERY", "execution_status": "PENDING"}
+                    ]
+                },
+                {
+                    "generated_queries": [
+                        {
+                            "query_id": "QUERY",
+                            "execution_status": "SEARCH_EXECUTED",
+                        }
+                    ]
+                },
+            ),
+            (
+                {
+                    "search_candidates": [
+                        {
+                            "candidate_id": "CANDIDATE",
+                            "ranking_status": "PENDING",
+                            "fetch_status": "NOT_STARTED",
+                        }
+                    ]
+                },
+                {
+                    "search_candidates": [
+                        {
+                            "candidate_id": "CANDIDATE",
+                            "ranking_status": "MATERIAL",
+                            "fetch_status": "MATERIAL_PENDING_FETCH",
+                        }
+                    ]
+                },
+            ),
+            (
+                {
+                    "search_candidates": [
+                        {
+                            "candidate_id": "CANDIDATE",
+                            "ranking_status": "MATERIAL",
+                            "fetch_status": "FETCH_RETRY_PENDING",
+                        }
+                    ]
+                },
+                {
+                    "search_candidates": [
+                        {
+                            "candidate_id": "CANDIDATE",
+                            "ranking_status": "MATERIAL",
+                            "fetch_status": "FULL_DOCUMENT_FETCHED",
+                        }
+                    ]
+                },
+            ),
+        )
+        for before_checkpoint, after_checkpoint in transitions:
+            with self.subTest(before=before_checkpoint):
+                self.assertTrue(
+                    _source_transport_advanced(
+                        _source_transport_work_state(before_checkpoint),
+                        _source_transport_work_state(after_checkpoint),
+                    )
+                )
+
+    def test_source_transport_progress_ignores_attempt_failure_and_document_churn(
+        self,
+    ) -> None:
+        before = _source_transport_work_state(
+            {
+                "generated_queries": [
+                    {
+                        "query_id": "QUERY",
+                        "execution_status": "PENDING",
+                        "attempt_id": "ATTEMPT-1",
+                    }
+                ],
+                "search_candidates": [
+                    {
+                        "candidate_id": "CANDIDATE",
+                        "ranking_status": "MATERIAL",
+                        "fetch_status": "FETCH_RETRY_PENDING",
+                        "full_fetch_attempt_count": 1,
+                    }
+                ],
+                "query_failures": [{"failure_id": "FAILURE-1"}],
+                "evidence_documents": [{"document_id": "DOCUMENT-1"}],
+            }
+        )
+        after = _source_transport_work_state(
+            {
+                "generated_queries": [
+                    {
+                        "query_id": "QUERY",
+                        "execution_status": "PENDING",
+                        "attempt_id": "ATTEMPT-2",
+                    }
+                ],
+                "search_candidates": [
+                    {
+                        "candidate_id": "CANDIDATE",
+                        "ranking_status": "MATERIAL",
+                        "fetch_status": "FETCH_RETRY_PENDING",
+                        "full_fetch_attempt_count": 99,
+                    }
+                ],
+                "query_failures": [{"failure_id": "FAILURE-2"}],
+                "evidence_documents": [{"document_id": "DOCUMENT-2"}],
+            }
+        )
+        self.assertEqual(before, after)
+        self.assertFalse(_source_transport_advanced(before, after))
+
+    def test_source_transport_progress_rejects_fresh_ids_without_transition(
+        self,
+    ) -> None:
+        before = _source_transport_work_state(
+            {
+                "generated_queries": [],
+                "search_candidates": [
+                    {
+                        "candidate_id": "EXISTING",
+                        "ranking_status": "MATERIAL",
+                        "fetch_status": "FULL_DOCUMENT_FETCHED",
+                    }
+                ],
+            }
+        )
+        after = _source_transport_work_state(
+            {
+                "generated_queries": [
+                    {"query_id": "FRESH-QUERY", "execution_status": "PENDING"}
+                ],
+                "search_candidates": [
+                    {
+                        "candidate_id": "EXISTING",
+                        "ranking_status": "MATERIAL",
+                        "fetch_status": "FULL_DOCUMENT_FETCHED",
+                    },
+                    {
+                        "candidate_id": "FRESH-CANDIDATE",
+                        "ranking_status": "PENDING",
+                        "fetch_status": "NOT_STARTED",
+                    },
+                ],
+            }
+        )
+        self.assertFalse(_source_transport_advanced(before, after))
+
+    def test_source_transport_progress_rejects_deleted_pending_rows(self) -> None:
+        before = _source_transport_work_state(
+            {
+                "generated_queries": [
+                    {"query_id": "DELETED-QUERY", "execution_status": "PENDING"}
+                ],
+                "search_candidates": [
+                    {
+                        "candidate_id": "DELETED-CANDIDATE",
+                        "ranking_status": "PENDING",
+                        "fetch_status": "NOT_STARTED",
+                    }
+                ],
+            }
+        )
+        after = _source_transport_work_state(
+            {"generated_queries": [], "search_candidates": []}
+        )
+        self.assertFalse(_source_transport_advanced(before, after))
+
+    def test_source_transport_chain_rejects_wrong_parent_and_allows_replay(
+        self,
+    ) -> None:
+        prior_checkpoint = _phase94_source_checkpoint(epoch=7)
+        wrong_parent_checkpoint = _phase94_source_checkpoint(
+            epoch=8,
+            resumed_from_checkpoint_id="SGCHECK-WRONG-PARENT",
+        )
+        prior = _source_transport_snapshot(prior_checkpoint)
+        wrong_parent = _source_transport_snapshot(wrong_parent_checkpoint)
+
+        self.assertFalse(
+            _source_transport_chain_is_valid(
+                prior,
+                wrong_parent,
+                readonly_replayed=False,
+            )
+        )
+        self.assertTrue(
+            _source_transport_chain_is_valid(
+                prior,
+                prior,
+                readonly_replayed=True,
+            )
+        )
+        self.assertFalse(
+            _source_transport_chain_is_valid(
+                prior,
+                wrong_parent,
+                readonly_replayed=True,
+            )
+        )
+
+    def test_result_source_transport_requires_target_date_and_hash(self) -> None:
+        checkpoint = _phase94_source_checkpoint(epoch=1)
+        result = SimpleNamespace(
+            source_graph=SimpleNamespace(checkpoint=checkpoint)
+        )
+        self.assertEqual(
+            _result_source_transport_work_state(
+                result,
+                target_id="CURRENT-TARGET",
+                as_of_date=AS_OF_DATE,
+            )["checkpoint_binding"]["checkpoint_id"],
+            checkpoint["checkpoint_id"],
+        )
+        with self.assertRaises(ValueError):
+            _result_source_transport_work_state(
+                result,
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-06-28",
+            )
+        tampered = dict(checkpoint)
+        tampered["epoch"] = 99
+        with self.assertRaises(ValueError):
+            _result_source_transport_work_state(
+                SimpleNamespace(
+                    source_graph=SimpleNamespace(checkpoint=tampered)
+                ),
+                target_id="CURRENT-TARGET",
+                as_of_date=AS_OF_DATE,
+            )
+
+    def test_source_transport_baseline_requires_valid_target_bound_checkpoint(
+        self,
+    ) -> None:
+        checkpoint = _finalize_checkpoint(
+            {
+                "schema_version": "e2r_v5_source_graph_checkpoint_v1",
+                "target_id": "CURRENT-TARGET",
+                "target_name": "Current Corp",
+                "as_of_date": "2026-06-29",
+                "mode": "TEST",
+                "epoch": 1,
+                "status": "CANDIDATE_RANKING_PENDING",
+                "production_score_authority": False,
+                "parser_field_direct_score_authority": False,
+                "snippet_evidence_allowed": False,
+                "transport_budget_can_complete_research": False,
+                "generated_queries": [
+                    {"query_id": "QUERY", "execution_status": "PENDING"}
+                ],
+                "search_candidates": [],
+                "evidence_documents": [],
+                "rejected_documents": [],
+                "quarantined_documents": [],
+            }
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "source_graph_checkpoint.json"
+            path.write_text(json.dumps(checkpoint), encoding="utf-8")
+            state = _load_prior_source_transport_work_state(
+                path=path,
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-06-29",
+            )
+            self.assertEqual(
+                _source_transport_work_summary(state["work_state"]),
+                {
+                    "pending_query_count": 1,
+                    "pending_ranking_count": 0,
+                    "pending_fetch_count": 0,
+                    "state_hash": stable_hash(state["work_state"]),
+                },
+            )
+            self.assertIsNone(
+                _load_prior_source_transport_work_state(
+                    path=path,
+                    target_id="OTHER-TARGET",
+                    as_of_date="2026-06-29",
+                )
+            )
+            self.assertIsNone(
+                _load_prior_source_transport_work_state(
+                    path=path,
+                    target_id="CURRENT-TARGET",
+                    as_of_date="2026-06-28",
+                )
+            )
+            tampered = dict(checkpoint)
+            tampered["status"] = "STOPPED_ON_RESOLUTION"
+            path.write_text(json.dumps(tampered), encoding="utf-8")
+            self.assertIsNone(
+                _load_prior_source_transport_work_state(
+                    path=path,
+                    target_id="CURRENT-TARGET",
+                    as_of_date="2026-06-29",
+                )
+            )
+
+    def test_repeated_semantics_continue_only_for_existing_work_transition(
+        self,
+    ) -> None:
+        signature = "9" * 64
+
+        def result(checkpoint):
+            return SimpleNamespace(
+                status="RESEARCH_CHECKPOINT_PENDING",
+                completion_gates={"source_graph_checkpoint_ready": False},
+                audit={"source_checkpoint_readonly_replayed": False},
+                source_graph=SimpleNamespace(checkpoint=checkpoint),
+            )
+
+        baseline_checkpoint = _phase94_source_checkpoint(
+            epoch=1,
+            search_candidates=(
+                {
+                    "candidate_id": "EXISTING",
+                    "ranking_status": "PENDING",
+                    "fetch_status": "NOT_STARTED",
+                },
+            ),
+        )
+        fetch_checkpoint = _phase94_source_checkpoint(
+            epoch=2,
+            resumed_from_checkpoint_id=baseline_checkpoint["checkpoint_id"],
+            search_candidates=(
+                {
+                    "candidate_id": "EXISTING",
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "MATERIAL_PENDING_FETCH",
+                },
+            ),
+        )
+        terminal_checkpoint = _phase94_source_checkpoint(
+            epoch=3,
+            resumed_from_checkpoint_id=fetch_checkpoint["checkpoint_id"],
+            search_candidates=(
+                {
+                    "candidate_id": "EXISTING",
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "FULL_DOCUMENT_FETCHED",
+                },
+            ),
+        )
+        fresh_only_checkpoint = _phase94_source_checkpoint(
+            epoch=4,
+            resumed_from_checkpoint_id=terminal_checkpoint["checkpoint_id"],
+            generated_queries=(
+                {
+                    "query_id": "FRESH-QUERY",
+                    "execution_status": "PENDING",
+                },
+            ),
+            search_candidates=(
+                {
+                    "candidate_id": "EXISTING",
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "FULL_DOCUMENT_FETCHED",
+                },
+            ),
+        )
+        results = tuple(
+            result(checkpoint)
+            for checkpoint in (
+                fetch_checkpoint,
+                terminal_checkpoint,
+                fresh_only_checkpoint,
+            )
+        )
+
+        class Runner:
+            def __init__(self) -> None:
+                self.calls = []
+
+            def run_checkpoint(self, **kwargs):
+                self.calls.append(kwargs["source_resume_mode"])
+                return results[len(self.calls) - 1]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target_root = root / "CURRENT-TARGET"
+            target_root.mkdir(parents=True)
+            no_progress_path = (
+                target_root / "semantic_no_progress_checkpoint.json"
+            )
+            (target_root / "source_graph_checkpoint.json").write_text(
+                json.dumps(baseline_checkpoint),
+                encoding="utf-8",
+            )
+            no_progress_path.write_text(
+                json.dumps(
+                    _bound_no_progress_payload(
+                        signature,
+                        baseline_checkpoint,
+                    )
+                ),
+                encoding="utf-8",
+            )
+            runner = Runner()
+            with (
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_signature",
+                    return_value=signature,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_state",
+                    return_value={},
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "refresh_canary_target_manifest_hash"
+                ),
+            ):
+                returned = _run_target_until_semantic_terminal(
+                    runner=runner,
+                    config=SimpleNamespace(
+                        output_root=str(root),
+                        as_of_date=AS_OF_DATE,
+                    ),
+                    target=SimpleNamespace(target_id="CURRENT-TARGET"),
+                )
+
+            self.assertIs(returned, results[-1])
+            self.assertEqual(
+                runner.calls,
+                ["REUSE_READY_CHECKPOINT", "ADVANCE", "ADVANCE"],
+            )
+            progress = json.loads(
+                (target_root / "until_pass_progress.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertFalse(progress["source_transport_advanced"])
+            self.assertTrue(progress["source_transport_chain_valid"])
+            self.assertEqual(
+                progress["source_checkpoint_binding"]["checkpoint_id"],
+                fresh_only_checkpoint["checkpoint_id"],
+            )
+            self.assertEqual(
+                set(progress["source_transport_work"]),
+                {
+                    "pending_query_count",
+                    "pending_ranking_count",
+                    "pending_fetch_count",
+                    "state_hash",
+                },
+            )
+            self.assertNotIn("FRESH-QUERY", json.dumps(progress))
+            self.assertEqual(
+                json.loads(no_progress_path.read_text(encoding="utf-8"))[
+                    "semantic_signature"
+                ],
+                signature,
+            )
 
     def test_no_progress_signature_ignores_attempt_ids_without_new_facts(
         self,
@@ -1319,6 +2128,234 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ]["query_generation_owner"],
                 "LLM",
             )
+
+    def test_ready_source_checkpoint_replays_without_acquisition_mutation(
+        self,
+    ) -> None:
+        target = CurrentResearchTarget(
+            symbol="CURRENT-TARGET",
+            company_name="Current Corp",
+            official_domains=("example.com",),
+        )
+        as_of_date = "2026-06-29"
+        plans = ComponentResearchPlanner().plan(
+            target_id=target.target_id,
+            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            evidence_facts=(),
+            historical_anchors=(),
+        )
+        graph = SourceGraphExplorer().explore(
+            target_id=target.target_id,
+            as_of_date=as_of_date,
+            documents=(),
+            research_plans=plans,
+            source_coverage=(),
+        )
+        source_provider = SourceBrainProvider()
+        source_run = ResearcherSourceGraphAcquirer(
+            query_provider=source_provider,
+            search_provider=EmptySearchProvider(),
+            page_fetcher=PageFetcher(fixture_text_by_url={}),
+        ).acquire(
+            config=SourceGraphAcquisitionConfig(
+                mode="TEST",
+                max_queries_per_checkpoint=1,
+                max_candidates_per_checkpoint=10,
+                max_fetches_per_checkpoint=1,
+            ),
+            target_id=target.target_id,
+            target_name=target.company_name,
+            target_aliases=(),
+            as_of_date=as_of_date,
+            open_objectives=graph.open_objectives,
+            current_evidence_facts=(),
+            target_business_model=None,
+            source_coverage=(),
+        )
+        self.assertEqual(
+            source_run.status,
+            "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+        )
+        self.assertEqual(
+            source_run.audit["checkpoint_binding"],
+            {
+                "target_id": source_run.checkpoint["target_id"],
+                "as_of_date": source_run.checkpoint["as_of_date"],
+                "checkpoint_id": source_run.checkpoint["checkpoint_id"],
+                "checkpoint_hash": source_run.checkpoint["checkpoint_hash"],
+                "epoch": source_run.checkpoint["epoch"],
+            },
+        )
+
+        class ForbiddenSourceAcquirer:
+            def acquire(self, **_kwargs):
+                raise AssertionError("readonly replay called source acquisition")
+
+        with tempfile.TemporaryDirectory() as directory:
+            target_root = Path(directory) / target.target_id
+            target_root.mkdir(parents=True)
+            paths = write_source_graph_acquisition_run(
+                source_run,
+                output_root=target_root,
+            )
+            legacy_audit = json.loads(
+                paths["audit"].read_text(encoding="utf-8")
+            )
+            legacy_audit.pop("checkpoint_binding", None)
+            legacy_audit["critical_counts"] = {
+                "stale_same_count_external_pass_must_not_be_trusted": 0
+            }
+            paths["audit"].write_text(
+                json.dumps(legacy_audit),
+                encoding="utf-8",
+            )
+            before = {
+                name: (path.read_bytes(), path.stat().st_mtime_ns)
+                for name, path in paths.items()
+            }
+            provider = Phase94IntegrationProvider()
+            runner = CurrentResearcherModeTargetRunner(
+                provider=provider,
+                official_materializer=Phase94IntegrationOfficialMaterializer(),
+                structured_materializer=(
+                    Phase94IntegrationStructuredMaterializer()
+                ),
+                source_acquirer=ForbiddenSourceAcquirer(),
+                fact_extractor=ResearcherEvidenceFactExtractor(
+                    provider=provider,
+                    documents_per_call=1,
+                ),
+            )
+            result = runner.run_checkpoint(
+                config=CurrentResearcherModeConfig(
+                    as_of_date=as_of_date,
+                    archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    output_root=directory,
+                    live_materialization_authorized=True,
+                    checkpoint_resume=True,
+                    gold_lane_isolated=True,
+                    require_researcher_parity=True,
+                    latest_trading_snapshot_date=as_of_date,
+                ),
+                target=target,
+                repo_root=self.ROOT,
+                source_resume_mode="REUSE_READY_CHECKPOINT",
+            )
+
+            self.assertTrue(
+                result.audit["source_checkpoint_readonly_replayed"]
+            )
+            self.assertEqual(
+                result.source_graph.audit["checkpoint_binding_status"],
+                "LEGACY_AUDIT_REBOUND_FROM_EXACT_CHECKPOINT_IN_MEMORY",
+            )
+            self.assertNotIn(
+                "stale_same_count_external_pass_must_not_be_trusted",
+                result.source_graph.audit["critical_counts"],
+            )
+            self.assertTrue(
+                any(
+                    row["pass_name"] == "BUSINESS_MODEL_RESEARCH"
+                    for row in provider.calls
+                )
+            )
+            self.assertEqual(
+                source_run.checkpoint["checkpoint_id"],
+                result.source_graph.checkpoint["checkpoint_id"],
+            )
+            self.assertEqual(
+                source_run.checkpoint["checkpoint_hash"],
+                result.source_graph.checkpoint["checkpoint_hash"],
+            )
+            self.assertEqual(
+                source_run.checkpoint["epoch"],
+                result.source_graph.checkpoint["epoch"],
+            )
+            self.assertEqual(
+                before,
+                {
+                    name: (path.read_bytes(), path.stat().st_mtime_ns)
+                    for name, path in paths.items()
+                },
+            )
+
+            other_target = CurrentResearchTarget(
+                symbol="OTHER-TARGET",
+                company_name="Other Corp",
+                official_domains=("example.com",),
+            )
+            other_root = Path(directory) / other_target.target_id
+            other_root.mkdir()
+            (other_root / "source_graph_checkpoint.json").write_bytes(
+                paths["checkpoint"].read_bytes()
+            )
+            with self.assertRaisesRegex(ValueError, "target mismatch"):
+                runner.run_checkpoint(
+                    config=CurrentResearcherModeConfig(
+                        as_of_date=as_of_date,
+                        archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                        output_root=directory,
+                        live_materialization_authorized=True,
+                        checkpoint_resume=True,
+                        gold_lane_isolated=True,
+                        require_researcher_parity=True,
+                    ),
+                    target=other_target,
+                    repo_root=self.ROOT,
+                    source_resume_mode="REUSE_READY_CHECKPOINT",
+                )
+
+            stale_bound_audit = dict(legacy_audit)
+            stale_bound_audit["critical_counts"] = dict(
+                result.source_graph.audit["critical_counts"]
+            )
+            stale_bound_audit["checkpoint_binding"] = {
+                **result.source_graph.audit["checkpoint_binding"],
+                "epoch": source_run.checkpoint["epoch"] + 1,
+            }
+            paths["audit"].write_text(
+                json.dumps(stale_bound_audit),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "binding mismatch"):
+                runner.run_checkpoint(
+                    config=CurrentResearcherModeConfig(
+                        as_of_date=as_of_date,
+                        archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                        output_root=directory,
+                        live_materialization_authorized=True,
+                        checkpoint_resume=True,
+                        gold_lane_isolated=True,
+                        require_researcher_parity=True,
+                    ),
+                    target=target,
+                    repo_root=self.ROOT,
+                    source_resume_mode="REUSE_READY_CHECKPOINT",
+                )
+
+            tampered = json.loads(
+                paths["checkpoint"].read_text(encoding="utf-8")
+            )
+            tampered["status"] = "STOPPED_ON_RESOLUTION"
+            paths["checkpoint"].write_text(
+                json.dumps(tampered),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "hash mismatch"):
+                runner.run_checkpoint(
+                    config=CurrentResearcherModeConfig(
+                        as_of_date=as_of_date,
+                        archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                        output_root=directory,
+                        live_materialization_authorized=True,
+                        checkpoint_resume=True,
+                        gold_lane_isolated=True,
+                        require_researcher_parity=True,
+                    ),
+                    target=target,
+                    repo_root=self.ROOT,
+                    source_resume_mode="REUSE_READY_CHECKPOINT",
+                )
 
     def test_structured_role_gap_keeps_component_objective_open_for_llm_search(
         self,

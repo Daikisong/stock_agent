@@ -72,6 +72,10 @@ from .source_graph_explorer import (
     SourceGraphAcquisitionRun,
     SourceGraphExplorer,
     load_source_graph_checkpoint,
+    source_graph_active_navigation_only_document_ids,
+    source_graph_acquisition_safety_critical_counts,
+    source_graph_checkpoint_audit_binding,
+    validate_source_graph_checkpoint,
     write_source_graph_acquisition_run,
 )
 from .structured_data_researcher import StructuredMetricRecord
@@ -206,7 +210,13 @@ class CurrentResearcherModeTargetRunner:
         config: CurrentResearcherModeConfig,
         target: CurrentResearchTarget,
         repo_root: str | Path = ".",
+        source_resume_mode: str = "ADVANCE",
     ) -> CurrentResearcherTargetRun:
+        if source_resume_mode not in {
+            "ADVANCE",
+            "REUSE_READY_CHECKPOINT",
+        }:
+            raise ValueError("unknown source resume mode")
         root = Path(config.output_root) / target.symbol
         root.mkdir(parents=True, exist_ok=True)
         _configure_provider_response_cache(self.provider, root)
@@ -244,8 +254,10 @@ class CurrentResearcherModeTargetRunner:
         prior_source_checkpoint = None
         source_checkpoint_path = root / "source_graph_checkpoint.json"
         if config.checkpoint_resume and source_checkpoint_path.is_file():
-            prior_source_checkpoint = load_source_graph_checkpoint(
-                source_checkpoint_path
+            prior_source_checkpoint = validate_source_graph_checkpoint(
+                load_source_graph_checkpoint(source_checkpoint_path),
+                target_id=target.target_id,
+                as_of_date=config.as_of_date,
             )
         prior_context = _load_prior_research_context(
             root,
@@ -267,51 +279,80 @@ class CurrentResearcherModeTargetRunner:
             or ("official sources fetched; unresolved semantic facts require discovery",)
             for row in initial_graph.open_objectives
         }
-        source_graph = self.source_acquirer.acquire(
-            config=SourceGraphAcquisitionConfig(
-                mode="RESEARCH_BACKFILL",
-                max_results_per_query=100,
-                max_queries_per_checkpoint=10,
-                max_candidates_per_checkpoint=100,
-                max_fetches_per_checkpoint=20,
-            ),
-            target_id=target.target_id,
-            target_name=target.company_name,
-            target_aliases=target.aliases,
-            as_of_date=config.as_of_date,
-            open_objectives=initial_graph.open_objectives,
-            current_evidence_facts=prior_context["facts"],
-            target_business_model=prior_context["business_model"],
-            source_coverage=source_coverage,
-            official_documents=official.evidence_documents,
-            official_gap_reasons_by_objective=official_gaps,
-            theme_context={"archetype_hypothesis": config.archetype_id},
-            score_gap_context={
-                "official_source_status": official.status,
-                "official_pending_reasons": list(official.pending_reasons),
-                "completion_policy": "semantic saturation, never transport count",
-                "verified_official_domain_allowlist": list(
-                    target.official_domains
-                ),
-                "prior_fact_extraction_feedback": list(
-                    prior_context["research_gap_feedback"]
-                ),
-                "prior_structured_source_gap": dict(
-                    prior_context["structured_gap_context"]
-                ),
-                "prior_deterministic_score_gap": dict(
-                    prior_context["score_gap_context"]
-                ),
-                "prior_supervisor_gap": dict(
-                    prior_context["supervisor_gap_context"]
-                ),
-                "prior_research_epoch": prior_context["research_epoch"],
-            },
-            resolved_objective_ids=prior_context["resolved_objective_ids"],
-            prior_checkpoint=prior_source_checkpoint,
-            official_domain_allowlist=target.official_domains,
+        source_acquisition_config = SourceGraphAcquisitionConfig(
+            mode="RESEARCH_BACKFILL",
+            max_results_per_query=100,
+            max_queries_per_checkpoint=10,
+            max_candidates_per_checkpoint=100,
+            max_fetches_per_checkpoint=20,
         )
-        write_source_graph_acquisition_run(source_graph, output_root=root)
+        source_checkpoint_navigation_migration_only = bool(
+            source_resume_mode == "REUSE_READY_CHECKPOINT"
+            and prior_source_checkpoint is not None
+            and source_graph_active_navigation_only_document_ids(
+                prior_source_checkpoint
+            )
+            and _source_checkpoint_has_terminal_source_work(
+                prior_source_checkpoint
+            )
+        )
+        source_checkpoint_readonly_replayed = bool(
+            source_resume_mode == "REUSE_READY_CHECKPOINT"
+            and prior_source_checkpoint is not None
+            and _source_checkpoint_is_ready_for_readonly_replay(
+                prior_source_checkpoint
+            )
+        )
+        if source_checkpoint_readonly_replayed:
+            source_graph = _hydrate_readonly_source_graph_run(
+                root=root,
+                checkpoint=prior_source_checkpoint,
+                open_objectives=initial_graph.open_objectives,
+                config=source_acquisition_config,
+            )
+        else:
+            source_graph = self.source_acquirer.acquire(
+                config=source_acquisition_config,
+                target_id=target.target_id,
+                target_name=target.company_name,
+                target_aliases=target.aliases,
+                as_of_date=config.as_of_date,
+                open_objectives=initial_graph.open_objectives,
+                current_evidence_facts=prior_context["facts"],
+                target_business_model=prior_context["business_model"],
+                source_coverage=source_coverage,
+                official_documents=official.evidence_documents,
+                official_gap_reasons_by_objective=official_gaps,
+                theme_context={"archetype_hypothesis": config.archetype_id},
+                score_gap_context={
+                    "official_source_status": official.status,
+                    "official_pending_reasons": list(official.pending_reasons),
+                    "completion_policy": "semantic saturation, never transport count",
+                    "verified_official_domain_allowlist": list(
+                        target.official_domains
+                    ),
+                    "prior_fact_extraction_feedback": list(
+                        prior_context["research_gap_feedback"]
+                    ),
+                    "prior_structured_source_gap": dict(
+                        prior_context["structured_gap_context"]
+                    ),
+                    "prior_deterministic_score_gap": dict(
+                        prior_context["score_gap_context"]
+                    ),
+                    "prior_supervisor_gap": dict(
+                        prior_context["supervisor_gap_context"]
+                    ),
+                    "prior_research_epoch": prior_context["research_epoch"],
+                },
+                resolved_objective_ids=prior_context["resolved_objective_ids"],
+                prior_checkpoint=prior_source_checkpoint,
+                official_domain_allowlist=target.official_domains,
+                checkpoint_migration_only=(
+                    source_checkpoint_navigation_migration_only
+                ),
+            )
+            write_source_graph_acquisition_run(source_graph, output_root=root)
         prior_fact = _load_fact_checkpoint(root, source_graph=source_graph)
         fact_extraction = self.fact_extractor.extract(
             target_id=target.target_id,
@@ -603,6 +644,12 @@ class CurrentResearcherModeTargetRunner:
             "completion_based_on_fixed_rounds": False,
             "zero_search_result_treated_as_completion": False,
             "transport_budget_treated_as_completion": False,
+            "source_checkpoint_readonly_replayed": (
+                source_checkpoint_readonly_replayed
+            ),
+            "source_checkpoint_navigation_migration_only": (
+                source_checkpoint_navigation_migration_only
+            ),
             "component_memo_count": len(component_memos),
             "fact_count": len(fact_extraction.facts),
             "counterfact_count": sum(
@@ -1180,6 +1227,142 @@ def _completion_gates(
             epoch.supervisor_review.ready_for_independent_saturation_review
         ),
     }
+
+
+def _source_checkpoint_is_ready_for_readonly_replay(
+    checkpoint: Mapping[str, Any],
+) -> bool:
+    """Return whether downstream may replay this exact source snapshot.
+
+    A replay is stricter than ordinary source readiness: every persisted query,
+    ranking, and fetch route must already be terminal.  This lets a recovered
+    provider or output contract retry downstream research without creating a
+    query, reference candidate, fetch, or new source epoch.
+    """
+
+    if not _source_checkpoint_has_terminal_source_work(checkpoint):
+        return False
+    if source_graph_active_navigation_only_document_ids(checkpoint):
+        # A ready legacy checkpoint can still contain a fetched search/listing
+        # page.  Route it through one bounded migration ADVANCE so source
+        # acquisition can preserve lineage and retire derived facts without
+        # creating a query, candidate, fetch, or source document.
+        return False
+    return True
+
+
+def _source_checkpoint_has_terminal_source_work(
+    checkpoint: Mapping[str, Any],
+) -> bool:
+    """Return whether persisted query/ranking/fetch work is terminal."""
+
+    if str(checkpoint.get("status") or "") not in {
+        "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+        "STOPPED_ON_RESOLUTION",
+    }:
+        return False
+    if any(
+        row.get("execution_status") == "PENDING"
+        for row in checkpoint.get("generated_queries") or ()
+        if isinstance(row, Mapping)
+    ):
+        return False
+    return not any(
+        (
+            row.get("ranking_status") == "PENDING"
+            or row.get("fetch_status")
+            in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+        )
+        for row in checkpoint.get("search_candidates") or ()
+        if isinstance(row, Mapping)
+    )
+
+
+def _hydrate_readonly_source_graph_run(
+    *,
+    root: Path,
+    checkpoint: Mapping[str, Any],
+    open_objectives: Sequence[Any],
+    config: SourceGraphAcquisitionConfig,
+) -> SourceGraphAcquisitionRun:
+    """Hydrate a ready source run without mutating acquisition lineage."""
+
+    if not _source_checkpoint_is_ready_for_readonly_replay(checkpoint):
+        raise ValueError("source checkpoint is not ready for readonly replay")
+    graph_payload = checkpoint.get("source_graph")
+    if not isinstance(graph_payload, Mapping):
+        raise ValueError("source checkpoint graph payload is missing")
+    graph = SourceGraphExplorer().build_graph(
+        target_id=str(checkpoint["target_id"]),
+        as_of_date=str(checkpoint["as_of_date"]),
+        documents=tuple(checkpoint.get("evidence_documents") or ()),
+        open_objectives=open_objectives,
+        source_coverage=tuple(
+            graph_payload.get("covered_source_families") or ()
+        ),
+        generated_queries=tuple(checkpoint.get("generated_queries") or ()),
+        discovery_candidates=tuple(
+            checkpoint.get("search_candidates") or ()
+        ),
+    )
+    if stable_hash(graph.to_dict()) != stable_hash(graph_payload):
+        raise ValueError("source checkpoint graph cannot be reproduced")
+    audit_path = root / "source_graph_acquisition_audit.json"
+    if not audit_path.is_file():
+        raise ValueError("source checkpoint audit is missing")
+    persisted_audit = _read_json(audit_path)
+    if (
+        persisted_audit.get("schema_version")
+        != "e2r_v5_source_graph_acquisition_run_audit_v1"
+    ):
+        raise ValueError("source checkpoint audit is not replay-safe")
+    expected_binding = source_graph_checkpoint_audit_binding(checkpoint)
+    persisted_binding = persisted_audit.get("checkpoint_binding")
+    if persisted_binding is not None and (
+        not isinstance(persisted_binding, Mapping)
+        or dict(persisted_binding) != dict(expected_binding)
+    ):
+        raise ValueError("source checkpoint audit binding mismatch")
+    critical = source_graph_acquisition_safety_critical_counts(
+        config=config,
+        checkpoint=checkpoint,
+    )
+    if sum(critical.values()) != 0:
+        raise ValueError("source checkpoint recomputed safety audit failed")
+    if persisted_binding is not None and (
+        dict(persisted_audit.get("critical_counts") or {}) != dict(critical)
+    ):
+        raise ValueError("source checkpoint bound audit critical counts mismatch")
+    audit = {
+        **persisted_audit,
+        "status": "V5_SOURCE_GRAPH_ACQUISITION_SAFETY_PASS",
+        "critical_counts": dict(critical),
+        "critical_count_sum": 0,
+        "checkpoint_binding": dict(expected_binding),
+        "checkpoint_binding_status": (
+            "EXACT_MATCH_RECOMPUTED"
+            if persisted_binding is not None
+            else "LEGACY_AUDIT_REBOUND_FROM_EXACT_CHECKPOINT_IN_MEMORY"
+        ),
+        "query_count": len(checkpoint.get("generated_queries") or ()),
+        "search_candidate_count": len(
+            checkpoint.get("search_candidates") or ()
+        ),
+        "pending_candidate_count": 0,
+    }
+    return SourceGraphAcquisitionRun(
+        status=str(checkpoint["status"]),
+        target_id=str(checkpoint["target_id"]),
+        as_of_date=str(checkpoint["as_of_date"]),
+        query_generation=None,
+        ranking_results=(),
+        evidence_documents=tuple(
+            dict(row) for row in checkpoint.get("evidence_documents") or ()
+        ),
+        source_graph=graph,
+        checkpoint=checkpoint,
+        audit=audit,
+    )
 
 
 def _load_official_checkpoint(

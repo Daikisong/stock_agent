@@ -18,6 +18,7 @@ from e2r.research_brain.researcher_mode import (
     compare_phase93_gold_post_run,
     load_current_research_targets,
     refresh_canary_target_manifest_hash,
+    validate_source_graph_checkpoint,
     write_canary_post_run_gold_comparison,
     write_phase93_post_run_comparison,
     write_production_lane,
@@ -300,9 +301,22 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
 
     target_root = Path(config.output_root) / target.target_id
     no_progress_path = target_root / "semantic_no_progress_checkpoint.json"
+    prior_source_transport_snapshot = (
+        _load_prior_source_transport_work_state(
+            path=target_root / "source_graph_checkpoint.json",
+            target_id=target.target_id,
+            as_of_date=config.as_of_date,
+        )
+    )
     prior_no_progress_signature = _load_prior_no_progress_signature(
         path=no_progress_path,
         target_id=target.target_id,
+        as_of_date=config.as_of_date,
+        source_checkpoint_binding=(
+            prior_source_transport_snapshot["checkpoint_binding"]
+            if prior_source_transport_snapshot is not None
+            else None
+        ),
     )
     # A resumed run still executes one real checkpoint so a recovered provider
     # can make progress.  Seeding only the previously confirmed no-progress
@@ -312,16 +326,50 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
         if prior_no_progress_signature is not None
         else set()
     )
+    first_checkpoint = True
     while True:
-        result = runner.run_checkpoint(config=config, target=target)
+        result = runner.run_checkpoint(
+            config=config,
+            target=target,
+            source_resume_mode=(
+                "REUSE_READY_CHECKPOINT" if first_checkpoint else "ADVANCE"
+            ),
+        )
+        first_checkpoint = False
         signature = _semantic_signature(result)
         semantic_state = _semantic_state(result)
+        source_checkpoint_readonly_replayed = bool(
+            (
+                getattr(result, "audit", {})
+                if isinstance(getattr(result, "audit", {}), Mapping)
+                else {}
+            ).get("source_checkpoint_readonly_replayed")
+        )
+        source_transport_snapshot = _result_source_transport_work_state(
+            result,
+            target_id=target.target_id,
+            as_of_date=config.as_of_date,
+        )
+        source_transport_chain_valid = _source_transport_chain_is_valid(
+            prior_source_transport_snapshot,
+            source_transport_snapshot,
+            readonly_replayed=source_checkpoint_readonly_replayed,
+        )
+        source_transport_advanced = bool(
+            source_transport_chain_valid
+            and prior_source_transport_snapshot is not None
+            and _source_transport_advanced(
+                prior_source_transport_snapshot["work_state"],
+                source_transport_snapshot["work_state"],
+            )
+        )
         progress_path = target_root / "until_pass_progress.json"
         write_json(
             progress_path,
             {
                 "schema_version": "e2r_v5_phase94_until_pass_progress_v1",
                 "target_id": target.target_id,
+                "as_of_date": config.as_of_date,
                 "status": result.status,
                 "semantic_signature": signature,
                 "semantic_state_component_hashes": {
@@ -331,6 +379,16 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
                 "seen_semantic_state_count": len(seen_signatures) + 1,
                 "completion_based_on_fixed_rounds": False,
                 "transport_budget_treated_as_completion": False,
+                "source_checkpoint_binding": dict(
+                    source_transport_snapshot["checkpoint_binding"]
+                ),
+                "source_transport_chain_valid": (
+                    source_transport_chain_valid
+                ),
+                "source_transport_advanced": source_transport_advanced,
+                "source_transport_work": _source_transport_work_summary(
+                    source_transport_snapshot["work_state"]
+                ),
                 "completion_gates": dict(result.completion_gates),
             },
         )
@@ -339,13 +397,26 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
             no_progress_path.unlink(missing_ok=True)
             refresh_canary_target_manifest_hash(progress_path.parent)
             return result
-        if signature in seen_signatures:
+        if source_checkpoint_readonly_replayed and source_transport_chain_valid:
+            # A ready source snapshot was intentionally held immutable so a
+            # recovered downstream provider/output contract could be retried
+            # first.  If that retry remains pending, allow one ordinary source
+            # ADVANCE before applying either the in-process or persisted
+            # semantic no-progress stop.
+            seen_signatures.add(signature)
+            prior_source_transport_snapshot = source_transport_snapshot
+            continue
+        if signature in seen_signatures and not source_transport_advanced:
             write_json(
                 no_progress_path,
                 {
                     "schema_version": "e2r_v5_phase94_semantic_no_progress_v1",
                     "status": "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
                     "target_id": target.target_id,
+                    "as_of_date": config.as_of_date,
+                    "source_checkpoint_binding": dict(
+                        source_transport_snapshot["checkpoint_binding"]
+                    ),
                     "semantic_signature": signature,
                     "research_complete": False,
                     "source_absence_proven": False,
@@ -366,14 +437,19 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
             refresh_canary_target_manifest_hash(progress_path.parent)
             prior_no_progress_signature = None
         seen_signatures.add(signature)
+        prior_source_transport_snapshot = source_transport_snapshot
 
 
 def _load_prior_no_progress_signature(
-    *, path: Path, target_id: str
+    *,
+    path: Path,
+    target_id: str,
+    as_of_date: str,
+    source_checkpoint_binding: Mapping[str, Any] | None,
 ) -> str | None:
-    """Load only a target-bound, explicitly confirmed semantic stop leaf."""
+    """Load only an exact source-generation-bound semantic stop leaf."""
 
-    if not path.is_file():
+    if not path.is_file() or source_checkpoint_binding is None:
         return None
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
@@ -386,12 +462,199 @@ def _load_prior_no_progress_signature(
         != "e2r_v5_phase94_semantic_no_progress_v1"
         or payload.get("status") != "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE"
         or str(payload.get("target_id") or "") != target_id
+        or str(payload.get("as_of_date") or "") != as_of_date
+        or not isinstance(payload.get("source_checkpoint_binding"), Mapping)
+        or dict(payload["source_checkpoint_binding"])
+        != dict(source_checkpoint_binding)
     ):
         return None
     signature = str(payload.get("semantic_signature") or "")
     if re.fullmatch(r"[0-9a-f]{64}", signature) is None:
         return None
     return signature
+
+
+def _load_prior_source_transport_work_state(
+    *,
+    path: Path,
+    target_id: str,
+    as_of_date: str,
+) -> Mapping[str, Any] | None:
+    """Load a target-bound, hash-validated source lifecycle baseline."""
+
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        checkpoint = validate_source_graph_checkpoint(
+            payload,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
+    except (
+        OSError,
+        UnicodeDecodeError,
+        json.JSONDecodeError,
+        TypeError,
+        ValueError,
+    ):
+        return None
+    return _source_transport_snapshot(checkpoint)
+
+
+def _result_source_transport_work_state(
+    result: Any,
+    *,
+    target_id: str,
+    as_of_date: str,
+) -> Mapping[str, Any]:
+    source_graph = getattr(result, "source_graph", None)
+    checkpoint = getattr(source_graph, "checkpoint", None)
+    if not isinstance(checkpoint, Mapping):
+        raise ValueError("current source checkpoint is missing")
+    validated = validate_source_graph_checkpoint(
+        checkpoint,
+        target_id=target_id,
+        as_of_date=as_of_date,
+    )
+    return _source_transport_snapshot(validated)
+
+
+def _source_transport_snapshot(
+    checkpoint: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    return {
+        "checkpoint_binding": {
+            "target_id": str(checkpoint.get("target_id") or ""),
+            "as_of_date": str(checkpoint.get("as_of_date") or ""),
+            "checkpoint_id": str(checkpoint.get("checkpoint_id") or ""),
+            "checkpoint_hash": str(checkpoint.get("checkpoint_hash") or ""),
+            "epoch": int(checkpoint.get("epoch") or 0),
+        },
+        "resumed_from_checkpoint_id": (
+            str(checkpoint.get("resumed_from_checkpoint_id") or "")
+            or None
+        ),
+        "work_state": _source_transport_work_state(checkpoint),
+    }
+
+
+def _source_transport_chain_is_valid(
+    prior: Mapping[str, Any] | None,
+    current: Mapping[str, Any],
+    *,
+    readonly_replayed: bool,
+) -> bool:
+    if prior is None:
+        return False
+    prior_binding = prior.get("checkpoint_binding")
+    current_binding = current.get("checkpoint_binding")
+    if not isinstance(prior_binding, Mapping) or not isinstance(
+        current_binding,
+        Mapping,
+    ):
+        return False
+    if readonly_replayed:
+        return dict(current_binding) == dict(prior_binding)
+    return bool(
+        current_binding.get("target_id") == prior_binding.get("target_id")
+        and current_binding.get("as_of_date") == prior_binding.get("as_of_date")
+        and int(current_binding.get("epoch") or 0)
+        == int(prior_binding.get("epoch") or 0) + 1
+        and current.get("resumed_from_checkpoint_id")
+        == prior_binding.get("checkpoint_id")
+    )
+
+
+def _source_transport_work_state(
+    checkpoint: Mapping[str, Any],
+) -> Mapping[str, Mapping[str, str]]:
+    """Project only query/rank/fetch lifecycle states from a checkpoint."""
+
+    queries: dict[str, str] = {}
+    for row in checkpoint.get("generated_queries") or ():
+        if not isinstance(row, Mapping):
+            continue
+        query_id = str(row.get("query_id") or "").strip()
+        if not query_id:
+            continue
+        queries[query_id] = (
+            "QUERY_PENDING"
+            if row.get("execution_status") == "PENDING"
+            else "TERMINAL"
+        )
+    candidates: dict[str, str] = {}
+    for row in checkpoint.get("search_candidates") or ():
+        if not isinstance(row, Mapping):
+            continue
+        candidate_id = str(row.get("candidate_id") or "").strip()
+        if not candidate_id:
+            continue
+        if row.get("ranking_status") == "PENDING":
+            state = "RANK_PENDING"
+        elif row.get("fetch_status") in {
+            "MATERIAL_PENDING_FETCH",
+            "FETCH_RETRY_PENDING",
+        }:
+            state = "FETCH_PENDING"
+        else:
+            state = "TERMINAL"
+        candidates[candidate_id] = state
+    return {
+        "queries": queries,
+        "candidates": candidates,
+    }
+
+
+def _source_transport_advanced(
+    prior: Mapping[str, Mapping[str, str]] | None,
+    current: Mapping[str, Mapping[str, str]],
+) -> bool:
+    """Recognize progress only for a persisted pending row's next lifecycle."""
+
+    if prior is None:
+        return False
+    prior_queries = prior.get("queries") or {}
+    current_queries = current.get("queries") or {}
+    if any(
+        state == "QUERY_PENDING"
+        and current_queries.get(row_id) == "TERMINAL"
+        for row_id, state in prior_queries.items()
+    ):
+        return True
+    prior_candidates = prior.get("candidates") or {}
+    current_candidates = current.get("candidates") or {}
+    for row_id, state in prior_candidates.items():
+        next_state = current_candidates.get(row_id)
+        if state == "RANK_PENDING" and next_state in {
+            "FETCH_PENDING",
+            "TERMINAL",
+        }:
+            return True
+        if state == "FETCH_PENDING" and next_state == "TERMINAL":
+            return True
+    return False
+
+
+def _source_transport_work_summary(
+    state: Mapping[str, Mapping[str, str]],
+) -> Mapping[str, Any]:
+    """Expose counts and an opaque state hash without raw transport IDs."""
+
+    queries = state.get("queries") or {}
+    candidates = state.get("candidates") or {}
+    return {
+        "pending_query_count": sum(
+            value == "QUERY_PENDING" for value in queries.values()
+        ),
+        "pending_ranking_count": sum(
+            value == "RANK_PENDING" for value in candidates.values()
+        ),
+        "pending_fetch_count": sum(
+            value == "FETCH_PENDING" for value in candidates.values()
+        ),
+        "state_hash": stable_hash(state),
+    }
 
 
 def _semantic_signature(result) -> str:

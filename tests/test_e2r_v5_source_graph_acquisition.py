@@ -15,6 +15,9 @@ from e2r.research.publication_date import (
 )
 from e2r.research.search_provider import SearchResult
 import e2r.research_brain.researcher_mode.source_graph_explorer as source_graph_module
+from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    _source_checkpoint_is_ready_for_readonly_replay,
+)
 from e2r.research_brain.researcher_mode import (
     PHASE85_PASS,
     ComponentResearchPlan,
@@ -1887,6 +1890,509 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             ],
         )
 
+    def test_official_reference_expansion_skips_navigation_only_urls(self) -> None:
+        parent = {
+            "candidate_id": "OFFICIAL-ARTICLE",
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "url": "https://issuer.example.com/news/current-results",
+            "verified_official_domain_candidate": True,
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "objective_ids": ["OBJECTIVE-1"],
+            "query_ids": ["QUERY-1"],
+            "requested_source_families": ["ISSUER_NEWSROOM"],
+            "discovered_referenced_urls": [
+                "https://issuer.example.com/tag/results",
+                "https://issuer.example.com/category/press",
+                "https://issuer.example.com/page/2/",
+                "https://issuer.example.com/?s=HBM4",
+                "https://issuer.example.com/news/customer-allocation-update",
+                "https://issuer.example.com/category/results/earnings.pdf",
+            ],
+        }
+        candidates = [parent]
+
+        deferred = source_graph_module._enqueue_candidate_discovery_references(
+            candidates,
+            parent_candidate=parent,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+        )
+
+        self.assertEqual(deferred, 0)
+        self.assertEqual(
+            [row["url"] for row in candidates[1:]],
+            [
+                "https://issuer.example.com/category/results/earnings.pdf",
+                "https://issuer.example.com/news/customer-allocation-update",
+            ],
+        )
+
+    def test_source_document_reference_keeps_cited_article_and_pdf_only(
+        self,
+    ) -> None:
+        article_url = "https://issuer.example.com/news/customer-allocation-update"
+        pdf_url = "https://issuer.example.com/category/results/earnings.pdf"
+        document = {
+            "document_id": "DOC-OFFICIAL-ARTICLE",
+            "canonical_url": "https://issuer.example.com/news/current-results",
+            "content_text": (
+                f"본문은 원문 기사 {article_url}와 실적표 {pdf_url}를 직접 인용한다."
+            ),
+            "source_family": "ISSUER_NEWSROOM",
+            "objective_ids": ["OBJECTIVE-1"],
+            "query_ids": ["QUERY-1"],
+            "requested_source_families": ["ISSUER_NEWSROOM"],
+            "referenced_urls": [
+                "https://issuer.example.com/tag/results",
+                "https://issuer.example.com/category/press",
+                "https://issuer.example.com/page/2/",
+                "https://issuer.example.com/?s=HBM4",
+                article_url,
+                pdf_url,
+            ],
+        }
+        candidates = []
+
+        deferred = source_graph_module._enqueue_reference_candidates(
+            candidates,
+            document=document,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            default_objective_ids=("OBJECTIVE-1",),
+        )
+
+        self.assertEqual(deferred, 0)
+        self.assertEqual(
+            [row["url"] for row in candidates],
+            [pdf_url, article_url],
+        )
+        self.assertTrue(
+            all(
+                row["graph_expansion_parent_document_ids"]
+                == ["DOC-OFFICIAL-ARTICLE"]
+                for row in candidates
+            )
+        )
+
+    def test_navigation_url_classifier_keeps_documents_and_articles(self) -> None:
+        navigation_urls = (
+            "https://issuer.example.com/tag/results",
+            "https://issuer.example.com/category/press/",
+            "https://issuer.example.com/en/page/6/?topic=HBM4",
+            "https://issuer.example.com/?s=HBM4",
+            "https://issuer.example.com/search?keyword=HBM4",
+        )
+        retained_urls = (
+            "https://issuer.example.com/news/customer-allocation-update",
+            "https://issuer.example.com/category/results/earnings.pdf",
+            "https://englishdart.fss.or.kr/dsbh001/main.do?rcpNo=20260601000123",
+            "https://issuer.example.com/news/article?page=2",
+            "https://issuer.example.com/archive/2026Q1/transcript",
+        )
+
+        for url in navigation_urls:
+            with self.subTest(url=url):
+                self.assertTrue(
+                    source_graph_module._is_navigation_only_reference_url(url)
+                )
+        for url in retained_urls:
+            with self.subTest(url=url):
+                self.assertFalse(
+                    source_graph_module._is_navigation_only_reference_url(url)
+                )
+
+    def test_persisted_navigation_url_closes_without_discarding_articles(self) -> None:
+        candidates = [
+            {
+                "candidate_id": "DIRECT-NAV-PARENT",
+                "url": "https://issuer.example.com/tag/results",
+                "direct_search_discovery": True,
+                "ranking_status": "MATERIAL",
+                "fetch_status": "FULL_DOCUMENT_FETCHED",
+            },
+            {
+                "candidate_id": "NAV-DESCENDANT-ARTICLE",
+                "url": "https://issuer.example.com/news/result-one",
+                "reference_discovery_only": True,
+                "graph_expansion_parent_candidate_ids": ["DIRECT-NAV-PARENT"],
+                "ranking_status": "MATERIAL",
+                "fetch_status": "MATERIAL_PENDING_FETCH",
+            },
+            {
+                "candidate_id": "NAV-GRANDCHILD",
+                "url": "https://issuer.example.com/news/result-two",
+                "reference_discovery_only": True,
+                "graph_expansion_parent_candidate_ids": [
+                    "NAV-DESCENDANT-ARTICLE"
+                ],
+                "ranking_status": "PENDING",
+                "fetch_status": "NOT_STARTED",
+            },
+            {
+                "candidate_id": "NONNAV-PARENT",
+                "url": "https://issuer.example.com/news/current-results",
+                "ranking_status": "MATERIAL",
+                "fetch_status": "FULL_DOCUMENT_FETCHED",
+            },
+            {
+                "candidate_id": "NAV-URL-CHILD",
+                "url": "https://issuer.example.com/category/press",
+                "reference_discovery_only": True,
+                "graph_expansion_parent_candidate_ids": ["NONNAV-PARENT"],
+                "ranking_status": "PENDING",
+                "fetch_status": "NOT_STARTED",
+            },
+            {
+                "candidate_id": "BODY-CITED-ARTICLE",
+                "url": "https://issuer.example.com/news/cited-article",
+                "graph_expansion_parent_document_ids": ["DOC-ARTICLE"],
+                "ranking_status": "MATERIAL",
+                "fetch_status": "MATERIAL_PENDING_FETCH",
+            },
+            {
+                "candidate_id": "BODY-CITED-PDF",
+                "url": "https://issuer.example.com/category/results/report.pdf",
+                "graph_expansion_parent_document_ids": ["DOC-ARTICLE"],
+                "ranking_status": "MATERIAL",
+                "fetch_status": "MATERIAL_PENDING_FETCH",
+            },
+            {
+                "candidate_id": "DIRECT-SEARCH-NAV",
+                "url": "https://issuer.example.com/category/press",
+                "direct_search_discovery": True,
+                "ranking_status": "PENDING",
+                "fetch_status": "NOT_STARTED",
+            },
+        ]
+        closed = source_graph_module._close_navigation_only_reference_routes(candidates)
+
+        self.assertEqual(closed, 2)
+        closed_by_id = {
+            row["candidate_id"]: row
+            for row in candidates
+            if row.get("reference_navigation_disposition")
+            == "TERMINAL_DISCOVERY_ONLY"
+        }
+        self.assertEqual(
+            set(closed_by_id),
+            {
+                "NAV-URL-CHILD",
+                "DIRECT-SEARCH-NAV",
+            },
+        )
+        self.assertTrue(
+            all(
+                row["fetch_status"]
+                == "REFERENCE_DISCOVERY_REJECTED_NAVIGATION_ONLY"
+                and row["ranking_status"] == "NOT_MATERIAL"
+                and row["score_authority"] is False
+                and row["reference_navigation_policy_version"]
+                == source_graph_module.NAVIGATION_ONLY_REFERENCE_POLICY_VERSION
+                for row in closed_by_id.values()
+            )
+        )
+        retained_by_id = {
+            row["candidate_id"]: row for row in candidates
+        }
+        self.assertEqual(
+            retained_by_id["NAV-DESCENDANT-ARTICLE"]["fetch_status"],
+            "MATERIAL_PENDING_FETCH",
+        )
+        self.assertEqual(
+            retained_by_id["NAV-GRANDCHILD"]["fetch_status"],
+            "NOT_STARTED",
+        )
+        self.assertEqual(
+            retained_by_id["BODY-CITED-ARTICLE"]["fetch_status"],
+            "MATERIAL_PENDING_FETCH",
+        )
+        self.assertEqual(
+            retained_by_id["BODY-CITED-PDF"]["fetch_status"],
+            "MATERIAL_PENDING_FETCH",
+        )
+        self.assertEqual(
+            retained_by_id["DIRECT-SEARCH-NAV"]["ranking_status"],
+            "NOT_MATERIAL",
+        )
+        self.assertEqual(
+            retained_by_id["DIRECT-SEARCH-NAV"]["fetch_status"],
+            "REFERENCE_DISCOVERY_REJECTED_NAVIGATION_ONLY",
+        )
+
+    def test_fetched_navigation_document_is_quarantined_and_facts_retire(
+        self,
+    ) -> None:
+        navigation_url = "https://issuer.example.com/search?keyword=HBM4"
+        article_url = "https://issuer.example.com/news/hbm4-allocation"
+        pdf_url = "https://issuer.example.com/category/results/hbm4.pdf"
+        candidates = [
+            {
+                "candidate_id": "FETCHED-NAVIGATION",
+                "ranking_status": "MATERIAL",
+                "fetch_status": "FULL_DOCUMENT_FETCHED",
+                "document_id": "SGDOC-navigation",
+                "url": navigation_url,
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+            },
+            {
+                "candidate_id": "ARTICLE-DESCENDANT",
+                "ranking_status": "MATERIAL",
+                "fetch_status": "FULL_DOCUMENT_FETCHED",
+                "document_id": "SGDOC-article",
+                "url": article_url,
+                "graph_expansion_parent_candidate_ids": [
+                    "FETCHED-NAVIGATION"
+                ],
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+            },
+            {
+                "candidate_id": "DIRECT-PDF",
+                "ranking_status": "MATERIAL",
+                "fetch_status": "FULL_DOCUMENT_FETCHED",
+                "document_id": "SGDOC-pdf",
+                "url": pdf_url,
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+            },
+        ]
+        documents = [
+            {
+                "document_id": candidate["document_id"],
+                "target_id": TARGET,
+                "as_of_date": AS_OF_DATE,
+                "canonical_url": candidate["url"],
+                "content_hash": hashlib.sha256(
+                    candidate["url"].encode("utf-8")
+                ).hexdigest(),
+                "content_text": f"complete content for {candidate['candidate_id']}",
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+                "evidence_eligible": True,
+            }
+            for candidate in candidates
+        ]
+        state = {
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "evidence_documents": documents,
+            "search_candidates": candidates,
+            "quarantined_documents": [],
+            "rejected_documents": [],
+        }
+        facts = (
+            {"fact_id": "FACT-NAV", "source_ids": ["SGDOC-navigation"]},
+            {"fact_id": "FACT-ARTICLE", "source_ids": ["SGDOC-article"]},
+            {"fact_id": "FACT-PDF", "source_ids": ["SGDOC-pdf"]},
+        )
+
+        reasons = source_graph_module._quarantine_navigation_only_documents(
+            state
+        )
+        active_facts, invalidated_count = (
+            source_graph_module._filter_facts_to_active_source_documents(
+                facts,
+                state["evidence_documents"],
+            )
+        )
+
+        self.assertEqual(
+            reasons,
+            ("NAVIGATION_ONLY_REFERENCE_URL:FULL_DOCUMENT_DEMOTED",),
+        )
+        self.assertEqual(
+            {row["document_id"] for row in state["evidence_documents"]},
+            {"SGDOC-article", "SGDOC-pdf"},
+        )
+        self.assertEqual(
+            {row["fact_id"] for row in active_facts},
+            {"FACT-ARTICLE", "FACT-PDF"},
+        )
+        self.assertEqual(invalidated_count, 1)
+        self.assertEqual(
+            source_graph_module.validated_quarantined_document_ids(state),
+            frozenset({"SGDOC-navigation"}),
+        )
+        navigation = candidates[0]
+        self.assertEqual(navigation["ranking_status"], "NOT_MATERIAL")
+        self.assertEqual(
+            navigation["fetch_status"],
+            "REFERENCE_DISCOVERY_REJECTED_NAVIGATION_ONLY",
+        )
+        self.assertEqual(
+            navigation["reference_navigation_disposition"],
+            "TERMINAL_DISCOVERY_ONLY",
+        )
+        self.assertEqual(
+            navigation["quarantined_document_id"],
+            "SGDOC-navigation",
+        )
+        self.assertNotIn("document_id", navigation)
+        self.assertEqual(
+            candidates[1]["fetch_status"],
+            "FULL_DOCUMENT_FETCHED",
+        )
+        self.assertEqual(candidates[2]["fetch_status"], "FULL_DOCUMENT_FETCHED")
+
+    def test_ready_readonly_checkpoint_advances_navigation_migration(
+        self,
+    ) -> None:
+        ready = {
+            "status": "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+            "generated_queries": [
+                {"execution_status": "SEARCH_EXECUTED"}
+            ],
+            "search_candidates": [
+                {
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "FULL_DOCUMENT_FETCHED",
+                    "document_id": "SGDOC-navigation",
+                    "url": "https://issuer.example.com/search?keyword=HBM4",
+                },
+                {
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "FULL_DOCUMENT_FETCHED",
+                    "document_id": "SGDOC-article",
+                    "url": "https://issuer.example.com/news/hbm4-allocation",
+                },
+            ],
+            "evidence_documents": [
+                {
+                    "document_id": "SGDOC-navigation",
+                    "canonical_url": (
+                        "https://issuer.example.com/search?keyword=HBM4"
+                    ),
+                },
+                {
+                    "document_id": "SGDOC-article",
+                    "canonical_url": (
+                        "https://issuer.example.com/news/hbm4-allocation"
+                    ),
+                },
+            ],
+        }
+
+        self.assertFalse(
+            _source_checkpoint_is_ready_for_readonly_replay(ready)
+        )
+        ready["evidence_documents"] = ready["evidence_documents"][1:]
+        self.assertTrue(
+            _source_checkpoint_is_ready_for_readonly_replay(ready)
+        )
+
+    def test_navigation_checkpoint_migration_adds_no_query_fetch_or_document(
+        self,
+    ) -> None:
+        navigation_url = "https://issuer.example.com/search?keyword=HBM4"
+        article_url = "https://issuer.example.com/news/hbm4-allocation"
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state["status"] = "EPOCH_COMPLETE_REQUIRES_SUPERVISOR"
+        state["generated_queries"] = [
+            {
+                "query_id": "QUERY-1",
+                "objective_id": "OBJECTIVE-1",
+                "literal_query": QUERY,
+                "generator_kind": "TEST_FIXTURE_LLM",
+                "execution_status": "SEARCH_EXECUTED",
+            }
+        ]
+        state["executed_queries"] = [QUERY]
+        state["search_candidates"] = [
+            {
+                "candidate_id": "FETCHED-NAVIGATION",
+                "ranking_status": "MATERIAL",
+                "fetch_status": "FULL_DOCUMENT_FETCHED",
+                "document_id": "SGDOC-navigation",
+                "url": navigation_url,
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+            },
+            {
+                "candidate_id": "ARTICLE-DESCENDANT",
+                "ranking_status": "MATERIAL",
+                "fetch_status": "FULL_DOCUMENT_FETCHED",
+                "document_id": "SGDOC-article",
+                "url": article_url,
+                "graph_expansion_parent_candidate_ids": [
+                    "FETCHED-NAVIGATION"
+                ],
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+            },
+        ]
+        state["evidence_documents"] = [
+            {
+                "document_id": document_id,
+                "target_id": TARGET,
+                "as_of_date": AS_OF_DATE,
+                "canonical_url": url,
+                "content_hash": hashlib.sha256(
+                    url.encode("utf-8")
+                ).hexdigest(),
+                "content_text": f"complete source text for {document_id}",
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+                "source_family": "ISSUER_NEWSROOM",
+                "evidence_eligible": True,
+            }
+            for document_id, url in (
+                ("SGDOC-navigation", navigation_url),
+                ("SGDOC-article", article_url),
+            )
+        ]
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        provider = SourceBrainProvider()
+        search = RecordingSearchProvider({})
+        facts = (
+            {
+                "fact_id": "FACT-NAV",
+                "target_id": TARGET,
+                "as_of_date": AS_OF_DATE,
+                "source_ids": ["SGDOC-navigation"],
+                "direction": "POSITIVE",
+            },
+            {
+                "fact_id": "FACT-ARTICLE",
+                "target_id": TARGET,
+                "as_of_date": AS_OF_DATE,
+                "source_ids": ["SGDOC-article"],
+                "direction": "POSITIVE",
+            },
+        )
+
+        migrated = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=checkpoint,
+            current_evidence_facts=facts,
+            checkpoint_migration_only=True,
+        )
+
+        self.assertEqual(provider.calls, [])
+        self.assertEqual(search.calls, [])
+        self.assertEqual(len(migrated.checkpoint["generated_queries"]), 1)
+        self.assertEqual(len(migrated.checkpoint["search_candidates"]), 2)
+        self.assertEqual(
+            {
+                row["document_id"]
+                for row in migrated.evidence_documents
+            },
+            {"SGDOC-article"},
+        )
+        self.assertIn(
+            "STALE_PRIOR_FACT_SOURCE_INVALIDATED:1",
+            migrated.checkpoint["pending_reasons"],
+        )
+        self.assertTrue(migrated.audit["checkpoint_migration_only"])
+
     def test_stale_unverified_reference_route_closes_without_llm_ranking(self) -> None:
         candidates = [
             {
@@ -2598,6 +3104,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         official_domains: Sequence[str] = (),
         current_evidence_facts: Sequence[Mapping[str, Any]] = (),
         score_gap_context: Mapping[str, Any] | None = None,
+        checkpoint_migration_only: bool = False,
     ):
         return ResearcherSourceGraphAcquirer(
             query_provider=provider,
@@ -2622,6 +3129,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             score_gap_context=score_gap_context,
             prior_checkpoint=checkpoint,
             official_domain_allowlist=official_domains,
+            checkpoint_migration_only=checkpoint_migration_only,
         )
 
 

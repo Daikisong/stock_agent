@@ -73,6 +73,9 @@ SOURCE_FAMILY_CLASSES: Mapping[str, tuple[str, ...]] = {
 PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION = (
     "e2r_split_article_date_precedence_v1"
 )
+NAVIGATION_ONLY_REFERENCE_POLICY_VERSION = (
+    "e2r_v5_navigation_only_reference_terminal_v1"
+)
 
 
 @dataclass(frozen=True)
@@ -555,7 +558,12 @@ class ResearcherSourceGraphAcquirer:
         resolved_objective_ids: Sequence[str] = (),
         prior_checkpoint: Mapping[str, Any] | None = None,
         official_domain_allowlist: Sequence[str] = (),
+        checkpoint_migration_only: bool = False,
     ) -> SourceGraphAcquisitionRun:
+        if checkpoint_migration_only and prior_checkpoint is None:
+            raise ValueError(
+                "checkpoint migration requires a prior source checkpoint"
+            )
         cutoff = date.fromisoformat(as_of_date)
         objectives = tuple(_objective_dict(row) for row in open_objectives)
         objective_by_id = {
@@ -623,6 +631,7 @@ class ResearcherSourceGraphAcquirer:
                     _fact_unreadable_document_ids(score_gap_context or {})
                 ),
             ),
+            *_quarantine_navigation_only_documents(state),
             *_quarantine_stale_publication_dates(state),
         )
         facts, invalidated_prior_fact_count = (
@@ -654,6 +663,7 @@ class ResearcherSourceGraphAcquirer:
             candidates,
             official_hosts=allowed_hosts,
         )
+        _close_navigation_only_reference_routes(candidates)
         _close_non_authority_candidate_reference_routes(candidates)
         _reopen_authority_link_extraction_candidates(
             candidates,
@@ -671,28 +681,32 @@ class ResearcherSourceGraphAcquirer:
         # A rejected/tiny official landing page can still point directly to
         # the original transcript.  Preserve those candidate-level routes
         # before using the checkpoint budget on broader document citations.
-        for parent_candidate in _ordered_candidate_reference_parents(
-            candidates,
-            as_of_date=cutoff,
-        ):
-            deferred_reference_count += _enqueue_candidate_discovery_references(
+        if not checkpoint_migration_only:
+            for parent_candidate in _ordered_candidate_reference_parents(
                 candidates,
-                parent_candidate=parent_candidate,
-                target_id=target_id,
-                as_of_date=as_of_date,
-                max_total_candidates=checkpoint_candidate_limit,
-            )
-        for document in tuple(evidence_documents):
-            deferred_reference_count += _enqueue_reference_candidates(
-                candidates,
-                document=document,
-                target_id=target_id,
-                as_of_date=as_of_date,
-                default_objective_ids=tuple(
-                    str(row["objective_id"]) for row in unresolved_objectives
-                ),
-                max_total_candidates=checkpoint_candidate_limit,
-            )
+                as_of_date=cutoff,
+            ):
+                deferred_reference_count += (
+                    _enqueue_candidate_discovery_references(
+                        candidates,
+                        parent_candidate=parent_candidate,
+                        target_id=target_id,
+                        as_of_date=as_of_date,
+                        max_total_candidates=checkpoint_candidate_limit,
+                    )
+                )
+            for document in tuple(evidence_documents):
+                deferred_reference_count += _enqueue_reference_candidates(
+                    candidates,
+                    document=document,
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    default_objective_ids=tuple(
+                        str(row["objective_id"])
+                        for row in unresolved_objectives
+                    ),
+                    max_total_candidates=checkpoint_candidate_limit,
+                )
         future_candidate_ids = _reject_future_candidate_metadata(
             candidates,
             rejected_rows,
@@ -737,7 +751,12 @@ class ResearcherSourceGraphAcquirer:
             and not _candidate_scope_is_fully_resolved(row, resolved)
             for row in candidates
         )
-        if unresolved_objectives and not pending_query_rows and not pending_candidate_work:
+        if (
+            not checkpoint_migration_only
+            and unresolved_objectives
+            and not pending_query_rows
+            and not pending_candidate_work
+        ):
             query_generation = ResearcherSourceQueryPlanner(
                 provider=self.query_provider
             ).generate(
@@ -787,6 +806,8 @@ class ResearcherSourceGraphAcquirer:
                 if row.get("execution_status") == "PENDING"
                 and str(row.get("objective_id")) not in resolved
             ]
+        if checkpoint_migration_only:
+            pending_query_rows = []
         query_budget = config.max_queries_per_checkpoint
         query_calls = 0
         for query_row in pending_query_rows:
@@ -890,12 +911,16 @@ class ResearcherSourceGraphAcquirer:
             candidates,
             official_hosts=allowed_hosts,
         )
-        pending_rank = [
-            row
-            for row in candidates
-            if row.get("ranking_status") == "PENDING"
-            and not _candidate_scope_is_fully_resolved(row, resolved)
-        ]
+        pending_rank = (
+            []
+            if checkpoint_migration_only
+            else [
+                row
+                for row in candidates
+                if row.get("ranking_status") == "PENDING"
+                and not _candidate_scope_is_fully_resolved(row, resolved)
+            ]
+        )
         ranking_results: list[CandidateRankingResult] = []
         if pending_rank:
             rank_batch = pending_rank[: config.max_candidates_per_checkpoint]
@@ -931,19 +956,23 @@ class ResearcherSourceGraphAcquirer:
                 else:
                     candidate["ranking_status"] = "NOT_MATERIAL"
                     candidate["fetch_status"] = "DISCOVERY_ONLY_NOT_FETCHED"
-        pending_fetch = sorted(
-            (
-                row
-                for row in candidates
-                if row.get("fetch_status")
-                in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
-                and not _candidate_scope_is_fully_resolved(row, resolved)
-            ),
-            key=lambda row: _pending_material_fetch_priority(
-                row,
-                as_of_date=cutoff,
-                official_first_required=config.official_first_required,
-            ),
+        pending_fetch = (
+            []
+            if checkpoint_migration_only
+            else sorted(
+                (
+                    row
+                    for row in candidates
+                    if row.get("fetch_status")
+                    in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+                    and not _candidate_scope_is_fully_resolved(row, resolved)
+                ),
+                key=lambda row: _pending_material_fetch_priority(
+                    row,
+                    as_of_date=cutoff,
+                    official_first_required=config.official_first_required,
+                ),
+            )
         )
         fetch_batch = pending_fetch[: config.max_fetches_per_checkpoint]
         if len(pending_fetch) > len(fetch_batch):
@@ -1142,6 +1171,11 @@ class ResearcherSourceGraphAcquirer:
             search_provider=search_provider,
             page_fetcher=page_fetcher,
         )
+        if checkpoint_migration_only:
+            audit = {
+                **audit,
+                "checkpoint_migration_only": True,
+            }
         return SourceGraphAcquisitionRun(
             status=status,
             target_id=target_id,
@@ -1291,6 +1325,7 @@ def validated_quarantined_document_ids(
         "INCOMPLETE_FULL_DOCUMENT_TEXT:",
         "STALE_PDF_READING_ORDER:",
         "STALE_PUBLICATION_DATE_INFERENCE:",
+        "NAVIGATION_ONLY_REFERENCE_URL:",
     )
     for row in rows:
         document_id = str(row.get("document_id") or "").strip()
@@ -1715,6 +1750,130 @@ def _quarantine_unreadable_documents(
     state["evidence_documents"] = kept
     state["quarantined_documents"] = _dedupe_mapping_rows(
         quarantine_rows, key_fields=("document_id", "quarantine_reason")
+    )
+    return tuple(dict.fromkeys(reasons))
+
+
+def _quarantine_navigation_only_documents(
+    state: dict[str, Any],
+) -> tuple[str, ...]:
+    """Demote fetched listing/search pages while preserving their lineage.
+
+    Older checkpoints could fetch a search, tag, category, feed, or paginated
+    listing before those URL classes became discovery-only.  Such a page can
+    still expose article links, but its changing result roster is not a stable
+    source document.  Resume therefore removes only the listing itself from
+    evidence authority.  Article descendants and direct document URLs remain
+    untouched, and the ordinary active-source fact filter retires facts that
+    cited the demoted document.
+    """
+
+    documents = list(state.get("evidence_documents") or ())
+    candidates = list(state.get("search_candidates") or ())
+    candidate_by_document_id = {
+        str(row.get("document_id") or ""): row
+        for row in candidates
+        if row.get("document_id")
+    }
+    candidate_by_url = {
+        _normalize_url(str(row.get("url") or "")): row
+        for row in candidates
+        if row.get("url")
+    }
+    kept: list[dict[str, Any]] = []
+    reasons: list[str] = []
+    quarantine_rows = list(state.setdefault("quarantined_documents", []))
+    rejected_rows = state.setdefault("rejected_documents", [])
+    reason = "NAVIGATION_ONLY_REFERENCE_URL:FULL_DOCUMENT_DEMOTED"
+    for raw_document in documents:
+        document = dict(raw_document)
+        document_id = str(document.get("document_id") or "")
+        url = str(document.get("canonical_url") or document.get("url") or "")
+        if not _is_navigation_only_reference_url(url):
+            kept.append(document)
+            continue
+        candidate = candidate_by_document_id.get(
+            document_id
+        ) or candidate_by_url.get(_normalize_url(url))
+        candidate_payload: Mapping[str, Any] = candidate or {
+            "candidate_id": stable_intelligence_id(
+                "SGCANDNAVIGATIONQUARANTINE",
+                {
+                    "target_id": state.get("target_id"),
+                    "as_of_date": state.get("as_of_date"),
+                    "document_id": document_id,
+                    "url": url,
+                },
+            ),
+            "url": url,
+            "query_ids": list(document.get("query_ids") or ()),
+            "objective_ids": list(document.get("objective_ids") or ()),
+        }
+        if candidate is not None:
+            candidate["ranking_status"] = "NOT_MATERIAL"
+            candidate["fetch_status"] = (
+                "REFERENCE_DISCOVERY_REJECTED_NAVIGATION_ONLY"
+            )
+            candidate["reference_navigation_disposition"] = (
+                "TERMINAL_DISCOVERY_ONLY"
+            )
+            candidate["reference_navigation_reason"] = (
+                "NAVIGATION_ONLY_REFERENCE_URL"
+            )
+            candidate["reference_navigation_policy_version"] = (
+                NAVIGATION_ONLY_REFERENCE_POLICY_VERSION
+            )
+            candidate["score_authority"] = False
+            candidate["snippet_evidence_eligible"] = False
+            candidate["quarantined_document_id"] = document_id
+            candidate.pop("document_id", None)
+        rejection = dict(
+            _candidate_rejection(
+                candidate_payload,
+                reason,
+                retryable=False,
+                content_hash=str(document.get("content_hash") or "") or None,
+            )
+        )
+        rejection.update(
+            {
+                "document_id": document_id,
+                "quarantined_on_checkpoint_resume": True,
+                "evidence_eligible": False,
+                "score_authority": False,
+                "reference_navigation_disposition": (
+                    "TERMINAL_DISCOVERY_ONLY"
+                ),
+            }
+        )
+        rejected_rows.append(rejection)
+        quarantine_rows.append(
+            {
+                "schema_version": "e2r_v5_source_graph_quarantine_v1",
+                "document_id": document_id,
+                "target_id": state.get("target_id"),
+                "as_of_date": state.get("as_of_date"),
+                "candidate_id": candidate_payload.get("candidate_id"),
+                "url": url,
+                "content_hash": document.get("content_hash"),
+                "query_ids": list(document.get("query_ids") or ()),
+                "objective_ids": list(document.get("objective_ids") or ()),
+                "quarantine_reason": reason,
+                "evidence_eligible": False,
+                "score_authority": False,
+                "reference_navigation_disposition": (
+                    "TERMINAL_DISCOVERY_ONLY"
+                ),
+                "reference_navigation_policy_version": (
+                    NAVIGATION_ONLY_REFERENCE_POLICY_VERSION
+                ),
+            }
+        )
+        reasons.append(reason)
+    state["evidence_documents"] = kept
+    state["quarantined_documents"] = _dedupe_mapping_rows(
+        quarantine_rows,
+        key_fields=("document_id",),
     )
     return tuple(dict.fromkeys(reasons))
 
@@ -2171,6 +2330,14 @@ def _enqueue_reference_candidates(
         or document.get("content")
         or ""
     )
+    if _is_navigation_only_reference_url(
+        str(document.get("canonical_url") or document.get("url") or "")
+    ):
+        # A tag/category/search listing is itself a navigation surface.  Its
+        # href roster is not the same thing as links cited by an article body.
+        # Do not turn every listing entry/menu link into another research
+        # candidate.  The fetched parent still preserves those URLs for audit.
+        return 0
     authority_backed_document = (
         document_source_family in SOURCE_FAMILY_CLASSES["OFFICIAL"]
     )
@@ -2181,6 +2348,8 @@ def _enqueue_reference_candidates(
         url = str(raw_url).strip()
         normalized = _normalize_url(url)
         if not normalized or not _is_http_url(url):
+            continue
+        if _is_navigation_only_reference_url(url):
             continue
         if not authority_backed_document and url not in document_text:
             # HTML navigation hrefs are stripped from fetched text.  A
@@ -2283,6 +2452,16 @@ def _enqueue_candidate_discovery_references(
         return 0
     if not _candidate_reference_expansion_authority(parent_candidate):
         return 0
+    if (
+        parent_candidate.get("reference_navigation_disposition")
+        == "TERMINAL_DISCOVERY_ONLY"
+        or _is_navigation_only_reference_url(
+            str(parent_candidate.get("url") or "")
+        )
+    ):
+        # Even when a navigation page was reached by a direct search, its
+        # page-wide hrefs must not recursively become research candidates.
+        return 0
     parent_url = _normalize_url(str(parent_candidate.get("url") or ""))
     by_url = {str(row.get("normalized_url")): row for row in candidates}
     objective_ids = tuple(parent_candidate.get("objective_ids") or ())
@@ -2301,6 +2480,7 @@ def _enqueue_candidate_discovery_references(
             not normalized
             or normalized == parent_url
             or not _is_http_url(url)
+            or _is_navigation_only_reference_url(url)
         ):
             continue
         existing = by_url.get(normalized)
@@ -2809,7 +2989,89 @@ def _audit_acquisition_run(
     candidates = checkpoint["search_candidates"]
     documents = checkpoint["evidence_documents"]
     rejected = checkpoint["rejected_documents"]
-    critical = {
+    critical = source_graph_acquisition_safety_critical_counts(
+        config=config,
+        checkpoint=checkpoint,
+    )
+    return {
+        "schema_version": "e2r_v5_source_graph_acquisition_run_audit_v1",
+        "status": (
+            "V5_SOURCE_GRAPH_ACQUISITION_SAFETY_PASS"
+            if sum(critical.values()) == 0
+            else "V5_SOURCE_GRAPH_ACQUISITION_SAFETY_FAIL"
+        ),
+        "critical_counts": critical,
+        "critical_count_sum": sum(critical.values()),
+        "checkpoint_binding": source_graph_checkpoint_audit_binding(checkpoint),
+        "mode": config.mode,
+        "max_results_per_query": config.max_results_per_query,
+        "top_results_parameter_present": False,
+        "query_count": len(queries),
+        "search_candidate_count": len(candidates),
+        "material_candidate_count": sum(
+            row.get("ranking_status") == "MATERIAL" for row in candidates
+        ),
+        "full_document_count": sum(
+            row.get("evidence_eligible") is True for row in documents
+        ),
+        "rejected_document_count": len(rejected),
+        "pending_candidate_count": sum(
+            row.get("ranking_status") == "PENDING"
+            or row.get("fetch_status") in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+            for row in candidates
+        ),
+        "navigation_only_reference_terminal_count": sum(
+            row.get("reference_navigation_disposition")
+            == "TERMINAL_DISCOVERY_ONLY"
+            and row.get("fetch_status")
+            == "REFERENCE_DISCOVERY_REJECTED_NAVIGATION_ONLY"
+            for row in candidates
+        ),
+        "navigation_only_reference_policy_version": (
+            NAVIGATION_ONLY_REFERENCE_POLICY_VERSION
+        ),
+        "query_provider_name": str(
+            getattr(query_provider, "provider_name", query_provider.__class__.__name__)
+        ),
+        "search_provider_name": type(search_provider).__name__,
+        "page_fetcher_name": type(page_fetcher).__name__,
+        "reuses_naver_free_search_provider": isinstance(
+            search_provider, NaverFreeSearchProvider
+        ),
+        "reuses_page_fetcher": isinstance(page_fetcher, PageFetcher),
+        "snippet_is_discovery_only": True,
+        "material_selection_uses_fixed_top_n": False,
+        "parser_field_direct_score_authority": False,
+        "input_dependent_score_mutation": False,
+        "checkpoint_resume_required": config.checkpoint_resume_required,
+    }
+
+
+def source_graph_checkpoint_audit_binding(
+    checkpoint: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Bind an acquisition audit to one exact validated source generation."""
+
+    return {
+        "target_id": checkpoint.get("target_id"),
+        "as_of_date": checkpoint.get("as_of_date"),
+        "checkpoint_id": checkpoint.get("checkpoint_id"),
+        "checkpoint_hash": checkpoint.get("checkpoint_hash"),
+        "epoch": checkpoint.get("epoch"),
+    }
+
+
+def source_graph_acquisition_safety_critical_counts(
+    *,
+    config: SourceGraphAcquisitionConfig,
+    checkpoint: Mapping[str, Any],
+) -> Mapping[str, int]:
+    """Recompute source safety solely from one checkpoint and its config."""
+
+    queries = checkpoint["generated_queries"]
+    candidates = checkpoint["search_candidates"]
+    documents = checkpoint["evidence_documents"]
+    return {
         "non_llm_query_count": sum(
             row.get("generator_kind") not in {"REAL_LLM", "TEST_FIXTURE_LLM"}
             for row in queries
@@ -2877,47 +3139,6 @@ def _audit_acquisition_run(
             and not row.get("official_gap_reasons")
             for row in queries
         ),
-    }
-    return {
-        "schema_version": "e2r_v5_source_graph_acquisition_run_audit_v1",
-        "status": (
-            "V5_SOURCE_GRAPH_ACQUISITION_SAFETY_PASS"
-            if sum(critical.values()) == 0
-            else "V5_SOURCE_GRAPH_ACQUISITION_SAFETY_FAIL"
-        ),
-        "critical_counts": critical,
-        "critical_count_sum": sum(critical.values()),
-        "mode": config.mode,
-        "max_results_per_query": config.max_results_per_query,
-        "top_results_parameter_present": False,
-        "query_count": len(queries),
-        "search_candidate_count": len(candidates),
-        "material_candidate_count": sum(
-            row.get("ranking_status") == "MATERIAL" for row in candidates
-        ),
-        "full_document_count": sum(
-            row.get("evidence_eligible") is True for row in documents
-        ),
-        "rejected_document_count": len(rejected),
-        "pending_candidate_count": sum(
-            row.get("ranking_status") == "PENDING"
-            or row.get("fetch_status") in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
-            for row in candidates
-        ),
-        "query_provider_name": str(
-            getattr(query_provider, "provider_name", query_provider.__class__.__name__)
-        ),
-        "search_provider_name": type(search_provider).__name__,
-        "page_fetcher_name": type(page_fetcher).__name__,
-        "reuses_naver_free_search_provider": isinstance(
-            search_provider, NaverFreeSearchProvider
-        ),
-        "reuses_page_fetcher": isinstance(page_fetcher, PageFetcher),
-        "snippet_is_discovery_only": True,
-        "material_selection_uses_fixed_top_n": False,
-        "parser_field_direct_score_authority": False,
-        "input_dependent_score_mutation": False,
-        "checkpoint_resume_required": config.checkpoint_resume_required,
     }
 
 
@@ -2987,6 +3208,148 @@ def _candidate_reference_expansion_authority(
     return bool(candidate.get("verified_official_domain_candidate")) or str(
         candidate.get("candidate_source_family_hint") or ""
     ) in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+
+
+def _is_navigation_only_reference_url(url: str) -> bool:
+    """Return whether ``url`` identifies a site-navigation surface.
+
+    This intentionally recognizes generic URL semantics only.  It does not
+    inspect a company, symbol, sector, archetype, objective, or score slot.
+    Direct documents win over path labels so a cited PDF such as
+    ``/category/results/report.pdf`` remains eligible.
+    """
+
+    value = str(url or "").strip()
+    if not value or not _is_http_url(value):
+        return False
+    parts = urlsplit(value)
+    path = parts.path.casefold()
+    if path.endswith(
+        (
+            ".pdf",
+            ".doc",
+            ".docx",
+            ".xls",
+            ".xlsx",
+            ".ppt",
+            ".pptx",
+            ".csv",
+            ".json",
+            ".xml",
+        )
+    ):
+        return False
+    segments = tuple(
+        segment
+        for segment in path.split("/")
+        if segment
+    )
+    if any(
+        segment in {
+            "tag",
+            "tags",
+            "category",
+            "categories",
+            "author",
+            "authors",
+            "search",
+        }
+        for segment in segments
+    ):
+        return True
+    if any(
+        segment == "page"
+        and index + 1 < len(segments)
+        and segments[index + 1].isdigit()
+        for index, segment in enumerate(segments)
+    ):
+        return True
+    if segments and segments[-1] in {
+        "archive",
+        "archives",
+        "feed",
+        "rss",
+    }:
+        return True
+    query_keys = {
+        key.casefold().strip()
+        for key, _ in parse_qsl(parts.query, keep_blank_values=True)
+    }
+    return bool(
+        query_keys
+        & {
+            "s",
+            "search",
+            "search_query",
+            "search_term",
+            "keyword",
+        }
+    )
+
+
+def source_graph_active_navigation_only_document_ids(
+    checkpoint: Mapping[str, Any],
+) -> frozenset[str]:
+    """Return active document ids whose own URL is discovery-only."""
+
+    return frozenset(
+        str(row.get("document_id") or "")
+        for row in checkpoint.get("evidence_documents") or ()
+        if str(row.get("document_id") or "")
+        and _is_navigation_only_reference_url(
+            str(row.get("canonical_url") or row.get("url") or "")
+        )
+    )
+
+
+def _close_navigation_only_reference_routes(
+    candidates: Sequence[dict[str, Any]],
+) -> int:
+    """Close only pending rows whose own URL is navigation-only.
+
+    A real article can legitimately be discovered from a tag or category page.
+    Its ancestry alone is therefore not a safe reason to discard it.  Conversely,
+    a navigation URL is discovery-only even when a direct search returned it.
+    Already fetched historical rows are handled by checkpoint quarantine before
+    this pending-route closure runs.
+    """
+
+    closed = 0
+    for candidate in candidates:
+        candidate_id = str(candidate.get("candidate_id") or "")
+        if not candidate_id:
+            continue
+        if candidate.get("reference_navigation_disposition") == (
+            "TERMINAL_DISCOVERY_ONLY"
+        ):
+            continue
+        if candidate.get("ranking_status") not in {"PENDING", "MATERIAL"}:
+            continue
+        if candidate.get("fetch_status") not in {
+            "NOT_STARTED",
+            "MATERIAL_PENDING_FETCH",
+            "FETCH_RETRY_PENDING",
+        }:
+            continue
+        if not _is_navigation_only_reference_url(str(candidate.get("url") or "")):
+            continue
+        candidate["ranking_status"] = "NOT_MATERIAL"
+        candidate["fetch_status"] = (
+            "REFERENCE_DISCOVERY_REJECTED_NAVIGATION_ONLY"
+        )
+        candidate["reference_navigation_disposition"] = (
+            "TERMINAL_DISCOVERY_ONLY"
+        )
+        candidate["reference_navigation_reason"] = (
+            "NAVIGATION_ONLY_REFERENCE_URL"
+        )
+        candidate["reference_navigation_policy_version"] = (
+            NAVIGATION_ONLY_REFERENCE_POLICY_VERSION
+        )
+        candidate["score_authority"] = False
+        candidate["snippet_evidence_eligible"] = False
+        closed += 1
+    return closed
 
 
 def _pending_material_fetch_priority(
