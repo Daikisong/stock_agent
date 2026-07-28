@@ -871,6 +871,21 @@ def _provider_output_schema(
     """
 
     base = _PROVIDER_SCHEMAS[pass_name]
+    if pass_name == "BUSINESS_MODEL_RESEARCH" and isinstance(
+        payload.get("loss_accounted_fact_chunk_synthesis"), Mapping
+    ):
+        # Every loss-accounted fact chunk has already been reviewed before
+        # this call.  Here ``research_complete`` means that synthesis covered
+        # that full roster; unresolved economics remain in ``uncertainties``.
+        # Bind the transport contract before the COMPONENT_RESEARCH-only
+        # branch below so a business-model synthesis cannot mislabel
+        # uncertainty as an unread fact plane.
+        schema = json.loads(json.dumps(base, ensure_ascii=False))
+        schema["properties"]["research_complete"] = {
+            "type": "boolean",
+            "enum": [True],
+        }
+        return schema
     required_judge_roster = {
         "COMPONENT_ANALYST_JUDGE": (
             "allowed_support_fact_ids",

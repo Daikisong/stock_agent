@@ -999,6 +999,40 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self.assertNotIn("minItems", chunk_roster)
         self.assertNotIn("maxItems", chunk_roster)
 
+    def test_business_model_synthesis_binds_review_completion_not_certainty(
+        self,
+    ) -> None:
+        synthesis_schema = _provider_output_schema(
+            pass_name="BUSINESS_MODEL_RESEARCH",
+            payload={
+                "loss_accounted_fact_chunk_synthesis": {
+                    "chunk_responses": [
+                        {
+                            "response": {
+                                "fact_row_indices": [3],
+                                "research_complete": False,
+                            }
+                        }
+                    ]
+                }
+            },
+        )
+        self.assertEqual(
+            synthesis_schema["properties"]["research_complete"],
+            {"type": "boolean", "enum": [True]},
+        )
+
+        chunk_schema = _provider_output_schema(
+            pass_name="BUSINESS_MODEL_RESEARCH",
+            payload={
+                "loss_accounted_fact_chunk": {"chunk_index": 0},
+            },
+        )
+        self.assertEqual(
+            chunk_schema["properties"]["research_complete"],
+            {"type": "boolean"},
+        )
+
     def test_red_team_schema_rejects_duplicate_challenged_fact_rows(self) -> None:
         schema = _provider_output_schema(
             pass_name="RED_TEAM_RESEARCH",
