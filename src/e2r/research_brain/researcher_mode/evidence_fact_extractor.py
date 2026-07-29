@@ -65,6 +65,9 @@ PUNCTUATION_ONLY_VALUE_NORMALIZATION = (
 TRANSPORT_FRAGMENT_VALUE_NORMALIZATION = (
     "TRANSPORT_FRAGMENT_VALUE_REPLACED_WITH_NORMALIZED_OBJECT"
 )
+STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED = (
+    "STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED"
+)
 
 
 def _is_transport_fragment_only_value(value: str) -> bool:
@@ -91,11 +94,29 @@ def normalize_punctuation_only_fact_value(
     ``:true}],`` is the same transport failure even though its JSON literal
     contains letters.  Only that narrowly recognizable structural form is
     repaired; standalone literals and normal prose containing them are
-    preserved exactly.
+    preserved exactly.  Complete JSON object/array strings are restored to
+    their native type so exact grounding compares an object with an object;
+    JSON scalars and actual mapping values are untouched.
     """
 
     normalized = dict(claim_or_proposal)
     raw_value = normalized.get("value")
+    normalizations = [
+        str(value).strip()
+        for value in normalized.get("deterministic_field_normalizations", ())
+        if str(value).strip()
+    ]
+    if isinstance(raw_value, str):
+        try:
+            parsed_value = json.loads(raw_value)
+        except (TypeError, ValueError, json.JSONDecodeError):
+            parsed_value = None
+        if isinstance(parsed_value, (dict, list)):
+            normalized["value"] = parsed_value
+            raw_value = parsed_value
+            normalizations.append(
+                STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED
+            )
     value_text = str(raw_value).strip() if raw_value is not None else ""
     normalized_object = str(normalized.get("normalized_object") or "").strip()
     punctuation_only = (
@@ -108,13 +129,12 @@ def normalize_punctuation_only_fact_value(
         or not (punctuation_only or transport_fragment_only)
         or not any(character.isalnum() for character in normalized_object)
     ):
+        if normalizations:
+            normalized["deterministic_field_normalizations"] = list(
+                dict.fromkeys(normalizations)
+            )
         return normalized
     normalized["value"] = normalized_object
-    normalizations = [
-        str(value).strip()
-        for value in normalized.get("deterministic_field_normalizations", ())
-        if str(value).strip()
-    ]
     normalizations.append(
         (
             TRANSPORT_FRAGMENT_VALUE_NORMALIZATION
@@ -1866,7 +1886,11 @@ def _accepted_claim(
         "mechanism_scope_id": str(proposal["mechanism_scope_id"]).strip(),
         "predicate": str(proposal["predicate"]).strip(),
         "predicate_family": str(proposal["predicate_family"]).strip(),
-        "value": str(proposal["value"]).strip(),
+        "value": (
+            proposal["value"]
+            if isinstance(proposal["value"], (Mapping, list))
+            else str(proposal["value"]).strip()
+        ),
         "normalized_object": str(proposal["normalized_object"]).strip(),
         "unit": str(proposal.get("unit") or "").strip() or None,
         "period": str(proposal["period"]).strip(),

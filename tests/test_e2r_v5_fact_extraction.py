@@ -28,6 +28,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     PUNCTUATION_ONLY_VALUE_NORMALIZATION,
+    STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED,
     TRANSPORT_FRAGMENT_VALUE_NORMALIZATION,
     normalize_punctuation_only_fact_value,
 )
@@ -494,11 +495,6 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 literal,
                 f"field value is {literal}",
                 f"{literal} 값은 정상적인 본문이다",
-                (
-                    '{"point": '
-                    + literal
-                    + ', "context": "normal structured value"}'
-                ),
             )
             for normal_text in normal_values:
                 with self.subTest(literal=literal, normal_text=normal_text):
@@ -513,6 +509,71 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                         "deterministic_field_normalizations",
                         unchanged,
                     )
+
+    def test_structured_json_string_value_restores_native_type_without_scalar_coercion(
+        self,
+    ) -> None:
+        for source, expected in (
+            (
+                '{"point": "68.1", "unit": "%", "period": "Q1_2026"}',
+                {"point": "68.1", "unit": "%", "period": "Q1_2026"},
+            ),
+            (
+                '[{"label": "매출 증가"}, {"point": 68.1}]',
+                [{"label": "매출 증가"}, {"point": 68.1}],
+            ),
+            (
+                '{"point": null, "enabled": true, "disabled": false}',
+                {"point": None, "enabled": True, "disabled": False},
+            ),
+            (
+                '{"point":"68.1","unit":"%"}',
+                {"point": "68.1", "unit": "%"},
+            ),
+        ):
+            with self.subTest(source=source):
+                normalized = normalize_punctuation_only_fact_value(
+                    {
+                        "value": source,
+                        "normalized_object": "structured_value",
+                    }
+                )
+                self.assertEqual(normalized["value"], expected)
+                self.assertEqual(
+                    normalized["deterministic_field_normalizations"],
+                    [STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED],
+                )
+
+        actual_mapping = {"point": "68.1", "unit": "%"}
+        for preserved in (
+            "null",
+            "true",
+            "68.1",
+            '"ordinary JSON scalar string"',
+            "ordinary prose",
+            actual_mapping,
+        ):
+            with self.subTest(preserved=preserved):
+                normalized = normalize_punctuation_only_fact_value(
+                    {
+                        "value": preserved,
+                        "normalized_object": "replacement_must_not_apply",
+                    }
+                )
+                self.assertEqual(normalized["value"], preserved)
+                self.assertNotIn(
+                    "deterministic_field_normalizations",
+                    normalized,
+                )
+        self.assertIs(
+            normalize_punctuation_only_fact_value(
+                {
+                    "value": actual_mapping,
+                    "normalized_object": "replacement_must_not_apply",
+                }
+            )["value"],
+            actual_mapping,
+        )
 
     def test_punctuation_only_provider_value_uses_normalized_object(self) -> None:
         result = ResearcherEvidenceFactExtractor(
@@ -565,6 +626,34 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         )
         self.assertEqual(len(result.facts), 1)
         self.assertEqual(result.facts[0].value, "record_operating_cash_flow")
+
+    def test_structured_json_string_provider_value_restores_native_type(
+        self,
+    ) -> None:
+        result = ResearcherEvidenceFactExtractor(
+            provider=CorruptedValueFactProvider(
+                '{"point": "68.1", "unit": "%", "period": "Q1_2026"}'
+            )
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(_document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),),
+            open_objectives=(),
+        )
+
+        expected = {"point": "68.1", "unit": "%", "period": "Q1_2026"}
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(result.material_claims), 1)
+        self.assertEqual(result.material_claims[0]["value"], expected)
+        self.assertEqual(
+            result.material_claims[0]["deterministic_field_normalizations"],
+            [STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED],
+        )
+        self.assertEqual(len(result.facts), 1)
+        self.assertEqual(result.facts[0].value, expected)
 
     def test_every_full_document_is_processed_and_independent_sources_dedupe_fact(self) -> None:
         provider = FactProvider()
@@ -891,11 +980,19 @@ class E2RV5FactExtractionTests(unittest.TestCase):
     def test_checkpoint_resume_migrates_punctuation_only_claim_without_duplication(
         self,
     ) -> None:
-        for corrupted_value in (",", ":null}],"):
-            with self.subTest(corrupted_value=corrupted_value):
+        checkpoint_cases = (
+            (",", "record_operating_cash_flow"),
+            (":null}],", "record_operating_cash_flow"),
+            (
+                '{"point": "68.1", "unit": "%"}',
+                {"point": "68.1", "unit": "%"},
+            ),
+        )
+        for persisted_value, expected_value in checkpoint_cases:
+            with self.subTest(persisted_value=persisted_value):
                 document = _document("DOC-1", "ISSUER_PRESENTATION", "ISSUER")
                 initial = ResearcherEvidenceFactExtractor(
-                    provider=CorruptedValueFactProvider(corrupted_value)
+                    provider=CorruptedValueFactProvider(persisted_value)
                 ).extract(
                     target_id=TARGET,
                     target_name=TARGET_NAME,
@@ -906,7 +1003,7 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                     open_objectives=(),
                 )
                 persisted_claim = dict(initial.material_claims[0])
-                persisted_claim["value"] = corrupted_value
+                persisted_claim["value"] = persisted_value
                 persisted_claim["deterministic_field_normalizations"] = []
 
                 with tempfile.TemporaryDirectory() as directory:
@@ -944,7 +1041,7 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 )
                 self.assertEqual(
                     migrated_claims[0]["value"],
-                    "record_operating_cash_flow",
+                    expected_value,
                 )
                 resumed_compilation = EvidenceFactCompiler().compile(
                     target_id=TARGET,
