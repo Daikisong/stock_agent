@@ -15,6 +15,7 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import re
 from typing import Any, Mapping, Sequence
 
 from e2r.production.metadata import write_json, write_jsonl
@@ -68,6 +69,34 @@ TRANSPORT_FRAGMENT_VALUE_NORMALIZATION = (
 STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED = (
     "STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED"
 )
+NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED = (
+    "NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED"
+)
+
+_RFC8259_NUMBER_PATTERN = re.compile(
+    r"-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?\Z"
+)
+_CALENDAR_YEAR_PATTERN = re.compile(r"(?:19|20)\d{2}\Z")
+_CALENDAR_YEAR_MONTH_PATTERN = re.compile(
+    r"(?:19|20)\d{2}\.(?:0?[1-9]|1[0-2])\Z"
+)
+_TEMPORAL_IDENTITY_UNITS = frozenset(
+    {"date", "year", "years", "날짜", "년", "년도", "연도"}
+)
+_NONQUANTITATIVE_UNITS = frozenset(
+    {
+        "n/a",
+        "na",
+        "none",
+        "not applicable",
+        "null",
+        "qualitative",
+        "text",
+        "unknown",
+        "unspecified",
+    }
+)
+_MAX_SAFE_NUMERIC_SIGNIFICANT_DIGITS = 15
 
 
 def _is_transport_fragment_only_value(value: str) -> bool:
@@ -81,6 +110,41 @@ def _is_transport_fragment_only_value(value: str) -> bool:
         if residue and all(character in "{}[],:" for character in residue):
             return True
     return False
+
+
+def _restorable_numeric_scalar(
+    value: str,
+    *,
+    unit: Any,
+) -> int | float | None:
+    """Restore only an unambiguous quantitative RFC 8259 number."""
+
+    if not _RFC8259_NUMBER_PATTERN.fullmatch(value):
+        return None
+    normalized_unit = str(unit or "").strip().casefold()
+    if (
+        not normalized_unit
+        or normalized_unit in _TEMPORAL_IDENTITY_UNITS
+        or normalized_unit in _NONQUANTITATIVE_UNITS
+        or _CALENDAR_YEAR_PATTERN.fullmatch(value)
+        or _CALENDAR_YEAR_MONTH_PATTERN.fullmatch(value)
+    ):
+        return None
+    mantissa = value.lower().split("e", 1)[0].lstrip("-")
+    significant_digits = mantissa.replace(".", "").lstrip("0")
+    if len(significant_digits or "0") > _MAX_SAFE_NUMERIC_SIGNIFICANT_DIGITS:
+        return None
+    try:
+        parsed = json.loads(value)
+    except (TypeError, ValueError, json.JSONDecodeError):
+        return None
+    if (
+        isinstance(parsed, bool)
+        or not isinstance(parsed, (int, float))
+        or (isinstance(parsed, float) and not math.isfinite(parsed))
+    ):
+        return None
+    return parsed
 
 
 def normalize_punctuation_only_fact_value(
@@ -116,6 +180,17 @@ def normalize_punctuation_only_fact_value(
             raw_value = parsed_value
             normalizations.append(
                 STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED
+            )
+        elif (
+            numeric_value := _restorable_numeric_scalar(
+                raw_value,
+                unit=normalized.get("unit"),
+            )
+        ) is not None:
+            normalized["value"] = numeric_value
+            raw_value = numeric_value
+            normalizations.append(
+                NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED
             )
     value_text = str(raw_value).strip() if raw_value is not None else ""
     normalized_object = str(normalized.get("normalized_object") or "").strip()
@@ -411,6 +486,11 @@ class ResearcherEvidenceFactExtractor:
                         "subject_id": "stable target business/product/mechanism subject",
                         "predicate_family": "stable economic predicate family",
                         "normalized_object": "concise normalized economic object or state",
+                        "value": (
+                            "Use a JSON number only for one finite quantitative "
+                            "point. Use a JSON string for text, ranges, identifiers, "
+                            "and dates. Do not encode arbitrary objects or arrays."
+                        ),
                         "mechanism_scope_id": "target-direct business mechanism, never industry or wrong-segment proxy",
                     },
                     "deterministic_mechanism_scope_contract": {
@@ -1811,7 +1891,28 @@ def _proposal_rejection_reason(
         "exact_quote",
         "materiality_rationale",
     )
-    missing = [key for key in required if not str(proposal.get(key) or "").strip()]
+    missing = [
+        key
+        for key in required
+        if (
+            key == "value"
+            and (
+                proposal.get(key) is None
+                or (
+                    isinstance(proposal.get(key), str)
+                    and not str(proposal.get(key)).strip()
+                )
+                or (
+                    isinstance(proposal.get(key), (Mapping, list, tuple))
+                    and not proposal.get(key)
+                )
+            )
+        )
+        or (
+            key != "value"
+            and not str(proposal.get(key) or "").strip()
+        )
+    ]
     if missing:
         return "EXPLICIT_FACT_FIELDS_MISSING:" + ",".join(missing)
     try:
@@ -1820,6 +1921,12 @@ def _proposal_rejection_reason(
         confidence = float(proposal.get("confidence"))
         if not math.isfinite(confidence) or not 0 <= confidence <= 1:
             raise ValueError("confidence")
+        proposal_value = proposal.get("value")
+        if isinstance(proposal_value, bool) or (
+            isinstance(proposal_value, float)
+            and not math.isfinite(proposal_value)
+        ):
+            raise ValueError("value")
     except (TypeError, ValueError):
         return "INVALID_FACT_ENUM_OR_CONFIDENCE"
     if str(proposal.get("materiality") or "") not in {"CRITICAL", "NONCRITICAL"}:
@@ -1888,7 +1995,17 @@ def _accepted_claim(
         "predicate_family": str(proposal["predicate_family"]).strip(),
         "value": (
             proposal["value"]
-            if isinstance(proposal["value"], (Mapping, list))
+            if (
+                isinstance(proposal["value"], (Mapping, list))
+                or (
+                    isinstance(proposal["value"], (int, float))
+                    and not isinstance(proposal["value"], bool)
+                    and (
+                        not isinstance(proposal["value"], float)
+                        or math.isfinite(proposal["value"])
+                    )
+                )
+            )
             else str(proposal["value"]).strip()
         ),
         "normalized_object": str(proposal["normalized_object"]).strip(),

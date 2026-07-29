@@ -27,6 +27,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     write_production_lane,
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
+    NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED,
     PUNCTUATION_ONLY_VALUE_NORMALIZATION,
     STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED,
     TRANSPORT_FRAGMENT_VALUE_NORMALIZATION,
@@ -141,15 +142,23 @@ class WrappedQuotePercentConfidenceProvider(FactProvider):
 
 
 class CorruptedValueFactProvider(FactProvider):
-    def __init__(self, corrupted_value: str) -> None:
+    def __init__(
+        self,
+        corrupted_value: Any,
+        *,
+        unit: str | None = None,
+    ) -> None:
         super().__init__()
         self.corrupted_value = corrupted_value
+        self.unit = unit
 
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(super().complete(pass_name=pass_name, payload=payload))
         response["facts"] = [dict(row) for row in response["facts"]]
         for fact in response["facts"]:
             fact["value"] = self.corrupted_value
+            if self.unit is not None:
+                fact["unit"] = self.unit
         return response
 
 
@@ -575,6 +584,60 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             actual_mapping,
         )
 
+    def test_numeric_scalar_string_restoration_is_quantitative_and_narrow(
+        self,
+    ) -> None:
+        for source, unit, expected in (
+            ("104.1", "조원", 104.1),
+            ("39", "%", 39),
+            ("-12.5", "KRW trillion", -12.5),
+            ("0", "%", 0),
+        ):
+            with self.subTest(source=source, unit=unit):
+                normalized = normalize_punctuation_only_fact_value(
+                    {
+                        "value": source,
+                        "unit": unit,
+                        "normalized_object": "quantitative point",
+                    }
+                )
+                self.assertEqual(normalized["value"], expected)
+                self.assertIs(type(normalized["value"]), type(expected))
+                self.assertEqual(
+                    normalized["deterministic_field_normalizations"],
+                    [NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED],
+                )
+
+        preserved_values = (
+            ("2026", "연도"),
+            ("2026", "%"),
+            ("2026.02", "%"),
+            ("31929129041293", None),
+            ("000", "count"),
+            ("10-20", "%"),
+            ("(39)", "%"),
+            ("+39", "%"),
+            ("1,000", "KRW"),
+            ("1234567890123456", "KRW"),
+            ("39", None),
+            ("39", "qualitative"),
+            ("39", "N/A"),
+        )
+        for source, unit in preserved_values:
+            with self.subTest(source=source, unit=unit):
+                normalized = normalize_punctuation_only_fact_value(
+                    {
+                        "value": source,
+                        "unit": unit,
+                        "normalized_object": "must remain text",
+                    }
+                )
+                self.assertEqual(normalized["value"], source)
+                self.assertNotIn(
+                    NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED,
+                    normalized.get("deterministic_field_normalizations", ()),
+                )
+
     def test_punctuation_only_provider_value_uses_normalized_object(self) -> None:
         result = ResearcherEvidenceFactExtractor(
             provider=CorruptedValueFactProvider(",")
@@ -654,6 +717,51 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         )
         self.assertEqual(len(result.facts), 1)
         self.assertEqual(result.facts[0].value, expected)
+
+    def test_native_numeric_provider_value_and_zero_remain_numeric(self) -> None:
+        for value in (104.1, 39, 0):
+            with self.subTest(value=value):
+                provider = CorruptedValueFactProvider(value, unit="%")
+                result = ResearcherEvidenceFactExtractor(
+                    provider=provider
+                ).extract(
+                    target_id=TARGET,
+                    target_name=TARGET_NAME,
+                    target_aliases=(),
+                    archetype_id=ARCHETYPE,
+                    as_of_date=AS_OF_DATE,
+                    documents=(
+                        _document(
+                            "DOC-1",
+                            "ISSUER_PRESENTATION",
+                            "ISSUER",
+                        ),
+                    ),
+                    open_objectives=(),
+                )
+
+                self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+                self.assertEqual(len(result.material_claims), 1)
+                self.assertEqual(result.material_claims[0]["value"], value)
+                self.assertIs(
+                    type(result.material_claims[0]["value"]),
+                    type(value),
+                )
+                self.assertEqual(result.facts[0].value, value)
+                self.assertNotIn(
+                    NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED,
+                    result.material_claims[0].get(
+                        "deterministic_field_normalizations",
+                        (),
+                    ),
+                )
+                value_instruction = provider.calls[0]["payload"][
+                    "normalization_contract"
+                ]["value"]
+                self.assertIn("JSON number", value_instruction)
+                self.assertIn("ranges", value_instruction)
+                self.assertIn("identifiers", value_instruction)
+                self.assertIn("dates", value_instruction)
 
     def test_every_full_document_is_processed_and_independent_sources_dedupe_fact(self) -> None:
         provider = FactProvider()
@@ -981,18 +1089,29 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self,
     ) -> None:
         checkpoint_cases = (
-            (",", "record_operating_cash_flow"),
-            (":null}],", "record_operating_cash_flow"),
+            (",", ",", "record_operating_cash_flow", None),
+            (
+                ":null}],",
+                ":null}],",
+                "record_operating_cash_flow",
+                None,
+            ),
             (
                 '{"point": "68.1", "unit": "%"}',
+                '{"point": "68.1", "unit": "%"}',
                 {"point": "68.1", "unit": "%"},
+                None,
             ),
+            (104.1, "104.1", 104.1, "%"),
         )
-        for persisted_value, expected_value in checkpoint_cases:
+        for provider_value, persisted_value, expected_value, unit in checkpoint_cases:
             with self.subTest(persisted_value=persisted_value):
                 document = _document("DOC-1", "ISSUER_PRESENTATION", "ISSUER")
                 initial = ResearcherEvidenceFactExtractor(
-                    provider=CorruptedValueFactProvider(persisted_value)
+                    provider=CorruptedValueFactProvider(
+                        provider_value,
+                        unit=unit,
+                    )
                 ).extract(
                     target_id=TARGET,
                     target_name=TARGET_NAME,
@@ -1804,6 +1923,18 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 "maxItems"
             ],
             FACT_EXTRACTION_PAGE_FACT_LIMIT,
+        )
+        value_schema = EVIDENCE_FACT_EXTRACTION_SCHEMA["properties"]["facts"][
+            "items"
+        ]["properties"]["value"]
+        self.assertEqual(
+            value_schema,
+            {
+                "anyOf": [
+                    {"type": "string", "minLength": 1},
+                    {"type": "number"},
+                ]
+            },
         )
 
 

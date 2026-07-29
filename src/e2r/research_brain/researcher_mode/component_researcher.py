@@ -431,7 +431,12 @@ EVIDENCE_FACT_EXTRACTION_SCHEMA: Mapping[str, Any] = {
                     "mechanism_scope_id": {"type": "string", "minLength": 1},
                     "predicate": {"type": "string", "minLength": 1},
                     "predicate_family": {"type": "string", "minLength": 1},
-                    "value": {"type": "string", "minLength": 1},
+                    "value": {
+                        "anyOf": [
+                            {"type": "string", "minLength": 1},
+                            {"type": "number"},
+                        ]
+                    },
                     "normalized_object": {"type": "string", "minLength": 1},
                     "unit": {"type": "string"},
                     "period": {"type": "string", "minLength": 1},
