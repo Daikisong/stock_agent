@@ -33,6 +33,7 @@ from .evidence_fact_extractor import (
     FACT_EXTRACTION_OUTPUT_FILES,
     ResearcherEvidenceFactExtractor,
     ResearcherFactExtractionResult,
+    normalize_punctuation_only_fact_value,
     production_material_fact_rows,
     write_researcher_fact_extraction_result,
 )
@@ -1632,7 +1633,7 @@ def _load_fact_checkpoint(
         if str(row.get("document_id") or "") in completed_ids
     )
     claims = tuple(
-        row
+        normalize_punctuation_only_fact_value(row)
         for row in _read_jsonl(paths["accepted_claims"])
         if str(row.get("document_id") or "") in completed_ids
     )

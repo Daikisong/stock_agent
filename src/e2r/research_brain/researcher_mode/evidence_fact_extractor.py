@@ -59,6 +59,45 @@ FACT_EXTRACTION_OUTPUT_FILES: Mapping[str, str] = {
     "audit": "fact_extraction_audit.json",
 }
 
+PUNCTUATION_ONLY_VALUE_NORMALIZATION = (
+    "PUNCTUATION_ONLY_VALUE_REPLACED_WITH_NORMALIZED_OBJECT"
+)
+
+
+def normalize_punctuation_only_fact_value(
+    claim_or_proposal: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Replace a punctuation-only value with its explicit semantic object.
+
+    ``value`` may arrive as a delimiter accidentally copied from a table even
+    though ``normalized_object`` contains the model's complete semantic value.
+    Only a non-empty value with no Unicode letter or number is repaired.  Any
+    value containing a meaningful letter/number (including Korean text) is
+    preserved exactly.
+    """
+
+    normalized = dict(claim_or_proposal)
+    raw_value = normalized.get("value")
+    value_text = str(raw_value).strip() if raw_value is not None else ""
+    normalized_object = str(normalized.get("normalized_object") or "").strip()
+    if (
+        not value_text
+        or any(character.isalnum() for character in value_text)
+        or not any(character.isalnum() for character in normalized_object)
+    ):
+        return normalized
+    normalized["value"] = normalized_object
+    normalizations = [
+        str(value).strip()
+        for value in normalized.get("deterministic_field_normalizations", ())
+        if str(value).strip()
+    ]
+    normalizations.append(PUNCTUATION_ONLY_VALUE_NORMALIZATION)
+    normalized["deterministic_field_normalizations"] = list(
+        dict.fromkeys(normalizations)
+    )
+    return normalized
+
 
 @dataclass(frozen=True)
 class FactExtractionRejection:
@@ -1874,10 +1913,10 @@ def _normalize_transport_fact_proposal(
 
     if not isinstance(proposal, Mapping):
         return proposal
-    normalized = dict(proposal)
+    normalized = dict(normalize_punctuation_only_fact_value(proposal))
     normalizations: list[str] = [
         str(value).strip()
-        for value in proposal.get("deterministic_field_normalizations", ())
+        for value in normalized.get("deterministic_field_normalizations", ())
         if str(value).strip()
     ]
     document_id = str(normalized.get("document_id") or "")
