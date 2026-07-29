@@ -510,6 +510,7 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             def __init__(self):
                 self.payloads = []
                 self.output_schemas = []
+                self.prompt_lengths = []
 
             def provider_identity(self):
                 return {
@@ -589,6 +590,7 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 payload = json.loads(prompt.rsplit("\n", 1)[-1])
                 self.payloads.append(payload)
                 self.output_schemas.append(output_schema)
+                self.prompt_lengths.append(len(prompt))
                 chunk = payload.get("loss_accounted_fact_chunk")
                 if chunk:
                     retry = payload.get(
@@ -598,8 +600,11 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                         "fact_row_index"
                     ]
                     if retry:
+                        retry_row = (
+                            retry["expected_selected_fact_groundings"][-1]
+                        )
                         grounding = {
-                            **retry["expected_selected_fact_groundings"][0],
+                            **retry_row,
                             "component_interpretation": (
                                 "fresh source-bound interpretation"
                             ),
@@ -673,7 +678,15 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         ]
         projection = project_current_decision_citable_facts(facts)
         transport = SemanticRetryTransport()
-        provider = OllamaResearcherProvider(transport=transport)
+
+        class BoundedCodexResearcherProvider(CodexResearcherProvider):
+            @property
+            def memo_fact_prompt_chunk_chars(self) -> int:
+                return 100_000
+
+        provider = BoundedCodexResearcherProvider(
+            transport=transport  # type: ignore[arg-type]
+        )
         response = provider.complete(
             pass_name="COMPONENT_RESEARCH",
             payload={
@@ -714,6 +727,45 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             ),
             len(base_chunk_payload["current_evidence_fact_graph"]),
         )
+        expected_groundings = _expected_component_chunk_fact_groundings(
+            retry_payloads[0]
+        )
+        expected_grounding_rows = [
+            {
+                "fact_row_index": row_index,
+                **expected_groundings[row_index],
+            }
+            for row_index in sorted(expected_groundings)
+        ]
+        self.assertEqual(
+            retry_context["expected_selected_fact_groundings"],
+            expected_grounding_rows,
+        )
+        retry_row_indices = [
+            row["fact_row_index"]
+            for row in retry_context["expected_selected_fact_groundings"]
+        ]
+        self.assertEqual(
+            retry_row_indices,
+            sorted(
+                row["fact_row_index"]
+                for row in retry_payloads[0][
+                    "current_evidence_fact_graph"
+                ]
+            ),
+        )
+        self.assertEqual(
+            len(retry_row_indices),
+            len(set(retry_row_indices)),
+        )
+        self.assertEqual(
+            retry_context["rejected_selected_fact_row_indices"],
+            [
+                base_chunk_payload["current_evidence_fact_graph"][0][
+                    "fact_row_index"
+                ]
+            ],
+        )
         retry_schema = next(
             schema
             for payload, schema in zip(
@@ -726,12 +778,15 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         grounding_variants = retry_schema["properties"][
             "selected_fact_groundings"
         ]["items"]["anyOf"]
-        self.assertEqual(len(grounding_variants), 1)
-        grounding_properties = grounding_variants[0]["properties"]
+        self.assertEqual(
+            len(grounding_variants),
+            len(expected_grounding_rows),
+        )
+        grounding_properties = grounding_variants[-1]["properties"]
         self.assertEqual(
             grounding_properties["fact_row_index"]["enum"],
             [
-                retry_context["expected_selected_fact_groundings"][0][
+                retry_context["expected_selected_fact_groundings"][-1][
                     "fact_row_index"
                 ]
             ],
@@ -739,21 +794,32 @@ class OllamaStructuredProviderTests(unittest.TestCase):
         self.assertEqual(
             grounding_properties["source_economic_mechanism"]["enum"],
             [
-                retry_context["expected_selected_fact_groundings"][0][
+                retry_context["expected_selected_fact_groundings"][-1][
                     "source_economic_mechanism"
                 ]
             ],
         )
         self.assertEqual(
-            retry_context["expected_selected_fact_groundings"][0][
+            retry_context["expected_selected_fact_groundings"][-1][
                 "source_predicate"
             ],
-            "RETRY_PREDICATE_0",
+            "RETRY_PREDICATE_1",
         )
         self.assertEqual(
             response["selected_fact_groundings"][0]["source_predicate"],
-            "RETRY_PREDICATE_0",
+            "RETRY_PREDICATE_1",
         )
+        retry_prompt_length = next(
+            prompt_length
+            for payload, prompt_length in zip(
+                transport.payloads,
+                transport.prompt_lengths,
+            )
+            if payload.get(
+                "loss_accounted_fact_chunk_validation_retry_context"
+            )
+        )
+        self.assertLess(retry_prompt_length, 1_000_000)
 
     def test_component_retry_schema_binds_immutable_fields_by_row(self) -> None:
         expected_rows = [

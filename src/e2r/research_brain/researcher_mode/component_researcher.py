@@ -1523,9 +1523,16 @@ class CodexResearcherProvider:
                     if validation_retry_used:
                         raise
                     validation_retry_used = True
-                    expected_retry_groundings = (
+                    rejected_selected_groundings = (
                         _selected_expected_chunk_grounding_rows(
                             response=response,
+                            expected_groundings=(
+                                expected_component_groundings
+                            ),
+                        )
+                    )
+                    expected_retry_groundings = (
+                        _all_expected_chunk_grounding_rows(
                             expected_groundings=(
                                 expected_component_groundings
                             ),
@@ -1548,7 +1555,7 @@ class CodexResearcherProvider:
                                 "rejected_selected_fact_row_indices": (
                                     [
                                         int(row["fact_row_index"])
-                                        for row in expected_retry_groundings
+                                        for row in rejected_selected_groundings
                                     ]
                                 ),
                                 "instruction": (
@@ -1559,7 +1566,8 @@ class CodexResearcherProvider:
                                     "Cite only allowed_fact_row_indices. For a "
                                     "component chunk, return one exact grounding "
                                     "per selected row by copying the immutable "
-                                    "fields in expected_selected_fact_groundings, "
+                                    "fields for that row from the complete "
+                                    "expected_selected_fact_groundings table, "
                                     "and dispose every required prior row exactly "
                                     "once. If a selected row does not support the "
                                     "component, omit it instead of attaching another "
@@ -3011,6 +3019,21 @@ def _selected_expected_chunk_grounding_rows(
             }
         )
     return result
+
+
+def _all_expected_chunk_grounding_rows(
+    *,
+    expected_groundings: Mapping[int, Mapping[str, Any]],
+) -> list[Mapping[str, Any]]:
+    """Expose every allowed chunk row's exact immutable grounding once."""
+
+    return [
+        {
+            "fact_row_index": row_index,
+            **expected_groundings[row_index],
+        }
+        for row_index in sorted(expected_groundings)
+    ]
 
 
 def _business_model_synthesis_chunk_fact_row_sets(
