@@ -4518,7 +4518,15 @@ def _pass_instruction(pass_name: str) -> str:
             "or invent a value."
         )
     if pass_name == "RED_TEAM_RESEARCH":
-        return "Challenge every material thesis independently, distinguish current counters from resolved history, and identify new research directions."
+        return (
+            "Challenge every material thesis independently and distinguish current "
+            "counters from resolved or superseded history. review_complete means the "
+            "full seven-component counter review was performed; it does not require "
+            "pretending that every monitoring uncertainty disappeared. Preserve honest "
+            "unresolved challenges and research directions so the independent Supervisor "
+            "can decide whether each is still material and has a reasonable public-source "
+            "route."
+        )
     if pass_name == "SYNTHESIS_REVIEW":
         return "Synthesize cross-component support and tension without calculating total points or Stage."
     if pass_name == "SOURCE_QUERY_GENERATION":
@@ -4600,6 +4608,13 @@ def _pass_instruction(pass_name: str) -> str:
             "Classify parser/extractor failure separately from "
             "source absence. Suggest semantic source/query directions; do not write literal "
             "fallback query templates and never treat zero results or a budget limit as completion. "
+            "The mere presence of component uncertainties or red-team unresolved-challenge "
+            "text does not make a completed memo insufficient. Decide materiality and route "
+            "availability independently: a limitation may remain as a scored counterweight or "
+            "monitoring item when verified counter/supersession routes were executed, the "
+            "public-source route is exhausted, and no new fact is reasonably likely to change "
+            "the component judgment. Keep memo_sufficient false and emit a concrete material "
+            "gap/direction whenever such a reasonable route still exists. "
             "When supervisor_validation_retry_context is present, rewrite the entire response "
             "once using its validation error, allowed objective ids, and deterministic current "
             "state as authoritative correction feedback. Do not repeat the rejected semantic "

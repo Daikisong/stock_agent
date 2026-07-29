@@ -406,6 +406,26 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
             seen_signatures.add(signature)
             prior_source_transport_snapshot = source_transport_snapshot
             continue
+        if (
+            signature in seen_signatures
+            and not source_transport_advanced
+            and source_transport_chain_valid
+            and _source_query_generation_was_deferred(result)
+            and _source_transport_work_is_drained(
+                source_transport_snapshot["work_state"]
+            )
+            and _supervisor_has_open_query_routes(result)
+        ):
+            # Candidate/reference work is scheduled before query generation.
+            # It may be created and fully drained inside one checkpoint, so it
+            # has no prior pending id for _source_transport_advanced() to
+            # recognize.  That checkpoint did not give the LLM planner a turn.
+            # Grant exactly the following ADVANCE; once the planner is called,
+            # the acquisition audit flag is false and ordinary no-progress
+            # handling applies.
+            seen_signatures.add(signature)
+            prior_source_transport_snapshot = source_transport_snapshot
+            continue
         if signature in seen_signatures and not source_transport_advanced:
             write_json(
                 no_progress_path,
@@ -655,6 +675,50 @@ def _source_transport_work_summary(
         ),
         "state_hash": stable_hash(state),
     }
+
+
+def _source_transport_work_is_drained(
+    state: Mapping[str, Mapping[str, str]],
+) -> bool:
+    summary = _source_transport_work_summary(state)
+    return not any(
+        int(summary[key])
+        for key in (
+            "pending_query_count",
+            "pending_ranking_count",
+            "pending_fetch_count",
+        )
+    )
+
+
+def _source_query_generation_was_deferred(result: Any) -> bool:
+    source_graph = getattr(result, "source_graph", None)
+    audit = getattr(source_graph, "audit", None)
+    return bool(
+        isinstance(audit, Mapping)
+        and audit.get("query_generation_deferred_by_candidate_work") is True
+    )
+
+
+def _supervisor_has_open_query_routes(result: Any) -> bool:
+    epoch = getattr(result, "research_epoch", None)
+    review = getattr(epoch, "supervisor_review", None)
+    if review is None:
+        return False
+
+    def field(key: str, default: Any = None) -> Any:
+        if isinstance(review, Mapping):
+            return review.get(key, default)
+        return getattr(review, key, default)
+
+    return bool(
+        field("status") == "NEXT_RESEARCH_REQUIRED"
+        and (
+            field("reasonable_positive_routes_remaining") is True
+            or field("query_direction_briefs", ())
+            or field("new_source_family_directions", ())
+        )
+    )
 
 
 def _semantic_signature(result) -> str:

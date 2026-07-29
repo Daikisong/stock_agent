@@ -259,9 +259,15 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         counter_projection = project_counter_route_proof(
             tuple(
                 {
-                    **row,
-                    "counter_or_supersession_search": True,
-                    "search_result_count": index % 5,
+                    "objective_id": row["objective_id"],
+                    "route_kind": (
+                        "COUNTER" if index % 2 == 0 else "SUPERSESSION"
+                    ),
+                    "query_ids": [row["query_id"]],
+                    "document_ids": [f"DOC-{index:04d}"],
+                    "fact_ids": [f"FACT-{index:04d}"],
+                    "parser_extractor_verified": True,
+                    "zero_result_only": False,
                 }
                 for index, row in enumerate(queries)
             )
@@ -269,9 +275,18 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertEqual(counter_projection["record_count"], 1_000)
         self.assertEqual(
             sum(
-                counter_projection["relation_coverage"]["query_id"].values()
+                counter_projection["relation_coverage"]["objective_id"].values()
             ),
             1_000,
+        )
+        self.assertEqual(counter_projection["semantic_group_count"], 2)
+        self.assertTrue(
+            all(
+                group["relation_coverage"]["query_ids"][
+                    "full_relation_values_persisted_outside_prompt"
+                ]
+                for group in counter_projection["semantic_groups"]
+            )
         )
         self.assertFalse(counter_projection["fixed_top_n_used"])
 

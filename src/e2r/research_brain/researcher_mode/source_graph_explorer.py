@@ -751,6 +751,12 @@ class ResearcherSourceGraphAcquirer:
             and not _candidate_scope_is_fully_resolved(row, resolved)
             for row in candidates
         )
+        query_generation_deferred_by_candidate_work = bool(
+            not checkpoint_migration_only
+            and unresolved_objectives
+            and not pending_query_rows
+            and pending_candidate_work
+        )
         if (
             not checkpoint_migration_only
             and unresolved_objectives
@@ -1171,6 +1177,19 @@ class ResearcherSourceGraphAcquirer:
             search_provider=search_provider,
             page_fetcher=page_fetcher,
         )
+        audit = {
+            **audit,
+            # Reference discovery runs before query planning.  A reference
+            # candidate can therefore occupy this checkpoint's work turn and
+            # become terminal before the checkpoint is written.  Preserve
+            # that exact scheduling fact so the until-pass wrapper can grant
+            # one following ADVANCE for the still-open LLM query directions
+            # instead of mistaking the drained reference turn for semantic
+            # saturation.
+            "query_generation_deferred_by_candidate_work": (
+                query_generation_deferred_by_candidate_work
+            ),
+        }
         if checkpoint_migration_only:
             audit = {
                 **audit,

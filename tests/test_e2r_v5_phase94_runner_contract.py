@@ -1615,6 +1615,103 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 signature,
             )
 
+    def test_repeated_semantics_grant_deferred_query_planner_one_turn(
+        self,
+    ) -> None:
+        signature = "8" * 64
+
+        def result(checkpoint, *, deferred: bool):
+            return SimpleNamespace(
+                status="RESEARCH_CHECKPOINT_PENDING",
+                completion_gates={"source_graph_checkpoint_ready": True},
+                audit={"source_checkpoint_readonly_replayed": False},
+                source_graph=SimpleNamespace(
+                    checkpoint=checkpoint,
+                    audit={
+                        "query_generation_deferred_by_candidate_work": deferred
+                    },
+                ),
+                research_epoch=SimpleNamespace(
+                    supervisor_review=SimpleNamespace(
+                        status="NEXT_RESEARCH_REQUIRED",
+                        reasonable_positive_routes_remaining=True,
+                        query_direction_briefs=({"objective_id": "OBJ"},),
+                        new_source_family_directions=(),
+                    )
+                ),
+            )
+
+        baseline = _phase94_source_checkpoint(epoch=1)
+        reference_drained = _phase94_source_checkpoint(
+            epoch=2,
+            resumed_from_checkpoint_id=baseline["checkpoint_id"],
+        )
+        planner_attempted = _phase94_source_checkpoint(
+            epoch=3,
+            resumed_from_checkpoint_id=reference_drained["checkpoint_id"],
+        )
+        results = (
+            result(reference_drained, deferred=True),
+            result(planner_attempted, deferred=False),
+        )
+
+        class Runner:
+            def __init__(self) -> None:
+                self.calls = []
+
+            def run_checkpoint(self, **kwargs):
+                self.calls.append(kwargs["source_resume_mode"])
+                return results[len(self.calls) - 1]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target_root = root / "CURRENT-TARGET"
+            target_root.mkdir(parents=True)
+            (target_root / "source_graph_checkpoint.json").write_text(
+                json.dumps(baseline),
+                encoding="utf-8",
+            )
+            (
+                target_root / "semantic_no_progress_checkpoint.json"
+            ).write_text(
+                json.dumps(_bound_no_progress_payload(signature, baseline)),
+                encoding="utf-8",
+            )
+            runner = Runner()
+            with (
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_signature",
+                    return_value=signature,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_state",
+                    return_value={},
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "refresh_canary_target_manifest_hash"
+                ),
+            ):
+                returned = _run_target_until_semantic_terminal(
+                    runner=runner,
+                    config=SimpleNamespace(
+                        output_root=str(root),
+                        as_of_date=AS_OF_DATE,
+                    ),
+                    target=SimpleNamespace(target_id="CURRENT-TARGET"),
+                )
+
+            self.assertIs(returned, results[-1])
+            self.assertEqual(runner.calls, ["REUSE_READY_CHECKPOINT", "ADVANCE"])
+            pending = json.loads(
+                (
+                    target_root / "semantic_no_progress_checkpoint.json"
+                ).read_text(encoding="utf-8")
+            )
+            self.assertEqual(pending["semantic_signature"], signature)
+
     def test_no_progress_signature_ignores_attempt_ids_without_new_facts(
         self,
     ) -> None:

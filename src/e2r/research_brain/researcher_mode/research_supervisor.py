@@ -320,6 +320,7 @@ class ResearchSupervisor:
         counter_route_proof_complete = _counter_route_proof_complete(
             counter_and_supersession_route_proof,
             source_graph_checkpoint=source_graph_checkpoint,
+            evidence_facts=facts,
             objective_ids=(
                 objective_ids
                 | {
@@ -832,7 +833,10 @@ def _review_from_provider_response(
         set(row.component_id for row in component_results)
         == set(CANONICAL_COMPONENT_ORDER)
         and all(row.status == "COMPLETE" for row in component_results)
-        and all(row.memo and not row.memo.uncertainties for row in component_results)
+        and all(
+            row.memo and row.memo.research_complete
+            for row in component_results
+        )
         and all(row.memo_sufficient for row in findings)
     )
     actual_structured_complete = _structured_data_complete(structured_result)
@@ -1287,20 +1291,151 @@ def _structured_data_complete(result: Any | None) -> bool:
 
 
 def _red_team_complete(result: RedTeamResearchResult | None) -> bool:
+    """Return whether the independent counter review covered the full roster.
+
+    ``unresolved_challenges`` is an honest inventory of risks and monitoring
+    limits, not a second completion flag.  The provider-backed Supervisor
+    separately decides which of those items is still material and has a
+    reasonable research route; those decisions are enforced by the readiness
+    gates in ``_review_from_provider_response``.
+    """
+
     return bool(
         result
         and result.status == "COMPLETE"
         and result.memo
         and set(result.memo.reviewed_component_ids)
         == set(CANONICAL_COMPONENT_ORDER)
-        and not result.memo.unresolved_challenges
+        and result.memo.review_complete
     )
+
+
+def build_counter_and_supersession_route_proof(
+    *,
+    source_graph_checkpoint: Mapping[str, Any],
+    document_dispositions: Sequence[Mapping[str, Any]],
+    evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+    required_objective_ids: Sequence[str],
+) -> tuple[Mapping[str, Any], ...]:
+    """Materialize verified counter/supersession lineage from persisted work.
+
+    A query flag alone is never proof.  Each emitted row must join an executed
+    counter/supersession query to an eligible full document, a successful
+    extractor disposition, and a source-backed fact of the matching semantic
+    kind.
+    """
+
+    required = {
+        str(value).strip()
+        for value in required_objective_ids
+        if str(value).strip()
+    }
+    query_by_id = {
+        str(row.get("query_id") or ""): dict(row)
+        for row in source_graph_checkpoint.get("generated_queries") or ()
+        if str(row.get("query_id") or "").strip()
+        and str(row.get("objective_id") or "").strip() in required
+        and bool(row.get("counter_or_supersession_search"))
+        and str(row.get("execution_status") or "") == "SEARCH_EXECUTED"
+    }
+    disposition_by_document: dict[str, Mapping[str, Any]] = {}
+    for source in document_dispositions:
+        row = dict(source)
+        document_id = str(row.get("document_id") or "").strip()
+        if not document_id:
+            continue
+        prior = disposition_by_document.get(document_id)
+        if prior is not None and dict(prior) != row:
+            raise ValueError("conflicting fact-extraction document dispositions")
+        disposition_by_document[document_id] = row
+
+    fact_by_id: dict[str, EvidenceFact] = {}
+    facts_by_document: dict[str, list[EvidenceFact]] = {}
+    for source in evidence_facts:
+        fact = _coerce_fact(source)
+        if fact.fact_id in fact_by_id and fact_by_id[fact.fact_id] != fact:
+            raise ValueError("conflicting EvidenceFact ids in counter route proof")
+        fact_by_id[fact.fact_id] = fact
+        for source_id in fact.source_ids:
+            facts_by_document.setdefault(str(source_id), []).append(fact)
+
+    members: dict[tuple[str, str], dict[str, set[str]]] = {}
+    for source in source_graph_checkpoint.get("evidence_documents") or ():
+        document = dict(source)
+        document_id = str(document.get("document_id") or "").strip()
+        if (
+            not document_id
+            or document.get("evidence_eligible") is not True
+            or document.get("full_fetch_performed") is not True
+            or bool(document.get("snippet_only"))
+            or str(
+                disposition_by_document.get(document_id, {}).get("status") or ""
+            )
+            != "FACTS_EXTRACTED"
+        ):
+            continue
+        document_objectives = {
+            str(value).strip()
+            for value in document.get("objective_ids") or ()
+            if str(value).strip()
+        }
+        linked_query_ids = {
+            str(value).strip()
+            for value in document.get("query_ids") or ()
+            if str(value).strip()
+        }
+        for query_id in sorted(linked_query_ids & set(query_by_id)):
+            query = query_by_id[query_id]
+            objective_id = str(query.get("objective_id") or "").strip()
+            if objective_id not in document_objectives:
+                continue
+            for fact in facts_by_document.get(document_id, ()):
+                route_kind = None
+                if (
+                    fact.direction == "COUNTER"
+                    and fact.current_lifecycle in {"CURRENT", "OPEN"}
+                ):
+                    route_kind = "COUNTER"
+                elif (
+                    fact.direction == "RESOLUTION"
+                    or fact.current_lifecycle in {"RESOLVED", "SUPERSEDED"}
+                ):
+                    route_kind = "SUPERSESSION"
+                if route_kind is None:
+                    continue
+                bucket = members.setdefault(
+                    (objective_id, route_kind),
+                    {
+                        "query_ids": set(),
+                        "document_ids": set(),
+                        "fact_ids": set(),
+                    },
+                )
+                bucket["query_ids"].add(query_id)
+                bucket["document_ids"].add(document_id)
+                bucket["fact_ids"].add(fact.fact_id)
+
+    rows = []
+    for (objective_id, route_kind), lineage in sorted(members.items()):
+        rows.append(
+            {
+                "objective_id": objective_id,
+                "route_kind": route_kind,
+                "query_ids": sorted(lineage["query_ids"]),
+                "document_ids": sorted(lineage["document_ids"]),
+                "fact_ids": sorted(lineage["fact_ids"]),
+                "parser_extractor_verified": True,
+                "zero_result_only": False,
+            }
+        )
+    return tuple(rows)
 
 
 def _counter_route_proof_complete(
     rows: Sequence[Mapping[str, Any]],
     *,
     source_graph_checkpoint: Mapping[str, Any],
+    evidence_facts: Sequence[EvidenceFact],
     objective_ids: set[str],
     required_objective_ids: set[str],
     structured_result: Any | None,
@@ -1314,11 +1449,13 @@ def _counter_route_proof_complete(
         for row in source_graph_checkpoint.get("generated_queries") or ()
         if str(row.get("query_id") or "")
     }
-    document_ids = {
-        str(row.get("document_id") or row.get("source_id") or "")
+    document_by_id = {
+        str(row.get("document_id") or row.get("source_id") or ""): row
         for row in source_graph_checkpoint.get("evidence_documents") or ()
         if str(row.get("document_id") or row.get("source_id") or "")
     }
+    document_ids = set(document_by_id)
+    fact_by_id = {row.fact_id: row for row in evidence_facts}
     structured_record_ids = {
         str(getattr(record, "record_id", "") or "")
         for record in (getattr(structured_result, "records", ()) or ())
@@ -1337,31 +1474,20 @@ def _counter_route_proof_complete(
         if not objective_id or objective_id not in objective_ids:
             return False
         route_kind_value = row.get("route_kind") or row.get("direction")
-        if not route_kind_value and row.get("counter_and_supersession"):
-            route_kind_value = "COUNTER_AND_SUPERSESSION"
         route_kind = str(route_kind_value or "").upper()
-        if route_kind == "COUNTER_AND_SUPERSESSION":
-            covered_route_kinds.update(("COUNTER", "SUPERSESSION"))
-            covered_by_objective.setdefault(objective_id, set()).update(
-                ("COUNTER", "SUPERSESSION")
-            )
-        elif route_kind in {"COUNTER", "SUPERSESSION"}:
+        if route_kind in {"COUNTER", "SUPERSESSION"}:
             covered_route_kinds.add(route_kind)
             covered_by_objective.setdefault(objective_id, set()).add(route_kind)
         else:
             return False
         query_ids = _proof_ids(row, "query_ids", "query_id")
         proof_document_ids = _proof_ids(row, "document_ids", "document_id")
+        proof_fact_ids = _proof_ids(row, "fact_ids", "fact_id")
         proof_structured_record_ids = _proof_ids(
             row, "structured_record_ids", "structured_record_id"
         )
         source_ids = _proof_ids(row, "source_ids", "source_id")
-        if not (
-            query_ids
-            or proof_document_ids
-            or proof_structured_record_ids
-            or source_ids
-        ):
+        if not (query_ids and proof_document_ids and proof_fact_ids):
             return False
         if any(query_id not in query_by_id for query_id in query_ids):
             return False
@@ -1371,11 +1497,57 @@ def _counter_route_proof_complete(
                 return False
             if str(query.get("execution_status") or "") not in {
                 "SEARCH_EXECUTED",
-                "NO_RESULT",
             }:
+                return False
+            if str(query.get("objective_id") or "") != objective_id:
                 return False
         if proof_document_ids and not set(proof_document_ids).issubset(document_ids):
             return False
+        for document_id in proof_document_ids:
+            document = document_by_id[document_id]
+            linked_queries = {
+                str(value) for value in document.get("query_ids") or ()
+            }
+            linked_objectives = {
+                str(value) for value in document.get("objective_ids") or ()
+            }
+            if (
+                objective_id not in linked_objectives
+                or not linked_queries.intersection(query_ids)
+                or document.get("evidence_eligible") is not True
+                or document.get("full_fetch_performed") is not True
+                or bool(document.get("snippet_only"))
+            ):
+                return False
+        if query_ids and any(
+            not any(
+                query_id in {
+                    str(value) for value in document_by_id[document_id].get(
+                        "query_ids"
+                    )
+                    or ()
+                }
+                for document_id in proof_document_ids
+            )
+            for query_id in query_ids
+        ):
+            return False
+        if proof_fact_ids and not set(proof_fact_ids).issubset(fact_by_id):
+            return False
+        for fact_id in proof_fact_ids:
+            fact = fact_by_id[fact_id]
+            if not set(fact.source_ids).intersection(proof_document_ids):
+                return False
+            if route_kind == "COUNTER" and not (
+                fact.direction == "COUNTER"
+                and fact.current_lifecycle in {"CURRENT", "OPEN"}
+            ):
+                return False
+            if route_kind == "SUPERSESSION" and not (
+                fact.direction == "RESOLUTION"
+                or fact.current_lifecycle in {"RESOLVED", "SUPERSEDED"}
+            ):
+                return False
         if proof_structured_record_ids and not set(
             proof_structured_record_ids
         ).issubset(structured_record_ids):
@@ -1606,6 +1778,7 @@ def _clean_error(error: Exception) -> str:
 
 
 __all__ = [
+    "build_counter_and_supersession_route_proof",
     "ResearchSupervisor",
     "ResearchSupervisorReview",
     "SUPERVISOR_FAILURE_CLASSES",

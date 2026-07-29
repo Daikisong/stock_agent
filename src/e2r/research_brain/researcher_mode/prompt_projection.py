@@ -2251,13 +2251,19 @@ def project_counter_route_proof(
     return _project_state_collection(
         rows,
         collection_name="counter_and_supersession_route_proof",
-        identity_fields=("query_id",),
+        identity_fields=("objective_id", "route_kind"),
         group_fields=(
-            "execution_status",
-            "counter_or_supersession_search",
+            "route_kind",
+            "parser_extractor_verified",
+            "zero_result_only",
         ),
-        relation_fields=("objective_id", "source_families", "query_id"),
-        numeric_fields=("search_result_count",),
+        relation_fields=("objective_id",),
+        numeric_fields=(),
+        hashed_group_relation_fields=(
+            "query_ids",
+            "document_ids",
+            "fact_ids",
+        ),
     )
 
 

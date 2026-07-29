@@ -398,7 +398,7 @@ def _review_from_response(
         and red_team_result.memo
         and set(red_team_result.memo.reviewed_component_ids)
         == set(CANONICAL_COMPONENT_ORDER)
-        and not red_team_result.memo.unresolved_challenges
+        and red_team_result.memo.review_complete
     )
     actual_structured = _structured_data_complete(structured_result)
     if seven_complete != actual_seven_complete:

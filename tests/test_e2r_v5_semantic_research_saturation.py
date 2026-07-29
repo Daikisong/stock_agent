@@ -36,6 +36,9 @@ from e2r.research_brain.researcher_mode import (
     validated_quarantined_document_ids,
     write_research_epoch_run,
 )
+from e2r.research_brain.researcher_mode.research_supervisor import (
+    build_counter_and_supersession_route_proof,
+)
 
 
 TARGET = "CURRENT-TARGET"
@@ -645,9 +648,18 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             )
         )
         self.assertEqual(second.checkpoint.current_fact_ids, ("FACT-2",))
-        self.assertEqual(second.checkpoint.retired_fact_ids, ("FACT-1",))
         self.assertEqual(
-            set(second.checkpoint.cumulative_fact_ids), {"FACT-1", "FACT-2"}
+            second.checkpoint.retired_fact_ids,
+            ("FACT-1", "FACT-COUNTER", "FACT-SUPERSESSION"),
+        )
+        self.assertEqual(
+            set(second.checkpoint.cumulative_fact_ids),
+            {
+                "FACT-1",
+                "FACT-2",
+                "FACT-COUNTER",
+                "FACT-SUPERSESSION",
+            },
         )
         self.assertEqual(
             second.checkpoint.retired_facts[0]["reason"],
@@ -742,7 +754,7 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         )
         self.assertEqual(
             supervisor_payload["current_evidence_fact_graph"]["record_count"],
-            1,
+            3,
         )
         self.assertFalse(
             supervisor_payload["current_evidence_fact_graph"]["fixed_top_n_used"]
@@ -965,6 +977,91 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         self.assertEqual(review.status, "NEXT_RESEARCH_REQUIRED")
         self.assertIn("counter/supersession", review.rationale)
 
+    def test_counter_route_builder_requires_query_document_extractor_fact_lineage(
+        self,
+    ) -> None:
+        source = _source_checkpoint()
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=source,
+            document_dispositions=(
+                {
+                    "document_id": "DOC-1",
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": "fixture facts extracted",
+                },
+            ),
+            evidence_facts=_route_facts(),
+            required_objective_ids=(OBJECTIVE_ID,),
+        )
+        self.assertEqual(
+            {(row["objective_id"], row["route_kind"]) for row in proof},
+            {
+                (OBJECTIVE_ID, "COUNTER"),
+                (OBJECTIVE_ID, "SUPERSESSION"),
+            },
+        )
+        ready = ResearchSupervisor(
+            provider=Phase87SupervisorProvider("READY")
+        ).review_epoch(
+            **_supervisor_inputs(counter_proof=proof)
+        )
+        self.assertEqual(
+            ready.status,
+            "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+        )
+
+        bad_disposition = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=source,
+            document_dispositions=(
+                {
+                    "document_id": "DOC-1",
+                    "status": "UNREADABLE",
+                    "rationale": "fixture unreadable",
+                },
+            ),
+            evidence_facts=_route_facts(),
+            required_objective_ids=(OBJECTIVE_ID,),
+        )
+        self.assertEqual(bad_disposition, ())
+        missing_supersession = tuple(
+            row for row in proof if row["route_kind"] != "SUPERSESSION"
+        )
+        pending = ResearchSupervisor(
+            provider=Phase87SupervisorProvider("FORCE_READY")
+        ).review_epoch(
+            **_supervisor_inputs(counter_proof=missing_supersession)
+        )
+        self.assertEqual(pending.status, "NEXT_RESEARCH_REQUIRED")
+
+    def test_completed_memo_uncertainty_and_red_team_monitoring_are_not_open_gaps(
+        self,
+    ) -> None:
+        components = _components(
+            uncertainties=("공개되지 않은 세부 수치는 점수 상단 제한 요인이다.",)
+        )
+        red_team = _red_team(
+            unresolved_challenges=(
+                "이미 점수에 반영한 공급 지속기간은 다음 실적에서 계속 감시한다.",
+            )
+        )
+        inputs = _supervisor_inputs()
+        inputs["component_results"] = components
+        inputs["red_team_result"] = red_team
+        ready = ResearchSupervisor(
+            provider=Phase87SupervisorProvider("READY")
+        ).review_epoch(**inputs)
+        self.assertEqual(
+            ready.status,
+            "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+        )
+
+        gap_inputs = dict(inputs)
+        pending = ResearchSupervisor(
+            provider=Phase87SupervisorProvider("GAP")
+        ).review_epoch(**gap_inputs)
+        self.assertEqual(pending.status, "NEXT_RESEARCH_REQUIRED")
+        self.assertFalse(pending.component_memos_sufficient)
+
     def test_structured_complete_label_without_records_cannot_open_saturation(self) -> None:
         empty = StructuredResearchResult(
             status="COMPLETE",
@@ -1031,7 +1128,7 @@ def _epoch_inputs(
         "component_results": tuple(components or _components()),
         "red_team_result": _red_team(),
         "structured_result": _structured(),
-        "evidence_facts": tuple(facts or (_fact("FACT-1"),)),
+        "evidence_facts": tuple(facts or _route_facts()),
         "source_graph_checkpoint": source_checkpoint,
         "open_objectives": (_objective(),),
         "prior_failures": (),
@@ -1055,7 +1152,7 @@ def _supervisor_inputs(
         "component_results": _components(),
         "red_team_result": _red_team(),
         "structured_result": structured or _structured(),
-        "evidence_facts": (_fact("FACT-1"),),
+        "evidence_facts": _route_facts(),
         "source_graph_checkpoint": _source_checkpoint(),
         "open_objectives": (_objective(),),
         "prior_failures": tuple(prior_failures),
@@ -1070,6 +1167,7 @@ def _components(
     summary_suffix: str = "v1",
     change_only_first: bool = False,
     fact_id: str = "FACT-1",
+    uncertainties: tuple[str, ...] = (),
 ) -> tuple[ComponentResearchResult, ...]:
     rows = []
     for index, component_id in enumerate(CANONICAL_COMPONENT_ORDER):
@@ -1089,7 +1187,7 @@ def _components(
             researcher_summary=f"현재 사실과 구조화 지표를 종합했다 {suffix}",
             positive_case="현재 positive fact의 경제적 전달 경로가 확인된다.",
             counter_case="독립 red team에서 반증 경로를 함께 확인했다.",
-            uncertainties=(),
+            uncertainties=uncertainties,
             source_coverage=("ISSUER_PRESENTATION",),
             proposed_score_lower=maximum * 0.30,
             proposed_score_mid=maximum * 0.40,
@@ -1116,7 +1214,12 @@ def _components(
     return tuple(rows)
 
 
-def _fact(fact_id: str) -> EvidenceFact:
+def _fact(
+    fact_id: str,
+    *,
+    direction: str = "POSITIVE",
+    current_lifecycle: str = "CURRENT",
+) -> EvidenceFact:
     return EvidenceFact(
         fact_id=fact_id,
         target_id=TARGET,
@@ -1129,17 +1232,32 @@ def _fact(fact_id: str) -> EvidenceFact:
         value=True,
         unit=None,
         period="2026Q2",
-        direction="POSITIVE",
+        direction=direction,
         source_ids=("DOC-1",),
         claim_ids=(f"CLAIM-{fact_id}",),
         quote_ids=(f"QUOTE-{fact_id}",),
-        current_lifecycle="CURRENT",
+        current_lifecycle=current_lifecycle,
         source_independence_group="ISSUER",
         confidence=0.85,
     )
 
 
-def _red_team() -> RedTeamResearchResult:
+def _route_facts() -> tuple[EvidenceFact, ...]:
+    return (
+        _fact("FACT-1"),
+        _fact("FACT-COUNTER", direction="COUNTER"),
+        _fact(
+            "FACT-SUPERSESSION",
+            direction="RESOLUTION",
+            current_lifecycle="RESOLVED",
+        ),
+    )
+
+
+def _red_team(
+    *,
+    unresolved_challenges: tuple[str, ...] = (),
+) -> RedTeamResearchResult:
     memo = RedTeamMemo(
         memo_id="RED-TEAM-MEMO",
         target_id=TARGET,
@@ -1148,7 +1266,7 @@ def _red_team() -> RedTeamResearchResult:
         challenged_fact_ids=("FACT-1",),
         counter_fact_ids=(),
         resolved_challenges=("counter and supersession routes checked",),
-        unresolved_challenges=(),
+        unresolved_challenges=unresolved_challenges,
         recommended_research_directions=(),
         source_coverage=("ISSUER_PRESENTATION", "CUSTOMER_OFFICIAL"),
         confidence=0.8,
@@ -1209,6 +1327,7 @@ def _counter_proof() -> tuple[Mapping[str, Any], ...]:
             "route_kind": "COUNTER",
             "query_id": "Q-COUNTER",
             "document_id": "DOC-1",
+            "fact_id": "FACT-COUNTER",
             "parser_extractor_verified": True,
         },
         {
@@ -1216,6 +1335,7 @@ def _counter_proof() -> tuple[Mapping[str, Any], ...]:
             "route_kind": "SUPERSESSION",
             "query_id": "Q-SUPERSESSION",
             "document_id": "DOC-1",
+            "fact_id": "FACT-SUPERSESSION",
             "parser_extractor_verified": True,
         },
     )
@@ -1283,6 +1403,11 @@ def _source_checkpoint(
                 "target_id": TARGET,
                 "published_at": document_date,
                 "source_family": "ISSUER_PRESENTATION",
+                "query_ids": ["Q-COUNTER", "Q-SUPERSESSION"],
+                "objective_ids": [OBJECTIVE_ID],
+                "evidence_eligible": True,
+                "full_fetch_performed": True,
+                "snippet_only": False,
                 "full_text": "source-backed current evidence and counter evidence",
             }
         ] if with_document and not quarantine_document else []

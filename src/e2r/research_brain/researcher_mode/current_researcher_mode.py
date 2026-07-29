@@ -53,7 +53,10 @@ from .research_epoch import (
     load_research_epoch_checkpoint,
     write_research_epoch_run,
 )
-from .research_supervisor import ResearchSupervisor
+from .research_supervisor import (
+    ResearchSupervisor,
+    build_counter_and_supersession_route_proof,
+)
 from .saturation import SATURATION_REVIEW_ROLES, SemanticSaturationReviewer
 from .schemas import CANONICAL_COMPONENT_ORDER, EvidenceDirection
 from .score_aggregator import (
@@ -525,11 +528,15 @@ class CurrentResearcherModeTargetRunner:
         epoch_path = root / "research_epoch_checkpoint.json"
         if config.checkpoint_resume and epoch_path.is_file():
             prior_epoch = load_research_epoch_checkpoint(epoch_path)
-        counter_route_proof = tuple(
-            row
-            for row in source_graph.checkpoint.get("generated_queries") or ()
-            if row.get("counter_or_supersession_search")
-            and row.get("execution_status") == "SEARCH_EXECUTED"
+        counter_route_proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=source_graph.checkpoint,
+            document_dispositions=fact_extraction.document_dispositions,
+            evidence_facts=fact_extraction.facts,
+            required_objective_ids=tuple(
+                str(row.get("objective_id") or "")
+                for row in objective_rows
+                if bool(row.get("counter_or_supersession_required", True))
+            ),
         )
         epoch = ResearchEpochRunner(
             supervisor=ResearchSupervisor(provider=self.provider),
@@ -1201,7 +1208,10 @@ def _completion_gates(
         dossier.red_team_result
         and dossier.red_team_result.status == "COMPLETE"
         and dossier.red_team_result.memo
-        and not dossier.red_team_result.memo.unresolved_challenges
+        and dossier.red_team_result.memo.review_complete
+        and set(dossier.red_team_result.memo.reviewed_component_ids)
+        == set(CANONICAL_COMPONENT_ORDER)
+        and epoch.supervisor_review.counter_and_supersession_checked
     )
     no_disagreement = all(
         not row.material_disagreement for row in aggregation.component_results
