@@ -25,10 +25,13 @@ from e2r.research_brain.researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.component_researcher import (
     CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT,
+    COMPONENT_RESEARCH_SCHEMA,
     SOURCE_CANDIDATE_RANKING_SCHEMA,
+    _canonical_json_hash,
     _canonicalize_ollama_red_team_fact_set,
     _expected_component_chunk_fact_groundings,
     _loss_accounted_fact_chunk_payloads,
+    _loss_accounted_fact_chunk_synthesis_payload,
     _provider_output_schema,
     _validate_loss_accounted_chunk_response,
     _validate_loss_accounted_synthesis_response,
@@ -1102,6 +1105,174 @@ class OllamaStructuredProviderTests(unittest.TestCase):
                 "enum"
             ],
             ["ANCHOR-C"],
+        )
+
+    def test_component_source_coverage_schema_binds_actual_payload_roster(
+        self,
+    ) -> None:
+        coverage_rows = [
+            {
+                "coverage_id": "TECHTIMES_GENERAL_WEB_DISCOVERY",
+                "source_family": "GENERAL_WEB",
+            },
+            {
+                "coverage_id": "COMPANY_IR",
+                "source_family": "COMPANY_OFFICIAL",
+            },
+        ]
+        allowed_labels = [
+            "COMPANY_IR",
+            "TECHTIMES_GENERAL_WEB_DISCOVERY",
+        ]
+
+        for component_id in ("INFO_CONFIDENCE", "CONTRACT_QUALITY"):
+            with self.subTest(component_id=component_id):
+                chunk_schema = _provider_output_schema(
+                    pass_name="COMPONENT_RESEARCH",
+                    payload={
+                        "component_id": component_id,
+                        "source_coverage": coverage_rows,
+                        "loss_accounted_fact_chunk": {"chunk_index": 0},
+                        "current_evidence_fact_graph": [
+                            {
+                                "fact_row_index": 0,
+                                "encoded_fact_values": [0, 0, 0, 0],
+                            }
+                        ],
+                        "current_evidence_fact_projection": {
+                            "chunk_fact_row_encoding": {
+                                "encoded_fact_value_fields": [
+                                    "predicate_dictionary_index",
+                                    "value_dictionary_index",
+                                    "period_dictionary_index",
+                                    "economic_mechanism_dictionary_index",
+                                ]
+                            },
+                            "fact_value_dictionaries": {
+                                "predicate": ["PREDICATE"],
+                                "value": ["VALUE"],
+                                "period": ["PERIOD"],
+                                "economic_mechanism": ["MECHANISM"],
+                            },
+                        },
+                    },
+                )
+                item_schema = chunk_schema["properties"][
+                    "source_coverage"
+                ]["items"]
+                self.assertEqual(item_schema["enum"], allowed_labels)
+                self.assertIn(
+                    "TECHTIMES_GENERAL_WEB_DISCOVERY",
+                    item_schema["enum"],
+                )
+                self.assertNotIn(
+                    "CUSTOMER_OFFICIAL_CONFIRMATION",
+                    item_schema["enum"],
+                )
+
+        empty_schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload={
+                "component_id": "INFO_CONFIDENCE",
+                "source_coverage": [],
+            },
+        )
+        self.assertEqual(
+            empty_schema["properties"]["source_coverage"],
+            {
+                "type": "array",
+                "items": {"type": "string", "minLength": 1},
+                "maxItems": 0,
+            },
+        )
+
+        bound_schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload={"source_coverage": coverage_rows},
+        )
+        other_roster_schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload={"source_coverage": ["EXCHANGE_OFFICIAL"]},
+        )
+        self.assertNotEqual(
+            _canonical_json_hash(COMPONENT_RESEARCH_SCHEMA),
+            _canonical_json_hash(bound_schema),
+        )
+        self.assertNotEqual(
+            _canonical_json_hash(bound_schema),
+            _canonical_json_hash(other_roster_schema),
+        )
+
+    def test_component_synthesis_preserves_and_binds_source_coverage(
+        self,
+    ) -> None:
+        coverage_rows = [
+            {"coverage_id": "GENERAL_WEB_DISCOVERY"},
+            {"route_id": "COMPANY_IR"},
+        ]
+        original_payload = {
+            "component_id": "INFO_CONFIDENCE",
+            "source_coverage": coverage_rows,
+            "current_evidence_fact_graph": [],
+            "current_evidence_fact_projection": {},
+        }
+        synthesis_payload = _loss_accounted_fact_chunk_synthesis_payload(
+            original_payload,
+            pass_name="COMPONENT_RESEARCH",
+            chunks=[],
+            chunk_responses=[],
+        )
+
+        self.assertEqual(
+            synthesis_payload["source_coverage"],
+            coverage_rows,
+        )
+        synthesis_schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload=synthesis_payload,
+        )
+        item_schema = synthesis_schema["properties"]["source_coverage"][
+            "items"
+        ]
+        self.assertEqual(
+            item_schema["enum"],
+            ["COMPANY_IR", "GENERAL_WEB_DISCOVERY"],
+        )
+        self.assertNotIn(
+            "CUSTOMER_OFFICIAL_CONFIRMATION",
+            item_schema["enum"],
+        )
+
+    def test_component_grounding_retry_keeps_source_coverage_binding(
+        self,
+    ) -> None:
+        expected_row = {
+            "fact_row_index": 7,
+            "source_predicate": "PREDICATE_7",
+            "source_value_json": '"VALUE_7"',
+            "source_period_json": '"PERIOD_7"',
+            "source_economic_mechanism": "MECHANISM_7",
+        }
+        schema = _provider_output_schema(
+            pass_name="COMPONENT_RESEARCH",
+            payload={
+                "source_coverage": ["GENERAL_WEB_DISCOVERY"],
+                "loss_accounted_fact_chunk_validation_retry_context": {
+                    "expected_selected_fact_groundings": [expected_row],
+                },
+            },
+        )
+
+        grounding_variant = schema["properties"][
+            "selected_fact_groundings"
+        ]["items"]["anyOf"][0]
+        self.assertEqual(
+            grounding_variant["properties"]["source_predicate"]["enum"],
+            ["PREDICATE_7"],
+        )
+        self.assertEqual(
+            schema["properties"]["source_coverage"]["items"]["enum"],
+            ["GENERAL_WEB_DISCOVERY"],
         )
 
     def test_component_schema_requires_every_available_structured_metric_row(

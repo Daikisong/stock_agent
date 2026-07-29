@@ -871,8 +871,11 @@ def _provider_output_schema(
     contract: the analyst must account for the whole supplied positive roster
     and the skeptic for the whole supplied counter roster.  Bind only that
     role-required roster as one exact array so summarization cannot silently
-    drop a member before the existing semantic completeness check runs.  No
-    citation, interpretation, or score is repaired by deterministic code.
+    drop a member before the existing semantic completeness check runs.
+    COMPONENT_RESEARCH source coverage is also bound to the exact labels
+    supplied in that payload, so neither a chunk nor its synthesis can invent
+    a stronger source family.  No citation, interpretation, or score is
+    repaired by deterministic code.
     """
 
     base = _PROVIDER_SCHEMAS[pass_name]
@@ -1023,6 +1026,28 @@ def _provider_output_schema(
     if pass_name != "COMPONENT_RESEARCH":
         return base
     schema = json.loads(json.dumps(base, ensure_ascii=False))
+    raw_source_coverage = payload.get("source_coverage")
+    source_coverage_labels = sorted(
+        _coverage_labels(raw_source_coverage)
+        if isinstance(raw_source_coverage, Sequence)
+        and not isinstance(raw_source_coverage, (str, bytes))
+        else ()
+    )
+    schema["properties"]["source_coverage"] = (
+        {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": source_coverage_labels,
+            },
+        }
+        if source_coverage_labels
+        else {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1},
+            "maxItems": 0,
+        }
+    )
     structured_metric_rows = payload.get("structured_metric_rows")
     if (
         isinstance(structured_metric_rows, Sequence)
