@@ -28,6 +28,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     PUNCTUATION_ONLY_VALUE_NORMALIZATION,
+    TRANSPORT_FRAGMENT_VALUE_NORMALIZATION,
     normalize_punctuation_only_fact_value,
 )
 
@@ -138,12 +139,16 @@ class WrappedQuotePercentConfidenceProvider(FactProvider):
         return response
 
 
-class PunctuationOnlyValueFactProvider(FactProvider):
+class CorruptedValueFactProvider(FactProvider):
+    def __init__(self, corrupted_value: str) -> None:
+        super().__init__()
+        self.corrupted_value = corrupted_value
+
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(super().complete(pass_name=pass_name, payload=payload))
         response["facts"] = [dict(row) for row in response["facts"]]
         for fact in response["facts"]:
-            fact["value"] = ","
+            fact["value"] = self.corrupted_value
         return response
 
 
@@ -461,9 +466,57 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                     unchanged,
                 )
 
+    def test_transport_fragment_normalizer_never_rewrites_normal_null_text(
+        self,
+    ) -> None:
+        for fragment in (
+            ":null},{",
+            ":null}],",
+            ": null",
+            ":true},{",
+            ":false},{",
+            ":true}],",
+        ):
+            with self.subTest(fragment=fragment):
+                repaired = normalize_punctuation_only_fact_value(
+                    {
+                        "value": fragment,
+                        "normalized_object": "semantic_value",
+                    }
+                )
+                self.assertEqual(repaired["value"], "semantic_value")
+                self.assertEqual(
+                    repaired["deterministic_field_normalizations"],
+                    [TRANSPORT_FRAGMENT_VALUE_NORMALIZATION],
+                )
+        for literal in ("null", "true", "false"):
+            normal_values = (
+                literal,
+                f"field value is {literal}",
+                f"{literal} 값은 정상적인 본문이다",
+                (
+                    '{"point": '
+                    + literal
+                    + ', "context": "normal structured value"}'
+                ),
+            )
+            for normal_text in normal_values:
+                with self.subTest(literal=literal, normal_text=normal_text):
+                    unchanged = normalize_punctuation_only_fact_value(
+                        {
+                            "value": normal_text,
+                            "normalized_object": "replacement_must_not_apply",
+                        }
+                    )
+                    self.assertEqual(unchanged["value"], normal_text)
+                    self.assertNotIn(
+                        "deterministic_field_normalizations",
+                        unchanged,
+                    )
+
     def test_punctuation_only_provider_value_uses_normalized_object(self) -> None:
         result = ResearcherEvidenceFactExtractor(
-            provider=PunctuationOnlyValueFactProvider()
+            provider=CorruptedValueFactProvider(",")
         ).extract(
             target_id=TARGET,
             target_name=TARGET_NAME,
@@ -483,6 +536,32 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(
             result.material_claims[0]["deterministic_field_normalizations"],
             [PUNCTUATION_ONLY_VALUE_NORMALIZATION],
+        )
+        self.assertEqual(len(result.facts), 1)
+        self.assertEqual(result.facts[0].value, "record_operating_cash_flow")
+
+    def test_transport_fragment_provider_value_uses_normalized_object(self) -> None:
+        result = ResearcherEvidenceFactExtractor(
+            provider=CorruptedValueFactProvider(":null},{")
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(_document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(result.material_claims), 1)
+        self.assertEqual(
+            result.material_claims[0]["value"],
+            "record_operating_cash_flow",
+        )
+        self.assertEqual(
+            result.material_claims[0]["deterministic_field_normalizations"],
+            [TRANSPORT_FRAGMENT_VALUE_NORMALIZATION],
         )
         self.assertEqual(len(result.facts), 1)
         self.assertEqual(result.facts[0].value, "record_operating_cash_flow")
@@ -812,71 +891,78 @@ class E2RV5FactExtractionTests(unittest.TestCase):
     def test_checkpoint_resume_migrates_punctuation_only_claim_without_duplication(
         self,
     ) -> None:
-        document = _document("DOC-1", "ISSUER_PRESENTATION", "ISSUER")
-        initial = ResearcherEvidenceFactExtractor(
-            provider=PunctuationOnlyValueFactProvider()
-        ).extract(
-            target_id=TARGET,
-            target_name=TARGET_NAME,
-            target_aliases=(),
-            archetype_id=ARCHETYPE,
-            as_of_date=AS_OF_DATE,
-            documents=(document,),
-            open_objectives=(),
-        )
-        persisted_claim = dict(initial.material_claims[0])
-        persisted_claim["value"] = ","
-        persisted_claim["deterministic_field_normalizations"] = []
-
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            rows_by_name = {
-                "material_fact_claims.jsonl": [persisted_claim],
-                "fact_document_dispositions.jsonl": list(
-                    initial.document_dispositions
-                ),
-                "fact_extraction_provider_calls.jsonl": [
-                    row.to_dict() for row in initial.provider_calls
-                ],
-                "fact_extraction_rejections.jsonl": [],
-            }
-            for filename, rows in rows_by_name.items():
-                (root / filename).write_text(
-                    "".join(
-                        json.dumps(row, ensure_ascii=False) + "\n"
-                        for row in rows
-                    ),
-                    encoding="utf-8",
+        for corrupted_value in (",", ":null}],"):
+            with self.subTest(corrupted_value=corrupted_value):
+                document = _document("DOC-1", "ISSUER_PRESENTATION", "ISSUER")
+                initial = ResearcherEvidenceFactExtractor(
+                    provider=CorruptedValueFactProvider(corrupted_value)
+                ).extract(
+                    target_id=TARGET,
+                    target_name=TARGET_NAME,
+                    target_aliases=(),
+                    archetype_id=ARCHETYPE,
+                    as_of_date=AS_OF_DATE,
+                    documents=(document,),
+                    open_objectives=(),
                 )
-            checkpoint = _load_fact_checkpoint(
-                root,
-                source_graph=SimpleNamespace(evidence_documents=(document,)),
-            )
+                persisted_claim = dict(initial.material_claims[0])
+                persisted_claim["value"] = corrupted_value
+                persisted_claim["deterministic_field_normalizations"] = []
 
-        migrated_claims = checkpoint["prior_material_claims"]
-        self.assertEqual(len(migrated_claims), 1)
-        self.assertEqual(
-            migrated_claims[0]["claim_id"],
-            initial.material_claims[0]["claim_id"],
-        )
-        self.assertEqual(
-            migrated_claims[0]["value"],
-            "record_operating_cash_flow",
-        )
-        resumed_compilation = EvidenceFactCompiler().compile(
-            target_id=TARGET,
-            as_of_date=AS_OF_DATE,
-            accepted_claims=migrated_claims,
-        )
-        self.assertEqual(len(resumed_compilation.facts), len(initial.facts))
-        self.assertEqual(
-            resumed_compilation.facts[0].fact_id,
-            initial.facts[0].fact_id,
-        )
-        self.assertEqual(
-            resumed_compilation.facts[0].value,
-            initial.facts[0].value,
-        )
+                with tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory)
+                    rows_by_name = {
+                        "material_fact_claims.jsonl": [persisted_claim],
+                        "fact_document_dispositions.jsonl": list(
+                            initial.document_dispositions
+                        ),
+                        "fact_extraction_provider_calls.jsonl": [
+                            row.to_dict() for row in initial.provider_calls
+                        ],
+                        "fact_extraction_rejections.jsonl": [],
+                    }
+                    for filename, rows in rows_by_name.items():
+                        (root / filename).write_text(
+                            "".join(
+                                json.dumps(row, ensure_ascii=False) + "\n"
+                                for row in rows
+                            ),
+                            encoding="utf-8",
+                        )
+                    checkpoint = _load_fact_checkpoint(
+                        root,
+                        source_graph=SimpleNamespace(
+                            evidence_documents=(document,)
+                        ),
+                    )
+
+                migrated_claims = checkpoint["prior_material_claims"]
+                self.assertEqual(len(migrated_claims), 1)
+                self.assertEqual(
+                    migrated_claims[0]["claim_id"],
+                    initial.material_claims[0]["claim_id"],
+                )
+                self.assertEqual(
+                    migrated_claims[0]["value"],
+                    "record_operating_cash_flow",
+                )
+                resumed_compilation = EvidenceFactCompiler().compile(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    accepted_claims=migrated_claims,
+                )
+                self.assertEqual(
+                    len(resumed_compilation.facts),
+                    len(initial.facts),
+                )
+                self.assertEqual(
+                    resumed_compilation.facts[0].fact_id,
+                    initial.facts[0].fact_id,
+                )
+                self.assertEqual(
+                    resumed_compilation.facts[0].value,
+                    initial.facts[0].value,
+                )
 
     def test_large_gap_ledgers_are_projected_without_losing_semantic_questions(self) -> None:
         provider = FactProvider()

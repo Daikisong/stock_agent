@@ -62,17 +62,35 @@ FACT_EXTRACTION_OUTPUT_FILES: Mapping[str, str] = {
 PUNCTUATION_ONLY_VALUE_NORMALIZATION = (
     "PUNCTUATION_ONLY_VALUE_REPLACED_WITH_NORMALIZED_OBJECT"
 )
+TRANSPORT_FRAGMENT_VALUE_NORMALIZATION = (
+    "TRANSPORT_FRAGMENT_VALUE_REPLACED_WITH_NORMALIZED_OBJECT"
+)
+
+
+def _is_transport_fragment_only_value(value: str) -> bool:
+    """Return true only for a detached JSON-literal serialization fragment."""
+
+    compact = "".join(value.lower().split())
+    for literal in ("null", "true", "false"):
+        if f":{literal}" not in compact:
+            continue
+        residue = compact.replace(literal, "")
+        if residue and all(character in "{}[],:" for character in residue):
+            return True
+    return False
 
 
 def normalize_punctuation_only_fact_value(
     claim_or_proposal: Mapping[str, Any],
 ) -> Mapping[str, Any]:
-    """Replace a punctuation-only value with its explicit semantic object.
+    """Replace transport-noise-only values with the explicit semantic object.
 
     ``value`` may arrive as a delimiter accidentally copied from a table even
     though ``normalized_object`` contains the model's complete semantic value.
-    Only a non-empty value with no Unicode letter or number is repaired.  Any
-    value containing a meaningful letter/number (including Korean text) is
+    A detached JSON serialization fragment such as ``:null},{`` or
+    ``:true}],`` is the same transport failure even though its JSON literal
+    contains letters.  Only that narrowly recognizable structural form is
+    repaired; standalone literals and normal prose containing them are
     preserved exactly.
     """
 
@@ -80,9 +98,14 @@ def normalize_punctuation_only_fact_value(
     raw_value = normalized.get("value")
     value_text = str(raw_value).strip() if raw_value is not None else ""
     normalized_object = str(normalized.get("normalized_object") or "").strip()
+    punctuation_only = (
+        bool(value_text)
+        and not any(character.isalnum() for character in value_text)
+    )
+    transport_fragment_only = _is_transport_fragment_only_value(value_text)
     if (
         not value_text
-        or any(character.isalnum() for character in value_text)
+        or not (punctuation_only or transport_fragment_only)
         or not any(character.isalnum() for character in normalized_object)
     ):
         return normalized
@@ -92,7 +115,13 @@ def normalize_punctuation_only_fact_value(
         for value in normalized.get("deterministic_field_normalizations", ())
         if str(value).strip()
     ]
-    normalizations.append(PUNCTUATION_ONLY_VALUE_NORMALIZATION)
+    normalizations.append(
+        (
+            TRANSPORT_FRAGMENT_VALUE_NORMALIZATION
+            if transport_fragment_only
+            else PUNCTUATION_ONLY_VALUE_NORMALIZATION
+        )
+    )
     normalized["deterministic_field_normalizations"] = list(
         dict.fromkeys(normalizations)
     )
