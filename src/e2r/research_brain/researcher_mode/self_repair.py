@@ -661,7 +661,12 @@ def render_phase99_self_repair_summary(audit: Mapping[str, Any]) -> str:
         [
             "",
             "내부 자가수리 회귀 통과는 target registry의 live dossier 완료를 대신하지 않는다.",
-            "따라서 현재 `MEANINGFUL_E2R_RESEARCHER_PARITY_READY` 선언은 허용되지 않는다.",
+            (
+                "live canary goal도 완료되었으므로 "
+                "`MEANINGFUL_E2R_RESEARCHER_PARITY_READY` 선언의 canary gate는 통과했다."
+                if audit.get("canary_goal_complete") is True
+                else "따라서 현재 `MEANINGFUL_E2R_RESEARCHER_PARITY_READY` 선언은 허용되지 않는다."
+            ),
             "",
         ]
     )

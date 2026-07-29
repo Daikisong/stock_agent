@@ -21,7 +21,9 @@ from e2r.research_brain.planning.provider_transport import (
     StructuredProviderUnavailable,
 )
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    CurrentResearcherModeConfig,
     _load_fact_checkpoint,
+    write_production_lane,
 )
 
 
@@ -451,10 +453,52 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         production = production_material_fact_rows(result)
         self.assertEqual(production[0]["question_family_id"], "cash_earnings_conversion")
         self.assertEqual(production[0]["temporal_status"], "CURRENT")
+        self.assertEqual(
+            production[0]["discovery_origin"],
+            "CANONICAL_SOURCE_TASK",
+        )
         self.assertFalse(production[0]["gold_visibility"])
         with tempfile.TemporaryDirectory() as directory:
             paths = write_researcher_fact_extraction_result(result, directory)
             self.assertTrue(all(path.is_file() for path in paths.values()))
+            production_root = Path(directory) / "production"
+            lane_paths = write_production_lane(
+                config=CurrentResearcherModeConfig(
+                    as_of_date=AS_OF_DATE,
+                    archetype_id=ARCHETYPE,
+                    output_root=production_root,
+                    live_materialization_authorized=True,
+                    checkpoint_resume=True,
+                    gold_lane_isolated=True,
+                    require_researcher_parity=True,
+                ),
+                target_runs=(
+                    SimpleNamespace(
+                        status=(
+                            "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+                        ),
+                        target=SimpleNamespace(target_id=TARGET),
+                        fact_extraction=result,
+                        component_memo_rows=(),
+                        production_input_rows=(),
+                    ),
+                ),
+            )
+            lane = json.loads(lane_paths["lane"].read_text(encoding="utf-8"))
+            written_facts = [
+                json.loads(line)
+                for line in lane_paths["facts"].read_text(
+                    encoding="utf-8"
+                ).splitlines()
+                if line.strip()
+            ]
+            self.assertEqual(lane["lane_role"], "PRODUCTION")
+            self.assertTrue(lane["production_research_complete"])
+            self.assertFalse(lane["gold_visibility"])
+            self.assertEqual(
+                {row["discovery_origin"] for row in written_facts},
+                {"CANONICAL_SOURCE_TASK"},
+            )
 
     def test_large_prior_fact_graph_is_compact_while_full_document_is_verbatim(self) -> None:
         provider = FactProvider()

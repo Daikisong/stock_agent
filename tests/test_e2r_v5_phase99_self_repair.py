@@ -120,18 +120,34 @@ class E2RV5Phase99SelfRepairTests(unittest.TestCase):
         )
         self.assertFalse(exhausted.canary_goal_complete)
 
-    def test_live_canary_truth_stays_pending_despite_internal_pass(self) -> None:
+    def test_live_canary_truth_matches_current_target_state(self) -> None:
         self.assertFalse(self.audit["production_readiness_authority"])
-        self.assertFalse(self.audit["canary_goal_complete"])
         by_target = {
             row["target_id"]: row
             for row in self.audit["live_canaries"]["targets"]
         }
-        self.assertEqual(by_target["005930"]["status"], "RESEARCH_CHECKPOINT_PENDING")
-        self.assertEqual(by_target["000660"]["status"], "RESEARCH_CHECKPOINT_PENDING")
+        self.assertEqual(set(by_target), {"005930", "000660"})
         blockers = self.audit["canary_completion_blockers"]
-        self.assertIn("LIVE_RESEARCH_CHECKPOINT_PENDING:005930", blockers)
-        self.assertIn("LIVE_RESEARCH_CHECKPOINT_PENDING:000660", blockers)
+        expected_complete = bool(by_target) and not blockers and all(
+            row["production_research_complete"] for row in by_target.values()
+        )
+        self.assertEqual(self.audit["canary_goal_complete"], expected_complete)
+        for target_id, row in by_target.items():
+            self.assertEqual(
+                row["status"] == "PRODUCTION_RESEARCH_COMPLETE",
+                row["production_research_complete"],
+            )
+            pending_blocker = f"LIVE_RESEARCH_CHECKPOINT_PENDING:{target_id}"
+            not_started_blocker = f"LIVE_RESEARCH_NOT_STARTED:{target_id}"
+            self.assertEqual(
+                pending_blocker in blockers,
+                row["status"]
+                not in {"LIVE_RESEARCH_NOT_STARTED", "PRODUCTION_RESEARCH_COMPLETE"},
+            )
+            self.assertEqual(
+                not_started_blocker in blockers,
+                row["status"] == "LIVE_RESEARCH_NOT_STARTED",
+            )
         usage_limit = self.audit["live_canaries"]
         usage_target_ids = usage_limit["provider_usage_limit_target_ids"]
         self.assertEqual(
@@ -244,7 +260,11 @@ class E2RV5Phase99SelfRepairTests(unittest.TestCase):
             render_phase99_self_repair_summary(self.audit),
         )
         self.assertIn("MEANINGFUL_E2R_RESEARCHER_PARITY_READY", committed_summary)
-        self.assertIn("선언은 허용되지 않는다", committed_summary)
+        if self.audit["canary_goal_complete"]:
+            self.assertIn("선언의 canary gate는 통과했다", committed_summary)
+            self.assertNotIn("선언은 허용되지 않는다", committed_summary)
+        else:
+            self.assertIn("선언은 허용되지 않는다", committed_summary)
 
 
 if __name__ == "__main__":

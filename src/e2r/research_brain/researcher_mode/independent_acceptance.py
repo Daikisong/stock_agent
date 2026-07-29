@@ -24,6 +24,7 @@ from .canary_leaf_contract import (
     CANARY_MASTER_LEAF_FILES,
     canary_output_tree_hash,
 )
+from .full_thesis_gold_benchmark import PHASE93_POST_RUN_PASS
 
 
 SCHEMA_VERSION = "e2r_v5_phase100_independent_acceptance_v1"
@@ -594,7 +595,7 @@ def _review_b(context: Mapping[str, Any], root: Path) -> Mapping[str, Any]:
     comparison_complete = gold_comparison.get("status") in {
         "PASS",
         "COMPLETE",
-        "V5_PHASE94_GOLD_RECALL_PASS",
+        PHASE93_POST_RUN_PASS,
     }
     critical = {
         "legacy_retrieval_critical_count": _base_document_critical(docs["legacy"]),

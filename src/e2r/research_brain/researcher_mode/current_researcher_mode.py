@@ -790,6 +790,7 @@ def write_production_lane(
     )
     lane = {
         "schema_version": "e2r_v5_phase94_production_lane_v1",
+        "lane_role": "PRODUCTION",
         "as_of_date": config.as_of_date,
         "archetype_id": config.archetype_id,
         "target_ids": [run.target.target_id for run in target_runs],

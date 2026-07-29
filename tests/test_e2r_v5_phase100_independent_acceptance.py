@@ -10,6 +10,7 @@ from e2r.research_brain.researcher_mode.independent_acceptance import (
     FINAL_NOT_READY_LABEL,
     FINAL_READY_LABEL,
     REVIEWER_GATE_FAIL,
+    REVIEWER_GATE_PASS,
     REVIEWER_SPECS,
     compile_phase100_acceptance_bundle,
     validate_full_test_evidence,
@@ -17,6 +18,13 @@ from e2r.research_brain.researcher_mode.independent_acceptance import (
 )
 from e2r.research_brain.researcher_mode.canary_leaf_contract import (
     CANARY_MASTER_LEAF_FILES,
+)
+from e2r.research_brain.researcher_mode import (
+    independent_acceptance as acceptance_module,
+)
+from e2r.research_brain.researcher_mode.full_thesis_gold_benchmark import (
+    PHASE93_POST_RUN_PASS,
+    PHASE93_RECALL_THRESHOLDS,
 )
 
 
@@ -39,30 +47,71 @@ class E2RV5Phase100IndependentAcceptanceTests(unittest.TestCase):
             self.assertEqual(row["detector_pass_count"], len(row["detector_ids"]))
             self.assertEqual(row["status"], "PASS" if row["critical_count_sum"] == 0 else "FAIL")
 
-    def test_current_gate_fails_exactly_instead_of_claiming_readiness(self) -> None:
-        by_id = {row["reviewer_id"]: row for row in self.gate["reviewers"]}
-        self.assertEqual(self.gate["status"], REVIEWER_GATE_FAIL)
-        self.assertGreater(self.gate["critical_count_sum"], 0)
-        self.assertEqual(self.gate["exact_verdict"], FINAL_NOT_READY_LABEL)
-        self.assertFalse(self.gate["production_readiness_authority"])
-        for reviewer_id in ("A", "C", "D", "E", "H", "I"):
-            self.assertEqual(by_id[reviewer_id]["status"], "PASS")
-        for reviewer_id in ("B", "F", "G", "J"):
-            self.assertEqual(by_id[reviewer_id]["status"], "FAIL")
-        self.assertNotEqual(self.gate["exact_verdict"], FINAL_READY_LABEL)
+    def test_current_gate_verdict_exactly_matches_critical_truth(self) -> None:
+        critical_sum = self.gate["critical_count_sum"]
+        failed_reviewers = [
+            row["reviewer_id"]
+            for row in self.gate["reviewers"]
+            if row["critical_count_sum"] > 0
+        ]
+        self.assertEqual(self.gate["failed_reviewers"], failed_reviewers)
+        if critical_sum == 0:
+            self.assertEqual(self.gate["status"], REVIEWER_GATE_PASS)
+            self.assertEqual(self.gate["exact_verdict"], FINAL_READY_LABEL)
+            self.assertTrue(self.gate["production_readiness_authority"])
+            self.assertEqual(failed_reviewers, [])
+            self.assertEqual(self.gate["blockers"], [])
+            self.assertTrue(
+                all(row["status"] == "PASS" for row in self.gate["reviewers"])
+            )
+        else:
+            self.assertEqual(self.gate["status"], REVIEWER_GATE_FAIL)
+            self.assertEqual(self.gate["exact_verdict"], FINAL_NOT_READY_LABEL)
+            self.assertFalse(self.gate["production_readiness_authority"])
+            self.assertTrue(failed_reviewers)
+            self.assertNotEqual(self.gate["exact_verdict"], FINAL_READY_LABEL)
 
     def test_live_canary_reviewer_has_no_fixed_score_or_stage(self) -> None:
-        reviewer = next(row for row in self.gate["reviewers"] if row["reviewer_id"] == "F")
+        by_id = {row["reviewer_id"]: row for row in self.gate["reviewers"]}
+        reviewer = by_id["F"]
         targets = reviewer["recomputed_metrics"]["targets"]
         self.assertEqual(len(targets), 2)
-        self.assertTrue(all(not row["score_valid"] for row in targets))
-        self.assertTrue(all(not row["stage_final"] for row in targets))
+        self.assertEqual({row["target_id"] for row in targets}, {"005930", "000660"})
+        self.assertEqual(
+            reviewer["critical_counts"]["incomplete_production_research_count"],
+            sum(not row["production_research_complete"] for row in targets),
+        )
+        stage_reviewer = by_id["G"]
+        expected_stagecourt_leaf_missing = sum(
+            not row["leaf_presence"].get("atomic_stage_decision.json")
+            or not row["leaf_presence"].get("stagecourt_trace.json")
+            for row in targets
+        )
+        self.assertEqual(
+            stage_reviewer["critical_counts"]["canary_score_valid_missing_count"],
+            sum(not row["score_valid"] for row in targets),
+        )
+        self.assertEqual(
+            stage_reviewer["critical_counts"]["canary_final_stagecourt_missing_count"],
+            expected_stagecourt_leaf_missing,
+        )
         self.assertTrue(
             all(
-                "score" not in row or isinstance(row.get("score_valid"), bool)
+                isinstance(row["production_research_complete"], bool)
+                and isinstance(row["score_valid"], bool)
+                and isinstance(row["stage_final"], bool)
                 for row in targets
             )
         )
+        if self.gate["critical_count_sum"] == 0:
+            self.assertTrue(
+                all(
+                    row["production_research_complete"]
+                    and row["score_valid"]
+                    and row["stage_final"]
+                    for row in targets
+                )
+            )
 
     def test_live_canary_reviewer_uses_exact_master_leaf_and_real_tree_hash(self) -> None:
         reviewer = next(row for row in self.gate["reviewers"] if row["reviewer_id"] == "F")
@@ -93,25 +142,72 @@ class E2RV5Phase100IndependentAcceptanceTests(unittest.TestCase):
         )
         self.assertFalse(calibration["production_current_score_authority"])
 
-    def test_stagecourt_audit_keeps_canonical_enum_and_current_pending(self) -> None:
+    def test_stagecourt_audit_keeps_canonical_enum_and_reports_current_truth(self) -> None:
         stagecourt = self.bundle["stagecourt_audit"]
         self.assertEqual(
             stagecourt["canonical_stage_enum"],
             ["0", "1", "2", "3-Green", "3-Yellow", "3-Red", "4A", "4B", "4C", "5"],
         )
-        self.assertEqual(stagecourt["status"], "FINAL_STAGECOURT_PENDING")
         self.assertFalse(stagecourt["llm_stage_authority"])
         self.assertFalse(stagecourt["event_overlay_can_change_canonical_stage"])
+        expected_critical = sum(stagecourt["critical_counts"].values())
+        self.assertEqual(stagecourt["critical_count_sum"], expected_critical)
+        self.assertEqual(
+            stagecourt["status"],
+            "FINAL_STAGECOURT_PASS"
+            if expected_critical == 0
+            else "FINAL_STAGECOURT_PENDING",
+        )
+        if self.gate["critical_count_sum"] == 0:
+            self.assertEqual(expected_critical, 0)
+            self.assertEqual(stagecourt["status"], "FINAL_STAGECOURT_PASS")
+            self.assertTrue(
+                all(
+                    row["score_valid"] and row["stage_final"]
+                    for row in stagecourt["targets"]
+                )
+            )
 
-    def test_required_dossiers_are_honest_pending_monitoring_documents(self) -> None:
+    def test_required_dossiers_truthfully_match_current_canary_state(self) -> None:
         dossiers = self.bundle["dossiers"]
         self.assertEqual(len(dossiers), 2)
-        for text in dossiers.values():
-            self.assertIn("production research complete: `false`", text)
-            self.assertIn("score valid: `false`", text)
-            self.assertIn("FINAL StageCourt: `false`", text)
+        reviewer = next(
+            row for row in self.gate["reviewers"] if row["reviewer_id"] == "F"
+        )
+        targets = {
+            row["target_id"]: row
+            for row in reviewer["recomputed_metrics"]["targets"]
+        }
+        self.assertEqual(set(dossiers), set(targets))
+        for target_id, text in dossiers.items():
+            row = targets[target_id]
+            self.assertIn(
+                "production research complete: "
+                f"`{str(row['production_research_complete']).lower()}`",
+                text,
+            )
+            self.assertIn(
+                f"score valid: `{str(row['score_valid']).lower()}`",
+                text,
+            )
+            self.assertIn(
+                f"FINAL StageCourt: `{str(row['stage_final']).lower()}`",
+                text,
+            )
+            self.assertIn(
+                f"complete component memos: `{row['component_memo_count']}` / `7`",
+                text,
+            )
             self.assertNotIn("FULL_E2R_100", text)
             self.assertNotIn("비중 확대", text)
+        if self.gate["critical_count_sum"] == 0:
+            for row in targets.values():
+                self.assertTrue(row["production_research_complete"])
+                self.assertTrue(row["score_valid"])
+                self.assertTrue(row["stage_final"])
+                self.assertEqual(row["component_memo_count"], 7)
+                self.assertEqual(row["canary_leaf_contract_critical_count"], 0)
+                self.assertTrue(all(row["leaf_presence"].values()))
 
     def test_committed_phase100_artifacts_recompile_byte_for_byte(self) -> None:
         gate = json.loads(
@@ -226,33 +322,92 @@ class E2RV5Phase100IndependentAcceptanceTests(unittest.TestCase):
     def test_reviewers_recompute_recall_capability_and_self_repair_gates(self) -> None:
         by_id = {row["reviewer_id"]: row for row in self.gate["reviewers"]}
         research_aperture = by_id["B"]
+        metrics = research_aperture["recomputed_metrics"]
         for metric_name in (
             "critical_material_fact_recall",
             "counter_supersession_recall",
             "all_material_fact_recall",
             "component_research_topic_coverage",
         ):
+            value = metrics.get(metric_name)
+            threshold = metrics["thresholds"].get(f"{metric_name}_min")
+            expected_failure = int(
+                not isinstance(value, (int, float))
+                or isinstance(value, bool)
+                or not isinstance(threshold, (int, float))
+                or isinstance(threshold, bool)
+                or float(value) < float(threshold)
+            )
             self.assertEqual(
                 research_aperture["critical_counts"][
                     f"{metric_name}_threshold_failure_count"
                 ],
-                1,
+                expected_failure,
             )
         runtime = by_id["J"]
         self.assertEqual(runtime["critical_counts"]["capability_regression_critical_count"], 0)
         self.assertEqual(runtime["critical_counts"]["self_repair_critical_count"], 0)
 
-    def test_final_readiness_lists_blockers_and_forbids_ready_label(self) -> None:
+    def test_actual_phase93_post_run_pass_closes_reviewer_b_recall_gate(self) -> None:
+        metrics = {
+            name.removesuffix("_min"): threshold
+            for name, threshold in PHASE93_RECALL_THRESHOLDS.items()
+        }
+        result = acceptance_module._review_b(
+            {
+                "documents": {
+                    "legacy": {
+                        "critical_count_sum": 0,
+                        "metric_values": {
+                            "legacy_valid_material_fact_recall": 1.0,
+                        },
+                    },
+                    "source_graph": {"critical_count_sum": 0},
+                    "gold": {
+                        "critical_count_sum": 0,
+                        "post_run_comparison": {
+                            "status": PHASE93_POST_RUN_PASS,
+                            "thresholds": dict(PHASE93_RECALL_THRESHOLDS),
+                            **metrics,
+                        },
+                    },
+                },
+            },
+            self.ROOT,
+        )
+        self.assertEqual(sum(result["critical_counts"].values()), 0)
+        self.assertEqual(result["blockers"], [])
+
+    def test_final_readiness_matches_gate_and_never_claims_false_ready(self) -> None:
         readiness = self.bundle["final_readiness"]
-        self.assertIn(FINAL_NOT_READY_LABEL, readiness)
-        self.assertIn("PHASE94_CLEAN_GOLD_RECALL_COMPARISON_PENDING", readiness)
-        self.assertIn("LIVE_CANARY_DOSSIER_INCOMPLETE", readiness)
-        self.assertIn("FINAL_STAGECOURT_PENDING", readiness)
-        self.assertIn("LIVE_RESEARCH_CHECKPOINT_PENDING:005930", readiness)
-        self.assertIn("LIVE_RESEARCH_CHECKPOINT_PENDING:000660", readiness)
-        self.assertNotIn("CANARY_LEAF_CONTRACT_PENDING", readiness)
+        critical_sum = self.gate["critical_count_sum"]
+        self.assertIn(
+            f"reviewer critical sum: `{critical_sum}`",
+            readiness,
+        )
+        self.assertIn(
+            f"reviewer gate: `{self.gate['status']}`",
+            readiness,
+        )
+        for blocker in self.gate["blockers"]:
+            self.assertIn(f"- `{blocker}`", readiness)
         self.assertIn(f"`{FINAL_READY_LABEL}`는", readiness)
-        self.assertNotIn(f"exact verdict: `{FINAL_READY_LABEL}`", readiness)
+        if critical_sum == 0:
+            self.assertEqual(self.gate["blockers"], [])
+            self.assertIn(f"exact verdict: `{FINAL_READY_LABEL}`", readiness)
+            self.assertNotIn(
+                f"exact verdict: `{FINAL_NOT_READY_LABEL}`",
+                readiness,
+            )
+            self.assertIn("StageCourt acceptance: `FINAL_STAGECOURT_PASS`", readiness)
+            for target_id in ("005930", "000660"):
+                dossier = self.bundle["dossiers"][target_id]
+                self.assertIn("production research complete: `true`", dossier)
+                self.assertIn("score valid: `true`", dossier)
+                self.assertIn("FINAL StageCourt: `true`", dossier)
+        else:
+            self.assertIn(f"exact verdict: `{FINAL_NOT_READY_LABEL}`", readiness)
+            self.assertNotIn(f"exact verdict: `{FINAL_READY_LABEL}`", readiness)
 
 
 if __name__ == "__main__":

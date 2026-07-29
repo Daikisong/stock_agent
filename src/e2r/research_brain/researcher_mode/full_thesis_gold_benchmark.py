@@ -68,6 +68,9 @@ PHASE93_RECALL_THRESHOLDS: Mapping[str, float] = {
     "all_material_fact_recall_min": 0.95,
     "component_research_topic_coverage_min": 1.0,
 }
+_POST_RUN_METRIC_NAMES = tuple(
+    name.removesuffix("_min") for name in PHASE93_RECALL_THRESHOLDS
+)
 
 _RED_TEAM_TOPIC = "red_team_counter_thesis"
 _QUERY_INTENTS = {
@@ -139,8 +142,9 @@ def compile_phase93_gold_research_recall_audit(
     *,
     gold_root: str | Path = PHASE93_GOLD_ROOT,
     production_root: str | Path = PHASE93_BASELINE_PRODUCTION_ROOT,
+    post_run_audit_path: str | Path | None = None,
 ) -> Mapping[str, Any]:
-    """Compile the Phase 93 build audit without pretending Phase 94 already ran."""
+    """Compile the Phase 93 build audit and project a verified Phase 94 result."""
 
     root = Path(repo_root).resolve()
     corpus = load_phase93_gold_corpus(root, gold_root=gold_root)
@@ -216,6 +220,49 @@ def compile_phase93_gold_research_recall_audit(
         production_as_of == gold_as_of
         and (production / "production_component_memos.jsonl").exists()
     )
+    verified_post_run = _load_verified_phase94_post_run_audit(
+        root=root,
+        explicit_path=post_run_audit_path,
+        production_root=production,
+        gold_as_of=gold_as_of,
+        target_ids=target_ids,
+    )
+    post_run_comparison = {
+        "status": (
+            "READY_TO_COMPARE"
+            if clean_run_comparable
+            else PHASE93_POST_RUN_PENDING
+        ),
+        "current_baseline_production_as_of_date": production_as_of or None,
+        "gold_as_of_date": gold_as_of,
+        "current_baseline_is_phase94_clean_rerun": False,
+        "critical_material_fact_recall": None,
+        "counter_supersession_recall": None,
+        "all_material_fact_recall": None,
+        "component_research_topic_coverage": None,
+        "thresholds": dict(PHASE93_RECALL_THRESHOLDS),
+        "pending_reason": (
+            None
+            if clean_run_comparable
+            else f"{gold_as_of} Gold를 숨긴 Phase 94 clean production rerun이 아직 없다."
+        ),
+    }
+    if verified_post_run is not None:
+        post_run_audit = verified_post_run["audit"]
+        metrics = post_run_audit["metrics"]
+        post_run_comparison = {
+            "status": PHASE93_POST_RUN_PASS,
+            "current_baseline_production_as_of_date": gold_as_of,
+            "gold_as_of_date": gold_as_of,
+            "current_baseline_is_phase94_clean_rerun": True,
+            **{
+                metric_name: metrics[metric_name]
+                for metric_name in _POST_RUN_METRIC_NAMES
+            },
+            "thresholds": dict(PHASE93_RECALL_THRESHOLDS),
+            "pending_reason": None,
+            "source_audit_path": verified_post_run["relative_path"],
+        }
     critical_counts = {
         "gold_output_file_missing_count": sum(
             not (gold / file_name).exists()
@@ -281,26 +328,7 @@ def compile_phase93_gold_research_recall_audit(
             "clean_rerun_required_after_research_fix": True,
             "leakage_audit": leakage,
         },
-        "post_run_comparison": {
-            "status": (
-                "READY_TO_COMPARE"
-                if clean_run_comparable
-                else PHASE93_POST_RUN_PENDING
-            ),
-            "current_baseline_production_as_of_date": production_as_of or None,
-            "gold_as_of_date": gold_as_of,
-            "current_baseline_is_phase94_clean_rerun": False,
-            "critical_material_fact_recall": None,
-            "counter_supersession_recall": None,
-            "all_material_fact_recall": None,
-            "component_research_topic_coverage": None,
-            "thresholds": dict(PHASE93_RECALL_THRESHOLDS),
-            "pending_reason": (
-                None
-                if clean_run_comparable
-                else "2026-07-12 Gold를 숨긴 Phase 94 clean production rerun이 아직 없다."
-            ),
-        },
+        "post_run_comparison": post_run_comparison,
         "reproducibility": {
             "gold_root": str(gold.relative_to(root)),
             "gold_output_sha256": output_hashes,
@@ -319,7 +347,7 @@ def compile_phase93_gold_research_recall_audit(
         },
         "phase93_scope_truth": {
             "benchmark_corpus_complete": True,
-            "post_run_recall_attested": False,
+            "post_run_recall_attested": verified_post_run is not None,
             "production_readiness_claimed": False,
             "phase94_clean_rerun_required": True,
         },
@@ -522,6 +550,114 @@ def gold_authority_leakage_paths(corpus: Mapping[str, Any]) -> tuple[str, ...]:
     ):
         visit(corpus[key], key)
     return tuple(sorted(set(paths)))
+
+
+def _load_verified_phase94_post_run_audit(
+    *,
+    root: Path,
+    explicit_path: str | Path | None,
+    production_root: Path,
+    gold_as_of: str,
+    target_ids: Sequence[str],
+) -> Mapping[str, Any] | None:
+    candidate_paths: tuple[Path, ...]
+    if explicit_path is not None:
+        path = Path(explicit_path)
+        candidate_paths = (path if path.is_absolute() else root / path,)
+    else:
+        scoped = production_root / "post_run_gold_recall_audit.json"
+        if scoped.is_file():
+            candidate_paths = (scoped,)
+        else:
+            candidate_paths = tuple(
+                sorted(
+                    root.glob(
+                        "output/researcher_mode/**/"
+                        "post_run_gold_recall_audit.json"
+                    ),
+                    key=lambda path: str(path),
+                )
+            )
+
+    for path in candidate_paths:
+        audit = _safe_read_mapping(path)
+        lane = _safe_read_mapping(path.parent / "production_lane_manifest.json")
+        if not _phase94_post_run_audit_is_scope_matched_pass(
+            audit=audit,
+            lane=lane,
+            gold_as_of=gold_as_of,
+            target_ids=target_ids,
+        ):
+            continue
+        try:
+            relative_path = str(path.resolve().relative_to(root.resolve()))
+        except ValueError:
+            relative_path = str(path.resolve())
+        return {
+            "audit": audit,
+            "relative_path": relative_path,
+        }
+    return None
+
+
+def _phase94_post_run_audit_is_scope_matched_pass(
+    *,
+    audit: Mapping[str, Any],
+    lane: Mapping[str, Any],
+    gold_as_of: str,
+    target_ids: Sequence[str],
+) -> bool:
+    critical_count_sum = audit.get("critical_count_sum")
+    if (
+        audit.get("schema_version") != PHASE93_SCHEMA_VERSION
+        or audit.get("status") != PHASE93_POST_RUN_PASS
+        or str(audit.get("as_of_date") or "") != gold_as_of
+        or audit.get("comparison_timing") != "POST_RUN_ONLY"
+        or audit.get("gold_visibility_during_production") is not False
+        or not isinstance(critical_count_sum, int)
+        or isinstance(critical_count_sum, bool)
+        or critical_count_sum != 0
+    ):
+        return False
+    expected_targets = tuple(str(value) for value in target_ids)
+    lane_targets = tuple(str(value) for value in lane.get("target_ids") or ())
+    if (
+        str(lane.get("as_of_date") or "") != gold_as_of
+        or lane.get("production_research_complete") is not True
+        or lane.get("gold_visibility") is not False
+        or lane.get("gold_query_visibility") is not False
+        or lane.get("gold_url_visibility") is not False
+        or lane.get("gold_fact_visibility") is not False
+        or lane.get("comparison_timing") != "POST_RUN_ONLY"
+        or len(lane_targets) != len(expected_targets)
+        or set(lane_targets) != set(expected_targets)
+    ):
+        return False
+
+    metrics = audit.get("metrics")
+    if not isinstance(metrics, Mapping):
+        return False
+    for threshold_name, expected_threshold in PHASE93_RECALL_THRESHOLDS.items():
+        metric_name = threshold_name.removesuffix("_min")
+        metric = metrics.get(metric_name)
+        if (
+            not _is_number(metric)
+            or float(metric) < float(expected_threshold)
+        ):
+            return False
+    return True
+
+
+def _safe_read_mapping(path: Path) -> Mapping[str, Any]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        return {}
+    return value if isinstance(value, Mapping) else {}
+
+
+def _is_number(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
 
 
 def _validate_phase93_gold_corpus(corpus: Mapping[str, Any]) -> None:

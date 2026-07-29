@@ -6,6 +6,11 @@ import unittest
 from pathlib import Path
 
 from e2r.research_brain.research_quality import BlindResearchQualityBenchmark
+from e2r.research_brain.researcher_mode import (
+    PHASE93_POST_RUN_PASS,
+    PHASE93_POST_RUN_PENDING,
+    PHASE93_RECALL_THRESHOLDS,
+)
 
 
 class GoldMaterialFactRecallTests(unittest.TestCase):
@@ -42,13 +47,27 @@ class GoldMaterialFactRecallTests(unittest.TestCase):
         self.assertGreater(operational["gold_fact_count"], 9)
         self.assertEqual(operational["gold_component_memo_count"], 14)
         self.assertEqual(set(operational["per_target"]), {"005930", "000660"})
+        post_run = operational["post_run_comparison"]
+        attested = operational["phase93_scope_truth"]["post_run_recall_attested"]
+        self.assertIn(
+            post_run["status"],
+            {PHASE93_POST_RUN_PENDING, PHASE93_POST_RUN_PASS},
+        )
         self.assertEqual(
-            operational["post_run_comparison"]["status"],
-            "PENDING_PHASE94_CLEAN_PRODUCTION_RERUN",
+            attested,
+            post_run["status"] == PHASE93_POST_RUN_PASS,
         )
-        self.assertFalse(
-            operational["phase93_scope_truth"]["post_run_recall_attested"]
-        )
+        self.assertEqual(post_run["thresholds"], dict(PHASE93_RECALL_THRESHOLDS))
+        if post_run["status"] == PHASE93_POST_RUN_PASS:
+            self.assertTrue(post_run["current_baseline_is_phase94_clean_rerun"])
+            for threshold_name, threshold in PHASE93_RECALL_THRESHOLDS.items():
+                self.assertGreaterEqual(
+                    post_run[threshold_name.removesuffix("_min")],
+                    threshold,
+                )
+        else:
+            self.assertFalse(attested)
+            self.assertFalse(post_run["current_baseline_is_phase94_clean_rerun"])
         self.assertNotEqual(operational, controlled)
 
     def test_benchmark_writes_target_specific_dossier_leaves(self) -> None:

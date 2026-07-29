@@ -1071,6 +1071,7 @@ def production_material_fact_rows(
                 "schema_version": "e2r_v5_production_material_fact_v1",
                 "fact_id": fact.fact_id,
                 "target_id": fact.target_id,
+                "discovery_origin": "CANONICAL_SOURCE_TASK",
                 "question_family_id": primary["question_family_id"],
                 "subject_id": primary["subject_id"],
                 "predicate_family": primary["predicate_family"],

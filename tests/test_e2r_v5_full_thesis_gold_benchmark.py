@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import shutil
 import tempfile
+from types import SimpleNamespace
 import unittest
 
 from e2r.research_brain.researcher_mode import (
@@ -17,6 +18,10 @@ from e2r.research_brain.researcher_mode import (
     compile_phase93_gold_research_recall_audit,
     gold_authority_leakage_paths,
     load_phase93_gold_corpus,
+)
+from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    CurrentResearcherModeConfig,
+    write_production_lane,
 )
 
 
@@ -42,13 +47,22 @@ class E2RV5FullThesisGoldBenchmarkTests(unittest.TestCase):
         self.assertEqual(self.audit, committed)
         self.assertEqual(self.audit["status"], PHASE93_READY)
         self.assertEqual(self.audit["critical_count_sum"], 0)
-        self.assertEqual(
-            self.audit["post_run_comparison"]["status"],
-            PHASE93_POST_RUN_PENDING,
+        post_run = self.audit["post_run_comparison"]
+        self.assertIn(
+            post_run["status"],
+            {PHASE93_POST_RUN_PENDING, PHASE93_POST_RUN_PASS},
         )
-        self.assertFalse(
-            self.audit["phase93_scope_truth"]["post_run_recall_attested"]
-        )
+        attested = self.audit["phase93_scope_truth"]["post_run_recall_attested"]
+        self.assertEqual(attested, post_run["status"] == PHASE93_POST_RUN_PASS)
+        if attested:
+            self.assertTrue(post_run["current_baseline_is_phase94_clean_rerun"])
+            for threshold_name, threshold in PHASE93_RECALL_THRESHOLDS.items():
+                self.assertGreaterEqual(
+                    post_run[threshold_name.removesuffix("_min")],
+                    threshold,
+                )
+        else:
+            self.assertFalse(post_run["current_baseline_is_phase94_clean_rerun"])
         self.assertFalse(
             self.audit["phase93_scope_truth"]["production_readiness_claimed"]
         )
@@ -178,12 +192,64 @@ class E2RV5FullThesisGoldBenchmarkTests(unittest.TestCase):
                 self.ROOT,
                 production_root=production,
             )
+            post_run_path = production / "post_run_gold_recall_audit.json"
+            self._write_json(post_run_path, result.audit)
+            compiled = compile_phase93_gold_research_recall_audit(
+                self.ROOT,
+                production_root=production,
+                post_run_audit_path=post_run_path,
+            )
         self.assertEqual(result.status, PHASE93_POST_RUN_PASS)
         self.assertEqual(result.audit["critical_count_sum"], 0)
         for metric, threshold in PHASE93_RECALL_THRESHOLDS.items():
             self.assertGreaterEqual(
                 result.audit["metrics"][metric.removesuffix("_min")],
                 threshold,
+            )
+            self.assertEqual(
+                compiled["post_run_comparison"][metric.removesuffix("_min")],
+                result.audit["metrics"][metric.removesuffix("_min")],
+            )
+        self.assertEqual(
+            compiled["post_run_comparison"]["status"],
+            PHASE93_POST_RUN_PASS,
+        )
+        self.assertTrue(
+            compiled["phase93_scope_truth"]["post_run_recall_attested"]
+        )
+
+    def test_fail_or_malformed_post_run_audit_is_never_attested(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            production = Path(tmp) / "production"
+            self._write_controlled_production(
+                production,
+                omit_fact_id="G-005930-EPS-S",
+            )
+            result = compare_phase93_gold_post_run(
+                self.ROOT,
+                production_root=production,
+            )
+            self.assertEqual(result.status, PHASE93_POST_RUN_FAIL)
+            post_run_path = production / "post_run_gold_recall_audit.json"
+            self._write_json(post_run_path, result.audit)
+            failed = compile_phase93_gold_research_recall_audit(
+                self.ROOT,
+                production_root=production,
+                post_run_audit_path=post_run_path,
+            )
+            post_run_path.write_text("{malformed", encoding="utf-8")
+            malformed = compile_phase93_gold_research_recall_audit(
+                self.ROOT,
+                production_root=production,
+                post_run_audit_path=post_run_path,
+            )
+        for audit in (failed, malformed):
+            self.assertNotEqual(
+                audit["post_run_comparison"]["status"],
+                PHASE93_POST_RUN_PASS,
+            )
+            self.assertFalse(
+                audit["phase93_scope_truth"]["post_run_recall_attested"]
             )
 
     def test_critical_fact_miss_fails_post_run_gate(self) -> None:
@@ -339,46 +405,91 @@ class E2RV5FullThesisGoldBenchmarkTests(unittest.TestCase):
         *,
         omit_fact_id: str | None = None,
     ) -> None:
-        facts = []
-        for index, gold in enumerate(self.corpus["facts"]):
-            if gold["fact_id"] == omit_fact_id:
-                continue
-            row = dict(gold)
-            row["fact_id"] = f"P-INDEPENDENT-{index:03d}"
-            row["discovery_origin"] = "CANONICAL_SOURCE_TASK"
-            facts.append(row)
-        self._write_jsonl(root / "production_material_facts.jsonl", facts)
-        self._write_jsonl(
-            root / "production_input_manifest.jsonl",
-            [
-                {
-                    "input_id": "P-CONTROLLED-CONFIG",
-                    "input_type": "CONFIG",
-                    "origin": "CANONICAL_CONFIG",
-                    "value": "canonical question and source contracts only",
-                }
-            ],
-        )
-        self._write_json(
-            root / "production_lane_manifest.json",
-            {
-                "schema_version": "controlled_full_thesis_production_v1",
-                "lane_role": "PRODUCTION",
-                "gold_visibility": False,
-                "as_of_date": "2026-07-12",
-            },
-        )
-        self._write_jsonl(
-            root / "production_component_memos.jsonl",
-            [
-                {
-                    "target_id": target_id,
-                    "component_id": component_id,
-                    "research_status": "RESEARCH_COMPLETE",
-                }
-                for target_id in self.corpus["manifest"]["target_ids"]
-                for component_id in self.corpus["manifest"]["component_ids"]
-            ],
+        runs = []
+        for target_id in self.corpus["manifest"]["target_ids"]:
+            claims = []
+            facts = []
+            for index, gold in enumerate(self.corpus["facts"]):
+                if (
+                    gold["target_id"] != target_id
+                    or gold["fact_id"] == omit_fact_id
+                ):
+                    continue
+                claim_id = f"P-CLAIM-{index:03d}"
+                claims.append(
+                    {
+                        "claim_id": claim_id,
+                        "question_family_id": gold["question_family_id"],
+                        "subject_id": gold["subject_id"],
+                        "predicate_family": gold["predicate_family"],
+                        "normalized_object": gold["normalized_object"],
+                        "mechanism_scope_id": gold["mechanism_scope_id"],
+                        "source_tier": gold["source_tier"],
+                        "materiality": gold["materiality"],
+                    }
+                )
+                facts.append(
+                    SimpleNamespace(
+                        fact_id=f"P-INDEPENDENT-{index:03d}",
+                        target_id=target_id,
+                        as_of_date=gold["as_of_date"],
+                        period=gold["period"],
+                        direction=(
+                            "COUNTER"
+                            if gold["fact_role"] == "COUNTER"
+                            else "POSITIVE"
+                        ),
+                        current_lifecycle=(
+                            "SUPERSEDED"
+                            if gold["fact_role"] == "SUPERSESSION"
+                            else "CURRENT"
+                        ),
+                        source_ids=(gold["source_id"],),
+                        claim_ids=(claim_id,),
+                        quote_ids=(),
+                        economic_mechanism=gold["mechanism_scope_id"],
+                        predicate=gold["predicate_family"],
+                        value=gold["normalized_object"],
+                        confidence=1.0,
+                    )
+                )
+            runs.append(
+                SimpleNamespace(
+                    status="PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
+                    target=SimpleNamespace(target_id=target_id),
+                    fact_extraction=SimpleNamespace(
+                        material_claims=tuple(claims),
+                        facts=tuple(facts),
+                    ),
+                    component_memo_rows=tuple(
+                        {
+                            "target_id": target_id,
+                            "component_id": component_id,
+                            "research_status": "RESEARCH_COMPLETE",
+                        }
+                        for component_id in self.corpus["manifest"]["component_ids"]
+                    ),
+                    production_input_rows=(
+                        {
+                            "input_id": f"P-CONTROLLED-CONFIG-{target_id}",
+                            "input_type": "CONFIG",
+                            "origin": "CANONICAL_CONFIG",
+                            "value": "canonical question and source contracts only",
+                        },
+                    ),
+                )
+            )
+        write_production_lane(
+            config=CurrentResearcherModeConfig(
+                as_of_date=self.corpus["manifest"]["as_of_date"],
+                archetype_id="CONTROLLED_GOLD_REPLAY",
+                output_root=root,
+                live_materialization_authorized=True,
+                checkpoint_resume=True,
+                gold_lane_isolated=True,
+                require_researcher_parity=True,
+            ),
+            target_runs=tuple(runs),
         )
 
     def _mutated_gold(self):
