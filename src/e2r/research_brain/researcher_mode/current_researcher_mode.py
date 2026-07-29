@@ -295,8 +295,16 @@ class CurrentResearcherModeTargetRunner:
             and source_graph_active_navigation_only_document_ids(
                 prior_source_checkpoint
             )
-            and _source_checkpoint_has_terminal_source_work(
-                prior_source_checkpoint
+            and (
+                _source_checkpoint_has_terminal_source_work(
+                    prior_source_checkpoint
+                )
+                or _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=prior_source_checkpoint,
+                    target_id=target.target_id,
+                    as_of_date=config.as_of_date,
+                )
             )
         )
         source_checkpoint_readonly_replayed = bool(
@@ -306,12 +314,30 @@ class CurrentResearcherModeTargetRunner:
                 prior_source_checkpoint
             )
         )
-        if source_checkpoint_readonly_replayed:
+        source_checkpoint_downstream_recovery_replayed = bool(
+            source_resume_mode == "REUSE_READY_CHECKPOINT"
+            and prior_source_checkpoint is not None
+            and not source_checkpoint_readonly_replayed
+            and not source_checkpoint_navigation_migration_only
+            and _source_checkpoint_needs_downstream_provider_recovery(
+                root=root,
+                checkpoint=prior_source_checkpoint,
+                target_id=target.target_id,
+                as_of_date=config.as_of_date,
+            )
+        )
+        if (
+            source_checkpoint_readonly_replayed
+            or source_checkpoint_downstream_recovery_replayed
+        ):
             source_graph = _hydrate_readonly_source_graph_run(
                 root=root,
                 checkpoint=prior_source_checkpoint,
                 open_objectives=initial_graph.open_objectives,
                 config=source_acquisition_config,
+                allow_pending_downstream_recovery=(
+                    source_checkpoint_downstream_recovery_replayed
+                ),
             )
         else:
             source_graph = self.source_acquirer.acquire(
@@ -653,6 +679,10 @@ class CurrentResearcherModeTargetRunner:
             "transport_budget_treated_as_completion": False,
             "source_checkpoint_readonly_replayed": (
                 source_checkpoint_readonly_replayed
+                or source_checkpoint_downstream_recovery_replayed
+            ),
+            "source_checkpoint_downstream_recovery_replayed": (
+                source_checkpoint_downstream_recovery_replayed
             ),
             "source_checkpoint_navigation_migration_only": (
                 source_checkpoint_navigation_migration_only
@@ -1288,17 +1318,130 @@ def _source_checkpoint_has_terminal_source_work(
     )
 
 
+def _source_checkpoint_needs_downstream_provider_recovery(
+    *,
+    root: Path,
+    checkpoint: Mapping[str, Any],
+    target_id: str,
+    as_of_date: str,
+) -> bool:
+    """Allow one immutable downstream retry before expanding pending sources.
+
+    This does not make a pending Source Graph ready.  It only handles the
+    narrower case where the exact current document roster was already fully
+    extracted, but a provider/output failure prevented the business model,
+    component dossier, or Supervisor from adjudicating whether the remaining
+    source candidates are still needed.
+    """
+
+    if (
+        _source_checkpoint_has_terminal_source_work(checkpoint)
+        or not checkpoint.get("evidence_documents")
+    ):
+        return False
+    fact_path = root / "fact_extraction_result.json"
+    dossier_path = root / "researcher_mode_dossier.json"
+    if not fact_path.is_file() or not dossier_path.is_file():
+        return False
+    try:
+        fact_result = _read_json(fact_path)
+        dossier = _read_json(dossier_path)
+    except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
+        return False
+    if (
+        str(fact_result.get("target_id") or "") != target_id
+        or str(fact_result.get("as_of_date") or "") != as_of_date
+        or fact_result.get("status") != "FACT_EXTRACTION_COMPLETE"
+        or int((fact_result.get("audit") or {}).get("critical_count_sum") or 0)
+        != 0
+        or str(dossier.get("target_id") or "") != target_id
+        or str(dossier.get("as_of_date") or "") != as_of_date
+    ):
+        return False
+    document_ids = {
+        str(row.get("document_id") or "")
+        for row in checkpoint.get("evidence_documents") or ()
+        if str(row.get("document_id") or "")
+    }
+    dispositions = tuple(
+        row
+        for row in fact_result.get("document_dispositions") or ()
+        if isinstance(row, Mapping)
+    )
+    disposition_ids = {
+        str(row.get("document_id") or "")
+        for row in dispositions
+        if str(row.get("document_id") or "")
+    }
+    if (
+        not document_ids
+        or disposition_ids != document_ids
+        or any(row.get("status") == "UNREADABLE" for row in dispositions)
+        or int((fact_result.get("audit") or {}).get("input_document_count") or 0)
+        != len(document_ids)
+    ):
+        return False
+    failure_texts = []
+    business = dossier.get("business_model_result") or {}
+    if isinstance(business, Mapping):
+        failure_texts.extend(business.get("pending_reasons") or ())
+    for row in dossier.get("component_results") or ():
+        if isinstance(row, Mapping):
+            failure_texts.extend(row.get("pending_reasons") or ())
+    red_team = dossier.get("red_team_result") or {}
+    if isinstance(red_team, Mapping):
+        failure_texts.extend(red_team.get("pending_reasons") or ())
+    supervisor_path = root / "research_supervisor_review.json"
+    if supervisor_path.is_file():
+        try:
+            supervisor = _read_json(supervisor_path)
+        except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
+            supervisor = {}
+        if isinstance(supervisor, Mapping):
+            failure_texts.extend(
+                supervisor.get("unresolved_material_questions") or ()
+            )
+            failure_texts.append(supervisor.get("rationale") or "")
+    return any(_is_downstream_provider_or_output_failure(value) for value in failure_texts)
+
+
+def _is_downstream_provider_or_output_failure(value: Any) -> bool:
+    text = " ".join(str(value).split()).upper()
+    return any(
+        marker in text
+        for marker in (
+            "PROVIDER_ERROR",
+            "PROVIDER_OR_OUTPUT_ERROR",
+            "INVALID_PROVIDER_OUTPUT",
+            "STRUCTUREDPROVIDER",
+            "OLLAMA_HTTP_ERROR",
+            "CODEX_CLI_",
+            "CUDA ERROR",
+            "CONTEXT_WINDOW",
+        )
+    )
+
+
 def _hydrate_readonly_source_graph_run(
     *,
     root: Path,
     checkpoint: Mapping[str, Any],
     open_objectives: Sequence[Any],
     config: SourceGraphAcquisitionConfig,
+    allow_pending_downstream_recovery: bool = False,
 ) -> SourceGraphAcquisitionRun:
     """Hydrate a ready source run without mutating acquisition lineage."""
 
-    if not _source_checkpoint_is_ready_for_readonly_replay(checkpoint):
+    if (
+        not allow_pending_downstream_recovery
+        and not _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
+    ):
         raise ValueError("source checkpoint is not ready for readonly replay")
+    if allow_pending_downstream_recovery and (
+        _source_checkpoint_has_terminal_source_work(checkpoint)
+        or not checkpoint.get("evidence_documents")
+    ):
+        raise ValueError("pending downstream recovery requires pending source work")
     graph_payload = checkpoint.get("source_graph")
     if not isinstance(graph_payload, Mapping):
         raise ValueError("source checkpoint graph payload is missing")
@@ -1343,6 +1486,15 @@ def _hydrate_readonly_source_graph_run(
         dict(persisted_audit.get("critical_counts") or {}) != dict(critical)
     ):
         raise ValueError("source checkpoint bound audit critical counts mismatch")
+    pending_candidate_count = sum(
+        bool(
+            row.get("ranking_status") == "PENDING"
+            or row.get("fetch_status")
+            in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+        )
+        for row in checkpoint.get("search_candidates") or ()
+        if isinstance(row, Mapping)
+    )
     audit = {
         **persisted_audit,
         "status": "V5_SOURCE_GRAPH_ACQUISITION_SAFETY_PASS",
@@ -1358,7 +1510,10 @@ def _hydrate_readonly_source_graph_run(
         "search_candidate_count": len(
             checkpoint.get("search_candidates") or ()
         ),
-        "pending_candidate_count": 0,
+        "pending_candidate_count": pending_candidate_count,
+        "downstream_provider_recovery_replay": (
+            allow_pending_downstream_recovery
+        ),
     }
     return SourceGraphAcquisitionRun(
         status=str(checkpoint["status"]),

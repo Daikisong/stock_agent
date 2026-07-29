@@ -43,6 +43,7 @@ from tests.test_e2r_v5_researcher_mode import ScriptedResearchProvider
 from tests.test_e2r_v5_source_graph_acquisition import SourceBrainProvider
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _source_checkpoint_is_ready_for_readonly_replay,
+    _source_checkpoint_needs_downstream_provider_recovery,
     _load_prior_component_memos,
     _same_lane_structured_cache_roots,
 )
@@ -606,6 +607,111 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             candidate = {**ready, **mutation}
             self.assertFalse(
                 _source_checkpoint_is_ready_for_readonly_replay(candidate)
+            )
+
+    def test_pending_source_snapshot_recovers_downstream_provider_before_fetch(
+        self,
+    ) -> None:
+        checkpoint = {
+            "status": "CANDIDATE_RANKING_PENDING",
+            "generated_queries": [
+                {"execution_status": "SEARCH_EXECUTED"}
+            ],
+            "search_candidates": [
+                {
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "MATERIAL_PENDING_FETCH",
+                }
+            ],
+            "evidence_documents": [
+                {
+                    "document_id": "DOC-1",
+                    "canonical_url": "https://example.com/report.pdf",
+                    "content_type": "application/pdf",
+                }
+            ],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fact_result = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": AS_OF_DATE,
+                "status": "FACT_EXTRACTION_COMPLETE",
+                "document_dispositions": [
+                    {
+                        "document_id": "DOC-1",
+                        "status": "FACTS_EXTRACTED",
+                    }
+                ],
+                "audit": {
+                    "critical_count_sum": 0,
+                    "input_document_count": 1,
+                },
+            }
+            dossier = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": AS_OF_DATE,
+                "business_model_result": {
+                    "status": "PENDING",
+                    "pending_reasons": [
+                        "PROVIDER_ERROR:CUDA error"
+                    ],
+                },
+                "component_results": [],
+                "red_team_result": None,
+            }
+            (root / "fact_extraction_result.json").write_text(
+                json.dumps(fact_result),
+                encoding="utf-8",
+            )
+            (root / "researcher_mode_dossier.json").write_text(
+                json.dumps(dossier),
+                encoding="utf-8",
+            )
+            self.assertTrue(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            dossier["business_model_result"]["pending_reasons"] = [
+                "MATERIAL_FACT_GAP_REMAINS"
+            ]
+            (root / "researcher_mode_dossier.json").write_text(
+                json.dumps(dossier),
+                encoding="utf-8",
+            )
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            dossier["business_model_result"]["pending_reasons"] = [
+                "PROVIDER_ERROR:CUDA error"
+            ]
+            fact_result["document_dispositions"][0]["status"] = "UNREADABLE"
+            (root / "researcher_mode_dossier.json").write_text(
+                json.dumps(dossier),
+                encoding="utf-8",
+            )
+            (root / "fact_extraction_result.json").write_text(
+                json.dumps(fact_result),
+                encoding="utf-8",
+            )
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
             )
 
     def test_completed_resume_removes_stale_no_progress_leaf(self) -> None:
