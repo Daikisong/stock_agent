@@ -361,8 +361,21 @@ class ResearcherDocumentRanker:
         decisions are recombined before the caller advances the checkpoint.
         """
 
-        midpoint = len(candidates) // 2
-        partitions = (tuple(candidates[:midpoint]), tuple(candidates[midpoint:]))
+        candidate_count_limit = _candidate_partition_count_limit(self.provider)
+        if (
+            candidate_count_limit is not None
+            and len(candidates) > candidate_count_limit
+        ):
+            partitions = tuple(
+                tuple(candidates[start : start + candidate_count_limit])
+                for start in range(0, len(candidates), candidate_count_limit)
+            )
+        else:
+            midpoint = len(candidates) // 2
+            partitions = (
+                tuple(candidates[:midpoint]),
+                tuple(candidates[midpoint:]),
+            )
         results = tuple(
             self.rank_candidates(
                 target_id=target_id,

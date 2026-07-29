@@ -20,6 +20,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
 )
 from e2r.research_brain.researcher_mode import (
     PHASE85_PASS,
+    CodexResearcherProvider,
     ComponentResearchPlan,
     ResearcherDocumentRanker,
     ResearcherSourceGraphAcquirer,
@@ -796,6 +797,85 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             },
             {row["candidate_id"] for row in candidates},
         )
+
+    def test_codex_candidate_ranking_pages_match_output_schema_limit(
+        self,
+    ) -> None:
+        class RecordingCodexProvider(CodexResearcherProvider):
+            def complete(self, *, pass_name, payload):
+                self.calls.append(
+                    {"pass_name": pass_name, "payload": payload}
+                )
+                rows = list(payload["discovery_candidates"])
+                return {
+                    "decisions": [
+                        {
+                            "candidate_id": row["candidate_id"],
+                            "material_relevance": True,
+                            "priority": 1.0,
+                            "objective_ids": list(row["objective_ids"]),
+                            "rationale": "Codex 공통 페이지의 후보를 전수 분류했다.",
+                        }
+                        for row in rows
+                    ],
+                    "ranking_complete": True,
+                    "unresolved_notes": [],
+                }
+
+        provider = RecordingCodexProvider(transport=object())  # type: ignore[arg-type]
+        candidates = tuple(
+            {
+                "candidate_id": f"CODEX-CANDIDATE-{index}",
+                "title": f"Current Corp Codex candidate {index}",
+                "url": f"https://example.com/codex-candidate-{index}",
+                "snippet": "lossless Codex candidate roster",
+                "source": "fixture-search",
+                "published_at": "2026-06-20",
+                "is_pdf": False,
+                "is_news": False,
+                "is_disclosure": False,
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+                "requested_source_families": ["NAVER_DISCOVERY"],
+            }
+            for index in range(100)
+        )
+
+        result = ResearcherDocumentRanker(provider=provider).rank_candidates(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            open_objectives=[_objective().to_dict()],
+            candidates=candidates,
+            current_evidence_facts=(),
+            target_business_model=None,
+            source_coverage=(),
+        )
+
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(result.status, "COMPLETE")
+        self.assertEqual(len(ranking_payloads), 9)
+        self.assertTrue(
+            all(
+                len(payload["discovery_candidates"])
+                <= provider.candidate_ranking_page_candidate_limit
+                for payload in ranking_payloads
+            )
+        )
+        emitted_ids = [
+            row["candidate_id"]
+            for payload in ranking_payloads
+            for row in payload["discovery_candidates"]
+        ]
+        self.assertEqual(
+            emitted_ids,
+            [row["candidate_id"] for row in candidates],
+        )
+        self.assertEqual(len(emitted_ids), len(set(emitted_ids)))
 
     def test_empty_or_duplicate_llm_query_is_pending_without_fallback(self) -> None:
         provider = SourceBrainProvider(queries=())

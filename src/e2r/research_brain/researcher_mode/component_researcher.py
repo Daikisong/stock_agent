@@ -1425,6 +1425,12 @@ class CodexResearcherProvider:
 
         return 250_000
 
+    @property
+    def candidate_ranking_page_candidate_limit(self) -> int:
+        """Match every provider ranking page to the shared output schema."""
+
+        return CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT
+
     def _normalize_loss_accounted_response(
         self,
         *,
@@ -2321,12 +2327,6 @@ class OllamaResearcherProvider(CodexResearcherProvider):
             max(10_000, prompt_limit // 4),
             max(100_000, self.semantic_prompt_chunk_chars * 8),
         )
-
-    @property
-    def candidate_ranking_page_candidate_limit(self) -> int:
-        """Bound one response page while losslessly partitioning the roster."""
-
-        return CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT
 
     def _normalize_loss_accounted_response(
         self,
