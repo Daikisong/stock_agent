@@ -338,6 +338,7 @@ class ResearchEpochRunner:
                             component_results=component_results,
                             red_team_result=red_team_result,
                             structured_result=structured_result,
+                            evidence_facts=evidence_facts,
                             source_graph_checkpoint=source_graph_checkpoint,
                         )
                     )

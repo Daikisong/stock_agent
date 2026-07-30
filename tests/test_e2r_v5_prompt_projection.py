@@ -1568,12 +1568,15 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             }
         )
         self.assertEqual(projected["checkpoint_id"], "REPOCH")
-        self.assertEqual(projected["document_delta_count"], 10)
-        self.assertEqual(len(projected["documents"]), 10)
+        self.assertEqual(projected["documents"]["record_count"], 10)
+        self.assertEqual(projected["new_facts"]["record_count"], 1)
         self.assertTrue(
-            projected["full_document_bodies_omitted_after_fact_extraction"]
+            projected["documents"][
+                "every_record_accounted_by_exact_count_and_full_hash"
+            ]
         )
-        self.assertNotIn("content_text", projected["documents"][0])
+        self.assertNotIn(text, json.dumps(projected, ensure_ascii=False))
+        self.assertNotIn("gold_critical_fact_miss_count", projected)
         self.assertFalse(
             projected["research_epoch_prompt_projection"]["fixed_top_n_used"]
         )

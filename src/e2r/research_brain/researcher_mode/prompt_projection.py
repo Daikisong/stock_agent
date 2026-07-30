@@ -2427,28 +2427,101 @@ def project_counter_route_proof(
 def project_research_epoch_checkpoint(
     checkpoint: Mapping[str, Any],
 ) -> Mapping[str, Any]:
-    """Remove repeated document bodies from an already-persisted epoch delta."""
+    """Bind saturation to one epoch while accounting for every persisted row.
 
-    output = dict(checkpoint)
+    The complete checkpoint contains the expanded Supervisor review, prior
+    saturation attempts, and large opaque id rosters.  Saturation receives the
+    current Supervisor semantics and all-fact projection separately, so this
+    transport view keeps current identity fields and replaces every repeated
+    collection with an exact count and full-roster hash.  Nothing is sampled.
+    """
+
+    output = {
+        key: checkpoint.get(key)
+        for key in (
+            "schema_version",
+            "checkpoint_id",
+            "checkpoint_hash",
+            "target_id",
+            "as_of_date",
+            "epoch",
+            "status",
+            "resumed_from_checkpoint_id",
+            "source_graph_checkpoint_id",
+            "component_memo_hashes",
+            "semantic_saturation_certified",
+            "completion_based_on_fixed_rounds",
+            "zero_search_result_treated_as_saturation",
+            "transport_budget_treated_as_completion",
+            "production_score_authority",
+            "unresolved_material_questions",
+            "next_actions",
+        )
+        if key in checkpoint
+    }
+    for key in (
+        "cumulative_query_ids",
+        "cumulative_document_ids",
+        "cumulative_fact_ids",
+        "current_fact_ids",
+        "retired_fact_ids",
+        "queries",
+        "documents",
+        "new_facts",
+        "retired_facts",
+        "changed_component_memos",
+    ):
+        rows = tuple(checkpoint.get(key) or ())
+        output[key] = _full_collection_roster_projection(
+            rows,
+            collection_name=f"research_epoch_{key}",
+        )
+    for key in (
+        "supervisor_review",
+        "saturation_reviews",
+        "saturation_certificate",
+    ):
+        value = checkpoint.get(key)
+        rows = (
+            tuple(value or ())
+            if isinstance(value, (list, tuple))
+            else (() if value is None else (value,))
+        )
+        output[key] = _full_collection_roster_projection(
+            rows,
+            collection_name=f"research_epoch_{key}",
+        )
     # Production reviewers may know only that Gold is a private post-run lane.
-    # A nullable legacy/result field is never prompt material.
-    output.pop("gold_critical_fact_miss_count", None)
     output["gold_evaluation_status"] = "NOT_RUN_POST_RUN_ONLY"
-    if "documents" in output:
-        documents = tuple(output.get("documents") or ())
-        output["documents"] = list(project_source_documents(documents))
-        output["document_delta_count"] = len(documents)
-        output["document_delta_manifest_hash"] = _stable_hash(documents)
-        output["full_document_bodies_omitted_after_fact_extraction"] = True
+    output["full_checkpoint_payload_hash"] = _stable_hash(checkpoint)
     output["research_epoch_prompt_projection"] = {
-        "schema_version": "e2r_v5_research_epoch_prompt_projection_v1",
+        "schema_version": "e2r_v5_research_epoch_prompt_projection_v2",
         "complete_checkpoint_persisted_outside_prompt": True,
-        "document_delta_hash_accounted": True,
+        "every_id_roster_delta_and_nested_review_hash_accounted": True,
         "fixed_top_n_used": False,
         "prompt_projection_is_research_cap": False,
         "score_authority": False,
     }
     return output
+
+
+def _full_collection_roster_projection(
+    rows: Sequence[Any],
+    *,
+    collection_name: str,
+) -> Mapping[str, Any]:
+    payloads = tuple(rows)
+    return {
+        "schema_version": "e2r_v5_full_collection_roster_projection_v1",
+        "collection_name": collection_name,
+        "record_count": len(payloads),
+        "full_roster_hash": _stable_hash(payloads),
+        "every_record_accounted_by_exact_count_and_full_hash": True,
+        "full_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
 
 
 def project_structured_records(

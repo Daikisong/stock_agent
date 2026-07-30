@@ -15,13 +15,22 @@ from e2r.research_brain.planning.provider_transport import (
 
 from .component_researcher import ComponentResearchResult, StructuredResearchProvider
 from .red_team_researcher import RedTeamResearchResult
-from .research_supervisor import ResearchSupervisorReview
-from .schemas import CANONICAL_COMPONENT_ORDER, assert_blind_research_output, scrub_blind_research_payload
+from .research_supervisor import (
+    ResearchSupervisorReview,
+    project_current_supervisor_review,
+)
+from .schemas import (
+    CANONICAL_COMPONENT_ORDER,
+    EvidenceFact,
+    assert_blind_research_output,
+    scrub_blind_research_payload,
+)
 from .source_graph_explorer import validate_source_graph_checkpoint
 from .prompt_projection import (
     project_research_epoch_checkpoint,
-    project_source_graph_checkpoint,
     project_structured_result,
+    project_supervisor_evidence_facts,
+    project_supervisor_source_graph_checkpoint,
 )
 
 
@@ -204,6 +213,7 @@ class SemanticSaturationReviewer:
         component_results: Sequence[ComponentResearchResult],
         red_team_result: RedTeamResearchResult | None,
         structured_result: Any | None,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
         source_graph_checkpoint: Mapping[str, Any],
     ) -> SaturationReviewerResult:
         provider_name = str(
@@ -222,24 +232,27 @@ class SemanticSaturationReviewer:
             target_id=str(checkpoint.get("target_id") or ""),
             as_of_date=str(checkpoint.get("as_of_date") or ""),
         )
-        payload = scrub_blind_research_payload(
-            {
-                "reviewer_role": self.reviewer_role,
-                "research_epoch_checkpoint": project_research_epoch_checkpoint(
-                    checkpoint
-                ),
-                "supervisor_review": supervisor_review.to_dict(),
-                "component_results": [row.to_dict() for row in component_results],
-                "red_team_result": (
-                    red_team_result.to_dict() if red_team_result else None
-                ),
-                "structured_result": (
-                    project_structured_result(structured_result)
-                ),
-                "source_graph_checkpoint": _saturation_source_graph_payload(
-                    source_graph_checkpoint
-                ),
-            }
+        fact_payloads = tuple(
+            row.to_dict() if isinstance(row, EvidenceFact) else dict(row)
+            for row in evidence_facts
+        )
+        _validate_current_fact_roster(
+            checkpoint=checkpoint,
+            evidence_facts=fact_payloads,
+        )
+        if str(checkpoint.get("source_graph_checkpoint_id") or "") != str(
+            source_graph_checkpoint.get("checkpoint_id") or ""
+        ):
+            raise ValueError("saturation Source Graph binding is stale")
+        payload = _semantic_saturation_prompt_payload(
+            reviewer_role=self.reviewer_role,
+            checkpoint=checkpoint,
+            supervisor_review=supervisor_review,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            structured_result=structured_result,
+            evidence_facts=fact_payloads,
+            source_graph_checkpoint=source_graph_checkpoint,
         )
         try:
             response = self.provider.complete(
@@ -477,21 +490,103 @@ def _review_from_response(
 def _saturation_source_graph_payload(
     checkpoint: Mapping[str, Any],
 ) -> Mapping[str, Any]:
-    return project_source_graph_checkpoint(
-        checkpoint,
-        keys=(
+    projection = dict(project_supervisor_source_graph_checkpoint(checkpoint))
+    projection["current_checkpoint_binding"] = {
+        key: checkpoint.get(key)
+        for key in (
             "checkpoint_id",
+            "checkpoint_hash",
+            "target_id",
+            "as_of_date",
             "epoch",
-            "generated_queries",
-            "query_failures",
-            "fetch_records",
-            "evidence_documents",
-            "rejected_documents",
-            "resolved_objective_ids",
-            "transport_budget_can_complete_research",
-            "semantic_saturation_certified",
-        ),
+            "status",
+        )
+    }
+    projection["full_checkpoint_hash"] = _payload_hash(checkpoint)
+    projection["current_checkpoint_binding_preserved"] = True
+    return projection
+
+
+def _semantic_saturation_prompt_payload(
+    *,
+    reviewer_role: str,
+    checkpoint: Mapping[str, Any],
+    supervisor_review: ResearchSupervisorReview | Mapping[str, Any],
+    component_results: Sequence[ComponentResearchResult | Mapping[str, Any]],
+    red_team_result: RedTeamResearchResult | Mapping[str, Any] | None,
+    structured_result: Any | None,
+    evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+    source_graph_checkpoint: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    component_payloads = [
+        row.to_dict() if hasattr(row, "to_dict") else dict(row)
+        for row in component_results
+    ]
+    red_team_payload = (
+        red_team_result.to_dict()
+        if hasattr(red_team_result, "to_dict")
+        else dict(red_team_result)
+        if red_team_result is not None
+        else None
     )
+    fact_payloads = tuple(
+        row.to_dict() if isinstance(row, EvidenceFact) else dict(row)
+        for row in evidence_facts
+    )
+    return scrub_blind_research_payload(
+        {
+            "reviewer_role": reviewer_role,
+            "research_epoch_checkpoint": project_research_epoch_checkpoint(
+                checkpoint
+            ),
+            "supervisor_review": project_current_supervisor_review(
+                supervisor_review
+            ),
+            "current_evidence_fact_graph": project_supervisor_evidence_facts(
+                fact_payloads
+            ),
+            # Independent reviewers keep the full current memo, red-team, and
+            # structured semantics; only repeated lineage ledgers are grouped.
+            "component_results": component_payloads,
+            "red_team_result": red_team_payload,
+            "structured_result": project_structured_result(structured_result),
+            "source_graph_checkpoint": _saturation_source_graph_payload(
+                source_graph_checkpoint
+            ),
+        }
+    )
+
+
+def _validate_current_fact_roster(
+    *,
+    checkpoint: Mapping[str, Any],
+    evidence_facts: Sequence[Mapping[str, Any]],
+) -> None:
+    fact_ids = tuple(str(row.get("fact_id") or "") for row in evidence_facts)
+    current_fact_ids = tuple(
+        str(value) for value in checkpoint.get("current_fact_ids") or ()
+    )
+    if (
+        any(not value for value in fact_ids)
+        or any(not value for value in current_fact_ids)
+        or len(fact_ids) != len(set(fact_ids))
+        or len(current_fact_ids) != len(set(current_fact_ids))
+        or len(fact_ids) != len(current_fact_ids)
+        or set(fact_ids) != set(current_fact_ids)
+    ):
+        raise ValueError(
+            "saturation facts must exactly match the current checkpoint roster"
+        )
+
+
+def _payload_hash(value: Any) -> str:
+    encoded = json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        default=str,
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 
 
 def _string_tuple(value: Any) -> tuple[str, ...]:

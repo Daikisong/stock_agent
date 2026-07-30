@@ -1424,6 +1424,42 @@ def _prior_supervisor_review_prompt_projection(
     return payload
 
 
+def project_current_supervisor_review(
+    review: ResearchSupervisorReview | Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Project every current Supervisor judgment and restore exact binding.
+
+    The shared loss-accounted projection collapses expanded failure assessments
+    into semantic groups.  Saturation additionally needs the identity of the
+    *current* provider review, so this wrapper restores its checkpoint-relevant
+    lineage and binds the projection to the full persisted review hash.
+    """
+
+    full_review = (
+        dict(review.to_dict())
+        if isinstance(review, ResearchSupervisorReview)
+        else dict(review)
+    )
+    projection = dict(_prior_supervisor_review_prompt_projection(full_review))
+    projection["current_review_binding"] = {
+        key: full_review.get(key)
+        for key in (
+            "review_id",
+            "epoch",
+            "prompt_hash",
+            "synthesis_memo_id",
+            "synthesis_memo_hash",
+        )
+    }
+    projection["full_review_hash"] = _stable_payload_hash(full_review)
+    projection["current_review_binding_preserved"] = True
+    projection["full_current_review_persisted_outside_prompt"] = True
+    projection["fixed_top_n_used"] = False
+    projection["prompt_projection_is_research_cap"] = False
+    projection["score_authority"] = False
+    return projection
+
+
 def _prior_supervisor_text_projection(value: Any) -> str:
     """Bound transport diagnostics while preserving normal research prose."""
 
@@ -2248,6 +2284,7 @@ def _clean_error(error: Exception) -> str:
 
 __all__ = [
     "build_counter_and_supersession_route_proof",
+    "project_current_supervisor_review",
     "ResearchSupervisor",
     "ResearchSupervisorReview",
     "SUPERVISOR_FAILURE_CLASSES",

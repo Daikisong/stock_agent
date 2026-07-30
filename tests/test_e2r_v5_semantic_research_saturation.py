@@ -27,9 +27,11 @@ from e2r.research_brain.researcher_mode import (
     RedTeamResearchResult,
     ResearchEpochRunner,
     ResearchSupervisor,
+    ResearchSupervisorReview,
     SaturationReview,
     SemanticSaturationCertifier,
     SemanticSaturationReviewer,
+    SupervisorFailureAssessment,
     SynthesisMemo,
     SynthesisResult,
     StructuredMetricRecord,
@@ -42,6 +44,9 @@ from e2r.research_brain.researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.research_supervisor import (
     build_counter_and_supersession_route_proof,
+)
+from e2r.research_brain.researcher_mode.saturation import (
+    _semantic_saturation_prompt_payload,
 )
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _completion_gates,
@@ -420,12 +425,26 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
                 "gold_critical_fact_miss_count",
                 projected_checkpoint,
             )
-            projected_supervisor = payload["research_epoch_checkpoint"][
-                "supervisor_review"
-            ]
+            projected_supervisor = payload["supervisor_review"]
             self.assertEqual(
-                projected_supervisor["synthesis_memo_hash"],
+                projected_supervisor["current_review_binding"][
+                    "synthesis_memo_hash"
+                ],
                 expected_hash,
+            )
+            self.assertEqual(
+                projected_supervisor["current_review_binding"]["review_id"],
+                run.supervisor_review.review_id,
+            )
+            self.assertEqual(
+                payload["current_evidence_fact_graph"]["record_count"],
+                len(_route_facts()),
+            )
+            self.assertEqual(
+                payload["source_graph_checkpoint"][
+                    "current_checkpoint_binding"
+                ]["checkpoint_id"],
+                run.checkpoint.source_graph_checkpoint_id,
             )
         self.assertEqual(
             run.saturation_certificate.checkpoint_id,  # type: ignore[union-attr]
@@ -439,6 +458,314 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             run.saturation_certificate.gold_critical_fact_miss_count  # type: ignore[union-attr]
         )
         self.assertTrue(_production_semantic_saturation_certified(run))
+
+    def test_large_saturation_payload_is_loss_accounted_and_under_transport_contract(
+        self,
+    ) -> None:
+        base = ResearchEpochRunner(
+            supervisor=ResearchSupervisor(
+                provider=Phase87SupervisorProvider("READY")
+            ),
+            saturation_reviewers=(),
+        ).run_epoch(**_epoch_inputs(source_checkpoint=_source_checkpoint()))
+        expanded_assessments = tuple(
+            SupervisorFailureAssessment(
+                failure_id=f"FAILURE-{index:05d}",
+                classification="IRRELEVANT_DOCUMENT",
+                rationale=(
+                    "동일 semantic failure group이며 current objective는 "
+                    "다른 source-backed facts로 해결됐다."
+                ),
+                retryable=False,
+                source_absence_claim_allowed=False,
+            )
+            for index in range(3_666)
+        )
+        supervisor_review = replace(
+            base.supervisor_review,
+            failure_assessments=expanded_assessments,
+        )
+        facts = (
+            _fact("FACT-1"),
+            *(
+                _fact(f"FACT-LARGE-{index:05d}")
+                for index in range(7_999)
+            ),
+        )
+        checkpoint = dict(base.checkpoint.to_dict())
+        checkpoint["current_fact_ids"] = [row.fact_id for row in facts]
+        checkpoint["cumulative_fact_ids"] = [row.fact_id for row in facts]
+        checkpoint["new_facts"] = [row.to_dict() for row in facts]
+        checkpoint["supervisor_review"] = supervisor_review.to_dict()
+        checkpoint["checkpoint_hash"] = _stable_test_hash(checkpoint)
+
+        source_checkpoint = dict(_source_checkpoint())
+        source_checkpoint.update(
+            {
+                "generated_queries": [
+                    {
+                        "query_id": f"QUERY-{index:04d}",
+                        "objective_id": OBJECTIVE_ID,
+                        "execution_status": "SEARCH_EXECUTED",
+                        "counter_or_supersession_search": bool(index % 2),
+                        "search_result_count": 1,
+                        "literal_query": f"generic current research route {index}",
+                    }
+                    for index in range(500)
+                ],
+                "query_failures": [
+                    {
+                        "failure_id": f"QFAIL-{index:04d}",
+                        "query_id": f"QUERY-{index % 500:04d}",
+                        "objective_id": OBJECTIVE_ID,
+                        "failure_stage": "SEARCH",
+                        "failure_reason": "grouped terminal route",
+                        "alternate_route_required": False,
+                        "absence_eligible": False,
+                        "zero_result_only": False,
+                    }
+                    for index in range(1_800)
+                ],
+                "search_candidates": [
+                    {
+                        "candidate_id": f"CAND-{index:05d}",
+                        "ranking_status": "RANKED",
+                        "fetch_status": "FETCHED",
+                        "candidate_source_family_hint": "ISSUER_PRESENTATION",
+                        "verified_official_domain_candidate": True,
+                        "objective_ids": [OBJECTIVE_ID],
+                        "requested_source_families": ["ISSUER_PRESENTATION"],
+                        "rank": index + 1,
+                        "url": f"https://issuer.example/{index}",
+                        "title": "grouped candidate",
+                        "snippet": "discovery only",
+                    }
+                    for index in range(4_000)
+                ],
+                "candidate_materiality_decisions": [
+                    {
+                        "decision_id": f"MAT-{index:05d}",
+                        "candidate_id": f"CAND-{index:05d}",
+                        "material_relevance": True,
+                        "evidence_eligible": True,
+                        "snippet_discovery_only": False,
+                        "score_authority": False,
+                        "objective_ids": [OBJECTIVE_ID],
+                        "priority": 1,
+                        "rationale": "material current route",
+                    }
+                    for index in range(4_000)
+                ],
+                "fetch_records": [
+                    {
+                        "fetch_id": f"FETCH-{index:05d}",
+                        "candidate_id": f"CAND-{index:05d}",
+                        "disposition": "FETCHED",
+                        "full_fetch_attempted": True,
+                        "snippet_used_as_document": False,
+                        "score_authority": False,
+                        "objective_ids": [OBJECTIVE_ID],
+                    }
+                    for index in range(2_500)
+                ],
+                "rejected_documents": [
+                    {
+                        "rejection_id": f"REJECT-{index:05d}",
+                        "candidate_id": f"CAND-{index:05d}",
+                        "retryable": False,
+                        "snippet_used_as_document": False,
+                        "score_authority": False,
+                        "objective_ids": [OBJECTIVE_ID],
+                        "accepted_claim_ids": [],
+                        "rejection_reason": "duplicate or superseded document",
+                    }
+                    for index in range(1_900)
+                ],
+                "evidence_documents": [
+                    {
+                        "document_id": f"DOC-{index:05d}",
+                        "target_id": TARGET,
+                        "as_of_date": AS_OF_DATE,
+                        "source_family": "ISSUER_PRESENTATION",
+                        "source_provider": "ISSUER",
+                        "publication_date_source": "DOCUMENT",
+                        "full_fetch_performed": True,
+                        "snippet_only": False,
+                        "evidence_eligible": True,
+                        "content_hash": f"{index:064x}",
+                    }
+                    for index in range(1_400)
+                ],
+            }
+        )
+        source_checkpoint["checkpoint_hash"] = _stable_test_hash(
+            {
+                key: value
+                for key, value in source_checkpoint.items()
+                if key not in {"checkpoint_hash", "checkpoint_id"}
+            }
+        )
+        checkpoint["source_graph_checkpoint_id"] = source_checkpoint[
+            "checkpoint_id"
+        ]
+
+        payloads = tuple(
+            _semantic_saturation_prompt_payload(
+                reviewer_role=role,
+                checkpoint=checkpoint,
+                supervisor_review=supervisor_review,
+                component_results=_components(),
+                red_team_result=_red_team(),
+                structured_result=_structured(),
+                evidence_facts=facts,
+                source_graph_checkpoint=source_checkpoint,
+            )
+            for role in SATURATION_REVIEW_ROLES
+        )
+        encoded_sizes = tuple(
+            len(
+                json.dumps(
+                    payload,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    default=str,
+                ).encode("utf-8")
+            )
+            for payload in payloads
+        )
+        self.assertTrue(all(size < 1_000_000 for size in encoded_sizes))
+        fact_projection = payloads[0]["current_evidence_fact_graph"]
+        self.assertEqual(fact_projection["record_count"], 8_000)
+        self.assertTrue(
+            fact_projection["every_record_accounted_by_hash_and_group_count"]
+        )
+        self.assertFalse(fact_projection["fixed_top_n_used"])
+        supervisor_projection = payloads[0]["supervisor_review"]
+        self.assertEqual(
+            supervisor_projection["failure_assessment_projection"][
+                "failure_assessment_count"
+            ],
+            3_666,
+        )
+        self.assertTrue(
+            supervisor_projection["failure_assessment_projection"][
+                "every_assessment_accounted_by_group_count_and_hash"
+            ]
+        )
+        source_projection = payloads[0]["source_graph_checkpoint"]
+        for key, count in (
+            ("generated_queries", 500),
+            ("query_failures", 1_800),
+            ("search_candidates", 4_000),
+            ("candidate_materiality_decisions", 4_000),
+            ("fetch_records", 2_500),
+            ("rejected_documents", 1_900),
+            ("evidence_documents", 1_400),
+        ):
+            self.assertEqual(source_projection[key]["record_count"], count)
+            self.assertTrue(
+                source_projection[key][
+                    "every_record_accounted_by_hash_and_group_count"
+                ]
+            )
+        self.assertEqual(
+            payloads[0]["component_results"][0]["memo"][
+                "researcher_summary"
+            ],
+            _components()[0].memo.researcher_summary,
+        )
+        self.assertEqual(
+            payloads[0]["red_team_result"]["memo"]["memo_id"],
+            _red_team().memo.memo_id,
+        )
+        self.assertEqual(
+            payloads[0]["structured_result"]["status"],
+            _structured().status,
+        )
+        prompt_hashes = tuple(_stable_test_hash(payload) for payload in payloads)
+        self.assertEqual(len(set(prompt_hashes)), len(SATURATION_REVIEW_ROLES))
+        reviews = tuple(
+            SaturationReview(
+                review_id=f"SAT-LARGE-{index}",
+                reviewer_role=role,
+                approve=True,
+                seven_component_memos_complete=True,
+                material_positive_routes_reviewed=True,
+                counter_and_supersession_routes_checked=True,
+                structured_data_complete=True,
+                new_source_family_directions_reviewed=True,
+                unresolved_material_questions=(),
+                rationale="대형 loss-accounted payload를 독립적으로 검토했다.",
+                checkpoint_id=str(checkpoint["checkpoint_id"]),
+                epoch=int(checkpoint["epoch"]),
+                provider_name=f"PROVIDER-{index}",
+                prompt_hash=prompt_hashes[index],
+                provider_backed=True,
+            )
+            for index, role in enumerate(SATURATION_REVIEW_ROLES)
+        )
+        certificate = SemanticSaturationCertifier().certify(
+            reviews,
+            expected_checkpoint_id=str(checkpoint["checkpoint_id"]),
+            require_provider_reviews=True,
+        )
+        self.assertTrue(certificate.semantic_saturation_certified)
+
+        mutated_facts = list(facts)
+        mutated_facts[-1] = replace(mutated_facts[-1], value=False)
+        mutated_payload = _semantic_saturation_prompt_payload(
+            reviewer_role=SATURATION_REVIEW_ROLES[0],
+            checkpoint=checkpoint,
+            supervisor_review=supervisor_review,
+            component_results=_components(),
+            red_team_result=_red_team(),
+            structured_result=_structured(),
+            evidence_facts=mutated_facts,
+            source_graph_checkpoint=source_checkpoint,
+        )
+        self.assertNotEqual(
+            fact_projection["record_roster_hash"],
+            mutated_payload["current_evidence_fact_graph"][
+                "record_roster_hash"
+            ],
+        )
+
+    def test_saturation_rejects_missing_facts_and_stale_source_before_provider(
+        self,
+    ) -> None:
+        base = ResearchEpochRunner(
+            supervisor=ResearchSupervisor(
+                provider=Phase87SupervisorProvider("READY")
+            ),
+            saturation_reviewers=(),
+        ).run_epoch(**_epoch_inputs(source_checkpoint=_source_checkpoint()))
+        provider = Phase87SaturationProvider("FAIL_CLOSED")
+        reviewer = SemanticSaturationReviewer(
+            reviewer_role=SATURATION_REVIEW_ROLES[0],
+            provider=provider,
+        )
+        common = {
+            "supervisor_review": base.supervisor_review,
+            "component_results": _components(),
+            "red_team_result": _red_team(),
+            "structured_result": _structured(),
+            "source_graph_checkpoint": _source_checkpoint(),
+        }
+        with self.assertRaisesRegex(ValueError, "exactly match"):
+            reviewer.review(
+                checkpoint=base.checkpoint.to_dict(),
+                evidence_facts=_route_facts()[:-1],
+                **common,
+            )
+        stale = dict(base.checkpoint.to_dict())
+        stale["source_graph_checkpoint_id"] = "STALE-SOURCE-CHECKPOINT"
+        with self.assertRaisesRegex(ValueError, "binding is stale"):
+            reviewer.review(
+                checkpoint=stale,
+                evidence_facts=_route_facts(),
+                **common,
+            )
+        self.assertEqual(provider.calls, [])
 
     def test_supervisor_does_not_request_without_current_complete_synthesis(
         self,
