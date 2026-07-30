@@ -556,6 +556,101 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             prior_projection["checkpoint_lineage_excluded_from_provider"]
         )
 
+    def test_supervisor_prompt_normalizes_collaboration_wait_request_id(self) -> None:
+        seed = ResearchSupervisor(
+            provider=Phase87SupervisorProvider("GAP")
+        ).review_epoch(**_supervisor_inputs())
+        request_a = "COLLABREQ-" + ("a" * 64)
+        request_b = "COLLABREQ-" + ("b" * 64)
+
+        def prior(request_id: str) -> Mapping[str, Any]:
+            wait = (
+                "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                "StructuredProviderUnavailable:"
+                f"COLLABORATION_RESPONSE_PENDING:{request_id}"
+            )
+            return {
+                **seed.to_dict(),
+                "unresolved_material_questions": [wait],
+                "rationale": wait,
+            }
+
+        provider = Phase87SupervisorProvider("GAP")
+        supervisor = ResearchSupervisor(provider=provider)
+        supervisor.review_epoch(
+            **_supervisor_inputs(),
+            prior_review=prior(request_a),
+        )
+        supervisor.review_epoch(
+            **_supervisor_inputs(),
+            prior_review=prior(request_b),
+        )
+
+        first_payload = provider.calls[-2]["payload"]
+        second_payload = provider.calls[-1]["payload"]
+        self.assertEqual(first_payload, second_payload)
+        encoded = json.dumps(first_payload, ensure_ascii=False, sort_keys=True)
+        self.assertNotIn(request_a, encoded)
+        self.assertNotIn(request_b, encoded)
+        self.assertIn("COLLABREQ-<REQUEST_ID>", encoded)
+        self.assertEqual(
+            first_payload["prior_supervisor_review"][
+                "prior_review_semantic_hash"
+            ],
+            second_payload["prior_supervisor_review"][
+                "prior_review_semantic_hash"
+            ],
+        )
+
+    def test_supervisor_prompt_preserves_noncanonical_provider_errors(self) -> None:
+        seed = ResearchSupervisor(
+            provider=Phase87SupervisorProvider("GAP")
+        ).review_epoch(**_supervisor_inputs())
+        request_id = "COLLABREQ-" + ("a" * 64)
+
+        def payload_for(error: str) -> Mapping[str, Any]:
+            prior = {
+                **seed.to_dict(),
+                "unresolved_material_questions": [error],
+                "rationale": error,
+            }
+            provider = Phase87SupervisorProvider("GAP")
+            ResearchSupervisor(provider=provider).review_epoch(
+                **_supervisor_inputs(),
+                prior_review=prior,
+            )
+            return provider.calls[-1]["payload"]
+
+        suffixed = (
+            "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+            "StructuredProviderUnavailable:"
+            "COLLABORATION_RESPONSE_PENDING:"
+            f"{request_id}:HTTP_503"
+        )
+        rejected = (
+            "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+            "StructuredProviderRejected:"
+            "component sufficiency contradicts current memos"
+        )
+        suffixed_payload = payload_for(suffixed)
+        rejected_payload = payload_for(rejected)
+        self.assertIn(
+            request_id,
+            json.dumps(suffixed_payload, ensure_ascii=False, sort_keys=True),
+        )
+        self.assertIn(
+            "StructuredProviderRejected",
+            json.dumps(rejected_payload, ensure_ascii=False, sort_keys=True),
+        )
+        self.assertNotEqual(
+            suffixed_payload["prior_supervisor_review"][
+                "prior_review_semantic_hash"
+            ],
+            rejected_payload["prior_supervisor_review"][
+                "prior_review_semantic_hash"
+            ],
+        )
+
     def test_supervisor_provider_error_is_bounded_before_checkpoint_persistence(
         self,
     ) -> None:

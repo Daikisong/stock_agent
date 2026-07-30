@@ -25,6 +25,7 @@ from .schemas import (
 )
 from .source_query_planner import CANONICAL_SOURCE_FAMILIES
 from .prompt_projection import (
+    normalize_collaboration_transport_wait,
     project_counter_route_proof,
     project_structured_result,
     project_supervisor_evidence_facts,
@@ -1180,6 +1181,7 @@ def _prior_supervisor_text_projection(value: Any) -> str:
     """Bound transport diagnostics while preserving normal research prose."""
 
     text = " ".join(str(value).split())
+    text = normalize_collaboration_transport_wait(text)
     if len(text) <= 2_000:
         return text
     folded = text.casefold()

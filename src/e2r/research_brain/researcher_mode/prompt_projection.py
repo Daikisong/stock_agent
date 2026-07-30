@@ -210,6 +210,9 @@ _FACT_TRANSPORT_PROGRESS_FEEDBACK_RE = re.compile(
     r"[^:\s]+:([0-9]+)/([1-9][0-9]*)$"
 )
 _DROP_COLLABORATION_TRANSPORT_WAIT = object()
+_COLLABORATION_TRANSPORT_WAIT_REQUEST_ID_RE = re.compile(
+    r"COLLABREQ-[0-9a-f]{64}$"
+)
 
 
 def project_source_documents(
@@ -2133,6 +2136,18 @@ def _is_collaboration_transport_wait(value: Any) -> bool:
         _COLLABORATION_TRANSPORT_WAIT_RE.fullmatch(
             str(value or "").strip()
         )
+    )
+
+
+def normalize_collaboration_transport_wait(value: Any) -> str:
+    """Keep a transport-wait class stable while removing its request nonce."""
+
+    text = " ".join(str(value or "").split())
+    if not _is_collaboration_transport_wait(text):
+        return text
+    return _COLLABORATION_TRANSPORT_WAIT_REQUEST_ID_RE.sub(
+        "COLLABREQ-<REQUEST_ID>",
+        text,
     )
 
 

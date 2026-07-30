@@ -1981,6 +1981,50 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             _semantic_signature(changed_validation),
         )
 
+    def test_no_progress_signature_normalizes_supervisor_wait_request_id(
+        self,
+    ) -> None:
+        def result(request_id: str):
+            wait = (
+                "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                "StructuredProviderUnavailable:"
+                "COLLABORATION_RESPONSE_PENDING:"
+                f"{request_id}"
+            )
+            return SimpleNamespace(
+                source_graph=SimpleNamespace(
+                    status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+                    checkpoint={
+                        "generated_queries": [],
+                        "search_candidates": [],
+                        "query_failures": [],
+                    },
+                    evidence_documents=(),
+                ),
+                fact_extraction=SimpleNamespace(
+                    status="FACT_EXTRACTION_COMPLETE",
+                    pending_reasons=(),
+                    facts=(),
+                ),
+                dossier=SimpleNamespace(component_results=()),
+                structured_result=SimpleNamespace(status="COMPLETE", records=()),
+                score_aggregation=SimpleNamespace(
+                    status="SCORE_PENDING",
+                    pending_reasons=(wait,),
+                ),
+                research_epoch=SimpleNamespace(
+                    supervisor_review=SimpleNamespace(
+                        status="NEXT_RESEARCH_REQUIRED",
+                        unresolved_material_questions=(wait,),
+                        failure_assessments=(),
+                    )
+                ),
+            )
+
+        first = result("COLLABREQ-" + ("a" * 64))
+        second = result("COLLABREQ-" + ("b" * 64))
+        self.assertEqual(_semantic_signature(first), _semantic_signature(second))
+
     def test_no_progress_signature_ignores_duplicate_supervisor_failures(
         self,
     ) -> None:

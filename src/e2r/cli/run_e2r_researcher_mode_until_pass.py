@@ -24,6 +24,9 @@ from e2r.research_brain.researcher_mode import (
     write_phase93_post_run_comparison,
     write_production_lane,
 )
+from e2r.research_brain.researcher_mode.prompt_projection import (
+    normalize_collaboration_transport_wait,
+)
 
 
 def _bool(value: str | bool) -> bool:
@@ -866,6 +869,7 @@ def _semantic_failure_reason(reason: str) -> str:
     """Remove transport noise that cannot represent new research semantics."""
 
     value = " ".join(str(reason).split())
+    value = normalize_collaboration_transport_wait(value)
     folded = value.casefold()
     prefix = value.split(":", 2)[:2]
     stable_prefix = ":".join(prefix)
