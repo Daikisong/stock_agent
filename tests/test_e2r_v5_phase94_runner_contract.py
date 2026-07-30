@@ -724,6 +724,84 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             )
         )
 
+    def test_terminal_fact_wait_stops_on_same_semantic_signature(
+        self,
+    ) -> None:
+        checkpoint = _phase94_source_checkpoint(epoch=1)
+        snapshot = _source_transport_snapshot(checkpoint)
+        pending_result = SimpleNamespace(
+            status="RESEARCH_CHECKPOINT_PENDING",
+            completion_gates={"source_graph_checkpoint_ready": True},
+            source_graph=SimpleNamespace(
+                status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+            ),
+            fact_extraction=SimpleNamespace(
+                status="FACT_EXTRACTION_PENDING",
+                pending_reasons=(
+                    "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                    "StructuredProviderUnavailable:"
+                    "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                    + "f" * 64,
+                ),
+            ),
+            audit={
+                "source_checkpoint_readonly_replayed": True,
+                "source_checkpoint_fact_extraction_recovery_replayed": False,
+            },
+        )
+
+        class Runner:
+            def __init__(self) -> None:
+                self.modes = []
+
+            def run_checkpoint(self, **kwargs):
+                self.modes.append(kwargs["source_resume_mode"])
+                return pending_result
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            runner = Runner()
+            with (
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_signature",
+                    return_value="a" * 64,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_state",
+                    return_value={},
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_load_prior_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_result_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "refresh_canary_target_manifest_hash"
+                ),
+            ):
+                returned = _run_target_until_semantic_terminal(
+                    runner=runner,
+                    config=SimpleNamespace(
+                        output_root=str(root),
+                        as_of_date=AS_OF_DATE,
+                    ),
+                    target=SimpleNamespace(target_id="CURRENT-TARGET"),
+                )
+
+        self.assertIs(returned, pending_result)
+        self.assertEqual(
+            runner.modes,
+            ["REUSE_READY_CHECKPOINT", "REUSE_READY_CHECKPOINT"],
+        )
+
     def test_readonly_source_replay_requires_terminal_source_work(self) -> None:
         ready = {
             "status": "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",

@@ -432,6 +432,7 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
         if (
             source_checkpoint_readonly_replayed
             and not source_checkpoint_fact_extraction_recovery_replayed
+            and next_source_resume_mode != "REUSE_READY_CHECKPOINT"
             and source_transport_chain_valid
         ):
             # A ready source snapshot was intentionally held immutable so a
