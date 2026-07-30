@@ -160,7 +160,11 @@ class ResearcherDocumentRanker:
                         "is_pdf": bool(row.get("is_pdf")),
                         "is_news": bool(row.get("is_news")),
                         "is_disclosure": bool(row.get("is_disclosure")),
-                        "query_ids": list(row.get("query_ids") or ()),
+                        "query_ids": list(
+                            row.get("materiality_query_ids")
+                            or row.get("query_ids")
+                            or ()
+                        ),
                         "objective_ids": list(row.get("objective_ids") or ()),
                         "requested_source_families": list(
                             row.get("requested_source_families") or ()
@@ -503,6 +507,13 @@ def _decode_candidate_ranking(
         if set(cited_objectives) - objective_ids:
             raise ValueError("candidate ranking cited unknown objective")
         candidate = candidate_by_id[candidate_id]
+        candidate_objective_ids = set(
+            _unique_strings(candidate.get("objective_ids") or ())
+        )
+        if set(cited_objectives) - candidate_objective_ids:
+            raise ValueError(
+                "candidate ranking cited an objective outside its query edge"
+            )
         requested_source_families = set(
             _unique_strings(
                 candidate.get("requested_source_families") or ()

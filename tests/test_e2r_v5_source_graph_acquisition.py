@@ -1880,7 +1880,19 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
         self.assertEqual(
             set(existing["requested_source_families"]),
-            {"TRUSTED_BUSINESS_MEDIA", "CUSTOMER_OFFICIAL"},
+            {"CUSTOMER_OFFICIAL"},
+        )
+        self.assertEqual(
+            set(existing["historical_requested_source_families"]),
+            {"TRUSTED_BUSINESS_MEDIA"},
+        )
+        self.assertEqual(
+            existing["objective_ids"],
+            ["OBJECTIVE-2"],
+        )
+        self.assertEqual(
+            existing["historical_objective_ids"],
+            ["OBJECTIVE-1"],
         )
 
     def test_production_reopens_legacy_pending_material_before_fetch(

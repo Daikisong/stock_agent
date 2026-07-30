@@ -816,6 +816,7 @@ class ResearcherSourceGraphAcquirer:
             pending_query_rows = []
         query_budget = config.max_queries_per_checkpoint
         query_calls = 0
+        materiality_scope_refreshed_urls: set[str] = set()
         for query_row in pending_query_rows:
             if query_calls >= query_budget:
                 pending_reasons.append("QUERY_TRANSPORT_BUDGET_CHECKPOINT")
@@ -892,6 +893,9 @@ class ResearcherSourceGraphAcquirer:
                 rejected_rows,
                 search_result_rows,
                 cutoff=cutoff,
+                materiality_scope_refreshed_urls=(
+                    materiality_scope_refreshed_urls
+                ),
             )
         newly_rejected_future_candidate_ids = (
             _reject_future_candidate_metadata(
@@ -2499,6 +2503,7 @@ def _merge_search_candidates(
     new_rows: Sequence[Mapping[str, Any]],
     *,
     cutoff: date,
+    materiality_scope_refreshed_urls: set[str] | None = None,
 ) -> None:
     by_url = {str(row["normalized_url"]): row for row in candidates}
     for raw in new_rows:
@@ -2517,8 +2522,13 @@ def _merge_search_candidates(
         key = str(row["normalized_url"])
         existing = by_url.get(key)
         if existing is None:
+            row["materiality_query_ids"] = list(
+                row.get("query_ids") or ()
+            )
             candidates.append(row)
             by_url[key] = row
+            if materiality_scope_refreshed_urls is not None:
+                materiality_scope_refreshed_urls.add(key)
             continue
         prior_materiality_scope_hash = (
             _candidate_materiality_scope_hash(existing)
@@ -2526,19 +2536,68 @@ def _merge_search_candidates(
         existing["query_ids"] = list(
             dict.fromkeys((*existing.get("query_ids", ()), *row.get("query_ids", ())))
         )
-        existing["objective_ids"] = list(
-            dict.fromkeys(
-                (*existing.get("objective_ids", ()), *row.get("objective_ids", ()))
-            )
+        first_scope_refresh = bool(
+            materiality_scope_refreshed_urls is None
+            or key not in materiality_scope_refreshed_urls
         )
-        existing["requested_source_families"] = list(
-            dict.fromkeys(
-                (
-                    *existing.get("requested_source_families", ()),
-                    *row.get("requested_source_families", ()),
+        if first_scope_refresh:
+            existing["historical_objective_ids"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("historical_objective_ids", ()),
+                        *existing.get("objective_ids", ()),
+                    )
                 )
             )
-        )
+            existing["historical_requested_source_families"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get(
+                            "historical_requested_source_families",
+                            (),
+                        ),
+                        *existing.get("requested_source_families", ()),
+                    )
+                )
+            )
+            existing["objective_ids"] = list(
+                dict.fromkeys(row.get("objective_ids") or ())
+            )
+            existing["requested_source_families"] = list(
+                dict.fromkeys(
+                    row.get("requested_source_families") or ()
+                )
+            )
+            existing["materiality_query_ids"] = list(
+                dict.fromkeys(row.get("query_ids") or ())
+            )
+            if materiality_scope_refreshed_urls is not None:
+                materiality_scope_refreshed_urls.add(key)
+        else:
+            existing["objective_ids"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("objective_ids", ()),
+                        *row.get("objective_ids", ()),
+                    )
+                )
+            )
+            existing["requested_source_families"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("requested_source_families", ()),
+                        *row.get("requested_source_families", ()),
+                    )
+                )
+            )
+            existing["materiality_query_ids"] = list(
+                dict.fromkeys(
+                    (
+                        *existing.get("materiality_query_ids", ()),
+                        *row.get("query_ids", ()),
+                    )
+                )
+            )
         existing["direct_search_discovery"] = bool(
             existing.get("direct_search_discovery")
             or row.get("direct_search_discovery")
@@ -3261,7 +3320,11 @@ def _fetch_candidate_document(
         "content_type": result.content_type,
         "content_hash": content_hash,
         "content_text": text,
-        "query_ids": list(candidate.get("query_ids") or ()),
+        "query_ids": list(
+            candidate.get("materiality_query_ids")
+            or candidate.get("query_ids")
+            or ()
+        ),
         "objective_ids": list(candidate.get("objective_ids") or ()),
         "requested_source_families": list(
             candidate.get("requested_source_families") or ()
@@ -3311,7 +3374,11 @@ def _fetch_record(
         "fetch_id": fetch_id,
         "candidate_id": candidate.get("candidate_id"),
         "url": candidate.get("url"),
-        "query_ids": list(candidate.get("query_ids") or ()),
+        "query_ids": list(
+            candidate.get("materiality_query_ids")
+            or candidate.get("query_ids")
+            or ()
+        ),
         "objective_ids": list(candidate.get("objective_ids") or ()),
         "disposition": disposition,
         "provider_error": error,
@@ -3343,7 +3410,11 @@ def _candidate_rejection(
         "rejection_id": rejection_id,
         "candidate_id": candidate.get("candidate_id"),
         "url": candidate.get("url"),
-        "query_ids": list(candidate.get("query_ids") or ()),
+        "query_ids": list(
+            candidate.get("materiality_query_ids")
+            or candidate.get("query_ids")
+            or ()
+        ),
         "objective_ids": list(candidate.get("objective_ids") or ()),
         "rejection_reason": reason,
         "retryable": retryable,
