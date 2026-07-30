@@ -2048,14 +2048,6 @@ def _load_prior_research_context(
                 )
                 if key in supervisor
             }
-            component_status = supervisor.get("component_status") or {}
-            if isinstance(component_status, Mapping):
-                supervisor_unresolved_components.update(
-                    str(component_id)
-                    for component_id, status in component_status.items()
-                    if str(component_id) in CANONICAL_COMPONENT_ORDER
-                    and str(status) != "COMPLETE"
-                )
             for finding in supervisor.get("component_findings") or ():
                 if not isinstance(finding, Mapping):
                     continue
@@ -2155,10 +2147,15 @@ def _component_supervisor_feedback_by_component(
             finding
             for finding in findings_by_component.get(component_id, [])
             if finding.get("memo_sufficient") is False
-            or str(status or "COMPLETE") != "COMPLETE"
         ]
         gaps = gaps_by_component.get(component_id, [])
-        if str(status or "COMPLETE") == "COMPLETE" and not findings and not gaps:
+        # A provider/transport placeholder marks every component PENDING before
+        # the supervisor has produced any semantic finding.  Status alone is
+        # therefore not rewrite authority: otherwise a completed memo is
+        # reopened merely because the supervisor response is still in flight.
+        # Findings and component-scoped material-fact gaps are the actionable
+        # feedback planes.
+        if not findings and not gaps:
             continue
         result[component_id] = {
             **shared,

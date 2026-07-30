@@ -1389,6 +1389,29 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertEqual(set(first), {"market_mispricing"})
 
+    def test_pending_supervisor_transport_placeholder_does_not_reopen_components(
+        self,
+    ) -> None:
+        routed = _component_supervisor_feedback_by_component(
+            {
+                "review_id": "RSUP-PENDING-1",
+                "status": "NEXT_RESEARCH_REQUIRED",
+                "component_status": {
+                    component_id: "PENDING"
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                },
+                "component_findings": [],
+                "missing_material_facts": [],
+                "unresolved_material_questions": [
+                    "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                    "COLLABORATION_RESPONSE_PENDING:COLLABREQ-1"
+                ],
+                "component_memos_sufficient": False,
+            }
+        )
+
+        self.assertEqual(routed, {})
+
     def test_provider_outage_recovers_only_hash_bound_prior_memo_body(self) -> None:
         memo = {
             "target_id": "CURRENT-TARGET",
@@ -3490,6 +3513,74 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 "research_need"
             ],
             "numeric issuer outlook",
+        )
+
+    def test_pending_supervisor_transport_placeholder_does_not_reopen_objectives(
+        self,
+    ) -> None:
+        target_id = "CURRENT-TARGET"
+        as_of_date = "2026-06-29"
+        objectives = tuple(
+            {
+                "objective_id": f"OBJECTIVE-{component_id}",
+                "component_id": component_id,
+            }
+            for component_id in CANONICAL_COMPONENT_ORDER
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "component_research_memos.jsonl").write_text(
+                "\n".join(
+                    json.dumps(
+                        {
+                            "component_id": component_id,
+                            "research_complete": True,
+                        }
+                    )
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        "checkpoint_id": "EPOCH-PENDING",
+                        "epoch": 9,
+                        "status": "NEXT_RESEARCH_REQUIRED",
+                        "supervisor_review": {
+                            "review_id": "RSUP-PENDING-1",
+                            "status": "NEXT_RESEARCH_REQUIRED",
+                            "component_status": {
+                                component_id: "PENDING"
+                                for component_id in CANONICAL_COMPONENT_ORDER
+                            },
+                            "component_findings": [],
+                            "missing_material_facts": [],
+                            "unresolved_material_questions": [
+                                "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                                "COLLABORATION_RESPONSE_PENDING:COLLABREQ-1"
+                            ],
+                            "component_memos_sufficient": False,
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=objectives,
+            )
+
+        self.assertEqual(
+            set(context["resolved_objective_ids"]),
+            {
+                f"OBJECTIVE-{component_id}"
+                for component_id in CANONICAL_COMPONENT_ORDER
+            },
         )
 
     def test_score_and_supervisor_gaps_reopen_only_their_component_objectives(
