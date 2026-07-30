@@ -852,7 +852,7 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertEqual(failure_projection["failure_group_count"], 6)
         self.assertTrue(
             failure_projection[
-                "every_failure_accounted_by_group_count_and_hash"
+                "every_semantic_failure_accounted_by_group_count_and_hash"
             ]
         )
         gap_projection = project_query_score_gap_context(
@@ -1157,6 +1157,177 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             first["query_score_gap_projection_audit"][
                 "checkpoint_lineage_excluded_from_provider"
             ]
+        )
+
+    def test_query_prompt_projection_ignores_only_collaboration_transport_waits(
+        self,
+    ):
+        request_a = "COLLABREQ-" + "a" * 64
+        request_b = "COLLABREQ-" + "b" * 64
+        real_failure = {
+            "failure_id": "FAILURE-REAL",
+            "failure_stage": "FULL_DOCUMENT_FETCH",
+            "failure_reason": "FETCH_TIMEOUT",
+            "objective_id": "OBJECTIVE-1",
+            "query_id": "QUERY-1",
+        }
+        wait_failure_a = {
+            "failure_reason": (
+                "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+                + request_a
+            ),
+            "objective_id": "MULTI_OBJECTIVE",
+            "query_id": "QUERY_GENERATION",
+        }
+        wait_failure_b = {
+            "failure_reason": (
+                "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+                + request_b
+            ),
+            "objective_id": "MULTI_OBJECTIVE",
+            "query_id": "QUERY_GENERATION",
+        }
+
+        first_failures = project_query_planner_failures(
+            (real_failure, wait_failure_a)
+        )
+        repeated_wait_failures = project_query_planner_failures(
+            (
+                real_failure,
+                wait_failure_a,
+                wait_failure_b,
+                wait_failure_b,
+            )
+        )
+        self.assertEqual(first_failures, repeated_wait_failures)
+        self.assertEqual(first_failures["failure_count"], 1)
+        self.assertTrue(
+            first_failures[
+                "collaboration_transport_waits_excluded_from_semantic_prompt"
+            ]
+        )
+
+        context_a = {
+            "source_graph_pending_reasons": [
+                "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+                + request_a,
+                "REFERENCE_DISCOVERY_TRANSPORT_BUDGET_CHECKPOINT:2",
+            ],
+            "prior_fact_extraction_feedback": [
+                "UNRESOLVED_RESEARCH_NOTE:peer band source가 필요하다.",
+                (
+                    "FACT_EXTRACTION_RETRY_CONTEXT:"
+                    "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                    "StructuredProviderUnavailable:"
+                    "COLLABORATION_RESPONSE_PENDING:"
+                    + request_a
+                ),
+            ],
+            "prior_supervisor_gap": {
+                "unresolved_material_questions": [
+                    (
+                        "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                        "StructuredProviderUnavailable:"
+                        "COLLABORATION_RESPONSE_PENDING:"
+                        + request_a
+                    ),
+                    "PEER_BAND를 확인해야 한다.",
+                ],
+            },
+            "prior_research_epoch": {
+                "unresolved_material_questions": [
+                    (
+                        "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                        "StructuredProviderUnavailable:"
+                        "COLLABORATION_RESPONSE_PENDING:"
+                        + request_a
+                    ),
+                    "PEER_BAND를 확인해야 한다.",
+                ],
+            },
+        }
+        context_b = {
+            **context_a,
+            "source_graph_pending_reasons": [
+                "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+                + request_b,
+                "REFERENCE_DISCOVERY_TRANSPORT_BUDGET_CHECKPOINT:2",
+            ],
+            "prior_fact_extraction_feedback": [
+                "UNRESOLVED_RESEARCH_NOTE:peer band source가 필요하다.",
+                (
+                    "FACT_EXTRACTION_RETRY_CONTEXT:"
+                    "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                    "StructuredProviderUnavailable:"
+                    "COLLABORATION_RESPONSE_PENDING:"
+                    + request_b
+                ),
+            ],
+            "prior_supervisor_gap": {
+                "unresolved_material_questions": [
+                    (
+                        "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                        "StructuredProviderUnavailable:"
+                        "COLLABORATION_RESPONSE_PENDING:"
+                        + request_b
+                    ),
+                    "PEER_BAND를 확인해야 한다.",
+                ],
+            },
+            "prior_research_epoch": {
+                "unresolved_material_questions": [
+                    (
+                        "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                        "StructuredProviderUnavailable:"
+                        "COLLABORATION_RESPONSE_PENDING:"
+                        + request_b
+                    ),
+                    "PEER_BAND를 확인해야 한다.",
+                ],
+            },
+        }
+        self.assertEqual(
+            project_query_score_gap_context(context_a),
+            project_query_score_gap_context(context_b),
+        )
+
+        changed_real_failure = {
+            **real_failure,
+            "failure_reason": "HTTP_503",
+        }
+        self.assertNotEqual(
+            first_failures,
+            project_query_planner_failures(
+                (changed_real_failure, wait_failure_a)
+            ),
+        )
+        mixed_failure = {
+            **real_failure,
+            "provider_error": (
+                "COLLABORATION_RESPONSE_PENDING:" + request_a
+            ),
+        }
+        mixed_projection = project_query_planner_failures((mixed_failure,))
+        self.assertEqual(mixed_projection["failure_count"], 1)
+        self.assertEqual(
+            mixed_projection["failures"][0]["failure_reason"],
+            "FETCH_TIMEOUT",
+        )
+        suffixed_real_error = {
+            "failure_reason": (
+                "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+                + request_a
+                + ":HTTP_503"
+            ),
+            "objective_id": "OBJECTIVE-1",
+        }
+        suffixed_projection = project_query_planner_failures(
+            (suffixed_real_error,)
+        )
+        self.assertEqual(suffixed_projection["failure_count"], 1)
+        self.assertEqual(
+            suffixed_projection["failures"][0]["failure_reason"],
+            "QUERY_PROVIDER_ERROR",
         )
 
     def test_research_source_profiles_ignore_transport_lineage_only_churn(self):

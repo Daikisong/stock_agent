@@ -737,6 +737,71 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(len(result.facts), 1)
         self.assertEqual(result.facts[0].value, "record_operating_cash_flow")
 
+    def test_fact_provider_payload_ignores_collaboration_wait_request_id(
+        self,
+    ) -> None:
+        def score_gap_context(request_id: str) -> Mapping[str, Any]:
+            supervisor_wait = (
+                "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                "StructuredProviderUnavailable:"
+                "COLLABORATION_RESPONSE_PENDING:"
+                + request_id
+            )
+            return {
+                "source_graph_pending_reasons": [
+                    "QUERY_PROVIDER_ERROR:"
+                    "COLLABORATION_RESPONSE_PENDING:"
+                    + request_id,
+                ],
+                "prior_fact_extraction_feedback": [
+                    "UNRESOLVED_RESEARCH_NOTE:peer band source가 필요하다.",
+                    (
+                        "FACT_EXTRACTION_RETRY_CONTEXT:"
+                        "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                        "StructuredProviderUnavailable:"
+                        "COLLABORATION_RESPONSE_PENDING:"
+                        + request_id
+                    ),
+                ],
+                "prior_supervisor_gap": {
+                    "unresolved_material_questions": [supervisor_wait],
+                },
+                "prior_research_epoch": {
+                    "unresolved_material_questions": [supervisor_wait],
+                },
+            }
+
+        provider_a = FactProvider()
+        provider_b = FactProvider()
+        common = {
+            "target_id": TARGET,
+            "target_name": TARGET_NAME,
+            "target_aliases": (),
+            "archetype_id": ARCHETYPE,
+            "as_of_date": AS_OF_DATE,
+            "documents": (
+                _document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),
+            ),
+            "open_objectives": (),
+        }
+        ResearcherEvidenceFactExtractor(provider=provider_a).extract(
+            **common,
+            score_gap_context=score_gap_context(
+                "COLLABREQ-" + "a" * 64
+            ),
+        )
+        ResearcherEvidenceFactExtractor(provider=provider_b).extract(
+            **common,
+            score_gap_context=score_gap_context(
+                "COLLABREQ-" + "b" * 64
+            ),
+        )
+
+        self.assertEqual(
+            provider_a.calls[0]["payload"],
+            provider_b.calls[0]["payload"],
+        )
+
     def test_transport_fragment_provider_value_uses_normalized_object(self) -> None:
         result = ResearcherEvidenceFactExtractor(
             provider=CorruptedValueFactProvider(":null},{")

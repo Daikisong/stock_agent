@@ -183,6 +183,29 @@ _FAILURE_RELATION_FIELDS = (
     "accepted_claim_ids",
 )
 
+_COLLABORATION_TRANSPORT_WAIT_PREFIXES = (
+    "",
+    "QUERY_PROVIDER_ERROR:",
+    "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:StructuredProviderUnavailable:",
+    "FACT_EXTRACTION_RETRY_CONTEXT:"
+    "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+    "StructuredProviderUnavailable:",
+    "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:StructuredProviderUnavailable:",
+    "PEER_SELECTION_PROVIDER_OR_SCHEMA_ERROR:",
+    "PEER_SELECTION_PENDING:PEER_SELECTION_PROVIDER_OR_SCHEMA_ERROR:",
+    "PROVIDER_ERROR:",
+)
+_COLLABORATION_TRANSPORT_WAIT_RE = re.compile(
+    r"^(?:"
+    + "|".join(
+        re.escape(prefix)
+        for prefix in _COLLABORATION_TRANSPORT_WAIT_PREFIXES
+    )
+    + r")COLLABORATION_RESPONSE_PENDING:"
+    r"COLLABREQ-[0-9a-f]{64}$"
+)
+_DROP_COLLABORATION_TRANSPORT_WAIT = object()
+
 
 def project_source_documents(
     rows: Sequence[Mapping[str, Any]],
@@ -2011,10 +2034,29 @@ def _failure_group_value(field: str, value: Any) -> Any:
 def project_query_planner_failures(
     rows: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
-    """Give the query LLM every failure state without opaque id inflation."""
+    """Give the query LLM every semantic failure without transport-wait churn.
 
+    ``COLLABORATION_RESPONSE_PENDING`` is the asynchronous bridge's control
+    signal: the same prompt is waiting for a Codex subagent response.  It is
+    persisted in the Source Graph checkpoint, but it is not a new search,
+    source, parser, or provider failure.  Replaying its request id into the
+    next prompt would change that prompt and make the awaited response
+    impossible to consume.
+    """
+
+    input_rows = tuple(dict(raw) for raw in rows)
+    semantic_rows = tuple(
+        projected
+        for raw in input_rows
+        if (
+            projected := _project_failure_without_collaboration_transport_wait(
+                raw
+            )
+        )
+        is not None
+    )
     ordered_inputs = sorted(
-        (dict(raw) for raw in rows),
+        semantic_rows,
         key=lambda row: (
             str(row.get("failure_id") or ""),
             _stable_hash(row),
@@ -2060,7 +2102,7 @@ def project_query_planner_failures(
         )
         failures.append(row)
     return {
-        "schema_version": "e2r_v5_query_planner_failure_projection_v1",
+        "schema_version": "e2r_v5_query_planner_failure_projection_v2",
         "failure_count": full_projection["failure_count"],
         "failure_group_count": full_projection["failure_group_count"],
         "failure_roster_hash": full_projection["failure_roster_hash"],
@@ -2068,15 +2110,75 @@ def project_query_planner_failures(
             full_projection.get("failure_group_members") or {}
         ),
         "failures": failures,
-        "every_failure_accounted_by_group_count_and_hash": (
+        "every_semantic_failure_accounted_by_group_count_and_hash": (
             sum(int(row["member_failure_count"]) for row in failures)
             == len(normalized)
         ),
         "full_failure_records_persisted_in_source_graph_checkpoint": True,
+        "collaboration_transport_waits_excluded_from_semantic_prompt": True,
+        "collaboration_transport_waits_persisted_in_source_graph_checkpoint": True,
         "fixed_top_n_used": False,
         "prompt_projection_is_research_cap": False,
         "score_authority": False,
     }
+
+
+def _is_collaboration_transport_wait(value: Any) -> bool:
+    return bool(
+        _COLLABORATION_TRANSPORT_WAIT_RE.fullmatch(
+            str(value or "").strip()
+        )
+    )
+
+
+def _project_failure_without_collaboration_transport_wait(
+    row: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    output = dict(row)
+    reason_fields = (
+        "failure_reason",
+        "reason",
+        "rejection_reason",
+        "provider_error",
+    )
+    wait_fields = tuple(
+        field
+        for field in reason_fields
+        if _is_collaboration_transport_wait(output.get(field))
+    )
+    if not wait_fields:
+        return output
+    for field in wait_fields:
+        output.pop(field, None)
+    if any(str(output.get(field) or "").strip() for field in reason_fields):
+        return output
+    return None
+
+
+def _project_without_collaboration_transport_waits(value: Any) -> Any:
+    if isinstance(value, str):
+        if _is_collaboration_transport_wait(value):
+            return _DROP_COLLABORATION_TRANSPORT_WAIT
+        return value
+    if isinstance(value, Mapping):
+        output = {}
+        for key, raw in value.items():
+            projected = _project_without_collaboration_transport_waits(raw)
+            if projected is not _DROP_COLLABORATION_TRANSPORT_WAIT:
+                output[key] = projected
+        return output
+    if isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+        return [
+            projected
+            for raw in value
+            if (
+                projected := _project_without_collaboration_transport_waits(
+                    raw
+                )
+            )
+            is not _DROP_COLLABORATION_TRANSPORT_WAIT
+        ]
+    return value
 
 
 def _project_gap_reason_roster(
@@ -2086,7 +2188,13 @@ def _project_gap_reason_roster(
 ) -> Mapping[str, Any]:
     """Account for a repeated run-state reason ledger without replaying it."""
 
-    ordered = tuple(sorted(str(value) for value in reasons))
+    ordered = tuple(
+        sorted(
+            str(value)
+            for value in reasons
+            if not _is_collaboration_transport_wait(value)
+        )
+    )
     kind_rows = tuple(
         {
             "kind": (
@@ -2100,7 +2208,7 @@ def _project_gap_reason_roster(
         for value in ordered
     )
     return {
-        "schema_version": "e2r_v5_gap_reason_roster_projection_v1",
+        "schema_version": "e2r_v5_gap_reason_roster_projection_v2",
         "field_name": field_name,
         "reason_count": len(ordered),
         "unique_reason_count": len(set(ordered)),
@@ -2110,6 +2218,7 @@ def _project_gap_reason_roster(
             sum(_relation_coverage(kind_rows, "kind").values()) == len(ordered)
         ),
         "full_reason_records_persisted_outside_prompt": True,
+        "collaboration_transport_waits_excluded_from_semantic_prompt": True,
         "fixed_top_n_used": False,
         "prompt_projection_is_research_cap": False,
         "score_authority": False,
@@ -2121,7 +2230,9 @@ def project_query_score_gap_context(
 ) -> Mapping[str, Any]:
     """Remove duplicate ledgers while preserving LLM-authored gap semantics."""
 
-    output = dict(context)
+    output = dict(
+        _project_without_collaboration_transport_waits(dict(context))
+    )
     for field in ("source_graph_pending_reasons",):
         reasons = output.get(field)
         if isinstance(reasons, Sequence) and not isinstance(reasons, (str, bytes)):
@@ -2132,9 +2243,13 @@ def project_query_score_gap_context(
             )
     feedback = output.get("prior_fact_extraction_feedback")
     if isinstance(feedback, Sequence) and not isinstance(feedback, (str, bytes)):
-        feedback_rows = tuple(str(value) for value in feedback)
+        feedback_rows = tuple(
+            str(value)
+            for value in feedback
+            if not _is_collaboration_transport_wait(value)
+        )
         output["prior_fact_extraction_feedback"] = {
-            "schema_version": "e2r_v5_fact_gap_feedback_projection_v1",
+            "schema_version": "e2r_v5_fact_gap_feedback_projection_v2",
             "feedback_count": len(feedback_rows),
             "feedback_roster_hash": _stable_hash(feedback_rows),
             "feedback_kind_coverage": _relation_coverage(
@@ -2150,6 +2265,7 @@ def project_query_score_gap_context(
             ),
             "supervisor_missing_facts_and_questions_remain_verbatim": True,
             "full_feedback_records_persisted_outside_prompt": True,
+            "collaboration_transport_waits_excluded_from_semantic_prompt": True,
             "fixed_top_n_used": False,
             "prompt_projection_is_research_cap": False,
             "score_authority": False,
@@ -2189,7 +2305,7 @@ def project_query_score_gap_context(
     return {
         **output,
         "query_score_gap_projection_audit": {
-            "schema_version": "e2r_v5_query_score_gap_projection_v2",
+            "schema_version": "e2r_v5_query_score_gap_projection_v3",
             "semantic_context_roster_hash": semantic_context_hash,
             "checkpoint_lineage_excluded_from_provider": True,
             "excluded_checkpoint_lineage_fields": [
@@ -2201,6 +2317,7 @@ def project_query_score_gap_context(
             ],
             "llm_authored_missing_facts_questions_and_directions_preserved": True,
             "duplicate_failure_ledgers_projected": True,
+            "collaboration_transport_waits_excluded_from_semantic_prompt": True,
             "full_gap_context_persisted_outside_prompt": True,
             "fixed_top_n_used": False,
             "prompt_projection_is_research_cap": False,

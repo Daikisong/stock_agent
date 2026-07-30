@@ -1005,6 +1005,123 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(result.status, "PENDING")
         self.assertIn("DUPLICATE_OR_ALREADY_EXECUTED_QUERY", result.feedback_for_next_llm_call[0])
 
+    def test_query_prompt_hash_stays_stable_while_collaboration_response_waits(
+        self,
+    ) -> None:
+        provider = SourceBrainProvider()
+        request_a = "COLLABREQ-" + "a" * 64
+        request_b = "COLLABREQ-" + "b" * 64
+        real_failure = {
+            "failure_stage": "FULL_DOCUMENT_FETCH",
+            "failure_reason": "FETCH_TIMEOUT",
+            "objective_id": _objective().objective_id,
+            "query_id": "QUERY-REAL",
+        }
+        wait_a = {
+            "failure_reason": (
+                "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+                + request_a
+            ),
+            "objective_id": "MULTI_OBJECTIVE",
+            "query_id": "QUERY_GENERATION",
+        }
+        wait_b = {
+            "failure_reason": (
+                "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+                + request_b
+            ),
+            "objective_id": "MULTI_OBJECTIVE",
+            "query_id": "QUERY_GENERATION",
+        }
+        common = {
+            "target_id": TARGET,
+            "target_name": TARGET_NAME,
+            "target_aliases": (),
+            "as_of_date": AS_OF_DATE,
+            "open_objectives": [_objective().to_dict()],
+            "current_evidence_facts": (),
+            "current_counterfacts": (),
+            "target_business_model": None,
+            "source_coverage": (),
+            "previously_executed_queries": (),
+            "theme_context": {},
+            "generator_kind": "TEST_FIXTURE_LLM",
+        }
+
+        def score_gap_context(request_id: str) -> Mapping[str, Any]:
+            supervisor_wait = (
+                "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                "StructuredProviderUnavailable:"
+                "COLLABORATION_RESPONSE_PENDING:"
+                + request_id
+            )
+            return {
+                "prior_fact_extraction_feedback": [
+                    "UNRESOLVED_RESEARCH_NOTE:peer band source가 필요하다.",
+                    (
+                        "FACT_EXTRACTION_RETRY_CONTEXT:"
+                        "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                        "StructuredProviderUnavailable:"
+                        "COLLABORATION_RESPONSE_PENDING:"
+                        + request_id
+                    ),
+                ],
+                "prior_supervisor_gap": {
+                    "unresolved_material_questions": [
+                        supervisor_wait,
+                        "PEER_BAND를 확인해야 한다.",
+                    ],
+                },
+                "prior_research_epoch": {
+                    "unresolved_material_questions": [
+                        supervisor_wait,
+                        "PEER_BAND를 확인해야 한다.",
+                    ],
+                },
+            }
+
+        first = ResearcherSourceQueryPlanner(provider=provider).generate(
+            **common,
+            prior_query_failures=(real_failure, wait_a),
+            score_gap_context=score_gap_context(request_a),
+        )
+        repeated_wait = ResearcherSourceQueryPlanner(provider=provider).generate(
+            **common,
+            prior_query_failures=(
+                real_failure,
+                wait_a,
+                wait_b,
+                wait_b,
+            ),
+            score_gap_context=score_gap_context(request_b),
+        )
+        changed_real_failure = ResearcherSourceQueryPlanner(
+            provider=provider
+        ).generate(
+            **common,
+            prior_query_failures=(
+                {
+                    **real_failure,
+                    "failure_reason": "HTTP_503",
+                },
+                wait_b,
+            ),
+            score_gap_context=score_gap_context(request_b),
+        )
+
+        query_payloads = [
+            call["payload"]
+            for call in provider.calls
+            if call["pass_name"] == "SOURCE_QUERY_GENERATION"
+        ]
+        self.assertEqual(query_payloads[0], query_payloads[1])
+        self.assertEqual(first.prompt_hash, repeated_wait.prompt_hash)
+        self.assertNotEqual(query_payloads[1], query_payloads[2])
+        self.assertNotEqual(
+            repeated_wait.prompt_hash,
+            changed_real_failure.prompt_hash,
+        )
+
     def test_future_dated_llm_query_is_rejected_before_search(self) -> None:
         provider = SourceBrainProvider(
             queries=("Current Corp report published 2026-06-30",)
