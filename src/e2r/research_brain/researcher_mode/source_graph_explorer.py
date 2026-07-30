@@ -917,6 +917,16 @@ class ResearcherSourceGraphAcquirer:
             candidates,
             official_hosts=allowed_hosts,
         )
+        stale_pending_materiality_count = 0
+        if config.mode == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value:
+            stale_pending_materiality_count = (
+                _reopen_stale_pending_materiality_candidates(candidates)
+            )
+            if stale_pending_materiality_count:
+                pending_reasons.append(
+                    "PRODUCTION_LEGACY_MATERIALITY_REVALIDATION_PENDING:"
+                    + str(stale_pending_materiality_count)
+                )
         pending_rank = (
             []
             if checkpoint_migration_only
@@ -958,13 +968,56 @@ class ResearcherSourceGraphAcquirer:
                 candidate["matched_requested_source_family"] = (
                     decision.matched_requested_source_family or "NONE"
                 )
+                candidate["materiality_scope_hash"] = (
+                    _candidate_materiality_scope_hash(candidate)
+                )
                 if decision.material_relevance:
                     candidate["ranking_status"] = "MATERIAL"
-                    candidate["fetch_status"] = "MATERIAL_PENDING_FETCH"
                     candidate["objective_ids"] = list(decision.objective_ids)
+                    revalidation_document_id = str(
+                        candidate.get("revalidation_document_id") or ""
+                    )
+                    if revalidation_document_id:
+                        candidate["fetch_status"] = "FULL_DOCUMENT_FETCHED"
+                        candidate["document_id"] = revalidation_document_id
+                        candidate.pop("revalidation_document_id", None)
+                        candidate.pop(
+                            "materiality_revalidation_reason", None
+                        )
+                        for document in evidence_documents:
+                            if (
+                                str(document.get("document_id") or "")
+                                != revalidation_document_id
+                            ):
+                                continue
+                            document["matched_requested_source_family"] = (
+                                decision.matched_requested_source_family
+                            )
+                            document["materiality_scope_hash"] = candidate[
+                                "materiality_scope_hash"
+                            ]
+                            document["objective_ids"] = list(
+                                dict.fromkeys(
+                                    (
+                                        *document.get("objective_ids", ()),
+                                        *decision.objective_ids,
+                                    )
+                                )
+                            )
+                            break
+                    else:
+                        candidate["fetch_status"] = "MATERIAL_PENDING_FETCH"
                 else:
                     candidate["ranking_status"] = "NOT_MATERIAL"
-                    candidate["fetch_status"] = "DISCOVERY_ONLY_NOT_FETCHED"
+                    if candidate.get("revalidation_document_id"):
+                        candidate["fetch_status"] = (
+                            "FULL_DOCUMENT_REVALIDATION_REJECTED"
+                        )
+                        candidate.pop("revalidation_document_id", None)
+                    else:
+                        candidate["fetch_status"] = (
+                            "DISCOVERY_ONLY_NOT_FETCHED"
+                        )
         pending_fetch = (
             []
             if checkpoint_migration_only
@@ -992,6 +1045,24 @@ class ResearcherSourceGraphAcquirer:
             if row.get("content_hash")
         }
         for candidate in fetch_batch:
+            if config.mode == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value:
+                matched_source_family = str(
+                    candidate.get("matched_requested_source_family") or ""
+                )
+                if (
+                    not matched_source_family
+                    or matched_source_family == "NONE"
+                    or matched_source_family
+                    not in set(
+                        candidate.get("requested_source_families") or ()
+                    )
+                    or candidate.get("materiality_scope_hash")
+                    != _candidate_materiality_scope_hash(candidate)
+                ):
+                    raise ValueError(
+                        "production fetch candidate lacks current "
+                        "requested-source-family materiality authority"
+                    )
             candidate["full_fetch_attempt_count"] = (
                 int(candidate.get("full_fetch_attempt_count") or 0) + 1
             )
@@ -1112,16 +1183,26 @@ class ResearcherSourceGraphAcquirer:
                 key=lambda row: str(row.get("document_id")),
             )
         )
+        production_documents = (
+            _production_downstream_documents(
+                documents=all_documents,
+                facts=facts,
+                candidates=candidates,
+            )
+            if config.mode
+            == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+            else all_documents
+        )
         coverage = [*source_coverage]
         coverage.extend(
             str(row.get("source_family"))
-            for row in all_documents
+            for row in production_documents
             if row.get("source_family")
         )
         graph = SourceGraphExplorer().build_graph(
             target_id=target_id,
             as_of_date=as_of_date,
-            documents=all_documents,
+            documents=production_documents,
             open_objectives=tuple(
                 SourceResearchObjective(**row) for row in objectives
             ),
@@ -1169,6 +1250,23 @@ class ResearcherSourceGraphAcquirer:
             rejected_rows, key_fields=("rejection_id",)
         )
         state["evidence_documents"] = [dict(row) for row in all_documents]
+        state["production_downstream_document_ids"] = [
+            str(row["document_id"])
+            for row in production_documents
+            if row.get("document_id")
+        ]
+        state["production_legacy_document_authority_pending_ids"] = sorted(
+            {
+                str(row["document_id"])
+                for row in all_documents
+                if row.get("document_id")
+            }
+            - {
+                str(row["document_id"])
+                for row in production_documents
+                if row.get("document_id")
+            }
+        )
         state["generated_queries"] = generated_rows
         state["search_candidates"] = candidates
         state["source_graph"] = graph.to_dict()
@@ -1198,13 +1296,25 @@ class ResearcherSourceGraphAcquirer:
                 **audit,
                 "checkpoint_migration_only": True,
             }
+        audit = {
+            **audit,
+            "production_downstream_document_count": len(
+                production_documents
+            ),
+            "production_legacy_document_authority_pending_count": (
+                len(all_documents) - len(production_documents)
+            ),
+            "production_stale_materiality_reopened_count": (
+                stale_pending_materiality_count
+            ),
+        }
         return SourceGraphAcquisitionRun(
             status=status,
             target_id=target_id,
             as_of_date=as_of_date,
             query_generation=query_generation,
             ranking_results=tuple(ranking_results),
-            evidence_documents=all_documents,
+            evidence_documents=production_documents,
             source_graph=graph,
             checkpoint=checkpoint,
             audit=audit,
@@ -1454,6 +1564,8 @@ def _new_acquisition_state(
         "source_graph": {},
         "semantic_saturation_certified": False,
         "production_score_authority": False,
+        "production_downstream_document_ids": [],
+        "production_legacy_document_authority_pending_ids": [],
         "parser_field_direct_score_authority": False,
         "snippet_evidence_allowed": False,
         "transport_budget_can_complete_research": False,
@@ -2231,6 +2343,156 @@ def _execute_search_query(
     return tuple(rows), errors
 
 
+def _candidate_materiality_scope_hash(
+    candidate: Mapping[str, Any],
+) -> str:
+    """Bind a materiality decision to the query scope it actually reviewed.
+
+    Candidate identity intentionally remains URL-based so repeated discovery
+    does not duplicate transport work.  Materiality identity is narrower:
+    adding a new objective or requested source family changes what the LLM
+    must decide even when the URL is identical.
+    """
+
+    payload = {
+        "normalized_url": str(
+            candidate.get("normalized_url")
+            or _normalize_url(str(candidate.get("url") or ""))
+        ),
+        "objective_ids": sorted(
+            str(value)
+            for value in candidate.get("objective_ids") or ()
+            if str(value).strip()
+        ),
+        "requested_source_families": sorted(
+            str(value)
+            for value in candidate.get("requested_source_families") or ()
+            if str(value).strip()
+        ),
+    }
+    return hashlib.sha256(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def _reopen_stale_pending_materiality_candidates(
+    candidates: Sequence[dict[str, Any]],
+) -> int:
+    """Re-rank legacy/stale MATERIAL rows before a production fetch.
+
+    Historical full documents remain auditable and may stay available when a
+    source-backed canonical fact already validates them downstream.  Only
+    unfinished transport work is reopened here, preventing a backfill-era
+    material decision from spending a production fetch budget.
+    """
+
+    reopened = 0
+    for candidate in candidates:
+        if candidate.get("ranking_status") != "MATERIAL":
+            continue
+        if candidate.get("fetch_status") not in {
+            "MATERIAL_PENDING_FETCH",
+            "FETCH_RETRY_PENDING",
+        }:
+            continue
+        current_scope_hash = _candidate_materiality_scope_hash(candidate)
+        matched_source_family = str(
+            candidate.get("matched_requested_source_family") or ""
+        )
+        if (
+            matched_source_family
+            and matched_source_family != "NONE"
+            and candidate.get("materiality_scope_hash")
+            == current_scope_hash
+            and matched_source_family
+            in set(candidate.get("requested_source_families") or ())
+        ):
+            continue
+        candidate["ranking_status"] = "PENDING"
+        candidate["fetch_status"] = "NOT_STARTED"
+        candidate["materiality_revalidation_reason"] = (
+            "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+        )
+        candidate.pop("materiality_decision_id", None)
+        candidate.pop("material_priority", None)
+        candidate.pop("materiality_rationale", None)
+        candidate.pop("matched_requested_source_family", None)
+        candidate.pop("materiality_scope_hash", None)
+        reopened += 1
+    return reopened
+
+
+def _production_downstream_documents(
+    *,
+    documents: Sequence[Mapping[str, Any]],
+    facts: Sequence[Mapping[str, Any]],
+    candidates: Sequence[Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    """Expose only production-validated documents to fact/supervisor stages.
+
+    A backfill document is preserved when a canonical fact already binds it to
+    an exact quote.  A newly fetched PageFetcher document instead needs the
+    current candidate decision's requested-source-family match.  This keeps
+    historical research usable without letting an unreviewed legacy backlog
+    become new production facts on resume.
+    """
+
+    fact_backed_document_ids = {
+        str(source_id)
+        for fact in facts
+        for source_id in fact.get("source_ids") or ()
+        if str(source_id).startswith("SGDOC-")
+    }
+    candidate_by_document_id = {
+        str(candidate.get("document_id") or ""): candidate
+        for candidate in candidates
+        if str(candidate.get("document_id") or "")
+    }
+    active: list[Mapping[str, Any]] = []
+    for document in documents:
+        document_id = str(document.get("document_id") or "")
+        if (
+            str(document.get("source_provider") or "") != "PageFetcher"
+            or document_id in fact_backed_document_ids
+        ):
+            active.append(document)
+            continue
+        candidate = candidate_by_document_id.get(document_id, {})
+        matched_source_family = str(
+            document.get("matched_requested_source_family")
+            or candidate.get("matched_requested_source_family")
+            or ""
+        )
+        requested_source_families = set(
+            str(value)
+            for value in (
+                document.get("requested_source_families")
+                or candidate.get("requested_source_families")
+                or ()
+            )
+            if str(value).strip()
+        )
+        materiality_scope_hash = str(
+            document.get("materiality_scope_hash")
+            or candidate.get("materiality_scope_hash")
+            or ""
+        )
+        if (
+            matched_source_family
+            and matched_source_family != "NONE"
+            and matched_source_family in requested_source_families
+            and materiality_scope_hash
+            == _candidate_materiality_scope_hash(candidate)
+        ):
+            active.append(document)
+    return tuple(active)
+
+
 def _merge_search_candidates(
     candidates: list[dict[str, Any]],
     rejected: list[dict[str, Any]],
@@ -2258,6 +2520,9 @@ def _merge_search_candidates(
             candidates.append(row)
             by_url[key] = row
             continue
+        prior_materiality_scope_hash = (
+            _candidate_materiality_scope_hash(existing)
+        )
         existing["query_ids"] = list(
             dict.fromkeys((*existing.get("query_ids", ()), *row.get("query_ids", ())))
         )
@@ -2278,6 +2543,51 @@ def _merge_search_candidates(
             existing.get("direct_search_discovery")
             or row.get("direct_search_discovery")
         )
+        expanded_materiality_scope_hash = (
+            _candidate_materiality_scope_hash(existing)
+        )
+        if prior_materiality_scope_hash == expanded_materiality_scope_hash:
+            continue
+        fetch_status = str(existing.get("fetch_status") or "")
+        ranking_status = str(existing.get("ranking_status") or "")
+        if fetch_status == "FULL_DOCUMENT_FETCHED" and existing.get(
+            "document_id"
+        ):
+            existing["revalidation_document_id"] = str(
+                existing["document_id"]
+            )
+            existing["ranking_status"] = "PENDING"
+            existing["fetch_status"] = (
+                "FULL_DOCUMENT_REVALIDATION_PENDING"
+            )
+        elif (
+            ranking_status in {"PENDING", "MATERIAL", "NOT_MATERIAL"}
+            and fetch_status
+            in {
+                "",
+                "NOT_STARTED",
+                "MATERIAL_PENDING_FETCH",
+                "FETCH_RETRY_PENDING",
+                "DISCOVERY_ONLY_NOT_FETCHED",
+            }
+        ):
+            existing["ranking_status"] = "PENDING"
+            existing["fetch_status"] = "NOT_STARTED"
+        else:
+            # A new query edge cannot make an unreadable, future, or otherwise
+            # terminal fetch valid.  Preserve that terminal transport result
+            # while recording that its old materiality decision has no
+            # authority for the expanded scope.
+            existing["materiality_scope_expanded_after_terminal_fetch"] = True
+            continue
+        existing["materiality_revalidation_reason"] = (
+            "QUERY_OBJECTIVE_OR_REQUESTED_SOURCE_SCOPE_EXPANDED"
+        )
+        existing.pop("materiality_decision_id", None)
+        existing.pop("material_priority", None)
+        existing.pop("materiality_rationale", None)
+        existing.pop("matched_requested_source_family", None)
+        existing.pop("materiality_scope_hash", None)
 
 
 def _reject_future_candidate_metadata(
@@ -2958,6 +3268,9 @@ def _fetch_candidate_document(
         ),
         "matched_requested_source_family": (
             matched_requested_source_family or None
+        ),
+        "materiality_scope_hash": (
+            candidate.get("materiality_scope_hash")
         ),
         "source_family_assigned_by_candidate_ranker": bool(
             classified_source_family == "GENERAL_WEB_DISCOVERY"

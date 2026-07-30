@@ -1816,6 +1816,160 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 mode="TEST",
             )
 
+    def test_legacy_production_checkpoint_needs_downstream_roster_migration(
+        self,
+    ) -> None:
+        checkpoint = {
+            "mode": "PRODUCTION_DAILY",
+            "status": "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+            "generated_queries": [],
+            "search_candidates": [],
+            "evidence_documents": [],
+        }
+
+        self.assertFalse(
+            _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
+        )
+        checkpoint["production_downstream_document_ids"] = []
+        self.assertTrue(
+            _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
+        )
+
+    def test_same_url_new_source_scope_invalidates_legacy_materiality(
+        self,
+    ) -> None:
+        url = "https://writer.example.net/legacy-hbm-retelling"
+        existing = {
+            "candidate_id": "LEGACY-CANDIDATE",
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "url": url,
+            "normalized_url": url,
+            "query_ids": ["OLD-QUERY"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["TRUSTED_BUSINESS_MEDIA"],
+            "ranking_status": "MATERIAL",
+            "fetch_status": "MATERIAL_PENDING_FETCH",
+            "materiality_decision_id": "LEGACY-DECISION",
+            "material_priority": 1.0,
+        }
+        newly_discovered = {
+            **existing,
+            "query_ids": ["NEW-QUERY"],
+            "objective_ids": ["OBJECTIVE-2"],
+            "requested_source_families": ["CUSTOMER_OFFICIAL"],
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+            "query_lineage_valid": True,
+        }
+        candidates = [existing]
+
+        source_graph_module._merge_search_candidates(
+            candidates,
+            [],
+            [newly_discovered],
+            cutoff=date.fromisoformat(AS_OF_DATE),
+        )
+
+        self.assertEqual(existing["ranking_status"], "PENDING")
+        self.assertEqual(existing["fetch_status"], "NOT_STARTED")
+        self.assertNotIn("materiality_decision_id", existing)
+        self.assertEqual(
+            existing["materiality_revalidation_reason"],
+            "QUERY_OBJECTIVE_OR_REQUESTED_SOURCE_SCOPE_EXPANDED",
+        )
+        self.assertEqual(
+            set(existing["requested_source_families"]),
+            {"TRUSTED_BUSINESS_MEDIA", "CUSTOMER_OFFICIAL"},
+        )
+
+    def test_production_reopens_legacy_pending_material_before_fetch(
+        self,
+    ) -> None:
+        candidate = {
+            "candidate_id": "LEGACY-PENDING",
+            "url": "https://writer.example.net/pending",
+            "normalized_url": "https://writer.example.net/pending",
+            "query_ids": ["QUERY-1"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["CUSTOMER_OFFICIAL"],
+            "ranking_status": "MATERIAL",
+            "fetch_status": "MATERIAL_PENDING_FETCH",
+            "materiality_decision_id": "LEGACY-DECISION",
+        }
+
+        reopened = (
+            source_graph_module._reopen_stale_pending_materiality_candidates(
+                [candidate]
+            )
+        )
+
+        self.assertEqual(reopened, 1)
+        self.assertEqual(candidate["ranking_status"], "PENDING")
+        self.assertEqual(candidate["fetch_status"], "NOT_STARTED")
+        self.assertNotIn("materiality_decision_id", candidate)
+
+    def test_production_downstream_requires_fact_or_current_source_match(
+        self,
+    ) -> None:
+        current_candidate = {
+            "candidate_id": "CURRENT-MATCHED",
+            "document_id": "SGDOC-current",
+            "url": "https://customer.example.com/platform",
+            "normalized_url": "https://customer.example.com/platform",
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["CUSTOMER_OFFICIAL"],
+            "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+        }
+        current_candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(
+                current_candidate
+            )
+        )
+        documents = (
+            {
+                "document_id": "SGDOC-fact-backed",
+                "source_provider": "PageFetcher",
+            },
+            {
+                "document_id": "SGDOC-legacy-unvalidated",
+                "source_provider": "PageFetcher",
+            },
+            {
+                "document_id": "SGDOC-current",
+                "source_provider": "PageFetcher",
+                "requested_source_families": ["CUSTOMER_OFFICIAL"],
+                "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+                "materiality_scope_hash": current_candidate[
+                    "materiality_scope_hash"
+                ],
+            },
+            {
+                "document_id": "SGDOC-official-merge",
+                "source_provider": "OpenDart",
+            },
+        )
+
+        active = source_graph_module._production_downstream_documents(
+            documents=documents,
+            facts=(
+                {
+                    "fact_id": "FACT-1",
+                    "source_ids": ["SGDOC-fact-backed"],
+                },
+            ),
+            candidates=(current_candidate,),
+        )
+
+        self.assertEqual(
+            {row["document_id"] for row in active},
+            {
+                "SGDOC-fact-backed",
+                "SGDOC-current",
+                "SGDOC-official-merge",
+            },
+        )
+
     def test_graph_keeps_official_structured_independent_and_reference_expansion(self) -> None:
         provider = SourceBrainProvider()
         web_url = "https://www.reuters.com/current-report"

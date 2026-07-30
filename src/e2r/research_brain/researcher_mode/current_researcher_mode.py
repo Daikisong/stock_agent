@@ -1297,6 +1297,16 @@ def _source_checkpoint_is_ready_for_readonly_replay(
 
     if not _source_checkpoint_has_terminal_source_work(checkpoint):
         return False
+    if (
+        checkpoint.get("mode")
+        == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+        and "production_downstream_document_ids" not in checkpoint
+    ):
+        # A legacy production checkpoint may contain backfill-era fetched
+        # documents that never passed a current requested-source-family
+        # decision.  Force one acquisition migration to persist the exact
+        # downstream document roster before readonly replay is allowed.
+        return False
     if source_graph_active_navigation_only_document_ids(checkpoint):
         # A ready legacy checkpoint can still contain a fetched search/listing
         # page.  Route it through one bounded migration ADVANCE so source
@@ -1460,10 +1470,31 @@ def _hydrate_readonly_source_graph_run(
     graph_payload = checkpoint.get("source_graph")
     if not isinstance(graph_payload, Mapping):
         raise ValueError("source checkpoint graph payload is missing")
+    checkpoint_documents = tuple(
+        checkpoint.get("evidence_documents") or ()
+    )
+    if (
+        checkpoint.get("mode")
+        == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+    ):
+        downstream_document_ids = {
+            str(value)
+            for value in checkpoint.get(
+                "production_downstream_document_ids"
+            )
+            or ()
+            if str(value).strip()
+        }
+        checkpoint_documents = tuple(
+            row
+            for row in checkpoint_documents
+            if str(row.get("document_id") or "")
+            in downstream_document_ids
+        )
     graph = SourceGraphExplorer().build_graph(
         target_id=str(checkpoint["target_id"]),
         as_of_date=str(checkpoint["as_of_date"]),
-        documents=tuple(checkpoint.get("evidence_documents") or ()),
+        documents=checkpoint_documents,
         open_objectives=open_objectives,
         source_coverage=tuple(
             graph_payload.get("covered_source_families") or ()
@@ -1537,7 +1568,7 @@ def _hydrate_readonly_source_graph_run(
         query_generation=None,
         ranking_results=(),
         evidence_documents=tuple(
-            dict(row) for row in checkpoint.get("evidence_documents") or ()
+            dict(row) for row in checkpoint_documents
         ),
         source_graph=graph,
         checkpoint=checkpoint,
