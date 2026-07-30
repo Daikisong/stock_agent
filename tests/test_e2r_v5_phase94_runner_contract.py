@@ -23,11 +23,13 @@ from e2r.cli.run_e2r_researcher_mode_until_pass import (
     _source_transport_work_summary,
     _terminal_source_snapshot_has_pending_fact_extraction,
     build_parser,
+    main as run_researcher_mode_until_pass,
 )
 from e2r.research import EmptySearchProvider, PageFetcher
 from e2r.production.metadata import stable_hash
 from e2r.research_brain.researcher_mode import (
     CANONICAL_COMPONENT_ORDER,
+    PHASE93_POST_RUN_FAIL,
     ComponentResearchPlanner,
     CurrentStructuredMaterializationResult,
     CurrentResearcherModeConfig,
@@ -1801,6 +1803,166 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertNotIn("compare_phase93_gold_post_run", source)
         self.assertNotIn("load_phase93_gold_corpus", source)
         self.assertIn('"gold_visibility": False', source)
+
+    def test_phase94_gold_comparison_runs_only_after_every_production_target_closes(
+        self,
+    ) -> None:
+        targets = tuple(
+            SimpleNamespace(target_id=value)
+            for value in ("CURRENT-A", "CURRENT-B")
+        )
+
+        def execute(*, second_status: str):
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                statuses = (
+                    "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
+                    second_status,
+                )
+                runs = tuple(
+                    SimpleNamespace(
+                        status=statuses[index],
+                        target=target,
+                        output_root=root / target.target_id,
+                        completion_gates={},
+                        score_aggregation=object(),
+                        stagecourt=object(),
+                    )
+                    for index, target in enumerate(targets)
+                )
+                order = []
+                run_by_id = {
+                    run.target.target_id: run for run in runs
+                }
+
+                def run_target(**kwargs):
+                    target_id = kwargs["target"].target_id
+                    order.append(f"production:{target_id}")
+                    return run_by_id[target_id]
+
+                def write_lane(**_kwargs):
+                    order.append("production_lane_closed")
+                    return {"lane": root / "production_lane_manifest.json"}
+
+                def compare(**_kwargs):
+                    order.append("post_run_gold_opened")
+                    return SimpleNamespace(
+                        status=PHASE93_POST_RUN_FAIL,
+                        comparisons=(),
+                        audit={
+                            "critical_counts": {
+                                "critical_material_fact_recall_below_threshold_count": 1
+                            }
+                        },
+                    )
+
+                with (
+                    patch(
+                        "e2r.cli.run_e2r_researcher_mode_until_pass."
+                        "load_current_research_targets",
+                        return_value=targets,
+                    ),
+                    patch(
+                        "e2r.cli.run_e2r_researcher_mode_until_pass."
+                        "_build_research_provider",
+                        return_value=object(),
+                    ),
+                    patch(
+                        "e2r.cli.run_e2r_researcher_mode_until_pass."
+                        "CurrentResearcherModeTargetRunner",
+                        return_value=SimpleNamespace(provider=object()),
+                    ),
+                    patch(
+                        "e2r.cli.run_e2r_researcher_mode_until_pass."
+                        "_research_provider_manifest",
+                        return_value={"provider_name": "TEST"},
+                    ),
+                    patch(
+                        "e2r.cli.run_e2r_researcher_mode_until_pass."
+                        "_run_target_until_semantic_terminal",
+                        side_effect=run_target,
+                    ),
+                    patch(
+                        "e2r.cli.run_e2r_researcher_mode_until_pass."
+                        "write_production_lane",
+                        side_effect=write_lane,
+                    ),
+                    patch(
+                        "e2r.cli.run_e2r_researcher_mode_until_pass."
+                        "compare_phase93_gold_post_run",
+                        side_effect=compare,
+                    ) as compare_mock,
+                    patch(
+                        "e2r.cli.run_e2r_researcher_mode_until_pass."
+                        "write_phase93_post_run_comparison"
+                    ),
+                    patch(
+                        "e2r.cli.run_e2r_researcher_mode_until_pass."
+                        "write_canary_post_run_gold_comparison"
+                    ),
+                    patch("builtins.print"),
+                ):
+                    exit_code = run_researcher_mode_until_pass(
+                        [
+                            "--as-of-date",
+                            AS_OF_DATE,
+                            "--symbols",
+                            "CURRENT-A,CURRENT-B",
+                            "--archetype",
+                            "CURRENT-ARCHETYPE",
+                            "--live-materialization-authorized",
+                            "true",
+                            "--checkpoint-resume",
+                            "true",
+                            "--gold-lane-isolated",
+                            "true",
+                            "--require-researcher-parity",
+                            "true",
+                            "--output-root",
+                            str(root),
+                        ]
+                    )
+                summary = json.loads(
+                    (root / "phase94_run_summary.json").read_text(
+                        encoding="utf-8"
+                    )
+                )
+                return exit_code, order, compare_mock.call_count, summary, runs
+
+        pending = execute(second_status="RESEARCH_CHECKPOINT_PENDING")
+        self.assertEqual(pending[0], 2)
+        self.assertEqual(pending[2], 0)
+        self.assertNotIn("post_run_gold_opened", pending[1])
+        self.assertFalse(pending[3]["production_research_complete"])
+
+        post_run_fail = execute(
+            second_status=(
+                "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+            )
+        )
+        self.assertEqual(post_run_fail[0], 2)
+        self.assertEqual(post_run_fail[2], 1)
+        self.assertEqual(
+            post_run_fail[1],
+            [
+                "production:CURRENT-A",
+                "production:CURRENT-B",
+                "production_lane_closed",
+                "post_run_gold_opened",
+            ],
+        )
+        self.assertTrue(post_run_fail[3]["production_research_complete"])
+        self.assertEqual(
+            post_run_fail[3]["post_run_gold_status"],
+            PHASE93_POST_RUN_FAIL,
+        )
+        self.assertTrue(
+            all(
+                run.status
+                == "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+                for run in post_run_fail[4]
+            )
+        )
 
     def test_phase94_output_contract_names_are_present(self) -> None:
         source = (

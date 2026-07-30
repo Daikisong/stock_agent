@@ -7,6 +7,7 @@ import unittest
 from pathlib import Path
 from typing import Any, Mapping
 
+from e2r.production.metadata import stable_hash
 from e2r.research_brain.researcher_mode import (
     PHASE84_PASS,
     AnalystJudge,
@@ -1324,6 +1325,20 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
         )
         self.assertEqual(dossier.status, "RESEARCH_MEMOS_COMPLETE")
         self.assertEqual(len(dossier.component_results), 7)
+        self.assertIsNotNone(dossier.red_team_result.memo)
+        self.assertIsNotNone(dossier.synthesis_result.memo)
+        red_team_memo = dossier.red_team_result.memo
+        synthesis_memo = dossier.synthesis_result.memo
+        assert red_team_memo is not None
+        assert synthesis_memo is not None
+        self.assertEqual(
+            synthesis_memo.red_team_memo_id,
+            red_team_memo.memo_id,
+        )
+        self.assertEqual(
+            synthesis_memo.red_team_memo_hash,
+            stable_hash(red_team_memo.to_dict()),
+        )
         for call in provider.calls:
             keys = _recursive_keys(call["payload"])
             self.assertFalse(
@@ -1940,7 +1955,6 @@ def _saturation_review(role: str) -> SaturationReview:
         structured_data_complete=True,
         new_source_family_directions_reviewed=True,
         unresolved_material_questions=(),
-        gold_critical_fact_miss_count=0,
         rationale="모든 semantic saturation 기준을 독립적으로 확인했다.",
     )
 

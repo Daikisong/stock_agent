@@ -12,10 +12,12 @@ from typing import Any, Mapping, Sequence
 from e2r.production.metadata import write_json, write_jsonl
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
 
+from .component_judge import SynthesisResult
 from .component_researcher import ComponentResearchResult
 from .red_team_researcher import RedTeamResearchResult
 from .research_supervisor import ResearchSupervisor, ResearchSupervisorReview
 from .saturation import (
+    GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
     SATURATION_REVIEW_ROLES,
     SaturationReview,
     SaturationReviewerResult,
@@ -62,12 +64,13 @@ class ResearchEpochCheckpoint:
     retired_fact_ids: tuple[str, ...]
     component_memo_hashes: Mapping[str, str]
     semantic_saturation_certified: bool
-    gold_critical_fact_miss_count: int
+    gold_evaluation_status: str = GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+    gold_critical_fact_miss_count: int | None = None
     completion_based_on_fixed_rounds: bool = False
     zero_search_result_treated_as_saturation: bool = False
     transport_budget_treated_as_completion: bool = False
     production_score_authority: bool = False
-    schema_version: str = "e2r_research_epoch_checkpoint_v2"
+    schema_version: str = "e2r_research_epoch_checkpoint_v3"
 
     def __post_init__(self) -> None:
         if not self.target_id.strip():
@@ -93,10 +96,16 @@ class ResearchEpochCheckpoint:
             raise ValueError("transport or fixed-round outcomes cannot complete research")
         if self.production_score_authority:
             raise ValueError("research checkpoint cannot assign production score")
-        if self.gold_critical_fact_miss_count < 0:
-            raise ValueError("gold critical fact miss count cannot be negative")
-        if self.semantic_saturation_certified and self.gold_critical_fact_miss_count:
-            raise ValueError("critical fact miss prevents semantic saturation")
+        if self.gold_evaluation_status != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY:
+            raise ValueError("production research epoch cannot contain Gold outcome")
+        if self.schema_version == "e2r_research_epoch_checkpoint_v3":
+            if self.gold_critical_fact_miss_count is not None:
+                raise ValueError("production research epoch cannot contain Gold miss count")
+        elif self.gold_critical_fact_miss_count is not None and (
+            type(self.gold_critical_fact_miss_count) is not int
+            or self.gold_critical_fact_miss_count < 0
+        ):
+            raise ValueError("legacy Gold field must be a nonnegative integer")
         if self.semantic_saturation_certified != (
             self.status == "SEMANTIC_SATURATION_CERTIFIED"
         ):
@@ -109,10 +118,22 @@ class ResearchEpochCheckpoint:
             raise ValueError("checkpoint and saturation certificate disagree")
         if self.semantic_saturation_certified:
             certificate = self.saturation_certificate or {}
+            v3_gold_contract = (
+                self.schema_version == "e2r_research_epoch_checkpoint_v3"
+            )
             if (
                 certificate.get("status") != "CERTIFIED"
                 or certificate.get("checkpoint_id") != self.checkpoint_id
                 or certificate.get("provider_backed_reviews_required") is not True
+                or (
+                    v3_gold_contract
+                    and (
+                        certificate.get("gold_evaluation_status")
+                        != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+                        or certificate.get("gold_critical_fact_miss_count")
+                        is not None
+                    )
+                )
             ):
                 raise ValueError("certified checkpoint has invalid certificate lineage")
             results = tuple(self.saturation_reviews)
@@ -143,6 +164,15 @@ class ResearchEpochCheckpoint:
                     or review.get("approve") is not True
                     or review.get("provider_backed") is not True
                     or review.get("checkpoint_id") != self.checkpoint_id
+                    or (
+                        v3_gold_contract
+                        and (
+                            review.get("gold_evaluation_status")
+                            != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+                            or review.get("gold_critical_fact_miss_count")
+                            is not None
+                        )
+                    )
                     or review.get("reviewer_role")
                     != results[index].get("reviewer_role")
                     for index, review in enumerate(reviews)
@@ -186,7 +216,7 @@ class ResearchEpochCheckpoint:
         return {
             "research_epoch_checkpoint_id": self.checkpoint_id,
             "epoch": self.epoch,
-            "gold_critical_fact_miss_count": self.gold_critical_fact_miss_count,
+            "gold_evaluation_status": self.gold_evaluation_status,
             "unresolved_material_questions": list(
                 self.unresolved_material_questions
             ),
@@ -249,6 +279,7 @@ class ResearchEpochRunner:
         as_of_date: str,
         component_results: Sequence[ComponentResearchResult],
         red_team_result: RedTeamResearchResult | None,
+        synthesis_result: SynthesisResult | None,
         structured_result: Any | None,
         evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
         source_graph_checkpoint: Mapping[str, Any],
@@ -256,11 +287,8 @@ class ResearchEpochRunner:
         prior_failures: Sequence[Mapping[str, Any]],
         counter_and_supersession_route_proof: Sequence[Mapping[str, Any]],
         prior_checkpoint: ResearchEpochCheckpoint | Mapping[str, Any] | None = None,
-        gold_critical_fact_miss_count: int = 0,
         score_gap_context: Mapping[str, Any] | None = None,
     ) -> ResearchEpochRun:
-        if gold_critical_fact_miss_count < 0:
-            raise ValueError("gold critical fact miss count cannot be negative")
         prior = _coerce_checkpoint(prior_checkpoint)
         if prior is not None and (
             prior.target_id != target_id or prior.as_of_date != as_of_date
@@ -273,6 +301,7 @@ class ResearchEpochRunner:
             as_of_date=as_of_date,
             component_results=component_results,
             red_team_result=red_team_result,
+            synthesis_result=synthesis_result,
             structured_result=structured_result,
             evidence_facts=evidence_facts,
             source_graph_checkpoint=source_graph_checkpoint,
@@ -291,7 +320,6 @@ class ResearchEpochRunner:
             component_results=component_results,
             source_graph_checkpoint=source_graph_checkpoint,
             supervisor_review=supervisor_review,
-            gold_critical_fact_miss_count=gold_critical_fact_miss_count,
         )
         base_checkpoint_id = _research_checkpoint_id(state)
         state["checkpoint_id"] = base_checkpoint_id
@@ -311,7 +339,6 @@ class ResearchEpochRunner:
                             red_team_result=red_team_result,
                             structured_result=structured_result,
                             source_graph_checkpoint=source_graph_checkpoint,
-                            gold_critical_fact_miss_count=gold_critical_fact_miss_count,
                         )
                     )
                 completed_reviews = tuple(
@@ -434,7 +461,6 @@ def _research_epoch_state(
     component_results: Sequence[ComponentResearchResult],
     source_graph_checkpoint: Mapping[str, Any],
     supervisor_review: ResearchSupervisorReview,
-    gold_critical_fact_miss_count: int,
 ) -> dict[str, Any]:
     date.fromisoformat(as_of_date)
     query_rows = tuple(
@@ -493,7 +519,7 @@ def _research_epoch_state(
         if prior_memo_hashes.get(result.component_id) != memo_hash:
             changed_memos.append(memo)
     state = {
-        "schema_version": "e2r_research_epoch_checkpoint_v2",
+        "schema_version": "e2r_research_epoch_checkpoint_v3",
         "target_id": target_id,
         "as_of_date": as_of_date,
         "epoch": epoch,
@@ -543,7 +569,8 @@ def _research_epoch_state(
         "retired_fact_ids": sorted(retired_fact_ids),
         "component_memo_hashes": current_memo_hashes,
         "semantic_saturation_certified": False,
-        "gold_critical_fact_miss_count": gold_critical_fact_miss_count,
+        "gold_evaluation_status": GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+        "gold_critical_fact_miss_count": None,
         "completion_based_on_fixed_rounds": False,
         "zero_search_result_treated_as_saturation": False,
         "transport_budget_treated_as_completion": False,
@@ -554,6 +581,19 @@ def _research_epoch_state(
 
 def _checkpoint_from_mapping(payload: Mapping[str, Any]) -> ResearchEpochCheckpoint:
     values = dict(payload)
+    if values.get("schema_version") in {
+        "e2r_research_epoch_checkpoint_v1",
+        "e2r_research_epoch_checkpoint_v2",
+    }:
+        # Legacy checkpoints overloaded 0/1 as an apparent Gold result even
+        # though Phase 94 had not opened the private post-run lane.  Preserve
+        # the raw field only so the original id/hash remains verifiable; the
+        # explicit state makes it non-authoritative and the next epoch writes
+        # the v3 nullable contract.
+        values.setdefault(
+            "gold_evaluation_status",
+            GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+        )
     legacy_current_fact_ids_missing = "current_fact_ids" not in values
     legacy_retired_fact_ids_missing = "retired_fact_ids" not in values
     legacy_retired_facts_missing = "retired_facts" not in values
@@ -604,11 +644,7 @@ def _coerce_checkpoint(
 
 
 def _research_checkpoint_id(state: Mapping[str, Any]) -> str:
-    legacy_projection_fields = (
-        {"retired_facts", "current_fact_ids", "retired_fact_ids"}
-        if state.get("schema_version") == "e2r_research_epoch_checkpoint_v1"
-        else set()
-    )
+    legacy_projection_fields = _legacy_checkpoint_projection_fields(state)
     identity = {
         key: value
         for key, value in state.items()
@@ -629,17 +665,31 @@ def _research_checkpoint_id(state: Mapping[str, Any]) -> str:
 
 
 def _research_checkpoint_hash(payload: Mapping[str, Any]) -> str:
-    legacy_projection_fields = (
-        {"retired_facts", "current_fact_ids", "retired_fact_ids"}
-        if payload.get("schema_version") == "e2r_research_epoch_checkpoint_v1"
-        else set()
-    )
+    legacy_projection_fields = _legacy_checkpoint_projection_fields(payload)
     values = {
         key: value
         for key, value in payload.items()
         if key != "checkpoint_hash" and key not in legacy_projection_fields
     }
     return _stable_hash(values)
+
+
+def _legacy_checkpoint_projection_fields(
+    payload: Mapping[str, Any],
+) -> set[str]:
+    schema_version = payload.get("schema_version")
+    fields = (
+        {"gold_evaluation_status"}
+        if schema_version
+        in {
+            "e2r_research_epoch_checkpoint_v1",
+            "e2r_research_epoch_checkpoint_v2",
+        }
+        else set()
+    )
+    if schema_version == "e2r_research_epoch_checkpoint_v1":
+        fields.update({"retired_facts", "current_fact_ids", "retired_fact_ids"})
+    return fields
 
 
 def _row_id(row: Mapping[str, Any], key: str, prefix: str) -> str:

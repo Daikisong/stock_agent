@@ -61,7 +61,11 @@ from .research_supervisor import (
     ResearchSupervisor,
     build_counter_and_supersession_route_proof,
 )
-from .saturation import SATURATION_REVIEW_ROLES, SemanticSaturationReviewer
+from .saturation import (
+    GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+    SATURATION_REVIEW_ROLES,
+    SemanticSaturationReviewer,
+)
 from .schemas import CANONICAL_COMPONENT_ORDER, EvidenceDirection
 from .score_aggregator import (
     DeterministicScoreAggregationRun,
@@ -643,6 +647,7 @@ class CurrentResearcherModeTargetRunner:
             as_of_date=config.as_of_date,
             component_results=dossier.component_results,
             red_team_result=dossier.red_team_result,
+            synthesis_result=dossier.synthesis_result,
             structured_result=structured,
             evidence_facts=fact_extraction.facts,
             source_graph_checkpoint=source_graph.checkpoint,
@@ -653,10 +658,6 @@ class CurrentResearcherModeTargetRunner:
             prior_failures=(),
             counter_and_supersession_route_proof=counter_route_proof,
             prior_checkpoint=prior_epoch,
-            # Gold is private during production.  One means "not yet verified",
-            # not an observed miss.  The post-run evaluator may replace it with
-            # the real count only after production has closed.
-            gold_critical_fact_miss_count=1,
             score_gap_context=_score_gap_context_for_supervisor(
                 aggregation=aggregation,
                 scoring_memos=scoring_memos,
@@ -867,6 +868,9 @@ def write_production_lane(
         "as_of_date": config.as_of_date,
         "archetype_id": config.archetype_id,
         "target_ids": [run.target.target_id for run in target_runs],
+        "target_statuses": {
+            run.target.target_id: run.status for run in target_runs
+        },
         "gold_visibility": False,
         "gold_query_visibility": False,
         "gold_url_visibility": False,
@@ -1308,6 +1312,42 @@ def _completion_gates(
         for row in dossier.component_results
         if row.status == "COMPLETE" and row.memo and row.memo.research_complete
     )
+    current_component_memo_ids = {
+        row.memo.memo_id for row in complete_results if row.memo is not None
+    }
+    synthesis_memo = (
+        dossier.synthesis_result.memo
+        if dossier.synthesis_result
+        and dossier.synthesis_result.status == "COMPLETE"
+        else None
+    )
+    current_red_team_memo = (
+        dossier.red_team_result.memo
+        if dossier.red_team_result
+        and dossier.red_team_result.status == "COMPLETE"
+        else None
+    )
+    synthesis_complete = bool(
+        synthesis_memo
+        and synthesis_memo.synthesis_complete
+        and synthesis_memo.target_id == dossier.target_id
+        and synthesis_memo.archetype_id == dossier.archetype_id
+        and current_red_team_memo
+        and synthesis_memo.red_team_memo_id
+        == current_red_team_memo.memo_id
+        and synthesis_memo.red_team_memo_hash
+        == stable_hash(current_red_team_memo.to_dict())
+        and len(synthesis_memo.component_memo_ids)
+        == len(CANONICAL_COMPONENT_ORDER)
+        and len(set(synthesis_memo.component_memo_ids))
+        == len(CANONICAL_COMPONENT_ORDER)
+        and set(synthesis_memo.component_memo_ids)
+        == current_component_memo_ids
+        and epoch.supervisor_review.synthesis_memo_id
+        == synthesis_memo.memo_id
+        and epoch.supervisor_review.synthesis_memo_hash
+        == stable_hash(synthesis_memo.to_dict())
+    )
     counter_complete = bool(
         dossier.red_team_result
         and dossier.red_team_result.status == "COMPLETE"
@@ -1316,6 +1356,7 @@ def _completion_gates(
         and set(dossier.red_team_result.memo.reviewed_component_ids)
         == set(CANONICAL_COMPONENT_ORDER)
         and epoch.supervisor_review.counter_and_supersession_checked
+        and synthesis_complete
     )
     no_disagreement = all(
         not row.material_disagreement for row in aggregation.component_results
@@ -1337,10 +1378,69 @@ def _completion_gates(
         "structured_valuation_revision_complete": structured.status == "COMPLETE",
         "no_unresolved_material_judge_disagreement": no_disagreement,
         "deterministic_total_score_complete": aggregation.score_valid,
-        "production_semantic_supervisor_ready": (
-            epoch.supervisor_review.ready_for_independent_saturation_review
+        "production_semantic_saturation_certified": (
+            _production_semantic_saturation_certified(epoch)
         ),
     }
+
+
+def _production_semantic_saturation_certified(
+    epoch: ResearchEpochRun,
+) -> bool:
+    checkpoint = getattr(epoch, "checkpoint", None)
+    if checkpoint is None:
+        return False
+    certificate = checkpoint.saturation_certificate
+    if (
+        checkpoint.status != "SEMANTIC_SATURATION_CERTIFIED"
+        or checkpoint.semantic_saturation_certified is not True
+        or checkpoint.gold_evaluation_status
+        != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+        or checkpoint.gold_critical_fact_miss_count is not None
+        or not isinstance(certificate, Mapping)
+        or certificate.get("status") != "CERTIFIED"
+        or certificate.get("semantic_saturation_certified") is not True
+        or certificate.get("checkpoint_id") != checkpoint.checkpoint_id
+        or certificate.get("provider_backed_reviews_required") is not True
+        or certificate.get("gold_evaluation_status")
+        != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+        or certificate.get("gold_critical_fact_miss_count") is not None
+    ):
+        return False
+    reviewer_results = tuple(checkpoint.saturation_reviews)
+    roles = tuple(str(row.get("reviewer_role") or "") for row in reviewer_results)
+    review_payloads = tuple(
+        row.get("review") if isinstance(row.get("review"), Mapping) else {}
+        for row in reviewer_results
+    )
+    review_ids = tuple(
+        str(review.get("review_id") or "") for review in review_payloads
+    )
+    prompt_hashes = tuple(
+        str(review.get("prompt_hash") or "") for review in review_payloads
+    )
+    return bool(
+        len(reviewer_results) == len(SATURATION_REVIEW_ROLES)
+        and set(roles) == set(SATURATION_REVIEW_ROLES)
+        and all(row.get("status") == "COMPLETE" for row in reviewer_results)
+        and all(
+            review.get("approve") is True
+            and review.get("provider_backed") is True
+            and review.get("checkpoint_id") == checkpoint.checkpoint_id
+            and review.get("reviewer_role") == roles[index]
+            and review.get("gold_evaluation_status")
+            == GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+            and review.get("gold_critical_fact_miss_count") is None
+            for index, review in enumerate(review_payloads)
+        )
+        and all(review_ids)
+        and len(set(review_ids)) == len(SATURATION_REVIEW_ROLES)
+        and set(review_ids) == set(certificate.get("review_ids") or ())
+        and all(prompt_hashes)
+        and len(set(prompt_hashes)) == len(SATURATION_REVIEW_ROLES)
+        and set(prompt_hashes)
+        == set(certificate.get("provider_prompt_hashes") or ())
+    )
 
 
 def _source_checkpoint_is_ready_for_readonly_replay(

@@ -29,7 +29,10 @@ from e2r.research_brain.researcher_mode.daily_census_integration import (
     write_daily_census_researcher_integration,
 )
 from e2r.research_brain.researcher_mode.schemas import CANONICAL_COMPONENT_ORDER
-from e2r.research_brain.researcher_mode.saturation import SATURATION_REVIEW_ROLES
+from e2r.research_brain.researcher_mode.saturation import (
+    GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+    SATURATION_REVIEW_ROLES,
+)
 from e2r.research_brain.runtime.atomic_score_stage import CanonicalStage
 from tests.test_e2r_v5_deterministic_score_aggregator import _aggregation_run
 
@@ -421,12 +424,14 @@ class E2RV5DailyCensusIntegrationTests(unittest.TestCase):
         review_ids = [f"SATURATION-REVIEW-{index}" for index in range(3)]
         prompt_hashes = [stable_hash(f"saturation-prompt-{index}") for index in range(3)]
         epoch = {
+            "schema_version": "e2r_research_epoch_checkpoint_v3",
             "checkpoint_id": "REPOCH-CANONICAL-COMPLETE",
             "target_id": target_id,
             "as_of_date": as_of_date,
             "status": "SEMANTIC_SATURATION_CERTIFIED",
             "semantic_saturation_certified": True,
-            "gold_critical_fact_miss_count": 0,
+            "gold_evaluation_status": GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+            "gold_critical_fact_miss_count": None,
             "current_fact_ids": [fact.fact_id for fact in facts],
             "completion_based_on_fixed_rounds": False,
             "zero_search_result_treated_as_saturation": False,
@@ -437,23 +442,33 @@ class E2RV5DailyCensusIntegrationTests(unittest.TestCase):
                     "reviewer_role": role,
                     "status": "COMPLETE",
                     "review": {
+                        "schema_version": "e2r_semantic_saturation_review_v3",
                         "review_id": review_ids[index],
                         "prompt_hash": prompt_hashes[index],
                         "approve": True,
                         "provider_backed": True,
                         "checkpoint_id": "REPOCH-CANONICAL-COMPLETE",
                         "reviewer_role": role,
+                        "gold_evaluation_status": (
+                            GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+                        ),
+                        "gold_critical_fact_miss_count": None,
                     },
                 }
                 for index, role in enumerate(SATURATION_REVIEW_ROLES)
             ],
             "saturation_certificate": {
+                "schema_version": "e2r_semantic_saturation_certificate_v3",
                 "status": "CERTIFIED",
                 "semantic_saturation_certified": True,
                 "checkpoint_id": "REPOCH-CANONICAL-COMPLETE",
                 "provider_backed_reviews_required": True,
                 "review_ids": review_ids,
                 "provider_prompt_hashes": prompt_hashes,
+                "gold_evaluation_status": (
+                    GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+                ),
+                "gold_critical_fact_miss_count": None,
             },
         }
         total = score_run.total_result.score
@@ -503,6 +518,25 @@ class E2RV5DailyCensusIntegrationTests(unittest.TestCase):
             dossier.score_value or 0.0,
             sum(float(row.final_points or 0.0) for row in dossier.components),
         )
+
+    def test_l5_materializer_rejects_legacy_v2_final_consumption(
+        self,
+    ) -> None:
+        research, epoch, score, stagecourt, facts = self._canonical_completed_leaves()
+        legacy_epoch = deepcopy(epoch)
+        legacy_epoch.pop("gold_evaluation_status")
+        legacy_epoch["schema_version"] = "e2r_research_epoch_checkpoint_v2"
+        legacy_epoch["gold_critical_fact_miss_count"] = 1
+
+        with self.assertRaisesRegex(ValueError, "saturation checkpoint"):
+            build_persisted_research_dossier(
+                target_name="Canonical Target",
+                research_dossier=research,
+                research_epoch_checkpoint=legacy_epoch,
+                score_aggregation=score,
+                stagecourt_run=stagecourt,
+                evidence_facts=facts,
+            )
 
     def test_l5_materializer_rejects_transport_completion_and_vector_tamper(self) -> None:
         research, epoch, score, stagecourt, facts = self._canonical_completed_leaves()

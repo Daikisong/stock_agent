@@ -30,7 +30,10 @@ from e2r.research_brain.runtime.current_operation_runner import (
 )
 
 from .schemas import CANONICAL_COMPONENT_ORDER, EvidenceLifecycle
-from .saturation import SATURATION_REVIEW_ROLES
+from .saturation import (
+    GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+    SATURATION_REVIEW_ROLES,
+)
 
 
 DAILY_CENSUS_INTEGRATION_SCHEMA_VERSION = (
@@ -905,22 +908,36 @@ def build_persisted_research_dossier(
     ) or (
         epoch.get("target_id") != target_id
         or epoch.get("as_of_date") != as_of_date
+        or epoch.get("schema_version")
+        != "e2r_research_epoch_checkpoint_v3"
         or epoch.get("status") != "SEMANTIC_SATURATION_CERTIFIED"
         or epoch.get("semantic_saturation_certified") is not True
-        or int(epoch.get("gold_critical_fact_miss_count") or 0) != 0
+        or epoch.get("gold_evaluation_status")
+        != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+        or epoch.get("gold_critical_fact_miss_count") is not None
         or not str(epoch.get("checkpoint_id") or "").strip()
+        or certificate.get("schema_version")
+        != "e2r_semantic_saturation_certificate_v3"
         or certificate.get("status") != "CERTIFIED"
         or certificate.get("semantic_saturation_certified") is not True
         or certificate.get("checkpoint_id") != epoch.get("checkpoint_id")
         or certificate.get("provider_backed_reviews_required") is not True
+        or certificate.get("gold_evaluation_status")
+        != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+        or certificate.get("gold_critical_fact_miss_count") is not None
         or len(saturation_rows) != len(SATURATION_REVIEW_ROLES)
         or set(saturation_roles) != set(SATURATION_REVIEW_ROLES)
         or any(row.get("status") != "COMPLETE" for row in saturation_rows)
         or any(
-            review.get("approve") is not True
+            review.get("schema_version")
+            != "e2r_semantic_saturation_review_v3"
+            or review.get("approve") is not True
             or review.get("provider_backed") is not True
             or review.get("checkpoint_id") != epoch.get("checkpoint_id")
             or review.get("reviewer_role") != saturation_roles[index]
+            or review.get("gold_evaluation_status")
+            != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+            or review.get("gold_critical_fact_miss_count") is not None
             for index, review in enumerate(review_payloads)
         )
         or any(not value for value in review_ids)

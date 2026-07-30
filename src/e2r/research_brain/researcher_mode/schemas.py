@@ -506,22 +506,34 @@ class SynthesisMemo:
     target_id: str
     archetype_id: str
     component_memo_ids: tuple[str, ...]
+    red_team_memo_id: str
+    red_team_memo_hash: str
     cross_component_support: tuple[str, ...]
     cross_component_tensions: tuple[str, ...]
     unresolved_material_questions: tuple[str, ...]
     synthesis_summary: str
     confidence: float
     synthesis_complete: bool
-    schema_version: str = "e2r_synthesis_memo_v1"
+    schema_version: str = "e2r_synthesis_memo_v2"
 
     def __post_init__(self) -> None:
         for value, label in (
             (self.memo_id, "memo_id"),
             (self.target_id, "target_id"),
             (self.archetype_id, "archetype_id"),
+            (self.red_team_memo_id, "red_team_memo_id"),
+            (self.red_team_memo_hash, "red_team_memo_hash"),
             (self.synthesis_summary, "synthesis_summary"),
         ):
             _require_text(value, label)
+        if len(self.red_team_memo_hash) != 64:
+            raise ValueError("red_team_memo_hash must be sha256")
+        try:
+            int(self.red_team_memo_hash, 16)
+        except ValueError as exc:
+            raise ValueError(
+                "red_team_memo_hash must be hexadecimal"
+            ) from exc
         _require_probability(self.confidence, "confidence")
         for values, label, allow_empty in (
             (self.component_memo_ids, "component_memo_ids", False),

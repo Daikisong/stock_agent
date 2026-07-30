@@ -391,6 +391,7 @@ from .research_supervisor import (
     SupervisorSourceDirection,
 )
 from .saturation import (
+    GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
     SATURATION_REVIEW_ROLES,
     SaturationReview,
     SaturationReviewerResult,
@@ -701,6 +702,7 @@ __all__ = [
     "RedTeamMemo",
     "RedTeamResearchResult",
     "RedTeamResearcher",
+    "GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY",
     "SATURATION_REVIEW_ROLES",
     "SCORE_AGGREGATION_OUTPUT_FILES",
     "STAGECOURT_OUTPUT_FILES",

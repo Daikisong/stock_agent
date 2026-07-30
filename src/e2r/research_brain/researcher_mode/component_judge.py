@@ -480,6 +480,7 @@ class SynthesisJudge:
             cited_memos = _strings(response, "component_memo_ids")
             if set(cited_memos) != memo_ids:
                 raise ValueError("synthesis must account for every component memo")
+            red_team_memo_hash = _stable_lineage_hash(red_team_memo.to_dict())
             memo = SynthesisMemo(
                 memo_id=stable_intelligence_id(
                     "SYNMEMO",
@@ -487,12 +488,15 @@ class SynthesisJudge:
                         "target_id": target_id,
                         "archetype_id": archetype_id,
                         "red_team_memo_id": red_team_memo.memo_id,
+                        "red_team_memo_hash": red_team_memo_hash,
                         "response": scrub_blind_research_payload(response),
                     },
                 ),
                 target_id=target_id,
                 archetype_id=archetype_id,
                 component_memo_ids=cited_memos,
+                red_team_memo_id=red_team_memo.memo_id,
+                red_team_memo_hash=red_team_memo_hash,
                 cross_component_support=_strings(
                     response, "cross_component_support"
                 ),
@@ -837,6 +841,11 @@ def _canonical_hash(value: Any) -> str:
         separators=(",", ":"),
         default=str,
     )
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+
+
+def _stable_lineage_hash(value: Any) -> str:
+    encoded = json.dumps(value, ensure_ascii=False, sort_keys=True, default=str)
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
 
 

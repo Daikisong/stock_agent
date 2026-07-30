@@ -1,10 +1,10 @@
 {
-  "audit_hash": "8cdcae787cf34314f2fde9d185e3c92cbde6636d376e0fe298aa6db4c81c60d9",
+  "audit_hash": "609ef436676f2aaa23d7966e7420237ad7eb0e443467a6582dd6a6f1d2a09cc3",
   "checkpoint_fields": [
     "changed_component_memos",
     "documents",
     "epoch",
-    "gold_critical_fact_miss_count",
+    "gold_evaluation_status",
     "new_facts",
     "next_actions",
     "queries",

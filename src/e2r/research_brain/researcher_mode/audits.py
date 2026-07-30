@@ -1556,7 +1556,7 @@ def compile_phase87_semantic_research_saturation_audit(
         "changed_component_memos",
         "unresolved_material_questions",
         "next_actions",
-        "gold_critical_fact_miss_count",
+        "gold_evaluation_status",
     }
     checkpoint_fields = {field.name for field in fields(ResearchEpochCheckpoint)}
     expected_roles = {
@@ -1591,7 +1591,6 @@ def compile_phase87_semantic_research_saturation_audit(
             structured_data_complete=True,
             new_source_family_directions_reviewed=True,
             unresolved_material_questions=(),
-            gold_critical_fact_miss_count=0,
             rationale="independent semantic completeness canary",
             checkpoint_id="PHASE87-CHECKPOINT",
             epoch=1,

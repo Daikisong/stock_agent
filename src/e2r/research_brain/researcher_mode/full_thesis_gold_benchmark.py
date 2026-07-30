@@ -366,16 +366,28 @@ def compare_phase93_gold_post_run(
     """Compute full-thesis recall only for a same-as-of, completed blind run."""
 
     root = Path(repo_root).resolve()
-    corpus = load_phase93_gold_corpus(root, gold_root=gold_root)
-    gold = Path(corpus["root"])
     production = Path(production_root)
     if not production.is_absolute():
         production = root / production
     lane = _read_json(production / "production_lane_manifest.json")
+    production_target_ids = _validate_post_run_production_lane(lane)
+
+    # The private corpus may only be opened after the production lane proves
+    # that every target is closed under the blind-run contract.
+    corpus = load_phase93_gold_corpus(root, gold_root=gold_root)
+    gold = Path(corpus["root"])
     if str(lane.get("as_of_date") or "") != str(
         corpus["manifest"]["as_of_date"]
     ):
         raise ValueError("post-run production and Gold as_of_date must match")
+    gold_target_ids = tuple(
+        str(value) for value in corpus["manifest"]["target_ids"]
+    )
+    if (
+        len(production_target_ids) != len(gold_target_ids)
+        or set(production_target_ids) != set(gold_target_ids)
+    ):
+        raise ValueError("post-run production and Gold target roster must match")
     memo_path = production / "production_component_memos.jsonl"
     production_memos = _read_jsonl(memo_path)
     _validate_production_component_memos(
@@ -497,6 +509,41 @@ def compare_phase93_gold_post_run(
         comparisons=comparison_rows,
         audit=audit,
     )
+
+
+def _validate_post_run_production_lane(
+    lane: Mapping[str, Any],
+) -> tuple[str, ...]:
+    target_ids_raw = lane.get("target_ids")
+    target_statuses = lane.get("target_statuses")
+    if (
+        lane.get("schema_version") != "e2r_v5_phase94_production_lane_v1"
+        or lane.get("lane_role") != "PRODUCTION"
+        or lane.get("production_research_complete") is not True
+        or lane.get("gold_visibility") is not False
+        or lane.get("gold_query_visibility") is not False
+        or lane.get("gold_url_visibility") is not False
+        or lane.get("gold_fact_visibility") is not False
+        or lane.get("comparison_timing") != "POST_RUN_ONLY"
+        or lane.get("completion_based_on_fixed_rounds") is not False
+        or not isinstance(target_ids_raw, (list, tuple))
+        or not isinstance(target_statuses, Mapping)
+    ):
+        raise ValueError("post-run Gold requires a completed blind production lane")
+    target_ids = tuple(str(value).strip() for value in target_ids_raw)
+    if (
+        not target_ids
+        or any(not value for value in target_ids)
+        or len(target_ids) != len(set(target_ids))
+        or set(target_statuses) != set(target_ids)
+        or any(
+            target_statuses[target_id]
+            != "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+            for target_id in target_ids
+        )
+    ):
+        raise ValueError("post-run Gold requires an exact completed target roster")
+    return target_ids
 
 
 def write_phase93_gold_research_recall_audit(

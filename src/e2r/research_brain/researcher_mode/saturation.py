@@ -31,6 +31,8 @@ SATURATION_REVIEW_ROLES = (
     "INDEPENDENT_COMPLETENESS_REVIEWER",
 )
 
+GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY = "NOT_RUN_POST_RUN_ONLY"
+
 
 @dataclass(frozen=True)
 class SaturationReview:
@@ -43,8 +45,9 @@ class SaturationReview:
     structured_data_complete: bool
     new_source_family_directions_reviewed: bool
     unresolved_material_questions: tuple[str, ...]
-    gold_critical_fact_miss_count: int
     rationale: str
+    gold_evaluation_status: str = GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+    gold_critical_fact_miss_count: int | None = None
     no_reasonable_positive_route_remaining: bool = True
     checkpoint_id: str | None = None
     epoch: int | None = None
@@ -54,13 +57,15 @@ class SaturationReview:
     fixed_round_completion_used: bool = False
     zero_search_result_treated_as_saturation: bool = False
     transport_budget_treated_as_saturation: bool = False
-    schema_version: str = "e2r_semantic_saturation_review_v2"
+    schema_version: str = "e2r_semantic_saturation_review_v3"
 
     def __post_init__(self) -> None:
         if self.reviewer_role not in SATURATION_REVIEW_ROLES:
             raise ValueError("unknown saturation reviewer role")
-        if self.gold_critical_fact_miss_count < 0:
-            raise ValueError("critical fact miss count cannot be negative")
+        if self.gold_evaluation_status != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY:
+            raise ValueError("production saturation review cannot contain Gold outcome")
+        if self.gold_critical_fact_miss_count is not None:
+            raise ValueError("production saturation review cannot contain Gold miss count")
         if not self.rationale.strip():
             raise ValueError("saturation review rationale is required")
         if self.epoch is not None and self.epoch < 0:
@@ -81,7 +86,6 @@ class SaturationReview:
             self.new_source_family_directions_reviewed,
             self.no_reasonable_positive_route_remaining,
             not self.unresolved_material_questions,
-            self.gold_critical_fact_miss_count == 0,
         )
         if self.approve and not all(criteria):
             raise ValueError("saturation approval requires every semantic criterion")
@@ -136,11 +140,17 @@ class SemanticSaturationCertificate:
     reviewer_roles: tuple[str, ...] = ()
     provider_prompt_hashes: tuple[str, ...] = ()
     provider_backed_reviews_required: bool = False
-    schema_version: str = "e2r_semantic_saturation_certificate_v2"
+    gold_evaluation_status: str = GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+    gold_critical_fact_miss_count: int | None = None
+    schema_version: str = "e2r_semantic_saturation_certificate_v3"
 
     def __post_init__(self) -> None:
         if self.status not in {"CERTIFIED", "PENDING"}:
             raise ValueError("unknown saturation certificate status")
+        if self.gold_evaluation_status != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY:
+            raise ValueError("production saturation certificate cannot contain Gold outcome")
+        if self.gold_critical_fact_miss_count is not None:
+            raise ValueError("production saturation certificate cannot contain Gold miss count")
         if (
             self.fixed_round_completion_used
             or self.zero_search_result_treated_as_saturation
@@ -195,7 +205,6 @@ class SemanticSaturationReviewer:
         red_team_result: RedTeamResearchResult | None,
         structured_result: Any | None,
         source_graph_checkpoint: Mapping[str, Any],
-        gold_critical_fact_miss_count: int = 0,
     ) -> SaturationReviewerResult:
         provider_name = str(
             getattr(self.provider, "provider_name", type(self.provider).__name__)
@@ -247,7 +256,6 @@ class SemanticSaturationReviewer:
                 red_team_result=red_team_result,
                 structured_result=structured_result,
                 source_graph_checkpoint=source_graph_checkpoint,
-                gold_critical_fact_miss_count=gold_critical_fact_miss_count,
                 provider_name=provider_name,
                 prompt_hash=prompt_hash,
             )
@@ -325,10 +333,12 @@ class SemanticSaturationCertifier:
                 f"{row.reviewer_role}:{question}"
                 for question in row.unresolved_material_questions
             )
-            if row.gold_critical_fact_miss_count:
-                reasons.append(
-                    f"{row.reviewer_role}:GOLD_CRITICAL_FACT_MISS={row.gold_critical_fact_miss_count}"
-                )
+            if (
+                row.gold_evaluation_status
+                != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+                or row.gold_critical_fact_miss_count is not None
+            ):
+                reasons.append(f"{row.reviewer_role}:PRODUCTION_GOLD_OUTCOME_PRESENT")
         certified = not reasons and set(roles) == set(SATURATION_REVIEW_ROLES)
         payload = {
             "review_ids": sorted(review_ids),
@@ -337,6 +347,7 @@ class SemanticSaturationCertifier:
             "certified": certified,
             "pending_reasons": reasons,
             "prompt_hashes": sorted(prompt_hashes),
+            "gold_evaluation_status": GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
         }
         return SemanticSaturationCertificate(
             certificate_id=stable_intelligence_id("SATCERT", payload),
@@ -361,14 +372,15 @@ def _review_from_response(
     red_team_result: RedTeamResearchResult | None,
     structured_result: Any | None,
     source_graph_checkpoint: Mapping[str, Any],
-    gold_critical_fact_miss_count: int,
     provider_name: str,
     prompt_hash: str,
 ) -> SaturationReview:
-    if int(checkpoint.get("gold_critical_fact_miss_count") or 0) != int(
-        gold_critical_fact_miss_count
+    if (
+        checkpoint.get("gold_evaluation_status")
+        != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+        or checkpoint.get("gold_critical_fact_miss_count") is not None
     ):
-        raise ValueError("critical fact miss count disagrees with checkpoint")
+        raise ValueError("production checkpoint cannot expose a Gold outcome")
     unresolved = _string_tuple(response.get("unresolved_material_questions"))
     seven_complete = _required_bool(response, "seven_component_memos_complete")
     positive_reviewed = _required_bool(
@@ -428,7 +440,6 @@ def _review_from_response(
         and source_directions_reviewed
         and not reasonable_routes
         and not unresolved
-        and gold_critical_fact_miss_count == 0
     )
     if approve != deterministic_approve:
         raise ValueError("saturation approval contradicts semantic gates")
@@ -453,7 +464,6 @@ def _review_from_response(
         structured_data_complete=structured_complete,
         new_source_family_directions_reviewed=source_directions_reviewed,
         unresolved_material_questions=unresolved,
-        gold_critical_fact_miss_count=gold_critical_fact_miss_count,
         rationale=str(response["rationale"]),
         no_reasonable_positive_route_remaining=not reasonable_routes,
         checkpoint_id=checkpoint_id,
@@ -555,6 +565,7 @@ def _provider_prompt_hash(
 
 
 __all__ = [
+    "GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY",
     "SATURATION_REVIEW_ROLES",
     "SaturationReview",
     "SaturationReviewerResult",

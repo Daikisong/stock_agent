@@ -2430,6 +2430,10 @@ def project_research_epoch_checkpoint(
     """Remove repeated document bodies from an already-persisted epoch delta."""
 
     output = dict(checkpoint)
+    # Production reviewers may know only that Gold is a private post-run lane.
+    # A nullable legacy/result field is never prompt material.
+    output.pop("gold_critical_fact_miss_count", None)
+    output["gold_evaluation_status"] = "NOT_RUN_POST_RUN_ONLY"
     if "documents" in output:
         documents = tuple(output.get("documents") or ())
         output["documents"] = list(project_source_documents(documents))

@@ -15,6 +15,7 @@ from e2r.research_brain.planning.provider_transport import (
     StructuredProviderUnavailable,
 )
 
+from .component_judge import SynthesisResult
 from .component_researcher import ComponentResearchResult, StructuredResearchProvider
 from .red_team_researcher import RedTeamResearchResult
 from .schemas import (
@@ -169,6 +170,8 @@ class ResearchSupervisorReview:
     rationale: str = "legacy deterministic supervisor review"
     provider_name: str = "DETERMINISTIC_SUPERVISOR_SCAFFOLD"
     prompt_hash: str | None = None
+    synthesis_memo_id: str | None = None
+    synthesis_memo_hash: str | None = None
     llm_direction_generation_used: bool = False
     search_zero_result_treated_as_saturation: bool = False
     transport_budget_treated_as_completion: bool = False
@@ -203,6 +206,8 @@ class ResearchSupervisorReview:
             raise ValueError("transport budget cannot complete research")
         if not self.rationale.strip():
             raise ValueError("supervisor rationale is required")
+        if bool(self.synthesis_memo_id) != bool(self.synthesis_memo_hash):
+            raise ValueError("supervisor synthesis lineage is incomplete")
         if self.ready_for_independent_saturation_review != (
             self.status == "READY_FOR_INDEPENDENT_SATURATION_REVIEW"
         ):
@@ -287,6 +292,7 @@ class ResearchSupervisor:
         as_of_date: str,
         component_results: Sequence[ComponentResearchResult],
         red_team_result: RedTeamResearchResult | None,
+        synthesis_result: SynthesisResult | None,
         structured_result: Any | None,
         evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
         source_graph_checkpoint: Mapping[str, Any],
@@ -307,6 +313,40 @@ class ResearchSupervisor:
             structured_result=structured_result,
             source_graph_checkpoint=source_graph_checkpoint,
         )
+        synthesis_binding, synthesis_pending_reason = _current_synthesis_binding(
+            target_id=target_id,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            synthesis_result=synthesis_result,
+        )
+        if synthesis_binding is None:
+            return _provider_pending_review(
+                epoch=epoch,
+                component_results=component_results,
+                reason=(
+                    "SUPERVISOR_SYNTHESIS_LINEAGE_PENDING:"
+                    f"{synthesis_pending_reason}"
+                ),
+                reviewer_role=self.reviewer_role,
+                provider_name=(
+                    str(
+                        getattr(
+                            self.provider,
+                            "provider_name",
+                            type(self.provider).__name__,
+                        )
+                    )
+                    if self.provider is not None
+                    else "UNCONFIGURED"
+                ),
+            )
+        current_synthesis_memo = synthesis_result.memo
+        assert current_synthesis_memo is not None
+        if prior_review is not None and not _prior_review_matches_synthesis(
+            prior_review,
+            synthesis_binding=synthesis_binding,
+        ):
+            prior_review = None
         objective_ids = {
             str(row.get("objective_id") or "").strip() for row in open_objectives
         }
@@ -371,6 +411,7 @@ class ResearchSupervisor:
                 reason="SUPERVISOR_PROVIDER_NOT_CONFIGURED",
                 reviewer_role=self.reviewer_role,
                 provider_name="UNCONFIGURED",
+                synthesis_binding=synthesis_binding,
             )
         failure_projection = project_supervisor_failures(failures)
         failure_prompt_projection = _supervisor_failure_prompt_projection(
@@ -397,6 +438,10 @@ class ResearchSupervisor:
                 "red_team_result": (
                     red_team_result.to_dict() if red_team_result else None
                 ),
+                "current_synthesis": {
+                    "binding": dict(synthesis_binding),
+                    "memo": current_synthesis_memo.to_dict(),
+                },
                 "structured_result": (
                     project_structured_result(structured_result)
                 ),
@@ -488,6 +533,7 @@ class ResearchSupervisor:
                     prompt_hash=_provider_prompt_hash(
                         self.provider, attempt_payload
                     ),
+                    synthesis_binding=synthesis_binding,
                 )
             prompt_hash = _provider_prompt_hash(self.provider, attempt_payload)
             try:
@@ -525,6 +571,7 @@ class ResearchSupervisor:
                         )
                     ),
                     prompt_hash=prompt_hash,
+                    synthesis_binding=synthesis_binding,
                 )
             except (KeyError, TypeError, ValueError) as exc:
                 _invalidate_provider_response_cache(self.provider, exc)
@@ -558,6 +605,7 @@ class ResearchSupervisor:
                             )
                         ),
                         prompt_hash=prompt_hash,
+                        synthesis_binding=synthesis_binding,
                     )
                 validation_retry_used = True
                 red_team_complete = _red_team_complete(red_team_result)
@@ -788,6 +836,7 @@ def _review_from_provider_response(
     source_graph_research_pending: bool,
     provider_name: str,
     prompt_hash: str,
+    synthesis_binding: Mapping[str, str],
 ) -> ResearchSupervisorReview:
     findings = tuple(
         SupervisorComponentFinding(
@@ -969,6 +1018,7 @@ def _review_from_provider_response(
         row.failure_id
         for row in assessments
         if row.classification == "PARSER_EXTRACTOR_FAILURE"
+        and _failure_blocks_readiness(row, failure_by_id[row.failure_id])
     )
     source_gaps = tuple(sorted({row.source_family for row in directions}))
     identity = {
@@ -982,6 +1032,7 @@ def _review_from_provider_response(
         "unresolved": unresolved,
         "ready": provider_ready,
         "prompt_hash": prompt_hash,
+        "synthesis_binding": dict(synthesis_binding),
     }
     return ResearchSupervisorReview(
         review_id=stable_intelligence_id("RSUP", identity),
@@ -1010,6 +1061,8 @@ def _review_from_provider_response(
         rationale=str(response["rationale"]),
         provider_name=provider_name,
         prompt_hash=prompt_hash,
+        synthesis_memo_id=synthesis_binding["synthesis_memo_id"],
+        synthesis_memo_hash=synthesis_binding["synthesis_memo_hash"],
         llm_direction_generation_used=True,
     )
 
@@ -1022,6 +1075,7 @@ def _provider_pending_review(
     reviewer_role: str,
     provider_name: str,
     prompt_hash: str | None = None,
+    synthesis_binding: Mapping[str, str] | None = None,
 ) -> ResearchSupervisorReview:
     status = {component_id: "NOT_RESEARCHED" for component_id in CANONICAL_COMPONENT_ORDER}
     for row in component_results:
@@ -1050,6 +1104,105 @@ def _provider_pending_review(
         rationale=reason,
         provider_name=provider_name,
         prompt_hash=prompt_hash,
+        synthesis_memo_id=(
+            synthesis_binding["synthesis_memo_id"]
+            if synthesis_binding is not None
+            else None
+        ),
+        synthesis_memo_hash=(
+            synthesis_binding["synthesis_memo_hash"]
+            if synthesis_binding is not None
+            else None
+        ),
+    )
+
+
+def _current_synthesis_binding(
+    *,
+    target_id: str,
+    component_results: Sequence[ComponentResearchResult],
+    red_team_result: RedTeamResearchResult | None,
+    synthesis_result: SynthesisResult | None,
+) -> tuple[Mapping[str, str] | None, str | None]:
+    if synthesis_result is None or synthesis_result.status != "COMPLETE":
+        return None, "CURRENT_SYNTHESIS_NOT_COMPLETE"
+    memo = synthesis_result.memo
+    if memo is None or not memo.synthesis_complete:
+        return None, "CURRENT_SYNTHESIS_MEMO_NOT_COMPLETE"
+    if memo.target_id != target_id:
+        return None, "CURRENT_SYNTHESIS_TARGET_MISMATCH"
+    by_component = {row.component_id: row for row in component_results}
+    if (
+        len(component_results) != len(CANONICAL_COMPONENT_ORDER)
+        or set(by_component) != set(CANONICAL_COMPONENT_ORDER)
+        or any(
+            row.status != "COMPLETE"
+            or row.memo is None
+            or not row.memo.research_complete
+            for row in component_results
+        )
+    ):
+        return None, "CURRENT_COMPONENT_MEMO_ROSTER_INCOMPLETE"
+    current_memos = tuple(
+        by_component[component_id].memo
+        for component_id in CANONICAL_COMPONENT_ORDER
+    )
+    if any(row is None for row in current_memos):
+        return None, "CURRENT_COMPONENT_MEMO_ROSTER_INCOMPLETE"
+    archetype_ids = {row.archetype_id for row in current_memos if row is not None}
+    if (
+        len(archetype_ids) != 1
+        or memo.archetype_id not in archetype_ids
+        or red_team_result is None
+        or red_team_result.status != "COMPLETE"
+        or red_team_result.memo is None
+        or not red_team_result.memo.review_complete
+        or red_team_result.memo.target_id != target_id
+        or red_team_result.memo.archetype_id != memo.archetype_id
+    ):
+        return None, "CURRENT_SYNTHESIS_ARCHETYPE_MISMATCH"
+    current_red_team_memo = red_team_result.memo
+    if (
+        memo.red_team_memo_id != current_red_team_memo.memo_id
+        or memo.red_team_memo_hash
+        != _stable_payload_hash(current_red_team_memo.to_dict())
+    ):
+        return None, "CURRENT_SYNTHESIS_RED_TEAM_LINEAGE_MISMATCH"
+    current_memo_ids = {
+        row.memo_id for row in current_memos if row is not None
+    }
+    synthesis_memo_ids = tuple(memo.component_memo_ids)
+    if (
+        len(synthesis_memo_ids) != len(CANONICAL_COMPONENT_ORDER)
+        or len(set(synthesis_memo_ids)) != len(synthesis_memo_ids)
+        or set(synthesis_memo_ids) != current_memo_ids
+    ):
+        return None, "CURRENT_SYNTHESIS_COMPONENT_MEMO_ROSTER_MISMATCH"
+    return (
+        {
+            "schema_version": "e2r_supervisor_synthesis_binding_v1",
+            "synthesis_memo_id": memo.memo_id,
+            "synthesis_memo_hash": _stable_payload_hash(memo.to_dict()),
+        },
+        None,
+    )
+
+
+def _prior_review_matches_synthesis(
+    review: ResearchSupervisorReview | Mapping[str, Any],
+    *,
+    synthesis_binding: Mapping[str, str],
+) -> bool:
+    payload = (
+        review.to_dict()
+        if isinstance(review, ResearchSupervisorReview)
+        else review
+    )
+    return bool(
+        payload.get("synthesis_memo_id")
+        == synthesis_binding["synthesis_memo_id"]
+        and payload.get("synthesis_memo_hash")
+        == synthesis_binding["synthesis_memo_hash"]
     )
 
 
@@ -1697,10 +1850,6 @@ def _collect_prior_failures(
         for source in source_graph_checkpoint.get(key) or ():
             row = dict(source)
             row.setdefault("failure_kind", kind)
-            objective_id = str(row.get("objective_id") or "")
-            if objective_id and objective_id in resolved_objectives:
-                row.setdefault("resolved", True)
-                row.setdefault("resolved_by", "SOURCE_GRAPH_OBJECTIVE_RESOLUTION")
             rows.append(row)
     by_id: dict[str, Mapping[str, Any]] = {}
     for source in rows:
@@ -1710,7 +1859,133 @@ def _collect_prior_failures(
         if prior is not None and dict(prior) != dict(row):
             raise ValueError("conflicting prior query/source failure ids")
         by_id[failure_id] = row
-    return tuple(by_id[key] for key in sorted(by_id))
+    generation_lineage = _query_generation_failure_lineage(
+        source_graph_checkpoint,
+        resolved_objectives=resolved_objectives,
+    )
+    normalized: dict[str, Mapping[str, Any]] = {}
+    for failure_id in sorted(by_id):
+        row = dict(by_id[failure_id])
+        if _is_multi_objective_generation_failure(row):
+            reason = str(row.get("failure_reason") or "")
+            scopes = generation_lineage.get(reason) or []
+            if scopes:
+                row["objective_ids"] = list(scopes.pop(0))
+                row["objective_lineage"] = (
+                    "QUERY_GENERATION_HISTORY_FEEDBACK"
+                )
+        objective_ids = _failure_objective_ids(row)
+        if objective_ids and set(objective_ids).issubset(resolved_objectives):
+            row["resolved"] = True
+            row["resolved_by"] = "SOURCE_GRAPH_OBJECTIVE_RESOLUTION"
+        normalized[failure_id] = row
+    return tuple(normalized[key] for key in sorted(normalized))
+
+
+def _query_generation_failure_lineage(
+    checkpoint: Mapping[str, Any],
+    *,
+    resolved_objectives: set[str],
+) -> dict[str, list[tuple[str, ...]]]:
+    """Recover exact query-generation scope from the persisted raw ledger."""
+
+    source_graph = checkpoint.get("source_graph")
+    graph = source_graph if isinstance(source_graph, Mapping) else {}
+    raw_objectives = graph.get("open_objectives")
+    objective_rows = (
+        raw_objectives
+        if isinstance(raw_objectives, (list, tuple))
+        else ()
+    )
+    objective_roster = tuple(
+        dict.fromkeys(
+            str(row.get("objective_id") or "").strip()
+            for row in objective_rows
+            if isinstance(row, Mapping)
+            and str(row.get("objective_id") or "").strip()
+        )
+    )
+    roster_set = set(objective_roster)
+    terminal_full_roster = bool(
+        objective_roster
+        and checkpoint.get("status") == "STOPPED_ON_RESOLUTION"
+        and roster_set.issubset(resolved_objectives)
+    )
+    lineage: dict[str, list[tuple[str, ...]]] = {}
+    for raw in checkpoint.get("query_generation_history") or ():
+        if not isinstance(raw, Mapping):
+            continue
+        if (
+            raw.get("deterministic_fallback_query_used") is not False
+            or not str(raw.get("prompt_hash") or "").strip()
+            or not str(raw.get("provider_name") or "").strip()
+        ):
+            continue
+        explicit_scope = _string_sequence(raw.get("objective_ids"))
+        observed_scope = tuple(
+            dict.fromkeys(
+                str(row.get("objective_id") or "").strip()
+                for key in ("queries", "rejected_suggestions")
+                for row in (
+                    raw.get(key)
+                    if isinstance(raw.get(key), (list, tuple))
+                    else ()
+                )
+                if isinstance(row, Mapping)
+                and str(row.get("objective_id") or "").strip()
+            )
+        )
+        scope = explicit_scope or observed_scope
+        if scope and (not roster_set or not set(scope).issubset(roster_set)):
+            continue
+        for value in raw.get("feedback_for_next_llm_call") or ():
+            reason = str(value).strip()
+            if not _is_resolvable_generation_failure_reason(reason):
+                continue
+            resolved_scope = scope
+            if not resolved_scope and terminal_full_roster:
+                resolved_scope = objective_roster
+            if resolved_scope:
+                lineage.setdefault(reason, []).append(resolved_scope)
+    return lineage
+
+
+def _is_multi_objective_generation_failure(
+    row: Mapping[str, Any],
+) -> bool:
+    return bool(
+        str(row.get("failure_kind") or "") == "QUERY_FAILURE"
+        and str(row.get("query_id") or "") == "QUERY_GENERATION"
+        and str(row.get("objective_id") or "") == "MULTI_OBJECTIVE"
+        and _is_resolvable_generation_failure_reason(
+            str(row.get("failure_reason") or "")
+        )
+    )
+
+
+def _is_resolvable_generation_failure_reason(reason: str) -> bool:
+    return bool(
+        reason == "LLM_RETURNED_NO_NEW_VALID_QUERY"
+        or reason.startswith("QUERY_PROVIDER_ERROR:")
+    )
+
+
+def _failure_objective_ids(row: Mapping[str, Any]) -> tuple[str, ...]:
+    objective_ids = _string_sequence(row.get("objective_ids"))
+    objective_id = str(row.get("objective_id") or "").strip()
+    if objective_id and objective_id != "MULTI_OBJECTIVE":
+        objective_ids = (*objective_ids, objective_id)
+    return tuple(dict.fromkeys(objective_ids))
+
+
+def _string_sequence(value: Any) -> tuple[str, ...]:
+    if not isinstance(value, (list, tuple)):
+        return ()
+    return tuple(
+        dict.fromkeys(
+            str(item).strip() for item in value if str(item).strip()
+        )
+    )
 
 
 def _coerce_fact(row: EvidenceFact | Mapping[str, Any]) -> EvidenceFact:

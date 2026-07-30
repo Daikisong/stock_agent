@@ -7,12 +7,14 @@ import tempfile
 import unittest
 from dataclasses import replace
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, Mapping, Sequence
 
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
 from e2r.research_brain.researcher_mode import (
     CANONICAL_COMPONENT_MAX_POINTS,
     CANONICAL_COMPONENT_ORDER,
+    GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
     PHASE87_PASS,
     RESEARCH_EPOCH_OUTPUT_FILES,
     RESEARCH_SUPERVISOR_SCHEMA,
@@ -28,6 +30,8 @@ from e2r.research_brain.researcher_mode import (
     SaturationReview,
     SemanticSaturationCertifier,
     SemanticSaturationReviewer,
+    SynthesisMemo,
+    SynthesisResult,
     StructuredMetricRecord,
     StructuredResearchResult,
     compile_phase87_semantic_research_saturation_audit,
@@ -38,6 +42,14 @@ from e2r.research_brain.researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.research_supervisor import (
     build_counter_and_supersession_route_proof,
+)
+from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    _completion_gates,
+    _production_semantic_saturation_certified,
+)
+from e2r.research_brain.researcher_mode.research_epoch import (
+    _research_checkpoint_hash,
+    _research_checkpoint_id,
 )
 
 
@@ -366,6 +378,11 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         )
         self.assertEqual(run.checkpoint.status, "SEMANTIC_SATURATION_CERTIFIED")
         self.assertTrue(run.checkpoint.semantic_saturation_certified)
+        self.assertEqual(
+            run.checkpoint.gold_evaluation_status,
+            GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+        )
+        self.assertIsNone(run.checkpoint.gold_critical_fact_miss_count)
         self.assertIsNotNone(run.saturation_certificate)
         self.assertEqual(
             set(run.saturation_certificate.reviewer_roles),  # type: ignore[union-attr]
@@ -376,6 +393,248 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             all(row.review and row.review.provider_backed for row in run.saturation_reviewer_results)
         )
         self.assertEqual(run.checkpoint.next_actions, ())
+        synthesis_memo = _synthesis().memo
+        assert synthesis_memo is not None
+        expected_hash = _stable_test_hash(synthesis_memo.to_dict())
+        self.assertEqual(
+            run.supervisor_review.synthesis_memo_id,
+            synthesis_memo.memo_id,
+        )
+        self.assertEqual(
+            run.supervisor_review.synthesis_memo_hash,
+            expected_hash,
+        )
+        checkpoint_supervisor = run.checkpoint.supervisor_review
+        self.assertEqual(
+            checkpoint_supervisor["synthesis_memo_hash"],
+            expected_hash,
+        )
+        for reviewer in reviewers:
+            payload = reviewer.provider.calls[-1]["payload"]
+            projected_checkpoint = payload["research_epoch_checkpoint"]
+            self.assertEqual(
+                projected_checkpoint["gold_evaluation_status"],
+                GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+            )
+            self.assertNotIn(
+                "gold_critical_fact_miss_count",
+                projected_checkpoint,
+            )
+            projected_supervisor = payload["research_epoch_checkpoint"][
+                "supervisor_review"
+            ]
+            self.assertEqual(
+                projected_supervisor["synthesis_memo_hash"],
+                expected_hash,
+            )
+        self.assertEqual(
+            run.saturation_certificate.checkpoint_id,  # type: ignore[union-attr]
+            run.checkpoint.checkpoint_id,
+        )
+        self.assertEqual(
+            run.saturation_certificate.gold_evaluation_status,  # type: ignore[union-attr]
+            GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+        )
+        self.assertIsNone(
+            run.saturation_certificate.gold_critical_fact_miss_count  # type: ignore[union-attr]
+        )
+        self.assertTrue(_production_semantic_saturation_certified(run))
+
+    def test_supervisor_does_not_request_without_current_complete_synthesis(
+        self,
+    ) -> None:
+        components = _components()
+        invalid_syntheses = (
+            None,
+            SynthesisResult(
+                status="PENDING",
+                memo=None,
+                pending_reasons=("fixture pending",),
+                provider_name="PHASE87_SYNTHESIS_FIXTURE",
+            ),
+            _synthesis(components, target_id="OTHER-TARGET"),
+            _synthesis(components, archetype_id="OTHER-ARCHETYPE"),
+            SynthesisResult(
+                status="COMPLETE",
+                memo=replace(
+                    _synthesis(components).memo,  # type: ignore[arg-type]
+                    component_memo_ids=tuple(
+                        row.memo.memo_id
+                        for row in components[:-1]
+                        if row.memo is not None
+                    ),
+                ),
+                pending_reasons=(),
+                provider_name="PHASE87_SYNTHESIS_FIXTURE",
+            ),
+        )
+        for synthesis in invalid_syntheses:
+            with self.subTest(synthesis=synthesis):
+                provider = Phase87SupervisorProvider("READY")
+                inputs = dict(_supervisor_inputs(components=components))
+                inputs["synthesis_result"] = synthesis
+                review = ResearchSupervisor(provider=provider).review_epoch(
+                    **inputs
+                )
+                self.assertEqual(provider.calls, [])
+                self.assertEqual(review.status, "NEXT_RESEARCH_REQUIRED")
+                self.assertIn(
+                    "SUPERVISOR_SYNTHESIS_LINEAGE_PENDING",
+                    review.rationale,
+                )
+                self.assertIsNone(review.synthesis_memo_id)
+                self.assertIsNone(review.synthesis_memo_hash)
+
+    def test_supervisor_prompt_identity_changes_with_synthesis_and_drops_stale_prior(
+        self,
+    ) -> None:
+        components = _components()
+        first_synthesis = _synthesis(components, memo_id="SYNTHESIS-MEMO-v1")
+        second_synthesis = _synthesis(components, memo_id="SYNTHESIS-MEMO-v2")
+        provider = Phase87SupervisorProvider("READY")
+        supervisor = ResearchSupervisor(provider=provider)
+        first = supervisor.review_epoch(
+            **_supervisor_inputs(
+                components=components,
+                synthesis=first_synthesis,
+            )
+        )
+        second = supervisor.review_epoch(
+            **_supervisor_inputs(
+                components=components,
+                synthesis=second_synthesis,
+            ),
+            prior_review=first,
+        )
+        first_payload = provider.calls[-2]["payload"]
+        second_payload = provider.calls[-1]["payload"]
+        first_binding = first_payload["current_synthesis"]["binding"]
+        second_binding = second_payload["current_synthesis"]["binding"]
+        self.assertNotEqual(first_binding, second_binding)
+        self.assertNotEqual(first.prompt_hash, second.prompt_hash)
+        self.assertIsNone(second_payload["prior_supervisor_review"])
+        self.assertEqual(
+            second.synthesis_memo_id,
+            second_binding["synthesis_memo_id"],
+        )
+        self.assertEqual(
+            second.synthesis_memo_hash,
+            second_binding["synthesis_memo_hash"],
+        )
+
+    def test_current_red_team_change_invalidates_synthesis_before_provider(
+        self,
+    ) -> None:
+        components = _components()
+        original_red_team = _red_team()
+        synthesis = _synthesis(
+            components,
+            red_team_result=original_red_team,
+        )
+        changed_red_team = replace(
+            original_red_team,
+            memo=replace(
+                original_red_team.memo,  # type: ignore[arg-type]
+                memo_id="RED-TEAM-MEMO-v2",
+            ),
+        )
+        provider = Phase87SupervisorProvider("READY")
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **_supervisor_inputs(
+                components=components,
+                synthesis=synthesis,
+                red_team=changed_red_team,
+            )
+        )
+        self.assertEqual(provider.calls, [])
+        self.assertEqual(review.status, "NEXT_RESEARCH_REQUIRED")
+        self.assertIn(
+            "CURRENT_SYNTHESIS_RED_TEAM_LINEAGE_MISMATCH",
+            review.rationale,
+        )
+
+    def test_counter_completion_requires_current_synthesis_supervisor_binding(
+        self,
+    ) -> None:
+        components = _components()
+        red_team = _red_team()
+        synthesis = _synthesis(components, red_team_result=red_team)
+        review = ResearchSupervisor(
+            provider=Phase87SupervisorProvider("READY")
+        ).review_epoch(
+            **_supervisor_inputs(
+                components=components,
+                synthesis=synthesis,
+                red_team=red_team,
+            )
+        )
+        dossier = SimpleNamespace(
+            target_id=TARGET,
+            archetype_id=ARCHETYPE,
+            component_results=components,
+            red_team_result=red_team,
+            synthesis_result=synthesis,
+        )
+        common = {
+            "source_graph": SimpleNamespace(
+                status="STOPPED_ON_RESOLUTION",
+                audit={"critical_count_sum": 0},
+            ),
+            "fact_extraction": SimpleNamespace(
+                status="FACT_EXTRACTION_COMPLETE",
+                audit={"critical_count_sum": 0},
+            ),
+            "structured": SimpleNamespace(status="COMPLETE"),
+            "aggregation": SimpleNamespace(
+                component_results=tuple(
+                    SimpleNamespace(material_disagreement=False)
+                    for _ in CANONICAL_COMPONENT_ORDER
+                ),
+                score_valid=True,
+            ),
+        }
+        gates = _completion_gates(
+            dossier=dossier,
+            epoch=SimpleNamespace(supervisor_review=review),
+            **common,
+        )
+        self.assertTrue(gates["counter_thesis_complete"])
+        self.assertFalse(gates["production_semantic_saturation_certified"])
+        missing = _completion_gates(
+            dossier=SimpleNamespace(**{**dossier.__dict__, "synthesis_result": None}),
+            epoch=SimpleNamespace(supervisor_review=review),
+            **common,
+        )
+        self.assertFalse(missing["counter_thesis_complete"])
+        stale = _completion_gates(
+            dossier=dossier,
+            epoch=SimpleNamespace(
+                supervisor_review=replace(
+                    review,
+                    synthesis_memo_hash="0" * 64,
+                )
+            ),
+            **common,
+        )
+        self.assertFalse(stale["counter_thesis_complete"])
+        changed_red_team = replace(
+            red_team,
+            memo=replace(
+                red_team.memo,  # type: ignore[arg-type]
+                memo_id="RED-TEAM-MEMO-v2",
+            ),
+        )
+        stale_red_team = _completion_gates(
+            dossier=SimpleNamespace(
+                **{
+                    **dossier.__dict__,
+                    "red_team_result": changed_red_team,
+                }
+            ),
+            epoch=SimpleNamespace(supervisor_review=review),
+            **common,
+        )
+        self.assertFalse(stale_red_team["counter_thesis_complete"])
 
     def test_zero_results_are_failure_context_not_semantic_saturation(self) -> None:
         source = _source_checkpoint(zero_results=True)
@@ -634,6 +893,231 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             absence_review.failure_assessments[0].source_absence_claim_allowed
         )
 
+    def test_resolved_multi_objective_generation_failures_keep_lineage_without_blocking(
+        self,
+    ) -> None:
+        class BlockingClassificationReadyProvider(Phase87SupervisorProvider):
+            def __init__(self) -> None:
+                super().__init__("FORCE_READY")
+
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                for assessment in response["failure_assessments"]:
+                    assessment.update(
+                        {
+                            "classification": "PROVIDER_FAILURE",
+                            "retryable": True,
+                            "source_absence_claim_allowed": False,
+                        }
+                    )
+                return response
+
+        provider_reasons = tuple(
+            f"QUERY_PROVIDER_ERROR:historical-provider-attempt-{index}"
+            for index in range(24)
+        )
+        no_query_reason = "LLM_RETURNED_NO_NEW_VALID_QUERY"
+        source = _source_checkpoint_with_updates(
+            _source_checkpoint(),
+            status="STOPPED_ON_RESOLUTION",
+            resolved_objective_ids=[OBJECTIVE_ID],
+            source_graph={
+                "open_objectives": [{"objective_id": OBJECTIVE_ID}]
+            },
+            query_failures=[
+                {
+                    "query_id": "QUERY_GENERATION",
+                    "objective_id": "MULTI_OBJECTIVE",
+                    "failure_reason": reason,
+                }
+                for reason in (*provider_reasons, no_query_reason)
+            ],
+            query_generation_history=[
+                {
+                    "status": "PENDING",
+                    "queries": [],
+                    "rejected_suggestions": [],
+                    "feedback_for_next_llm_call": [reason],
+                    "provider_name": "CURRENT-QUERY-PROVIDER",
+                    "prompt_hash": f"QUERYPROMPT-{index}",
+                    "response_hash": None,
+                    "deterministic_fallback_query_used": False,
+                }
+                for index, reason in enumerate(
+                    (*provider_reasons, no_query_reason)
+                )
+            ],
+        )
+        provider = BlockingClassificationReadyProvider()
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **{
+                **_supervisor_inputs(),
+                "source_graph_checkpoint": source,
+            }
+        )
+
+        self.assertEqual(
+            review.status,
+            "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+        )
+        self.assertEqual(len(review.failure_assessments), 25)
+        supplied = provider.calls[-1]["payload"][
+            "prior_query_source_failures"
+        ]
+        by_reason = {
+            row["failure_reason"]: row
+            for row in supplied
+        }
+        provider_group = by_reason["QUERY_PROVIDER_ERROR"]
+        self.assertEqual(provider_group["member_failure_count"], 24)
+        self.assertIs(provider_group["resolved"], True)
+        self.assertEqual(
+            provider_group["resolved_by"],
+            "SOURCE_GRAPH_OBJECTIVE_RESOLUTION",
+        )
+        self.assertEqual(
+            provider_group["relation_coverage"]["objective_ids"],
+            {OBJECTIVE_ID: 24},
+        )
+        no_query_group = by_reason[no_query_reason]
+        self.assertIs(no_query_group["resolved"], True)
+        self.assertEqual(
+            no_query_group["relation_coverage"]["objective_ids"],
+            {OBJECTIVE_ID: 1},
+        )
+
+    def test_multi_objective_label_without_raw_generation_lineage_still_blocks(
+        self,
+    ) -> None:
+        class BlockingClassificationReadyProvider(Phase87SupervisorProvider):
+            def __init__(self) -> None:
+                super().__init__("FORCE_READY")
+
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                for assessment in response["failure_assessments"]:
+                    assessment.update(
+                        {
+                            "classification": "PROVIDER_FAILURE",
+                            "retryable": True,
+                            "source_absence_claim_allowed": False,
+                        }
+                    )
+                return response
+
+        source = _source_checkpoint_with_updates(
+            _source_checkpoint(),
+            status="STOPPED_ON_RESOLUTION",
+            resolved_objective_ids=[OBJECTIVE_ID],
+            source_graph={
+                "open_objectives": [{"objective_id": OBJECTIVE_ID}]
+            },
+            query_failures=[
+                {
+                    "query_id": "QUERY_GENERATION",
+                    "objective_id": "MULTI_OBJECTIVE",
+                    "failure_reason": (
+                        "QUERY_PROVIDER_ERROR:not-in-generation-history"
+                    ),
+                }
+            ],
+            query_generation_history=[],
+        )
+        provider = BlockingClassificationReadyProvider()
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **{
+                **_supervisor_inputs(),
+                "source_graph_checkpoint": source,
+            }
+        )
+
+        self.assertEqual(review.status, "NEXT_RESEARCH_REQUIRED")
+        self.assertEqual(len(provider.calls), 2)
+        supplied = provider.calls[-1]["payload"][
+            "prior_query_source_failures"
+        ][0]
+        self.assertNotIn("resolved", supplied)
+        self.assertEqual(
+            supplied["relation_coverage"]["objective_id"],
+            {"MULTI_OBJECTIVE": 1},
+        )
+
+    def test_resolved_parser_assessment_is_honest_but_not_an_open_parser_gap(
+        self,
+    ) -> None:
+        class ResolvedParserReadyProvider(Phase87SupervisorProvider):
+            def __init__(self) -> None:
+                super().__init__("FORCE_READY")
+
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                for assessment in response["failure_assessments"]:
+                    assessment.update(
+                        {
+                            "classification": "PARSER_EXTRACTOR_FAILURE",
+                            "retryable": True,
+                            "source_absence_claim_allowed": False,
+                        }
+                    )
+                return response
+
+        source = _source_checkpoint_with_updates(
+            _source_checkpoint(),
+            status="STOPPED_ON_RESOLUTION",
+            resolved_objective_ids=[OBJECTIVE_ID],
+            source_graph={
+                "open_objectives": [{"objective_id": OBJECTIVE_ID}]
+            },
+        )
+        provider = ResolvedParserReadyProvider()
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **{
+                **_supervisor_inputs(
+                    prior_failures=(
+                        {
+                            "failure_id": "FAIL-RESOLVED-PARSER",
+                            "failure_kind": "DOCUMENT_REJECTION",
+                            "failure_reason": (
+                                "FACT_EXTRACTOR_REPORTED_UNREADABLE_FULL_DOCUMENT"
+                            ),
+                            "objective_ids": [OBJECTIVE_ID],
+                        },
+                    )
+                ),
+                "source_graph_checkpoint": source,
+            }
+        )
+
+        self.assertEqual(
+            review.status,
+            "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+        )
+        self.assertEqual(
+            review.failure_assessments[0].classification,
+            "PARSER_EXTRACTOR_FAILURE",
+        )
+        self.assertEqual(review.parser_or_extractor_failures, ())
+        supplied = provider.calls[-1]["payload"][
+            "prior_query_source_failures"
+        ][0]
+        self.assertIs(supplied["resolved"], True)
+        self.assertEqual(
+            supplied["resolved_by"],
+            "SOURCE_GRAPH_OBJECTIVE_RESOLUTION",
+        )
+
     def test_equivalent_failure_group_judgment_expands_to_every_original_id(self) -> None:
         provider = Phase87SupervisorProvider("PARSER")
         failure_ids = tuple(f"FAIL-PARSER-{index}" for index in range(100))
@@ -699,6 +1183,8 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             + "replayed failure ledger " * 5_000
             + " Codex ran out of room in the model's context window"
         )
+        synthesis_memo = _synthesis().memo
+        assert synthesis_memo is not None
         ResearchSupervisor(provider=provider).review_epoch(
             **_supervisor_inputs(),
             prior_review={
@@ -717,6 +1203,10 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
                 "next_actions": ["provider 입력을 의미 집계로 재구성한다."],
                 "failure_assessments": failure_assessments,
                 "rationale": oversized_error,
+                "synthesis_memo_id": synthesis_memo.memo_id,
+                "synthesis_memo_hash": _stable_test_hash(
+                    synthesis_memo.to_dict()
+                ),
             },
         )
         payload = provider.calls[-1]["payload"]
@@ -910,7 +1400,9 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         self.assertIn("SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR", review.rationale)
         self.assertEqual(review.failure_assessments, ())
 
-    def test_checkpoint_resume_records_only_deltas_and_returns_prior_review(self) -> None:
+    def test_checkpoint_resume_records_only_deltas_and_drops_stale_prior_review(
+        self,
+    ) -> None:
         provider = Phase87SupervisorProvider("GAP")
         runner = ResearchEpochRunner(
             supervisor=ResearchSupervisor(provider=provider),
@@ -939,8 +1431,12 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         )
         self.assertEqual([row["fact_id"] for row in second.checkpoint.new_facts], ["FACT-2"])
         self.assertEqual(len(second.checkpoint.changed_component_memos), 1)
-        self.assertIsNotNone(
+        self.assertIsNone(
             provider.calls[-1]["payload"]["prior_supervisor_review"]
+        )
+        self.assertNotEqual(
+            first.supervisor_review.synthesis_memo_hash,
+            second.supervisor_review.synthesis_memo_hash,
         )
 
     def test_checkpoint_reused_component_results_are_semantically_unchanged_deltas(
@@ -1144,6 +1640,62 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             ]
             self.assertEqual(len(rows), 3)
             self.assertTrue(all("status" in row for row in rows))
+
+    def test_v2_unknown_gold_sentinel_resumes_hash_safely_as_v3_not_run(self) -> None:
+        runner = ResearchEpochRunner(
+            supervisor=ResearchSupervisor(
+                provider=Phase87SupervisorProvider("GAP")
+            ),
+            saturation_reviewers=(),
+        )
+        first = runner.run_epoch(
+            **_epoch_inputs(source_checkpoint=_source_checkpoint())
+        )
+        legacy = dict(first.checkpoint.to_dict())
+        legacy["schema_version"] = "e2r_research_epoch_checkpoint_v2"
+        legacy.pop("gold_evaluation_status")
+        legacy["gold_critical_fact_miss_count"] = 1
+        legacy["checkpoint_id"] = _research_checkpoint_id(legacy)
+        legacy["checkpoint_hash"] = _research_checkpoint_hash(legacy)
+
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "legacy-v2.json"
+            path.write_text(
+                json.dumps(legacy, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            restored = load_research_epoch_checkpoint(path)
+
+        self.assertEqual(restored.checkpoint_id, legacy["checkpoint_id"])
+        self.assertEqual(restored.checkpoint_hash, legacy["checkpoint_hash"])
+        self.assertEqual(
+            restored.gold_evaluation_status,
+            GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+        )
+        self.assertNotIn(
+            "gold_critical_fact_miss_count",
+            restored.to_score_gap_context(),
+        )
+
+        resumed = runner.run_epoch(
+            **_epoch_inputs(
+                source_checkpoint=_source_checkpoint(),
+                prior_checkpoint=restored,
+            )
+        )
+        self.assertEqual(
+            resumed.checkpoint.schema_version,
+            "e2r_research_epoch_checkpoint_v3",
+        )
+        self.assertEqual(
+            resumed.checkpoint.resumed_from_checkpoint_id,
+            legacy["checkpoint_id"],
+        )
+        self.assertEqual(
+            resumed.checkpoint.gold_evaluation_status,
+            GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
+        )
+        self.assertIsNone(resumed.checkpoint.gold_critical_fact_miss_count)
 
     def test_provider_outage_is_pending_and_never_builds_fallback_query(self) -> None:
         provider = Phase87SupervisorProvider("ERROR")
@@ -1401,6 +1953,10 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         inputs = _supervisor_inputs()
         inputs["component_results"] = components
         inputs["red_team_result"] = red_team
+        inputs["synthesis_result"] = _synthesis(
+            components,
+            red_team_result=red_team,
+        )
         ready = ResearchSupervisor(
             provider=Phase87SupervisorProvider("READY")
         ).review_epoch(**inputs)
@@ -1476,11 +2032,17 @@ def _epoch_inputs(
     counter_proof: Sequence[Mapping[str, Any]] | None = None,
     prior_checkpoint: Any | None = None,
 ) -> Mapping[str, Any]:
+    component_results = tuple(components or _components())
+    red_team_result = _red_team()
     return {
         "target_id": TARGET,
         "as_of_date": AS_OF_DATE,
-        "component_results": tuple(components or _components()),
-        "red_team_result": _red_team(),
+        "component_results": component_results,
+        "red_team_result": red_team_result,
+        "synthesis_result": _synthesis(
+            component_results,
+            red_team_result=red_team_result,
+        ),
         "structured_result": _structured(),
         "evidence_facts": tuple(facts or _route_facts()),
         "source_graph_checkpoint": source_checkpoint,
@@ -1498,13 +2060,23 @@ def _supervisor_inputs(
     prior_failures: Sequence[Mapping[str, Any]] = (),
     counter_proof: Sequence[Mapping[str, Any]] | None = None,
     structured: StructuredResearchResult | None = None,
+    components: Sequence[ComponentResearchResult] | None = None,
+    synthesis: SynthesisResult | None = None,
+    red_team: RedTeamResearchResult | None = None,
 ) -> Mapping[str, Any]:
+    component_results = tuple(components or _components())
+    red_team_result = red_team or _red_team()
     return {
         "epoch": 1,
         "target_id": TARGET,
         "as_of_date": AS_OF_DATE,
-        "component_results": _components(),
-        "red_team_result": _red_team(),
+        "component_results": component_results,
+        "red_team_result": red_team_result,
+        "synthesis_result": synthesis
+        or _synthesis(
+            component_results,
+            red_team_result=red_team_result,
+        ),
         "structured_result": structured or _structured(),
         "evidence_facts": _route_facts(),
         "source_graph_checkpoint": _source_checkpoint(),
@@ -1632,6 +2204,53 @@ def _red_team(
         pending_reasons=(),
         provider_name="PHASE87_RED_TEAM_FIXTURE",
     )
+
+
+def _synthesis(
+    components: Sequence[ComponentResearchResult] | None = None,
+    *,
+    memo_id: str = "SYNTHESIS-MEMO-v1",
+    target_id: str = TARGET,
+    archetype_id: str = ARCHETYPE,
+    red_team_result: RedTeamResearchResult | None = None,
+) -> SynthesisResult:
+    component_results = tuple(components or _components())
+    current_red_team_result = red_team_result or _red_team()
+    assert current_red_team_result.memo is not None
+    memo = SynthesisMemo(
+        memo_id=memo_id,
+        target_id=target_id,
+        archetype_id=archetype_id,
+        component_memo_ids=tuple(
+            row.memo.memo_id for row in component_results if row.memo is not None
+        ),
+        red_team_memo_id=current_red_team_result.memo.memo_id,
+        red_team_memo_hash=_stable_test_hash(
+            current_red_team_result.memo.to_dict()
+        ),
+        cross_component_support=("7개 component의 현재 근거가 함께 수렴한다.",),
+        cross_component_tensions=("현금 전환의 지속기간은 계속 검토한다.",),
+        unresolved_material_questions=(),
+        synthesis_summary="현재 7개 component와 red-team 결과를 종합했다.",
+        confidence=0.8,
+        synthesis_complete=True,
+    )
+    return SynthesisResult(
+        status="COMPLETE",
+        memo=memo,
+        pending_reasons=(),
+        provider_name="PHASE87_SYNTHESIS_FIXTURE",
+    )
+
+
+def _stable_test_hash(value: Any) -> str:
+    encoded = json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        default=str,
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 
 
 def _structured() -> StructuredResearchResult:
@@ -1877,6 +2496,34 @@ def _source_checkpoint(
     return state
 
 
+def _source_checkpoint_with_updates(
+    checkpoint: Mapping[str, Any],
+    **updates: Any,
+) -> Mapping[str, Any]:
+    state = dict(checkpoint)
+    state.update(updates)
+    state.pop("checkpoint_hash", None)
+    state.pop("checkpoint_id", None)
+    encoded = json.dumps(
+        state,
+        ensure_ascii=False,
+        sort_keys=True,
+        default=str,
+    ).encode("utf-8")
+    checkpoint_hash = hashlib.sha256(encoded).hexdigest()
+    state["checkpoint_hash"] = checkpoint_hash
+    state["checkpoint_id"] = stable_intelligence_id(
+        "SGCHECK",
+        {
+            "target_id": state["target_id"],
+            "as_of_date": state["as_of_date"],
+            "epoch": state["epoch"],
+            "checkpoint_hash": checkpoint_hash,
+        },
+    )
+    return state
+
+
 def _manual_saturation_review(
     role: str,
     *,
@@ -1892,7 +2539,6 @@ def _manual_saturation_review(
         structured_data_complete=True,
         new_source_family_directions_reviewed=True,
         unresolved_material_questions=(),
-        gold_critical_fact_miss_count=0,
         rationale="all semantic routes independently reviewed",
         checkpoint_id="CHECKPOINT",
         epoch=1,

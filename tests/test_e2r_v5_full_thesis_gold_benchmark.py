@@ -6,6 +6,7 @@ import shutil
 import tempfile
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 from e2r.research_brain.researcher_mode import (
     PHASE93_POST_RUN_FAIL,
@@ -217,6 +218,60 @@ class E2RV5FullThesisGoldBenchmarkTests(unittest.TestCase):
         self.assertTrue(
             compiled["phase93_scope_truth"]["post_run_recall_attested"]
         )
+
+    def test_incomplete_or_inexact_lane_is_rejected_before_gold_load(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            production = Path(tmp) / "production"
+            self._write_controlled_production(production)
+            lane_path = production / "production_lane_manifest.json"
+            valid_lane = json.loads(lane_path.read_text(encoding="utf-8"))
+            invalid_lanes = {
+                "production_pending": {
+                    **valid_lane,
+                    "production_research_complete": False,
+                },
+                "status_roster_missing_target": {
+                    **valid_lane,
+                    "target_statuses": {
+                        valid_lane["target_ids"][0]: (
+                            "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+                        )
+                    },
+                },
+            }
+            for case, lane in invalid_lanes.items():
+                with self.subTest(case=case):
+                    self._write_json(lane_path, lane)
+                    with patch(
+                        "e2r.research_brain.researcher_mode."
+                        "full_thesis_gold_benchmark.load_phase93_gold_corpus"
+                    ) as load_gold:
+                        with self.assertRaisesRegex(
+                            ValueError, "completed blind|exact completed"
+                        ):
+                            compare_phase93_gold_post_run(
+                                self.ROOT,
+                                production_root=production,
+                            )
+                    load_gold.assert_not_called()
+
+    def test_production_target_roster_must_match_gold_after_gold_load(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            production = Path(tmp) / "production"
+            self._write_controlled_production(production)
+            lane_path = production / "production_lane_manifest.json"
+            lane = json.loads(lane_path.read_text(encoding="utf-8"))
+            lane["target_ids"].append("OUTSIDE-GOLD-ROSTER")
+            lane["target_statuses"]["OUTSIDE-GOLD-ROSTER"] = (
+                "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+            )
+            self._write_json(lane_path, lane)
+
+            with self.assertRaisesRegex(ValueError, "target roster must match"):
+                compare_phase93_gold_post_run(
+                    self.ROOT,
+                    production_root=production,
+                )
 
     def test_fail_or_malformed_post_run_audit_is_never_attested(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
