@@ -34,7 +34,7 @@ from .evidence_fact_extractor import (
     FACT_EXTRACTION_OUTPUT_FILES,
     ResearcherEvidenceFactExtractor,
     ResearcherFactExtractionResult,
-    fact_extraction_has_exact_collaboration_wait,
+    fact_extraction_has_exact_checkpoint_recovery_wait,
     normalize_punctuation_only_fact_value,
     production_material_fact_rows,
     write_researcher_fact_extraction_result,
@@ -1383,11 +1383,12 @@ def _source_checkpoint_needs_fact_extraction_recovery(
 ) -> bool:
     """Replay one immutable source snapshot solely to drain pending facts.
 
-    A collaboration wait may be opened immediately after a terminal source
-    epoch.  The source planner must not replace that exact document snapshot
-    while its fact-extraction queue is still pending.  This predicate admits
-    only that wait leaf; empty-query outcomes, source failures, and real query,
-    ranking, or fetch work continue through ordinary source acquisition.
+    A collaboration wait or canonical-state refresh barrier may be opened
+    immediately after a terminal source epoch.  The source planner must not
+    replace that exact document snapshot while its fact-extraction queue is
+    still pending.  This predicate admits only those exact fact recovery
+    leaves; empty-query outcomes, source failures, and real query, ranking, or
+    fetch work continue through ordinary source acquisition.
     """
 
     pending_reasons = tuple(checkpoint.get("pending_reasons") or ())
@@ -1434,7 +1435,7 @@ def _source_checkpoint_needs_fact_extraction_recovery(
         str(fact_result.get("target_id") or "") == target_id
         and str(fact_result.get("as_of_date") or "") == as_of_date
         and fact_result.get("status") == "FACT_EXTRACTION_PENDING"
-        and fact_extraction_has_exact_collaboration_wait(
+        and fact_extraction_has_exact_checkpoint_recovery_wait(
             fact_result.get("pending_reasons") or ()
         )
         and isinstance(audit, Mapping)

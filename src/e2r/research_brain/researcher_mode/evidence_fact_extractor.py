@@ -353,6 +353,9 @@ _INCOMPLETE_FACT_TRANSPORT_RE = re.compile(
     r"INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
     r"SGDOC-[0-9a-f]{24}:[0-9]+/[1-9][0-9]*"
 )
+FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED = (
+    "FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED"
+)
 
 
 def fact_extraction_has_exact_collaboration_wait(
@@ -372,6 +375,126 @@ def fact_extraction_has_exact_collaboration_wait(
             or _INCOMPLETE_FACT_TRANSPORT_RE.fullmatch(reason) is not None
             for reason in reasons
         )
+    )
+
+
+def fact_extraction_has_exact_checkpoint_recovery_wait(
+    pending_reasons: Sequence[Any],
+) -> bool:
+    """Recognize only a bounded fact queue wait that may reuse source state."""
+
+    reasons = tuple(str(value) for value in pending_reasons)
+    if fact_extraction_has_exact_collaboration_wait(reasons):
+        return True
+    refresh_count = reasons.count(
+        FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+    )
+    return bool(
+        refresh_count == 1
+        and all(
+            reason == FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+            or _INCOMPLETE_FACT_TRANSPORT_RE.fullmatch(reason) is not None
+            for reason in reasons
+        )
+    )
+
+
+def _project_current_facts_with_accepted_claims(
+    *,
+    current_facts: Sequence[Mapping[str, Any]],
+    accepted_claims: Sequence[Mapping[str, Any]],
+    target_id: str,
+    as_of_date: str,
+) -> Mapping[str, Any]:
+    """Project the fact state that a clean resume would load.
+
+    Facts accepted earlier in the same extraction invocation are persisted and
+    compiled before a clean resume.  Compile them before every later batch too,
+    then replace same-id baseline facts with the compiler-owned row so an
+    in-process prompt and its resumed prompt have identical semantic context.
+    """
+
+    merged_by_fact_id: dict[str, Mapping[str, Any]] = {}
+    rows_without_fact_id: list[Mapping[str, Any]] = []
+    for row in current_facts:
+        payload = (
+            dict(row)
+            if isinstance(row, Mapping)
+            else dict(row.to_dict())
+        )
+        fact_id = str(payload.get("fact_id") or "")
+        if fact_id:
+            merged_by_fact_id[fact_id] = payload
+        else:
+            rows_without_fact_id.append(payload)
+    if accepted_claims:
+        compilation = EvidenceFactCompiler().compile(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            accepted_claims=accepted_claims,
+        )
+        for fact in compilation.facts:
+            merged_by_fact_id[fact.fact_id] = fact.to_dict()
+    return project_fact_extraction_evidence_context(
+        (
+            *rows_without_fact_id,
+            *(
+                merged_by_fact_id[fact_id]
+                for fact_id in sorted(merged_by_fact_id)
+            ),
+        )
+    )
+
+
+def _canonical_downstream_fact_input_hash(
+    *,
+    claims: Sequence[Mapping[str, Any]],
+    dispositions: Sequence[Mapping[str, Any]],
+    pending: Sequence[str],
+    split_chunk_ids_by_document: Mapping[str, tuple[str, ...]],
+    pending_transport_chunk_ids: set[str],
+    target_id: str,
+    as_of_date: str,
+) -> str:
+    """Hash only parent-complete fact inputs consumed downstream."""
+
+    canonical_claims, canonical_dispositions, _ = (
+        _reconcile_transport_chunks(
+            claims=claims,
+            dispositions=dispositions,
+            pending=pending,
+            split_chunk_ids_by_document=split_chunk_ids_by_document,
+            pending_transport_chunk_ids=pending_transport_chunk_ids,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
+    )
+
+    def canonical_json(row: Mapping[str, Any]) -> str:
+        return json.dumps(
+            dict(row),
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+
+    return stable_intelligence_id(
+        "FACTDOWNSTREAM",
+        {
+            "claims": [
+                json.loads(value)
+                for value in sorted(
+                    canonical_json(row) for row in canonical_claims
+                )
+            ],
+            "dispositions": [
+                json.loads(value)
+                for value in sorted(
+                    canonical_json(row)
+                    for row in canonical_dispositions
+                )
+            ],
+        },
     )
 
 
@@ -548,10 +671,18 @@ class ResearcherEvidenceFactExtractor:
         )
         pending_transport_chunk_ids: set[str] = set()
         provider_circuit_breaker_open = False
-        current_fact_prompt_context = project_fact_extraction_evidence_context(
-            current_facts
+        current_fact_prompt_context = (
+            _project_current_facts_with_accepted_claims(
+                current_facts=current_facts,
+                accepted_claims=claims,
+                target_id=target_id,
+                as_of_date=as_of_date,
+            )
         )
-        current_fact_prompt_context_chars = _json_character_count(
+        maximum_current_fact_prompt_count = int(
+            current_fact_prompt_context.get("fact_count") or 0
+        )
+        maximum_current_fact_prompt_context_chars = _json_character_count(
             current_fact_prompt_context
         )
         score_gap_prompt_context = project_fact_extraction_score_gap_context(
@@ -569,11 +700,44 @@ class ResearcherEvidenceFactExtractor:
         max_transport_chunk_chars = 0
         pagination_continuation_call_count = 0
         maximum_pagination_page_count = 1
-        for batch in _document_batches(
+        document_batches = _document_batches(
             transport_documents,
             max_documents=self.documents_per_call,
             max_chars=self.max_document_chars_per_call,
-        ):
+        )
+        canonical_state_refresh_barrier_count = 0
+        for batch_index, batch in enumerate(document_batches):
+            downstream_input_hash_before_batch = (
+                _canonical_downstream_fact_input_hash(
+                    claims=claims,
+                    dispositions=dispositions,
+                    pending=pending,
+                    split_chunk_ids_by_document=(
+                        split_chunk_ids_by_document
+                    ),
+                    pending_transport_chunk_ids=(
+                        pending_transport_chunk_ids
+                    ),
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                )
+            )
+            current_fact_prompt_context = (
+                _project_current_facts_with_accepted_claims(
+                    current_facts=current_facts,
+                    accepted_claims=claims,
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                )
+            )
+            maximum_current_fact_prompt_count = max(
+                maximum_current_fact_prompt_count,
+                int(current_fact_prompt_context.get("fact_count") or 0),
+            )
+            maximum_current_fact_prompt_context_chars = max(
+                maximum_current_fact_prompt_context_chars,
+                _json_character_count(current_fact_prompt_context),
+            )
             batch_identity = {
                 "target_id": target_id,
                 "as_of_date": as_of_date,
@@ -1225,6 +1389,50 @@ class ResearcherEvidenceFactExtractor:
                 break
             if provider_circuit_breaker_open:
                 break
+            successful_call = calls[-1] if calls else None
+            successful_batch_changed_downstream_input = bool(
+                successful_call is not None
+                and successful_call.status == "COMPLETE"
+                and downstream_input_hash_before_batch
+                != _canonical_downstream_fact_input_hash(
+                    claims=claims,
+                    dispositions=dispositions,
+                    pending=pending,
+                    split_chunk_ids_by_document=(
+                        split_chunk_ids_by_document
+                    ),
+                    pending_transport_chunk_ids=(
+                        pending_transport_chunk_ids
+                    ),
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                )
+            )
+            successful_batch_added_feedback = bool(
+                successful_call is not None
+                and successful_call.status == "COMPLETE"
+                and successful_call.research_gap_feedback
+            )
+            if (
+                batch_index + 1 < len(document_batches)
+                and (
+                    successful_batch_changed_downstream_input
+                    or successful_batch_added_feedback
+                )
+            ):
+                # A completed parent disposition feeds the downstream
+                # counter-route, structured gaps, Supervisor, and the next
+                # checkpoint's fact prompt.  Persist that canonical state
+                # before opening another collaboration request.  Intermediate
+                # split chunks may continue because their accepted claims are
+                # embedded in the call ledger and projected above; only the
+                # reconciler proving every split chunk complete closes its
+                # parent and therefore yields here.
+                pending.append(
+                    FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+                )
+                canonical_state_refresh_barrier_count += 1
+                break
         claims, dispositions, pending = _reconcile_transport_chunks(
             claims=claims,
             dispositions=dispositions,
@@ -1321,13 +1529,23 @@ class ResearcherEvidenceFactExtractor:
             "transport_chunk_size": self.documents_per_call,
             "transport_character_bound": self.max_document_chars_per_call,
             "transport_chunk_is_completion_cap": False,
+            "canonical_state_refresh_barrier_count": (
+                canonical_state_refresh_barrier_count
+            ),
+            "canonical_state_refresh_is_completion_cap": False,
             "prompt_transport_accounting": {
                 "current_fact_projection_schema_version": (
                     current_fact_prompt_context["schema_version"]
                 ),
-                "current_fact_count": len(current_facts),
+                "current_fact_count": maximum_current_fact_prompt_count,
+                "maximum_current_fact_count": (
+                    maximum_current_fact_prompt_count
+                ),
                 "current_fact_projection_chars": (
-                    current_fact_prompt_context_chars
+                    maximum_current_fact_prompt_context_chars
+                ),
+                "maximum_current_fact_projection_chars": (
+                    maximum_current_fact_prompt_context_chars
                 ),
                 "score_gap_projection_schema_version": (
                     score_gap_prompt_context[

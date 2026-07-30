@@ -209,6 +209,10 @@ _FACT_TRANSPORT_PROGRESS_FEEDBACK_RE = re.compile(
     r"INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
     r"[^:\s]+:([0-9]+)/([1-9][0-9]*)$"
 )
+_FACT_CANONICAL_STATE_REFRESH_FEEDBACK = (
+    "FACT_EXTRACTION_RETRY_CONTEXT:"
+    "FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED"
+)
 _DROP_COLLABORATION_TRANSPORT_WAIT = object()
 _COLLABORATION_TRANSPORT_WAIT_REQUEST_ID_RE = re.compile(
     r"COLLABREQ-[0-9a-f]{64}$"
@@ -2152,11 +2156,12 @@ def normalize_collaboration_transport_wait(value: Any) -> str:
 
 
 def _is_fact_transport_progress_feedback(value: Any) -> bool:
-    """Identify only the extractor's canonical split-document progress row."""
+    """Identify only canonical fact checkpoint progress rows."""
 
-    match = _FACT_TRANSPORT_PROGRESS_FEEDBACK_RE.fullmatch(
-        str(value or "").strip()
-    )
+    text = str(value or "").strip()
+    if text == _FACT_CANONICAL_STATE_REFRESH_FEEDBACK:
+        return True
+    match = _FACT_TRANSPORT_PROGRESS_FEEDBACK_RE.fullmatch(text)
     return bool(
         match
         and int(match.group(1)) < int(match.group(2))

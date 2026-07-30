@@ -1360,8 +1360,20 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
                 ]
             }
         )
+        canonical_refresh = project_query_score_gap_context(
+            {
+                "prior_fact_extraction_feedback": [
+                    *base_feedback,
+                    (
+                        "FACT_EXTRACTION_RETRY_CONTEXT:"
+                        "FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED"
+                    ),
+                ]
+            }
+        )
 
         self.assertEqual(first, resumed)
+        self.assertEqual(first, canonical_refresh)
         self.assertEqual(
             project_fact_extraction_score_gap_context(
                 {
@@ -1425,6 +1437,10 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
                 "FACT_EXTRACTION_RETRY_CONTEXT:"
                 "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
                 "OTHERDOC-deadbeef:3/3"
+            ),
+            (
+                "FACT_EXTRACTION_RETRY_CONTEXT:"
+                "FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED:EXTRA"
             ),
         ):
             with self.subTest(semantic_row=semantic_row):

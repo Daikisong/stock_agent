@@ -49,6 +49,9 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _load_prior_component_memos,
     _same_lane_structured_cache_roots,
 )
+from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
+    FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+)
 from e2r.research_brain.researcher_mode.source_graph_explorer import (
     _finalize_checkpoint,
     source_graph_acquisition_safety_critical_counts,
@@ -720,6 +723,19 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertFalse(
             _terminal_source_snapshot_has_pending_fact_extraction(
                 results[2],
+                snapshot["work_state"],
+            )
+        )
+        canonical_refresh = result(
+            fact_status="FACT_EXTRACTION_PENDING",
+            source_status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+        )
+        canonical_refresh.fact_extraction.pending_reasons = (
+            FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+        )
+        self.assertTrue(
+            _terminal_source_snapshot_has_pending_fact_extraction(
+                canonical_refresh,
                 snapshot["work_state"],
             )
         )
@@ -2914,10 +2930,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                         "as_of_date": as_of_date,
                         "status": "FACT_EXTRACTION_PENDING",
                         "pending_reasons": [
-                            "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
-                            "StructuredProviderUnavailable:"
-                            "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
-                            + "e" * 64
+                            FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
                         ],
                         "audit": {"input_document_count": 1},
                     }

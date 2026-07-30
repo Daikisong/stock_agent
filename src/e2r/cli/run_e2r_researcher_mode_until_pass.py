@@ -28,7 +28,7 @@ from e2r.research_brain.researcher_mode.prompt_projection import (
     normalize_collaboration_transport_wait,
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
-    fact_extraction_has_exact_collaboration_wait,
+    fact_extraction_has_exact_checkpoint_recovery_wait,
 )
 
 
@@ -753,7 +753,7 @@ def _terminal_source_snapshot_has_pending_fact_extraction(
         and _source_transport_work_is_drained(source_transport_work_state)
         and getattr(fact_extraction, "status", None)
         == "FACT_EXTRACTION_PENDING"
-        and fact_extraction_has_exact_collaboration_wait(
+        and fact_extraction_has_exact_checkpoint_recovery_wait(
             getattr(fact_extraction, "pending_reasons", ())
         )
     )

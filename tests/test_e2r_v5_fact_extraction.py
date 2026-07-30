@@ -9,9 +9,11 @@ from types import SimpleNamespace
 from typing import Any, Mapping
 
 from e2r.research_brain.researcher_mode import (
+    CollaborationCodexResearcherProvider,
     EVIDENCE_FACT_EXTRACTION_SCHEMA,
     EvidenceFactCompiler,
     ResearcherEvidenceFactExtractor,
+    import_collaboration_response,
     production_material_fact_rows,
     write_researcher_fact_extraction_result,
 )
@@ -27,6 +29,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     write_production_lane,
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
+    FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
     NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED,
     PUNCTUATION_ONLY_VALUE_NORMALIZATION,
     STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED,
@@ -802,6 +805,185 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             provider_b.calls[0]["payload"],
         )
 
+    def test_clean_resume_consumes_pending_collaboration_request_after_prior_fact(
+        self,
+    ) -> None:
+        documents = (
+            _document("DOC-1", "ISSUER_PRESENTATION", "ISSUER"),
+            _document("DOC-2", "REGULATORY_FILING", "REGULATOR"),
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            provider = CollaborationCodexResearcherProvider.default()
+            provider.configure_response_cache(
+                root / "research_provider_response_cache"
+            )
+            journal = root / "collaboration_codex_subagent_provider"
+            extractor = ResearcherEvidenceFactExtractor(provider=provider)
+            common = {
+                "target_id": TARGET,
+                "target_name": TARGET_NAME,
+                "target_aliases": (),
+                "archetype_id": ARCHETYPE,
+                "as_of_date": AS_OF_DATE,
+                "open_objectives": (),
+            }
+
+            # Materialize DOC-1's deterministic collaboration request first,
+            # then import one valid fact so the real two-document invocation
+            # can complete DOC-1 and pause exactly at DOC-2.
+            extractor.extract(
+                **common,
+                documents=(documents[0],),
+            )
+            doc1_request_path = next(
+                (journal / "requests").glob("COLLABREQ-*.json")
+            )
+            doc1_request = json.loads(
+                doc1_request_path.read_text(encoding="utf-8")
+            )
+            doc1_payload = json.loads(
+                doc1_request["prompt"].rsplit("\n", 1)[-1]
+            )
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=doc1_request["request_id"],
+                response_payload=FactProvider().complete(
+                    pass_name="EVIDENCE_FACT_EXTRACTION",
+                    payload=doc1_payload,
+                ),
+                agent_id="fact-doc-1",
+                canonical_task_name="/root/fact_doc_1",
+                agent_model="codex-collaboration",
+            )
+
+            first = extractor.extract(
+                **common,
+                documents=documents,
+            )
+            self.assertEqual(first.status, "FACT_EXTRACTION_PENDING")
+            self.assertEqual(len(first.facts), 1)
+            self.assertEqual(
+                first.pending_reasons,
+                (FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,),
+            )
+            requests_before_resume = {
+                path.name: json.loads(path.read_text(encoding="utf-8"))
+                for path in (journal / "requests").glob(
+                    "COLLABREQ-*.json"
+                )
+            }
+            self.assertEqual(
+                {
+                    json.loads(
+                        request["prompt"].rsplit("\n", 1)[-1]
+                    )["full_documents"][0]["document_id"]
+                    for request in requests_before_resume.values()
+                },
+                {"DOC-1"},
+            )
+
+            checkpoint_root = root / "fact_checkpoint"
+            write_researcher_fact_extraction_result(
+                first,
+                checkpoint_root,
+            )
+            checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(
+                    evidence_documents=documents
+                ),
+            )
+            refreshed_score_gap = {
+                "prior_structured_source_gap": {
+                    "status": "SOURCE_PENDING",
+                    "missing_roles_by_component": {
+                        "market_mispricing": ["PEER_BAND"]
+                    },
+                }
+            }
+            waiting = extractor.extract(
+                **common,
+                documents=documents,
+                current_facts=tuple(
+                    fact.to_dict() for fact in first.facts
+                ),
+                score_gap_context=refreshed_score_gap,
+                **checkpoint,
+            )
+            self.assertEqual(waiting.status, "FACT_EXTRACTION_PENDING")
+            requests_with_doc2 = {
+                path.name: json.loads(path.read_text(encoding="utf-8"))
+                for path in (journal / "requests").glob(
+                    "COLLABREQ-*.json"
+                )
+            }
+            doc2_request = next(
+                request
+                for request in requests_with_doc2.values()
+                if json.loads(request["prompt"].rsplit("\n", 1)[-1])[
+                    "full_documents"
+                ][0]["document_id"]
+                == "DOC-2"
+            )
+            doc2_pending_call = next(
+                call
+                for call in waiting.provider_calls
+                if call.document_ids == ("DOC-2",)
+            )
+            doc2_payload = json.loads(
+                doc2_request["prompt"].rsplit("\n", 1)[-1]
+            )
+            self.assertEqual(
+                doc2_payload["score_gap_context"][
+                    "prior_structured_source_gap"
+                ]["status"],
+                "SOURCE_PENDING",
+            )
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=doc2_request["request_id"],
+                response_payload=FactProvider().complete(
+                    pass_name="EVIDENCE_FACT_EXTRACTION",
+                    payload=doc2_payload,
+                ),
+                agent_id="fact-doc-2",
+                canonical_task_name="/root/fact_doc_2",
+                agent_model="codex-collaboration",
+            )
+
+            resumed = extractor.extract(
+                **common,
+                documents=documents,
+                current_facts=tuple(
+                    fact.to_dict() for fact in first.facts
+                ),
+                score_gap_context=refreshed_score_gap,
+                **checkpoint,
+            )
+
+            self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
+            self.assertEqual(
+                set(requests_with_doc2),
+                {
+                    path.name
+                    for path in (journal / "requests").glob(
+                        "COLLABREQ-*.json"
+                    )
+                },
+            )
+            doc2_completed_call = next(
+                call
+                for call in resumed.provider_calls
+                if call.document_ids == ("DOC-2",)
+            )
+            self.assertEqual(doc2_completed_call.status, "COMPLETE")
+            self.assertEqual(
+                doc2_completed_call.prompt_hash,
+                doc2_pending_call.prompt_hash,
+            )
+
     def test_transport_fragment_provider_value_uses_normalized_object(self) -> None:
         result = ResearcherEvidenceFactExtractor(
             provider=CorruptedValueFactProvider(":null},{")
@@ -903,19 +1085,33 @@ class E2RV5FactExtractionTests(unittest.TestCase):
 
     def test_every_full_document_is_processed_and_independent_sources_dedupe_fact(self) -> None:
         provider = FactProvider()
-        result = ResearcherEvidenceFactExtractor(
+        extractor = ResearcherEvidenceFactExtractor(
             provider=provider,
-        ).extract(
-            target_id=TARGET,
-            target_name=TARGET_NAME,
-            target_aliases=(),
-            archetype_id=ARCHETYPE,
-            as_of_date=AS_OF_DATE,
-            documents=(
+        )
+        common = {
+            "target_id": TARGET,
+            "target_name": TARGET_NAME,
+            "target_aliases": (),
+            "archetype_id": ARCHETYPE,
+            "as_of_date": AS_OF_DATE,
+            "documents": (
                 _document("DOC-1", "ISSUER_PRESENTATION", "ISSUER:current.example"),
                 _document("DOC-2", "REUTERS", "REUTERS:reuters.example"),
             ),
-            open_objectives=(),
+            "open_objectives": (),
+        }
+        first = extractor.extract(**common)
+        self.assertEqual(
+            first.pending_reasons,
+            (FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,),
+        )
+        result = extractor.extract(
+            **common,
+            current_facts=tuple(fact.to_dict() for fact in first.facts),
+            prior_material_claims=first.material_claims,
+            prior_document_dispositions=first.document_dispositions,
+            prior_provider_calls=first.provider_calls,
+            prior_rejections=first.rejections,
         )
 
         self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
@@ -1108,6 +1304,127 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 ]
                 for call in provider.calls
             )
+        )
+
+    def test_final_split_chunk_yields_before_opening_next_parent(self) -> None:
+        provider = ChunkAwareFactProvider()
+        chunked = dict(
+            _document(
+                "DOC-CHUNKED",
+                "ISSUER_PRESENTATION",
+                "ISSUER:current.example",
+            )
+        )
+        full_text = (
+            "Current Corp reported record operating cash flow in 2026Q1.\n"
+            + ("complete source body line\n" * 9_000)
+        )
+        chunked["content_text"] = full_text
+        chunked["content_hash"] = hashlib.sha256(
+            full_text.encode("utf-8")
+        ).hexdigest()
+        next_parent = _document(
+            "DOC-NEXT",
+            "REUTERS",
+            "REUTERS:reuters.example",
+        )
+        extractor = ResearcherEvidenceFactExtractor(
+            provider=provider,
+            max_document_chars_per_call=100_000,
+        )
+        common = {
+            "target_id": TARGET,
+            "target_name": TARGET_NAME,
+            "target_aliases": (),
+            "archetype_id": ARCHETYPE,
+            "as_of_date": AS_OF_DATE,
+            "documents": (chunked, next_parent),
+            "open_objectives": (),
+        }
+
+        first = extractor.extract(**common)
+
+        self.assertEqual(
+            first.pending_reasons,
+            (FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,),
+        )
+        self.assertEqual(
+            {call["payload"]["full_documents"][0]["document_id"]
+             for call in provider.calls},
+            {"DOC-CHUNKED"},
+        )
+        self.assertEqual(len(first.document_dispositions), 1)
+        self.assertTrue(
+            first.document_dispositions[0]["all_transport_chunks_complete"]
+        )
+
+        resumed = extractor.extract(
+            **common,
+            current_facts=tuple(fact.to_dict() for fact in first.facts),
+            prior_material_claims=first.material_claims,
+            prior_document_dispositions=first.document_dispositions,
+            prior_provider_calls=first.provider_calls,
+            prior_rejections=first.rejections,
+        )
+
+        self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(
+            provider.calls[-1]["payload"]["full_documents"][0][
+                "document_id"
+            ],
+            "DOC-NEXT",
+        )
+
+    def test_later_split_chunk_does_not_close_parent_with_missing_chunk(
+        self,
+    ) -> None:
+        provider = ChunkAwareFactProvider(fail_chunk_index=1)
+        chunked = dict(
+            _document(
+                "DOC-CHUNK-PENDING",
+                "ISSUER_PRESENTATION",
+                "ISSUER:current.example",
+            )
+        )
+        full_text = (
+            "Current Corp reported record operating cash flow in 2026Q1.\n"
+            + ("complete source body line\n" * 12_000)
+        )
+        chunked["content_text"] = full_text
+        chunked["content_hash"] = hashlib.sha256(
+            full_text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(
+            provider=provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(
+                chunked,
+                _document(
+                    "DOC-NEXT",
+                    "REUTERS",
+                    "REUTERS:reuters.example",
+                ),
+            ),
+            open_objectives=(),
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_PENDING")
+        self.assertNotIn(
+            FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+            result.pending_reasons,
+        )
+        self.assertEqual(
+            provider.calls[-1]["payload"]["full_documents"][0][
+                "document_id"
+            ],
+            "DOC-NEXT",
         )
 
     def test_one_chunk_timeout_keeps_parent_unaccounted_but_later_chunks_continue(self) -> None:
