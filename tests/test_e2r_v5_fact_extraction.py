@@ -1223,6 +1223,187 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             ["DOC-COMPLETE"],
         )
 
+    def test_clean_resume_skips_verified_split_chunks_without_promoting_parent(
+        self,
+    ) -> None:
+        document = dict(
+            _document(
+                "DOC-CHUNK-RESUME",
+                "ISSUER_PRESENTATION",
+                "ISSUER:current.example",
+            )
+        )
+        full_text = (
+            "Current Corp reported record operating cash flow in 2026Q1.\n"
+            + ("complete source body line\n" * 12_000)
+        )
+        document["content_text"] = full_text
+        document["content_hash"] = hashlib.sha256(
+            full_text.encode("utf-8")
+        ).hexdigest()
+        first_provider = ChunkAwareFactProvider(fail_chunk_index=1)
+        first = ResearcherEvidenceFactExtractor(
+            provider=first_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+
+        self.assertEqual(first.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(first.material_claims, ())
+        self.assertEqual(first.facts, ())
+        self.assertEqual(first.document_dispositions, ())
+        completed_first_chunk_ids = {
+            chunk_id
+            for call in first.provider_calls
+            if call.status == "COMPLETE"
+            for chunk_id in call.transport_chunk_ids
+        }
+        self.assertGreaterEqual(len(completed_first_chunk_ids), 2)
+        self.assertTrue(
+            all(
+                call.accepted_claims is not None
+                for call in first.provider_calls
+                if call.status == "COMPLETE"
+            )
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            write_researcher_fact_extraction_result(first, directory)
+            checkpoint = _load_fact_checkpoint(
+                Path(directory),
+                source_graph=SimpleNamespace(
+                    evidence_documents=(document,)
+                ),
+            )
+
+        self.assertEqual(checkpoint["prior_material_claims"], ())
+        self.assertEqual(checkpoint["prior_document_dispositions"], ())
+        self.assertEqual(
+            {
+                chunk_id
+                for call in checkpoint["prior_provider_calls"]
+                for chunk_id in call["transport_chunk_ids"]
+            },
+            completed_first_chunk_ids,
+        )
+        resumed_provider = ChunkAwareFactProvider()
+        resumed = ResearcherEvidenceFactExtractor(
+            provider=resumed_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            **checkpoint,
+        )
+
+        resumed_indices = [
+            int(
+                (
+                    call["payload"]["full_documents"][0].get(
+                        "transport_chunk"
+                    )
+                    or {}
+                ).get("chunk_index")
+                or 0
+            )
+            for call in resumed_provider.calls
+        ]
+        self.assertEqual(resumed_indices, [1])
+        self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(resumed.material_claims), 1)
+        self.assertEqual(len(resumed.facts), 1)
+        self.assertEqual(len(resumed.document_dispositions), 1)
+        self.assertTrue(
+            resumed.document_dispositions[0]["all_transport_chunks_complete"]
+        )
+        self.assertEqual(
+            resumed.audit["prompt_transport_accounting"][
+                "resumed_transport_chunk_count"
+            ],
+            len(completed_first_chunk_ids),
+        )
+        self.assertEqual(
+            resumed.audit["prompt_transport_accounting"][
+                "provider_transport_chunk_count"
+            ],
+            1,
+        )
+        checkpoint_json = json.dumps(checkpoint, ensure_ascii=False)
+        for tamper_kind in ("EXACT_QUOTE", "DISPOSITION_COUNT"):
+            with self.subTest(tamper_kind=tamper_kind):
+                tampered_checkpoint = json.loads(checkpoint_json)
+                claim_call = next(
+                    call
+                    for call in tampered_checkpoint[
+                        "prior_provider_calls"
+                    ]
+                    if call.get("accepted_claims")
+                )
+                tampered_chunk_index = int(
+                    claim_call["document_dispositions"][0][
+                        "transport_chunk_index"
+                    ]
+                )
+                if tamper_kind == "EXACT_QUOTE":
+                    claim_call["accepted_claims"][0][
+                        "exact_quote"
+                    ] = "tampered quote absent from source"
+                else:
+                    claim_call["document_dispositions"][0][
+                        "accepted_fact_count"
+                    ] += 1
+                fail_closed_provider = ChunkAwareFactProvider()
+                fail_closed = ResearcherEvidenceFactExtractor(
+                    provider=fail_closed_provider,
+                    max_document_chars_per_call=100_000,
+                ).extract(
+                    target_id=TARGET,
+                    target_name=TARGET_NAME,
+                    target_aliases=(),
+                    archetype_id=ARCHETYPE,
+                    as_of_date=AS_OF_DATE,
+                    documents=(document,),
+                    open_objectives=(),
+                    **tampered_checkpoint,
+                )
+                fail_closed_indices = {
+                    int(
+                        (
+                            call["payload"]["full_documents"][0].get(
+                                "transport_chunk"
+                            )
+                            or {}
+                        ).get("chunk_index")
+                        or 0
+                    )
+                    for call in fail_closed_provider.calls
+                }
+                self.assertEqual(
+                    fail_closed_indices,
+                    {1, tampered_chunk_index},
+                )
+                self.assertEqual(
+                    fail_closed.status,
+                    "FACT_EXTRACTION_COMPLETE",
+                )
+                self.assertEqual(len(fail_closed.material_claims), 1)
+                self.assertNotEqual(
+                    fail_closed.material_claims[0]["exact_quote"],
+                    "tampered quote absent from source",
+                )
+
     def test_checkpoint_resume_migrates_punctuation_only_claim_without_duplication(
         self,
     ) -> None:
@@ -2201,6 +2382,11 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             as_of_date=AS_OF_DATE,
             documents=documents,
             open_objectives=(),
+        )
+        self.assertIsNone(first.provider_calls[0].accepted_claims)
+        self.assertNotIn(
+            "accepted_claims",
+            first.provider_calls[0].to_dict(),
         )
         second_provider = FactProvider(fail=True)
         resumed = ResearcherEvidenceFactExtractor(

@@ -204,6 +204,11 @@ _COLLABORATION_TRANSPORT_WAIT_RE = re.compile(
     + r")COLLABORATION_RESPONSE_PENDING:"
     r"COLLABREQ-[0-9a-f]{64}$"
 )
+_FACT_TRANSPORT_PROGRESS_FEEDBACK_RE = re.compile(
+    r"^FACT_EXTRACTION_RETRY_CONTEXT:"
+    r"INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+    r"[^:\s]+:([0-9]+)/([1-9][0-9]*)$"
+)
 _DROP_COLLABORATION_TRANSPORT_WAIT = object()
 
 
@@ -2131,6 +2136,18 @@ def _is_collaboration_transport_wait(value: Any) -> bool:
     )
 
 
+def _is_fact_transport_progress_feedback(value: Any) -> bool:
+    """Identify only the extractor's canonical split-document progress row."""
+
+    match = _FACT_TRANSPORT_PROGRESS_FEEDBACK_RE.fullmatch(
+        str(value or "").strip()
+    )
+    return bool(
+        match
+        and int(match.group(1)) < int(match.group(2))
+    )
+
+
 def _project_failure_without_collaboration_transport_wait(
     row: Mapping[str, Any],
 ) -> Mapping[str, Any] | None:
@@ -2247,9 +2264,10 @@ def project_query_score_gap_context(
             str(value)
             for value in feedback
             if not _is_collaboration_transport_wait(value)
+            and not _is_fact_transport_progress_feedback(value)
         )
         output["prior_fact_extraction_feedback"] = {
-            "schema_version": "e2r_v5_fact_gap_feedback_projection_v2",
+            "schema_version": "e2r_v5_fact_gap_feedback_projection_v3",
             "feedback_count": len(feedback_rows),
             "feedback_roster_hash": _stable_hash(feedback_rows),
             "feedback_kind_coverage": _relation_coverage(
@@ -2266,6 +2284,8 @@ def project_query_score_gap_context(
             "supervisor_missing_facts_and_questions_remain_verbatim": True,
             "full_feedback_records_persisted_outside_prompt": True,
             "collaboration_transport_waits_excluded_from_semantic_prompt": True,
+            "fact_transport_progress_excluded_from_semantic_prompt": True,
+            "fact_transport_progress_persisted_in_fact_checkpoint": True,
             "fixed_top_n_used": False,
             "prompt_projection_is_research_cap": False,
             "score_authority": False,

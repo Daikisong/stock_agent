@@ -47,6 +47,12 @@ class FixtureStructuredTransport:
                     _krx_stock_row(),
                     _krx_stock_row(symbol="111111", name="Peer Alpha"),
                     _krx_stock_row(symbol="222222", name="Peer Beta"),
+                    _krx_stock_row(
+                        symbol="333333", name="Relabelled Company"
+                    ),
+                    _krx_stock_row(
+                        symbol="444444", name="Invented Listing Vehicle"
+                    ),
                 ]
             }
         elif "/idx/" in url:
@@ -207,6 +213,297 @@ class RepeatedVerificationFailurePeerProvider(FixturePeerProvider):
 
     def invalidate_last_response_cache(self, reason):
         event = {"status": "INVALIDATED", "reason": reason}
+        self.invalidations.append(event)
+        return event
+
+
+class ExpansionPeerProvider(FixturePeerProvider):
+    def complete(self, *, pass_name, payload):
+        if pass_name != "STRUCTURED_PEER_SELECTION":
+            raise AssertionError(pass_name)
+        legacy_exclusive_roster = bool(
+            (
+                payload.get("point_in_time_peer_roster_accounting")
+                or {}
+            ).get(
+                "when_two_or_more_available_select_only_from_this_roster"
+            )
+            or (payload.get("selection_constraints") or {}).get(
+                (
+                    "when_two_or_more_point_in_time_identities_are_available_"
+                    "select_only_from_point_in_time_structured_peer_identity_roster"
+                )
+            )
+        )
+        if (
+            "peer_selection_retry_context" not in payload
+            or legacy_exclusive_roster
+        ):
+            return super().complete(pass_name=pass_name, payload=payload)
+        self.calls.append({"pass_name": pass_name, "payload": payload})
+        return {
+            "peers": [
+                {
+                    "peer_symbol": "555555",
+                    "peer_name": "Peer Gamma",
+                    "shared_economic_drivers": ["same capital cycle"],
+                    "material_differences": ["different customer mix"],
+                    "comparability_rationale": "capacity economics overlap",
+                    "confidence": 0.82,
+                },
+                {
+                    "peer_symbol": "666666",
+                    "peer_name": "Peer Delta",
+                    "shared_economic_drivers": ["same demand cycle"],
+                    "material_differences": ["different product mix"],
+                    "comparability_rationale": "forward earnings cycle overlaps",
+                    "confidence": 0.8,
+                },
+            ],
+            "selection_complete": True,
+            "unresolved_research_notes": [],
+            "selection_rationale": "expand beyond cached availability hints",
+        }
+
+
+class ExpansionFixtureStructuredTransport(FixtureStructuredTransport):
+    def get_json(self, *, url, params, headers, timeout_seconds):
+        if "/sto/" not in url:
+            return super().get_json(
+                url=url,
+                params=params,
+                headers=headers,
+                timeout_seconds=timeout_seconds,
+            )
+        del headers, timeout_seconds
+        self.calls.append(("json", url, dict(params)))
+        payload = {
+            "OutBlock_1": [
+                _krx_stock_row(),
+                _krx_stock_row(symbol="111111", name="Peer Alpha"),
+                _krx_stock_row(symbol="222222", name="Peer Beta"),
+                _krx_stock_row(symbol="555555", name="Peer Gamma"),
+                _krx_stock_row(symbol="666666", name="Peer Delta"),
+            ]
+        }
+        raw = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()
+        return StructuredHTTPResponse(
+            status_code=200,
+            canonical_url=url,
+            provider_request_id="FIXTURE-EXPANSION-JSON",
+            content_hash=hashlib.sha256(raw).hexdigest(),
+            payload=payload,
+        )
+
+    def get_text(self, *, url, params, headers, timeout_seconds):
+        symbol = str(params.get("cmp_cd") or "")
+        definition = {
+            "555555": ("Peer Gamma", 9.0, 1.6, 4.5),
+            "666666": ("Peer Delta", 11.0, 2.0, 5.5),
+        }.get(symbol)
+        if definition is None:
+            return super().get_text(
+                url=url,
+                params=params,
+                headers=headers,
+                timeout_seconds=timeout_seconds,
+            )
+        del headers, timeout_seconds
+        self.calls.append(("text", url, dict(params)))
+        text = _companyguide_html(
+            "2026.07.10",
+            company_name=definition[0],
+            forward_per=definition[1],
+            forward_pbr=definition[2],
+            forward_ev_ebitda=definition[3],
+        )
+        return StructuredHTTPResponse(
+            status_code=200,
+            canonical_url=url,
+            provider_request_id="FIXTURE-EXPANSION-TEXT",
+            content_hash=hashlib.sha256(text.encode()).hexdigest(),
+            text=text,
+        )
+
+
+class MarketCoverageStructuredTransport(FixtureStructuredTransport):
+    def __init__(
+        self,
+        *,
+        target_id: str = "005930",
+        target_market: str = "KOSPI",
+        missing_market: str | None = None,
+        target_only_market: str | None = None,
+    ) -> None:
+        super().__init__()
+        self.target_id = target_id
+        self.target_market = target_market
+        self.missing_market = missing_market
+        self.target_only_market = target_only_market
+
+    def get_json(self, *, url, params, headers, timeout_seconds):
+        market = (
+            "KOSPI"
+            if "stk_bydd_trd" in url
+            else "KOSDAQ"
+            if "ksq_bydd_trd" in url
+            else None
+        )
+        if market is not None:
+            del headers, timeout_seconds
+            self.calls.append(("json", url, dict(params)))
+            if market == self.missing_market:
+                payload = {"OutBlock_1": []}
+            else:
+                rows = [
+                    _krx_stock_row(
+                        symbol="111111" if market == "KOSPI" else "222222",
+                        name=(
+                            "Peer Alpha"
+                            if market == "KOSPI"
+                            else "Peer Beta"
+                        ),
+                    )
+                ]
+                if market == self.target_market:
+                    rows.insert(
+                        0,
+                        _krx_stock_row(
+                            symbol=self.target_id,
+                            name="Current Corp",
+                        ),
+                    )
+                if market == self.target_only_market:
+                    rows = [
+                        row
+                        for row in rows
+                        if str(row.get("ISU_CD") or "") == self.target_id
+                    ]
+                payload = {"OutBlock_1": rows}
+            return _json_response(
+                url,
+                payload,
+                request_id=f"FIXTURE-{market}-STOCK",
+            )
+        if "/idx/" in url:
+            del headers, timeout_seconds
+            self.calls.append(("json", url, dict(params)))
+            market = "KOSDAQ" if "kosdaq" in url else "KOSPI"
+            row = {
+                **_krx_index_row(params["basDd"]),
+                "IDX_NM": "코스닥" if market == "KOSDAQ" else "코스피",
+            }
+            return _json_response(
+                url,
+                {"OutBlock_1": [row]},
+                request_id=f"FIXTURE-{market}-INDEX",
+            )
+        return super().get_json(
+            url=url,
+            params=params,
+            headers=headers,
+            timeout_seconds=timeout_seconds,
+        )
+
+
+class CacheInvalidationRecordingPeerProvider(FixturePeerProvider):
+    def __init__(self):
+        super().__init__()
+        self.invalidations = []
+        self.active_response = False
+
+    def invalidate_last_response_cache(self, reason):
+        event = {
+            "status": (
+                "INVALIDATED"
+                if self.active_response
+                else "NO_ELIGIBLE_RESPONSE"
+            ),
+            "reason": reason,
+        }
+        self.active_response = False
+        self.invalidations.append(event)
+        return event
+
+    def complete(self, *, pass_name, payload):
+        if "peer_selection_retry_context" in payload:
+            return super().complete(pass_name=pass_name, payload=payload)
+        self.calls.append({"pass_name": pass_name, "payload": payload})
+        self.active_response = True
+        return {
+            "peers": [
+                {
+                    "peer_symbol": "999999",
+                    "peer_name": "Absent Peer",
+                    "shared_economic_drivers": ["same earnings cycle"],
+                    "material_differences": ["different product mix"],
+                    "comparability_rationale": "cycle economics overlap",
+                    "confidence": 0.8,
+                },
+                {
+                    "peer_symbol": "222222",
+                    "peer_name": "Peer Beta",
+                    "shared_economic_drivers": ["same capacity cycle"],
+                    "material_differences": ["different customer mix"],
+                    "comparability_rationale": "capacity economics overlap",
+                    "confidence": 0.8,
+                },
+            ],
+            "selection_complete": True,
+            "unresolved_research_notes": [],
+            "selection_rationale": "stateful invalid cached proposal",
+        }
+
+
+class InvalidStructuredRetryPeerProvider(FixturePeerProvider):
+    def __init__(self):
+        super().__init__()
+        self.attempt_count = 0
+        self.active_response = False
+        self.invalidations = []
+
+    def complete(self, *, pass_name, payload):
+        self.attempt_count += 1
+        self.calls.append({"pass_name": pass_name, "payload": payload})
+        self.active_response = True
+        pairs = (
+            (
+                ("333333", "Relabelled Company"),
+                ("444444", "Invented Listing Vehicle"),
+            )
+            if self.attempt_count == 1
+            else (
+                ("999999", "Absent Peer"),
+                ("222222", "Peer Beta"),
+            )
+        )
+        return {
+            "peers": [
+                {
+                    "peer_symbol": symbol,
+                    "peer_name": name,
+                    "shared_economic_drivers": ["same earnings cycle"],
+                    "material_differences": ["different product mix"],
+                    "comparability_rationale": "cycle economics overlap",
+                    "confidence": 0.8,
+                }
+                for symbol, name in pairs
+            ],
+            "selection_complete": True,
+            "unresolved_research_notes": [],
+            "selection_rationale": "exercise structured retry validation",
+        }
+
+    def invalidate_last_response_cache(self, reason):
+        event = {
+            "status": (
+                "INVALIDATED"
+                if self.active_response
+                else "NO_ELIGIBLE_RESPONSE"
+            ),
+            "reason": reason,
+        }
+        self.active_response = False
         self.invalidations.append(event)
         return event
 
@@ -424,6 +721,457 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
                     },
                 ),
             )
+
+    def test_cached_point_in_time_roster_is_hint_not_exclusive_allowlist(self):
+        transport = ExpansionFixtureStructuredTransport()
+        peer_provider = ExpansionPeerProvider()
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            cache = Path(directory) / "structured_source_cache"
+            cache.mkdir(parents=True)
+            for symbol, name, per, pbr in (
+                ("111111", "Peer Alpha", 8.0, "N/A"),
+                ("222222", "Peer Beta", "N/A", 2.2),
+            ):
+                _write_legacy_text_cache(
+                    cache / f"companyguide_peer_snapshot_{symbol}.json",
+                    url="https://comp.wisereport.co.kr/company/c1010001.aspx",
+                    text=_companyguide_html(
+                        "2026.07.10",
+                        company_name=name,
+                        forward_per=per,
+                        forward_pbr=pbr,
+                        forward_ev_ebitda="N/A",
+                    ),
+                )
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+
+        payload = peer_provider.calls[0]["payload"]
+        self.assertEqual(
+            {
+                row["peer_symbol"]
+                for row in payload[
+                    "point_in_time_structured_peer_identity_roster"
+                ]
+            },
+            {"111111", "222222"},
+        )
+        self.assertTrue(
+            payload["point_in_time_peer_roster_accounting"][
+                "availability_hint_only_not_peer_allowlist"
+            ]
+        )
+        self.assertEqual(len(peer_provider.calls), 2)
+        retry_payload = peer_provider.calls[1]["payload"]
+        self.assertIn("peer_selection_retry_context", retry_payload)
+        self.assertEqual(
+            {
+                row["peer_symbol"]
+                for row in retry_payload[
+                    "authoritative_listing_identity_roster"
+                ]
+            },
+            {"111111", "222222", "555555", "666666"},
+        )
+        self.assertTrue(
+            result.audit["peer_selection"][
+                "structured_verification_retry_used"
+            ]
+        )
+        self.assertEqual(
+            {
+                row["peer_symbol"]
+                for row in result.audit["peer_selection"]["selected_peers"]
+            },
+            {"555555", "666666"},
+        )
+        self.assertEqual(
+            result.audit["peer_selection"]["status"],
+            "PEER_SELECTION_COMPLETE",
+        )
+        self.assertNotIn(
+            "point_in_time_structured_peer_identity_roster_is_allowlist",
+            retry_payload["selection_constraints"],
+        )
+        self.assertNotIn(
+            (
+                "when_two_or_more_point_in_time_identities_are_available_"
+                "select_only_from_point_in_time_structured_peer_identity_roster"
+            ),
+            retry_payload["selection_constraints"],
+        )
+        self.assertNotIn(
+            "when_two_or_more_available_select_only_from_this_roster",
+            retry_payload["point_in_time_peer_roster_accounting"],
+        )
+
+    def test_peer_identity_must_match_authoritative_krx_pair(self):
+        response = FixturePeerProvider().complete(
+            pass_name="STRUCTURED_PEER_SELECTION",
+            payload={},
+        )
+        tampered = json.loads(json.dumps(response))
+        tampered["peers"][0]["peer_name"] = "Wrong Legal Name"
+        with self.assertRaisesRegex(
+            ValueError,
+            "mismatches authoritative listing roster",
+        ):
+            structured_materializer_module._validated_peer_proposals(
+                tampered,
+                target_id="005930",
+                authoritative_listing_identity_roster=(
+                    {"peer_symbol": "111111", "peer_name": "Peer Alpha"},
+                    {"peer_symbol": "222222", "peer_name": "Peer Beta"},
+                ),
+            )
+
+    def test_krx_market_identity_rosters_merge_and_drop_conflicts(self):
+        merged = structured_materializer_module._merge_listing_identity_rosters(
+            (
+                {"peer_symbol": "111111", "peer_name": "KOSPI Peer"},
+                {"peer_symbol": "222222", "peer_name": "KOSDAQ Peer"},
+                {"peer_symbol": "333333", "peer_name": "First Name"},
+                {"peer_symbol": "333333", "peer_name": "Conflicting Name"},
+            )
+        )
+        self.assertEqual(
+            merged,
+            (
+                {"peer_symbol": "111111", "peer_name": "KOSPI Peer"},
+                {"peer_symbol": "222222", "peer_name": "KOSDAQ Peer"},
+            ),
+        )
+
+    def test_kospi_and_kosdaq_rosters_are_both_required_and_merged(self):
+        transport = MarketCoverageStructuredTransport()
+        peer_provider = FixturePeerProvider()
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+
+        provider_roster = peer_provider.calls[0]["payload"][
+            "authoritative_listing_identity_roster"
+        ]
+        self.assertEqual(
+            provider_roster,
+            [
+                {"peer_symbol": "111111", "peer_name": "Peer Alpha"},
+                {"peer_symbol": "222222", "peer_name": "Peer Beta"},
+            ],
+        )
+        roster_audit = result.audit["peer_selection"][
+            "listing_identity_roster"
+        ]
+        self.assertTrue(roster_audit["all_required_markets_complete"])
+        self.assertEqual(
+            roster_audit["complete_markets"],
+            ["KOSPI", "KOSDAQ"],
+        )
+        self.assertEqual(
+            roster_audit["market_details"]["KOSPI"]["identity_count"],
+            1,
+        )
+        self.assertEqual(
+            roster_audit["market_details"]["KOSDAQ"]["identity_count"],
+            1,
+        )
+
+    def test_missing_one_krx_market_fails_closed_before_peer_provider(self):
+        transport = MarketCoverageStructuredTransport(
+            missing_market="KOSDAQ"
+        )
+        peer_provider = FixturePeerProvider()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+            )
+
+        self.assertEqual(peer_provider.calls, [])
+        peer_audit = result.audit["peer_selection"]
+        self.assertEqual(
+            peer_audit["pending_reason"],
+            "AUTHORITATIVE_LISTING_ROSTER_INCOMPLETE",
+        )
+        self.assertFalse(
+            peer_audit["listing_identity_roster"][
+                "all_required_markets_complete"
+            ]
+        )
+        self.assertEqual(
+            peer_audit["listing_identity_roster"]["incomplete_markets"],
+            ["KOSDAQ"],
+        )
+        self.assertIn(
+            (
+                "PEER_SELECTION_PENDING:"
+                "AUTHORITATIVE_LISTING_ROSTER_INCOMPLETE"
+            ),
+            result.pending_reasons,
+        )
+
+    def test_target_only_market_row_is_not_a_complete_identity_plane(self):
+        transport = MarketCoverageStructuredTransport(
+            target_only_market="KOSPI"
+        )
+        peer_provider = FixturePeerProvider()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+            )
+
+        self.assertEqual(peer_provider.calls, [])
+        peer_audit = result.audit["peer_selection"]
+        self.assertEqual(
+            peer_audit["pending_reason"],
+            "AUTHORITATIVE_LISTING_ROSTER_INCOMPLETE",
+        )
+        kospi_audit = peer_audit["listing_identity_roster"][
+            "market_details"
+        ]["KOSPI"]
+        self.assertEqual(kospi_audit["exact_snapshot_row_count"], 1)
+        self.assertEqual(kospi_audit["target_row_count"], 1)
+        self.assertEqual(kospi_audit["identity_count"], 0)
+        self.assertFalse(kospi_audit["complete_identity_plane"])
+        self.assertEqual(kospi_audit["status"], "IDENTITY_PLANE_INCOMPLETE")
+
+    def test_kosdaq_target_uses_kosdaq_price_and_benchmark_lineage_only(self):
+        transport = MarketCoverageStructuredTransport(
+            target_id="000660",
+            target_market="KOSDAQ",
+        )
+        attempts = []
+        manifests = []
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            route, _, roster_audit = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+            )._price_route(
+                target_id="000660",
+                cutoff=date(2026, 7, 12),
+                trading_date=date(2026, 7, 10),
+                cache_root=Path(directory),
+                checkpoint_resume=True,
+                attempts=attempts,
+                manifests=manifests,
+            )
+
+        self.assertEqual(route.payload.diagnostics["market"], "KOSDAQ")
+        self.assertTrue(roster_audit["all_required_markets_complete"])
+        kospi_stock_source = roster_audit["market_details"]["KOSPI"][
+            "source_id"
+        ]
+        kosdaq_stock_source = roster_audit["market_details"]["KOSDAQ"][
+            "source_id"
+        ]
+        self.assertNotIn(kospi_stock_source, route.payload.source_ids)
+        self.assertIn(kosdaq_stock_source, route.payload.source_ids)
+        kosdaq_index_sources = {
+            row["source_id"]
+            for row in manifests
+            if row["canonical_url"]
+            == structured_materializer_module._KRX_INDEX_URLS["KOSDAQ"]
+        }
+        self.assertTrue(kosdaq_index_sources)
+        self.assertTrue(
+            kosdaq_index_sources.issubset(set(route.payload.source_ids))
+        )
+        self.assertFalse(
+            {
+                row["source_id"]
+                for row in manifests
+                if row["canonical_url"]
+                == structured_materializer_module._KRX_INDEX_URLS["KOSPI"]
+            }
+            & set(route.payload.source_ids)
+        )
+
+    def test_invalid_cached_peer_membership_is_quarantined_then_retried(self):
+        transport = FixtureStructuredTransport()
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            initial_materializer = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=FixturePeerProvider(),
+            )
+            for _ in range(2):
+                initial_materializer.materialize(
+                    target_id="005930",
+                    target_name="Current Corp",
+                    as_of_date="2026-07-12",
+                    latest_trading_snapshot_date="2026-07-10",
+                    official=_official(),
+                    output_root=directory,
+                    checkpoint_resume=True,
+                    evidence_facts=facts,
+                    source_claims=claims,
+                    source_documents=documents,
+                )
+            selection_cache_path = (
+                Path(directory)
+                / "structured_source_cache"
+                / "peer_selection_005930.json"
+            )
+            cached = json.loads(
+                selection_cache_path.read_text(encoding="utf-8")
+            )
+            cached["response"]["peers"][0]["peer_symbol"] = "999999"
+            cached["response"]["peers"][0]["peer_name"] = "Absent Peer"
+            cached["provider_response_hash"] = (
+                structured_materializer_module.stable_hash(
+                    cached["response"]
+                )
+            )
+            selection_cache_path.write_text(
+                json.dumps(
+                    cached,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            peer_provider = CacheInvalidationRecordingPeerProvider()
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+
+        audit = result.audit["peer_selection"]
+        self.assertEqual(audit["status"], "PEER_SELECTION_COMPLETE")
+        self.assertTrue(audit["rejected_provider_cache_hit"])
+        self.assertTrue(audit["validation_retry_used"])
+        self.assertEqual(len(peer_provider.calls), 2)
+        self.assertEqual(len(peer_provider.invalidations), 2)
+        self.assertEqual(
+            [row["status"] for row in peer_provider.invalidations],
+            ["NO_ELIGIBLE_RESPONSE", "INVALIDATED"],
+        )
+        self.assertIn(
+            "absent from authoritative listing roster",
+            peer_provider.invalidations[1]["reason"],
+        )
+        self.assertEqual(
+            [
+                row["status"]
+                for row in audit["provider_response_cache_invalidations"]
+            ],
+            ["NO_ELIGIBLE_RESPONSE", "INVALIDATED"],
+        )
+        self.assertTrue(
+            audit["selection_route_cache_invalidations"][0][
+                "cache_entry_deleted"
+            ]
+        )
 
     def test_shared_cache_request_fingerprint_blocks_other_symbol(self):
         url = "https://comp.wisereport.co.kr/company/c1010001.aspx"
@@ -676,6 +1424,14 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
             [
                 {"peer_symbol": "111111", "peer_name": "Peer Alpha"},
                 {"peer_symbol": "222222", "peer_name": "Peer Beta"},
+                {
+                    "peer_symbol": "333333",
+                    "peer_name": "Relabelled Company",
+                },
+                {
+                    "peer_symbol": "444444",
+                    "peer_name": "Invented Listing Vehicle",
+                },
             ],
         )
         self.assertTrue(
@@ -812,6 +1568,64 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
             {"111111", "222222"},
         )
 
+    def test_invalid_structured_retry_response_is_quarantined_and_not_cached(self):
+        transport = FixtureStructuredTransport()
+        peer_provider = InvalidStructuredRetryPeerProvider()
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+            selection_cache_exists = (
+                Path(directory)
+                / "structured_source_cache"
+                / "peer_selection_005930.json"
+            ).exists()
+
+        audit = result.audit["peer_selection"]
+        self.assertEqual(audit["status"], "PEER_SELECTION_PENDING")
+        self.assertTrue(audit["structured_verification_retry_used"])
+        self.assertIn(
+            "PEER_SELECTION_VERIFICATION_RETRY_ERROR",
+            audit["pending_reason"],
+        )
+        self.assertEqual(peer_provider.attempt_count, 2)
+        self.assertEqual(
+            [row["status"] for row in peer_provider.invalidations],
+            ["INVALIDATED"],
+        )
+        self.assertIn(
+            "absent from authoritative listing roster",
+            peer_provider.invalidations[0]["reason"],
+        )
+        self.assertFalse(selection_cache_exists)
+        self.assertTrue(
+            audit["selection_route_cache_invalidations"][0][
+                "cache_entry_deleted"
+            ]
+        )
+
     def test_repeated_source_invalid_peer_response_is_not_reusable_cache(self):
         transport = FixtureStructuredTransport()
         peer_provider = RepeatedVerificationFailurePeerProvider()
@@ -895,6 +1709,22 @@ def _text_response(url: str, text: str) -> StructuredHTTPResponse:
         provider_request_id=f"FIXTURE-{content_hash[:20]}",
         content_hash=content_hash,
         text=text,
+    )
+
+
+def _json_response(
+    url: str,
+    payload,
+    *,
+    request_id: str,
+) -> StructuredHTTPResponse:
+    raw = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()
+    return StructuredHTTPResponse(
+        status_code=200,
+        canonical_url=url,
+        provider_request_id=request_id,
+        content_hash=hashlib.sha256(raw).hexdigest(),
+        payload=payload,
     )
 
 

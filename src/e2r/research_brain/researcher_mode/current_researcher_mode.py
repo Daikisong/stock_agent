@@ -1685,7 +1685,15 @@ def _load_fact_checkpoint(
         row
         for row in all_calls
         if row.get("status") == "COMPLETE"
-        and set(row.get("document_ids") or ()).issubset(completed_ids)
+        and (
+            set(row.get("document_ids") or ()).issubset(completed_ids)
+            or (
+                bool(row.get("transport_chunk_ids"))
+                and "accepted_claims" in row
+                and bool(row.get("document_ids"))
+                and set(row.get("document_ids") or ()).issubset(current_ids)
+            )
+        )
     )
     rejections = tuple(
         row

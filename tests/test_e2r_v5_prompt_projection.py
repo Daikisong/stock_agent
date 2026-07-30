@@ -12,6 +12,7 @@ from e2r.research_brain.researcher_mode.prompt_projection import (
     project_current_decision_citable_facts,
     project_evidence_facts,
     project_fact_extraction_evidence_context,
+    project_fact_extraction_score_gap_context,
     project_generated_queries,
     project_peer_selection_context,
     project_query_planner_failures,
@@ -1329,6 +1330,114 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             suffixed_projection["failures"][0]["failure_reason"],
             "QUERY_PROVIDER_ERROR",
         )
+
+    def test_fact_transport_chunk_progress_does_not_change_semantic_prompt(self):
+        base_feedback = [
+            "UNRESOLVED_RESEARCH_NOTE:peer band source가 필요하다.",
+            "FACT_EXTRACTION_RETRY_CONTEXT:UNREADABLE_FULL_DOCUMENT:SGDOC-deadbeef",
+        ]
+        first = project_query_score_gap_context(
+            {
+                "prior_fact_extraction_feedback": [
+                    *base_feedback,
+                    (
+                        "FACT_EXTRACTION_RETRY_CONTEXT:"
+                        "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+                        "SGDOC-2ef3c663d8923972cecc7372:0/3"
+                    ),
+                ]
+            }
+        )
+        resumed = project_query_score_gap_context(
+            {
+                "prior_fact_extraction_feedback": [
+                    *base_feedback,
+                    (
+                        "FACT_EXTRACTION_RETRY_CONTEXT:"
+                        "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+                        "SGDOC-2ef3c663d8923972cecc7372:1/3"
+                    ),
+                ]
+            }
+        )
+
+        self.assertEqual(first, resumed)
+        self.assertEqual(
+            project_fact_extraction_score_gap_context(
+                {
+                    "prior_fact_extraction_feedback": [
+                        *base_feedback,
+                        (
+                            "FACT_EXTRACTION_RETRY_CONTEXT:"
+                            "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+                            "SGDOC-2ef3c663d8923972cecc7372:0/3"
+                        ),
+                    ]
+                }
+            ),
+            project_fact_extraction_score_gap_context(
+                {
+                    "prior_fact_extraction_feedback": [
+                        *base_feedback,
+                        (
+                            "FACT_EXTRACTION_RETRY_CONTEXT:"
+                            "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+                            "SGDOC-2ef3c663d8923972cecc7372:1/3"
+                        ),
+                    ]
+                }
+            ),
+        )
+        feedback_projection = first["prior_fact_extraction_feedback"]
+        self.assertEqual(
+            feedback_projection["schema_version"],
+            "e2r_v5_fact_gap_feedback_projection_v3",
+        )
+        self.assertEqual(feedback_projection["feedback_count"], 2)
+        self.assertTrue(
+            feedback_projection[
+                "fact_transport_progress_excluded_from_semantic_prompt"
+            ]
+        )
+        self.assertTrue(
+            feedback_projection[
+                "fact_transport_progress_persisted_in_fact_checkpoint"
+            ]
+        )
+
+    def test_fact_transport_progress_filter_preserves_semantic_or_malformed_rows(
+        self,
+    ):
+        baseline = project_query_score_gap_context(
+            {"prior_fact_extraction_feedback": []}
+        )
+        for semantic_row in (
+            (
+                "FACT_EXTRACTION_RETRY_CONTEXT:"
+                "UNREADABLE_FULL_DOCUMENT:SGDOC-deadbeef"
+            ),
+            (
+                "FACT_EXTRACTION_RETRY_CONTEXT:"
+                "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+                "SGDOC-deadbeef:1/3:SOURCE_ERROR"
+            ),
+            (
+                "FACT_EXTRACTION_RETRY_CONTEXT:"
+                "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+                "OTHERDOC-deadbeef:3/3"
+            ),
+        ):
+            with self.subTest(semantic_row=semantic_row):
+                projected = project_query_score_gap_context(
+                    {"prior_fact_extraction_feedback": [semantic_row]}
+                )
+                self.assertNotEqual(projected, baseline)
+                self.assertEqual(
+                    projected["prior_fact_extraction_feedback"][
+                        "feedback_count"
+                    ],
+                    1,
+                )
 
     def test_research_source_profiles_ignore_transport_lineage_only_churn(self):
         claim = {

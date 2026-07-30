@@ -260,7 +260,8 @@ class FactExtractionProviderCall:
     validation_retry_used: bool = False
     completion_flag_reconciled: bool = False
     transport_chunk_ids: tuple[str, ...] = ()
-    schema_version: str = "e2r_v5_fact_extraction_provider_call_v1"
+    accepted_claims: tuple[Mapping[str, Any], ...] | None = None
+    schema_version: str = "e2r_v5_fact_extraction_provider_call_v2"
 
     def __post_init__(self) -> None:
         if self.status not in {"COMPLETE", "PENDING"}:
@@ -269,12 +270,31 @@ class FactExtractionProviderCall:
             raise ValueError("pending fact extraction call requires reasons")
         if self.provider_attempt_count <= 0:
             raise ValueError("fact extraction provider attempt count must be positive")
+        if self.accepted_claims is not None:
+            embedded_claim_ids = tuple(
+                str(row.get("claim_id") or "") for row in self.accepted_claims
+            )
+            if (
+                any(not value for value in embedded_claim_ids)
+                or len(embedded_claim_ids) != len(set(embedded_claim_ids))
+                or set(embedded_claim_ids) != set(self.accepted_claim_ids)
+            ):
+                raise ValueError(
+                    "embedded fact extraction claims must match accepted claim ids"
+                )
 
     def to_dict(self) -> Mapping[str, Any]:
-        return {
+        output = {
             **asdict(self),
             "document_dispositions": [dict(row) for row in self.document_dispositions],
         }
+        if self.accepted_claims is None:
+            output.pop("accepted_claims", None)
+        else:
+            output["accepted_claims"] = [
+                dict(row) for row in self.accepted_claims
+            ]
+        return output
 
 
 @dataclass(frozen=True)
@@ -440,24 +460,22 @@ class ResearcherEvidenceFactExtractor:
         rejections: list[FactExtractionRejection] = [
             _coerce_rejection(row) for row in prior_rejections
         ]
-        calls: list[FactExtractionProviderCall] = [
+        checkpoint_calls = [
             _coerce_provider_call(row) for row in prior_provider_calls
         ]
-        if any(row.status != "COMPLETE" for row in calls):
+        if any(row.status != "COMPLETE" for row in checkpoint_calls):
             raise ValueError("only completed fact provider calls may be resumed")
         pending: list[str] = []
-        research_gap_feedback: list[str] = [
-            reason for row in calls for reason in row.research_gap_feedback
-        ]
         provider_name = str(
             getattr(self.provider, "provider_name", type(self.provider).__name__)
         )
+        parent_disposition_ids = set(prior_disposition_ids)
         remaining = tuple(
             row
             for row in prepared
-            if str(row["document_id"]) not in set(prior_disposition_ids)
+            if str(row["document_id"]) not in parent_disposition_ids
         )
-        transport_documents = tuple(
+        all_transport_documents = tuple(
             chunk
             for document in remaining
             for chunk in _document_transport_chunks(
@@ -466,7 +484,35 @@ class ResearcherEvidenceFactExtractor:
             )
         )
         split_chunk_ids_by_document = _split_chunk_ids_by_document(
-            transport_documents
+            all_transport_documents
+        )
+        (
+            resumed_transport_calls,
+            resumed_transport_claims,
+            resumed_transport_dispositions,
+            resumed_transport_chunk_ids,
+        ) = _resume_completed_transport_chunks(
+            calls=checkpoint_calls,
+            transport_documents=all_transport_documents,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
+        calls: list[FactExtractionProviderCall] = [
+            row
+            for row in checkpoint_calls
+            if set(row.document_ids).issubset(parent_disposition_ids)
+        ]
+        calls.extend(resumed_transport_calls)
+        claims.extend(resumed_transport_claims)
+        dispositions.extend(resumed_transport_dispositions)
+        research_gap_feedback: list[str] = [
+            reason for row in calls for reason in row.research_gap_feedback
+        ]
+        transport_documents = tuple(
+            row
+            for row in all_transport_documents
+            if str(row.get("transport_chunk_id") or "")
+            not in resumed_transport_chunk_ids
         )
         pending_transport_chunk_ids: set[str] = set()
         provider_circuit_breaker_open = False
@@ -1136,6 +1182,12 @@ class ResearcherEvidenceFactExtractor:
                             batch_completion_flag_reconciled
                         ),
                         transport_chunk_ids=batch_transport_chunk_ids,
+                        accepted_claims=(
+                            tuple(combined_batch_claims.values())
+                            if batch_transport_chunk_ids
+                            and not batch_pending
+                            else None
+                        ),
                     )
                 )
                 break
@@ -1258,7 +1310,12 @@ class ResearcherEvidenceFactExtractor:
                     <= self.max_document_chars_per_call
                 ),
                 "split_document_count": len(split_chunk_ids_by_document),
-                "transport_chunk_count": len(transport_documents),
+                "transport_chunk_count": len(all_transport_documents),
+                "resumed_transport_chunk_count": len(
+                    resumed_transport_chunk_ids
+                ),
+                "provider_transport_chunk_count": len(transport_documents),
+                "resumed_transport_chunks_skipped_provider": True,
                 "every_full_document_covered_by_transport_chunks": True,
                 "maximum_primary_payload_chars": max_primary_payload_chars,
                 "maximum_attempt_payload_chars": max_attempt_payload_chars,
@@ -1573,6 +1630,156 @@ def _batch_transport_chunk_ids(
         str(row["transport_chunk_id"])
         for row in batch
         if row.get("transport_chunk_id")
+    )
+
+
+def _resume_completed_transport_chunks(
+    *,
+    calls: Sequence[FactExtractionProviderCall],
+    transport_documents: Sequence[Mapping[str, Any]],
+    target_id: str,
+    as_of_date: str,
+) -> tuple[
+    list[FactExtractionProviderCall],
+    list[Mapping[str, Any]],
+    list[Mapping[str, Any]],
+    set[str],
+]:
+    """Restore only self-contained COMPLETE chunk checkpoints.
+
+    A split parent has no canonical disposition until every chunk is complete.
+    The provider-call ledger therefore embeds the verified claims and per-chunk
+    disposition needed for a clean resume.  Legacy calls without that embedded
+    state, stale chunk ids, or internally inconsistent rows are ignored so the
+    provider safely reprocesses those chunks instead of promoting partial data.
+    """
+
+    chunk_by_id = {
+        str(row.get("transport_chunk_id") or ""): row
+        for row in transport_documents
+        if str(row.get("transport_chunk_id") or "")
+    }
+    structurally_valid: list[
+        tuple[
+            FactExtractionProviderCall,
+            tuple[Mapping[str, Any], ...],
+            tuple[Mapping[str, Any], ...],
+        ]
+    ] = []
+    for call in calls:
+        chunk_ids = tuple(call.transport_chunk_ids)
+        if (
+            not chunk_ids
+            or call.accepted_claims is None
+            or len(chunk_ids) != len(set(chunk_ids))
+            or any(chunk_id not in chunk_by_id for chunk_id in chunk_ids)
+        ):
+            continue
+        chunks = tuple(chunk_by_id[chunk_id] for chunk_id in chunk_ids)
+        chunk_document_ids = tuple(
+            str(row.get("document_id") or "") for row in chunks
+        )
+        if (
+            any(not value for value in chunk_document_ids)
+            or len(chunk_document_ids) != len(set(chunk_document_ids))
+            or set(chunk_document_ids) != set(call.document_ids)
+        ):
+            continue
+        disposition_by_chunk_id = {
+            str(row.get("transport_chunk_id") or ""): row
+            for row in call.document_dispositions
+            if str(row.get("transport_chunk_id") or "")
+        }
+        if (
+            len(disposition_by_chunk_id) != len(call.document_dispositions)
+            or set(disposition_by_chunk_id) != set(chunk_ids)
+        ):
+            continue
+        chunk_by_document_id = {
+            str(row["document_id"]): row for row in chunks
+        }
+        claims = tuple(dict(row) for row in call.accepted_claims)
+        claim_ids = tuple(
+            str(row.get("claim_id") or "") for row in claims
+        )
+        if (
+            any(not value for value in claim_ids)
+            or len(claim_ids) != len(set(claim_ids))
+            or set(claim_ids) != set(call.accepted_claim_ids)
+        ):
+            continue
+        claims_by_document: dict[str, list[Mapping[str, Any]]] = {}
+        claims_valid = True
+        for claim in claims:
+            document_id = str(claim.get("document_id") or "")
+            document = chunk_by_document_id.get(document_id)
+            if (
+                document is None
+                or str(claim.get("target_id") or "") != target_id
+                or str(claim.get("as_of_date") or "") != as_of_date
+                or not str(claim.get("exact_quote") or "")
+                or str(claim.get("exact_quote") or "")
+                not in str(document.get("content_text") or "")
+            ):
+                claims_valid = False
+                break
+            claims_by_document.setdefault(document_id, []).append(claim)
+        if not claims_valid:
+            continue
+        dispositions = tuple(
+            dict(disposition_by_chunk_id[chunk_id])
+            for chunk_id in chunk_ids
+        )
+        dispositions_valid = True
+        for disposition in dispositions:
+            chunk_id = str(disposition["transport_chunk_id"])
+            document = chunk_by_id[chunk_id]
+            document_id = str(disposition.get("document_id") or "")
+            accepted_count = len(claims_by_document.get(document_id, ()))
+            status = str(disposition.get("status") or "")
+            if (
+                document_id != str(document.get("document_id") or "")
+                or int(disposition.get("accepted_fact_count") or 0)
+                != accepted_count
+                or (status == "FACTS_EXTRACTED") != bool(accepted_count)
+                or status
+                not in {
+                    "FACTS_EXTRACTED",
+                    "NO_MATERIAL_FACT",
+                    "WRONG_TARGET_OR_SEGMENT",
+                }
+            ):
+                dispositions_valid = False
+                break
+        if not dispositions_valid:
+            continue
+        structurally_valid.append((call, claims, dispositions))
+
+    chunk_occurrence_count: dict[str, int] = {}
+    for call, _, _ in structurally_valid:
+        for chunk_id in call.transport_chunk_ids:
+            chunk_occurrence_count[chunk_id] = (
+                chunk_occurrence_count.get(chunk_id, 0) + 1
+            )
+    resumed_calls: list[FactExtractionProviderCall] = []
+    resumed_claims: list[Mapping[str, Any]] = []
+    resumed_dispositions: list[Mapping[str, Any]] = []
+    resumed_chunk_ids: set[str] = set()
+    for call, claims, dispositions in structurally_valid:
+        if any(
+            chunk_occurrence_count.get(chunk_id) != 1
+            for chunk_id in call.transport_chunk_ids
+        ):
+            continue
+        resumed_calls.append(call)
+        resumed_claims.extend(claims)
+        resumed_dispositions.extend(dispositions)
+        resumed_chunk_ids.update(call.transport_chunk_ids)
+    return (
+        resumed_calls,
+        resumed_claims,
+        resumed_dispositions,
+        resumed_chunk_ids,
     )
 
 
@@ -2427,6 +2634,15 @@ def _coerce_provider_call(
             row.get("completion_flag_reconciled")
         ),
         transport_chunk_ids=tuple(row.get("transport_chunk_ids") or ()),
+        accepted_claims=(
+            tuple(dict(value) for value in row.get("accepted_claims") or ())
+            if "accepted_claims" in row
+            else None
+        ),
+        schema_version=str(
+            row.get("schema_version")
+            or "e2r_v5_fact_extraction_provider_call_v1"
+        ),
     )
 
 

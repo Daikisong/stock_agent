@@ -337,6 +337,48 @@ def _invalidate_structured_peer_response_cache(
     return dict(result) if isinstance(result, Mapping) else None
 
 
+def _invalidate_peer_validation_response_cache(
+    provider: StructuredResearchProvider,
+    *,
+    rejection_phase: str,
+    rejection_error: Exception,
+) -> Mapping[str, Any] | None:
+    """Quarantine a provider response rejected before source verification."""
+
+    invalidate = getattr(provider, "invalidate_last_response_cache", None)
+    if not callable(invalidate):
+        return None
+    reason = (
+        "STRUCTURED_PEER_RESPONSE_VALIDATION_REJECTED:"
+        f"{rejection_phase}:"
+        + " ".join(str(rejection_error).split())
+    )[-500:]
+    try:
+        result = invalidate(reason=reason)
+    except (OSError, TypeError, ValueError, RuntimeError):
+        return None
+    return dict(result) if isinstance(result, Mapping) else None
+
+
+def _delete_peer_selection_route_cache(
+    selection_cache_path: Path,
+    *,
+    reason: str,
+) -> Mapping[str, Any]:
+    cache_entry_existed = selection_cache_path.is_file()
+    try:
+        selection_cache_path.unlink(missing_ok=True)
+        cache_entry_deleted = cache_entry_existed
+    except OSError:
+        cache_entry_deleted = False
+    return {
+        "cache_path": str(selection_cache_path),
+        "cache_entry_existed": cache_entry_existed,
+        "cache_entry_deleted": cache_entry_deleted,
+        "reason": reason,
+    }
+
+
 class CurrentStructuredSourceMaterializer:
     """Collect every canonical structured route and fail closed on gaps."""
 
@@ -415,7 +457,11 @@ class CurrentStructuredSourceMaterializer:
             manifests=manifests,
             shared_cache_roots=reusable_cache_roots,
         )
-        price_route, listing_identity_roster = self._price_route(
+        (
+            price_route,
+            listing_identity_roster,
+            listing_identity_roster_audit,
+        ) = self._price_route(
             target_id=target_id,
             cutoff=cutoff,
             trading_date=trading_date,
@@ -438,6 +484,7 @@ class CurrentStructuredSourceMaterializer:
             evidence_facts=evidence_facts,
             source_claims=source_claims,
             listing_identity_roster=listing_identity_roster,
+            listing_identity_roster_audit=listing_identity_roster_audit,
             listing_snapshot_date=trading_date,
             cache_root=cache_root,
             checkpoint_resume=checkpoint_resume,
@@ -822,7 +869,10 @@ class CurrentStructuredSourceMaterializer:
         manifests: list[Mapping[str, Any]],
     ):
         bars: list[PriceBar] = []
-        listing_identity_roster: tuple[Mapping[str, str], ...] = ()
+        listing_identity_rows: list[Mapping[str, str]] = []
+        required_listing_markets = tuple(_KRX_STOCK_URLS)
+        complete_listing_markets: list[str] = []
+        listing_market_details: dict[str, Mapping[str, Any]] = {}
         data_key = os.environ.get("DATA_GO_KR_SERVICE_KEY")
         if data_key:
             page = 1
@@ -885,6 +935,7 @@ class CurrentStructuredSourceMaterializer:
         krx_key = os.environ.get("KRX_OPENAPI_KEY")
         if krx_key:
             for candidate_market, url in _KRX_STOCK_URLS.items():
+                manifest_start = len(manifests)
                 payload = self._json(
                     target_id=target_id,
                     cutoff=cutoff,
@@ -904,29 +955,82 @@ class CurrentStructuredSourceMaterializer:
                     rows_getter=lambda value: value.get("OutBlock_1") or (),
                 )
                 if payload is None:
+                    listing_market_details[candidate_market] = {
+                        "status": "PROVIDER_ERROR",
+                        "exact_snapshot_row_count": 0,
+                        "identity_count": 0,
+                        "source_id": None,
+                    }
                     continue
+                raw_rows = payload.get("OutBlock_1") or ()
+                exact_snapshot_rows = tuple(
+                    row
+                    for row in raw_rows
+                    if isinstance(row, Mapping)
+                    and str(row.get("BAS_DD") or "")
+                    == trading_date.strftime("%Y%m%d")
+                )
+                snapshot_accounting = _krx_listing_snapshot_accounting(
+                    payload,
+                    target_id=target_id,
+                    snapshot_date=trading_date,
+                )
+                market_identities = tuple(
+                    dict(row)
+                    for row in snapshot_accounting.get("identities") or ()
+                )
+                market_source_id = next(
+                    (
+                        str(row["source_id"])
+                        for row in manifests[manifest_start:]
+                        if row.get("provider_name") == "KRX"
+                        and row.get("source_role")
+                        == "CURRENT_PRICE_MARKET_CAP"
+                        and row.get("canonical_url") == url
+                    ),
+                    None,
+                )
+                market_snapshot_complete = (
+                    snapshot_accounting.get("complete_identity_plane") is True
+                    and market_source_id is not None
+                )
+                listing_market_details[candidate_market] = {
+                    "status": (
+                        "COMPLETE"
+                        if market_snapshot_complete
+                        else "IDENTITY_PLANE_INCOMPLETE"
+                    ),
+                    **{
+                        key: value
+                        for key, value in snapshot_accounting.items()
+                        if key != "identities"
+                    },
+                    "source_id": market_source_id,
+                }
+                if not market_snapshot_complete:
+                    continue
+                complete_listing_markets.append(candidate_market)
+                listing_identity_rows.extend(
+                    market_identities
+                )
                 target_row = next(
                     (
                         row
-                        for row in payload.get("OutBlock_1") or ()
-                        if isinstance(row, Mapping)
-                        and str(row.get("ISU_CD") or row.get("ISU_SRT_CD") or "")
+                        for row in exact_snapshot_rows
+                        if str(row.get("ISU_CD") or row.get("ISU_SRT_CD") or "")
                         == target_id
                     ),
                     None,
                 )
                 if target_row is None:
                     continue
-                listing_identity_roster = _krx_listing_identity_roster(
-                    payload,
-                    target_id=target_id,
-                    snapshot_date=trading_date,
-                )
                 bar = _krx_stock_bar(target_row, target_id=target_id, cutoff=cutoff)
-                if bar is not None:
+                if bar is not None and market is None:
                     bars.append(bar)
                     market = candidate_market
-                    break
+            listing_identity_roster = _merge_listing_identity_rosters(
+                listing_identity_rows
+            )
             if market:
                 for benchmark_date in (
                     trading_date - timedelta(days=35),
@@ -969,6 +1073,16 @@ class CurrentStructuredSourceMaterializer:
                         if bar is not None:
                             bars.append(bar)
         else:
+            listing_identity_roster = ()
+            listing_market_details = {
+                candidate_market: {
+                    "status": "AUTH_FAILED",
+                    "exact_snapshot_row_count": 0,
+                    "identity_count": 0,
+                    "source_id": None,
+                }
+                for candidate_market in required_listing_markets
+            }
             attempts.append(
                 _failed_attempt(
                     target_id,
@@ -980,12 +1094,61 @@ class CurrentStructuredSourceMaterializer:
                     "KRX_OPENAPI_KEY is not configured",
                 )
             )
+        complete_listing_market_set = set(complete_listing_markets)
+        listing_identity_roster_audit = {
+            "schema_version": "e2r_v5_krx_listing_identity_roster_audit_v1",
+            "snapshot_date": trading_date.isoformat(),
+            "required_markets": list(required_listing_markets),
+            "complete_markets": [
+                market
+                for market in required_listing_markets
+                if market in complete_listing_market_set
+            ],
+            "incomplete_markets": [
+                market
+                for market in required_listing_markets
+                if market not in complete_listing_market_set
+            ],
+            "market_details": {
+                market: dict(listing_market_details[market])
+                for market in required_listing_markets
+            },
+            "all_required_markets_complete": (
+                complete_listing_market_set == set(required_listing_markets)
+            ),
+            "complete_market_snapshot_used_without_top_n": (
+                complete_listing_market_set == set(required_listing_markets)
+            ),
+            "identity_count": len(listing_identity_roster),
+            "identity_roster_hash": stable_hash(listing_identity_roster),
+            "identity_scope_only_not_score_or_stage_input": True,
+        }
         selected = _dedupe_price_bars(bars, target_id=target_id)
         source_ids = tuple(
             dict.fromkeys(
                 row["source_id"]
                 for row in manifests
-                if row["provider_name"] in {"KRX", "data.go.kr"}
+                if (
+                    row.get("provider_name") == "data.go.kr"
+                    and row.get("source_role") == "PRICE_HISTORY"
+                )
+                or (
+                    row.get("provider_name") == "KRX"
+                    and market is not None
+                    and (
+                        (
+                            row.get("source_role")
+                            == "CURRENT_PRICE_MARKET_CAP"
+                            and row.get("canonical_url")
+                            == _KRX_STOCK_URLS[market]
+                        )
+                        or (
+                            row.get("source_role") == "BENCHMARK_PRICE"
+                            and row.get("canonical_url")
+                            == _KRX_INDEX_URLS[market]
+                        )
+                    )
+                )
             )
         )
         if not selected or not source_ids:
@@ -995,6 +1158,7 @@ class CurrentStructuredSourceMaterializer:
                     "no point-in-time price history available",
                 ),
                 listing_identity_roster,
+                listing_identity_roster_audit,
             )
         payload = StructuredSourcePayload(
             route_name="KRX_PRICE_MARKET_CAP",
@@ -1011,6 +1175,7 @@ class CurrentStructuredSourceMaterializer:
         return (
             InMemoryStructuredSourceRoute("KRX_PRICE_MARKET_CAP", payload),
             listing_identity_roster,
+            listing_identity_roster_audit,
         )
 
     def _peer_route(
@@ -1022,6 +1187,7 @@ class CurrentStructuredSourceMaterializer:
         evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
         source_claims: Sequence[Mapping[str, Any]],
         listing_identity_roster: Sequence[Mapping[str, str]],
+        listing_identity_roster_audit: Mapping[str, Any],
         listing_snapshot_date: date,
         cache_root: Path,
         checkpoint_resume: bool,
@@ -1061,11 +1227,27 @@ class CurrentStructuredSourceMaterializer:
             "common_metric_peer_counts": {},
             "selected_peers": [],
             "pending_reason": None,
+            "listing_identity_roster": dict(listing_identity_roster_audit),
+            "provider_response_cache_invalidations": [],
+            "selection_route_cache_invalidations": [],
             "llm_selects_direction_only": True,
             "llm_supplies_valuation_values": False,
             "point_in_time_structured_fetch_required": True,
             "production_score_authority": False,
         }
+        if listing_identity_roster_audit.get(
+            "all_required_markets_complete"
+        ) is not True:
+            base_audit["pending_reason"] = (
+                "AUTHORITATIVE_LISTING_ROSTER_INCOMPLETE"
+            )
+            return (
+                UnavailableStructuredSourceRoute(
+                    "PEER_STRUCTURED",
+                    "authoritative KRX listing roster is incomplete",
+                ),
+                base_audit,
+            )
         if self.peer_provider is None:
             base_audit["pending_reason"] = "PEER_PROVIDER_NOT_CONFIGURED"
             return (
@@ -1105,7 +1287,18 @@ class CurrentStructuredSourceMaterializer:
                 "snapshot_date": listing_snapshot_date.isoformat(),
                 "identity_count": len(listing_identity_roster),
                 "identity_roster_hash": stable_hash(listing_identity_roster),
-                "complete_market_snapshot_used_without_top_n": True,
+                "required_markets": list(
+                    listing_identity_roster_audit.get("required_markets") or ()
+                ),
+                "complete_markets": list(
+                    listing_identity_roster_audit.get("complete_markets") or ()
+                ),
+                "complete_market_snapshot_used_without_top_n": (
+                    listing_identity_roster_audit.get(
+                        "complete_market_snapshot_used_without_top_n"
+                    )
+                    is True
+                ),
                 "identity_scope_only_not_score_or_stage_input": True,
             },
             "point_in_time_peer_roster_accounting": {
@@ -1115,7 +1308,11 @@ class CurrentStructuredSourceMaterializer:
                     point_in_time_peer_roster
                 ),
                 "availability_only_no_multiple_or_score_values_exposed": True,
-                "when_two_or_more_available_select_only_from_this_roster": True,
+                "availability_hint_only_not_peer_allowlist": True,
+                (
+                    "cached_snapshot_candidates_should_be_preferred_only_"
+                    "when_economically_comparable"
+                ): True,
             },
             "peer_selection_context_accounting": {
                 key: value
@@ -1134,13 +1331,14 @@ class CurrentStructuredSourceMaterializer:
                 "exclude_target_symbol": True,
                 "sector_label_alone_is_insufficient": True,
                 "structured_value_invention_forbidden": True,
+                "authoritative_listing_identity_roster_is_allowlist": True,
+                (
+                    "point_in_time_structured_peer_identity_roster_is_"
+                    "availability_hint_only"
+                ): True,
                 (
                     "peer_symbol_and_name_must_be_copied_exactly_from_"
                     "authoritative_listing_identity_roster"
-                ): True,
-                (
-                    "when_two_or_more_point_in_time_identities_are_available_"
-                    "select_only_from_point_in_time_structured_peer_identity_roster"
                 ): True,
                 "score_or_stage_authority": False,
             },
@@ -1167,8 +1365,46 @@ class CurrentStructuredSourceMaterializer:
                     base_audit["provider_cache_hit"] = True
             except (OSError, TypeError, ValueError, json.JSONDecodeError):
                 response = None
+        if response is not None:
+            try:
+                assert_blind_research_output(response)
+                proposals = _validated_peer_proposals(
+                    response,
+                    target_id=target_id,
+                    authoritative_listing_identity_roster=(
+                        listing_identity_roster
+                    ),
+                )
+            except (KeyError, TypeError, ValueError) as exc:
+                invalidation = _invalidate_peer_validation_response_cache(
+                    self.peer_provider,
+                    rejection_phase="CACHED_SELECTION_RESPONSE",
+                    rejection_error=exc,
+                )
+                if invalidation is not None:
+                    base_audit[
+                        "provider_response_cache_invalidations"
+                    ].append(invalidation)
+                base_audit["selection_route_cache_invalidations"].append(
+                    _delete_peer_selection_route_cache(
+                        selection_cache_path,
+                        reason=(
+                            "STRUCTURED_PEER_CACHED_RESPONSE_VALIDATION_REJECTED"
+                        ),
+                    )
+                )
+                base_audit["rejected_provider_cache_hit"] = True
+                base_audit["provider_cache_hit"] = False
+                base_audit["validation_retry_used"] = True
+                response = None
+                cached_prompt_hash = None
         try:
             if response is None:
+                # A route-cache row does not carry an active collaboration
+                # request handle across a clean process resume.  Replay the
+                # original semantic payload once so the real provider/journal
+                # response becomes active; if it is still invalid, the normal
+                # fresh-response path below can quarantine that exact response.
                 attempt_payload = payload
                 for attempt_index in range(2):
                     base_audit["provider_attempt_count"] += 1
@@ -1181,8 +1417,36 @@ class CurrentStructuredSourceMaterializer:
                         proposals = _validated_peer_proposals(
                             response,
                             target_id=target_id,
+                            authoritative_listing_identity_roster=(
+                                listing_identity_roster
+                            ),
                         )
                     except (KeyError, TypeError, ValueError) as exc:
+                        invalidation = (
+                            _invalidate_peer_validation_response_cache(
+                                self.peer_provider,
+                                rejection_phase=(
+                                    "FRESH_SELECTION_RESPONSE_"
+                                    f"ATTEMPT_{attempt_index + 1}"
+                                ),
+                                rejection_error=exc,
+                            )
+                        )
+                        if invalidation is not None:
+                            base_audit[
+                                "provider_response_cache_invalidations"
+                            ].append(invalidation)
+                        base_audit[
+                            "selection_route_cache_invalidations"
+                        ].append(
+                            _delete_peer_selection_route_cache(
+                                selection_cache_path,
+                                reason=(
+                                    "STRUCTURED_PEER_FRESH_RESPONSE_"
+                                    "VALIDATION_REJECTED"
+                                ),
+                            )
+                        )
                         if attempt_index == 0:
                             base_audit["validation_retry_used"] = True
                             attempt_payload = {
@@ -1201,12 +1465,6 @@ class CurrentStructuredSourceMaterializer:
                             continue
                         raise
                     break
-            else:
-                assert_blind_research_output(response)
-                proposals = _validated_peer_proposals(
-                    response,
-                    target_id=target_id,
-                )
             prompt_hash = cached_prompt_hash or _latest_provider_prompt_hash(
                 self.peer_provider, "STRUCTURED_PEER_SELECTION"
             )
@@ -1423,11 +1681,41 @@ class CurrentStructuredSourceMaterializer:
                         pass_name="STRUCTURED_PEER_SELECTION",
                         payload=retry_payload,
                     )
-                    assert_blind_research_output(retry_response)
-                    _validated_peer_proposals(
-                        retry_response,
-                        target_id=target_id,
-                    )
+                    try:
+                        assert_blind_research_output(retry_response)
+                        _validated_peer_proposals(
+                            retry_response,
+                            target_id=target_id,
+                            authoritative_listing_identity_roster=(
+                                listing_identity_roster
+                            ),
+                        )
+                    except (KeyError, TypeError, ValueError) as exc:
+                        invalidation = (
+                            _invalidate_peer_validation_response_cache(
+                                self.peer_provider,
+                                rejection_phase=(
+                                    "STRUCTURED_SOURCE_VERIFICATION_RETRY_RESPONSE"
+                                ),
+                                rejection_error=exc,
+                            )
+                        )
+                        if invalidation is not None:
+                            base_audit[
+                                "provider_response_cache_invalidations"
+                            ].append(invalidation)
+                        base_audit[
+                            "selection_route_cache_invalidations"
+                        ].append(
+                            _delete_peer_selection_route_cache(
+                                selection_cache_path,
+                                reason=(
+                                    "STRUCTURED_PEER_VERIFICATION_RETRY_"
+                                    "RESPONSE_VALIDATION_REJECTED"
+                                ),
+                            )
+                        )
+                        raise
                     retry_prompt_hash = _latest_provider_prompt_hash(
                         self.peer_provider,
                         "STRUCTURED_PEER_SELECTION",
@@ -1467,6 +1755,9 @@ class CurrentStructuredSourceMaterializer:
                     evidence_facts=evidence_facts,
                     source_claims=source_claims,
                     listing_identity_roster=listing_identity_roster,
+                    listing_identity_roster_audit=(
+                        listing_identity_roster_audit
+                    ),
                     listing_snapshot_date=listing_snapshot_date,
                     cache_root=cache_root,
                     checkpoint_resume=True,
@@ -1494,18 +1785,15 @@ class CurrentStructuredSourceMaterializer:
                     proposal_failures=proposal_failures,
                 )
             )
-            selection_cache_existed = selection_cache_path.is_file()
-            try:
-                selection_cache_path.unlink(missing_ok=True)
-                selection_cache_deleted = selection_cache_existed
-            except OSError:
-                selection_cache_deleted = False
-            base_audit["selection_route_cache_invalidation"] = {
-                "cache_path": str(selection_cache_path),
-                "cache_entry_existed": selection_cache_existed,
-                "cache_entry_deleted": selection_cache_deleted,
-                "reason": "STRUCTURED_PEER_SOURCE_VERIFICATION_REJECTED",
-            }
+            base_audit["selection_route_cache_invalidation"] = (
+                _delete_peer_selection_route_cache(
+                    selection_cache_path,
+                    reason="STRUCTURED_PEER_SOURCE_VERIFICATION_REJECTED",
+                )
+            )
+            base_audit["selection_route_cache_invalidations"].append(
+                base_audit["selection_route_cache_invalidation"]
+            )
             base_audit["pending_reason"] = "INSUFFICIENT_COMMON_PEER_MULTIPLES"
             return (
                 UnavailableStructuredSourceRoute(
@@ -2449,7 +2737,10 @@ def _period_end(period: str) -> date | None:
 
 
 def _validated_peer_proposals(
-    response: Mapping[str, Any], *, target_id: str
+    response: Mapping[str, Any],
+    *,
+    target_id: str,
+    authoritative_listing_identity_roster: Sequence[Mapping[str, str]],
 ) -> tuple[Mapping[str, Any], ...]:
     if not isinstance(response, Mapping):
         raise TypeError("peer selection response must be an object")
@@ -2473,6 +2764,16 @@ def _validated_peer_proposals(
         raise TypeError("peer proposals must be an array")
     if not 2 <= len(peers) <= 5:
         raise ValueError("peer selection requires two to five proposals")
+    authoritative_identities = {
+        str(row.get("peer_symbol") or "").strip(): str(
+            row.get("peer_name") or ""
+        ).strip()
+        for row in authoritative_listing_identity_roster
+        if str(row.get("peer_symbol") or "").strip()
+        and str(row.get("peer_name") or "").strip()
+    }
+    if not authoritative_identities:
+        raise ValueError("authoritative listing identity roster is empty")
     required = {
         "peer_symbol",
         "peer_name",
@@ -2495,6 +2796,15 @@ def _validated_peer_proposals(
             raise ValueError("peer symbols must be unique")
         seen.add(symbol)
         name = str(raw.get("peer_name") or "").strip()
+        authoritative_name = authoritative_identities.get(symbol)
+        if authoritative_name is None:
+            raise ValueError(
+                f"peer symbol is absent from authoritative listing roster: {symbol}"
+            )
+        if _company_name_key(name) != _company_name_key(authoritative_name):
+            raise ValueError(
+                f"peer symbol/name pair mismatches authoritative listing roster: {symbol}"
+            )
         rationale = str(raw.get("comparability_rationale") or "").strip()
         shared = _nonempty_string_sequence(raw.get("shared_economic_drivers"))
         differences = _nonempty_string_sequence(raw.get("material_differences"))
@@ -2506,7 +2816,7 @@ def _validated_peer_proposals(
         output.append(
             {
                 "peer_symbol": symbol,
-                "peer_name": name,
+                "peer_name": authoritative_name,
                 "shared_economic_drivers": shared,
                 "material_differences": differences,
                 "comparability_rationale": rationale,
@@ -2920,6 +3230,159 @@ def _krx_listing_identity_roster(
             continue
         previous = identities.get(symbol)
         if previous is not None and previous != name:
+            ambiguous.add(symbol)
+            continue
+        identities[symbol] = name
+    return tuple(
+        {"peer_symbol": symbol, "peer_name": identities[symbol]}
+        for symbol in sorted(identities)
+        if symbol not in ambiguous
+    )
+
+
+def _krx_listing_snapshot_accounting(
+    payload: Mapping[str, Any],
+    *,
+    target_id: str,
+    snapshot_date: date,
+) -> Mapping[str, Any]:
+    """Prove that one KRX market identity plane was consumed without top-N."""
+
+    raw_rows = payload.get("OutBlock_1") or ()
+    if isinstance(raw_rows, (str, bytes)) or not isinstance(
+        raw_rows, Sequence
+    ):
+        raw_rows = ()
+    expected_date = snapshot_date.strftime("%Y%m%d")
+    target_rows: list[Mapping[str, Any]] = []
+    eligible_rows_by_symbol: dict[str, list[Mapping[str, Any]]] = {}
+    non_peer_eligible_rows: list[Mapping[str, Any]] = []
+    malformed_rows: list[Any] = []
+    non_snapshot_rows: list[Mapping[str, Any]] = []
+    for raw in raw_rows:
+        if not isinstance(raw, Mapping):
+            malformed_rows.append(raw)
+            continue
+        if str(raw.get("BAS_DD") or "") != expected_date:
+            non_snapshot_rows.append(raw)
+            continue
+        symbol = str(
+            raw.get("ISU_CD") or raw.get("ISU_SRT_CD") or ""
+        ).strip()
+        name = str(raw.get("ISU_NM") or "").strip()
+        if not symbol or not name:
+            malformed_rows.append(raw)
+        elif symbol == target_id:
+            target_rows.append(raw)
+        elif len(symbol) == 6 and symbol.isdigit():
+            eligible_rows_by_symbol.setdefault(symbol, []).append(raw)
+        else:
+            # Preferred shares and SPAC identifiers can contain letters.  They
+            # are fully accounted source rows but cannot satisfy the provider
+            # contract requiring a six-digit numeric common-stock identity.
+            non_peer_eligible_rows.append(raw)
+
+    identities: list[Mapping[str, str]] = []
+    duplicate_identity_row_count = 0
+    ambiguous_identity_row_count = 0
+    for symbol, rows in eligible_rows_by_symbol.items():
+        names = {
+            _company_name_key(str(row.get("ISU_NM") or "").strip())
+            for row in rows
+        }
+        if len(names) != 1:
+            ambiguous_identity_row_count += len(rows)
+            continue
+        if len(rows) != 1:
+            duplicate_identity_row_count += len(rows)
+            continue
+        identities.append(
+            {
+                "peer_symbol": symbol,
+                "peer_name": str(rows[0].get("ISU_NM") or "").strip(),
+            }
+        )
+    identities = sorted(identities, key=lambda row: row["peer_symbol"])
+    exact_snapshot_row_count = (
+        len(target_rows)
+        + sum(len(rows) for rows in eligible_rows_by_symbol.values())
+        + len(non_peer_eligible_rows)
+        + sum(
+            1
+            for raw in malformed_rows
+            if isinstance(raw, Mapping)
+            and str(raw.get("BAS_DD") or "") == expected_date
+        )
+    )
+    accounted_exact_snapshot_row_count = (
+        len(target_rows)
+        + len(identities)
+        + duplicate_identity_row_count
+        + ambiguous_identity_row_count
+        + len(non_peer_eligible_rows)
+        + sum(
+            1
+            for raw in malformed_rows
+            if isinstance(raw, Mapping)
+            and str(raw.get("BAS_DD") or "") == expected_date
+        )
+    )
+    unaccounted_exact_snapshot_row_count = (
+        exact_snapshot_row_count - accounted_exact_snapshot_row_count
+    )
+    return {
+        "identities": identities,
+        "raw_row_count": len(raw_rows),
+        "exact_snapshot_row_count": exact_snapshot_row_count,
+        "identity_count": len(identities),
+        "target_row_count": len(target_rows),
+        "non_peer_eligible_security_row_count": len(
+            non_peer_eligible_rows
+        ),
+        "duplicate_identity_row_count": duplicate_identity_row_count,
+        "ambiguous_identity_row_count": ambiguous_identity_row_count,
+        "malformed_row_count": len(malformed_rows),
+        "non_snapshot_row_count": len(non_snapshot_rows),
+        "unaccounted_exact_snapshot_row_count": (
+            unaccounted_exact_snapshot_row_count
+        ),
+        "all_rows_accounted": (
+            unaccounted_exact_snapshot_row_count == 0
+            and not malformed_rows
+            and not non_snapshot_rows
+        ),
+        "complete_identity_plane": (
+            bool(identities)
+            and len(target_rows) <= 1
+            and duplicate_identity_row_count == 0
+            and ambiguous_identity_row_count == 0
+            and unaccounted_exact_snapshot_row_count == 0
+            and not malformed_rows
+            and not non_snapshot_rows
+        ),
+    }
+
+
+def _merge_listing_identity_rosters(
+    rows: Sequence[Mapping[str, str]],
+) -> tuple[Mapping[str, str], ...]:
+    """Merge bounded KRX market identity planes without choosing peers.
+
+    A symbol whose legal name conflicts across source rows is omitted instead
+    of letting market iteration order decide its identity.
+    """
+
+    identities: dict[str, str] = {}
+    ambiguous: set[str] = set()
+    for row in rows:
+        symbol = str(row.get("peer_symbol") or "").strip()
+        name = str(row.get("peer_name") or "").strip()
+        if not symbol or not name:
+            continue
+        previous = identities.get(symbol)
+        if previous is not None and _company_name_key(previous) != _company_name_key(
+            name
+        ):
             ambiguous.add(symbol)
             continue
         identities[symbol] = name
