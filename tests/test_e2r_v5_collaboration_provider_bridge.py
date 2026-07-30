@@ -1479,6 +1479,53 @@ class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
             "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
         )
 
+    def test_phase94_explicit_codex_collaboration_option_skips_cli_primary(
+        self,
+    ) -> None:
+        args = build_phase94_parser().parse_args(
+            [
+                "--as-of-date",
+                "2026-07-12",
+                "--symbols",
+                "005930",
+                "--archetype",
+                "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "--live-materialization-authorized",
+                "true",
+                "--checkpoint-resume",
+                "true",
+                "--gold-lane-isolated",
+                "true",
+                "--require-researcher-parity",
+                "true",
+                "--output-root",
+                "output/test",
+                "--research-provider",
+                "codex-collaboration",
+            ]
+        )
+
+        provider = _build_research_provider(args)
+        self.assertIsInstance(
+            provider,
+            CollaborationCodexResearcherProvider,
+        )
+        self.assertNotIsInstance(
+            provider,
+            CodexSubagentFallbackResearchProvider,
+        )
+        manifest = _research_provider_manifest(provider)
+        self.assertTrue(manifest["provider_selected_explicitly"])
+        self.assertFalse(manifest["score_or_stage_authority"])
+        self.assertEqual(
+            manifest["provider_identity"]["provider_route"],
+            "COLLABORATION_CODEX_SUBAGENT",
+        )
+        self.assertEqual(
+            manifest["provider_identity"]["provenance_assurance"],
+            "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+        )
+
     def test_dedicated_importer_cli_writes_only_validated_response_namespace(
         self,
     ) -> None:
