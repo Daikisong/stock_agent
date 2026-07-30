@@ -462,6 +462,8 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
             signature in seen_signatures
             and not source_transport_advanced
             and source_transport_chain_valid
+            and not source_checkpoint_readonly_replayed
+            and next_source_resume_mode == "ADVANCE"
             and _source_query_generation_was_deferred(result)
             and _source_transport_work_is_drained(
                 source_transport_snapshot["work_state"]
