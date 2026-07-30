@@ -20,6 +20,7 @@ from e2r.cli.run_e2r_researcher_mode_until_pass import (
     _source_transport_snapshot,
     _source_transport_work_state,
     _source_transport_work_summary,
+    _terminal_source_snapshot_has_pending_fact_extraction,
     build_parser,
 )
 from e2r.research import EmptySearchProvider, PageFetcher
@@ -43,12 +44,15 @@ from tests.test_e2r_v5_researcher_mode import ScriptedResearchProvider
 from tests.test_e2r_v5_source_graph_acquisition import SourceBrainProvider
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _source_checkpoint_is_ready_for_readonly_replay,
+    _source_checkpoint_needs_fact_extraction_recovery,
     _source_checkpoint_needs_downstream_provider_recovery,
     _load_prior_component_memos,
     _same_lane_structured_cache_roots,
 )
 from e2r.research_brain.researcher_mode.source_graph_explorer import (
     _finalize_checkpoint,
+    source_graph_acquisition_safety_critical_counts,
+    source_graph_checkpoint_audit_binding,
 )
 
 AS_OF_DATE = "2026-06-29"
@@ -564,6 +568,162 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             ["REUSE_READY_CHECKPOINT", "ADVANCE"],
         )
 
+    def test_until_pass_reuses_terminal_source_until_fact_queue_drains(
+        self,
+    ) -> None:
+        checkpoint = _phase94_source_checkpoint(epoch=1)
+        advanced_checkpoint = _phase94_source_checkpoint(
+            epoch=2,
+            resumed_from_checkpoint_id=checkpoint["checkpoint_id"],
+        )
+        snapshot = _source_transport_snapshot(checkpoint)
+        advanced_snapshot = _source_transport_snapshot(advanced_checkpoint)
+
+        def result(
+            *,
+            fact_status: str,
+            source_status: str,
+            fact_recovery_replayed: bool = False,
+            complete: bool = False,
+        ):
+            return SimpleNamespace(
+                status=(
+                    "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+                    if complete
+                    else "RESEARCH_CHECKPOINT_PENDING"
+                ),
+                completion_gates={"source_graph_checkpoint_ready": True},
+                source_graph=SimpleNamespace(
+                    status=source_status,
+                ),
+                fact_extraction=SimpleNamespace(
+                    status=fact_status,
+                    pending_reasons=(
+                        (
+                            "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                            "StructuredProviderUnavailable:"
+                            "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                            + "e" * 64,
+                        )
+                        if fact_status == "FACT_EXTRACTION_PENDING"
+                        else ()
+                    ),
+                ),
+                audit={
+                    "source_checkpoint_readonly_replayed": not complete,
+                    "source_checkpoint_fact_extraction_recovery_replayed": (
+                        fact_recovery_replayed
+                    ),
+                },
+            )
+
+        results = (
+            result(
+                fact_status="FACT_EXTRACTION_PENDING",
+                source_status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+            ),
+            result(
+                fact_status="FACT_EXTRACTION_PENDING",
+                source_status="QUERY_GENERATION_PENDING",
+                fact_recovery_replayed=True,
+            ),
+            result(
+                fact_status="FACT_EXTRACTION_COMPLETE",
+                source_status="QUERY_GENERATION_PENDING",
+                fact_recovery_replayed=True,
+            ),
+            result(
+                fact_status="FACT_EXTRACTION_COMPLETE",
+                source_status="QUERY_GENERATION_PENDING",
+                complete=True,
+            ),
+        )
+
+        class Runner:
+            def __init__(self) -> None:
+                self.modes = []
+
+            def run_checkpoint(self, **kwargs):
+                self.modes.append(kwargs["source_resume_mode"])
+                return results[len(self.modes) - 1]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            runner = Runner()
+            with (
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_signature",
+                    side_effect=(
+                        "a" * 64,
+                        "b" * 64,
+                        "c" * 64,
+                        "d" * 64,
+                    ),
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_state",
+                    return_value={},
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_load_prior_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_result_source_transport_work_state",
+                    side_effect=(
+                        snapshot,
+                        snapshot,
+                        snapshot,
+                        advanced_snapshot,
+                    ),
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "refresh_canary_target_manifest_hash"
+                ),
+            ):
+                returned = _run_target_until_semantic_terminal(
+                    runner=runner,
+                    config=SimpleNamespace(
+                        output_root=str(root),
+                        as_of_date=AS_OF_DATE,
+                    ),
+                    target=SimpleNamespace(target_id="CURRENT-TARGET"),
+                )
+
+        self.assertIs(returned, results[-1])
+        self.assertEqual(
+            runner.modes,
+            [
+                "REUSE_READY_CHECKPOINT",
+                "REUSE_READY_CHECKPOINT",
+                "REUSE_READY_CHECKPOINT",
+                "ADVANCE",
+            ],
+        )
+        self.assertTrue(
+            _terminal_source_snapshot_has_pending_fact_extraction(
+                results[0],
+                snapshot["work_state"],
+            )
+        )
+        self.assertTrue(
+            _terminal_source_snapshot_has_pending_fact_extraction(
+                results[1],
+                snapshot["work_state"],
+            )
+        )
+        self.assertFalse(
+            _terminal_source_snapshot_has_pending_fact_extraction(
+                results[2],
+                snapshot["work_state"],
+            )
+        )
+
     def test_readonly_source_replay_requires_terminal_source_work(self) -> None:
         ready = {
             "status": "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
@@ -608,6 +768,176 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             self.assertFalse(
                 _source_checkpoint_is_ready_for_readonly_replay(candidate)
             )
+
+    def test_fact_extraction_recovery_requires_exact_drained_query_wait(
+        self,
+    ) -> None:
+        request_id = "COLLABREQ-" + "a" * 64
+        checkpoint = {
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "status": "QUERY_GENERATION_PENDING",
+            "pending_reasons": [
+                "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+                + request_id
+            ],
+            "generated_queries": [
+                {"execution_status": "SEARCH_EXECUTED"}
+            ],
+            "search_candidates": [
+                {
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "FULL_DOCUMENT_FETCHED",
+                }
+            ],
+            "evidence_documents": [
+                {"document_id": "DOC-1"},
+                {"document_id": "BACKFILL-NOT-DOWNSTREAM"},
+            ],
+            "production_downstream_document_ids": ["DOC-1"],
+        }
+        fact_result = {
+            "target_id": "CURRENT-TARGET",
+            "as_of_date": AS_OF_DATE,
+            "status": "FACT_EXTRACTION_PENDING",
+            "pending_reasons": [
+                "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                "StructuredProviderUnavailable:"
+                "COLLABORATION_RESPONSE_PENDING:COLLABREQ-" + "b" * 64,
+                "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+                "SGDOC-" + "c" * 24 + ":0/3",
+            ],
+            "audit": {"input_document_count": 1},
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            fact_path = root / "fact_extraction_result.json"
+            fact_path.write_text(json.dumps(fact_result), encoding="utf-8")
+            self.assertTrue(
+                _source_checkpoint_needs_fact_extraction_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            invalid_checkpoints = []
+            for pending_reason in (
+                checkpoint["pending_reasons"][0] + ":SUFFIX",
+                "LLM_RETURNED_NO_NEW_VALID_QUERY",
+                "QUERY_PROVIDER_ERROR:SEARCH_PROVIDER_ERROR",
+            ):
+                invalid_checkpoints.append(
+                    {
+                        **checkpoint,
+                        "pending_reasons": [pending_reason],
+                    }
+                )
+            invalid_checkpoints.extend(
+                (
+                    {
+                        **checkpoint,
+                        "generated_queries": [
+                            {"execution_status": "PENDING"}
+                        ],
+                    },
+                    {
+                        **checkpoint,
+                        "search_candidates": [
+                            {
+                                "ranking_status": "PENDING",
+                                "fetch_status": "NOT_STARTED",
+                            }
+                        ],
+                    },
+                    {
+                        **checkpoint,
+                        "search_candidates": [
+                            {
+                                "ranking_status": "MATERIAL",
+                                "fetch_status": "MATERIAL_PENDING_FETCH",
+                            }
+                        ],
+                    },
+                    {
+                        **checkpoint,
+                        "production_downstream_document_ids": [
+                            "DOC-1",
+                            "DOC-MISSING",
+                        ],
+                    },
+                )
+            )
+            for invalid in invalid_checkpoints:
+                self.assertFalse(
+                    _source_checkpoint_needs_fact_extraction_recovery(
+                        root=root,
+                        checkpoint=invalid,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                    )
+                )
+
+            for key, value in (
+                ("status", "FACT_EXTRACTION_COMPLETE"),
+                ("target_id", "OTHER-TARGET"),
+                ("as_of_date", "2026-06-28"),
+            ):
+                invalid_fact = {**fact_result, key: value}
+                fact_path.write_text(
+                    json.dumps(invalid_fact),
+                    encoding="utf-8",
+                )
+                self.assertFalse(
+                    _source_checkpoint_needs_fact_extraction_recovery(
+                        root=root,
+                        checkpoint=checkpoint,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                    )
+                )
+
+            mismatched_roster_fact = {
+                **fact_result,
+                "audit": {"input_document_count": 2},
+            }
+            fact_path.write_text(
+                json.dumps(mismatched_roster_fact),
+                encoding="utf-8",
+            )
+            self.assertFalse(
+                _source_checkpoint_needs_fact_extraction_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            for invalid_reason in (
+                "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                "StructuredProviderUnavailable:INVALID_PROVIDER_OUTPUT",
+                fact_result["pending_reasons"][0] + ":SUFFIX",
+                "INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+                "SGDOC-" + "c" * 24 + ":0/3",
+            ):
+                invalid_fact = {
+                    **fact_result,
+                    "pending_reasons": [invalid_reason],
+                }
+                fact_path.write_text(
+                    json.dumps(invalid_fact),
+                    encoding="utf-8",
+                )
+                self.assertFalse(
+                    _source_checkpoint_needs_fact_extraction_recovery(
+                        root=root,
+                        checkpoint=checkpoint,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                    )
+                )
 
     def test_pending_source_snapshot_recovers_downstream_provider_before_fetch(
         self,
@@ -2388,6 +2718,191 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     "prior_structured_source_gap"
                 ]["query_generation_owner"],
                 "LLM",
+            )
+
+    def test_query_wait_snapshot_replays_only_to_recover_pending_facts(
+        self,
+    ) -> None:
+        target = CurrentResearchTarget(
+            symbol="CURRENT-TARGET",
+            company_name="Current Corp",
+            official_domains=("example.com",),
+        )
+        as_of_date = "2026-06-29"
+        plans = ComponentResearchPlanner().plan(
+            target_id=target.target_id,
+            archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            evidence_facts=(),
+            historical_anchors=(),
+        )
+        graph = SourceGraphExplorer().explore(
+            target_id=target.target_id,
+            as_of_date=as_of_date,
+            documents=(),
+            research_plans=plans,
+            source_coverage=(),
+        )
+        document = dict(
+            _document(
+                "DOC-FACT-RECOVERY",
+                "ISSUER_PRESENTATION",
+                "ISSUER:example.com",
+            )
+        )
+        document.update(
+            target_id=target.target_id,
+            as_of_date=as_of_date,
+            objective_ids=[graph.open_objectives[0].objective_id],
+        )
+        acquisition_config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_results_per_query=100,
+            max_queries_per_checkpoint=10,
+            max_candidates_per_checkpoint=100,
+            max_fetches_per_checkpoint=20,
+        )
+        source_run = ResearcherSourceGraphAcquirer(
+            query_provider=SourceBrainProvider(),
+            search_provider=EmptySearchProvider(),
+            page_fetcher=PageFetcher(fixture_text_by_url={}),
+        ).acquire(
+            config=acquisition_config,
+            target_id=target.target_id,
+            target_name=target.company_name,
+            target_aliases=(),
+            as_of_date=as_of_date,
+            open_objectives=graph.open_objectives,
+            current_evidence_facts=(),
+            target_business_model=None,
+            source_coverage=(),
+            official_documents=(document,),
+        )
+        self.assertEqual(len(source_run.evidence_documents), 1)
+        terminal_checkpoint_id = source_run.checkpoint["checkpoint_id"]
+        pending_state = json.loads(json.dumps(source_run.checkpoint))
+        pending_state.pop("checkpoint_id")
+        pending_state.pop("checkpoint_hash")
+        pending_state.update(
+            epoch=int(pending_state["epoch"]) + 1,
+            status="QUERY_GENERATION_PENDING",
+            resumed_from_checkpoint_id=terminal_checkpoint_id,
+            pending_reasons=[
+                "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+                "COLLABREQ-" + "d" * 64
+            ],
+            production_downstream_document_ids=["DOC-FACT-RECOVERY"],
+        )
+        pending_checkpoint = _finalize_checkpoint(pending_state)
+
+        class ForbiddenSourceAcquirer:
+            def acquire(self, **_kwargs):
+                raise AssertionError(
+                    "fact recovery replay called source acquisition"
+                )
+
+        with tempfile.TemporaryDirectory() as directory:
+            target_root = Path(directory) / target.target_id
+            target_root.mkdir(parents=True)
+            paths = write_source_graph_acquisition_run(
+                source_run,
+                output_root=target_root,
+            )
+            paths["checkpoint"].write_text(
+                json.dumps(pending_checkpoint),
+                encoding="utf-8",
+            )
+            audit = json.loads(paths["audit"].read_text(encoding="utf-8"))
+            critical = source_graph_acquisition_safety_critical_counts(
+                config=acquisition_config,
+                checkpoint=pending_checkpoint,
+            )
+            audit.update(
+                checkpoint_binding=dict(
+                    source_graph_checkpoint_audit_binding(
+                        pending_checkpoint
+                    )
+                ),
+                critical_counts=dict(critical),
+                critical_count_sum=sum(critical.values()),
+            )
+            paths["audit"].write_text(
+                json.dumps(audit),
+                encoding="utf-8",
+            )
+            (target_root / "fact_extraction_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target.target_id,
+                        "as_of_date": as_of_date,
+                        "status": "FACT_EXTRACTION_PENDING",
+                        "pending_reasons": [
+                            "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                            "StructuredProviderUnavailable:"
+                            "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                            + "e" * 64
+                        ],
+                        "audit": {"input_document_count": 1},
+                    }
+                ),
+                encoding="utf-8",
+            )
+            provider = Phase94IntegrationProvider()
+            runner = CurrentResearcherModeTargetRunner(
+                provider=provider,
+                official_materializer=Phase94IntegrationOfficialMaterializer(),
+                structured_materializer=(
+                    Phase94IntegrationStructuredMaterializer()
+                ),
+                source_acquirer=ForbiddenSourceAcquirer(),
+                fact_extractor=ResearcherEvidenceFactExtractor(
+                    provider=provider,
+                    documents_per_call=1,
+                ),
+            )
+            result = runner.run_checkpoint(
+                config=CurrentResearcherModeConfig(
+                    as_of_date=as_of_date,
+                    archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    output_root=directory,
+                    live_materialization_authorized=True,
+                    checkpoint_resume=True,
+                    gold_lane_isolated=True,
+                    require_researcher_parity=True,
+                    latest_trading_snapshot_date=as_of_date,
+                    source_acquisition_mode="TEST",
+                ),
+                target=target,
+                repo_root=self.ROOT,
+                source_resume_mode="REUSE_READY_CHECKPOINT",
+            )
+
+            self.assertTrue(
+                result.audit["source_checkpoint_readonly_replayed"]
+            )
+            self.assertTrue(
+                result.audit[
+                    "source_checkpoint_fact_extraction_recovery_replayed"
+                ]
+            )
+            self.assertFalse(
+                result.audit[
+                    "source_checkpoint_downstream_recovery_replayed"
+                ]
+            )
+            self.assertTrue(
+                result.source_graph.audit[
+                    "fact_extraction_recovery_replay"
+                ]
+            )
+            self.assertEqual(
+                result.source_graph.checkpoint["checkpoint_id"],
+                pending_checkpoint["checkpoint_id"],
+            )
+            self.assertTrue(
+                any(
+                    row["pass_name"] == "EVIDENCE_FACT_EXTRACTION"
+                    for row in provider.calls
+                )
             )
 
     def test_ready_source_checkpoint_replays_without_acquisition_mutation(

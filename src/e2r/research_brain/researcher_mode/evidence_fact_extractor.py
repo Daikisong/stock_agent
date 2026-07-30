@@ -343,6 +343,38 @@ class ResearcherFactExtractionResult:
         }
 
 
+_COLLABORATION_FACT_WAIT_RE = re.compile(
+    r"FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+    r"StructuredProviderUnavailable:"
+    r"COLLABORATION_RESPONSE_PENDING:"
+    r"COLLABREQ-[0-9a-f]{64}"
+)
+_INCOMPLETE_FACT_TRANSPORT_RE = re.compile(
+    r"INCOMPLETE_DOCUMENT_TRANSPORT_CHUNKS:"
+    r"SGDOC-[0-9a-f]{24}:[0-9]+/[1-9][0-9]*"
+)
+
+
+def fact_extraction_has_exact_collaboration_wait(
+    pending_reasons: Sequence[Any],
+) -> bool:
+    """Recognize only the resumable Codex response wait plus split progress."""
+
+    reasons = tuple(str(value) for value in pending_reasons)
+    collaboration_wait_count = sum(
+        _COLLABORATION_FACT_WAIT_RE.fullmatch(reason) is not None
+        for reason in reasons
+    )
+    return bool(
+        collaboration_wait_count == 1
+        and all(
+            _COLLABORATION_FACT_WAIT_RE.fullmatch(reason) is not None
+            or _INCOMPLETE_FACT_TRANSPORT_RE.fullmatch(reason) is not None
+            for reason in reasons
+        )
+    )
+
+
 class ResearcherEvidenceFactExtractor:
     """Extract and verify facts from every supplied full document.
 

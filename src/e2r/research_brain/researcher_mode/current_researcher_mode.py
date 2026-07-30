@@ -12,6 +12,7 @@ from datetime import date
 import hashlib
 import json
 from pathlib import Path
+import re
 from typing import Any, Mapping, Sequence
 
 from e2r.production.metadata import stable_hash, write_json, write_jsonl
@@ -33,6 +34,7 @@ from .evidence_fact_extractor import (
     FACT_EXTRACTION_OUTPUT_FILES,
     ResearcherEvidenceFactExtractor,
     ResearcherFactExtractionResult,
+    fact_extraction_has_exact_collaboration_wait,
     normalize_punctuation_only_fact_value,
     production_material_fact_rows,
     write_researcher_fact_extraction_result,
@@ -334,9 +336,23 @@ class CurrentResearcherModeTargetRunner:
                 as_of_date=config.as_of_date,
             )
         )
+        source_checkpoint_fact_extraction_recovery_replayed = bool(
+            source_resume_mode == "REUSE_READY_CHECKPOINT"
+            and prior_source_checkpoint is not None
+            and not source_checkpoint_readonly_replayed
+            and not source_checkpoint_navigation_migration_only
+            and not source_checkpoint_downstream_recovery_replayed
+            and _source_checkpoint_needs_fact_extraction_recovery(
+                root=root,
+                checkpoint=prior_source_checkpoint,
+                target_id=target.target_id,
+                as_of_date=config.as_of_date,
+            )
+        )
         if (
             source_checkpoint_readonly_replayed
             or source_checkpoint_downstream_recovery_replayed
+            or source_checkpoint_fact_extraction_recovery_replayed
         ):
             source_graph = _hydrate_readonly_source_graph_run(
                 root=root,
@@ -345,6 +361,9 @@ class CurrentResearcherModeTargetRunner:
                 config=source_acquisition_config,
                 allow_pending_downstream_recovery=(
                     source_checkpoint_downstream_recovery_replayed
+                ),
+                allow_pending_fact_extraction_recovery=(
+                    source_checkpoint_fact_extraction_recovery_replayed
                 ),
             )
         else:
@@ -694,9 +713,13 @@ class CurrentResearcherModeTargetRunner:
             "source_checkpoint_readonly_replayed": (
                 source_checkpoint_readonly_replayed
                 or source_checkpoint_downstream_recovery_replayed
+                or source_checkpoint_fact_extraction_recovery_replayed
             ),
             "source_checkpoint_downstream_recovery_replayed": (
                 source_checkpoint_downstream_recovery_replayed
+            ),
+            "source_checkpoint_fact_extraction_recovery_replayed": (
+                source_checkpoint_fact_extraction_recovery_replayed
             ),
             "source_checkpoint_navigation_migration_only": (
                 source_checkpoint_navigation_migration_only
@@ -1326,6 +1349,14 @@ def _source_checkpoint_has_terminal_source_work(
         "STOPPED_ON_RESOLUTION",
     }:
         return False
+    return _source_checkpoint_has_drained_persisted_work(checkpoint)
+
+
+def _source_checkpoint_has_drained_persisted_work(
+    checkpoint: Mapping[str, Any],
+) -> bool:
+    """Return whether no persisted query, ranking, or fetch action is pending."""
+
     if any(
         row.get("execution_status") == "PENDING"
         for row in checkpoint.get("generated_queries") or ()
@@ -1340,6 +1371,75 @@ def _source_checkpoint_has_terminal_source_work(
         )
         for row in checkpoint.get("search_candidates") or ()
         if isinstance(row, Mapping)
+    )
+
+
+def _source_checkpoint_needs_fact_extraction_recovery(
+    *,
+    root: Path,
+    checkpoint: Mapping[str, Any],
+    target_id: str,
+    as_of_date: str,
+) -> bool:
+    """Replay one immutable source snapshot solely to drain pending facts.
+
+    A collaboration wait may be opened immediately after a terminal source
+    epoch.  The source planner must not replace that exact document snapshot
+    while its fact-extraction queue is still pending.  This predicate admits
+    only that wait leaf; empty-query outcomes, source failures, and real query,
+    ranking, or fetch work continue through ordinary source acquisition.
+    """
+
+    pending_reasons = tuple(checkpoint.get("pending_reasons") or ())
+    if (
+        str(checkpoint.get("status") or "") != "QUERY_GENERATION_PENDING"
+        or str(checkpoint.get("target_id") or "") != target_id
+        or str(checkpoint.get("as_of_date") or "") != as_of_date
+        or len(pending_reasons) != 1
+        or re.fullmatch(
+            r"QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+            r"COLLABREQ-[0-9a-f]{64}",
+            str(pending_reasons[0]),
+        )
+        is None
+        or not _source_checkpoint_has_drained_persisted_work(checkpoint)
+    ):
+        return False
+    downstream_document_ids = tuple(
+        str(value)
+        for value in checkpoint.get("production_downstream_document_ids") or ()
+        if str(value).strip()
+    )
+    downstream_document_id_set = set(downstream_document_ids)
+    evidence_document_ids = {
+        str(row.get("document_id") or "")
+        for row in checkpoint.get("evidence_documents") or ()
+        if isinstance(row, Mapping) and str(row.get("document_id") or "")
+    }
+    if (
+        not downstream_document_ids
+        or len(downstream_document_ids) != len(downstream_document_id_set)
+        or not downstream_document_id_set.issubset(evidence_document_ids)
+    ):
+        return False
+    fact_path = root / "fact_extraction_result.json"
+    if not fact_path.is_file():
+        return False
+    try:
+        fact_result = _read_json(fact_path)
+    except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
+        return False
+    audit = fact_result.get("audit") or {}
+    return bool(
+        str(fact_result.get("target_id") or "") == target_id
+        and str(fact_result.get("as_of_date") or "") == as_of_date
+        and fact_result.get("status") == "FACT_EXTRACTION_PENDING"
+        and fact_extraction_has_exact_collaboration_wait(
+            fact_result.get("pending_reasons") or ()
+        )
+        and isinstance(audit, Mapping)
+        and int(audit.get("input_document_count") or 0)
+        == len(downstream_document_id_set)
     )
 
 
@@ -1454,19 +1554,38 @@ def _hydrate_readonly_source_graph_run(
     open_objectives: Sequence[Any],
     config: SourceGraphAcquisitionConfig,
     allow_pending_downstream_recovery: bool = False,
+    allow_pending_fact_extraction_recovery: bool = False,
 ) -> SourceGraphAcquisitionRun:
     """Hydrate a ready source run without mutating acquisition lineage."""
 
     if (
         not allow_pending_downstream_recovery
+        and not allow_pending_fact_extraction_recovery
         and not _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
     ):
         raise ValueError("source checkpoint is not ready for readonly replay")
+    if (
+        allow_pending_downstream_recovery
+        and allow_pending_fact_extraction_recovery
+    ):
+        raise ValueError("source checkpoint recovery replay is ambiguous")
     if allow_pending_downstream_recovery and (
         _source_checkpoint_has_terminal_source_work(checkpoint)
         or not checkpoint.get("evidence_documents")
     ):
         raise ValueError("pending downstream recovery requires pending source work")
+    if allow_pending_fact_extraction_recovery and (
+        not _source_checkpoint_needs_fact_extraction_recovery(
+            root=root,
+            checkpoint=checkpoint,
+            target_id=str(checkpoint.get("target_id") or ""),
+            as_of_date=str(checkpoint.get("as_of_date") or ""),
+        )
+    ):
+        raise ValueError(
+            "pending fact extraction recovery requires an exact collaboration "
+            "query wait with drained source work"
+        )
     graph_payload = checkpoint.get("source_graph")
     if not isinstance(graph_payload, Mapping):
         raise ValueError("source checkpoint graph payload is missing")
@@ -1559,6 +1678,9 @@ def _hydrate_readonly_source_graph_run(
         "pending_candidate_count": pending_candidate_count,
         "downstream_provider_recovery_replay": (
             allow_pending_downstream_recovery
+        ),
+        "fact_extraction_recovery_replay": (
+            allow_pending_fact_extraction_recovery
         ),
     }
     return SourceGraphAcquisitionRun(

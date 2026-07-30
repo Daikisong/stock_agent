@@ -27,6 +27,9 @@ from e2r.research_brain.researcher_mode import (
 from e2r.research_brain.researcher_mode.prompt_projection import (
     normalize_collaboration_transport_wait,
 )
+from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
+    fact_extraction_has_exact_collaboration_wait,
+)
 
 
 def _bool(value: str | bool) -> bool:
@@ -343,24 +346,28 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
         if prior_no_progress_signature is not None
         else set()
     )
-    first_checkpoint = True
+    next_source_resume_mode = "REUSE_READY_CHECKPOINT"
     while True:
+        source_resume_mode = next_source_resume_mode
         result = runner.run_checkpoint(
             config=config,
             target=target,
-            source_resume_mode=(
-                "REUSE_READY_CHECKPOINT" if first_checkpoint else "ADVANCE"
-            ),
+            source_resume_mode=source_resume_mode,
         )
-        first_checkpoint = False
         signature = _semantic_signature(result)
         semantic_state = _semantic_state(result)
+        result_audit = (
+            getattr(result, "audit", {})
+            if isinstance(getattr(result, "audit", {}), Mapping)
+            else {}
+        )
         source_checkpoint_readonly_replayed = bool(
-            (
-                getattr(result, "audit", {})
-                if isinstance(getattr(result, "audit", {}), Mapping)
-                else {}
-            ).get("source_checkpoint_readonly_replayed")
+            result_audit.get("source_checkpoint_readonly_replayed")
+        )
+        source_checkpoint_fact_extraction_recovery_replayed = bool(
+            result_audit.get(
+                "source_checkpoint_fact_extraction_recovery_replayed"
+            )
         )
         source_transport_snapshot = _result_source_transport_work_state(
             result,
@@ -379,6 +386,14 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
                 prior_source_transport_snapshot["work_state"],
                 source_transport_snapshot["work_state"],
             )
+        )
+        next_source_resume_mode = (
+            "REUSE_READY_CHECKPOINT"
+            if _terminal_source_snapshot_has_pending_fact_extraction(
+                result,
+                source_transport_snapshot["work_state"],
+            )
+            else "ADVANCE"
         )
         progress_path = target_root / "until_pass_progress.json"
         write_json(
@@ -414,7 +429,11 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
             no_progress_path.unlink(missing_ok=True)
             refresh_canary_target_manifest_hash(progress_path.parent)
             return result
-        if source_checkpoint_readonly_replayed and source_transport_chain_valid:
+        if (
+            source_checkpoint_readonly_replayed
+            and not source_checkpoint_fact_extraction_recovery_replayed
+            and source_transport_chain_valid
+        ):
             # A ready source snapshot was intentionally held immutable so a
             # recovered downstream provider/output contract could be retried
             # first.  If that retry remains pending, allow one ordinary source
@@ -704,6 +723,37 @@ def _source_transport_work_is_drained(
             "pending_query_count",
             "pending_ranking_count",
             "pending_fetch_count",
+        )
+    )
+
+
+def _terminal_source_snapshot_has_pending_fact_extraction(
+    result: Any,
+    source_transport_work_state: Mapping[str, Mapping[str, str]],
+) -> bool:
+    """Keep a terminal immutable source snapshot until its fact queue drains."""
+
+    source_graph = getattr(result, "source_graph", None)
+    fact_extraction = getattr(result, "fact_extraction", None)
+    result_audit = getattr(result, "audit", None)
+    terminal_source_identity = bool(
+        getattr(source_graph, "status", None)
+        in {"EPOCH_COMPLETE_REQUIRES_SUPERVISOR", "STOPPED_ON_RESOLUTION"}
+        or (
+            isinstance(result_audit, Mapping)
+            and result_audit.get(
+                "source_checkpoint_fact_extraction_recovery_replayed"
+            )
+            is True
+        )
+    )
+    return bool(
+        terminal_source_identity
+        and _source_transport_work_is_drained(source_transport_work_state)
+        and getattr(fact_extraction, "status", None)
+        == "FACT_EXTRACTION_PENDING"
+        and fact_extraction_has_exact_collaboration_wait(
+            getattr(fact_extraction, "pending_reasons", ())
         )
     )
 
