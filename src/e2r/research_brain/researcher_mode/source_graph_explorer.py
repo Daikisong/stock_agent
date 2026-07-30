@@ -921,6 +921,15 @@ class ResearcherSourceGraphAcquirer:
             candidates,
             official_hosts=allowed_hosts,
         )
+        current_query_edge_scope_repaired_count = 0
+        if config.mode == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value:
+            current_query_edge_scope_repaired_count = (
+                _reconcile_candidate_current_query_edge_scopes(
+                    candidates,
+                    generated_rows,
+                    ranking_rows,
+                )
+            )
         stale_pending_materiality_count = 0
         if config.mode == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value:
             stale_pending_materiality_count = (
@@ -965,6 +974,13 @@ class ResearcherSourceGraphAcquirer:
                 decision = decision_by_candidate.get(str(candidate["candidate_id"]))
                 if decision is None:
                     continue
+                terminal_fetch_status = str(
+                    candidate.pop(
+                        "terminal_fetch_status_before_materiality_revalidation",
+                        "",
+                    )
+                    or ""
+                )
                 ranking_rows.append(decision.to_dict())
                 candidate["materiality_decision_id"] = decision.decision_id
                 candidate["material_priority"] = decision.priority
@@ -977,7 +993,6 @@ class ResearcherSourceGraphAcquirer:
                 )
                 if decision.material_relevance:
                     candidate["ranking_status"] = "MATERIAL"
-                    candidate["objective_ids"] = list(decision.objective_ids)
                     revalidation_document_id = str(
                         candidate.get("revalidation_document_id") or ""
                     )
@@ -994,6 +1009,47 @@ class ResearcherSourceGraphAcquirer:
                                 != revalidation_document_id
                             ):
                                 continue
+                            document["historical_objective_ids"] = list(
+                                dict.fromkeys(
+                                    (
+                                        *document.get(
+                                            "historical_objective_ids",
+                                            (),
+                                        ),
+                                        *document.get("objective_ids", ()),
+                                    )
+                                )
+                            )
+                            document[
+                                "historical_requested_source_families"
+                            ] = list(
+                                dict.fromkeys(
+                                    (
+                                        *document.get(
+                                            "historical_requested_source_families",
+                                            (),
+                                        ),
+                                        *document.get(
+                                            "requested_source_families",
+                                            (),
+                                        ),
+                                    )
+                                )
+                            )
+                            document["query_ids"] = list(
+                                dict.fromkeys(
+                                    (
+                                        *document.get("query_ids", ()),
+                                        *candidate.get(
+                                            "materiality_query_ids",
+                                            (),
+                                        ),
+                                    )
+                                )
+                            )
+                            document["materiality_query_ids"] = list(
+                                candidate.get("materiality_query_ids") or ()
+                            )
                             document["matched_requested_source_family"] = (
                                 decision.matched_requested_source_family
                             )
@@ -1001,16 +1057,35 @@ class ResearcherSourceGraphAcquirer:
                                 "materiality_scope_hash"
                             ]
                             document["objective_ids"] = list(
-                                dict.fromkeys(
-                                    (
-                                        *document.get("objective_ids", ()),
-                                        *decision.objective_ids,
-                                    )
+                                candidate.get("objective_ids") or ()
+                            )
+                            document["requested_source_families"] = list(
+                                candidate.get(
+                                    "requested_source_families",
+                                    (),
                                 )
                             )
+                            document["materiality_scope_url"] = _normalize_url(
+                                str(
+                                    candidate.get("normalized_url")
+                                    or candidate.get("url")
+                                    or ""
+                                )
+                            )
+                            document[
+                                "source_materiality_decision_id"
+                            ] = decision.decision_id
                             break
                     else:
-                        candidate["fetch_status"] = "MATERIAL_PENDING_FETCH"
+                        if terminal_fetch_status:
+                            candidate["fetch_status"] = terminal_fetch_status
+                            candidate[
+                                "materiality_revalidated_terminal_transport_preserved"
+                            ] = True
+                        else:
+                            candidate["fetch_status"] = (
+                                "MATERIAL_PENDING_FETCH"
+                            )
                 else:
                     candidate["ranking_status"] = "NOT_MATERIAL"
                     if candidate.get("revalidation_document_id"):
@@ -1018,6 +1093,11 @@ class ResearcherSourceGraphAcquirer:
                             "FULL_DOCUMENT_REVALIDATION_REJECTED"
                         )
                         candidate.pop("revalidation_document_id", None)
+                    elif terminal_fetch_status:
+                        candidate["fetch_status"] = terminal_fetch_status
+                        candidate[
+                            "materiality_revalidated_terminal_transport_preserved"
+                        ] = True
                     else:
                         candidate["fetch_status"] = (
                             "DISCOVERY_ONLY_NOT_FETCHED"
@@ -1159,6 +1239,14 @@ class ResearcherSourceGraphAcquirer:
                 raise ValueError("fetch candidate terminated without document or rejection")
             if fetch_record.get("disposition") == "DUPLICATE_CONTENT":
                 candidate["fetch_status"] = "DUPLICATE_CONTENT"
+                existing_document_id = str(
+                    fetch_record.get("existing_document_id") or ""
+                )
+                if existing_document_id:
+                    candidate["document_id"] = existing_document_id
+                    candidate[
+                        "duplicate_content_document_id"
+                    ] = existing_document_id
                 continue
             evidence_documents.append(document)
             content_hash_to_document[str(document["content_hash"])] = document
@@ -1310,6 +1398,9 @@ class ResearcherSourceGraphAcquirer:
             ),
             "production_stale_materiality_reopened_count": (
                 stale_pending_materiality_count
+            ),
+            "production_current_query_edge_scope_repaired_count": (
+                current_query_edge_scope_repaired_count
             ),
         }
         return SourceGraphAcquisitionRun(
@@ -2457,6 +2548,11 @@ def _production_downstream_documents(
         for candidate in candidates
         if str(candidate.get("document_id") or "")
     }
+    candidate_by_materiality_decision_id = {
+        str(candidate.get("materiality_decision_id") or ""): candidate
+        for candidate in candidates
+        if str(candidate.get("materiality_decision_id") or "")
+    }
     active: list[Mapping[str, Any]] = []
     for document in documents:
         document_id = str(document.get("document_id") or "")
@@ -2465,6 +2561,35 @@ def _production_downstream_documents(
             or document_id in fact_backed_document_ids
         ):
             active.append(document)
+            continue
+        document_scope = _validated_reference_materiality_scope(document)
+        if document_scope is not None:
+            provenance_candidate = candidate_by_materiality_decision_id.get(
+                str(document_scope["source_materiality_decision_id"])
+            )
+            candidate_scope = (
+                _validated_reference_materiality_scope(
+                    provenance_candidate
+                )
+                if provenance_candidate is not None
+                else None
+            )
+            if (
+                candidate_scope is not None
+                and candidate_scope["materiality_scope_hash"]
+                == document_scope["materiality_scope_hash"]
+                and candidate_scope["materiality_scope_url"]
+                == document_scope["materiality_scope_url"]
+            ):
+                active.append(document)
+                continue
+        if (
+            document.get("source_materiality_decision_id")
+            or document.get("materiality_scope_url")
+        ):
+            # An explicit current-provenance contract must validate as a whole.
+            # Do not silently downgrade a broken new contract to the legacy
+            # document-id fallback below.
             continue
         candidate = candidate_by_document_id.get(document_id, {})
         matched_source_family = str(
@@ -2605,48 +2730,442 @@ def _merge_search_candidates(
         expanded_materiality_scope_hash = (
             _candidate_materiality_scope_hash(existing)
         )
-        if prior_materiality_scope_hash == expanded_materiality_scope_hash:
-            continue
-        fetch_status = str(existing.get("fetch_status") or "")
-        ranking_status = str(existing.get("ranking_status") or "")
-        if fetch_status == "FULL_DOCUMENT_FETCHED" and existing.get(
-            "document_id"
-        ):
-            existing["revalidation_document_id"] = str(
-                existing["document_id"]
-            )
-            existing["ranking_status"] = "PENDING"
-            existing["fetch_status"] = (
-                "FULL_DOCUMENT_REVALIDATION_PENDING"
-            )
-        elif (
-            ranking_status in {"PENDING", "MATERIAL", "NOT_MATERIAL"}
-            and fetch_status
-            in {
-                "",
-                "NOT_STARTED",
-                "MATERIAL_PENDING_FETCH",
-                "FETCH_RETRY_PENDING",
-                "DISCOVERY_ONLY_NOT_FETCHED",
-            }
-        ):
-            existing["ranking_status"] = "PENDING"
-            existing["fetch_status"] = "NOT_STARTED"
-        else:
-            # A new query edge cannot make an unreadable, future, or otherwise
-            # terminal fetch valid.  Preserve that terminal transport result
-            # while recording that its old materiality decision has no
-            # authority for the expanded scope.
-            existing["materiality_scope_expanded_after_terminal_fetch"] = True
-            continue
-        existing["materiality_revalidation_reason"] = (
-            "QUERY_OBJECTIVE_OR_REQUESTED_SOURCE_SCOPE_EXPANDED"
+        _invalidate_candidate_materiality_for_scope_change(
+            existing,
+            prior_scope_hash=prior_materiality_scope_hash,
+            current_scope_hash=expanded_materiality_scope_hash,
+            reason="QUERY_OBJECTIVE_OR_REQUESTED_SOURCE_SCOPE_EXPANDED",
+            force=bool(
+                existing.get("fetch_status")
+                == "REFERENCE_DISCOVERY_PENDING_PARENT_REVALIDATION"
+            ),
         )
-        existing.pop("materiality_decision_id", None)
-        existing.pop("material_priority", None)
-        existing.pop("materiality_rationale", None)
-        existing.pop("matched_requested_source_family", None)
-        existing.pop("materiality_scope_hash", None)
+
+
+def _reconcile_candidate_current_query_edge_scopes(
+    candidates: Sequence[dict[str, Any]],
+    generated_queries: Sequence[Mapping[str, Any]],
+    materiality_decisions: Sequence[Mapping[str, Any]] = (),
+) -> int:
+    """Restore current materiality scope from its exact query-edge roster.
+
+    ``query_ids`` is append-only transport history.  Only
+    ``materiality_query_ids`` names the current edges that the semantic ranker
+    may use.  Reference expansion used to merge its parent's full historical
+    scope into an already refreshed direct-search candidate without adding
+    matching current query ids.  Rebuild only that current scope from the
+    persisted LLM query rows; historical scope remains audit-only.
+    """
+
+    query_by_id = {
+        str(row.get("query_id") or ""): row
+        for row in generated_queries
+        if str(row.get("query_id") or "").strip()
+    }
+    decision_by_id = {
+        str(row.get("decision_id") or ""): row
+        for row in materiality_decisions
+        if str(row.get("decision_id") or "").strip()
+    }
+    repaired_count = 0
+    for candidate in candidates:
+        materiality_query_ids = tuple(
+            dict.fromkeys(
+                str(value)
+                for value in candidate.get("materiality_query_ids") or ()
+                if str(value).strip()
+            )
+        )
+        if not materiality_query_ids:
+            continue
+        query_edges = tuple(
+            query_by_id.get(query_id) for query_id in materiality_query_ids
+        )
+        if any(not isinstance(row, Mapping) for row in query_edges):
+            continue
+        objective_ids = tuple(
+            dict.fromkeys(
+                str(row.get("objective_id") or "")
+                for row in query_edges
+                if str(row.get("objective_id") or "").strip()
+            )
+        )
+        source_families = tuple(
+            dict.fromkeys(
+                str(source_family)
+                for row in query_edges
+                for source_family in row.get("source_families") or ()
+                if str(source_family).strip()
+            )
+        )
+        if not objective_ids or not source_families:
+            continue
+        prior_objective_ids = tuple(candidate.get("objective_ids") or ())
+        prior_source_families = tuple(
+            candidate.get("requested_source_families") or ()
+        )
+        scope_fields_match = bool(
+            prior_objective_ids == objective_ids
+            and prior_source_families == source_families
+        )
+        prior_scope_hash = _candidate_materiality_scope_hash(candidate)
+        stored_scope_hash = str(
+            candidate.get("materiality_scope_hash") or ""
+        )
+        stored_matched_source_family = str(
+            candidate.get("matched_requested_source_family") or ""
+        )
+        stored_decision_id = str(
+            candidate.get("materiality_decision_id") or ""
+        )
+        if not scope_fields_match:
+            candidate["historical_objective_ids"] = list(
+                dict.fromkeys(
+                    (
+                        *candidate.get("historical_objective_ids", ()),
+                        *prior_objective_ids,
+                    )
+                )
+            )
+            candidate["historical_requested_source_families"] = list(
+                dict.fromkeys(
+                    (
+                        *candidate.get(
+                            "historical_requested_source_families",
+                            (),
+                        ),
+                        *prior_source_families,
+                    )
+                )
+            )
+            candidate["objective_ids"] = list(objective_ids)
+            candidate["requested_source_families"] = list(source_families)
+            candidate["current_query_edge_scope_reconciled"] = True
+            candidate["current_query_edge_scope_reconciliation_basis"] = (
+                "MATERIALITY_QUERY_IDS_TO_LLM_GENERATED_QUERY_ROWS"
+            )
+        current_scope_hash = _candidate_materiality_scope_hash(candidate)
+        prior_decision_matches_reconciled_scope = (
+            _candidate_materiality_decision_binds_scope(
+                candidate=candidate,
+                decision=decision_by_id.get(stored_decision_id),
+                scope_hash=current_scope_hash,
+                requested_source_families=source_families,
+            )
+        )
+        if prior_decision_matches_reconciled_scope:
+            if not scope_fields_match:
+                candidate[
+                    "current_query_edge_scope_reused_exact_prior_decision"
+                ] = True
+                repaired_count += 1
+            continue
+        if (
+            str(candidate.get("ranking_status") or "") == "PENDING"
+            and not stored_decision_id
+            and not stored_scope_hash
+            and not stored_matched_source_family
+        ):
+            if not scope_fields_match:
+                repaired_count += 1
+            continue
+        if (
+            scope_fields_match
+            and not stored_scope_hash
+            and not stored_matched_source_family
+        ):
+            # Legacy terminal rows predate the persisted current-scope
+            # contract.  They are not transport work and must not be bulk
+            # reopened merely because a historical decision id still exists.
+            # Once any current-contract marker is present, however, an absent
+            # or invalid companion field is treated as a broken contract.
+            continue
+        if str(candidate.get("ranking_status") or "") not in {
+            "MATERIAL",
+            "NOT_MATERIAL",
+            "PENDING",
+        }:
+            if not scope_fields_match:
+                repaired_count += 1
+            continue
+        _invalidate_candidate_materiality_for_scope_change(
+            candidate,
+            prior_scope_hash=prior_scope_hash,
+            current_scope_hash=current_scope_hash,
+            reason="CURRENT_QUERY_EDGE_SCOPE_RECONCILED",
+            force=True,
+        )
+        repaired_count += 1
+    return repaired_count
+
+
+def _candidate_materiality_decision_binds_scope(
+    *,
+    candidate: Mapping[str, Any],
+    decision: Mapping[str, Any] | None,
+    scope_hash: str,
+    requested_source_families: Sequence[str],
+) -> bool:
+    """Verify exact candidate, status, family, and scope decision lineage."""
+
+    if not isinstance(decision, Mapping):
+        return False
+    candidate_id = str(candidate.get("candidate_id") or "")
+    decision_id = str(candidate.get("materiality_decision_id") or "")
+    ranking_status = str(candidate.get("ranking_status") or "")
+    matched_source_family = str(
+        candidate.get("matched_requested_source_family") or ""
+    )
+    decision_matched_source_family = str(
+        decision.get("matched_requested_source_family") or "NONE"
+    )
+    material_relevance = bool(decision.get("material_relevance"))
+    expected_material_relevance = ranking_status == "MATERIAL"
+    if ranking_status not in {"MATERIAL", "NOT_MATERIAL"}:
+        return False
+    if (
+        not candidate_id
+        or not decision_id
+        or str(decision.get("decision_id") or "") != decision_id
+        or str(decision.get("candidate_id") or "") != candidate_id
+        or material_relevance != expected_material_relevance
+        or decision_matched_source_family != matched_source_family
+        or str(candidate.get("materiality_scope_hash") or "")
+        != scope_hash
+    ):
+        return False
+    candidate_objective_ids = {
+        str(value)
+        for value in candidate.get("objective_ids") or ()
+        if str(value).strip()
+    }
+    decision_objective_ids = {
+        str(value)
+        for value in decision.get("objective_ids") or ()
+        if str(value).strip()
+    }
+    if not decision_objective_ids.issubset(candidate_objective_ids):
+        return False
+    requested = set(requested_source_families)
+    if ranking_status == "MATERIAL":
+        return bool(
+            decision_objective_ids
+            and matched_source_family
+            and matched_source_family != "NONE"
+            and matched_source_family in requested
+        )
+    return bool(
+        matched_source_family == "NONE"
+        or matched_source_family in requested
+    )
+
+
+def _invalidate_candidate_materiality_for_scope_change(
+    candidate: dict[str, Any],
+    *,
+    prior_scope_hash: str,
+    current_scope_hash: str,
+    reason: str,
+    force: bool = False,
+) -> None:
+    """Require a fresh semantic decision whenever current scope changes."""
+
+    if not force and prior_scope_hash == current_scope_hash:
+        return
+    fetch_status = str(candidate.get("fetch_status") or "")
+    ranking_status = str(candidate.get("ranking_status") or "")
+    if fetch_status == "FULL_DOCUMENT_FETCHED" and candidate.get("document_id"):
+        candidate["revalidation_document_id"] = str(candidate["document_id"])
+        candidate["ranking_status"] = "PENDING"
+        candidate["fetch_status"] = "FULL_DOCUMENT_REVALIDATION_PENDING"
+    elif (
+        ranking_status in {"PENDING", "MATERIAL", "NOT_MATERIAL"}
+        and fetch_status
+        in {
+            "",
+            "NOT_STARTED",
+            "MATERIAL_PENDING_FETCH",
+            "FETCH_RETRY_PENDING",
+            "DISCOVERY_ONLY_NOT_FETCHED",
+            "REFERENCE_DISCOVERY_PENDING_PARENT_REVALIDATION",
+        }
+    ):
+        candidate["ranking_status"] = "PENDING"
+        candidate["fetch_status"] = "NOT_STARTED"
+    else:
+        # A new query edge cannot make an unreadable, future, or otherwise
+        # terminal fetch valid.  Re-review semantic materiality while retaining
+        # the exact terminal transport state so a new decision cannot enqueue
+        # another identical fetch.
+        candidate[
+            "terminal_fetch_status_before_materiality_revalidation"
+        ] = fetch_status
+        candidate["ranking_status"] = "PENDING"
+        candidate["materiality_scope_expanded_after_terminal_fetch"] = True
+    candidate["materiality_revalidation_reason"] = reason
+    candidate.pop("materiality_decision_id", None)
+    candidate.pop("material_priority", None)
+    candidate.pop("materiality_rationale", None)
+    candidate.pop("matched_requested_source_family", None)
+    candidate.pop("materiality_scope_hash", None)
+
+
+def _validated_reference_materiality_scope(
+    source: Mapping[str, Any],
+) -> Mapping[str, tuple[str, ...] | str] | None:
+    """Return only an explicit, decision-provenance-bound current triplet."""
+
+    materiality_query_ids = tuple(
+        dict.fromkeys(
+            str(value)
+            for value in source.get("materiality_query_ids") or ()
+            if str(value).strip()
+        )
+    )
+    objective_ids = tuple(
+        dict.fromkeys(
+            str(value)
+            for value in source.get("objective_ids") or ()
+            if str(value).strip()
+        )
+    )
+    requested_source_families = tuple(
+        dict.fromkeys(
+            str(value)
+            for value in source.get("requested_source_families") or ()
+            if str(value).strip()
+        )
+    )
+    matched_source_family = str(
+        source.get("matched_requested_source_family") or ""
+    )
+    stored_scope_hash = str(source.get("materiality_scope_hash") or "")
+    # A fetched candidate also stores ``document_id`` after linkage.  Its
+    # candidate decision remains the authority; only standalone document rows
+    # use the copied ``source_materiality_decision_id`` provenance field.
+    is_document = bool(
+        str(source.get("document_id") or "").strip()
+        and not str(source.get("candidate_id") or "").strip()
+    )
+    decision_provenance_id = str(
+        source.get(
+            (
+                "source_materiality_decision_id"
+                if is_document
+                else "materiality_decision_id"
+            )
+        )
+        or ""
+    )
+    normalized_url = str(
+        source.get("materiality_scope_url")
+        or source.get("normalized_url")
+        or source.get("canonical_url")
+        or source.get("url")
+        or ""
+    )
+    ranking_status = str(source.get("ranking_status") or "")
+    if (
+        not materiality_query_ids
+        or not objective_ids
+        or not requested_source_families
+        or matched_source_family not in requested_source_families
+        or not stored_scope_hash
+        or not decision_provenance_id
+        or (
+            not is_document
+            and ranking_status != "MATERIAL"
+        )
+    ):
+        return None
+    expected_scope_hash = _candidate_materiality_scope_hash(
+        {
+            "normalized_url": _normalize_url(normalized_url),
+            "objective_ids": objective_ids,
+            "requested_source_families": requested_source_families,
+        }
+    )
+    if stored_scope_hash != expected_scope_hash:
+        return None
+    return {
+        "materiality_query_ids": materiality_query_ids,
+        "objective_ids": objective_ids,
+        "requested_source_families": requested_source_families,
+        "matched_requested_source_family": matched_source_family,
+        "materiality_scope_hash": stored_scope_hash,
+        "materiality_scope_url": _normalize_url(normalized_url),
+        "source_materiality_decision_id": decision_provenance_id,
+    }
+
+
+def _adopt_reference_materiality_scope_if_absent(
+    candidate: dict[str, Any],
+    *,
+    current_scope: Mapping[str, tuple[str, ...] | str] | None,
+) -> bool:
+    """Let a verified reference edge fill an empty scope, never widen one."""
+
+    if candidate.get("materiality_query_ids") or current_scope is None:
+        return False
+    prior_scope_hash = _candidate_materiality_scope_hash(candidate)
+    prior_objective_ids = tuple(candidate.get("objective_ids") or ())
+    prior_source_families = tuple(
+        candidate.get("requested_source_families") or ()
+    )
+    candidate["historical_objective_ids"] = list(
+        dict.fromkeys(
+            (
+                *candidate.get("historical_objective_ids", ()),
+                *prior_objective_ids,
+            )
+        )
+    )
+    candidate["historical_requested_source_families"] = list(
+        dict.fromkeys(
+            (
+                *candidate.get(
+                    "historical_requested_source_families",
+                    (),
+                ),
+                *prior_source_families,
+            )
+        )
+    )
+    candidate["materiality_query_ids"] = list(
+        current_scope["materiality_query_ids"]
+    )
+    candidate["objective_ids"] = list(current_scope["objective_ids"])
+    candidate["requested_source_families"] = list(
+        current_scope["requested_source_families"]
+    )
+    candidate["query_ids"] = list(
+        dict.fromkeys(
+            (
+                *candidate.get("query_ids", ()),
+                *current_scope["materiality_query_ids"],
+            )
+        )
+    )
+    candidate["reference_current_scope_inherited"] = True
+    candidate["reference_current_scope_inheritance_basis"] = (
+        "DECISION_AND_HASH_BOUND_PARENT_MATERIALITY_QUERY_EDGE"
+    )
+    candidate["reference_parent_materiality_decision_id"] = str(
+        current_scope["source_materiality_decision_id"]
+    )
+    # This candidate has not yet received a decision for the inherited edge.
+    # Preserve the matched family only as parent-edge provenance; the child
+    # ranker must independently return its own matched family.
+    candidate.pop("matched_requested_source_family", None)
+    candidate.pop("materiality_scope_hash", None)
+    _invalidate_candidate_materiality_for_scope_change(
+        candidate,
+        prior_scope_hash=prior_scope_hash,
+        current_scope_hash=_candidate_materiality_scope_hash(candidate),
+        reason="VERIFIED_REFERENCE_CURRENT_SCOPE_INHERITED",
+        force=True,
+    )
+    return True
 
 
 def _reject_future_candidate_metadata(
@@ -2769,19 +3288,14 @@ def _enqueue_reference_candidates(
         objective_ids = tuple(
             document.get("objective_ids") or default_objective_ids
         )
-        query_ids = tuple(document.get("query_ids") or ())
+        historical_query_ids = tuple(document.get("query_ids") or ())
+        current_scope = _validated_reference_materiality_scope(document)
         if existing is not None:
-            existing["objective_ids"] = list(
-                dict.fromkeys((*existing.get("objective_ids", ()), *objective_ids))
-            )
             existing["query_ids"] = list(
-                dict.fromkeys((*existing.get("query_ids", ()), *query_ids))
-            )
-            existing["requested_source_families"] = list(
                 dict.fromkeys(
                     (
-                        *existing.get("requested_source_families", ()),
-                        *requested_source_families,
+                        *existing.get("query_ids", ()),
+                        *historical_query_ids,
                     )
                 )
             )
@@ -2793,6 +3307,15 @@ def _enqueue_reference_candidates(
                     )
                 )
             )
+            _adopt_reference_materiality_scope_if_absent(
+                existing,
+                current_scope=current_scope,
+            )
+            continue
+        if current_scope is None:
+            # The URL remains preserved on the parent document for audit.  A
+            # legacy document without an exact current decision edge must not
+            # spend production candidate budget or create a rankable child.
             continue
         if (
             max_total_candidates is not None
@@ -2824,18 +3347,26 @@ def _enqueue_reference_candidates(
             "is_report_domain": False,
             "is_news": "news" in _normalized_host(url),
             "is_disclosure": False,
-            "query_ids": list(query_ids),
-            "objective_ids": list(objective_ids),
-            "requested_source_families": list(requested_source_families),
+            "query_ids": list(historical_query_ids),
+            "historical_objective_ids": list(objective_ids),
+            "historical_requested_source_families": list(
+                requested_source_families
+            ),
             "query_lineage_valid": True,
             "graph_expansion_parent_document_ids": [document.get("document_id")],
             "discovery_only": True,
             "snippet_discovery_only": True,
             "snippet_evidence_eligible": False,
             "score_authority": False,
-            "ranking_status": "PENDING",
-            "fetch_status": "NOT_STARTED",
+            "ranking_status": "NOT_MATERIAL",
+            "fetch_status": (
+                "REFERENCE_DISCOVERY_PENDING_PARENT_REVALIDATION"
+            ),
         }
+        _adopt_reference_materiality_scope_if_absent(
+            row,
+            current_scope=current_scope,
+        )
         candidates.append(row)
         by_url[normalized] = row
     return deferred_count
@@ -2874,9 +3405,12 @@ def _enqueue_candidate_discovery_references(
     parent_url = _normalize_url(str(parent_candidate.get("url") or ""))
     by_url = {str(row.get("normalized_url")): row for row in candidates}
     objective_ids = tuple(parent_candidate.get("objective_ids") or ())
-    query_ids = tuple(parent_candidate.get("query_ids") or ())
+    historical_query_ids = tuple(parent_candidate.get("query_ids") or ())
     requested_source_families = tuple(
         parent_candidate.get("requested_source_families") or ()
+    )
+    current_scope = _validated_reference_materiality_scope(
+        parent_candidate
     )
     deferred_count = 0
     for raw_url in _ordered_reference_urls(
@@ -2894,17 +3428,11 @@ def _enqueue_candidate_discovery_references(
             continue
         existing = by_url.get(normalized)
         if existing is not None:
-            existing["objective_ids"] = list(
-                dict.fromkeys((*existing.get("objective_ids", ()), *objective_ids))
-            )
             existing["query_ids"] = list(
-                dict.fromkeys((*existing.get("query_ids", ()), *query_ids))
-            )
-            existing["requested_source_families"] = list(
                 dict.fromkeys(
                     (
-                        *existing.get("requested_source_families", ()),
-                        *requested_source_families,
+                        *existing.get("query_ids", ()),
+                        *historical_query_ids,
                     )
                 )
             )
@@ -2916,6 +3444,14 @@ def _enqueue_candidate_discovery_references(
                     )
                 )
             )
+            _adopt_reference_materiality_scope_if_absent(
+                existing,
+                current_scope=current_scope,
+            )
+            continue
+        if current_scope is None:
+            # Preserve the reference on the parent candidate only.  Historical
+            # query lineage is not current materiality authority for a new URL.
             continue
         if (
             max_total_candidates is not None
@@ -2947,9 +3483,11 @@ def _enqueue_candidate_discovery_references(
             "is_report_domain": False,
             "is_news": "news" in _normalized_host(url),
             "is_disclosure": False,
-            "query_ids": list(query_ids),
-            "objective_ids": list(objective_ids),
-            "requested_source_families": list(requested_source_families),
+            "query_ids": list(historical_query_ids),
+            "historical_objective_ids": list(objective_ids),
+            "historical_requested_source_families": list(
+                requested_source_families
+            ),
             "query_lineage_valid": True,
             "graph_expansion_parent_candidate_ids": [parent_id],
             "reference_discovery_only": True,
@@ -2959,9 +3497,15 @@ def _enqueue_candidate_discovery_references(
             "snippet_discovery_only": True,
             "snippet_evidence_eligible": False,
             "score_authority": False,
-            "ranking_status": "PENDING",
-            "fetch_status": "NOT_STARTED",
+            "ranking_status": "NOT_MATERIAL",
+            "fetch_status": (
+                "REFERENCE_DISCOVERY_PENDING_PARENT_REVALIDATION"
+            ),
         }
+        _adopt_reference_materiality_scope_if_absent(
+            row,
+            current_scope=current_scope,
+        )
         candidates.append(row)
         by_url[normalized] = row
     return deferred_count
@@ -3180,9 +3724,10 @@ def _fetch_candidate_document(
                     (*existing.get("query_ids", ()), *candidate.get("query_ids", ()))
                 )
             )
-            existing["objective_ids"] = list(
+            existing["historical_objective_ids"] = list(
                 dict.fromkeys(
                     (
+                        *existing.get("historical_objective_ids", ()),
                         *existing.get("objective_ids", ()),
                         *candidate.get("objective_ids", ()),
                     )
@@ -3191,14 +3736,51 @@ def _fetch_candidate_document(
             existing["discovery_urls"] = list(
                 dict.fromkeys((*existing.get("discovery_urls", ()), url))
             )
-            existing["requested_source_families"] = list(
+            existing["historical_requested_source_families"] = list(
                 dict.fromkeys(
                     (
+                        *existing.get(
+                            "historical_requested_source_families",
+                            (),
+                        ),
                         *existing.get("requested_source_families", ()),
                         *candidate.get("requested_source_families", ()),
                     )
                 )
             )
+            candidate_scope = _validated_reference_materiality_scope(
+                candidate
+            )
+            if (
+                candidate_scope is not None
+                and _validated_reference_materiality_scope(existing) is None
+            ):
+                existing["materiality_query_ids"] = list(
+                    candidate_scope["materiality_query_ids"]
+                )
+                existing["objective_ids"] = list(
+                    candidate_scope["objective_ids"]
+                )
+                existing["requested_source_families"] = list(
+                    candidate_scope["requested_source_families"]
+                )
+                existing["matched_requested_source_family"] = (
+                    candidate_scope["matched_requested_source_family"]
+                )
+                existing["materiality_scope_hash"] = candidate_scope[
+                    "materiality_scope_hash"
+                ]
+                existing["materiality_scope_url"] = candidate_scope[
+                    "materiality_scope_url"
+                ]
+                existing[
+                    "source_materiality_decision_id"
+                ] = candidate_scope[
+                    "source_materiality_decision_id"
+                ]
+                existing[
+                    "duplicate_document_current_scope_adopted"
+                ] = True
             existing["referenced_urls"] = list(
                 dict.fromkeys(
                     (
@@ -3325,6 +3907,9 @@ def _fetch_candidate_document(
             or candidate.get("query_ids")
             or ()
         ),
+        "materiality_query_ids": list(
+            candidate.get("materiality_query_ids") or ()
+        ),
         "objective_ids": list(candidate.get("objective_ids") or ()),
         "requested_source_families": list(
             candidate.get("requested_source_families") or ()
@@ -3334,6 +3919,16 @@ def _fetch_candidate_document(
         ),
         "materiality_scope_hash": (
             candidate.get("materiality_scope_hash")
+        ),
+        "materiality_scope_url": _normalize_url(
+            str(
+                candidate.get("normalized_url")
+                or candidate.get("url")
+                or ""
+            )
+        ),
+        "source_materiality_decision_id": (
+            candidate.get("materiality_decision_id")
         ),
         "source_family_assigned_by_candidate_ranker": bool(
             classified_source_family == "GENERAL_WEB_DISCOVERY"

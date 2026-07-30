@@ -14,6 +14,7 @@ from e2r.research_brain.researcher_mode import (
     PHASE93_POST_RUN_PASS,
     CurrentResearcherModeConfig,
     CurrentResearcherModeTargetRunner,
+    CodexSubagentFallbackResearchProvider,
     OllamaResearcherProvider,
     compare_phase93_gold_post_run,
     load_current_research_targets,
@@ -53,9 +54,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--latest-trading-snapshot-date")
     parser.add_argument(
         "--research-provider",
-        choices=("codex", "ollama"),
+        choices=("codex", "codex-subagent", "ollama"),
         default="codex",
-        help="Structured LLM provider; Ollama is used only when explicitly selected.",
+        help=(
+            "Structured LLM provider. codex-subagent preserves exact Codex CLI "
+            "cache hits and journals only usage-limit cache misses for an "
+            "audited Codex collaboration-subagent response."
+        ),
     )
     parser.add_argument("--ollama-base-url")
     parser.add_argument("--ollama-model")
@@ -205,7 +210,7 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def _build_research_provider(args: argparse.Namespace):
-    if args.research_provider == "codex":
+    if args.research_provider in {"codex", "codex-subagent"}:
         ollama_options = {
             key: value
             for key, value in vars(args).items()
@@ -216,7 +221,12 @@ def _build_research_provider(args: argparse.Namespace):
                 "Ollama options require --research-provider ollama:"
                 f" {sorted(ollama_options)}"
             )
-        return None
+        if args.research_provider == "codex":
+            return None
+        return CodexSubagentFallbackResearchProvider.default(
+            working_directory=Path.cwd(),
+            timeout_seconds=300.0,
+        )
     return OllamaResearcherProvider.default(
         base_url=args.ollama_base_url or "http://127.0.0.1:11434",
         model=args.ollama_model or "qwen3.5:27b",
@@ -279,7 +289,11 @@ def _research_provider_manifest(provider) -> Mapping[str, Any]:
         "provider_identity_resolved": identity_error is None,
         "provider_identity_error": identity_error,
         "provider_selected_explicitly": isinstance(
-            provider, OllamaResearcherProvider
+            provider,
+            (
+                OllamaResearcherProvider,
+                CodexSubagentFallbackResearchProvider,
+            ),
         ),
         "score_or_stage_authority": False,
     }

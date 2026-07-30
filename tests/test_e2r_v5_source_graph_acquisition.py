@@ -43,6 +43,49 @@ FAILED_URL = "https://tls.example.com/report.pdf"
 ALTERNATE_URL = "https://mirror.example.com/report"
 
 
+def _bind_candidate_reference_scope(
+    row: dict[str, Any],
+    *,
+    decision_id: str,
+) -> None:
+    row.setdefault("normalized_url", row["url"])
+    row["materiality_query_ids"] = list(row.get("query_ids") or ())
+    row["matched_requested_source_family"] = next(
+        iter(row.get("requested_source_families") or ()),
+        "NONE",
+    )
+    row["materiality_decision_id"] = decision_id
+    row["ranking_status"] = "MATERIAL"
+    row["materiality_scope_hash"] = (
+        source_graph_module._candidate_materiality_scope_hash(row)
+    )
+
+
+def _bind_document_reference_scope(
+    row: dict[str, Any],
+    *,
+    decision_id: str,
+) -> None:
+    row["materiality_query_ids"] = list(row.get("query_ids") or ())
+    row["matched_requested_source_family"] = next(
+        iter(row.get("requested_source_families") or ()),
+        "NONE",
+    )
+    row["source_materiality_decision_id"] = decision_id
+    row["materiality_scope_url"] = row["canonical_url"]
+    row["materiality_scope_hash"] = (
+        source_graph_module._candidate_materiality_scope_hash(
+            {
+                "normalized_url": row["materiality_scope_url"],
+                "objective_ids": row["objective_ids"],
+                "requested_source_families": row[
+                    "requested_source_families"
+                ],
+            }
+        )
+    )
+
+
 class SourceBrainProvider:
     provider_name = "TEST_FIXTURE_SOURCE_BRAIN"
 
@@ -1588,6 +1631,24 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             row["disposition"] for row in run.checkpoint["fetch_records"]
         }
         self.assertEqual(dispositions, {"FULL_DOCUMENT_FETCHED", "DUPLICATE_CONTENT"})
+        duplicate_record = next(
+            row
+            for row in run.checkpoint["fetch_records"]
+            if row["disposition"] == "DUPLICATE_CONTENT"
+        )
+        duplicate_candidate = next(
+            row
+            for row in run.checkpoint["search_candidates"]
+            if row["candidate_id"] == duplicate_record["candidate_id"]
+        )
+        self.assertEqual(
+            duplicate_candidate["document_id"],
+            run.evidence_documents[0]["document_id"],
+        )
+        self.assertEqual(
+            duplicate_candidate["duplicate_content_document_id"],
+            run.evidence_documents[0]["document_id"],
+        )
 
     def test_duplicate_bytes_from_verified_issuer_upgrade_provenance_once(self) -> None:
         provider = SourceBrainProvider(
@@ -2249,6 +2310,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 "https://issuer.example.com/category/results/earnings.pdf",
             ],
         }
+        _bind_candidate_reference_scope(
+            parent,
+            decision_id="DECISION-OFFICIAL-ARTICLE",
+        )
         candidates = [parent]
 
         deferred = source_graph_module._enqueue_candidate_discovery_references(
@@ -2291,6 +2356,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 pdf_url,
             ],
         }
+        _bind_document_reference_scope(
+            document,
+            decision_id="DECISION-OFFICIAL-DOCUMENT",
+        )
         candidates = []
 
         deferred = source_graph_module._enqueue_reference_candidates(
@@ -2313,6 +2382,629 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 for row in candidates
             )
         )
+
+    def test_legacy_candidate_reference_cannot_widen_direct_current_edge(
+        self,
+    ) -> None:
+        child_url = "https://issuer.example.com/reports/current.pdf"
+        parent = {
+            "candidate_id": "LEGACY-PARENT",
+            "url": "https://issuer.example.com/reports",
+            "verified_official_domain_candidate": True,
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "query_ids": ["OLD-QUERY-1", "OLD-QUERY-2"],
+            "objective_ids": ["OLD-OBJECTIVE-1", "OLD-OBJECTIVE-2"],
+            "requested_source_families": [
+                "GENERAL_WEB_DISCOVERY",
+                "ISSUER_NEWSROOM",
+            ],
+            "discovered_referenced_urls": [child_url],
+        }
+        child = {
+            "candidate_id": "DIRECT-CHILD",
+            "url": child_url,
+            "normalized_url": child_url,
+            "query_ids": ["CURRENT-QUERY"],
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["FINANCIAL_STATEMENTS"],
+            "direct_search_discovery": True,
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+        }
+        candidates = [parent, child]
+
+        deferred = source_graph_module._enqueue_candidate_discovery_references(
+            candidates,
+            parent_candidate=parent,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+        )
+
+        self.assertEqual(deferred, 0)
+        self.assertEqual(child["materiality_query_ids"], ["CURRENT-QUERY"])
+        self.assertEqual(child["objective_ids"], ["CURRENT-OBJECTIVE"])
+        self.assertEqual(
+            child["requested_source_families"],
+            ["FINANCIAL_STATEMENTS"],
+        )
+        self.assertEqual(
+            child["graph_expansion_parent_candidate_ids"],
+            ["LEGACY-PARENT"],
+        )
+        self.assertTrue(
+            {"OLD-QUERY-1", "OLD-QUERY-2"}.issubset(child["query_ids"])
+        )
+
+    def test_verified_candidate_reference_inherits_only_current_edge(
+        self,
+    ) -> None:
+        child_url = "https://issuer.example.com/reports/current.pdf"
+        parent = {
+            "candidate_id": "CURRENT-PARENT",
+            "url": "https://issuer.example.com/reports/current",
+            "normalized_url": "https://issuer.example.com/reports/current",
+            "verified_official_domain_candidate": True,
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "query_ids": ["OLD-QUERY", "CURRENT-QUERY"],
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["ISSUER_NEWSROOM"],
+            "matched_requested_source_family": "ISSUER_NEWSROOM",
+            "materiality_decision_id": "DECISION-CURRENT-PARENT",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+            "discovered_referenced_urls": [child_url],
+        }
+        parent["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(parent)
+        )
+        candidates = [parent]
+
+        source_graph_module._enqueue_candidate_discovery_references(
+            candidates,
+            parent_candidate=parent,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+        )
+
+        child = candidates[1]
+        self.assertEqual(child["materiality_query_ids"], ["CURRENT-QUERY"])
+        self.assertEqual(child["objective_ids"], ["CURRENT-OBJECTIVE"])
+        self.assertEqual(
+            child["requested_source_families"],
+            ["ISSUER_NEWSROOM"],
+        )
+        self.assertEqual(child["ranking_status"], "PENDING")
+        self.assertEqual(child["fetch_status"], "NOT_STARTED")
+        self.assertIn("OLD-QUERY", child["query_ids"])
+
+    def test_legacy_document_reference_cannot_widen_direct_current_edge(
+        self,
+    ) -> None:
+        child_url = "https://issuer.example.com/reports/current.pdf"
+        child = {
+            "candidate_id": "DIRECT-CHILD",
+            "url": child_url,
+            "normalized_url": child_url,
+            "query_ids": ["CURRENT-QUERY"],
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["FINANCIAL_STATEMENTS"],
+            "direct_search_discovery": True,
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+        }
+        document = {
+            "document_id": "LEGACY-DOCUMENT",
+            "canonical_url": "https://issuer.example.com/reports",
+            "source_family": "ISSUER_NEWSROOM",
+            "query_ids": ["OLD-QUERY"],
+            "objective_ids": ["OLD-OBJECTIVE"],
+            "requested_source_families": ["GENERAL_WEB_DISCOVERY"],
+            "referenced_urls": [child_url],
+        }
+
+        source_graph_module._enqueue_reference_candidates(
+            [child],
+            document=document,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            default_objective_ids=("OLD-OBJECTIVE",),
+        )
+
+        self.assertEqual(child["materiality_query_ids"], ["CURRENT-QUERY"])
+        self.assertEqual(child["objective_ids"], ["CURRENT-OBJECTIVE"])
+        self.assertEqual(
+            child["requested_source_families"],
+            ["FINANCIAL_STATEMENTS"],
+        )
+        self.assertEqual(
+            child["graph_expansion_parent_document_ids"],
+            ["LEGACY-DOCUMENT"],
+        )
+
+    def test_verified_document_reference_inherits_only_materiality_edge(
+        self,
+    ) -> None:
+        parent_url = "https://issuer.example.com/reports/current"
+        child_url = "https://issuer.example.com/reports/current.pdf"
+        document = {
+            "document_id": "CURRENT-DOCUMENT",
+            "canonical_url": parent_url,
+            "source_family": "ISSUER_NEWSROOM",
+            "query_ids": ["OLD-QUERY", "CURRENT-QUERY"],
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["ISSUER_NEWSROOM"],
+            "matched_requested_source_family": "ISSUER_NEWSROOM",
+            "source_materiality_decision_id": (
+                "DECISION-CURRENT-DOCUMENT"
+            ),
+            "materiality_scope_url": parent_url,
+            "referenced_urls": [child_url],
+        }
+        document["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(
+                {
+                    "normalized_url": parent_url,
+                    "objective_ids": document["objective_ids"],
+                    "requested_source_families": document[
+                        "requested_source_families"
+                    ],
+                }
+            )
+        )
+        candidates = []
+
+        source_graph_module._enqueue_reference_candidates(
+            candidates,
+            document=document,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            default_objective_ids=("CURRENT-OBJECTIVE",),
+        )
+
+        child = candidates[0]
+        self.assertEqual(child["materiality_query_ids"], ["CURRENT-QUERY"])
+        self.assertEqual(child["objective_ids"], ["CURRENT-OBJECTIVE"])
+        self.assertEqual(
+            child["requested_source_families"],
+            ["ISSUER_NEWSROOM"],
+        )
+        self.assertEqual(child["ranking_status"], "PENDING")
+        self.assertEqual(child["fetch_status"], "NOT_STARTED")
+
+    def test_resume_reconciles_reference_pollution_to_exact_query_edge(
+        self,
+    ) -> None:
+        current_query = {
+            "query_id": "CURRENT-QUERY",
+            "objective_id": "CURRENT-OBJECTIVE",
+            "source_families": [
+                "CASH_FLOW",
+                "FINANCIAL_STATEMENTS",
+            ],
+        }
+        candidate = {
+            "candidate_id": "POLLUTED-CANDIDATE",
+            "url": "https://issuer.example.com/reports/current.pdf",
+            "normalized_url": (
+                "https://issuer.example.com/reports/current.pdf"
+            ),
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": [
+                "CURRENT-OBJECTIVE",
+                "LEGACY-OBJECTIVE",
+            ],
+            "requested_source_families": [
+                "CASH_FLOW",
+                "FINANCIAL_STATEMENTS",
+                "GENERAL_WEB_DISCOVERY",
+            ],
+            "matched_requested_source_family": "CASH_FLOW",
+            "materiality_decision_id": "DECISION-1",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FULL_DOCUMENT_FETCHED",
+            "document_id": "DOCUMENT-1",
+        }
+        expected_scope = {
+            **candidate,
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": [
+                "CASH_FLOW",
+                "FINANCIAL_STATEMENTS",
+            ],
+        }
+        candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(
+                expected_scope
+            )
+        )
+
+        repaired = (
+            source_graph_module._reconcile_candidate_current_query_edge_scopes(
+                [candidate],
+                [current_query],
+                [
+                    {
+                        "decision_id": "DECISION-1",
+                        "candidate_id": "POLLUTED-CANDIDATE",
+                        "material_relevance": True,
+                        "objective_ids": ["CURRENT-OBJECTIVE"],
+                        "matched_requested_source_family": "CASH_FLOW",
+                    }
+                ],
+            )
+        )
+
+        self.assertEqual(repaired, 1)
+        self.assertEqual(candidate["objective_ids"], ["CURRENT-OBJECTIVE"])
+        self.assertEqual(
+            candidate["requested_source_families"],
+            ["CASH_FLOW", "FINANCIAL_STATEMENTS"],
+        )
+        self.assertEqual(candidate["materiality_decision_id"], "DECISION-1")
+        self.assertEqual(candidate["ranking_status"], "MATERIAL")
+        self.assertEqual(candidate["fetch_status"], "FULL_DOCUMENT_FETCHED")
+        self.assertTrue(
+            candidate[
+                "current_query_edge_scope_reused_exact_prior_decision"
+            ]
+        )
+
+    def test_resume_reconciles_unbound_terminal_decision_for_reranking(
+        self,
+    ) -> None:
+        candidate = {
+            "candidate_id": "UNBOUND-CANDIDATE",
+            "url": "https://issuer.example.com/reports/current.pdf",
+            "normalized_url": (
+                "https://issuer.example.com/reports/current.pdf"
+            ),
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": [
+                "CURRENT-OBJECTIVE",
+                "LEGACY-OBJECTIVE",
+            ],
+            "requested_source_families": [
+                "FINANCIAL_STATEMENTS",
+                "GENERAL_WEB_DISCOVERY",
+            ],
+            "matched_requested_source_family": "FINANCIAL_STATEMENTS",
+            "materiality_decision_id": "UNBOUND-DECISION",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+        }
+
+        repaired = (
+            source_graph_module._reconcile_candidate_current_query_edge_scopes(
+                [candidate],
+                [
+                    {
+                        "query_id": "CURRENT-QUERY",
+                        "objective_id": "CURRENT-OBJECTIVE",
+                        "source_families": ["FINANCIAL_STATEMENTS"],
+                    }
+                ],
+            )
+        )
+
+        self.assertEqual(repaired, 1)
+        self.assertEqual(candidate["ranking_status"], "PENDING")
+        self.assertEqual(candidate["fetch_status"], "FETCH_REJECTED")
+        self.assertEqual(
+            candidate[
+                "terminal_fetch_status_before_materiality_revalidation"
+            ],
+            "FETCH_REJECTED",
+        )
+        self.assertNotIn("materiality_decision_id", candidate)
+        self.assertNotIn("matched_requested_source_family", candidate)
+
+    def test_resume_reopens_same_scope_without_bound_decision(self) -> None:
+        candidate = {
+            "candidate_id": "MISSING-DECISION-CANDIDATE",
+            "url": "https://issuer.example.com/reports/current.pdf",
+            "normalized_url": (
+                "https://issuer.example.com/reports/current.pdf"
+            ),
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["FINANCIAL_STATEMENTS"],
+            "matched_requested_source_family": "FINANCIAL_STATEMENTS",
+            "materiality_decision_id": "MISSING-DECISION",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FULL_DOCUMENT_FETCHED",
+            "document_id": "DOCUMENT-1",
+        }
+        candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(candidate)
+        )
+
+        repaired = (
+            source_graph_module._reconcile_candidate_current_query_edge_scopes(
+                [candidate],
+                [
+                    {
+                        "query_id": "CURRENT-QUERY",
+                        "objective_id": "CURRENT-OBJECTIVE",
+                        "source_families": ["FINANCIAL_STATEMENTS"],
+                    }
+                ],
+                (),
+            )
+        )
+
+        self.assertEqual(repaired, 1)
+        self.assertEqual(candidate["ranking_status"], "PENDING")
+        self.assertEqual(
+            candidate["fetch_status"],
+            "FULL_DOCUMENT_REVALIDATION_PENDING",
+        )
+        self.assertEqual(candidate["revalidation_document_id"], "DOCUMENT-1")
+        self.assertNotIn("materiality_decision_id", candidate)
+
+    def test_material_decision_with_none_family_cannot_be_reused(
+        self,
+    ) -> None:
+        candidate = {
+            "candidate_id": "NONE-FAMILY-CANDIDATE",
+            "url": "https://issuer.example.com/reports/current.pdf",
+            "normalized_url": (
+                "https://issuer.example.com/reports/current.pdf"
+            ),
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["FINANCIAL_STATEMENTS"],
+            "matched_requested_source_family": "NONE",
+            "materiality_decision_id": "DECISION-NONE",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FULL_DOCUMENT_FETCHED",
+            "document_id": "DOCUMENT-1",
+        }
+        candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(candidate)
+        )
+
+        source_graph_module._reconcile_candidate_current_query_edge_scopes(
+            [candidate],
+            [
+                {
+                    "query_id": "CURRENT-QUERY",
+                    "objective_id": "CURRENT-OBJECTIVE",
+                    "source_families": ["FINANCIAL_STATEMENTS"],
+                }
+            ],
+            [
+                {
+                    "decision_id": "DECISION-NONE",
+                    "candidate_id": "NONE-FAMILY-CANDIDATE",
+                    "material_relevance": True,
+                    "objective_ids": ["CURRENT-OBJECTIVE"],
+                    "matched_requested_source_family": "NONE",
+                }
+            ],
+        )
+
+        self.assertEqual(candidate["ranking_status"], "PENDING")
+        self.assertEqual(
+            candidate["fetch_status"],
+            "FULL_DOCUMENT_REVALIDATION_PENDING",
+        )
+        self.assertNotIn("materiality_decision_id", candidate)
+
+    def test_direct_search_reopens_dormant_reference_candidate(self) -> None:
+        url = "https://issuer.example.com/reports/current.pdf"
+        existing = {
+            "candidate_id": "DORMANT-REFERENCE",
+            "url": url,
+            "normalized_url": url,
+            "query_ids": ["PARENT-QUERY"],
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["FINANCIAL_STATEMENTS"],
+            "ranking_status": "NOT_MATERIAL",
+            "fetch_status": (
+                "REFERENCE_DISCOVERY_PENDING_PARENT_REVALIDATION"
+            ),
+        }
+        direct = {
+            "candidate_id": "DIRECT-RESULT",
+            "url": url,
+            "normalized_url": url,
+            "query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["FINANCIAL_STATEMENTS"],
+            "query_lineage_valid": True,
+            "direct_search_discovery": True,
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+        }
+
+        source_graph_module._merge_search_candidates(
+            [existing],
+            [],
+            [direct],
+            cutoff=date.fromisoformat(AS_OF_DATE),
+        )
+
+        self.assertTrue(existing["direct_search_discovery"])
+        self.assertEqual(existing["ranking_status"], "PENDING")
+        self.assertEqual(existing["fetch_status"], "NOT_STARTED")
+
+    def test_reference_scope_adoption_preserves_terminal_transport(
+        self,
+    ) -> None:
+        child_url = "https://issuer.example.com/reports/current.pdf"
+        parent = {
+            "candidate_id": "CURRENT-PARENT",
+            "url": "https://issuer.example.com/reports/current",
+            "verified_official_domain_candidate": True,
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["ISSUER_NEWSROOM"],
+            "discovered_referenced_urls": [child_url],
+        }
+        _bind_candidate_reference_scope(
+            parent,
+            decision_id="DECISION-CURRENT-PARENT",
+        )
+        child = {
+            "candidate_id": "TERMINAL-CHILD",
+            "url": child_url,
+            "normalized_url": child_url,
+            "query_ids": ["LEGACY-QUERY"],
+            "objective_ids": ["LEGACY-OBJECTIVE"],
+            "requested_source_families": ["GENERAL_WEB_DISCOVERY"],
+            "ranking_status": "NOT_MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+        }
+
+        source_graph_module._enqueue_candidate_discovery_references(
+            [parent, child],
+            parent_candidate=parent,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+        )
+
+        self.assertEqual(child["ranking_status"], "PENDING")
+        self.assertEqual(child["fetch_status"], "FETCH_REJECTED")
+        self.assertEqual(
+            child[
+                "terminal_fetch_status_before_materiality_revalidation"
+            ],
+            "FETCH_REJECTED",
+        )
+
+    def test_unproven_parent_edges_create_no_new_candidate(self) -> None:
+        child_url = "https://issuer.example.com/reports/current.pdf"
+        parent = {
+            "candidate_id": "UNPROVEN-PARENT",
+            "url": "https://issuer.example.com/reports/current",
+            "verified_official_domain_candidate": True,
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "query_ids": ["CURRENT-QUERY"],
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["ISSUER_NEWSROOM"],
+            "matched_requested_source_family": "ISSUER_NEWSROOM",
+            "ranking_status": "MATERIAL",
+            "discovered_referenced_urls": [child_url],
+        }
+        parent["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(parent)
+        )
+        candidates = [parent]
+        source_graph_module._enqueue_candidate_discovery_references(
+            candidates,
+            parent_candidate=parent,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+        )
+        self.assertEqual(candidates, [parent])
+
+        document = {
+            "document_id": "UNPROVEN-DOCUMENT",
+            "canonical_url": parent["url"],
+            "source_family": "ISSUER_NEWSROOM",
+            "query_ids": ["CURRENT-QUERY"],
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["ISSUER_NEWSROOM"],
+            "matched_requested_source_family": "ISSUER_NEWSROOM",
+            "materiality_scope_hash": parent["materiality_scope_hash"],
+            "referenced_urls": [child_url],
+        }
+        document_candidates: list[dict[str, Any]] = []
+        source_graph_module._enqueue_reference_candidates(
+            document_candidates,
+            document=document,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            default_objective_ids=("CURRENT-OBJECTIVE",),
+        )
+        self.assertEqual(document_candidates, [])
+
+    def test_duplicate_document_adopts_url_bound_current_provenance(
+        self,
+    ) -> None:
+        original_url = "https://mirror.example.net/report"
+        current_url = "https://issuer.example.com/report"
+        text = _document_text("same-bytes-different-url")
+        content_hash = hashlib.sha256(
+            text.strip().encode("utf-8")
+        ).hexdigest()
+        existing_document = {
+            "document_id": "SGDOC-EXISTING",
+            "canonical_url": original_url,
+            "source_provider": "PageFetcher",
+            "source_family": "GENERAL_WEB_DISCOVERY",
+            "content_hash": content_hash,
+            "query_ids": ["LEGACY-QUERY"],
+            "objective_ids": ["LEGACY-OBJECTIVE"],
+            "requested_source_families": ["GENERAL_WEB_DISCOVERY"],
+        }
+        candidate = {
+            "candidate_id": "CURRENT-DUPLICATE",
+            "url": current_url,
+            "normalized_url": current_url,
+            "query_ids": ["CURRENT-QUERY"],
+            "materiality_query_ids": ["CURRENT-QUERY"],
+            "objective_ids": ["CURRENT-OBJECTIVE"],
+            "requested_source_families": ["ISSUER_NEWSROOM"],
+            "matched_requested_source_family": "ISSUER_NEWSROOM",
+            "materiality_decision_id": "DECISION-CURRENT-DUPLICATE",
+            "ranking_status": "MATERIAL",
+            "published_at": "2026-06-20",
+        }
+        candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(candidate)
+        )
+
+        record, document, rejection = (
+            source_graph_module._fetch_candidate_document(
+                candidate=candidate,
+                target_id=TARGET,
+                target_name=TARGET_NAME,
+                target_aliases=(),
+                as_of_date=date.fromisoformat(AS_OF_DATE),
+                page_fetcher=PageFetcher(
+                    fixture_text_by_url={current_url: text}
+                ),
+                min_chars=10,
+                require_date_verified=True,
+                official_hosts={"issuer.example.com"},
+                content_hash_to_document={
+                    content_hash: existing_document
+                },
+            )
+        )
+
+        self.assertIsNone(rejection)
+        self.assertEqual(record["disposition"], "DUPLICATE_CONTENT")
+        self.assertIs(document, existing_document)
+        self.assertEqual(
+            document["materiality_scope_url"],
+            current_url,
+        )
+        self.assertEqual(
+            document["source_materiality_decision_id"],
+            "DECISION-CURRENT-DUPLICATE",
+        )
+        self.assertIsNotNone(
+            source_graph_module._validated_reference_materiality_scope(
+                document
+            )
+        )
+        candidate["document_id"] = record["existing_document_id"]
+        active = source_graph_module._production_downstream_documents(
+            documents=(document,),
+            facts=(),
+            candidates=(candidate,),
+        )
+        self.assertEqual(active, (document,))
 
     def test_navigation_url_classifier_keeps_documents_and_articles(self) -> None:
         navigation_urls = (
@@ -2783,6 +3475,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 "https://www.example.com/files/earnings.pdf?download=1",
             ],
         }
+        _bind_candidate_reference_scope(
+            parent,
+            decision_id="DECISION-OFFICIAL-BUDGET",
+        )
         candidates = [parent]
         deferred = source_graph_module._enqueue_candidate_discovery_references(
             candidates,
@@ -2818,6 +3514,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 "https://ir.example.com/archive/2023Q1/transcript"
             ],
         }
+        _bind_candidate_reference_scope(
+            old_parent,
+            decision_id="DECISION-OLD-PARENT",
+        )
         current_parent = {
             **old_parent,
             "candidate_id": "CURRENT-OFFICIAL-PARENT",
@@ -2827,6 +3527,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 "https://ir.example.com/current/2026Q1/transcript"
             ],
         }
+        _bind_candidate_reference_scope(
+            current_parent,
+            decision_id="DECISION-CURRENT-PARENT",
+        )
         candidates = [old_parent, current_parent]
         for parent in source_graph_module._ordered_candidate_reference_parents(
             candidates,

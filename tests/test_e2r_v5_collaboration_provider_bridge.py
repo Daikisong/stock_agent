@@ -1,0 +1,1548 @@
+from __future__ import annotations
+
+from contextlib import redirect_stdout
+import hashlib
+import io
+import json
+import multiprocessing
+import os
+import tempfile
+import unittest
+from pathlib import Path
+
+from e2r.cli.run_e2r_researcher_mode_until_pass import (
+    _build_research_provider,
+    _research_provider_manifest,
+    build_parser as build_phase94_parser,
+)
+from e2r.cli.import_e2r_collaboration_response import (
+    main as import_response_main,
+)
+from e2r.research_brain.planning.provider_transport import (
+    StructuredProviderRejected,
+    StructuredProviderResponse,
+    StructuredProviderUnavailable,
+)
+from e2r.research_brain.researcher_mode import (
+    CodexResearcherProvider,
+    CodexSubagentFallbackResearchProvider,
+    CollaborationCodexResearcherProvider,
+    CollaborationCodexSubagentTransport,
+    ResearcherDocumentRanker,
+    import_collaboration_response,
+)
+from e2r.research_brain.researcher_mode.prompt_projection import (
+    project_current_decision_citable_facts,
+)
+
+
+QUERY_RESPONSE = {
+    "suggested_queries": [],
+    "new_source_directions": [],
+    "unresolved_research_notes": [],
+}
+
+
+class UsageLimitTransport:
+    def __init__(self) -> None:
+        self.call_count = 0
+
+    def complete(self, *, prompt, output_schema, schema_name):
+        del prompt, output_schema, schema_name
+        self.call_count += 1
+        raise StructuredProviderUnavailable(
+            "ERROR: You've hit your usage limit. "
+            "try again at Aug 5th, 2026 5:23 PM."
+        )
+
+
+class OtherFailureTransport:
+    def __init__(self) -> None:
+        self.call_count = 0
+
+    def complete(self, *, prompt, output_schema, schema_name):
+        del prompt, output_schema, schema_name
+        self.call_count += 1
+        raise StructuredProviderUnavailable("codex_cli_timeout")
+
+
+class SuccessfulQueryTransport:
+    def __init__(self) -> None:
+        self.call_count = 0
+
+    def complete(self, *, prompt, output_schema, schema_name):
+        del prompt, output_schema, schema_name
+        self.call_count += 1
+        return StructuredProviderResponse(
+            payload=QUERY_RESPONSE,
+            raw_response=json.dumps(QUERY_RESPONSE),
+            stderr="",
+            returncode=0,
+        )
+
+
+class SuccessThenUsageLimitTransport(SuccessfulQueryTransport):
+    def complete(self, *, prompt, output_schema, schema_name):
+        if self.call_count:
+            self.call_count += 1
+            raise StructuredProviderUnavailable(
+                "ERROR: You've hit your usage limit. "
+                "try again at Aug 5th, 2026 5:23 PM."
+            )
+        return super().complete(
+            prompt=prompt,
+            output_schema=output_schema,
+            schema_name=schema_name,
+        )
+
+
+def _business_model_response(payload):
+    chunk = payload.get("loss_accounted_fact_chunk")
+    if chunk:
+        row_index = payload["current_evidence_fact_graph"][0][
+            "fact_row_index"
+        ]
+        return {
+            "business_model_summary": (
+                f"chunk {chunk['chunk_index']} mechanism review"
+            ),
+            "revenue_engines": ["chunk revenue mechanism"],
+            "cost_and_cash_drivers": ["chunk cash mechanism"],
+            "capacity_and_supply_constraints": [
+                "chunk capacity mechanism"
+            ],
+            "customer_and_channel_dependencies": [
+                "chunk customer mechanism"
+            ],
+            "fact_row_indices": [row_index],
+            "uncertainties": ["chunk uncertainty"],
+            "confidence": 0.7,
+            "research_complete": True,
+        }
+    partials = payload["loss_accounted_fact_chunk_synthesis"][
+        "chunk_responses"
+    ]
+    return {
+        "business_model_summary": "all chunks synthesized",
+        "revenue_engines": ["all revenue mechanisms"],
+        "cost_and_cash_drivers": ["all cash mechanisms"],
+        "capacity_and_supply_constraints": [
+            "all capacity mechanisms"
+        ],
+        "customer_and_channel_dependencies": [
+            "all customer mechanisms"
+        ],
+        "fact_row_indices": [
+            row_index
+            for row in partials
+            for row_index in row["response"]["fact_row_indices"]
+        ],
+        "uncertainties": ["cross-chunk uncertainty"],
+        "confidence": 0.8,
+        "research_complete": True,
+    }
+
+
+class BusinessChunkSuccessThenUsageLimitTransport:
+    def __init__(self) -> None:
+        self.call_count = 0
+        self.payloads = []
+
+    def provider_identity(self):
+        return {
+            "transport_class": self.__class__.__qualname__,
+            "model": "test-codex",
+        }
+
+    def complete(self, *, prompt, output_schema, schema_name):
+        del output_schema, schema_name
+        payload = json.loads(prompt.rsplit("\n", 1)[-1])
+        self.payloads.append(payload)
+        self.call_count += 1
+        if self.call_count > 1:
+            raise StructuredProviderUnavailable(
+                "ERROR: You've hit your usage limit. "
+                "try again at Aug 5th, 2026 5:23 PM."
+            )
+        response = _business_model_response(payload)
+        return StructuredProviderResponse(
+            payload=response,
+            raw_response=json.dumps(response),
+            stderr="",
+            returncode=0,
+        )
+
+
+class BoundedCodexResearcherProvider(CodexResearcherProvider):
+    @property
+    def memo_fact_prompt_chunk_chars(self) -> int:
+        return 100_000
+
+
+def _provider(primary_transport) -> CodexSubagentFallbackResearchProvider:
+    return CodexSubagentFallbackResearchProvider(
+        primary=CodexResearcherProvider(transport=primary_transport),  # type: ignore[arg-type]
+        collaboration=CollaborationCodexResearcherProvider(
+            transport=CollaborationCodexSubagentTransport()
+        ),
+    )
+
+
+def _configure(provider, root: Path) -> Path:
+    provider.configure_response_cache(
+        root / "research_provider_response_cache"
+    )
+    return root / "collaboration_codex_subagent_provider"
+
+
+def _request(journal_root: Path):
+    paths = tuple((journal_root / "requests").glob("COLLABREQ-*.json"))
+    if len(paths) != 1:
+        raise AssertionError(f"expected one request, got {len(paths)}")
+    return paths[0], json.loads(paths[0].read_text(encoding="utf-8"))
+
+
+def _request_payload(request):
+    return json.loads(request["prompt"].rsplit("\n", 1)[-1])
+
+
+def _business_model_payload():
+    facts = [
+        {
+            "fact_id": f"EFACT-{index:04d}",
+            "target_id": "TEST",
+            "as_of_date": "2026-06-29",
+            "subject": "target memory business",
+            "business_segment": "MEMORY",
+            "product_family": "HBM",
+            "economic_mechanism": (
+                f"fact {index} " + "긴 경제 메커니즘 " * 500
+            ),
+            "predicate": f"CURRENT_HBM_MECHANISM_{index}",
+            "value": index,
+            "unit": "units",
+            "period": "2026-06-29",
+            "direction": (
+                "POSITIVE" if index % 2 == 0 else "COUNTER"
+            ),
+            "current_lifecycle": "CURRENT",
+            "confidence": 0.9,
+            "structured_evidence_roles": [],
+            "claim_ids": [f"CLAIM-{index:04d}"],
+            "source_ids": [f"DOC-{index:04d}"],
+            "source_independence_group": "issuer:test",
+            "corroborating_independence_groups": ["issuer:test"],
+            "allowed_component_ids": [],
+            "question_family_tags": [],
+            "primitive_tags": [],
+        }
+        for index in range(24)
+    ]
+    projection = project_current_decision_citable_facts(facts)
+    return {
+        "researcher_role": "BusinessMechanismResearcher",
+        "target_id": "TEST",
+        "archetype_id": "TEST_ARCHETYPE",
+        "as_of_date": "2026-06-29",
+        "current_evidence_fact_graph": projection["facts"],
+        "current_evidence_fact_projection": {
+            key: value
+            for key, value in projection.items()
+            if key not in {"facts", "fact_id_by_row_index"}
+        },
+        "source_claims": {},
+        "source_documents": {},
+        "source_coverage": ["ISSUER"],
+    }
+
+
+def _concurrent_import_worker(
+    *,
+    journal_root,
+    request_id,
+    response_payload,
+    agent_id,
+    barrier,
+    result_queue,
+):
+    try:
+        barrier.wait(timeout=10)
+        envelope = import_collaboration_response(
+            journal_root=journal_root,
+            request_id=request_id,
+            response_payload=response_payload,
+            agent_id=agent_id,
+            canonical_task_name=f"/root/{agent_id}",
+            agent_model="codex-collaboration",
+        )
+    except Exception as exc:  # pragma: no cover - asserted in parent process
+        result_queue.put(
+            {
+                "status": "ERROR",
+                "error_type": exc.__class__.__name__,
+                "error": str(exc),
+            }
+        )
+    else:
+        result_queue.put(
+            {
+                "status": "SUCCESS",
+                "envelope": dict(envelope),
+            }
+        )
+
+
+def _paused_import_worker(
+    *,
+    journal_root,
+    request_id,
+    response_payload,
+    agent_id,
+    reached_commit,
+    resume_commit,
+    result_queue,
+):
+    from e2r.research_brain.researcher_mode import (
+        collaboration_provider_bridge as bridge,
+    )
+
+    original_create = bridge._atomic_create_json
+
+    def pausing_create(path, value):
+        if path.parent.name == "responses":
+            reached_commit.set()
+            if not resume_commit.wait(timeout=10):
+                raise TimeoutError("import commit was not resumed")
+        return original_create(path, value)
+
+    bridge._atomic_create_json = pausing_create
+    try:
+        envelope = import_collaboration_response(
+            journal_root=journal_root,
+            request_id=request_id,
+            response_payload=response_payload,
+            agent_id=agent_id,
+            canonical_task_name=f"/root/{agent_id}",
+            agent_model="codex-collaboration",
+        )
+    except Exception as exc:  # pragma: no cover - asserted in parent process
+        result_queue.put(
+            {
+                "worker": "IMPORT",
+                "status": "ERROR",
+                "error_type": exc.__class__.__name__,
+                "error": str(exc),
+            }
+        )
+    else:
+        result_queue.put(
+            {
+                "worker": "IMPORT",
+                "status": "SUCCESS",
+                "envelope": dict(envelope),
+            }
+        )
+
+
+def _semantic_quarantine_worker(
+    *,
+    journal_root,
+    request_id,
+    response_id,
+    started,
+    result_queue,
+):
+    transport = CollaborationCodexSubagentTransport()
+    transport.configure_journal_root(journal_root)
+    transport._last_request_id = request_id
+    transport._last_response_id = response_id
+    started.set()
+    try:
+        event = transport.invalidate_last_response("semantic poison")
+    except Exception as exc:  # pragma: no cover - asserted in parent process
+        result_queue.put(
+            {
+                "worker": "QUARANTINE",
+                "status": "ERROR",
+                "error_type": exc.__class__.__name__,
+                "error": str(exc),
+            }
+        )
+    else:
+        result_queue.put(
+            {
+                "worker": "QUARANTINE",
+                "status": "SUCCESS",
+                "event": dict(event),
+            }
+        )
+
+
+class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
+    def test_default_composite_primary_keeps_normal_codex_cache_identity(
+        self,
+    ) -> None:
+        normal = CodexResearcherProvider.default(
+            working_directory="/repo",
+            timeout_seconds=300.0,
+        )
+        composite = CodexSubagentFallbackResearchProvider.default(
+            working_directory="/repo",
+            timeout_seconds=300.0,
+        )
+
+        self.assertEqual(
+            composite.primary.provider_name,
+            normal.provider_name,
+        )
+        self.assertEqual(
+            composite.primary._provider_identity(),
+            normal._provider_identity(),
+        )
+
+    def test_exact_primary_codex_cache_hit_precedes_collaboration_journal(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            transport = SuccessThenUsageLimitTransport()
+            provider = _provider(transport)
+            journal = _configure(provider, Path(directory))
+            payload = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": "2026-07-12",
+            }
+
+            first = provider.complete(
+                pass_name="SOURCE_QUERY_GENERATION",
+                payload=payload,
+            )
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload={**payload, "target_id": "UNCACHED-TARGET"},
+                )
+            request_count_before_cache_replay = len(
+                tuple((journal / "requests").glob("*.json"))
+            )
+            second = provider.complete(
+                pass_name="SOURCE_QUERY_GENERATION",
+                payload=payload,
+            )
+
+            self.assertEqual(first, QUERY_RESPONSE)
+            self.assertEqual(second, QUERY_RESPONSE)
+            self.assertEqual(transport.call_count, 2)
+            self.assertTrue(provider.primary.calls[-1]["cache_hit"])
+            self.assertEqual(request_count_before_cache_replay, 1)
+            self.assertEqual(
+                len(tuple((journal / "requests").glob("*.json"))),
+                request_count_before_cache_replay,
+            )
+
+    def test_usage_limit_cache_miss_writes_full_request_and_resumes_after_import(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = _provider(UsageLimitTransport())
+            journal = _configure(provider, Path(directory))
+            payload = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": "2026-07-12",
+            }
+
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload=payload,
+                )
+
+            request_path, request = _request(journal)
+            self.assertEqual(request["pass_name"], "SOURCE_QUERY_GENERATION")
+            self.assertIn("independent E2R 2.0 research analyst", request["prompt"])
+            self.assertEqual(
+                request["prompt_hash"],
+                __import__("hashlib").sha256(
+                    request["prompt"].encode("utf-8")
+                ).hexdigest(),
+            )
+            self.assertIsInstance(request["output_schema"], dict)
+            self.assertFalse(request["score_or_stage_authority"])
+            self.assertFalse(request["production_score_authority"])
+            self.assertTrue(request_path.name.startswith("COLLABREQ-"))
+
+            envelope = import_collaboration_response(
+                journal_root=journal,
+                request_id=request["request_id"],
+                response_payload=QUERY_RESPONSE,
+                agent_id="agent-123",
+                canonical_task_name="/root/rank_partition_0",
+                agent_model="codex-collaboration",
+            )
+            resumed = provider.complete(
+                pass_name="SOURCE_QUERY_GENERATION",
+                payload=payload,
+            )
+
+            self.assertEqual(resumed, QUERY_RESPONSE)
+            self.assertFalse(envelope["score_or_stage_authority"])
+            self.assertEqual(
+                envelope["provenance"]["provenance_assurance"],
+                "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+            )
+            audit = provider.response_cache_audit()
+            self.assertTrue(audit["provider_usage_limit_detected"])
+            self.assertEqual(
+                audit["collaboration_journal"]["validated_response_count"],
+                1,
+            )
+            self.assertEqual(
+                provider.calls[-1]["provider_route"],
+                "COLLABORATION_CODEX_SUBAGENT",
+            )
+
+    def test_multichunk_usage_limit_falls_back_only_for_missing_leaf(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            transport = BusinessChunkSuccessThenUsageLimitTransport()
+            provider = CodexSubagentFallbackResearchProvider(
+                primary=BoundedCodexResearcherProvider(
+                    transport=transport  # type: ignore[arg-type]
+                ),
+                collaboration=CollaborationCodexResearcherProvider(
+                    transport=CollaborationCodexSubagentTransport()
+                ),
+            )
+            journal = _configure(provider, Path(directory))
+            payload = _business_model_payload()
+
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.complete(
+                    pass_name="BUSINESS_MODEL_RESEARCH",
+                    payload=payload,
+                )
+
+            request_paths = tuple(
+                (journal / "requests").glob("COLLABREQ-*.json")
+            )
+            self.assertEqual(len(request_paths), 1)
+            second_chunk_request = json.loads(
+                request_paths[0].read_text(encoding="utf-8")
+            )
+            second_chunk_payload = _request_payload(second_chunk_request)
+            self.assertEqual(
+                second_chunk_payload["loss_accounted_fact_chunk"][
+                    "chunk_index"
+                ],
+                1,
+            )
+            self.assertEqual(transport.call_count, 2)
+
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=second_chunk_request["request_id"],
+                response_payload=_business_model_response(
+                    second_chunk_payload
+                ),
+                agent_id="agent-chunk-1",
+                canonical_task_name="/root/business_chunk_1",
+                agent_model="codex-collaboration",
+            )
+
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.complete(
+                    pass_name="BUSINESS_MODEL_RESEARCH",
+                    payload=payload,
+                )
+
+            requests = [
+                json.loads(path.read_text(encoding="utf-8"))
+                for path in (
+                    journal / "requests"
+                ).glob("COLLABREQ-*.json")
+            ]
+            self.assertEqual(len(requests), 2)
+            request_payloads = [
+                _request_payload(request) for request in requests
+            ]
+            self.assertEqual(
+                sum(
+                    (
+                        row.get("loss_accounted_fact_chunk") or {}
+                    ).get("chunk_index")
+                    == 0
+                    for row in request_payloads
+                ),
+                0,
+            )
+            synthesis_requests = [
+                request
+                for request, row in zip(requests, request_payloads)
+                if row.get("loss_accounted_fact_chunk_synthesis")
+            ]
+            self.assertEqual(len(synthesis_requests), 1)
+            self.assertTrue(provider.primary.calls[-3]["cache_hit"])
+            self.assertEqual(transport.call_count, 2)
+
+            synthesis_request = synthesis_requests[0]
+            synthesis_payload = _request_payload(synthesis_request)
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=synthesis_request["request_id"],
+                response_payload=_business_model_response(
+                    synthesis_payload
+                ),
+                agent_id="agent-synthesis",
+                canonical_task_name="/root/business_synthesis",
+                agent_model="codex-collaboration",
+            )
+            response = provider.complete(
+                pass_name="BUSINESS_MODEL_RESEARCH",
+                payload=payload,
+            )
+
+            self.assertTrue(response["research_complete"])
+            self.assertEqual(
+                len(
+                    tuple(
+                        (journal / "requests").glob(
+                            "COLLABREQ-*.json"
+                        )
+                    )
+                ),
+                2,
+            )
+            self.assertEqual(transport.call_count, 2)
+            self.assertEqual(
+                provider.calls[-1]["provider_route"],
+                "COLLABORATION_CODEX_SUBAGENT",
+            )
+
+    def test_non_usage_provider_failure_does_not_open_subagent_fallback(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = _provider(OtherFailureTransport())
+            journal = _configure(provider, Path(directory))
+
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "codex_cli_timeout",
+            ):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload={
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": "2026-07-12",
+                    },
+                )
+
+            self.assertEqual(tuple((journal / "requests").glob("*.json")), ())
+            self.assertEqual(provider.calls[-1]["provider_route"], "CODEX_CLI")
+
+    def test_import_rejects_schema_violation_and_request_hash_tampering(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = _provider(UsageLimitTransport())
+            journal = _configure(provider, Path(directory))
+            with self.assertRaises(StructuredProviderUnavailable):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload={
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": "2026-07-12",
+                    },
+                )
+            request_path, request = _request(journal)
+
+            with self.assertRaisesRegex(ValueError, "schema violation"):
+                import_collaboration_response(
+                    journal_root=journal,
+                    request_id=request["request_id"],
+                    response_payload={"suggested_queries": []},
+                    agent_id="agent-123",
+                    canonical_task_name="/root/rank_partition_0",
+                    agent_model="codex-collaboration",
+                )
+            self.assertFalse(
+                (journal / "responses" / request_path.name).exists()
+            )
+
+            request["prompt"] += "\ntampered"
+            request_path.write_text(
+                json.dumps(request, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "content hash mismatch"):
+                import_collaboration_response(
+                    journal_root=journal,
+                    request_id=request["request_id"],
+                    response_payload=QUERY_RESPONSE,
+                    agent_id="agent-123",
+                    canonical_task_name="/root/rank_partition_0",
+                    agent_model="codex-collaboration",
+                )
+
+    def test_request_contract_rejects_schema_flag_and_identity_tampering(
+        self,
+    ) -> None:
+        def canonical_hash(value):
+            return hashlib.sha256(
+                json.dumps(
+                    value,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ).encode("utf-8")
+            ).hexdigest()
+
+        for variant in (
+            "schema_pass_mismatch",
+            "response_import_disabled",
+            "provider_identity",
+            "extra_key",
+        ):
+            with self.subTest(variant=variant):
+                with tempfile.TemporaryDirectory() as directory:
+                    provider = _provider(UsageLimitTransport())
+                    journal = _configure(provider, Path(directory))
+                    with self.assertRaises(
+                        StructuredProviderUnavailable
+                    ):
+                        provider.complete(
+                            pass_name="SOURCE_QUERY_GENERATION",
+                            payload={
+                                "target_id": f"TARGET-{variant}",
+                                "as_of_date": "2026-07-12",
+                            },
+                        )
+                    request_path, original = _request(journal)
+                    tampered = dict(original)
+                    if variant == "schema_pass_mismatch":
+                        tampered["schema_name"] = (
+                            "e2r_v5_business_model_research"
+                        )
+                    elif variant == "response_import_disabled":
+                        tampered["response_import_required"] = False
+                    elif variant == "provider_identity":
+                        provider_identity = dict(
+                            tampered["provider_identity"]
+                        )
+                        provider_identity["provider_route"] = "TAMPERED"
+                        provider_identity_hash = canonical_hash(
+                            provider_identity
+                        )
+                        identity = {
+                            **tampered["request_identity"],
+                            "provider_identity_hash": (
+                                provider_identity_hash
+                            ),
+                        }
+                        tampered.update(
+                            {
+                                "provider_identity": provider_identity,
+                                "provider_identity_hash": (
+                                    provider_identity_hash
+                                ),
+                                "request_identity": identity,
+                                "request_id": (
+                                    "COLLABREQ-"
+                                    + canonical_hash(identity)
+                                ),
+                            }
+                        )
+                    else:
+                        tampered["extra_metadata"] = "not bound"
+                    request_path.unlink()
+                    request_id = tampered["request_id"]
+                    (
+                        journal
+                        / "requests"
+                        / f"{request_id}.json"
+                    ).write_text(
+                        json.dumps(tampered, ensure_ascii=False),
+                        encoding="utf-8",
+                    )
+
+                    with self.assertRaises(ValueError):
+                        import_collaboration_response(
+                            journal_root=journal,
+                            request_id=request_id,
+                            response_payload=QUERY_RESPONSE,
+                            agent_id="tamper-agent",
+                            canonical_task_name="/root/tamper_agent",
+                            agent_model="codex-collaboration",
+                        )
+                    audit = provider.response_cache_audit()[
+                        "collaboration_journal"
+                    ]
+                    self.assertEqual(audit["request_count"], 1)
+                    self.assertEqual(
+                        audit["validated_request_count"],
+                        0,
+                    )
+                    self.assertEqual(audit["invalid_request_count"], 1)
+
+    def test_concurrent_import_is_atomic_first_writer_wins(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = _provider(UsageLimitTransport())
+            journal = _configure(provider, Path(directory))
+            with self.assertRaises(StructuredProviderUnavailable):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload={
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": "2026-07-12",
+                    },
+                )
+            _, request = _request(journal)
+            payloads = (
+                {
+                    **QUERY_RESPONSE,
+                    "unresolved_research_notes": ["candidate A"],
+                },
+                {
+                    **QUERY_RESPONSE,
+                    "unresolved_research_notes": ["candidate B"],
+                },
+            )
+            context = multiprocessing.get_context("spawn")
+            barrier = context.Barrier(2)
+            result_queue = context.Queue()
+            processes = [
+                context.Process(
+                    target=_concurrent_import_worker,
+                    kwargs={
+                        "journal_root": str(journal),
+                        "request_id": request["request_id"],
+                        "response_payload": payload,
+                        "agent_id": f"race-agent-{index}",
+                        "barrier": barrier,
+                        "result_queue": result_queue,
+                    },
+                )
+                for index, payload in enumerate(payloads)
+            ]
+            for process in processes:
+                process.start()
+            for process in processes:
+                process.join(timeout=20)
+                if process.is_alive():
+                    process.terminate()
+                    process.join(timeout=5)
+                    self.fail("concurrent importer process did not finish")
+                self.assertEqual(process.exitcode, 0)
+            results = [result_queue.get(timeout=5) for _ in processes]
+
+            successes = [
+                row for row in results if row["status"] == "SUCCESS"
+            ]
+            failures = [
+                row for row in results if row["status"] == "ERROR"
+            ]
+            self.assertEqual(len(successes), 1)
+            self.assertEqual(len(failures), 1)
+            self.assertEqual(failures[0]["error_type"], "ValueError")
+            self.assertIn(
+                "a different collaboration response is already imported",
+                failures[0]["error"],
+            )
+            final_envelope = json.loads(
+                (
+                    journal
+                    / "responses"
+                    / f"{request['request_id']}.json"
+                ).read_text(encoding="utf-8")
+            )
+            self.assertEqual(final_envelope, successes[0]["envelope"])
+            self.assertIn(final_envelope["payload"], payloads)
+            self.assertEqual(
+                tuple(
+                    (
+                        journal / "responses"
+                    ).glob(f"{request['request_id']}.json")
+                ),
+                (
+                    journal
+                    / "responses"
+                    / f"{request['request_id']}.json",
+                ),
+            )
+
+    def test_downstream_semantic_rejection_quarantines_imported_response(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = _provider(UsageLimitTransport())
+            journal = _configure(provider, Path(directory))
+            ranker = ResearcherDocumentRanker(provider=provider)
+            kwargs = {
+                "target_id": "CURRENT-TARGET",
+                "target_name": "Current Corp",
+                "as_of_date": "2026-07-12",
+                "open_objectives": [
+                    {
+                        "objective_id": "OBJ-1",
+                        "question": "현재 고객 공식 확인이 있는가?",
+                    }
+                ],
+                "candidates": [
+                    {
+                        "candidate_id": "CAND-1",
+                        "title": "customer update",
+                        "url": "https://example.com/update",
+                        "snippet": "customer update",
+                        "source": "test",
+                        "objective_ids": ["OBJ-1"],
+                        "requested_source_families": [
+                            "CUSTOMER_OFFICIAL"
+                        ],
+                    }
+                ],
+                "current_evidence_facts": [],
+                "target_business_model": None,
+                "source_coverage": [],
+            }
+
+            first = ranker.rank_candidates(**kwargs)
+            self.assertEqual(first.status, "PENDING")
+            _, request = _request(journal)
+            # Schema-valid, but the ordinary semantic ranker must reject the
+            # unknown candidate id rather than allowing the bridge to repair it.
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=request["request_id"],
+                response_payload={
+                    "decisions": [
+                        {
+                            "candidate_id": "UNKNOWN-CANDIDATE",
+                            "material_relevance": False,
+                            "priority": 0.0,
+                            "objective_ids": [],
+                            "matched_requested_source_family": "NONE",
+                            "rationale": "입력 후보와 관련이 없다.",
+                        }
+                    ],
+                    "ranking_complete": True,
+                    "unresolved_notes": [],
+                },
+                agent_id="agent-123",
+                canonical_task_name="/root/rank_partition_0",
+                agent_model="codex-collaboration",
+            )
+
+            retried = ranker.rank_candidates(**kwargs)
+
+            self.assertEqual(retried.status, "PENDING")
+            self.assertFalse(
+                (
+                    journal
+                    / "responses"
+                    / f"{request['request_id']}.json"
+                ).exists()
+            )
+            quarantined = tuple(
+                path
+                for path in (journal / "quarantine").rglob("*.json")
+                if not path.name.endswith(".reason.json")
+            )
+            self.assertEqual(len(quarantined), 1)
+            self.assertEqual(
+                provider.response_cache_audit()[
+                    "downstream_semantic_invalidation_count"
+                ],
+                1,
+            )
+            # The clean semantic retry has a different prompt hash and request.
+            self.assertEqual(
+                len(tuple((journal / "requests").glob("*.json"))),
+                2,
+            )
+
+    def test_malformed_response_id_cannot_escape_quarantine_root(
+        self,
+    ) -> None:
+        for variant in ("absolute", "traversal"):
+            with self.subTest(variant=variant):
+                with tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory)
+                    provider = _provider(UsageLimitTransport())
+                    journal = _configure(provider, root)
+                    with self.assertRaises(
+                        StructuredProviderUnavailable
+                    ):
+                        provider.complete(
+                            pass_name="SOURCE_QUERY_GENERATION",
+                            payload={
+                                "target_id": f"TARGET-{variant}",
+                                "as_of_date": "2026-07-12",
+                            },
+                        )
+                    _, request = _request(journal)
+                    quarantine_root = (
+                        journal
+                        / "quarantine"
+                        / request["request_id"]
+                    )
+                    escaped_path = root / f"escaped-{variant}.json"
+                    escaped_stem = escaped_path.with_suffix("")
+                    malicious_response_id = (
+                        str(escaped_stem)
+                        if variant == "absolute"
+                        else os.path.relpath(
+                            escaped_stem,
+                            quarantine_root,
+                        )
+                    )
+                    malformed = {
+                        "schema_version": "malformed",
+                        "response_id": malicious_response_id,
+                    }
+                    response_bytes = json.dumps(
+                        malformed,
+                        ensure_ascii=False,
+                        sort_keys=True,
+                    ).encode("utf-8")
+                    (
+                        journal
+                        / "responses"
+                        / f"{request['request_id']}.json"
+                    ).write_bytes(response_bytes)
+
+                    with self.assertRaisesRegex(
+                        StructuredProviderRejected,
+                        "COLLABORATION_RESPONSE_REJECTED",
+                    ):
+                        provider.complete(
+                            pass_name="SOURCE_QUERY_GENERATION",
+                            payload={
+                                "target_id": f"TARGET-{variant}",
+                                "as_of_date": "2026-07-12",
+                            },
+                        )
+
+                    safe_response_id = (
+                        "COLLABRESP-"
+                        + hashlib.sha256(response_bytes).hexdigest()
+                    )
+                    quarantine_path = (
+                        quarantine_root / f"{safe_response_id}.json"
+                    )
+                    self.assertFalse(escaped_path.exists())
+                    self.assertTrue(quarantine_path.is_file())
+                    self.assertEqual(
+                        quarantine_path.read_bytes(),
+                        response_bytes,
+                    )
+                    reason_paths = tuple(
+                        quarantine_root.glob(
+                            f"{safe_response_id}.json.*.reason.json"
+                        )
+                    )
+                    self.assertEqual(len(reason_paths), 1)
+                    self.assertTrue(
+                        all(
+                            path.resolve().is_relative_to(
+                                quarantine_root.resolve()
+                            )
+                            for path in (
+                                quarantine_path,
+                                *reason_paths,
+                            )
+                        )
+                    )
+
+        transport = CollaborationCodexSubagentTransport()
+        with tempfile.TemporaryDirectory() as directory:
+            transport.configure_journal_root(directory)
+            with self.assertRaisesRegex(
+                ValueError,
+                "quarantine request id is invalid",
+            ):
+                transport._quarantine_response(
+                    request_id="../../escaped",
+                    reason="malformed request id",
+                )
+
+    def test_unvalidated_response_id_cannot_collide_with_existing_quarantine(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = _provider(UsageLimitTransport())
+            journal = _configure(provider, Path(directory))
+            payload = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": "2026-07-12",
+            }
+            with self.assertRaises(StructuredProviderUnavailable):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload=payload,
+                )
+            _, request = _request(journal)
+            attacker_selected_id = "COLLABRESP-" + "a" * 64
+            quarantine_root = (
+                journal / "quarantine" / request["request_id"]
+            )
+            quarantine_root.mkdir(parents=True, exist_ok=True)
+            existing_quarantine_path = (
+                quarantine_root / f"{attacker_selected_id}.json"
+            )
+            existing_bytes = b'{"existing":true}'
+            existing_quarantine_path.write_bytes(existing_bytes)
+            malformed = {
+                "schema_version": "malformed",
+                "response_id": attacker_selected_id,
+            }
+            response_bytes = json.dumps(
+                malformed,
+                ensure_ascii=False,
+                sort_keys=True,
+            ).encode("utf-8")
+            active_response_path = (
+                journal
+                / "responses"
+                / f"{request['request_id']}.json"
+            )
+            active_response_path.write_bytes(response_bytes)
+
+            with self.assertRaisesRegex(
+                StructuredProviderRejected,
+                "COLLABORATION_RESPONSE_REJECTED",
+            ):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload=payload,
+                )
+
+            safe_response_id = (
+                "COLLABRESP-" + hashlib.sha256(response_bytes).hexdigest()
+            )
+            self.assertFalse(active_response_path.exists())
+            self.assertEqual(
+                existing_quarantine_path.read_bytes(),
+                existing_bytes,
+            )
+            self.assertEqual(
+                (
+                    quarantine_root / f"{safe_response_id}.json"
+                ).read_bytes(),
+                response_bytes,
+            )
+
+    def test_semantically_quarantined_response_cannot_be_reimported(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = _provider(UsageLimitTransport())
+            journal = _configure(provider, Path(directory))
+            payload = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": "2026-07-12",
+            }
+            with self.assertRaises(StructuredProviderUnavailable):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload=payload,
+                )
+            _, request = _request(journal)
+            import_kwargs = {
+                "journal_root": journal,
+                "request_id": request["request_id"],
+                "response_payload": QUERY_RESPONSE,
+                "agent_id": "semantic-agent",
+                "canonical_task_name": "/root/semantic_agent",
+                "agent_model": "codex-collaboration",
+            }
+            imported = import_collaboration_response(**import_kwargs)
+            self.assertEqual(
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload=payload,
+                ),
+                QUERY_RESPONSE,
+            )
+
+            event = provider.invalidate_last_response_cache(
+                "semantic poison"
+            )
+
+            self.assertEqual(
+                event["collaboration_journal_invalidation"]["status"],
+                "COLLABORATION_RESPONSE_QUARANTINED",
+            )
+            self.assertTrue(
+                (
+                    journal
+                    / "quarantine"
+                    / request["request_id"]
+                    / f"{imported['response_id']}.json"
+                ).is_file()
+            )
+            with self.assertRaisesRegex(
+                ValueError,
+                "same collaboration response was previously quarantined",
+            ):
+                import_collaboration_response(**import_kwargs)
+
+            corrected_payload = {
+                **QUERY_RESPONSE,
+                "unresolved_research_notes": ["corrected response"],
+            }
+            corrected = import_collaboration_response(
+                **{
+                    **import_kwargs,
+                    "response_payload": corrected_payload,
+                }
+            )
+            self.assertNotEqual(
+                corrected["response_id"],
+                imported["response_id"],
+            )
+            self.assertEqual(corrected["payload"], corrected_payload)
+
+    def test_import_commit_and_semantic_quarantine_are_serialized(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = _provider(UsageLimitTransport())
+            journal = _configure(provider, Path(directory))
+            payload = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": "2026-07-12",
+            }
+            with self.assertRaises(StructuredProviderUnavailable):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload=payload,
+                )
+            _, request = _request(journal)
+            agent_id = "race-semantic-agent"
+            provenance = {
+                "agent_id": agent_id,
+                "canonical_task_name": f"/root/{agent_id}",
+                "agent_model": "codex-collaboration",
+                "agent_surface": "CODEX_COLLABORATION_SUBAGENT",
+                "provenance_assurance": (
+                    "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC"
+                ),
+            }
+
+            def canonical_hash(value):
+                return hashlib.sha256(
+                    json.dumps(
+                        value,
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    ).encode("utf-8")
+                ).hexdigest()
+
+            response_id = "COLLABRESP-" + canonical_hash(
+                {
+                    "request_id": request["request_id"],
+                    "payload_hash": canonical_hash(QUERY_RESPONSE),
+                    "provenance": provenance,
+                }
+            )
+            context = multiprocessing.get_context("spawn")
+            reached_commit = context.Event()
+            resume_commit = context.Event()
+            quarantine_started = context.Event()
+            result_queue = context.Queue()
+            importer = context.Process(
+                target=_paused_import_worker,
+                kwargs={
+                    "journal_root": str(journal),
+                    "request_id": request["request_id"],
+                    "response_payload": QUERY_RESPONSE,
+                    "agent_id": agent_id,
+                    "reached_commit": reached_commit,
+                    "resume_commit": resume_commit,
+                    "result_queue": result_queue,
+                },
+            )
+            importer.start()
+            self.assertTrue(reached_commit.wait(timeout=10))
+            quarantiner = context.Process(
+                target=_semantic_quarantine_worker,
+                kwargs={
+                    "journal_root": str(journal),
+                    "request_id": request["request_id"],
+                    "response_id": response_id,
+                    "started": quarantine_started,
+                    "result_queue": result_queue,
+                },
+            )
+            quarantiner.start()
+            self.assertTrue(quarantine_started.wait(timeout=10))
+            resume_commit.set()
+            for process in (importer, quarantiner):
+                process.join(timeout=20)
+                if process.is_alive():
+                    process.terminate()
+                    process.join(timeout=5)
+                    self.fail("journal transition process did not finish")
+                self.assertEqual(process.exitcode, 0)
+            results = [result_queue.get(timeout=5) for _ in range(2)]
+            self.assertEqual(
+                {row["worker"] for row in results},
+                {"IMPORT", "QUARANTINE"},
+            )
+            self.assertTrue(
+                all(row["status"] == "SUCCESS" for row in results)
+            )
+
+            active_path = (
+                journal
+                / "responses"
+                / f"{request['request_id']}.json"
+            )
+            tombstone_path = (
+                journal
+                / "quarantine"
+                / request["request_id"]
+                / f"{response_id}.json"
+            )
+            self.assertFalse(active_path.exists())
+            self.assertTrue(tombstone_path.is_file())
+            with self.assertRaisesRegex(
+                ValueError,
+                "same collaboration response was previously quarantined",
+            ):
+                import_collaboration_response(
+                    journal_root=journal,
+                    request_id=request["request_id"],
+                    response_payload=QUERY_RESPONSE,
+                    agent_id=agent_id,
+                    canonical_task_name=f"/root/{agent_id}",
+                    agent_model="codex-collaboration",
+                )
+            self.assertFalse(active_path.exists())
+            self.assertTrue(tombstone_path.is_file())
+
+    def test_journal_audit_counts_only_revalidated_responses(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = _provider(UsageLimitTransport())
+            journal = _configure(provider, Path(directory))
+            payload = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": "2026-07-12",
+            }
+            with self.assertRaises(StructuredProviderUnavailable):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload=payload,
+                )
+            _, request = _request(journal)
+            imported = import_collaboration_response(
+                journal_root=journal,
+                request_id=request["request_id"],
+                response_payload=QUERY_RESPONSE,
+                agent_id="audit-agent",
+                canonical_task_name="/root/audit_agent",
+                agent_model="codex-collaboration",
+            )
+            tampered = {
+                **imported,
+                "payload_hash": "0" * 64,
+            }
+            response_path = (
+                journal
+                / "responses"
+                / f"{request['request_id']}.json"
+            )
+            response_path.write_text(
+                json.dumps(tampered, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            orphan_id = "COLLABREQ-" + "f" * 64
+            (journal / "responses" / f"{orphan_id}.json").write_text(
+                "{malformed",
+                encoding="utf-8",
+            )
+
+            audit = provider.response_cache_audit()[
+                "collaboration_journal"
+            ]
+
+            self.assertEqual(audit["request_count"], 1)
+            self.assertEqual(audit["validated_request_count"], 1)
+            self.assertEqual(audit["invalid_request_count"], 0)
+            self.assertEqual(audit["response_file_count"], 2)
+            self.assertEqual(audit["validated_response_count"], 0)
+            self.assertEqual(audit["invalid_response_count"], 1)
+            self.assertEqual(audit["orphan_response_count"], 1)
+            self.assertEqual(audit["pending_response_count"], 1)
+
+    def test_response_envelope_extra_key_is_not_audited_as_valid(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = _provider(UsageLimitTransport())
+            journal = _configure(provider, Path(directory))
+            with self.assertRaises(StructuredProviderUnavailable):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload={
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": "2026-07-12",
+                    },
+                )
+            _, request = _request(journal)
+            imported = import_collaboration_response(
+                journal_root=journal,
+                request_id=request["request_id"],
+                response_payload=QUERY_RESPONSE,
+                agent_id="audit-agent",
+                canonical_task_name="/root/audit_agent",
+                agent_model="codex-collaboration",
+            )
+            tampered = {
+                **imported,
+                "extra_metadata": "not bound",
+            }
+            (
+                journal
+                / "responses"
+                / f"{request['request_id']}.json"
+            ).write_text(
+                json.dumps(tampered, ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+            audit = provider.response_cache_audit()[
+                "collaboration_journal"
+            ]
+
+            self.assertEqual(audit["validated_response_count"], 0)
+            self.assertEqual(audit["invalid_response_count"], 1)
+            self.assertEqual(audit["pending_response_count"], 1)
+
+    def test_phase94_explicit_codex_subagent_option_has_separate_provenance(
+        self,
+    ) -> None:
+        args = build_phase94_parser().parse_args(
+            [
+                "--as-of-date",
+                "2026-07-12",
+                "--symbols",
+                "005930",
+                "--archetype",
+                "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "--live-materialization-authorized",
+                "true",
+                "--checkpoint-resume",
+                "true",
+                "--gold-lane-isolated",
+                "true",
+                "--require-researcher-parity",
+                "true",
+                "--output-root",
+                "output/test",
+                "--research-provider",
+                "codex-subagent",
+            ]
+        )
+
+        provider = _build_research_provider(args)
+        self.assertIsInstance(
+            provider,
+            CodexSubagentFallbackResearchProvider,
+        )
+        manifest = _research_provider_manifest(provider)
+        self.assertTrue(manifest["provider_selected_explicitly"])
+        self.assertFalse(manifest["score_or_stage_authority"])
+        self.assertEqual(
+            manifest["provider_identity"]["fallback_condition"],
+            "CODEX_CLI_USAGE_LIMIT_CACHE_MISS_ONLY",
+        )
+        self.assertEqual(
+            manifest["provider_identity"]["provenance_assurance"],
+            "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+        )
+
+    def test_dedicated_importer_cli_writes_only_validated_response_namespace(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            provider = _provider(UsageLimitTransport())
+            journal = _configure(provider, root)
+            with self.assertRaises(StructuredProviderUnavailable):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload={
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": "2026-07-12",
+                    },
+                )
+            _, request = _request(journal)
+            draft_path = root / "subagent-draft.json"
+            draft_path.write_text(
+                json.dumps(QUERY_RESPONSE, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            stdout = io.StringIO()
+
+            with redirect_stdout(stdout):
+                exit_code = import_response_main(
+                    [
+                        "--journal-root",
+                        str(journal),
+                        "--request-id",
+                        request["request_id"],
+                        "--response-path",
+                        str(draft_path),
+                        "--agent-id",
+                        "agent-123",
+                        "--canonical-task-name",
+                        "/root/rank_partition_0",
+                        "--agent-model",
+                        "codex-collaboration",
+                    ]
+                )
+
+            self.assertEqual(exit_code, 0)
+            receipt = json.loads(stdout.getvalue())
+            self.assertEqual(
+                receipt["status"],
+                "COLLABORATION_RESPONSE_IMPORTED",
+            )
+            self.assertFalse(receipt["score_or_stage_authority"])
+            self.assertTrue(
+                (
+                    journal
+                    / "responses"
+                    / f"{request['request_id']}.json"
+                ).is_file()
+            )
+            self.assertEqual(
+                tuple(
+                    (
+                        root / "research_provider_response_cache"
+                    ).glob("source_query_generation-*.json")
+                ),
+                (),
+            )
+
+
+if __name__ == "__main__":
+    unittest.main()

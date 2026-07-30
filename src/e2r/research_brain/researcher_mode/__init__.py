@@ -118,6 +118,16 @@ from .component_researcher import (
     ValuationResearcher,
     build_component_researchers,
 )
+from .collaboration_provider_bridge import (
+    CODEX_SUBAGENT_FALLBACK_PROVIDER_NAME,
+    COLLABORATION_BRIDGE_SCHEMA_VERSION,
+    COLLABORATION_PROVIDER_NAME,
+    COLLABORATION_PROVENANCE_ASSURANCE,
+    CodexSubagentFallbackResearchProvider,
+    CollaborationCodexResearcherProvider,
+    CollaborationCodexSubagentTransport,
+    import_collaboration_response,
+)
 from .red_team_researcher import RedTeamResearchResult, RedTeamResearcher
 from .component_judge import (
     AnalystJudge,
@@ -565,7 +575,15 @@ __all__ = [
     "CalibrationJudge",
     "CandidateRankingResult",
     "CodexResearcherProvider",
+    "CodexSubagentFallbackResearchProvider",
+    "CollaborationCodexResearcherProvider",
+    "CollaborationCodexSubagentTransport",
+    "CODEX_SUBAGENT_FALLBACK_PROVIDER_NAME",
+    "COLLABORATION_BRIDGE_SCHEMA_VERSION",
+    "COLLABORATION_PROVIDER_NAME",
+    "COLLABORATION_PROVENANCE_ASSURANCE",
     "OllamaResearcherProvider",
+    "import_collaboration_response",
     "DeterministicScoreAggregator",
     "DeterministicScoreAggregationRun",
     "DeterministicTotalScore",
