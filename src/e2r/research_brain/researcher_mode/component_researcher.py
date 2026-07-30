@@ -1755,31 +1755,16 @@ class CodexResearcherProvider:
     def _complete_single_payload(
         self, *, pass_name: str, payload: Mapping[str, Any]
     ) -> Mapping[str, Any]:
-        if pass_name not in _PROVIDER_SCHEMAS:
-            raise ValueError(f"unsupported researcher pass: {pass_name}")
-        safe_payload = scrub_blind_research_payload(payload)
-        output_schema = _provider_output_schema(
+        (
+            safe_payload,
+            output_schema,
+            prompt,
+            prompt_hash,
+            schema_hash,
+        ) = _single_payload_request_material(
             pass_name=pass_name,
-            payload=safe_payload,
+            payload=payload,
         )
-        instruction = _pass_instruction(pass_name)
-        prompt = "\n".join(
-            (
-                "You are an independent E2R 2.0 research analyst.",
-                "Use only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.",
-                "Read the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.",
-                "For loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.",
-                "Decode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.",
-                "When the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.",
-                "Cite only ids present in the input. Do not invent facts, sources, metrics, or anchors.",
-                "Never output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.",
-                instruction,
-                "Return exactly one JSON object matching the supplied schema.",
-                json.dumps(safe_payload, ensure_ascii=False, sort_keys=True),
-            )
-        )
-        prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
-        schema_hash = _canonical_json_hash(output_schema)
         try:
             provider_identity = self._provider_identity()
         except (
@@ -1983,6 +1968,19 @@ class CodexResearcherProvider:
             }
         )
         return response.payload
+
+    def preview_prompt_hash(
+        self,
+        *,
+        pass_name: str,
+        payload: Mapping[str, Any],
+    ) -> str:
+        """Return the exact single-payload prompt hash without transport I/O."""
+
+        return _single_payload_request_material(
+            pass_name=pass_name,
+            payload=payload,
+        )[3]
 
     def configure_response_cache(self, directory: str | Path) -> None:
         """Bind one target checkpoint cache without weakening prompt validation."""
@@ -4584,6 +4582,41 @@ def _pending_result(
         provider_name=_provider_name(researcher.provider),
         prompt_hash=prompt_hash,
     )
+
+
+def _single_payload_request_material(
+    *,
+    pass_name: str,
+    payload: Mapping[str, Any],
+) -> tuple[Mapping[str, Any], Mapping[str, Any], str, str, str]:
+    """Build the exact transport request material without performing I/O."""
+
+    if pass_name not in _PROVIDER_SCHEMAS:
+        raise ValueError(f"unsupported researcher pass: {pass_name}")
+    safe_payload = scrub_blind_research_payload(payload)
+    output_schema = _provider_output_schema(
+        pass_name=pass_name,
+        payload=safe_payload,
+    )
+    instruction = _pass_instruction(pass_name)
+    prompt = "\n".join(
+        (
+            "You are an independent E2R 2.0 research analyst.",
+            "Use only the supplied as-of-date sources, claims, EvidenceFacts, structured records, and blind historical anchors.",
+            "Read the full economic mechanism; primitive names and question seeds are investigation hints, never score gates.",
+            "For loss-accounted transport projections, decode each row with its shared field legend, review every row/group, and never treat projection hashes as research completion.",
+            "Decode current_evidence_fact_graph rows with current_evidence_fact_projection.fact_fields and fact_value_dictionaries when dictionary indices are present. If source_claims contains a claims table, decode it with claim_fields; if it is a loss-accounted profile, review every semantic group and use the complete current/open citable fact rows for claim meaning. Resolved and superseded history is hash-accounted context and cannot drive a current score.",
+            "When the schema asks for fact_row_indices, return only exact non-negative fact_row_index values from those rows; deterministic code resolves immutable fact ids.",
+            "Cite only ids present in the input. Do not invent facts, sources, metrics, or anchors.",
+            "Never output a total score, canonical Stage, investment recommendation, MFE/MAE, or any future outcome.",
+            instruction,
+            "Return exactly one JSON object matching the supplied schema.",
+            json.dumps(safe_payload, ensure_ascii=False, sort_keys=True),
+        )
+    )
+    prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+    schema_hash = _canonical_json_hash(output_schema)
+    return safe_payload, output_schema, prompt, prompt_hash, schema_hash
 
 
 def _pass_instruction(pass_name: str) -> str:

@@ -7,6 +7,7 @@ from datetime import date
 import hashlib
 import json
 from pathlib import Path
+import re
 from typing import Any, Mapping, Sequence
 
 from e2r.production.metadata import write_json, write_jsonl
@@ -15,7 +16,16 @@ from e2r.research_brain.intelligence_schema import stable_intelligence_id
 from .component_judge import SynthesisResult
 from .component_researcher import ComponentResearchResult
 from .red_team_researcher import RedTeamResearchResult
-from .research_supervisor import ResearchSupervisor, ResearchSupervisorReview
+from .research_supervisor import (
+    ResearchSupervisor,
+    ResearchSupervisorReview,
+    SupervisorComponentFinding,
+    SupervisorFactGap,
+    SupervisorFailureAssessment,
+    SupervisorQueryDirection,
+    SupervisorSourceDirection,
+    _material_score_disagreement_component_ids,
+)
 from .saturation import (
     GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY,
     SATURATION_REVIEW_ROLES,
@@ -294,36 +304,50 @@ class ResearchEpochRunner:
             prior.target_id != target_id or prior.as_of_date != as_of_date
         ):
             raise ValueError("research epoch resume target/as_of mismatch")
-        epoch = (prior.epoch + 1) if prior else 1
-        supervisor_review = self.supervisor.review_epoch(
-            epoch=epoch,
-            target_id=target_id,
-            as_of_date=as_of_date,
+        replay = _saturation_transport_replay_context(
+            prior=prior,
+            saturation_reviewers=self.saturation_reviewers,
             component_results=component_results,
             red_team_result=red_team_result,
             synthesis_result=synthesis_result,
             structured_result=structured_result,
             evidence_facts=evidence_facts,
             source_graph_checkpoint=source_graph_checkpoint,
-            open_objectives=open_objectives,
-            prior_failures=prior_failures,
-            counter_and_supersession_route_proof=counter_and_supersession_route_proof,
-            prior_review=prior.supervisor_review if prior else None,
             score_gap_context=score_gap_context,
         )
-        state = _research_epoch_state(
-            target_id=target_id,
-            as_of_date=as_of_date,
-            epoch=epoch,
-            prior=prior,
-            evidence_facts=evidence_facts,
-            component_results=component_results,
-            source_graph_checkpoint=source_graph_checkpoint,
-            supervisor_review=supervisor_review,
-        )
-        base_checkpoint_id = _research_checkpoint_id(state)
-        state["checkpoint_id"] = base_checkpoint_id
-        state["checkpoint_hash"] = _research_checkpoint_hash(state)
+        if replay is not None:
+            epoch, supervisor_review, state = replay
+        else:
+            epoch = (prior.epoch + 1) if prior else 1
+            supervisor_review = self.supervisor.review_epoch(
+                epoch=epoch,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                component_results=component_results,
+                red_team_result=red_team_result,
+                synthesis_result=synthesis_result,
+                structured_result=structured_result,
+                evidence_facts=evidence_facts,
+                source_graph_checkpoint=source_graph_checkpoint,
+                open_objectives=open_objectives,
+                prior_failures=prior_failures,
+                counter_and_supersession_route_proof=counter_and_supersession_route_proof,
+                prior_review=prior.supervisor_review if prior else None,
+                score_gap_context=score_gap_context,
+            )
+            state = _research_epoch_state(
+                target_id=target_id,
+                as_of_date=as_of_date,
+                epoch=epoch,
+                prior=prior,
+                evidence_facts=evidence_facts,
+                component_results=component_results,
+                source_graph_checkpoint=source_graph_checkpoint,
+                supervisor_review=supervisor_review,
+            )
+            state["checkpoint_id"] = _research_checkpoint_id(state)
+            state["checkpoint_hash"] = _research_checkpoint_hash(state)
+        base_checkpoint_id = str(state["checkpoint_id"])
         preliminary = dict(state)
 
         reviewer_results: list[SaturationReviewerResult] = []
@@ -411,6 +435,224 @@ class ResearchEpochRunner:
             saturation_reviewer_results=tuple(reviewer_results),
             saturation_certificate=certificate,
         )
+
+
+_COLLABORATION_RESPONSE_PENDING_PATTERN = re.compile(
+    r"(?:^|:)COLLABORATION_RESPONSE_PENDING:"
+    r"COLLABREQ-[0-9a-f]{64}(?:$|:)"
+)
+
+
+def _saturation_transport_replay_context(
+    *,
+    prior: ResearchEpochCheckpoint | None,
+    saturation_reviewers: Sequence[SemanticSaturationReviewer],
+    component_results: Sequence[ComponentResearchResult],
+    red_team_result: RedTeamResearchResult | None,
+    synthesis_result: SynthesisResult | None,
+    structured_result: Any | None,
+    evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+    source_graph_checkpoint: Mapping[str, Any],
+    score_gap_context: Mapping[str, Any] | None,
+) -> tuple[int, ResearchSupervisorReview, dict[str, Any]] | None:
+    """Replay only an unchanged READY checkpoint's exact transport wait.
+
+    The persisted checkpoint contains reviewer-wait diagnostics that were not
+    part of the original reviewer prompt.  Reconstruct that preliminary
+    checkpoint, then require all three current prompts to match the persisted
+    prompt commitments before reusing the epoch/checkpoint identity.
+    """
+
+    if (
+        prior is None
+        or prior.schema_version != "e2r_research_epoch_checkpoint_v3"
+        or prior.status != "READY_FOR_INDEPENDENT_SATURATION_REVIEW"
+        or prior.semantic_saturation_certified
+        or len(saturation_reviewers) != len(SATURATION_REVIEW_ROLES)
+        or set(row.reviewer_role for row in saturation_reviewers)
+        != set(SATURATION_REVIEW_ROLES)
+        or len(prior.saturation_reviews) != len(SATURATION_REVIEW_ROLES)
+    ):
+        return None
+    if _material_score_disagreement_component_ids(score_gap_context):
+        return None
+    if str(source_graph_checkpoint.get("checkpoint_id") or "") != str(
+        prior.source_graph_checkpoint_id or ""
+    ):
+        return None
+
+    try:
+        supervisor_review = _coerce_supervisor_review(prior.supervisor_review)
+    except (KeyError, TypeError, ValueError):
+        return None
+    if (
+        supervisor_review.epoch != prior.epoch
+        or not supervisor_review.ready_for_independent_saturation_review
+        or synthesis_result is None
+        or synthesis_result.status != "COMPLETE"
+        or synthesis_result.memo is None
+        or supervisor_review.synthesis_memo_id
+        != synthesis_result.memo.memo_id
+        or supervisor_review.synthesis_memo_hash
+        != _stable_hash(synthesis_result.memo.to_dict())
+    ):
+        return None
+
+    reviewer_by_role = {
+        row.reviewer_role: row for row in saturation_reviewers
+    }
+    persisted_by_role: dict[str, Mapping[str, Any]] = {}
+    prompt_hashes: list[str] = []
+    pending_count = 0
+    for raw_result in prior.saturation_reviews:
+        if not isinstance(raw_result, Mapping):
+            return None
+        result = dict(raw_result)
+        role = str(result.get("reviewer_role") or "")
+        if role not in reviewer_by_role or role in persisted_by_role:
+            return None
+        reviewer = reviewer_by_role[role]
+        provider_name = str(
+            getattr(
+                reviewer.provider,
+                "provider_name",
+                type(reviewer.provider).__name__,
+            )
+        )
+        prompt_hash = str(result.get("prompt_hash") or "")
+        if (
+            not prompt_hash
+            or str(result.get("provider_name") or "") != provider_name
+        ):
+            return None
+        prompt_hashes.append(prompt_hash)
+        status = str(result.get("status") or "")
+        if status == "PENDING":
+            reasons = result.get("pending_reasons") or ()
+            if (
+                isinstance(reasons, (str, bytes))
+                or not isinstance(reasons, Sequence)
+                or not reasons
+                or result.get("review") is not None
+                or not all(
+                    _COLLABORATION_RESPONSE_PENDING_PATTERN.search(str(reason))
+                    for reason in reasons
+                )
+            ):
+                return None
+            pending_count += 1
+        elif status == "COMPLETE":
+            review = result.get("review")
+            if not isinstance(review, Mapping) or (
+                review.get("approve") is not True
+                or review.get("provider_backed") is not True
+                or str(review.get("reviewer_role") or "") != role
+                or str(review.get("checkpoint_id") or "")
+                != prior.checkpoint_id
+                or int(review.get("epoch") or 0) != prior.epoch
+                or str(review.get("provider_name") or "") != provider_name
+                or str(review.get("prompt_hash") or "") != prompt_hash
+                or review.get("gold_evaluation_status")
+                != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+                or review.get("gold_critical_fact_miss_count") is not None
+            ):
+                return None
+        else:
+            return None
+        persisted_by_role[role] = result
+    if pending_count == 0 or len(prompt_hashes) != len(set(prompt_hashes)):
+        return None
+
+    certificate = prior.saturation_certificate
+    if not isinstance(certificate, Mapping) or (
+        certificate.get("status") != "PENDING"
+        or certificate.get("semantic_saturation_certified") is not False
+        or str(certificate.get("checkpoint_id") or "")
+        != prior.checkpoint_id
+        or certificate.get("provider_backed_reviews_required") is not True
+        or certificate.get("gold_evaluation_status")
+        != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+        or certificate.get("gold_critical_fact_miss_count") is not None
+    ):
+        return None
+
+    state = dict(prior.to_dict())
+    state["saturation_reviews"] = []
+    state["saturation_certificate"] = None
+    state["semantic_saturation_certified"] = False
+    state["status"] = "READY_FOR_INDEPENDENT_SATURATION_REVIEW"
+    state["unresolved_material_questions"] = list(
+        supervisor_review.unresolved_material_questions
+    )
+    state["next_actions"] = list(supervisor_review.next_actions)
+    state["supervisor_review"] = supervisor_review.to_dict()
+    state["checkpoint_hash"] = _research_checkpoint_hash(state)
+    if _research_checkpoint_id(state) != prior.checkpoint_id:
+        return None
+
+    try:
+        for role, reviewer in reviewer_by_role.items():
+            current_prompt_hash = reviewer.preview_prompt_hash(
+                checkpoint=state,
+                supervisor_review=supervisor_review,
+                component_results=component_results,
+                red_team_result=red_team_result,
+                structured_result=structured_result,
+                evidence_facts=evidence_facts,
+                source_graph_checkpoint=source_graph_checkpoint,
+            )
+            if current_prompt_hash != str(
+                persisted_by_role[role].get("prompt_hash") or ""
+            ):
+                return None
+    except (
+        KeyError,
+        TypeError,
+        ValueError,
+        RuntimeError,
+        OSError,
+    ):
+        return None
+    return prior.epoch, supervisor_review, state
+
+
+def _coerce_supervisor_review(
+    value: ResearchSupervisorReview | Mapping[str, Any],
+) -> ResearchSupervisorReview:
+    if isinstance(value, ResearchSupervisorReview):
+        return value
+    payload = dict(value)
+    payload["component_status"] = dict(payload.get("component_status") or {})
+    for key in (
+        "unresolved_material_questions",
+        "source_family_gaps",
+        "parser_or_extractor_failures",
+        "next_actions",
+    ):
+        payload[key] = tuple(payload.get(key) or ())
+    payload["component_findings"] = tuple(
+        SupervisorComponentFinding(**dict(row))
+        for row in payload.get("component_findings") or ()
+    )
+    payload["missing_material_facts"] = tuple(
+        SupervisorFactGap(**dict(row))
+        for row in payload.get("missing_material_facts") or ()
+    )
+    payload["failure_assessments"] = tuple(
+        SupervisorFailureAssessment(**dict(row))
+        for row in payload.get("failure_assessments") or ()
+    )
+    payload["new_source_family_directions"] = tuple(
+        SupervisorSourceDirection(**dict(row))
+        for row in payload.get("new_source_family_directions") or ()
+    )
+    query_directions = []
+    for row in payload.get("query_direction_briefs") or ():
+        values = dict(row)
+        values["avoid_repeating"] = tuple(values.get("avoid_repeating") or ())
+        query_directions.append(SupervisorQueryDirection(**values))
+    payload["query_direction_briefs"] = tuple(query_directions)
+    return ResearchSupervisorReview(**payload)
 
 
 def write_research_epoch_run(

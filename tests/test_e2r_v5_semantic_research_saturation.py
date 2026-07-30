@@ -22,6 +22,8 @@ from e2r.research_brain.researcher_mode import (
     SEMANTIC_SATURATION_REVIEW_SCHEMA,
     ComponentResearchMemo,
     ComponentResearchResult,
+    CollaborationCodexResearcherProvider,
+    CollaborationCodexSubagentTransport,
     EvidenceFact,
     RedTeamMemo,
     RedTeamResearchResult,
@@ -37,6 +39,7 @@ from e2r.research_brain.researcher_mode import (
     StructuredMetricRecord,
     StructuredResearchResult,
     compile_phase87_semantic_research_saturation_audit,
+    import_collaboration_response,
     load_research_epoch_checkpoint,
     validate_source_graph_checkpoint,
     validated_quarantined_document_ids,
@@ -44,6 +47,9 @@ from e2r.research_brain.researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.research_supervisor import (
     build_counter_and_supersession_route_proof,
+)
+from e2r.research_brain.planning.provider_transport import (
+    StructuredProviderUnavailable,
 )
 from e2r.research_brain.researcher_mode.saturation import (
     _semantic_saturation_prompt_payload,
@@ -336,6 +342,24 @@ class Phase87SaturationProvider:
         }
 
 
+class Phase87PendingSaturationProvider(Phase87SaturationProvider):
+    def __init__(self, name: str) -> None:
+        super().__init__(name)
+        self.transport_pending = True
+
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        if not self.transport_pending:
+            return super().complete(pass_name=pass_name, payload=payload)
+        self.calls.append({"pass_name": pass_name, "payload": payload})
+        prompt_hash = _stable_test_hash(payload)
+        raise StructuredProviderUnavailable(
+            "COLLABORATION_RESPONSE_PENDING:"
+            f"COLLABREQ-{prompt_hash}"
+        )
+
+
 class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
 
@@ -458,6 +482,253 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             run.saturation_certificate.gold_critical_fact_miss_count  # type: ignore[union-attr]
         )
         self.assertTrue(_production_semantic_saturation_certified(run))
+
+    def test_clean_resume_consumes_exact_pending_saturation_requests_in_same_epoch(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            supervisor_provider = Phase87SupervisorProvider("READY")
+            saturation_providers = tuple(
+                CollaborationCodexResearcherProvider(
+                    transport=CollaborationCodexSubagentTransport()
+                )
+                for _ in SATURATION_REVIEW_ROLES
+            )
+            cache_root = Path(directory) / "research_provider_response_cache"
+            for provider in saturation_providers:
+                provider.configure_response_cache(cache_root)
+            journal_root = (
+                cache_root.parent
+                / "collaboration_codex_subagent_provider"
+            )
+            reviewers = tuple(
+                SemanticSaturationReviewer(
+                    reviewer_role=role,
+                    provider=provider,
+                )
+                for role, provider in zip(
+                    SATURATION_REVIEW_ROLES,
+                    saturation_providers,
+                )
+            )
+            runner = ResearchEpochRunner(
+                supervisor=ResearchSupervisor(provider=supervisor_provider),
+                saturation_reviewers=reviewers,
+            )
+            first = runner.run_epoch(
+                **_epoch_inputs(source_checkpoint=_source_checkpoint())
+            )
+            first_prompt_hashes = tuple(
+                row.prompt_hash for row in first.saturation_reviewer_results
+            )
+            request_paths = tuple(
+                (journal_root / "requests").glob("COLLABREQ-*.json")
+            )
+            first_request_ids = {path.stem for path in request_paths}
+            self.assertEqual(
+                first.checkpoint.status,
+                "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+            )
+            self.assertEqual(len(set(first_prompt_hashes)), 3)
+            self.assertEqual(len(first_request_ids), 3)
+            self.assertTrue(
+                all(
+                    "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                    in row.pending_reasons[0]
+                    for row in first.saturation_reviewer_results
+                )
+            )
+            response = {
+                "approve": True,
+                "seven_component_memos_complete": True,
+                "material_positive_routes_reviewed": True,
+                "counter_and_supersession_routes_checked": True,
+                "structured_data_complete": True,
+                "new_source_family_directions_reviewed": True,
+                "reasonable_positive_routes_remaining": False,
+                "unresolved_material_questions": [],
+                "rationale": (
+                    "현재 checkpoint만 보고 독립적으로 completeness를 검토했다."
+                ),
+            }
+            for index, request_id in enumerate(sorted(first_request_ids)):
+                import_collaboration_response(
+                    journal_root=journal_root,
+                    request_id=request_id,
+                    response_payload=response,
+                    agent_id=f"clean-resume-agent-{index}",
+                    canonical_task_name=f"/root/clean_resume_{index}",
+                    agent_model="codex-collaboration",
+                )
+            resumed = runner.run_epoch(
+                **_epoch_inputs(
+                    source_checkpoint=_source_checkpoint(),
+                    prior_checkpoint=first.checkpoint,
+                )
+            )
+
+            self.assertEqual(len(supervisor_provider.calls), 1)
+            self.assertEqual(resumed.checkpoint.epoch, first.checkpoint.epoch)
+            self.assertEqual(
+                resumed.checkpoint.checkpoint_id,
+                first.checkpoint.checkpoint_id,
+            )
+            self.assertEqual(
+                tuple(
+                    row.prompt_hash
+                    for row in resumed.saturation_reviewer_results
+                ),
+                first_prompt_hashes,
+            )
+            self.assertEqual(
+                {
+                    path.stem
+                    for path in (journal_root / "requests").glob(
+                        "COLLABREQ-*.json"
+                    )
+                },
+                first_request_ids,
+            )
+            self.assertTrue(resumed.checkpoint.semantic_saturation_certified)
+            self.assertEqual(
+                resumed.saturation_certificate.checkpoint_id,  # type: ignore[union-attr]
+                first.checkpoint.checkpoint_id,
+            )
+            self.assertFalse(
+                resumed.checkpoint.completion_based_on_fixed_rounds
+            )
+            self.assertFalse(
+                resumed.checkpoint.zero_search_result_treated_as_saturation
+            )
+            self.assertFalse(
+                resumed.checkpoint.transport_budget_treated_as_completion
+            )
+
+    def test_clean_resume_opens_new_epoch_when_bound_semantic_input_changes(
+        self,
+    ) -> None:
+        """Facts/source/components bind positive, failure, and counter routes."""
+
+        cases = (
+            (
+                "fact",
+                {
+                    "facts": (
+                        replace(
+                            _fact("FACT-1"),
+                            economic_mechanism=(
+                                "changed current cash conversion mechanism"
+                            ),
+                        ),
+                        *_route_facts()[1:],
+                    ),
+                },
+            ),
+            (
+                "source_graph",
+                {"source_checkpoint": _source_checkpoint(extra_epoch=True)},
+            ),
+            (
+                "component_and_synthesis",
+                {"components": _components(summary_suffix="v2")},
+            ),
+        )
+        for label, changes in cases:
+            with self.subTest(label=label):
+                supervisor_provider = Phase87SupervisorProvider("READY")
+                saturation_providers = tuple(
+                    Phase87PendingSaturationProvider(
+                        f"CHANGED-{label}-{index}"
+                    )
+                    for index in range(len(SATURATION_REVIEW_ROLES))
+                )
+                runner = ResearchEpochRunner(
+                    supervisor=ResearchSupervisor(
+                        provider=supervisor_provider
+                    ),
+                    saturation_reviewers=tuple(
+                        SemanticSaturationReviewer(
+                            reviewer_role=role,
+                            provider=provider,
+                        )
+                        for role, provider in zip(
+                            SATURATION_REVIEW_ROLES,
+                            saturation_providers,
+                        )
+                    ),
+                )
+                first = runner.run_epoch(
+                    **_epoch_inputs(source_checkpoint=_source_checkpoint())
+                )
+                resumed_inputs = {
+                    "source_checkpoint": _source_checkpoint(),
+                    "prior_checkpoint": first.checkpoint,
+                    **changes,
+                }
+                second = runner.run_epoch(**_epoch_inputs(**resumed_inputs))
+
+                self.assertEqual(second.checkpoint.epoch, 2)
+                self.assertNotEqual(
+                    second.checkpoint.checkpoint_id,
+                    first.checkpoint.checkpoint_id,
+                )
+                self.assertEqual(len(supervisor_provider.calls), 2)
+                self.assertNotEqual(
+                    tuple(
+                        row.prompt_hash
+                        for row in second.saturation_reviewer_results
+                    ),
+                    tuple(
+                        row.prompt_hash
+                        for row in first.saturation_reviewer_results
+                    ),
+                )
+
+    def test_clean_resume_fails_closed_on_new_material_judge_disagreement(
+        self,
+    ) -> None:
+        supervisor_provider = Phase87SupervisorProvider("READY")
+        reviewers = tuple(
+            SemanticSaturationReviewer(
+                reviewer_role=role,
+                provider=Phase87PendingSaturationProvider(
+                    f"DISAGREEMENT-{index}"
+                ),
+            )
+            for index, role in enumerate(SATURATION_REVIEW_ROLES)
+        )
+        runner = ResearchEpochRunner(
+            supervisor=ResearchSupervisor(provider=supervisor_provider),
+            saturation_reviewers=reviewers,
+        )
+        first = runner.run_epoch(
+            **_epoch_inputs(source_checkpoint=_source_checkpoint())
+        )
+        resumed_inputs = dict(
+            _epoch_inputs(
+                source_checkpoint=_source_checkpoint(),
+                prior_checkpoint=first.checkpoint,
+            )
+        )
+        resumed_inputs["score_gap_context"] = {
+            "component_research_requests": [
+                {
+                    "component_id": CANONICAL_COMPONENT_ORDER[0],
+                    "reason_codes": [
+                        "UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT"
+                    ],
+                }
+            ]
+        }
+        second = runner.run_epoch(**resumed_inputs)
+
+        self.assertEqual(second.checkpoint.epoch, 2)
+        self.assertEqual(len(supervisor_provider.calls), 2)
+        self.assertEqual(
+            second.checkpoint.status,
+            "NEXT_RESEARCH_REQUIRED",
+        )
+        self.assertEqual(second.saturation_reviewer_results, ())
 
     def test_large_saturation_payload_is_loss_accounted_and_under_transport_contract(
         self,

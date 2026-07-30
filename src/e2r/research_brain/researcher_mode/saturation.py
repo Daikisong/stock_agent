@@ -227,31 +227,13 @@ class SemanticSaturationReviewer:
                 pending_reasons=("SUPERVISOR_NOT_READY_FOR_SATURATION_REVIEW",),
                 provider_name=provider_name,
             )
-        validate_source_graph_checkpoint(
-            source_graph_checkpoint,
-            target_id=str(checkpoint.get("target_id") or ""),
-            as_of_date=str(checkpoint.get("as_of_date") or ""),
-        )
-        fact_payloads = tuple(
-            row.to_dict() if isinstance(row, EvidenceFact) else dict(row)
-            for row in evidence_facts
-        )
-        _validate_current_fact_roster(
-            checkpoint=checkpoint,
-            evidence_facts=fact_payloads,
-        )
-        if str(checkpoint.get("source_graph_checkpoint_id") or "") != str(
-            source_graph_checkpoint.get("checkpoint_id") or ""
-        ):
-            raise ValueError("saturation Source Graph binding is stale")
-        payload = _semantic_saturation_prompt_payload(
-            reviewer_role=self.reviewer_role,
+        payload = self._validated_prompt_payload(
             checkpoint=checkpoint,
             supervisor_review=supervisor_review,
             component_results=component_results,
             red_team_result=red_team_result,
             structured_result=structured_result,
-            evidence_facts=fact_payloads,
+            evidence_facts=evidence_facts,
             source_graph_checkpoint=source_graph_checkpoint,
         )
         try:
@@ -300,6 +282,77 @@ class SemanticSaturationReviewer:
                 provider_name=provider_name,
                 prompt_hash=_provider_prompt_hash(self.provider, payload),
             )
+
+    def preview_prompt_hash(
+        self,
+        *,
+        checkpoint: Mapping[str, Any],
+        supervisor_review: ResearchSupervisorReview,
+        component_results: Sequence[ComponentResearchResult],
+        red_team_result: RedTeamResearchResult | None,
+        structured_result: Any | None,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        source_graph_checkpoint: Mapping[str, Any],
+    ) -> str:
+        """Commit to the exact current prompt without consuming transport."""
+
+        payload = self._validated_prompt_payload(
+            checkpoint=checkpoint,
+            supervisor_review=supervisor_review,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            structured_result=structured_result,
+            evidence_facts=evidence_facts,
+            source_graph_checkpoint=source_graph_checkpoint,
+        )
+        preview = getattr(self.provider, "preview_prompt_hash", None)
+        if callable(preview):
+            return str(
+                preview(
+                    pass_name="SEMANTIC_SATURATION_REVIEW",
+                    payload=payload,
+                )
+            )
+        return _payload_hash(payload)
+
+    def _validated_prompt_payload(
+        self,
+        *,
+        checkpoint: Mapping[str, Any],
+        supervisor_review: ResearchSupervisorReview,
+        component_results: Sequence[ComponentResearchResult],
+        red_team_result: RedTeamResearchResult | None,
+        structured_result: Any | None,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        source_graph_checkpoint: Mapping[str, Any],
+    ) -> Mapping[str, Any]:
+        validate_source_graph_checkpoint(
+            source_graph_checkpoint,
+            target_id=str(checkpoint.get("target_id") or ""),
+            as_of_date=str(checkpoint.get("as_of_date") or ""),
+        )
+        fact_payloads = tuple(
+            row.to_dict() if isinstance(row, EvidenceFact) else dict(row)
+            for row in evidence_facts
+        )
+        _validate_current_fact_roster(
+            checkpoint=checkpoint,
+            evidence_facts=fact_payloads,
+        )
+        if str(checkpoint.get("source_graph_checkpoint_id") or "") != str(
+            source_graph_checkpoint.get("checkpoint_id") or ""
+        ):
+            raise ValueError("saturation Source Graph binding is stale")
+        return _semantic_saturation_prompt_payload(
+            reviewer_role=self.reviewer_role,
+            checkpoint=checkpoint,
+            supervisor_review=supervisor_review,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            structured_result=structured_result,
+            evidence_facts=fact_payloads,
+            source_graph_checkpoint=source_graph_checkpoint,
+        )
 
 
 class SemanticSaturationCertifier:
