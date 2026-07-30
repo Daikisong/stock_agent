@@ -43,6 +43,7 @@ from tests.test_e2r_v5_fact_extraction import FactProvider, _document
 from tests.test_e2r_v5_researcher_mode import ScriptedResearchProvider
 from tests.test_e2r_v5_source_graph_acquisition import SourceBrainProvider
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    _score_gap_context_for_supervisor,
     _source_checkpoint_is_ready_for_readonly_replay,
     _source_checkpoint_needs_fact_extraction_recovery,
     _source_checkpoint_needs_downstream_provider_recovery,
@@ -3583,12 +3584,13 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             },
         )
 
-    def test_score_and_supervisor_gaps_reopen_only_their_component_objectives(
+    def test_score_disagreement_stays_supervisor_owned_while_fact_gaps_reopen_sources(
         self,
     ) -> None:
         target_id = "CURRENT-TARGET"
         as_of_date = "2026-06-29"
-        unresolved = {"market_mispricing", "valuation_rerating"}
+        score_unresolved = {"market_mispricing", "valuation_rerating"}
+        source_unresolved = {"market_mispricing"}
         objectives = tuple(
             {
                 "objective_id": f"OBJECTIVE-{component_id}",
@@ -3604,7 +3606,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 "query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
                 "deterministic_query_synthesis": False,
             }
-            for component_id in sorted(unresolved)
+            for component_id in sorted(score_unresolved)
         ]
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -3637,12 +3639,12 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                                 "component_id": component_id,
                                 "status": (
                                     "RESEARCH_REQUIRED"
-                                    if component_id in unresolved
+                                    if component_id in score_unresolved
                                     else "COMPLETE"
                                 ),
                                 "pending_reasons": (
                                     ["UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT"]
-                                    if component_id in unresolved
+                                    if component_id in score_unresolved
                                     else []
                                 ),
                             }
@@ -3694,19 +3696,228 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             {
                 f"OBJECTIVE-{component_id}"
                 for component_id in CANONICAL_COMPONENT_ORDER
-                if component_id not in unresolved
+                if component_id not in source_unresolved
             },
         )
-        score_gap = context["score_gap_context"]
+        # Only market remains open because it has a concrete Supervisor fact
+        # gap.  Valuation has a raw query direction but no matching fact gap,
+        # so it cannot create source work.  Raw judge disagreement itself is
+        # routed directly to ResearchSupervisor.
+        self.assertEqual(context["score_gap_context"], {})
+        source_gap = context["supervisor_source_gap_context"]
         self.assertEqual(
-            set(score_gap["unresolved_component_ids"]), unresolved
+            {
+                row["component_id"]
+                for row in source_gap["missing_material_facts"]
+            },
+            source_unresolved,
         )
-        self.assertEqual(len(score_gap["component_research_requests"]), 2)
+        self.assertEqual(source_gap["query_direction_briefs"], [])
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "component_research_memos.jsonl").write_text(
+                "\n".join(
+                    json.dumps(
+                        {
+                            "component_id": component_id,
+                            "research_complete": True,
+                        }
+                    )
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "deterministic_score_aggregation_run.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "status": "DETERMINISTIC_SCORE_RESEARCH_REQUIRED",
+                        "score_valid": False,
+                        "pending_reasons": [
+                            "EXACT_SEVEN_COMPONENT_DECISIONS_REQUIRED"
+                        ],
+                        "research_requests": requests,
+                        "component_results": [],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            score_only_context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=objectives,
+            )
+
         self.assertEqual(
-            score_gap["next_query_generation_authority"],
-            "LLM_RESEARCH_SUPERVISOR",
+            set(score_only_context["resolved_objective_ids"]),
+            {row["objective_id"] for row in objectives},
         )
-        self.assertFalse(score_gap["deterministic_query_synthesis"])
+        self.assertEqual(score_only_context["score_gap_context"], {})
+        self.assertEqual(
+            score_only_context["supervisor_source_gap_context"], {}
+        )
+
+    def test_only_retryable_parser_or_fetch_failures_reopen_source_path(
+        self,
+    ) -> None:
+        target_id = "CURRENT-TARGET"
+        as_of_date = "2026-06-29"
+        objectives = tuple(
+            {
+                "objective_id": f"OBJECTIVE-{component_id}",
+                "component_id": component_id,
+            }
+            for component_id in CANONICAL_COMPONENT_ORDER
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "component_research_memos.jsonl").write_text(
+                "\n".join(
+                    json.dumps(
+                        {
+                            "component_id": component_id,
+                            "research_complete": True,
+                        }
+                    )
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        "checkpoint_id": "EPOCH-FAILURE-ROUTING",
+                        "epoch": 3,
+                        "status": "NEXT_RESEARCH_REQUIRED",
+                        "supervisor_review": {
+                            "status": "NEXT_RESEARCH_REQUIRED",
+                            "missing_material_facts": [],
+                            "failure_assessments": [
+                                {
+                                    "failure_id": "PROVIDER-RETRYABLE",
+                                    "classification": "PROVIDER_FAILURE",
+                                    "retryable": True,
+                                },
+                                {
+                                    "failure_id": "PARSER-NONRETRYABLE",
+                                    "classification": "PARSER_EXTRACTOR_FAILURE",
+                                    "retryable": False,
+                                },
+                                {
+                                    "failure_id": "PARSER-RETRYABLE",
+                                    "classification": "PARSER_EXTRACTOR_FAILURE",
+                                    "retryable": True,
+                                },
+                                {
+                                    "failure_id": "FETCH-RETRYABLE",
+                                    "classification": "FETCH_FAILURE",
+                                    "retryable": True,
+                                },
+                            ],
+                            "parser_or_extractor_failures": [
+                                "PARSER-NONRETRYABLE",
+                                "PARSER-RETRYABLE",
+                            ],
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=objectives,
+            )
+
+        source_gap = context["supervisor_source_gap_context"]
+        self.assertEqual(
+            {
+                row["failure_id"]
+                for row in source_gap["failure_assessments"]
+            },
+            {"PARSER-RETRYABLE", "FETCH-RETRYABLE"},
+        )
+        self.assertEqual(
+            source_gap["parser_or_extractor_failures"],
+            ["PARSER-RETRYABLE"],
+        )
+
+    def test_score_supervisor_projection_keeps_all_three_exact_judge_ranges(
+        self,
+    ) -> None:
+        component_id = "bottleneck_pricing"
+        decisions = tuple(
+            SimpleNamespace(
+                role=role,
+                proposed_points=points,
+                allowed_range=allowed_range,
+                rationale=f"{role} rationale",
+                disagreements=(f"{role} disagreement",),
+                why_not_higher=f"{role} upper bound",
+                why_not_lower=f"{role} lower bound",
+            )
+            for role, points, allowed_range in (
+                ("ANALYST", 16.5, (14.9, 18.0)),
+                ("SKEPTIC", 15.5, (14.5, 17.0)),
+                ("CALIBRATION_JUDGE", 18.35, (18.05, 18.75)),
+            )
+        )
+        aggregation = SimpleNamespace(
+            to_score_gap_context=lambda: {
+                "component_research_requests": [
+                    {
+                        "component_id": component_id,
+                        "reason_codes": [
+                            "UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT"
+                        ],
+                    }
+                ]
+            },
+            component_results=(
+                SimpleNamespace(
+                    component_id=component_id,
+                    material_disagreement=True,
+                    pending_reasons=(
+                        "UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT",
+                    ),
+                ),
+            ),
+        )
+        scoring_memos = SimpleNamespace(
+            component_memos=(
+                SimpleNamespace(
+                    component_id=component_id,
+                    judge_decisions=decisions,
+                ),
+            )
+        )
+
+        context = _score_gap_context_for_supervisor(
+            aggregation=aggregation,
+            scoring_memos=scoring_memos,
+        )
+
+        self.assertEqual(
+            context["material_disagreement_component_ids"], [component_id]
+        )
+        reviews = context["material_disagreement_judge_reviews"][0][
+            "judge_reviews"
+        ]
+        self.assertEqual(
+            [row["role"] for row in reviews],
+            ["ANALYST", "SKEPTIC", "CALIBRATION_JUDGE"],
+        )
+        self.assertEqual(
+            [row["allowed_range"] for row in reviews],
+            [[14.9, 18.0], [14.5, 17.0], [18.05, 18.75]],
+        )
 
 
 if __name__ == "__main__":

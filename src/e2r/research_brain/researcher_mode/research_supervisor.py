@@ -294,6 +294,7 @@ class ResearchSupervisor:
         prior_failures: Sequence[Mapping[str, Any]],
         counter_and_supersession_route_proof: Sequence[Mapping[str, Any]],
         prior_review: ResearchSupervisorReview | Mapping[str, Any] | None = None,
+        score_gap_context: Mapping[str, Any] | None = None,
     ) -> ResearchSupervisorReview:
         cutoff = date.fromisoformat(as_of_date)
         facts = tuple(_coerce_fact(row) for row in evidence_facts)
@@ -311,6 +312,19 @@ class ResearchSupervisor:
         }
         if "" in objective_ids or len(objective_ids) != len(open_objectives):
             raise ValueError("open research objectives require unique ids")
+        objective_component_by_id = {
+            str(row.get("objective_id") or "").strip(): str(
+                row.get("component_id") or ""
+            ).strip()
+            for row in open_objectives
+        }
+        if any(
+            component_id not in CANONICAL_COMPONENT_ORDER
+            for component_id in objective_component_by_id.values()
+        ):
+            raise ValueError(
+                "open research objectives require canonical component ids"
+            )
         failures = _collect_prior_failures(
             prior_failures,
             source_graph_checkpoint=source_graph_checkpoint,
@@ -368,6 +382,12 @@ class ResearchSupervisor:
                 for value in failure_projection["failure_group_members"]
             )
         )
+        material_score_disagreement_component_ids = (
+            _material_score_disagreement_component_ids(score_gap_context)
+        )
+        transport_wait_score_component_ids = (
+            _transport_wait_score_component_ids(score_gap_context)
+        )
         payload = scrub_blind_research_payload(
             {
                 "reviewer_role": self.reviewer_role,
@@ -399,14 +419,32 @@ class ResearchSupervisor:
                     "canonical_component_ids": list(CANONICAL_COMPONENT_ORDER),
                     "failure_group_ids": list(required_failure_group_ids),
                     "failure_group_count": len(required_failure_group_ids),
+                    "material_score_disagreement_component_ids": list(
+                        material_score_disagreement_component_ids
+                    ),
+                    "transport_wait_score_component_ids": list(
+                        transport_wait_score_component_ids
+                    ),
                     "instruction": (
                         "component_findings must contain every canonical component "
                         "id exactly once. failure_assessments must contain every "
                         "failure_group_id exactly once, with no omission, duplicate, "
                         "or extra id. An empty failure_group_ids roster requires an "
-                        "empty failure_assessments array."
+                        "empty failure_assessments array. Every component in "
+                        "material_score_disagreement_component_ids must be marked "
+                        "memo_sufficient=false until a semantic component rewrite "
+                        "and new independent judges remove that disagreement. Decide "
+                        "from the supplied judge reviews whether a genuinely missing "
+                        "source-backed fact exists; do not invent a query merely to "
+                        "change a score. Transport-only missing judge responses do "
+                        "not reopen an otherwise complete component memo. A source "
+                        "or query direction is valid only when missing_material_facts "
+                        "contains a concrete fact gap for that objective's component."
                     ),
                 },
+                "deterministic_score_gap_context": dict(
+                    score_gap_context or {}
+                ),
                 "counter_and_supersession_route_proof": project_counter_route_proof(
                     counter_and_supersession_route_proof
                 ),
@@ -469,6 +507,13 @@ class ResearchSupervisor:
                             "failure_group_members"
                         ].items()
                     },
+                    material_score_disagreement_component_ids=(
+                        material_score_disagreement_component_ids
+                    ),
+                    transport_wait_score_component_ids=(
+                        transport_wait_score_component_ids
+                    ),
+                    objective_component_by_id=objective_component_by_id,
                     counter_route_proof_complete=counter_route_proof_complete,
                     source_graph_zero_result_only=source_graph_zero_result_only,
                     source_graph_research_pending=source_graph_research_pending,
@@ -529,6 +574,12 @@ class ResearchSupervisor:
                             "required_failure_group_ids": list(
                                 required_failure_group_ids
                             ),
+                            "material_score_disagreement_component_ids": list(
+                                material_score_disagreement_component_ids
+                            ),
+                            "transport_wait_score_component_ids": list(
+                                transport_wait_score_component_ids
+                            ),
                             "failure_assessment_roster_diagnostics": (
                                 failure_roster_diagnostics
                             ),
@@ -549,6 +600,12 @@ class ResearchSupervisor:
                                 ),
                                 "source_graph_research_pending": (
                                     source_graph_research_pending
+                                ),
+                                "material_score_disagreement_component_ids": list(
+                                    material_score_disagreement_component_ids
+                                ),
+                                "transport_wait_score_component_ids": list(
+                                    transport_wait_score_component_ids
                                 ),
                             },
                             "instruction": (
@@ -574,7 +631,17 @@ class ResearchSupervisor:
                                 "is valid only when the classification is exactly "
                                 "SOURCE_ABSENCE_CANDIDATE and the id is listed in "
                                 "source_absence_proof_valid_group_ids; otherwise it must "
-                                "be false. Do not invent evidence, queries, scores, or stages."
+                                "be false. Mark every component listed in "
+                                "material_score_disagreement_component_ids as "
+                                "memo_sufficient=false and explain the semantic "
+                                "rewrite needed; request a new source only when the "
+                                "supplied judge reviews identify a concrete missing "
+                                "source-backed fact. Keep every component listed in "
+                                "transport_wait_score_component_ids sufficient unless "
+                                "you also return a concrete missing_material_facts row "
+                                "for that component. Every source/query direction must "
+                                "map to a component with such a fact row. Do not invent "
+                                "evidence, queries, scores, or stages."
                             ),
                         },
                     }
@@ -713,6 +780,9 @@ def _review_from_provider_response(
     objective_ids: set[str],
     failure_by_id: Mapping[str, Mapping[str, Any]],
     failure_group_members: Mapping[str, Sequence[str]],
+    material_score_disagreement_component_ids: Sequence[str],
+    transport_wait_score_component_ids: Sequence[str],
+    objective_component_by_id: Mapping[str, str],
     counter_route_proof_complete: bool,
     source_graph_zero_result_only: bool,
     source_graph_research_pending: bool,
@@ -733,6 +803,14 @@ def _review_from_provider_response(
         finding_components
     ) != set(CANONICAL_COMPONENT_ORDER):
         raise ValueError("supervisor must assess every component exactly once")
+    finding_by_component = {row.component_id: row for row in findings}
+    if any(
+        finding_by_component[component_id].memo_sufficient
+        for component_id in material_score_disagreement_component_ids
+    ):
+        raise ValueError(
+            "material score disagreement requires a semantic component rewrite"
+        )
     gaps = tuple(
         SupervisorFactGap(
             component_id=str(row["component_id"]),
@@ -742,6 +820,15 @@ def _review_from_provider_response(
         )
         for row in _mapping_rows(response, "missing_material_facts")
     )
+    gap_component_ids = {row.component_id for row in gaps}
+    if any(
+        not finding_by_component[component_id].memo_sufficient
+        and component_id not in gap_component_ids
+        for component_id in transport_wait_score_component_ids
+    ):
+        raise ValueError(
+            "transport-pending judge responses cannot reopen a component memo"
+        )
     group_assessments = tuple(
         SupervisorFailureAssessment(
             failure_id=str(row["failure_id"]),
@@ -814,6 +901,13 @@ def _review_from_provider_response(
     )
     if any(row.objective_id not in objective_ids for row in (*directions, *query_directions)):
         raise ValueError("supervisor referenced an unknown research objective")
+    if any(
+        objective_component_by_id[row.objective_id] not in gap_component_ids
+        for row in (*directions, *query_directions)
+    ):
+        raise ValueError(
+            "supervisor source/query direction requires a concrete component fact gap"
+        )
     unresolved = _string_tuple(response.get("unresolved_material_questions"))
     next_actions = _string_tuple(response.get("next_actions"))
     counter_checked = _required_bool(response, "counter_and_supersession_checked")
@@ -1662,6 +1756,104 @@ def _string_tuple(value: Any) -> tuple[str, ...]:
     if any(not row for row in rows) or len(rows) != len(set(rows)):
         raise ValueError("string array must contain unique non-empty values")
     return rows
+
+
+def _material_score_disagreement_component_ids(
+    context: Mapping[str, Any] | None,
+) -> tuple[str, ...]:
+    """Return only semantic score disagreements, never transport waits.
+
+    A missing judge response is an in-flight transport leaf and must not
+    rewrite a complete component memo.  An aggregation-confirmed material
+    disagreement is different: the three completed judges could not establish
+    one intersecting range, so the semantic Supervisor must send that exact
+    component back for clarification.
+    """
+
+    if context is None:
+        return ()
+    if not isinstance(context, Mapping):
+        raise TypeError("score gap context must be an object")
+    requests = context.get("component_research_requests") or ()
+    if isinstance(requests, (str, bytes)) or not isinstance(
+        requests, Sequence
+    ):
+        raise TypeError("component score research requests must be an array")
+    component_ids = []
+    for row in requests:
+        if not isinstance(row, Mapping):
+            raise TypeError("component score research request must be an object")
+        reasons = row.get("reason_codes") or ()
+        if isinstance(reasons, (str, bytes)) or not isinstance(
+            reasons, Sequence
+        ):
+            raise TypeError("component score research reasons must be an array")
+        if "UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT" not in {
+            str(value) for value in reasons
+        }:
+            continue
+        component_id = str(row.get("component_id") or "")
+        if component_id not in CANONICAL_COMPONENT_ORDER:
+            raise ValueError(
+                "material score disagreement has an unknown component"
+            )
+        component_ids.append(component_id)
+    return tuple(
+        component_id
+        for component_id in CANONICAL_COMPONENT_ORDER
+        if component_id in set(component_ids)
+    )
+
+
+def _transport_wait_score_component_ids(
+    context: Mapping[str, Any] | None,
+) -> tuple[str, ...]:
+    """Identify score requests caused only by missing provider responses."""
+
+    if context is None:
+        return ()
+    if not isinstance(context, Mapping):
+        raise TypeError("score gap context must be an object")
+    requests = context.get("component_research_requests") or ()
+    if isinstance(requests, (str, bytes)) or not isinstance(
+        requests, Sequence
+    ):
+        raise TypeError("component score research requests must be an array")
+    component_ids = []
+    for row in requests:
+        if not isinstance(row, Mapping):
+            raise TypeError("component score research request must be an object")
+        reasons = row.get("reason_codes") or ()
+        if isinstance(reasons, (str, bytes)) or not isinstance(
+            reasons, Sequence
+        ):
+            raise TypeError("component score research reasons must be an array")
+        normalized = tuple(str(value) for value in reasons)
+        if (
+            normalized
+            and "UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT" not in normalized
+            and any(
+                reason in {
+                    "COMPONENT_SCORING_MEMO_NOT_READY",
+                    "COMPONENT_SCORING_MEMO_RUN_NOT_READY",
+                    "THREE_VALID_JUDGE_CONSENSUS_MISSING",
+                }
+                or "PROVIDER_ERROR:" in reason
+                or "COLLABORATION_RESPONSE_PENDING" in reason
+                for reason in normalized
+            )
+        ):
+            component_id = str(row.get("component_id") or "")
+            if component_id not in CANONICAL_COMPONENT_ORDER:
+                raise ValueError(
+                    "transport score wait has an unknown component"
+                )
+            component_ids.append(component_id)
+    return tuple(
+        component_id
+        for component_id in CANONICAL_COMPONENT_ORDER
+        if component_id in set(component_ids)
+    )
 
 
 def _provider_prompt_hash(

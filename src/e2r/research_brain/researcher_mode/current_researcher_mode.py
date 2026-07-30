@@ -397,7 +397,7 @@ class CurrentResearcherModeTargetRunner:
                         prior_context["score_gap_context"]
                     ),
                     "prior_supervisor_gap": dict(
-                        prior_context["supervisor_gap_context"]
+                        prior_context["supervisor_source_gap_context"]
                     ),
                     "prior_research_epoch": prior_context["research_epoch"],
                 },
@@ -434,7 +434,7 @@ class CurrentResearcherModeTargetRunner:
                     prior_context["score_gap_context"]
                 ),
                 "prior_supervisor_gap": dict(
-                    prior_context["supervisor_gap_context"]
+                    prior_context["supervisor_source_gap_context"]
                 ),
             },
             extraction_mode=(
@@ -625,6 +625,10 @@ class CurrentResearcherModeTargetRunner:
             # not an observed miss.  The post-run evaluator may replace it with
             # the real count only after production has closed.
             gold_critical_fact_miss_count=1,
+            score_gap_context=_score_gap_context_for_supervisor(
+                aggregation=aggregation,
+                scoring_memos=scoring_memos,
+            ),
         )
         write_research_epoch_run(epoch, root)
         provider_cache_audit = _provider_response_cache_audit(self.provider)
@@ -1947,70 +1951,24 @@ def _load_prior_research_context(
                 "query_generation_owner": "LLM",
                 "deterministic_fallback_query_allowed": False,
             }
+    # Deterministic score disagreements are semantic Supervisor input, not a
+    # direct source-query instruction.  Sending them to SOURCE_QUERY_GENERATION
+    # made the planner see broad monitoring uncertainties and create more
+    # documents even when the actual leaf was only non-intersecting judge
+    # ranges.  The current aggregation is passed to ResearchSupervisor later
+    # in this same run; only a concrete Supervisor fact gap or query direction
+    # may reopen acquisition on the following resume.
     score_gap_context: Mapping[str, Any] = {}
-    score_unresolved_components: set[str] = set()
-    score_path = root / "deterministic_score_aggregation_run.json"
-    if score_path.is_file():
-        score = _read_json(score_path)
-        if (
-            str(score.get("target_id") or "") == target_id
-            and str(score.get("as_of_date") or "") == as_of_date
-            and score.get("score_valid") is not True
-        ):
-            # Older checkpoints copied this run-level conjunction into every
-            # component.  It is diagnostic, not a component-specific research
-            # gap, so only requests with an additional actionable reason reopen
-            # that component.
-            run_only_reasons = {"COMPONENT_SCORING_MEMO_RUN_NOT_READY"}
-            actionable_requests: list[Mapping[str, Any]] = []
-            for candidate in score.get("research_requests") or ():
-                if not isinstance(candidate, Mapping):
-                    continue
-                reason_codes = tuple(
-                    str(reason)
-                    for reason in candidate.get("reason_codes") or ()
-                    if str(reason).strip()
-                )
-                component_id = str(candidate.get("component_id") or "")
-                if (
-                    component_id in CANONICAL_COMPONENT_ORDER
-                    and any(reason not in run_only_reasons for reason in reason_codes)
-                ):
-                    score_unresolved_components.add(component_id)
-                    actionable_requests.append(dict(candidate))
-            for candidate in score.get("component_results") or ():
-                if not isinstance(candidate, Mapping):
-                    continue
-                component_id = str(candidate.get("component_id") or "")
-                pending_reasons = tuple(
-                    str(reason)
-                    for reason in candidate.get("pending_reasons") or ()
-                    if str(reason).strip()
-                )
-                if (
-                    component_id in CANONICAL_COMPONENT_ORDER
-                    and candidate.get("status") != "COMPLETE"
-                    and any(
-                        reason not in run_only_reasons
-                        for reason in pending_reasons
-                    )
-                ):
-                    score_unresolved_components.add(component_id)
-            score_gap_context = {
-                "status": score.get("status"),
-                "score_valid": False,
-                "pending_reasons": list(score.get("pending_reasons") or ()),
-                "component_research_requests": actionable_requests,
-                "unresolved_component_ids": sorted(
-                    score_unresolved_components
-                ),
-                "next_query_generation_authority": "LLM_RESEARCH_SUPERVISOR",
-                "deterministic_query_synthesis": False,
-            }
     epoch_context = None
     supervisor_gap_context: Mapping[str, Any] = {}
+    supervisor_source_gap_context: Mapping[str, Any] = {}
     supervisor_unresolved_components: set[str] = set()
     supervisor_unresolved_objectives: set[str] = set()
+    objective_component_by_id = {
+        str(row.get("objective_id") or ""): str(row.get("component_id") or "")
+        for row in objectives
+        if str(row.get("objective_id") or "")
+    }
     epoch_path = root / "research_epoch_checkpoint.json"
     if epoch_path.is_file():
         epoch = _read_json(epoch_path)
@@ -2048,15 +2006,6 @@ def _load_prior_research_context(
                 )
                 if key in supervisor
             }
-            for finding in supervisor.get("component_findings") or ():
-                if not isinstance(finding, Mapping):
-                    continue
-                component_id = str(finding.get("component_id") or "")
-                if (
-                    component_id in CANONICAL_COMPONENT_ORDER
-                    and finding.get("memo_sufficient") is False
-                ):
-                    supervisor_unresolved_components.add(component_id)
             for gap in supervisor.get("missing_material_facts") or ():
                 if isinstance(gap, Mapping):
                     component_id = str(gap.get("component_id") or "")
@@ -2069,16 +2018,76 @@ def _load_prior_research_context(
                 for direction in supervisor.get(key) or ():
                     if isinstance(direction, Mapping):
                         objective_id = str(direction.get("objective_id") or "")
-                        if objective_id:
+                        if (
+                            objective_id
+                            and objective_component_by_id.get(objective_id)
+                            in supervisor_unresolved_components
+                        ):
                             supervisor_unresolved_objectives.add(objective_id)
+            concrete_gap_components = set(supervisor_unresolved_components)
+            source_failures = [
+                dict(row)
+                for row in supervisor.get("failure_assessments") or ()
+                if isinstance(row, Mapping)
+                and row.get("retryable") is True
+                and str(row.get("classification") or "")
+                in {"PARSER_EXTRACTOR_FAILURE", "FETCH_FAILURE"}
+            ]
+            retryable_parser_failure_ids = {
+                str(row.get("failure_id") or "")
+                for row in source_failures
+                if str(row.get("classification") or "")
+                == "PARSER_EXTRACTOR_FAILURE"
+                and str(row.get("failure_id") or "")
+            }
+            parser_failures = list(
+                failure_id
+                for failure_id in (
+                    supervisor.get("parser_or_extractor_failures") or ()
+                )
+                if str(failure_id) in retryable_parser_failure_ids
+            )
+            filtered_directions: dict[str, list[Mapping[str, Any]]] = {}
+            for key in (
+                "new_source_family_directions",
+                "query_direction_briefs",
+            ):
+                filtered_directions[key] = [
+                    dict(direction)
+                    for direction in supervisor.get(key) or ()
+                    if isinstance(direction, Mapping)
+                    and objective_component_by_id.get(
+                        str(direction.get("objective_id") or "")
+                    )
+                    in concrete_gap_components
+                ]
+            missing_facts = [
+                dict(row)
+                for row in supervisor.get("missing_material_facts") or ()
+                if isinstance(row, Mapping)
+            ]
+            if missing_facts or source_failures or parser_failures:
+                supervisor_source_gap_context = {
+                    "status": supervisor.get("status"),
+                    "missing_material_facts": missing_facts,
+                    "failure_assessments": source_failures,
+                    "new_source_family_directions": filtered_directions[
+                        "new_source_family_directions"
+                    ],
+                    "query_direction_briefs": filtered_directions[
+                        "query_direction_briefs"
+                    ],
+                    "source_family_gaps": list(
+                        supervisor.get("source_family_gaps") or ()
+                    ),
+                    "parser_or_extractor_failures": parser_failures,
+                }
     resolved_objective_ids = tuple(
         str(row["objective_id"])
         for row in objectives
         if str(row.get("component_id") or "") in complete_components
         and str(row.get("component_id") or "")
         not in structured_missing_components
-        and str(row.get("component_id") or "")
-        not in score_unresolved_components
         and str(row.get("component_id") or "")
         not in supervisor_unresolved_components
         and str(row.get("objective_id") or "")
@@ -2091,6 +2100,7 @@ def _load_prior_research_context(
         "structured_gap_context": structured_gap_context,
         "score_gap_context": score_gap_context,
         "supervisor_gap_context": supervisor_gap_context,
+        "supervisor_source_gap_context": supervisor_source_gap_context,
         "resolved_objective_ids": resolved_objective_ids,
         "research_epoch": epoch_context,
     }
@@ -2165,6 +2175,65 @@ def _component_supervisor_feedback_by_component(
             "missing_material_facts": gaps,
         }
     return result
+
+
+def _score_gap_context_for_supervisor(
+    *,
+    aggregation: DeterministicScoreAggregationRun,
+    scoring_memos: ComponentScoringMemoRun,
+) -> Mapping[str, Any]:
+    """Expose only active score-research leaves to the semantic supervisor.
+
+    The deterministic aggregator already returns a material judge
+    disagreement to research, but its compact request intentionally omits the
+    judges' prose.  The Supervisor needs the exact allowed ranges and
+    rationales to decide whether the component memo needs a semantic rewrite
+    or whether a genuinely missing source-backed fact requires another query.
+    Transport-only missing judge responses are preserved as diagnostics but
+    never become memo-rewrite authority.
+    """
+
+    context = dict(aggregation.to_score_gap_context())
+    material_components = {
+        row.component_id
+        for row in aggregation.component_results
+        if row.material_disagreement
+        and "UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT"
+        in row.pending_reasons
+    }
+    scoring_by_component = {
+        row.component_id: row for row in scoring_memos.component_memos
+    }
+    judge_reviews = []
+    for component_id in CANONICAL_COMPONENT_ORDER:
+        if component_id not in material_components:
+            continue
+        scoring_memo = scoring_by_component.get(component_id)
+        if scoring_memo is None:
+            continue
+        judge_reviews.append(
+            {
+                "component_id": component_id,
+                "judge_reviews": [
+                    {
+                        "role": decision.role,
+                        "proposed_points": decision.proposed_points,
+                        "allowed_range": list(decision.allowed_range),
+                        "rationale": decision.rationale,
+                        "disagreements": list(decision.disagreements),
+                        "why_not_higher": decision.why_not_higher,
+                        "why_not_lower": decision.why_not_lower,
+                    }
+                    for decision in scoring_memo.judge_decisions
+                ],
+            }
+        )
+    context["material_disagreement_component_ids"] = sorted(
+        material_components
+    )
+    context["material_disagreement_judge_reviews"] = judge_reviews
+    context["score_or_stage_authority"] = False
+    return context
 
 
 def _structured_gap_resolution_contracts(

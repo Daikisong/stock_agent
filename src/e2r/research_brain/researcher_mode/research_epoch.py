@@ -257,6 +257,7 @@ class ResearchEpochRunner:
         counter_and_supersession_route_proof: Sequence[Mapping[str, Any]],
         prior_checkpoint: ResearchEpochCheckpoint | Mapping[str, Any] | None = None,
         gold_critical_fact_miss_count: int = 0,
+        score_gap_context: Mapping[str, Any] | None = None,
     ) -> ResearchEpochRun:
         if gold_critical_fact_miss_count < 0:
             raise ValueError("gold critical fact miss count cannot be negative")
@@ -279,6 +280,7 @@ class ResearchEpochRunner:
             prior_failures=prior_failures,
             counter_and_supersession_route_proof=counter_and_supersession_route_proof,
             prior_review=prior.supervisor_review if prior else None,
+            score_gap_context=score_gap_context,
         )
         state = _research_epoch_state(
             target_id=target_id,

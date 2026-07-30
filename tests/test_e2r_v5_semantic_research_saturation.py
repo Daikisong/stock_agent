@@ -65,6 +65,12 @@ class Phase87SupervisorProvider:
         parser_mode = self.mode == "PARSER"
         absence_mode = self.mode == "ABSENCE"
         force_ready = self.mode == "FORCE_READY"
+        score_disagreement_components = set(
+            (payload.get("required_output_rosters") or {}).get(
+                "material_score_disagreement_component_ids"
+            )
+            or ()
+        )
         structured_payload = payload.get("structured_result") or {}
         structured_complete = bool(
             structured_payload.get("status") == "COMPLETE"
@@ -72,15 +78,24 @@ class Phase87SupervisorProvider:
         )
         findings = []
         for index, component_id in enumerate(CANONICAL_COMPONENT_ORDER):
-            sufficient = not (gap_mode and index == 0)
+            sufficient = not (
+                (gap_mode and index == 0)
+                or component_id in score_disagreement_components
+            )
             findings.append(
                 {
                     "component_id": component_id,
                     "memo_sufficient": sufficient,
                     "missing_fact_needs": (
-                        [] if sufficient else ["현금 전환의 지속성 원천 사실"]
+                        []
+                        if sufficient or component_id in score_disagreement_components
+                        else ["현금 전환의 지속성 원천 사실"]
                     ),
-                    "rationale": "현재 memo의 사실·반증·구조화 지표를 검토했다.",
+                    "rationale": (
+                        "judge 허용구간 불일치가 남아 memo의 비교 설명을 다시 쓴다."
+                        if component_id in score_disagreement_components
+                        else "현재 memo의 사실·반증·구조화 지표를 검토했다."
+                    ),
                 }
             )
         assessments = []
@@ -113,9 +128,19 @@ class Phase87SupervisorProvider:
                     "source_absence_claim_allowed": absence_allowed,
                 }
             )
-        operational_gap = gap_mode or parser_mode or absence_mode
+        operational_gap = bool(
+            gap_mode
+            or parser_mode
+            or absence_mode
+            or score_disagreement_components
+        )
         ready = bool(
-            (self.mode == "READY" and structured_complete and not assessments)
+            (
+                self.mode == "READY"
+                and structured_complete
+                and not assessments
+                and not score_disagreement_components
+            )
             or force_ready
         )
         missing_facts = (
@@ -166,6 +191,10 @@ class Phase87SupervisorProvider:
         )
         if not structured_complete and not force_ready:
             unresolved.append("필수 structured data가 비어 있음")
+        if score_disagreement_components:
+            unresolved.append(
+                "독립 judge 허용구간 불일치를 component memo 재작성으로 해소해야 함"
+            )
         next_actions = (
             []
             if ready
@@ -185,7 +214,9 @@ class Phase87SupervisorProvider:
             "structured_data_complete": (
                 True if force_ready else structured_complete
             ),
-            "component_memos_sufficient": not gap_mode,
+            "component_memos_sufficient": not (
+                gap_mode or score_disagreement_components
+            ),
             "reasonable_positive_routes_remaining": not ready,
             "ready_for_independent_saturation_review": ready,
             "rationale": (
@@ -370,6 +401,194 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR",
             run.supervisor_review.unresolved_material_questions[0],
         )
+
+    def test_material_score_disagreement_reaches_supervisor_and_reopens_only_its_memo(
+        self,
+    ) -> None:
+        component_id = CANONICAL_COMPONENT_ORDER[2]
+        score_gap_context = {
+            "deterministic_score_aggregation_status": (
+                "DETERMINISTIC_SCORE_RESEARCH_REQUIRED"
+            ),
+            "score_valid": False,
+            "component_research_requests": [
+                {
+                    "component_id": component_id,
+                    "reason_codes": [
+                        "UNRESOLVED_MATERIAL_JUDGE_DISAGREEMENT"
+                    ],
+                    "proposal_points": {
+                        "ANALYST": 16.5,
+                        "SKEPTIC": 15.5,
+                        "CALIBRATION_JUDGE": 18.35,
+                    },
+                },
+                {
+                    "component_id": CANONICAL_COMPONENT_ORDER[3],
+                    "reason_codes": [
+                        "COMPONENT_SCORING_MEMO_NOT_READY",
+                        "SKEPTIC:PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING",
+                    ],
+                },
+            ],
+            "material_disagreement_judge_reviews": [
+                {
+                    "component_id": component_id,
+                    "judge_reviews": [
+                        {
+                            "role": "SKEPTIC",
+                            "proposed_points": 15.5,
+                            "allowed_range": [14.5, 17.0],
+                            "rationale": "현재 counter를 반영한 상단이다.",
+                        },
+                        {
+                            "role": "CALIBRATION_JUDGE",
+                            "proposed_points": 18.35,
+                            "allowed_range": [18.05, 18.75],
+                            "rationale": "ordinal anchor의 하단이다.",
+                        },
+                    ],
+                }
+            ],
+            "score_or_stage_authority": False,
+        }
+        provider = Phase87SupervisorProvider("READY")
+        run = ResearchEpochRunner(
+            supervisor=ResearchSupervisor(provider=provider),
+            saturation_reviewers=(),
+        ).run_epoch(
+            **_epoch_inputs(source_checkpoint=_source_checkpoint()),
+            score_gap_context=score_gap_context,
+        )
+
+        self.assertEqual(run.checkpoint.status, "NEXT_RESEARCH_REQUIRED")
+        findings = {
+            row.component_id: row
+            for row in run.supervisor_review.component_findings
+        }
+        self.assertFalse(findings[component_id].memo_sufficient)
+        self.assertTrue(
+            findings[CANONICAL_COMPONENT_ORDER[3]].memo_sufficient
+        )
+        payload = provider.calls[0]["payload"]
+        self.assertEqual(
+            payload["required_output_rosters"][
+                "material_score_disagreement_component_ids"
+            ],
+            [component_id],
+        )
+        reviews = payload["deterministic_score_gap_context"][
+            "material_disagreement_judge_reviews"
+        ][0]["judge_reviews"]
+        self.assertEqual(reviews[0]["allowed_range"], [14.5, 17.0])
+        self.assertEqual(reviews[1]["allowed_range"], [18.05, 18.75])
+
+    def test_transport_pending_judge_cannot_reopen_complete_component_memo(
+        self,
+    ) -> None:
+        component_id = CANONICAL_COMPONENT_ORDER[3]
+
+        class ReopeningProvider(Phase87SupervisorProvider):
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                findings = [
+                    dict(row) for row in response["component_findings"]
+                ]
+                for row in findings:
+                    if row["component_id"] == component_id:
+                        row.update(
+                            {
+                                "memo_sufficient": False,
+                                "missing_fact_needs": [],
+                                "rationale": "transport 대기를 memo 결함으로 오인",
+                            }
+                        )
+                response.update(
+                    {
+                        "component_findings": findings,
+                        "component_memos_sufficient": False,
+                        "reasonable_positive_routes_remaining": True,
+                        "ready_for_independent_saturation_review": False,
+                        "next_actions": ["judge transport 응답을 기다린다."],
+                        "rationale": "transport 대기만 남아 있다.",
+                    }
+                )
+                return response
+
+        provider = ReopeningProvider("READY")
+        run = ResearchEpochRunner(
+            supervisor=ResearchSupervisor(provider=provider),
+            saturation_reviewers=(),
+        ).run_epoch(
+            **_epoch_inputs(source_checkpoint=_source_checkpoint()),
+            score_gap_context={
+                "component_research_requests": [
+                    {
+                        "component_id": component_id,
+                        "reason_codes": [
+                            "COMPONENT_SCORING_MEMO_NOT_READY",
+                            "SKEPTIC:PROVIDER_ERROR:"
+                            "COLLABORATION_RESPONSE_PENDING",
+                        ],
+                    }
+                ]
+            },
+        )
+
+        self.assertEqual(run.checkpoint.status, "NEXT_RESEARCH_REQUIRED")
+        self.assertEqual(run.supervisor_review.component_findings, ())
+        self.assertIn(
+            "transport-pending judge responses cannot reopen",
+            run.supervisor_review.unresolved_material_questions[0],
+        )
+        self.assertEqual(len(provider.calls), 2)
+
+    def test_supervisor_query_direction_requires_matching_concrete_fact_gap(
+        self,
+    ) -> None:
+        class DirectionWithoutGapProvider(Phase87SupervisorProvider):
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                response.update(
+                    {
+                        "query_direction_briefs": [
+                            {
+                                "objective_id": OBJECTIVE_ID,
+                                "research_need": "근거 없는 추가 검색",
+                                "avoid_repeating": [],
+                                "counter_or_supersession": False,
+                            }
+                        ],
+                        "reasonable_positive_routes_remaining": True,
+                        "ready_for_independent_saturation_review": False,
+                        "next_actions": ["근거 없는 검색을 시도한다."],
+                        "rationale": "구체적 missing fact 없이 검색을 요청했다.",
+                    }
+                )
+                return response
+
+        provider = DirectionWithoutGapProvider("READY")
+        run = ResearchEpochRunner(
+            supervisor=ResearchSupervisor(provider=provider),
+            saturation_reviewers=(),
+        ).run_epoch(
+            **_epoch_inputs(source_checkpoint=_source_checkpoint())
+        )
+
+        self.assertEqual(run.supervisor_review.component_findings, ())
+        self.assertIn(
+            "requires a concrete component fact gap",
+            run.supervisor_review.unresolved_material_questions[0],
+        )
+        self.assertEqual(len(provider.calls), 2)
 
     def test_parser_failure_and_source_absence_are_distinct(self) -> None:
         parser_provider = Phase87SupervisorProvider("PARSER")
