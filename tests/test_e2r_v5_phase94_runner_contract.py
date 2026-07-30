@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import inspect
 import json
 import tempfile
@@ -48,6 +49,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _source_checkpoint_needs_fact_extraction_recovery,
     _source_checkpoint_needs_downstream_provider_recovery,
     _load_prior_component_memos,
+    _reusable_prior_component_memos,
     _same_lane_structured_cache_roots,
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
@@ -1412,6 +1414,176 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         )
 
         self.assertEqual(routed, {})
+
+    def test_complete_prior_memo_reuse_requires_stable_semantic_inputs(
+        self,
+    ) -> None:
+        prior_memos = {
+            component_id: {
+                "component_id": component_id,
+                "research_complete": True,
+            }
+            for component_id in (
+                "eps_fcf_explosion",
+                "bottleneck_pricing",
+                "capital_allocation",
+            )
+        }
+        facts = (
+            {
+                "fact_id": "FACT-1",
+                "predicate": "free_cash_flow",
+                "value": 100,
+            },
+        )
+        structured_records = (
+            {
+                "record_id": "STRUCT-1",
+                "evidence_roles": ["ACTUAL_EARNINGS"],
+                "value": 100,
+            },
+        )
+        requirements = {
+            component_id: (
+                ("ACTUAL_EARNINGS",)
+                if component_id == "eps_fcf_explosion"
+                else ()
+            )
+            for component_id in CANONICAL_COMPONENT_ORDER
+        }
+        actionable = {
+            "bottleneck_pricing": {"component_findings": [{}]},
+            "capital_allocation": {"component_findings": [{}]},
+        }
+
+        reusable = _reusable_prior_component_memos(
+            prior_component_memos=prior_memos,
+            actionable_feedback_by_component=actionable,
+            prior_facts=facts,
+            current_facts=facts,
+            prior_fact_snapshot_available=True,
+            prior_structured_result={
+                "records": list(structured_records)
+            },
+            current_structured_result=SimpleNamespace(
+                records=structured_records
+            ),
+            required_roles_by_component=requirements,
+        )
+        self.assertEqual(set(reusable), {"eps_fcf_explosion"})
+
+        fact_drift = _reusable_prior_component_memos(
+            prior_component_memos=prior_memos,
+            actionable_feedback_by_component={},
+            prior_facts=facts,
+            current_facts=(
+                *facts,
+                {
+                    "fact_id": "FACT-2",
+                    "predicate": "capacity",
+                    "value": 2,
+                },
+            ),
+            prior_fact_snapshot_available=True,
+            prior_structured_result={
+                "records": list(structured_records)
+            },
+            current_structured_result=SimpleNamespace(
+                records=structured_records
+            ),
+            required_roles_by_component=requirements,
+        )
+        self.assertEqual(fact_drift, {})
+
+        structured_drift = _reusable_prior_component_memos(
+            prior_component_memos=prior_memos,
+            actionable_feedback_by_component={},
+            prior_facts=facts,
+            current_facts=facts,
+            prior_fact_snapshot_available=True,
+            prior_structured_result={
+                "records": list(structured_records)
+            },
+            current_structured_result=SimpleNamespace(
+                records=(
+                    {
+                        **structured_records[0],
+                        "value": 200,
+                    },
+                )
+            ),
+            required_roles_by_component=requirements,
+        )
+        self.assertNotIn("eps_fcf_explosion", structured_drift)
+
+    def test_query_direction_and_retryable_source_failure_reopen_component(
+        self,
+    ) -> None:
+        routed = _component_supervisor_feedback_by_component(
+            {
+                "status": "NEXT_RESEARCH_REQUIRED",
+                "component_status": {},
+                "component_findings": [],
+                "missing_material_facts": [],
+                "query_direction_briefs": [
+                    {
+                        "objective_id": "OBJ-BOTTLENECK",
+                        "query_brief": "패키징 처리량을 재확인",
+                    }
+                ],
+                "new_source_family_directions": [
+                    {
+                        "objective_id": "OBJ-EPS",
+                        "source_family": "ISSUER_EARNINGS_RELEASE",
+                    }
+                ],
+                "failure_assessments": [
+                    {
+                        "failure_id": "FAIL-CAPITAL",
+                        "objective_id": "OBJ-CAPITAL",
+                        "classification": "FETCH_FAILURE",
+                        "retryable": True,
+                    },
+                    {
+                        "failure_id": "FAIL-GLOBAL",
+                        "classification": "FETCH_FAILURE",
+                        "retryable": True,
+                    },
+                ],
+            },
+            objective_component_by_id={
+                "OBJ-EPS": "eps_fcf_explosion",
+                "OBJ-BOTTLENECK": "bottleneck_pricing",
+                "OBJ-CAPITAL": "capital_allocation",
+            },
+        )
+
+        self.assertEqual(
+            set(routed),
+            {
+                "eps_fcf_explosion",
+                "bottleneck_pricing",
+                "capital_allocation",
+            },
+        )
+        self.assertEqual(
+            routed["eps_fcf_explosion"][
+                "new_source_family_directions"
+            ][0]["objective_id"],
+            "OBJ-EPS",
+        )
+        self.assertEqual(
+            routed["bottleneck_pricing"]["query_direction_briefs"][0][
+                "objective_id"
+            ],
+            "OBJ-BOTTLENECK",
+        )
+        self.assertEqual(
+            routed["capital_allocation"]["failure_assessments"][0][
+                "failure_id"
+            ],
+            "FAIL-CAPITAL",
+        )
 
     def test_provider_outage_recovers_only_hash_bound_prior_memo_body(self) -> None:
         memo = {
@@ -2892,6 +3064,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ).is_file()
             )
 
+            provider_call_count_before_resume = len(provider.calls)
             runner.run_checkpoint(
                 config=config,
                 target=CurrentResearchTarget(
@@ -2903,27 +3076,10 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             )
             resumed_component_payloads = [
                 row["payload"]
-                for row in provider.calls
+                for row in provider.calls[provider_call_count_before_resume:]
                 if row["pass_name"] == "COMPONENT_RESEARCH"
-            ][-len(CANONICAL_COMPONENT_ORDER):]
-            self.assertEqual(
-                len(resumed_component_payloads),
-                len(CANONICAL_COMPONENT_ORDER),
-            )
-            self.assertTrue(
-                all(
-                    payload["prior_component_memo_context"]["available"]
-                    for payload in resumed_component_payloads
-                )
-            )
-            self.assertTrue(
-                all(
-                    not payload["prior_component_memo_context"][
-                        "deterministic_fact_carry_forward"
-                    ]
-                    for payload in resumed_component_payloads
-                )
-            )
+            ]
+            self.assertEqual(resumed_component_payloads, [])
             resumed_query_payload = [
                 row["payload"]
                 for row in provider.calls
@@ -3584,13 +3740,190 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             },
         )
 
+    def test_hash_bound_complete_memo_survives_transport_pending_and_semantic_rewrite_does_not_reopen_source(
+        self,
+    ) -> None:
+        target_id = "CURRENT-TARGET"
+        as_of_date = "2026-06-29"
+        archetype_id = "C06_HBM_MEMORY_CUSTOMER_CAPACITY"
+        component_id = "bottleneck_pricing"
+        objective_id = "OBJECTIVE-bottleneck_pricing"
+        memo = {
+            "target_id": target_id,
+            "archetype_id": archetype_id,
+            "component_id": component_id,
+            "researcher_role": "BottleneckPricingResearcher",
+            "positive_fact_ids": ["FACT-POS"],
+            "counter_fact_ids": ["FACT-COUNTER"],
+            "resolution_fact_ids": [],
+            "context_fact_ids": [],
+            "research_complete": True,
+        }
+        memo_hash = hashlib.sha256(
+            json.dumps(
+                memo,
+                ensure_ascii=False,
+                sort_keys=True,
+                default=str,
+            ).encode("utf-8")
+        ).hexdigest()
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "component_research_memos.jsonl").write_text(
+                json.dumps(
+                    {
+                        "component_id": component_id,
+                        "research_complete": False,
+                        "pending_reasons": [
+                            "PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING"
+                        ],
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "research_epochs.jsonl").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "changed_component_memos": [memo],
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            def write_checkpoint(supervisor_review):
+                (root / "research_epoch_checkpoint.json").write_text(
+                    json.dumps(
+                        {
+                            "checkpoint_id": "EPOCH-HASH-BOUND",
+                            "target_id": target_id,
+                            "as_of_date": as_of_date,
+                            "epoch": 10,
+                            "status": "NEXT_RESEARCH_REQUIRED",
+                            "component_memo_hashes": {
+                                component_id: memo_hash
+                            },
+                            "supervisor_review": supervisor_review,
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+
+            semantic_rewrite = {
+                "review_id": "SUPERVISOR-SEMANTIC-REWRITE",
+                "status": "NEXT_RESEARCH_REQUIRED",
+                "component_status": {component_id: "PENDING"},
+                "component_findings": [
+                    {
+                        "component_id": component_id,
+                        "memo_sufficient": False,
+                        "missing_fact_needs": [],
+                        "rationale": (
+                            "심판 허용구간 불일치 설명을 memo에서 다시 쓴다."
+                        ),
+                    }
+                ],
+                "missing_material_facts": [],
+                "new_source_family_directions": [],
+                "query_direction_briefs": [],
+                "source_family_gaps": [],
+                "failure_assessments": [],
+                "parser_or_extractor_failures": [],
+                "unresolved_material_questions": [
+                    "semantic component rewrite required"
+                ],
+                "next_actions": ["rewrite bottleneck memo"],
+            }
+            write_checkpoint(semantic_rewrite)
+            semantic_context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=(
+                    {
+                        "objective_id": objective_id,
+                        "component_id": component_id,
+                    },
+                ),
+                archetype_id=archetype_id,
+            )
+
+            self.assertEqual(
+                semantic_context["resolved_objective_ids"],
+                (objective_id,),
+            )
+            self.assertEqual(
+                semantic_context["supervisor_source_gap_context"], {}
+            )
+            routed = _component_supervisor_feedback_by_component(
+                semantic_context["supervisor_gap_context"],
+                objective_component_by_id={
+                    objective_id: component_id
+                },
+            )
+            self.assertEqual(set(routed), {component_id})
+
+            write_checkpoint(
+                {
+                    "review_id": "SUPERVISOR-TRANSPORT-PENDING",
+                    "status": "NEXT_RESEARCH_REQUIRED",
+                    "component_status": {component_id: "PENDING"},
+                    "component_findings": [],
+                    "missing_material_facts": [],
+                    "new_source_family_directions": [],
+                    "query_direction_briefs": [],
+                    "source_family_gaps": [],
+                    "failure_assessments": [],
+                    "parser_or_extractor_failures": [],
+                    "unresolved_material_questions": [
+                        "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+                        "COLLABORATION_RESPONSE_PENDING:COLLABREQ-1"
+                    ],
+                    "next_actions": ["retry supervisor transport"],
+                }
+            )
+            transport_context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=(
+                    {
+                        "objective_id": objective_id,
+                        "component_id": component_id,
+                    },
+                ),
+                archetype_id=archetype_id,
+            )
+
+        self.assertEqual(
+            transport_context["resolved_objective_ids"],
+            (objective_id,),
+        )
+        self.assertEqual(
+            transport_context["supervisor_source_gap_context"], {}
+        )
+        self.assertEqual(
+            _component_supervisor_feedback_by_component(
+                transport_context["supervisor_gap_context"],
+                objective_component_by_id={objective_id: component_id},
+            ),
+            {},
+        )
+
     def test_score_disagreement_stays_supervisor_owned_while_fact_gaps_reopen_sources(
         self,
     ) -> None:
         target_id = "CURRENT-TARGET"
         as_of_date = "2026-06-29"
         score_unresolved = {"market_mispricing", "valuation_rerating"}
-        source_unresolved = {"market_mispricing"}
+        source_unresolved = {
+            "market_mispricing",
+            "valuation_rerating",
+        }
         objectives = tuple(
             {
                 "objective_id": f"OBJECTIVE-{component_id}",
@@ -3699,10 +4032,10 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 if component_id not in source_unresolved
             },
         )
-        # Only market remains open because it has a concrete Supervisor fact
-        # gap.  Valuation has a raw query direction but no matching fact gap,
-        # so it cannot create source work.  Raw judge disagreement itself is
-        # routed directly to ResearchSupervisor.
+        # Raw judge disagreement itself stays Supervisor-owned.  Market opens
+        # because it has a concrete fact gap; valuation opens because the
+        # persisted Supervisor review contains an objective-bound query
+        # direction.  Status and next_actions text alone have no authority.
         self.assertEqual(context["score_gap_context"], {})
         source_gap = context["supervisor_source_gap_context"]
         self.assertEqual(
@@ -3710,9 +4043,15 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 row["component_id"]
                 for row in source_gap["missing_material_facts"]
             },
-            source_unresolved,
+            {"market_mispricing"},
         )
-        self.assertEqual(source_gap["query_direction_briefs"], [])
+        self.assertEqual(
+            [
+                row["objective_id"]
+                for row in source_gap["query_direction_briefs"]
+            ],
+            ["OBJECTIVE-valuation_rerating"],
+        )
 
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -3828,6 +4167,30 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
+            (root / "source_graph_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        "resolved_objective_ids": [],
+                        "query_failures": [
+                            {
+                                "failure_id": "PARSER-RETRYABLE",
+                                "objective_id": (
+                                    "OBJECTIVE-bottleneck_pricing"
+                                ),
+                            },
+                            {
+                                "failure_id": "FETCH-RETRYABLE",
+                                "objective_id": (
+                                    "OBJECTIVE-capital_allocation"
+                                ),
+                            },
+                        ],
+                        "provider_failures": [],
+                        "rejected_documents": [],
+                    }
+                ),
+                encoding="utf-8",
+            )
 
             context = _load_prior_research_context(
                 root,
@@ -3847,6 +4210,14 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertEqual(
             source_gap["parser_or_extractor_failures"],
             ["PARSER-RETRYABLE"],
+        )
+        self.assertNotIn(
+            "OBJECTIVE-bottleneck_pricing",
+            context["resolved_objective_ids"],
+        )
+        self.assertNotIn(
+            "OBJECTIVE-capital_allocation",
+            context["resolved_objective_ids"],
         )
 
     def test_score_supervisor_projection_keeps_all_three_exact_judge_ranges(

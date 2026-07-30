@@ -16,6 +16,7 @@ import re
 from typing import Any, Mapping, Sequence
 
 from e2r.production.metadata import stable_hash, write_json, write_jsonl
+from e2r.research_brain.intelligence_schema import stable_intelligence_id
 from e2r.research_brain.runtime.scoring_contracts import (
     load_archetype_scoring_contract,
 )
@@ -277,6 +278,7 @@ class CurrentResearcherModeTargetRunner:
             target_id=target.target_id,
             as_of_date=config.as_of_date,
             objectives=objective_rows,
+            archetype_id=config.archetype_id,
         )
         source_coverage = tuple(
             sorted(
@@ -521,6 +523,35 @@ class CurrentResearcherModeTargetRunner:
             if config.checkpoint_resume
             else {}
         )
+        objective_component_by_id = {
+            str(row.get("objective_id") or ""): str(
+                row.get("component_id") or ""
+            )
+            for row in objective_rows
+            if str(row.get("objective_id") or "")
+        }
+        supervisor_feedback_by_component = (
+            _component_supervisor_feedback_by_component(
+                prior_context["supervisor_gap_context"],
+                objective_component_by_id=objective_component_by_id,
+            )
+        )
+        reusable_prior_component_memos = _reusable_prior_component_memos(
+            prior_component_memos=prior_component_memos,
+            actionable_feedback_by_component=(
+                supervisor_feedback_by_component
+            ),
+            prior_facts=prior_context["facts"],
+            current_facts=fact_extraction.facts,
+            prior_fact_snapshot_available=bool(
+                prior_context["fact_snapshot_available"]
+            ),
+            prior_structured_result=prior_context[
+                "structured_engine_result"
+            ],
+            current_structured_result=structured,
+            required_roles_by_component=required_structured_roles,
+        )
         dossier = CanonicalResearchDossierBuilder(provider=self.provider).build(
             target_id=target.target_id,
             archetype_id=config.archetype_id,
@@ -532,10 +563,11 @@ class CurrentResearcherModeTargetRunner:
             source_coverage=research_source_coverage,
             structured_engine_result=structured,
             prior_component_memos_by_component=prior_component_memos,
+            reusable_prior_component_memos_by_component=(
+                reusable_prior_component_memos
+            ),
             prior_supervisor_feedback_by_component=(
-                _component_supervisor_feedback_by_component(
-                    prior_context["supervisor_gap_context"]
-                )
+                supervisor_feedback_by_component
             ),
         )
         _write_dossier(root, dossier)
@@ -1841,7 +1873,9 @@ def _load_prior_research_context(
     target_id: str,
     as_of_date: str,
     objectives: Sequence[Mapping[str, Any]],
+    archetype_id: str | None = None,
 ) -> Mapping[str, Any]:
+    fact_snapshot_available = (root / "evidence_facts.jsonl").is_file()
     facts = tuple(
         row
         for row in _read_jsonl(root / "evidence_facts.jsonl")
@@ -1882,7 +1916,33 @@ def _load_prior_research_context(
         for row in _read_jsonl(root / "component_research_memos.jsonl")
         if row.get("research_complete") is True
     }
+    resolved_archetype_id = str(
+        archetype_id
+        or (
+            business_model.get("archetype_id")
+            if isinstance(business_model, Mapping)
+            else ""
+        )
+        or ""
+    )
+    if resolved_archetype_id:
+        # The convenience JSONL is the latest attempt, not durable completion
+        # authority.  A transport-pending retry may overwrite it with pending
+        # rows even though the active epoch still hash-binds a complete memo.
+        # Recover that exact memo from the append-only epoch ledger before
+        # deciding whether its source objective is open.
+        complete_components.update(
+            component_id
+            for component_id, memo in _load_prior_component_memos(
+                root=root,
+                target_id=target_id,
+                archetype_id=resolved_archetype_id,
+                as_of_date=as_of_date,
+            ).items()
+            if memo.get("research_complete") is True
+        )
     structured_gap_context: Mapping[str, Any] = {}
+    structured_engine_result: Mapping[str, Any] = {}
     structured_missing_components: set[str] = set()
     structured_path = root / "structured_engine_result.json"
     materialization_path = root / "current_structured_materialization.json"
@@ -1895,6 +1955,7 @@ def _load_prior_research_context(
             str(structured.get("target_id") or "") == target_id
             and str(structured.get("as_of_date") or "") == as_of_date
         ):
+            structured_engine_result = structured
             missing_by_component = {
                 str(component_id): tuple(
                     str(role)
@@ -1969,6 +2030,50 @@ def _load_prior_research_context(
         for row in objectives
         if str(row.get("objective_id") or "")
     }
+    source_failure_by_id: dict[str, Mapping[str, Any]] = {}
+    source_checkpoint_path = root / "source_graph_checkpoint.json"
+    if source_checkpoint_path.is_file():
+        source_checkpoint = _read_json(source_checkpoint_path)
+        resolved_source_objectives = {
+            str(value)
+            for value in source_checkpoint.get("resolved_objective_ids") or ()
+        }
+        for key, kind in (
+            ("query_failures", "QUERY_FAILURE"),
+            ("provider_failures", "PROVIDER_FAILURE"),
+            ("rejected_documents", "DOCUMENT_REJECTION"),
+        ):
+            for raw in source_checkpoint.get(key) or ():
+                if not isinstance(raw, Mapping):
+                    continue
+                row = dict(raw)
+                row.setdefault("failure_kind", kind)
+                objective_id = str(row.get("objective_id") or "")
+                if (
+                    objective_id
+                    and objective_id in resolved_source_objectives
+                ):
+                    row.setdefault("resolved", True)
+                    row.setdefault(
+                        "resolved_by",
+                        "SOURCE_GRAPH_OBJECTIVE_RESOLUTION",
+                    )
+                row.setdefault("absence_eligible", False)
+                reason = str(
+                    row.get("failure_reason") or row.get("reason") or ""
+                )
+                row["zero_result_only"] = bool(
+                    row.get("zero_result_only")
+                ) or (
+                    "NO_RESULT" in reason.upper()
+                    or "ZERO_RESULT" in reason.upper()
+                )
+                failure_id = str(row.get("failure_id") or "").strip()
+                if not failure_id:
+                    failure_id = stable_intelligence_id("RSFAIL", row)
+                    row["failure_id"] = failure_id
+                if failure_id:
+                    source_failure_by_id[failure_id] = row
     epoch_path = root / "research_epoch_checkpoint.json"
     if epoch_path.is_file():
         epoch = _read_json(epoch_path)
@@ -2006,33 +2111,55 @@ def _load_prior_research_context(
                 )
                 if key in supervisor
             }
+
+            def route_source_row(row: Mapping[str, Any]) -> None:
+                objective_id = str(row.get("objective_id") or "")
+                component_id = str(row.get("component_id") or "")
+                if component_id not in CANONICAL_COMPONENT_ORDER:
+                    component_id = objective_component_by_id.get(
+                        objective_id, ""
+                    )
+                if component_id in CANONICAL_COMPONENT_ORDER:
+                    supervisor_unresolved_components.add(component_id)
+                if objective_id in objective_component_by_id:
+                    supervisor_unresolved_objectives.add(objective_id)
+
             for gap in supervisor.get("missing_material_facts") or ():
                 if isinstance(gap, Mapping):
-                    component_id = str(gap.get("component_id") or "")
-                    if component_id in CANONICAL_COMPONENT_ORDER:
-                        supervisor_unresolved_components.add(component_id)
+                    route_source_row(gap)
             for key in (
                 "new_source_family_directions",
                 "query_direction_briefs",
+                "source_family_gaps",
             ):
                 for direction in supervisor.get(key) or ():
                     if isinstance(direction, Mapping):
-                        objective_id = str(direction.get("objective_id") or "")
-                        if (
-                            objective_id
-                            and objective_component_by_id.get(objective_id)
-                            in supervisor_unresolved_components
-                        ):
-                            supervisor_unresolved_objectives.add(objective_id)
-            concrete_gap_components = set(supervisor_unresolved_components)
-            source_failures = [
-                dict(row)
-                for row in supervisor.get("failure_assessments") or ()
-                if isinstance(row, Mapping)
-                and row.get("retryable") is True
-                and str(row.get("classification") or "")
-                in {"PARSER_EXTRACTOR_FAILURE", "FETCH_FAILURE"}
-            ]
+                        route_source_row(direction)
+            source_failures = []
+            enriched_failure_assessments = []
+            for raw in supervisor.get("failure_assessments") or ():
+                if not isinstance(raw, Mapping):
+                    continue
+                failure = dict(raw)
+                source = source_failure_by_id.get(
+                    str(failure.get("failure_id") or ""), {}
+                )
+                for key, value in source.items():
+                    failure.setdefault(key, value)
+                enriched_failure_assessments.append(failure)
+                if (
+                    failure.get("retryable") is not True
+                    or str(failure.get("classification") or "")
+                    not in {"PARSER_EXTRACTOR_FAILURE", "FETCH_FAILURE"}
+                ):
+                    continue
+                route_source_row(failure)
+                source_failures.append(failure)
+            if enriched_failure_assessments:
+                supervisor_gap_context = {
+                    **supervisor_gap_context,
+                    "failure_assessments": enriched_failure_assessments,
+                }
             retryable_parser_failure_ids = {
                 str(row.get("failure_id") or "")
                 for row in source_failures
@@ -2056,17 +2183,34 @@ def _load_prior_research_context(
                     dict(direction)
                     for direction in supervisor.get(key) or ()
                     if isinstance(direction, Mapping)
-                    and objective_component_by_id.get(
-                        str(direction.get("objective_id") or "")
-                    )
-                    in concrete_gap_components
+                    and str(direction.get("objective_id") or "")
+                    in supervisor_unresolved_objectives
                 ]
             missing_facts = [
                 dict(row)
                 for row in supervisor.get("missing_material_facts") or ()
                 if isinstance(row, Mapping)
             ]
-            if missing_facts or source_failures or parser_failures:
+            source_family_gaps = [
+                dict(row) if isinstance(row, Mapping) else str(row)
+                for row in supervisor.get("source_family_gaps") or ()
+                if (
+                    isinstance(row, Mapping)
+                    and (
+                        str(row.get("component_id") or "")
+                        in supervisor_unresolved_components
+                        or str(row.get("objective_id") or "")
+                        in supervisor_unresolved_objectives
+                    )
+                )
+            ]
+            if (
+                missing_facts
+                or source_failures
+                or parser_failures
+                or any(filtered_directions.values())
+                or source_family_gaps
+            ):
                 supervisor_source_gap_context = {
                     "status": supervisor.get("status"),
                     "missing_material_facts": missing_facts,
@@ -2077,9 +2221,7 @@ def _load_prior_research_context(
                     "query_direction_briefs": filtered_directions[
                         "query_direction_briefs"
                     ],
-                    "source_family_gaps": list(
-                        supervisor.get("source_family_gaps") or ()
-                    ),
+                    "source_family_gaps": source_family_gaps,
                     "parser_or_extractor_failures": parser_failures,
                 }
     resolved_objective_ids = tuple(
@@ -2095,9 +2237,11 @@ def _load_prior_research_context(
     )
     return {
         "facts": facts,
+        "fact_snapshot_available": fact_snapshot_available,
         "business_model": business_model,
         "research_gap_feedback": feedback,
         "structured_gap_context": structured_gap_context,
+        "structured_engine_result": structured_engine_result,
         "score_gap_context": score_gap_context,
         "supervisor_gap_context": supervisor_gap_context,
         "supervisor_source_gap_context": supervisor_source_gap_context,
@@ -2108,6 +2252,8 @@ def _load_prior_research_context(
 
 def _component_supervisor_feedback_by_component(
     context: Mapping[str, Any] | None,
+    *,
+    objective_component_by_id: Mapping[str, str] | None = None,
 ) -> Mapping[str, Mapping[str, Any]]:
     """Route only actionable supervisor feedback to its component rewrite.
 
@@ -2124,6 +2270,23 @@ def _component_supervisor_feedback_by_component(
     component_status = context.get("component_status") or {}
     if not isinstance(component_status, Mapping):
         raise TypeError("supervisor component_status must be an object")
+    objective_components = {
+        str(objective_id): str(component_id)
+        for objective_id, component_id in (
+            objective_component_by_id or {}
+        ).items()
+        if str(objective_id)
+        and str(component_id) in CANONICAL_COMPONENT_ORDER
+    }
+
+    def component_for(row: Mapping[str, Any]) -> str:
+        direct = str(row.get("component_id") or "")
+        if direct in CANONICAL_COMPONENT_ORDER:
+            return direct
+        return objective_components.get(
+            str(row.get("objective_id") or ""), ""
+        )
+
     findings_by_component: dict[str, list[Mapping[str, Any]]] = {}
     for finding in context.get("component_findings") or ():
         if not isinstance(finding, Mapping):
@@ -2140,6 +2303,62 @@ def _component_supervisor_feedback_by_component(
         component_id = str(gap.get("component_id") or "")
         if component_id in CANONICAL_COMPONENT_ORDER:
             gaps_by_component.setdefault(component_id, []).append(dict(gap))
+    routed_rows_by_key: dict[
+        str, dict[str, list[Mapping[str, Any]]]
+    ] = {
+        key: {}
+        for key in (
+            "new_source_family_directions",
+            "query_direction_briefs",
+            "source_family_gaps",
+            "failure_assessments",
+            "parser_or_extractor_failures",
+        )
+    }
+    for key in (
+        "new_source_family_directions",
+        "query_direction_briefs",
+        "source_family_gaps",
+    ):
+        for row in context.get(key) or ():
+            if not isinstance(row, Mapping):
+                continue
+            component_id = component_for(row)
+            if component_id:
+                routed_rows_by_key[key].setdefault(
+                    component_id, []
+                ).append(dict(row))
+    retryable_failure_by_id: dict[str, Mapping[str, Any]] = {}
+    for row in context.get("failure_assessments") or ():
+        if (
+            not isinstance(row, Mapping)
+            or row.get("retryable") is not True
+            or str(row.get("classification") or "")
+            not in {"PARSER_EXTRACTOR_FAILURE", "FETCH_FAILURE"}
+        ):
+            continue
+        failure = dict(row)
+        failure_id = str(failure.get("failure_id") or "")
+        if failure_id:
+            retryable_failure_by_id[failure_id] = failure
+        component_id = component_for(failure)
+        if component_id:
+            routed_rows_by_key["failure_assessments"].setdefault(
+                component_id, []
+            ).append(failure)
+    for raw in context.get("parser_or_extractor_failures") or ():
+        row = (
+            dict(raw)
+            if isinstance(raw, Mapping)
+            else retryable_failure_by_id.get(str(raw))
+        )
+        if not isinstance(row, Mapping):
+            continue
+        component_id = component_for(row)
+        if component_id:
+            routed_rows_by_key[
+                "parser_or_extractor_failures"
+            ].setdefault(component_id, []).append(dict(row))
 
     # ``review_id`` and ``epoch`` are checkpoint lineage, not semantic rewrite
     # instructions.  Including them here forces a fresh provider prompt on
@@ -2159,13 +2378,17 @@ def _component_supervisor_feedback_by_component(
             if finding.get("memo_sufficient") is False
         ]
         gaps = gaps_by_component.get(component_id, [])
+        routed = {
+            key: rows_by_component.get(component_id, [])
+            for key, rows_by_component in routed_rows_by_key.items()
+        }
         # A provider/transport placeholder marks every component PENDING before
         # the supervisor has produced any semantic finding.  Status alone is
         # therefore not rewrite authority: otherwise a completed memo is
         # reopened merely because the supervisor response is still in flight.
         # Findings and component-scoped material-fact gaps are the actionable
         # feedback planes.
-        if not findings and not gaps:
+        if not findings and not gaps and not any(routed.values()):
             continue
         result[component_id] = {
             **shared,
@@ -2173,6 +2396,11 @@ def _component_supervisor_feedback_by_component(
             "component_status": status,
             "component_findings": findings,
             "missing_material_facts": gaps,
+            **{
+                key: rows
+                for key, rows in routed.items()
+                if rows
+            },
         }
     return result
 
@@ -2324,6 +2552,131 @@ def _read_jsonl(path: Path) -> tuple[Mapping[str, Any], ...]:
         for value in (json.loads(line),)
         if isinstance(value, Mapping)
     )
+
+
+def _reusable_prior_component_memos(
+    *,
+    prior_component_memos: Mapping[str, Mapping[str, Any]],
+    actionable_feedback_by_component: Mapping[str, Mapping[str, Any]],
+    prior_facts: Sequence[Mapping[str, Any]],
+    current_facts: Sequence[Any],
+    prior_fact_snapshot_available: bool,
+    prior_structured_result: Mapping[str, Any],
+    current_structured_result: StructuredEngineResult,
+    required_roles_by_component: Mapping[str, Sequence[str]],
+) -> Mapping[str, Mapping[str, Any]]:
+    """Reuse a complete memo only when its semantic input plane is unchanged."""
+
+    if (
+        not prior_fact_snapshot_available
+        or not prior_structured_result
+        or _semantic_row_roster_hash(prior_facts, id_key="fact_id")
+        != _semantic_row_roster_hash(current_facts, id_key="fact_id")
+    ):
+        return {}
+    prior_structured_hashes = _component_structured_input_hashes(
+        prior_structured_result.get("records") or (),
+        required_roles_by_component=required_roles_by_component,
+    )
+    current_structured_hashes = _component_structured_input_hashes(
+        current_structured_result.records,
+        required_roles_by_component=required_roles_by_component,
+    )
+    return {
+        component_id: memo
+        for component_id, memo in prior_component_memos.items()
+        if component_id in CANONICAL_COMPONENT_ORDER
+        and memo.get("research_complete") is True
+        and component_id not in actionable_feedback_by_component
+        and prior_structured_hashes.get(component_id)
+        == current_structured_hashes.get(component_id)
+    }
+
+
+def _semantic_row_roster_hash(
+    rows: Sequence[Any],
+    *,
+    id_key: str,
+) -> str:
+    payloads = []
+    seen: set[str] = set()
+    for row in rows:
+        if isinstance(row, Mapping):
+            payload = dict(row)
+        else:
+            to_dict = getattr(row, "to_dict", None)
+            if not callable(to_dict):
+                raise TypeError("semantic input row must expose to_dict")
+            payload = dict(to_dict())
+        row_id = str(payload.get(id_key) or "")
+        if not row_id or row_id in seen:
+            raise ValueError(
+                f"semantic input rows require unique {id_key}"
+            )
+        seen.add(row_id)
+        payloads.append(payload)
+    return stable_hash(
+        sorted(payloads, key=lambda payload: str(payload[id_key]))
+    )
+
+
+def _component_structured_input_hashes(
+    records: Sequence[Any],
+    *,
+    required_roles_by_component: Mapping[str, Sequence[str]],
+) -> Mapping[str, str]:
+    payloads = []
+    for row in records:
+        if isinstance(row, Mapping):
+            payload = dict(row)
+        else:
+            to_dict = getattr(row, "to_dict", None)
+            if not callable(to_dict):
+                raise TypeError("structured input row must expose to_dict")
+            payload = dict(to_dict())
+        payloads.append(payload)
+    result = {}
+    for component_id in CANONICAL_COMPONENT_ORDER:
+        required_roles = tuple(
+            dict.fromkeys(
+                str(role)
+                for role in required_roles_by_component.get(
+                    component_id, ()
+                )
+                if str(role)
+            )
+        )
+        compatible_roles = {
+            role
+            for required_role in required_roles
+            for role in (
+                required_role,
+                *PHASE86_COMPONENT_ROLE_COMPATIBILITY.get(
+                    required_role, ()
+                ),
+            )
+        }
+        relevant = [
+            payload
+            for payload in payloads
+            if compatible_roles
+            & {
+                str(role)
+                for role in payload.get("evidence_roles") or ()
+            }
+        ]
+        result[component_id] = stable_hash(
+            {
+                "required_roles": list(required_roles),
+                "records": sorted(
+                    relevant,
+                    key=lambda payload: str(
+                        payload.get("record_id") or ""
+                    ),
+                ),
+            }
+        )
+    return result
 
 
 def _load_prior_component_memos(

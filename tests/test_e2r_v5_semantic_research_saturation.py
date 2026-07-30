@@ -943,6 +943,46 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             provider.calls[-1]["payload"]["prior_supervisor_review"]
         )
 
+    def test_checkpoint_reused_component_results_are_semantically_unchanged_deltas(
+        self,
+    ) -> None:
+        provider = Phase87SupervisorProvider("GAP")
+        runner = ResearchEpochRunner(
+            supervisor=ResearchSupervisor(provider=provider),
+            saturation_reviewers=(),
+        )
+        original_components = _components()
+        first = runner.run_epoch(
+            **_epoch_inputs(
+                source_checkpoint=_source_checkpoint(),
+                components=original_components,
+            )
+        )
+        reused_components = tuple(
+            replace(
+                row,
+                provider_name="CHECKPOINT_REUSED_PRIOR_COMPONENT_MEMO",
+                prompt_hash=None,
+            )
+            for row in original_components
+        )
+        second = runner.run_epoch(
+            **_epoch_inputs(
+                source_checkpoint=_source_checkpoint(),
+                components=reused_components,
+                prior_checkpoint=first.checkpoint,
+            )
+        )
+
+        self.assertEqual(second.checkpoint.changed_component_memos, ())
+        self.assertEqual(
+            second.checkpoint.component_memo_hashes,
+            first.checkpoint.component_memo_hashes,
+        )
+        self.assertIsNotNone(
+            provider.calls[-1]["payload"]["prior_supervisor_review"]
+        )
+
     def test_reextracted_fact_is_retired_with_lineage_instead_of_crashing_resume(self) -> None:
         runner = ResearchEpochRunner(
             supervisor=ResearchSupervisor(

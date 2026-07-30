@@ -4587,6 +4587,14 @@ def _pending_result(
 
 
 def _pass_instruction(pass_name: str) -> str:
+    judge_fact_projection_instruction = (
+        "First decode every evidence_fact_projection.facts row positionally with "
+        "evidence_fact_projection.fact_fields. Each row preserves one exact fact_id "
+        "and its economic meaning. Resolve source_independence_group_index through "
+        "source_independence_group_dictionary. The count/hash rosters account only "
+        "for repeated lineage; they are not omitted research, a top-N selection, or "
+        "permission to skip rows. Review all fact_count rows. "
+    )
     if pass_name == "BUSINESS_MODEL_RESEARCH":
         return "Explain how revenue, cost, cash conversion, capacity, and customer dependencies work before component scoring."
     if pass_name == "COMPONENT_RESEARCH":
@@ -4777,7 +4785,8 @@ def _pass_instruction(pass_name: str) -> str:
         )
     if pass_name == "COMPONENT_ANALYST_JUDGE":
         return (
-            "Act as the independent positive analyst for exactly one broad component. "
+            judge_fact_projection_instruction
+            + "Act as the independent positive analyst for exactly one broad component. "
             "Derive proposed component points and an allowed range from current support facts, "
             "economic strength, duration, and cash conversion. Account for every supplied "
             "positive component fact and compare the case with at least one nearest blind "
@@ -4785,13 +4794,15 @@ def _pass_instruction(pass_name: str) -> str:
         )
     if pass_name == "COMPONENT_SKEPTIC_JUDGE":
         return (
-            "Act as the independent skeptic for exactly one broad component. Review every "
+            judge_fact_projection_instruction
+            + "Act as the independent skeptic for exactly one broad component. Review every "
             "supplied counterfact and explicitly reflect business phase, valuation, customer "
             "or supplier concentration, and uncertainty in proposed component points and the "
             "allowed range. Compare with a nearest blind anchor and explain both bounds."
         )
     return (
-        "Act as the independent calibration judge for exactly one broad component. Compare "
+        judge_fact_projection_instruction
+        + "Act as the independent calibration judge for exactly one broad component. Compare "
         "the current support and counter fact shape with usable blind historical anchors, "
         "validate the component point scale and allowed range, and explain why the proposal "
         "is neither above nor below the selected anchor-calibrated band."

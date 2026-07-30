@@ -117,6 +117,9 @@ class CanonicalResearchDossierBuilder:
         prior_component_memos_by_component: Mapping[
             str, ComponentResearchMemo | Mapping[str, Any]
         ] | None = None,
+        reusable_prior_component_memos_by_component: Mapping[
+            str, ComponentResearchMemo | Mapping[str, Any]
+        ] | None = None,
         prior_supervisor_feedback_by_component: Mapping[
             str, Mapping[str, Any]
         ] | None = None,
@@ -183,6 +186,21 @@ class CanonicalResearchDossierBuilder:
                 "prior component memos contain unknown components: "
                 f"{sorted(unknown_prior_components)}"
             )
+        reusable_prior_component_memos = (
+            reusable_prior_component_memos_by_component or {}
+        )
+        unknown_reusable_components = set(
+            reusable_prior_component_memos
+        ) - set(CANONICAL_COMPONENT_ORDER)
+        if unknown_reusable_components:
+            raise ValueError(
+                "reusable prior component memos contain unknown components: "
+                f"{sorted(unknown_reusable_components)}"
+            )
+        if set(reusable_prior_component_memos) - set(prior_component_memos):
+            raise ValueError(
+                "reusable prior component memos must be present in prior memos"
+            )
         supervisor_feedback = prior_supervisor_feedback_by_component or {}
         unknown_feedback_components = set(supervisor_feedback) - set(
             CANONICAL_COMPONENT_ORDER
@@ -192,23 +210,48 @@ class CanonicalResearchDossierBuilder:
                 "prior supervisor feedback contains unknown components: "
                 f"{sorted(unknown_feedback_components)}"
             )
-        component_results = tuple(
-            researcher.research(
-                plan=plan_by_component[researcher.component_id],
-                business_model=business_result.memo,
-                evidence_facts=facts,
-                historical_anchors=historical_anchors,
-                source_coverage=source_coverage,
-                source_claims=source_claims,
-                source_documents=source_documents,
-                structured_metrics=metrics.get(researcher.component_id, {}),
-                prior_memo=prior_component_memos.get(researcher.component_id),
-                prior_supervisor_feedback=supervisor_feedback.get(
-                    researcher.component_id
-                ),
+        component_results_list = []
+        for researcher in build_component_researchers(self.provider):
+            component_id = researcher.component_id
+            reusable_prior = reusable_prior_component_memos.get(component_id)
+            if (
+                reusable_prior is not None
+                and component_id not in supervisor_feedback
+            ):
+                memo = _coerce_component_research_memo(reusable_prior)
+                if not memo.research_complete:
+                    raise ValueError(
+                        "reusable prior component memo must be research complete"
+                    )
+                component_results_list.append(
+                    ComponentResearchResult(
+                        component_id=component_id,
+                        researcher_role=researcher.researcher_role,
+                        status="COMPLETE",
+                        memo=memo,
+                        pending_reasons=(),
+                        provider_name="CHECKPOINT_REUSED_PRIOR_COMPONENT_MEMO",
+                        prompt_hash=None,
+                    )
+                )
+                continue
+            component_results_list.append(
+                researcher.research(
+                    plan=plan_by_component[component_id],
+                    business_model=business_result.memo,
+                    evidence_facts=facts,
+                    historical_anchors=historical_anchors,
+                    source_coverage=source_coverage,
+                    source_claims=source_claims,
+                    source_documents=source_documents,
+                    structured_metrics=metrics.get(component_id, {}),
+                    prior_memo=prior_component_memos.get(component_id),
+                    prior_supervisor_feedback=supervisor_feedback.get(
+                        component_id
+                    ),
+                )
             )
-            for researcher in build_component_researchers(self.provider)
-        )
+        component_results = tuple(component_results_list)
         pending = [
             f"{row.component_id}:{reason}"
             for row in component_results
@@ -269,6 +312,28 @@ class CanonicalResearchDossierBuilder:
             synthesis_result=synthesis_result,
             pending_reasons=tuple(dict.fromkeys(pending)),
         )
+
+
+def _coerce_component_research_memo(
+    row: ComponentResearchMemo | Mapping[str, Any],
+) -> ComponentResearchMemo:
+    if isinstance(row, ComponentResearchMemo):
+        return row
+    payload = dict(row)
+    for key in (
+        "positive_fact_ids",
+        "counter_fact_ids",
+        "resolution_fact_ids",
+        "context_fact_ids",
+        "historical_anchor_ids",
+        "uncertainties",
+        "source_coverage",
+        "nearest_positive_anchor_ids",
+        "nearest_counter_anchor_ids",
+    ):
+        payload[key] = tuple(payload.get(key) or ())
+    payload["structured_metrics"] = dict(payload.get("structured_metrics") or {})
+    return ComponentResearchMemo(**payload)
 
 
 def _coerce_fact(row: EvidenceFact | Mapping[str, Any]) -> EvidenceFact:

@@ -15,6 +15,7 @@ from e2r.research_brain.planning.provider_transport import (
 )
 
 from .component_researcher import StructuredResearchProvider
+from .prompt_projection import project_citable_evidence_facts
 from .schemas import (
     CANONICAL_COMPONENT_ORDER,
     ComponentAnchor,
@@ -224,6 +225,15 @@ class ComponentJudge:
                 code="INVALID_JUDGE_INPUT_LINEAGE",
                 error=exc,
             )
+        selected_fact_rows = tuple(
+            facts[fact_id].to_dict()
+            for fact_id in (
+                *memo.positive_fact_ids,
+                *memo.counter_fact_ids,
+                *memo.resolution_fact_ids,
+            )
+            if fact_id in facts
+        )
         payload = scrub_blind_research_payload(
             {
                 "judge_role": self.role,
@@ -234,15 +244,9 @@ class ComponentJudge:
                 "component_id": memo.component_id,
                 "component_max_points": memo.component_max_points,
                 "component_research_memo": _scoring_blind_memo(memo),
-                "evidence_facts": [
-                    facts[fact_id].to_dict()
-                    for fact_id in (
-                        *memo.positive_fact_ids,
-                        *memo.counter_fact_ids,
-                        *memo.resolution_fact_ids,
-                    )
-                    if fact_id in facts
-                ],
+                "evidence_fact_projection": project_citable_evidence_facts(
+                    selected_fact_rows
+                ),
                 "historical_component_anchors": [
                     anchors[anchor_id]
                     for anchor_id in memo.historical_anchor_ids

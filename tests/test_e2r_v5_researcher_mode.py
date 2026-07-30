@@ -1373,6 +1373,87 @@ class E2RV5ResearcherModeTests(unittest.TestCase):
             ["prior_supervisor_feedback_context"]["available"]
         )
 
+    def test_reusable_complete_memos_skip_component_provider_except_actionable_findings(
+        self,
+    ) -> None:
+        first_provider = ScriptedResearchProvider()
+        common = {
+            "target_id": TARGET,
+            "archetype_id": ARCHETYPE,
+            "as_of_date": AS_OF_DATE,
+            "evidence_facts": self.facts,
+            "historical_anchors": self.anchors,
+            "source_claims": (),
+            "source_documents": (),
+            "source_coverage": ("ISSUER_OFFICIAL",),
+            "structured_metrics_by_component": {
+                key: {} for key in self.maxima
+            },
+            "component_max_points": self.maxima,
+            "structured_metric_requirements": {
+                key: () for key in self.maxima
+            },
+        }
+        first = CanonicalResearchDossierBuilder(
+            provider=first_provider,
+            research_seeds=(),
+        ).build(**common)
+        prior = {
+            row.component_id: row.memo
+            for row in first.component_results
+            if row.memo is not None
+        }
+
+        second_provider = ScriptedResearchProvider()
+        second = CanonicalResearchDossierBuilder(
+            provider=second_provider,
+            research_seeds=(),
+        ).build(
+            **common,
+            prior_component_memos_by_component=prior,
+            reusable_prior_component_memos_by_component=prior,
+            prior_supervisor_feedback_by_component={
+                component_id: {
+                    "component_id": component_id,
+                    "component_findings": [
+                        {
+                            "component_id": component_id,
+                            "memo_sufficient": False,
+                            "rationale": "semantic judge disagreement",
+                        }
+                    ],
+                }
+                for component_id in (
+                    "bottleneck_pricing",
+                    "capital_allocation",
+                )
+            },
+        )
+
+        component_calls = [
+            call
+            for call in second_provider.calls
+            if call["pass_name"] == "COMPONENT_RESEARCH"
+        ]
+        self.assertEqual(
+            {
+                call["payload"]["component_id"]
+                for call in component_calls
+            },
+            {"bottleneck_pricing", "capital_allocation"},
+        )
+        self.assertEqual(second.status, "RESEARCH_MEMOS_COMPLETE")
+        self.assertEqual(
+            {
+                row.component_id
+                for row in second.component_results
+                if row.provider_name
+                == "CHECKPOINT_REUSED_PRIOR_COMPONENT_MEMO"
+            },
+            set(CANONICAL_COMPONENT_ORDER)
+            - {"bottleneck_pricing", "capital_allocation"},
+        )
+
     def test_large_dossier_keeps_every_fact_but_compacts_repeated_lineage(self) -> None:
         provider = ScriptedResearchProvider()
         facts = tuple(

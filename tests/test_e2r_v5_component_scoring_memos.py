@@ -7,18 +7,27 @@ import unittest
 from pathlib import Path
 from typing import Any, Mapping
 
+from jsonschema import Draft202012Validator
+
+from e2r.research_brain.planning.provider_transport import (
+    StructuredProviderResponse,
+)
 from e2r.research_brain.researcher_mode import (
+    AnalystJudge,
     CANONICAL_COMPONENT_MAX_POINTS,
     CANONICAL_COMPONENT_ORDER,
     COMPONENT_SCORING_MEMO_OUTPUT_FILES,
     JUDGE_RESPONSE_FIELDS,
     PHASE89_PASS,
     REQUIRED_COMPONENT_JUDGE_ROLES,
+    CalibrationJudge,
+    CodexResearcherProvider,
     ComponentAnchor,
     ComponentResearchMemo,
     ComponentResearchResult,
     EvidenceFact,
     LLMComponentScoringMemoEngine,
+    SkepticJudge,
     compile_phase89_component_scoring_memos_audit,
     write_component_scoring_memo_run,
 )
@@ -196,6 +205,181 @@ class E2RV5ComponentScoringMemoTests(unittest.TestCase):
             "HISTORICAL_ANCHOR_COMPARABILITY",
             by_pass["CALIBRATION_JUDGE"],
         )
+
+    def test_large_three_role_judge_projection_stays_below_transport_gate(
+        self,
+    ) -> None:
+        class LargeRosterTransport:
+            def __init__(self) -> None:
+                self.prompts: list[str] = []
+                self.payloads: list[Mapping[str, Any]] = []
+                self.output_schemas: list[Mapping[str, Any]] = []
+
+            def provider_identity(self) -> Mapping[str, Any]:
+                return {
+                    "transport_class": "LargeRosterTransport",
+                    "model": "judge-projection-regression",
+                }
+
+            def complete(
+                self,
+                *,
+                prompt: str,
+                output_schema: Mapping[str, Any],
+                schema_name: str,
+            ) -> StructuredProviderResponse:
+                del schema_name
+                payload = json.loads(prompt.rsplit("\n", 1)[-1])
+                self.prompts.append(prompt)
+                self.payloads.append(payload)
+                self.output_schemas.append(output_schema)
+                maximum = float(payload["component_max_points"])
+                response = {
+                    "anchor_comparisons": [
+                        "the current fact shape fits the blind ordinal band"
+                    ],
+                    "proposed_points": maximum * 0.5,
+                    "allowed_range": [maximum * 0.4, maximum * 0.6],
+                    "rationale": (
+                        "every decoded support, counter, and resolution row "
+                        "was reviewed"
+                    ),
+                    "disagreements": [],
+                    "support_fact_ids": list(
+                        payload["allowed_support_fact_ids"]
+                    ),
+                    "counter_fact_ids": list(
+                        payload["allowed_counter_fact_ids"]
+                    ),
+                    "nearest_anchor_ids": list(
+                        payload["allowed_nearest_anchor_ids"][:1]
+                    ),
+                    "why_not_higher": "counter rows bound the upper range",
+                    "why_not_lower": "support rows establish the lower range",
+                }
+                Draft202012Validator(output_schema).validate(response)
+                return StructuredProviderResponse(
+                    payload=response,
+                    raw_response=json.dumps(response, ensure_ascii=False),
+                    stderr="",
+                    returncode=0,
+                )
+
+        facts = _large_judge_facts()
+        memo = _large_judge_memo(facts)
+        transport = LargeRosterTransport()
+        provider = CodexResearcherProvider(
+            transport=transport  # type: ignore[arg-type]
+        )
+        judges = (
+            AnalystJudge(provider=provider),
+            SkepticJudge(provider=provider),
+            CalibrationJudge(provider=provider),
+        )
+
+        results = tuple(
+            judge.judge(
+                memo=memo,
+                evidence_facts=facts,
+                historical_anchors=_anchors(),
+            )
+            for judge in judges
+        )
+
+        expected_fact_ids = {
+            *memo.positive_fact_ids,
+            *memo.counter_fact_ids,
+            *memo.resolution_fact_ids,
+        }
+        expected_facts_by_id = {
+            row.fact_id: row.to_dict() for row in facts
+        }
+        self.assertEqual(len(expected_fact_ids), 807)
+        self.assertGreater(
+            len(
+                json.dumps(
+                    list(expected_facts_by_id.values()),
+                    ensure_ascii=False,
+                    sort_keys=True,
+                )
+            ),
+            1_000_000,
+        )
+        self.assertTrue(all(row.status == "COMPLETE" for row in results))
+        self.assertEqual(len(transport.prompts), 3)
+        self.assertTrue(
+            all(len(prompt) < 1_000_000 for prompt in transport.prompts)
+        )
+        self.assertTrue(
+            all(
+                "decode every evidence_fact_projection.facts row"
+                in prompt.lower()
+                for prompt in transport.prompts
+            )
+        )
+        for payload in transport.payloads:
+            self.assertNotIn("evidence_facts", payload)
+            projection = payload["evidence_fact_projection"]
+            self.assertEqual(projection["fact_count"], 807)
+            self.assertTrue(projection["every_fact_id_preserved"])
+            self.assertTrue(
+                projection[
+                    "every_fact_lineage_accounted_by_count_and_hash"
+                ]
+            )
+            self.assertFalse(projection["fixed_top_n_used"])
+            self.assertFalse(projection["prompt_projection_is_research_cap"])
+            decoded_rows = [
+                dict(zip(projection["fact_fields"], row))
+                for row in projection["facts"]
+            ]
+            decoded_fact_ids = [row["fact_id"] for row in decoded_rows]
+            self.assertEqual(len(decoded_fact_ids), len(expected_fact_ids))
+            self.assertEqual(len(decoded_fact_ids), len(set(decoded_fact_ids)))
+            self.assertEqual(set(decoded_fact_ids), expected_fact_ids)
+            for decoded in decoded_rows:
+                source = expected_facts_by_id[decoded["fact_id"]]
+                for field in (
+                    "subject",
+                    "business_segment",
+                    "product_family",
+                    "economic_mechanism",
+                    "predicate",
+                    "value",
+                    "unit",
+                    "period",
+                    "direction",
+                    "current_lifecycle",
+                    "confidence",
+                    "structured_evidence_roles",
+                ):
+                    self.assertEqual(decoded[field], source[field])
+                self.assertEqual(
+                    projection["source_independence_group_dictionary"][
+                        decoded["source_independence_group_index"]
+                    ],
+                    source["source_independence_group"],
+                )
+            self.assertFalse(
+                {
+                    "stage",
+                    "total_score",
+                    "future_outcome",
+                }
+                & _recursive_keys(payload)
+            )
+        for result in results:
+            decision = result.decision
+            self.assertIsNotNone(decision)
+            assert decision is not None
+            self.assertEqual(
+                set(decision.support_fact_ids),
+                set(memo.positive_fact_ids),
+            )
+            self.assertEqual(
+                set(decision.counter_fact_ids),
+                set(memo.counter_fact_ids),
+            )
 
     def test_total_score_or_stage_attempt_is_pending_not_ignored(self) -> None:
         for mode in ("EXTRA_TOTAL_SCORE", "EXTRA_STAGE"):
@@ -490,6 +674,91 @@ def _facts() -> tuple[EvidenceFact, ...]:
             current_lifecycle="OPEN",
             **common,
         ),
+    )
+
+
+def _large_judge_facts() -> tuple[EvidenceFact, ...]:
+    shared_source_ids = tuple(
+        f"LARGE-SHARED-SOURCE-{index:02d}" for index in range(24)
+    )
+    shared_claim_ids = tuple(
+        f"LARGE-SHARED-CLAIM-{index:02d}" for index in range(24)
+    )
+    shared_quote_ids = tuple(
+        f"LARGE-SHARED-QUOTE-{index:02d}" for index in range(24)
+    )
+    component_id = CANONICAL_COMPONENT_ORDER[0]
+    rows = []
+    for index in range(807):
+        if index < 400:
+            direction = "POSITIVE"
+            lifecycle = "CURRENT"
+            prefix = "POSITIVE"
+        elif index < 800:
+            direction = "COUNTER"
+            lifecycle = "OPEN"
+            prefix = "COUNTER"
+        else:
+            direction = "RESOLUTION"
+            lifecycle = "RESOLVED"
+            prefix = "RESOLUTION"
+        rows.append(
+            EvidenceFact(
+                fact_id=f"LARGE-{prefix}-FACT-{index:04d}",
+                target_id=TARGET,
+                as_of_date=AS_OF_DATE,
+                subject=f"current target operating observation {index}",
+                business_segment=f"segment {index % 5}",
+                product_family=f"product family {index % 11}",
+                economic_mechanism=(
+                    f"distinct economic mechanism {index} links operating "
+                    "conditions to component cash economics"
+                ),
+                predicate=f"LARGE_PREDICATE_{index:04d}",
+                value={"observation": index, "confirmed": True},
+                unit="index",
+                period=f"2026Q{index % 4 + 1}",
+                direction=direction,
+                source_ids=shared_source_ids,
+                claim_ids=shared_claim_ids,
+                quote_ids=shared_quote_ids,
+                current_lifecycle=lifecycle,
+                source_independence_group="ISSUER:CURRENT_TARGET",
+                confidence=0.85,
+                corroborating_independence_groups=(
+                    "ISSUER:CURRENT_TARGET",
+                    "INDEPENDENT:CURRENT_TARGET",
+                ),
+                question_family_tags=(f"QUESTION-{index % 17}",),
+                primitive_tags=(f"PRIMITIVE-{index % 13}",),
+                allowed_component_ids=(component_id,),
+                structured_evidence_roles=("FORWARD_GUIDANCE",),
+            )
+        )
+    return tuple(rows)
+
+
+def _large_judge_memo(
+    facts: tuple[EvidenceFact, ...],
+) -> ComponentResearchMemo:
+    base = _component_results()[0].memo
+    assert base is not None
+    return replace(
+        base,
+        memo_id="PHASE89-LARGE-JUDGE-RESEARCH-MEMO",
+        positive_fact_ids=tuple(
+            row.fact_id for row in facts if row.direction == "POSITIVE"
+        ),
+        counter_fact_ids=tuple(
+            row.fact_id for row in facts if row.direction == "COUNTER"
+        ),
+        resolution_fact_ids=tuple(
+            row.fact_id for row in facts if row.direction == "RESOLUTION"
+        ),
+        structured_metrics={
+            "current_economic_metric": 1.0,
+            "stage": "must be scrubbed before provider transport",
+        },
     )
 
 
