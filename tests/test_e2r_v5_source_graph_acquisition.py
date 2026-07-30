@@ -3127,8 +3127,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                     "decisions": [
                         {
                             "candidate_id": row["candidate_id"],
-                            "material_relevance": "customer.example.com"
-                            in str(row["url"]),
+                            "material_relevance": (
+                                "customer.example.com/platform/hbm"
+                                in str(row["url"])
+                            ),
                             "priority": 1.0,
                             "objective_ids": list(row["objective_ids"]),
                             "matched_requested_source_family": (
@@ -3153,6 +3155,9 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
         blog_url = "https://writer.example.net/hbm-retelling"
         customer_url = "https://customer.example.com/platform/hbm"
+        wrong_subject_customer_url = (
+            "https://customer.example.com/careers/accounting"
+        )
         run = self._run(
             provider=provider,
             search=RecordingSearchProvider(
@@ -3160,6 +3165,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                     QUERY: (
                         _result("Current Corp HBM 해설", blog_url),
                         _result("Current Corp HBM platform", customer_url),
+                        _result(
+                            "Customer Corp accounting careers",
+                            wrong_subject_customer_url,
+                        ),
                     )
                 }
             ),
@@ -3167,6 +3176,9 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 fixture_text_by_url={
                     blog_url: _document_text("third-party-retelling"),
                     customer_url: _document_text("customer-original"),
+                    wrong_subject_customer_url: _document_text(
+                        "wrong-subject-customer-original"
+                    ),
                 }
             ),
         )
@@ -3191,6 +3203,16 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(
             candidates[blog_url]["matched_requested_source_family"],
             "NONE",
+        )
+        self.assertEqual(
+            candidates[wrong_subject_customer_url]["fetch_status"],
+            "DISCOVERY_ONLY_NOT_FETCHED",
+        )
+        self.assertEqual(
+            candidates[wrong_subject_customer_url][
+                "matched_requested_source_family"
+            ],
+            "CUSTOMER_OFFICIAL",
         )
 
     def test_ranker_prompt_compacts_complete_large_fact_graph(self) -> None:

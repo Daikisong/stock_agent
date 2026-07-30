@@ -62,8 +62,9 @@ class SourceCandidateMaterialityDecision:
             raise ValueError("search-result metadata cannot become evidence or score")
         if self.material_relevance and not self.objective_ids:
             raise ValueError("material candidate must map to a research objective")
-        if self.material_relevance != bool(
-            self.matched_requested_source_family
+        if (
+            self.material_relevance
+            and not self.matched_requested_source_family
         ):
             raise ValueError(
                 "material candidate must match one requested source family"
@@ -526,7 +527,7 @@ def _decode_candidate_ranking(
                 "candidate ranking cited an unrequested source family"
             )
         material_relevance = bool(raw["material_relevance"])
-        if material_relevance != bool(matched_source_family):
+        if material_relevance and not matched_source_family:
             raise ValueError(
                 "candidate materiality and requested source family mismatch"
             )
