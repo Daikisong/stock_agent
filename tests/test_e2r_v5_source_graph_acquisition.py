@@ -94,6 +94,25 @@ class SourceBrainProvider:
                         ),
                         "priority": 1.0 - index * 0.01,
                         "objective_ids": list(row["objective_ids"]),
+                        "matched_requested_source_family": (
+                            next(
+                                iter(
+                                    row.get(
+                                        "requested_source_families"
+                                    )
+                                    or ()
+                                ),
+                                "NONE",
+                            )
+                            if (
+                                not self.material_titles
+                                or any(
+                                    value in str(row["title"])
+                                    for value in self.material_titles
+                                )
+                            )
+                            else "NONE"
+                        ),
                         "rationale": "research objective와 직접 관련된 후보",
                     }
                     for index, row in enumerate(rows)
@@ -181,6 +200,9 @@ class InvalidThenCorrectRankingProvider(SourceBrainProvider):
                             "material_relevance": True,
                             "priority": 1.0,
                             "objective_ids": ["OBJECTIVE-1"],
+                            "matched_requested_source_family": (
+                                "NAVER_DISCOVERY"
+                            ),
                             "rationale": "잘못된 첫 응답",
                         }
                     ],
@@ -212,6 +234,15 @@ class IncompleteThenCorrectRankingProvider(SourceBrainProvider):
                             "material_relevance": True,
                             "priority": 1.0,
                             "objective_ids": list(row["objective_ids"]),
+                            "matched_requested_source_family": next(
+                                iter(
+                                    row.get(
+                                        "requested_source_families"
+                                    )
+                                    or ()
+                                ),
+                                "NONE",
+                            ),
                             "rationale": "모든 후보를 분류했지만 완료 표시는 잘못 남겼다.",
                         }
                         for row in rows
@@ -244,6 +275,12 @@ class RepeatedIncompleteCompleteRosterProvider(SourceBrainProvider):
                     "material_relevance": True,
                     "priority": 1.0,
                     "objective_ids": list(row["objective_ids"]),
+                    "matched_requested_source_family": next(
+                        iter(
+                            row.get("requested_source_families") or ()
+                        ),
+                        "NONE",
+                    ),
                     "rationale": "후보 분류는 끝났지만 원문 수집은 남았다.",
                 }
                 for row in rows
@@ -276,6 +313,12 @@ class SplitRecoveryRankingProvider(SourceBrainProvider):
                     "material_relevance": True,
                     "priority": 1.0,
                     "objective_ids": list(row["objective_ids"]),
+                    "matched_requested_source_family": next(
+                        iter(
+                            row.get("requested_source_families") or ()
+                        ),
+                        "NONE",
+                    ),
                     "rationale": "분할된 후보 roster를 모두 직접 검토했다.",
                 }
                 for row in response_rows
@@ -814,6 +857,15 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                             "material_relevance": True,
                             "priority": 1.0,
                             "objective_ids": list(row["objective_ids"]),
+                            "matched_requested_source_family": next(
+                                iter(
+                                    row.get(
+                                        "requested_source_families"
+                                    )
+                                    or ()
+                                ),
+                                "NONE",
+                            ),
                             "rationale": "Codex 공통 페이지의 후보를 전수 분류했다.",
                         }
                         for row in rows
@@ -1721,6 +1773,47 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                     max_fetches_per_checkpoint=2,
                 ),
                 official_gaps={},
+            )
+
+    def test_backfill_checkpoint_migrates_one_way_to_production_daily(
+        self,
+    ) -> None:
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="RESEARCH_BACKFILL",
+        )
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+
+        resumed = source_graph_module._resume_acquisition_state(
+            checkpoint,
+            target_id=TARGET,
+            as_of_date=AS_OF_DATE,
+            mode="PRODUCTION_DAILY",
+        )
+
+        self.assertEqual(resumed["mode"], "PRODUCTION_DAILY")
+        self.assertEqual(
+            resumed["mode_migration"]["from"],
+            "RESEARCH_BACKFILL",
+        )
+        self.assertTrue(
+            resumed["mode_migration"][
+                "historical_evidence_requires_downstream_validation"
+            ]
+        )
+        self.assertTrue(
+            resumed["mode_migration"][
+                "transport_history_does_not_certify_completion"
+            ]
+        )
+        with self.assertRaisesRegex(ValueError, "mode mismatch"):
+            source_graph_module._resume_acquisition_state(
+                checkpoint,
+                target_id=TARGET,
+                as_of_date=AS_OF_DATE,
+                mode="TEST",
             )
 
     def test_graph_keeps_official_structured_independent_and_reference_expansion(self) -> None:
@@ -2861,6 +2954,89 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(
             candidate["candidate_source_family_hint"],
             "ISSUER_NEWSROOM",
+        )
+
+    def test_customer_official_request_does_not_fetch_third_party_retelling(
+        self,
+    ) -> None:
+        class CustomerSourceAwareProvider(SourceBrainProvider):
+            def complete(self, *, pass_name, payload):
+                if pass_name != "SOURCE_CANDIDATE_RANKING":
+                    return super().complete(
+                        pass_name=pass_name,
+                        payload=payload,
+                    )
+                self.calls.append(
+                    {"pass_name": pass_name, "payload": payload}
+                )
+                return {
+                    "decisions": [
+                        {
+                            "candidate_id": row["candidate_id"],
+                            "material_relevance": "customer.example.com"
+                            in str(row["url"]),
+                            "priority": 1.0,
+                            "objective_ids": list(row["objective_ids"]),
+                            "matched_requested_source_family": (
+                                "CUSTOMER_OFFICIAL"
+                                if "customer.example.com"
+                                in str(row["url"])
+                                else "NONE"
+                            ),
+                            "rationale": (
+                                "고객 소유 도메인의 원문만 고객 공식 "
+                                "source 요청을 충족한다."
+                            ),
+                        }
+                        for row in payload["discovery_candidates"]
+                    ],
+                    "ranking_complete": True,
+                    "unresolved_notes": [],
+                }
+
+        provider = CustomerSourceAwareProvider(
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        blog_url = "https://writer.example.net/hbm-retelling"
+        customer_url = "https://customer.example.com/platform/hbm"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result("Current Corp HBM 해설", blog_url),
+                        _result("Current Corp HBM platform", customer_url),
+                    )
+                }
+            ),
+            fetcher=PageFetcher(
+                fixture_text_by_url={
+                    blog_url: _document_text("third-party-retelling"),
+                    customer_url: _document_text("customer-original"),
+                }
+            ),
+        )
+
+        self.assertEqual(len(run.evidence_documents), 1)
+        self.assertEqual(
+            run.evidence_documents[0]["canonical_url"],
+            customer_url,
+        )
+        self.assertEqual(
+            run.evidence_documents[0]["source_family"],
+            "CUSTOMER_OFFICIAL",
+        )
+        candidates = {
+            row["url"]: row
+            for row in run.checkpoint["search_candidates"]
+        }
+        self.assertEqual(
+            candidates[blog_url]["fetch_status"],
+            "DISCOVERY_ONLY_NOT_FETCHED",
+        )
+        self.assertEqual(
+            candidates[blog_url]["matched_requested_source_family"],
+            "NONE",
         )
 
     def test_ranker_prompt_compacts_complete_large_fact_graph(self) -> None:

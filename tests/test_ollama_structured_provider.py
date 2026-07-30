@@ -1107,6 +1107,93 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             ["ANCHOR-C"],
         )
 
+    def test_production_fact_schema_binds_current_objective_roster(self) -> None:
+        schema = _provider_output_schema(
+            pass_name="EVIDENCE_FACT_EXTRACTION",
+            payload={
+                "fact_extraction_scope_contract": {
+                    "mode": "PRODUCTION_OBJECTIVE_LOCAL",
+                    "document_objective_ids": [
+                        {
+                            "document_id": "DOC-1",
+                            "objective_ids": ["OBJECTIVE-A"],
+                        },
+                        {
+                            "document_id": "DOC-2",
+                            "objective_ids": ["OBJECTIVE-B"],
+                        },
+                    ],
+                }
+            },
+        )
+        fact_schema = schema["properties"]["facts"]["items"]
+
+        self.assertIn("objective_ids", fact_schema["required"])
+        self.assertIn("objective_relation", fact_schema["required"])
+        self.assertEqual(
+            fact_schema["properties"]["objective_ids"]["items"]["enum"],
+            ["OBJECTIVE-A", "OBJECTIVE-B"],
+        )
+        self.assertEqual(
+            fact_schema["properties"]["objective_relation"]["enum"],
+            ["ADVANCE", "COUNTER", "SUPERSEDE"],
+        )
+        other_schema = _provider_output_schema(
+            pass_name="EVIDENCE_FACT_EXTRACTION",
+            payload={
+                "fact_extraction_scope_contract": {
+                    "mode": "PRODUCTION_OBJECTIVE_LOCAL",
+                    "document_objective_ids": [
+                        {
+                            "document_id": "DOC-3",
+                            "objective_ids": ["OBJECTIVE-C"],
+                        }
+                    ],
+                }
+            },
+        )
+        self.assertNotEqual(
+            _canonical_json_hash(schema),
+            _canonical_json_hash(other_schema),
+        )
+
+    def test_candidate_schema_binds_requested_source_family_roster(self) -> None:
+        schema = _provider_output_schema(
+            pass_name="SOURCE_CANDIDATE_RANKING",
+            payload={
+                "discovery_candidates": [
+                    {
+                        "candidate_id": "CANDIDATE-1",
+                        "requested_source_families": [
+                            "CUSTOMER_OFFICIAL"
+                        ],
+                    }
+                ]
+            },
+        )
+        matched_schema = schema["properties"]["decisions"]["items"][
+            "properties"
+        ]["matched_requested_source_family"]
+        self.assertEqual(
+            matched_schema["enum"],
+            ["NONE", "CUSTOMER_OFFICIAL"],
+        )
+        other_schema = _provider_output_schema(
+            pass_name="SOURCE_CANDIDATE_RANKING",
+            payload={
+                "discovery_candidates": [
+                    {
+                        "candidate_id": "CANDIDATE-2",
+                        "requested_source_families": ["REUTERS"],
+                    }
+                ]
+            },
+        )
+        self.assertNotEqual(
+            _canonical_json_hash(schema),
+            _canonical_json_hash(other_schema),
+        )
+
     def test_component_source_coverage_schema_binds_actual_payload_roster(
         self,
     ) -> None:

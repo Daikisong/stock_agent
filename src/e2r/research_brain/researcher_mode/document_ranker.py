@@ -47,6 +47,7 @@ class SourceCandidateMaterialityDecision:
     material_relevance: bool
     priority: float
     objective_ids: tuple[str, ...]
+    matched_requested_source_family: str | None
     rationale: str
     snippet_discovery_only: bool = True
     evidence_eligible: bool = False
@@ -61,6 +62,12 @@ class SourceCandidateMaterialityDecision:
             raise ValueError("search-result metadata cannot become evidence or score")
         if self.material_relevance and not self.objective_ids:
             raise ValueError("material candidate must map to a research objective")
+        if self.material_relevance != bool(
+            self.matched_requested_source_family
+        ):
+            raise ValueError(
+                "material candidate must match one requested source family"
+            )
 
     def to_dict(self) -> Mapping[str, Any]:
         return {
@@ -69,6 +76,9 @@ class SourceCandidateMaterialityDecision:
             "material_relevance": self.material_relevance,
             "priority": self.priority,
             "objective_ids": list(self.objective_ids),
+            "matched_requested_source_family": (
+                self.matched_requested_source_family or "NONE"
+            ),
             "rationale": self.rationale,
             "snippet_discovery_only": self.snippet_discovery_only,
             "evidence_eligible": self.evidence_eligible,
@@ -491,6 +501,35 @@ def _decode_candidate_ranking(
         cited_objectives = _unique_strings(raw.get("objective_ids"))
         if set(cited_objectives) - objective_ids:
             raise ValueError("candidate ranking cited unknown objective")
+        candidate = candidate_by_id[candidate_id]
+        requested_source_families = set(
+            _unique_strings(
+                candidate.get("requested_source_families") or ()
+            )
+        )
+        raw_matched_source_family = str(
+            raw.get("matched_requested_source_family") or ""
+        ).strip()
+        matched_source_family = (
+            None
+            if raw_matched_source_family == "NONE"
+            else raw_matched_source_family
+        )
+        if (
+            not raw_matched_source_family
+            or (
+                matched_source_family is not None
+                and matched_source_family not in requested_source_families
+            )
+        ):
+            raise ValueError(
+                "candidate ranking cited an unrequested source family"
+            )
+        material_relevance = bool(raw["material_relevance"])
+        if material_relevance != bool(matched_source_family):
+            raise ValueError(
+                "candidate materiality and requested source family mismatch"
+            )
         decisions.append(
             SourceCandidateMaterialityDecision(
                 decision_id=stable_intelligence_id(
@@ -501,9 +540,10 @@ def _decode_candidate_ranking(
                     },
                 ),
                 candidate_id=candidate_id,
-                material_relevance=bool(raw["material_relevance"]),
+                material_relevance=material_relevance,
                 priority=float(raw["priority"]),
                 objective_ids=cited_objectives,
+                matched_requested_source_family=matched_source_family,
                 rationale=str(raw["rationale"]),
             )
         )

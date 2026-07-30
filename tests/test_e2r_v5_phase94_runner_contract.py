@@ -982,7 +982,20 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             "gold_lane_isolated": True,
             "require_researcher_parity": True,
         }
-        CurrentResearcherModeConfig(**base)
+        config = CurrentResearcherModeConfig(**base)
+        self.assertEqual(
+            config.source_acquisition_mode,
+            "PRODUCTION_DAILY",
+        )
+        CurrentResearcherModeConfig(
+            **base,
+            source_acquisition_mode="TEST",
+        )
+        with self.assertRaisesRegex(ValueError, "backfill"):
+            CurrentResearcherModeConfig(
+                **base,
+                source_acquisition_mode="RESEARCH_BACKFILL",
+            )
         for key in (
             "live_materialization_authorized",
             "checkpoint_resume",
@@ -2172,6 +2185,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 gold_lane_isolated=True,
                 require_researcher_parity=True,
                 latest_trading_snapshot_date="2026-06-29",
+                source_acquisition_mode="TEST",
             )
             result = runner.run_checkpoint(
                 config=config,
@@ -2439,6 +2453,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     gold_lane_isolated=True,
                     require_researcher_parity=True,
                     latest_trading_snapshot_date=as_of_date,
+                    source_acquisition_mode="TEST",
                 ),
                 target=target,
                 repo_root=self.ROOT,
@@ -2502,6 +2517,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                         checkpoint_resume=True,
                         gold_lane_isolated=True,
                         require_researcher_parity=True,
+                        source_acquisition_mode="TEST",
                     ),
                     target=other_target,
                     repo_root=self.ROOT,
@@ -2530,6 +2546,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                         checkpoint_resume=True,
                         gold_lane_isolated=True,
                         require_researcher_parity=True,
+                        source_acquisition_mode="TEST",
                     ),
                     target=target,
                     repo_root=self.ROOT,
@@ -2554,6 +2571,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                         checkpoint_resume=True,
                         gold_lane_isolated=True,
                         require_researcher_parity=True,
+                        source_acquisition_mode="TEST",
                     ),
                     target=target,
                     repo_root=self.ROOT,

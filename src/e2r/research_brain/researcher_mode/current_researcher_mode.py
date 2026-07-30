@@ -73,6 +73,7 @@ from .stagecourt import (
 from .source_graph_explorer import (
     ResearcherSourceGraphAcquirer,
     SourceGraphAcquisitionConfig,
+    SourceGraphAcquisitionMode,
     SourceGraphAcquisitionRun,
     SourceGraphExplorer,
     load_source_graph_checkpoint,
@@ -126,10 +127,12 @@ class CurrentResearcherModeConfig:
     gold_lane_isolated: bool
     require_researcher_parity: bool
     latest_trading_snapshot_date: str | None = None
+    source_acquisition_mode: str = SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
     schema_version: str = CURRENT_RESEARCHER_MODE_SCHEMA_VERSION
 
     def __post_init__(self) -> None:
         cutoff = date.fromisoformat(self.as_of_date)
+        source_mode = SourceGraphAcquisitionMode(self.source_acquisition_mode)
         if not self.archetype_id.strip():
             raise ValueError("Researcher Mode archetype is required")
         if not self.live_materialization_authorized:
@@ -140,6 +143,10 @@ class CurrentResearcherModeConfig:
             raise ValueError("Phase 94 production requires Gold lane isolation")
         if not self.require_researcher_parity:
             raise ValueError("Phase 94 requires Researcher parity gates")
+        if source_mode == SourceGraphAcquisitionMode.RESEARCH_BACKFILL:
+            raise ValueError(
+                "Phase 94 current Researcher Mode cannot run with backfill source semantics"
+            )
         if self.latest_trading_snapshot_date:
             trading_date = date.fromisoformat(self.latest_trading_snapshot_date)
             if trading_date > cutoff:
@@ -284,7 +291,7 @@ class CurrentResearcherModeTargetRunner:
             for row in initial_graph.open_objectives
         }
         source_acquisition_config = SourceGraphAcquisitionConfig(
-            mode="RESEARCH_BACKFILL",
+            mode=config.source_acquisition_mode,
             max_results_per_query=100,
             max_queries_per_checkpoint=10,
             max_candidates_per_checkpoint=100,
@@ -411,6 +418,12 @@ class CurrentResearcherModeTargetRunner:
                     prior_context["supervisor_gap_context"]
                 ),
             },
+            extraction_mode=(
+                "PRODUCTION_OBJECTIVE_LOCAL"
+                if config.source_acquisition_mode
+                == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+                else "RESEARCH_BACKFILL"
+            ),
             **prior_fact,
         )
         write_researcher_fact_extraction_result(fact_extraction, root)

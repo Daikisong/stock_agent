@@ -345,6 +345,7 @@ SOURCE_CANDIDATE_RANKING_SCHEMA: Mapping[str, Any] = {
                     "material_relevance",
                     "priority",
                     "objective_ids",
+                    "matched_requested_source_family",
                     "rationale",
                 ],
                 "properties": {
@@ -352,6 +353,10 @@ SOURCE_CANDIDATE_RANKING_SCHEMA: Mapping[str, Any] = {
                     "material_relevance": {"type": "boolean"},
                     "priority": {"type": "number", "minimum": 0, "maximum": 1},
                     "objective_ids": _STRING_ARRAY,
+                    "matched_requested_source_family": {
+                        "type": "string",
+                        "minLength": 1,
+                    },
                     "rationale": {"type": "string", "minLength": 1},
                 },
             },
@@ -879,6 +884,76 @@ def _provider_output_schema(
     """
 
     base = _PROVIDER_SCHEMAS[pass_name]
+    if pass_name == "SOURCE_CANDIDATE_RANKING":
+        requested_source_families = list(
+            dict.fromkeys(
+                str(source_family).strip()
+                for candidate in payload.get("discovery_candidates") or ()
+                if isinstance(candidate, Mapping)
+                for source_family in candidate.get(
+                    "requested_source_families"
+                )
+                or ()
+                if str(source_family).strip()
+            )
+        )
+        if not requested_source_families:
+            raise ValueError(
+                "candidate ranking schema requires requested source families"
+            )
+        schema = json.loads(json.dumps(base, ensure_ascii=False))
+        schema["properties"]["decisions"]["items"]["properties"][
+            "matched_requested_source_family"
+        ] = {
+            "type": "string",
+            "enum": ["NONE", *requested_source_families],
+        }
+        return schema
+    if pass_name == "EVIDENCE_FACT_EXTRACTION" and isinstance(
+        payload.get("fact_extraction_scope_contract"), Mapping
+    ):
+        contract = payload["fact_extraction_scope_contract"]
+        if contract.get("mode") == "PRODUCTION_OBJECTIVE_LOCAL":
+            document_objective_rows = contract.get(
+                "document_objective_ids"
+            )
+            if isinstance(document_objective_rows, (str, bytes)) or not isinstance(
+                document_objective_rows, Sequence
+            ):
+                raise ValueError(
+                    "production fact schema requires document objective rows"
+                )
+            allowed_objective_ids = list(
+                dict.fromkeys(
+                    str(objective_id).strip()
+                    for row in document_objective_rows
+                    if isinstance(row, Mapping)
+                    for objective_id in row.get("objective_ids") or ()
+                    if str(objective_id).strip()
+                )
+            )
+            if not allowed_objective_ids:
+                raise ValueError(
+                    "production fact schema requires objective ids"
+                )
+            schema = json.loads(json.dumps(base, ensure_ascii=False))
+            fact_item = schema["properties"]["facts"]["items"]
+            fact_item["required"].extend(
+                ["objective_ids", "objective_relation"]
+            )
+            fact_item["properties"]["objective_ids"] = {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "type": "string",
+                    "enum": allowed_objective_ids,
+                },
+            }
+            fact_item["properties"]["objective_relation"] = {
+                "type": "string",
+                "enum": ["ADVANCE", "COUNTER", "SUPERSEDE"],
+            }
+            return schema
     if pass_name == "BUSINESS_MODEL_RESEARCH" and isinstance(
         payload.get("loss_accounted_fact_chunk_synthesis"), Mapping
     ):
@@ -4593,6 +4668,12 @@ def _pass_instruction(pass_name: str) -> str:
             "candidate_source_family_hint as discovery provenance. When an objective "
             "requires an issuer source, prioritize an eligible verified issuer-domain "
             "candidate over a third-party retelling even when the issuer snippet is sparse. "
+            "Set matched_requested_source_family to exactly one family requested by "
+            "that candidate only when the URL owner and discovery metadata support "
+            "that provenance. Otherwise set it to NONE and material_relevance=false. "
+            "A blog, portal repost, or third-party retelling never satisfies an issuer- "
+            "or customer-official request merely because it discusses the requested "
+            "company or product. "
             "A landing page, redirect page, or document referenced by an already fetched "
             "page may be materially relevant as a route to the full original source; do "
             "not reject it merely because it is not yet evidence."
@@ -4628,6 +4709,15 @@ def _pass_instruction(pass_name: str) -> str:
             "return only the next facts not listed there. A page that reaches the page limit "
             "must be followed by another page; an empty final page with the accurate document "
             "disposition may certify that no distinct facts remain. "
+            "When fact_extraction_scope_contract.mode is "
+            "PRODUCTION_OBJECTIVE_LOCAL, its narrower material_fact_definition "
+            "and completion_definition override document-wide exhaustive scope. "
+            "Return only facts that directly affect at least one objective id "
+            "linked to that document, copy every directly affected id into "
+            "objective_ids, and classify the effect as ADVANCE, COUNTER, or "
+            "SUPERSEDE. Do not turn general background or adjacent technical "
+            "history into production facts merely because it is economically "
+            "interesting. "
             "Never use snippets, future outcomes, score, or Stage."
         )
     if pass_name == "RESEARCH_SUPERVISOR_REVIEW":

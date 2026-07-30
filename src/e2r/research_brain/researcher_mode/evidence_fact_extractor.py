@@ -72,6 +72,12 @@ STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED = (
 NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED = (
     "NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED"
 )
+FACT_EXTRACTION_MODES = frozenset(
+    {"RESEARCH_BACKFILL", "PRODUCTION_OBJECTIVE_LOCAL"}
+)
+OBJECTIVE_FACT_RELATIONS = frozenset(
+    {"ADVANCE", "COUNTER", "SUPERSEDE"}
+)
 
 _RFC8259_NUMBER_PATTERN = re.compile(
     r"-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?\Z"
@@ -362,16 +368,49 @@ class ResearcherEvidenceFactExtractor:
         prior_rejections: Sequence[
             FactExtractionRejection | Mapping[str, Any]
         ] = (),
+        extraction_mode: str = "RESEARCH_BACKFILL",
     ) -> ResearcherFactExtractionResult:
         cutoff = date.fromisoformat(as_of_date)
         if not target_id.strip() or not target_name.strip() or not archetype_id.strip():
             raise ValueError("fact extraction target identity is incomplete")
+        if extraction_mode not in FACT_EXTRACTION_MODES:
+            raise ValueError("unknown fact extraction mode")
         prepared = _validate_documents(
             documents,
             target_id=target_id,
             as_of_date=as_of_date,
             cutoff=cutoff,
         )
+        objective_ids = {
+            str(row.get("objective_id") or "").strip()
+            for row in open_objectives
+        }
+        if "" in objective_ids or len(objective_ids) != len(open_objectives):
+            raise ValueError("fact extraction objectives require unique ids")
+        objective_scope_by_document: Mapping[str, frozenset[str]] | None = None
+        if extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL":
+            if not objective_ids:
+                raise ValueError(
+                    "production objective-local extraction requires open objectives"
+                )
+            objective_scope_by_document = {
+                str(document["document_id"]): frozenset(
+                    str(value).strip()
+                    for value in document.get("objective_ids") or ()
+                    if str(value).strip() in objective_ids
+                )
+                for document in prepared
+            }
+            unlinked = sorted(
+                document_id
+                for document_id, linked_ids in objective_scope_by_document.items()
+                if not linked_ids
+            )
+            if unlinked:
+                raise ValueError(
+                    "production evidence documents lack current objective lineage:"
+                    + ",".join(unlinked)
+                )
         scope_contract = load_mechanism_scope_contracts().get(archetype_id)
         if scope_contract is None:
             raise ValueError("fact extraction archetype lacks mechanism-scope contract")
@@ -519,6 +558,54 @@ class ResearcherEvidenceFactExtractor:
                         },
                     },
                     "full_documents": [_document_prompt_row(row) for row in batch],
+                    **(
+                        {
+                            "fact_extraction_scope_contract": {
+                                "mode": "PRODUCTION_OBJECTIVE_LOCAL",
+                                "allowed_objective_relations": sorted(
+                                    OBJECTIVE_FACT_RELATIONS
+                                ),
+                                "document_objective_ids": [
+                                    {
+                                        "document_id": str(row["document_id"]),
+                                        "objective_ids": sorted(
+                                            objective_scope_by_document[
+                                                str(row["document_id"])
+                                            ]
+                                        ),
+                                    }
+                                    for row in batch
+                                ],
+                                "material_fact_definition": (
+                                    "A source-backed fact is material in this "
+                                    "production pass only when it directly "
+                                    "advances, counters, or supersedes at least "
+                                    "one document-linked current research "
+                                    "objective, with the unresolved facts and "
+                                    "questions in score_gap_context controlling "
+                                    "the present research focus. General "
+                                    "background, adjacent technology history, "
+                                    "and facts that do not affect that focus "
+                                    "must not be emitted."
+                                ),
+                                "completion_definition": (
+                                    "extraction_complete means no further "
+                                    "distinct objective-linked fact remains in "
+                                    "the supplied document batch; it never "
+                                    "means every generally economic sentence "
+                                    "in the document was exhausted."
+                                ),
+                                "deterministic_validation_scope": (
+                                    "objective roster, document lineage, exact "
+                                    "quote, as_of_date, and closed-vocabulary "
+                                    "mechanism coordinates only"
+                                ),
+                                "llm_owns_economic_relevance": True,
+                            }
+                        }
+                        if objective_scope_by_document is not None
+                        else {}
+                    ),
                 }
             )
             prompt_documents = tuple(payload.get("full_documents") or ())
@@ -671,6 +758,7 @@ class ResearcherEvidenceFactExtractor:
                             str(row["document_id"]) for row in batch
                         }
                     },
+                    objective_scope_by_document=objective_scope_by_document,
                 )
                 page_boundary_reached = (
                     len(tuple(response.get("facts") or ()))
@@ -751,6 +839,20 @@ class ResearcherEvidenceFactExtractor:
                                         ),
                                         "current_lifecycle": str(
                                             claim["current_lifecycle"]
+                                        ),
+                                        **(
+                                            {
+                                                "objective_ids": list(
+                                                    claim["objective_ids"]
+                                                ),
+                                                "objective_relation": str(
+                                                    claim[
+                                                        "objective_relation"
+                                                    ]
+                                                ),
+                                            }
+                                            if claim.get("objective_ids")
+                                            else {}
                                         ),
                                         "exact_quote": str(
                                             claim["exact_quote"]
@@ -1127,6 +1229,10 @@ class ResearcherEvidenceFactExtractor:
             ),
             "maximum_pagination_page_count": (
                 maximum_pagination_page_count
+            ),
+            "extraction_mode": extraction_mode,
+            "production_objective_local_completion": (
+                extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
             ),
             "transport_chunk_size": self.documents_per_call,
             "transport_character_bound": self.max_document_chars_per_call,
@@ -1592,6 +1698,9 @@ def _validate_response(
     previously_rejected_material_quote_failure_counts: (
         Mapping[str, int] | None
     ) = None,
+    objective_scope_by_document: (
+        Mapping[str, frozenset[str]] | None
+    ) = None,
 ) -> tuple[
     list[Mapping[str, Any]],
     list[FactExtractionRejection],
@@ -1664,6 +1773,27 @@ def _validate_response(
                     proposed_exact_quote=proposed_exact_quote,
                 )
             )
+            continue
+        objective_scope_reason = _objective_scope_rejection_reason(
+            proposal,
+            objective_scope_by_document=objective_scope_by_document,
+        )
+        if objective_scope_reason:
+            rejections.append(
+                FactExtractionRejection(
+                    batch_id=batch_id,
+                    proposal_index=index,
+                    document_id=document_id,
+                    reason=objective_scope_reason,
+                    material_proposal=material,
+                    proposed_exact_quote=proposed_exact_quote or None,
+                )
+            )
+            if material:
+                pending.append(
+                    "MATERIAL_FACT_PROPOSAL_REJECTED:"
+                    f"{document_id}:{objective_scope_reason}"
+                )
             continue
         reason = _proposal_rejection_reason(
             proposal,
@@ -1944,6 +2074,40 @@ def _proposal_rejection_reason(
     return None
 
 
+def _objective_scope_rejection_reason(
+    proposal: Any,
+    *,
+    objective_scope_by_document: Mapping[str, frozenset[str]] | None,
+) -> str | None:
+    if objective_scope_by_document is None:
+        return None
+    if not isinstance(proposal, Mapping):
+        return "FACT_PROPOSAL_NOT_OBJECT"
+    document_id = str(proposal.get("document_id") or "")
+    allowed_objective_ids = objective_scope_by_document.get(document_id)
+    if allowed_objective_ids is None:
+        return "UNKNOWN_DOCUMENT_ID"
+    raw_objective_ids = proposal.get("objective_ids")
+    if isinstance(raw_objective_ids, (str, bytes)) or not isinstance(
+        raw_objective_ids, Sequence
+    ):
+        return "OBJECTIVE_IDS_MISSING_OR_MALFORMED"
+    cited_objective_ids = tuple(
+        str(value).strip() for value in raw_objective_ids
+    )
+    if (
+        not cited_objective_ids
+        or any(not value for value in cited_objective_ids)
+        or len(cited_objective_ids) != len(set(cited_objective_ids))
+    ):
+        return "OBJECTIVE_IDS_MISSING_OR_DUPLICATED"
+    if set(cited_objective_ids) - set(allowed_objective_ids):
+        return "OBJECTIVE_ID_OUTSIDE_DOCUMENT_LINEAGE"
+    if str(proposal.get("objective_relation") or "") not in OBJECTIVE_FACT_RELATIONS:
+        return "INVALID_OBJECTIVE_FACT_RELATION"
+    return None
+
+
 def _accepted_claim(
     proposal: Mapping[str, Any],
     *,
@@ -1978,6 +2142,14 @@ def _accepted_claim(
         "accepted_by_evidence_os": True,
         "material": True,
         "materiality": proposal["materiality"],
+        **(
+            {
+                "objective_ids": list(proposal["objective_ids"]),
+                "objective_relation": str(proposal["objective_relation"]),
+            }
+            if proposal.get("objective_ids")
+            else {}
+        ),
         "question_family_id": str(proposal["question_family_id"]).strip(),
         "subject_id": str(proposal["subject_id"]).strip(),
         "subject": str(proposal["subject"]).strip(),

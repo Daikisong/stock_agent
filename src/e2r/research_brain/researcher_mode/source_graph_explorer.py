@@ -955,6 +955,9 @@ class ResearcherSourceGraphAcquirer:
                 candidate["materiality_decision_id"] = decision.decision_id
                 candidate["material_priority"] = decision.priority
                 candidate["materiality_rationale"] = decision.rationale
+                candidate["matched_requested_source_family"] = (
+                    decision.matched_requested_source_family or "NONE"
+                )
                 if decision.material_relevance:
                     candidate["ranking_status"] = "MATERIAL"
                     candidate["fetch_status"] = "MATERIAL_PENDING_FETCH"
@@ -1462,17 +1465,35 @@ def _resume_acquisition_state(
 ) -> dict[str, Any]:
     if checkpoint.get("checkpoint_hash") != _checkpoint_hash(checkpoint):
         raise ValueError("source graph checkpoint hash mismatch")
-    for key, expected in (
-        ("target_id", target_id),
-        ("as_of_date", as_of_date),
-        ("mode", mode),
-    ):
+    for key, expected in (("target_id", target_id), ("as_of_date", as_of_date)):
         if str(checkpoint.get(key)) != expected:
             raise ValueError(f"source graph checkpoint {key} mismatch")
+    prior_mode = str(checkpoint.get("mode") or "")
+    mode_migrated = (
+        prior_mode == SourceGraphAcquisitionMode.RESEARCH_BACKFILL.value
+        and mode == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+    )
+    if prior_mode != mode and not mode_migrated:
+        raise ValueError("source graph checkpoint mode mismatch")
     state = json.loads(json.dumps(checkpoint, ensure_ascii=False))
     state["resumed_from_checkpoint_id"] = checkpoint.get("checkpoint_id")
     state.pop("checkpoint_id", None)
     state.pop("checkpoint_hash", None)
+    if mode_migrated:
+        # Phase 94 historically persisted bounded production checkpoints under
+        # the RESEARCH_BACKFILL label.  Preserve their already fetched,
+        # source-backed lineage, but make every subsequent epoch obey the
+        # production budget/provider/official-first contract.  This is a
+        # one-way semantics migration; TEST and PRODUCTION checkpoints never
+        # downgrade to backfill.
+        state["mode"] = mode
+        state["mode_migration"] = {
+            "from": prior_mode,
+            "to": mode,
+            "source_checkpoint_id": checkpoint.get("checkpoint_id"),
+            "historical_evidence_requires_downstream_validation": True,
+            "transport_history_does_not_certify_completion": True,
+        }
     return state
 
 
@@ -2750,8 +2771,25 @@ def _fetch_candidate_document(
         reason = "WRONG_SUBJECT_FULL_DOCUMENT"
         rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
         return _fetch_record(fetch_id, candidate, "REJECTED", reason, content_hash), None, rejection
-    source_family = _classify_source_family(
+    matched_requested_source_family = str(
+        candidate.get("matched_requested_source_family") or ""
+    )
+    classified_source_family = _classify_source_family(
         candidate, url=url, official_hosts=official_hosts
+    )
+    # Target official, regulatory, Reuters, news, and report routes have
+    # deterministic URL/provenance classifiers and retain that stronger
+    # observation.  CUSTOMER_OFFICIAL is the one canonical official family
+    # whose owner is intentionally outside the target issuer allowlist; the
+    # LLM ranker therefore supplies that semantic provenance while
+    # deterministic code binds it to the exact requested-family roster.
+    source_family = (
+        "CUSTOMER_OFFICIAL"
+        if (
+            classified_source_family == "GENERAL_WEB_DISCOVERY"
+            and matched_requested_source_family == "CUSTOMER_OFFICIAL"
+        )
+        else classified_source_family
     )
     evidence_reference_urls = tuple(
         dict.fromkeys(
@@ -2917,6 +2955,13 @@ def _fetch_candidate_document(
         "objective_ids": list(candidate.get("objective_ids") or ()),
         "requested_source_families": list(
             candidate.get("requested_source_families") or ()
+        ),
+        "matched_requested_source_family": (
+            matched_requested_source_family or None
+        ),
+        "source_family_assigned_by_candidate_ranker": bool(
+            classified_source_family == "GENERAL_WEB_DISCOVERY"
+            and matched_requested_source_family == "CUSTOMER_OFFICIAL"
         ),
         "source_independence_group": _source_independence_group(url, source_family),
         "verified_official_discovery_urls": (

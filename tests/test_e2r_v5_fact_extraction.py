@@ -200,6 +200,79 @@ class PagedFactProvider(FactProvider):
         return response
 
 
+class ObjectiveLocalFactProvider(FactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        response["facts"] = [dict(row) for row in response["facts"]]
+        objective_ids_by_document = {
+            str(row["document_id"]): list(row["objective_ids"])
+            for row in payload["fact_extraction_scope_contract"][
+                "document_objective_ids"
+            ]
+        }
+        for fact in response["facts"]:
+            fact["objective_ids"] = objective_ids_by_document[
+                str(fact["document_id"])
+            ]
+            fact["objective_relation"] = "ADVANCE"
+        return response
+
+
+class ObjectiveLocalPagedFactProvider(PagedFactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        response["facts"] = [dict(row) for row in response["facts"]]
+        objective_ids_by_document = {
+            str(row["document_id"]): list(row["objective_ids"])
+            for row in payload["fact_extraction_scope_contract"][
+                "document_objective_ids"
+            ]
+        }
+        for fact in response["facts"]:
+            fact["objective_ids"] = objective_ids_by_document[
+                str(fact["document_id"])
+            ]
+            fact["objective_relation"] = "ADVANCE"
+        return response
+
+
+class ObjectiveIrrelevantDocumentProvider(FactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        response["facts"] = []
+        response["document_dispositions"] = [
+            {
+                "document_id": row["document_id"],
+                "status": "NO_MATERIAL_FACT",
+                "rationale": (
+                    "현재 공백에 직접 영향을 주는 사실이 없는 일반 배경이다."
+                ),
+            }
+            for row in payload["full_documents"]
+        ]
+        response["unresolved_document_ids"] = []
+        response["extraction_complete"] = True
+        return response
+
+
+class WrongObjectiveThenCorrectProvider(ObjectiveLocalFactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        response["facts"] = [dict(row) for row in response["facts"]]
+        if "fact_extraction_retry_context" not in payload:
+            for fact in response["facts"]:
+                fact["objective_ids"] = ["OBJECTIVE-OUTSIDE-DOCUMENT"]
+        return response
+
+
 class BoundaryCompletePagedFactProvider(PagedFactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(
@@ -1397,6 +1470,175 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             result.audit["pagination_continuation_call_count"], 1
         )
         self.assertFalse(result.audit["fact_page_limit_is_total_fact_cap"])
+
+    def test_production_long_background_document_stops_at_current_objective(
+        self,
+    ) -> None:
+        provider = ObjectiveIrrelevantDocumentProvider()
+        document = dict(
+            _document(
+                "DOC-OBJECTIVE-IRRELEVANT",
+                "GENERAL_WEB_DISCOVERY",
+                "GENERAL",
+            )
+        )
+        text = " ".join(
+            f"General adjacent technology history paragraph {index}."
+            for index in range(1_000)
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(
+                {
+                    "objective_id": "OBJECTIVE-1",
+                    "component_id": "information_confidence",
+                    "research_objective": (
+                        "Verify final customer allocation and repeat orders."
+                    ),
+                },
+            ),
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "component_findings": [
+                        {
+                            "component_id": "information_confidence",
+                            "memo_sufficient": False,
+                            "missing_fact_needs": [
+                                "customer final allocation and repeat orders"
+                            ],
+                        }
+                    ]
+                }
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 1)
+        self.assertEqual(result.material_claims, ())
+        self.assertEqual(
+            result.document_dispositions[0]["status"],
+            "NO_MATERIAL_FACT",
+        )
+        scope_contract = provider.calls[0]["payload"][
+            "fact_extraction_scope_contract"
+        ]
+        self.assertEqual(
+            scope_contract["mode"],
+            "PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        self.assertTrue(
+            result.audit["production_objective_local_completion"]
+        )
+
+    def test_production_objective_linked_fact_pages_remain_lossless(
+        self,
+    ) -> None:
+        provider = ObjectiveLocalPagedFactProvider()
+        document = dict(
+            _document(
+                "DOC-OBJECTIVE-PAGED",
+                "ISSUER_PRESENTATION",
+                "ISSUER",
+            )
+        )
+        text = "\n".join(
+            f"Current Corp material fact number {index}."
+            for index in range(13)
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(
+                {
+                    "objective_id": "OBJECTIVE-1",
+                    "component_id": "eps_fcf_explosion",
+                },
+            ),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(result.material_claims), 13)
+        self.assertEqual(len(provider.calls), 2)
+        self.assertTrue(
+            all(
+                row["objective_ids"] == ["OBJECTIVE-1"]
+                and row["objective_relation"] == "ADVANCE"
+                for row in result.material_claims
+            )
+        )
+        continuation = provider.calls[1]["payload"][
+            "fact_extraction_continuation_context"
+        ]
+        self.assertTrue(
+            all(
+                row["objective_ids"] == ["OBJECTIVE-1"]
+                for row in continuation["previously_accepted_facts"]
+            )
+        )
+
+    def test_production_rejects_fact_outside_document_objective_lineage(
+        self,
+    ) -> None:
+        provider = WrongObjectiveThenCorrectProvider()
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(
+                _document(
+                    "DOC-OBJECTIVE-RETRY",
+                    "ISSUER_PRESENTATION",
+                    "ISSUER",
+                ),
+            ),
+            open_objectives=(
+                {
+                    "objective_id": "OBJECTIVE-1",
+                    "component_id": "eps_fcf_explosion",
+                },
+            ),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 2)
+        self.assertEqual(len(result.material_claims), 1)
+        self.assertEqual(
+            result.material_claims[0]["objective_ids"],
+            ["OBJECTIVE-1"],
+        )
+        retry_context = provider.calls[1]["payload"][
+            "fact_extraction_retry_context"
+        ]
+        self.assertTrue(
+            any(
+                "OBJECTIVE_ID_OUTSIDE_DOCUMENT_LINEAGE" in reason
+                for reason in retry_context["validation_errors"]
+            )
+        )
 
     def test_full_page_forces_empty_completion_page_even_if_llm_says_complete(
         self,
