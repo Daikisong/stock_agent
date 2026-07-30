@@ -166,6 +166,22 @@ class SourceBrainProvider:
         raise AssertionError(pass_name)
 
 
+class PendingThenCompleteRankingProvider(SourceBrainProvider):
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.ranking_pending = True
+
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        if pass_name == "SOURCE_CANDIDATE_RANKING" and self.ranking_pending:
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            raise RuntimeError(
+                "COLLABORATION_RESPONSE_PENDING:TEST_PENDING_RANKING"
+            )
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
 class RecordingSearchProvider:
     def __init__(self, results_by_query: Mapping[str, Sequence[SearchResult]]) -> None:
         self.results_by_query = results_by_query
@@ -1356,6 +1372,153 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             paths = write_source_graph_acquisition_run(run3, output_root=directory)
             loaded = load_source_graph_checkpoint(paths["checkpoint"])
             self.assertEqual(loaded["checkpoint_hash"], run3.checkpoint["checkpoint_hash"])
+
+    def test_resume_finishes_pending_ranking_before_executing_pending_query(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteRankingProvider(queries=(QUERY,))
+        old_url = "https://example.com/pending-ranking"
+        fresh_url = "https://example.com/deferred-query-result"
+        search = RecordingSearchProvider(
+            {
+                QUERY: (
+                    _result("Current Corp pending ranking", old_url),
+                ),
+                ALTERNATE_QUERY: (
+                    _result(
+                        "Current Corp deferred query result",
+                        fresh_url,
+                        query=ALTERNATE_QUERY,
+                    ),
+                ),
+            }
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={
+                old_url: _document_text("pending-ranking"),
+                fresh_url: _document_text("deferred-query-result"),
+            }
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=2,
+            max_fetches_per_checkpoint=2,
+        )
+
+        bootstrap = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+        )
+        old_candidate_id = bootstrap.checkpoint["search_candidates"][0][
+            "candidate_id"
+        ]
+        state = json.loads(json.dumps(bootstrap.checkpoint))
+        state.pop("checkpoint_id")
+        state.pop("checkpoint_hash")
+        state["generated_queries"].append(
+            {
+                "query_id": "QUERY-PENDING-AFTER-RANKING",
+                "objective_id": "OBJECTIVE-1",
+                "literal_query": ALTERNATE_QUERY,
+                "source_families": ["NAVER_DISCOVERY"],
+                "rationale": "랭킹 완료 뒤 남은 source gap을 확인한다.",
+                "counter_or_supersession_search": False,
+                "generator_kind": "TEST_FIXTURE_LLM",
+                "provider_name": provider.provider_name,
+                "prompt_hash": "TEST-PENDING-QUERY-PROMPT",
+                "response_hash": "TEST-PENDING-QUERY-RESPONSE",
+                "production_score_authority": False,
+                "execution_status": "PENDING",
+                "official_gap_reasons": ["official source gap recorded"],
+            }
+        )
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        provider.calls.clear()
+        search.calls.clear()
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=checkpoint,
+        )
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=first.checkpoint,
+        )
+        self.assertEqual(search.calls, [])
+        self.assertEqual(
+            first.ranking_results[0].prompt_hash,
+            second.ranking_results[0].prompt_hash,
+        )
+        pending_ranking_calls = [
+            row
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(len(pending_ranking_calls), 2)
+        self.assertEqual(
+            [
+                tuple(
+                    candidate["candidate_id"]
+                    for candidate in row["payload"]["discovery_candidates"]
+                )
+                for row in pending_ranking_calls
+            ],
+            [(old_candidate_id,), (old_candidate_id,)],
+        )
+
+        provider.ranking_pending = False
+        third = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=second.checkpoint,
+        )
+        self.assertEqual(search.calls, [])
+        self.assertEqual(
+            third.ranking_results[0].prompt_hash,
+            first.ranking_results[0].prompt_hash,
+        )
+        self.assertEqual(
+            next(
+                row
+                for row in third.checkpoint["generated_queries"]
+                if row["query_id"] == "QUERY-PENDING-AFTER-RANKING"
+            )["execution_status"],
+            "PENDING",
+        )
+
+        fourth = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=third.checkpoint,
+        )
+        self.assertEqual([row[0] for row in search.calls], [ALTERNATE_QUERY])
+        self.assertEqual(
+            next(
+                row
+                for row in fourth.checkpoint["generated_queries"]
+                if row["query_id"] == "QUERY-PENDING-AFTER-RANKING"
+            )["execution_status"],
+            "SEARCH_EXECUTED",
+        )
+        self.assertTrue(
+            any(
+                row["url"] == fresh_url
+                for row in fourth.checkpoint["search_candidates"]
+            )
+        )
 
     def test_bounded_fetch_prioritizes_current_official_original_over_old_higher_score(
         self,

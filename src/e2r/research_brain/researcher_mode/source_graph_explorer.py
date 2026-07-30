@@ -742,6 +742,11 @@ class ResearcherSourceGraphAcquirer:
             if row.get("execution_status") == "PENDING"
             and str(row.get("objective_id")) not in resolved
         ]
+        pending_ranking_at_checkpoint_start = any(
+            row.get("ranking_status") == "PENDING"
+            and not _candidate_scope_is_fully_resolved(row, resolved)
+            for row in candidates
+        )
         pending_candidate_work = any(
             (
                 row.get("ranking_status") == "PENDING"
@@ -812,7 +817,7 @@ class ResearcherSourceGraphAcquirer:
                 if row.get("execution_status") == "PENDING"
                 and str(row.get("objective_id")) not in resolved
             ]
-        if checkpoint_migration_only:
+        if checkpoint_migration_only or pending_ranking_at_checkpoint_start:
             pending_query_rows = []
         query_budget = config.max_queries_per_checkpoint
         query_calls = 0
