@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 from collections import Counter
-from dataclasses import asdict, dataclass
+from dataclasses import MISSING, asdict, dataclass
 from datetime import date
 import hashlib
 import json
+import re
 from typing import Any, Mapping, Sequence
 
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
@@ -170,14 +171,31 @@ class ResearchSupervisorReview:
     rationale: str = "legacy deterministic supervisor review"
     provider_name: str = "DETERMINISTIC_SUPERVISOR_SCAFFOLD"
     prompt_hash: str | None = None
+    prior_review_prompt_projection: Mapping[str, Any] | None = None
     synthesis_memo_id: str | None = None
     synthesis_memo_hash: str | None = None
     llm_direction_generation_used: bool = False
     search_zero_result_treated_as_saturation: bool = False
     transport_budget_treated_as_completion: bool = False
-    schema_version: str = "e2r_research_supervisor_review_v2"
+    schema_version: str = "e2r_research_supervisor_review_v3"
 
     def __post_init__(self) -> None:
+        if self.schema_version not in {
+            "e2r_research_supervisor_review_v2",
+            "e2r_research_supervisor_review_v3",
+        }:
+            raise ValueError("unknown Research Supervisor review schema")
+        if (
+            self.schema_version == "e2r_research_supervisor_review_v2"
+            and self.prior_review_prompt_projection is not None
+        ):
+            raise ValueError(
+                "legacy supervisor review cannot carry a v3 prior-review commitment"
+            )
+        if self.prior_review_prompt_projection is not None:
+            _validate_prior_review_prompt_projection(
+                self.prior_review_prompt_projection
+            )
         if self.epoch < 0:
             raise ValueError("research epoch cannot be negative")
         if self.reviewer_role not in {
@@ -226,6 +244,8 @@ class ResearchSupervisorReview:
 
     def to_dict(self) -> Mapping[str, Any]:
         payload = asdict(self)
+        if self.schema_version == "e2r_research_supervisor_review_v2":
+            payload.pop("prior_review_prompt_projection", None)
         return payload
 
     def to_score_gap_context(self) -> Mapping[str, Any]:
@@ -263,6 +283,22 @@ class ResearchSupervisorReview:
             ),
             "next_actions": list(self.next_actions),
         }
+
+
+@dataclass(frozen=True)
+class _SupervisorPromptMaterial:
+    payload: Mapping[str, Any]
+    prior_review_prompt_projection: Mapping[str, Any] | None
+    objective_ids: frozenset[str]
+    objective_component_by_id: Mapping[str, str]
+    failure_by_id: Mapping[str, Mapping[str, Any]]
+    failure_group_members: Mapping[str, tuple[str, ...]]
+    required_failure_group_ids: tuple[str, ...]
+    material_score_disagreement_component_ids: tuple[str, ...]
+    transport_wait_score_component_ids: tuple[str, ...]
+    counter_route_proof_complete: bool
+    source_graph_zero_result_only: bool
+    source_graph_research_pending: bool
 
 
 class ResearchSupervisor:
@@ -347,63 +383,6 @@ class ResearchSupervisor:
             synthesis_binding=synthesis_binding,
         ):
             prior_review = None
-        objective_ids = {
-            str(row.get("objective_id") or "").strip() for row in open_objectives
-        }
-        if "" in objective_ids or len(objective_ids) != len(open_objectives):
-            raise ValueError("open research objectives require unique ids")
-        objective_component_by_id = {
-            str(row.get("objective_id") or "").strip(): str(
-                row.get("component_id") or ""
-            ).strip()
-            for row in open_objectives
-        }
-        if any(
-            component_id not in CANONICAL_COMPONENT_ORDER
-            for component_id in objective_component_by_id.values()
-        ):
-            raise ValueError(
-                "open research objectives require canonical component ids"
-            )
-        failures = _collect_prior_failures(
-            prior_failures,
-            source_graph_checkpoint=source_graph_checkpoint,
-        )
-        failure_by_id = {str(row["failure_id"]): row for row in failures}
-        if len(failure_by_id) != len(failures):
-            raise ValueError("prior query/source failures require unique ids")
-        counter_route_proof_complete = _counter_route_proof_complete(
-            counter_and_supersession_route_proof,
-            source_graph_checkpoint=source_graph_checkpoint,
-            evidence_facts=facts,
-            objective_ids=(
-                objective_ids
-                | {
-                    str(row.get("objective_id") or "")
-                    for row in source_graph_checkpoint.get("generated_queries") or ()
-                    if str(row.get("objective_id") or "")
-                }
-                | {
-                    str(value)
-                    for value in source_graph_checkpoint.get(
-                        "resolved_objective_ids"
-                    )
-                    or ()
-                }
-            ),
-            required_objective_ids={
-                str(row.get("objective_id") or "")
-                for row in open_objectives
-                if bool(row.get("counter_or_supersession_required", True))
-            },
-            structured_result=structured_result,
-        )
-        source_graph_zero_result_only = _source_graph_zero_result_only(
-            source_graph_checkpoint
-        )
-        source_graph_research_pending = _source_graph_research_pending(
-            source_graph_checkpoint
-        )
         if self.provider is None:
             return _provider_pending_review(
                 epoch=epoch,
@@ -413,93 +392,40 @@ class ResearchSupervisor:
                 provider_name="UNCONFIGURED",
                 synthesis_binding=synthesis_binding,
             )
-        failure_projection = project_supervisor_failures(failures)
-        failure_prompt_projection = _supervisor_failure_prompt_projection(
-            failure_projection
+        material = _build_supervisor_prompt_material(
+            reviewer_role=self.reviewer_role,
+            target_id=target_id,
+            as_of_date=as_of_date,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            current_synthesis_memo=current_synthesis_memo,
+            synthesis_binding=synthesis_binding,
+            structured_result=structured_result,
+            facts=facts,
+            source_graph_checkpoint=source_graph_checkpoint,
+            open_objectives=open_objectives,
+            prior_failures=prior_failures,
+            counter_and_supersession_route_proof=(
+                counter_and_supersession_route_proof
+            ),
+            prior_review=prior_review,
+            score_gap_context=score_gap_context,
         )
-        required_failure_group_ids = tuple(
-            sorted(
-                str(value)
-                for value in failure_projection["failure_group_members"]
-            )
-        )
+        payload = material.payload
+        objective_ids = set(material.objective_ids)
+        objective_component_by_id = material.objective_component_by_id
+        failure_by_id = material.failure_by_id
+        required_failure_group_ids = material.required_failure_group_ids
         material_score_disagreement_component_ids = (
-            _material_score_disagreement_component_ids(score_gap_context)
+            material.material_score_disagreement_component_ids
         )
         transport_wait_score_component_ids = (
-            _transport_wait_score_component_ids(score_gap_context)
+            material.transport_wait_score_component_ids
         )
-        payload = scrub_blind_research_payload(
-            {
-                "reviewer_role": self.reviewer_role,
-                "target_id": target_id,
-                "as_of_date": as_of_date,
-                "component_results": [row.to_dict() for row in component_results],
-                "red_team_result": (
-                    red_team_result.to_dict() if red_team_result else None
-                ),
-                "current_synthesis": {
-                    "binding": dict(synthesis_binding),
-                    "memo": current_synthesis_memo.to_dict(),
-                },
-                "structured_result": (
-                    project_structured_result(structured_result)
-                ),
-                "current_evidence_fact_graph": project_supervisor_evidence_facts(
-                    facts
-                ),
-                "source_graph_checkpoint": _supervisor_source_graph_payload(
-                    source_graph_checkpoint
-                ),
-                "open_research_objectives": list(open_objectives),
-                "prior_query_source_failures": failure_prompt_projection[
-                    "failures"
-                ],
-                "prior_query_source_failure_projection": {
-                    key: value
-                    for key, value in failure_prompt_projection.items()
-                    if key != "failures"
-                },
-                "required_output_rosters": {
-                    "canonical_component_ids": list(CANONICAL_COMPONENT_ORDER),
-                    "failure_group_ids": list(required_failure_group_ids),
-                    "failure_group_count": len(required_failure_group_ids),
-                    "material_score_disagreement_component_ids": list(
-                        material_score_disagreement_component_ids
-                    ),
-                    "transport_wait_score_component_ids": list(
-                        transport_wait_score_component_ids
-                    ),
-                    "instruction": (
-                        "component_findings must contain every canonical component "
-                        "id exactly once. failure_assessments must contain every "
-                        "failure_group_id exactly once, with no omission, duplicate, "
-                        "or extra id. An empty failure_group_ids roster requires an "
-                        "empty failure_assessments array. Every component in "
-                        "material_score_disagreement_component_ids must be marked "
-                        "memo_sufficient=false until a semantic component rewrite "
-                        "and new independent judges remove that disagreement. Decide "
-                        "from the supplied judge reviews whether a genuinely missing "
-                        "source-backed fact exists; do not invent a query merely to "
-                        "change a score. Transport-only missing judge responses do "
-                        "not reopen an otherwise complete component memo. A source "
-                        "or query direction is valid only when missing_material_facts "
-                        "contains a concrete fact gap for that objective's component."
-                    ),
-                },
-                "deterministic_score_gap_context": dict(
-                    score_gap_context or {}
-                ),
-                "counter_and_supersession_route_proof": project_counter_route_proof(
-                    counter_and_supersession_route_proof
-                ),
-                "prior_supervisor_review": (
-                    _prior_supervisor_review_prompt_projection(prior_review)
-                    if prior_review
-                    else None
-                ),
-            }
-        )
+        counter_route_proof_complete = material.counter_route_proof_complete
+        source_graph_zero_result_only = material.source_graph_zero_result_only
+        source_graph_research_pending = material.source_graph_research_pending
+        failure_group_members = material.failure_group_members
         attempt_payload = payload
         validation_retry_used = False
         while True:
@@ -533,6 +459,9 @@ class ResearchSupervisor:
                     prompt_hash=_provider_prompt_hash(
                         self.provider, attempt_payload
                     ),
+                    prior_review_prompt_projection=(
+                        material.prior_review_prompt_projection
+                    ),
                     synthesis_binding=synthesis_binding,
                 )
             prompt_hash = _provider_prompt_hash(self.provider, attempt_payload)
@@ -547,12 +476,7 @@ class ResearchSupervisor:
                     structured_result=structured_result,
                     objective_ids=objective_ids,
                     failure_by_id=failure_by_id,
-                    failure_group_members={
-                        str(group_id): tuple(str(value) for value in member_ids)
-                        for group_id, member_ids in failure_projection[
-                            "failure_group_members"
-                        ].items()
-                    },
+                    failure_group_members=failure_group_members,
                     material_score_disagreement_component_ids=(
                         material_score_disagreement_component_ids
                     ),
@@ -571,6 +495,9 @@ class ResearchSupervisor:
                         )
                     ),
                     prompt_hash=prompt_hash,
+                    prior_review_prompt_projection=(
+                        material.prior_review_prompt_projection
+                    ),
                     synthesis_binding=synthesis_binding,
                 )
             except (KeyError, TypeError, ValueError) as exc:
@@ -579,14 +506,7 @@ class ResearchSupervisor:
                     response=response,
                     required_failure_group_ids=required_failure_group_ids,
                     failure_by_id=failure_by_id,
-                    failure_group_members={
-                        str(group_id): tuple(
-                            str(value) for value in member_ids
-                        )
-                        for group_id, member_ids in failure_projection[
-                            "failure_group_members"
-                        ].items()
-                    },
+                    failure_group_members=failure_group_members,
                 )
                 if validation_retry_used:
                     return _provider_pending_review(
@@ -605,6 +525,9 @@ class ResearchSupervisor:
                             )
                         ),
                         prompt_hash=prompt_hash,
+                        prior_review_prompt_projection=(
+                            material.prior_review_prompt_projection
+                        ),
                         synthesis_binding=synthesis_binding,
                     )
                 validation_retry_used = True
@@ -694,6 +617,90 @@ class ResearchSupervisor:
                         },
                     }
                 )
+
+    def preview_prompt_hash(
+        self,
+        *,
+        epoch: int,
+        target_id: str,
+        as_of_date: str,
+        component_results: Sequence[ComponentResearchResult],
+        red_team_result: RedTeamResearchResult | None,
+        synthesis_result: SynthesisResult | None,
+        structured_result: Any | None,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        source_graph_checkpoint: Mapping[str, Any],
+        open_objectives: Sequence[Mapping[str, Any]],
+        prior_failures: Sequence[Mapping[str, Any]],
+        counter_and_supersession_route_proof: Sequence[Mapping[str, Any]],
+        prior_review: ResearchSupervisorReview | Mapping[str, Any] | None = None,
+        prior_review_prompt_projection: Mapping[str, Any] | None = None,
+        score_gap_context: Mapping[str, Any] | None = None,
+    ) -> str:
+        """Rebuild the exact first-attempt Supervisor prompt without I/O."""
+
+        del epoch
+        if self.provider is None:
+            raise ValueError("Research Supervisor preview requires a provider")
+        cutoff = date.fromisoformat(as_of_date)
+        facts = tuple(_coerce_fact(row) for row in evidence_facts)
+        _validate_current_inputs(
+            target_id=target_id,
+            cutoff=cutoff,
+            facts=facts,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            structured_result=structured_result,
+            source_graph_checkpoint=source_graph_checkpoint,
+        )
+        synthesis_binding, synthesis_pending_reason = _current_synthesis_binding(
+            target_id=target_id,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            synthesis_result=synthesis_result,
+        )
+        if synthesis_binding is None or synthesis_result is None:
+            raise ValueError(
+                "supervisor prompt preview lacks current synthesis:"
+                f"{synthesis_pending_reason}"
+            )
+        current_synthesis_memo = synthesis_result.memo
+        if current_synthesis_memo is None:
+            raise ValueError("supervisor prompt preview lacks synthesis memo")
+        if prior_review is not None and not _prior_review_matches_synthesis(
+            prior_review,
+            synthesis_binding=synthesis_binding,
+        ):
+            prior_review = None
+        material = _build_supervisor_prompt_material(
+            reviewer_role=self.reviewer_role,
+            target_id=target_id,
+            as_of_date=as_of_date,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            current_synthesis_memo=current_synthesis_memo,
+            synthesis_binding=synthesis_binding,
+            structured_result=structured_result,
+            facts=facts,
+            source_graph_checkpoint=source_graph_checkpoint,
+            open_objectives=open_objectives,
+            prior_failures=prior_failures,
+            counter_and_supersession_route_proof=(
+                counter_and_supersession_route_proof
+            ),
+            prior_review=prior_review,
+            prior_review_prompt_projection=prior_review_prompt_projection,
+            score_gap_context=score_gap_context,
+        )
+        preview = getattr(self.provider, "preview_prompt_hash", None)
+        if callable(preview):
+            return str(
+                preview(
+                    pass_name="RESEARCH_SUPERVISOR_REVIEW",
+                    payload=material.payload,
+                )
+            )
+        return _stable_payload_hash(material.payload)
 
     def review(
         self,
@@ -836,6 +843,7 @@ def _review_from_provider_response(
     source_graph_research_pending: bool,
     provider_name: str,
     prompt_hash: str,
+    prior_review_prompt_projection: Mapping[str, Any] | None,
     synthesis_binding: Mapping[str, str],
 ) -> ResearchSupervisorReview:
     findings = tuple(
@@ -1061,6 +1069,7 @@ def _review_from_provider_response(
         rationale=str(response["rationale"]),
         provider_name=provider_name,
         prompt_hash=prompt_hash,
+        prior_review_prompt_projection=prior_review_prompt_projection,
         synthesis_memo_id=synthesis_binding["synthesis_memo_id"],
         synthesis_memo_hash=synthesis_binding["synthesis_memo_hash"],
         llm_direction_generation_used=True,
@@ -1075,6 +1084,7 @@ def _provider_pending_review(
     reviewer_role: str,
     provider_name: str,
     prompt_hash: str | None = None,
+    prior_review_prompt_projection: Mapping[str, Any] | None = None,
     synthesis_binding: Mapping[str, str] | None = None,
 ) -> ResearchSupervisorReview:
     status = {component_id: "NOT_RESEARCHED" for component_id in CANONICAL_COMPONENT_ORDER}
@@ -1104,6 +1114,7 @@ def _provider_pending_review(
         rationale=reason,
         provider_name=provider_name,
         prompt_hash=prompt_hash,
+        prior_review_prompt_projection=prior_review_prompt_projection,
         synthesis_memo_id=(
             synthesis_binding["synthesis_memo_id"]
             if synthesis_binding is not None
@@ -1203,6 +1214,193 @@ def _prior_review_matches_synthesis(
         == synthesis_binding["synthesis_memo_id"]
         and payload.get("synthesis_memo_hash")
         == synthesis_binding["synthesis_memo_hash"]
+    )
+
+
+def _build_supervisor_prompt_material(
+    *,
+    reviewer_role: str,
+    target_id: str,
+    as_of_date: str,
+    component_results: Sequence[ComponentResearchResult],
+    red_team_result: RedTeamResearchResult | None,
+    current_synthesis_memo: Any,
+    synthesis_binding: Mapping[str, str],
+    structured_result: Any | None,
+    facts: Sequence[EvidenceFact],
+    source_graph_checkpoint: Mapping[str, Any],
+    open_objectives: Sequence[Mapping[str, Any]],
+    prior_failures: Sequence[Mapping[str, Any]],
+    counter_and_supersession_route_proof: Sequence[Mapping[str, Any]],
+    prior_review: ResearchSupervisorReview | Mapping[str, Any] | None,
+    score_gap_context: Mapping[str, Any] | None,
+    prior_review_prompt_projection: Mapping[str, Any] | None = None,
+) -> _SupervisorPromptMaterial:
+    """Build all deterministic commitments for one Supervisor provider call."""
+
+    objective_ids = {
+        str(row.get("objective_id") or "").strip() for row in open_objectives
+    }
+    if "" in objective_ids or len(objective_ids) != len(open_objectives):
+        raise ValueError("open research objectives require unique ids")
+    objective_component_by_id = {
+        str(row.get("objective_id") or "").strip(): str(
+            row.get("component_id") or ""
+        ).strip()
+        for row in open_objectives
+    }
+    if any(
+        component_id not in CANONICAL_COMPONENT_ORDER
+        for component_id in objective_component_by_id.values()
+    ):
+        raise ValueError(
+            "open research objectives require canonical component ids"
+        )
+    failures = _collect_prior_failures(
+        prior_failures,
+        source_graph_checkpoint=source_graph_checkpoint,
+    )
+    failure_by_id = {str(row["failure_id"]): row for row in failures}
+    if len(failure_by_id) != len(failures):
+        raise ValueError("prior query/source failures require unique ids")
+    counter_route_proof_complete = _counter_route_proof_complete(
+        counter_and_supersession_route_proof,
+        source_graph_checkpoint=source_graph_checkpoint,
+        evidence_facts=facts,
+        objective_ids=(
+            objective_ids
+            | {
+                str(row.get("objective_id") or "")
+                for row in source_graph_checkpoint.get("generated_queries") or ()
+                if str(row.get("objective_id") or "")
+            }
+            | {
+                str(value)
+                for value in source_graph_checkpoint.get(
+                    "resolved_objective_ids"
+                )
+                or ()
+            }
+        ),
+        required_objective_ids={
+            str(row.get("objective_id") or "")
+            for row in open_objectives
+            if bool(row.get("counter_or_supersession_required", True))
+        },
+        structured_result=structured_result,
+    )
+    source_graph_zero_result_only = _source_graph_zero_result_only(
+        source_graph_checkpoint
+    )
+    source_graph_research_pending = _source_graph_research_pending(
+        source_graph_checkpoint
+    )
+    failure_projection = project_supervisor_failures(failures)
+    failure_prompt_projection = _supervisor_failure_prompt_projection(
+        failure_projection
+    )
+    failure_group_members = {
+        str(group_id): tuple(str(value) for value in member_ids)
+        for group_id, member_ids in failure_projection[
+            "failure_group_members"
+        ].items()
+    }
+    required_failure_group_ids = tuple(sorted(failure_group_members))
+    material_score_disagreement_component_ids = (
+        _material_score_disagreement_component_ids(score_gap_context)
+    )
+    transport_wait_score_component_ids = (
+        _transport_wait_score_component_ids(score_gap_context)
+    )
+    prior_prompt_projection = (
+        dict(prior_review_prompt_projection)
+        if prior_review_prompt_projection is not None
+        else (
+            _prior_supervisor_review_prompt_projection(prior_review)
+            if prior_review
+            else None
+        )
+    )
+    payload = scrub_blind_research_payload(
+        {
+            "reviewer_role": reviewer_role,
+            "target_id": target_id,
+            "as_of_date": as_of_date,
+            "component_results": [row.to_dict() for row in component_results],
+            "red_team_result": (
+                red_team_result.to_dict() if red_team_result else None
+            ),
+            "current_synthesis": {
+                "binding": dict(synthesis_binding),
+                "memo": current_synthesis_memo.to_dict(),
+            },
+            "structured_result": project_structured_result(structured_result),
+            "current_evidence_fact_graph": project_supervisor_evidence_facts(
+                facts
+            ),
+            "source_graph_checkpoint": _supervisor_source_graph_payload(
+                source_graph_checkpoint
+            ),
+            "open_research_objectives": list(open_objectives),
+            "prior_query_source_failures": failure_prompt_projection[
+                "failures"
+            ],
+            "prior_query_source_failure_projection": {
+                key: value
+                for key, value in failure_prompt_projection.items()
+                if key != "failures"
+            },
+            "required_output_rosters": {
+                "canonical_component_ids": list(CANONICAL_COMPONENT_ORDER),
+                "failure_group_ids": list(required_failure_group_ids),
+                "failure_group_count": len(required_failure_group_ids),
+                "material_score_disagreement_component_ids": list(
+                    material_score_disagreement_component_ids
+                ),
+                "transport_wait_score_component_ids": list(
+                    transport_wait_score_component_ids
+                ),
+                "instruction": (
+                    "component_findings must contain every canonical component "
+                    "id exactly once. failure_assessments must contain every "
+                    "failure_group_id exactly once, with no omission, duplicate, "
+                    "or extra id. An empty failure_group_ids roster requires an "
+                    "empty failure_assessments array. Every component in "
+                    "material_score_disagreement_component_ids must be marked "
+                    "memo_sufficient=false until a semantic component rewrite "
+                    "and new independent judges remove that disagreement. Decide "
+                    "from the supplied judge reviews whether a genuinely missing "
+                    "source-backed fact exists; do not invent a query merely to "
+                    "change a score. Transport-only missing judge responses do "
+                    "not reopen an otherwise complete component memo. A source "
+                    "or query direction is valid only when missing_material_facts "
+                    "contains a concrete fact gap for that objective's component."
+                ),
+            },
+            "deterministic_score_gap_context": dict(score_gap_context or {}),
+            "counter_and_supersession_route_proof": project_counter_route_proof(
+                counter_and_supersession_route_proof
+            ),
+            "prior_supervisor_review": prior_prompt_projection,
+        }
+    )
+    return _SupervisorPromptMaterial(
+        payload=payload,
+        prior_review_prompt_projection=payload.get(
+            "prior_supervisor_review"
+        ),
+        objective_ids=frozenset(objective_ids),
+        objective_component_by_id=objective_component_by_id,
+        failure_by_id=failure_by_id,
+        failure_group_members=failure_group_members,
+        required_failure_group_ids=required_failure_group_ids,
+        material_score_disagreement_component_ids=(
+            material_score_disagreement_component_ids
+        ),
+        transport_wait_score_component_ids=transport_wait_score_component_ids,
+        counter_route_proof_complete=counter_route_proof_complete,
+        source_graph_zero_result_only=source_graph_zero_result_only,
+        source_graph_research_pending=source_graph_research_pending,
     )
 
 
@@ -1324,6 +1522,435 @@ def _supervisor_failure_prompt_projection(
     }
 
 
+_PRIOR_REVIEW_PROMPT_LINEAGE_FIELDS = frozenset(
+    {
+        "review_id",
+        "epoch",
+        "prompt_hash",
+        "prior_review_prompt_projection",
+    }
+)
+_PRIOR_REVIEW_PROMPT_COMPACTED_FIELDS = frozenset(
+    {
+        "failure_assessments",
+        "parser_or_extractor_failures",
+    }
+)
+_PRIOR_REVIEW_PROMPT_PROJECTION_FIELDS = frozenset(
+    {
+        "failure_assessment_projection",
+        "parser_or_extractor_failure_projection",
+        "prior_review_semantic_hash",
+        "checkpoint_lineage_excluded_from_provider",
+        "excluded_checkpoint_lineage_fields",
+        "full_prior_review_persisted_outside_prompt",
+        "fixed_top_n_used",
+        "prompt_projection_is_research_cap",
+        "score_authority",
+    }
+)
+
+
+def _prior_review_prompt_projection_top_keys() -> set[str]:
+    """Derive the closed projection roster from the canonical review schema."""
+
+    return (
+        set(ResearchSupervisorReview.__dataclass_fields__)
+        - _PRIOR_REVIEW_PROMPT_LINEAGE_FIELDS
+        - _PRIOR_REVIEW_PROMPT_COMPACTED_FIELDS
+    ) | set(_PRIOR_REVIEW_PROMPT_PROJECTION_FIELDS)
+
+
+def _prior_review_prompt_default(field_name: str) -> Any:
+    field = ResearchSupervisorReview.__dataclass_fields__[field_name]
+    if field.default is not MISSING:
+        return field.default
+    required_defaults: Mapping[str, Any] = {
+        "review_id": "",
+        "epoch": 0,
+        "status": "NEXT_RESEARCH_REQUIRED",
+        "component_status": {
+            component_id: "NOT_RESEARCHED"
+            for component_id in CANONICAL_COMPONENT_ORDER
+        },
+        "unresolved_material_questions": (),
+        "source_family_gaps": (),
+        "parser_or_extractor_failures": (),
+        "next_actions": (),
+        "counter_and_supersession_checked": False,
+        "structured_data_complete": False,
+        "ready_for_independent_saturation_review": False,
+    }
+    if field_name not in required_defaults:
+        raise ValueError(
+            f"prior supervisor review lacks canonical field: {field_name}"
+        )
+    return required_defaults[field_name]
+
+
+def _canonical_prior_review_prompt_source(
+    review: ResearchSupervisorReview | Mapping[str, Any],
+) -> Mapping[str, Any]:
+    raw = (
+        dict(review.to_dict())
+        if isinstance(review, ResearchSupervisorReview)
+        else dict(review)
+    )
+    review_fields = set(ResearchSupervisorReview.__dataclass_fields__)
+    if not set(raw).issubset(review_fields):
+        raise ValueError("prior supervisor review has unknown fields")
+    return {
+        field_name: (
+            raw[field_name]
+            if field_name in raw
+            else _prior_review_prompt_default(field_name)
+        )
+        for field_name in ResearchSupervisorReview.__dataclass_fields__
+    }
+
+
+def _validate_prior_review_prompt_projection(
+    projection: Mapping[str, Any],
+) -> None:
+    """Validate the exact prior-review fragment committed by a v3 review."""
+
+    if not isinstance(projection, Mapping):
+        raise ValueError("prior supervisor review prompt commitment must be an object")
+    if set(projection) != _prior_review_prompt_projection_top_keys():
+        raise ValueError(
+            "prior supervisor review prompt commitment key roster mismatch"
+        )
+    expected_excluded_fields = [
+        "review_id",
+        "epoch",
+        "prompt_hash",
+        "prior_review_prompt_projection",
+    ]
+    if (
+        projection.get("checkpoint_lineage_excluded_from_provider") is not True
+        or projection.get("excluded_checkpoint_lineage_fields")
+        != expected_excluded_fields
+        or projection.get("full_prior_review_persisted_outside_prompt") is not True
+        or projection.get("fixed_top_n_used") is not False
+        or projection.get("prompt_projection_is_research_cap") is not False
+        or projection.get("score_authority") is not False
+    ):
+        raise ValueError("invalid prior supervisor review prompt commitment")
+    _validate_prior_review_prompt_projection_semantics(projection)
+    semantic_projection = dict(projection)
+    expected_semantic_hash = str(
+        semantic_projection.pop("prior_review_semantic_hash", "")
+    )
+    for key in (
+        "checkpoint_lineage_excluded_from_provider",
+        "excluded_checkpoint_lineage_fields",
+        "full_prior_review_persisted_outside_prompt",
+        "fixed_top_n_used",
+        "prompt_projection_is_research_cap",
+        "score_authority",
+    ):
+        semantic_projection.pop(key, None)
+    if (
+        len(expected_semantic_hash) != 64
+        or _stable_payload_hash(semantic_projection)
+        != expected_semantic_hash
+    ):
+        raise ValueError("prior supervisor review semantic commitment hash mismatch")
+
+
+def _validate_prior_review_prompt_projection_semantics(
+    projection: Mapping[str, Any],
+) -> None:
+    component_status = projection.get("component_status")
+    if (
+        not isinstance(component_status, Mapping)
+        or set(component_status) != set(CANONICAL_COMPONENT_ORDER)
+        or any(
+            not isinstance(value, str) or not value
+            for value in component_status.values()
+        )
+    ):
+        raise ValueError("prior supervisor component status roster mismatch")
+    for key in (
+        "unresolved_material_questions",
+        "source_family_gaps",
+        "next_actions",
+    ):
+        _validate_projection_string_array(projection.get(key), key)
+    for key in (
+        "completion_based_on_round_count",
+        "counter_and_supersession_checked",
+        "structured_data_complete",
+        "ready_for_independent_saturation_review",
+        "component_memos_sufficient",
+        "reasonable_positive_routes_remaining",
+        "llm_direction_generation_used",
+        "search_zero_result_treated_as_saturation",
+        "transport_budget_treated_as_completion",
+    ):
+        if type(projection.get(key)) is not bool:
+            raise ValueError(f"prior supervisor projection {key} must be boolean")
+    if projection.get("status") not in {
+        "NEXT_RESEARCH_REQUIRED",
+        "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+    }:
+        raise ValueError("prior supervisor projection status is invalid")
+    if projection.get("reviewer_role") not in {
+        "RESEARCH_SUPERVISOR_A",
+        "RESEARCH_SUPERVISOR_B",
+    }:
+        raise ValueError("prior supervisor projection reviewer role is invalid")
+    if projection.get("schema_version") not in {
+        "e2r_research_supervisor_review_v2",
+        "e2r_research_supervisor_review_v3",
+    }:
+        raise ValueError("prior supervisor projection schema is invalid")
+    for key in ("rationale", "provider_name"):
+        if not isinstance(projection.get(key), str) or not str(
+            projection[key]
+        ).strip():
+            raise ValueError(f"prior supervisor projection {key} is invalid")
+    synthesis_memo_id = projection.get("synthesis_memo_id")
+    synthesis_memo_hash = projection.get("synthesis_memo_hash")
+    if bool(synthesis_memo_id) != bool(synthesis_memo_hash):
+        raise ValueError("prior supervisor projection synthesis lineage is incomplete")
+    if synthesis_memo_id is not None and (
+        not isinstance(synthesis_memo_id, str)
+        or not isinstance(synthesis_memo_hash, str)
+        or re.fullmatch(r"[0-9a-f]{64}", synthesis_memo_hash) is None
+    ):
+        raise ValueError("prior supervisor projection synthesis lineage is invalid")
+
+    finding_rows = _validate_projection_rows(
+        projection.get("component_findings"),
+        set(SupervisorComponentFinding.__dataclass_fields__),
+        "component finding",
+    )
+    findings = tuple(
+        SupervisorComponentFinding(
+            component_id=_required_projection_string(row, "component_id"),
+            memo_sufficient=_required_projection_bool(row, "memo_sufficient"),
+            missing_fact_needs=_projection_string_tuple(
+                row.get("missing_fact_needs"),
+                "missing_fact_needs",
+            ),
+            rationale=_required_projection_string(row, "rationale"),
+        )
+        for row in finding_rows
+    )
+    finding_ids = [row.component_id for row in findings]
+    if finding_ids and (
+        len(finding_ids) != len(set(finding_ids))
+        or set(finding_ids) != set(CANONICAL_COMPONENT_ORDER)
+    ):
+        raise ValueError("prior supervisor findings must cover seven components")
+    for row in _validate_projection_rows(
+        projection.get("missing_material_facts"),
+        set(SupervisorFactGap.__dataclass_fields__),
+        "fact gap",
+    ):
+        SupervisorFactGap(
+            component_id=_required_projection_string(row, "component_id"),
+            fact_need=_required_projection_string(row, "fact_need"),
+            why_material=_required_projection_string(row, "why_material"),
+            direction=_required_projection_string(row, "direction"),
+        )
+    for row in _validate_projection_rows(
+        projection.get("new_source_family_directions"),
+        set(SupervisorSourceDirection.__dataclass_fields__),
+        "source direction",
+    ):
+        SupervisorSourceDirection(
+            objective_id=_required_projection_string(row, "objective_id"),
+            source_family=_required_projection_string(row, "source_family"),
+            direction=_required_projection_string(row, "direction"),
+            rationale=_required_projection_string(row, "rationale"),
+            counter_or_supersession=_required_projection_bool(
+                row,
+                "counter_or_supersession",
+            ),
+        )
+    for row in _validate_projection_rows(
+        projection.get("query_direction_briefs"),
+        set(SupervisorQueryDirection.__dataclass_fields__),
+        "query direction",
+    ):
+        SupervisorQueryDirection(
+            objective_id=_required_projection_string(row, "objective_id"),
+            research_need=_required_projection_string(row, "research_need"),
+            avoid_repeating=_projection_string_tuple(
+                row.get("avoid_repeating"),
+                "avoid_repeating",
+            ),
+            counter_or_supersession=_required_projection_bool(
+                row,
+                "counter_or_supersession",
+            ),
+        )
+    _validate_failure_assessment_prompt_projection(
+        projection.get("failure_assessment_projection")
+    )
+    _validate_parser_failure_prompt_projection(
+        projection.get("parser_or_extractor_failure_projection")
+    )
+
+
+def _validate_failure_assessment_prompt_projection(value: Any) -> None:
+    expected_keys = {
+        "schema_version",
+        "failure_assessment_count",
+        "semantic_group_count",
+        "semantic_groups",
+        "failure_assessment_roster_hash",
+        "every_assessment_accounted_by_group_count_and_hash",
+        "full_failure_assessments_persisted_outside_prompt",
+        "fixed_top_n_used",
+        "prompt_projection_is_research_cap",
+        "score_authority",
+    }
+    if not isinstance(value, Mapping) or set(value) != expected_keys:
+        raise ValueError("prior supervisor failure projection key roster mismatch")
+    if (
+        value.get("schema_version")
+        != "e2r_v5_prior_supervisor_failure_projection_v1"
+        or value.get("every_assessment_accounted_by_group_count_and_hash")
+        is not True
+        or value.get("full_failure_assessments_persisted_outside_prompt")
+        is not True
+        or value.get("fixed_top_n_used") is not False
+        or value.get("prompt_projection_is_research_cap") is not False
+        or value.get("score_authority") is not False
+    ):
+        raise ValueError("invalid prior supervisor failure projection")
+    failure_count = _nonnegative_projection_int(
+        value.get("failure_assessment_count"),
+        "failure_assessment_count",
+    )
+    group_count = _nonnegative_projection_int(
+        value.get("semantic_group_count"),
+        "semantic_group_count",
+    )
+    if not _is_sha256(value.get("failure_assessment_roster_hash")):
+        raise ValueError("prior supervisor failure roster hash is invalid")
+    group_rows = _validate_projection_rows(
+        value.get("semantic_groups"),
+        {
+            "classification",
+            "retryable",
+            "source_absence_claim_allowed",
+            "rationale",
+            "assessment_count",
+            "assessment_roster_hash",
+        },
+        "failure semantic group",
+    )
+    if len(group_rows) != group_count:
+        raise ValueError("prior supervisor failure semantic group count mismatch")
+    accounted_count = 0
+    for row in group_rows:
+        classification = _required_projection_string(
+            row,
+            "classification",
+        )
+        retryable = _required_projection_bool(row, "retryable")
+        source_absence_allowed = _required_projection_bool(
+            row,
+            "source_absence_claim_allowed",
+        )
+        if classification not in SUPERVISOR_FAILURE_CLASSES:
+            raise ValueError("prior supervisor failure classification is invalid")
+        if (
+            source_absence_allowed
+            and classification != "SOURCE_ABSENCE_CANDIDATE"
+        ):
+            raise ValueError("prior supervisor source absence permission is invalid")
+        del retryable
+        _required_projection_string(row, "rationale")
+        assessment_count = _positive_projection_int(
+            row.get("assessment_count"),
+            "assessment_count",
+        )
+        if not _is_sha256(row.get("assessment_roster_hash")):
+            raise ValueError("prior supervisor assessment roster hash is invalid")
+        accounted_count += assessment_count
+    if accounted_count != failure_count:
+        raise ValueError("prior supervisor failure assessment count mismatch")
+
+
+def _validate_parser_failure_prompt_projection(value: Any) -> None:
+    expected_keys = {
+        "failure_count",
+        "failure_roster_hash",
+        "full_failure_ids_persisted_outside_prompt",
+    }
+    if not isinstance(value, Mapping) or set(value) != expected_keys:
+        raise ValueError("prior supervisor parser projection key roster mismatch")
+    _nonnegative_projection_int(value.get("failure_count"), "failure_count")
+    if (
+        not _is_sha256(value.get("failure_roster_hash"))
+        or value.get("full_failure_ids_persisted_outside_prompt") is not True
+    ):
+        raise ValueError("invalid prior supervisor parser failure projection")
+
+
+def _validate_projection_rows(
+    value: Any,
+    expected_keys: set[str],
+    label: str,
+) -> tuple[Mapping[str, Any], ...]:
+    if isinstance(value, (str, bytes)) or not isinstance(value, (list, tuple)):
+        raise ValueError(f"prior supervisor {label} rows must be an array")
+    rows = tuple(value)
+    if any(not isinstance(row, Mapping) or set(row) != expected_keys for row in rows):
+        raise ValueError(f"prior supervisor {label} key roster mismatch")
+    return rows
+
+
+def _validate_projection_string_array(value: Any, label: str) -> None:
+    _projection_string_tuple(value, label)
+
+
+def _projection_string_tuple(value: Any, label: str) -> tuple[str, ...]:
+    if isinstance(value, (str, bytes)) or not isinstance(value, (list, tuple)):
+        raise ValueError(f"prior supervisor projection {label} must be an array")
+    if any(not isinstance(item, str) for item in value):
+        raise ValueError(
+            f"prior supervisor projection {label} requires string values"
+        )
+    return tuple(value)
+
+
+def _required_projection_string(row: Mapping[str, Any], key: str) -> str:
+    value = row.get(key)
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"prior supervisor projection {key} is invalid")
+    return value
+
+
+def _required_projection_bool(row: Mapping[str, Any], key: str) -> bool:
+    value = row.get(key)
+    if type(value) is not bool:
+        raise ValueError(f"prior supervisor projection {key} must be boolean")
+    return value
+
+
+def _nonnegative_projection_int(value: Any, label: str) -> int:
+    if type(value) is not int or value < 0:
+        raise ValueError(f"prior supervisor projection {label} is invalid")
+    return value
+
+
+def _positive_projection_int(value: Any, label: str) -> int:
+    result = _nonnegative_projection_int(value, label)
+    if result == 0:
+        raise ValueError(f"prior supervisor projection {label} must be positive")
+    return result
+
+
+def _is_sha256(value: Any) -> bool:
+    return isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None
+
+
 def _prior_supervisor_review_prompt_projection(
     review: ResearchSupervisorReview | Mapping[str, Any],
 ) -> Mapping[str, Any]:
@@ -1337,15 +1964,11 @@ def _prior_supervisor_review_prompt_projection(
     remains in the immutable epoch checkpoint.
     """
 
-    payload = (
-        dict(review.to_dict())
-        if isinstance(review, ResearchSupervisorReview)
-        else dict(review)
-    )
+    payload = dict(_canonical_prior_review_prompt_source(review))
     # These fields bind the persisted review to one checkpoint but do not
     # change its research judgment. Excluding them lets an unchanged semantic
     # review reuse the provider response after checkpoint resume.
-    for key in ("review_id", "epoch", "prompt_hash"):
+    for key in _PRIOR_REVIEW_PROMPT_LINEAGE_FIELDS:
         payload.pop(key, None)
     assessments = tuple(
         dict(row)
@@ -1416,6 +2039,7 @@ def _prior_supervisor_review_prompt_projection(
         "review_id",
         "epoch",
         "prompt_hash",
+        "prior_review_prompt_projection",
     ]
     payload["full_prior_review_persisted_outside_prompt"] = True
     payload["fixed_top_n_used"] = False

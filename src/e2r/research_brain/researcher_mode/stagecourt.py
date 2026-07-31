@@ -1,10 +1,10 @@
 """Phase 95 deterministic StageCourt for the v5 Researcher Mode.
 
-The LLM has one narrow job here: map already source-backed material claims to
-the configured Evidence Contract primitive ids.  It never sees or returns a
-score or Stage.  Deterministic code validates claim/source/currentness/scope
-lineage, evaluates contract gates and quorum, builds the canonical score
-snapshot, and is the sole Stage authority.
+The LLM has one narrow job here: map current source-backed EvidenceFact rows to
+configured Evidence Contract primitive ids and explicitly dispose every row.
+It never sees or returns a score or Stage. Deterministic code resolves each row
+through fact/claim/source lineage, validates currentness, scope, freshness and
+quorum, builds the canonical score snapshot, and is the sole Stage authority.
 """
 
 from __future__ import annotations
@@ -43,6 +43,14 @@ from e2r.staging import ACTIVE_RERATING_STAGES, StageClassificationInput, StageC
 from .component_researcher import (
     STAGE_GATE_FACT_MAPPING_SCHEMA,
     StructuredResearchProvider,
+)
+from .prompt_projection import (
+    citable_fact_id_by_row_index,
+    project_claim_fact_link_profile,
+    project_research_source_claim_profile,
+    project_research_source_document_profile,
+    project_stage_gate_citable_facts,
+    resolve_citable_fact_row_indices,
 )
 from .schemas import (
     CANONICAL_COMPONENT_ORDER,
@@ -273,6 +281,7 @@ class ResearcherStageCourt:
         archetype_id: str,
         as_of_date: str,
         score_aggregation: DeterministicScoreAggregationRun,
+        evidence_facts: Sequence[Any | Mapping[str, Any]],
         material_claims: Sequence[Mapping[str, Any]],
         claim_fact_links: Sequence[Mapping[str, Any]],
         source_documents: Sequence[Mapping[str, Any]],
@@ -323,6 +332,16 @@ class ResearcherStageCourt:
             claim_fact_links,
             claim_ids=set(claims),
         )
+        facts = _validated_evidence_facts(
+            evidence_facts,
+            target_id=target_id,
+            as_of_date=as_of_date,
+        )
+        fact_claim_ids = _validated_fact_claim_lineage(
+            facts=facts,
+            claims=claims,
+            links=links,
+        )
         records = _structured_rows(
             structured_records,
             target_id=target_id,
@@ -333,6 +352,22 @@ class ResearcherStageCourt:
         _validate_transition(transition, claims=claims)
 
         allowed_primitives = _contract_primitive_ids(contract)
+        fact_projection = project_stage_gate_citable_facts(
+            tuple(facts.values())
+        )
+        fact_id_by_row_index = citable_fact_id_by_row_index(
+            fact_projection
+        )
+        provider_fact_projection = {
+            key: value
+            for key, value in fact_projection.items()
+            if key not in {"facts", "fact_id_by_row_index"}
+        }
+        stage_link_rows = tuple(
+            dict(row)
+            for row in claim_fact_links
+            if str(row.get("claim_id") or "") in claims
+        )
         payload = scrub_blind_research_payload(
             {
                 "researcher_role": "STAGE_GATE_FACT_MAPPER",
@@ -351,15 +386,29 @@ class ResearcherStageCourt:
                     },
                     "aggregation_rules": list(contract.aggregation_rules),
                 },
-                "source_backed_material_claims": [
-                    _claim_prompt_row(row) for row in claims.values()
-                ],
+                "current_evidence_fact_graph": fact_projection["facts"],
+                "current_evidence_fact_projection": (
+                    provider_fact_projection
+                ),
+                "source_claims": project_research_source_claim_profile(
+                    tuple(claims.values())
+                ),
+                "source_documents": (
+                    project_research_source_document_profile(
+                        tuple(documents.values())
+                    )
+                ),
+                "claim_fact_links": project_claim_fact_link_profile(
+                    stage_link_rows
+                ),
                 "instructions": (
-                    "Map only semantically matching current source-backed claims to exact "
-                    "allowed primitive ids. Return claim ids verbatim. SUPPORT is positive "
-                    "evidence and COUNTER is thesis risk. Do not calculate or mention score, "
-                    "Stage, investment action, expected outcome, or future data. Empty mappings "
-                    "are valid only after all claims were reviewed and mapping_complete is true."
+                    "Map only semantically matching CURRENT/OPEN POSITIVE or COUNTER "
+                    "EvidenceFact rows to exact allowed primitive ids. Return canonical "
+                    "fact_row_indices, never ids. SUPPORT is positive evidence and COUNTER "
+                    "is thesis risk. Review every supplied row and return it exactly once "
+                    "in fact_dispositions as MAPPED, NO_MATCH, or UNRESOLVED. Do not "
+                    "calculate or mention score, Stage, investment action, expected "
+                    "outcome, or future data."
                 ),
             }
         )
@@ -403,6 +452,9 @@ class ResearcherStageCourt:
             contract=contract,
             claims=claims,
             links=links,
+            facts=facts,
+            fact_claim_ids=fact_claim_ids,
+            fact_id_by_row_index=fact_id_by_row_index,
             documents=documents,
             cutoff=cutoff,
             prompt_hash=prompt_hash,
@@ -660,6 +712,105 @@ def _validated_claim_fact_links(
     return {key: _unique_text(value) for key, value in links.items()}
 
 
+def _validated_evidence_facts(
+    rows: Sequence[Any | Mapping[str, Any]],
+    *,
+    target_id: str,
+    as_of_date: str,
+) -> Mapping[str, Mapping[str, Any]]:
+    facts: dict[str, Mapping[str, Any]] = {}
+    for raw in rows:
+        row = dict(raw) if isinstance(raw, Mapping) else dict(raw.to_dict())
+        fact_id = str(row.get("fact_id") or "").strip()
+        if not fact_id or fact_id in facts:
+            raise ValueError("StageCourt EvidenceFacts require unique ids")
+        if str(row.get("target_id") or "") != target_id:
+            raise ValueError("StageCourt EvidenceFact crosses target scope")
+        if str(row.get("as_of_date") or "") != as_of_date:
+            raise ValueError("StageCourt EvidenceFact as_of_date mismatch")
+        if str(row.get("direction") or "") not in {
+            "POSITIVE",
+            "COUNTER",
+            "NEUTRAL",
+            "RESOLUTION",
+        }:
+            raise ValueError("StageCourt EvidenceFact direction is invalid")
+        if str(row.get("current_lifecycle") or "") not in {
+            "CURRENT",
+            "OPEN",
+            "RESOLVED",
+            "SUPERSEDED",
+        }:
+            raise ValueError("StageCourt EvidenceFact lifecycle is invalid")
+        facts[fact_id] = row
+    return facts
+
+
+def _validated_fact_claim_lineage(
+    *,
+    facts: Mapping[str, Mapping[str, Any]],
+    claims: Mapping[str, Mapping[str, Any]],
+    links: Mapping[str, tuple[str, ...]],
+) -> Mapping[str, tuple[str, ...]]:
+    fact_claim_ids: dict[str, list[str]] = {
+        fact_id: [] for fact_id in facts
+    }
+    for claim_id, fact_ids in links.items():
+        for fact_id in fact_ids:
+            if fact_id not in facts:
+                raise ValueError(
+                    "StageCourt claim/fact link references unknown fact"
+                )
+            fact_claim_ids[fact_id].append(claim_id)
+    unlinked = sorted(
+        fact_id
+        for fact_id, claim_ids in fact_claim_ids.items()
+        if not claim_ids
+    )
+    if unlinked:
+        raise ValueError(
+            f"StageCourt EvidenceFacts lack claim lineage: {unlinked[:5]}"
+        )
+
+    result: dict[str, tuple[str, ...]] = {}
+    for fact_id, linked_claim_ids in fact_claim_ids.items():
+        canonical_claim_ids = _unique_text(linked_claim_ids)
+        fact = facts[fact_id]
+        embedded_claim_ids = _unique_text(
+            _strings(fact.get("claim_ids"))
+        )
+        if embedded_claim_ids and set(embedded_claim_ids) != set(
+            canonical_claim_ids
+        ):
+            raise ValueError(
+                "StageCourt EvidenceFact embedded claim lineage mismatch"
+            )
+        fact_direction = str(fact.get("direction") or "")
+        fact_lifecycle = str(fact.get("current_lifecycle") or "")
+        fact_source_ids = set(_strings(fact.get("source_ids")))
+        for claim_id in canonical_claim_ids:
+            claim = claims[claim_id]
+            if str(claim.get("direction") or "") != fact_direction:
+                raise ValueError(
+                    "StageCourt EvidenceFact/claim direction mismatch"
+                )
+            if (
+                str(claim.get("current_lifecycle") or "")
+                != fact_lifecycle
+            ):
+                raise ValueError(
+                    "StageCourt EvidenceFact/claim lifecycle mismatch"
+                )
+            if not set(_strings(claim.get("source_ids"))).issubset(
+                fact_source_ids
+            ):
+                raise ValueError(
+                    "StageCourt EvidenceFact source lineage mismatch"
+                )
+        result[fact_id] = canonical_claim_ids
+    return result
+
+
 def _raw_structured_record_ids(
     rows: Sequence[Any | Mapping[str, Any]],
 ) -> tuple[str, ...]:
@@ -790,17 +941,27 @@ def _validate_mapping_response(
     contract: EvidenceContractV2,
     claims: Mapping[str, Mapping[str, Any]],
     links: Mapping[str, tuple[str, ...]],
+    facts: Mapping[str, Mapping[str, Any]],
+    fact_claim_ids: Mapping[str, tuple[str, ...]],
+    fact_id_by_row_index: Mapping[int, str],
     documents: Mapping[str, Mapping[str, Any]],
     cutoff: date,
     prompt_hash: str,
     response_hash: str,
 ) -> tuple[tuple[StagePrimitiveMapping, ...], tuple[Mapping[str, Any], ...]]:
+    del links
     raw_rows = response.get("mappings")
     if not isinstance(raw_rows, list):
         return (), ({"proposal_index": -1, "reason": "MAPPINGS_NOT_ARRAY"},)
     allowed = set(_contract_primitive_ids(contract))
     mappings: list[StagePrimitiveMapping] = []
-    rejections: list[Mapping[str, Any]] = []
+    rejections: list[Mapping[str, Any]] = list(
+        _stage_fact_accounting_rejections(
+            response=response,
+            fact_id_by_row_index=fact_id_by_row_index,
+            facts=facts,
+        )
+    )
     keys: set[tuple[str, str]] = set()
     for index, raw in enumerate(raw_rows):
         if not isinstance(raw, Mapping):
@@ -808,27 +969,58 @@ def _validate_mapping_response(
             continue
         primitive_id = str(raw.get("primitive_id") or "").strip()
         direction = str(raw.get("direction") or "").strip()
-        claim_ids = _strings(raw.get("claim_ids"))
+        raw_fact_row_indices = raw.get("fact_row_indices")
+        fact_row_indices = _non_negative_integers(
+            raw_fact_row_indices
+        )
         rationale = str(raw.get("semantic_rationale") or "").strip()
         reason = None
         if primitive_id not in allowed:
             reason = "UNKNOWN_PRIMITIVE_ID"
         elif direction not in {"SUPPORT", "COUNTER"}:
             reason = "UNKNOWN_MAPPING_DIRECTION"
-        elif not claim_ids or len(claim_ids) != len(set(claim_ids)):
-            reason = "CLAIM_IDS_EMPTY_OR_DUPLICATED"
-        elif any(claim_id not in claims for claim_id in claim_ids):
-            reason = "UNKNOWN_CLAIM_ID"
+        elif (
+            not fact_row_indices
+            or len(fact_row_indices) != len(set(fact_row_indices))
+        ):
+            reason = "FACT_ROW_INDICES_EMPTY_OR_DUPLICATED"
+        elif any(
+            row_index not in fact_id_by_row_index
+            for row_index in fact_row_indices
+        ):
+            reason = "UNKNOWN_FACT_ROW_INDEX"
         elif not rationale:
             reason = "SEMANTIC_RATIONALE_MISSING"
         elif (primitive_id, direction) in keys:
             reason = "DUPLICATE_PRIMITIVE_DIRECTION"
         elif any(
-            str(claims[claim_id].get("direction") or "")
+            str(
+                facts[fact_id_by_row_index[row_index]].get("direction")
+                or ""
+            )
             not in ({"POSITIVE"} if direction == "SUPPORT" else {"COUNTER"})
-            for claim_id in claim_ids
+            for row_index in fact_row_indices
         ):
-            reason = "CLAIM_DIRECTION_MISMATCH"
+            reason = "FACT_DIRECTION_MISMATCH"
+        fact_ids = (
+            resolve_citable_fact_row_indices(
+                fact_row_indices,
+                fact_id_by_row_index=fact_id_by_row_index,
+                label="fact_row_indices",
+            )
+            if reason is None
+            else ()
+        )
+        claim_ids = _unique_text(
+            claim_id
+            for fact_id in fact_ids
+            for claim_id in fact_claim_ids[fact_id]
+        )
+        if reason is None and (
+            not claim_ids
+            or any(claim_id not in claims for claim_id in claim_ids)
+        ):
+            reason = "FACT_CLAIM_LINEAGE_MISSING"
         elif any(
             not _claim_source_backed(claims[claim_id], documents)
             for claim_id in claim_ids
@@ -840,6 +1032,8 @@ def _validate_mapping_response(
                     "proposal_index": index,
                     "primitive_id": primitive_id,
                     "direction": direction,
+                    "fact_row_indices": list(fact_row_indices),
+                    "fact_ids": list(fact_ids),
                     "claim_ids": list(claim_ids),
                     "reason": reason,
                 }
@@ -855,9 +1049,6 @@ def _validate_mapping_response(
                 contract=contract,
                 cutoff=cutoff,
             )
-        )
-        fact_ids = _unique_text(
-            fact_id for claim_id in claim_ids for fact_id in links[claim_id]
         )
         document_ids = _unique_text(
             str(claims[claim_id].get("document_id") or "")
@@ -894,6 +1085,120 @@ def _validate_mapping_response(
             )
         )
     return tuple(mappings), tuple(rejections)
+
+
+def _stage_fact_accounting_rejections(
+    *,
+    response: Mapping[str, Any],
+    fact_id_by_row_index: Mapping[int, str],
+    facts: Mapping[str, Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    """Reject omission, duplication, tamper, and incomplete row disposition."""
+
+    raw_mappings = response.get("mappings")
+    mapped: set[int] = set()
+    if isinstance(raw_mappings, list):
+        for raw in raw_mappings:
+            if not isinstance(raw, Mapping):
+                continue
+            values = _non_negative_integers(raw.get("fact_row_indices"))
+            mapped.update(
+                row_index
+                for row_index in values
+                if row_index in fact_id_by_row_index
+            )
+
+    raw_dispositions = response.get("fact_dispositions")
+    if not isinstance(raw_dispositions, list):
+        return (
+            {
+                "proposal_index": -1,
+                "reason": "FACT_DISPOSITIONS_NOT_ARRAY",
+            },
+        )
+    seen: dict[int, str] = {}
+    rejections: list[Mapping[str, Any]] = []
+    allowed = set(fact_id_by_row_index)
+    for index, raw in enumerate(raw_dispositions):
+        if not isinstance(raw, Mapping):
+            rejections.append(
+                {
+                    "proposal_index": index,
+                    "reason": "FACT_DISPOSITION_NOT_OBJECT",
+                }
+            )
+            continue
+        row_index = raw.get("fact_row_index")
+        status = str(raw.get("status") or "")
+        rationale = str(raw.get("rationale") or "").strip()
+        reason = None
+        if (
+            isinstance(row_index, bool)
+            or not isinstance(row_index, int)
+            or row_index < 0
+            or row_index not in allowed
+        ):
+            reason = "FACT_DISPOSITION_UNKNOWN_ROW"
+        elif row_index in seen:
+            reason = "FACT_DISPOSITION_DUPLICATE_ROW"
+        elif status not in {"MAPPED", "NO_MATCH", "UNRESOLVED"}:
+            reason = "FACT_DISPOSITION_UNKNOWN_STATUS"
+        elif not rationale:
+            reason = "FACT_DISPOSITION_RATIONALE_MISSING"
+        elif (status == "MAPPED") != (row_index in mapped):
+            reason = "FACT_DISPOSITION_MAPPING_MISMATCH"
+        if reason:
+            rejections.append(
+                {
+                    "proposal_index": index,
+                    "fact_row_index": row_index,
+                    "reason": reason,
+                }
+            )
+            continue
+        seen[row_index] = status
+        if status == "UNRESOLVED":
+            rejections.append(
+                {
+                    "proposal_index": index,
+                    "fact_row_index": row_index,
+                    "fact_id": fact_id_by_row_index[row_index],
+                    "reason": "FACT_DISPOSITION_UNRESOLVED",
+                }
+            )
+    if set(seen) != allowed:
+        rejections.append(
+            {
+                "proposal_index": -1,
+                "reason": "FACT_DISPOSITION_ROSTER_MISMATCH",
+                "missing_fact_row_indices": sorted(allowed - set(seen)),
+                "extra_fact_row_indices": sorted(set(seen) - allowed),
+            }
+        )
+    for row_index in mapped & allowed:
+        expected = str(
+            facts[fact_id_by_row_index[row_index]].get("direction") or ""
+        )
+        if expected not in {"POSITIVE", "COUNTER"}:
+            rejections.append(
+                {
+                    "proposal_index": -1,
+                    "fact_row_index": row_index,
+                    "reason": "MAPPED_FACT_DIRECTION_NOT_ELIGIBLE",
+                }
+            )
+    return tuple(rejections)
+
+
+def _non_negative_integers(value: Any) -> tuple[int, ...]:
+    if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
+        return ()
+    result = []
+    for item in value:
+        if isinstance(item, bool) or not isinstance(item, int) or item < 0:
+            return ()
+        result.append(item)
+    return tuple(result)
 
 
 def _claim_source_backed(

@@ -694,6 +694,7 @@ class CurrentResearcherModeTargetRunner:
             archetype_id=config.archetype_id,
             as_of_date=config.as_of_date,
             score_aggregation=aggregation,
+            evidence_facts=fact_extraction.fact_compilation.facts,
             material_claims=fact_extraction.material_claims,
             claim_fact_links=tuple(
                 row.to_dict()

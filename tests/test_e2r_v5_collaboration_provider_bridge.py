@@ -506,6 +506,79 @@ class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
                 "COLLABORATION_CODEX_SUBAGENT",
             )
 
+    def test_validated_journal_recovers_exact_request_payload_read_only(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = CollaborationCodexResearcherProvider(
+                transport=CollaborationCodexSubagentTransport()
+            )
+            journal = _configure(provider, Path(directory))
+            payload = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": "2026-07-12",
+                "prior_supervisor_review": {
+                    "prior_review_semantic_hash": "a" * 64,
+                    "score_authority": False,
+                },
+            }
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.complete(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    payload=payload,
+                )
+            _, request = _request(journal)
+            envelope = import_collaboration_response(
+                journal_root=journal,
+                request_id=request["request_id"],
+                response_payload=QUERY_RESPONSE,
+                agent_id="agent-recover",
+                canonical_task_name="/root/recover_request_payload",
+                agent_model="codex-collaboration",
+            )
+            before = {
+                path.relative_to(journal): path.read_bytes()
+                for path in journal.rglob("*.json")
+            }
+
+            recovered = provider.validated_request_payload(
+                pass_name="SOURCE_QUERY_GENERATION",
+                prompt_hash=request["prompt_hash"],
+            )
+
+            self.assertEqual(recovered, payload)
+            self.assertEqual(
+                {
+                    path.relative_to(journal): path.read_bytes()
+                    for path in journal.rglob("*.json")
+                },
+                before,
+            )
+            self.assertIsNone(
+                provider.validated_request_payload(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    prompt_hash="f" * 64,
+                )
+            )
+
+            quarantine_path = (
+                journal
+                / "quarantine"
+                / request["request_id"]
+                / f"{envelope['response_id']}.json"
+            )
+            quarantine_path.parent.mkdir(parents=True, exist_ok=True)
+            quarantine_path.write_text("{}\n", encoding="utf-8")
+            self.assertIsNone(
+                provider.validated_request_payload(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    prompt_hash=request["prompt_hash"],
+                )
+            )
+
     def test_multichunk_usage_limit_falls_back_only_for_missing_leaf(
         self,
     ) -> None:

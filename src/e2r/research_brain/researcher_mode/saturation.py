@@ -41,6 +41,22 @@ SATURATION_REVIEW_ROLES = (
 )
 
 GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY = "NOT_RUN_POST_RUN_ONLY"
+VALIDATED_PROVIDER_RESPONSE_IDENTITY_SCHEMA_VERSION = (
+    "e2r_v5_validated_provider_response_identity_v1"
+)
+_VALIDATED_PROVIDER_RESPONSE_IDENTITY_KEYS = frozenset(
+    {
+        "schema_version",
+        "provider_route",
+        "provider_name",
+        "pass_name",
+        "prompt_hash",
+        "response_hash",
+        "request_locator_id",
+        "response_locator_id",
+        "provenance_hash",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -111,6 +127,7 @@ class SaturationReviewerResult:
     pending_reasons: tuple[str, ...]
     provider_name: str
     prompt_hash: str | None = None
+    provider_response_identity: Mapping[str, Any] | None = None
 
     def __post_init__(self) -> None:
         if self.reviewer_role not in SATURATION_REVIEW_ROLES:
@@ -123,9 +140,22 @@ class SaturationReviewerResult:
             raise ValueError("pending saturation result requires reasons")
         if self.review is not None and self.review.reviewer_role != self.reviewer_role:
             raise ValueError("saturation result/review role mismatch")
+        if self.provider_response_identity is not None:
+            identity = _validate_provider_response_identity(
+                self.provider_response_identity
+            )
+            if (
+                self.status != "COMPLETE"
+                or self.review is None
+                or identity["provider_name"] != self.provider_name
+                or identity["prompt_hash"] != self.prompt_hash
+            ):
+                raise ValueError(
+                    "saturation provider response identity is not bound"
+                )
 
     def to_dict(self) -> Mapping[str, Any]:
-        return {
+        payload = {
             "reviewer_role": self.reviewer_role,
             "status": self.status,
             "review": self.review.to_dict() if self.review else None,
@@ -133,6 +163,11 @@ class SaturationReviewerResult:
             "provider_name": self.provider_name,
             "prompt_hash": self.prompt_hash,
         }
+        if self.provider_response_identity is not None:
+            payload["provider_response_identity"] = dict(
+                self.provider_response_identity
+            )
+        return payload
 
 
 @dataclass(frozen=True)
@@ -254,6 +289,13 @@ class SemanticSaturationReviewer:
                 provider_name=provider_name,
                 prompt_hash=prompt_hash,
             )
+            response_identity = _validated_provider_response_identity(
+                provider=self.provider,
+                pass_name="SEMANTIC_SATURATION_REVIEW",
+                payload=payload,
+                prompt_hash=prompt_hash,
+                response=response,
+            )
             return SaturationReviewerResult(
                 reviewer_role=self.reviewer_role,
                 status="COMPLETE",
@@ -261,6 +303,7 @@ class SemanticSaturationReviewer:
                 pending_reasons=(),
                 provider_name=provider_name,
                 prompt_hash=prompt_hash,
+                provider_response_identity=response_identity,
             )
         except (
             StructuredProviderUnavailable,
@@ -314,6 +357,59 @@ class SemanticSaturationReviewer:
                 )
             )
         return _payload_hash(payload)
+
+    def validate_persisted_response_identity(
+        self,
+        *,
+        checkpoint: Mapping[str, Any],
+        supervisor_review: ResearchSupervisorReview,
+        component_results: Sequence[ComponentResearchResult],
+        red_team_result: RedTeamResearchResult | None,
+        structured_result: Any | None,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        source_graph_checkpoint: Mapping[str, Any],
+        review: SaturationReview,
+        persisted_identity: Mapping[str, Any] | None,
+    ) -> Mapping[str, Any] | None:
+        """Prove that the persisted approval came from one validated response."""
+
+        payload = self._validated_prompt_payload(
+            checkpoint=checkpoint,
+            supervisor_review=supervisor_review,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            structured_result=structured_result,
+            evidence_facts=evidence_facts,
+            source_graph_checkpoint=source_graph_checkpoint,
+        )
+        preview = getattr(self.provider, "preview_prompt_hash", None)
+        prompt_hash = (
+            str(
+                preview(
+                    pass_name="SEMANTIC_SATURATION_REVIEW",
+                    payload=payload,
+                )
+            )
+            if callable(preview)
+            else _payload_hash(payload)
+        )
+        if prompt_hash != review.prompt_hash:
+            return None
+        response = _saturation_response_payload(review)
+        identity = _validated_provider_response_identity(
+            provider=self.provider,
+            pass_name="SEMANTIC_SATURATION_REVIEW",
+            payload=payload,
+            prompt_hash=prompt_hash,
+            response=response,
+        )
+        if identity is None:
+            return None
+        if persisted_identity is not None and dict(
+            _validate_provider_response_identity(persisted_identity)
+        ) != dict(identity):
+            return None
+        return identity
 
     def _validated_prompt_payload(
         self,
@@ -630,6 +726,137 @@ def _validate_current_fact_roster(
         raise ValueError(
             "saturation facts must exactly match the current checkpoint roster"
         )
+
+
+def _saturation_response_payload(
+    review: SaturationReview,
+) -> Mapping[str, Any]:
+    return {
+        "approve": review.approve,
+        "seven_component_memos_complete": (
+            review.seven_component_memos_complete
+        ),
+        "material_positive_routes_reviewed": (
+            review.material_positive_routes_reviewed
+        ),
+        "counter_and_supersession_routes_checked": (
+            review.counter_and_supersession_routes_checked
+        ),
+        "structured_data_complete": review.structured_data_complete,
+        "new_source_family_directions_reviewed": (
+            review.new_source_family_directions_reviewed
+        ),
+        "reasonable_positive_routes_remaining": (
+            not review.no_reasonable_positive_route_remaining
+        ),
+        "unresolved_material_questions": list(
+            review.unresolved_material_questions
+        ),
+        "rationale": review.rationale,
+    }
+
+
+def _validated_provider_response_identity(
+    *,
+    provider: StructuredResearchProvider,
+    pass_name: str,
+    payload: Mapping[str, Any],
+    prompt_hash: str,
+    response: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Return only a response identity backed by a validated provider path."""
+
+    validate = getattr(provider, "validated_response_identity", None)
+    if callable(validate):
+        identity = validate(
+            pass_name=pass_name,
+            payload=payload,
+            response_payload=response,
+        )
+        if identity is None:
+            return None
+        validated = _validate_provider_response_identity(identity)
+        if (
+            validated["provider_name"]
+            != str(
+                getattr(provider, "provider_name", type(provider).__name__)
+            )
+            or validated["pass_name"] != pass_name
+            or validated["prompt_hash"] != prompt_hash
+            or validated["response_hash"] != _payload_hash(response)
+        ):
+            return None
+        return validated
+
+    calls = getattr(provider, "calls", None)
+    if not isinstance(calls, list):
+        return None
+    provider_name = str(
+        getattr(provider, "provider_name", type(provider).__name__)
+    )
+    response_hash = _payload_hash(response)
+    for row in reversed(calls):
+        if (
+            not isinstance(row, Mapping)
+            or row.get("status") != "COMPLETE"
+            or row.get("pass_name") != pass_name
+            or row.get("prompt_hash") != prompt_hash
+            or row.get("payload") != payload
+            or row.get("response") != response
+        ):
+            continue
+        locator_payload = {
+            "provider_name": provider_name,
+            "pass_name": pass_name,
+            "prompt_hash": prompt_hash,
+            "response_hash": response_hash,
+        }
+        return _validate_provider_response_identity(
+            {
+                "schema_version": (
+                    VALIDATED_PROVIDER_RESPONSE_IDENTITY_SCHEMA_VERSION
+                ),
+                "provider_route": "IN_MEMORY_VALIDATED_PROVIDER_CALL",
+                "provider_name": provider_name,
+                "pass_name": pass_name,
+                "prompt_hash": prompt_hash,
+                "response_hash": response_hash,
+                "request_locator_id": f"PROMPT-{prompt_hash}",
+                "response_locator_id": (
+                    "PROVCALL-" + _payload_hash(locator_payload)
+                ),
+                "provenance_hash": _payload_hash(
+                    {
+                        "provider_name": provider_name,
+                        "provider_class": type(provider).__qualname__,
+                    }
+                ),
+            }
+        )
+    return None
+
+
+def _validate_provider_response_identity(
+    value: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    payload = dict(value)
+    if set(payload) != _VALIDATED_PROVIDER_RESPONSE_IDENTITY_KEYS:
+        raise ValueError("validated provider response identity key mismatch")
+    if (
+        payload.get("schema_version")
+        != VALIDATED_PROVIDER_RESPONSE_IDENTITY_SCHEMA_VERSION
+    ):
+        raise ValueError("unknown validated provider response identity schema")
+    for key in _VALIDATED_PROVIDER_RESPONSE_IDENTITY_KEYS - {
+        "schema_version"
+    }:
+        if not isinstance(payload.get(key), str) or not str(
+            payload[key]
+        ).strip():
+            raise ValueError(
+                "validated provider response identity is incomplete"
+            )
+    return payload
 
 
 def _payload_hash(value: Any) -> str:

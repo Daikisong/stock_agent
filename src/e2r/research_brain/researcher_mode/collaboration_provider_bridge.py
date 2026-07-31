@@ -37,6 +37,7 @@ from e2r.research_brain.planning.provider_transport import (
 from .component_researcher import (
     CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT,
     CodexResearcherProvider,
+    _single_payload_request_material,
 )
 from .schemas import assert_blind_research_output
 
@@ -407,6 +408,157 @@ class CollaborationCodexSubagentTransport:
             stderr="",
             returncode=0,
         )
+
+    def validated_response_identity(
+        self,
+        *,
+        prompt: str,
+        output_schema: Mapping[str, Any],
+        schema_name: str,
+        response_payload: Mapping[str, Any],
+        provider_name: str,
+    ) -> Mapping[str, Any] | None:
+        """Read and validate one exact active journal response without writes."""
+
+        root = self.journal_root
+        if root is None:
+            return None
+        pass_name = _pass_name_from_schema_name(schema_name)
+        prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+        output_schema_hash = _canonical_hash(output_schema)
+        provider_identity = dict(self.provider_identity())
+        provider_identity_hash = _canonical_hash(provider_identity)
+        identity = _request_identity(
+            pass_name=pass_name,
+            prompt_hash=prompt_hash,
+            output_schema_hash=output_schema_hash,
+            provider_identity_hash=provider_identity_hash,
+        )
+        request_id = _request_id(identity)
+        request_path = root / "requests" / f"{request_id}.json"
+        response_path = root / "responses" / f"{request_id}.json"
+        try:
+            request = _validate_request(_read_json_object(request_path))
+            envelope = _validate_response_envelope(
+                request=request,
+                envelope=_read_json_object(response_path),
+            )
+        except (
+            FileNotFoundError,
+            OSError,
+            TypeError,
+            ValueError,
+            RuntimeError,
+        ):
+            return None
+        if (
+            request["request_id"] != request_id
+            or request["prompt"] != prompt
+            or request["output_schema"] != output_schema
+            or envelope["payload"] != response_payload
+            or (
+                root
+                / "quarantine"
+                / request_id
+                / f"{envelope['response_id']}.json"
+            ).is_file()
+        ):
+            return None
+        response_hash = hashlib.sha256(
+            json.dumps(
+                response_payload,
+                ensure_ascii=False,
+                sort_keys=True,
+                default=str,
+            ).encode("utf-8")
+        ).hexdigest()
+        return {
+            "schema_version": (
+                "e2r_v5_validated_provider_response_identity_v1"
+            ),
+            "provider_route": "COLLABORATION_VALIDATED_RESPONSE_JOURNAL",
+            "provider_name": provider_name,
+            "pass_name": pass_name,
+            "prompt_hash": prompt_hash,
+            "response_hash": response_hash,
+            "request_locator_id": request_id,
+            "response_locator_id": str(envelope["response_id"]),
+            "provenance_hash": _canonical_hash(envelope["provenance"]),
+        }
+
+    def validated_request_material_for_prompt_hash(
+        self,
+        *,
+        pass_name: str,
+        prompt_hash: str,
+    ) -> Mapping[str, Any] | None:
+        """Recover one exact active request/response pair without journal writes."""
+
+        root = self.journal_root
+        clean_pass_name = str(pass_name).strip()
+        clean_prompt_hash = str(prompt_hash).strip()
+        if (
+            root is None
+            or re.fullmatch(r"[A-Z0-9_]+", clean_pass_name) is None
+            or re.fullmatch(r"[0-9a-f]{64}", clean_prompt_hash) is None
+        ):
+            return None
+        candidates: list[tuple[Mapping[str, Any], Mapping[str, Any]]] = []
+        try:
+            request_paths = tuple(
+                (root / "requests").glob("COLLABREQ-*.json")
+            )
+        except OSError:
+            return None
+        for request_path in request_paths:
+            try:
+                request = _validate_request(
+                    _read_json_object(request_path)
+                )
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+            ):
+                continue
+            if (
+                request["pass_name"] != clean_pass_name
+                or request["prompt_hash"] != clean_prompt_hash
+            ):
+                continue
+            request_id = str(request["request_id"])
+            response_path = root / "responses" / f"{request_id}.json"
+            try:
+                envelope = _validate_response_envelope(
+                    request=request,
+                    envelope=_read_json_object(response_path),
+                )
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+            ):
+                continue
+            quarantine_path = (
+                root
+                / "quarantine"
+                / request_id
+                / f"{envelope['response_id']}.json"
+            )
+            if quarantine_path.is_file():
+                continue
+            candidates.append((request, envelope))
+        if len(candidates) != 1:
+            return None
+        request, envelope = candidates[0]
+        return {
+            "request": dict(request),
+            "response": dict(envelope),
+        }
 
     def invalidate_last_response(self, reason: str) -> Mapping[str, Any]:
         request_id = self._last_request_id
@@ -882,6 +1034,84 @@ class CollaborationCodexResearcherProvider(CodexResearcherProvider):
             self.cache_invalidations[-1] = combined
         return combined
 
+    def validated_response_identity(
+        self,
+        *,
+        pass_name: str,
+        payload: Mapping[str, Any],
+        response_payload: Mapping[str, Any],
+    ) -> Mapping[str, Any] | None:
+        """Bind reuse to the exact validated collaboration response envelope."""
+
+        (
+            _safe_payload,
+            output_schema,
+            prompt,
+            _prompt_hash,
+            _schema_hash,
+        ) = _single_payload_request_material(
+            pass_name=pass_name,
+            payload=payload,
+        )
+        return self.transport.validated_response_identity(
+            prompt=prompt,
+            output_schema=output_schema,
+            schema_name=f"e2r_v5_{pass_name.lower()}",
+            response_payload=response_payload,
+            provider_name=self.provider_name,
+        )
+
+    def validated_request_payload(
+        self,
+        *,
+        pass_name: str,
+        prompt_hash: str,
+    ) -> Mapping[str, Any] | None:
+        """Recover the payload from one fully validated active journal request."""
+
+        material = self.transport.validated_request_material_for_prompt_hash(
+            pass_name=pass_name,
+            prompt_hash=prompt_hash,
+        )
+        if material is None:
+            return None
+        request = material.get("request")
+        if not isinstance(request, Mapping):
+            return None
+        prompt = request.get("prompt")
+        if not isinstance(prompt, str) or "\n" not in prompt:
+            return None
+        try:
+            payload = json.loads(prompt.rsplit("\n", 1)[-1])
+        except (TypeError, json.JSONDecodeError):
+            return None
+        if not isinstance(payload, Mapping):
+            return None
+        try:
+            (
+                safe_payload,
+                output_schema,
+                rebuilt_prompt,
+                rebuilt_prompt_hash,
+                rebuilt_schema_hash,
+            ) = _single_payload_request_material(
+                pass_name=pass_name,
+                payload=payload,
+            )
+        except (KeyError, TypeError, ValueError):
+            return None
+        if (
+            rebuilt_prompt_hash != prompt_hash
+            or request.get("prompt_hash") != rebuilt_prompt_hash
+            or request.get("prompt") != rebuilt_prompt
+            or request.get("output_schema") != output_schema
+            or request.get("output_schema_hash") != rebuilt_schema_hash
+            or request.get("schema_name")
+            != f"e2r_v5_{pass_name.lower()}"
+        ):
+            return None
+        return dict(safe_payload)
+
     def response_cache_audit(self) -> Mapping[str, Any]:
         return {
             **super().response_cache_audit(),
@@ -997,6 +1227,19 @@ class CodexSubagentFallbackResearchProvider(CodexResearcherProvider):
         self.collaboration.configure_response_cache(directory)
         self._call_start_index = len(self.calls)
         self._last_provider = None
+
+    def validated_request_payload(
+        self,
+        *,
+        pass_name: str,
+        prompt_hash: str,
+    ) -> Mapping[str, Any] | None:
+        """Delegate legacy request recovery only to the validated journal."""
+
+        return self.collaboration.validated_request_payload(
+            pass_name=pass_name,
+            prompt_hash=prompt_hash,
+        )
 
     def invalidate_last_response_cache(self, reason: str) -> Mapping[str, Any]:
         if self._last_provider is None:

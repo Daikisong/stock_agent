@@ -1481,6 +1481,223 @@ def project_current_decision_citable_facts(
     }
 
 
+def project_stage_gate_citable_facts(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Expose every Stage-mappable fact and account for every excluded fact.
+
+    Stage primitive mappings can only accept CURRENT/OPEN POSITIVE facts as
+    SUPPORT and CURRENT/OPEN COUNTER facts as COUNTER. Closed lifecycle rows
+    and active NEUTRAL/RESOLUTION rows therefore cannot be selected by the
+    Stage mapper. They are not sampled or discarded: every input fact remains
+    represented in the full fact-lineage profile and in one exact eligibility
+    partition count/hash, while the immutable ledger stays available to
+    deterministic validation.
+
+    Eligible rows reuse the canonical dictionary-coded citable-fact table. Its
+    private row-index-to-fact-id roster is retained for deterministic
+    resolution; callers must exclude that roster from provider payloads.
+    """
+
+    payloads = tuple(
+        sorted(
+            (_record_dict(row) for row in rows),
+            key=lambda row: (
+                str(row.get("fact_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    eligible_rows = tuple(
+        row
+        for row in payloads
+        if str(row.get("current_lifecycle") or "") in {"CURRENT", "OPEN"}
+        and str(row.get("direction") or "") in {"POSITIVE", "COUNTER"}
+    )
+    closed_rows = tuple(
+        row
+        for row in payloads
+        if str(row.get("current_lifecycle") or "")
+        in {"RESOLVED", "SUPERSEDED"}
+    )
+    active_non_mappable_rows = tuple(
+        row
+        for row in payloads
+        if str(row.get("current_lifecycle") or "") in {"CURRENT", "OPEN"}
+        and str(row.get("direction") or "") in {"NEUTRAL", "RESOLUTION"}
+    )
+    accounted_ids = {
+        id(row)
+        for row in (
+            *eligible_rows,
+            *closed_rows,
+            *active_non_mappable_rows,
+        )
+    }
+    if len(accounted_ids) != len(payloads):
+        raise ValueError(
+            "Stage gate fact projection received unknown lifecycle/direction"
+        )
+
+    projection = dict(project_current_decision_citable_facts(eligible_rows))
+    projection.update(
+        {
+            "schema_version": (
+                "e2r_v5_stage_gate_citable_fact_projection_v1"
+            ),
+            "input_fact_count": len(payloads),
+            "fact_count": len(eligible_rows),
+            "closed_fact_count": len(closed_rows),
+            "active_non_mappable_fact_count": len(
+                active_non_mappable_rows
+            ),
+            "input_fact_roster_hash": _stable_hash(payloads),
+            "current_fact_roster_hash": _stable_hash(eligible_rows),
+            "closed_fact_roster_hash": _stable_hash(closed_rows),
+            "active_non_mappable_fact_roster_hash": _stable_hash(
+                active_non_mappable_rows
+            ),
+            "closed_fact_history": _project_opaque_fact_partition(
+                closed_rows,
+                partition_name="closed_fact_history",
+                exclusion_reason="CLOSED_LIFECYCLE_CANNOT_MAP_CURRENT_STAGE",
+            ),
+            "active_non_mappable_fact_history": (
+                _project_opaque_fact_partition(
+                    active_non_mappable_rows,
+                    partition_name="active_non_mappable_fact_history",
+                    exclusion_reason=(
+                        "NEUTRAL_OR_RESOLUTION_CANNOT_MAP_SUPPORT_OR_COUNTER"
+                    ),
+                )
+            ),
+            "all_fact_lineage_profile": (
+                project_fact_extraction_evidence_context(payloads)
+            ),
+            "every_input_fact_accounted": (
+                len(eligible_rows)
+                + len(closed_rows)
+                + len(active_non_mappable_rows)
+                == len(payloads)
+            ),
+            "every_eligible_fact_individually_citable": projection[
+                "every_current_fact_individually_citable"
+            ],
+            "every_ineligible_fact_accounted_by_count_and_hash": True,
+            "stage_gate_eligibility_is_semantic_not_top_n": True,
+            "closed_lifecycle_rows_cannot_drive_current_score": True,
+            "active_neutral_or_resolution_rows_cannot_map_stage": True,
+            "full_fact_records_persisted_outside_prompt": True,
+            "fixed_top_n_used": False,
+            "prompt_projection_is_research_cap": False,
+            "score_authority": False,
+        }
+    )
+    return projection
+
+
+def project_claim_fact_link_profile(
+    rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Count/hash-account every immutable claim-to-fact lineage edge."""
+
+    payloads = tuple(dict(row) for row in rows)
+    ordered = tuple(
+        sorted(
+            payloads,
+            key=lambda row: (
+                str(row.get("claim_id") or ""),
+                str(row.get("fact_id") or ""),
+                str(row.get("link_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    return {
+        "schema_version": "e2r_v5_claim_fact_link_profile_v1",
+        "link_count": len(ordered),
+        "link_roster_hash": _stable_hash(ordered),
+        "claim_id_roster": _project_text_roster(
+            row.get("claim_id") for row in ordered
+        ),
+        "fact_id_roster": _project_text_roster(
+            row.get("fact_id") for row in ordered
+        ),
+        "source_id_roster": _project_text_roster(
+            source_id
+            for row in ordered
+            for source_id in row.get("source_ids") or ()
+        ),
+        "link_role_roster": _project_text_roster(
+            row.get("link_role") for row in ordered
+        ),
+        "every_link_accounted_by_count_and_hash": True,
+        "full_link_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
+def _project_opaque_fact_partition(
+    rows: Sequence[Mapping[str, Any]],
+    *,
+    partition_name: str,
+    exclusion_reason: str,
+) -> Mapping[str, Any]:
+    """Preserve an ineligible Stage partition without replaying its prose."""
+
+    ordered = tuple(
+        sorted(
+            (dict(row) for row in rows),
+            key=lambda row: (
+                str(row.get("fact_id") or ""),
+                _stable_hash(row),
+            ),
+        )
+    )
+    semantic_rows = tuple(
+        {
+            field: row.get(field)
+            for field in _FACT_OBSERVATION_FIELDS
+            if field in row
+        }
+        for row in ordered
+    )
+    return {
+        "schema_version": "e2r_v5_opaque_fact_partition_v1",
+        "partition_name": partition_name,
+        "exclusion_reason": exclusion_reason,
+        "fact_count": len(ordered),
+        "fact_roster_hash": _stable_hash(ordered),
+        "fact_id_roster": _project_text_roster(
+            row.get("fact_id") for row in ordered
+        ),
+        "claim_id_roster": _project_text_roster(
+            claim_id
+            for row in ordered
+            for claim_id in row.get("claim_ids") or ()
+        ),
+        "source_id_roster": _project_text_roster(
+            source_id
+            for row in ordered
+            for source_id in row.get("source_ids") or ()
+        ),
+        "quote_id_roster": _project_text_roster(
+            quote_id
+            for row in ordered
+            for quote_id in row.get("quote_ids") or ()
+        ),
+        "semantic_observation_count": len(semantic_rows),
+        "semantic_observation_roster_hash": _stable_hash(semantic_rows),
+        "every_fact_accounted_by_count_and_hash": True,
+        "full_fact_records_persisted_outside_prompt": True,
+        "fixed_top_n_used": False,
+        "prompt_projection_is_research_cap": False,
+        "score_authority": False,
+    }
+
+
 def project_candidate_ranking_evidence_context(
     rows: Sequence[Mapping[str, Any]],
 ) -> Mapping[str, Any]:
@@ -2899,6 +3116,7 @@ def _stable_hash(value: Any) -> str:
 __all__ = [
     "citable_fact_id_by_row_index",
     "project_candidate_ranking_evidence_context",
+    "project_claim_fact_link_profile",
     "project_counter_route_proof",
     "project_citable_evidence_facts",
     "project_current_decision_citable_facts",
@@ -2918,6 +3136,7 @@ __all__ = [
     "project_research_source_document_profile",
     "project_source_document_profile",
     "project_source_document_table",
+    "project_stage_gate_citable_facts",
     "project_structured_records",
     "project_structured_result",
     "project_supervisor_evidence_facts",

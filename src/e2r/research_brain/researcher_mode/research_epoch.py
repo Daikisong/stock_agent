@@ -35,7 +35,7 @@ from .saturation import (
     SemanticSaturationCertifier,
     SemanticSaturationReviewer,
 )
-from .schemas import EvidenceFact
+from .schemas import CANONICAL_COMPONENT_ORDER, EvidenceFact
 from .source_graph_explorer import validated_quarantined_document_ids
 
 
@@ -304,6 +304,25 @@ class ResearchEpochRunner:
             prior.target_id != target_id or prior.as_of_date != as_of_date
         ):
             raise ValueError("research epoch resume target/as_of mismatch")
+        certified_reuse = _certified_saturation_reuse_run(
+            prior=prior,
+            supervisor=self.supervisor,
+            saturation_reviewers=self.saturation_reviewers,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            synthesis_result=synthesis_result,
+            structured_result=structured_result,
+            evidence_facts=evidence_facts,
+            source_graph_checkpoint=source_graph_checkpoint,
+            open_objectives=open_objectives,
+            prior_failures=prior_failures,
+            counter_and_supersession_route_proof=(
+                counter_and_supersession_route_proof
+            ),
+            score_gap_context=score_gap_context,
+        )
+        if certified_reuse is not None:
+            return certified_reuse
         replay = _saturation_transport_replay_context(
             prior=prior,
             saturation_reviewers=self.saturation_reviewers,
@@ -443,6 +462,410 @@ _COLLABORATION_RESPONSE_PENDING_PATTERN = re.compile(
 )
 
 
+def _certified_saturation_reuse_run(
+    *,
+    prior: ResearchEpochCheckpoint | None,
+    supervisor: ResearchSupervisor,
+    saturation_reviewers: Sequence[SemanticSaturationReviewer],
+    component_results: Sequence[ComponentResearchResult],
+    red_team_result: RedTeamResearchResult | None,
+    synthesis_result: SynthesisResult | None,
+    structured_result: Any | None,
+    evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+    source_graph_checkpoint: Mapping[str, Any],
+    open_objectives: Sequence[Mapping[str, Any]],
+    prior_failures: Sequence[Mapping[str, Any]],
+    counter_and_supersession_route_proof: Sequence[Mapping[str, Any]],
+    score_gap_context: Mapping[str, Any] | None,
+) -> ResearchEpochRun | None:
+    """Reuse one unchanged v3 certificate without reopening provider review.
+
+    A downstream retry, such as StageCourt transport recovery, does not create
+    new research semantics.  The persisted certificate may therefore be
+    replayed only after rebuilding its pre-review checkpoint and proving that
+    every current provider prompt still matches the three immutable prompt
+    commitments.  Status text alone is never sufficient.
+    """
+
+    if (
+        prior is None
+        or prior.schema_version != "e2r_research_epoch_checkpoint_v3"
+        or prior.status != "SEMANTIC_SATURATION_CERTIFIED"
+        or not prior.semantic_saturation_certified
+        or len(saturation_reviewers) != len(SATURATION_REVIEW_ROLES)
+        or set(row.reviewer_role for row in saturation_reviewers)
+        != set(SATURATION_REVIEW_ROLES)
+        or len(prior.saturation_reviews) != len(SATURATION_REVIEW_ROLES)
+        or _material_score_disagreement_component_ids(score_gap_context)
+    ):
+        return None
+    if str(source_graph_checkpoint.get("checkpoint_id") or "") != str(
+        prior.source_graph_checkpoint_id or ""
+    ):
+        return None
+
+    try:
+        supervisor_review = _coerce_supervisor_review(prior.supervisor_review)
+    except (KeyError, TypeError, ValueError):
+        return None
+    current_supervisor_provider = str(
+        getattr(
+            supervisor.provider,
+            "provider_name",
+            type(supervisor.provider).__name__,
+        )
+    )
+    if (
+        supervisor_review.epoch != prior.epoch
+        or supervisor_review.reviewer_role != supervisor.reviewer_role
+        or supervisor_review.provider_name != current_supervisor_provider
+        or not str(supervisor_review.prompt_hash or "").strip()
+        or not supervisor_review.ready_for_independent_saturation_review
+        or synthesis_result is None
+        or synthesis_result.status != "COMPLETE"
+        or synthesis_result.memo is None
+        or supervisor_review.synthesis_memo_id
+        != synthesis_result.memo.memo_id
+        or supervisor_review.synthesis_memo_hash
+        != _stable_hash(synthesis_result.memo.to_dict())
+    ):
+        return None
+    prior_review_prompt_projection = (
+        supervisor_review.prior_review_prompt_projection
+    )
+    if (
+        supervisor_review.schema_version
+        == "e2r_research_supervisor_review_v2"
+        and prior.epoch > 1
+    ):
+        recover_payload = getattr(
+            supervisor.provider,
+            "validated_request_payload",
+            None,
+        )
+        if not callable(recover_payload):
+            return None
+        try:
+            recovered_payload = recover_payload(
+                pass_name="RESEARCH_SUPERVISOR_REVIEW",
+                prompt_hash=str(supervisor_review.prompt_hash),
+            )
+        except (KeyError, TypeError, ValueError, RuntimeError, OSError):
+            return None
+        if not isinstance(recovered_payload, Mapping):
+            return None
+        recovered_projection = recovered_payload.get(
+            "prior_supervisor_review"
+        )
+        if recovered_projection is not None and not isinstance(
+            recovered_projection,
+            Mapping,
+        ):
+            return None
+        prior_review_prompt_projection = recovered_projection
+    try:
+        current_supervisor_prompt_hash = supervisor.preview_prompt_hash(
+            epoch=prior.epoch,
+            target_id=prior.target_id,
+            as_of_date=prior.as_of_date,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            synthesis_result=synthesis_result,
+            structured_result=structured_result,
+            evidence_facts=evidence_facts,
+            source_graph_checkpoint=source_graph_checkpoint,
+            open_objectives=open_objectives,
+            prior_failures=prior_failures,
+            counter_and_supersession_route_proof=(
+                counter_and_supersession_route_proof
+            ),
+            prior_review=None,
+            prior_review_prompt_projection=(
+                prior_review_prompt_projection
+            ),
+            score_gap_context=score_gap_context,
+        )
+    except (KeyError, TypeError, ValueError, RuntimeError, OSError):
+        return None
+    if current_supervisor_prompt_hash != supervisor_review.prompt_hash:
+        return None
+
+    current_component_hashes = _complete_component_memo_hashes(
+        component_results
+    )
+    if (
+        current_component_hashes is None
+        or dict(prior.component_memo_hashes) != current_component_hashes
+        or red_team_result is None
+        or red_team_result.status != "COMPLETE"
+        or red_team_result.memo is None
+        or not red_team_result.memo.review_complete
+        or structured_result is None
+        or getattr(structured_result, "status", None) != "COMPLETE"
+        or not getattr(structured_result, "records", None)
+        or any(
+            (getattr(structured_result, "missing_roles_by_component", {}) or {}).values()
+        )
+    ):
+        return None
+    synthesis_memo = synthesis_result.memo
+    current_memo_ids = {
+        row.memo.memo_id
+        for row in component_results
+        if row.memo is not None
+    }
+    if (
+        set(synthesis_memo.component_memo_ids) != current_memo_ids
+        or synthesis_memo.red_team_memo_id != red_team_result.memo.memo_id
+        or synthesis_memo.red_team_memo_hash
+        != _stable_hash(red_team_result.memo.to_dict())
+    ):
+        return None
+
+    fact_ids = tuple(
+        str(_fact_payload(row).get("fact_id") or "") for row in evidence_facts
+    )
+    if (
+        any(not value for value in fact_ids)
+        or len(fact_ids) != len(set(fact_ids))
+        or set(fact_ids) != set(prior.current_fact_ids)
+    ):
+        return None
+
+    reviewer_by_role = {
+        row.reviewer_role: row for row in saturation_reviewers
+    }
+    persisted_results: list[SaturationReviewerResult] = []
+    reviews: list[SaturationReview] = []
+    result_by_role: dict[str, SaturationReviewerResult] = {}
+    try:
+        for raw_result in prior.saturation_reviews:
+            result = _coerce_saturation_reviewer_result(raw_result)
+            role = result.reviewer_role
+            if role not in reviewer_by_role or role in result_by_role:
+                return None
+            reviewer = reviewer_by_role[role]
+            provider_name = str(
+                getattr(
+                    reviewer.provider,
+                    "provider_name",
+                    type(reviewer.provider).__name__,
+                )
+            )
+            review = result.review
+            if (
+                result.status != "COMPLETE"
+                or result.pending_reasons
+                or review is None
+                or result.provider_name != provider_name
+                or review.provider_name != provider_name
+                or not result.prompt_hash
+                or result.prompt_hash != review.prompt_hash
+                or not review.provider_backed
+                or not review.approve
+                or review.checkpoint_id != prior.checkpoint_id
+                or review.epoch != prior.epoch
+                or review.gold_evaluation_status
+                != GOLD_EVALUATION_NOT_RUN_POST_RUN_ONLY
+                or review.gold_critical_fact_miss_count is not None
+                or review.fixed_round_completion_used
+                or review.zero_search_result_treated_as_saturation
+                or review.transport_budget_treated_as_saturation
+                or review.review_id != _expected_saturation_review_id(review)
+            ):
+                return None
+            result_by_role[role] = result
+            persisted_results.append(result)
+            reviews.append(review)
+        if len({row.prompt_hash for row in reviews}) != len(
+            SATURATION_REVIEW_ROLES
+        ):
+            return None
+        review_by_role = {
+            row.reviewer_role: row for row in reviews
+        }
+        certificate = _coerce_saturation_certificate(
+            prior.saturation_certificate
+        )
+        expected_certificate = SemanticSaturationCertifier().certify(
+            reviews,
+            expected_checkpoint_id=prior.checkpoint_id,
+            require_provider_reviews=True,
+        )
+        if (
+            not certificate.semantic_saturation_certified
+            or certificate.status != "CERTIFIED"
+            or certificate.to_dict() != expected_certificate.to_dict()
+        ):
+            return None
+    except (KeyError, TypeError, ValueError):
+        return None
+
+    preliminary = _preliminary_saturation_state(
+        prior=prior,
+        supervisor_review=supervisor_review,
+    )
+    if preliminary is None:
+        return None
+    try:
+        for role, reviewer in reviewer_by_role.items():
+            if reviewer.preview_prompt_hash(
+                checkpoint=preliminary,
+                supervisor_review=supervisor_review,
+                component_results=component_results,
+                red_team_result=red_team_result,
+                structured_result=structured_result,
+                evidence_facts=evidence_facts,
+                source_graph_checkpoint=source_graph_checkpoint,
+            ) != result_by_role[role].prompt_hash:
+                return None
+            if reviewer.validate_persisted_response_identity(
+                checkpoint=preliminary,
+                supervisor_review=supervisor_review,
+                component_results=component_results,
+                red_team_result=red_team_result,
+                structured_result=structured_result,
+                evidence_facts=evidence_facts,
+                source_graph_checkpoint=source_graph_checkpoint,
+                review=review_by_role[role],
+                persisted_identity=(
+                    result_by_role[role].provider_response_identity
+                ),
+            ) is None:
+                return None
+    except (
+        KeyError,
+        TypeError,
+        ValueError,
+        RuntimeError,
+        OSError,
+    ):
+        return None
+
+    return ResearchEpochRun(
+        checkpoint=prior,
+        supervisor_review=supervisor_review,
+        saturation_reviewer_results=tuple(persisted_results),
+        saturation_certificate=certificate,
+    )
+
+
+def _complete_component_memo_hashes(
+    component_results: Sequence[ComponentResearchResult],
+) -> dict[str, str] | None:
+    if (
+        len(component_results) != len(CANONICAL_COMPONENT_ORDER)
+        or set(row.component_id for row in component_results)
+        != set(CANONICAL_COMPONENT_ORDER)
+        or any(
+            row.status != "COMPLETE"
+            or row.memo is None
+            or not row.memo.research_complete
+            for row in component_results
+        )
+    ):
+        return None
+    return {
+        row.component_id: _stable_hash(row.memo.to_dict())
+        for row in component_results
+        if row.memo is not None
+    }
+
+
+def _coerce_saturation_reviewer_result(
+    value: Mapping[str, Any],
+) -> SaturationReviewerResult:
+    payload = dict(value)
+    raw_review = payload.get("review")
+    review = None
+    if raw_review is not None:
+        review_payload = dict(raw_review)
+        review_payload["unresolved_material_questions"] = tuple(
+            review_payload.get("unresolved_material_questions") or ()
+        )
+        review = SaturationReview(**review_payload)
+    payload["review"] = review
+    payload["pending_reasons"] = tuple(payload.get("pending_reasons") or ())
+    if payload.get("provider_response_identity") is not None:
+        payload["provider_response_identity"] = dict(
+            payload["provider_response_identity"]
+        )
+    return SaturationReviewerResult(**payload)
+
+
+def _coerce_saturation_certificate(
+    value: Mapping[str, Any] | None,
+) -> SemanticSaturationCertificate:
+    if not isinstance(value, Mapping):
+        raise TypeError("certified saturation checkpoint requires a certificate")
+    payload = dict(value)
+    for key in (
+        "review_ids",
+        "pending_reasons",
+        "reviewer_roles",
+        "provider_prompt_hashes",
+    ):
+        payload[key] = tuple(payload.get(key) or ())
+    return SemanticSaturationCertificate(**payload)
+
+
+def _expected_saturation_review_id(review: SaturationReview) -> str:
+    response = {
+        "approve": review.approve,
+        "seven_component_memos_complete": (
+            review.seven_component_memos_complete
+        ),
+        "material_positive_routes_reviewed": (
+            review.material_positive_routes_reviewed
+        ),
+        "counter_and_supersession_routes_checked": (
+            review.counter_and_supersession_routes_checked
+        ),
+        "structured_data_complete": review.structured_data_complete,
+        "new_source_family_directions_reviewed": (
+            review.new_source_family_directions_reviewed
+        ),
+        "reasonable_positive_routes_remaining": (
+            not review.no_reasonable_positive_route_remaining
+        ),
+        "unresolved_material_questions": list(
+            review.unresolved_material_questions
+        ),
+        "rationale": review.rationale,
+    }
+    return stable_intelligence_id(
+        "SATREVIEW",
+        {
+            "reviewer_role": review.reviewer_role,
+            "checkpoint_id": review.checkpoint_id,
+            "epoch": review.epoch,
+            "response": response,
+            "prompt_hash": review.prompt_hash,
+        },
+    )
+
+
+def _preliminary_saturation_state(
+    *,
+    prior: ResearchEpochCheckpoint,
+    supervisor_review: ResearchSupervisorReview,
+) -> dict[str, Any] | None:
+    state = dict(prior.to_dict())
+    state["saturation_reviews"] = []
+    state["saturation_certificate"] = None
+    state["semantic_saturation_certified"] = False
+    state["status"] = "READY_FOR_INDEPENDENT_SATURATION_REVIEW"
+    state["unresolved_material_questions"] = list(
+        supervisor_review.unresolved_material_questions
+    )
+    state["next_actions"] = list(supervisor_review.next_actions)
+    state["supervisor_review"] = supervisor_review.to_dict()
+    state["checkpoint_hash"] = _research_checkpoint_hash(state)
+    if _research_checkpoint_id(state) != prior.checkpoint_id:
+        return None
+    return state
+
+
 def _saturation_transport_replay_context(
     *,
     prior: ResearchEpochCheckpoint | None,
@@ -576,18 +999,11 @@ def _saturation_transport_replay_context(
     ):
         return None
 
-    state = dict(prior.to_dict())
-    state["saturation_reviews"] = []
-    state["saturation_certificate"] = None
-    state["semantic_saturation_certified"] = False
-    state["status"] = "READY_FOR_INDEPENDENT_SATURATION_REVIEW"
-    state["unresolved_material_questions"] = list(
-        supervisor_review.unresolved_material_questions
+    state = _preliminary_saturation_state(
+        prior=prior,
+        supervisor_review=supervisor_review,
     )
-    state["next_actions"] = list(supervisor_review.next_actions)
-    state["supervisor_review"] = supervisor_review.to_dict()
-    state["checkpoint_hash"] = _research_checkpoint_hash(state)
-    if _research_checkpoint_id(state) != prior.checkpoint_id:
+    if state is None:
         return None
 
     try:
@@ -630,10 +1046,18 @@ def _coerce_supervisor_review(
         "next_actions",
     ):
         payload[key] = tuple(payload.get(key) or ())
-    payload["component_findings"] = tuple(
-        SupervisorComponentFinding(**dict(row))
-        for row in payload.get("component_findings") or ()
-    )
+    if payload.get("prior_review_prompt_projection") is not None:
+        payload["prior_review_prompt_projection"] = dict(
+            payload["prior_review_prompt_projection"]
+        )
+    component_findings = []
+    for row in payload.get("component_findings") or ():
+        values = dict(row)
+        values["missing_fact_needs"] = tuple(
+            values.get("missing_fact_needs") or ()
+        )
+        component_findings.append(SupervisorComponentFinding(**values))
+    payload["component_findings"] = tuple(component_findings)
     payload["missing_material_facts"] = tuple(
         SupervisorFactGap(**dict(row))
         for row in payload.get("missing_material_facts") or ()
@@ -824,6 +1248,7 @@ def _research_epoch_state(
 
 def _checkpoint_from_mapping(payload: Mapping[str, Any]) -> ResearchEpochCheckpoint:
     values = dict(payload)
+    _validate_v3_checkpoint_schema(values)
     if values.get("schema_version") in {
         "e2r_research_epoch_checkpoint_v1",
         "e2r_research_epoch_checkpoint_v2",
@@ -881,9 +1306,171 @@ def _checkpoint_from_mapping(payload: Mapping[str, Any]) -> ResearchEpochCheckpo
 def _coerce_checkpoint(
     value: ResearchEpochCheckpoint | Mapping[str, Any] | None,
 ) -> ResearchEpochCheckpoint | None:
-    if value is None or isinstance(value, ResearchEpochCheckpoint):
+    if value is None:
         return value
+    if isinstance(value, ResearchEpochCheckpoint):
+        payload = value.to_dict()
+        reconstructed = _checkpoint_from_mapping(payload)
+        if reconstructed.to_dict() != payload:
+            raise ValueError(
+                "research epoch checkpoint object round-trip mismatch"
+            )
+        return reconstructed
     return _checkpoint_from_mapping(value)
+
+
+def _validate_v3_checkpoint_schema(payload: Mapping[str, Any]) -> None:
+    if payload.get("schema_version") != "e2r_research_epoch_checkpoint_v3":
+        return
+    _require_exact_mapping_keys(
+        payload,
+        set(ResearchEpochCheckpoint.__dataclass_fields__),
+        "research epoch checkpoint v3",
+    )
+    supervisor = payload.get("supervisor_review")
+    if not isinstance(supervisor, Mapping):
+        raise ValueError("research supervisor review must be an object")
+    supervisor_schema_version = supervisor.get("schema_version")
+    supervisor_keys = set(ResearchSupervisorReview.__dataclass_fields__)
+    if (
+        supervisor_schema_version
+        == "e2r_research_supervisor_review_v2"
+    ):
+        expected_supervisor_keys = (
+            supervisor_keys - {"prior_review_prompt_projection"}
+        )
+    elif (
+        supervisor_schema_version
+        == "e2r_research_supervisor_review_v3"
+    ):
+        expected_supervisor_keys = supervisor_keys
+    else:
+        raise ValueError("unknown nested research supervisor review schema")
+    _require_exact_mapping_keys(
+        supervisor,
+        expected_supervisor_keys,
+        f"research supervisor review {supervisor_schema_version}",
+    )
+    _validate_supervisor_nested_schema(supervisor)
+    try:
+        _coerce_supervisor_review(supervisor)
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError(
+            "invalid nested research supervisor review"
+        ) from exc
+
+    results = payload.get("saturation_reviews")
+    if not isinstance(results, (list, tuple)):
+        raise ValueError("checkpoint saturation reviews must be an array")
+    result_keys = set(SaturationReviewerResult.__dataclass_fields__)
+    legacy_result_keys = result_keys - {"provider_response_identity"}
+    for result in results:
+        if not isinstance(result, Mapping) or (
+            set(result) != result_keys
+            and set(result) != legacy_result_keys
+        ):
+            raise ValueError(
+                "checkpoint saturation reviewer result key mismatch"
+            )
+        identity = result.get("provider_response_identity")
+        if identity is not None:
+            _require_exact_mapping_keys(
+                identity,
+                {
+                    "schema_version",
+                    "provider_route",
+                    "provider_name",
+                    "pass_name",
+                    "prompt_hash",
+                    "response_hash",
+                    "request_locator_id",
+                    "response_locator_id",
+                    "provenance_hash",
+                },
+                "validated provider response identity",
+            )
+            if (
+                identity.get("schema_version")
+                != "e2r_v5_validated_provider_response_identity_v1"
+            ):
+                raise ValueError(
+                    "unknown validated provider response identity schema"
+                )
+        review = result.get("review")
+        if review is not None:
+            _require_exact_mapping_keys(
+                review,
+                set(SaturationReview.__dataclass_fields__),
+                "semantic saturation review v3",
+            )
+            if (
+                review.get("schema_version")
+                != "e2r_semantic_saturation_review_v3"
+            ):
+                raise ValueError(
+                    "unknown nested semantic saturation review schema"
+                )
+
+    certificate = payload.get("saturation_certificate")
+    if certificate is not None:
+        _require_exact_mapping_keys(
+            certificate,
+            set(SemanticSaturationCertificate.__dataclass_fields__),
+            "semantic saturation certificate v3",
+        )
+        if (
+            certificate.get("schema_version")
+            != "e2r_semantic_saturation_certificate_v3"
+        ):
+            raise ValueError(
+                "unknown nested semantic saturation certificate schema"
+            )
+
+
+def _validate_supervisor_nested_schema(
+    supervisor: Mapping[str, Any],
+) -> None:
+    nested = (
+        (
+            "component_findings",
+            set(SupervisorComponentFinding.__dataclass_fields__),
+        ),
+        (
+            "missing_material_facts",
+            set(SupervisorFactGap.__dataclass_fields__),
+        ),
+        (
+            "failure_assessments",
+            set(SupervisorFailureAssessment.__dataclass_fields__),
+        ),
+        (
+            "new_source_family_directions",
+            set(SupervisorSourceDirection.__dataclass_fields__),
+        ),
+        (
+            "query_direction_briefs",
+            set(SupervisorQueryDirection.__dataclass_fields__),
+        ),
+    )
+    for key, expected_keys in nested:
+        rows = supervisor.get(key)
+        if not isinstance(rows, (list, tuple)):
+            raise ValueError(f"nested supervisor {key} must be an array")
+        for row in rows:
+            _require_exact_mapping_keys(
+                row,
+                expected_keys,
+                f"nested supervisor {key} row",
+            )
+
+
+def _require_exact_mapping_keys(
+    value: Any,
+    expected_keys: set[str],
+    label: str,
+) -> None:
+    if not isinstance(value, Mapping) or set(value) != expected_keys:
+        raise ValueError(f"{label} key roster mismatch")
 
 
 def _research_checkpoint_id(state: Mapping[str, Any]) -> str:

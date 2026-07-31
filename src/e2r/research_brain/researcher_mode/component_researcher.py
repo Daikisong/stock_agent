@@ -767,6 +767,7 @@ STAGE_GATE_FACT_MAPPING_SCHEMA: Mapping[str, Any] = {
     "additionalProperties": False,
     "required": [
         "mappings",
+        "fact_dispositions",
         "unresolved_material_questions",
         "mapping_complete",
     ],
@@ -779,7 +780,7 @@ STAGE_GATE_FACT_MAPPING_SCHEMA: Mapping[str, Any] = {
                 "required": [
                     "primitive_id",
                     "direction",
-                    "claim_ids",
+                    "fact_row_indices",
                     "semantic_rationale",
                 ],
                 "properties": {
@@ -788,8 +789,35 @@ STAGE_GATE_FACT_MAPPING_SCHEMA: Mapping[str, Any] = {
                         "type": "string",
                         "enum": ["SUPPORT", "COUNTER"],
                     },
-                    "claim_ids": {**_STRING_ARRAY, "minItems": 1},
+                    "fact_row_indices": {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {"type": "integer", "minimum": 0},
+                    },
                     "semantic_rationale": {"type": "string", "minLength": 1},
+                },
+            },
+        },
+        "fact_dispositions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "additionalProperties": False,
+                "required": [
+                    "fact_row_index",
+                    "status",
+                    "rationale",
+                ],
+                "properties": {
+                    "fact_row_index": {
+                        "type": "integer",
+                        "minimum": 0,
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": ["MAPPED", "NO_MATCH", "UNRESOLVED"],
+                    },
+                    "rationale": {"type": "string", "minLength": 1},
                 },
             },
         },
@@ -1062,6 +1090,28 @@ def _provider_output_schema(
                     "maxItems": 0,
                 }
             )
+        return schema
+    if pass_name == "STAGE_GATE_FACT_MAPPING":
+        allowed_row_indices = _payload_fact_row_indices(payload)
+        schema = json.loads(json.dumps(base, ensure_ascii=False))
+        if allowed_row_indices:
+            mapping_indices = schema["properties"]["mappings"]["items"][
+                "properties"
+            ]["fact_row_indices"]
+            mapping_indices["items"] = {
+                "type": "integer",
+                "enum": allowed_row_indices,
+            }
+            dispositions = schema["properties"]["fact_dispositions"]
+            dispositions["minItems"] = len(allowed_row_indices)
+            dispositions["maxItems"] = len(allowed_row_indices)
+            dispositions["items"]["properties"]["fact_row_index"] = {
+                "type": "integer",
+                "enum": allowed_row_indices,
+            }
+        else:
+            schema["properties"]["mappings"]["maxItems"] = 0
+            schema["properties"]["fact_dispositions"]["maxItems"] = 0
         return schema
     if pass_name == "RED_TEAM_RESEARCH":
         allowed_row_indices: list[int] = []
@@ -1493,6 +1543,10 @@ _PROVIDER_USAGE_LIMIT_RESET_RE = re.compile(
     r"\d{1,2}:\d{2}\s+(?:AM|PM))",
     re.IGNORECASE,
 )
+_COLLABORATION_RESPONSE_PENDING_RE = re.compile(
+    r"^COLLABORATION_RESPONSE_PENDING:"
+    r"(COLLABREQ-[0-9a-f]{64})$"
+)
 
 
 @dataclass
@@ -1531,6 +1585,12 @@ class CodexResearcherProvider:
         return 250_000
 
     @property
+    def prompt_transport_max_chars(self) -> int:
+        """Strict upper bound used while materializing Stage fact chunks."""
+
+        return _CODEX_PROMPT_TRANSPORT_MAX_CHARS
+
+    @property
     def candidate_ranking_page_candidate_limit(self) -> int:
         """Match every provider ranking page to the shared output schema."""
 
@@ -1566,10 +1626,18 @@ class CodexResearcherProvider:
                     payload=payload,
                 ),
             )
-        chunks = _loss_accounted_fact_chunk_payloads(
-            payload,
-            pass_name=pass_name,
-            target_projection_chars=self.memo_fact_prompt_chunk_chars,
+        chunks = (
+            _materialize_stage_gate_fact_chunks(
+                payload,
+                target_projection_chars=self.memo_fact_prompt_chunk_chars,
+                max_prompt_chars=self.prompt_transport_max_chars,
+            )
+            if pass_name == "STAGE_GATE_FACT_MAPPING"
+            else _loss_accounted_fact_chunk_payloads(
+                payload,
+                pass_name=pass_name,
+                target_projection_chars=self.memo_fact_prompt_chunk_chars,
+            )
         )
         if len(chunks) <= 1:
             return self._normalize_loss_accounted_response(
@@ -1581,6 +1649,7 @@ class CodexResearcherProvider:
             )
 
         chunk_responses = []
+        collaboration_pending_request_ids: list[str] = []
         for chunk in chunks:
             local_to_global = tuple(
                 int(value)
@@ -1608,16 +1677,47 @@ class CodexResearcherProvider:
                 if pass_name == "COMPONENT_RESEARCH"
                 else {}
             )
+            expected_stage_directions = (
+                _stage_gate_chunk_fact_directions(chunk)
+                if pass_name == "STAGE_GATE_FACT_MAPPING"
+                else {}
+            )
+            allowed_stage_primitives = {
+                str(value)
+                for value in (
+                    (chunk.get("evidence_contract") or {}).get(
+                        "allowed_primitive_ids"
+                    )
+                    or ()
+                )
+                if str(value).strip()
+            }
             attempt_payload = chunk
             validation_retry_used = False
+            chunk_collaboration_pending = False
             while True:
-                response = self._normalize_loss_accounted_response(
-                    pass_name=pass_name,
-                    response=self._complete_single_payload(
+                try:
+                    response = self._normalize_loss_accounted_response(
                         pass_name=pass_name,
-                        payload=attempt_payload,
-                    ),
-                )
+                        response=self._complete_single_payload(
+                            pass_name=pass_name,
+                            payload=attempt_payload,
+                        ),
+                    )
+                except StructuredProviderUnavailable as exc:
+                    pending_request_id = (
+                        _collaboration_pending_request_id(exc)
+                    )
+                    if (
+                        pass_name == "STAGE_GATE_FACT_MAPPING"
+                        and pending_request_id is not None
+                    ):
+                        collaboration_pending_request_ids.append(
+                            pending_request_id
+                        )
+                        chunk_collaboration_pending = True
+                        break
+                    raise
                 try:
                     _validate_loss_accounted_chunk_response(
                         pass_name=pass_name,
@@ -1626,6 +1726,12 @@ class CodexResearcherProvider:
                         prior_fact_row_indices=prior_indices,
                         expected_component_groundings=(
                             expected_component_groundings
+                        ),
+                        expected_stage_directions=(
+                            expected_stage_directions
+                        ),
+                        allowed_stage_primitives=(
+                            allowed_stage_primitives
                         ),
                     )
                     break
@@ -1670,24 +1776,40 @@ class CodexResearcherProvider:
                                     ]
                                 ),
                                 "instruction": (
-                                    "Write the complete chunk response again from "
-                                    "the supplied source table, not from the prior "
-                                    "rejected answer, which is intentionally omitted "
-                                    "to prevent copying its bad row binding. "
-                                    "Cite only allowed_fact_row_indices. For a "
-                                    "component chunk, return one exact grounding "
-                                    "per selected row by copying the immutable "
-                                    "fields for that row from the complete "
-                                    "expected_selected_fact_groundings table, "
-                                    "and dispose every required prior row exactly "
-                                    "once. If a selected row does not support the "
-                                    "component, omit it instead of attaching another "
-                                    "row's semantics. Do not invent evidence, score, "
-                                    "or Stage."
+                                    (
+                                        "Write the complete Stage chunk response "
+                                        "again. Use only allowed_fact_row_indices, "
+                                        "match SUPPORT to POSITIVE and COUNTER to "
+                                        "COUNTER, and return every allowed row "
+                                        "exactly once in fact_dispositions as "
+                                        "MAPPED, NO_MATCH, or UNRESOLVED. Do not "
+                                        "invent evidence, score, or Stage."
+                                    )
+                                    if pass_name
+                                    == "STAGE_GATE_FACT_MAPPING"
+                                    else (
+                                        "Write the complete chunk response again "
+                                        "from the supplied source table, not from "
+                                        "the prior rejected answer, which is "
+                                        "intentionally omitted to prevent copying "
+                                        "its bad row binding. Cite only "
+                                        "allowed_fact_row_indices. For a component "
+                                        "chunk, return one exact grounding per "
+                                        "selected row by copying the immutable "
+                                        "fields for that row from the complete "
+                                        "expected_selected_fact_groundings table, "
+                                        "and dispose every required prior row "
+                                        "exactly once. If a selected row does not "
+                                        "support the component, omit it instead of "
+                                        "attaching another row's semantics. Do not "
+                                        "invent evidence, score, or Stage."
+                                    )
                                 ),
                             },
                         }
                     )
+            if chunk_collaboration_pending:
+                continue
             response = _restore_loss_accounted_chunk_global_indices(
                 pass_name=pass_name,
                 response=response,
@@ -1703,6 +1825,20 @@ class CodexResearcherProvider:
                     ],
                     "response": dict(response),
                 }
+            )
+
+        if collaboration_pending_request_ids:
+            raise StructuredProviderUnavailable(
+                "COLLABORATION_RESPONSE_PENDING:"
+                + ":".join(
+                    dict.fromkeys(collaboration_pending_request_ids)
+                )
+            )
+
+        if pass_name == "STAGE_GATE_FACT_MAPPING":
+            return _merge_stage_gate_chunk_responses(
+                chunks=chunks,
+                chunk_responses=chunk_responses,
             )
 
         synthesis_payload = _loss_accounted_fact_chunk_synthesis_payload(
@@ -2431,6 +2567,19 @@ class OllamaResearcherProvider(CodexResearcherProvider):
             max(100_000, self.semantic_prompt_chunk_chars * 8),
         )
 
+    @property
+    def prompt_transport_max_chars(self) -> int:
+        return min(
+            _CODEX_PROMPT_TRANSPORT_MAX_CHARS,
+            int(
+                getattr(
+                    self.transport,
+                    "prompt_character_limit",
+                    _CODEX_PROMPT_TRANSPORT_MAX_CHARS,
+                )
+            ),
+        )
+
     def _normalize_loss_accounted_response(
         self,
         *,
@@ -2516,6 +2665,7 @@ _LOSS_ACCOUNTED_FACT_CHUNK_PASSES = {
     "BUSINESS_MODEL_RESEARCH",
     "COMPONENT_RESEARCH",
     "RED_TEAM_RESEARCH",
+    "STAGE_GATE_FACT_MAPPING",
 }
 _FACT_CHUNK_SYNTHESIS_ONLY_KEYS = {
     "business_model_validation_retry_context",
@@ -2690,6 +2840,104 @@ def _loss_accounted_fact_chunk_payloads(
     if emitted != row_indices or len(emitted) != len(set(emitted)):
         raise ValueError("loss-accounted fact chunks changed the global row roster")
     return tuple(chunks)
+
+
+def _payload_fact_row_indices(
+    payload: Mapping[str, Any],
+) -> list[int]:
+    """Return the exact citable row roster from full or chunk transport."""
+
+    raw_rows = payload.get("current_evidence_fact_graph")
+    if not isinstance(raw_rows, Sequence) or isinstance(
+        raw_rows, (str, bytes)
+    ):
+        return []
+    result: list[int] = []
+    for row in raw_rows:
+        value = (
+            row.get("fact_row_index")
+            if isinstance(row, Mapping)
+            else row[0]
+            if isinstance(row, Sequence)
+            and not isinstance(row, (str, bytes))
+            and row
+            else None
+        )
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, int)
+            or value < 0
+            or value in result
+        ):
+            raise ValueError("provider payload fact row roster is invalid")
+        result.append(value)
+    return result
+
+
+def _materialize_stage_gate_fact_chunks(
+    payload: Mapping[str, Any],
+    *,
+    target_projection_chars: int,
+    max_prompt_chars: int,
+) -> tuple[Mapping[str, Any], ...]:
+    """Build every exhaustive Stage chunk and verify its actual prompt size.
+
+    The regular fact chunker estimates row transport weight to form useful
+    batches. StageCourt additionally validates the fully rendered prompt before
+    any provider call. If shared contract or lineage context makes a batch too
+    large, the target is reduced and the complete roster is repartitioned. No
+    row is sampled, capped, or removed.
+    """
+
+    if max_prompt_chars < 10_000:
+        raise ValueError("Stage gate prompt budget is too small")
+    target = max(10_000, int(target_projection_chars))
+    prior_partition: tuple[tuple[int, ...], ...] | None = None
+    while True:
+        chunks = _loss_accounted_fact_chunk_payloads(
+            payload,
+            pass_name="STAGE_GATE_FACT_MAPPING",
+            target_projection_chars=target,
+        )
+        prompt_lengths = tuple(
+            len(
+                _single_payload_request_material(
+                    pass_name="STAGE_GATE_FACT_MAPPING",
+                    payload=chunk,
+                )[2]
+            )
+            for chunk in chunks
+        )
+        if all(length < max_prompt_chars for length in prompt_lengths):
+            return chunks
+        partition = tuple(
+            tuple(
+                int(value)
+                for value in (
+                    (
+                        chunk.get("loss_accounted_fact_chunk") or {}
+                    ).get("global_fact_row_index_by_chunk_local_index")
+                    or _payload_fact_row_indices(chunk)
+                )
+            )
+            for chunk in chunks
+        )
+        if any(
+            length >= max_prompt_chars and len(row_indices) <= 1
+            for length, row_indices in zip(prompt_lengths, partition)
+        ):
+            raise StructuredProviderRejected(
+                "stage_gate_single_fact_prompt_exceeds_transport_budget"
+            )
+        next_target = max(10_000, target * 3 // 4)
+        if next_target == target or partition == prior_partition:
+            next_target = max(10_000, target // 2)
+        if next_target == target:
+            raise StructuredProviderRejected(
+                "stage_gate_fact_prompt_cannot_fit_transport_budget"
+            )
+        prior_partition = partition
+        target = next_target
 
 
 def _citable_fact_row_transport_weight(
@@ -2892,6 +3140,27 @@ def _restore_loss_accounted_chunk_global_indices(
         return int(local_to_global[value])
 
     result = dict(response)
+    if pass_name == "STAGE_GATE_FACT_MAPPING":
+        result["mappings"] = [
+            {
+                **dict(row),
+                "fact_row_indices": [
+                    restore(value)
+                    for value in row.get("fact_row_indices") or ()
+                ],
+            }
+            for row in response.get("mappings") or ()
+            if isinstance(row, Mapping)
+        ]
+        result["fact_dispositions"] = [
+            {
+                **dict(row),
+                "fact_row_index": restore(row.get("fact_row_index")),
+            }
+            for row in response.get("fact_dispositions") or ()
+            if isinstance(row, Mapping)
+        ]
+        return result
     citation_field = {
         "BUSINESS_MODEL_RESEARCH": "fact_row_indices",
         "COMPONENT_RESEARCH": "selected_fact_row_indices",
@@ -2911,6 +3180,125 @@ def _restore_loss_accounted_chunk_global_indices(
                 if isinstance(row, Mapping)
             ]
     return result
+
+
+def _merge_stage_gate_chunk_responses(
+    *,
+    chunks: Sequence[Mapping[str, Any]],
+    chunk_responses: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Deterministically union exhaustive Stage chunk judgments."""
+
+    if len(chunks) != len(chunk_responses) or not chunks:
+        raise StructuredProviderRejected(
+            "stage_gate_chunk_response_count_mismatch"
+        )
+    expected_global = [
+        int(value)
+        for chunk in chunks
+        for value in (
+            (chunk.get("loss_accounted_fact_chunk") or {}).get(
+                "global_fact_row_index_by_chunk_local_index"
+            )
+            or ()
+        )
+    ]
+    if not expected_global:
+        raise StructuredProviderRejected(
+            "stage_gate_chunk_global_roster_missing"
+        )
+    if len(expected_global) != len(set(expected_global)):
+        raise StructuredProviderRejected(
+            "stage_gate_chunk_global_roster_duplicate"
+        )
+
+    mappings: dict[tuple[str, str], dict[str, Any]] = {}
+    dispositions: dict[int, Mapping[str, Any]] = {}
+    unresolved: set[str] = set()
+    complete = True
+    for chunk_response in chunk_responses:
+        response = chunk_response.get("response")
+        if not isinstance(response, Mapping):
+            raise StructuredProviderRejected(
+                "stage_gate_chunk_response_missing"
+            )
+        complete = complete and response.get("mapping_complete") is True
+        unresolved.update(
+            str(value).strip()
+            for value in response.get("unresolved_material_questions") or ()
+            if str(value).strip()
+        )
+        for raw in response.get("mappings") or ():
+            if not isinstance(raw, Mapping):
+                raise StructuredProviderRejected(
+                    "stage_gate_chunk_mapping_not_object"
+                )
+            key = (
+                str(raw.get("primitive_id") or ""),
+                str(raw.get("direction") or ""),
+            )
+            state = mappings.setdefault(
+                key,
+                {
+                    "fact_row_indices": set(),
+                    "semantic_rationales": set(),
+                },
+            )
+            state["fact_row_indices"].update(
+                _stage_gate_mapping_fact_row_indices(raw)
+            )
+            rationale = str(raw.get("semantic_rationale") or "").strip()
+            if rationale:
+                state["semantic_rationales"].add(rationale)
+        for raw in response.get("fact_dispositions") or ():
+            if not isinstance(raw, Mapping):
+                raise StructuredProviderRejected(
+                    "stage_gate_chunk_disposition_not_object"
+                )
+            row_index = raw.get("fact_row_index")
+            if (
+                isinstance(row_index, bool)
+                or not isinstance(row_index, int)
+                or row_index < 0
+                or row_index in dispositions
+            ):
+                raise StructuredProviderRejected(
+                    "stage_gate_chunk_disposition_global_duplicate"
+                )
+            dispositions[row_index] = dict(raw)
+
+    if set(expected_global) != set(dispositions):
+        raise StructuredProviderRejected(
+            "stage_gate_chunk_disposition_global_roster_mismatch"
+        )
+    merged_mappings = [
+        {
+            "primitive_id": primitive_id,
+            "direction": direction,
+            "fact_row_indices": sorted(state["fact_row_indices"]),
+            "semantic_rationale": " | ".join(
+                sorted(state["semantic_rationales"])
+            ),
+        }
+        for (primitive_id, direction), state in sorted(mappings.items())
+    ]
+    merged_dispositions = [
+        dict(dispositions[row_index])
+        for row_index in sorted(dispositions)
+    ]
+    return {
+        "mappings": merged_mappings,
+        "fact_dispositions": merged_dispositions,
+        "unresolved_material_questions": sorted(unresolved),
+        "mapping_complete": bool(
+            complete
+            and not unresolved
+            and all(
+                row.get("status") != "UNRESOLVED"
+                for row in merged_dispositions
+            )
+        ),
+    }
 
 
 def _loss_accounted_fact_chunk_synthesis_payload(
@@ -2975,7 +3363,17 @@ def _validate_loss_accounted_chunk_response(
     allowed_fact_row_indices: set[int],
     prior_fact_row_indices: set[int],
     expected_component_groundings: Mapping[int, Mapping[str, Any]],
+    expected_stage_directions: Mapping[int, str] | None = None,
+    allowed_stage_primitives: set[str] | None = None,
 ) -> None:
+    if pass_name == "STAGE_GATE_FACT_MAPPING":
+        _validate_stage_gate_fact_response(
+            response=response,
+            allowed_fact_row_indices=allowed_fact_row_indices,
+            expected_directions=expected_stage_directions or {},
+            allowed_primitives=allowed_stage_primitives or set(),
+        )
+        return
     cited = _response_fact_row_indices(pass_name, response)
     if not cited.issubset(allowed_fact_row_indices):
         raise StructuredProviderRejected(
@@ -3024,10 +3422,175 @@ def _validate_loss_accounted_chunk_response(
         )
 
 
-def _expected_component_chunk_fact_groundings(
+def _stage_gate_chunk_fact_directions(
+    chunk: Mapping[str, Any],
+) -> Mapping[int, str]:
+    """Decode the immutable direction attached to every Stage chunk row."""
+
+    decoded = _decode_chunk_fact_rows(chunk)
+    result: dict[int, str] = {}
+    for row_index, row in decoded.items():
+        direction = str(row.get("direction") or "")
+        if direction not in {"POSITIVE", "COUNTER"}:
+            raise ValueError(
+                "Stage gate chunk contains a non-mappable fact direction"
+            )
+        result[row_index] = direction
+    return result
+
+
+def _validate_stage_gate_fact_response(
+    *,
+    response: Mapping[str, Any],
+    allowed_fact_row_indices: set[int],
+    expected_directions: Mapping[int, str],
+    allowed_primitives: set[str],
+) -> None:
+    """Require exactly one terminal disposition for every supplied fact row."""
+
+    if set(expected_directions) != allowed_fact_row_indices:
+        raise StructuredProviderRejected(
+            "stage_gate_expected_direction_roster_mismatch"
+        )
+    raw_mappings = response.get("mappings")
+    if not isinstance(raw_mappings, Sequence) or isinstance(
+        raw_mappings, (str, bytes)
+    ):
+        raise StructuredProviderRejected("stage_gate_mappings_not_array")
+    mapped: set[int] = set()
+    mapping_keys: set[tuple[str, str]] = set()
+    for raw in raw_mappings:
+        if not isinstance(raw, Mapping):
+            raise StructuredProviderRejected("stage_gate_mapping_not_object")
+        primitive_id = str(raw.get("primitive_id") or "").strip()
+        direction = str(raw.get("direction") or "").strip()
+        rationale = str(raw.get("semantic_rationale") or "").strip()
+        if primitive_id not in allowed_primitives:
+            raise StructuredProviderRejected(
+                "stage_gate_mapping_unknown_primitive"
+            )
+        if direction not in {"SUPPORT", "COUNTER"}:
+            raise StructuredProviderRejected(
+                "stage_gate_mapping_unknown_direction"
+            )
+        if not rationale:
+            raise StructuredProviderRejected(
+                "stage_gate_mapping_rationale_missing"
+            )
+        key = (primitive_id, direction)
+        if key in mapping_keys:
+            raise StructuredProviderRejected(
+                "stage_gate_mapping_duplicate_primitive_direction"
+            )
+        mapping_keys.add(key)
+        indices = _stage_gate_mapping_fact_row_indices(raw)
+        if not indices:
+            raise StructuredProviderRejected(
+                "stage_gate_mapping_fact_rows_empty"
+            )
+        if not indices.issubset(allowed_fact_row_indices):
+            raise StructuredProviderRejected(
+                "stage_gate_mapping_fact_row_outside_chunk"
+            )
+        expected = "POSITIVE" if direction == "SUPPORT" else "COUNTER"
+        if any(expected_directions[index] != expected for index in indices):
+            raise StructuredProviderRejected(
+                "stage_gate_mapping_fact_direction_mismatch"
+            )
+        mapped.update(indices)
+
+    raw_dispositions = response.get("fact_dispositions")
+    if not isinstance(raw_dispositions, Sequence) or isinstance(
+        raw_dispositions, (str, bytes)
+    ):
+        raise StructuredProviderRejected(
+            "stage_gate_fact_dispositions_not_array"
+        )
+    disposition_status: dict[int, str] = {}
+    unresolved_disposition = False
+    for raw in raw_dispositions:
+        if not isinstance(raw, Mapping):
+            raise StructuredProviderRejected(
+                "stage_gate_fact_disposition_not_object"
+            )
+        row_index = raw.get("fact_row_index")
+        status = str(raw.get("status") or "")
+        rationale = str(raw.get("rationale") or "").strip()
+        if (
+            isinstance(row_index, bool)
+            or not isinstance(row_index, int)
+            or row_index < 0
+            or row_index not in allowed_fact_row_indices
+        ):
+            raise StructuredProviderRejected(
+                "stage_gate_fact_disposition_outside_chunk"
+            )
+        if row_index in disposition_status:
+            raise StructuredProviderRejected(
+                "stage_gate_fact_disposition_duplicate"
+            )
+        if status not in {"MAPPED", "NO_MATCH", "UNRESOLVED"}:
+            raise StructuredProviderRejected(
+                "stage_gate_fact_disposition_status_invalid"
+            )
+        if not rationale:
+            raise StructuredProviderRejected(
+                "stage_gate_fact_disposition_rationale_missing"
+            )
+        if (status == "MAPPED") != (row_index in mapped):
+            raise StructuredProviderRejected(
+                "stage_gate_fact_disposition_mapping_mismatch"
+            )
+        unresolved_disposition = (
+            unresolved_disposition or status == "UNRESOLVED"
+        )
+        disposition_status[row_index] = status
+    if set(disposition_status) != allowed_fact_row_indices:
+        raise StructuredProviderRejected(
+            "stage_gate_fact_disposition_roster_mismatch"
+        )
+
+    unresolved_questions = response.get("unresolved_material_questions")
+    if not isinstance(unresolved_questions, Sequence) or isinstance(
+        unresolved_questions, (str, bytes)
+    ) or any(not str(value).strip() for value in unresolved_questions):
+        raise StructuredProviderRejected(
+            "stage_gate_unresolved_material_questions_invalid"
+        )
+    if response.get("mapping_complete") is True and (
+        unresolved_disposition or unresolved_questions
+    ):
+        raise StructuredProviderRejected(
+            "stage_gate_mapping_complete_contradicts_unresolved"
+        )
+
+
+def _stage_gate_mapping_fact_row_indices(
+    row: Mapping[str, Any],
+) -> set[int]:
+    values = row.get("fact_row_indices")
+    if not isinstance(values, Sequence) or isinstance(values, (str, bytes)):
+        raise StructuredProviderRejected(
+            "stage_gate_mapping_fact_rows_not_array"
+        )
+    result: set[int] = set()
+    for value in values:
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise StructuredProviderRejected(
+                "stage_gate_mapping_fact_row_invalid"
+            )
+        if value in result:
+            raise StructuredProviderRejected(
+                "stage_gate_mapping_fact_row_duplicate"
+            )
+        result.add(value)
+    return result
+
+
+def _decode_chunk_fact_rows(
     chunk: Mapping[str, Any],
 ) -> Mapping[int, Mapping[str, Any]]:
-    """Decode immutable grounding fields for each chunk-local fact row."""
+    """Decode every dictionary-coded chunk row without changing semantics."""
 
     projection = chunk.get("current_evidence_fact_projection")
     rows = chunk.get("current_evidence_fact_graph")
@@ -3036,13 +3599,13 @@ def _expected_component_chunk_fact_groundings(
         or not isinstance(rows, Sequence)
         or isinstance(rows, (str, bytes))
     ):
-        raise ValueError("component fact chunk projection is unavailable")
+        raise ValueError("fact chunk projection is unavailable")
     encoding = projection.get("chunk_fact_row_encoding")
     dictionaries = projection.get("fact_value_dictionaries")
     if not isinstance(encoding, Mapping) or not isinstance(
         dictionaries, Mapping
     ):
-        raise ValueError("component fact chunk encoding is unavailable")
+        raise ValueError("fact chunk encoding is unavailable")
     fields = tuple(
         str(value)
         for value in encoding.get("encoded_fact_value_fields") or ()
@@ -3050,7 +3613,7 @@ def _expected_component_chunk_fact_groundings(
     decoded_by_row: dict[int, Mapping[str, Any]] = {}
     for row in rows:
         if not isinstance(row, Mapping):
-            raise ValueError("component fact chunk row must be an object")
+            raise ValueError("fact chunk row must be an object")
         row_index = row.get("fact_row_index")
         encoded_values = row.get("encoded_fact_values")
         if (
@@ -3062,11 +3625,11 @@ def _expected_component_chunk_fact_groundings(
             or len(encoded_values) != len(fields)
             or row_index in decoded_by_row
         ):
-            raise ValueError("component fact chunk row encoding is invalid")
+            raise ValueError("fact chunk row encoding is invalid")
         decoded: dict[str, Any] = {}
         for field, dictionary_index in zip(fields, encoded_values):
             if not field.endswith("_dictionary_index"):
-                raise ValueError("component fact chunk field is not encoded")
+                raise ValueError("fact chunk field is not encoded")
             dictionary_name = field[: -len("_dictionary_index")]
             dictionary = dictionaries.get(dictionary_name)
             if (
@@ -3077,18 +3640,30 @@ def _expected_component_chunk_fact_groundings(
                 or dictionary_index < 0
                 or dictionary_index >= len(dictionary)
             ):
-                raise ValueError("component fact chunk dictionary index is invalid")
+                raise ValueError("fact chunk dictionary index is invalid")
             decoded[dictionary_name] = dictionary[dictionary_index]
+        decoded_by_row[row_index] = decoded
+    return decoded_by_row
+
+
+def _expected_component_chunk_fact_groundings(
+    chunk: Mapping[str, Any],
+) -> Mapping[int, Mapping[str, Any]]:
+    """Decode immutable grounding fields for each chunk-local fact row."""
+
+    decoded_by_row = _decode_chunk_fact_rows(chunk)
+    result: dict[int, Mapping[str, Any]] = {}
+    for row_index, decoded in decoded_by_row.items():
         required = {"predicate", "value", "period", "economic_mechanism"}
         if not required.issubset(decoded):
             raise ValueError("component fact chunk grounding fields are missing")
-        decoded_by_row[row_index] = {
+        result[row_index] = {
             "source_predicate": decoded["predicate"],
             "source_value_json": _canonical_fact_field_json(decoded["value"]),
             "source_period_json": _canonical_fact_field_json(decoded["period"]),
             "source_economic_mechanism": decoded["economic_mechanism"],
         }
-    return decoded_by_row
+    return result
 
 
 def _selected_expected_chunk_grounding_rows(
@@ -3315,6 +3890,13 @@ def _mapping_fact_row_indices(rows: Any) -> set[int]:
 
 def _provider_error_detail(error: Exception) -> str:
     return " ".join(str(error).split())[-500:] or "no detail"
+
+
+def _collaboration_pending_request_id(
+    error: Exception,
+) -> str | None:
+    match = _COLLABORATION_RESPONSE_PENDING_RE.fullmatch(str(error).strip())
+    return match.group(1) if match else None
 
 
 def _provider_usage_limit_reset_hint(value: str) -> str | None:
@@ -4800,11 +5382,13 @@ def _pass_instruction(pass_name: str) -> str:
         )
     if pass_name == "STAGE_GATE_FACT_MAPPING":
         return (
-            "Map only source-backed material claim ids to exact configured Evidence Contract "
-            "primitive ids. SUPPORT means a current positive mechanism and COUNTER means a "
-            "current thesis risk. Primitive names are semantic labels, never score or Stage "
-            "authority. Review every supplied claim, report unresolved material questions, "
-            "and never calculate points, total score, canonical Stage, or an investment action."
+            "Map only source-backed current/open EvidenceFact row indices to exact configured "
+            "Evidence Contract primitive ids. SUPPORT means a current positive mechanism and "
+            "COUNTER means a current thesis risk. Return every supplied fact row exactly once "
+            "in fact_dispositions: MAPPED only when cited by at least one mapping, NO_MATCH "
+            "when fully reviewed without a semantic match, or UNRESOLVED when review cannot "
+            "terminate. Primitive names are semantic labels, never score or Stage authority. "
+            "Never calculate points, total score, canonical Stage, or an investment action."
         )
     if pass_name == "STRUCTURED_PEER_SELECTION":
         return (
