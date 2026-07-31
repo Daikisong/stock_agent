@@ -10,20 +10,26 @@ import re
 from typing import Any, Mapping
 
 from e2r.production.metadata import stable_hash, write_json
-from e2r.research_brain.researcher_mode import (
-    PHASE93_POST_RUN_PASS,
+from e2r.research_brain.researcher_mode.canary_leaf_contract import (
+    refresh_canary_target_manifest_hash,
+    write_canary_post_run_gold_comparison,
+)
+from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
     CollaborationCodexResearcherProvider,
+    CodexSubagentFallbackResearchProvider,
+)
+from e2r.research_brain.researcher_mode.component_researcher import (
+    OllamaResearcherProvider,
+)
+from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeConfig,
     CurrentResearcherModeTargetRunner,
-    CodexSubagentFallbackResearchProvider,
-    OllamaResearcherProvider,
-    compare_phase93_gold_post_run,
+    load_current_research_target_registry,
     load_current_research_targets,
-    refresh_canary_target_manifest_hash,
-    validate_source_graph_checkpoint,
-    write_canary_post_run_gold_comparison,
-    write_phase93_post_run_comparison,
     write_production_lane,
+)
+from e2r.research_brain.researcher_mode.source_graph_explorer import (
+    validate_source_graph_checkpoint,
 )
 from e2r.research_brain.researcher_mode.prompt_projection import (
     normalize_collaboration_transport_wait,
@@ -95,10 +101,35 @@ def main(argv: list[str] | None = None) -> int:
     )
     if not symbols:
         raise ValueError("--symbols must contain at least one symbol")
+    registry_rows = load_current_research_target_registry(
+        args.target_registry
+    )
+    mandatory_target_ids = tuple(
+        str(row.get("symbol") or row.get("target_id") or "")
+        for row in registry_rows
+    )
     targets = load_current_research_targets(
         symbols=symbols,
         registry_path=args.target_registry,
         as_of_date=args.as_of_date,
+        registry_rows=registry_rows,
+    )
+    selected_target_ids = tuple(target.target_id for target in targets)
+    selected_target_id_set = set(selected_target_ids)
+    mandatory_target_id_set = set(mandatory_target_ids)
+    full_mandatory_target_roster_selected = bool(
+        len(selected_target_ids) == len(mandatory_target_ids)
+        and selected_target_id_set == mandatory_target_id_set
+    )
+    missing_mandatory_target_ids = tuple(
+        target_id
+        for target_id in mandatory_target_ids
+        if target_id not in selected_target_id_set
+    )
+    unexpected_selected_target_ids = tuple(
+        target_id
+        for target_id in selected_target_ids
+        if target_id not in mandatory_target_id_set
     )
     trading_date = (
         args.latest_trading_snapshot_date
@@ -157,12 +188,20 @@ def main(argv: list[str] | None = None) -> int:
     )
     post_run_status = "PENDING_PRODUCTION_RESEARCH_COMPLETION"
     gold_critical_fact_miss_count = None
-    if production_complete:
+    comparison_executed = False
+    post_run_pass_status = None
+    if production_complete and full_mandatory_target_roster_selected:
         # Deliberately imported data access happens only now, after the clean
         # production files and lane manifest have been closed.
+        (
+            post_run_pass_status,
+            compare_phase93_gold_post_run,
+            write_phase93_post_run_comparison,
+        ) = _load_post_run_gold_tools()
         comparison = compare_phase93_gold_post_run(
             production_root=output_root,
         )
+        comparison_executed = True
         write_phase93_post_run_comparison(
             result=comparison,
             comparison_path=output_root / "gold_fact_comparison.jsonl",
@@ -183,6 +222,31 @@ def main(argv: list[str] | None = None) -> int:
         gold_critical_fact_miss_count = comparison.audit["critical_counts"].get(
             "critical_material_fact_recall_below_threshold_count"
         )
+    elif production_complete:
+        post_run_status = "PENDING_FULL_MANDATORY_TARGET_ROSTER"
+        write_json(
+            output_root / "post_run_gold_recall_audit.json",
+            {
+                "schema_version": (
+                    "e2r_v5_phase94_post_run_gold_full_roster_pending_v1"
+                ),
+                "status": post_run_status,
+                "as_of_date": config.as_of_date,
+                "gold_visibility_during_production": False,
+                "comparison_executed": False,
+                "reason": (
+                    "Post-run Gold comparison requires the selected "
+                    "production target roster to exactly match the target "
+                    "registry mandatory_targets roster."
+                ),
+                "selected_target_ids": list(selected_target_ids),
+                "mandatory_target_ids": list(mandatory_target_ids),
+                "missing_target_ids": list(missing_mandatory_target_ids),
+                "unexpected_target_ids": list(
+                    unexpected_selected_target_ids
+                ),
+            },
+        )
     else:
         write_json(
             output_root / "post_run_gold_recall_audit.json",
@@ -195,7 +259,12 @@ def main(argv: list[str] | None = None) -> int:
                 "reason": "7/7 component, structured data, judges, and supervisor gates are not complete.",
             },
         )
-    complete = production_complete and post_run_status == PHASE93_POST_RUN_PASS
+    complete = bool(
+        production_complete
+        and full_mandatory_target_roster_selected
+        and post_run_pass_status is not None
+        and post_run_status == post_run_pass_status
+    )
     summary = {
         "status": (
             "PHASE94_CURRENT_RESEARCHER_MODE_PASS"
@@ -210,8 +279,20 @@ def main(argv: list[str] | None = None) -> int:
         "target_completion_gates": {
             run.target.target_id: dict(run.completion_gates) for run in runs
         },
+        "selected_target_ids": list(selected_target_ids),
+        "mandatory_target_ids": list(mandatory_target_ids),
+        "full_mandatory_target_roster_selected": (
+            full_mandatory_target_roster_selected
+        ),
+        "missing_mandatory_target_ids": list(
+            missing_mandatory_target_ids
+        ),
+        "unexpected_selected_target_ids": list(
+            unexpected_selected_target_ids
+        ),
         "production_research_complete": production_complete,
         "post_run_gold_status": post_run_status,
+        "comparison_executed": comparison_executed,
         "gold_critical_fact_miss_count": gold_critical_fact_miss_count,
         "gold_visibility_during_production": False,
         "completion_based_on_fixed_rounds": False,
@@ -221,6 +302,22 @@ def main(argv: list[str] | None = None) -> int:
     write_json(output_root / "phase94_run_summary.json", summary)
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
     return 0 if complete else 2
+
+
+def _load_post_run_gold_tools():
+    """Open Gold comparison code only after the full production roster closes."""
+
+    from e2r.research_brain.researcher_mode.full_thesis_gold_benchmark import (
+        PHASE93_POST_RUN_PASS,
+        compare_phase93_gold_post_run,
+        write_phase93_post_run_comparison,
+    )
+
+    return (
+        PHASE93_POST_RUN_PASS,
+        compare_phase93_gold_post_run,
+        write_phase93_post_run_comparison,
+    )
 
 
 def _build_research_provider(args: argparse.Namespace):

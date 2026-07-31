@@ -48,6 +48,11 @@ _CHECKPOINT_REQUIRED = tuple(
 )
 
 
+def _is_post_run_gold_leaf(path: Path) -> bool:
+    name = path.name
+    return name.startswith("gold_") or name.startswith("post_run_gold_")
+
+
 def materialize_canary_checkpoint_leaves(
     output_root: str | Path,
     *,
@@ -78,7 +83,11 @@ def materialize_canary_checkpoint_leaves(
     )
     write_json(root / "canary_leaf_contract_audit.json", audit)
     if refresh_target_manifest:
-        _refresh_target_manifest(root, audit)
+        _refresh_target_manifest(
+            root,
+            audit,
+            include_post_run_gold=False,
+        )
     return audit
 
 
@@ -106,7 +115,11 @@ def write_canary_post_run_gold_comparison(
     )
     write_json(root / "canary_leaf_contract_audit.json", audit)
     if refresh_target_manifest:
-        _refresh_target_manifest(root, audit)
+        _refresh_target_manifest(
+            root,
+            audit,
+            include_post_run_gold=True,
+        )
     return audit
 
 
@@ -122,7 +135,21 @@ def audit_canary_leaf_contract(
     leaf_rows = {
         key: _leaf_row(root, filename)
         for key, filename in CANARY_MASTER_LEAF_FILES.items()
+        if key != "gold_fact_comparison"
     }
+    if post_run_gold_required:
+        leaf_rows["gold_fact_comparison"] = _leaf_row(
+            root,
+            CANARY_MASTER_LEAF_FILES["gold_fact_comparison"],
+        )
+    else:
+        leaf_rows["gold_fact_comparison"] = {
+            "path": CANARY_MASTER_LEAF_FILES["gold_fact_comparison"],
+            "exists": None,
+            "sha256": None,
+            "row_count": None,
+            "access_status": "EXCLUDED_POST_RUN_ONLY",
+        }
     mirror_mismatches = {
         destination: int(
             not _jsonl_equal(root / destination, root / source)
@@ -164,9 +191,14 @@ def audit_canary_leaf_contract(
         target_id=target_id,
         as_of_date=as_of_date,
     )
-    gold_present = leaf_rows["gold_fact_comparison"]["exists"]
-    gold_rows = _read_jsonl(
-        root / CANARY_MASTER_LEAF_FILES["gold_fact_comparison"]
+    gold_present = bool(
+        post_run_gold_required
+        and leaf_rows["gold_fact_comparison"]["exists"]
+    )
+    gold_rows = (
+        _read_jsonl(root / CANARY_MASTER_LEAF_FILES["gold_fact_comparison"])
+        if post_run_gold_required
+        else ()
     )
     critical_counts = {
         "checkpoint_leaf_missing_count": sum(
@@ -211,7 +243,11 @@ def audit_canary_leaf_contract(
     }
 
 
-def canary_output_tree_hash(output_root: str | Path) -> str:
+def canary_output_tree_hash(
+    output_root: str | Path,
+    *,
+    include_post_run_gold: bool = True,
+) -> str:
     root = Path(output_root)
     return stable_hash(
         [
@@ -220,7 +256,14 @@ def canary_output_tree_hash(output_root: str | Path) -> str:
                 "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
             }
             for path in sorted(root.rglob("*"))
-            if path.is_file() and path.name != "target_run_manifest.json"
+            if (
+                path.is_file()
+                and path.name != "target_run_manifest.json"
+                and (
+                    include_post_run_gold
+                    or not _is_post_run_gold_leaf(path)
+                )
+            )
         ]
     )
 
@@ -243,7 +286,10 @@ def refresh_canary_target_manifest_hash(output_root: str | Path) -> bool:
         path,
         {
             **manifest,
-            "output_tree_hash": canary_output_tree_hash(root),
+            "output_tree_hash": canary_output_tree_hash(
+                root,
+                include_post_run_gold=False,
+            ),
         },
     )
     return True
@@ -404,7 +450,12 @@ def _jsonl_equal(left: Path, right: Path) -> bool:
     return bool(left.is_file() and right.is_file() and _read_jsonl(left) == _read_jsonl(right))
 
 
-def _refresh_target_manifest(root: Path, audit: Mapping[str, Any]) -> None:
+def _refresh_target_manifest(
+    root: Path,
+    audit: Mapping[str, Any],
+    *,
+    include_post_run_gold: bool,
+) -> None:
     path = root / "target_run_manifest.json"
     manifest = _read_json(path)
     if not manifest:
@@ -416,7 +467,10 @@ def _refresh_target_manifest(root: Path, audit: Mapping[str, Any]) -> None:
             "critical_count_sum": audit["critical_count_sum"],
             "audit_path": "canary_leaf_contract_audit.json",
         },
-        "output_tree_hash": canary_output_tree_hash(root),
+        "output_tree_hash": canary_output_tree_hash(
+            root,
+            include_post_run_gold=include_post_run_gold,
+        ),
     }
     write_json(path, manifest)
 

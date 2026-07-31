@@ -22,7 +22,10 @@ from e2r.research_brain.runtime.scoring_contracts import (
 )
 
 from .component_anchor_atlas import compile_component_anchor_atlas_from_files
-from .canary_leaf_contract import materialize_canary_checkpoint_leaves
+from .canary_leaf_contract import (
+    canary_output_tree_hash,
+    materialize_canary_checkpoint_leaves,
+)
 from .component_research_planner import ComponentResearchPlanner
 from .component_researcher import CodexResearcherProvider, StructuredResearchProvider
 from .component_scoring_memos import (
@@ -902,13 +905,16 @@ def load_current_research_targets(
     official_domain_registry_path: str | Path = (
         "configs/e2r_issuer_official_domains_v1.json"
     ),
+    registry_rows: Sequence[Mapping[str, Any]] | None = None,
 ) -> tuple[CurrentResearchTarget, ...]:
-    payload = _read_json(Path(registry_path))
-    rows = payload.get("mandatory_targets") or payload.get("targets") or ()
+    rows = (
+        tuple(dict(row) for row in registry_rows)
+        if registry_rows is not None
+        else load_current_research_target_registry(registry_path)
+    )
     by_symbol = {
         str(row.get("symbol") or row.get("target_id") or ""): row
         for row in rows
-        if isinstance(row, Mapping)
     }
     missing = [symbol for symbol in symbols if symbol not in by_symbol]
     if missing:
@@ -947,6 +953,37 @@ def load_current_research_targets(
         )
         for symbol in symbols
     )
+
+
+def load_current_research_target_registry(
+    registry_path: str | Path = "configs/e2r_targeted_live_smoke_v1.json",
+) -> tuple[Mapping[str, Any], ...]:
+    """Load the canonical effective roster without duplicating fallback logic."""
+
+    path = Path(registry_path)
+    payload = _read_json(path)
+    raw_rows = payload.get("mandatory_targets") or payload.get("targets") or ()
+    if not isinstance(raw_rows, (list, tuple)) or not raw_rows:
+        raise ValueError(
+            "target registry mandatory_targets or targets must be a "
+            "non-empty array"
+        )
+    rows = tuple(
+        dict(row) if isinstance(row, Mapping) else {}
+        for row in raw_rows
+    )
+    target_ids = tuple(
+        str(row.get("symbol") or row.get("target_id") or "").strip()
+        for row in rows
+    )
+    if (
+        any(not target_id for target_id in target_ids)
+        or len(target_ids) != len(set(target_ids))
+    ):
+        raise ValueError(
+            "target registry roster must contain unique target ids"
+        )
+    return rows
 
 
 def _verified_official_domains_by_symbol(
@@ -2603,15 +2640,9 @@ def _structured_gap_resolution_contracts(
 
 
 def _tree_hash(root: Path) -> str:
-    return stable_hash(
-        [
-            {
-                "path": str(path.relative_to(root)),
-                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
-            }
-            for path in sorted(root.rglob("*"))
-            if path.is_file() and path.name != "target_run_manifest.json"
-        ]
+    return canary_output_tree_hash(
+        root,
+        include_post_run_gold=False,
     )
 
 
@@ -2853,6 +2884,7 @@ __all__ = [
     "CurrentResearcherModeConfig",
     "CurrentResearcherModeTargetRunner",
     "CurrentResearcherTargetRun",
+    "load_current_research_target_registry",
     "load_current_research_targets",
     "write_production_lane",
 ]

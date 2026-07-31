@@ -5,6 +5,8 @@ add the historical atlas, source graph, component researchers, judges, and
 deterministic aggregation here so production has one future authority.
 """
 
+from importlib import import_module
+
 from .audits import (
     PHASE80_ARTIFACT_PATHS,
     PHASE84_AUDIT_PATH,
@@ -297,6 +299,7 @@ from .current_researcher_mode import (
     CurrentResearcherModeConfig,
     CurrentResearcherModeTargetRunner,
     CurrentResearcherTargetRun,
+    load_current_research_target_registry,
     load_current_research_targets,
     write_production_lane,
 )
@@ -451,25 +454,36 @@ from .legacy_retrieval_aperture import (
     write_legacy_retrieval_shadow_snapshot,
     write_phase92_legacy_retrieval_parity_audit,
 )
-from .full_thesis_gold_benchmark import (
-    FullThesisPostRunComparison,
-    PHASE93_AUDIT_PATH,
-    PHASE93_GOLD_ROOT,
-    PHASE93_OUTPUT_FILES,
-    PHASE93_POST_RUN_FAIL,
-    PHASE93_POST_RUN_PASS,
-    PHASE93_POST_RUN_PENDING,
-    PHASE93_READY,
-    PHASE93_RECALL_THRESHOLDS,
-    PHASE93_SCHEMA_VERSION,
-    PHASE93_SOURCE_FAMILIES,
-    compare_phase93_gold_post_run,
-    compile_phase93_gold_research_recall_audit,
-    gold_authority_leakage_paths,
-    load_phase93_gold_corpus,
-    write_phase93_gold_research_recall_audit,
-    write_phase93_post_run_comparison,
+_PHASE93_GOLD_EXPORTS = frozenset(
+    {
+        "FullThesisPostRunComparison",
+        "PHASE93_AUDIT_PATH",
+        "PHASE93_GOLD_ROOT",
+        "PHASE93_OUTPUT_FILES",
+        "PHASE93_POST_RUN_FAIL",
+        "PHASE93_POST_RUN_PASS",
+        "PHASE93_POST_RUN_PENDING",
+        "PHASE93_READY",
+        "PHASE93_RECALL_THRESHOLDS",
+        "PHASE93_SCHEMA_VERSION",
+        "PHASE93_SOURCE_FAMILIES",
+        "compare_phase93_gold_post_run",
+        "compile_phase93_gold_research_recall_audit",
+        "gold_authority_leakage_paths",
+        "load_phase93_gold_corpus",
+        "write_phase93_gold_research_recall_audit",
+        "write_phase93_post_run_comparison",
+    }
 )
+
+
+def __getattr__(name: str):
+    if name not in _PHASE93_GOLD_EXPORTS:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+    module = import_module(f"{__name__}.full_thesis_gold_benchmark")
+    value = getattr(module, name)
+    globals()[name] = value
+    return value
 
 __all__ = [
     "AGGREGATOR_CONFIG",
@@ -816,6 +830,7 @@ __all__ = [
     "write_researcher_stagecourt_run",
     "write_official_source_materialization",
     "write_current_structured_materialization",
+    "load_current_research_target_registry",
     "load_current_research_targets",
     "write_production_lane",
     "write_claim_impact_mapping_result",

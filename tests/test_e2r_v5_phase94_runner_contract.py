@@ -3,11 +3,15 @@ from __future__ import annotations
 import hashlib
 import inspect
 import json
+import os
+import subprocess
+import sys
 import tempfile
+import textwrap
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from e2r.cli.run_e2r_researcher_mode_until_pass import (
     _latest_calendar_trading_candidate,
@@ -30,6 +34,7 @@ from e2r.production.metadata import stable_hash
 from e2r.research_brain.researcher_mode import (
     CANONICAL_COMPONENT_ORDER,
     PHASE93_POST_RUN_FAIL,
+    PHASE93_POST_RUN_PASS,
     ComponentResearchPlanner,
     CurrentStructuredMaterializationResult,
     CurrentResearcherModeConfig,
@@ -40,6 +45,7 @@ from e2r.research_brain.researcher_mode import (
     ResearcherSourceGraphAcquirer,
     SourceGraphAcquisitionConfig,
     write_source_graph_acquisition_run,
+    load_current_research_target_registry,
     load_current_research_targets,
 )
 from tests.test_e2r_v5_fact_extraction import FactProvider, _document
@@ -1770,6 +1776,40 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertNotIn("삼성전자", runner_source)
         self.assertNotIn("SK하이닉스", runner_source)
 
+        with tempfile.TemporaryDirectory() as directory:
+            legacy_registry = Path(directory) / "legacy_targets.json"
+            legacy_registry.write_text(
+                json.dumps(
+                    {
+                        "targets": [
+                            {
+                                "target_id": "CURRENT-LEGACY",
+                                "company_name": "Current Legacy",
+                                "aliases": ["Legacy Current"],
+                                "official_domains": ["current.example"],
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            registry_rows = load_current_research_target_registry(
+                legacy_registry
+            )
+            legacy = load_current_research_targets(
+                symbols=("CURRENT-LEGACY",),
+                registry_path=legacy_registry,
+                registry_rows=registry_rows,
+            )
+            self.assertEqual(
+                tuple(
+                    row.get("target_id") for row in registry_rows
+                ),
+                ("CURRENT-LEGACY",),
+            )
+            self.assertEqual(legacy[0].target_id, "CURRENT-LEGACY")
+            self.assertEqual(legacy[0].company_name, "Current Legacy")
+
     def test_source_graph_has_one_full_thesis_objective_per_component(self) -> None:
         plans = ComponentResearchPlanner().plan(
             target_id="CURRENT",
@@ -1812,23 +1852,52 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             for value in ("CURRENT-A", "CURRENT-B")
         )
 
-        def execute(*, second_status: str):
+        def execute(
+            *,
+            second_status: str,
+            selected_target_ids: tuple[str, ...] = (
+                "CURRENT-A",
+                "CURRENT-B",
+            ),
+        ):
             with tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
-                statuses = (
-                    "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
-                    second_status,
+                registry_path = root / "target_registry.json"
+                registry_path.write_text(
+                    json.dumps(
+                        {
+                            "mandatory_targets": [
+                                {
+                                    "symbol": target.target_id,
+                                    "company_name": target.target_id,
+                                }
+                                for target in targets
+                            ]
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                statuses = {
+                    "CURRENT-A": (
+                        "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+                    ),
+                    "CURRENT-B": second_status,
+                }
+                selected_targets = tuple(
+                    target
+                    for target in targets
+                    if target.target_id in selected_target_ids
                 )
                 runs = tuple(
                     SimpleNamespace(
-                        status=statuses[index],
+                        status=statuses[target.target_id],
                         target=target,
                         output_root=root / target.target_id,
                         completion_gates={},
                         score_aggregation=object(),
                         stagecourt=object(),
                     )
-                    for index, target in enumerate(targets)
+                    for target in selected_targets
                 )
                 order = []
                 run_by_id = {
@@ -1856,11 +1925,12 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                         },
                     )
 
+                compare_mock = Mock(side_effect=compare)
                 with (
                     patch(
                         "e2r.cli.run_e2r_researcher_mode_until_pass."
                         "load_current_research_targets",
-                        return_value=targets,
+                        return_value=selected_targets,
                     ),
                     patch(
                         "e2r.cli.run_e2r_researcher_mode_until_pass."
@@ -1889,13 +1959,13 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     ),
                     patch(
                         "e2r.cli.run_e2r_researcher_mode_until_pass."
-                        "compare_phase93_gold_post_run",
-                        side_effect=compare,
-                    ) as compare_mock,
-                    patch(
-                        "e2r.cli.run_e2r_researcher_mode_until_pass."
-                        "write_phase93_post_run_comparison"
-                    ),
+                        "_load_post_run_gold_tools",
+                        return_value=(
+                            PHASE93_POST_RUN_PASS,
+                            compare_mock,
+                            Mock(),
+                        ),
+                    ) as gold_tools_mock,
                     patch(
                         "e2r.cli.run_e2r_researcher_mode_until_pass."
                         "write_canary_post_run_gold_comparison"
@@ -1907,7 +1977,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                             "--as-of-date",
                             AS_OF_DATE,
                             "--symbols",
-                            "CURRENT-A,CURRENT-B",
+                            ",".join(selected_target_ids),
                             "--archetype",
                             "CURRENT-ARCHETYPE",
                             "--live-materialization-authorized",
@@ -1920,6 +1990,8 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                             "true",
                             "--output-root",
                             str(root),
+                            "--target-registry",
+                            str(registry_path),
                         ]
                     )
                 summary = json.loads(
@@ -1927,13 +1999,71 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                         encoding="utf-8"
                     )
                 )
-                return exit_code, order, compare_mock.call_count, summary, runs
+                audit_path = root / "post_run_gold_recall_audit.json"
+                audit = (
+                    json.loads(
+                        audit_path.read_text(
+                            encoding="utf-8"
+                        )
+                    )
+                    if audit_path.is_file()
+                    else None
+                )
+                return (
+                    exit_code,
+                    order,
+                    compare_mock.call_count,
+                    summary,
+                    runs,
+                    audit,
+                    gold_tools_mock.call_count,
+                )
 
         pending = execute(second_status="RESEARCH_CHECKPOINT_PENDING")
         self.assertEqual(pending[0], 2)
         self.assertEqual(pending[2], 0)
         self.assertNotIn("post_run_gold_opened", pending[1])
         self.assertFalse(pending[3]["production_research_complete"])
+
+        partial_complete = execute(
+            second_status=(
+                "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+            ),
+            selected_target_ids=("CURRENT-A",),
+        )
+        self.assertEqual(partial_complete[0], 2)
+        self.assertEqual(partial_complete[2], 0)
+        self.assertEqual(partial_complete[6], 0)
+        self.assertNotIn("post_run_gold_opened", partial_complete[1])
+        self.assertTrue(
+            partial_complete[3]["production_research_complete"]
+        )
+        self.assertFalse(partial_complete[3]["comparison_executed"])
+        self.assertEqual(
+            partial_complete[3]["post_run_gold_status"],
+            "PENDING_FULL_MANDATORY_TARGET_ROSTER",
+        )
+        self.assertEqual(
+            partial_complete[3]["missing_mandatory_target_ids"],
+            ["CURRENT-B"],
+        )
+        self.assertEqual(
+            partial_complete[3]["target_statuses"],
+            {
+                "CURRENT-A": (
+                    "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+                )
+            },
+        )
+        self.assertFalse(partial_complete[5]["comparison_executed"])
+        self.assertEqual(
+            partial_complete[5]["missing_target_ids"],
+            ["CURRENT-B"],
+        )
+        self.assertIn(
+            "mandatory_targets roster",
+            partial_complete[5]["reason"],
+        )
 
         post_run_fail = execute(
             second_status=(
@@ -1942,6 +2072,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         )
         self.assertEqual(post_run_fail[0], 2)
         self.assertEqual(post_run_fail[2], 1)
+        self.assertEqual(post_run_fail[6], 1)
         self.assertEqual(
             post_run_fail[1],
             [
@@ -1952,6 +2083,10 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             ],
         )
         self.assertTrue(post_run_fail[3]["production_research_complete"])
+        self.assertTrue(post_run_fail[3]["comparison_executed"])
+        self.assertTrue(
+            post_run_fail[3]["full_mandatory_target_roster_selected"]
+        )
         self.assertEqual(
             post_run_fail[3]["post_run_gold_status"],
             PHASE93_POST_RUN_FAIL,
@@ -1962,6 +2097,160 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 == "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
                 for run in post_run_fail[4]
             )
+        )
+
+    def test_partial_subprocess_never_loads_or_reads_gold(self) -> None:
+        script = textwrap.dedent(
+            """
+            import json
+            import sys
+            import tempfile
+            from pathlib import Path
+            from types import SimpleNamespace
+            from unittest.mock import patch
+
+            gold_module = (
+                "e2r.research_brain.researcher_mode."
+                "full_thesis_gold_benchmark"
+            )
+            assert gold_module not in sys.modules
+            import e2r.cli.run_e2r_researcher_mode_until_pass as cli
+            assert gold_module not in sys.modules
+
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                registry = root / "targets.json"
+                registry.write_text(
+                    json.dumps(
+                        {
+                            "mandatory_targets": [
+                                {
+                                    "symbol": "CURRENT-A",
+                                    "company_name": "Current A",
+                                },
+                                {
+                                    "symbol": "CURRENT-B",
+                                    "company_name": "Current B",
+                                },
+                            ]
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                output_root = root / "output"
+                target_root = output_root / "CURRENT-A"
+                target_root.mkdir(parents=True)
+                stale_gold = target_root / "gold_fact_comparison.jsonl"
+                stale_gold.write_text(
+                    "{malformed stale Gold",
+                    encoding="utf-8",
+                )
+                original_read_text = Path.read_text
+                original_read_bytes = Path.read_bytes
+
+                def guarded_read_text(path, *args, **kwargs):
+                    if path == stale_gold:
+                        raise AssertionError("partial main read stale Gold")
+                    return original_read_text(path, *args, **kwargs)
+
+                def guarded_read_bytes(path, *args, **kwargs):
+                    if path == stale_gold:
+                        raise AssertionError("partial main hashed stale Gold")
+                    return original_read_bytes(path, *args, **kwargs)
+
+                def completed_run(**kwargs):
+                    target = kwargs["target"]
+                    return SimpleNamespace(
+                        status=(
+                            "PRODUCTION_RESEARCH_COMPLETE_"
+                            "PENDING_POST_RUN_GOLD"
+                        ),
+                        target=target,
+                        output_root=target_root,
+                        completion_gates={},
+                    )
+
+                with (
+                    patch.object(Path, "read_text", guarded_read_text),
+                    patch.object(Path, "read_bytes", guarded_read_bytes),
+                    patch.object(
+                        cli,
+                        "_build_research_provider",
+                        return_value=object(),
+                    ),
+                    patch.object(
+                        cli,
+                        "CurrentResearcherModeTargetRunner",
+                        return_value=SimpleNamespace(provider=object()),
+                    ),
+                    patch.object(
+                        cli,
+                        "_research_provider_manifest",
+                        return_value={"provider_name": "TEST"},
+                    ),
+                    patch.object(
+                        cli,
+                        "_run_target_until_semantic_terminal",
+                        side_effect=completed_run,
+                    ),
+                    patch.object(
+                        cli,
+                        "write_production_lane",
+                        return_value={
+                            "lane": output_root
+                            / "production_lane_manifest.json"
+                        },
+                    ),
+                    patch("builtins.print"),
+                ):
+                    exit_code = cli.main(
+                        [
+                            "--as-of-date",
+                            "2026-06-29",
+                            "--symbols",
+                            "CURRENT-A",
+                            "--archetype",
+                            "CURRENT-ARCHETYPE",
+                            "--live-materialization-authorized",
+                            "true",
+                            "--checkpoint-resume",
+                            "true",
+                            "--gold-lane-isolated",
+                            "true",
+                            "--require-researcher-parity",
+                            "true",
+                            "--output-root",
+                            str(output_root),
+                            "--target-registry",
+                            str(registry),
+                        ]
+                    )
+                assert exit_code == 2
+                assert gold_module not in sys.modules
+                summary = json.loads(
+                    (output_root / "phase94_run_summary.json").read_text(
+                        encoding="utf-8"
+                    )
+                )
+                assert summary["production_research_complete"] is True
+                assert summary["comparison_executed"] is False
+                assert summary["missing_mandatory_target_ids"] == [
+                    "CURRENT-B"
+                ]
+            """
+        )
+        result = subprocess.run(
+            [sys.executable, "-c", script],
+            cwd=self.ROOT,
+            env={**os.environ, "PYTHONPATH": "src"},
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(
+            result.returncode,
+            0,
+            result.stdout + result.stderr,
         )
 
     def test_phase94_output_contract_names_are_present(self) -> None:

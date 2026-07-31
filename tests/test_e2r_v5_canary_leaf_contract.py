@@ -4,6 +4,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from e2r.production.metadata import write_json, write_jsonl
 from e2r.research_brain.researcher_mode.canary_leaf_contract import (
@@ -122,15 +123,121 @@ class E2RV5CanaryLeafContractTests(unittest.TestCase):
                     refresh_target_manifest=False,
                 )
 
-            premature = materialize_canary_checkpoint_leaves(
+            production_isolated = materialize_canary_checkpoint_leaves(
                 root,
                 target_id=self.TARGET_ID,
                 as_of_date=self.AS_OF_DATE,
                 production_research_complete=False,
             )
             self.assertEqual(
-                premature["critical_counts"]["premature_gold_comparison_count"],
-                1,
+                production_isolated["critical_counts"][
+                    "premature_gold_comparison_count"
+                ],
+                0,
+            )
+            self.assertEqual(
+                production_isolated["leaf_rows"]["gold_fact_comparison"][
+                    "access_status"
+                ],
+                "EXCLUDED_POST_RUN_ONLY",
+            )
+
+    def test_production_contract_never_reads_or_hashes_stale_gold_leaves(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._write_pending_sources(root)
+            write_json(
+                root / "target_run_manifest.json",
+                {
+                    "target_id": self.TARGET_ID,
+                    "as_of_date": self.AS_OF_DATE,
+                    "status": "RESEARCH_CHECKPOINT_PENDING",
+                    "production_research_complete": False,
+                    "output_tree_hash": "STALE",
+                },
+            )
+            stale_gold_paths = {
+                root / "gold_fact_comparison.jsonl",
+                root / "gold_comparison.jsonl",
+                root / "post_run_gold_recall_audit.json",
+            }
+            for path in stale_gold_paths:
+                path.write_text("{malformed stale Gold", encoding="utf-8")
+
+            original_read_text = Path.read_text
+            original_read_bytes = Path.read_bytes
+
+            def guarded_read_text(path, *args, **kwargs):
+                if path in stale_gold_paths:
+                    raise AssertionError(f"production read stale Gold: {path}")
+                return original_read_text(path, *args, **kwargs)
+
+            def guarded_read_bytes(path, *args, **kwargs):
+                if path in stale_gold_paths:
+                    raise AssertionError(f"production hashed stale Gold: {path}")
+                return original_read_bytes(path, *args, **kwargs)
+
+            with (
+                patch.object(Path, "read_text", guarded_read_text),
+                patch.object(Path, "read_bytes", guarded_read_bytes),
+            ):
+                audit = materialize_canary_checkpoint_leaves(
+                    root,
+                    target_id=self.TARGET_ID,
+                    as_of_date=self.AS_OF_DATE,
+                    production_research_complete=False,
+                    refresh_target_manifest=True,
+                )
+                self.assertTrue(refresh_canary_target_manifest_hash(root))
+
+            self.assertEqual(audit["critical_count_sum"], 0)
+            self.assertEqual(
+                audit["leaf_rows"]["gold_fact_comparison"][
+                    "access_status"
+                ],
+                "EXCLUDED_POST_RUN_ONLY",
+            )
+            manifest = json.loads(
+                (root / "target_run_manifest.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            self.assertEqual(
+                manifest["output_tree_hash"],
+                canary_output_tree_hash(
+                    root,
+                    include_post_run_gold=False,
+                ),
+            )
+            production_hash_before = canary_output_tree_hash(
+                root,
+                include_post_run_gold=False,
+            )
+            post_run_hash_before = canary_output_tree_hash(
+                root,
+                include_post_run_gold=True,
+            )
+            (root / "gold_fact_comparison.jsonl").write_text(
+                "{different malformed stale Gold",
+                encoding="utf-8",
+            )
+            production_hash_after = canary_output_tree_hash(
+                root,
+                include_post_run_gold=False,
+            )
+            post_run_hash_after = canary_output_tree_hash(
+                root,
+                include_post_run_gold=True,
+            )
+            self.assertEqual(
+                production_hash_before,
+                production_hash_after,
+            )
+            self.assertNotEqual(
+                post_run_hash_before,
+                post_run_hash_after,
             )
 
     def test_runner_progress_leaf_rebinds_manifest_tree_hash(self) -> None:
