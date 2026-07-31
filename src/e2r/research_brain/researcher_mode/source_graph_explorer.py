@@ -640,6 +640,15 @@ class ResearcherSourceGraphAcquirer:
         unresolved_objectives = tuple(
             row for row in objectives if str(row["objective_id"]) not in resolved
         )
+        supervisor_query_direction_priority = (
+            _has_actionable_supervisor_query_direction(
+                score_gap_context or {},
+                unresolved_objective_ids={
+                    str(row["objective_id"])
+                    for row in unresolved_objectives
+                },
+            )
+        )
         query_generation: SourceQueryGenerationResult | None = None
         pending_reasons: list[str] = list(checkpoint_quarantine_reasons)
         if invalidated_prior_fact_count:
@@ -678,7 +687,10 @@ class ResearcherSourceGraphAcquirer:
         # A rejected/tiny official landing page can still point directly to
         # the original transcript.  Preserve those candidate-level routes
         # before using the checkpoint budget on broader document citations.
-        if not checkpoint_migration_only:
+        if (
+            not checkpoint_migration_only
+            and not supervisor_query_direction_priority
+        ):
             for parent_candidate in _ordered_candidate_reference_parents(
                 candidates,
                 as_of_date=cutoff,
@@ -721,7 +733,17 @@ class ResearcherSourceGraphAcquirer:
                 "REFERENCE_DISCOVERY_TRANSPORT_BUDGET_CHECKPOINT:"
                 + str(deferred_reference_count)
             )
-        query_failures = [*state["query_failures"], *prior_query_failures]
+        query_failures = [
+            *state["query_failures"],
+            *prior_query_failures,
+            *_requested_source_family_without_matched_fetch_failures(
+                generated_queries=generated_rows,
+                documents=evidence_documents,
+                candidates=candidates,
+                facts=facts,
+                unresolved_objectives=unresolved_objectives,
+            ),
+        ]
         for row in generated_rows:
             if row.get("execution_status") != "BLOCKED_OFFICIAL_FIRST":
                 continue
@@ -742,6 +764,10 @@ class ResearcherSourceGraphAcquirer:
         pending_ranking_at_checkpoint_start = any(
             row.get("ranking_status") == "PENDING"
             and not _candidate_scope_is_fully_resolved(row, resolved)
+            and not (
+                supervisor_query_direction_priority
+                and _candidate_is_reference_only(row)
+            )
             for row in candidates
         )
         pending_candidate_work = any(
@@ -751,6 +777,10 @@ class ResearcherSourceGraphAcquirer:
                 in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
             )
             and not _candidate_scope_is_fully_resolved(row, resolved)
+            and not (
+                supervisor_query_direction_priority
+                and _candidate_is_reference_only(row)
+            )
             for row in candidates
         )
         query_generation_deferred_by_candidate_work = bool(
@@ -945,12 +975,22 @@ class ResearcherSourceGraphAcquirer:
         pending_rank = (
             []
             if checkpoint_migration_only
-            else [
-                row
-                for row in candidates
-                if row.get("ranking_status") == "PENDING"
-                and not _candidate_scope_is_fully_resolved(row, resolved)
-            ]
+            else sorted(
+                (
+                    row
+                    for row in candidates
+                    if row.get("ranking_status") == "PENDING"
+                    and not _candidate_scope_is_fully_resolved(
+                        row, resolved
+                    )
+                ),
+                key=lambda row: _pending_candidate_ranking_priority(
+                    row,
+                    supervisor_query_direction_priority=(
+                        supervisor_query_direction_priority
+                    ),
+                ),
+            )
         )
         ranking_results: list[CandidateRankingResult] = []
         if pending_rank:
@@ -1383,6 +1423,9 @@ class ResearcherSourceGraphAcquirer:
             # saturation.
             "query_generation_deferred_by_candidate_work": (
                 query_generation_deferred_by_candidate_work
+            ),
+            "supervisor_query_direction_prioritized_over_reference_backlog": (
+                supervisor_query_direction_priority
             ),
         }
         if checkpoint_migration_only:
@@ -2622,6 +2665,147 @@ def _production_downstream_documents(
         ):
             active.append(document)
     return tuple(active)
+
+
+def _requested_source_family_without_matched_fetch_failures(
+    *,
+    generated_queries: Sequence[Mapping[str, Any]],
+    documents: Sequence[Mapping[str, Any]],
+    candidates: Sequence[Mapping[str, Any]],
+    facts: Sequence[Mapping[str, Any]],
+    unresolved_objectives: Sequence[Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    """Return loss-accounted feedback for requested but unfetched families.
+
+    A generated query is only an instruction to try a source family.  It is
+    not evidence that the family was actually reached.  Once the query and
+    candidate work are terminal, return this exact distinction to the LLM so
+    it can choose a new literal query.  Deterministic code never supplies that
+    query and never treats the gap as source absence.
+    """
+
+    unresolved_ids = {
+        str(row.get("objective_id") or "")
+        for row in unresolved_objectives
+        if str(row.get("objective_id") or "")
+    }
+    attempted_by_objective: dict[str, set[str]] = {}
+    attempted_query_ids: dict[tuple[str, str], list[str]] = {}
+    for query in generated_queries:
+        objective_id = str(query.get("objective_id") or "")
+        if (
+            objective_id not in unresolved_ids
+            or str(query.get("execution_status") or "")
+            not in {"SEARCH_EXECUTED", "NO_RESULT", "PROVIDER_ERROR"}
+        ):
+            continue
+        for family in query.get("source_families") or ():
+            source_family = str(family or "").strip()
+            if source_family not in CANONICAL_SOURCE_FAMILIES:
+                continue
+            attempted_by_objective.setdefault(objective_id, set()).add(
+                source_family
+            )
+            attempted_query_ids.setdefault(
+                (objective_id, source_family), []
+            ).append(str(query.get("query_id") or ""))
+    if not attempted_by_objective:
+        return ()
+
+    production_documents = _production_downstream_documents(
+        documents=documents,
+        facts=facts,
+        candidates=candidates,
+    )
+    reached_by_objective: dict[str, set[str]] = {}
+    for document in production_documents:
+        if document.get("evidence_eligible", True) is not True:
+            continue
+        source_family = str(document.get("source_family") or "").strip()
+        if source_family not in CANONICAL_SOURCE_FAMILIES:
+            continue
+        for objective_id in document.get("objective_ids") or ():
+            normalized_objective_id = str(objective_id or "").strip()
+            if normalized_objective_id in unresolved_ids:
+                reached_by_objective.setdefault(
+                    normalized_objective_id, set()
+                ).add(source_family)
+
+    failures = []
+    for objective_id in sorted(attempted_by_objective):
+        missing_families = (
+            attempted_by_objective[objective_id]
+            - reached_by_objective.get(objective_id, set())
+        )
+        for source_family in sorted(missing_families):
+            if any(
+                source_family
+                in set(
+                    str(value)
+                    for value in candidate.get(
+                        "requested_source_families"
+                    )
+                    or ()
+                )
+                and objective_id
+                in set(
+                    str(value)
+                    for value in candidate.get("objective_ids") or ()
+                )
+                and (
+                    candidate.get("ranking_status") == "PENDING"
+                    or candidate.get("fetch_status")
+                    in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+                )
+                for candidate in candidates
+            ):
+                continue
+            query_ids = tuple(
+                value
+                for value in attempted_query_ids[
+                    (objective_id, source_family)
+                ]
+                if value
+            )
+            failures.append(
+                {
+                    "failure_kind": "SOURCE_FAMILY_COVERAGE",
+                    "failure_stage": "FULL_DOCUMENT_FETCH",
+                    "failure_reason": (
+                        "REQUESTED_SOURCE_FAMILY_WITHOUT_MATCHED_FETCH"
+                    ),
+                    "objective_id": objective_id,
+                    "query_ids": list(dict.fromkeys(query_ids)),
+                    "source_family": source_family,
+                    "attempted_source_families": [source_family],
+                    "full_fetch_attempted": any(
+                        source_family
+                        in set(
+                            str(value)
+                            for value in candidate.get(
+                                "requested_source_families"
+                            )
+                            or ()
+                        )
+                        and objective_id
+                        in set(
+                            str(value)
+                            for value in candidate.get("objective_ids") or ()
+                        )
+                        and int(
+                            candidate.get("full_fetch_attempt_count") or 0
+                        )
+                        > 0
+                        for candidate in candidates
+                    ),
+                    "retryable": True,
+                    "alternate_route_required": True,
+                    "absence_eligible": False,
+                    "zero_result_only": False,
+                    "resolved": False,
+                }
+            )
+    return tuple(failures)
 
 
 def _merge_search_candidates(
@@ -4245,6 +4429,68 @@ def _candidate_scope_is_fully_resolved(
         if str(value).strip()
     }
     return candidate_objective_ids.issubset(resolved_objective_ids)
+
+
+def _has_actionable_supervisor_query_direction(
+    score_gap_context: Mapping[str, Any],
+    *,
+    unresolved_objective_ids: set[str],
+) -> bool:
+    """Prioritize an LLM-directed route over inherited reference backlog."""
+
+    supervisor_gap = score_gap_context.get("prior_supervisor_gap")
+    if not isinstance(supervisor_gap, Mapping):
+        return False
+    for key in (
+        "new_source_family_directions",
+        "query_direction_briefs",
+    ):
+        for row in supervisor_gap.get(key) or ():
+            if not isinstance(row, Mapping):
+                continue
+            objective_id = str(row.get("objective_id") or "").strip()
+            if objective_id in unresolved_objective_ids:
+                return True
+    return False
+
+
+def _candidate_is_reference_only(candidate: Mapping[str, Any]) -> bool:
+    """Return whether a candidate came only from inherited page links."""
+
+    return bool(
+        not candidate.get("direct_search_discovery")
+        and (
+            candidate.get("reference_discovery_only")
+            or candidate.get("graph_expansion_parent_document_ids")
+            or candidate.get("graph_expansion_parent_candidate_ids")
+        )
+    )
+
+
+def _pending_candidate_ranking_priority(
+    candidate: Mapping[str, Any],
+    *,
+    supervisor_query_direction_priority: bool,
+) -> tuple[int, int, str]:
+    """Put a fresh LLM search route ahead of inherited reference backlog."""
+
+    return (
+        (
+            0
+            if (
+                supervisor_query_direction_priority
+                and candidate.get("direct_search_discovery")
+            )
+            else 1
+            if (
+                supervisor_query_direction_priority
+                and _candidate_is_reference_only(candidate)
+            )
+            else 0
+        ),
+        int(candidate.get("rank") or 0),
+        str(candidate.get("candidate_id") or ""),
+    )
 
 
 def _candidate_reference_expansion_authority(

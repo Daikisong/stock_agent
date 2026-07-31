@@ -78,6 +78,9 @@ FACT_EXTRACTION_MODES = frozenset(
 OBJECTIVE_FACT_RELATIONS = frozenset(
     {"ADVANCE", "COUNTER", "SUPERSEDE"}
 )
+FACT_EXTRACTION_SEMANTICS_VERSION = (
+    "e2r_v5_objective_local_coverage_audit_v1"
+)
 
 _RFC8259_NUMBER_PATTERN = re.compile(
     r"-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?\Z"
@@ -237,6 +240,7 @@ class FactExtractionRejection:
     reason: str
     material_proposal: bool
     proposed_exact_quote: str | None = None
+    extraction_semantics_version: str = FACT_EXTRACTION_SEMANTICS_VERSION
     schema_version: str = "e2r_v5_fact_extraction_rejection_v1"
 
     def to_dict(self) -> Mapping[str, Any]:
@@ -261,7 +265,9 @@ class FactExtractionProviderCall:
     completion_flag_reconciled: bool = False
     transport_chunk_ids: tuple[str, ...] = ()
     accepted_claims: tuple[Mapping[str, Any], ...] | None = None
-    schema_version: str = "e2r_v5_fact_extraction_provider_call_v2"
+    coverage_audit_performed: bool = False
+    extraction_semantics_version: str = FACT_EXTRACTION_SEMANTICS_VERSION
+    schema_version: str = "e2r_v5_fact_extraction_provider_call_v3"
 
     def __post_init__(self) -> None:
         if self.status not in {"COMPLETE", "PENDING"}:
@@ -590,46 +596,119 @@ class ResearcherEvidenceFactExtractor:
         if scope_contract is None:
             raise ValueError("fact extraction archetype lacks mechanism-scope contract")
         document_ids = {str(row["document_id"]) for row in prepared}
-        dispositions: list[Mapping[str, Any]] = [
+        coverage_gap_objective_ids = _coverage_gap_objective_ids(
+            open_objectives=open_objectives,
+            score_gap_context=score_gap_context or {},
+        )
+        stale_semantics_disposition_count = sum(
+            _extraction_semantics_version(row)
+            != FACT_EXTRACTION_SEMANTICS_VERSION
+            for row in prior_document_dispositions
+        )
+        stale_semantics_provider_call_count = sum(
+            _extraction_semantics_version(row)
+            != FACT_EXTRACTION_SEMANTICS_VERSION
+            for row in prior_provider_calls
+        )
+        all_prior_dispositions = [
             dict(row) for row in prior_document_dispositions
         ]
-        prior_disposition_ids = [
-            str(row.get("document_id") or "") for row in dispositions
+        all_prior_disposition_ids = [
+            str(row.get("document_id") or "")
+            for row in all_prior_dispositions
         ]
+        stale_semantics_disposition_ids = {
+            str(row.get("document_id") or "")
+            for row in all_prior_dispositions
+            if _extraction_semantics_version(row)
+            != FACT_EXTRACTION_SEMANTICS_VERSION
+        }
         if (
-            any(not value or value not in document_ids for value in prior_disposition_ids)
-            or len(prior_disposition_ids) != len(set(prior_disposition_ids))
+            any(
+                not value or value not in document_ids
+                for value in all_prior_disposition_ids
+            )
+            or len(all_prior_disposition_ids)
+            != len(set(all_prior_disposition_ids))
         ):
             raise ValueError("prior fact dispositions are stale or duplicated")
-        claims: list[Mapping[str, Any]] = [dict(row) for row in prior_material_claims]
+        all_checkpoint_calls = [
+            _coerce_provider_call(row) for row in prior_provider_calls
+        ]
+        if any(row.status != "COMPLETE" for row in all_checkpoint_calls):
+            raise ValueError("only completed fact provider calls may be resumed")
+        coverage_complete_document_ids = {
+            document_id
+            for call in all_checkpoint_calls
+            if call.coverage_audit_performed
+            and call.extraction_semantics_version
+            == FACT_EXTRACTION_SEMANTICS_VERSION
+            for document_id in call.document_ids
+        }
+        coverage_refresh_document_ids = {
+            str(document["document_id"])
+            for document in prepared
+            if str(document["document_id"])
+            in set(all_prior_disposition_ids)
+            and str(document["document_id"])
+            not in coverage_complete_document_ids
+            and bool(
+                set(document.get("objective_ids") or ())
+                & coverage_gap_objective_ids
+            )
+        }
+        retained_prior_disposition_ids = (
+            set(all_prior_disposition_ids)
+            - coverage_refresh_document_ids
+        )
+        dispositions: list[Mapping[str, Any]] = [
+            row
+            for row in all_prior_dispositions
+            if str(row.get("document_id") or "")
+            in retained_prior_disposition_ids
+        ]
+        claims: list[Mapping[str, Any]] = [
+            dict(row) for row in prior_material_claims
+        ]
         claim_ids = [str(row.get("claim_id") or "") for row in claims]
         if any(not value for value in claim_ids) or len(claim_ids) != len(set(claim_ids)):
             raise ValueError("prior material claims require unique ids")
         if any(
-            str(row.get("document_id") or "") not in set(prior_disposition_ids)
+            str(row.get("document_id") or "")
+            not in set(all_prior_disposition_ids)
             or str(row.get("target_id") or "") != target_id
             or str(row.get("as_of_date") or "") != as_of_date
             for row in claims
         ):
             raise ValueError("prior material claims are outside resumed document scope")
         rejections: list[FactExtractionRejection] = [
-            _coerce_rejection(row) for row in prior_rejections
+            _coerce_rejection(row)
+            for row in prior_rejections
         ]
-        checkpoint_calls = [
-            _coerce_provider_call(row) for row in prior_provider_calls
-        ]
-        if any(row.status != "COMPLETE" for row in checkpoint_calls):
-            raise ValueError("only completed fact provider calls may be resumed")
         pending: list[str] = []
         provider_name = str(
             getattr(self.provider, "provider_name", type(self.provider).__name__)
         )
-        parent_disposition_ids = set(prior_disposition_ids)
+        parent_disposition_ids = set(retained_prior_disposition_ids)
         remaining = tuple(
             row
             for row in prepared
             if str(row["document_id"]) not in parent_disposition_ids
         )
+        coverage_required_document_ids = {
+            str(document["document_id"])
+            for document in prepared
+            if (
+                str(document["document_id"])
+                in coverage_refresh_document_ids
+                or str(document["document_id"])
+                not in set(all_prior_disposition_ids)
+            )
+            and bool(
+                set(document.get("objective_ids") or ())
+                & coverage_gap_objective_ids
+            )
+        }
         all_transport_documents = tuple(
             chunk
             for document in remaining
@@ -647,15 +726,24 @@ class ResearcherEvidenceFactExtractor:
             resumed_transport_dispositions,
             resumed_transport_chunk_ids,
         ) = _resume_completed_transport_chunks(
-            calls=checkpoint_calls,
+            calls=tuple(
+                call
+                for call in all_checkpoint_calls
+                if not (
+                    set(call.document_ids)
+                    & coverage_refresh_document_ids
+                )
+            ),
             transport_documents=all_transport_documents,
             target_id=target_id,
             as_of_date=as_of_date,
         )
         calls: list[FactExtractionProviderCall] = [
             row
-            for row in checkpoint_calls
-            if set(row.document_ids).issubset(parent_disposition_ids)
+            for row in all_checkpoint_calls
+            if set(row.document_ids).issubset(
+                set(all_prior_disposition_ids)
+            )
         ]
         calls.extend(resumed_transport_calls)
         claims.extend(resumed_transport_claims)
@@ -700,10 +788,32 @@ class ResearcherEvidenceFactExtractor:
         max_transport_chunk_chars = 0
         pagination_continuation_call_count = 0
         maximum_pagination_page_count = 1
-        document_batches = _document_batches(
-            transport_documents,
-            max_documents=self.documents_per_call,
-            max_chars=self.max_document_chars_per_call,
+        coverage_audit_call_count = 0
+        coverage_audit_document_ids: set[str] = set()
+        coverage_audit_new_fact_count = 0
+        coverage_refresh_transport_documents = tuple(
+            row
+            for row in transport_documents
+            if str(row["document_id"])
+            in coverage_refresh_document_ids
+        )
+        primary_transport_documents = tuple(
+            row
+            for row in transport_documents
+            if str(row["document_id"])
+            not in coverage_refresh_document_ids
+        )
+        document_batches = (
+            *_document_batches(
+                coverage_refresh_transport_documents,
+                max_documents=self.documents_per_call,
+                max_chars=self.max_document_chars_per_call,
+            ),
+            *_document_batches(
+                primary_transport_documents,
+                max_documents=self.documents_per_call,
+                max_chars=self.max_document_chars_per_call,
+            ),
         )
         canonical_state_refresh_barrier_count = 0
         for batch_index, batch in enumerate(document_batches):
@@ -743,6 +853,13 @@ class ResearcherEvidenceFactExtractor:
                 "as_of_date": as_of_date,
                 "document_ids": [str(row["document_id"]) for row in batch],
             }
+            batch_document_ids = {
+                str(row["document_id"]) for row in batch
+            }
+            coverage_only_batch = bool(batch_document_ids) and (
+                batch_document_ids
+                <= coverage_refresh_document_ids
+            )
             batch_transport_chunk_ids = _batch_transport_chunk_ids(batch)
             if any(
                 int(row.get("transport_chunk_count") or 1) > 1
@@ -867,15 +984,63 @@ class ResearcherEvidenceFactExtractor:
                 max_transport_chunk_chars,
                 *(len(str(row.get("content_text") or "")) for row in batch),
             )
+            attempt_base_payload = payload
             attempt_payload = payload
             provider_attempt_count = 0
             validation_retry_used = False
             validation_retry_count = 0
             pagination_page_number = 1
+            coverage_audit_performed = False
+            carried_rejections: list[FactExtractionRejection] = []
+            carried_feedback: list[str] = []
+            carried_completion_flag_reconciled = False
             previously_accepted_claims: dict[str, Mapping[str, Any]] = {}
+            primary_accepted_claim_ids: set[str] = set()
             previously_rejected_material_quote_failures: dict[
                 tuple[str, str], FactExtractionRejection
             ] = {}
+            if coverage_only_batch:
+                content_by_document_id = {
+                    str(row["document_id"]): str(
+                        row.get("content_text") or ""
+                    )
+                    for row in batch
+                }
+                previously_accepted_claims = {
+                    str(claim["claim_id"]): claim
+                    for claim in claims
+                    if str(claim.get("document_id") or "")
+                    in batch_document_ids
+                    and str(claim.get("exact_quote") or "")
+                    in content_by_document_id.get(
+                        str(claim.get("document_id") or ""),
+                        "",
+                    )
+                }
+                primary_accepted_claim_ids = set(
+                    previously_accepted_claims
+                )
+                coverage_audit_performed = True
+                coverage_audit_call_count += 1
+                coverage_audit_document_ids.update(
+                    batch_document_ids
+                )
+                attempt_base_payload = _coverage_audit_attempt_payload(
+                    primary_payload=payload,
+                    required_document_ids=sorted(
+                        batch_document_ids
+                    ),
+                    primary_document_dispositions=tuple(
+                        row
+                        for row in all_prior_dispositions
+                        if str(row.get("document_id") or "")
+                        in batch_document_ids
+                    ),
+                    previously_accepted_claims=tuple(
+                        previously_accepted_claims.values()
+                    ),
+                )
+                attempt_payload = attempt_base_payload
             while True:
                 max_attempt_payload_chars = max(
                     max_attempt_payload_chars,
@@ -926,6 +1091,9 @@ class ResearcherEvidenceFactExtractor:
                             response_hash=None,
                             provider_attempt_count=provider_attempt_count,
                             validation_retry_used=validation_retry_used,
+                            coverage_audit_performed=(
+                                coverage_audit_performed
+                            ),
                             transport_chunk_ids=(
                                 batch_transport_chunk_ids
                             ),
@@ -974,14 +1142,13 @@ class ResearcherEvidenceFactExtractor:
                             str(row["document_id"]) for row in batch
                         }
                     },
-                    previously_accepted_exact_quotes={
+                    previously_accepted_semantic_identities={
                         document_id: tuple(
                             dict.fromkeys(
-                                str(claim.get("exact_quote") or "")
+                                _fact_semantic_identity(claim)
                                 for claim in previously_accepted_claims.values()
                                 if str(claim.get("document_id") or "")
                                 == document_id
-                                and str(claim.get("exact_quote") or "")
                             )
                         )
                         for document_id in {
@@ -1049,7 +1216,7 @@ class ResearcherEvidenceFactExtractor:
                     )
                     attempt_payload = scrub_blind_research_payload(
                         {
-                            **payload,
+                            **attempt_base_payload,
                             "fact_extraction_continuation_context": {
                                 "page_number": pagination_page_number,
                                 "page_fact_limit": (
@@ -1120,6 +1287,49 @@ class ResearcherEvidenceFactExtractor:
                             },
                         }
                     )
+                    continue
+                if (
+                    not batch_pending
+                    and extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
+                    and not coverage_audit_performed
+                    and bool(
+                        required_page_ids
+                        & coverage_required_document_ids
+                    )
+                ):
+                    for claim in batch_claims:
+                        previously_accepted_claims[
+                            str(claim["claim_id"])
+                        ] = claim
+                    carried_rejections.extend(batch_rejections)
+                    carried_feedback.extend(batch_feedback)
+                    carried_completion_flag_reconciled = (
+                        carried_completion_flag_reconciled
+                        or batch_completion_flag_reconciled
+                    )
+                    coverage_audit_performed = True
+                    coverage_audit_call_count += 1
+                    coverage_audit_document_ids.update(
+                        str(row["document_id"]) for row in batch
+                    )
+                    primary_accepted_claim_ids = set(
+                        previously_accepted_claims
+                    )
+                    validation_retry_count = 0
+                    pagination_page_number = 1
+                    attempt_base_payload = _coverage_audit_attempt_payload(
+                        primary_payload=payload,
+                        required_document_ids=sorted(
+                            required_page_ids
+                        ),
+                        primary_document_dispositions=(
+                            batch_dispositions
+                        ),
+                        previously_accepted_claims=tuple(
+                            previously_accepted_claims.values()
+                        ),
+                    )
+                    attempt_payload = attempt_base_payload
                     continue
                 if batch_pending:
                     _invalidate_semantically_invalid_provider_response(
@@ -1226,7 +1436,7 @@ class ResearcherEvidenceFactExtractor:
                     }
                     attempt_payload = scrub_blind_research_payload(
                         {
-                            **payload,
+                            **attempt_base_payload,
                             "fact_extraction_retry_context": {
                                 "rewrite_attempt": validation_retry_count,
                                 "maximum_rewrite_attempts": 2,
@@ -1335,6 +1545,18 @@ class ResearcherEvidenceFactExtractor:
                         }
                     )
                     continue
+                batch_rejections = [
+                    *carried_rejections,
+                    *batch_rejections,
+                ]
+                batch_feedback = [
+                    *carried_feedback,
+                    *batch_feedback,
+                ]
+                batch_completion_flag_reconciled = (
+                    carried_completion_flag_reconciled
+                    or batch_completion_flag_reconciled
+                )
                 combined_batch_claims = {
                     **previously_accepted_claims,
                     **{
@@ -1342,6 +1564,12 @@ class ResearcherEvidenceFactExtractor:
                         for claim in batch_claims
                     },
                 }
+                if coverage_audit_performed:
+                    coverage_audit_new_fact_count += sum(
+                        claim_id
+                        not in primary_accepted_claim_ids
+                        for claim_id in combined_batch_claims
+                    )
                 claims.extend(combined_batch_claims.values())
                 rejections.extend(batch_rejections)
                 if batch_pending:
@@ -1376,6 +1604,9 @@ class ResearcherEvidenceFactExtractor:
                         validation_retry_used=validation_retry_used,
                         completion_flag_reconciled=(
                             batch_completion_flag_reconciled
+                        ),
+                        coverage_audit_performed=(
+                            coverage_audit_performed
                         ),
                         transport_chunk_ids=batch_transport_chunk_ids,
                         accepted_claims=(
@@ -1464,6 +1695,18 @@ class ResearcherEvidenceFactExtractor:
         research_gap_feedback.extend(
             f"FACT_EXTRACTION_RETRY_CONTEXT:{reason}" for reason in pending
         )
+        coverage_audited_document_ids = {
+            document_id
+            for call in calls
+            if call.status == "COMPLETE"
+            and call.coverage_audit_performed
+            for document_id in call.document_ids
+        }
+        disposition_document_ids = {
+            str(row.get("document_id") or "")
+            for row in dispositions
+            if str(row.get("document_id") or "")
+        }
         critical_counts = {
             "snippet_or_non_full_document_input_count": sum(
                 bool(row.get("snippet_only"))
@@ -1486,6 +1729,17 @@ class ResearcherEvidenceFactExtractor:
                 compilation.accepted_claim_without_fact_count
             ),
             "provider_or_semantic_pending_count": len(pending),
+            "production_document_without_coverage_audit_count": (
+                len(
+                    (
+                        disposition_document_ids
+                        & coverage_required_document_ids
+                    )
+                    - coverage_audited_document_ids
+                )
+                if extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
+                else 0
+            ),
             "future_source_count": sum(
                 date.fromisoformat(str(row["published_at"])[:10]) > cutoff
                 for row in prepared
@@ -1523,8 +1777,48 @@ class ResearcherEvidenceFactExtractor:
                 maximum_pagination_page_count
             ),
             "extraction_mode": extraction_mode,
+            "extraction_semantics_version": (
+                FACT_EXTRACTION_SEMANTICS_VERSION
+            ),
+            "stale_semantics_disposition_count": (
+                stale_semantics_disposition_count
+            ),
+            "stale_semantics_provider_call_count": (
+                stale_semantics_provider_call_count
+            ),
+            "stale_semantics_checkpoint_reextracted": False,
+            "stale_semantics_checkpoint_coverage_refreshed": bool(
+                coverage_refresh_document_ids
+                & stale_semantics_disposition_ids
+            ),
+            "prior_checkpoint_coverage_refreshed": bool(
+                coverage_refresh_document_ids
+            ),
+            "preserved_prior_claim_count": len(
+                prior_material_claims
+            ),
+            "base_reextraction_document_count": 0,
             "production_objective_local_completion": (
                 extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
+            ),
+            "coverage_audit_required_for_production": (
+                extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
+            ),
+            "coverage_gap_objective_count": len(
+                coverage_gap_objective_ids
+            ),
+            "coverage_audit_required_document_count": len(
+                coverage_required_document_ids
+            ),
+            "coverage_refresh_prior_document_count": len(
+                coverage_refresh_document_ids
+            ),
+            "coverage_audit_call_count": coverage_audit_call_count,
+            "coverage_audit_document_count": len(
+                coverage_audit_document_ids
+            ),
+            "coverage_audit_new_fact_count": (
+                coverage_audit_new_fact_count
             ),
             "transport_chunk_size": self.documents_per_call,
             "transport_character_bound": self.max_document_chars_per_call,
@@ -2106,6 +2400,9 @@ def _reconcile_transport_chunks(
         output_dispositions.append(
             {
                 "schema_version": "e2r_v5_fact_document_disposition_v1",
+                "extraction_semantics_version": (
+                    FACT_EXTRACTION_SEMANTICS_VERSION
+                ),
                 "batch_id": stable_intelligence_id(
                     "FACTDOCAGG",
                     {
@@ -2149,7 +2446,7 @@ def _validate_response(
     prompt_hash: str,
     response_hash: str,
     previously_accepted_claim_counts: Mapping[str, int] | None = None,
-    previously_accepted_exact_quotes: (
+    previously_accepted_semantic_identities: (
         Mapping[str, Sequence[str]] | None
     ) = None,
     previously_rejected_material_quote_failure_counts: (
@@ -2187,14 +2484,14 @@ def _validate_response(
         ).items()
         if str(document_id) in document_by_id and int(count) > 0
     }
-    accepted_quotes_by_document = {
+    accepted_identities_by_document = {
         str(document_id): frozenset(
-            _literal_quote_whitespace_identity(value)
+            str(value)
             for value in values
-            if str(value).strip()
+            if str(value)
         )
         for document_id, values in (
-            previously_accepted_exact_quotes or {}
+            previously_accepted_semantic_identities or {}
         ).items()
         if str(document_id) in document_by_id
     }
@@ -2217,8 +2514,11 @@ def _validate_response(
         if (
             material
             and proposed_exact_quote
-            and _literal_quote_whitespace_identity(proposed_exact_quote)
-            in accepted_quotes_by_document.get(document_id, frozenset())
+            and _fact_semantic_identity(proposal)
+            in accepted_identities_by_document.get(
+                document_id,
+                frozenset(),
+            )
         ):
             rejections.append(
                 FactExtractionRejection(
@@ -2354,6 +2654,9 @@ def _validate_response(
         dispositions.append(
             {
                 "schema_version": "e2r_v5_fact_document_disposition_v1",
+                "extraction_semantics_version": (
+                    FACT_EXTRACTION_SEMANTICS_VERSION
+                ),
                 "batch_id": batch_id,
                 "document_id": document_id,
                 "status": status,
@@ -2426,6 +2729,44 @@ def _literal_quote_whitespace_identity(value: Any) -> str:
     """Identify the same literal quote despite transport/OCR spacing only."""
 
     return "".join(str(value).split()).casefold()
+
+
+def _fact_semantic_identity(
+    fact: Mapping[str, Any],
+) -> str:
+    """Identify a duplicate by quote plus normalized economic meaning."""
+
+    return stable_intelligence_id(
+        "FACTSEM",
+        {
+            "document_id": str(fact.get("document_id") or ""),
+            "exact_quote": _literal_quote_whitespace_identity(
+                fact.get("exact_quote")
+            ),
+            "question_family_id": str(
+                fact.get("question_family_id") or ""
+            ),
+            "subject_id": str(fact.get("subject_id") or ""),
+            "predicate_family": str(
+                fact.get("predicate_family") or ""
+            ),
+            "normalized_object": str(
+                fact.get("normalized_object") or ""
+            ),
+            "period": str(fact.get("period") or ""),
+            "direction": str(fact.get("direction") or ""),
+            "current_lifecycle": str(
+                fact.get("current_lifecycle") or ""
+            ),
+            "objective_ids": sorted(
+                str(value)
+                for value in fact.get("objective_ids") or ()
+            ),
+            "objective_relation": str(
+                fact.get("objective_relation") or ""
+            ),
+        },
+    )
 
 
 def _invalidate_semantically_invalid_provider_response(
@@ -2857,6 +3198,234 @@ def _json_character_count(value: Any) -> int:
     )
 
 
+def _coverage_gap_objective_ids(
+    *,
+    open_objectives: Sequence[Mapping[str, Any]],
+    score_gap_context: Mapping[str, Any],
+) -> frozenset[str]:
+    """Route coverage audit only to objective lineage with a live gap.
+
+    The router reads structured gap fields, never company names, URLs, source
+    prose, or fixed research keywords.  Economic selection remains with the
+    provider during the coverage audit itself.
+    """
+
+    objective_component_by_id = {
+        str(row.get("objective_id") or "").strip(): str(
+            row.get("component_id") or ""
+        ).strip()
+        for row in open_objectives
+        if str(row.get("objective_id") or "").strip()
+    }
+    open_objective_ids = frozenset(objective_component_by_id)
+    unresolved_objective_ids: set[str] = set()
+    unresolved_component_ids: set[str] = set()
+    nonempty_gap_fields = frozenset(
+        {
+            "missing_fact_needs",
+            "missing_material_facts",
+            "source_family_gaps",
+            "parser_or_extractor_failures",
+            "failure_assessments",
+            "unresolved_material_questions",
+            "unresolved_document_ids",
+            "pending_reasons",
+            "query_direction_briefs",
+            "new_source_family_directions",
+        }
+    )
+    incomplete_boolean_fields = frozenset(
+        {
+            "memo_sufficient",
+            "source_research_sufficient",
+            "structured_data_complete",
+            "research_complete",
+            "extraction_complete",
+            "resolved",
+        }
+    )
+
+    def nonempty(value: Any) -> bool:
+        if value is None or value is False:
+            return False
+        if isinstance(value, (str, bytes)):
+            return bool(str(value).strip())
+        if isinstance(value, Mapping):
+            return bool(value)
+        if isinstance(value, Sequence):
+            return bool(tuple(value))
+        return bool(value)
+
+    def visit(value: Any) -> None:
+        if isinstance(value, Mapping):
+            status = str(value.get("status") or "").strip().upper()
+            declares_gap = (
+                any(
+                    value.get(key) is False
+                    for key in incomplete_boolean_fields
+                    if key in value
+                )
+                or any(
+                    nonempty(value.get(key))
+                    for key in nonempty_gap_fields
+                    if key in value
+                )
+                or any(
+                    token in status
+                    for token in (
+                        "PENDING",
+                        "INCOMPLETE",
+                        "FAILED",
+                        "NEXT_RESEARCH_REQUIRED",
+                    )
+                )
+                or (
+                    value.get("retryable") is True
+                    and bool(
+                        str(value.get("classification") or "").strip()
+                    )
+                )
+            )
+            for key in (
+                "unresolved_objective_ids",
+                "missing_objective_ids",
+                "pending_objective_ids",
+            ):
+                for objective_id in value.get(key) or ():
+                    normalized = str(objective_id).strip()
+                    if normalized in open_objective_ids:
+                        unresolved_objective_ids.add(normalized)
+            for key in (
+                "unresolved_component_ids",
+                "missing_component_ids",
+                "pending_component_ids",
+            ):
+                for component_id in value.get(key) or ():
+                    normalized = str(component_id).strip()
+                    if normalized:
+                        unresolved_component_ids.add(normalized)
+            if declares_gap:
+                direct_objective_ids = {
+                    str(value.get("objective_id") or "").strip(),
+                    *(
+                        str(row).strip()
+                        for row in value.get("objective_ids") or ()
+                    ),
+                }
+                unresolved_objective_ids.update(
+                    direct_objective_ids & open_objective_ids
+                )
+                component_id = str(
+                    value.get("component_id") or ""
+                ).strip()
+                if component_id:
+                    unresolved_component_ids.add(component_id)
+            for nested in value.values():
+                visit(nested)
+            return
+        if isinstance(value, Sequence) and not isinstance(
+            value,
+            (str, bytes),
+        ):
+            for nested in value:
+                visit(nested)
+
+    visit(score_gap_context)
+    unresolved_objective_ids.update(
+        objective_id
+        for objective_id, component_id
+        in objective_component_by_id.items()
+        if component_id in unresolved_component_ids
+    )
+    return frozenset(unresolved_objective_ids)
+
+
+def _coverage_audit_fact_row(
+    claim: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Project accepted facts needed to prevent coverage-audit duplication."""
+
+    return {
+        "document_id": str(claim["document_id"]),
+        "question_family_id": str(claim["question_family_id"]),
+        "subject_id": str(claim["subject_id"]),
+        "predicate_family": str(claim["predicate_family"]),
+        "normalized_object": str(claim["normalized_object"]),
+        "period": str(claim["period"]),
+        "direction": str(claim["direction"]),
+        "current_lifecycle": str(claim["current_lifecycle"]),
+        **(
+            {
+                "objective_ids": list(claim["objective_ids"]),
+                "objective_relation": str(claim["objective_relation"]),
+            }
+            if claim.get("objective_ids")
+            else {}
+        ),
+        "exact_quote": str(claim["exact_quote"]),
+    }
+
+
+def _coverage_audit_attempt_payload(
+    *,
+    primary_payload: Mapping[str, Any],
+    required_document_ids: Sequence[str],
+    primary_document_dispositions: Sequence[Mapping[str, Any]],
+    previously_accepted_claims: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    return scrub_blind_research_payload(
+        {
+            **primary_payload,
+            "fact_extraction_coverage_audit_context": {
+                "audit_round": 1,
+                "required_document_ids": sorted(required_document_ids),
+                "primary_document_dispositions": [
+                    dict(row) for row in primary_document_dispositions
+                ],
+                "previously_accepted_facts": [
+                    _coverage_audit_fact_row(claim)
+                    for claim in previously_accepted_claims
+                ],
+                "instruction": (
+                    "Perform one independent coverage review of the same "
+                    "supplied full documents from start to finish. Return "
+                    "only distinct objective-linked facts or counterfacts "
+                    "omitted from previously_accepted_facts. Recheck named "
+                    "relationships and attribution spans such as events, "
+                    "sessions, speakers, participants, products, platforms, "
+                    "and counterparties, and recheck source-quality or "
+                    "uncertainty spans such as preliminary or unaudited "
+                    "status, review or change risk, independent-verification "
+                    "limits, and forward-looking risk. These are semantic "
+                    "coverage families, not a keyword checklist. Do not "
+                    "infer a fact or source absence from silence, and do not "
+                    "repeat an accepted quote with the same normalized "
+                    "economic identity. The same literal may be reused only "
+                    "when it explicitly supports a materially distinct "
+                    "objective-linked predicate or limitation; do not split "
+                    "one meaning into cosmetic duplicates. If no "
+                    "omitted distinct fact remains, return an empty facts "
+                    "array, an empty unresolved_document_ids array, and "
+                    "extraction_complete=true. Use FACTS_EXTRACTED only when "
+                    "the supplied document or transport chunk has an "
+                    "accepted fact in this context; otherwise return its "
+                    "accurate disposition."
+                ),
+            },
+        }
+    )
+
+
+def _extraction_semantics_version(
+    row: FactExtractionProviderCall
+    | FactExtractionRejection
+    | Mapping[str, Any],
+) -> str:
+    if isinstance(row, (FactExtractionProviderCall, FactExtractionRejection)):
+        return row.extraction_semantics_version
+    return str(row.get("extraction_semantics_version") or "")
+
+
 def _coerce_provider_call(
     row: FactExtractionProviderCall | Mapping[str, Any],
 ) -> FactExtractionProviderCall:
@@ -2889,6 +3458,12 @@ def _coerce_provider_call(
             if "accepted_claims" in row
             else None
         ),
+        coverage_audit_performed=bool(
+            row.get("coverage_audit_performed")
+        ),
+        extraction_semantics_version=str(
+            row.get("extraction_semantics_version") or ""
+        ),
         schema_version=str(
             row.get("schema_version")
             or "e2r_v5_fact_extraction_provider_call_v1"
@@ -2911,6 +3486,9 @@ def _coerce_rejection(
             str(row["proposed_exact_quote"])
             if row.get("proposed_exact_quote")
             else None
+        ),
+        extraction_semantics_version=str(
+            row.get("extraction_semantics_version") or ""
         ),
     )
 

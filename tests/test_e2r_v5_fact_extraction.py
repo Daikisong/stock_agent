@@ -224,6 +224,93 @@ class ObjectiveLocalFactProvider(FactProvider):
         return response
 
 
+class CoverageAuditOmissionProvider(ObjectiveLocalFactProvider):
+    def __init__(
+        self,
+        *,
+        omitted_quote: str,
+        omitted_predicate_family: str,
+        omitted_normalized_object: str,
+        direction: str,
+    ) -> None:
+        super().__init__()
+        self.omitted_quote = omitted_quote
+        self.omitted_predicate_family = omitted_predicate_family
+        self.omitted_normalized_object = omitted_normalized_object
+        self.direction = direction
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        if "fact_extraction_coverage_audit_context" not in payload:
+            return response
+        response["facts"] = [dict(response["facts"][0])]
+        response["facts"][0].update(
+            {
+                "question_family_id": "independent_coverage_review",
+                "subject_id": "target_information_quality",
+                "subject": "Current Corp source-backed information",
+                "predicate": self.omitted_predicate_family,
+                "predicate_family": self.omitted_predicate_family,
+                "normalized_object": self.omitted_normalized_object,
+                "value": self.omitted_normalized_object,
+                "direction": self.direction,
+                "exact_quote": self.omitted_quote,
+                "materiality_rationale": (
+                    "The omitted span directly changes objective confidence."
+                ),
+            }
+        )
+        return response
+
+
+class SameQuoteDistinctSemanticCoverageProvider(
+    ObjectiveLocalFactProvider
+):
+    shared_quote = (
+        "In this reporting section, there is no material long-term "
+        "supply contract requiring separate disclosure."
+    )
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        response["facts"] = [dict(response["facts"][0])]
+        fact = response["facts"][0]
+        fact.update(
+            {
+                "question_family_id": "contract_existence",
+                "predicate": "reported no material contract",
+                "predicate_family": "material_contract_existence",
+                "normalized_object": "no_material_contract_in_section",
+                "value": "none_reported",
+                "direction": "COUNTER",
+                "exact_quote": self.shared_quote,
+            }
+        )
+        if payload.get("fact_extraction_coverage_audit_context"):
+            fact.update(
+                {
+                    "question_family_id": (
+                        "contract_term_information_coverage"
+                    ),
+                    "predicate": (
+                        "bounded section provides no separately "
+                        "disclosed material contract terms"
+                    ),
+                    "predicate_family": (
+                        "contract_term_disclosure_limitation"
+                    ),
+                    "normalized_object": (
+                        "section_scoped_contract_term_limitation"
+                    ),
+                }
+            )
+        return response
+
+
 class ObjectiveLocalPagedFactProvider(PagedFactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(
@@ -241,6 +328,20 @@ class ObjectiveLocalPagedFactProvider(PagedFactProvider):
                 str(fact["document_id"])
             ]
             fact["objective_relation"] = "ADVANCE"
+        if payload.get("fact_extraction_coverage_audit_context"):
+            response["facts"] = []
+            response["document_dispositions"] = [
+                {
+                    "document_id": row["document_id"],
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": (
+                        "독립 coverage 재검토에서 누락된 추가 사실이 없다."
+                    ),
+                }
+                for row in payload["full_documents"]
+            ]
+            response["unresolved_document_ids"] = []
+            response["extraction_complete"] = True
         return response
 
 
@@ -554,6 +655,14 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         )
         self.assertIn(
             "official counterparty catalog",
+            extraction_instruction,
+        )
+        self.assertIn(
+            "bounded disclosure section",
+            extraction_instruction,
+        )
+        self.assertIn(
+            "never generalize it into document-wide",
             extraction_instruction,
         )
         self.assertIn(
@@ -2123,7 +2232,7 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         )
 
         self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
-        self.assertEqual(len(provider.calls), 1)
+        self.assertEqual(len(provider.calls), 2)
         self.assertEqual(result.material_claims, ())
         self.assertEqual(
             result.document_dispositions[0]["status"],
@@ -2138,6 +2247,461 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         )
         self.assertTrue(
             result.audit["production_objective_local_completion"]
+        )
+        self.assertIn(
+            "fact_extraction_coverage_audit_context",
+            provider.calls[1]["payload"],
+        )
+
+    def test_production_coverage_audit_recovers_named_event_session_speaker(
+        self,
+    ) -> None:
+        omitted_quote = (
+            "At Open Compute Forum 2026, the Scaling Memory session "
+            "featured systems engineer Alex Kim discussing Current Corp HBM4."
+        )
+        provider = CoverageAuditOmissionProvider(
+            omitted_quote=omitted_quote,
+            omitted_predicate_family="named_event_session_participation",
+            omitted_normalized_object=(
+                "named_event_session_speaker_technical_participation"
+            ),
+            direction="POSITIVE",
+        )
+        document = dict(
+            _document(
+                "DOC-COVERAGE-EVENT",
+                "COUNTERPARTY_OFFICIAL_EVENT",
+                "COUNTERPARTY",
+            )
+        )
+        text = f"{document['content_text']} {omitted_quote}"
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(
+                {
+                    "objective_id": "OBJECTIVE-1",
+                    "component_id": "information_confidence",
+                    "research_objective": (
+                        "Verify independent technical participation and attribution."
+                    ),
+                },
+            ),
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "component_findings": [
+                        {
+                            "component_id": "information_confidence",
+                            "memo_sufficient": False,
+                            "missing_fact_needs": [
+                                "independent technical attribution"
+                            ],
+                        }
+                    ]
+                }
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 2)
+        self.assertEqual(len(result.material_claims), 2)
+        self.assertTrue(
+            any(
+                row["exact_quote"] == omitted_quote
+                and row["predicate_family"]
+                == "named_event_session_participation"
+                for row in result.material_claims
+            )
+        )
+        coverage_context = provider.calls[1]["payload"][
+            "fact_extraction_coverage_audit_context"
+        ]
+        self.assertEqual(
+            len(coverage_context["previously_accepted_facts"]),
+            1,
+        )
+        self.assertEqual(result.audit["coverage_audit_call_count"], 1)
+        self.assertEqual(result.audit["coverage_audit_new_fact_count"], 1)
+        self.assertEqual(
+            result.audit["critical_counts"][
+                "production_document_without_coverage_audit_count"
+            ],
+            0,
+        )
+
+    def test_production_coverage_audit_recovers_unaudited_change_risk(
+        self,
+    ) -> None:
+        omitted_quote = (
+            "The results are unaudited, remain subject to external review "
+            "and may change; forward-looking statements involve known and "
+            "unknown risks."
+        )
+        provider = CoverageAuditOmissionProvider(
+            omitted_quote=omitted_quote,
+            omitted_predicate_family="reported_information_uncertainty",
+            omitted_normalized_object=(
+                "unaudited_review_change_and_forward_looking_risk"
+            ),
+            direction="COUNTER",
+        )
+        document = dict(
+            _document(
+                "DOC-COVERAGE-UNCERTAINTY",
+                "ISSUER_EARNINGS_RELEASE",
+                "ISSUER",
+            )
+        )
+        text = f"{document['content_text']} {omitted_quote}"
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(
+                {
+                    "objective_id": "OBJECTIVE-1",
+                    "component_id": "information_confidence",
+                    "research_objective": (
+                        "Assess the certainty of reported results and forecasts."
+                    ),
+                },
+            ),
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "component_findings": [
+                        {
+                            "component_id": "information_confidence",
+                            "memo_sufficient": False,
+                            "missing_fact_needs": [
+                                "reported information uncertainty"
+                            ],
+                        }
+                    ]
+                }
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(result.material_claims), 2)
+        recovered = [
+            row
+            for row in result.material_claims
+            if row["exact_quote"] == omitted_quote
+        ]
+        self.assertEqual(len(recovered), 1)
+        self.assertEqual(recovered[0]["direction"], "COUNTER")
+        self.assertEqual(
+            recovered[0]["predicate_family"],
+            "reported_information_uncertainty",
+        )
+        instruction = provider.calls[1]["payload"][
+            "fact_extraction_coverage_audit_context"
+        ]["instruction"]
+        self.assertIn("unaudited", instruction)
+        self.assertIn("forward-looking", instruction)
+
+    def test_same_quote_with_distinct_semantic_identity_is_not_dropped(
+        self,
+    ) -> None:
+        provider = SameQuoteDistinctSemanticCoverageProvider()
+        document = dict(
+            _document(
+                "DOC-SCOPED-CONTRACT-LIMIT",
+                "ISSUER_FILING",
+                "ISSUER",
+            )
+        )
+        text = (
+            f"{document['content_text']} "
+            f"{provider.shared_quote}"
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(
+                {
+                    "objective_id": "OBJECTIVE-1",
+                    "component_id": "information_confidence",
+                },
+            ),
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "component_findings": [
+                        {
+                            "component_id": "information_confidence",
+                            "memo_sufficient": False,
+                            "missing_fact_needs": [
+                                "bounded contract disclosure coverage"
+                            ],
+                        }
+                    ]
+                }
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        same_quote_claims = [
+            row
+            for row in result.material_claims
+            if row["exact_quote"] == provider.shared_quote
+        ]
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(same_quote_claims), 2)
+        self.assertEqual(
+            {
+                row["predicate_family"]
+                for row in same_quote_claims
+            },
+            {
+                "material_contract_existence",
+                "contract_term_disclosure_limitation",
+            },
+        )
+        self.assertFalse(
+            any(
+                row.reason
+                == "PREVIOUSLY_ACCEPTED_EXACT_QUOTE_REPEATED"
+                for row in result.rejections
+            )
+        )
+
+    def test_clean_resume_refreshes_legacy_coverage_without_base_reextract(
+        self,
+    ) -> None:
+        document = _document(
+            "DOC-LEGACY-COVERAGE",
+            "ISSUER_PRESENTATION",
+            "ISSUER",
+        )
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "information_confidence",
+        }
+        first = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveLocalFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        legacy_dispositions = []
+        for row in first.document_dispositions:
+            legacy = dict(row)
+            legacy.pop("extraction_semantics_version", None)
+            legacy_dispositions.append(legacy)
+        legacy_calls = []
+        for row in first.provider_calls:
+            legacy = dict(row.to_dict())
+            legacy.pop("extraction_semantics_version", None)
+            legacy_calls.append(legacy)
+        legacy_rejections = []
+        for row in first.rejections:
+            legacy = dict(row.to_dict())
+            legacy.pop("extraction_semantics_version", None)
+            legacy_rejections.append(legacy)
+
+        resumed_provider = ObjectiveLocalFactProvider()
+        resumed = ResearcherEvidenceFactExtractor(
+            provider=resumed_provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            prior_material_claims=first.material_claims,
+            prior_document_dispositions=legacy_dispositions,
+            prior_provider_calls=legacy_calls,
+            prior_rejections=legacy_rejections,
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "component_findings": [
+                        {
+                            "component_id": "information_confidence",
+                            "memo_sufficient": False,
+                            "missing_fact_needs": [
+                                "independent coverage review"
+                            ],
+                        }
+                    ]
+                }
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(resumed_provider.calls), 1)
+        self.assertEqual(len(resumed.material_claims), 1)
+        self.assertFalse(
+            resumed.audit["stale_semantics_checkpoint_reextracted"]
+        )
+        self.assertTrue(
+            resumed.audit[
+                "stale_semantics_checkpoint_coverage_refreshed"
+            ]
+        )
+        self.assertEqual(
+            resumed.audit["stale_semantics_disposition_count"],
+            1,
+        )
+        self.assertEqual(
+            resumed.audit["base_reextraction_document_count"],
+            0,
+        )
+        self.assertEqual(
+            resumed.audit["critical_counts"][
+                "production_document_without_coverage_audit_count"
+            ],
+            0,
+        )
+
+    def test_gap_lineage_audits_only_relevant_completed_document(
+        self,
+    ) -> None:
+        relevant = dict(
+            _document(
+                "DOC-GAP-RELEVANT",
+                "ISSUER_PRESENTATION",
+                "ISSUER",
+            )
+        )
+        unrelated = dict(
+            _document(
+                "DOC-GAP-UNRELATED",
+                "ISSUER_PRESENTATION",
+                "ISSUER",
+            )
+        )
+        unrelated["objective_ids"] = ["OBJECTIVE-2"]
+        objectives = (
+            {
+                "objective_id": "OBJECTIVE-1",
+                "component_id": "information_confidence",
+            },
+            {
+                "objective_id": "OBJECTIVE-2",
+                "component_id": "capital_allocation",
+            },
+        )
+        first = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveLocalFactProvider(),
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(relevant, unrelated),
+            open_objectives=objectives,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        first_claim_ids = {
+            str(row["claim_id"]) for row in first.material_claims
+        }
+
+        resumed_provider = ObjectiveLocalFactProvider()
+        resumed = ResearcherEvidenceFactExtractor(
+            provider=resumed_provider,
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(relevant, unrelated),
+            open_objectives=objectives,
+            prior_material_claims=first.material_claims,
+            prior_document_dispositions=first.document_dispositions,
+            prior_provider_calls=first.provider_calls,
+            prior_rejections=first.rejections,
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "component_findings": [
+                        {
+                            "component_id": "information_confidence",
+                            "memo_sufficient": False,
+                            "missing_fact_needs": [
+                                "independent attribution coverage"
+                            ],
+                        },
+                        {
+                            "component_id": "capital_allocation",
+                            "memo_sufficient": True,
+                            "missing_fact_needs": [],
+                        },
+                    ]
+                }
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(resumed_provider.calls), 1)
+        self.assertEqual(
+            [
+                row["document_id"]
+                for row in resumed_provider.calls[0]["payload"][
+                    "full_documents"
+                ]
+            ],
+            ["DOC-GAP-RELEVANT"],
+        )
+        self.assertIn(
+            "fact_extraction_coverage_audit_context",
+            resumed_provider.calls[0]["payload"],
+        )
+        self.assertEqual(
+            {
+                str(row["claim_id"])
+                for row in resumed.material_claims
+            },
+            first_claim_ids,
+        )
+        self.assertEqual(
+            resumed.audit["coverage_refresh_prior_document_count"],
+            1,
+        )
+        self.assertEqual(
+            resumed.audit["base_reextraction_document_count"],
+            0,
         )
 
     def test_production_objective_linked_fact_pages_remain_lossless(

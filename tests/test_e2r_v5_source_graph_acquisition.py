@@ -2347,6 +2347,210 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             },
         )
 
+    def test_requested_family_is_not_coverage_until_matched_fetch(self) -> None:
+        query = {
+            "query_id": "QUERY-CUSTOMER",
+            "objective_id": "OBJECTIVE-1",
+            "source_families": ["CUSTOMER_OFFICIAL"],
+            "execution_status": "SEARCH_EXECUTED",
+        }
+        unrelated_document = {
+            "document_id": "SGDOC-ISSUER",
+            "source_provider": "OpenDart",
+            "source_family": "OPENDART",
+            "objective_ids": ["OBJECTIVE-1"],
+            "evidence_eligible": True,
+        }
+
+        missing = (
+            source_graph_module
+            ._requested_source_family_without_matched_fetch_failures(
+                generated_queries=(query,),
+                documents=(unrelated_document,),
+                candidates=(),
+                facts=(),
+                unresolved_objectives=(
+                    {"objective_id": "OBJECTIVE-1"},
+                ),
+            )
+        )
+
+        self.assertEqual(len(missing), 1)
+        self.assertEqual(
+            missing[0]["failure_reason"],
+            "REQUESTED_SOURCE_FAMILY_WITHOUT_MATCHED_FETCH",
+        )
+        self.assertEqual(
+            missing[0]["source_family"],
+            "CUSTOMER_OFFICIAL",
+        )
+        self.assertFalse(missing[0]["absence_eligible"])
+
+        reached = (
+            source_graph_module
+            ._requested_source_family_without_matched_fetch_failures(
+                generated_queries=(query,),
+                documents=(
+                    unrelated_document,
+                    {
+                        "document_id": "SGDOC-CUSTOMER",
+                        "source_provider": "CustomerOfficialFetcher",
+                        "source_family": "CUSTOMER_OFFICIAL",
+                        "objective_ids": ["OBJECTIVE-1"],
+                        "evidence_eligible": True,
+                    },
+                ),
+                candidates=(),
+                facts=(),
+                unresolved_objectives=(
+                    {"objective_id": "OBJECTIVE-1"},
+                ),
+            )
+        )
+
+        self.assertEqual(reached, ())
+
+        pending = (
+            source_graph_module
+            ._requested_source_family_without_matched_fetch_failures(
+                generated_queries=(query,),
+                documents=(unrelated_document,),
+                candidates=(
+                    {
+                        "objective_ids": ["OBJECTIVE-1"],
+                        "requested_source_families": [
+                            "CUSTOMER_OFFICIAL"
+                        ],
+                        "ranking_status": "PENDING",
+                        "fetch_status": "NOT_STARTED",
+                    },
+                ),
+                facts=(),
+                unresolved_objectives=(
+                    {"objective_id": "OBJECTIVE-1"},
+                ),
+            )
+        )
+
+        self.assertEqual(pending, ())
+
+    def test_supervisor_query_direction_preempts_reference_backlog(
+        self,
+    ) -> None:
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state["status"] = "CHECKPOINT_PENDING"
+        state["generated_queries"] = [
+            {
+                "query_id": "OLD-QUERY",
+                "objective_id": "OBJECTIVE-1",
+                "literal_query": "Current Corp old issuer archive",
+                "source_families": ["ISSUER_NEWSROOM"],
+                "execution_status": "SEARCH_EXECUTED",
+            }
+        ]
+        state["executed_queries"] = [
+            "Current Corp old issuer archive"
+        ]
+        state["search_candidates"] = [
+            {
+                "candidate_id": "REFERENCE-BACKLOG",
+                "target_id": TARGET,
+                "as_of_date": AS_OF_DATE,
+                "url": "https://issuer.example.com/old-menu-link",
+                "normalized_url": (
+                    "https://issuer.example.com/old-menu-link"
+                ),
+                "title": "old inherited reference",
+                "snippet": None,
+                "source": "issuer.example.com",
+                "published_at": None,
+                "rank": 0,
+                "is_pdf": False,
+                "is_report_domain": False,
+                "is_news": False,
+                "is_disclosure": False,
+                "query_ids": ["OLD-QUERY"],
+                "objective_ids": ["OBJECTIVE-1"],
+                "requested_source_families": [
+                    "ISSUER_NEWSROOM"
+                ],
+                "query_lineage_valid": True,
+                "graph_expansion_parent_document_ids": ["OLD-DOC"],
+                "discovery_only": True,
+                "snippet_discovery_only": True,
+                "ranking_status": "PENDING",
+                "fetch_status": "NOT_STARTED",
+            }
+        ]
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        provider = SourceBrainProvider()
+        direct_url = "https://example.com/new-supervisor-route"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result(
+                            "Current Corp material new route",
+                            direct_url,
+                        ),
+                    )
+                }
+            ),
+            fetcher=PageFetcher(
+                fixture_text_by_url={
+                    direct_url: _document_text("supervisor-route")
+                }
+            ),
+            config=SourceGraphAcquisitionConfig(
+                mode="TEST",
+                max_results_per_query=1,
+                max_queries_per_checkpoint=1,
+                max_candidates_per_checkpoint=1,
+                max_fetches_per_checkpoint=1,
+            ),
+            checkpoint=checkpoint,
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "query_direction_briefs": [
+                        {
+                            "objective_id": "OBJECTIVE-1",
+                            "research_need": (
+                                "try a distinct official counterparty route"
+                            ),
+                        }
+                    ]
+                }
+            },
+        )
+
+        self.assertIsNotNone(run.query_generation)
+        ranking_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+        self.assertEqual(
+            [row["url"] for row in ranking_payload["discovery_candidates"]],
+            [direct_url],
+        )
+        reference = next(
+            row
+            for row in run.checkpoint["search_candidates"]
+            if row["candidate_id"] == "REFERENCE-BACKLOG"
+        )
+        self.assertEqual(reference["ranking_status"], "PENDING")
+        self.assertTrue(
+            run.audit[
+                "supervisor_query_direction_prioritized_over_reference_backlog"
+            ]
+        )
+
     def test_graph_keeps_official_structured_independent_and_reference_expansion(self) -> None:
         provider = SourceBrainProvider()
         web_url = "https://www.reuters.com/current-report"
