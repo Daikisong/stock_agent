@@ -326,6 +326,162 @@ class SemanticSaturationReviewer:
                 prompt_hash=_provider_prompt_hash(self.provider, payload),
             )
 
+    def replay_prompt_hash(
+        self,
+        *,
+        persisted_prompt_hash: str,
+        checkpoint: Mapping[str, Any],
+        supervisor_review: ResearchSupervisorReview,
+        component_results: Sequence[ComponentResearchResult],
+        red_team_result: RedTeamResearchResult | None,
+        structured_result: Any | None,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        source_graph_checkpoint: Mapping[str, Any],
+    ) -> str | None:
+        """Prove one old prompt against a lineage-advanced SourceGraph.
+
+        This is deliberately stronger than ignoring ``checkpoint_id``.  The
+        current SourceGraph must be canonical, and its complete loss-accounted
+        saturation projection must equal the immutable old request after only
+        SourceGraph persistence lineage is neutralized.
+        """
+
+        payload = self._validated_lineage_replay_prompt_payload(
+            pending_request_only=False,
+            persisted_prompt_hash=persisted_prompt_hash,
+            checkpoint=checkpoint,
+            supervisor_review=supervisor_review,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            structured_result=structured_result,
+            evidence_facts=evidence_facts,
+            source_graph_checkpoint=source_graph_checkpoint,
+        )
+        if payload is None:
+            return None
+        return persisted_prompt_hash
+
+    def replay_pending_prompt_hash(
+        self,
+        *,
+        persisted_prompt_hash: str,
+        checkpoint: Mapping[str, Any],
+        supervisor_review: ResearchSupervisorReview,
+        component_results: Sequence[ComponentResearchResult],
+        red_team_result: RedTeamResearchResult | None,
+        structured_result: Any | None,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        source_graph_checkpoint: Mapping[str, Any],
+    ) -> str | None:
+        """Prove an exact still-pending request without requiring a response."""
+
+        payload = self._validated_lineage_replay_prompt_payload(
+            pending_request_only=True,
+            persisted_prompt_hash=persisted_prompt_hash,
+            checkpoint=checkpoint,
+            supervisor_review=supervisor_review,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            structured_result=structured_result,
+            evidence_facts=evidence_facts,
+            source_graph_checkpoint=source_graph_checkpoint,
+        )
+        return persisted_prompt_hash if payload is not None else None
+
+    def review_replayed_prompt(
+        self,
+        *,
+        persisted_prompt_hash: str,
+        checkpoint: Mapping[str, Any],
+        supervisor_review: ResearchSupervisorReview,
+        component_results: Sequence[ComponentResearchResult],
+        red_team_result: RedTeamResearchResult | None,
+        structured_result: Any | None,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        source_graph_checkpoint: Mapping[str, Any],
+    ) -> SaturationReviewerResult:
+        """Consume the exact old request after semantic SourceGraph proof."""
+
+        provider_name = str(
+            getattr(self.provider, "provider_name", type(self.provider).__name__)
+        )
+        try:
+            payload = self._validated_lineage_replay_prompt_payload(
+                pending_request_only=True,
+                persisted_prompt_hash=persisted_prompt_hash,
+                checkpoint=checkpoint,
+                supervisor_review=supervisor_review,
+                component_results=component_results,
+                red_team_result=red_team_result,
+                structured_result=structured_result,
+                evidence_facts=evidence_facts,
+                source_graph_checkpoint=source_graph_checkpoint,
+            )
+            if payload is None:
+                raise ValueError(
+                    "SourceGraph semantic replay commitment mismatch"
+                )
+            response = self.provider.complete(
+                pass_name="SEMANTIC_SATURATION_REVIEW",
+                payload=payload,
+            )
+            assert_blind_research_output(response)
+            prompt_hash = _provider_prompt_hash(self.provider, payload)
+            if prompt_hash != persisted_prompt_hash:
+                raise ValueError("replayed saturation prompt hash mismatch")
+            semantic_source_graph = dict(source_graph_checkpoint)
+            semantic_source_graph["checkpoint_id"] = str(
+                checkpoint.get("source_graph_checkpoint_id") or ""
+            )
+            review = _review_from_response(
+                response=response,
+                reviewer_role=self.reviewer_role,
+                checkpoint=checkpoint,
+                supervisor_review=supervisor_review,
+                component_results=component_results,
+                red_team_result=red_team_result,
+                structured_result=structured_result,
+                source_graph_checkpoint=semantic_source_graph,
+                provider_name=provider_name,
+                prompt_hash=prompt_hash,
+            )
+            response_identity = _validated_provider_response_identity(
+                provider=self.provider,
+                pass_name="SEMANTIC_SATURATION_REVIEW",
+                payload=payload,
+                prompt_hash=prompt_hash,
+                response=response,
+            )
+            return SaturationReviewerResult(
+                reviewer_role=self.reviewer_role,
+                status="COMPLETE",
+                review=review,
+                pending_reasons=(),
+                provider_name=provider_name,
+                prompt_hash=prompt_hash,
+                provider_response_identity=response_identity,
+            )
+        except (
+            StructuredProviderUnavailable,
+            StructuredProviderRejected,
+            TimeoutError,
+            OSError,
+            RuntimeError,
+            KeyError,
+            TypeError,
+            ValueError,
+        ) as exc:
+            return SaturationReviewerResult(
+                reviewer_role=self.reviewer_role,
+                status="PENDING",
+                review=None,
+                pending_reasons=(
+                    f"SATURATION_PROVIDER_OR_OUTPUT_ERROR:{type(exc).__name__}:{exc}",
+                ),
+                provider_name=provider_name,
+                prompt_hash=persisted_prompt_hash,
+            )
+
     def preview_prompt_hash(
         self,
         *,
@@ -410,6 +566,121 @@ class SemanticSaturationReviewer:
         ) != dict(identity):
             return None
         return identity
+
+    def validate_replayed_persisted_response_identity(
+        self,
+        *,
+        persisted_prompt_hash: str,
+        checkpoint: Mapping[str, Any],
+        supervisor_review: ResearchSupervisorReview,
+        component_results: Sequence[ComponentResearchResult],
+        red_team_result: RedTeamResearchResult | None,
+        structured_result: Any | None,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        source_graph_checkpoint: Mapping[str, Any],
+        review: SaturationReview,
+        persisted_identity: Mapping[str, Any] | None,
+    ) -> Mapping[str, Any] | None:
+        """Validate a certified old response after lineage-only source churn."""
+
+        payload = self._validated_lineage_replay_prompt_payload(
+            pending_request_only=False,
+            persisted_prompt_hash=persisted_prompt_hash,
+            checkpoint=checkpoint,
+            supervisor_review=supervisor_review,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            structured_result=structured_result,
+            evidence_facts=evidence_facts,
+            source_graph_checkpoint=source_graph_checkpoint,
+        )
+        if payload is None or review.prompt_hash != persisted_prompt_hash:
+            return None
+        response = _saturation_response_payload(review)
+        identity = _validated_provider_response_identity(
+            provider=self.provider,
+            pass_name="SEMANTIC_SATURATION_REVIEW",
+            payload=payload,
+            prompt_hash=persisted_prompt_hash,
+            response=response,
+        )
+        if identity is None:
+            return None
+        if persisted_identity is not None and dict(
+            _validate_provider_response_identity(persisted_identity)
+        ) != dict(identity):
+            return None
+        return identity
+
+    def _validated_lineage_replay_prompt_payload(
+        self,
+        *,
+        pending_request_only: bool,
+        persisted_prompt_hash: str,
+        checkpoint: Mapping[str, Any],
+        supervisor_review: ResearchSupervisorReview,
+        component_results: Sequence[ComponentResearchResult],
+        red_team_result: RedTeamResearchResult | None,
+        structured_result: Any | None,
+        evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
+        source_graph_checkpoint: Mapping[str, Any],
+    ) -> Mapping[str, Any] | None:
+        validate_source_graph_checkpoint(
+            source_graph_checkpoint,
+            target_id=str(checkpoint.get("target_id") or ""),
+            as_of_date=str(checkpoint.get("as_of_date") or ""),
+        )
+        fact_payloads = tuple(
+            row.to_dict() if isinstance(row, EvidenceFact) else dict(row)
+            for row in evidence_facts
+        )
+        _validate_current_fact_roster(
+            checkpoint=checkpoint,
+            evidence_facts=fact_payloads,
+        )
+        recovery_method = (
+            "validated_pending_request_payload"
+            if pending_request_only
+            else "validated_request_payload"
+        )
+        recover_payload = getattr(self.provider, recovery_method, None)
+        if not callable(recover_payload):
+            return None
+        recovered = recover_payload(
+            pass_name="SEMANTIC_SATURATION_REVIEW",
+            prompt_hash=persisted_prompt_hash,
+        )
+        if not isinstance(recovered, Mapping):
+            return None
+        current = _semantic_saturation_prompt_payload(
+            reviewer_role=self.reviewer_role,
+            checkpoint=checkpoint,
+            supervisor_review=supervisor_review,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            structured_result=structured_result,
+            evidence_facts=fact_payloads,
+            source_graph_checkpoint=source_graph_checkpoint,
+        )
+        if (
+            _neutralize_saturation_source_lineage(current)
+            != _neutralize_saturation_source_lineage(recovered)
+        ):
+            return None
+        preview = getattr(self.provider, "preview_prompt_hash", None)
+        recovered_hash = (
+            str(
+                preview(
+                    pass_name="SEMANTIC_SATURATION_REVIEW",
+                    payload=recovered,
+                )
+            )
+            if callable(preview)
+            else _payload_hash(recovered)
+        )
+        if recovered_hash != persisted_prompt_hash:
+            return None
+        return dict(recovered)
 
     def _validated_prompt_payload(
         self,
@@ -654,6 +925,32 @@ def _saturation_source_graph_payload(
     projection["full_checkpoint_hash"] = _payload_hash(checkpoint)
     projection["current_checkpoint_binding_preserved"] = True
     return projection
+
+
+def _neutralize_saturation_source_lineage(
+    payload: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    """Remove only SourceGraph persistence lineage from a review prompt.
+
+    The full loss-accounted query/document/failure/objective projection,
+    target, as-of date, and terminal status remain exact.  ``full_checkpoint``
+    hash is removed only because it also commits to ``epoch`` and
+    ``resumed_from_checkpoint_id``; every projected semantic leaf must still
+    compare equal.
+    """
+
+    output = json.loads(
+        json.dumps(payload, ensure_ascii=False, sort_keys=True, default=str)
+    )
+    source_graph = output.get("source_graph_checkpoint")
+    if not isinstance(source_graph, dict):
+        return output
+    binding = source_graph.get("current_checkpoint_binding")
+    if isinstance(binding, dict):
+        for key in ("checkpoint_id", "checkpoint_hash", "epoch"):
+            binding.pop(key, None)
+    source_graph.pop("full_checkpoint_hash", None)
+    return output
 
 
 def _semantic_saturation_prompt_payload(

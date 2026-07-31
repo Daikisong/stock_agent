@@ -560,6 +560,89 @@ class CollaborationCodexSubagentTransport:
             "response": dict(envelope),
         }
 
+    def validated_request_for_prompt_hash(
+        self,
+        *,
+        pass_name: str,
+        prompt_hash: str,
+    ) -> Mapping[str, Any] | None:
+        """Recover one exact active request, including a still-pending one.
+
+        A SourceGraph transport-only resume can advance its checkpoint lineage
+        while an already-written collaboration request is waiting for a
+        response.  Request recovery therefore cannot require a response file,
+        but any response that does exist must still pass the full envelope and
+        quarantine checks.
+        """
+
+        root = self.journal_root
+        clean_pass_name = str(pass_name).strip()
+        clean_prompt_hash = str(prompt_hash).strip()
+        if (
+            root is None
+            or re.fullmatch(r"[A-Z0-9_]+", clean_pass_name) is None
+            or re.fullmatch(r"[0-9a-f]{64}", clean_prompt_hash) is None
+        ):
+            return None
+        candidates: list[Mapping[str, Any]] = []
+        try:
+            request_paths = tuple(
+                (root / "requests").glob("COLLABREQ-*.json")
+            )
+        except OSError:
+            return None
+        for request_path in request_paths:
+            try:
+                request = _validate_request(
+                    _read_json_object(request_path)
+                )
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+            ):
+                continue
+            if (
+                request["pass_name"] != clean_pass_name
+                or request["prompt_hash"] != clean_prompt_hash
+            ):
+                continue
+            request_id = str(request["request_id"])
+            quarantine_root = root / "quarantine" / request_id
+            try:
+                if any(quarantine_root.glob("COLLABRESP-*.json")):
+                    continue
+            except OSError:
+                continue
+            response_path = root / "responses" / f"{request_id}.json"
+            if response_path.is_file():
+                try:
+                    envelope = _validate_response_envelope(
+                        request=request,
+                        envelope=_read_json_object(response_path),
+                    )
+                except (
+                    FileNotFoundError,
+                    OSError,
+                    TypeError,
+                    ValueError,
+                    RuntimeError,
+                ):
+                    continue
+                if (
+                    root
+                    / "quarantine"
+                    / request_id
+                    / f"{envelope['response_id']}.json"
+                ).is_file():
+                    continue
+            candidates.append(request)
+        if len(candidates) != 1:
+            return None
+        return dict(candidates[0])
+
     def invalidate_last_response(self, reason: str) -> Mapping[str, Any]:
         request_id = self._last_request_id
         if request_id is None:
@@ -1067,15 +1150,46 @@ class CollaborationCodexResearcherProvider(CodexResearcherProvider):
         pass_name: str,
         prompt_hash: str,
     ) -> Mapping[str, Any] | None:
-        """Recover the payload from one fully validated active journal request."""
+        """Recover only a request backed by one validated active response."""
 
         material = self.transport.validated_request_material_for_prompt_hash(
             pass_name=pass_name,
             prompt_hash=prompt_hash,
         )
-        if material is None:
+        if not isinstance(material, Mapping):
             return None
         request = material.get("request")
+        return self._validated_payload_from_request(
+            request=request,
+            pass_name=pass_name,
+            prompt_hash=prompt_hash,
+        )
+
+    def validated_pending_request_payload(
+        self,
+        *,
+        pass_name: str,
+        prompt_hash: str,
+    ) -> Mapping[str, Any] | None:
+        """Recover request-only material for a pending saturation replay."""
+
+        request = self.transport.validated_request_for_prompt_hash(
+            pass_name=pass_name,
+            prompt_hash=prompt_hash,
+        )
+        return self._validated_payload_from_request(
+            request=request,
+            pass_name=pass_name,
+            prompt_hash=prompt_hash,
+        )
+
+    @staticmethod
+    def _validated_payload_from_request(
+        *,
+        request: Any,
+        pass_name: str,
+        prompt_hash: str,
+    ) -> Mapping[str, Any] | None:
         if not isinstance(request, Mapping):
             return None
         prompt = request.get("prompt")
@@ -1237,6 +1351,19 @@ class CodexSubagentFallbackResearchProvider(CodexResearcherProvider):
         """Delegate legacy request recovery only to the validated journal."""
 
         return self.collaboration.validated_request_payload(
+            pass_name=pass_name,
+            prompt_hash=prompt_hash,
+        )
+
+    def validated_pending_request_payload(
+        self,
+        *,
+        pass_name: str,
+        prompt_hash: str,
+    ) -> Mapping[str, Any] | None:
+        """Delegate request-only recovery solely to collaboration pending."""
+
+        return self.collaboration.validated_pending_request_payload(
             pass_name=pass_name,
             prompt_hash=prompt_hash,
         )

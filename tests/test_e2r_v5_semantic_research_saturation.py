@@ -351,6 +351,35 @@ class Phase87SaturationProvider:
         )
         return response
 
+    def validated_request_payload(
+        self,
+        *,
+        pass_name: str,
+        prompt_hash: str,
+    ) -> Mapping[str, Any] | None:
+        matches = [
+            row["payload"]
+            for row in self.calls
+            if row.get("pass_name") == pass_name
+            and row.get("status") == "COMPLETE"
+            and _stable_test_hash(row.get("payload")) == prompt_hash
+        ]
+        return dict(matches[0]) if len(matches) == 1 else None
+
+    def validated_pending_request_payload(
+        self,
+        *,
+        pass_name: str,
+        prompt_hash: str,
+    ) -> Mapping[str, Any] | None:
+        matches = [
+            row["payload"]
+            for row in self.calls
+            if row.get("pass_name") == pass_name
+            and _stable_test_hash(row.get("payload")) == prompt_hash
+        ]
+        return dict(matches[0]) if len(matches) == 1 else None
+
 
 class Phase87PendingSaturationProvider(Phase87SaturationProvider):
     def __init__(self, name: str) -> None:
@@ -514,17 +543,23 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
                 )
             ),
         )
+        source_checkpoint = _source_checkpoint()
         first = runner.run_epoch(
-            **_epoch_inputs(source_checkpoint=_source_checkpoint())
+            **_epoch_inputs(source_checkpoint=source_checkpoint)
         )
         supervisor_call_count = len(supervisor_provider.calls)
         saturation_call_counts = tuple(
             len(provider.calls) for provider in saturation_providers
         )
+        lineage_advanced_source = _source_checkpoint_with_updates(
+            source_checkpoint,
+            epoch=int(source_checkpoint["epoch"]) + 1,
+            resumed_from_checkpoint_id=source_checkpoint["checkpoint_id"],
+        )
 
         resumed = runner.run_epoch(
             **_epoch_inputs(
-                source_checkpoint=_source_checkpoint(),
+                source_checkpoint=lineage_advanced_source,
                 prior_checkpoint=first.checkpoint,
             )
         )
@@ -741,6 +776,145 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             tuple(len(provider.calls) for provider in saturation_providers),
             saturation_call_counts,
         )
+
+    def test_legacy_v2_certified_reuse_requires_valid_supervisor_response_material(
+        self,
+    ) -> None:
+        class ResponseBoundRecoveringSupervisorProvider(
+            Phase87SupervisorProvider
+        ):
+            response_material_state = "VALID"
+
+            def validated_request_payload(
+                self,
+                *,
+                pass_name: str,
+                prompt_hash: str,
+            ) -> Mapping[str, Any] | None:
+                if (
+                    pass_name != "RESEARCH_SUPERVISOR_REVIEW"
+                    or self.response_material_state != "VALID"
+                ):
+                    return None
+                matches = [
+                    row["payload"]
+                    for row in self.calls
+                    if _stable_test_hash(row["payload"]) == prompt_hash
+                ]
+                return dict(matches[0]) if len(matches) == 1 else None
+
+            def validated_pending_request_payload(
+                self,
+                *,
+                pass_name: str,
+                prompt_hash: str,
+            ) -> Mapping[str, Any] | None:
+                matches = [
+                    row["payload"]
+                    for row in self.calls
+                    if pass_name == "RESEARCH_SUPERVISOR_REVIEW"
+                    and _stable_test_hash(row["payload"]) == prompt_hash
+                ]
+                return dict(matches[0]) if len(matches) == 1 else None
+
+        class LegacyV2Supervisor(ResearchSupervisor):
+            def review_epoch(self, **kwargs: Any) -> ResearchSupervisorReview:
+                review = super().review_epoch(**kwargs)
+                if (
+                    review.epoch > 1
+                    and review.ready_for_independent_saturation_review
+                ):
+                    return replace(
+                        review,
+                        prior_review_prompt_projection=None,
+                        schema_version="e2r_research_supervisor_review_v2",
+                    )
+                return review
+
+        for response_material_state in (
+            "RESPONSE_DELETED",
+            "RESPONSE_TAMPERED",
+            "RESPONSE_QUARANTINED",
+        ):
+            with self.subTest(
+                response_material_state=response_material_state
+            ):
+                supervisor_provider = (
+                    ResponseBoundRecoveringSupervisorProvider("GAP")
+                )
+                saturation_providers = tuple(
+                    Phase87SaturationProvider(
+                        f"LEGACY-RESPONSE-REQUIRED-"
+                        f"{response_material_state}-{index}"
+                    )
+                    for index in range(len(SATURATION_REVIEW_ROLES))
+                )
+                runner = ResearchEpochRunner(
+                    supervisor=LegacyV2Supervisor(
+                        provider=supervisor_provider
+                    ),
+                    saturation_reviewers=tuple(
+                        SemanticSaturationReviewer(
+                            reviewer_role=role,
+                            provider=provider,
+                        )
+                        for role, provider in zip(
+                            SATURATION_REVIEW_ROLES,
+                            saturation_providers,
+                        )
+                    ),
+                )
+                first = runner.run_epoch(
+                    **_epoch_inputs(source_checkpoint=_source_checkpoint())
+                )
+                supervisor_provider.mode = "READY"
+                certified = runner.run_epoch(
+                    **_epoch_inputs(
+                        source_checkpoint=_source_checkpoint(),
+                        prior_checkpoint=first.checkpoint,
+                    )
+                )
+                self.assertTrue(
+                    certified.checkpoint.semantic_saturation_certified
+                )
+                self.assertEqual(
+                    certified.supervisor_review.schema_version,
+                    "e2r_research_supervisor_review_v2",
+                )
+                supervisor_call_count = len(supervisor_provider.calls)
+                saturation_call_counts = tuple(
+                    len(provider.calls) for provider in saturation_providers
+                )
+                supervisor_provider.response_material_state = (
+                    response_material_state
+                )
+
+                resumed = runner.run_epoch(
+                    **_epoch_inputs(
+                        source_checkpoint=_source_checkpoint(),
+                        prior_checkpoint=certified.checkpoint,
+                    )
+                )
+
+                self.assertNotEqual(
+                    resumed.checkpoint.checkpoint_id,
+                    certified.checkpoint.checkpoint_id,
+                )
+                self.assertEqual(
+                    resumed.checkpoint.epoch,
+                    certified.checkpoint.epoch + 1,
+                )
+                self.assertEqual(
+                    len(supervisor_provider.calls),
+                    supervisor_call_count + 1,
+                )
+                self.assertEqual(
+                    tuple(
+                        len(provider.calls)
+                        for provider in saturation_providers
+                    ),
+                    tuple(count + 1 for count in saturation_call_counts),
+                )
 
     def test_certified_checkpoint_opens_new_epoch_on_bound_input_change(
         self,
@@ -1352,8 +1526,9 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
                 supervisor=ResearchSupervisor(provider=supervisor_provider),
                 saturation_reviewers=reviewers,
             )
+            source_checkpoint = _source_checkpoint()
             first = runner.run_epoch(
-                **_epoch_inputs(source_checkpoint=_source_checkpoint())
+                **_epoch_inputs(source_checkpoint=source_checkpoint)
             )
             first_prompt_hashes = tuple(
                 row.prompt_hash for row in first.saturation_reviewer_results
@@ -1388,6 +1563,33 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
                     "현재 checkpoint만 보고 독립적으로 completeness를 검토했다."
                 ),
             }
+            lineage_advanced_source = _source_checkpoint_with_updates(
+                source_checkpoint,
+                epoch=int(source_checkpoint["epoch"]) + 1,
+                resumed_from_checkpoint_id=source_checkpoint[
+                    "checkpoint_id"
+                ],
+            )
+            still_pending = runner.run_epoch(
+                **_epoch_inputs(
+                    source_checkpoint=lineage_advanced_source,
+                    prior_checkpoint=first.checkpoint,
+                )
+            )
+            self.assertEqual(still_pending.checkpoint.epoch, first.checkpoint.epoch)
+            self.assertEqual(
+                still_pending.checkpoint.checkpoint_id,
+                first.checkpoint.checkpoint_id,
+            )
+            self.assertEqual(
+                {
+                    path.stem
+                    for path in (journal_root / "requests").glob(
+                        "COLLABREQ-*.json"
+                    )
+                },
+                first_request_ids,
+            )
             for index, request_id in enumerate(sorted(first_request_ids)):
                 import_collaboration_response(
                     journal_root=journal_root,
@@ -1399,8 +1601,8 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
                 )
             resumed = runner.run_epoch(
                 **_epoch_inputs(
-                    source_checkpoint=_source_checkpoint(),
-                    prior_checkpoint=first.checkpoint,
+                    source_checkpoint=lineage_advanced_source,
+                    prior_checkpoint=still_pending.checkpoint,
                 )
             )
 
@@ -1456,7 +1658,7 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
 
             reused = runner.run_epoch(
                 **_epoch_inputs(
-                    source_checkpoint=_source_checkpoint(),
+                    source_checkpoint=lineage_advanced_source,
                     prior_checkpoint=legacy_v3,
                 )
             )
@@ -1549,6 +1751,86 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
                         for row in first.saturation_reviewer_results
                     ),
                 )
+
+    def test_source_lineage_replay_fails_closed_on_each_semantic_leaf(
+        self,
+    ) -> None:
+        base = _source_checkpoint()
+        query_changed = [dict(row) for row in base["generated_queries"]]
+        query_changed[0]["literal_query"] = (
+            "changed current target counter evidence"
+        )
+        document_changed = [dict(row) for row in base["evidence_documents"]]
+        document_changed[0]["source_family"] = "CUSTOMER_OFFICIAL"
+        cases = {
+            "generated_query": {"generated_queries": query_changed},
+            "evidence_document": {"evidence_documents": document_changed},
+            "query_failure": {
+                "query_failures": [
+                    {
+                        "failure_id": "SGFAIL-SEMANTIC-CHANGE",
+                        "query_id": "Q-COUNTER",
+                        "objective_id": OBJECTIVE_ID,
+                        "failure_stage": "SEARCH",
+                        "failure_reason": "CHANGED_PROVIDER_FAILURE",
+                        "alternate_route_required": True,
+                        "absence_eligible": False,
+                        "zero_result_only": False,
+                    }
+                ]
+            },
+            "resolved_objective": {
+                "resolved_objective_ids": [OBJECTIVE_ID]
+            },
+            "terminal_status": {"status": "STOPPED_ON_RESOLUTION"},
+        }
+        for label, semantic_update in cases.items():
+            with self.subTest(label=label):
+                supervisor_provider = Phase87SupervisorProvider("READY")
+                saturation_providers = tuple(
+                    Phase87PendingSaturationProvider(
+                        f"SEMANTIC-LEAF-{label}-{index}"
+                    )
+                    for index in range(len(SATURATION_REVIEW_ROLES))
+                )
+                runner = ResearchEpochRunner(
+                    supervisor=ResearchSupervisor(
+                        provider=supervisor_provider
+                    ),
+                    saturation_reviewers=tuple(
+                        SemanticSaturationReviewer(
+                            reviewer_role=role,
+                            provider=provider,
+                        )
+                        for role, provider in zip(
+                            SATURATION_REVIEW_ROLES,
+                            saturation_providers,
+                        )
+                    ),
+                )
+                first = runner.run_epoch(
+                    **_epoch_inputs(source_checkpoint=base)
+                )
+                changed = _source_checkpoint_with_updates(
+                    base,
+                    epoch=int(base["epoch"]) + 1,
+                    resumed_from_checkpoint_id=base["checkpoint_id"],
+                    **semantic_update,
+                )
+
+                resumed = runner.run_epoch(
+                    **_epoch_inputs(
+                        source_checkpoint=changed,
+                        prior_checkpoint=first.checkpoint,
+                    )
+                )
+
+                self.assertEqual(resumed.checkpoint.epoch, 2)
+                self.assertNotEqual(
+                    resumed.checkpoint.checkpoint_id,
+                    first.checkpoint.checkpoint_id,
+                )
+                self.assertEqual(len(supervisor_provider.calls), 2)
 
     def test_clean_resume_fails_closed_on_new_material_judge_disagreement(
         self,

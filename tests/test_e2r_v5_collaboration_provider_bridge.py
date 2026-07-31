@@ -531,6 +531,19 @@ class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
                     payload=payload,
                 )
             _, request = _request(journal)
+            self.assertEqual(
+                provider.validated_pending_request_payload(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    prompt_hash=request["prompt_hash"],
+                ),
+                payload,
+            )
+            self.assertIsNone(
+                provider.validated_request_payload(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    prompt_hash=request["prompt_hash"],
+                )
+            )
             envelope = import_collaboration_response(
                 journal_root=journal,
                 request_id=request["request_id"],
@@ -539,6 +552,46 @@ class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
                 canonical_task_name="/root/recover_request_payload",
                 agent_model="codex-collaboration",
             )
+            response_path = (
+                journal
+                / "responses"
+                / f"{request['request_id']}.json"
+            )
+            response_bytes = response_path.read_bytes()
+            response_path.unlink()
+            self.assertIsNone(
+                provider.validated_request_payload(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    prompt_hash=request["prompt_hash"],
+                )
+            )
+            self.assertEqual(
+                provider.validated_pending_request_payload(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    prompt_hash=request["prompt_hash"],
+                ),
+                payload,
+            )
+            response_path.write_bytes(response_bytes)
+            tampered_response = json.loads(response_bytes)
+            tampered_response["validation"]["request_hashes_valid"] = False
+            response_path.write_text(
+                json.dumps(tampered_response, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            self.assertIsNone(
+                provider.validated_request_payload(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    prompt_hash=request["prompt_hash"],
+                )
+            )
+            self.assertIsNone(
+                provider.validated_pending_request_payload(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    prompt_hash=request["prompt_hash"],
+                )
+            )
+            response_path.write_bytes(response_bytes)
             before = {
                 path.relative_to(journal): path.read_bytes()
                 for path in journal.rglob("*.json")
@@ -572,8 +625,15 @@ class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
             )
             quarantine_path.parent.mkdir(parents=True, exist_ok=True)
             quarantine_path.write_text("{}\n", encoding="utf-8")
+            response_path.unlink()
             self.assertIsNone(
                 provider.validated_request_payload(
+                    pass_name="SOURCE_QUERY_GENERATION",
+                    prompt_hash=request["prompt_hash"],
+                )
+            )
+            self.assertIsNone(
+                provider.validated_pending_request_payload(
                     pass_name="SOURCE_QUERY_GENERATION",
                     prompt_hash=request["prompt_hash"],
                 )

@@ -325,6 +325,7 @@ class ResearchEpochRunner:
             return certified_reuse
         replay = _saturation_transport_replay_context(
             prior=prior,
+            supervisor=self.supervisor,
             saturation_reviewers=self.saturation_reviewers,
             component_results=component_results,
             red_team_result=red_team_result,
@@ -332,10 +333,21 @@ class ResearchEpochRunner:
             structured_result=structured_result,
             evidence_facts=evidence_facts,
             source_graph_checkpoint=source_graph_checkpoint,
+            open_objectives=open_objectives,
+            prior_failures=prior_failures,
+            counter_and_supersession_route_proof=(
+                counter_and_supersession_route_proof
+            ),
             score_gap_context=score_gap_context,
         )
+        replayed_prompt_hashes: Mapping[str, str] = {}
         if replay is not None:
-            epoch, supervisor_review, state = replay
+            (
+                epoch,
+                supervisor_review,
+                state,
+                replayed_prompt_hashes,
+            ) = replay
         else:
             epoch = (prior.epoch + 1) if prior else 1
             supervisor_review = self.supervisor.review_epoch(
@@ -374,8 +386,12 @@ class ResearchEpochRunner:
         if supervisor_review.ready_for_independent_saturation_review:
             if self.saturation_reviewers:
                 for reviewer in self.saturation_reviewers:
-                    reviewer_results.append(
-                        reviewer.review(
+                    replayed_prompt_hash = replayed_prompt_hashes.get(
+                        reviewer.reviewer_role
+                    )
+                    if replayed_prompt_hash:
+                        result = reviewer.review_replayed_prompt(
+                            persisted_prompt_hash=replayed_prompt_hash,
                             checkpoint=preliminary,
                             supervisor_review=supervisor_review,
                             component_results=component_results,
@@ -384,7 +400,17 @@ class ResearchEpochRunner:
                             evidence_facts=evidence_facts,
                             source_graph_checkpoint=source_graph_checkpoint,
                         )
-                    )
+                    else:
+                        result = reviewer.review(
+                            checkpoint=preliminary,
+                            supervisor_review=supervisor_review,
+                            component_results=component_results,
+                            red_team_result=red_team_result,
+                            structured_result=structured_result,
+                            evidence_facts=evidence_facts,
+                            source_graph_checkpoint=source_graph_checkpoint,
+                        )
+                    reviewer_results.append(result)
                 completed_reviews = tuple(
                     row.review
                     for row in reviewer_results
@@ -499,10 +525,9 @@ def _certified_saturation_reuse_run(
         or _material_score_disagreement_component_ids(score_gap_context)
     ):
         return None
-    if str(source_graph_checkpoint.get("checkpoint_id") or "") != str(
-        prior.source_graph_checkpoint_id or ""
-    ):
-        return None
+    source_lineage_changed = str(
+        source_graph_checkpoint.get("checkpoint_id") or ""
+    ) != str(prior.source_graph_checkpoint_id or "")
 
     try:
         supervisor_review = _coerce_supervisor_review(prior.supervisor_review)
@@ -709,29 +734,64 @@ def _certified_saturation_reuse_run(
         return None
     try:
         for role, reviewer in reviewer_by_role.items():
-            if reviewer.preview_prompt_hash(
-                checkpoint=preliminary,
-                supervisor_review=supervisor_review,
-                component_results=component_results,
-                red_team_result=red_team_result,
-                structured_result=structured_result,
-                evidence_facts=evidence_facts,
-                source_graph_checkpoint=source_graph_checkpoint,
-            ) != result_by_role[role].prompt_hash:
-                return None
-            if reviewer.validate_persisted_response_identity(
-                checkpoint=preliminary,
-                supervisor_review=supervisor_review,
-                component_results=component_results,
-                red_team_result=red_team_result,
-                structured_result=structured_result,
-                evidence_facts=evidence_facts,
-                source_graph_checkpoint=source_graph_checkpoint,
-                review=review_by_role[role],
-                persisted_identity=(
-                    result_by_role[role].provider_response_identity
-                ),
-            ) is None:
+            persisted_prompt_hash = str(
+                result_by_role[role].prompt_hash or ""
+            )
+            if source_lineage_changed:
+                if reviewer.replay_prompt_hash(
+                    persisted_prompt_hash=persisted_prompt_hash,
+                    checkpoint=preliminary,
+                    supervisor_review=supervisor_review,
+                    component_results=component_results,
+                    red_team_result=red_team_result,
+                    structured_result=structured_result,
+                    evidence_facts=evidence_facts,
+                    source_graph_checkpoint=source_graph_checkpoint,
+                ) != persisted_prompt_hash:
+                    return None
+                identity = (
+                    reviewer.validate_replayed_persisted_response_identity(
+                        persisted_prompt_hash=persisted_prompt_hash,
+                        checkpoint=preliminary,
+                        supervisor_review=supervisor_review,
+                        component_results=component_results,
+                        red_team_result=red_team_result,
+                        structured_result=structured_result,
+                        evidence_facts=evidence_facts,
+                        source_graph_checkpoint=source_graph_checkpoint,
+                        review=review_by_role[role],
+                        persisted_identity=(
+                            result_by_role[
+                                role
+                            ].provider_response_identity
+                        ),
+                    )
+                )
+            else:
+                if reviewer.preview_prompt_hash(
+                    checkpoint=preliminary,
+                    supervisor_review=supervisor_review,
+                    component_results=component_results,
+                    red_team_result=red_team_result,
+                    structured_result=structured_result,
+                    evidence_facts=evidence_facts,
+                    source_graph_checkpoint=source_graph_checkpoint,
+                ) != persisted_prompt_hash:
+                    return None
+                identity = reviewer.validate_persisted_response_identity(
+                    checkpoint=preliminary,
+                    supervisor_review=supervisor_review,
+                    component_results=component_results,
+                    red_team_result=red_team_result,
+                    structured_result=structured_result,
+                    evidence_facts=evidence_facts,
+                    source_graph_checkpoint=source_graph_checkpoint,
+                    review=review_by_role[role],
+                    persisted_identity=(
+                        result_by_role[role].provider_response_identity
+                    ),
+                )
+            if identity is None:
                 return None
     except (
         KeyError,
@@ -869,6 +929,7 @@ def _preliminary_saturation_state(
 def _saturation_transport_replay_context(
     *,
     prior: ResearchEpochCheckpoint | None,
+    supervisor: ResearchSupervisor,
     saturation_reviewers: Sequence[SemanticSaturationReviewer],
     component_results: Sequence[ComponentResearchResult],
     red_team_result: RedTeamResearchResult | None,
@@ -876,8 +937,16 @@ def _saturation_transport_replay_context(
     structured_result: Any | None,
     evidence_facts: Sequence[EvidenceFact | Mapping[str, Any]],
     source_graph_checkpoint: Mapping[str, Any],
+    open_objectives: Sequence[Mapping[str, Any]],
+    prior_failures: Sequence[Mapping[str, Any]],
+    counter_and_supersession_route_proof: Sequence[Mapping[str, Any]],
     score_gap_context: Mapping[str, Any] | None,
-) -> tuple[int, ResearchSupervisorReview, dict[str, Any]] | None:
+) -> tuple[
+    int,
+    ResearchSupervisorReview,
+    dict[str, Any],
+    Mapping[str, str],
+] | None:
     """Replay only an unchanged READY checkpoint's exact transport wait.
 
     The persisted checkpoint contains reviewer-wait diagnostics that were not
@@ -899,17 +968,26 @@ def _saturation_transport_replay_context(
         return None
     if _material_score_disagreement_component_ids(score_gap_context):
         return None
-    if str(source_graph_checkpoint.get("checkpoint_id") or "") != str(
-        prior.source_graph_checkpoint_id or ""
-    ):
-        return None
+    source_lineage_changed = str(
+        source_graph_checkpoint.get("checkpoint_id") or ""
+    ) != str(prior.source_graph_checkpoint_id or "")
 
     try:
         supervisor_review = _coerce_supervisor_review(prior.supervisor_review)
     except (KeyError, TypeError, ValueError):
         return None
+    current_supervisor_provider = str(
+        getattr(
+            supervisor.provider,
+            "provider_name",
+            type(supervisor.provider).__name__,
+        )
+    )
     if (
         supervisor_review.epoch != prior.epoch
+        or supervisor_review.reviewer_role != supervisor.reviewer_role
+        or supervisor_review.provider_name != current_supervisor_provider
+        or not str(supervisor_review.prompt_hash or "").strip()
         or not supervisor_review.ready_for_independent_saturation_review
         or synthesis_result is None
         or synthesis_result.status != "COMPLETE"
@@ -919,6 +997,65 @@ def _saturation_transport_replay_context(
         or supervisor_review.synthesis_memo_hash
         != _stable_hash(synthesis_result.memo.to_dict())
     ):
+        return None
+    prior_review_prompt_projection = (
+        supervisor_review.prior_review_prompt_projection
+    )
+    if (
+        supervisor_review.schema_version
+        == "e2r_research_supervisor_review_v2"
+        and prior.epoch > 1
+    ):
+        recover_payload = getattr(
+            supervisor.provider,
+            "validated_request_payload",
+            None,
+        )
+        if not callable(recover_payload):
+            return None
+        try:
+            recovered_payload = recover_payload(
+                pass_name="RESEARCH_SUPERVISOR_REVIEW",
+                prompt_hash=str(supervisor_review.prompt_hash),
+            )
+        except (KeyError, TypeError, ValueError, RuntimeError, OSError):
+            return None
+        if not isinstance(recovered_payload, Mapping):
+            return None
+        recovered_projection = recovered_payload.get(
+            "prior_supervisor_review"
+        )
+        if recovered_projection is not None and not isinstance(
+            recovered_projection,
+            Mapping,
+        ):
+            return None
+        prior_review_prompt_projection = recovered_projection
+    try:
+        current_supervisor_prompt_hash = supervisor.preview_prompt_hash(
+            epoch=prior.epoch,
+            target_id=prior.target_id,
+            as_of_date=prior.as_of_date,
+            component_results=component_results,
+            red_team_result=red_team_result,
+            synthesis_result=synthesis_result,
+            structured_result=structured_result,
+            evidence_facts=evidence_facts,
+            source_graph_checkpoint=source_graph_checkpoint,
+            open_objectives=open_objectives,
+            prior_failures=prior_failures,
+            counter_and_supersession_route_proof=(
+                counter_and_supersession_route_proof
+            ),
+            prior_review=None,
+            prior_review_prompt_projection=(
+                prior_review_prompt_projection
+            ),
+            score_gap_context=score_gap_context,
+        )
+    except (KeyError, TypeError, ValueError, RuntimeError, OSError):
+        return None
+    if current_supervisor_prompt_hash != supervisor_review.prompt_hash:
         return None
 
     reviewer_by_role = {
@@ -1006,20 +1143,36 @@ def _saturation_transport_replay_context(
     if state is None:
         return None
 
+    replayed_prompt_hashes: dict[str, str] = {}
     try:
         for role, reviewer in reviewer_by_role.items():
-            current_prompt_hash = reviewer.preview_prompt_hash(
-                checkpoint=state,
-                supervisor_review=supervisor_review,
-                component_results=component_results,
-                red_team_result=red_team_result,
-                structured_result=structured_result,
-                evidence_facts=evidence_facts,
-                source_graph_checkpoint=source_graph_checkpoint,
-            )
-            if current_prompt_hash != str(
+            persisted_prompt_hash = str(
                 persisted_by_role[role].get("prompt_hash") or ""
-            ):
+            )
+            if source_lineage_changed:
+                current_prompt_hash = reviewer.replay_pending_prompt_hash(
+                    persisted_prompt_hash=persisted_prompt_hash,
+                    checkpoint=state,
+                    supervisor_review=supervisor_review,
+                    component_results=component_results,
+                    red_team_result=red_team_result,
+                    structured_result=structured_result,
+                    evidence_facts=evidence_facts,
+                    source_graph_checkpoint=source_graph_checkpoint,
+                )
+                if current_prompt_hash == persisted_prompt_hash:
+                    replayed_prompt_hashes[role] = persisted_prompt_hash
+            else:
+                current_prompt_hash = reviewer.preview_prompt_hash(
+                    checkpoint=state,
+                    supervisor_review=supervisor_review,
+                    component_results=component_results,
+                    red_team_result=red_team_result,
+                    structured_result=structured_result,
+                    evidence_facts=evidence_facts,
+                    source_graph_checkpoint=source_graph_checkpoint,
+                )
+            if current_prompt_hash != persisted_prompt_hash:
                 return None
     except (
         KeyError,
@@ -1029,7 +1182,12 @@ def _saturation_transport_replay_context(
         OSError,
     ):
         return None
-    return prior.epoch, supervisor_review, state
+    return (
+        prior.epoch,
+        supervisor_review,
+        state,
+        replayed_prompt_hashes,
+    )
 
 
 def _coerce_supervisor_review(
