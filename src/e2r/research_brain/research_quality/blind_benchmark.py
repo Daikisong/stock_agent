@@ -16,6 +16,15 @@ GOLD_COVERAGE_FILE = "gold_question_coverage.json"
 PRODUCTION_FACT_FILE = "production_material_facts.jsonl"
 PRODUCTION_INPUT_FILE = "production_input_manifest.jsonl"
 PRODUCTION_LANE_FILE = "production_lane_manifest.json"
+POST_RUN_SEMANTIC_PRIMARY_FILE = "post_run_gold_semantic_primary.json"
+POST_RUN_SEMANTIC_REVIEW_DIRECTORY = "post_run_gold_semantic_reviews"
+POST_RUN_SEMANTIC_PRIMARY_SCHEMA_VERSION = (
+    "e2r_v5_post_run_gold_semantic_primary_v1"
+)
+POST_RUN_SEMANTIC_REVIEW_SCHEMA_VERSION = (
+    "e2r_v5_post_run_gold_semantic_review_v1"
+)
+MINIMUM_INDEPENDENT_SEMANTIC_REVIEW_COUNT = 2
 
 REQUIRED_GOLD_ROUTES = {
     "official_filing",
@@ -50,6 +59,8 @@ class MaterialFactComparison:
     miss_reason: str | None
     fact_role: str
     target_id: str
+    production_fact_ids: tuple[str, ...]
+    semantic_match_method: str
 
     def to_dict(self) -> Mapping[str, Any]:
         return asdict(self)
@@ -70,6 +81,7 @@ class BlindResearchQualityBenchmark:
         *,
         gold_root: str | Path,
         production_root: str | Path,
+        post_run_semantic_adjudication_root: str | Path | None = None,
     ) -> BlindResearchBenchmarkResult:
         gold = Path(gold_root).resolve()
         production = Path(production_root).resolve()
@@ -82,6 +94,15 @@ class BlindResearchQualityBenchmark:
         production_lane = _read_json(production / PRODUCTION_LANE_FILE)
         _validate_gold_lane(gold_facts, gold_sources, coverage)
         _validate_production_lane(production_facts, production_lane)
+        semantic_adjudication = _load_post_run_semantic_adjudication(
+            root=(
+                Path(post_run_semantic_adjudication_root).resolve()
+                if post_run_semantic_adjudication_root is not None
+                else None
+            ),
+            gold_facts=gold_facts,
+            production_facts=production_facts,
+        )
 
         leakage = _audit_gold_leakage(
             gold_root=gold,
@@ -90,7 +111,11 @@ class BlindResearchQualityBenchmark:
             production_inputs=production_inputs,
             production_lane=production_lane,
         )
-        comparisons = _compare_material_facts(gold_facts, production_facts)
+        comparisons = _compare_material_facts(
+            gold_facts,
+            production_facts,
+            semantic_adjudication=semantic_adjudication,
+        )
         qualified = {
             row.gold_fact_id
             for row in comparisons
@@ -160,6 +185,14 @@ class BlindResearchQualityBenchmark:
             "production_lane_role": "CANONICAL_BLIND_RUN",
             "gold_fact_count": len(gold_facts),
             "production_fact_count": len(production_facts),
+            "post_run_semantic_adjudication": (
+                dict(semantic_adjudication["audit"])
+                if semantic_adjudication is not None
+                else {
+                    "status": "NOT_PROVIDED_EXACT_CANONICAL_MATCH_ONLY",
+                    "score_or_stage_authority": False,
+                }
+            ),
             "qualified_material_fact_match_count": len(qualified),
             "noncritical_fact_count": len(noncritical),
             "noncritical_fact_recall": round(noncritical_recall, 6),
@@ -246,36 +279,80 @@ class BlindResearchQualityBenchmark:
 def _compare_material_facts(
     gold_facts: Sequence[Mapping[str, Any]],
     production_facts: Sequence[Mapping[str, Any]],
+    *,
+    semantic_adjudication: Mapping[str, Any] | None = None,
 ) -> tuple[MaterialFactComparison, ...]:
+    production_by_id = {
+        str(row["fact_id"]): row for row in production_facts
+    }
     production_by_key: dict[str, list[Mapping[str, Any]]] = {}
     for row in production_facts:
         production_by_key.setdefault(_semantic_fact_key(row), []).append(row)
+    adjudication_by_gold_id = (
+        dict(semantic_adjudication["rows"])
+        if semantic_adjudication is not None
+        else {}
+    )
     used_production_ids: set[str] = set()
     comparisons = []
     for gold in gold_facts:
-        candidates = [
-            row
-            for row in production_by_key.get(_semantic_fact_key(gold), ())
-            if str(row["fact_id"]) not in used_production_ids
-        ]
-        production = min(candidates, key=_candidate_rank) if candidates else None
-        if production is not None:
-            used_production_ids.add(str(production["fact_id"]))
-        semantic_match = production is not None
+        gold_fact_id = str(gold["fact_id"])
+        adjudicated = adjudication_by_gold_id.get(gold_fact_id)
+        if adjudicated is None:
+            candidates = [
+                row
+                for row in production_by_key.get(_semantic_fact_key(gold), ())
+                if str(row["fact_id"]) not in used_production_ids
+            ]
+            production_rows = (
+                (min(candidates, key=_candidate_rank),)
+                if candidates
+                else ()
+            )
+            semantic_match = bool(production_rows)
+            mechanism_match = bool(
+                production_rows
+                and production_rows[0].get("mechanism_scope_id")
+                == gold.get("mechanism_scope_id")
+            )
+            semantic_match_method = "EXACT_CANONICAL_SEMANTIC_KEY"
+        else:
+            production_fact_ids = tuple(adjudicated["production_fact_ids"])
+            production_rows = tuple(
+                production_by_id[production_fact_id]
+                for production_fact_id in production_fact_ids
+            )
+            semantic_match = bool(adjudicated["semantic_match"])
+            mechanism_match = bool(
+                semantic_match and adjudicated["mechanism_scope_match"]
+            )
+            semantic_match_method = (
+                "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION"
+            )
+        selected_production_ids = tuple(
+            str(row["fact_id"]) for row in production_rows
+        )
+        if used_production_ids.intersection(selected_production_ids):
+            raise ValueError(
+                "post-run semantic adjudication reuses a production fact"
+            )
+        used_production_ids.update(selected_production_ids)
+        production = production_rows[0] if production_rows else None
         source_match = bool(
-            production is not None
-            and _source_rank(str(production["source_tier"]))
-            <= _source_rank(str(gold["source_tier"]))
+            production_rows
+            and all(
+                _source_rank(str(row["source_tier"]))
+                <= _source_rank(str(gold["source_tier"]))
+                for row in production_rows
+            )
         )
         currentness_match = bool(
-            production is not None
-            and production.get("temporal_status") == "CURRENT"
-            and production.get("as_of_date") == gold.get("as_of_date")
-        )
-        mechanism_match = bool(
-            production is not None
-            and production.get("mechanism_scope_id")
-            == gold.get("mechanism_scope_id")
+            production_rows
+            and all(
+                row.get("temporal_status") == "CURRENT"
+                and row.get("as_of_date") == gold.get("as_of_date")
+                for row in production_rows
+            )
         )
         comparisons.append(
             MaterialFactComparison(
@@ -299,9 +376,198 @@ def _compare_material_facts(
                 ),
                 fact_role=str(gold["fact_role"]),
                 target_id=str(gold["target_id"]),
+                production_fact_ids=selected_production_ids,
+                semantic_match_method=semantic_match_method,
             )
         )
     return tuple(comparisons)
+
+
+def _load_post_run_semantic_adjudication(
+    *,
+    root: Path | None,
+    gold_facts: Sequence[Mapping[str, Any]],
+    production_facts: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any] | None:
+    if root is None:
+        return None
+    primary_path = root / POST_RUN_SEMANTIC_PRIMARY_FILE
+    review_root = root / POST_RUN_SEMANTIC_REVIEW_DIRECTORY
+    if not primary_path.is_file() and not review_root.exists():
+        return None
+    if not primary_path.is_file() or not review_root.is_dir():
+        raise ValueError(
+            "post-run semantic adjudication requires primary and review files"
+        )
+    primary = _read_json(primary_path)
+    if (
+        primary.get("schema_version")
+        != POST_RUN_SEMANTIC_PRIMARY_SCHEMA_VERSION
+        or primary.get("gold_visible_only_post_run") is not True
+        or primary.get("score_or_stage_authority") is not False
+        or primary.get("production_score_authority") is not False
+    ):
+        raise ValueError("post-run semantic primary contract is invalid")
+    primary_reviewer_id = str(primary.get("reviewer_id") or "").strip()
+    if not primary_reviewer_id.startswith("/root/"):
+        raise ValueError("post-run semantic primary reviewer is invalid")
+    gold_ids = tuple(str(row["fact_id"]) for row in gold_facts)
+    production_ids = tuple(str(row["fact_id"]) for row in production_facts)
+    if primary.get("gold_fact_roster_hash") != stable_hash(sorted(gold_ids)):
+        raise ValueError("post-run semantic Gold roster hash mismatch")
+    if primary.get("production_fact_roster_hash") != stable_hash(
+        sorted(production_ids)
+    ):
+        raise ValueError("post-run semantic production roster hash mismatch")
+    primary_rows = primary.get("rows")
+    if not isinstance(primary_rows, list):
+        raise ValueError("post-run semantic primary rows are missing")
+    _require_unique(primary_rows, "gold_fact_id")
+    if {str(row["gold_fact_id"]) for row in primary_rows} != set(gold_ids):
+        raise ValueError("post-run semantic primary Gold roster is inexact")
+    gold_by_id = {str(row["fact_id"]): row for row in gold_facts}
+    production_by_id = {
+        str(row["fact_id"]): row for row in production_facts
+    }
+    used_production_ids: set[str] = set()
+    normalized_rows: dict[str, Mapping[str, Any]] = {}
+    for row in primary_rows:
+        gold_fact_id = str(row["gold_fact_id"])
+        production_fact_ids_raw = row.get("production_fact_ids")
+        if not isinstance(production_fact_ids_raw, list):
+            raise ValueError(
+                "post-run semantic production fact ids must be a list"
+            )
+        production_fact_ids = tuple(
+            str(value).strip() for value in production_fact_ids_raw
+        )
+        if (
+            any(not value for value in production_fact_ids)
+            or len(production_fact_ids) != len(set(production_fact_ids))
+        ):
+            raise ValueError(
+                "post-run semantic production fact ids are invalid"
+            )
+        semantic_match = row.get("semantic_match")
+        mechanism_scope_match = row.get("mechanism_scope_match")
+        rationale = str(row.get("rationale") or "").strip()
+        if (
+            not isinstance(semantic_match, bool)
+            or not isinstance(mechanism_scope_match, bool)
+            or not rationale
+        ):
+            raise ValueError("post-run semantic primary row is invalid")
+        if semantic_match != mechanism_scope_match:
+            raise ValueError(
+                "post-run semantic and mechanism decisions must agree"
+            )
+        if semantic_match != bool(production_fact_ids):
+            raise ValueError(
+                "post-run semantic match requires an exact production fact set"
+            )
+        gold = gold_by_id[gold_fact_id]
+        for production_fact_id in production_fact_ids:
+            production = production_by_id.get(production_fact_id)
+            if production is None:
+                raise ValueError(
+                    "post-run semantic production fact id is unknown"
+                )
+            if str(production["target_id"]) != str(gold["target_id"]):
+                raise ValueError(
+                    "post-run semantic mapping crosses target boundaries"
+                )
+        if used_production_ids.intersection(production_fact_ids):
+            raise ValueError(
+                "post-run semantic primary reuses a production fact"
+            )
+        used_production_ids.update(production_fact_ids)
+        normalized_rows[gold_fact_id] = {
+            "production_fact_ids": production_fact_ids,
+            "semantic_match": semantic_match,
+            "mechanism_scope_match": mechanism_scope_match,
+            "rationale": rationale,
+        }
+    primary_payload_hash = stable_hash(primary)
+    review_paths = sorted(review_root.glob("*.json"))
+    if len(review_paths) < MINIMUM_INDEPENDENT_SEMANTIC_REVIEW_COUNT:
+        raise ValueError(
+            "post-run semantic adjudication lacks independent reviews"
+        )
+    reviewer_ids: list[str] = []
+    approval_by_gold_id = {gold_fact_id: 0 for gold_fact_id in gold_ids}
+    for review_path in review_paths:
+        review = _read_json(review_path)
+        if (
+            review.get("schema_version")
+            != POST_RUN_SEMANTIC_REVIEW_SCHEMA_VERSION
+            or review.get("primary_payload_hash") != primary_payload_hash
+            or review.get("gold_visible_only_post_run") is not True
+            or review.get("score_or_stage_authority") is not False
+            or review.get("production_score_authority") is not False
+        ):
+            raise ValueError("post-run semantic review contract is invalid")
+        reviewer_id = str(review.get("reviewer_id") or "").strip()
+        if (
+            not reviewer_id.startswith("/root/")
+            or reviewer_id == primary_reviewer_id
+            or reviewer_id in reviewer_ids
+        ):
+            raise ValueError("post-run semantic reviewer identity is invalid")
+        reviewer_ids.append(reviewer_id)
+        review_rows = review.get("rows")
+        if not isinstance(review_rows, list):
+            raise ValueError("post-run semantic review rows are missing")
+        _require_unique(review_rows, "gold_fact_id")
+        if {str(row["gold_fact_id"]) for row in review_rows} != set(gold_ids):
+            raise ValueError("post-run semantic review Gold roster is inexact")
+        for row in review_rows:
+            if not isinstance(row.get("approve"), bool) or not str(
+                row.get("rationale") or ""
+            ).strip():
+                raise ValueError("post-run semantic review row is invalid")
+            if row["approve"]:
+                approval_by_gold_id[str(row["gold_fact_id"])] += 1
+    accepted_rows = {}
+    for gold_fact_id, row in normalized_rows.items():
+        accepted = (
+            len(reviewer_ids)
+            >= MINIMUM_INDEPENDENT_SEMANTIC_REVIEW_COUNT
+            and approval_by_gold_id[gold_fact_id] == len(reviewer_ids)
+        )
+        accepted_rows[gold_fact_id] = {
+            **row,
+            "production_fact_ids": (
+                row["production_fact_ids"]
+                if accepted and row["semantic_match"]
+                else ()
+            ),
+            "semantic_match": bool(accepted and row["semantic_match"]),
+            "mechanism_scope_match": bool(
+                accepted and row["mechanism_scope_match"]
+            ),
+        }
+    return {
+        "rows": accepted_rows,
+        "audit": {
+            "status": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION_VALID",
+            "primary_reviewer_id": primary_reviewer_id,
+            "independent_reviewer_ids": reviewer_ids,
+            "independent_review_count": len(reviewer_ids),
+            "minimum_independent_review_count": (
+                MINIMUM_INDEPENDENT_SEMANTIC_REVIEW_COUNT
+            ),
+            "primary_payload_hash": primary_payload_hash,
+            "gold_fact_roster_hash": primary["gold_fact_roster_hash"],
+            "production_fact_roster_hash": (
+                primary["production_fact_roster_hash"]
+            ),
+            "approved_gold_fact_count": sum(
+                row["semantic_match"] for row in accepted_rows.values()
+            ),
+            "score_or_stage_authority": False,
+            "gold_visible_only_post_run": True,
+        },
+    }
 
 
 def _semantic_fact_key(row: Mapping[str, Any]) -> str:

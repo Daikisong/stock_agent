@@ -11,6 +11,8 @@ from typing import Any, Mapping, Sequence
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
 from e2r.research.page_fetcher import FetchResult, PageFetcher
 from e2r.research.publication_date import (
+    PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION,
+    infer_publication_date,
     infer_source_locator_publication_date,
 )
 from e2r.research.search_provider import SearchResult
@@ -534,6 +536,28 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             infer_source_locator_publication_date(
                 "https://issuer.example/certificate-20231015-20261014.pdf"
             )
+        )
+
+    def test_publication_metadata_accepts_english_month_name_date(self) -> None:
+        self.assertEqual(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(
+                    "SINGLE_ARTICLE_DATE:April 22, 2026",
+                ),
+                as_of_date=date(2026, 7, 12),
+            ),
+            date(2026, 4, 22),
+        )
+        self.assertEqual(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(
+                    "HTML_META_datepublished:22 Apr 2026",
+                ),
+                as_of_date=date(2026, 7, 12),
+            ),
+            date(2026, 4, 22),
         )
 
     def test_operational_phase85_audit_is_reproducible_and_complete(self) -> None:
@@ -3900,7 +3924,47 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertTrue(
             date_candidate["publication_metadata_fetch_retry_attempted"]
         )
+        self.assertEqual(
+            date_candidate["fetch_semantics_policy_version"],
+            PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION,
+        )
         self.assertTrue(pdf_candidate["pdf_fallback_fetch_retry_attempted"])
+
+    def test_old_date_inference_retry_reopens_for_new_policy_once(self) -> None:
+        candidate = {
+            "candidate_id": "UNKNOWN-DATE",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+            "publication_metadata_fetch_retry_attempted": True,
+            "fetch_semantics_policy_version": (
+                "e2r_page_fetch_publication_metadata_v1"
+            ),
+        }
+        rejected = (
+            {
+                "candidate_id": "UNKNOWN-DATE",
+                "rejection_reason": (
+                    "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH"
+                ),
+            },
+        )
+
+        first = source_graph_module._reopen_fetch_semantics_candidates(
+            [candidate],
+            rejected_documents=rejected,
+        )
+        candidate["fetch_status"] = "FETCH_REJECTED"
+        second = source_graph_module._reopen_fetch_semantics_candidates(
+            [candidate],
+            rejected_documents=rejected,
+        )
+
+        self.assertEqual(first, 1)
+        self.assertEqual(second, 0)
+        self.assertEqual(
+            candidate["fetch_semantics_policy_version"],
+            PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION,
+        )
 
     def test_fetch_semantics_retry_closes_before_unrelated_official_backlog(
         self,

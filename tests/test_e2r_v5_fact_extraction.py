@@ -19,6 +19,7 @@ from e2r.research_brain.researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.component_researcher import (
     FACT_EXTRACTION_PAGE_FACT_LIMIT,
+    _pass_instruction,
 )
 from e2r.research_brain.planning.provider_transport import (
     StructuredProviderUnavailable,
@@ -526,6 +527,41 @@ class ChunkAwareFactProvider(FactProvider):
 
 
 class E2RV5FactExtractionTests(unittest.TestCase):
+    def test_llm_instructions_keep_corroboration_and_uncertainty_distinct(
+        self,
+    ) -> None:
+        query_instruction = _pass_instruction(
+            "SOURCE_QUERY_GENERATION"
+        )
+        extraction_instruction = _pass_instruction(
+            "EVIDENCE_FACT_EXTRACTION"
+        )
+        supervisor_instruction = _pass_instruction(
+            "RESEARCH_SUPERVISOR_REVIEW"
+        )
+
+        self.assertIn(
+            "counterparty's official catalog",
+            query_instruction,
+        )
+        self.assertIn(
+            "without proving a purchase obligation",
+            query_instruction,
+        )
+        self.assertIn(
+            "figures are preliminary",
+            extraction_instruction,
+        )
+        self.assertIn(
+            "official counterparty catalog",
+            extraction_instruction,
+        )
+        self.assertIn(
+            "issuer-affiliated repetitions do not establish independent "
+            "corroboration",
+            supervisor_instruction,
+        )
+
     def test_punctuation_only_semantic_value_normalizer_is_narrow(self) -> None:
         repaired = normalize_punctuation_only_fact_value(
             {

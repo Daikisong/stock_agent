@@ -18,7 +18,6 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from e2r.production.metadata import write_json, write_jsonl
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
-from e2r.research.page_fetcher import PUBLICATION_METADATA_SEMANTICS_VERSION
 from e2r.research.page_fetcher import TEXT_CACHE_SEMANTICS_VERSION
 from e2r.research.page_fetcher import PageFetcher
 from e2r.research.pdf_text_extractor import (
@@ -26,6 +25,7 @@ from e2r.research.pdf_text_extractor import (
     extracted_text_unreadable_reason,
 )
 from e2r.research.publication_date import (
+    PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION,
     infer_publication_date,
     infer_source_locator_publication_date,
 )
@@ -70,9 +70,6 @@ SOURCE_FAMILY_CLASSES: Mapping[str, tuple[str, ...]] = {
     ),
 }
 
-PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION = (
-    "e2r_split_article_date_precedence_v1"
-)
 NAVIGATION_ONLY_REFERENCE_POLICY_VERSION = (
     "e2r_v5_navigation_only_reference_terminal_v1"
 )
@@ -4689,14 +4686,21 @@ def _reopen_fetch_semantics_candidates(
             continue
         if reason == "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH":
             flag = "publication_metadata_fetch_retry_attempted"
-            if candidate.get(flag):
+            policy_version = (
+                PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION
+            )
+            if (
+                candidate.get(flag)
+                and candidate.get("fetch_semantics_policy_version")
+                == policy_version
+            ):
                 continue
             candidate[flag] = True
             candidate["fetch_semantics_retry_reason"] = (
-                "PRIOR_UNKNOWN_DATE_PRECEDED_HTML_PUBLICATION_METADATA"
+                "PRIOR_UNKNOWN_DATE_PRECEDED_PUBLICATION_DATE_INFERENCE"
             )
             candidate["fetch_semantics_policy_version"] = (
-                PUBLICATION_METADATA_SEMANTICS_VERSION
+                policy_version
             )
         elif "live_pdf_text_extraction_failed:" in reason:
             flag = "pdf_fallback_fetch_retry_attempted"

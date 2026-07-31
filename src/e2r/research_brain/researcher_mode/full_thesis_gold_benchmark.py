@@ -400,6 +400,7 @@ def compare_phase93_gold_post_run(
     blind = BlindResearchQualityBenchmark().compare(
         gold_root=gold,
         production_root=production,
+        post_run_semantic_adjudication_root=production,
     )
     full_leakage = _audit_production_gold_leakage(
         corpus=corpus,

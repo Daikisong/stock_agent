@@ -8,6 +8,41 @@ from typing import Iterable
 from urllib.parse import unquote
 
 
+PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION = (
+    "e2r_publication_date_inference_v2"
+)
+
+_ENGLISH_MONTHS = {
+    "jan": 1,
+    "january": 1,
+    "feb": 2,
+    "february": 2,
+    "mar": 3,
+    "march": 3,
+    "apr": 4,
+    "april": 4,
+    "may": 5,
+    "jun": 6,
+    "june": 6,
+    "jul": 7,
+    "july": 7,
+    "aug": 8,
+    "august": 8,
+    "sep": 9,
+    "sept": 9,
+    "september": 9,
+    "oct": 10,
+    "october": 10,
+    "nov": 11,
+    "november": 11,
+    "dec": 12,
+    "december": 12,
+}
+_ENGLISH_MONTH_PATTERN = "|".join(
+    sorted(_ENGLISH_MONTHS, key=len, reverse=True)
+)
+
+
 def infer_publication_date(
     *,
     explicit: date | datetime | None,
@@ -98,6 +133,30 @@ def _date_candidates(text: str, *, as_of_date: date | None) -> tuple[date, ...]:
         year, month, day = map(int, match.groups())
         if year <= upper:
             _append_valid(candidates, 2000 + year, month, day)
+    for match in re.finditer(
+        rf"(?i)\b({_ENGLISH_MONTH_PATTERN})\.?\s+([0-3]?\d)"
+        rf"(?:st|nd|rd|th)?\s*,?\s+(20\d{{2}})\b",
+        text,
+    ):
+        month_name, day, year = match.groups()
+        _append_valid(
+            candidates,
+            int(year),
+            _ENGLISH_MONTHS[month_name.casefold()],
+            int(day),
+        )
+    for match in re.finditer(
+        rf"(?i)\b([0-3]?\d)(?:st|nd|rd|th)?\s+"
+        rf"({_ENGLISH_MONTH_PATTERN})\.?\s*,?\s+(20\d{{2}})\b",
+        text,
+    ):
+        day, month_name, year = match.groups()
+        _append_valid(
+            candidates,
+            int(year),
+            _ENGLISH_MONTHS[month_name.casefold()],
+            int(day),
+        )
     return tuple(dict.fromkeys(candidates))
 
 
@@ -199,6 +258,7 @@ def _append_valid(values: list[date], year: int, month: int, day: int) -> None:
 
 
 __all__ = [
+    "PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION",
     "infer_publication_date",
     "infer_source_locator_publication_date",
 ]
