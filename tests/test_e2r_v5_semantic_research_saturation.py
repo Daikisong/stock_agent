@@ -59,6 +59,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _production_semantic_saturation_certified,
 )
 from e2r.research_brain.researcher_mode.research_epoch import (
+    _preliminary_saturation_state,
     _research_checkpoint_hash,
     _research_checkpoint_id,
 )
@@ -685,6 +686,43 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             "prior_review_prompt_projection",
             second.checkpoint.supervisor_review,
         )
+        replay_state = _preliminary_saturation_state(
+            prior=second.checkpoint,
+            supervisor_review=second.supervisor_review,
+        )
+        self.assertIsNotNone(replay_state)
+        replay_inputs = _epoch_inputs(
+            source_checkpoint=_source_checkpoint()
+        )
+        rebuilt_prompt_hashes = []
+        for reviewer in runner.saturation_reviewers:
+            rebuilt_prompt_hashes.append(
+                reviewer.preview_prompt_hash(
+                    checkpoint=replay_state,  # type: ignore[arg-type]
+                    supervisor_review=second.supervisor_review,
+                    component_results=replay_inputs["component_results"],
+                    red_team_result=replay_inputs["red_team_result"],
+                    structured_result=replay_inputs["structured_result"],
+                    evidence_facts=replay_inputs["evidence_facts"],
+                    source_graph_checkpoint=replay_inputs[
+                        "source_graph_checkpoint"
+                    ],
+                )
+            )
+        self.assertEqual(
+            tuple(rebuilt_prompt_hashes),
+            tuple(
+                result.prompt_hash
+                for result in second.saturation_reviewer_results
+            ),
+        )
+        for provider in saturation_providers:
+            self.assertEqual(
+                provider.calls[-1]["payload"]["supervisor_review"][
+                    "excluded_checkpoint_lineage_fields"
+                ],
+                ["review_id", "epoch", "prompt_hash"],
+            )
         supervisor_call_count = len(supervisor_provider.calls)
         saturation_call_counts = tuple(
             len(provider.calls) for provider in saturation_providers

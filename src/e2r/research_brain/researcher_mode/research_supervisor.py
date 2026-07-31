@@ -1561,6 +1561,17 @@ def _prior_review_prompt_projection_top_keys() -> set[str]:
     ) | set(_PRIOR_REVIEW_PROMPT_PROJECTION_FIELDS)
 
 
+def _prior_review_prompt_excluded_lineage_fields(
+    schema_version: Any,
+) -> list[str]:
+    fields = ["review_id", "epoch", "prompt_hash"]
+    if schema_version == "e2r_research_supervisor_review_v3":
+        fields.append("prior_review_prompt_projection")
+    elif schema_version != "e2r_research_supervisor_review_v2":
+        raise ValueError("prior supervisor projection schema is invalid")
+    return fields
+
+
 def _prior_review_prompt_default(field_name: str) -> Any:
     field = ResearchSupervisorReview.__dataclass_fields__[field_name]
     if field.default is not MISSING:
@@ -1620,12 +1631,9 @@ def _validate_prior_review_prompt_projection(
         raise ValueError(
             "prior supervisor review prompt commitment key roster mismatch"
         )
-    expected_excluded_fields = [
-        "review_id",
-        "epoch",
-        "prompt_hash",
-        "prior_review_prompt_projection",
-    ]
+    expected_excluded_fields = _prior_review_prompt_excluded_lineage_fields(
+        projection.get("schema_version")
+    )
     if (
         projection.get("checkpoint_lineage_excluded_from_provider") is not True
         or projection.get("excluded_checkpoint_lineage_fields")
@@ -2035,12 +2043,11 @@ def _prior_supervisor_review_prompt_projection(
     }
     payload["prior_review_semantic_hash"] = _stable_payload_hash(payload)
     payload["checkpoint_lineage_excluded_from_provider"] = True
-    payload["excluded_checkpoint_lineage_fields"] = [
-        "review_id",
-        "epoch",
-        "prompt_hash",
-        "prior_review_prompt_projection",
-    ]
+    payload["excluded_checkpoint_lineage_fields"] = (
+        _prior_review_prompt_excluded_lineage_fields(
+            payload.get("schema_version")
+        )
+    )
     payload["full_prior_review_persisted_outside_prompt"] = True
     payload["fixed_top_n_used"] = False
     payload["prompt_projection_is_research_cap"] = False
