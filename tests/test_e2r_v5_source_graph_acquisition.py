@@ -2794,6 +2794,11 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                             {
                                 "component_id": "eps_fcf_explosion",
                                 "source_family": "CUSTOMER_OFFICIAL",
+                            },
+                            {
+                                "objective_id": "OTHER-OBJECTIVE",
+                                "component_id": "eps_fcf_explosion",
+                                "source_family": "REUTERS",
                             }
                         ],
                         "source_family_gaps": [

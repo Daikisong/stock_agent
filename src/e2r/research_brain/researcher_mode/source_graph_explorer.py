@@ -3374,7 +3374,11 @@ def _current_supervisor_mandatory_source_family_pairs(
             if source_family not in CANONICAL_SOURCE_FAMILIES:
                 continue
             objective_id = str(row.get("objective_id") or "").strip()
-            if objective_id not in objective_ids:
+            if objective_id and objective_id not in objective_ids:
+                # An explicit cross-roster objective cannot borrow authority
+                # from an otherwise valid component id.
+                continue
+            if not objective_id:
                 component_id = str(row.get("component_id") or "").strip()
                 component_objective_ids = objective_ids_by_component.get(
                     component_id, ()
