@@ -709,10 +709,7 @@ class ResearcherSourceGraphAcquirer:
             )
         )
         candidate_query_edge_failure_roster = _dedupe_mapping_rows(
-            (
-                *state["query_failures"],
-                *persisted_candidate_query_edge_failures,
-            ),
+            persisted_candidate_query_edge_failures,
             key_fields=("query_id", "candidate_id", "failure_reason"),
         )
         candidate_query_edge_failure_roster = (
@@ -848,7 +845,12 @@ class ResearcherSourceGraphAcquirer:
                 + str(deferred_reference_count)
             )
         query_failures = [
-            *state["query_failures"],
+            *(
+                row
+                for row in state["query_failures"]
+                if str(row.get("failure_reason") or "")
+                != "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+            ),
             *(
                 row
                 for row in persisted_candidate_query_edge_failures
@@ -5312,7 +5314,7 @@ def _candidate_source_family_query_edge_failures(
             in set(candidate.get("requested_source_families") or ())
         ):
             continue
-        for objective_id in candidate.get("objective_ids") or ():
+        for objective_id in decision.objective_ids:
             failures.append(
                 {
                     "query_id": (
@@ -5408,7 +5410,10 @@ def _persisted_candidate_source_family_query_edge_failures(
         )
         if (
             not candidate_objective_ids
-            or set(candidate_objective_ids) != set(decision_objective_ids)
+            or not decision_objective_ids
+            or not set(decision_objective_ids).issubset(
+                set(candidate_objective_ids)
+            )
         ):
             continue
         source_family = str(
@@ -5422,7 +5427,7 @@ def _persisted_candidate_source_family_query_edge_failures(
             in set(candidate.get("requested_source_families") or ())
         ):
             continue
-        for objective_id in candidate_objective_ids:
+        for objective_id in decision_objective_ids:
             failures.append(
                 {
                     "query_id": (

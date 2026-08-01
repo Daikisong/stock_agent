@@ -3008,7 +3008,24 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 ),
             }
         ]
-        state["query_failures"] = []
+        state["search_candidates"][1]["material_priority"] = 1.0
+        state["query_failures"] = [
+            {
+                "query_id": (
+                    "CANDIDATE_QUERY_EDGE:UNRELATED-BACKLOG:"
+                    "ISSUER_NEWSROOM"
+                ),
+                "objective_id": "OBJECTIVE-1",
+                "candidate_id": "UNRELATED-BACKLOG",
+                "failure_reason": (
+                    "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                ),
+                "source_family": "ISSUER_NEWSROOM",
+                "detection_basis": (
+                    "LLM_UNRESOLVED_NOTE_CANDIDATE_REFERENCE"
+                ),
+            }
+        ]
         checkpoint = source_graph_module._finalize_checkpoint(state)
         provider = SourceBrainProvider(
             queries=(repair_query,),
@@ -3046,6 +3063,25 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
 
         self.assertIsNotNone(run.query_generation)
+        query_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+        )
+        serialized_query_failures = json.dumps(
+            query_payload["prior_query_or_source_failures"],
+            ensure_ascii=False,
+        )
+        self.assertNotIn(
+            "CANDIDATE_QUERY_EDGE:UNRELATED-BACKLOG:ISSUER_NEWSROOM",
+            serialized_query_failures,
+        )
+        self.assertIn(
+            "CANDIDATE_QUERY_EDGE:"
+            + candidate_id
+            + ":ISSUER_NEWSROOM",
+            serialized_query_failures,
+        )
         ranking_payload = next(
             row["payload"]
             for row in provider.calls
@@ -3189,6 +3225,23 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 }
             ],
         )
+        original["materiality_decision_id"] = "MATDEC-ORIGINAL"
+        original["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(original)
+        )
+        state["candidate_materiality_decisions"] = [
+            {
+                "decision_id": "MATDEC-ORIGINAL",
+                "candidate_id": candidate_id,
+                "material_relevance": False,
+                "matched_requested_source_family": "NONE",
+                "objective_ids": ["OBJECTIVE-1"],
+                "priority": 0.8,
+                "rationale": (
+                    "공식 원문이지만 현재 query edge의 family와 다르다."
+                ),
+            }
+        ]
         provider = SourceBrainProvider(
             queries=(repair_query,),
             source_families=("ISSUER_NEWSROOM",),
@@ -3225,6 +3278,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             fetcher=fetcher,
             config=config,
             checkpoint=source_graph_module._finalize_checkpoint(state),
+            official_domains=("issuer.example.com",),
         )
 
         first_by_url = {
@@ -3271,6 +3325,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             fetcher=fetcher,
             config=config,
             checkpoint=first.checkpoint,
+            official_domains=("issuer.example.com",),
         )
 
         second_by_url = {
@@ -3366,6 +3421,28 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 }
             ],
         )
+        zero_result_candidate = state["search_candidates"][0]
+        zero_result_candidate["materiality_decision_id"] = (
+            "MATDEC-ZERO-RESULT"
+        )
+        zero_result_candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(
+                zero_result_candidate
+            )
+        )
+        state["candidate_materiality_decisions"] = [
+            {
+                "decision_id": "MATDEC-ZERO-RESULT",
+                "candidate_id": candidate_id,
+                "material_relevance": False,
+                "matched_requested_source_family": "NONE",
+                "objective_ids": ["OBJECTIVE-1"],
+                "priority": 0.8,
+                "rationale": (
+                    "공식 원문이지만 현재 query edge의 family와 다르다."
+                ),
+            }
+        ]
         config = SourceGraphAcquisitionConfig(
             mode="TEST",
             max_results_per_query=1,
@@ -3385,6 +3462,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             fetcher=PageFetcher(fixture_text_by_url={}),
             config=config,
             checkpoint=source_graph_module._finalize_checkpoint(state),
+            official_domains=("issuer.example.com",),
         )
 
         self.assertEqual(len(first_search.calls), 1)
@@ -3411,6 +3489,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             fetcher=PageFetcher(fixture_text_by_url={}),
             config=config,
             checkpoint=first.checkpoint,
+            official_domains=("issuer.example.com",),
         )
 
         self.assertEqual(second.status, "QUERY_GENERATION_PENDING")
@@ -5418,6 +5497,41 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(
             structural_failures[0]["detection_basis"],
             "LLM_NONMATERIAL_DECISION_ON_CURRENT_OFFICIAL_TRANSPORT_REPAIR_FAMILY_MISMATCH",
+        )
+
+        multi_objective_candidate = {
+            **candidate,
+            "objective_ids": ["OBJECTIVE-1", "OBJECTIVE-2"],
+        }
+        live_subset_failures = (
+            source_graph_module._candidate_source_family_query_edge_failures(
+                ranking=ranking,
+                candidates=(multi_objective_candidate,),
+            )
+        )
+        self.assertEqual(
+            [row["objective_id"] for row in live_subset_failures],
+            ["OBJECTIVE-1"],
+        )
+        persisted_multi = {
+            **multi_objective_candidate,
+            "normalized_url": multi_objective_candidate["url"],
+            "ranking_status": "NOT_MATERIAL",
+            "matched_requested_source_family": "NONE",
+            "materiality_decision_id": ranking.decisions[0].decision_id,
+        }
+        persisted_multi["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(
+                persisted_multi
+            )
+        )
+        resumed_subset_failures = source_graph_module._persisted_candidate_source_family_query_edge_failures(
+            candidates=(persisted_multi,),
+            materiality_decisions=(ranking.decisions[0].to_dict(),),
+        )
+        self.assertEqual(
+            [row["objective_id"] for row in resumed_subset_failures],
+            ["OBJECTIVE-1"],
         )
 
         generic_candidate_mention = replace(
