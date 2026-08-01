@@ -4453,6 +4453,100 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "CURRENT-ALTERNATE-ROUTE",
         )
 
+    def test_llm_candidate_family_gap_reopens_query_edge_not_materiality(
+        self,
+    ) -> None:
+        candidate_id = "SGCAND-0123456789abcdef01234567"
+        candidate = {
+            "candidate_id": candidate_id,
+            "title": "Current Corp official preliminary results",
+            "url": "https://issuer.example.com/current-results",
+            "query_ids": ["QUERY-VALUATION"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["VALUATION_MULTIPLES"],
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "verified_official_domain_candidate": True,
+        }
+
+        class FamilyGapProvider:
+            provider_name = "TEST_FAMILY_GAP_PROVIDER"
+
+            def complete(self, *, pass_name, payload):
+                self.assertEqual(pass_name, "SOURCE_CANDIDATE_RANKING")
+                return {
+                    "decisions": [
+                        {
+                            "candidate_id": candidate_id,
+                            "material_relevance": False,
+                            "priority": 1.0,
+                            "objective_ids": ["OBJECTIVE-1"],
+                            "matched_requested_source_family": "NONE",
+                            "rationale": (
+                                "공식 실적 경로지만 현재 query edge의 family가 다르다."
+                            ),
+                        }
+                    ],
+                    "ranking_complete": True,
+                    "unresolved_notes": [
+                        candidate_id
+                        + "는 ISSUER_NEWSROOM query edge가 필요하다."
+                    ],
+                }
+
+            def assertEqual(self, first, second):
+                if first != second:
+                    raise AssertionError((first, second))
+
+        ranking = ResearcherDocumentRanker(
+            provider=FamilyGapProvider()
+        ).rank_candidates(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            open_objectives=({"objective_id": "OBJECTIVE-1"},),
+            candidates=(candidate,),
+            current_evidence_facts=(),
+            target_business_model=None,
+            source_coverage=(),
+        )
+
+        self.assertEqual(ranking.status, "COMPLETE")
+        self.assertEqual(len(ranking.unresolved_notes), 1)
+        failures = (
+            source_graph_module._candidate_source_family_query_edge_failures(
+                ranking=ranking,
+                candidates=(candidate,),
+            )
+        )
+        self.assertEqual(len(failures), 1)
+        self.assertEqual(
+            failures[0]["source_family"],
+            "ISSUER_NEWSROOM",
+        )
+        self.assertFalse(ranking.decisions[0].material_relevance)
+        self.assertEqual(
+            len(
+                source_graph_module._unresolved_candidate_source_family_query_edge_failures(
+                    failures,
+                    candidates=(candidate,),
+                )
+            ),
+            1,
+        )
+
+        rebound = dict(candidate)
+        rebound["requested_source_families"] = [
+            "VALUATION_MULTIPLES",
+            "ISSUER_NEWSROOM",
+        ]
+        self.assertEqual(
+            source_graph_module._unresolved_candidate_source_family_query_edge_failures(
+                failures,
+                candidates=(rebound,),
+            ),
+            (),
+        )
+
     def test_resolved_objective_processes_current_provenance_revalidation(
         self,
     ) -> None:

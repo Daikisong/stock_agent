@@ -700,7 +700,21 @@ class ResearcherSourceGraphAcquirer:
             for row in source_family_lineage_failures
             if str(row.get("objective_id") or "")
         }
-        resolved.difference_update(source_family_gap_objective_ids)
+        candidate_query_edge_failures = (
+            _unresolved_candidate_source_family_query_edge_failures(
+                state["query_failures"],
+                candidates=candidates,
+            )
+        )
+        candidate_query_edge_gap_objective_ids = {
+            str(row.get("objective_id") or "")
+            for row in candidate_query_edge_failures
+            if str(row.get("objective_id") or "")
+        }
+        resolved.difference_update(
+            source_family_gap_objective_ids
+            | candidate_query_edge_gap_objective_ids
+        )
         unresolved_objectives = tuple(
             row for row in objectives if str(row["objective_id"]) not in resolved
         )
@@ -1073,6 +1087,12 @@ class ResearcherSourceGraphAcquirer:
             )
             ranking_results.append(ranking)
             pending_reasons.extend(ranking.pending_reasons)
+            query_failures.extend(
+                _candidate_source_family_query_edge_failures(
+                    ranking=ranking,
+                    candidates=rank_batch,
+                )
+            )
             decision_by_candidate = {
                 row.candidate_id: row for row in ranking.decisions
             }
@@ -4783,6 +4803,115 @@ def _candidate_has_current_fetch_semantics_retry(
     if reason == "PRIOR_PDF_FAILURE_PRECEDED_PDFPLUMBER_FALLBACK":
         return policy_version == "e2r_pdf_text_fallback_v1"
     return False
+
+
+def _candidate_source_family_query_edge_failures(
+    *,
+    ranking: CandidateRankingResult,
+    candidates: Sequence[Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    """Persist LLM-identified official routes that lack a valid query edge.
+
+    The ranking LLM may recognize a useful official route but must correctly
+    reject it when that candidate's query did not request the route's source
+    family.  Its unresolved note is therefore not completion prose: it is
+    feedback for the next LLM query-generation call.  Deterministic code only
+    validates the mentioned candidate id and structural family mismatch; it
+    never invents the new query or makes the candidate material.
+    """
+
+    candidate_by_id = {
+        str(row.get("candidate_id") or ""): row
+        for row in candidates
+        if str(row.get("candidate_id") or "")
+    }
+    decision_by_id = {
+        row.candidate_id: row for row in ranking.decisions
+    }
+    failures: list[Mapping[str, Any]] = []
+    for note in ranking.unresolved_notes:
+        mentioned_ids = tuple(
+            dict.fromkeys(re.findall(r"SGCAND-[0-9a-f]{24}", note))
+        )
+        for candidate_id in mentioned_ids:
+            candidate = candidate_by_id.get(candidate_id)
+            decision = decision_by_id.get(candidate_id)
+            if candidate is None or decision is None:
+                continue
+            if decision.material_relevance:
+                continue
+            source_family = str(
+                candidate.get("candidate_source_family_hint") or ""
+            )
+            if (
+                source_family not in CANONICAL_SOURCE_FAMILIES
+                or source_family
+                in {"GENERAL_WEB_DISCOVERY", "NAVER_DISCOVERY"}
+                or source_family
+                in set(candidate.get("requested_source_families") or ())
+            ):
+                continue
+            for objective_id in candidate.get("objective_ids") or ():
+                failures.append(
+                    {
+                        "query_id": (
+                            "CANDIDATE_QUERY_EDGE:"
+                            + candidate_id
+                            + ":"
+                            + source_family
+                        ),
+                        "objective_id": str(objective_id),
+                        "candidate_id": candidate_id,
+                        "query_ids": list(candidate.get("query_ids") or ()),
+                        "failure_kind": "SOURCE_FAMILY_QUERY_EDGE",
+                        "failure_stage": "SOURCE_CANDIDATE_RANKING",
+                        "failure_reason": (
+                            "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                        ),
+                        "source_family": source_family,
+                        "requested_source_families": list(
+                            candidate.get("requested_source_families") or ()
+                        ),
+                        "llm_unresolved_note": note,
+                        "retryable": True,
+                        "alternate_route_required": True,
+                        "absence_eligible": False,
+                        "resolved": False,
+                    }
+                )
+    return tuple(failures)
+
+
+def _unresolved_candidate_source_family_query_edge_failures(
+    failures: Sequence[Mapping[str, Any]],
+    *,
+    candidates: Sequence[Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    """Keep a ranking edge gap open only until a new LLM query binds it."""
+
+    candidate_by_id = {
+        str(row.get("candidate_id") or ""): row
+        for row in candidates
+        if str(row.get("candidate_id") or "")
+    }
+    unresolved = []
+    for failure in failures:
+        if str(failure.get("failure_reason") or "") != (
+            "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+        ):
+            continue
+        candidate = candidate_by_id.get(
+            str(failure.get("candidate_id") or "")
+        )
+        source_family = str(failure.get("source_family") or "")
+        if candidate is None or not source_family:
+            continue
+        if source_family in set(
+            candidate.get("requested_source_families") or ()
+        ):
+            continue
+        unresolved.append(failure)
+    return tuple(unresolved)
 
 
 def _has_actionable_supervisor_query_direction(

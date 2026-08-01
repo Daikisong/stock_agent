@@ -96,6 +96,7 @@ class CandidateRankingResult:
     prompt_hash: str
     response_hash: str | None
     completion_flag_reconciled: bool = False
+    unresolved_notes: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if self.status not in {"COMPLETE", "PENDING"}:
@@ -112,6 +113,7 @@ class CandidateRankingResult:
             "prompt_hash": self.prompt_hash,
             "response_hash": self.response_hash,
             "completion_flag_reconciled": self.completion_flag_reconciled,
+            "unresolved_notes": list(self.unresolved_notes),
         }
 
 
@@ -355,6 +357,7 @@ class ResearcherDocumentRanker:
             prompt_hash=prompt_hash,
             response_hash=response_hash,
             completion_flag_reconciled=completion_flag_reconciled,
+            unresolved_notes=notes,
         )
 
     def _rank_candidate_partitions(
@@ -450,6 +453,13 @@ class ResearcherDocumentRanker:
                     result.completion_flag_reconciled
                     for result in results
                 ),
+                unresolved_notes=tuple(
+                    dict.fromkeys(
+                        note
+                        for result in results
+                        for note in result.unresolved_notes
+                    )
+                ),
             )
         pending_reasons = ["SEMANTIC_RANKING_SPLIT_PENDING"]
         if not roster_complete:
@@ -474,6 +484,13 @@ class ResearcherDocumentRanker:
             completion_flag_reconciled=any(
                 result.completion_flag_reconciled
                 for result in results
+            ),
+            unresolved_notes=tuple(
+                dict.fromkeys(
+                    note
+                    for result in results
+                    for note in result.unresolved_notes
+                )
             ),
         )
 
