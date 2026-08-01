@@ -688,6 +688,8 @@ class ResearcherSourceGraphAcquirer:
                 generated_queries=generated_rows,
                 documents=evidence_documents,
                 candidates=candidates,
+                materiality_decisions=ranking_rows,
+                fetch_records=fetch_rows,
                 facts=facts,
                 # A previously resolved objective must be reopened when its
                 # requested family never produced accepted claim/fact lineage.
@@ -1406,6 +1408,8 @@ class ResearcherSourceGraphAcquirer:
                 documents=all_documents,
                 facts=facts,
                 candidates=candidates,
+                materiality_decisions=ranking_rows,
+                fetch_records=fetch_rows,
             )
             if config.mode
             == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
@@ -2661,11 +2665,82 @@ def _reopen_stale_pending_materiality_candidates(
     return reopened
 
 
+def _page_fetcher_document_transport_binds_candidate(
+    *,
+    document: Mapping[str, Any],
+    candidate: Mapping[str, Any],
+    fetch_records: Sequence[Mapping[str, Any]],
+    objective_ids: Sequence[str],
+) -> bool:
+    """Verify fetched bytes, stable identity, and the candidate fetch ledger."""
+
+    document_id = str(document.get("document_id") or "")
+    content = str(document.get("content_text") or "")
+    content_hash = str(document.get("content_hash") or "")
+    target_id = str(document.get("target_id") or "")
+    candidate_id = str(candidate.get("candidate_id") or "")
+    expected_document_id = (
+        stable_intelligence_id(
+            "SGDOC",
+            {
+                "target_id": target_id,
+                "content_hash": content_hash,
+                "published_at": document.get("published_at"),
+            },
+        )
+        if target_id and content_hash
+        else ""
+    )
+    required_objective_ids = {
+        str(value) for value in objective_ids if str(value).strip()
+    }
+    fetch_is_bound = any(
+        str(row.get("candidate_id") or "") == candidate_id
+        and str(row.get("content_hash") or "") == content_hash
+        and row.get("full_fetch_attempted") is True
+        and not row.get("provider_error")
+        and (
+            (
+                str(row.get("disposition") or "")
+                == "FULL_DOCUMENT_FETCHED"
+                and str(row.get("document_id") or "") == document_id
+            )
+            or (
+                str(row.get("disposition") or "")
+                == "DUPLICATE_CONTENT"
+                and str(row.get("existing_document_id") or "")
+                == document_id
+            )
+        )
+        and required_objective_ids.issubset(
+            {
+                str(value)
+                for value in row.get("objective_ids") or ()
+                if str(value).strip()
+            }
+        )
+        for row in fetch_records
+    )
+    return bool(
+        document.get("full_fetch_performed") is True
+        and document.get("evidence_eligible") is True
+        and document.get("snippet_only") is not True
+        and document.get("snippet_used_as_document") is not True
+        and content
+        and content_hash
+        == hashlib.sha256(content.encode("utf-8")).hexdigest()
+        and document_id == expected_document_id
+        and fetch_is_bound
+    )
+
+
 def _production_downstream_documents(
     *,
     documents: Sequence[Mapping[str, Any]],
     facts: Sequence[Mapping[str, Any]],
     candidates: Sequence[Mapping[str, Any]],
+    materiality_decisions: Sequence[Mapping[str, Any]] = (),
+    fetch_records: Sequence[Mapping[str, Any]] = (),
 ) -> tuple[Mapping[str, Any], ...]:
     """Expose only production-validated documents to fact/supervisor stages.
 
@@ -2692,6 +2767,18 @@ def _production_downstream_documents(
         for candidate in candidates
         if str(candidate.get("materiality_decision_id") or "")
     }
+    materiality_decision_by_id = {
+        str(decision.get("decision_id") or ""): decision
+        for decision in materiality_decisions
+        if str(decision.get("decision_id") or "")
+    }
+    fetch_records_by_candidate_id: dict[str, list[Mapping[str, Any]]] = {}
+    for fetch_record in fetch_records:
+        candidate_id = str(fetch_record.get("candidate_id") or "")
+        if candidate_id:
+            fetch_records_by_candidate_id.setdefault(candidate_id, []).append(
+                fetch_record
+            )
     active: list[Mapping[str, Any]] = []
     for document in documents:
         document_id = str(document.get("document_id") or "")
@@ -2703,14 +2790,24 @@ def _production_downstream_documents(
             continue
         document_scope = _validated_reference_materiality_scope(document)
         if document_scope is not None:
-            provenance_candidate = candidate_by_materiality_decision_id.get(
+            current_scope_candidate = candidate_by_materiality_decision_id.get(
                 str(document_scope["source_materiality_decision_id"])
             )
             candidate_scope = (
                 _validated_reference_materiality_scope(
-                    provenance_candidate
+                    current_scope_candidate
                 )
-                if provenance_candidate is not None
+                if current_scope_candidate is not None
+                else None
+            )
+            current_decision = (
+                materiality_decision_by_id.get(
+                    str(
+                        current_scope_candidate.get("materiality_decision_id")
+                        or ""
+                    )
+                )
+                if current_scope_candidate is not None
                 else None
             )
             if (
@@ -2719,9 +2816,138 @@ def _production_downstream_documents(
                 == document_scope["materiality_scope_hash"]
                 and candidate_scope["materiality_scope_url"]
                 == document_scope["materiality_scope_url"]
+                and _candidate_materiality_decision_binds_scope(
+                    candidate=current_scope_candidate,
+                    decision=current_decision,
+                    scope_hash=str(candidate_scope["materiality_scope_hash"]),
+                    requested_source_families=tuple(
+                        candidate_scope["requested_source_families"]
+                    ),
+                )
+                and str(current_scope_candidate.get("ranking_status") or "")
+                == "MATERIAL"
+                and _page_fetcher_document_transport_binds_candidate(
+                    document=document,
+                    candidate=current_scope_candidate,
+                    fetch_records=fetch_records_by_candidate_id.get(
+                        str(current_scope_candidate.get("candidate_id") or ""),
+                        (),
+                    ),
+                    objective_ids=tuple(document_scope["objective_ids"]),
+                )
             ):
                 active.append(document)
                 continue
+            # Candidate identity is URL-based, while materiality is
+            # query-scope-based.  A later NOT_MATERIAL decision for an
+            # unrelated question must not revoke the already fetched
+            # document's earlier production-valid scope.  Reuse that scope
+            # only when its persisted decision still binds the same candidate,
+            # URL, objectives, requested family, and material decision.
+            provenance_candidate = candidate_by_document_id.get(document_id)
+            provenance_decision = materiality_decision_by_id.get(
+                str(document_scope["source_materiality_decision_id"])
+            )
+            candidate_scope = (
+                _validated_current_candidate_materiality_scope(
+                    provenance_candidate
+                )
+                if provenance_candidate is not None
+                else None
+            )
+            current_decision = (
+                materiality_decision_by_id.get(
+                    str(
+                        provenance_candidate.get("materiality_decision_id")
+                        or ""
+                    )
+                )
+                if provenance_candidate is not None
+                else None
+            )
+            current_objective_ids = (
+                set(candidate_scope["objective_ids"])
+                if candidate_scope is not None
+                else set()
+            )
+            document_objective_ids = set(document_scope["objective_ids"])
+            current_scope_is_bound = bool(
+                provenance_candidate is not None
+                and candidate_scope is not None
+                and _candidate_materiality_decision_binds_scope(
+                    candidate=provenance_candidate,
+                    decision=current_decision,
+                    scope_hash=str(candidate_scope["materiality_scope_hash"]),
+                    requested_source_families=tuple(
+                        candidate_scope["requested_source_families"]
+                    ),
+                )
+            )
+            candidate_id = (
+                str(provenance_candidate.get("candidate_id") or "")
+                if provenance_candidate is not None
+                else ""
+            )
+            document_transport_is_valid = bool(
+                provenance_candidate is not None
+                and _page_fetcher_document_transport_binds_candidate(
+                    document=document,
+                    candidate=provenance_candidate,
+                    fetch_records=fetch_records_by_candidate_id.get(
+                        candidate_id, ()
+                    ),
+                    objective_ids=tuple(document_scope["objective_ids"]),
+                )
+            )
+            if (
+                provenance_candidate is not None
+                and current_scope_is_bound
+                and candidate_scope["materiality_scope_hash"]
+                != document_scope["materiality_scope_hash"]
+                and not current_objective_ids.intersection(
+                    document_objective_ids
+                )
+                and document_transport_is_valid
+            ):
+                historical_scope_candidate = {
+                    "candidate_id": provenance_candidate.get("candidate_id"),
+                    "materiality_decision_id": document_scope[
+                        "source_materiality_decision_id"
+                    ],
+                    "ranking_status": "MATERIAL",
+                    "matched_requested_source_family": document_scope[
+                        "matched_requested_source_family"
+                    ],
+                    "materiality_scope_hash": document_scope[
+                        "materiality_scope_hash"
+                    ],
+                    "objective_ids": document_scope["objective_ids"],
+                    "requested_source_families": document_scope[
+                        "requested_source_families"
+                    ],
+                }
+                candidate_url = _normalize_url(
+                    str(
+                        provenance_candidate.get("normalized_url")
+                        or provenance_candidate.get("url")
+                        or ""
+                    )
+                )
+                if (
+                    candidate_url == document_scope["materiality_scope_url"]
+                    and _candidate_materiality_decision_binds_scope(
+                        candidate=historical_scope_candidate,
+                        decision=provenance_decision,
+                        scope_hash=str(
+                            document_scope["materiality_scope_hash"]
+                        ),
+                        requested_source_families=tuple(
+                            document_scope["requested_source_families"]
+                        ),
+                    )
+                ):
+                    active.append(document)
+                    continue
         if (
             document.get("source_materiality_decision_id")
             or document.get("materiality_scope_url")
@@ -2766,6 +2992,8 @@ def _requested_source_family_without_matched_fetch_failures(
     generated_queries: Sequence[Mapping[str, Any]],
     documents: Sequence[Mapping[str, Any]],
     candidates: Sequence[Mapping[str, Any]],
+    materiality_decisions: Sequence[Mapping[str, Any]] = (),
+    fetch_records: Sequence[Mapping[str, Any]] = (),
     facts: Sequence[Mapping[str, Any]],
     unresolved_objectives: Sequence[Mapping[str, Any]],
 ) -> tuple[Mapping[str, Any], ...]:
@@ -2811,6 +3039,8 @@ def _requested_source_family_without_matched_fetch_failures(
         documents=documents,
         facts=facts,
         candidates=candidates,
+        materiality_decisions=materiality_decisions,
+        fetch_records=fetch_records,
     )
     accepted_fact_document_ids = {
         str(source_id)
@@ -3400,6 +3630,96 @@ def _validated_reference_materiality_scope(
         "materiality_scope_hash": stored_scope_hash,
         "materiality_scope_url": _normalize_url(normalized_url),
         "source_materiality_decision_id": decision_provenance_id,
+    }
+
+
+def _validated_current_candidate_materiality_scope(
+    candidate: Mapping[str, Any],
+) -> Mapping[str, tuple[str, ...] | str] | None:
+    """Validate a current MATERIAL or NOT_MATERIAL candidate scope.
+
+    A NOT_MATERIAL scope is useful only to prove that a later review covered a
+    different objective.  It never authorizes a document by itself; callers
+    must also bind the candidate to the persisted decision row.
+    """
+
+    if not str(candidate.get("candidate_id") or "").strip():
+        return None
+    ranking_status = str(candidate.get("ranking_status") or "")
+    if ranking_status not in {"MATERIAL", "NOT_MATERIAL"}:
+        return None
+    materiality_query_ids = tuple(
+        dict.fromkeys(
+            str(value)
+            for value in candidate.get("materiality_query_ids") or ()
+            if str(value).strip()
+        )
+    )
+    objective_ids = tuple(
+        dict.fromkeys(
+            str(value)
+            for value in candidate.get("objective_ids") or ()
+            if str(value).strip()
+        )
+    )
+    requested_source_families = tuple(
+        dict.fromkeys(
+            str(value)
+            for value in candidate.get("requested_source_families") or ()
+            if str(value).strip()
+        )
+    )
+    matched_source_family = str(
+        candidate.get("matched_requested_source_family") or ""
+    )
+    decision_id = str(candidate.get("materiality_decision_id") or "")
+    stored_scope_hash = str(candidate.get("materiality_scope_hash") or "")
+    normalized_url = _normalize_url(
+        str(
+            candidate.get("materiality_scope_url")
+            or candidate.get("normalized_url")
+            or candidate.get("url")
+            or ""
+        )
+    )
+    if (
+        not materiality_query_ids
+        or not objective_ids
+        or not requested_source_families
+        or not decision_id
+        or not stored_scope_hash
+        or not normalized_url
+        or (
+            ranking_status == "MATERIAL"
+            and (
+                matched_source_family == "NONE"
+                or matched_source_family not in requested_source_families
+            )
+        )
+        or (
+            ranking_status == "NOT_MATERIAL"
+            and matched_source_family != "NONE"
+            and matched_source_family not in requested_source_families
+        )
+    ):
+        return None
+    expected_scope_hash = _candidate_materiality_scope_hash(
+        {
+            "normalized_url": normalized_url,
+            "objective_ids": objective_ids,
+            "requested_source_families": requested_source_families,
+        }
+    )
+    if stored_scope_hash != expected_scope_hash:
+        return None
+    return {
+        "materiality_query_ids": materiality_query_ids,
+        "objective_ids": objective_ids,
+        "requested_source_families": requested_source_families,
+        "matched_requested_source_family": matched_source_family,
+        "materiality_scope_hash": stored_scope_hash,
+        "materiality_scope_url": normalized_url,
+        "source_materiality_decision_id": decision_id,
     }
 
 

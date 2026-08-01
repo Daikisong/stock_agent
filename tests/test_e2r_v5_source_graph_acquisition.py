@@ -2405,6 +2405,160 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             },
         )
 
+    def test_production_downstream_preserves_valid_fetched_scope_when_later_scope_is_unrelated(
+        self,
+    ) -> None:
+        url = "https://issuer.example.com/q1-results"
+        content = "Q1 preliminary results are unaudited and may change."
+        content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
+        published_at = "2026-04-24"
+        target_id = "005930"
+        document_id = source_graph_module.stable_intelligence_id(
+            "SGDOC",
+            {
+                "target_id": target_id,
+                "content_hash": content_hash,
+                "published_at": published_at,
+            },
+        )
+        document = {
+            "document_id": document_id,
+            "target_id": target_id,
+            "source_provider": "PageFetcher",
+            "canonical_url": url,
+            "published_at": published_at,
+            "content_text": content,
+            "content_hash": content_hash,
+            "full_fetch_performed": True,
+            "evidence_eligible": True,
+            "snippet_only": False,
+            "snippet_used_as_document": False,
+            "materiality_query_ids": ["QUERY-Q1-DISCLAIMER"],
+            "objective_ids": ["OBJECTIVE-Q1-DISCLAIMER"],
+            "requested_source_families": ["ISSUER_EARNINGS_RELEASE"],
+            "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+            "source_materiality_decision_id": "DECISION-Q1-MATERIAL",
+            "materiality_scope_url": url,
+        }
+        document["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(
+                {
+                    "normalized_url": url,
+                    "objective_ids": document["objective_ids"],
+                    "requested_source_families": document[
+                        "requested_source_families"
+                    ],
+                }
+            )
+        )
+        current_candidate = {
+            "candidate_id": "SGCAND-SAME-URL",
+            "document_id": document["document_id"],
+            "url": url,
+            "normalized_url": url,
+            "materiality_query_ids": ["QUERY-ANNUAL-MIX"],
+            "objective_ids": ["OBJECTIVE-ANNUAL-MIX"],
+            "requested_source_families": ["ISSUER_EARNINGS_RELEASE"],
+            "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+            "materiality_decision_id": "DECISION-ANNUAL-NOT-MATERIAL",
+            "ranking_status": "NOT_MATERIAL",
+            "fetch_status": "FULL_DOCUMENT_REVALIDATION_REJECTED",
+        }
+        current_candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(
+                current_candidate
+            )
+        )
+        original_material_decision = {
+            "candidate_id": current_candidate["candidate_id"],
+            "decision_id": document["source_materiality_decision_id"],
+            "material_relevance": True,
+            "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+            "objective_ids": document["objective_ids"],
+        }
+        current_not_material_decision = {
+            "candidate_id": current_candidate["candidate_id"],
+            "decision_id": current_candidate["materiality_decision_id"],
+            "material_relevance": False,
+            "matched_requested_source_family": "ISSUER_EARNINGS_RELEASE",
+            "objective_ids": current_candidate["objective_ids"],
+        }
+        fetch_record = {
+            "candidate_id": current_candidate["candidate_id"],
+            "content_hash": content_hash,
+            "disposition": "FULL_DOCUMENT_FETCHED",
+            "document_id": document_id,
+            "full_fetch_attempted": True,
+            "provider_error": None,
+            "objective_ids": document["objective_ids"],
+        }
+
+        self.assertEqual(
+            source_graph_module._production_downstream_documents(
+                documents=(document,),
+                facts=(),
+                candidates=(current_candidate,),
+            ),
+            (),
+        )
+        self.assertEqual(
+            source_graph_module._production_downstream_documents(
+                documents=(document,),
+                facts=(),
+                candidates=(current_candidate,),
+                materiality_decisions=(
+                    original_material_decision,
+                    current_not_material_decision,
+                ),
+                fetch_records=(fetch_record,),
+            ),
+            (document,),
+        )
+
+        same_scope_candidate = {
+            **current_candidate,
+            "materiality_query_ids": document["materiality_query_ids"],
+            "objective_ids": document["objective_ids"],
+            "materiality_scope_hash": document["materiality_scope_hash"],
+        }
+        same_scope_not_material_decision = {
+            **current_not_material_decision,
+            "objective_ids": document["objective_ids"],
+        }
+        self.assertEqual(
+            source_graph_module._production_downstream_documents(
+                documents=(document,),
+                facts=(),
+                candidates=(same_scope_candidate,),
+                materiality_decisions=(
+                    original_material_decision,
+                    same_scope_not_material_decision,
+                ),
+                fetch_records=(fetch_record,),
+            ),
+            (),
+        )
+
+        forged_document = {
+            **document,
+            "content_text": "forged",
+            "full_fetch_performed": False,
+            "evidence_eligible": False,
+        }
+        self.assertEqual(
+            source_graph_module._production_downstream_documents(
+                documents=(forged_document,),
+                facts=(),
+                candidates=(current_candidate,),
+                materiality_decisions=(
+                    original_material_decision,
+                    current_not_material_decision,
+                ),
+                fetch_records=(fetch_record,),
+            ),
+            (),
+        )
+
     def test_requested_family_is_not_coverage_until_matched_fetch(self) -> None:
         query = {
             "query_id": "QUERY-CUSTOMER",
@@ -3613,12 +3767,28 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         content_hash = hashlib.sha256(
             text.strip().encode("utf-8")
         ).hexdigest()
+        published_at = "2026-06-20"
+        existing_document_id = source_graph_module.stable_intelligence_id(
+            "SGDOC",
+            {
+                "target_id": TARGET,
+                "content_hash": content_hash,
+                "published_at": published_at,
+            },
+        )
         existing_document = {
-            "document_id": "SGDOC-EXISTING",
+            "document_id": existing_document_id,
+            "target_id": TARGET,
             "canonical_url": original_url,
             "source_provider": "PageFetcher",
             "source_family": "GENERAL_WEB_DISCOVERY",
+            "published_at": published_at,
             "content_hash": content_hash,
+            "content_text": text.strip(),
+            "full_fetch_performed": True,
+            "evidence_eligible": True,
+            "snippet_only": False,
+            "snippet_used_as_document": False,
             "query_ids": ["LEGACY-QUERY"],
             "objective_ids": ["LEGACY-OBJECTIVE"],
             "requested_source_families": ["GENERAL_WEB_DISCOVERY"],
@@ -3634,7 +3804,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "matched_requested_source_family": "ISSUER_NEWSROOM",
             "materiality_decision_id": "DECISION-CURRENT-DUPLICATE",
             "ranking_status": "MATERIAL",
-            "published_at": "2026-06-20",
+            "published_at": published_at,
         }
         candidate["materiality_scope_hash"] = (
             source_graph_module._candidate_materiality_scope_hash(candidate)
@@ -3680,8 +3850,47 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             documents=(document,),
             facts=(),
             candidates=(candidate,),
+            materiality_decisions=(
+                {
+                    "candidate_id": candidate["candidate_id"],
+                    "decision_id": candidate["materiality_decision_id"],
+                    "material_relevance": True,
+                    "matched_requested_source_family": (
+                        "ISSUER_NEWSROOM"
+                    ),
+                    "objective_ids": candidate["objective_ids"],
+                },
+            ),
+            fetch_records=(record,),
         )
         self.assertEqual(active, (document,))
+
+        forged_current_document = {
+            **document,
+            "content_text": "forged current bytes",
+            "full_fetch_performed": False,
+            "evidence_eligible": False,
+        }
+        self.assertEqual(
+            source_graph_module._production_downstream_documents(
+                documents=(forged_current_document,),
+                facts=(),
+                candidates=(candidate,),
+                materiality_decisions=(
+                    {
+                        "candidate_id": candidate["candidate_id"],
+                        "decision_id": candidate["materiality_decision_id"],
+                        "material_relevance": True,
+                        "matched_requested_source_family": (
+                            "ISSUER_NEWSROOM"
+                        ),
+                        "objective_ids": candidate["objective_ids"],
+                    },
+                ),
+                fetch_records=(record,),
+            ),
+            (),
+        )
 
     def test_navigation_url_classifier_keeps_documents_and_articles(self) -> None:
         navigation_urls = (
