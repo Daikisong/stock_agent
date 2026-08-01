@@ -1896,6 +1896,8 @@ class OllamaStructuredProviderTests(unittest.TestCase):
             runner.fact_extractor.max_document_chars_per_call,
             10_000,
         )
+        provider.transport.model_digest = "d" * 64
+        provider.transport.server_version = "test-version"
         self.assertEqual(
             provider._provider_identity()[
                 "effective_semantic_prompt_chunk_chars"
