@@ -2875,6 +2875,646 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             ]
         )
 
+    def test_candidate_query_edge_repair_preempts_candidate_backlog(
+        self,
+    ) -> None:
+        candidate_id = "SGCAND-0123456789abcdef01234567"
+        repair_query = "Current Corp official preliminary results newsroom"
+        official_url = "https://issuer.example.com/current-results"
+        backlog_url = "https://example.com/unrelated-backlog"
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state.update(
+            status="CHECKPOINT_PENDING",
+            generated_queries=[
+                {
+                    "query_id": "QUERY-VALUATION",
+                    "objective_id": "OBJECTIVE-1",
+                    "literal_query": "Current Corp valuation multiples",
+                    "source_families": ["VALUATION_MULTIPLES"],
+                    "execution_status": "SEARCH_EXECUTED",
+                }
+            ],
+            executed_queries=["Current Corp valuation multiples"],
+            search_candidates=[
+                {
+                    "candidate_id": candidate_id,
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "url": official_url,
+                    "normalized_url": official_url,
+                    "title": "Current Corp official preliminary results",
+                    "snippet": None,
+                    "source": "issuer.example.com",
+                    "published_at": "2026-06-20",
+                    "rank": 1,
+                    "is_pdf": False,
+                    "is_report_domain": False,
+                    "is_news": True,
+                    "is_disclosure": False,
+                    "query_ids": ["QUERY-VALUATION"],
+                    "materiality_query_ids": ["QUERY-VALUATION"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "requested_source_families": [
+                        "VALUATION_MULTIPLES"
+                    ],
+                    "query_lineage_valid": True,
+                    "discovery_only": True,
+                    "snippet_discovery_only": True,
+                    "ranking_status": "NOT_MATERIAL",
+                    "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
+                    "candidate_source_family_hint": "ISSUER_NEWSROOM",
+                    "verified_official_domain_candidate": True,
+                    "alternate_route_required": True,
+                    "materiality_revalidation_reason": (
+                        "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+                    ),
+                    "matched_requested_source_family": "NONE",
+                },
+                {
+                    "candidate_id": "UNRELATED-BACKLOG",
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "url": backlog_url,
+                    "normalized_url": backlog_url,
+                    "title": "unrelated inherited candidate",
+                    "snippet": None,
+                    "source": "example.com",
+                    "published_at": "2026-06-19",
+                    "rank": 0,
+                    "is_pdf": False,
+                    "is_report_domain": False,
+                    "is_news": False,
+                    "is_disclosure": False,
+                    "query_ids": ["QUERY-VALUATION"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "requested_source_families": [
+                        "VALUATION_MULTIPLES"
+                    ],
+                    "query_lineage_valid": True,
+                    "discovery_only": True,
+                    "snippet_discovery_only": True,
+                    "ranking_status": "PENDING",
+                    "fetch_status": "NOT_STARTED",
+                },
+            ],
+            query_failures=[
+                {
+                    "query_id": (
+                        "CANDIDATE_QUERY_EDGE:"
+                        + candidate_id
+                        + ":ISSUER_NEWSROOM"
+                    ),
+                    "objective_id": "OBJECTIVE-1",
+                    "candidate_id": candidate_id,
+                    "query_ids": ["QUERY-VALUATION"],
+                    "failure_kind": "SOURCE_FAMILY_QUERY_EDGE",
+                    "failure_stage": "SOURCE_CANDIDATE_RANKING",
+                    "failure_reason": (
+                        "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                    ),
+                    "source_family": "ISSUER_NEWSROOM",
+                    "requested_source_families": [
+                        "VALUATION_MULTIPLES"
+                    ],
+                    "retryable": True,
+                    "alternate_route_required": True,
+                    "absence_eligible": False,
+                    "resolved": False,
+                }
+            ],
+        )
+        persisted_candidate = state["search_candidates"][0]
+        persisted_candidate["materiality_decision_id"] = "MATDEC-PERSISTED"
+        persisted_candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(
+                persisted_candidate
+            )
+        )
+        state["candidate_materiality_decisions"] = [
+            {
+                "decision_id": "MATDEC-PERSISTED",
+                "candidate_id": candidate_id,
+                "material_relevance": False,
+                "matched_requested_source_family": "NONE",
+                "objective_ids": ["OBJECTIVE-1"],
+                "priority": 0.12,
+                "rationale": (
+                    "공식 원문이지만 현재 query edge의 family와 다르다."
+                ),
+            }
+        ]
+        state["query_failures"] = []
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        provider = SourceBrainProvider(
+            queries=(repair_query,),
+            source_families=("ISSUER_NEWSROOM",),
+            material_titles=("official preliminary results",),
+        )
+
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    repair_query: (
+                        _result(
+                            "Current Corp official preliminary results",
+                            official_url,
+                            query=repair_query,
+                        ),
+                    )
+                }
+            ),
+            fetcher=PageFetcher(
+                fixture_text_by_url={
+                    official_url: _document_text("current-results")
+                }
+            ),
+            config=SourceGraphAcquisitionConfig(
+                mode="TEST",
+                max_results_per_query=1,
+                max_queries_per_checkpoint=1,
+                max_candidates_per_checkpoint=1,
+                max_fetches_per_checkpoint=1,
+            ),
+            checkpoint=checkpoint,
+            official_domains=("issuer.example.com",),
+        )
+
+        self.assertIsNotNone(run.query_generation)
+        ranking_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+        self.assertEqual(
+            [
+                row["candidate_id"]
+                for row in ranking_payload["discovery_candidates"]
+            ],
+            [candidate_id],
+        )
+        repaired = next(
+            row
+            for row in run.checkpoint["search_candidates"]
+            if row["candidate_id"] == candidate_id
+        )
+        backlog = next(
+            row
+            for row in run.checkpoint["search_candidates"]
+            if row["candidate_id"] == "UNRELATED-BACKLOG"
+        )
+        self.assertEqual(
+            repaired["requested_source_families"],
+            ["ISSUER_NEWSROOM"],
+        )
+        self.assertEqual(repaired["ranking_status"], "MATERIAL")
+        self.assertEqual(backlog["ranking_status"], "PENDING")
+        self.assertTrue(
+            run.audit[
+                "candidate_query_edge_direction_prioritized_over_candidate_backlog"
+            ]
+        )
+
+    def test_candidate_query_edge_alternate_url_closes_then_resumes_backlog(
+        self,
+    ) -> None:
+        candidate_id = "SGCAND-0123456789abcdef01234567"
+        original_url = "https://issuer.example.com/current-results"
+        alternate_url = "https://issuer.example.com/current-results-mirror"
+        ranking_backlog_url = "https://example.com/ranking-backlog"
+        fetch_backlog_url = "https://example.com/fetch-backlog"
+        repair_query = "Current Corp official preliminary results mirror"
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        common = {
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "snippet": None,
+            "published_at": "2026-06-20",
+            "rank": 1,
+            "is_pdf": False,
+            "is_report_domain": False,
+            "is_news": True,
+            "is_disclosure": False,
+            "query_lineage_valid": True,
+            "discovery_only": True,
+            "snippet_discovery_only": True,
+        }
+        original = {
+            **common,
+            "candidate_id": candidate_id,
+            "url": original_url,
+            "normalized_url": original_url,
+            "title": "Current Corp official preliminary results",
+            "source": "issuer.example.com",
+            "query_ids": ["QUERY-VALUATION"],
+            "materiality_query_ids": ["QUERY-VALUATION"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["VALUATION_MULTIPLES"],
+            "ranking_status": "NOT_MATERIAL",
+            "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
+            "candidate_source_family_hint": "ISSUER_NEWSROOM",
+            "verified_official_domain_candidate": True,
+            "alternate_route_required": True,
+            "materiality_revalidation_reason": (
+                "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+            ),
+            "matched_requested_source_family": "NONE",
+        }
+        ranking_backlog = {
+            **common,
+            "candidate_id": "UNRELATED-RANKING-BACKLOG",
+            "url": ranking_backlog_url,
+            "normalized_url": ranking_backlog_url,
+            "title": "unrelated ranking backlog",
+            "source": "example.com",
+            "query_ids": ["QUERY-VALUATION"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["VALUATION_MULTIPLES"],
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+        }
+        fetch_backlog = {
+            **common,
+            "candidate_id": "UNRELATED-FETCH-BACKLOG",
+            "url": fetch_backlog_url,
+            "normalized_url": fetch_backlog_url,
+            "title": "unrelated material fetch backlog",
+            "source": "example.com",
+            "query_ids": ["QUERY-VALUATION"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["VALUATION_MULTIPLES"],
+            "ranking_status": "MATERIAL",
+            "fetch_status": "MATERIAL_PENDING_FETCH",
+            "material_priority": 2.0,
+            "matched_requested_source_family": "VALUATION_MULTIPLES",
+        }
+        state.update(
+            status="CHECKPOINT_PENDING",
+            generated_queries=[
+                {
+                    "query_id": "QUERY-VALUATION",
+                    "objective_id": "OBJECTIVE-1",
+                    "literal_query": "Current Corp valuation multiples",
+                    "source_families": ["VALUATION_MULTIPLES"],
+                    "execution_status": "SEARCH_EXECUTED",
+                }
+            ],
+            executed_queries=["Current Corp valuation multiples"],
+            search_candidates=[original, ranking_backlog, fetch_backlog],
+            query_failures=[
+                {
+                    "query_id": (
+                        "CANDIDATE_QUERY_EDGE:"
+                        + candidate_id
+                        + ":ISSUER_NEWSROOM"
+                    ),
+                    "objective_id": "OBJECTIVE-1",
+                    "candidate_id": candidate_id,
+                    "failure_reason": (
+                        "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                    ),
+                    "source_family": "ISSUER_NEWSROOM",
+                    "retryable": True,
+                    "resolved": False,
+                }
+            ],
+        )
+        provider = SourceBrainProvider(
+            queries=(repair_query,),
+            source_families=("ISSUER_NEWSROOM",),
+            material_titles=("official preliminary results mirror",),
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={
+                alternate_url: _document_text("alternate-official"),
+                fetch_backlog_url: _document_text("fetch-backlog"),
+                ranking_backlog_url: _document_text("ranking-backlog"),
+            }
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_results_per_query=1,
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    repair_query: (
+                        _result(
+                            "Current Corp official preliminary results mirror",
+                            alternate_url,
+                            query=repair_query,
+                        ),
+                    )
+                }
+            ),
+            fetcher=fetcher,
+            config=config,
+            checkpoint=source_graph_module._finalize_checkpoint(state),
+        )
+
+        first_by_url = {
+            row["url"]: row
+            for row in first.checkpoint["search_candidates"]
+        }
+        self.assertEqual(
+            first_by_url[alternate_url]["fetch_status"],
+            "FULL_DOCUMENT_FETCHED",
+        )
+        self.assertEqual(
+            first_by_url[fetch_backlog_url]["fetch_status"],
+            "MATERIAL_PENDING_FETCH",
+        )
+        self.assertEqual(
+            first_by_url[ranking_backlog_url]["ranking_status"],
+            "PENDING",
+        )
+        first_ranking_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+        self.assertEqual(
+            [
+                row["url"]
+                for row in first_ranking_payload["discovery_candidates"]
+            ],
+            [alternate_url],
+        )
+        self.assertTrue(
+            first.audit["candidate_query_edge_direction_priority_requested"]
+        )
+        self.assertTrue(
+            first.audit[
+                "candidate_query_edge_direction_prioritized_over_candidate_backlog"
+            ]
+        )
+
+        second_provider = SourceBrainProvider()
+        second = self._run(
+            provider=second_provider,
+            search=RecordingSearchProvider({}),
+            fetcher=fetcher,
+            config=config,
+            checkpoint=first.checkpoint,
+        )
+
+        second_by_url = {
+            row["url"]: row
+            for row in second.checkpoint["search_candidates"]
+        }
+        self.assertNotEqual(
+            second_by_url[ranking_backlog_url]["ranking_status"],
+            "PENDING",
+        )
+        self.assertFalse(
+            second.audit["candidate_query_edge_direction_priority_requested"]
+        )
+        self.assertFalse(
+            second.audit[
+                "candidate_query_edge_direction_prioritized_over_candidate_backlog"
+            ]
+        )
+        self.assertEqual(
+            source_graph_module._unresolved_candidate_source_family_query_edge_failures(
+                second.checkpoint["query_failures"],
+                candidates=second.checkpoint["search_candidates"],
+                generated_queries=second.checkpoint["generated_queries"],
+            ),
+            (),
+        )
+
+    def test_candidate_query_edge_zero_result_is_bounded_and_audited(
+        self,
+    ) -> None:
+        candidate_id = "SGCAND-0123456789abcdef01234567"
+        official_url = "https://issuer.example.com/current-results"
+        repair_query = "Current Corp official preliminary results newsroom"
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state.update(
+            status="CHECKPOINT_PENDING",
+            generated_queries=[
+                {
+                    "query_id": "QUERY-VALUATION",
+                    "objective_id": "OBJECTIVE-1",
+                    "literal_query": "Current Corp valuation multiples",
+                    "source_families": ["VALUATION_MULTIPLES"],
+                    "execution_status": "SEARCH_EXECUTED",
+                }
+            ],
+            executed_queries=["Current Corp valuation multiples"],
+            search_candidates=[
+                {
+                    "candidate_id": candidate_id,
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "url": official_url,
+                    "normalized_url": official_url,
+                    "title": "Current Corp official preliminary results",
+                    "source": "issuer.example.com",
+                    "published_at": "2026-06-20",
+                    "query_ids": ["QUERY-VALUATION"],
+                    "materiality_query_ids": ["QUERY-VALUATION"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "requested_source_families": [
+                        "VALUATION_MULTIPLES"
+                    ],
+                    "query_lineage_valid": True,
+                    "ranking_status": "NOT_MATERIAL",
+                    "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
+                    "candidate_source_family_hint": "ISSUER_NEWSROOM",
+                    "verified_official_domain_candidate": True,
+                    "alternate_route_required": True,
+                    "materiality_revalidation_reason": (
+                        "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+                    ),
+                    "matched_requested_source_family": "NONE",
+                }
+            ],
+            query_failures=[
+                {
+                    "query_id": (
+                        "CANDIDATE_QUERY_EDGE:"
+                        + candidate_id
+                        + ":ISSUER_NEWSROOM"
+                    ),
+                    "objective_id": "OBJECTIVE-1",
+                    "candidate_id": candidate_id,
+                    "failure_reason": (
+                        "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                    ),
+                    "source_family": "ISSUER_NEWSROOM",
+                }
+            ],
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_results_per_query=1,
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+        first_provider = SourceBrainProvider(
+            queries=(repair_query,),
+            source_families=("ISSUER_NEWSROOM",),
+        )
+        first_search = RecordingSearchProvider({})
+
+        first = self._run(
+            provider=first_provider,
+            search=first_search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            config=config,
+            checkpoint=source_graph_module._finalize_checkpoint(state),
+        )
+
+        self.assertEqual(len(first_search.calls), 1)
+        self.assertFalse(
+            any(
+                row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+                for row in first_provider.calls
+            )
+        )
+        self.assertTrue(
+            first.audit[
+                "candidate_query_edge_direction_prioritized_over_candidate_backlog"
+            ]
+        )
+
+        second_provider = SourceBrainProvider(
+            queries=(repair_query,),
+            source_families=("ISSUER_NEWSROOM",),
+        )
+        second_search = RecordingSearchProvider({})
+        second = self._run(
+            provider=second_provider,
+            search=second_search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            config=config,
+            checkpoint=first.checkpoint,
+        )
+
+        self.assertEqual(second.status, "QUERY_GENERATION_PENDING")
+        self.assertEqual(second_search.calls, [])
+        self.assertIsNotNone(second.query_generation)
+        self.assertEqual(second.query_generation.queries, ())
+        self.assertTrue(
+            second.audit["candidate_query_edge_direction_priority_requested"]
+        )
+        self.assertFalse(
+            second.audit[
+                "candidate_query_edge_direction_prioritized_over_candidate_backlog"
+            ]
+        )
+
+    def test_candidate_query_edge_duplicate_content_closes_repair(self) -> None:
+        candidate_id = "SGCAND-0123456789abcdef01234567"
+        failure = {
+            "query_id": (
+                "CANDIDATE_QUERY_EDGE:"
+                + candidate_id
+                + ":ISSUER_NEWSROOM"
+            ),
+            "objective_id": "OBJECTIVE-1",
+            "candidate_id": candidate_id,
+            "failure_reason": (
+                "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+            ),
+            "source_family": "ISSUER_NEWSROOM",
+        }
+        original = {
+            "candidate_id": candidate_id,
+            "requested_source_families": ["VALUATION_MULTIPLES"],
+        }
+        duplicate_route = {
+            "candidate_id": "SGCAND-fedcba9876543210fedcba98",
+            "normalized_url": (
+                "https://issuer.example.com/current-results-mirror"
+            ),
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["ISSUER_NEWSROOM"],
+            "materiality_query_ids": ["QUERY-REPAIR"],
+            "matched_requested_source_family": "ISSUER_NEWSROOM",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "DUPLICATE_CONTENT",
+            "document_id": "SGDOC-existing-document",
+        }
+        duplicate_route["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(
+                duplicate_route
+            )
+        )
+
+        unresolved = source_graph_module._unresolved_candidate_source_family_query_edge_failures(
+            (failure,),
+            candidates=(original, duplicate_route),
+            generated_queries=(
+                {
+                    "query_id": "QUERY-REPAIR",
+                    "objective_id": "OBJECTIVE-1",
+                    "source_families": ["ISSUER_NEWSROOM"],
+                    "execution_status": "SEARCH_EXECUTED",
+                },
+            ),
+        )
+
+        self.assertEqual(unresolved, ())
+
+    def test_candidate_query_edge_uses_llm_priority_per_scope(self) -> None:
+        high_id = "SGCAND-0123456789abcdef01234567"
+        low_id = "SGCAND-fedcba9876543210fedcba98"
+        candidates = (
+            {
+                "candidate_id": high_id,
+                "material_priority": 0.12,
+                "rank": 2,
+            },
+            {
+                "candidate_id": low_id,
+                "material_priority": 0.03,
+                "rank": 12,
+            },
+        )
+        failures = tuple(
+            {
+                "query_id": "CANDIDATE_QUERY_EDGE:" + candidate_id,
+                "candidate_id": candidate_id,
+                "objective_id": "OBJECTIVE-1",
+                "source_family": "ISSUER_NEWSROOM",
+                "failure_reason": (
+                    "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                ),
+            }
+            for candidate_id in (low_id, high_id)
+        )
+
+        selected = source_graph_module._prioritize_candidate_source_family_query_edge_failures(
+            failures,
+            candidates=candidates,
+        )
+
+        self.assertEqual(len(selected), 1)
+        self.assertEqual(selected[0]["candidate_id"], high_id)
+
     def test_graph_keeps_official_structured_independent_and_reference_expansion(self) -> None:
         provider = SourceBrainProvider()
         web_url = "https://www.reuters.com/current-report"
@@ -4676,6 +5316,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "requested_source_families": ["VALUATION_MULTIPLES"],
             "candidate_source_family_hint": "ISSUER_NEWSROOM",
             "verified_official_domain_candidate": True,
+            "alternate_route_required": True,
+            "materiality_revalidation_reason": (
+                "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+            ),
         }
 
         class FamilyGapProvider:
@@ -4757,14 +5401,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             (),
         )
 
-        current_transport_repair = {
-            **candidate,
-            "alternate_route_required": True,
-            "verified_official_domain_candidate": True,
-            "materiality_revalidation_reason": (
-                "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
-            ),
-        }
+        current_transport_repair = dict(candidate)
         generic_note_ranking = replace(
             ranking,
             unresolved_notes=(
@@ -4781,6 +5418,37 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(
             structural_failures[0]["detection_basis"],
             "LLM_NONMATERIAL_DECISION_ON_CURRENT_OFFICIAL_TRANSPORT_REPAIR_FAMILY_MISMATCH",
+        )
+
+        generic_candidate_mention = replace(
+            ranking,
+            unresolved_notes=(
+                candidate_id + "는 현재 목적과 직접 관련되지 않는다.",
+            ),
+        )
+        non_transport_candidate = dict(candidate)
+        non_transport_candidate.pop("alternate_route_required")
+        non_transport_candidate.pop("materiality_revalidation_reason")
+        self.assertEqual(
+            source_graph_module._candidate_source_family_query_edge_failures(
+                ranking=generic_candidate_mention,
+                candidates=(non_transport_candidate,),
+            ),
+            (),
+        )
+        negative_family_note = replace(
+            ranking,
+            unresolved_notes=(
+                candidate_id
+                + "에는 ISSUER_NEWSROOM query edge가 필요하지 않다.",
+            ),
+        )
+        self.assertEqual(
+            source_graph_module._candidate_source_family_query_edge_failures(
+                ranking=negative_family_note,
+                candidates=(non_transport_candidate,),
+            ),
+            (),
         )
 
     def test_resolved_objective_processes_current_provenance_revalidation(

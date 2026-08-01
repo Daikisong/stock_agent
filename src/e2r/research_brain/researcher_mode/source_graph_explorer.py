@@ -702,10 +702,30 @@ class ResearcherSourceGraphAcquirer:
             for row in source_family_lineage_failures
             if str(row.get("objective_id") or "")
         }
+        persisted_candidate_query_edge_failures = (
+            _persisted_candidate_source_family_query_edge_failures(
+                candidates=candidates,
+                materiality_decisions=ranking_rows,
+            )
+        )
+        candidate_query_edge_failure_roster = _dedupe_mapping_rows(
+            (
+                *state["query_failures"],
+                *persisted_candidate_query_edge_failures,
+            ),
+            key_fields=("query_id", "candidate_id", "failure_reason"),
+        )
+        candidate_query_edge_failure_roster = (
+            _prioritize_candidate_source_family_query_edge_failures(
+                candidate_query_edge_failure_roster,
+                candidates=candidates,
+            )
+        )
         candidate_query_edge_failures = (
             _unresolved_candidate_source_family_query_edge_failures(
-                state["query_failures"],
+                candidate_query_edge_failure_roster,
                 candidates=candidates,
+                generated_queries=generated_rows,
             )
         )
         candidate_query_edge_gap_objective_ids = {
@@ -713,6 +733,23 @@ class ResearcherSourceGraphAcquirer:
             for row in candidate_query_edge_failures
             if str(row.get("objective_id") or "")
         }
+        candidate_query_edge_repair_ids = {
+            str(row.get("candidate_id") or "")
+            for row in candidate_query_edge_failures
+            if str(row.get("candidate_id") or "")
+        }
+        candidate_query_edge_repair_scopes = {
+            (
+                str(row.get("objective_id") or ""),
+                str(row.get("source_family") or ""),
+            )
+            for row in candidate_query_edge_failures
+            if str(row.get("objective_id") or "")
+            and str(row.get("source_family") or "")
+        }
+        candidate_query_edge_direction_priority = bool(
+            candidate_query_edge_repair_scopes
+        )
         resolved.difference_update(
             source_family_gap_objective_ids
             | candidate_query_edge_gap_objective_ids
@@ -766,6 +803,7 @@ class ResearcherSourceGraphAcquirer:
         if (
             not checkpoint_migration_only
             and not supervisor_query_direction_priority
+            and not candidate_query_edge_direction_priority
         ):
             for parent_candidate in _ordered_candidate_reference_parents(
                 candidates,
@@ -811,6 +849,15 @@ class ResearcherSourceGraphAcquirer:
             )
         query_failures = [
             *state["query_failures"],
+            *(
+                row
+                for row in persisted_candidate_query_edge_failures
+                if any(
+                    str(row.get("query_id") or "")
+                    == str(selected.get("query_id") or "")
+                    for selected in candidate_query_edge_failure_roster
+                )
+            ),
             *prior_query_failures,
             *source_family_lineage_failures,
         ]
@@ -858,14 +905,31 @@ class ResearcherSourceGraphAcquirer:
             and unresolved_objectives
             and not pending_query_rows
             and pending_candidate_work
+            and not candidate_query_edge_direction_priority
         )
         if (
             not checkpoint_migration_only
             and unresolved_objectives
             and not pending_query_rows
-            and not pending_candidate_work
-            and not repeated_source_family_lineage_failures
+            and (
+                not pending_candidate_work
+                or candidate_query_edge_direction_priority
+            )
+            and (
+                not repeated_source_family_lineage_failures
+                or candidate_query_edge_direction_priority
+            )
         ):
+            query_generation_objectives = (
+                tuple(
+                    row
+                    for row in unresolved_objectives
+                    if str(row["objective_id"])
+                    in candidate_query_edge_gap_objective_ids
+                )
+                if candidate_query_edge_direction_priority
+                else unresolved_objectives
+            )
             query_generation = ResearcherSourceQueryPlanner(
                 provider=self.query_provider
             ).generate(
@@ -873,7 +937,7 @@ class ResearcherSourceGraphAcquirer:
                 target_name=target_name,
                 target_aliases=target_aliases,
                 as_of_date=as_of_date,
-                open_objectives=unresolved_objectives,
+                open_objectives=query_generation_objectives,
                 current_evidence_facts=facts,
                 current_counterfacts=tuple(
                     row for row in facts if row.get("direction") == "COUNTER"
@@ -915,8 +979,18 @@ class ResearcherSourceGraphAcquirer:
                 if row.get("execution_status") == "PENDING"
                 and str(row.get("objective_id")) not in resolved
             ]
-        if checkpoint_migration_only or pending_ranking_at_checkpoint_start:
+        if checkpoint_migration_only or (
+            pending_ranking_at_checkpoint_start
+            and not candidate_query_edge_direction_priority
+        ):
             pending_query_rows = []
+        candidate_query_edge_repair_query_ids = (
+            _candidate_query_edge_repair_query_ids(
+                generated_rows,
+                repair_scopes=candidate_query_edge_repair_scopes,
+            )
+        )
+        candidate_query_edge_priority_query_executed = False
         query_budget = config.max_queries_per_checkpoint
         query_calls = 0
         materiality_scope_refreshed_urls: set[str] = set()
@@ -945,6 +1019,11 @@ class ResearcherSourceGraphAcquirer:
                 pending_reasons.append("GENERAL_WEB_WITHOUT_OFFICIAL_GAP")
                 continue
             query_calls += 1
+            if (
+                str(query_row.get("query_id") or "")
+                in candidate_query_edge_repair_query_ids
+            ):
+                candidate_query_edge_priority_query_executed = True
             literal_query = str(query_row["literal_query"])
             remaining_candidate_budget = max(
                 1,
@@ -1043,6 +1122,23 @@ class ResearcherSourceGraphAcquirer:
                     "PRODUCTION_LEGACY_MATERIALITY_REVALIDATION_PENDING:"
                     + str(stale_pending_materiality_count)
                 )
+        candidate_query_edge_actionable_ids = {
+            str(row.get("candidate_id") or "")
+            for row in candidates
+            if str(row.get("candidate_id") or "")
+            and (
+                str(row.get("candidate_id") or "")
+                in candidate_query_edge_repair_ids
+                or bool(
+                    set(
+                        row.get("materiality_query_ids")
+                        or row.get("query_ids")
+                        or ()
+                    )
+                    & candidate_query_edge_repair_query_ids
+                )
+            )
+        }
         pending_rank = (
             []
             if checkpoint_migration_only
@@ -1054,6 +1150,11 @@ class ResearcherSourceGraphAcquirer:
                     and not _candidate_scope_is_fully_resolved(
                         row, resolved
                     )
+                    and (
+                        not candidate_query_edge_direction_priority
+                        or str(row.get("candidate_id") or "")
+                        in candidate_query_edge_actionable_ids
+                    )
                 ),
                 key=lambda row: _pending_candidate_ranking_priority(
                     row,
@@ -1064,8 +1165,17 @@ class ResearcherSourceGraphAcquirer:
             )
         )
         ranking_results: list[CandidateRankingResult] = []
+        candidate_query_edge_priority_ranked = False
         if pending_rank:
             rank_batch = pending_rank[: config.max_candidates_per_checkpoint]
+            candidate_query_edge_priority_ranked = bool(
+                candidate_query_edge_direction_priority
+                and any(
+                    str(row.get("candidate_id") or "")
+                    in candidate_query_edge_actionable_ids
+                    for row in rank_batch
+                )
+            )
             if len(pending_rank) > len(rank_batch):
                 pending_reasons.append("CANDIDATE_RANKING_TRANSPORT_BUDGET_CHECKPOINT")
             ranking = self.document_ranker.rank_candidates(
@@ -1241,14 +1351,31 @@ class ResearcherSourceGraphAcquirer:
                     in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
                     and not _candidate_scope_is_fully_resolved(row, resolved)
                 ),
-                key=lambda row: _pending_material_fetch_priority(
-                    row,
-                    as_of_date=cutoff,
-                    official_first_required=config.official_first_required,
+                key=lambda row: (
+                    0
+                    if (
+                        candidate_query_edge_direction_priority
+                        and str(row.get("candidate_id") or "")
+                        in candidate_query_edge_actionable_ids
+                    )
+                    else 1,
+                    *_pending_material_fetch_priority(
+                        row,
+                        as_of_date=cutoff,
+                        official_first_required=config.official_first_required,
+                    ),
                 ),
             )
         )
         fetch_batch = pending_fetch[: config.max_fetches_per_checkpoint]
+        candidate_query_edge_priority_fetched = bool(
+            candidate_query_edge_direction_priority
+            and any(
+                str(row.get("candidate_id") or "")
+                in candidate_query_edge_actionable_ids
+                for row in fetch_batch
+            )
+        )
         if len(pending_fetch) > len(fetch_batch):
             pending_reasons.append("FULL_FETCH_TRANSPORT_BUDGET_CHECKPOINT")
         content_hash_to_document = {
@@ -1518,6 +1645,17 @@ class ResearcherSourceGraphAcquirer:
             ),
             "supervisor_query_direction_prioritized_over_reference_backlog": (
                 supervisor_query_direction_priority
+            ),
+            "candidate_query_edge_direction_prioritized_over_candidate_backlog": (
+                candidate_query_edge_direction_priority
+                and (
+                    candidate_query_edge_priority_query_executed
+                    or candidate_query_edge_priority_ranked
+                    or candidate_query_edge_priority_fetched
+                )
+            ),
+            "candidate_query_edge_direction_priority_requested": (
+                candidate_query_edge_direction_priority
             ),
         }
         if checkpoint_migration_only:
@@ -5134,10 +5272,10 @@ def _candidate_source_family_query_edge_failures(
 
     The ranking LLM may recognize a useful official route but must correctly
     reject it when that candidate's query did not request the route's source
-    family.  Its unresolved note is therefore not completion prose: it is
-    feedback for the next LLM query-generation call.  Deterministic code only
-    validates the mentioned candidate id and structural family mismatch; it
-    never invents the new query or makes the candidate material.
+    family.  Only the exact current official-transport repair contract may
+    project that bound LLM decision into scheduling feedback.  Free-form
+    unresolved notes remain diagnostics; deterministic code does not infer
+    affirmative per-candidate query directions from prose.
     """
 
     candidate_by_id = {
@@ -5148,20 +5286,11 @@ def _candidate_source_family_query_edge_failures(
     decision_by_id = {
         row.candidate_id: row for row in ranking.decisions
     }
-    note_by_candidate_id: dict[str, str] = {}
-    for note in ranking.unresolved_notes:
-        mentioned_ids = tuple(
-            dict.fromkeys(re.findall(r"SGCAND-[0-9a-f]{24}", note))
-        )
-        for candidate_id in mentioned_ids:
-            note_by_candidate_id.setdefault(candidate_id, note)
-
     failures: list[Mapping[str, Any]] = []
     for candidate_id, decision in decision_by_id.items():
         candidate = candidate_by_id.get(candidate_id)
         if candidate is None or decision.material_relevance:
             continue
-        explicitly_identified = candidate_id in note_by_candidate_id
         current_transport_repair_family_mismatch = bool(
             candidate.get("alternate_route_required") is True
             and candidate.get("verified_official_domain_candidate") is True
@@ -5170,14 +5299,11 @@ def _candidate_source_family_query_edge_failures(
             and str(decision.matched_requested_source_family or "NONE")
             == "NONE"
         )
-        if (
-            not explicitly_identified
-            and not current_transport_repair_family_mismatch
-        ):
-            continue
         source_family = str(
             candidate.get("candidate_source_family_hint") or ""
         )
+        if not current_transport_repair_family_mismatch:
+            continue
         if (
             source_family not in CANONICAL_SOURCE_FAMILIES
             or source_family
@@ -5207,14 +5333,10 @@ def _candidate_source_family_query_edge_failures(
                     "requested_source_families": list(
                         candidate.get("requested_source_families") or ()
                     ),
-                    "llm_unresolved_note": note_by_candidate_id.get(
-                        candidate_id,
-                        decision.rationale,
-                    ),
+                    "llm_unresolved_note": decision.rationale,
                     "detection_basis": (
-                        "LLM_UNRESOLVED_NOTE_CANDIDATE_REFERENCE"
-                        if explicitly_identified
-                        else "LLM_NONMATERIAL_DECISION_ON_CURRENT_OFFICIAL_TRANSPORT_REPAIR_FAMILY_MISMATCH"
+                        "LLM_NONMATERIAL_DECISION_ON_CURRENT_OFFICIAL_"
+                        "TRANSPORT_REPAIR_FAMILY_MISMATCH"
                     ),
                     "retryable": True,
                     "alternate_route_required": True,
@@ -5225,18 +5347,229 @@ def _candidate_source_family_query_edge_failures(
     return tuple(failures)
 
 
-def _unresolved_candidate_source_family_query_edge_failures(
+def _persisted_candidate_source_family_query_edge_failures(
+    *,
+    candidates: Sequence[Mapping[str, Any]],
+    materiality_decisions: Sequence[Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    """Rehydrate the same edge feedback from a bound persisted LLM decision.
+
+    A runner started before the edge-feedback policy can persist the LLM's
+    exact NOT_MATERIAL decision and then stop before persisting the derived
+    query failure.  Resume may project only that missing scheduling row; it
+    must not reinterpret an unbound, stale, or differently scoped decision.
+    """
+
+    decision_by_id = {
+        str(row.get("decision_id") or ""): row
+        for row in materiality_decisions
+        if str(row.get("decision_id") or "")
+    }
+    failures: list[Mapping[str, Any]] = []
+    for candidate in candidates:
+        candidate_id = str(candidate.get("candidate_id") or "")
+        decision_id = str(candidate.get("materiality_decision_id") or "")
+        decision = decision_by_id.get(decision_id)
+        if (
+            not candidate_id
+            or decision is None
+            or str(decision.get("candidate_id") or "") != candidate_id
+            or decision.get("material_relevance") is not False
+            or str(candidate.get("ranking_status") or "")
+            != "NOT_MATERIAL"
+            or str(
+                decision.get("matched_requested_source_family") or "NONE"
+            )
+            != "NONE"
+            or str(candidate.get("matched_requested_source_family") or "NONE")
+            != "NONE"
+            or candidate.get("alternate_route_required") is not True
+            or candidate.get("verified_official_domain_candidate") is not True
+            or str(candidate.get("materiality_revalidation_reason") or "")
+            != "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+            or not str(candidate.get("materiality_scope_hash") or "")
+            or str(candidate.get("materiality_scope_hash") or "")
+            != _candidate_materiality_scope_hash(candidate)
+        ):
+            continue
+        candidate_objective_ids = tuple(
+            dict.fromkeys(
+                str(value)
+                for value in candidate.get("objective_ids") or ()
+                if str(value)
+            )
+        )
+        decision_objective_ids = tuple(
+            dict.fromkeys(
+                str(value)
+                for value in decision.get("objective_ids") or ()
+                if str(value)
+            )
+        )
+        if (
+            not candidate_objective_ids
+            or set(candidate_objective_ids) != set(decision_objective_ids)
+        ):
+            continue
+        source_family = str(
+            candidate.get("candidate_source_family_hint") or ""
+        )
+        if (
+            source_family not in CANONICAL_SOURCE_FAMILIES
+            or source_family
+            in {"GENERAL_WEB_DISCOVERY", "NAVER_DISCOVERY"}
+            or source_family
+            in set(candidate.get("requested_source_families") or ())
+        ):
+            continue
+        for objective_id in candidate_objective_ids:
+            failures.append(
+                {
+                    "query_id": (
+                        "CANDIDATE_QUERY_EDGE:"
+                        + candidate_id
+                        + ":"
+                        + source_family
+                    ),
+                    "objective_id": objective_id,
+                    "candidate_id": candidate_id,
+                    "query_ids": list(candidate.get("query_ids") or ()),
+                    "failure_kind": "SOURCE_FAMILY_QUERY_EDGE",
+                    "failure_stage": "SOURCE_CANDIDATE_RANKING",
+                    "failure_reason": (
+                        "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                    ),
+                    "source_family": source_family,
+                    "requested_source_families": list(
+                        candidate.get("requested_source_families") or ()
+                    ),
+                    "llm_unresolved_note": str(
+                        decision.get("rationale") or ""
+                    ),
+                    "detection_basis": (
+                        "PERSISTED_BOUND_LLM_NONMATERIAL_DECISION_ON_"
+                        "CURRENT_OFFICIAL_TRANSPORT_REPAIR_FAMILY_MISMATCH"
+                    ),
+                    "retryable": True,
+                    "alternate_route_required": True,
+                    "absence_eligible": False,
+                    "resolved": False,
+                }
+            )
+    return tuple(failures)
+
+
+def _prioritize_candidate_source_family_query_edge_failures(
     failures: Sequence[Mapping[str, Any]],
     *,
     candidates: Sequence[Mapping[str, Any]],
 ) -> tuple[Mapping[str, Any], ...]:
-    """Keep a ranking edge gap open only until a new LLM query binds it."""
+    """Schedule one LLM-prioritized candidate per objective/family gap."""
 
     candidate_by_id = {
         str(row.get("candidate_id") or ""): row
         for row in candidates
         if str(row.get("candidate_id") or "")
     }
+    other_failures: list[Mapping[str, Any]] = []
+    best_by_scope: dict[tuple[str, str], Mapping[str, Any]] = {}
+    for failure in failures:
+        if str(failure.get("failure_reason") or "") != (
+            "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+        ):
+            other_failures.append(failure)
+            continue
+        candidate_id = str(failure.get("candidate_id") or "")
+        candidate = candidate_by_id.get(candidate_id)
+        if candidate is None:
+            continue
+        scope = (
+            str(failure.get("objective_id") or ""),
+            str(failure.get("source_family") or ""),
+        )
+        if not all(scope):
+            continue
+        incumbent = best_by_scope.get(scope)
+        if incumbent is None:
+            best_by_scope[scope] = failure
+            continue
+        incumbent_candidate = candidate_by_id.get(
+            str(incumbent.get("candidate_id") or ""),
+            {},
+        )
+        challenger_key = (
+            -float(candidate.get("material_priority") or 0.0),
+            int(candidate.get("rank") or 10**9),
+            candidate_id,
+        )
+        incumbent_key = (
+            -float(incumbent_candidate.get("material_priority") or 0.0),
+            int(incumbent_candidate.get("rank") or 10**9),
+            str(incumbent.get("candidate_id") or ""),
+        )
+        if challenger_key < incumbent_key:
+            best_by_scope[scope] = failure
+    return tuple(
+        (
+            *other_failures,
+            *(
+                best_by_scope[scope]
+                for scope in sorted(best_by_scope)
+            ),
+        )
+    )
+
+
+def _candidate_query_edge_repair_query_ids(
+    generated_queries: Sequence[Mapping[str, Any]],
+    *,
+    repair_scopes: set[tuple[str, str]],
+) -> set[str]:
+    """Return only LLM query edges that can repair a named family gap."""
+
+    return {
+        str(row.get("query_id") or "")
+        for row in generated_queries
+        if str(row.get("query_id") or "")
+        and any(
+            (
+                str(row.get("objective_id") or ""),
+                str(source_family),
+            )
+            in repair_scopes
+            for source_family in row.get("source_families") or ()
+        )
+    }
+
+
+def _unresolved_candidate_source_family_query_edge_failures(
+    failures: Sequence[Mapping[str, Any]],
+    *,
+    candidates: Sequence[Mapping[str, Any]],
+    generated_queries: Sequence[Mapping[str, Any]] = (),
+) -> tuple[Mapping[str, Any], ...]:
+    """Keep an edge gap open until its route or a fetched alternate binds it."""
+
+    candidate_by_id = {
+        str(row.get("candidate_id") or ""): row
+        for row in candidates
+        if str(row.get("candidate_id") or "")
+    }
+    repair_scopes = {
+        (
+            str(row.get("objective_id") or ""),
+            str(row.get("source_family") or ""),
+        )
+        for row in failures
+        if str(row.get("failure_reason") or "")
+        == "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+        and str(row.get("objective_id") or "")
+        and str(row.get("source_family") or "")
+    }
+    repair_query_ids = _candidate_query_edge_repair_query_ids(
+        generated_queries,
+        repair_scopes=repair_scopes,
+    )
     unresolved = []
     for failure in failures:
         if str(failure.get("failure_reason") or "") != (
@@ -5252,6 +5585,35 @@ def _unresolved_candidate_source_family_query_edge_failures(
         if source_family in set(
             candidate.get("requested_source_families") or ()
         ):
+            continue
+        objective_id = str(failure.get("objective_id") or "")
+        fetched_alternate_route = any(
+            objective_id
+            in {
+                str(value)
+                for value in row.get("objective_ids") or ()
+            }
+            and source_family
+            in set(row.get("requested_source_families") or ())
+            and str(row.get("matched_requested_source_family") or "")
+            == source_family
+            and str(row.get("ranking_status") or "") == "MATERIAL"
+            and str(row.get("fetch_status") or "")
+            in {"FULL_DOCUMENT_FETCHED", "DUPLICATE_CONTENT"}
+            and bool(str(row.get("document_id") or ""))
+            and str(row.get("materiality_scope_hash") or "")
+            == _candidate_materiality_scope_hash(row)
+            and bool(
+                set(
+                    row.get("materiality_query_ids")
+                    or row.get("query_ids")
+                    or ()
+                )
+                & repair_query_ids
+            )
+            for row in candidates
+        )
+        if fetched_alternate_route:
             continue
         unresolved.append(failure)
     return tuple(unresolved)
