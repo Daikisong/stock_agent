@@ -1131,6 +1131,27 @@ OPM 개선폭 6%
             "https://example.com/search/%ED%95%98%EC%9D%B4%EB%8B%89%EC%8A%A4?q=HBM%20%EA%B3%A0%EA%B0%9D",
         )
 
+    def test_page_fetcher_uses_the_production_research_user_agent(self):
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=_FakeHTTPResponse("공식 본문"),
+        ) as urlopen:
+            result = PageFetcher(live_enabled=True).fetch(
+                "https://issuer.example.com/current-results",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertTrue(result.ok)
+        request_arg = urlopen.call_args.args[0]
+        self.assertEqual(
+            request_arg.get_header("User-agent"),
+            "Mozilla/5.0 E2R-ResearcherMode/5.0",
+        )
+        self.assertNotIn(
+            "example.invalid",
+            request_arg.get_header("User-agent"),
+        )
+
     def test_page_fetcher_rejects_non_http_live_url(self):
         result = PageFetcher(live_enabled=True).fetch("manual://naver-ai", as_of_date=date(2026, 6, 8))
 

@@ -4415,6 +4415,44 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
+    def test_alternate_route_revalidation_ranks_before_legacy_backlog(
+        self,
+    ) -> None:
+        alternate_route = {
+            "candidate_id": "CURRENT-ALTERNATE-ROUTE",
+            "rank": 2,
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+            "materiality_revalidation_reason": (
+                "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+            ),
+            "alternate_route_required": True,
+        }
+        legacy_backlog = {
+            "candidate_id": "LEGACY-REVALIDATION",
+            "rank": 0,
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+            "materiality_revalidation_reason": (
+                "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+            ),
+        }
+
+        ordered = sorted(
+            (legacy_backlog, alternate_route),
+            key=lambda row: (
+                source_graph_module._pending_candidate_ranking_priority(
+                    row,
+                    supervisor_query_direction_priority=False,
+                )
+            ),
+        )
+
+        self.assertEqual(
+            ordered[0]["candidate_id"],
+            "CURRENT-ALTERNATE-ROUTE",
+        )
+
     def test_resolved_objective_processes_current_provenance_revalidation(
         self,
     ) -> None:

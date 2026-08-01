@@ -61,9 +61,7 @@ class PageFetcher:
     max_body_bytes: int = 2_000_000
     max_pdf_body_bytes: int = 25_000_000
     max_text_chars: int | None = 200_000
-    user_agent: str = (
-        "Mozilla/5.0 (compatible; E2RResearchBot/0.1; +https://example.invalid/e2r)"
-    )
+    user_agent: str = "Mozilla/5.0 E2R-ResearcherMode/5.0"
 
     def fetch(self, url: str, *, as_of_date: date) -> FetchResult:
         fetched_at = datetime(as_of_date.year, as_of_date.month, as_of_date.day, 8, 0)

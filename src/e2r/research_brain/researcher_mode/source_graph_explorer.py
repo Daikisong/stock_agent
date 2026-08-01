@@ -4825,10 +4825,18 @@ def _pending_candidate_ranking_priority(
     candidate: Mapping[str, Any],
     *,
     supervisor_query_direction_priority: bool,
-) -> tuple[int, int, str]:
-    """Put a fresh LLM search route ahead of inherited reference backlog."""
+) -> tuple[int, int, int, str]:
+    """Put exact current transport repairs ahead of legacy revalidation."""
 
     return (
+        (
+            0
+            if (
+                candidate.get("alternate_route_required") is True
+                or _candidate_has_current_fetch_semantics_retry(candidate)
+            )
+            else 1
+        ),
         (
             0
             if (
