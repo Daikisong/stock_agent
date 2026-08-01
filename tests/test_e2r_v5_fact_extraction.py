@@ -655,6 +655,63 @@ class ChunkAwareFactProvider(FactProvider):
         return response
 
 
+class ObjectiveLocalChunkAwareFactProvider(ChunkAwareFactProvider):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        response["facts"] = [dict(row) for row in response["facts"]]
+        objective_ids_by_document = {
+            str(row["document_id"]): list(row["objective_ids"])
+            for row in payload["fact_extraction_scope_contract"][
+                "document_objective_ids"
+            ]
+        }
+        for fact in response["facts"]:
+            fact["objective_ids"] = objective_ids_by_document[
+                str(fact["document_id"])
+            ]
+            fact["objective_relation"] = "ADVANCE"
+        return response
+
+
+class NoNewFactCoverageChunkProvider(
+    ObjectiveLocalChunkAwareFactProvider
+):
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        if "fact_extraction_coverage_audit_context" not in payload:
+            return super().complete(pass_name=pass_name, payload=payload)
+        self.calls.append({"pass_name": pass_name, "payload": payload})
+        document = payload["full_documents"][0]
+        chunk_index = int(
+            (document.get("transport_chunk") or {}).get("chunk_index") or 0
+        )
+        if self.fail_chunk_index == chunk_index:
+            raise StructuredProviderUnavailable("codex_cli_timeout")
+        previously_accepted = payload[
+            "fact_extraction_coverage_audit_context"
+        ]["previously_accepted_facts"]
+        return {
+            "facts": [],
+            "document_dispositions": [
+                {
+                    "document_id": document["document_id"],
+                    "status": (
+                        "FACTS_EXTRACTED"
+                        if previously_accepted
+                        else "NO_MATERIAL_FACT"
+                    ),
+                    "rationale": (
+                        "전체 전송 청크를 재검토했고 누락된 새 사실은 없다."
+                    ),
+                }
+            ],
+            "unresolved_document_ids": [],
+            "unresolved_research_notes": [],
+            "extraction_complete": True,
+        }
+
+
 class E2RV5FactExtractionTests(unittest.TestCase):
     def test_llm_instructions_keep_corroboration_and_uncertainty_distinct(
         self,
@@ -3016,6 +3073,412 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(refreshed.audit["coverage_audit_call_count"], 1)
         self.assertEqual(
             refreshed.audit["pending_coverage_refresh_document_ids"],
+            [],
+        )
+
+    def test_pending_split_coverage_refresh_preserves_atomic_baseline(
+        self,
+    ) -> None:
+        document = dict(
+            _document(
+                "DOC-SPLIT-COVERAGE-RESUME",
+                "ISSUER_PRESENTATION",
+                "ISSUER:current.example",
+            )
+        )
+        full_text = (
+            "Current Corp reported record operating cash flow in 2026Q1.\n"
+            + ("complete source body line\n" * 12_000)
+        )
+        document["content_text"] = full_text
+        document["content_hash"] = hashlib.sha256(
+            full_text.encode("utf-8")
+        ).hexdigest()
+        document["historical_objective_ids"] = [
+            "OBJECTIVE-1",
+            "OBJECTIVE-2",
+        ]
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "information_confidence",
+        }
+        historical_objective = {
+            "objective_id": "OBJECTIVE-2",
+            "component_id": "capital_allocation",
+        }
+        extractor_kwargs = {
+            "target_id": TARGET,
+            "target_name": TARGET_NAME,
+            "target_aliases": (),
+            "archetype_id": ARCHETYPE,
+            "as_of_date": AS_OF_DATE,
+            "documents": (document,),
+            "open_objectives": (objective, historical_objective),
+            "extraction_mode": "PRODUCTION_OBJECTIVE_LOCAL",
+        }
+        initial = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveLocalChunkAwareFactProvider(),
+            max_document_chars_per_call=100_000,
+        ).extract(**extractor_kwargs)
+        baseline_claim_ids = {
+            str(row["claim_id"]) for row in initial.material_claims
+        }
+        self.assertEqual(initial.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(initial.document_dispositions), 1)
+        self.assertTrue(
+            initial.document_dispositions[0][
+                "all_transport_chunks_complete"
+            ]
+        )
+        current_facts = tuple(
+            fact.to_dict() for fact in initial.fact_compilation.facts
+        )
+        legacy_dispositions = []
+        for row in initial.document_dispositions:
+            legacy = dict(row)
+            legacy.pop("extraction_semantics_version", None)
+            legacy_dispositions.append(legacy)
+        legacy_coverage_calls = []
+        for call in initial.provider_calls:
+            legacy = dict(call.to_dict())
+            legacy.pop("extraction_semantics_version", None)
+            legacy["coverage_audit_performed"] = True
+            legacy_coverage_calls.append(legacy)
+        semantics_refresh_provider = NoNewFactCoverageChunkProvider(
+            fail_chunk_index=1
+        )
+        semantics_refreshed = ResearcherEvidenceFactExtractor(
+            provider=semantics_refresh_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            **extractor_kwargs,
+            current_facts=current_facts,
+            prior_material_claims=initial.material_claims,
+            prior_document_dispositions=legacy_dispositions,
+            prior_provider_calls=legacy_coverage_calls,
+            prior_rejections=initial.rejections,
+            prior_coverage_refresh_document_ids=(
+                "DOC-SPLIT-COVERAGE-RESUME",
+            ),
+        )
+        self.assertEqual(
+            len(semantics_refresh_provider.calls),
+            initial.document_dispositions[0]["transport_chunk_count"],
+        )
+        self.assertEqual(
+            semantics_refreshed.status,
+            "FACT_EXTRACTION_PENDING",
+        )
+        self.assertTrue(
+            all(
+                call["payload"]["fact_extraction_scope_contract"][
+                    "document_objective_ids"
+                ][0]["objective_ids"]
+                == ["OBJECTIVE-1", "OBJECTIVE-2"]
+                for call in semantics_refresh_provider.calls
+            )
+        )
+        self.assertEqual(
+            semantics_refreshed.audit[
+                "pending_coverage_refresh_document_ids"
+            ],
+            ["DOC-SPLIT-COVERAGE-RESUME"],
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(
+                semantics_refreshed,
+                checkpoint_root,
+            )
+            semantics_checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    evidence_documents=(document,),
+                ),
+            )
+        semantics_resume_provider = NoNewFactCoverageChunkProvider()
+        semantics_resumed = ResearcherEvidenceFactExtractor(
+            provider=semantics_resume_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            **extractor_kwargs,
+            current_facts=current_facts,
+            **semantics_checkpoint,
+        )
+        self.assertEqual(semantics_resumed.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(semantics_resume_provider.calls), 1)
+        self.assertEqual(
+            semantics_resume_provider.calls[0]["payload"][
+                "fact_extraction_scope_contract"
+            ]["document_objective_ids"][0]["objective_ids"],
+            ["OBJECTIVE-1", "OBJECTIVE-2"],
+        )
+        self.assertTrue(
+            semantics_resume_provider.calls[0]["payload"][
+                "fact_extraction_scope_contract"
+            ]["objective_lineage_reassessment"]["enabled"]
+        )
+
+        class CollaborationPendingProvider:
+            provider_name = "TEST_COLLABORATION_PENDING_PROVIDER"
+
+            def __init__(self) -> None:
+                self.calls = []
+
+            def complete(self, *, pass_name, payload):
+                self.calls.append(
+                    {"pass_name": pass_name, "payload": payload}
+                )
+                raise StructuredProviderUnavailable(
+                    "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                    + "b" * 64
+                )
+
+        first_pending_provider = CollaborationPendingProvider()
+        first_pending = ResearcherEvidenceFactExtractor(
+            provider=first_pending_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            **extractor_kwargs,
+            current_facts=current_facts,
+            prior_material_claims=initial.material_claims,
+            prior_document_dispositions=initial.document_dispositions,
+            prior_provider_calls=initial.provider_calls,
+            prior_rejections=initial.rejections,
+            prior_coverage_refresh_document_ids=(
+                "DOC-SPLIT-COVERAGE-RESUME",
+            ),
+        )
+        self.assertEqual(first_pending.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(len(first_pending_provider.calls), 1)
+        self.assertEqual(
+            {
+                str(row["claim_id"])
+                for row in first_pending.material_claims
+            },
+            baseline_claim_ids,
+        )
+        self.assertEqual(
+            first_pending.document_dispositions,
+            initial.document_dispositions,
+        )
+        self.assertEqual(
+            first_pending.audit["pending_coverage_refresh_document_ids"],
+            ["DOC-SPLIT-COVERAGE-RESUME"],
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(
+                first_pending,
+                checkpoint_root,
+            )
+            first_checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    evidence_documents=(document,),
+                ),
+            )
+        self.assertEqual(
+            {
+                str(row["claim_id"])
+                for row in first_checkpoint["prior_material_claims"]
+            },
+            baseline_claim_ids,
+        )
+        self.assertEqual(
+            len(first_checkpoint["prior_document_dispositions"]),
+            1,
+        )
+
+        second_pending_provider = CollaborationPendingProvider()
+        second_pending = ResearcherEvidenceFactExtractor(
+            provider=second_pending_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            **extractor_kwargs,
+            current_facts=current_facts,
+            **first_checkpoint,
+        )
+        self.assertEqual(len(second_pending_provider.calls), 1)
+        self.assertEqual(
+            second_pending_provider.calls[0]["payload"],
+            first_pending_provider.calls[0]["payload"],
+        )
+        self.assertEqual(
+            second_pending.document_dispositions,
+            initial.document_dispositions,
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(
+                second_pending,
+                checkpoint_root,
+            )
+            second_checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    evidence_documents=(document,),
+                ),
+            )
+
+        partial_provider = NoNewFactCoverageChunkProvider(
+            fail_chunk_index=1
+        )
+        partial = ResearcherEvidenceFactExtractor(
+            provider=partial_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            **extractor_kwargs,
+            current_facts=current_facts,
+            **second_checkpoint,
+        )
+        self.assertEqual(partial.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(
+            {
+                str(row["claim_id"]) for row in partial.material_claims
+            },
+            baseline_claim_ids,
+        )
+        self.assertEqual(
+            partial.document_dispositions,
+            initial.document_dispositions,
+        )
+        completed_partial_chunk_ids = {
+            chunk_id
+            for call in partial.provider_calls
+            if call.status == "COMPLETE"
+            and call.coverage_audit_performed
+            for chunk_id in call.transport_chunk_ids
+        }
+        self.assertTrue(completed_partial_chunk_ids)
+        new_document = _document(
+            "DOC-NEW-DURING-SPLIT-COVERAGE",
+            "ISSUER_EARNINGS_RELEASE",
+            "ISSUER:new.example",
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(
+                partial,
+                checkpoint_root,
+            )
+            partial_checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    evidence_documents=(document, new_document),
+                ),
+            )
+        self.assertEqual(
+            {
+                chunk_id
+                for call in partial_checkpoint["prior_provider_calls"]
+                if bool(call.get("coverage_audit_performed"))
+                for chunk_id in call.get("transport_chunk_ids") or ()
+            },
+            completed_partial_chunk_ids,
+        )
+
+        deferred_provider = ObjectiveLocalChunkAwareFactProvider()
+        deferred = ResearcherEvidenceFactExtractor(
+            provider=deferred_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            **{
+                **extractor_kwargs,
+                "documents": (document, new_document),
+            },
+            current_facts=current_facts,
+            **partial_checkpoint,
+        )
+        self.assertEqual(
+            {
+                call["payload"]["full_documents"][0]["document_id"]
+                for call in deferred_provider.calls
+            },
+            {"DOC-NEW-DURING-SPLIT-COVERAGE"},
+        )
+        self.assertEqual(
+            deferred.audit["pending_coverage_refresh_document_ids"],
+            ["DOC-SPLIT-COVERAGE-RESUME"],
+        )
+        self.assertEqual(
+            deferred.pending_reasons,
+            (FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(
+                deferred,
+                checkpoint_root,
+            )
+            deferred_checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    evidence_documents=(document, new_document),
+                ),
+            )
+
+        final_provider = NoNewFactCoverageChunkProvider()
+        final = ResearcherEvidenceFactExtractor(
+            provider=final_provider,
+            max_document_chars_per_call=100_000,
+        ).extract(
+            **{
+                **extractor_kwargs,
+                "documents": (document, new_document),
+            },
+            current_facts=tuple(
+                fact.to_dict() for fact in deferred.fact_compilation.facts
+            ),
+            **deferred_checkpoint,
+        )
+        self.assertEqual(final.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(
+            {
+                int(
+                    (
+                        call["payload"]["full_documents"][0].get(
+                            "transport_chunk"
+                        )
+                        or {}
+                    ).get("chunk_index")
+                    or 0
+                )
+                for call in final_provider.calls
+            },
+            {1},
+        )
+        self.assertEqual(
+            {str(row["claim_id"]) for row in final.material_claims},
+            {
+                str(row["claim_id"])
+                for row in deferred.material_claims
+            },
+        )
+        self.assertEqual(len(final.document_dispositions), 2)
+        self.assertTrue(
+            next(
+                row
+                for row in final.document_dispositions
+                if row["document_id"]
+                == "DOC-SPLIT-COVERAGE-RESUME"
+            )["all_transport_chunks_complete"]
+        )
+        self.assertEqual(
+            final.audit["pending_coverage_refresh_document_ids"],
             [],
         )
 

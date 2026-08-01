@@ -666,7 +666,7 @@ class ResearcherEvidenceFactExtractor:
             and call.extraction_semantics_version
             == FACT_EXTRACTION_SEMANTICS_VERSION
             for document_id in call.document_ids
-        }
+        } - set(carried_coverage_refresh_document_ids)
         stale_semantics_document_ids = (
             stale_semantics_disposition_ids
             | {
@@ -839,9 +839,16 @@ class ResearcherEvidenceFactExtractor:
             calls=tuple(
                 call
                 for call in all_checkpoint_calls
-                if not (
-                    set(call.document_ids)
-                    & coverage_refresh_document_ids
+                if (
+                    not (
+                        set(call.document_ids)
+                        & coverage_refresh_document_ids
+                    )
+                    or (
+                        call.coverage_audit_performed
+                        and call.extraction_semantics_version
+                        == FACT_EXTRACTION_SEMANTICS_VERSION
+                    )
                 )
             ),
             transport_documents=all_transport_documents,
@@ -855,7 +862,12 @@ class ResearcherEvidenceFactExtractor:
                 set(all_prior_disposition_ids)
             )
         ]
-        calls.extend(resumed_transport_calls)
+        checkpoint_call_object_ids = {id(row) for row in calls}
+        calls.extend(
+            row
+            for row in resumed_transport_calls
+            if id(row) not in checkpoint_call_object_ids
+        )
         claims.extend(resumed_transport_claims)
         dispositions.extend(resumed_transport_dispositions)
         research_gap_feedback: list[str] = [
@@ -1839,6 +1851,87 @@ class ResearcherEvidenceFactExtractor:
             target_id=target_id,
             as_of_date=as_of_date,
         )
+        coverage_audited_document_ids = {
+            document_id
+            for call in calls
+            if call.status == "COMPLETE"
+            and call.coverage_audit_performed
+            and call.extraction_semantics_version
+            == FACT_EXTRACTION_SEMANTICS_VERSION
+            for document_id in call.document_ids
+        }
+        coverage_audited_transport_chunk_ids = {
+            chunk_id
+            for call in calls
+            if call.status == "COMPLETE"
+            and call.coverage_audit_performed
+            and call.extraction_semantics_version
+            == FACT_EXTRACTION_SEMANTICS_VERSION
+            for chunk_id in call.transport_chunk_ids
+        }
+        current_semantics_disposition_ids = {
+            str(row.get("document_id") or "")
+            for row in dispositions
+            if _extraction_semantics_version(row)
+            == FACT_EXTRACTION_SEMANTICS_VERSION
+        }
+        completed_coverage_refresh_document_ids = {
+            document_id
+            for document_id in set(coverage_refresh_document_ids)
+            if document_id in current_semantics_disposition_ids
+            and (
+                (
+                    document_id in split_chunk_ids_by_document
+                    and set(split_chunk_ids_by_document[document_id])
+                    <= coverage_audited_transport_chunk_ids
+                )
+                or (
+                    document_id not in split_chunk_ids_by_document
+                    and document_id in coverage_audited_document_ids
+                )
+            )
+        }
+        incomplete_coverage_refresh_document_ids = (
+            set(coverage_refresh_document_ids)
+            | deferred_coverage_refresh_document_ids
+        ) - completed_coverage_refresh_document_ids
+        if incomplete_coverage_refresh_document_ids:
+            # A coverage refresh is an atomic replacement of an already
+            # accepted parent document.  Until every transport chunk has a
+            # COMPLETE audit response, keep the baseline parent disposition
+            # and claims in the durable checkpoint.  The completed chunk
+            # calls above remain embedded in the provider-call ledger and are
+            # resumed independently; exposing their partial claims or
+            # deleting the baseline would make the next clean resume mistake
+            # the same document for a first-pass extraction.
+            baseline_claims = [
+                dict(row)
+                for row in prior_material_claims
+                if str(row.get("document_id") or "")
+                in incomplete_coverage_refresh_document_ids
+            ]
+            claim_by_id = {
+                str(
+                    row.get("claim_id")
+                    or stable_intelligence_id("CLAIM", row)
+                ): row
+                for row in (*claims, *baseline_claims)
+            }
+            claims = list(claim_by_id.values())
+            disposition_by_document_id = {
+                str(row.get("document_id") or ""): row
+                for row in dispositions
+                if str(row.get("document_id") or "")
+            }
+            for row in all_prior_dispositions:
+                document_id = str(row.get("document_id") or "")
+                if (
+                    document_id
+                    in incomplete_coverage_refresh_document_ids
+                    and document_id not in disposition_by_document_id
+                ):
+                    dispositions.append(row)
+                    disposition_by_document_id[document_id] = row
         if (
             deferred_coverage_refresh_document_ids
             and not pending
@@ -1879,49 +1972,10 @@ class ResearcherEvidenceFactExtractor:
         research_gap_feedback.extend(
             f"FACT_EXTRACTION_RETRY_CONTEXT:{reason}" for reason in pending
         )
-        coverage_audited_document_ids = {
-            document_id
-            for call in calls
-            if call.status == "COMPLETE"
-            and call.coverage_audit_performed
-            for document_id in call.document_ids
-        }
-        coverage_audited_transport_chunk_ids = {
-            chunk_id
-            for call in calls
-            if call.status == "COMPLETE"
-            and call.coverage_audit_performed
-            for chunk_id in call.transport_chunk_ids
-        }
         disposition_document_ids = {
             str(row.get("document_id") or "")
             for row in dispositions
             if str(row.get("document_id") or "")
-        }
-        current_semantics_disposition_ids = {
-            str(row.get("document_id") or "")
-            for row in dispositions
-            if _extraction_semantics_version(row)
-            == FACT_EXTRACTION_SEMANTICS_VERSION
-        }
-        completed_coverage_refresh_document_ids = {
-            document_id
-            for document_id in (
-                set(coverage_refresh_document_ids)
-                | deferred_coverage_refresh_document_ids
-            )
-            if document_id in current_semantics_disposition_ids
-            and (
-                (
-                    document_id in split_chunk_ids_by_document
-                    and set(split_chunk_ids_by_document[document_id])
-                    <= coverage_audited_transport_chunk_ids
-                )
-                or (
-                    document_id not in split_chunk_ids_by_document
-                    and document_id in coverage_audited_document_ids
-                )
-            )
         }
         pending_coverage_refresh_document_ids = sorted(
             (
