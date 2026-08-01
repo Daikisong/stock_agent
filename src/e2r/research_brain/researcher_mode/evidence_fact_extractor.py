@@ -556,6 +556,7 @@ class ResearcherEvidenceFactExtractor:
         prior_rejections: Sequence[
             FactExtractionRejection | Mapping[str, Any]
         ] = (),
+        prior_coverage_refresh_document_ids: Sequence[str] = (),
         extraction_mode: str = "RESEARCH_BACKFILL",
     ) -> ResearcherFactExtractionResult:
         cutoff = date.fromisoformat(as_of_date)
@@ -603,6 +604,20 @@ class ResearcherEvidenceFactExtractor:
         if scope_contract is None:
             raise ValueError("fact extraction archetype lacks mechanism-scope contract")
         document_ids = {str(row["document_id"]) for row in prepared}
+        carried_coverage_refresh_document_ids = tuple(
+            dict.fromkeys(
+                str(value).strip()
+                for value in prior_coverage_refresh_document_ids
+                if str(value).strip()
+            )
+        )
+        if any(
+            document_id not in document_ids
+            for document_id in carried_coverage_refresh_document_ids
+        ):
+            raise ValueError(
+                "prior coverage refresh intent is outside current documents"
+            )
         coverage_gap_objective_ids = _coverage_gap_objective_ids(
             open_objectives=open_objectives,
             score_gap_context=score_gap_context or {},
@@ -699,6 +714,31 @@ class ResearcherEvidenceFactExtractor:
                 )
             )
         }
+        coverage_refresh_document_ids.update(
+            carried_coverage_refresh_document_ids
+        )
+        new_unprocessed_document_ids = {
+            str(document["document_id"])
+            for document in prepared
+            if str(document["document_id"])
+            not in set(all_prior_disposition_ids)
+            and str(document["document_id"])
+            not in coverage_refresh_document_ids
+        }
+        deferred_coverage_refresh_document_ids = set()
+        if new_unprocessed_document_ids:
+            # A newly fetched document can change the canonical fact state and
+            # therefore the gap that requested a stale coverage re-audit.  Drain
+            # the new source first and keep every prior disposition intact for
+            # this checkpoint.  The canonical-state barrier then recomputes the
+            # gap; if the re-audit is still required, the next clean resume sees
+            # the same prior disposition and performs it.  Removing the prior
+            # disposition before an unprocessed new document would lose that
+            # durable refresh intent when a collaboration response is pending.
+            deferred_coverage_refresh_document_ids = set(
+                coverage_refresh_document_ids
+            )
+            coverage_refresh_document_ids = set()
         coverage_refresh_objective_scope_by_document = (
             {
                 document_id: frozenset(
@@ -1799,6 +1839,24 @@ class ResearcherEvidenceFactExtractor:
             target_id=target_id,
             as_of_date=as_of_date,
         )
+        if (
+            deferred_coverage_refresh_document_ids
+            and not pending
+            and new_unprocessed_document_ids.issubset(
+                {
+                    str(row.get("document_id") or "")
+                    for row in dispositions
+                }
+            )
+        ):
+            # The deferred baseline dispositions are intentionally still
+            # present.  Persist the newly accepted canonical fact state before
+            # deciding on the next resume whether those older documents still
+            # need their coverage audit.
+            pending.append(
+                FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED
+            )
+            canonical_state_refresh_barrier_count += 1
         rejections = list(
             {
                 (
@@ -1828,11 +1886,50 @@ class ResearcherEvidenceFactExtractor:
             and call.coverage_audit_performed
             for document_id in call.document_ids
         }
+        coverage_audited_transport_chunk_ids = {
+            chunk_id
+            for call in calls
+            if call.status == "COMPLETE"
+            and call.coverage_audit_performed
+            for chunk_id in call.transport_chunk_ids
+        }
         disposition_document_ids = {
             str(row.get("document_id") or "")
             for row in dispositions
             if str(row.get("document_id") or "")
         }
+        current_semantics_disposition_ids = {
+            str(row.get("document_id") or "")
+            for row in dispositions
+            if _extraction_semantics_version(row)
+            == FACT_EXTRACTION_SEMANTICS_VERSION
+        }
+        completed_coverage_refresh_document_ids = {
+            document_id
+            for document_id in (
+                set(coverage_refresh_document_ids)
+                | deferred_coverage_refresh_document_ids
+            )
+            if document_id in current_semantics_disposition_ids
+            and (
+                (
+                    document_id in split_chunk_ids_by_document
+                    and set(split_chunk_ids_by_document[document_id])
+                    <= coverage_audited_transport_chunk_ids
+                )
+                or (
+                    document_id not in split_chunk_ids_by_document
+                    and document_id in coverage_audited_document_ids
+                )
+            )
+        }
+        pending_coverage_refresh_document_ids = sorted(
+            (
+                set(coverage_refresh_document_ids)
+                | deferred_coverage_refresh_document_ids
+            )
+            - completed_coverage_refresh_document_ids
+        )
         critical_counts = {
             "snippet_or_non_full_document_input_count": sum(
                 bool(row.get("snippet_only"))
@@ -1947,6 +2044,18 @@ class ResearcherEvidenceFactExtractor:
             ),
             "coverage_refresh_prior_document_count": len(
                 coverage_refresh_document_ids
+            ),
+            "coverage_refresh_deferred_for_new_document_count": len(
+                deferred_coverage_refresh_document_ids
+            ),
+            "pending_coverage_refresh_document_ids": (
+                pending_coverage_refresh_document_ids
+            ),
+            "pending_coverage_refresh_document_count": len(
+                pending_coverage_refresh_document_ids
+            ),
+            "new_unprocessed_document_count": len(
+                new_unprocessed_document_ids
             ),
             "bounded_stale_coverage_refresh_document_count": len(
                 bounded_stale_coverage_refresh_document_ids

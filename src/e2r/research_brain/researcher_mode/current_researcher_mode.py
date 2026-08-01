@@ -12,7 +12,6 @@ from datetime import date
 import hashlib
 import json
 from pathlib import Path
-import re
 from typing import Any, Mapping, Sequence
 
 from e2r.production.metadata import stable_hash, write_json, write_jsonl
@@ -1583,26 +1582,17 @@ def _source_checkpoint_needs_fact_extraction_recovery(
     """Replay one immutable source snapshot solely to drain pending facts.
 
     A collaboration wait or canonical-state refresh barrier may be opened
-    immediately after a terminal source epoch.  The source planner must not
-    replace that exact document snapshot while its fact-extraction queue is
-    still pending.  This predicate admits only those exact fact recovery
-    leaves; empty-query outcomes, source failures, and real query, ranking, or
-    fetch work continue through ordinary source acquisition.
+    while unrelated source work is still pending.  The source planner must not
+    replace that exact document snapshot before its already-fetched documents
+    have drained through fact extraction.  This does not certify Source Graph
+    completion: it freezes one exact snapshot solely for the downstream retry.
     """
 
-    pending_reasons = tuple(checkpoint.get("pending_reasons") or ())
     if (
-        str(checkpoint.get("status") or "") != "QUERY_GENERATION_PENDING"
-        or str(checkpoint.get("target_id") or "") != target_id
+        str(checkpoint.get("target_id") or "") != target_id
         or str(checkpoint.get("as_of_date") or "") != as_of_date
-        or len(pending_reasons) != 1
-        or re.fullmatch(
-            r"QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
-            r"COLLABREQ-[0-9a-f]{64}",
-            str(pending_reasons[0]),
-        )
-        is None
-        or not _source_checkpoint_has_drained_persisted_work(checkpoint)
+        or _source_checkpoint_has_terminal_source_work(checkpoint)
+        or not checkpoint.get("evidence_documents")
     ):
         return False
     downstream_document_ids = tuple(
@@ -1784,7 +1774,7 @@ def _hydrate_readonly_source_graph_run(
     ):
         raise ValueError(
             "pending fact extraction recovery requires an exact collaboration "
-            "query wait with drained source work"
+            "or canonical refresh wait over the current source snapshot"
         )
     graph_payload = checkpoint.get("source_graph")
     if not isinstance(graph_payload, Mapping):
@@ -2046,6 +2036,41 @@ def _load_fact_checkpoint(
                 for claim in call["accepted_claims"]
             ]
         all_calls.append(call)
+    carried_coverage_refresh_document_ids: list[str] = []
+    result_path = paths["result"]
+    if result_path.is_file():
+        try:
+            prior_result = _read_json(result_path)
+        except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
+            prior_result = {}
+        if (
+            str(prior_result.get("target_id") or "")
+            == str(getattr(source_graph, "target_id", ""))
+            and str(prior_result.get("as_of_date") or "")
+            == str(getattr(source_graph, "as_of_date", ""))
+        ):
+            audit = prior_result.get("audit") or {}
+            if isinstance(audit, Mapping):
+                carried_coverage_refresh_document_ids.extend(
+                    str(value)
+                    for value in audit.get(
+                        "pending_coverage_refresh_document_ids"
+                    )
+                    or ()
+                    if str(value) in current_ids
+                )
+    # Migration for a checkpoint written before the durable refresh-intent
+    # roster existed.  A pending coverage-audit call is not accepted as a
+    # completed fact call, but its current document id must keep the audit from
+    # silently disappearing on resume.
+    carried_coverage_refresh_document_ids.extend(
+        str(document_id)
+        for row in all_calls
+        if row.get("status") == "PENDING"
+        and row.get("coverage_audit_performed") is True
+        for document_id in row.get("document_ids") or ()
+        if str(document_id) in current_ids
+    )
     completed_call_ids = {
         str(document_id)
         for row in all_calls
@@ -2093,6 +2118,9 @@ def _load_fact_checkpoint(
         "prior_document_dispositions": dispositions,
         "prior_provider_calls": calls,
         "prior_rejections": rejections,
+        "prior_coverage_refresh_document_ids": tuple(
+            dict.fromkeys(carried_coverage_refresh_document_ids)
+        ),
     }
 
 

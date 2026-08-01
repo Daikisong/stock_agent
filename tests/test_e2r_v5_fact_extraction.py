@@ -913,10 +913,15 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         self.assertEqual(len(result.facts), 1)
         self.assertEqual(result.facts[0].value, "record_operating_cash_flow")
 
-    def test_fact_provider_payload_ignores_collaboration_wait_request_id(
+    def test_fact_provider_payload_ignores_source_transport_state(
         self,
     ) -> None:
-        def score_gap_context(request_id: str) -> Mapping[str, Any]:
+        def score_gap_context(
+            request_id: str,
+            *,
+            source_status: str,
+            source_reason: str,
+        ) -> Mapping[str, Any]:
             supervisor_wait = (
                 "SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
                 "StructuredProviderUnavailable:"
@@ -924,11 +929,31 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 + request_id
             )
             return {
+                "source_graph_status": source_status,
                 "source_graph_pending_reasons": [
                     "QUERY_PROVIDER_ERROR:"
                     "COLLABORATION_RESPONSE_PENDING:"
                     + request_id,
+                    source_reason,
                 ],
+                "prior_structured_source_gap": {
+                    "status": "SOURCE_PENDING",
+                    "missing_roles_by_component": {
+                        "cash_conversion": ["OPERATING_CASH_FLOW"]
+                    },
+                    "issuer_fact_materialization": {
+                        "input_claim_count": (
+                            8_357
+                            if source_status == "QUERY_GENERATION_PENDING"
+                            else 8_386
+                        ),
+                        "input_fact_count": (
+                            8_345
+                            if source_status == "QUERY_GENERATION_PENDING"
+                            else 8_374
+                        ),
+                    },
+                },
                 "prior_fact_extraction_feedback": [
                     "UNRESOLVED_RESEARCH_NOTE:peer band source가 필요하다.",
                     (
@@ -963,19 +988,41 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         ResearcherEvidenceFactExtractor(provider=provider_a).extract(
             **common,
             score_gap_context=score_gap_context(
-                "COLLABREQ-" + "a" * 64
+                "COLLABREQ-" + "a" * 64,
+                source_status="QUERY_GENERATION_PENDING",
+                source_reason="QUERY_TRANSPORT_BUDGET_CHECKPOINT",
             ),
         )
         ResearcherEvidenceFactExtractor(provider=provider_b).extract(
             **common,
             score_gap_context=score_gap_context(
-                "COLLABREQ-" + "b" * 64
+                "COLLABREQ-" + "b" * 64,
+                source_status="CANDIDATE_RANKING_PENDING",
+                source_reason="CANDIDATE_RANKING_TRANSPORT_BUDGET_CHECKPOINT",
             ),
         )
 
         self.assertEqual(
             provider_a.calls[0]["payload"],
             provider_b.calls[0]["payload"],
+        )
+        projected = provider_a.calls[0]["payload"]["score_gap_context"]
+        self.assertNotIn("source_graph_status", projected)
+        self.assertNotIn("source_graph_pending_reasons", projected)
+        self.assertNotIn(
+            "issuer_fact_materialization",
+            projected["prior_structured_source_gap"],
+        )
+        self.assertEqual(
+            projected["prior_structured_source_gap"][
+                "missing_roles_by_component"
+            ],
+            {"cash_conversion": ["OPERATING_CASH_FLOW"]},
+        )
+        self.assertTrue(
+            projected["fact_extraction_score_gap_projection_audit"][
+                "source_transport_state_excluded_from_fact_identity"
+            ]
         )
 
     def test_clean_resume_consumes_pending_collaboration_request_after_prior_fact(
@@ -2158,9 +2205,11 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             ],
             3_000,
         )
-        self.assertEqual(
-            context["source_graph_pending_reasons"]["reason_count"],
-            2_000,
+        self.assertNotIn("source_graph_pending_reasons", context)
+        self.assertTrue(
+            context["fact_extraction_score_gap_projection_audit"][
+                "source_transport_state_excluded_from_fact_identity"
+            ]
         )
         accounting = result.audit["prompt_transport_accounting"]
         self.assertLess(accounting["score_gap_projection_chars"], 100_000)
@@ -2726,6 +2775,248 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 "production_document_without_coverage_audit_count"
             ],
             0,
+        )
+
+    def test_new_document_precedes_stale_coverage_refresh(self) -> None:
+        stale = _document(
+            "DOC-STALE-COVERAGE",
+            "ISSUER_PRESENTATION",
+            "ISSUER",
+        )
+        new = _document(
+            "DOC-NEW-EVIDENCE",
+            "ISSUER_EARNINGS_RELEASE",
+            "ISSUER",
+        )
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "information_confidence",
+        }
+        initial = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveLocalFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(stale,),
+            open_objectives=(objective,),
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        legacy_dispositions = []
+        for raw in initial.document_dispositions:
+            row = dict(raw)
+            row.pop("extraction_semantics_version", None)
+            legacy_dispositions.append(row)
+        legacy_calls = []
+        for raw in initial.provider_calls:
+            row = dict(raw.to_dict())
+            row.pop("extraction_semantics_version", None)
+            legacy_calls.append(row)
+        semantic_score_gap_context = {
+            "prior_supervisor_gap": {
+                "component_findings": [
+                    {
+                        "component_id": "information_confidence",
+                        "memo_sufficient": False,
+                        "missing_fact_needs": [
+                            "independent coverage review"
+                        ],
+                    }
+                ]
+            }
+        }
+
+        class PendingFactProvider:
+            provider_name = "TEST_PENDING_FACT_PROVIDER"
+
+            def __init__(self) -> None:
+                self.calls = []
+
+            def complete(self, *, pass_name, payload):
+                self.calls.append(
+                    {"pass_name": pass_name, "payload": payload}
+                )
+                raise StructuredProviderUnavailable(
+                    "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                    + "a" * 64
+                )
+
+        pending_provider = PendingFactProvider()
+        waiting = ResearcherEvidenceFactExtractor(
+            provider=pending_provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(stale, new),
+            open_objectives=(objective,),
+            prior_material_claims=initial.material_claims,
+            prior_document_dispositions=legacy_dispositions,
+            prior_provider_calls=legacy_calls,
+            prior_rejections=initial.rejections,
+            score_gap_context={
+                **semantic_score_gap_context,
+                "source_graph_status": "QUERY_GENERATION_PENDING",
+                "source_graph_pending_reasons": [
+                    "QUERY_TRANSPORT_BUDGET_CHECKPOINT"
+                ],
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(waiting.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(len(pending_provider.calls), 1)
+        self.assertEqual(
+            [
+                row["document_id"]
+                for row in pending_provider.calls[0]["payload"][
+                    "full_documents"
+                ]
+            ],
+            ["DOC-NEW-EVIDENCE"],
+        )
+        self.assertIn(
+            "DOC-STALE-COVERAGE",
+            {
+                row["document_id"]
+                for row in waiting.document_dispositions
+            },
+        )
+        self.assertEqual(
+            waiting.audit["pending_coverage_refresh_document_ids"],
+            ["DOC-STALE-COVERAGE"],
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(
+                waiting,
+                checkpoint_root,
+            )
+            waiting_checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    evidence_documents=(stale, new),
+                ),
+            )
+        self.assertEqual(
+            waiting_checkpoint["prior_coverage_refresh_document_ids"],
+            ("DOC-STALE-COVERAGE",),
+        )
+
+        provider = ObjectiveLocalFactProvider()
+        resumed = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(stale, new),
+            open_objectives=(objective,),
+            **waiting_checkpoint,
+            score_gap_context={
+                **semantic_score_gap_context,
+                "source_graph_status": "CANDIDATE_RANKING_PENDING",
+                "source_graph_pending_reasons": [
+                    "CANDIDATE_RANKING_TRANSPORT_BUDGET_CHECKPOINT"
+                ],
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertTrue(provider.calls)
+        self.assertTrue(
+            all(
+                [
+                    row["document_id"]
+                    for row in call["payload"]["full_documents"]
+                ]
+                == ["DOC-NEW-EVIDENCE"]
+                for call in provider.calls
+            )
+        )
+        self.assertEqual(
+            pending_provider.calls[0]["payload"],
+            provider.calls[0]["payload"],
+        )
+        self.assertEqual(
+            resumed.pending_reasons,
+            (FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,),
+        )
+        self.assertEqual(
+            resumed.audit[
+                "coverage_refresh_deferred_for_new_document_count"
+            ],
+            1,
+        )
+        disposition_by_id = {
+            row["document_id"]: row
+            for row in resumed.document_dispositions
+        }
+        self.assertEqual(
+            set(disposition_by_id),
+            {"DOC-STALE-COVERAGE", "DOC-NEW-EVIDENCE"},
+        )
+        self.assertNotIn(
+            "extraction_semantics_version",
+            disposition_by_id["DOC-STALE-COVERAGE"],
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(
+                resumed,
+                checkpoint_root,
+            )
+            resumed_checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(
+                    target_id=TARGET,
+                    as_of_date=AS_OF_DATE,
+                    evidence_documents=(stale, new),
+                ),
+            )
+
+        refresh_provider = ObjectiveLocalFactProvider()
+        refreshed = ResearcherEvidenceFactExtractor(
+            provider=refresh_provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(stale, new),
+            open_objectives=(objective,),
+            **resumed_checkpoint,
+            score_gap_context=semantic_score_gap_context,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(refreshed.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertTrue(refresh_provider.calls)
+        self.assertTrue(
+            all(
+                [
+                    row["document_id"]
+                    for row in call["payload"]["full_documents"]
+                ]
+                == ["DOC-STALE-COVERAGE"]
+                for call in refresh_provider.calls
+            )
+        )
+        self.assertIn(
+            "fact_extraction_coverage_audit_context",
+            refresh_provider.calls[0]["payload"],
+        )
+        self.assertEqual(refreshed.audit["coverage_audit_call_count"], 1)
+        self.assertEqual(
+            refreshed.audit["pending_coverage_refresh_document_ids"],
+            [],
         )
 
     def test_zero_gap_stale_official_document_reassesses_narrowed_lineage(

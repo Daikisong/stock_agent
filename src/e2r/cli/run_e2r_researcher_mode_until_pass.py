@@ -962,20 +962,26 @@ def _terminal_source_snapshot_has_pending_fact_extraction(
     source_graph = getattr(result, "source_graph", None)
     fact_extraction = getattr(result, "fact_extraction", None)
     result_audit = getattr(result, "audit", None)
+    fact_recovery_replayed = bool(
+        isinstance(result_audit, Mapping)
+        and result_audit.get(
+            "source_checkpoint_fact_extraction_recovery_replayed"
+        )
+        is True
+    )
     terminal_source_identity = bool(
         getattr(source_graph, "status", None)
         in {"EPOCH_COMPLETE_REQUIRES_SUPERVISOR", "STOPPED_ON_RESOLUTION"}
-        or (
-            isinstance(result_audit, Mapping)
-            and result_audit.get(
-                "source_checkpoint_fact_extraction_recovery_replayed"
-            )
-            is True
-        )
+        or fact_recovery_replayed
     )
     return bool(
         terminal_source_identity
-        and _source_transport_work_is_drained(source_transport_work_state)
+        and (
+            fact_recovery_replayed
+            or _source_transport_work_is_drained(
+                source_transport_work_state
+            )
+        )
         and getattr(fact_extraction, "status", None)
         == "FACT_EXTRACTION_PENDING"
         and fact_extraction_has_exact_checkpoint_recovery_wait(

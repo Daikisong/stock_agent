@@ -2599,14 +2599,45 @@ def project_fact_extraction_score_gap_context(
     query_audit = dict(
         projected.pop("query_score_gap_projection_audit", {}) or {}
     )
+    # Source acquisition status and its pending-reason ledger describe queue
+    # transport, not the economic meaning of a fetched document.  Replaying
+    # those fields into fact extraction makes an otherwise identical document,
+    # objective roster, and fact state produce a different collaboration
+    # request whenever Source Graph advances from query to ranking or fetch.
+    # Keep the full values in the source checkpoint and make fact request
+    # identity depend only on the semantic gap context.
+    projected.pop("source_graph_status", None)
+    projected.pop("source_graph_pending_reasons", None)
+    prior_structured_source_gap = projected.get(
+        "prior_structured_source_gap"
+    )
+    if isinstance(prior_structured_source_gap, Mapping):
+        semantic_structured_gap = dict(prior_structured_source_gap)
+        # These counts describe how many already-persisted claims/facts the
+        # materializer replayed.  Split-document checkpoint reconciliation can
+        # legitimately change them without changing the current fact roster or
+        # any missing structured role.  Keep the semantic gap fields and the
+        # full accounting in its own artifact, but do not let the bookkeeping
+        # totals mint a new exact fact-extraction request.
+        semantic_structured_gap.pop("issuer_fact_materialization", None)
+        projected["prior_structured_source_gap"] = semantic_structured_gap
     return {
         **projected,
         "fact_extraction_score_gap_projection_audit": {
-            "schema_version": "e2r_v5_fact_extraction_score_gap_projection_v1",
+            "schema_version": "e2r_v5_fact_extraction_score_gap_projection_v3",
             "semantic_context_roster_hash": _stable_hash(projected),
             "shared_gap_projection_schema_version": query_audit.get(
                 "schema_version"
             ),
+            "source_transport_state_excluded_from_fact_identity": True,
+            "excluded_source_transport_fields": [
+                "source_graph_status",
+                "source_graph_pending_reasons",
+                (
+                    "prior_structured_source_gap."
+                    "issuer_fact_materialization"
+                ),
+            ],
             "llm_authored_missing_facts_questions_and_directions_preserved": True,
             "duplicate_failure_ledgers_projected": True,
             "full_gap_context_persisted_outside_prompt": True,

@@ -860,6 +860,120 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             ["REUSE_READY_CHECKPOINT", "REUSE_READY_CHECKPOINT"],
         )
 
+    def test_fact_recovery_keeps_non_drained_source_snapshot_frozen(
+        self,
+    ) -> None:
+        checkpoint = _phase94_source_checkpoint(
+            epoch=1,
+            search_candidates=(
+                {
+                    "candidate_id": "CANDIDATE-PENDING",
+                    "ranking_status": "PENDING",
+                    "fetch_status": "NOT_STARTED",
+                },
+            ),
+        )
+        snapshot = _source_transport_snapshot(checkpoint)
+        pending = SimpleNamespace(
+            status="RESEARCH_CHECKPOINT_PENDING",
+            completion_gates={"source_graph_checkpoint_ready": False},
+            source_graph=SimpleNamespace(
+                status="CANDIDATE_RANKING_PENDING",
+            ),
+            fact_extraction=SimpleNamespace(
+                status="FACT_EXTRACTION_PENDING",
+                pending_reasons=(
+                    "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
+                    "StructuredProviderUnavailable:"
+                    "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                    + "f" * 64,
+                ),
+            ),
+            audit={
+                "source_checkpoint_readonly_replayed": True,
+                "source_checkpoint_fact_extraction_recovery_replayed": True,
+            },
+        )
+        complete = SimpleNamespace(
+            status="PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
+            completion_gates={"source_graph_checkpoint_ready": True},
+            source_graph=SimpleNamespace(
+                status="EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+            ),
+            fact_extraction=SimpleNamespace(
+                status="FACT_EXTRACTION_COMPLETE",
+                pending_reasons=(),
+            ),
+            audit={
+                "source_checkpoint_readonly_replayed": True,
+                "source_checkpoint_fact_extraction_recovery_replayed": True,
+            },
+        )
+
+        class Runner:
+            def __init__(self) -> None:
+                self.modes = []
+
+            def run_checkpoint(self, **kwargs):
+                self.modes.append(kwargs["source_resume_mode"])
+                return (pending, complete)[len(self.modes) - 1]
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            runner = Runner()
+            with (
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_signature",
+                    side_effect=("a" * 64, "b" * 64),
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_state",
+                    return_value={},
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_load_prior_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_result_source_transport_work_state",
+                    side_effect=(snapshot, snapshot),
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "refresh_canary_target_manifest_hash"
+                ),
+            ):
+                returned = _run_target_until_semantic_terminal(
+                    runner=runner,
+                    config=SimpleNamespace(
+                        output_root=str(root),
+                        as_of_date=AS_OF_DATE,
+                    ),
+                    target=SimpleNamespace(target_id="CURRENT-TARGET"),
+                )
+
+        self.assertIs(returned, complete)
+        self.assertEqual(
+            runner.modes,
+            ["REUSE_READY_CHECKPOINT", "REUSE_READY_CHECKPOINT"],
+        )
+        self.assertEqual(
+            _source_transport_work_summary(snapshot["work_state"])[
+                "pending_ranking_count"
+            ],
+            1,
+        )
+        self.assertTrue(
+            _terminal_source_snapshot_has_pending_fact_extraction(
+                pending,
+                snapshot["work_state"],
+            )
+        )
+
     def test_terminal_fact_wait_does_not_replay_persisted_deferred_audit(
         self,
     ) -> None:
@@ -1009,7 +1123,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 _source_checkpoint_is_ready_for_readonly_replay(candidate)
             )
 
-    def test_fact_extraction_recovery_requires_exact_drained_query_wait(
+    def test_fact_extraction_recovery_freezes_pending_source_snapshot(
         self,
     ) -> None:
         request_id = "COLLABREQ-" + "a" * 64
@@ -1062,19 +1176,19 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 )
             )
 
-            invalid_checkpoints = []
+            recoverable_pending_checkpoints = []
             for pending_reason in (
                 checkpoint["pending_reasons"][0] + ":SUFFIX",
                 "LLM_RETURNED_NO_NEW_VALID_QUERY",
                 "QUERY_PROVIDER_ERROR:SEARCH_PROVIDER_ERROR",
             ):
-                invalid_checkpoints.append(
+                recoverable_pending_checkpoints.append(
                     {
                         **checkpoint,
                         "pending_reasons": [pending_reason],
                     }
                 )
-            invalid_checkpoints.extend(
+            recoverable_pending_checkpoints.extend(
                 (
                     {
                         **checkpoint,
@@ -1084,6 +1198,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     },
                     {
                         **checkpoint,
+                        "status": "CANDIDATE_RANKING_PENDING",
                         "search_candidates": [
                             {
                                 "ranking_status": "PENDING",
@@ -1100,14 +1215,31 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                             }
                         ],
                     },
-                    {
-                        **checkpoint,
-                        "production_downstream_document_ids": [
-                            "DOC-1",
-                            "DOC-MISSING",
-                        ],
-                    },
                 )
+            )
+            for recoverable in recoverable_pending_checkpoints:
+                self.assertTrue(
+                    _source_checkpoint_needs_fact_extraction_recovery(
+                        root=root,
+                        checkpoint=recoverable,
+                        target_id="CURRENT-TARGET",
+                        as_of_date=AS_OF_DATE,
+                    )
+                )
+
+            invalid_checkpoints = (
+                {
+                    **checkpoint,
+                    "production_downstream_document_ids": [
+                        "DOC-1",
+                        "DOC-MISSING",
+                    ],
+                },
+                {**checkpoint, "evidence_documents": []},
+                {
+                    **checkpoint,
+                    "status": "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+                },
             )
             for invalid in invalid_checkpoints:
                 self.assertFalse(
