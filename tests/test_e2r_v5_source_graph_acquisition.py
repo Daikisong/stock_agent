@@ -2708,7 +2708,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
 
         self.assertEqual(pending, ())
 
-    def test_resolved_requested_family_gap_returns_to_llm_then_source_pending(
+    def test_resolved_historical_requested_family_gap_does_not_reopen(
         self,
     ) -> None:
         state = source_graph_module._new_acquisition_state(
@@ -2732,6 +2732,139 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             resolved_objective_ids=["OBJECTIVE-1"],
         )
         checkpoint = source_graph_module._finalize_checkpoint(state)
+        provider = SourceBrainProvider(
+            queries=(ALTERNATE_QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    # Neither a legacy string nor an allowed-family roster has
+                    # objective-bound mandatory-family authority.
+                    "source_family_gaps": ["CUSTOMER_OFFICIAL"],
+                    "missing_role_resolution_contracts": [
+                        {
+                            "objective_id": "OBJECTIVE-1",
+                            "allowed_source_families": [
+                                "CUSTOMER_OFFICIAL"
+                            ],
+                        }
+                    ],
+                    "failure_assessments": [
+                        {
+                            "objective_id": "OBJECTIVE-1",
+                            "source_family": "CUSTOMER_OFFICIAL",
+                            "classification": "FETCH_FAILURE",
+                        }
+                    ],
+                }
+            },
+        )
+
+        self.assertEqual(run.status, "STOPPED_ON_RESOLUTION")
+        self.assertIn(
+            "OBJECTIVE-1",
+            run.checkpoint["resolved_objective_ids"],
+        )
+        self.assertFalse(provider.calls)
+        self.assertFalse(
+            any(
+                row.get("failure_reason")
+                == "REQUESTED_SOURCE_FAMILY_WITHOUT_"
+                "ACCEPTED_CLAIM_FACT_LINEAGE"
+                for row in run.checkpoint["query_failures"]
+            )
+        )
+
+    def test_mandatory_family_pairs_use_only_current_supervisor_gap_keys(
+        self,
+    ) -> None:
+        pairs = (
+            source_graph_module
+            ._current_supervisor_mandatory_source_family_pairs(
+                score_gap_context={
+                    "prior_supervisor_gap": {
+                        "new_source_family_directions": [
+                            {
+                                "component_id": "eps_fcf_explosion",
+                                "source_family": "CUSTOMER_OFFICIAL",
+                            }
+                        ],
+                        "source_family_gaps": [
+                            "REUTERS",
+                            {
+                                "objective_id": "OBJECTIVE-1",
+                                "source_family": "KIND_KRX",
+                            },
+                            {
+                                "objective_id": "OBJECTIVE-1",
+                                "allowed_source_families": ["REUTERS"],
+                            },
+                        ],
+                        "failure_assessments": [
+                            {
+                                "objective_id": "OBJECTIVE-1",
+                                "source_family": "REUTERS",
+                            }
+                        ],
+                    }
+                },
+                objectives=(_objective().to_dict(),),
+            )
+        )
+
+        self.assertEqual(
+            pairs,
+            frozenset(
+                {
+                    ("OBJECTIVE-1", "CUSTOMER_OFFICIAL"),
+                    ("OBJECTIVE-1", "KIND_KRX"),
+                }
+            ),
+        )
+
+    def test_current_supervisor_mandatory_family_gap_reopens_then_pending(
+        self,
+    ) -> None:
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state.update(
+            status="STOPPED_ON_RESOLUTION",
+            generated_queries=[
+                {
+                    "query_id": "QUERY-CUSTOMER-1",
+                    "objective_id": "OBJECTIVE-1",
+                    "literal_query": QUERY,
+                    "source_families": ["CUSTOMER_OFFICIAL"],
+                    "execution_status": "SEARCH_EXECUTED",
+                }
+            ],
+            executed_queries=[QUERY],
+            resolved_objective_ids=["OBJECTIVE-1"],
+        )
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        mandatory_gap_context = {
+            "prior_supervisor_gap": {
+                "new_source_family_directions": [
+                    {
+                        # The existing objective roster provides the only
+                        # allowed component-to-objective fallback.
+                        "component_id": "eps_fcf_explosion",
+                        "source_family": "CUSTOMER_OFFICIAL",
+                    }
+                ]
+            }
+        }
         first_provider = SourceBrainProvider(
             queries=(ALTERNATE_QUERY,),
             source_families=("CUSTOMER_OFFICIAL",),
@@ -2743,6 +2876,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             fetcher=PageFetcher(fixture_text_by_url={}),
             checkpoint=checkpoint,
             resolved_objective_ids=("OBJECTIVE-1",),
+            score_gap_context=mandatory_gap_context,
         )
 
         query_payload = next(
@@ -2775,6 +2909,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             fetcher=PageFetcher(fixture_text_by_url={}),
             checkpoint=first.checkpoint,
             resolved_objective_ids=("OBJECTIVE-1",),
+            score_gap_context=mandatory_gap_context,
         )
 
         self.assertEqual(second.status, "SOURCE_PROVIDER_PENDING")

@@ -683,7 +683,13 @@ class ResearcherSourceGraphAcquirer:
             candidates,
             rejected_documents=rejected_rows,
         )
-        source_family_lineage_failures = (
+        mandatory_source_family_pairs = (
+            _current_supervisor_mandatory_source_family_pairs(
+                score_gap_context=score_gap_context or {},
+                objectives=objectives,
+            )
+        )
+        observed_source_family_lineage_failures = (
             _requested_source_family_without_matched_fetch_failures(
                 generated_queries=generated_rows,
                 documents=evidence_documents,
@@ -691,11 +697,23 @@ class ResearcherSourceGraphAcquirer:
                 materiality_decisions=ranking_rows,
                 fetch_records=fetch_rows,
                 facts=facts,
-                # A previously resolved objective must be reopened when its
-                # requested family never produced accepted claim/fact lineage.
-                # Query execution alone is not completion evidence.
                 unresolved_objectives=objectives,
             )
+        )
+        # A query's source-family roster records where the LLM attempted to
+        # search.  It is not, by itself, a current completion obligation.
+        # Reopen an objective only when the current Supervisor gap context
+        # explicitly binds one canonical family to that objective.  This
+        # preserves accepted-lineage enforcement for a real semantic gap while
+        # preventing append-only query history from reopening completed work.
+        source_family_lineage_failures = tuple(
+            row
+            for row in observed_source_family_lineage_failures
+            if (
+                str(row.get("objective_id") or ""),
+                str(row.get("source_family") or ""),
+            )
+            in mandatory_source_family_pairs
         )
         source_family_gap_objective_ids = {
             str(row.get("objective_id") or "")
@@ -945,8 +963,14 @@ class ResearcherSourceGraphAcquirer:
             *(
                 row
                 for row in state["query_failures"]
-                if str(row.get("failure_reason") or "")
-                != "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                if (
+                    str(row.get("failure_reason") or "")
+                    != "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                    and _source_family_lineage_failure_is_current_mandatory(
+                        row,
+                        mandatory_pairs=mandatory_source_family_pairs,
+                    )
+                )
             ),
             *(
                 row
@@ -957,7 +981,14 @@ class ResearcherSourceGraphAcquirer:
                     for selected in candidate_query_edge_failure_roster
                 )
             ),
-            *prior_query_failures,
+            *(
+                row
+                for row in prior_query_failures
+                if _source_family_lineage_failure_is_current_mandatory(
+                    row,
+                    mandatory_pairs=mandatory_source_family_pairs,
+                )
+            ),
             *source_family_lineage_failures,
         ]
         for row in generated_rows:
@@ -3295,6 +3326,85 @@ def _production_downstream_documents(
         ):
             active.append(document)
     return tuple(active)
+
+
+def _current_supervisor_mandatory_source_family_pairs(
+    *,
+    score_gap_context: Mapping[str, Any],
+    objectives: Sequence[Mapping[str, Any]],
+) -> frozenset[tuple[str, str]]:
+    """Return only current Supervisor-routed source-family obligations.
+
+    Historical query ``source_families`` are attempted routes, not durable
+    completion gates.  A family becomes mandatory only when the current
+    Supervisor gap plane supplies one mapping row with an exact canonical
+    family and an objective id, or a component id that maps unambiguously to
+    one current objective.  Legacy string gaps and structured
+    ``allowed_source_families`` remain planning context and cannot acquire
+    reopen authority.
+    """
+
+    prior_supervisor_gap = score_gap_context.get("prior_supervisor_gap")
+    if not isinstance(prior_supervisor_gap, Mapping):
+        return frozenset()
+    objective_ids = {
+        str(row.get("objective_id") or "")
+        for row in objectives
+        if str(row.get("objective_id") or "")
+    }
+    objective_ids_by_component: dict[str, list[str]] = {}
+    for objective in objectives:
+        objective_id = str(objective.get("objective_id") or "")
+        component_id = str(objective.get("component_id") or "")
+        if objective_id and component_id:
+            objective_ids_by_component.setdefault(component_id, []).append(
+                objective_id
+            )
+
+    mandatory: set[tuple[str, str]] = set()
+    for key in ("new_source_family_directions", "source_family_gaps"):
+        value = prior_supervisor_gap.get(key)
+        if not isinstance(value, (list, tuple)):
+            continue
+        for row in value:
+            if not isinstance(row, Mapping):
+                # Legacy string-only family gaps have no objective lineage.
+                continue
+            source_family = str(row.get("source_family") or "").strip()
+            if source_family not in CANONICAL_SOURCE_FAMILIES:
+                continue
+            objective_id = str(row.get("objective_id") or "").strip()
+            if objective_id not in objective_ids:
+                component_id = str(row.get("component_id") or "").strip()
+                component_objective_ids = objective_ids_by_component.get(
+                    component_id, ()
+                )
+                objective_id = (
+                    component_objective_ids[0]
+                    if len(component_objective_ids) == 1
+                    else ""
+                )
+            if objective_id in objective_ids:
+                mandatory.add((objective_id, source_family))
+    return frozenset(mandatory)
+
+
+def _source_family_lineage_failure_is_current_mandatory(
+    row: Mapping[str, Any],
+    *,
+    mandatory_pairs: frozenset[tuple[str, str]],
+) -> bool:
+    """Keep ordinary failures and only current mandatory lineage failures."""
+
+    if (
+        str(row.get("failure_reason") or "")
+        != "REQUESTED_SOURCE_FAMILY_WITHOUT_ACCEPTED_CLAIM_FACT_LINEAGE"
+    ):
+        return True
+    return (
+        str(row.get("objective_id") or ""),
+        str(row.get("source_family") or ""),
+    ) in mandatory_pairs
 
 
 def _requested_source_family_without_matched_fetch_failures(
