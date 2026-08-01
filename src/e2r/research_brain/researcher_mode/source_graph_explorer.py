@@ -771,9 +771,20 @@ class ResearcherSourceGraphAcquirer:
                 for value in candidate.get("materiality_query_ids") or ()
                 if str(value)
             }
+            persisted_exact_rebound_query_ids = {
+                str(value)
+                for value in candidate.get(
+                    "candidate_query_edge_exact_rebound_query_ids"
+                )
+                or ()
+                if str(value)
+            }
             query_edges = tuple(
                 generated_query_by_id.get(query_id)
-                for query_id in materiality_query_ids
+                for query_id in (
+                    persisted_exact_rebound_query_ids
+                    or materiality_query_ids
+                )
             )
             current_rebound_query_ids = {
                 str(row.get("query_id") or "")
@@ -803,6 +814,11 @@ class ResearcherSourceGraphAcquirer:
                 or source_family
                 not in set(
                     candidate.get("requested_source_families") or ()
+                )
+                or (
+                    not persisted_exact_rebound_query_ids
+                    and str(candidate.get("fetch_status") or "")
+                    != "NOT_STARTED"
                 )
                 or not current_rebound_query_ids
             ):
@@ -1219,6 +1235,22 @@ class ResearcherSourceGraphAcquirer:
                 & candidate_query_edge_repair_query_ids
             )
         }
+        for row in candidates:
+            if (
+                str(row.get("candidate_id") or "")
+                not in candidate_query_edge_exact_rebound_ids
+            ):
+                continue
+            row[
+                "candidate_query_edge_exact_rebound_query_ids"
+            ] = sorted(
+                set(
+                    row.get("materiality_query_ids")
+                    or row.get("query_ids")
+                    or ()
+                )
+                & candidate_query_edge_repair_query_ids
+            )
         candidate_query_edge_repair_scopes_by_query_id = {
             str(row.get("query_id") or ""): {
                 (
@@ -1345,6 +1377,10 @@ class ResearcherSourceGraphAcquirer:
                 decision = decision_by_candidate.get(str(candidate["candidate_id"]))
                 if decision is None:
                     continue
+                candidate.pop(
+                    "candidate_query_edge_exact_rebound_query_ids",
+                    None,
+                )
                 terminal_fetch_status = str(
                     candidate.pop(
                         "terminal_fetch_status_before_materiality_revalidation",

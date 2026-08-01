@@ -2912,6 +2912,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         repair_query = "Current Corp official preliminary results newsroom"
         official_url = "https://issuer.example.com/current-results"
         alternate_url = "https://issuer.example.com/alternate-results"
+        stale_terminal_url = "https://issuer.example.com/stale-results"
         backlog_url = "https://example.com/unrelated-backlog"
         state = source_graph_module._new_acquisition_state(
             target_id=TARGET,
@@ -2991,6 +2992,39 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                     "snippet_discovery_only": True,
                     "ranking_status": "PENDING",
                     "fetch_status": "NOT_STARTED",
+                },
+                {
+                    "candidate_id": "STALE-TERMINAL-SAME-SCOPE",
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "url": stale_terminal_url,
+                    "normalized_url": stale_terminal_url,
+                    "title": "Current Corp stale official results",
+                    "snippet": None,
+                    "source": "issuer.example.com",
+                    "published_at": "2026-06-18",
+                    "rank": 3,
+                    "is_pdf": False,
+                    "is_report_domain": False,
+                    "is_news": True,
+                    "is_disclosure": False,
+                    "query_ids": ["QUERY-VALUATION"],
+                    "materiality_query_ids": ["QUERY-VALUATION"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "requested_source_families": [
+                        "VALUATION_MULTIPLES"
+                    ],
+                    "query_lineage_valid": True,
+                    "discovery_only": True,
+                    "snippet_discovery_only": True,
+                    "ranking_status": "PENDING",
+                    "fetch_status": "FETCH_ROUTE_EXHAUSTED",
+                    "candidate_source_family_hint": "ISSUER_NEWSROOM",
+                    "verified_official_domain_candidate": True,
+                    "alternate_route_required": True,
+                    "materiality_revalidation_reason": (
+                        "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+                    ),
                 },
             ],
             query_failures=[
@@ -3080,6 +3114,12 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                             rank=2,
                             query=repair_query,
                         ),
+                        _result(
+                            "Current Corp stale official results",
+                            stale_terminal_url,
+                            rank=3,
+                            query=repair_query,
+                        ),
                     )
                 }
             ),
@@ -3087,13 +3127,14 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 fixture_text_by_url={
                     official_url: _document_text("current-results"),
                     alternate_url: _document_text("alternate-results"),
+                    stale_terminal_url: _document_text("stale-results"),
                 }
             ),
             config=SourceGraphAcquisitionConfig(
                 mode="TEST",
-                max_results_per_query=2,
+                max_results_per_query=3,
                 max_queries_per_checkpoint=1,
-                max_candidates_per_checkpoint=2,
+                max_candidates_per_checkpoint=3,
                 max_fetches_per_checkpoint=1,
             ),
             checkpoint=checkpoint,
@@ -3147,6 +3188,11 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             for row in first.checkpoint["search_candidates"]
             if row["url"] == alternate_url
         )
+        first_stale_terminal = next(
+            row
+            for row in first.checkpoint["search_candidates"]
+            if row["url"] == stale_terminal_url
+        )
         self.assertEqual(
             first_repaired["requested_source_families"],
             ["ISSUER_NEWSROOM"],
@@ -3154,6 +3200,21 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(first_repaired["ranking_status"], "PENDING")
         self.assertEqual(first_backlog["ranking_status"], "PENDING")
         self.assertEqual(first_alternate["ranking_status"], "PENDING")
+        self.assertEqual(
+            first_repaired[
+                "candidate_query_edge_exact_rebound_query_ids"
+            ],
+            first_repaired["materiality_query_ids"],
+        )
+        self.assertEqual(first_stale_terminal["ranking_status"], "PENDING")
+        self.assertEqual(
+            first_stale_terminal["fetch_status"],
+            "FETCH_ROUTE_EXHAUSTED",
+        )
+        self.assertNotIn(
+            "candidate_query_edge_exact_rebound_query_ids",
+            first_stale_terminal,
+        )
         self.assertTrue(
             first.audit[
                 "candidate_query_edge_direction_prioritized_over_candidate_backlog"
@@ -3168,13 +3229,14 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 fixture_text_by_url={
                     official_url: _document_text("current-results"),
                     alternate_url: _document_text("alternate-results"),
+                    stale_terminal_url: _document_text("stale-results"),
                 }
             ),
             config=SourceGraphAcquisitionConfig(
                 mode="TEST",
-                max_results_per_query=2,
+                max_results_per_query=3,
                 max_queries_per_checkpoint=1,
-                max_candidates_per_checkpoint=2,
+                max_candidates_per_checkpoint=3,
                 max_fetches_per_checkpoint=1,
             ),
             checkpoint=first.checkpoint,
@@ -3203,6 +3265,11 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             for row in second.checkpoint["search_candidates"]
             if row["url"] == alternate_url
         )
+        second_stale_terminal = next(
+            row
+            for row in second.checkpoint["search_candidates"]
+            if row["url"] == stale_terminal_url
+        )
         self.assertEqual(
             second_by_id[candidate_id]["ranking_status"],
             "MATERIAL",
@@ -3212,6 +3279,11 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "PENDING",
         )
         self.assertEqual(second_alternate["ranking_status"], "PENDING")
+        self.assertEqual(second_stale_terminal["ranking_status"], "PENDING")
+        self.assertNotIn(
+            "candidate_query_edge_exact_rebound_query_ids",
+            second_by_id[candidate_id],
+        )
         self.assertIsNone(second.query_generation)
         self.assertFalse(
             second.audit["candidate_query_edge_direction_priority_requested"]
