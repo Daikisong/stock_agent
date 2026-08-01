@@ -37,6 +37,15 @@ from e2r.research_brain.researcher_mode.prompt_projection import (
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     fact_extraction_has_exact_checkpoint_recovery_wait,
 )
+from e2r.research_brain.researcher_mode.sealed_production import (
+    SEALED_PRODUCTION_SEMANTICS_MATCH,
+    SealedProductionVerification,
+    assert_frozen_production_unchanged,
+    build_current_production_semantics,
+    make_production_semantics_seal,
+    reviewed_post_run_semantic_files_present,
+    verify_sealed_production,
+)
 
 
 def _bool(value: str | bool) -> bool:
@@ -150,42 +159,118 @@ def main(argv: list[str] | None = None) -> int:
     provider = _build_research_provider(args)
     runner = CurrentResearcherModeTargetRunner(provider=provider)
     provider_manifest = _research_provider_manifest(runner.provider)
-    # This manifest is closed before any target production call.  No Gold
-    # module is touched until every production target reports completion.
-    write_json(
-        output_root / "production_lane_manifest.json",
-        {
-            "schema_version": "e2r_v5_phase94_production_lane_v1",
-            "status": "PRODUCTION_RESEARCH_RUNNING",
-            "as_of_date": config.as_of_date,
-            "archetype_id": config.archetype_id,
-            "target_ids": [target.target_id for target in targets],
-            "gold_visibility": False,
-            "gold_query_visibility": False,
-            "gold_url_visibility": False,
-            "gold_fact_visibility": False,
-            "comparison_timing": "POST_RUN_ONLY",
-            "completion_based_on_fixed_rounds": False,
-            "latest_trading_snapshot_date": trading_date,
-            "latest_trading_snapshot_verification": (
-                "CALENDAR_CANDIDATE_PENDING_STRUCTURED_KRX_CONFIRMATION"
-            ),
-            "research_provider": provider_manifest,
-        },
+    current_semantics_before_run = build_current_production_semantics(
+        config=config,
+        targets=targets,
+        registry_rows=registry_rows,
+        target_registry_path=args.target_registry,
+        provider_manifest=provider_manifest,
+        repo_root=Path.cwd(),
     )
-    runs = tuple(
-        _run_target_until_semantic_terminal(
-            runner=runner,
-            config=config,
-            target=target,
+    sealed_verification: SealedProductionVerification | None = None
+    reviewed_semantic_files_present = bool(
+        full_mandatory_target_roster_selected
+        and reviewed_post_run_semantic_files_present(output_root)
+    )
+    sealed_verification_reasons = [
+        "reviewed_post_run_semantic_files_not_ready"
+    ]
+    if reviewed_semantic_files_present:
+        # This verifier never imports or reads the Gold corpus/reviews.  A
+        # mismatch therefore still permits a clean Gold-blind production run.
+        candidate = verify_sealed_production(
+            output_root=output_root,
+            target_ids=selected_target_ids,
+            as_of_date=config.as_of_date,
+            archetype_id=config.archetype_id,
+            expected_semantics=current_semantics_before_run,
         )
-        for target in targets
-    )
-    paths = write_production_lane(config=config, target_runs=runs)
-    production_complete = all(
-        run.status == "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
-        for run in runs
-    )
+        sealed_verification_reasons = list(candidate.reasons)
+        if candidate.eligible:
+            sealed_verification = candidate
+
+    post_run_only = sealed_verification is not None
+    runs = ()
+    if post_run_only:
+        # The production lane and all target leaves remain byte-for-byte
+        # sealed.  Only the post-run Gold section below may write files.
+        paths = {"lane": output_root / "production_lane_manifest.json"}
+        target_statuses = dict(sealed_verification.target_statuses)
+        target_completion_gates = {
+            target_id: dict(gates)
+            for target_id, gates in (
+                sealed_verification.target_completion_gates.items()
+            )
+        }
+        production_complete = True
+    else:
+        # This manifest is closed before any target production call.  No Gold
+        # module or Gold review content is touched on this path.
+        write_json(
+            output_root / "production_lane_manifest.json",
+            {
+                "schema_version": "e2r_v5_phase94_production_lane_v1",
+                "status": "PRODUCTION_RESEARCH_RUNNING",
+                "as_of_date": config.as_of_date,
+                "archetype_id": config.archetype_id,
+                "target_ids": [target.target_id for target in targets],
+                "gold_visibility": False,
+                "gold_query_visibility": False,
+                "gold_url_visibility": False,
+                "gold_fact_visibility": False,
+                "comparison_timing": "POST_RUN_ONLY",
+                "completion_based_on_fixed_rounds": False,
+                "latest_trading_snapshot_date": trading_date,
+                "latest_trading_snapshot_verification": (
+                    "CALENDAR_CANDIDATE_PENDING_STRUCTURED_KRX_CONFIRMATION"
+                ),
+                "research_provider": provider_manifest,
+                "expected_production_semantics": dict(
+                    current_semantics_before_run
+                ),
+            },
+        )
+        runs = tuple(
+            _run_target_until_semantic_terminal(
+                runner=runner,
+                config=config,
+                target=target,
+            )
+            for target in targets
+        )
+        current_semantics_after_run = build_current_production_semantics(
+            config=config,
+            targets=targets,
+            registry_rows=registry_rows,
+            target_registry_path=args.target_registry,
+            provider_manifest=provider_manifest,
+            repo_root=Path.cwd(),
+        )
+        production_semantics_seal = make_production_semantics_seal(
+            before_run=current_semantics_before_run,
+            after_run=current_semantics_after_run,
+        )
+        paths = write_production_lane(
+            config=config,
+            target_runs=runs,
+            research_provider=provider_manifest,
+            production_semantics_seal=production_semantics_seal,
+        )
+        target_statuses = {
+            run.target.target_id: run.status for run in runs
+        }
+        target_completion_gates = {
+            run.target.target_id: dict(run.completion_gates) for run in runs
+        }
+        production_complete = bool(
+            all(
+                run.status
+                == "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+                for run in runs
+            )
+            and production_semantics_seal.get("status")
+            == SEALED_PRODUCTION_SEMANTICS_MATCH
+        )
     post_run_status = "PENDING_PRODUCTION_RESEARCH_COMPLETION"
     gold_critical_fact_miss_count = None
     comparison_executed = False
@@ -198,26 +283,40 @@ def main(argv: list[str] | None = None) -> int:
             compare_phase93_gold_post_run,
             write_phase93_post_run_comparison,
         ) = _load_post_run_gold_tools()
-        comparison = compare_phase93_gold_post_run(
-            production_root=output_root,
-        )
-        comparison_executed = True
-        write_phase93_post_run_comparison(
-            result=comparison,
-            comparison_path=output_root / "gold_fact_comparison.jsonl",
-            audit_path=output_root / "post_run_gold_recall_audit.json",
-        )
-        for run in runs:
-            write_canary_post_run_gold_comparison(
-                run.output_root,
-                target_id=run.target.target_id,
-                as_of_date=config.as_of_date,
-                comparison_rows=tuple(
-                    row
-                    for row in comparison.comparisons
-                    if str(row.get("target_id") or "") == run.target.target_id
-                ),
+        try:
+            comparison = compare_phase93_gold_post_run(
+                production_root=output_root,
             )
+            comparison_executed = True
+            write_phase93_post_run_comparison(
+                result=comparison,
+                comparison_path=output_root / "gold_fact_comparison.jsonl",
+                audit_path=output_root / "post_run_gold_recall_audit.json",
+            )
+            for target in targets:
+                write_canary_post_run_gold_comparison(
+                    output_root / target.target_id,
+                    target_id=target.target_id,
+                    as_of_date=config.as_of_date,
+                    comparison_rows=tuple(
+                        row
+                        for row in comparison.comparisons
+                        if str(row.get("target_id") or "")
+                        == target.target_id
+                    ),
+                )
+                # Keep the manifest hash Gold-blind.  The canary audit still
+                # records the post-run result, while the tree binding excludes
+                # Gold leaves exactly like the production seal verifier.
+                refresh_canary_target_manifest_hash(
+                    output_root / target.target_id
+                )
+        finally:
+            if sealed_verification is not None:
+                assert_frozen_production_unchanged(
+                    output_root=output_root,
+                    verification=sealed_verification,
+                )
         post_run_status = comparison.status
         gold_critical_fact_miss_count = comparison.audit["critical_counts"].get(
             "critical_material_fact_recall_below_threshold_count"
@@ -273,12 +372,8 @@ def main(argv: list[str] | None = None) -> int:
         ),
         "as_of_date": config.as_of_date,
         "latest_trading_snapshot_date": trading_date,
-        "target_statuses": {
-            run.target.target_id: run.status for run in runs
-        },
-        "target_completion_gates": {
-            run.target.target_id: dict(run.completion_gates) for run in runs
-        },
+        "target_statuses": target_statuses,
+        "target_completion_gates": target_completion_gates,
         "selected_target_ids": list(selected_target_ids),
         "mandatory_target_ids": list(mandatory_target_ids),
         "full_mandatory_target_roster_selected": (
@@ -293,6 +388,22 @@ def main(argv: list[str] | None = None) -> int:
         "production_research_complete": production_complete,
         "post_run_gold_status": post_run_status,
         "comparison_executed": comparison_executed,
+        "production_execution_mode": (
+            "SEALED_PRODUCTION_POST_RUN_ONLY"
+            if post_run_only
+            else "PRODUCTION_RUN"
+        ),
+        "sealed_production_verified": post_run_only,
+        "sealed_production_verification_reasons": (
+            []
+            if sealed_verification is not None
+            else sealed_verification_reasons
+        ),
+        "frozen_production_file_count": (
+            len(sealed_verification.frozen_file_sha256)
+            if sealed_verification is not None
+            else None
+        ),
         "gold_critical_fact_miss_count": gold_critical_fact_miss_count,
         "gold_visibility_during_production": False,
         "completion_based_on_fixed_rounds": False,

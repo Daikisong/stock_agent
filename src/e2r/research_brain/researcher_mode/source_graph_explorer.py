@@ -643,18 +643,6 @@ class ResearcherSourceGraphAcquirer:
                 state.get("evidence_documents") or (),
             )
         )
-        unresolved_objectives = tuple(
-            row for row in objectives if str(row["objective_id"]) not in resolved
-        )
-        supervisor_query_direction_priority = (
-            _has_actionable_supervisor_query_direction(
-                score_gap_context or {},
-                unresolved_objective_ids={
-                    str(row["objective_id"])
-                    for row in unresolved_objectives
-                },
-            )
-        )
         query_generation: SourceQueryGenerationResult | None = None
         pending_reasons: list[str] = list(checkpoint_quarantine_reasons)
         if invalidated_prior_fact_count:
@@ -695,6 +683,62 @@ class ResearcherSourceGraphAcquirer:
             candidates,
             rejected_documents=rejected_rows,
         )
+        source_family_lineage_failures = (
+            _requested_source_family_without_matched_fetch_failures(
+                generated_queries=generated_rows,
+                documents=evidence_documents,
+                candidates=candidates,
+                facts=facts,
+                # A previously resolved objective must be reopened when its
+                # requested family never produced accepted claim/fact lineage.
+                # Query execution alone is not completion evidence.
+                unresolved_objectives=objectives,
+            )
+        )
+        source_family_gap_objective_ids = {
+            str(row.get("objective_id") or "")
+            for row in source_family_lineage_failures
+            if str(row.get("objective_id") or "")
+        }
+        resolved.difference_update(source_family_gap_objective_ids)
+        unresolved_objectives = tuple(
+            row for row in objectives if str(row["objective_id"]) not in resolved
+        )
+        supervisor_query_direction_priority = (
+            _has_actionable_supervisor_query_direction(
+                score_gap_context or {},
+                unresolved_objective_ids={
+                    str(row["objective_id"])
+                    for row in unresolved_objectives
+                },
+            )
+        )
+        prior_lineage_failure_keys = {
+            (
+                str(row.get("objective_id") or ""),
+                str(row.get("source_family") or ""),
+            )
+            for row in state["query_failures"]
+            if str(row.get("failure_reason") or "")
+            == "REQUESTED_SOURCE_FAMILY_WITHOUT_ACCEPTED_CLAIM_FACT_LINEAGE"
+        }
+        repeated_source_family_lineage_failures = tuple(
+            row
+            for row in source_family_lineage_failures
+            if (
+                str(row.get("objective_id") or ""),
+                str(row.get("source_family") or ""),
+            )
+            in prior_lineage_failure_keys
+        )
+        if repeated_source_family_lineage_failures:
+            pending_reasons.extend(
+                "SOURCE_FAMILY_ACCEPTED_LINEAGE_PENDING:"
+                + str(row.get("objective_id") or "")
+                + ":"
+                + str(row.get("source_family") or "")
+                for row in repeated_source_family_lineage_failures
+            )
         checkpoint_candidate_start_count = len(candidates)
         checkpoint_candidate_limit = (
             checkpoint_candidate_start_count + config.max_candidates_per_checkpoint
@@ -752,13 +796,7 @@ class ResearcherSourceGraphAcquirer:
         query_failures = [
             *state["query_failures"],
             *prior_query_failures,
-            *_requested_source_family_without_matched_fetch_failures(
-                generated_queries=generated_rows,
-                documents=evidence_documents,
-                candidates=candidates,
-                facts=facts,
-                unresolved_objectives=unresolved_objectives,
-            ),
+            *source_family_lineage_failures,
         ]
         for row in generated_rows:
             if row.get("execution_status") != "BLOCKED_OFFICIAL_FIRST":
@@ -810,6 +848,7 @@ class ResearcherSourceGraphAcquirer:
             and unresolved_objectives
             and not pending_query_rows
             and not pending_candidate_work
+            and not repeated_source_family_lineage_failures
         ):
             query_generation = ResearcherSourceQueryPlanner(
                 provider=self.query_provider
@@ -1017,7 +1056,16 @@ class ResearcherSourceGraphAcquirer:
                 target_id=target_id,
                 target_name=target_name,
                 as_of_date=as_of_date,
-                open_objectives=unresolved_objectives,
+                open_objectives=tuple(
+                    row
+                    for row in objectives
+                    if str(row["objective_id"])
+                    in {
+                        str(value)
+                        for candidate in rank_batch
+                        for value in candidate.get("objective_ids") or ()
+                    }
+                ),
                 candidates=rank_batch,
                 current_evidence_facts=facts,
                 target_business_model=target_business_model,
@@ -1374,15 +1422,19 @@ class ResearcherSourceGraphAcquirer:
             and not _candidate_scope_is_fully_resolved(row, resolved)
             for row in candidates
         )
-        if not unresolved_objectives:
-            status = "STOPPED_ON_RESOLUTION"
-        elif query_generation and query_generation.status == "PENDING" and not query_generation.queries:
+        if query_generation and query_generation.status == "PENDING" and not query_generation.queries:
             status = "QUERY_GENERATION_PENDING"
         elif still_pending_rank:
             status = "CANDIDATE_RANKING_PENDING"
-        elif still_pending_query or still_pending_fetch:
+        elif still_pending_fetch:
             status = "CHECKPOINT_PENDING"
-        elif any("PROVIDER_ERROR" in value for value in pending_reasons):
+        elif not unresolved_objectives:
+            status = "STOPPED_ON_RESOLUTION"
+        elif still_pending_query:
+            status = "CHECKPOINT_PENDING"
+        elif repeated_source_family_lineage_failures or any(
+            "PROVIDER_ERROR" in value for value in pending_reasons
+        ):
             status = "SOURCE_PROVIDER_PENDING"
         else:
             status = "EPOCH_COMPLETE_REQUIRES_SUPERVISOR"
@@ -2697,13 +2749,14 @@ def _requested_source_family_without_matched_fetch_failures(
     facts: Sequence[Mapping[str, Any]],
     unresolved_objectives: Sequence[Mapping[str, Any]],
 ) -> tuple[Mapping[str, Any], ...]:
-    """Return loss-accounted feedback for requested but unfetched families.
+    """Return feedback for requested families without accepted fact lineage.
 
     A generated query is only an instruction to try a source family.  It is
-    not evidence that the family was actually reached.  Once the query and
-    candidate work are terminal, return this exact distinction to the LLM so
-    it can choose a new literal query.  Deterministic code never supplies that
-    query and never treats the gap as source absence.
+    not evidence that the family was actually reached.  A fetched document is
+    also not enough until an accepted claim/fact binds back to that complete
+    document.  Once query/candidate work is terminal, return this distinction
+    to the LLM so it can choose a new literal query.  Deterministic code never
+    supplies that query and never treats the gap as source absence.
     """
 
     unresolved_ids = {
@@ -2739,9 +2792,26 @@ def _requested_source_family_without_matched_fetch_failures(
         facts=facts,
         candidates=candidates,
     )
+    accepted_fact_document_ids = {
+        str(source_id)
+        for fact in facts
+        if str(fact.get("fact_id") or "").strip()
+        and (
+            tuple(fact.get("claim_ids") or ())
+            or tuple(fact.get("quote_ids") or ())
+        )
+        for source_id in fact.get("source_ids") or ()
+        if str(source_id).strip()
+    }
     reached_by_objective: dict[str, set[str]] = {}
     for document in production_documents:
         if document.get("evidence_eligible", True) is not True:
+            continue
+        if document.get("snippet_only") is True:
+            continue
+        if document.get("snippet_used_as_document") is True:
+            continue
+        if str(document.get("document_id") or "") not in accepted_fact_document_ids:
             continue
         source_family = str(document.get("source_family") or "").strip()
         if source_family not in CANONICAL_SOURCE_FAMILIES:
@@ -2791,10 +2861,17 @@ def _requested_source_family_without_matched_fetch_failures(
             )
             failures.append(
                 {
+                    "query_id": (
+                        "SOURCE_FAMILY_LINEAGE:"
+                        + objective_id
+                        + ":"
+                        + source_family
+                    ),
                     "failure_kind": "SOURCE_FAMILY_COVERAGE",
-                    "failure_stage": "FULL_DOCUMENT_FETCH",
+                    "failure_stage": "ACCEPTED_CLAIM_FACT_LINEAGE",
                     "failure_reason": (
-                        "REQUESTED_SOURCE_FAMILY_WITHOUT_MATCHED_FETCH"
+                        "REQUESTED_SOURCE_FAMILY_WITHOUT_"
+                        "ACCEPTED_CLAIM_FACT_LINEAGE"
                     ),
                     "objective_id": objective_id,
                     "query_ids": list(dict.fromkeys(query_ids)),
@@ -4651,6 +4728,13 @@ def _candidate_scope_is_fully_resolved(
 ) -> bool:
     """Keep historical candidate state without blocking unrelated open work."""
 
+    if _candidate_has_actionable_current_provenance_work(candidate):
+        # A current provenance decision is transport work in its own right.
+        # The objective may have been closed under an older source-family
+        # interpretation, but that historical resolution cannot hide the
+        # revalidation/fetch that decides current production eligibility.
+        return False
+
     if (
         candidate.get("fetch_status")
         in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
@@ -4668,6 +4752,23 @@ def _candidate_scope_is_fully_resolved(
         if str(value).strip()
     }
     return candidate_objective_ids.issubset(resolved_objective_ids)
+
+
+def _candidate_has_actionable_current_provenance_work(
+    candidate: Mapping[str, Any],
+) -> bool:
+    ranking_pending = candidate.get("ranking_status") == "PENDING"
+    fetch_pending = candidate.get("fetch_status") in {
+        "MATERIAL_PENDING_FETCH",
+        "FETCH_RETRY_PENDING",
+    }
+    return bool(
+        (ranking_pending or fetch_pending)
+        and (
+            str(candidate.get("materiality_revalidation_reason") or "").strip()
+            or candidate.get("alternate_route_required") is True
+        )
+    )
 
 
 def _candidate_has_current_fetch_semantics_retry(

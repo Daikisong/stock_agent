@@ -2436,7 +2436,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(len(missing), 1)
         self.assertEqual(
             missing[0]["failure_reason"],
-            "REQUESTED_SOURCE_FAMILY_WITHOUT_MATCHED_FETCH",
+            "REQUESTED_SOURCE_FAMILY_WITHOUT_ACCEPTED_CLAIM_FACT_LINEAGE",
         )
         self.assertEqual(
             missing[0]["source_family"],
@@ -2444,7 +2444,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
         self.assertFalse(missing[0]["absence_eligible"])
 
-        reached = (
+        fetched_without_accepted_fact = (
             source_graph_module
             ._requested_source_family_without_matched_fetch_failures(
                 generated_queries=(query,),
@@ -2460,6 +2460,37 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 ),
                 candidates=(),
                 facts=(),
+                unresolved_objectives=(
+                    {"objective_id": "OBJECTIVE-1"},
+                ),
+            )
+        )
+
+        self.assertEqual(len(fetched_without_accepted_fact), 1)
+
+        reached = (
+            source_graph_module
+            ._requested_source_family_without_matched_fetch_failures(
+                generated_queries=(query,),
+                documents=(
+                    unrelated_document,
+                    {
+                        "document_id": "SGDOC-CUSTOMER",
+                        "source_provider": "CustomerOfficialFetcher",
+                        "source_family": "CUSTOMER_OFFICIAL",
+                        "objective_ids": ["OBJECTIVE-1"],
+                        "evidence_eligible": True,
+                        "snippet_only": False,
+                    },
+                ),
+                candidates=(),
+                facts=(
+                    {
+                        "fact_id": "FACT-CUSTOMER",
+                        "source_ids": ["SGDOC-CUSTOMER"],
+                        "claim_ids": ["CLAIM-CUSTOMER"],
+                    },
+                ),
                 unresolved_objectives=(
                     {"objective_id": "OBJECTIVE-1"},
                 ),
@@ -2491,6 +2522,86 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
 
         self.assertEqual(pending, ())
+
+    def test_resolved_requested_family_gap_returns_to_llm_then_source_pending(
+        self,
+    ) -> None:
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state.update(
+            status="STOPPED_ON_RESOLUTION",
+            generated_queries=[
+                {
+                    "query_id": "QUERY-CUSTOMER-1",
+                    "objective_id": "OBJECTIVE-1",
+                    "literal_query": QUERY,
+                    "source_families": ["CUSTOMER_OFFICIAL"],
+                    "execution_status": "SEARCH_EXECUTED",
+                }
+            ],
+            executed_queries=[QUERY],
+            resolved_objective_ids=["OBJECTIVE-1"],
+        )
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        first_provider = SourceBrainProvider(
+            queries=(ALTERNATE_QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+
+        first = self._run(
+            provider=first_provider,
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        query_payload = next(
+            row["payload"]
+            for row in first_provider.calls
+            if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+        )
+        projected_failures = json.dumps(
+            query_payload["prior_query_or_source_failures"],
+            ensure_ascii=False,
+        )
+        self.assertIn(
+            "REQUESTED_SOURCE_FAMILY_WITHOUT_"
+            "ACCEPTED_CLAIM_FACT_LINEAGE",
+            projected_failures,
+        )
+        self.assertIn("CUSTOMER_OFFICIAL", projected_failures)
+        self.assertNotIn(
+            "OBJECTIVE-1",
+            first.checkpoint["resolved_objective_ids"],
+        )
+
+        second_provider = SourceBrainProvider(
+            queries=("Current Corp another customer official route",),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        second = self._run(
+            provider=second_provider,
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=first.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        self.assertEqual(second.status, "SOURCE_PROVIDER_PENDING")
+        self.assertFalse(second_provider.calls)
+        self.assertTrue(
+            any(
+                value
+                == "SOURCE_FAMILY_ACCEPTED_LINEAGE_PENDING:"
+                "OBJECTIVE-1:CUSTOMER_OFFICIAL"
+                for value in second.checkpoint["pending_reasons"]
+            )
+        )
 
     def test_supervisor_query_direction_preempts_reference_backlog(
         self,
@@ -4281,6 +4392,104 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 candidate,
                 {"OBJECTIVE-1"},
             )
+        )
+
+    def test_current_provenance_revalidation_survives_objective_resolution(
+        self,
+    ) -> None:
+        candidate = {
+            "candidate_id": "CURRENT-PROVENANCE-REVALIDATION",
+            "objective_ids": ["OBJECTIVE-1"],
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+            "materiality_revalidation_reason": (
+                "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+            ),
+            "alternate_route_required": True,
+        }
+
+        self.assertFalse(
+            source_graph_module._candidate_scope_is_fully_resolved(
+                candidate,
+                {"OBJECTIVE-1"},
+            )
+        )
+
+    def test_resolved_objective_processes_current_provenance_revalidation(
+        self,
+    ) -> None:
+        url = "https://issuer.example.com/current-provenance-release"
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state.update(
+            status="STOPPED_ON_RESOLUTION",
+            generated_queries=[
+                {
+                    "query_id": "QUERY-1",
+                    "objective_id": "OBJECTIVE-1",
+                    "literal_query": QUERY,
+                    "source_families": ["ISSUER_NEWSROOM"],
+                    "execution_status": "SEARCH_EXECUTED",
+                }
+            ],
+            executed_queries=[QUERY],
+            resolved_objective_ids=["OBJECTIVE-1"],
+            search_candidates=[
+                {
+                    "candidate_id": "CURRENT-PROVENANCE-REVALIDATION",
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "title": "Current Corp official current release",
+                    "url": url,
+                    "normalized_url": url,
+                    "published_at": "2026-06-20",
+                    "query_ids": ["QUERY-1"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "requested_source_families": ["ISSUER_NEWSROOM"],
+                    "ranking_status": "PENDING",
+                    "fetch_status": "NOT_STARTED",
+                    "materiality_revalidation_reason": (
+                        "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+                    ),
+                    "alternate_route_required": True,
+                }
+            ],
+        )
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        provider = SourceBrainProvider(
+            source_families=("ISSUER_NEWSROOM",),
+        )
+
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(
+                fixture_text_by_url={url: _document_text("current-provenance")}
+            ),
+            checkpoint=checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        candidate = next(
+            row
+            for row in run.checkpoint["search_candidates"]
+            if row["candidate_id"] == "CURRENT-PROVENANCE-REVALIDATION"
+        )
+        self.assertEqual(candidate["ranking_status"], "MATERIAL")
+        self.assertEqual(candidate["fetch_status"], "FULL_DOCUMENT_FETCHED")
+        self.assertEqual(run.status, "STOPPED_ON_RESOLUTION")
+        ranking_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+        self.assertEqual(
+            ranking_payload["open_research_objectives"][0]["objective_id"],
+            "OBJECTIVE-1",
         )
 
     def test_resolved_objective_still_fetches_current_semantics_retry(

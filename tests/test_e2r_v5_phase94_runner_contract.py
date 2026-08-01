@@ -52,6 +52,7 @@ from tests.test_e2r_v5_fact_extraction import FactProvider, _document
 from tests.test_e2r_v5_researcher_mode import ScriptedResearchProvider
 from tests.test_e2r_v5_source_graph_acquisition import SourceBrainProvider
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    _official_gap_reasons,
     _score_gap_context_for_supervisor,
     _source_checkpoint_is_ready_for_readonly_replay,
     _source_checkpoint_needs_fact_extraction_recovery,
@@ -244,6 +245,37 @@ class Phase94IntegrationStructuredMaterializer:
 
 class E2RV5Phase94RunnerContractTests(unittest.TestCase):
     ROOT = Path(__file__).resolve().parents[1]
+
+    def test_issuer_ir_failure_is_preserved_as_official_gap(self):
+        official = OfficialSourceMaterializationResult(
+            target_id="CURRENT-TARGET",
+            as_of_date=AS_OF_DATE,
+            status="OFFICIAL_SOURCE_MATERIALIZED",
+            evidence_documents=(),
+            provider_attempts=(
+                {
+                    "provider_name": "GenericIssuerProvider",
+                    "source_class": "IR",
+                    "status": "PROVIDER_FAILED",
+                    "counts_as_symbol_evidence": False,
+                    "provider_error": "issuer discovery unavailable",
+                },
+            ),
+            structured_payloads=(),
+            pending_reasons=(),
+            audit={"status": "OFFICIAL_SOURCE_MATERIALIZATION_PASS"},
+        )
+
+        reasons = _official_gap_reasons(official)
+
+        self.assertEqual(
+            reasons,
+            (
+                "OFFICIAL_PROVIDER_PENDING:GenericIssuerProvider:"
+                "PROVIDER_FAILED:issuer discovery unavailable",
+            ),
+        )
+        self.assertFalse(any("official sources fetched" in row for row in reasons))
 
     def test_same_lane_cache_roots_require_matching_target_manifest_and_date(self):
         with tempfile.TemporaryDirectory() as directory:

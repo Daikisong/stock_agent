@@ -79,7 +79,14 @@ OBJECTIVE_FACT_RELATIONS = frozenset(
     {"ADVANCE", "COUNTER", "SUPERSEDE"}
 )
 FACT_EXTRACTION_SEMANTICS_VERSION = (
-    "e2r_v5_objective_local_coverage_audit_v1"
+    "e2r_v5_objective_local_lineage_coverage_audit_v2"
+)
+_OFFICIAL_COVERAGE_REFRESH_SOURCE_TIERS = frozenset(
+    {
+        "REGULATORY_OFFICIAL",
+        "ISSUER_OFFICIAL",
+        "CUSTOMER_OFFICIAL",
+    }
 )
 
 _RFC8259_NUMBER_PATTERN = re.compile(
@@ -645,6 +652,37 @@ class ResearcherEvidenceFactExtractor:
             == FACT_EXTRACTION_SEMANTICS_VERSION
             for document_id in call.document_ids
         }
+        stale_semantics_document_ids = (
+            stale_semantics_disposition_ids
+            | {
+                document_id
+                for call in all_checkpoint_calls
+                if call.extraction_semantics_version
+                != FACT_EXTRACTION_SEMANTICS_VERSION
+                for document_id in call.document_ids
+            }
+        )
+        prior_disposition_by_document_id = {
+            str(row.get("document_id") or ""): row
+            for row in all_prior_dispositions
+        }
+        bounded_stale_coverage_refresh_document_ids = (
+            _bounded_stale_coverage_refresh_document_ids(
+                documents=prepared,
+                prior_disposition_by_document_id=(
+                    prior_disposition_by_document_id
+                ),
+                stale_semantics_document_ids=(
+                    stale_semantics_document_ids
+                ),
+                coverage_complete_document_ids=(
+                    coverage_complete_document_ids
+                ),
+                open_objective_ids=frozenset(objective_ids),
+            )
+            if extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
+            else frozenset()
+        )
         coverage_refresh_document_ids = {
             str(document["document_id"])
             for document in prepared
@@ -652,11 +690,41 @@ class ResearcherEvidenceFactExtractor:
             in set(all_prior_disposition_ids)
             and str(document["document_id"])
             not in coverage_complete_document_ids
-            and bool(
-                set(document.get("objective_ids") or ())
-                & coverage_gap_objective_ids
+            and (
+                str(document["document_id"])
+                in bounded_stale_coverage_refresh_document_ids
+                or bool(
+                    set(document.get("objective_ids") or ())
+                    & coverage_gap_objective_ids
+                )
             )
         }
+        coverage_refresh_objective_scope_by_document = (
+            {
+                document_id: frozenset(
+                    (
+                        objective_scope_by_document[document_id]
+                        | {
+                            str(value).strip()
+                            for value in document.get(
+                                "historical_objective_ids", ()
+                            )
+                            if str(value).strip() in objective_ids
+                        }
+                    )
+                    if document_id
+                    in bounded_stale_coverage_refresh_document_ids
+                    else objective_scope_by_document[document_id]
+                )
+                for document in prepared
+                if (
+                    document_id := str(document["document_id"])
+                )
+                in coverage_refresh_document_ids
+            }
+            if objective_scope_by_document is not None
+            else {}
+        )
         retained_prior_disposition_ids = (
             set(all_prior_disposition_ids)
             - coverage_refresh_document_ids
@@ -701,12 +769,14 @@ class ResearcherEvidenceFactExtractor:
             if (
                 str(document["document_id"])
                 in coverage_refresh_document_ids
-                or str(document["document_id"])
-                not in set(all_prior_disposition_ids)
-            )
-            and bool(
-                set(document.get("objective_ids") or ())
-                & coverage_gap_objective_ids
+                or (
+                    str(document["document_id"])
+                    not in set(all_prior_disposition_ids)
+                    and bool(
+                        set(document.get("objective_ids") or ())
+                        & coverage_gap_objective_ids
+                    )
+                )
             )
         }
         all_transport_documents = tuple(
@@ -860,6 +930,38 @@ class ResearcherEvidenceFactExtractor:
                 batch_document_ids
                 <= coverage_refresh_document_ids
             )
+            batch_objective_scope_by_document = (
+                {
+                    document_id: (
+                        coverage_refresh_objective_scope_by_document[
+                            document_id
+                        ]
+                    )
+                    for document_id in batch_document_ids
+                }
+                if coverage_only_batch
+                and objective_scope_by_document is not None
+                else objective_scope_by_document
+            )
+            objective_lineage_reassessment_rows = [
+                {
+                    "document_id": document_id,
+                    "prior_current_objective_ids": sorted(
+                        objective_scope_by_document[document_id]
+                    ),
+                    "current_open_objective_candidates": sorted(
+                        batch_objective_scope_by_document[document_id]
+                    ),
+                }
+                for document_id in sorted(batch_document_ids)
+                if (
+                    coverage_only_batch
+                    and objective_scope_by_document is not None
+                    and batch_objective_scope_by_document is not None
+                    and batch_objective_scope_by_document[document_id]
+                    != objective_scope_by_document[document_id]
+                )
+            ]
             batch_transport_chunk_ids = _batch_transport_chunk_ids(batch)
             if any(
                 int(row.get("transport_chunk_count") or 1) > 1
@@ -928,7 +1030,7 @@ class ResearcherEvidenceFactExtractor:
                                     {
                                         "document_id": str(row["document_id"]),
                                         "objective_ids": sorted(
-                                            objective_scope_by_document[
+                                            batch_objective_scope_by_document[
                                                 str(row["document_id"])
                                             ]
                                         ),
@@ -960,6 +1062,28 @@ class ResearcherEvidenceFactExtractor:
                                     "mechanism coordinates only"
                                 ),
                                 "llm_owns_economic_relevance": True,
+                                **(
+                                    {
+                                        "objective_lineage_reassessment": {
+                                            "enabled": True,
+                                            "documents": (
+                                                objective_lineage_reassessment_rows
+                                            ),
+                                            "instruction": (
+                                                "For this stale-semantics full-document "
+                                                "coverage refresh, reassess which listed "
+                                                "current open objectives the literal source "
+                                                "fact advances, counters, or supersedes. "
+                                                "Emit only relations supported by the supplied "
+                                                "full text. Historical lineage only expands the "
+                                                "bounded candidate roster; it is not itself "
+                                                "evidence that a relation exists."
+                                            ),
+                                        }
+                                    }
+                                    if objective_lineage_reassessment_rows
+                                    else {}
+                                ),
                             }
                         }
                         if objective_scope_by_document is not None
@@ -1167,7 +1291,9 @@ class ResearcherEvidenceFactExtractor:
                             str(row["document_id"]) for row in batch
                         }
                     },
-                    objective_scope_by_document=objective_scope_by_document,
+                    objective_scope_by_document=(
+                        batch_objective_scope_by_document
+                    ),
                 )
                 page_boundary_reached = (
                     len(tuple(response.get("facts") or ()))
@@ -1822,6 +1948,16 @@ class ResearcherEvidenceFactExtractor:
             "coverage_refresh_prior_document_count": len(
                 coverage_refresh_document_ids
             ),
+            "bounded_stale_coverage_refresh_document_count": len(
+                bounded_stale_coverage_refresh_document_ids
+            ),
+            "coverage_refresh_objective_lineage_reassessment_document_count": sum(
+                coverage_refresh_objective_scope_by_document[document_id]
+                != objective_scope_by_document[document_id]
+                for document_id in coverage_refresh_document_ids
+            )
+            if objective_scope_by_document is not None
+            else 0,
             "coverage_audit_call_count": coverage_audit_call_count,
             "coverage_audit_document_count": len(
                 coverage_audit_document_ids
@@ -3287,6 +3423,56 @@ def _json_character_count(value: Any) -> int:
             default=str,
         )
     )
+
+
+def _bounded_stale_coverage_refresh_document_ids(
+    *,
+    documents: Sequence[Mapping[str, Any]],
+    prior_disposition_by_document_id: Mapping[str, Mapping[str, Any]],
+    stale_semantics_document_ids: set[str] | frozenset[str],
+    coverage_complete_document_ids: set[str] | frozenset[str],
+    open_objective_ids: frozenset[str],
+) -> frozenset[str]:
+    """Select only high-value stale checkpoints needing lineage reassessment.
+
+    A legacy checkpoint alone is too broad a reason to replay a large source
+    graph.  The zero-gap repair is therefore limited to source-backed documents
+    that already produced an accepted material fact, have official provenance,
+    and have verified historical lineage to a *current* open objective that is
+    absent from their narrowed current document scope.  The provider, not this
+    selector, decides whether any literal fact actually relates to that
+    objective during the independent full-text coverage audit.
+    """
+
+    selected: set[str] = set()
+    for document in documents:
+        document_id = str(document.get("document_id") or "")
+        if (
+            document_id not in stale_semantics_document_ids
+            or document_id in coverage_complete_document_ids
+            or _source_tier(str(document.get("source_family") or ""))
+            not in _OFFICIAL_COVERAGE_REFRESH_SOURCE_TIERS
+        ):
+            continue
+        disposition = prior_disposition_by_document_id.get(document_id, {})
+        if (
+            str(disposition.get("status") or "") != "FACTS_EXTRACTED"
+            or int(disposition.get("accepted_fact_count") or 0) <= 0
+        ):
+            continue
+        current_scope = {
+            str(value).strip()
+            for value in document.get("objective_ids") or ()
+            if str(value).strip() in open_objective_ids
+        }
+        historical_current_scope = {
+            str(value).strip()
+            for value in document.get("historical_objective_ids") or ()
+            if str(value).strip() in open_objective_ids
+        }
+        if historical_current_scope - current_scope:
+            selected.add(document_id)
+    return frozenset(selected)
 
 
 def _coverage_gap_objective_ids(

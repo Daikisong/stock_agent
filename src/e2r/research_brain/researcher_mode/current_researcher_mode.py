@@ -298,9 +298,9 @@ class CurrentResearcherModeTargetRunner:
                 }
             )
         )
+        effective_official_gap_reasons = _official_gap_reasons(official)
         official_gaps = {
-            row.objective_id: tuple(official.pending_reasons)
-            or ("official sources fetched; unresolved semantic facts require discovery",)
+            row.objective_id: effective_official_gap_reasons
             for row in initial_graph.open_objectives
         }
         source_acquisition_config = SourceGraphAcquisitionConfig(
@@ -867,6 +867,8 @@ def write_production_lane(
     *,
     config: CurrentResearcherModeConfig,
     target_runs: Sequence[CurrentResearcherTargetRun],
+    research_provider: Mapping[str, Any] | None = None,
+    production_semantics_seal: Mapping[str, Any] | None = None,
 ) -> Mapping[str, Path]:
     root = Path(config.output_root)
     facts = tuple(
@@ -901,6 +903,12 @@ def write_production_lane(
         "completion_based_on_fixed_rounds": False,
         "latest_trading_snapshot_date": config.latest_trading_snapshot_date,
     }
+    if research_provider is not None:
+        lane["research_provider"] = dict(research_provider)
+    if production_semantics_seal is not None:
+        lane["production_semantics_seal"] = dict(
+            production_semantics_seal
+        )
     paths = {
         "facts": root / "production_material_facts.jsonl",
         "memos": root / "production_component_memos.jsonl",
@@ -1921,6 +1929,45 @@ def _load_official_checkpoint(
         structured_payloads=_read_jsonl(paths["structured_payloads"]),
         pending_reasons=tuple(result.get("pending_reasons") or ()),
         audit=audit,
+    )
+
+
+def _official_gap_reasons(
+    official: OfficialSourceMaterializationResult,
+) -> tuple[str, ...]:
+    """Preserve issuer-owned provider failures in official-first feedback.
+
+    The materializer may have enough DART evidence to pass its mandatory
+    provider audit while the generic issuer-IR discovery route still failed.
+    That failure remains an official-source gap; replacing it with a generic
+    "official fetched" sentence would incorrectly authorize objective closure.
+    """
+
+    reasons = list(official.pending_reasons)
+    for attempt in official.provider_attempts:
+        source_class = str(attempt.get("source_class") or "").upper()
+        if source_class not in {"IR", "ISSUER_IR", "ISSUERIR"}:
+            continue
+        status = str(attempt.get("status") or "UNKNOWN")
+        if (
+            status == "FETCHED"
+            and attempt.get("counts_as_symbol_evidence") is True
+        ):
+            continue
+        provider_name = str(attempt.get("provider_name") or source_class)
+        provider_error = str(
+            attempt.get("provider_error") or "no symbol evidence"
+        )
+        reasons.append(
+            "OFFICIAL_PROVIDER_PENDING:"
+            + provider_name
+            + ":"
+            + status
+            + ":"
+            + provider_error
+        )
+    return tuple(dict.fromkeys(reasons)) or (
+        "official sources fetched; unresolved semantic facts require discovery",
     )
 
 

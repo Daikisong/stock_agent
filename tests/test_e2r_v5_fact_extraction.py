@@ -265,6 +265,34 @@ class CoverageAuditOmissionProvider(ObjectiveLocalFactProvider):
         return response
 
 
+class StaleLineageCoverageCodexProvider(CoverageAuditOmissionProvider):
+    provider_name = (
+        "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE"
+    )
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        if "fact_extraction_coverage_audit_context" not in payload:
+            return response
+        response["facts"] = [dict(row) for row in response["facts"]]
+        for fact in response["facts"]:
+            fact.update(
+                {
+                    "scope_business_segment": "CORPORATE_GENERIC",
+                    "scope_product_family": "CORPORATE_GENERIC",
+                    "scope_technology_family": "CORPORATE_GENERIC",
+                    "scope_transaction_type": "GENERIC_INFORMATION",
+                    "scope_economic_mechanism": "INFORMATION_ONLY",
+                    "scope_confidence": 0.99,
+                    "objective_ids": ["OBJECTIVE-INFORMATION"],
+                    "objective_relation": "COUNTER",
+                }
+            )
+        return response
+
+
 class SameQuoteDistinctSemanticCoverageProvider(
     ObjectiveLocalFactProvider
 ):
@@ -2693,6 +2721,173 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             resumed.audit["base_reextraction_document_count"],
             0,
         )
+        self.assertEqual(
+            resumed.audit["critical_counts"][
+                "production_document_without_coverage_audit_count"
+            ],
+            0,
+        )
+
+    def test_zero_gap_stale_official_document_reassesses_narrowed_lineage(
+        self,
+    ) -> None:
+        disclaimer = (
+            "The first-quarter figures are preliminary, have not completed "
+            "external review, and may change; forward-looking statements "
+            "remain subject to risks and uncertainties."
+        )
+        official = dict(
+            _document(
+                "DOC-STALE-OFFICIAL-LINEAGE",
+                "ISSUER_EARNINGS_RELEASE",
+                "ISSUER",
+            )
+        )
+        official_text = f"{official['content_text']} {disclaimer}"
+        official["content_text"] = official_text
+        official["content_hash"] = hashlib.sha256(
+            official_text.encode("utf-8")
+        ).hexdigest()
+        unofficial = dict(
+            _document(
+                "DOC-STALE-UNOFFICIAL-LINEAGE",
+                "TRUSTED_BUSINESS_MEDIA",
+                "MEDIA",
+            )
+        )
+        objectives = (
+            {
+                "objective_id": "OBJECTIVE-CAPITAL",
+                "component_id": "capital_allocation",
+            },
+            {
+                "objective_id": "OBJECTIVE-INFORMATION",
+                "component_id": "information_confidence",
+            },
+        )
+        official["objective_ids"] = ["OBJECTIVE-CAPITAL"]
+        unofficial["objective_ids"] = ["OBJECTIVE-CAPITAL"]
+
+        first = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveLocalFactProvider(),
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(official, unofficial),
+            open_objectives=objectives,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        legacy_dispositions = []
+        for row in first.document_dispositions:
+            legacy = dict(row)
+            legacy.pop("extraction_semantics_version", None)
+            legacy_dispositions.append(legacy)
+        legacy_calls = []
+        for row in first.provider_calls:
+            legacy = dict(row.to_dict())
+            legacy.pop("extraction_semantics_version", None)
+            legacy_calls.append(legacy)
+        legacy_rejections = []
+        for row in first.rejections:
+            legacy = dict(row.to_dict())
+            legacy.pop("extraction_semantics_version", None)
+            legacy_rejections.append(legacy)
+
+        official["historical_objective_ids"] = [
+            "OBJECTIVE-CAPITAL",
+            "OBJECTIVE-INFORMATION",
+            "OBJECTIVE-NOT-CURRENT",
+        ]
+        unofficial["historical_objective_ids"] = [
+            "OBJECTIVE-CAPITAL",
+            "OBJECTIVE-INFORMATION",
+        ]
+        resumed_provider = StaleLineageCoverageCodexProvider(
+            omitted_quote=disclaimer,
+            omitted_predicate_family=(
+                "reported_information_uncertainty"
+            ),
+            omitted_normalized_object=(
+                "preliminary_review_change_and_forward_risk"
+            ),
+            direction="COUNTER",
+        )
+        resumed = ResearcherEvidenceFactExtractor(
+            provider=resumed_provider,
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(official, unofficial),
+            open_objectives=objectives,
+            prior_material_claims=first.material_claims,
+            prior_document_dispositions=legacy_dispositions,
+            prior_provider_calls=legacy_calls,
+            prior_rejections=legacy_rejections,
+            score_gap_context={},
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(resumed_provider.calls), 1)
+        payload = resumed_provider.calls[0]["payload"]
+        self.assertEqual(
+            [row["document_id"] for row in payload["full_documents"]],
+            ["DOC-STALE-OFFICIAL-LINEAGE"],
+        )
+        self.assertIn("fact_extraction_coverage_audit_context", payload)
+        scope = payload["fact_extraction_scope_contract"]
+        self.assertEqual(
+            scope["document_objective_ids"],
+            [
+                {
+                    "document_id": "DOC-STALE-OFFICIAL-LINEAGE",
+                    "objective_ids": [
+                        "OBJECTIVE-CAPITAL",
+                        "OBJECTIVE-INFORMATION",
+                    ],
+                }
+            ],
+        )
+        self.assertTrue(
+            scope["objective_lineage_reassessment"]["enabled"]
+        )
+        recovered = [
+            row
+            for row in resumed.material_claims
+            if row["exact_quote"] == disclaimer
+        ]
+        self.assertEqual(len(recovered), 1)
+        self.assertEqual(
+            recovered[0]["objective_ids"],
+            ["OBJECTIVE-INFORMATION"],
+        )
+        self.assertEqual(recovered[0]["objective_relation"], "COUNTER")
+        self.assertEqual(resumed.audit["coverage_gap_objective_count"], 0)
+        self.assertEqual(
+            resumed.audit[
+                "bounded_stale_coverage_refresh_document_count"
+            ],
+            1,
+        )
+        self.assertEqual(
+            resumed.audit[
+                "coverage_refresh_objective_lineage_reassessment_document_count"
+            ],
+            1,
+        )
+        self.assertEqual(
+            resumed.audit["coverage_audit_required_document_count"],
+            1,
+        )
+        self.assertEqual(resumed.audit["coverage_audit_call_count"], 1)
         self.assertEqual(
             resumed.audit["critical_counts"][
                 "production_document_without_coverage_audit_count"
