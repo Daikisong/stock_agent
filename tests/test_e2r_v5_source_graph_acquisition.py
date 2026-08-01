@@ -185,6 +185,36 @@ class PendingThenCompleteRankingProvider(SourceBrainProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class TwoScopeRepairProvider(SourceBrainProvider):
+    def __init__(self, *, query_by_objective: Mapping[str, str]) -> None:
+        super().__init__(queries=())
+        self.query_by_objective = dict(query_by_objective)
+
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        if pass_name == "SOURCE_QUERY_GENERATION":
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            return {
+                "suggested_queries": [
+                    {
+                        "objective_id": row["objective_id"],
+                        "literal_query": self.query_by_objective[
+                            row["objective_id"]
+                        ],
+                        "source_families": ["ISSUER_NEWSROOM"],
+                        "rationale": "각 objective의 공식 원문을 확인한다.",
+                        "counter_or_supersession_search": False,
+                    }
+                    for row in payload["open_research_objectives"]
+                    if row["objective_id"] in self.query_by_objective
+                ],
+                "new_source_directions": [],
+                "unresolved_research_notes": [],
+            }
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
 class RecordingSearchProvider:
     def __init__(self, results_by_query: Mapping[str, Sequence[SearchResult]]) -> None:
         self.results_by_query = results_by_query
@@ -2881,6 +2911,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         candidate_id = "SGCAND-0123456789abcdef01234567"
         repair_query = "Current Corp official preliminary results newsroom"
         official_url = "https://issuer.example.com/current-results"
+        alternate_url = "https://issuer.example.com/alternate-results"
         backlog_url = "https://example.com/unrelated-backlog"
         state = source_graph_module._new_acquisition_state(
             target_id=TARGET,
@@ -3027,13 +3058,13 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             }
         ]
         checkpoint = source_graph_module._finalize_checkpoint(state)
-        provider = SourceBrainProvider(
+        provider = PendingThenCompleteRankingProvider(
             queries=(repair_query,),
             source_families=("ISSUER_NEWSROOM",),
             material_titles=("official preliminary results",),
         )
 
-        run = self._run(
+        first = self._run(
             provider=provider,
             search=RecordingSearchProvider(
                 {
@@ -3043,26 +3074,33 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                             official_url,
                             query=repair_query,
                         ),
+                        _result(
+                            "Current Corp alternate official results",
+                            alternate_url,
+                            rank=2,
+                            query=repair_query,
+                        ),
                     )
                 }
             ),
             fetcher=PageFetcher(
                 fixture_text_by_url={
-                    official_url: _document_text("current-results")
+                    official_url: _document_text("current-results"),
+                    alternate_url: _document_text("alternate-results"),
                 }
             ),
             config=SourceGraphAcquisitionConfig(
                 mode="TEST",
-                max_results_per_query=1,
+                max_results_per_query=2,
                 max_queries_per_checkpoint=1,
-                max_candidates_per_checkpoint=1,
+                max_candidates_per_checkpoint=2,
                 max_fetches_per_checkpoint=1,
             ),
             checkpoint=checkpoint,
             official_domains=("issuer.example.com",),
         )
 
-        self.assertIsNotNone(run.query_generation)
+        self.assertIsNotNone(first.query_generation)
         query_payload = next(
             row["payload"]
             for row in provider.calls
@@ -3082,7 +3120,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             + ":ISSUER_NEWSROOM",
             serialized_query_failures,
         )
-        ranking_payload = next(
+        first_ranking_payload = next(
             row["payload"]
             for row in provider.calls
             if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
@@ -3090,31 +3128,310 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertEqual(
             [
                 row["candidate_id"]
-                for row in ranking_payload["discovery_candidates"]
+                for row in first_ranking_payload["discovery_candidates"]
             ],
             [candidate_id],
         )
-        repaired = next(
+        first_repaired = next(
             row
-            for row in run.checkpoint["search_candidates"]
+            for row in first.checkpoint["search_candidates"]
             if row["candidate_id"] == candidate_id
         )
-        backlog = next(
+        first_backlog = next(
             row
-            for row in run.checkpoint["search_candidates"]
+            for row in first.checkpoint["search_candidates"]
             if row["candidate_id"] == "UNRELATED-BACKLOG"
         )
+        first_alternate = next(
+            row
+            for row in first.checkpoint["search_candidates"]
+            if row["url"] == alternate_url
+        )
         self.assertEqual(
-            repaired["requested_source_families"],
+            first_repaired["requested_source_families"],
             ["ISSUER_NEWSROOM"],
         )
-        self.assertEqual(repaired["ranking_status"], "MATERIAL")
-        self.assertEqual(backlog["ranking_status"], "PENDING")
+        self.assertEqual(first_repaired["ranking_status"], "PENDING")
+        self.assertEqual(first_backlog["ranking_status"], "PENDING")
+        self.assertEqual(first_alternate["ranking_status"], "PENDING")
         self.assertTrue(
-            run.audit[
+            first.audit[
                 "candidate_query_edge_direction_prioritized_over_candidate_backlog"
             ]
         )
+
+        provider.ranking_pending = False
+        second = self._run(
+            provider=provider,
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(
+                fixture_text_by_url={
+                    official_url: _document_text("current-results"),
+                    alternate_url: _document_text("alternate-results"),
+                }
+            ),
+            config=SourceGraphAcquisitionConfig(
+                mode="TEST",
+                max_results_per_query=2,
+                max_queries_per_checkpoint=1,
+                max_candidates_per_checkpoint=2,
+                max_fetches_per_checkpoint=1,
+            ),
+            checkpoint=first.checkpoint,
+            official_domains=("issuer.example.com",),
+        )
+
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(len(ranking_payloads), 2)
+        self.assertEqual(
+            [
+                row["candidate_id"]
+                for row in ranking_payloads[-1]["discovery_candidates"]
+            ],
+            [candidate_id],
+        )
+        second_by_id = {
+            row["candidate_id"]: row
+            for row in second.checkpoint["search_candidates"]
+        }
+        second_alternate = next(
+            row
+            for row in second.checkpoint["search_candidates"]
+            if row["url"] == alternate_url
+        )
+        self.assertEqual(
+            second_by_id[candidate_id]["ranking_status"],
+            "MATERIAL",
+        )
+        self.assertEqual(
+            second_by_id["UNRELATED-BACKLOG"]["ranking_status"],
+            "PENDING",
+        )
+        self.assertEqual(second_alternate["ranking_status"], "PENDING")
+        self.assertIsNone(second.query_generation)
+        self.assertFalse(
+            second.audit["candidate_query_edge_direction_priority_requested"]
+        )
+        self.assertTrue(
+            second.audit["candidate_query_edge_rebound_priority_requested"]
+        )
+        self.assertTrue(
+            second.audit[
+                "candidate_query_edge_direction_prioritized_over_candidate_backlog"
+            ]
+        )
+
+    def test_candidate_query_edge_exact_rebound_only_shadows_its_scope(
+        self,
+    ) -> None:
+        first_candidate_id = "SGCAND-111111111111111111111111"
+        second_candidate_id = "SGCAND-222222222222222222222222"
+        first_query = "Current Corp first official newsroom result"
+        second_query = "Current Corp second official newsroom result"
+        first_url = "https://issuer.example.com/first-original"
+        first_alternate_url = "https://issuer.example.com/first-alternate"
+        second_url = "https://issuer.example.com/second-original"
+        second_alternate_url = "https://issuer.example.com/second-alternate"
+        backlog_url = "https://example.com/unrelated-backlog"
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        common = {
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "snippet": None,
+            "published_at": "2026-06-20",
+            "rank": 1,
+            "is_pdf": False,
+            "is_report_domain": False,
+            "is_news": True,
+            "is_disclosure": False,
+            "query_lineage_valid": True,
+            "discovery_only": True,
+            "snippet_discovery_only": True,
+        }
+
+        def _repair_candidate(
+            *, candidate_id: str, objective_id: str, url: str
+        ) -> dict[str, Any]:
+            row = {
+                **common,
+                "candidate_id": candidate_id,
+                "url": url,
+                "normalized_url": url,
+                "title": objective_id + " original official result",
+                "source": "issuer.example.com",
+                "query_ids": ["OLD-" + objective_id],
+                "materiality_query_ids": ["OLD-" + objective_id],
+                "objective_ids": [objective_id],
+                "requested_source_families": ["VALUATION_MULTIPLES"],
+                "ranking_status": "NOT_MATERIAL",
+                "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
+                "candidate_source_family_hint": "ISSUER_NEWSROOM",
+                "verified_official_domain_candidate": True,
+                "alternate_route_required": True,
+                "materiality_revalidation_reason": (
+                    "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+                ),
+                "matched_requested_source_family": "NONE",
+                "materiality_decision_id": "DECISION-" + objective_id,
+            }
+            row["materiality_scope_hash"] = (
+                source_graph_module._candidate_materiality_scope_hash(row)
+            )
+            return row
+
+        first_candidate = _repair_candidate(
+            candidate_id=first_candidate_id,
+            objective_id="OBJECTIVE-1",
+            url=first_url,
+        )
+        second_candidate = _repair_candidate(
+            candidate_id=second_candidate_id,
+            objective_id="OBJECTIVE-2",
+            url=second_url,
+        )
+        backlog = {
+            **common,
+            "candidate_id": "UNRELATED-BACKLOG",
+            "url": backlog_url,
+            "normalized_url": backlog_url,
+            "title": "unrelated inherited candidate",
+            "source": "example.com",
+            "query_ids": ["OLD-OBJECTIVE-1"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["VALUATION_MULTIPLES"],
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+        }
+        state.update(
+            status="CHECKPOINT_PENDING",
+            generated_queries=[
+                {
+                    "query_id": "OLD-OBJECTIVE-1",
+                    "objective_id": "OBJECTIVE-1",
+                    "literal_query": "Current Corp old first valuation",
+                    "source_families": ["VALUATION_MULTIPLES"],
+                    "execution_status": "SEARCH_EXECUTED",
+                },
+                {
+                    "query_id": "OLD-OBJECTIVE-2",
+                    "objective_id": "OBJECTIVE-2",
+                    "literal_query": "Current Corp old second valuation",
+                    "source_families": ["VALUATION_MULTIPLES"],
+                    "execution_status": "SEARCH_EXECUTED",
+                },
+            ],
+            executed_queries=[
+                "Current Corp old first valuation",
+                "Current Corp old second valuation",
+            ],
+            search_candidates=[first_candidate, second_candidate, backlog],
+            candidate_materiality_decisions=[
+                {
+                    "decision_id": "DECISION-OBJECTIVE-1",
+                    "candidate_id": first_candidate_id,
+                    "material_relevance": False,
+                    "matched_requested_source_family": "NONE",
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "priority": 0.9,
+                    "rationale": "첫 scope의 현재 query family와 다르다.",
+                },
+                {
+                    "decision_id": "DECISION-OBJECTIVE-2",
+                    "candidate_id": second_candidate_id,
+                    "material_relevance": False,
+                    "matched_requested_source_family": "NONE",
+                    "objective_ids": ["OBJECTIVE-2"],
+                    "priority": 0.8,
+                    "rationale": "둘째 scope의 현재 query family와 다르다.",
+                },
+            ],
+        )
+        second_objective = SourceResearchObjective(
+            objective_id="OBJECTIVE-2",
+            component_id="earnings_visibility",
+            research_objective="second official result visibility",
+            preferred_source_families=("ISSUER_NEWSROOM",),
+            counter_or_supersession_required=True,
+        )
+        provider = TwoScopeRepairProvider(
+            query_by_objective={
+                "OBJECTIVE-1": first_query,
+                "OBJECTIVE-2": second_query,
+            }
+        )
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    first_query: (
+                        _result(
+                            "first exact official result",
+                            first_url,
+                            query=first_query,
+                        ),
+                        _result(
+                            "first alternate official result",
+                            first_alternate_url,
+                            rank=2,
+                            query=first_query,
+                        ),
+                    ),
+                    second_query: (
+                        _result(
+                            "second alternate official result",
+                            second_alternate_url,
+                            query=second_query,
+                        ),
+                    ),
+                }
+            ),
+            fetcher=PageFetcher(
+                fixture_text_by_url={
+                    first_url: _document_text("first-exact"),
+                    first_alternate_url: _document_text("first-alternate"),
+                    second_alternate_url: _document_text("second-alternate"),
+                }
+            ),
+            config=SourceGraphAcquisitionConfig(
+                mode="TEST",
+                max_results_per_query=2,
+                max_queries_per_checkpoint=2,
+                max_candidates_per_checkpoint=4,
+                max_fetches_per_checkpoint=2,
+            ),
+            checkpoint=source_graph_module._finalize_checkpoint(state),
+            official_domains=("issuer.example.com",),
+            official_gaps={
+                "OBJECTIVE-1": ("official source gap recorded",),
+                "OBJECTIVE-2": ("official source gap recorded",),
+            },
+            open_objectives=(_objective(), second_objective),
+        )
+
+        ranking_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+        ranked_urls = {
+            row["url"]
+            for row in ranking_payload["discovery_candidates"]
+        }
+        self.assertEqual(
+            ranked_urls,
+            {first_url, second_alternate_url},
+        )
+        self.assertNotIn(first_alternate_url, ranked_urls)
+        self.assertNotIn(backlog_url, ranked_urls)
 
     def test_candidate_query_edge_alternate_url_closes_then_resumes_backlog(
         self,
@@ -6570,6 +6887,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         score_gap_context: Mapping[str, Any] | None = None,
         checkpoint_migration_only: bool = False,
         resolved_objective_ids: Sequence[str] = (),
+        open_objectives: Sequence[SourceResearchObjective] | None = None,
     ):
         return ResearcherSourceGraphAcquirer(
             query_provider=provider,
@@ -6581,7 +6899,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             target_name=TARGET_NAME,
             target_aliases=(),
             as_of_date=AS_OF_DATE,
-            open_objectives=(_objective(),),
+            open_objectives=tuple(open_objectives or (_objective(),)),
             current_evidence_facts=current_evidence_facts,
             target_business_model=None,
             source_coverage=(),

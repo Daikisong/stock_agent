@@ -747,6 +747,87 @@ class ResearcherSourceGraphAcquirer:
         candidate_query_edge_direction_priority = bool(
             candidate_query_edge_repair_scopes
         )
+        generated_query_by_id = {
+            str(row.get("query_id") or ""): row
+            for row in generated_rows
+            if str(row.get("query_id") or "")
+        }
+        candidate_query_edge_pending_rebound_ids: set[str] = set()
+        candidate_query_edge_pending_rebound_scopes: set[
+            tuple[str, str]
+        ] = set()
+        for candidate in candidates:
+            candidate_id = str(candidate.get("candidate_id") or "")
+            source_family = str(
+                candidate.get("candidate_source_family_hint") or ""
+            )
+            objective_ids = {
+                str(value)
+                for value in candidate.get("objective_ids") or ()
+                if str(value)
+            }
+            materiality_query_ids = {
+                str(value)
+                for value in candidate.get("materiality_query_ids") or ()
+                if str(value)
+            }
+            query_edges = tuple(
+                generated_query_by_id.get(query_id)
+                for query_id in materiality_query_ids
+            )
+            current_rebound_query_ids = {
+                str(row.get("query_id") or "")
+                for row in query_edges
+                if isinstance(row, Mapping)
+                and str(row.get("objective_id") or "")
+                in objective_ids
+                and source_family
+                in set(row.get("source_families") or ())
+            }
+            if (
+                not candidate_id
+                or str(candidate.get("ranking_status") or "") != "PENDING"
+                or candidate.get("alternate_route_required") is not True
+                or candidate.get("verified_official_domain_candidate")
+                is not True
+                or str(
+                    candidate.get("materiality_revalidation_reason") or ""
+                )
+                not in {
+                    "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH",
+                    "QUERY_OBJECTIVE_OR_REQUESTED_SOURCE_SCOPE_EXPANDED",
+                }
+                or source_family not in CANONICAL_SOURCE_FAMILIES
+                or source_family
+                in {"GENERAL_WEB_DISCOVERY", "NAVER_DISCOVERY"}
+                or source_family
+                not in set(
+                    candidate.get("requested_source_families") or ()
+                )
+                or not current_rebound_query_ids
+            ):
+                continue
+            candidate_query_edge_pending_rebound_ids.add(candidate_id)
+            candidate_query_edge_pending_rebound_scopes.update(
+                (objective_id, source_family)
+                for objective_id in objective_ids
+            )
+        candidate_query_edge_repair_ids.update(
+            candidate_query_edge_pending_rebound_ids
+        )
+        candidate_query_edge_repair_scopes.update(
+            candidate_query_edge_pending_rebound_scopes
+        )
+        candidate_query_edge_gap_objective_ids.update(
+            objective_id
+            for objective_id, _ in (
+                candidate_query_edge_pending_rebound_scopes
+            )
+        )
+        candidate_query_edge_work_priority = bool(
+            candidate_query_edge_direction_priority
+            or candidate_query_edge_pending_rebound_ids
+        )
         resolved.difference_update(
             source_family_gap_objective_ids
             | candidate_query_edge_gap_objective_ids
@@ -800,7 +881,7 @@ class ResearcherSourceGraphAcquirer:
         if (
             not checkpoint_migration_only
             and not supervisor_query_direction_priority
-            and not candidate_query_edge_direction_priority
+            and not candidate_query_edge_work_priority
         ):
             for parent_candidate in _ordered_candidate_reference_parents(
                 candidates,
@@ -907,7 +988,7 @@ class ResearcherSourceGraphAcquirer:
             and unresolved_objectives
             and not pending_query_rows
             and pending_candidate_work
-            and not candidate_query_edge_direction_priority
+            and not candidate_query_edge_work_priority
         )
         if (
             not checkpoint_migration_only
@@ -1124,6 +1205,60 @@ class ResearcherSourceGraphAcquirer:
                     "PRODUCTION_LEGACY_MATERIALITY_REVALIDATION_PENDING:"
                     + str(stale_pending_materiality_count)
                 )
+        candidate_query_edge_exact_rebound_ids = {
+            str(row.get("candidate_id") or "")
+            for row in candidates
+            if str(row.get("candidate_id") or "")
+            in candidate_query_edge_repair_ids
+            and bool(
+                set(
+                    row.get("materiality_query_ids")
+                    or row.get("query_ids")
+                    or ()
+                )
+                & candidate_query_edge_repair_query_ids
+            )
+        }
+        candidate_query_edge_repair_scopes_by_query_id = {
+            str(row.get("query_id") or ""): {
+                (
+                    str(row.get("objective_id") or ""),
+                    str(source_family),
+                )
+                for source_family in row.get("source_families") or ()
+                if (
+                    str(row.get("objective_id") or ""),
+                    str(source_family),
+                )
+                in candidate_query_edge_repair_scopes
+            }
+            for row in generated_rows
+            if str(row.get("query_id") or "")
+        }
+
+        def _current_candidate_repair_scopes(
+            row: Mapping[str, Any],
+        ) -> set[tuple[str, str]]:
+            return {
+                scope
+                for query_id in (
+                    row.get("materiality_query_ids")
+                    or row.get("query_ids")
+                    or ()
+                )
+                for scope in candidate_query_edge_repair_scopes_by_query_id.get(
+                    str(query_id),
+                    (),
+                )
+            }
+
+        candidate_query_edge_exact_rebound_scopes = {
+            scope
+            for row in candidates
+            if str(row.get("candidate_id") or "")
+            in candidate_query_edge_exact_rebound_ids
+            for scope in _current_candidate_repair_scopes(row)
+        }
         candidate_query_edge_actionable_ids = {
             str(row.get("candidate_id") or "")
             for row in candidates
@@ -1132,12 +1267,8 @@ class ResearcherSourceGraphAcquirer:
                 str(row.get("candidate_id") or "")
                 in candidate_query_edge_repair_ids
                 or bool(
-                    set(
-                        row.get("materiality_query_ids")
-                        or row.get("query_ids")
-                        or ()
-                    )
-                    & candidate_query_edge_repair_query_ids
+                    _current_candidate_repair_scopes(row)
+                    - candidate_query_edge_exact_rebound_scopes
                 )
             )
         }
@@ -1153,7 +1284,7 @@ class ResearcherSourceGraphAcquirer:
                         row, resolved
                     )
                     and (
-                        not candidate_query_edge_direction_priority
+                        not candidate_query_edge_work_priority
                         or str(row.get("candidate_id") or "")
                         in candidate_query_edge_actionable_ids
                     )
@@ -1171,7 +1302,7 @@ class ResearcherSourceGraphAcquirer:
         if pending_rank:
             rank_batch = pending_rank[: config.max_candidates_per_checkpoint]
             candidate_query_edge_priority_ranked = bool(
-                candidate_query_edge_direction_priority
+                candidate_query_edge_work_priority
                 and any(
                     str(row.get("candidate_id") or "")
                     in candidate_query_edge_actionable_ids
@@ -1356,7 +1487,7 @@ class ResearcherSourceGraphAcquirer:
                 key=lambda row: (
                     0
                     if (
-                        candidate_query_edge_direction_priority
+                        candidate_query_edge_work_priority
                         and str(row.get("candidate_id") or "")
                         in candidate_query_edge_actionable_ids
                     )
@@ -1371,7 +1502,7 @@ class ResearcherSourceGraphAcquirer:
         )
         fetch_batch = pending_fetch[: config.max_fetches_per_checkpoint]
         candidate_query_edge_priority_fetched = bool(
-            candidate_query_edge_direction_priority
+            candidate_query_edge_work_priority
             and any(
                 str(row.get("candidate_id") or "")
                 in candidate_query_edge_actionable_ids
@@ -1649,7 +1780,7 @@ class ResearcherSourceGraphAcquirer:
                 supervisor_query_direction_priority
             ),
             "candidate_query_edge_direction_prioritized_over_candidate_backlog": (
-                candidate_query_edge_direction_priority
+                candidate_query_edge_work_priority
                 and (
                     candidate_query_edge_priority_query_executed
                     or candidate_query_edge_priority_ranked
@@ -1658,6 +1789,9 @@ class ResearcherSourceGraphAcquirer:
             ),
             "candidate_query_edge_direction_priority_requested": (
                 candidate_query_edge_direction_priority
+            ),
+            "candidate_query_edge_rebound_priority_requested": bool(
+                candidate_query_edge_pending_rebound_ids
             ),
         }
         if checkpoint_migration_only:
