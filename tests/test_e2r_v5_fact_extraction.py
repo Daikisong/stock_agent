@@ -1261,6 +1261,352 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 doc2_pending_call.prompt_hash,
             )
 
+    def _prepare_semantic_validation_retry_journal(self, root: Path):
+        document = _document(
+            "DOC-SEMANTIC-RETRY-RESUME",
+            "ISSUER_PRESENTATION",
+            "ISSUER",
+        )
+        initial = ResearcherEvidenceFactExtractor(
+            provider=FactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        provider = CollaborationCodexResearcherProvider.default()
+        provider.configure_response_cache(
+            root / "research_provider_response_cache"
+        )
+        journal = root / "collaboration_codex_subagent_provider"
+        extractor = ResearcherEvidenceFactExtractor(provider=provider)
+        resume_kwargs = {
+            "target_id": TARGET,
+            "target_name": TARGET_NAME,
+            "target_aliases": (),
+            "archetype_id": ARCHETYPE,
+            "as_of_date": AS_OF_DATE,
+            "documents": (document,),
+            "open_objectives": (),
+            "current_facts": tuple(
+                fact.to_dict() for fact in initial.facts
+            ),
+            "prior_material_claims": initial.material_claims,
+            "prior_document_dispositions": (
+                initial.document_dispositions
+            ),
+            "prior_provider_calls": initial.provider_calls,
+            "prior_rejections": initial.rejections,
+            "prior_coverage_refresh_document_ids": (
+                document["document_id"],
+            ),
+        }
+
+        first = extractor.extract(**resume_kwargs)
+        self.assertEqual(first.status, "FACT_EXTRACTION_PENDING")
+        requests = tuple(
+            json.loads(path.read_text(encoding="utf-8"))
+            for path in (journal / "requests").glob("COLLABREQ-*.json")
+        )
+        self.assertEqual(len(requests), 1)
+        primary_request = requests[0]
+        primary_payload = json.loads(
+            primary_request["prompt"].rsplit("\n", 1)[-1]
+        )
+        self.assertIn(
+            "fact_extraction_coverage_audit_context",
+            primary_payload,
+        )
+        invalid_primary_response = {
+            "facts": [],
+            "document_dispositions": [
+                {
+                    "document_id": document["document_id"],
+                    "status": "NO_MATERIAL_FACT",
+                    "rationale": "검토한 문서에서 새 사실을 찾지 못했다.",
+                }
+            ],
+            "unresolved_document_ids": [],
+            "unresolved_research_notes": [],
+            "extraction_complete": True,
+        }
+        import_collaboration_response(
+            journal_root=journal,
+            request_id=primary_request["request_id"],
+            response_payload=invalid_primary_response,
+            agent_id="invalid-primary-fact",
+            canonical_task_name="/root/invalid_primary_fact",
+            agent_model="codex-collaboration",
+        )
+
+        waiting_retry = extractor.extract(**resume_kwargs)
+        self.assertEqual(
+            waiting_retry.status,
+            "FACT_EXTRACTION_PENDING",
+        )
+        request_by_id = {
+            request["request_id"]: request
+            for request in (
+                json.loads(path.read_text(encoding="utf-8"))
+                for path in (journal / "requests").glob(
+                    "COLLABREQ-*.json"
+                )
+            )
+        }
+        retry_request = next(
+            request
+            for request in request_by_id.values()
+            if "fact_extraction_retry_context"
+            in json.loads(request["prompt"].rsplit("\n", 1)[-1])
+        )
+        self.assertFalse(
+            (
+                journal
+                / "responses"
+                / f"{primary_request['request_id']}.json"
+            ).exists()
+        )
+        self.assertTrue(
+            any(
+                (
+                    journal
+                    / "quarantine"
+                    / primary_request["request_id"]
+                ).glob("COLLABRESP-*.json.*.reason.json")
+            )
+        )
+        return (
+            extractor,
+            provider,
+            journal,
+            resume_kwargs,
+            initial,
+            primary_request,
+            retry_request,
+        )
+
+    def test_clean_resume_consumes_exact_semantic_validation_retry(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            (
+                extractor,
+                _provider,
+                journal,
+                resume_kwargs,
+                initial,
+                primary_request,
+                retry_request,
+            ) = self._prepare_semantic_validation_retry_journal(
+                Path(directory)
+            )
+            document_id = resume_kwargs["documents"][0]["document_id"]
+            corrected_response = {
+                "facts": [],
+                "document_dispositions": [
+                    {
+                        "document_id": document_id,
+                        "status": "FACTS_EXTRACTED",
+                        "rationale": (
+                            "이전에 검증된 사실이 있어 해당 상태를 유지한다."
+                        ),
+                    }
+                ],
+                "unresolved_document_ids": [],
+                "unresolved_research_notes": [],
+                "extraction_complete": True,
+            }
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=retry_request["request_id"],
+                response_payload=corrected_response,
+                agent_id="corrected-retry-fact",
+                canonical_task_name="/root/corrected_retry_fact",
+                agent_model="codex-collaboration",
+            )
+
+            resumed = extractor.extract(**resume_kwargs)
+
+            self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
+            self.assertEqual(
+                {row["claim_id"] for row in resumed.material_claims},
+                {row["claim_id"] for row in initial.material_claims},
+            )
+            completed_call = next(
+                call
+                for call in reversed(resumed.provider_calls)
+                if call.coverage_audit_performed
+            )
+            self.assertTrue(completed_call.validation_retry_used)
+            self.assertEqual(completed_call.provider_attempt_count, 2)
+            self.assertFalse(
+                (
+                    journal
+                    / "responses"
+                    / f"{primary_request['request_id']}.json"
+                ).exists()
+            )
+
+    def test_clean_resume_does_not_consume_retry_for_other_primary_context(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            (
+                extractor,
+                provider,
+                journal,
+                resume_kwargs,
+                _initial,
+                primary_request,
+                retry_request,
+            ) = self._prepare_semantic_validation_retry_journal(
+                Path(directory)
+            )
+            retry_payload = json.loads(
+                retry_request["prompt"].rsplit("\n", 1)[-1]
+            )
+            mismatched_payload = json.loads(
+                json.dumps(retry_payload, ensure_ascii=False)
+            )
+            mismatched_payload["target_name"] = "Different Current Corp"
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.complete(
+                    pass_name="EVIDENCE_FACT_EXTRACTION",
+                    payload=mismatched_payload,
+                )
+            requests = tuple(
+                json.loads(path.read_text(encoding="utf-8"))
+                for path in (journal / "requests").glob(
+                    "COLLABREQ-*.json"
+                )
+            )
+            mismatch_request = next(
+                request
+                for request in requests
+                if json.loads(
+                    request["prompt"].rsplit("\n", 1)[-1]
+                ).get("target_name")
+                == "Different Current Corp"
+            )
+            document_id = resume_kwargs["documents"][0]["document_id"]
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=mismatch_request["request_id"],
+                response_payload={
+                    "facts": [],
+                    "document_dispositions": [
+                        {
+                            "document_id": document_id,
+                            "status": "FACTS_EXTRACTED",
+                            "rationale": "다른 primary 문맥의 정정 응답이다.",
+                        }
+                    ],
+                    "unresolved_document_ids": [],
+                    "unresolved_research_notes": [],
+                    "extraction_complete": True,
+                },
+                agent_id="mismatched-retry-fact",
+                canonical_task_name="/root/mismatched_retry_fact",
+                agent_model="codex-collaboration",
+            )
+
+            resumed = extractor.extract(**resume_kwargs)
+
+            self.assertEqual(resumed.status, "FACT_EXTRACTION_PENDING")
+            self.assertTrue(
+                (
+                    journal
+                    / "responses"
+                    / f"{mismatch_request['request_id']}.json"
+                ).is_file()
+            )
+            self.assertFalse(
+                (
+                    journal
+                    / "responses"
+                    / f"{retry_request['request_id']}.json"
+                ).exists()
+            )
+            self.assertFalse(
+                (
+                    journal
+                    / "responses"
+                    / f"{primary_request['request_id']}.json"
+                ).exists()
+            )
+
+    def test_clean_resume_does_not_consume_retry_with_hash_mismatch(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            (
+                extractor,
+                _provider,
+                journal,
+                resume_kwargs,
+                _initial,
+                _primary_request,
+                retry_request,
+            ) = self._prepare_semantic_validation_retry_journal(
+                Path(directory)
+            )
+            document_id = resume_kwargs["documents"][0]["document_id"]
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=retry_request["request_id"],
+                response_payload={
+                    "facts": [],
+                    "document_dispositions": [
+                        {
+                            "document_id": document_id,
+                            "status": "FACTS_EXTRACTED",
+                            "rationale": "정확한 재시도 응답이다.",
+                        }
+                    ],
+                    "unresolved_document_ids": [],
+                    "unresolved_research_notes": [],
+                    "extraction_complete": True,
+                },
+                agent_id="hash-mismatch-retry-fact",
+                canonical_task_name="/root/hash_mismatch_retry_fact",
+                agent_model="codex-collaboration",
+            )
+            retry_request_path = (
+                journal
+                / "requests"
+                / f"{retry_request['request_id']}.json"
+            )
+            corrupted_request = dict(retry_request)
+            corrupted_request["prompt_hash"] = "0" * 64
+            retry_request_path.write_text(
+                json.dumps(
+                    corrupted_request,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            resumed = extractor.extract(**resume_kwargs)
+
+            self.assertEqual(resumed.status, "FACT_EXTRACTION_PENDING")
+            self.assertTrue(
+                (
+                    journal
+                    / "responses"
+                    / f"{retry_request['request_id']}.json"
+                ).is_file()
+            )
+
     def test_transport_fragment_provider_value_uses_normalized_object(self) -> None:
         result = ResearcherEvidenceFactExtractor(
             provider=CorruptedValueFactProvider(":null},{")

@@ -643,6 +643,214 @@ class CollaborationCodexSubagentTransport:
             return None
         return dict(candidates[0])
 
+    def validated_fact_extraction_retry_material(
+        self,
+        *,
+        primary_prompt: str,
+        output_schema: Mapping[str, Any],
+        schema_name: str,
+    ) -> Mapping[str, Any] | None:
+        """Recover one exact corrected retry for a quarantined primary.
+
+        The quarantined primary payload is deliberately never read.  Its
+        immutable request and semantic-validation receipt only establish why
+        an exact retry request may be resumed.
+        """
+
+        root = self.journal_root
+        if root is None:
+            return None
+        pass_name = _pass_name_from_schema_name(schema_name)
+        if pass_name != "EVIDENCE_FACT_EXTRACTION":
+            return None
+        primary_prompt_hash = hashlib.sha256(
+            primary_prompt.encode("utf-8")
+        ).hexdigest()
+        output_schema_hash = _canonical_hash(output_schema)
+        provider_identity = dict(self.provider_identity())
+        provider_identity_hash = _canonical_hash(provider_identity)
+        primary_identity = _request_identity(
+            pass_name=pass_name,
+            prompt_hash=primary_prompt_hash,
+            output_schema_hash=output_schema_hash,
+            provider_identity_hash=provider_identity_hash,
+        )
+        primary_request_id = _request_id(primary_identity)
+        try:
+            primary_request = _validate_request(
+                _read_json_object(
+                    root
+                    / "requests"
+                    / f"{primary_request_id}.json"
+                )
+            )
+            primary_payload = json.loads(
+                primary_prompt.rsplit("\n", 1)[-1]
+            )
+        except (
+            FileNotFoundError,
+            OSError,
+            TypeError,
+            ValueError,
+            RuntimeError,
+            json.JSONDecodeError,
+        ):
+            return None
+        if (
+            not isinstance(primary_payload, Mapping)
+            or primary_request.get("request_id") != primary_request_id
+            or primary_request.get("prompt") != primary_prompt
+            or primary_request.get("output_schema") != output_schema
+            or primary_request.get("schema_name") != schema_name
+            or (
+                root
+                / "responses"
+                / f"{primary_request_id}.json"
+            ).is_file()
+        ):
+            return None
+
+        semantic_reasons: set[str] = set()
+        quarantine_root = root / "quarantine" / primary_request_id
+        try:
+            reason_paths = tuple(
+                quarantine_root.glob(
+                    "COLLABRESP-*.json.*.reason.json"
+                )
+            )
+        except OSError:
+            return None
+        for reason_path in reason_paths:
+            try:
+                receipt = _read_json_object(reason_path)
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+            ):
+                continue
+            response_id = str(receipt.get("response_id") or "")
+            reason = str(receipt.get("reason") or "")
+            if (
+                receipt.get("schema_version")
+                != "e2r_v5_collaboration_response_quarantine_v1"
+                or receipt.get("request_id") != primary_request_id
+                or _RESPONSE_ID_RE.fullmatch(response_id) is None
+                or not reason_path.name.startswith(
+                    f"{response_id}.json."
+                )
+                or not (
+                    quarantine_root / f"{response_id}.json"
+                ).is_file()
+                or receipt.get("production_score_authority") is not False
+                or receipt.get("reusable_provider_response") is not False
+                or not reason.startswith(
+                    "FACT_EXTRACTION_SEMANTIC_VALIDATION:"
+                )
+            ):
+                continue
+            semantic_reasons.add(reason)
+        if not semantic_reasons:
+            return None
+
+        candidates: list[
+            tuple[Mapping[str, Any], Mapping[str, Any], Mapping[str, Any]]
+        ] = []
+        try:
+            request_paths = tuple(
+                (root / "requests").glob("COLLABREQ-*.json")
+            )
+        except OSError:
+            return None
+        for request_path in request_paths:
+            try:
+                retry_request = _validate_request(
+                    _read_json_object(request_path)
+                )
+                retry_payload = json.loads(
+                    str(retry_request["prompt"]).rsplit("\n", 1)[-1]
+                )
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+                json.JSONDecodeError,
+            ):
+                continue
+            if (
+                retry_request.get("request_id") == primary_request_id
+                or retry_request.get("pass_name") != pass_name
+                or retry_request.get("schema_name") != schema_name
+                or retry_request.get("output_schema") != output_schema
+                or not isinstance(retry_payload, Mapping)
+            ):
+                continue
+            retry_context = retry_payload.get(
+                "fact_extraction_retry_context"
+            )
+            if not isinstance(retry_context, Mapping):
+                continue
+            retry_base_payload = dict(retry_payload)
+            retry_base_payload.pop("fact_extraction_retry_context", None)
+            if retry_base_payload != primary_payload:
+                continue
+            validation_errors = retry_context.get("validation_errors")
+            if (
+                not isinstance(validation_errors, list)
+                or not validation_errors
+                or any(
+                    not isinstance(reason, str) or not reason.strip()
+                    for reason in validation_errors
+                )
+            ):
+                continue
+            expected_reason = " ".join(
+                (
+                    "FACT_EXTRACTION_SEMANTIC_VALIDATION:"
+                    + " | ".join(validation_errors)
+                ).split()
+            )[-1000:]
+            if expected_reason not in semantic_reasons:
+                continue
+            request_id = str(retry_request["request_id"])
+            try:
+                retry_response = _validate_response_envelope(
+                    request=retry_request,
+                    envelope=_read_json_object(
+                        root / "responses" / f"{request_id}.json"
+                    ),
+                )
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+            ):
+                continue
+            if (
+                root
+                / "quarantine"
+                / request_id
+                / f"{retry_response['response_id']}.json"
+            ).is_file():
+                continue
+            candidates.append(
+                (retry_request, retry_response, retry_payload)
+            )
+        if len(candidates) != 1:
+            return None
+        retry_request, retry_response, retry_payload = candidates[0]
+        return {
+            "primary_request": dict(primary_request),
+            "retry_request": dict(retry_request),
+            "retry_response": dict(retry_response),
+            "retry_payload": dict(retry_payload),
+        }
+
     def invalidate_last_response(self, reason: str) -> Mapping[str, Any]:
         request_id = self._last_request_id
         if request_id is None:
@@ -1183,6 +1391,49 @@ class CollaborationCodexResearcherProvider(CodexResearcherProvider):
             prompt_hash=prompt_hash,
         )
 
+    def validated_fact_extraction_retry_payload(
+        self,
+        *,
+        primary_payload: Mapping[str, Any],
+    ) -> Mapping[str, Any] | None:
+        """Recover only the exact active retry bound to this primary."""
+
+        try:
+            (
+                safe_primary_payload,
+                output_schema,
+                primary_prompt,
+                _primary_prompt_hash,
+                _schema_hash,
+            ) = _single_payload_request_material(
+                pass_name="EVIDENCE_FACT_EXTRACTION",
+                payload=primary_payload,
+            )
+        except (KeyError, TypeError, ValueError):
+            return None
+        material = self.transport.validated_fact_extraction_retry_material(
+            primary_prompt=primary_prompt,
+            output_schema=output_schema,
+            schema_name="e2r_v5_evidence_fact_extraction",
+        )
+        if not isinstance(material, Mapping):
+            return None
+        request = material.get("retry_request")
+        if not isinstance(request, Mapping):
+            return None
+        retry_payload = self._validated_payload_from_request(
+            request=request,
+            pass_name="EVIDENCE_FACT_EXTRACTION",
+            prompt_hash=str(request.get("prompt_hash") or ""),
+        )
+        if not isinstance(retry_payload, Mapping):
+            return None
+        retry_base_payload = dict(retry_payload)
+        retry_base_payload.pop("fact_extraction_retry_context", None)
+        if retry_base_payload != safe_primary_payload:
+            return None
+        return dict(retry_payload)
+
     @staticmethod
     def _validated_payload_from_request(
         *,
@@ -1366,6 +1617,17 @@ class CodexSubagentFallbackResearchProvider(CodexResearcherProvider):
         return self.collaboration.validated_pending_request_payload(
             pass_name=pass_name,
             prompt_hash=prompt_hash,
+        )
+
+    def validated_fact_extraction_retry_payload(
+        self,
+        *,
+        primary_payload: Mapping[str, Any],
+    ) -> Mapping[str, Any] | None:
+        """Delegate exact semantic-retry recovery to collaboration only."""
+
+        return self.collaboration.validated_fact_extraction_retry_payload(
+            primary_payload=primary_payload,
         )
 
     def invalidate_last_response_cache(self, reason: str) -> Mapping[str, Any]:

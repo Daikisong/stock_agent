@@ -1242,6 +1242,36 @@ class ResearcherEvidenceFactExtractor:
                     TypeError,
                     ValueError,
                 ) as exc:
+                    recovered_retry_payload = (
+                        _recover_validated_fact_extraction_retry_payload(
+                            self.provider,
+                            primary_payload=attempt_base_payload,
+                            previously_accepted_claims=tuple(
+                                previously_accepted_claims.values()
+                            ),
+                        )
+                        if (
+                            isinstance(exc, StructuredProviderUnavailable)
+                            and str(exc).startswith(
+                                "COLLABORATION_RESPONSE_PENDING:"
+                                "COLLABREQ-"
+                            )
+                            and attempt_payload == attempt_base_payload
+                            and "fact_extraction_retry_context"
+                            not in attempt_payload
+                        )
+                        else None
+                    )
+                    if recovered_retry_payload is not None:
+                        retry_context = recovered_retry_payload[
+                            "fact_extraction_retry_context"
+                        ]
+                        validation_retry_count = int(
+                            retry_context["rewrite_attempt"]
+                        )
+                        validation_retry_used = True
+                        attempt_payload = recovered_retry_payload
+                        continue
                     reason = (
                         "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
                         f"{type(exc).__name__}:{_clean_error(exc)}"
@@ -1639,32 +1669,13 @@ class ResearcherEvidenceFactExtractor:
                                     )
                                 ],
                                 "must_not_repeat_rejected_proposals": True,
-                                "previously_accepted_facts": [
-                                    {
-                                        "document_id": str(
-                                            claim["document_id"]
-                                        ),
-                                        "question_family_id": str(
-                                            claim["question_family_id"]
-                                        ),
-                                        "subject_id": str(claim["subject_id"]),
-                                        "predicate_family": str(
-                                            claim["predicate_family"]
-                                        ),
-                                        "normalized_object": str(
-                                            claim["normalized_object"]
-                                        ),
-                                        "period": str(claim["period"]),
-                                        "direction": str(claim["direction"]),
-                                        "current_lifecycle": str(
-                                            claim["current_lifecycle"]
-                                        ),
-                                        "exact_quote": str(
-                                            claim["exact_quote"]
-                                        ),
-                                    }
-                                    for claim in previously_accepted_claims.values()
-                                ],
+                                "previously_accepted_facts": (
+                                    _fact_extraction_retry_accepted_facts(
+                                        tuple(
+                                            previously_accepted_claims.values()
+                                        )
+                                    )
+                                ),
                                 "prohibited_exact_quote_reuse": [
                                     {
                                         "document_id": row["document_id"],
@@ -3092,6 +3103,101 @@ def _invalidate_semantically_invalid_provider_response(
         )
     except (OSError, TypeError, ValueError, RuntimeError):
         return
+
+
+def _fact_extraction_retry_accepted_facts(
+    claims: Sequence[Mapping[str, Any]],
+) -> list[Mapping[str, str]]:
+    return [
+        {
+            "document_id": str(claim["document_id"]),
+            "question_family_id": str(claim["question_family_id"]),
+            "subject_id": str(claim["subject_id"]),
+            "predicate_family": str(claim["predicate_family"]),
+            "normalized_object": str(claim["normalized_object"]),
+            "period": str(claim["period"]),
+            "direction": str(claim["direction"]),
+            "current_lifecycle": str(claim["current_lifecycle"]),
+            "exact_quote": str(claim["exact_quote"]),
+        }
+        for claim in claims
+    ]
+
+
+def _recover_validated_fact_extraction_retry_payload(
+    provider: StructuredResearchProvider,
+    *,
+    primary_payload: Mapping[str, Any],
+    previously_accepted_claims: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any] | None:
+    recover = getattr(
+        provider,
+        "validated_fact_extraction_retry_payload",
+        None,
+    )
+    if not callable(recover):
+        return None
+    try:
+        recovered = recover(primary_payload=primary_payload)
+    except (OSError, TypeError, ValueError, RuntimeError):
+        return None
+    if not isinstance(recovered, Mapping):
+        return None
+    retry_context = recovered.get("fact_extraction_retry_context")
+    if not isinstance(retry_context, Mapping):
+        return None
+    rewrite_attempt = retry_context.get("rewrite_attempt")
+    maximum_rewrite_attempts = retry_context.get(
+        "maximum_rewrite_attempts"
+    )
+    validation_errors = retry_context.get("validation_errors")
+    if (
+        isinstance(rewrite_attempt, bool)
+        or rewrite_attempt not in (1, 2)
+        or maximum_rewrite_attempts != 2
+        or not isinstance(validation_errors, list)
+        or not validation_errors
+        or any(
+            not isinstance(reason, str) or not reason.strip()
+            for reason in validation_errors
+        )
+        or retry_context.get("prior_material_quote_failures") not in (
+            [],
+            (),
+        )
+    ):
+        return None
+    expected_accepted = _fact_extraction_retry_accepted_facts(
+        previously_accepted_claims
+    )
+    recovered_accepted = retry_context.get("previously_accepted_facts")
+    if not isinstance(recovered_accepted, list):
+        return None
+    canonical_recovered = sorted(
+        json.dumps(
+            dict(row),
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+        for row in recovered_accepted
+        if isinstance(row, Mapping)
+    )
+    canonical_expected = sorted(
+        json.dumps(
+            dict(row),
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+        for row in expected_accepted
+    )
+    if (
+        len(canonical_recovered) != len(recovered_accepted)
+        or canonical_recovered != canonical_expected
+    ):
+        return None
+    return dict(recovered)
 
 
 def _proposal_rejection_reason(
