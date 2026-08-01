@@ -5148,57 +5148,80 @@ def _candidate_source_family_query_edge_failures(
     decision_by_id = {
         row.candidate_id: row for row in ranking.decisions
     }
-    failures: list[Mapping[str, Any]] = []
+    note_by_candidate_id: dict[str, str] = {}
     for note in ranking.unresolved_notes:
         mentioned_ids = tuple(
             dict.fromkeys(re.findall(r"SGCAND-[0-9a-f]{24}", note))
         )
         for candidate_id in mentioned_ids:
-            candidate = candidate_by_id.get(candidate_id)
-            decision = decision_by_id.get(candidate_id)
-            if candidate is None or decision is None:
-                continue
-            if decision.material_relevance:
-                continue
-            source_family = str(
-                candidate.get("candidate_source_family_hint") or ""
+            note_by_candidate_id.setdefault(candidate_id, note)
+
+    failures: list[Mapping[str, Any]] = []
+    for candidate_id, decision in decision_by_id.items():
+        candidate = candidate_by_id.get(candidate_id)
+        if candidate is None or decision.material_relevance:
+            continue
+        explicitly_identified = candidate_id in note_by_candidate_id
+        current_transport_repair_family_mismatch = bool(
+            candidate.get("alternate_route_required") is True
+            and candidate.get("verified_official_domain_candidate") is True
+            and str(candidate.get("materiality_revalidation_reason") or "")
+            == "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+            and str(decision.matched_requested_source_family or "NONE")
+            == "NONE"
+        )
+        if (
+            not explicitly_identified
+            and not current_transport_repair_family_mismatch
+        ):
+            continue
+        source_family = str(
+            candidate.get("candidate_source_family_hint") or ""
+        )
+        if (
+            source_family not in CANONICAL_SOURCE_FAMILIES
+            or source_family
+            in {"GENERAL_WEB_DISCOVERY", "NAVER_DISCOVERY"}
+            or source_family
+            in set(candidate.get("requested_source_families") or ())
+        ):
+            continue
+        for objective_id in candidate.get("objective_ids") or ():
+            failures.append(
+                {
+                    "query_id": (
+                        "CANDIDATE_QUERY_EDGE:"
+                        + candidate_id
+                        + ":"
+                        + source_family
+                    ),
+                    "objective_id": str(objective_id),
+                    "candidate_id": candidate_id,
+                    "query_ids": list(candidate.get("query_ids") or ()),
+                    "failure_kind": "SOURCE_FAMILY_QUERY_EDGE",
+                    "failure_stage": "SOURCE_CANDIDATE_RANKING",
+                    "failure_reason": (
+                        "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                    ),
+                    "source_family": source_family,
+                    "requested_source_families": list(
+                        candidate.get("requested_source_families") or ()
+                    ),
+                    "llm_unresolved_note": note_by_candidate_id.get(
+                        candidate_id,
+                        decision.rationale,
+                    ),
+                    "detection_basis": (
+                        "LLM_UNRESOLVED_NOTE_CANDIDATE_REFERENCE"
+                        if explicitly_identified
+                        else "LLM_NONMATERIAL_DECISION_ON_CURRENT_OFFICIAL_TRANSPORT_REPAIR_FAMILY_MISMATCH"
+                    ),
+                    "retryable": True,
+                    "alternate_route_required": True,
+                    "absence_eligible": False,
+                    "resolved": False,
+                }
             )
-            if (
-                source_family not in CANONICAL_SOURCE_FAMILIES
-                or source_family
-                in {"GENERAL_WEB_DISCOVERY", "NAVER_DISCOVERY"}
-                or source_family
-                in set(candidate.get("requested_source_families") or ())
-            ):
-                continue
-            for objective_id in candidate.get("objective_ids") or ():
-                failures.append(
-                    {
-                        "query_id": (
-                            "CANDIDATE_QUERY_EDGE:"
-                            + candidate_id
-                            + ":"
-                            + source_family
-                        ),
-                        "objective_id": str(objective_id),
-                        "candidate_id": candidate_id,
-                        "query_ids": list(candidate.get("query_ids") or ()),
-                        "failure_kind": "SOURCE_FAMILY_QUERY_EDGE",
-                        "failure_stage": "SOURCE_CANDIDATE_RANKING",
-                        "failure_reason": (
-                            "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
-                        ),
-                        "source_family": source_family,
-                        "requested_source_families": list(
-                            candidate.get("requested_source_families") or ()
-                        ),
-                        "llm_unresolved_note": note,
-                        "retryable": True,
-                        "alternate_route_required": True,
-                        "absence_eligible": False,
-                        "resolved": False,
-                    }
-                )
     return tuple(failures)
 
 

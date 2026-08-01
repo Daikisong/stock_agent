@@ -4,6 +4,7 @@ import hashlib
 import json
 import tempfile
 import unittest
+from dataclasses import replace
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -4754,6 +4755,32 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 candidates=(rebound,),
             ),
             (),
+        )
+
+        current_transport_repair = {
+            **candidate,
+            "alternate_route_required": True,
+            "verified_official_domain_candidate": True,
+            "materiality_revalidation_reason": (
+                "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+            ),
+        }
+        generic_note_ranking = replace(
+            ranking,
+            unresolved_notes=(
+                "모든 후보를 검토했으며 원문 fetch와 검증이 남아 있다.",
+            ),
+        )
+        structural_failures = (
+            source_graph_module._candidate_source_family_query_edge_failures(
+                ranking=generic_note_ranking,
+                candidates=(current_transport_repair,),
+            )
+        )
+        self.assertEqual(len(structural_failures), 1)
+        self.assertEqual(
+            structural_failures[0]["detection_basis"],
+            "LLM_NONMATERIAL_DECISION_ON_CURRENT_OFFICIAL_TRANSPORT_REPAIR_FAMILY_MISMATCH",
         )
 
     def test_resolved_objective_processes_current_provenance_revalidation(
