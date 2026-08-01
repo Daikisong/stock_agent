@@ -560,6 +560,64 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             date(2026, 4, 22),
         )
 
+    def test_leading_press_release_accepts_standalone_english_date(self) -> None:
+        self.assertEqual(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=(
+                    "Official Newsroom\n"
+                    "Press Release\n"
+                    "Share\nTweet\nLinkedIn\nEmail\n"
+                    "Current Corp and Partner Announce Technology Partnership\n"
+                    "Collaboration Supports Next-Generation Systems\n"
+                    "June 7, 2026\n"
+                    "News Summary:\n"
+                    "The companies announced a multiyear collaboration.\n"
+                ),
+                as_of_date=date(2026, 7, 12),
+            ),
+            date(2026, 6, 7),
+        )
+
+    def test_release_footer_more_news_date_is_not_publication_date(self) -> None:
+        self.assertIsNone(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=(
+                    "Official Newsroom\n"
+                    "Press Release\n"
+                    "Current Corp Announces Technology Partnership\n"
+                    "News Summary:\n"
+                    "The full release contains no visible publication date.\n"
+                    "More News\n"
+                    "Another Company Announces a Product\n"
+                    "July 29, 2026\n"
+                ),
+                as_of_date=date(2026, 7, 12),
+            )
+        )
+
+    def test_release_head_fallback_does_not_override_metadata_date(self) -> None:
+        self.assertEqual(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(
+                    "JSON_LD_DATE_PUBLISHED:2026-06-06",
+                ),
+                document_text=(
+                    "Official Newsroom\n"
+                    "Press Release\n"
+                    "Current Corp Announces Technology Partnership\n"
+                    "June 7, 2026\n"
+                    "News Summary:\n"
+                ),
+                as_of_date=date(2026, 7, 12),
+            ),
+            date(2026, 6, 6),
+        )
+
     def test_operational_phase85_audit_is_reproducible_and_complete(self) -> None:
         actual = compile_phase85_source_graph_acquisition_audit(self.ROOT)
         committed = json.loads(
@@ -4202,6 +4260,130 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
 
         self.assertEqual(ordered[0]["candidate_id"], "CURRENT-SEMANTICS-RETRY")
 
+    def test_fetch_semantics_retry_survives_prior_objective_resolution(
+        self,
+    ) -> None:
+        candidate = {
+            "candidate_id": "CURRENT-SEMANTICS-RETRY",
+            "objective_ids": ["OBJECTIVE-1"],
+            "ranking_status": "MATERIAL",
+            "fetch_status": "MATERIAL_PENDING_FETCH",
+            "fetch_semantics_retry_reason": (
+                "PRIOR_UNKNOWN_DATE_PRECEDED_PUBLICATION_DATE_INFERENCE"
+            ),
+            "fetch_semantics_policy_version": (
+                PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION
+            ),
+        }
+
+        self.assertFalse(
+            source_graph_module._candidate_scope_is_fully_resolved(
+                candidate,
+                {"OBJECTIVE-1"},
+            )
+        )
+
+    def test_resolved_objective_still_fetches_current_semantics_retry(
+        self,
+    ) -> None:
+        url = "https://issuer.example.com/current-semantics-retry"
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state.update(
+            status="STOPPED_ON_RESOLUTION",
+            generated_queries=[
+                {
+                    "query_id": "QUERY-1",
+                    "objective_id": "OBJECTIVE-1",
+                    "literal_query": QUERY,
+                    "execution_status": "SEARCH_EXECUTED",
+                }
+            ],
+            executed_queries=[QUERY],
+            resolved_objective_ids=["OBJECTIVE-1"],
+            search_candidates=[
+                {
+                    "candidate_id": "CURRENT-SEMANTICS-RETRY",
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "title": "Current Corp official current release",
+                    "url": url,
+                    "normalized_url": url,
+                    "published_at": "2026-06-20",
+                    "query_ids": ["QUERY-1"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "MATERIAL_PENDING_FETCH",
+                    "material_priority": 1.0,
+                    "fetch_semantics_retry_reason": (
+                        "PRIOR_UNKNOWN_DATE_PRECEDED_PUBLICATION_DATE_INFERENCE"
+                    ),
+                    "fetch_semantics_policy_version": (
+                        PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION
+                    ),
+                }
+            ],
+        )
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+
+        run = self._run(
+            provider=SourceBrainProvider(),
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(
+                fixture_text_by_url={url: _document_text("semantics-retry")}
+            ),
+            checkpoint=checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        candidate = next(
+            row
+            for row in run.checkpoint["search_candidates"]
+            if row["candidate_id"] == "CURRENT-SEMANTICS-RETRY"
+        )
+        self.assertEqual(candidate["fetch_status"], "FULL_DOCUMENT_FETCHED")
+        self.assertEqual(candidate["full_fetch_attempt_count"], 1)
+        self.assertTrue(
+            any(row.get("canonical_url") == url for row in run.evidence_documents)
+        )
+        ordinary_pending = {
+            **candidate,
+            "candidate_id": "ORDINARY-RESOLVED-PENDING",
+            "fetch_status": "MATERIAL_PENDING_FETCH",
+            "fetch_semantics_retry_reason": None,
+            "fetch_semantics_policy_version": None,
+        }
+        self.assertTrue(
+            source_graph_module._candidate_scope_is_fully_resolved(
+                ordinary_pending,
+                {"OBJECTIVE-1"},
+            )
+        )
+        stale_policy_pending = {
+            **candidate,
+            "fetch_status": "MATERIAL_PENDING_FETCH",
+            "fetch_semantics_policy_version": (
+                "e2r_publication_date_inference_v2"
+            ),
+        }
+        self.assertTrue(
+            source_graph_module._candidate_scope_is_fully_resolved(
+                stale_policy_pending,
+                {"OBJECTIVE-1"},
+            )
+        )
+        candidate["fetch_status"] = "FULL_DOCUMENT_FETCHED"
+        self.assertTrue(
+            source_graph_module._candidate_scope_is_fully_resolved(
+                candidate,
+                {"OBJECTIVE-1"},
+            )
+        )
+
     def test_legacy_text_cap_document_is_quarantined_and_refetched_once(self) -> None:
         content = "x" * 200_000
         content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
@@ -4418,7 +4600,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             source_families=("CUSTOMER_OFFICIAL",),
         )
         blog_url = "https://writer.example.net/hbm-retelling"
-        customer_url = "https://customer.example.com/platform/hbm"
+        customer_url = "https://news.customer.example.com/platform/hbm"
         wrong_subject_customer_url = (
             "https://customer.example.com/careers/accounting"
         )
@@ -4428,7 +4610,11 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 {
                     QUERY: (
                         _result("Current Corp HBM 해설", blog_url),
-                        _result("Current Corp HBM platform", customer_url),
+                        _result(
+                            "Current Corp HBM platform",
+                            customer_url,
+                            is_news=True,
+                        ),
                         _result(
                             "Customer Corp accounting careers",
                             wrong_subject_customer_url,
@@ -4456,6 +4642,23 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             run.evidence_documents[0]["source_family"],
             "CUSTOMER_OFFICIAL",
         )
+        self.assertEqual(
+            run.evidence_documents[0]["source_family_observations"],
+            ["TRUSTED_BUSINESS_MEDIA", "CUSTOMER_OFFICIAL"],
+        )
+        self.assertTrue(
+            run.evidence_documents[0][
+                "source_family_assigned_by_candidate_ranker"
+            ]
+        )
+        self.assertEqual(
+            run.evidence_documents[0]["source_independence_group"],
+            "CUSTOMER_OFFICIAL:news.customer.example.com",
+        )
+        self.assertEqual(
+            run.evidence_documents[0]["verified_official_discovery_urls"],
+            [customer_url],
+        )
         candidates = {
             row["url"]: row
             for row in run.checkpoint["search_candidates"]
@@ -4478,6 +4681,172 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             ],
             "CUSTOMER_OFFICIAL",
         )
+
+    def test_customer_official_override_preserves_strong_classifiers(
+        self,
+    ) -> None:
+        for weak_family in (
+            "GENERAL_WEB_DISCOVERY",
+            "TRUSTED_BUSINESS_MEDIA",
+        ):
+            with self.subTest(weak_family=weak_family):
+                self.assertTrue(
+                    source_graph_module._ranker_customer_official_provenance_applies(
+                        classified_source_family=weak_family,
+                        matched_requested_source_family="CUSTOMER_OFFICIAL",
+                    )
+                )
+        for strong_family in (
+            "OPENDART",
+            "KIND_KRX",
+            "ISSUER_NEWSROOM",
+            "REUTERS",
+            "PUBLIC_BROKER_PDF",
+        ):
+            with self.subTest(strong_family=strong_family):
+                self.assertFalse(
+                    source_graph_module._ranker_customer_official_provenance_applies(
+                        classified_source_family=strong_family,
+                        matched_requested_source_family="CUSTOMER_OFFICIAL",
+                    )
+                )
+
+    def test_checkpoint_migrates_exact_customer_news_provenance_once(
+        self,
+    ) -> None:
+        url = "https://news.customer.example.com/releases/memory"
+        text = _document_text("customer-newsroom-provenance")
+        candidate = {
+            "candidate_id": "CUSTOMER-NEWSROOM",
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "url": url,
+            "normalized_url": url,
+            "query_ids": ["QUERY-1"],
+            "materiality_query_ids": ["QUERY-1"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["CUSTOMER_OFFICIAL"],
+            "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+            "materiality_decision_id": "DECISION-CUSTOMER-NEWSROOM",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FULL_DOCUMENT_FETCHED",
+            "document_id": "SGDOC-CUSTOMER-NEWSROOM",
+            "is_news": True,
+        }
+        candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(candidate)
+        )
+        document = {
+            "schema_version": "e2r_v5_source_graph_document_v1",
+            "document_id": "SGDOC-CUSTOMER-NEWSROOM",
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "canonical_url": url,
+            "title": "Customer official memory release",
+            "source_family": "TRUSTED_BUSINESS_MEDIA",
+            "source_family_observations": ["TRUSTED_BUSINESS_MEDIA"],
+            "source_provider": "PageFetcher",
+            "published_at": "2026-06-20",
+            "available_at": "2026-06-20",
+            "content_type": "text/html",
+            "content_hash": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+            "content_text": text,
+            "query_ids": ["QUERY-1"],
+            "materiality_query_ids": ["QUERY-1"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["CUSTOMER_OFFICIAL"],
+            "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+            "materiality_scope_hash": candidate["materiality_scope_hash"],
+            "materiality_scope_url": url,
+            "source_materiality_decision_id": (
+                "DECISION-CUSTOMER-NEWSROOM"
+            ),
+            "source_family_assigned_by_candidate_ranker": False,
+            "source_independence_group": (
+                "TRUSTED_BUSINESS_MEDIA:news.customer.example.com"
+            ),
+            "verified_official_discovery_urls": [],
+            "referenced_urls": [],
+            "referenced_document_ids": [],
+            "full_fetch_performed": True,
+            "snippet_only": False,
+            "snippet_used_as_document": False,
+            "evidence_eligible": True,
+            "production_score_authority": False,
+        }
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state["search_candidates"] = [candidate]
+        state["candidate_materiality_decisions"] = [
+            {
+                "decision_id": "DECISION-CUSTOMER-NEWSROOM",
+                "candidate_id": "CUSTOMER-NEWSROOM",
+                "material_relevance": True,
+                "priority": 1.0,
+                "objective_ids": ["OBJECTIVE-1"],
+                "matched_requested_source_family": "CUSTOMER_OFFICIAL",
+                "rationale": "customer-owned official newsroom source",
+            }
+        ]
+        state["evidence_documents"] = [document]
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        self.assertEqual(
+            source_graph_module.source_graph_ranker_customer_official_reclassification_document_ids(
+                checkpoint
+            ),
+            frozenset({"SGDOC-CUSTOMER-NEWSROOM"}),
+        )
+
+        first = self._run(
+            provider=SourceBrainProvider(),
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=checkpoint,
+            checkpoint_migration_only=True,
+        )
+
+        self.assertEqual(len(first.evidence_documents), 1)
+        migrated = first.evidence_documents[0]
+        self.assertEqual(migrated["document_id"], document["document_id"])
+        self.assertEqual(migrated["content_hash"], document["content_hash"])
+        self.assertEqual(migrated["source_family"], "CUSTOMER_OFFICIAL")
+        self.assertEqual(
+            migrated["source_family_before_provenance_reclassification"],
+            "TRUSTED_BUSINESS_MEDIA",
+        )
+        self.assertEqual(
+            migrated["source_independence_group"],
+            "CUSTOMER_OFFICIAL:news.customer.example.com",
+        )
+        self.assertTrue(migrated["source_family_provenance_reclassified"])
+        self.assertTrue(migrated["source_family_assigned_by_candidate_ranker"])
+        self.assertEqual(first.audit["source_family_provenance_reclassified_count"], 1)
+        self.assertEqual(first.checkpoint["fetch_records"], [])
+        self.assertEqual(
+            source_graph_module.source_graph_ranker_customer_official_reclassification_document_ids(
+                first.checkpoint
+            ),
+            frozenset(),
+        )
+
+        second = self._run(
+            provider=SourceBrainProvider(),
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=first.checkpoint,
+            checkpoint_migration_only=True,
+        )
+
+        self.assertEqual(
+            second.audit["source_family_provenance_reclassified_count"],
+            0,
+        )
+        self.assertEqual(len(second.evidence_documents), 1)
+        self.assertEqual(second.checkpoint["fetch_records"], [])
 
     def test_ranker_prompt_compacts_complete_large_fact_graph(self) -> None:
         provider = SourceBrainProvider()
@@ -4628,6 +4997,46 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 url=url,
                 published_at="2026-06-30T07:45:00+09:00",
             ),
+        )
+        self.assertFalse(
+            any(row.get("canonical_url") == url for row in run.evidence_documents)
+        )
+        self.assertTrue(
+            any(
+                row.get("rejection_reason")
+                == "FUTURE_DOCUMENT_AFTER_FULL_FETCH"
+                for row in run.checkpoint["rejected_documents"]
+            )
+        )
+
+    def test_future_leading_press_release_date_is_rejected(self) -> None:
+        provider = SourceBrainProvider()
+        url = "https://example.com/future-press-release"
+        text = (
+            "Official Newsroom\n"
+            "Press Release\n"
+            "Current Corp Announces Technology Partnership\n"
+            "Collaboration Supports Next-Generation Systems\n"
+            "July 2, 2026\n"
+            "News Summary:\n"
+            "Current Corp disclosed capacity, customer qualification, pricing, "
+            "cash conversion, and counter evidence. "
+            + "source-backed release detail " * 12
+        )
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result(
+                            "Current Corp technology partnership",
+                            url,
+                            published=None,
+                        ),
+                    )
+                }
+            ),
+            fetcher=PageFetcher(fixture_text_by_url={url: text}),
         )
         self.assertFalse(
             any(row.get("canonical_url") == url for row in run.evidence_documents)
@@ -4801,6 +5210,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         current_evidence_facts: Sequence[Mapping[str, Any]] = (),
         score_gap_context: Mapping[str, Any] | None = None,
         checkpoint_migration_only: bool = False,
+        resolved_objective_ids: Sequence[str] = (),
     ):
         return ResearcherSourceGraphAcquirer(
             query_provider=provider,
@@ -4823,6 +5233,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 else {"OBJECTIVE-1": ("official source gap recorded",)}
             ),
             score_gap_context=score_gap_context,
+            resolved_objective_ids=resolved_objective_ids,
             prior_checkpoint=checkpoint,
             official_domain_allowlist=official_domains,
             checkpoint_migration_only=checkpoint_migration_only,
@@ -4846,6 +5257,7 @@ def _result(
     rank: int = 1,
     published: str | None = "2026-06-20",
     query: str = QUERY,
+    is_news: bool | None = None,
 ) -> SearchResult:
     return SearchResult(
         title=title,
@@ -4855,7 +5267,7 @@ def _result(
         published_at=(datetime.fromisoformat(published) if published else None),
         query=query,
         rank=rank,
-        is_news="reuters" in url,
+        is_news=("reuters" in url if is_news is None else is_news),
     )
 
 

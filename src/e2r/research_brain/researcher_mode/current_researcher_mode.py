@@ -41,6 +41,7 @@ from .evidence_fact_extractor import (
     fact_extraction_has_exact_checkpoint_recovery_wait,
     normalize_punctuation_only_fact_value,
     production_material_fact_rows,
+    rematerialize_claim_source_provenance,
     write_researcher_fact_extraction_result,
 )
 from .official_source_materializer import (
@@ -87,6 +88,7 @@ from .source_graph_explorer import (
     SourceGraphAcquisitionRun,
     SourceGraphExplorer,
     load_source_graph_checkpoint,
+    source_graph_ranker_customer_official_reclassification_document_ids,
     source_graph_active_navigation_only_document_ids,
     source_graph_acquisition_safety_critical_counts,
     source_graph_checkpoint_audit_binding,
@@ -326,9 +328,21 @@ class CurrentResearcherModeTargetRunner:
                 )
             )
         )
+        source_checkpoint_provenance_migration_only = bool(
+            source_resume_mode == "REUSE_READY_CHECKPOINT"
+            and prior_source_checkpoint is not None
+            and source_graph_ranker_customer_official_reclassification_document_ids(
+                prior_source_checkpoint
+            )
+        )
+        source_checkpoint_migration_only = bool(
+            source_checkpoint_navigation_migration_only
+            or source_checkpoint_provenance_migration_only
+        )
         source_checkpoint_readonly_replayed = bool(
             source_resume_mode == "REUSE_READY_CHECKPOINT"
             and prior_source_checkpoint is not None
+            and not source_checkpoint_migration_only
             and _source_checkpoint_is_ready_for_readonly_replay(
                 prior_source_checkpoint
             )
@@ -337,7 +351,7 @@ class CurrentResearcherModeTargetRunner:
             source_resume_mode == "REUSE_READY_CHECKPOINT"
             and prior_source_checkpoint is not None
             and not source_checkpoint_readonly_replayed
-            and not source_checkpoint_navigation_migration_only
+            and not source_checkpoint_migration_only
             and _source_checkpoint_needs_downstream_provider_recovery(
                 root=root,
                 checkpoint=prior_source_checkpoint,
@@ -349,7 +363,7 @@ class CurrentResearcherModeTargetRunner:
             source_resume_mode == "REUSE_READY_CHECKPOINT"
             and prior_source_checkpoint is not None
             and not source_checkpoint_readonly_replayed
-            and not source_checkpoint_navigation_migration_only
+            and not source_checkpoint_migration_only
             and not source_checkpoint_downstream_recovery_replayed
             and _source_checkpoint_needs_fact_extraction_recovery(
                 root=root,
@@ -414,7 +428,7 @@ class CurrentResearcherModeTargetRunner:
                 prior_checkpoint=prior_source_checkpoint,
                 official_domain_allowlist=target.official_domains,
                 checkpoint_migration_only=(
-                    source_checkpoint_navigation_migration_only
+                    source_checkpoint_migration_only
                 ),
             )
             write_source_graph_acquisition_run(source_graph, output_root=root)
@@ -764,6 +778,9 @@ class CurrentResearcherModeTargetRunner:
             ),
             "source_checkpoint_navigation_migration_only": (
                 source_checkpoint_navigation_migration_only
+            ),
+            "source_checkpoint_provenance_migration_only": (
+                source_checkpoint_provenance_migration_only
             ),
             "component_memo_count": len(component_memos),
             "fact_count": len(fact_extraction.facts),
@@ -1954,7 +1971,34 @@ def _load_fact_checkpoint(
     current_ids = {
         str(row.get("document_id") or "") for row in source_graph.evidence_documents
     }
-    all_calls = _read_jsonl(paths["provider_calls"])
+    document_by_id = {
+        str(row.get("document_id") or ""): row
+        for row in source_graph.evidence_documents
+        if str(row.get("document_id") or "")
+    }
+    persisted_claims = tuple(
+        rematerialize_claim_source_provenance(
+            normalize_punctuation_only_fact_value(row),
+            document=document_by_id.get(
+                str(row.get("document_id") or "")
+            ),
+        )
+        for row in _read_jsonl(paths["accepted_claims"])
+    )
+    all_calls: list[Mapping[str, Any]] = []
+    for raw_call in _read_jsonl(paths["provider_calls"]):
+        call = dict(raw_call)
+        if isinstance(call.get("accepted_claims"), list):
+            call["accepted_claims"] = [
+                rematerialize_claim_source_provenance(
+                    claim,
+                    document=document_by_id.get(
+                        str(claim.get("document_id") or "")
+                    ),
+                )
+                for claim in call["accepted_claims"]
+            ]
+        all_calls.append(call)
     completed_call_ids = {
         str(document_id)
         for row in all_calls
@@ -1974,8 +2018,8 @@ def _load_fact_checkpoint(
         if str(row.get("document_id") or "") in completed_ids
     )
     claims = tuple(
-        normalize_punctuation_only_fact_value(row)
-        for row in _read_jsonl(paths["accepted_claims"])
+        row
+        for row in persisted_claims
         if str(row.get("document_id") or "") in completed_ids
     )
     calls = tuple(

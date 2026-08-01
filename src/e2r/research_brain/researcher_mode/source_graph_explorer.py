@@ -73,6 +73,12 @@ SOURCE_FAMILY_CLASSES: Mapping[str, tuple[str, ...]] = {
 NAVIGATION_ONLY_REFERENCE_POLICY_VERSION = (
     "e2r_v5_navigation_only_reference_terminal_v1"
 )
+SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION = (
+    "e2r_v5_customer_official_weak_discovery_override_v1"
+)
+_WEAK_DISCOVERY_SOURCE_FAMILIES = frozenset(
+    {"GENERAL_WEB_DISCOVERY", "TRUSTED_BUSINESS_MEDIA"}
+)
 
 
 @dataclass(frozen=True)
@@ -668,6 +674,16 @@ class ResearcherSourceGraphAcquirer:
         _annotate_candidate_source_hints(
             candidates,
             official_hosts=allowed_hosts,
+        )
+        source_family_provenance_reclassified_count = (
+            _reclassify_persisted_customer_official_documents(
+                evidence_documents,
+                candidates=candidates,
+                decisions=ranking_rows,
+            )
+        )
+        state["source_family_provenance_semantics_version"] = (
+            SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION
         )
         _close_navigation_only_reference_routes(candidates)
         _close_non_authority_candidate_reference_routes(candidates)
@@ -1446,6 +1462,12 @@ class ResearcherSourceGraphAcquirer:
             ),
             "production_current_query_edge_scope_repaired_count": (
                 current_query_edge_scope_repaired_count
+            ),
+            "source_family_provenance_reclassified_count": (
+                source_family_provenance_reclassified_count
+            ),
+            "source_family_provenance_semantics_version": (
+                SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION
             ),
         }
         return SourceGraphAcquisitionRun(
@@ -3876,18 +3898,25 @@ def _fetch_candidate_document(
     classified_source_family = _classify_source_family(
         candidate, url=url, official_hosts=official_hosts
     )
-    # Target official, regulatory, Reuters, news, and report routes have
-    # deterministic URL/provenance classifiers and retain that stronger
-    # observation.  CUSTOMER_OFFICIAL is the one canonical official family
-    # whose owner is intentionally outside the target issuer allowlist; the
-    # LLM ranker therefore supplies that semantic provenance while
-    # deterministic code binds it to the exact requested-family roster.
+    # Target official, regulatory, Reuters, and report routes have strong
+    # deterministic provenance classifiers and retain that observation.
+    # GENERAL_WEB and is_news are only weak discovery hints: a customer-owned
+    # newsroom can legitimately have either shape.  CUSTOMER_OFFICIAL is the
+    # one canonical official family whose owner is intentionally outside the
+    # target issuer allowlist, so the current LLM materiality decision supplies
+    # that semantic provenance while deterministic code binds it to the exact
+    # requested-family roster and scope hash.
+    ranker_customer_official_provenance = (
+        _ranker_customer_official_provenance_applies(
+            classified_source_family=classified_source_family,
+            matched_requested_source_family=(
+                matched_requested_source_family
+            ),
+        )
+    )
     source_family = (
         "CUSTOMER_OFFICIAL"
-        if (
-            classified_source_family == "GENERAL_WEB_DISCOVERY"
-            and matched_requested_source_family == "CUSTOMER_OFFICIAL"
-        )
+        if ranker_customer_official_provenance
         else classified_source_family
     )
     evidence_reference_urls = tuple(
@@ -4051,7 +4080,9 @@ def _fetch_candidate_document(
         "discovery_urls": [url],
         "title": candidate.get("title"),
         "source_family": source_family,
-        "source_family_observations": [source_family],
+        "source_family_observations": list(
+            dict.fromkeys((classified_source_family, source_family))
+        ),
         "source_provider": type(page_fetcher).__name__,
         "published_at": published.isoformat() if published else None,
         "available_at": published.isoformat() if published else None,
@@ -4116,9 +4147,11 @@ def _fetch_candidate_document(
         "source_materiality_decision_id": (
             candidate.get("materiality_decision_id")
         ),
-        "source_family_assigned_by_candidate_ranker": bool(
-            classified_source_family == "GENERAL_WEB_DISCOVERY"
-            and matched_requested_source_family == "CUSTOMER_OFFICIAL"
+        "source_family_assigned_by_candidate_ranker": (
+            ranker_customer_official_provenance
+        ),
+        "source_family_provenance_semantics_version": (
+            SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION
         ),
         "source_independence_group": _source_independence_group(url, source_family),
         "verified_official_discovery_urls": (
@@ -4390,6 +4423,201 @@ def _classify_source_family(
     return "GENERAL_WEB_DISCOVERY"
 
 
+def _ranker_customer_official_provenance_applies(
+    *,
+    classified_source_family: str,
+    matched_requested_source_family: str,
+) -> bool:
+    """Let a current ranker decision override only weak discovery hints.
+
+    Search metadata such as ``is_news`` describes the result presentation,
+    not who owns the page.  A customer company's official newsroom can
+    therefore look like business media.  Regulatory, target-issuer, Reuters,
+    and report/PDF classifications remain deterministic stronger evidence and
+    cannot be relabelled by this semantic decision.
+    """
+
+    return (
+        matched_requested_source_family == "CUSTOMER_OFFICIAL"
+        and classified_source_family in _WEAK_DISCOVERY_SOURCE_FAMILIES
+    )
+
+
+def _reclassify_persisted_customer_official_documents(
+    documents: Sequence[dict[str, Any]],
+    *,
+    candidates: Sequence[Mapping[str, Any]],
+    decisions: Sequence[Mapping[str, Any]],
+) -> int:
+    """Migrate exact current decision-bound documents without a refetch.
+
+    The document bytes and identity remain unchanged.  Only a fetched
+    document whose copied materiality scope, URL, and decision id still match
+    its current candidate can move from a weak discovery family to
+    ``CUSTOMER_OFFICIAL``.  This keeps the migration one-way, auditable, and
+    idempotent while preventing stale LLM decisions from laundering sources.
+    """
+
+    candidate_by_document_id = {
+        str(row.get("document_id") or ""): row
+        for row in candidates
+        if str(row.get("document_id") or "")
+    }
+    candidate_by_decision_id = {
+        str(row.get("materiality_decision_id") or ""): row
+        for row in candidates
+        if str(row.get("materiality_decision_id") or "")
+    }
+    decision_by_id = {
+        str(row.get("decision_id") or ""): row
+        for row in decisions
+        if str(row.get("decision_id") or "")
+    }
+    migrated = 0
+    for document in documents:
+        document_scope = _validated_reference_materiality_scope(document)
+        if document_scope is None:
+            continue
+        candidate = candidate_by_decision_id.get(
+            str(document_scope["source_materiality_decision_id"])
+        ) or candidate_by_document_id.get(
+            str(document.get("document_id") or "")
+        )
+        if candidate is None:
+            continue
+        candidate_scope = _validated_reference_materiality_scope(candidate)
+        if (
+            candidate_scope is None
+            or str(candidate.get("fetch_status") or "")
+            != "FULL_DOCUMENT_FETCHED"
+            or str(candidate.get("document_id") or "")
+            != str(document.get("document_id") or "")
+            or not _candidate_materiality_decision_binds_scope(
+                candidate=candidate,
+                decision=decision_by_id.get(
+                    str(candidate.get("materiality_decision_id") or "")
+                ),
+                scope_hash=str(
+                    candidate_scope["materiality_scope_hash"]
+                ),
+                requested_source_families=tuple(
+                    candidate_scope["requested_source_families"]
+                ),
+            )
+            or candidate_scope["matched_requested_source_family"]
+            != "CUSTOMER_OFFICIAL"
+            or candidate_scope["materiality_scope_hash"]
+            != document_scope["materiality_scope_hash"]
+            or candidate_scope["materiality_scope_url"]
+            != document_scope["materiality_scope_url"]
+            or candidate_scope["source_materiality_decision_id"]
+            != document_scope["source_materiality_decision_id"]
+        ):
+            continue
+        current_family = str(document.get("source_family") or "")
+        if current_family == "CUSTOMER_OFFICIAL":
+            document["source_family_provenance_semantics_version"] = (
+                SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION
+            )
+            continue
+        if current_family not in _WEAK_DISCOVERY_SOURCE_FAMILIES:
+            continue
+        url = str(
+            document.get("canonical_url")
+            or candidate.get("url")
+            or ""
+        )
+        content = str(document.get("content_text") or "")
+        host = _normalized_host(url)
+        if (
+            str(document.get("source_provider") or "") != "PageFetcher"
+            or document.get("full_fetch_performed") is not True
+            or document.get("snippet_only") is True
+            or document.get("evidence_eligible") is not True
+            or not _is_http_url(url)
+            or not host
+            or not content
+            or hashlib.sha256(content.encode("utf-8")).hexdigest()
+            != str(document.get("content_hash") or "")
+            or str(document.get("source_independence_group") or "")
+            != _source_independence_group(url, current_family)
+        ):
+            continue
+        document["source_family_before_provenance_reclassification"] = (
+            current_family
+        )
+        document["source_family"] = "CUSTOMER_OFFICIAL"
+        document["source_family_observations"] = list(
+            dict.fromkeys(
+                (
+                    *document.get(
+                        "source_family_observations",
+                        (current_family,),
+                    ),
+                    "CUSTOMER_OFFICIAL",
+                )
+            )
+        )
+        document["source_independence_group"] = (
+            _source_independence_group(url, "CUSTOMER_OFFICIAL")
+        )
+        document["verified_official_discovery_urls"] = list(
+            dict.fromkeys(
+                (
+                    *document.get(
+                        "verified_official_discovery_urls",
+                        (),
+                    ),
+                    url,
+                )
+            )
+        )
+        document["source_family_assigned_by_candidate_ranker"] = True
+        document["source_family_provenance_reclassified"] = True
+        document["source_family_provenance_reclassification_reason"] = (
+            "CURRENT_CUSTOMER_OFFICIAL_DECISION_OVERRIDES_WEAK_DISCOVERY_HINT"
+        )
+        document["source_family_provenance_semantics_version"] = (
+            SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION
+        )
+        migrated += 1
+    return migrated
+
+
+def source_graph_ranker_customer_official_reclassification_document_ids(
+    checkpoint: Mapping[str, Any],
+) -> frozenset[str]:
+    """Detect ready checkpoints that need the one-way provenance migration."""
+
+    documents = [
+        dict(row) for row in checkpoint.get("evidence_documents") or ()
+    ]
+    before = {
+        str(row.get("document_id") or ""): str(
+            row.get("source_family") or ""
+        )
+        for row in documents
+    }
+    _reclassify_persisted_customer_official_documents(
+        documents,
+        candidates=tuple(checkpoint.get("search_candidates") or ()),
+        decisions=tuple(
+            checkpoint.get("candidate_materiality_decisions") or ()
+        ),
+    )
+    return frozenset(
+        document_id
+        for document_id, prior_family in before.items()
+        if prior_family in _WEAK_DISCOVERY_SOURCE_FAMILIES
+        and any(
+            str(row.get("document_id") or "") == document_id
+            and str(row.get("source_family") or "")
+            == "CUSTOMER_OFFICIAL"
+            for row in documents
+        )
+    )
+
+
 def _host_is_official(host: str, official_hosts: set[str]) -> bool:
     return any(
         host == official_host or host.endswith("." + official_host)
@@ -4423,12 +4651,37 @@ def _candidate_scope_is_fully_resolved(
 ) -> bool:
     """Keep historical candidate state without blocking unrelated open work."""
 
+    if (
+        candidate.get("fetch_status")
+        in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+        and _candidate_has_current_fetch_semantics_retry(candidate)
+    ):
+        # A local parser/fetch-semantics upgrade reopens the exact document,
+        # not its old research question.  The prior objective resolution
+        # therefore cannot suppress the one pending full-fetch attempt that
+        # determines whether the newly readable source is material.
+        return False
+
     candidate_objective_ids = {
         str(value)
         for value in candidate.get("objective_ids") or ()
         if str(value).strip()
     }
     return candidate_objective_ids.issubset(resolved_objective_ids)
+
+
+def _candidate_has_current_fetch_semantics_retry(
+    candidate: Mapping[str, Any],
+) -> bool:
+    reason = str(candidate.get("fetch_semantics_retry_reason") or "")
+    policy_version = str(
+        candidate.get("fetch_semantics_policy_version") or ""
+    )
+    if reason == "PRIOR_UNKNOWN_DATE_PRECEDED_PUBLICATION_DATE_INFERENCE":
+        return policy_version == PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION
+    if reason == "PRIOR_PDF_FAILURE_PRECEDED_PDFPLUMBER_FALLBACK":
+        return policy_version == "e2r_pdf_text_fallback_v1"
+    return False
 
 
 def _has_actionable_supervisor_query_direction(
@@ -5126,6 +5379,7 @@ def _observed_date(row: Mapping[str, Any]) -> date | None:
 __all__ = [
     "ResearcherSourceGraphAcquirer",
     "SOURCE_FAMILY_CLASSES",
+    "SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION",
     "SourceGraphAcquisitionConfig",
     "SourceGraphAcquisitionMode",
     "SourceGraphAcquisitionRun",
@@ -5135,6 +5389,7 @@ __all__ = [
     "SourceGraphNode",
     "SourceResearchObjective",
     "load_source_graph_checkpoint",
+    "source_graph_ranker_customer_official_reclassification_document_ids",
     "validate_source_graph_checkpoint",
     "validated_quarantined_document_ids",
     "write_source_graph_acquisition_run",

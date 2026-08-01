@@ -9,7 +9,7 @@ from urllib.parse import unquote
 
 
 PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION = (
-    "e2r_publication_date_inference_v2"
+    "e2r_publication_date_inference_v3"
 )
 
 _ENGLISH_MONTHS = {
@@ -67,6 +67,13 @@ def infer_publication_date(
     candidates.extend(
         _labelled_publication_dates(document_text, as_of_date=as_of_date)
     )
+    if not candidates:
+        candidates.extend(
+            _leading_release_publication_dates(
+                document_text,
+                as_of_date=as_of_date,
+            )
+        )
     return max(candidates) if candidates else None
 
 
@@ -248,6 +255,90 @@ def _publication_label_strength(line: str) -> str | None:
     ):
         return "FALLBACK"
     return None
+
+
+def _leading_release_publication_dates(
+    text: str,
+    *,
+    as_of_date: date | None,
+) -> tuple[date, ...]:
+    """Read an unlabelled date only from a release document's leading block.
+
+    Some official newsrooms render ``Press Release`` followed by the title,
+    subtitle, and a standalone date line, without exposing ``datePublished``
+    metadata.  Treating every standalone body date as publication metadata
+    would be unsafe, so this route is deliberately narrow: the release marker
+    must occur near the document head, the date must be one of the next few
+    non-empty lines, and article/footer boundaries end the search.
+    """
+
+    lines = tuple(
+        line.strip()
+        for line in str(text or "").splitlines()
+        if line.strip()
+    )
+    marker_index: int | None = None
+    for index, line in enumerate(lines[:80]):
+        if re.fullmatch(
+            r"(?i)(?:press|news|media)\s+releases?",
+            re.sub(r"\s+", " ", line),
+        ):
+            marker_index = index
+            break
+    if marker_index is None:
+        return ()
+
+    boundary = re.compile(
+        r"(?i)^(?:"
+        r"news\s+summary|summary|highlights?|key\s+points?"
+        r"|more\s+news|related\s+news|latest\s+news"
+        r"|media\s+contacts?|about\s+.+"
+        r")\s*:?$"
+    )
+    candidates: list[date] = []
+    for line in lines[marker_index + 1 : marker_index + 25]:
+        normalized = re.sub(r"\s+", " ", line)
+        if boundary.fullmatch(normalized):
+            break
+        candidate = _standalone_english_month_date(normalized)
+        if candidate is not None:
+            candidates.append(candidate)
+            break
+    return tuple(candidates)
+
+
+def _standalone_english_month_date(text: str) -> date | None:
+    match = re.fullmatch(
+        rf"(?i)({_ENGLISH_MONTH_PATTERN})\.?\s+([0-3]?\d)"
+        rf"(?:st|nd|rd|th)?\s*,?\s+(20\d{{2}})",
+        text,
+    )
+    if match is not None:
+        month_name, day, year = match.groups()
+        values: list[date] = []
+        _append_valid(
+            values,
+            int(year),
+            _ENGLISH_MONTHS[month_name.casefold()],
+            int(day),
+        )
+        return values[0] if values else None
+    match = re.fullmatch(
+        rf"(?i)([0-3]?\d)(?:st|nd|rd|th)?\s+"
+        rf"({_ENGLISH_MONTH_PATTERN})\.?\s*,?\s+(20\d{{2}})",
+        text,
+    )
+    if match is None:
+        return None
+    day, month_name, year = match.groups()
+    values = []
+    _append_valid(
+        values,
+        int(year),
+        _ENGLISH_MONTHS[month_name.casefold()],
+        int(day),
+    )
+    return values[0] if values else None
 
 
 def _append_valid(values: list[date], year: int, month: int, day: int) -> None:

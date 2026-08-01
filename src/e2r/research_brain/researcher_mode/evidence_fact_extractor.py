@@ -1797,6 +1797,15 @@ class ResearcherEvidenceFactExtractor:
             "preserved_prior_claim_count": len(
                 prior_material_claims
             ),
+            "prior_claim_source_provenance_rematerialized_count": sum(
+                row.get("source_provenance_rematerialized") is True
+                for row in prior_material_claims
+            ),
+            "embedded_claim_source_provenance_rematerialized_count": sum(
+                claim.get("source_provenance_rematerialized") is True
+                for call in all_checkpoint_calls
+                for claim in call.accepted_claims or ()
+            ),
             "base_reextraction_document_count": 0,
             "production_objective_local_completion": (
                 extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
@@ -3167,6 +3176,88 @@ def _source_tier(source_family: str) -> str:
     }:
         return "TRUSTED_INDEPENDENT"
     return "GENERAL_WEB"
+
+
+def rematerialize_claim_source_provenance(
+    claim: Mapping[str, Any],
+    *,
+    document: Mapping[str, Any] | None,
+) -> Mapping[str, Any]:
+    """Refresh only deterministic provenance derived from a migrated source.
+
+    Claim/economic identities do not include the source-family label.  When a
+    checkpoint migration corrects that label, preserve the exact quote and
+    claim id while updating the family, tier, and independence group from the
+    current canonical document.  Any lineage/content mismatch fails closed.
+    """
+
+    row = dict(claim)
+    if (
+        document is None
+        or document.get("source_family_provenance_reclassified") is not True
+    ):
+        return row
+    document_id = str(document.get("document_id") or "")
+    source_ids = {
+        str(value) for value in row.get("source_ids") or () if str(value)
+    }
+    content = str(document.get("content_text") or "")
+    exact_quote = str(row.get("exact_quote") or "")
+    if (
+        not document_id
+        or str(row.get("document_id") or "") != document_id
+        or source_ids != {document_id}
+        or str(row.get("target_id") or "")
+        != str(document.get("target_id") or "")
+        or str(row.get("as_of_date") or "")
+        != str(document.get("as_of_date") or "")
+        or not exact_quote
+        or exact_quote not in content
+        or hashlib.sha256(content.encode("utf-8")).hexdigest()
+        != str(document.get("content_hash") or "")
+        or (
+            row.get("canonical_url")
+            and str(row.get("canonical_url"))
+            != str(document.get("canonical_url") or "")
+        )
+        or (
+            row.get("published_at")
+            and str(row.get("published_at"))
+            != str(document.get("published_at") or "")
+        )
+        or (
+            row.get("available_at")
+            and str(row.get("available_at"))
+            != str(document.get("available_at") or "")
+        )
+    ):
+        raise ValueError(
+            "claim source provenance migration lineage mismatch"
+        )
+    source_family = str(document.get("source_family") or "")
+    source_independence_group = str(
+        document.get("source_independence_group") or ""
+    )
+    if not source_family or not source_independence_group:
+        raise ValueError(
+            "migrated source document lacks canonical provenance"
+        )
+    if (
+        str(row.get("source_family") or "") == source_family
+        and str(row.get("source_independence_group") or "")
+        == source_independence_group
+        and str(row.get("source_tier") or "")
+        == _source_tier(source_family)
+    ):
+        return row
+    row["source_family"] = source_family
+    row["source_tier"] = _source_tier(source_family)
+    row["source_independence_group"] = source_independence_group
+    row["source_provenance_rematerialized"] = True
+    row["source_provenance_semantics_version"] = str(
+        document.get("source_family_provenance_semantics_version") or ""
+    )
+    return row
 
 
 def _clean_error(error: Exception) -> str:

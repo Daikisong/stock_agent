@@ -1685,6 +1685,115 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             ["DOC-COMPLETE"],
         )
 
+    def test_source_provenance_migration_rematerializes_claim_without_provider(
+        self,
+    ) -> None:
+        document = _document(
+            "DOC-CUSTOMER-NEWSROOM",
+            "TRUSTED_BUSINESS_MEDIA",
+            "TRUSTED_BUSINESS_MEDIA:news.customer.example.com",
+        )
+        initial = ResearcherEvidenceFactExtractor(
+            provider=FactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+        )
+        self.assertEqual(
+            initial.material_claims[0]["source_tier"],
+            "TRUSTED_INDEPENDENT",
+        )
+        migrated_document = {
+            **document,
+            "source_family": "CUSTOMER_OFFICIAL",
+            "source_independence_group": (
+                "CUSTOMER_OFFICIAL:news.customer.example.com"
+            ),
+            "source_family_provenance_reclassified": True,
+            "source_family_provenance_semantics_version": (
+                "e2r_v5_customer_official_weak_discovery_override_v1"
+            ),
+        }
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_researcher_fact_extraction_result(initial, root)
+            checkpoint = _load_fact_checkpoint(
+                root,
+                source_graph=SimpleNamespace(
+                    evidence_documents=(migrated_document,)
+                ),
+            )
+
+        self.assertEqual(len(checkpoint["prior_material_claims"]), 1)
+        checkpoint_claim = checkpoint["prior_material_claims"][0]
+        self.assertEqual(
+            checkpoint_claim["claim_id"],
+            initial.material_claims[0]["claim_id"],
+        )
+        self.assertEqual(
+            checkpoint_claim["source_family"],
+            "CUSTOMER_OFFICIAL",
+        )
+        self.assertEqual(
+            checkpoint_claim["source_tier"],
+            "CUSTOMER_OFFICIAL",
+        )
+        self.assertEqual(
+            checkpoint_claim["source_independence_group"],
+            "CUSTOMER_OFFICIAL:news.customer.example.com",
+        )
+        self.assertEqual(len(checkpoint["prior_document_dispositions"]), 1)
+        self.assertEqual(len(checkpoint["prior_provider_calls"]), 1)
+        resumed_provider = FactProvider(fail=True)
+        resumed = ResearcherEvidenceFactExtractor(
+            provider=resumed_provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(migrated_document,),
+            open_objectives=(),
+            **checkpoint,
+        )
+
+        self.assertEqual(len(resumed_provider.calls), 0)
+        self.assertEqual(len(resumed.material_claims), 1)
+        rematerialized = resumed.material_claims[0]
+        self.assertEqual(
+            rematerialized["claim_id"],
+            initial.material_claims[0]["claim_id"],
+        )
+        self.assertEqual(
+            resumed.facts[0].fact_id,
+            initial.facts[0].fact_id,
+        )
+        self.assertEqual(
+            rematerialized["source_family"],
+            "CUSTOMER_OFFICIAL",
+        )
+        self.assertEqual(
+            rematerialized["source_tier"],
+            "CUSTOMER_OFFICIAL",
+        )
+        self.assertEqual(
+            rematerialized["source_independence_group"],
+            "CUSTOMER_OFFICIAL:news.customer.example.com",
+        )
+        self.assertEqual(
+            resumed.audit[
+                "prior_claim_source_provenance_rematerialized_count"
+            ],
+            1,
+        )
+
     def test_clean_resume_skips_verified_split_chunks_without_promoting_parent(
         self,
     ) -> None:
