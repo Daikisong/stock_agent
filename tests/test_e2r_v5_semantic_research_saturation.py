@@ -2796,6 +2796,87 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             {"MULTI_OBJECTIVE": 1},
         )
 
+    def test_resolved_rejected_query_keeps_exact_objective_lineage(self) -> None:
+        class BlockingClassificationReadyProvider(Phase87SupervisorProvider):
+            def __init__(self) -> None:
+                super().__init__("FORCE_READY")
+
+            def complete(
+                self, *, pass_name: str, payload: Mapping[str, Any]
+            ) -> Mapping[str, Any]:
+                response = dict(
+                    super().complete(pass_name=pass_name, payload=payload)
+                )
+                for assessment in response["failure_assessments"]:
+                    assessment.update(
+                        {
+                            "classification": "INSUFFICIENT_SEARCH",
+                            "retryable": True,
+                            "source_absence_claim_allowed": False,
+                        }
+                    )
+                return response
+
+        rejected_feedback = "TARGET_SCOPE_MISSING:counterparty-only query"
+        source = _source_checkpoint_with_updates(
+            _source_checkpoint(),
+            status="STOPPED_ON_RESOLUTION",
+            resolved_objective_ids=[OBJECTIVE_ID],
+            source_graph={
+                "open_objectives": [{"objective_id": OBJECTIVE_ID}]
+            },
+            query_failures=[
+                {
+                    "query_id": "QUERY_GENERATION",
+                    "objective_id": "MULTI_OBJECTIVE",
+                    "failure_reason": rejected_feedback,
+                }
+            ],
+            query_generation_history=[
+                {
+                    "status": "PARTIAL",
+                    "queries": [],
+                    "rejected_suggestions": [
+                        {
+                            "suggestion_index": "0",
+                            "objective_id": OBJECTIVE_ID,
+                            "literal_query": "counterparty-only query",
+                            "reason": "TARGET_SCOPE_MISSING",
+                        }
+                    ],
+                    "feedback_for_next_llm_call": [rejected_feedback],
+                    "provider_name": "CURRENT-QUERY-PROVIDER",
+                    "prompt_hash": "QUERYPROMPT-REJECTED-SCOPE",
+                    "response_hash": "QUERYRESP-REJECTED-SCOPE",
+                    "deterministic_fallback_query_used": False,
+                }
+            ],
+        )
+        provider = BlockingClassificationReadyProvider()
+        review = ResearchSupervisor(provider=provider).review_epoch(
+            **{
+                **_supervisor_inputs(),
+                "source_graph_checkpoint": source,
+            }
+        )
+
+        self.assertEqual(
+            review.status,
+            "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+        )
+        supplied = provider.calls[-1]["payload"][
+            "prior_query_source_failures"
+        ][0]
+        self.assertIs(supplied["resolved"], True)
+        self.assertEqual(
+            supplied["resolved_by"],
+            "SOURCE_GRAPH_OBJECTIVE_RESOLUTION",
+        )
+        self.assertEqual(
+            supplied["relation_coverage"]["objective_ids"],
+            {OBJECTIVE_ID: 1},
+        )
+
     def test_resolved_parser_assessment_is_honest_but_not_an_open_parser_gap(
         self,
     ) -> None:

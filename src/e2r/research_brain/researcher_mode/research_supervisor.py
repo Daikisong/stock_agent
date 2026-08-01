@@ -2605,8 +2605,31 @@ def _query_generation_failure_lineage(
         scope = explicit_scope or observed_scope
         if scope and (not roster_set or not set(scope).issubset(roster_set)):
             continue
+        rejected_scope_by_feedback: dict[str, tuple[str, ...]] = {}
+        for rejected in raw.get("rejected_suggestions") or ():
+            if not isinstance(rejected, Mapping):
+                continue
+            objective_id = str(rejected.get("objective_id") or "").strip()
+            if not objective_id or (
+                roster_set and objective_id not in roster_set
+            ):
+                continue
+            reason = str(rejected.get("reason") or "").strip()
+            feedback_suffix = str(
+                rejected.get("literal_query")
+                or rejected.get("suggestion_index")
+                or ""
+            ).strip()
+            if reason and feedback_suffix:
+                rejected_scope_by_feedback[
+                    f"{reason}:{feedback_suffix}"
+                ] = (objective_id,)
         for value in raw.get("feedback_for_next_llm_call") or ():
             reason = str(value).strip()
+            rejected_scope = rejected_scope_by_feedback.get(reason)
+            if rejected_scope:
+                lineage.setdefault(reason, []).append(rejected_scope)
+                continue
             if not _is_resolvable_generation_failure_reason(reason):
                 continue
             resolved_scope = scope
@@ -2624,9 +2647,7 @@ def _is_multi_objective_generation_failure(
         str(row.get("failure_kind") or "") == "QUERY_FAILURE"
         and str(row.get("query_id") or "") == "QUERY_GENERATION"
         and str(row.get("objective_id") or "") == "MULTI_OBJECTIVE"
-        and _is_resolvable_generation_failure_reason(
-            str(row.get("failure_reason") or "")
-        )
+        and str(row.get("failure_reason") or "").strip()
     )
 
 
