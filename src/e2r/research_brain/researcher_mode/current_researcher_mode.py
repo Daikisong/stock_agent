@@ -2825,6 +2825,7 @@ def _reusable_prior_component_memos(
         != _semantic_row_roster_hash(current_facts, id_key="fact_id")
     ):
         return {}
+    current_fact_ids = _semantic_row_ids(current_facts, id_key="fact_id")
     prior_structured_hashes = _component_structured_input_hashes(
         prior_structured_result.get("records") or (),
         required_roles_by_component=required_roles_by_component,
@@ -2839,9 +2840,50 @@ def _reusable_prior_component_memos(
         if component_id in CANONICAL_COMPONENT_ORDER
         and memo.get("research_complete") is True
         and component_id not in actionable_feedback_by_component
+        and _component_memo_cites_only_current_facts(
+            memo,
+            current_fact_ids=current_fact_ids,
+        )
         and prior_structured_hashes.get(component_id)
         == current_structured_hashes.get(component_id)
     }
+
+
+def _component_memo_cites_only_current_facts(
+    memo: Mapping[str, Any],
+    *,
+    current_fact_ids: set[str],
+) -> bool:
+    for field_name in (
+        "positive_fact_ids",
+        "counter_fact_ids",
+        "resolution_fact_ids",
+    ):
+        values = memo.get(field_name) or ()
+        if isinstance(values, (str, bytes)) or not isinstance(values, Sequence):
+            return False
+        for value in values:
+            fact_id = str(value).strip()
+            if not fact_id or fact_id not in current_fact_ids:
+                return False
+    return True
+
+
+def _semantic_row_ids(rows: Sequence[Any], *, id_key: str) -> set[str]:
+    row_ids: set[str] = set()
+    for row in rows:
+        if isinstance(row, Mapping):
+            payload = row
+        else:
+            to_dict = getattr(row, "to_dict", None)
+            if not callable(to_dict):
+                raise TypeError("semantic input row must expose to_dict")
+            payload = to_dict()
+        row_id = str(payload.get(id_key) or "")
+        if not row_id or row_id in row_ids:
+            raise ValueError(f"semantic input rows require unique {id_key}")
+        row_ids.add(row_id)
+    return row_ids
 
 
 def _semantic_row_roster_hash(

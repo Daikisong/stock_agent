@@ -1688,6 +1688,47 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         )
         self.assertNotIn("eps_fcf_explosion", structured_drift)
 
+    def test_prior_memo_citing_retired_fact_is_not_reused_after_snapshot_stabilizes(
+        self,
+    ) -> None:
+        facts = (
+            {
+                "fact_id": "FACT-CURRENT",
+                "predicate": "free_cash_flow",
+                "value": 100,
+            },
+        )
+        prior_memos = {
+            "eps_fcf_explosion": {
+                "component_id": "eps_fcf_explosion",
+                "research_complete": True,
+                "positive_fact_ids": ["FACT-RETIRED"],
+            },
+            "bottleneck_pricing": {
+                "component_id": "bottleneck_pricing",
+                "research_complete": True,
+                "positive_fact_ids": ["FACT-CURRENT"],
+                "context_fact_ids": ["FACT-RETIRED-CONTEXT"],
+            },
+        }
+        requirements = {
+            component_id: () for component_id in CANONICAL_COMPONENT_ORDER
+        }
+
+        reusable = _reusable_prior_component_memos(
+            prior_component_memos=prior_memos,
+            actionable_feedback_by_component={},
+            prior_facts=facts,
+            current_facts=facts,
+            prior_fact_snapshot_available=True,
+            prior_structured_result={"records": []},
+            current_structured_result=SimpleNamespace(records=()),
+            required_roles_by_component=requirements,
+        )
+
+        self.assertNotIn("eps_fcf_explosion", reusable)
+        self.assertIn("bottleneck_pricing", reusable)
+
     def test_query_direction_and_retryable_source_failure_reopen_component(
         self,
     ) -> None:
