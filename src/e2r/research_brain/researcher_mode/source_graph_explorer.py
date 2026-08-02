@@ -698,6 +698,9 @@ class ResearcherSourceGraphAcquirer:
                 fetch_records=fetch_rows,
                 facts=facts,
                 unresolved_objectives=objectives,
+                required_source_family_pairs=(
+                    mandatory_source_family_pairs
+                ),
             )
         )
         # A query's source-family roster records where the LLM attempted to
@@ -1388,7 +1391,10 @@ class ResearcherSourceGraphAcquirer:
                         for value in candidate.get("objective_ids") or ()
                     }
                 ),
-                candidates=rank_batch,
+                candidates=_candidate_ranking_transport_rows(
+                    rank_batch,
+                    evidence_documents=evidence_documents,
+                ),
                 current_evidence_facts=facts,
                 target_business_model=target_business_model,
                 source_coverage=source_coverage,
@@ -1440,6 +1446,10 @@ class ResearcherSourceGraphAcquirer:
                         candidate.pop("revalidation_document_id", None)
                         candidate.pop(
                             "materiality_revalidation_reason", None
+                        )
+                        candidate.pop(
+                            "sparse_reference_full_fetch_revalidation_pending",
+                            None,
                         )
                         for document in evidence_documents:
                             if (
@@ -1525,18 +1535,56 @@ class ResearcherSourceGraphAcquirer:
                                 "MATERIAL_PENDING_FETCH"
                             )
                 else:
-                    candidate["ranking_status"] = "NOT_MATERIAL"
-                    if candidate.get("revalidation_document_id"):
+                    sparse_reference_transport_family = (
+                        _sparse_verified_reference_transport_family(
+                            candidate,
+                            decision=decision,
+                        )
+                    )
+                    if sparse_reference_transport_family:
+                        candidate["ranking_status"] = "MATERIAL"
+                        candidate["fetch_status"] = "MATERIAL_PENDING_FETCH"
+                        candidate["matched_requested_source_family"] = (
+                            sparse_reference_transport_family
+                        )
+                        candidate["materiality_scope_hash"] = (
+                            _candidate_materiality_scope_hash(candidate)
+                        )
+                        candidate[
+                            "sparse_reference_transport_revalidation_attempted"
+                        ] = True
+                        candidate[
+                            "sparse_reference_metadata_decision_id"
+                        ] = decision.decision_id
+                        candidate[
+                            "sparse_reference_transport_authority"
+                        ] = (
+                            "VERIFIED_OFFICIAL_PARENT_CURRENT_SCOPE_"
+                            "BOUNDED_ONE_FETCH"
+                        )
+                    else:
+                        candidate["ranking_status"] = "NOT_MATERIAL"
+                    if (
+                        not sparse_reference_transport_family
+                        and candidate.get("revalidation_document_id")
+                    ):
                         candidate["fetch_status"] = (
                             "FULL_DOCUMENT_REVALIDATION_REJECTED"
                         )
                         candidate.pop("revalidation_document_id", None)
-                    elif terminal_fetch_status:
+                        candidate.pop(
+                            "sparse_reference_full_fetch_revalidation_pending",
+                            None,
+                        )
+                    elif (
+                        not sparse_reference_transport_family
+                        and terminal_fetch_status
+                    ):
                         candidate["fetch_status"] = terminal_fetch_status
                         candidate[
                             "materiality_revalidated_terminal_transport_preserved"
                         ] = True
-                    else:
+                    elif not sparse_reference_transport_family:
                         candidate["fetch_status"] = (
                             "DISCOVERY_ONLY_NOT_FETCHED"
                         )
@@ -1720,6 +1768,19 @@ class ResearcherSourceGraphAcquirer:
                 )
             candidate["fetch_status"] = "FULL_DOCUMENT_FETCHED"
             candidate["document_id"] = document["document_id"]
+            if candidate.get(
+                "sparse_reference_transport_revalidation_attempted"
+            ):
+                candidate["ranking_status"] = "PENDING"
+                candidate["fetch_status"] = (
+                    "FULL_DOCUMENT_REVALIDATION_PENDING"
+                )
+                candidate["revalidation_document_id"] = document[
+                    "document_id"
+                ]
+                candidate[
+                    "sparse_reference_full_fetch_revalidation_pending"
+                ] = True
         state["query_failures"] = _dedupe_mapping_rows(
             query_failures,
             key_fields=("query_id", "candidate_id", "failure_reason"),
@@ -3420,6 +3481,7 @@ def _requested_source_family_without_matched_fetch_failures(
     fetch_records: Sequence[Mapping[str, Any]] = (),
     facts: Sequence[Mapping[str, Any]],
     unresolved_objectives: Sequence[Mapping[str, Any]],
+    required_source_family_pairs: Sequence[tuple[str, str]] = (),
 ) -> tuple[Mapping[str, Any], ...]:
     """Return feedback for requested families without accepted fact lineage.
 
@@ -3438,6 +3500,17 @@ def _requested_source_family_without_matched_fetch_failures(
     }
     attempted_by_objective: dict[str, set[str]] = {}
     attempted_query_ids: dict[tuple[str, str], list[str]] = {}
+    for objective_id, source_family in required_source_family_pairs:
+        if (
+            objective_id in unresolved_ids
+            and source_family in CANONICAL_SOURCE_FAMILIES
+        ):
+            attempted_by_objective.setdefault(objective_id, set()).add(
+                source_family
+            )
+            attempted_query_ids.setdefault(
+                (objective_id, source_family), []
+            )
     for query in generated_queries:
         objective_id = str(query.get("objective_id") or "")
         if (
@@ -3528,9 +3601,9 @@ def _requested_source_family_without_matched_fetch_failures(
                 continue
             query_ids = tuple(
                 value
-                for value in attempted_query_ids[
-                    (objective_id, source_family)
-                ]
+                for value in attempted_query_ids.get(
+                    (objective_id, source_family), ()
+                )
                 if value
             )
             failures.append(
@@ -4202,6 +4275,9 @@ def _adopt_reference_materiality_scope_if_absent(
     candidate["reference_parent_materiality_decision_id"] = str(
         current_scope["source_materiality_decision_id"]
     )
+    candidate[
+        "reference_parent_matched_requested_source_family"
+    ] = str(current_scope["matched_requested_source_family"])
     # This candidate has not yet received a decision for the inherited edge.
     # Preserve the matched family only as parent-edge provenance; the child
     # ranker must independently return its own matched family.
@@ -4403,6 +4479,16 @@ def _enqueue_reference_candidates(
             ),
             "query_lineage_valid": True,
             "graph_expansion_parent_document_ids": [document.get("document_id")],
+            "reference_expansion_parent_authority_verified": bool(
+                str(document.get("source_family") or "")
+                in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+            ),
+            "reference_expansion_policy": (
+                "VERIFIED_OFFICIAL_PARENT_ONLY"
+                if str(document.get("source_family") or "")
+                in SOURCE_FAMILY_CLASSES["OFFICIAL"]
+                else "DOCUMENT_REFERENCE_DISCOVERY_ONLY"
+            ),
             "discovery_only": True,
             "snippet_discovery_only": True,
             "snippet_evidence_eligible": False,
@@ -5942,6 +6028,107 @@ def _candidate_is_reference_only(candidate: Mapping[str, Any]) -> bool:
             or candidate.get("graph_expansion_parent_candidate_ids")
         )
     )
+
+
+def _candidate_reference_metadata_is_sparse(
+    candidate: Mapping[str, Any],
+) -> bool:
+    """Return whether discovery metadata contains no substantive description."""
+
+    title = " ".join(str(candidate.get("title") or "").split())
+    snippet = " ".join(str(candidate.get("snippet") or "").split())
+    return bool(
+        not snippet
+        and (
+            not title
+            or title.casefold().startswith("referenced by ")
+        )
+    )
+
+
+def _candidate_ranking_transport_rows(
+    candidates: Sequence[Mapping[str, Any]],
+    *,
+    evidence_documents: Sequence[Mapping[str, Any]],
+) -> tuple[Mapping[str, Any], ...]:
+    """Attach fetched text only for one pending sparse-reference revalidation."""
+
+    document_by_id = {
+        str(row.get("document_id") or ""): row
+        for row in evidence_documents
+        if str(row.get("document_id") or "")
+    }
+    projected = []
+    for candidate in candidates:
+        row = dict(candidate)
+        row["reference_metadata_sparse"] = (
+            _candidate_reference_metadata_is_sparse(candidate)
+        )
+        if candidate.get(
+            "sparse_reference_full_fetch_revalidation_pending"
+        ):
+            document = document_by_id.get(
+                str(candidate.get("revalidation_document_id") or "")
+            )
+            if document is not None:
+                row["full_fetch_revalidation_content_text"] = str(
+                    document.get("content_text") or ""
+                )
+        projected.append(row)
+    return tuple(projected)
+
+
+def _sparse_verified_reference_transport_family(
+    candidate: Mapping[str, Any],
+    *,
+    decision: Any,
+) -> str:
+    """Authorize one fetch when sparse metadata cannot support a final rejection.
+
+    The parent decision and exact inherited query edge authorize transport only.
+    The LLM must review the fetched text on the next checkpoint before the
+    document can enter the production downstream set.
+    """
+
+    if (
+        bool(getattr(decision, "material_relevance", False))
+        or candidate.get("direct_search_discovery") is True
+        or candidate.get(
+            "reference_expansion_parent_authority_verified"
+        )
+        is not True
+        or candidate.get("reference_current_scope_inherited") is not True
+        or candidate.get(
+            "sparse_reference_transport_revalidation_attempted"
+        )
+        is True
+        or int(candidate.get("full_fetch_attempt_count") or 0) > 0
+        or not _candidate_reference_metadata_is_sparse(candidate)
+        or _is_navigation_only_reference_url(
+            str(candidate.get("url") or "")
+        )
+        or not (
+            candidate.get("graph_expansion_parent_document_ids")
+            or candidate.get("graph_expansion_parent_candidate_ids")
+        )
+        or not str(candidate.get("materiality_scope_hash") or "")
+        or str(candidate.get("materiality_scope_hash") or "")
+        != _candidate_materiality_scope_hash(candidate)
+    ):
+        return ""
+    source_family = str(
+        candidate.get(
+            "reference_parent_matched_requested_source_family"
+        )
+        or ""
+    )
+    if (
+        source_family not in CANONICAL_SOURCE_FAMILIES
+        or source_family
+        not in set(candidate.get("requested_source_families") or ())
+    ):
+        return ""
+    return source_family
 
 
 def _pending_candidate_ranking_priority(

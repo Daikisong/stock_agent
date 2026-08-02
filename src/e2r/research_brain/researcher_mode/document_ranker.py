@@ -183,6 +183,30 @@ class ResearcherDocumentRanker:
                         "graph_expansion_parent_candidate_ids": list(
                             row.get("graph_expansion_parent_candidate_ids") or ()
                         ),
+                        "reference_transport_context": {
+                            "parent_authority_verified": bool(
+                                row.get(
+                                    "reference_expansion_parent_authority_verified"
+                                )
+                            ),
+                            "current_scope_inherited": bool(
+                                row.get("reference_current_scope_inherited")
+                            ),
+                            "metadata_sparse": bool(
+                                row.get("reference_metadata_sparse")
+                            ),
+                            "bounded_full_fetch_revalidation": bool(
+                                row.get(
+                                    "sparse_reference_full_fetch_revalidation_pending"
+                                )
+                            ),
+                            "full_fetch_document_id": row.get(
+                                "revalidation_document_id"
+                            ),
+                            "full_fetch_content_text": row.get(
+                                "full_fetch_revalidation_content_text"
+                            ),
+                        },
                         "snippet_discovery_only": True,
                     }
                     for row in candidates

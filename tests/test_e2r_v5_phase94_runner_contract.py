@@ -4929,6 +4929,27 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         context = _score_gap_context_for_supervisor(
             aggregation=aggregation,
             scoring_memos=scoring_memos,
+            structured_report_candidates=(
+                {
+                    "candidate_id": "STRUCTCAND-report-1",
+                    "provider_name": "CompanyGuide",
+                    "source_family_hint": "PUBLIC_BROKER_PDF",
+                    "research_route": "PUBLIC_BROKER_REPORT",
+                    "published_at": "2026-04-06",
+                    "broker": "Example Securities",
+                    "title": "Target quarterly preview",
+                    "provider_file_name": "report.pdf",
+                    "structured_fields": {"fy1_eps": 1234.0},
+                    "url_resolution_required": True,
+                    "full_document_owner": "LLM_SOURCE_GRAPH",
+                    "evidence_eligible": False,
+                    "snippet_only": True,
+                    "deterministic_url_synthesis": False,
+                    "deterministic_query_synthesis": False,
+                    "production_score_authority": False,
+                    "canonical_url": "https://must-not-project.example/report",
+                },
+            ),
         )
 
         self.assertEqual(
@@ -4944,6 +4965,27 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertEqual(
             [row["allowed_range"] for row in reviews],
             [[14.9, 18.0], [14.5, 17.0], [18.05, 18.75]],
+        )
+        report_candidates = context[
+            "structured_report_source_candidates"
+        ]
+        self.assertEqual(len(report_candidates), 1)
+        self.assertEqual(
+            report_candidates[0]["source_family_hint"],
+            "PUBLIC_BROKER_PDF",
+        )
+        self.assertNotIn("canonical_url", report_candidates[0])
+        contract = context[
+            "structured_report_source_candidate_contract"
+        ]
+        self.assertEqual(contract["bounded_candidate_count"], 1)
+        self.assertTrue(contract["metadata_is_discovery_hint_not_evidence"])
+        self.assertEqual(
+            contract["literal_query_generation_owner"],
+            "SOURCE_QUERY_GENERATION_LLM",
+        )
+        self.assertFalse(
+            contract["deterministic_url_or_query_synthesis_allowed"]
         )
 
 

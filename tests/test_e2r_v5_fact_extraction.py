@@ -293,6 +293,78 @@ class StaleLineageCoverageCodexProvider(CoverageAuditOmissionProvider):
         return response
 
 
+class CrossObjectiveAtomicLegCoverageProvider(ObjectiveLocalFactProvider):
+    omitted_quote = (
+        "Current Corp ADR closed at 168.01 after rising 12.8 percent "
+        "from its 149.00 offer price on the first trading day."
+    )
+
+    def __init__(self, *, incompatible_component: bool = False) -> None:
+        super().__init__()
+        self.incompatible_component = incompatible_component
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        response = dict(
+            super().complete(pass_name=pass_name, payload=payload)
+        )
+        if "fact_extraction_coverage_audit_context" not in payload:
+            return response
+        response["facts"] = [dict(response["facts"][0])]
+        fact = response["facts"][0]
+        fact.update(
+            {
+                "question_family_id": "market_reaction_atomic_leg",
+                "subject_id": "target_adr_market_reaction",
+                "subject": "Current Corp ADR",
+                "business_segment": "MEMORY",
+                "product_family": "HBM",
+                "economic_mechanism": (
+                    "The first-day ADR price reaction is a distinct market "
+                    "response leg of the compound source statement."
+                ),
+                "mechanism_scope_id": "TARGET_ADR_MARKET_REACTION",
+                "predicate": "rose from offer price on first trading day",
+                "predicate_family": "first_day_market_price_reaction",
+                "value": 12.8,
+                "normalized_object": "first_day_adr_price_increase",
+                "unit": "%",
+                "period": "2026-06-10",
+                "direction": "POSITIVE",
+                "current_lifecycle": "CURRENT",
+                "exact_quote": self.omitted_quote,
+                "materiality_rationale": (
+                    "The literal price reaction directly changes the open "
+                    "market-mispricing assessment."
+                ),
+                "objective_ids": ["OBJECTIVE-MARKET"],
+                "objective_relation": "ADVANCE",
+            }
+        )
+        if self.incompatible_component:
+            fact.update(
+                {
+                    "scope_business_segment": "CORPORATE_GENERIC",
+                    "scope_product_family": "CORPORATE_GENERIC",
+                    "scope_technology_family": "CORPORATE_GENERIC",
+                    "scope_transaction_type": "GENERIC_INFORMATION",
+                    "scope_economic_mechanism": "INFORMATION_ONLY",
+                    "scope_confidence": 0.99,
+                }
+            )
+        else:
+            fact.update(
+                {
+                    "scope_business_segment": "MEMORY",
+                    "scope_product_family": "HBM",
+                    "scope_technology_family": "HBM",
+                    "scope_transaction_type": "VALUATION_ANALYSIS",
+                    "scope_economic_mechanism": "MARKET_EXPECTATION_GAP",
+                    "scope_confidence": 0.99,
+                }
+            )
+        return response
+
+
 class SameQuoteDistinctSemanticCoverageProvider(
     ObjectiveLocalFactProvider
 ):
@@ -3828,7 +3900,7 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             [],
         )
 
-    def test_zero_gap_stale_official_document_reassesses_narrowed_lineage(
+    def test_zero_gap_stale_trusted_documents_reassess_all_open_lineage(
         self,
     ) -> None:
         disclaimer = (
@@ -3940,7 +4012,10 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         payload = resumed_provider.calls[0]["payload"]
         self.assertEqual(
             [row["document_id"] for row in payload["full_documents"]],
-            ["DOC-STALE-OFFICIAL-LINEAGE"],
+            [
+                "DOC-STALE-OFFICIAL-LINEAGE",
+                "DOC-STALE-UNOFFICIAL-LINEAGE",
+            ],
         )
         self.assertIn("fact_extraction_coverage_audit_context", payload)
         scope = payload["fact_extraction_scope_contract"]
@@ -3953,7 +4028,14 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                         "OBJECTIVE-CAPITAL",
                         "OBJECTIVE-INFORMATION",
                     ],
-                }
+                },
+                {
+                    "document_id": "DOC-STALE-UNOFFICIAL-LINEAGE",
+                    "objective_ids": [
+                        "OBJECTIVE-CAPITAL",
+                        "OBJECTIVE-INFORMATION",
+                    ],
+                },
             ],
         )
         self.assertTrue(
@@ -3975,22 +4057,391 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             resumed.audit[
                 "bounded_stale_coverage_refresh_document_count"
             ],
-            1,
+            2,
         )
         self.assertEqual(
             resumed.audit[
                 "coverage_refresh_objective_lineage_reassessment_document_count"
             ],
-            1,
+            2,
         )
         self.assertEqual(
             resumed.audit["coverage_audit_required_document_count"],
-            1,
+            2,
         )
         self.assertEqual(resumed.audit["coverage_audit_call_count"], 1)
         self.assertEqual(
             resumed.audit["critical_counts"][
                 "production_document_without_coverage_audit_count"
+            ],
+            0,
+        )
+
+    def test_stale_trusted_document_recovers_cross_objective_atomic_leg_once(
+        self,
+    ) -> None:
+        document = dict(
+            _document(
+                "DOC-STALE-TRUSTED-CROSS-OBJECTIVE",
+                "TRUSTED_BUSINESS_MEDIA",
+                "MEDIA:independent.example",
+            )
+        )
+        document["objective_ids"] = ["OBJECTIVE-CAPITAL"]
+        text = (
+            f"{document['content_text']} "
+            f"{CrossObjectiveAtomicLegCoverageProvider.omitted_quote}"
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+        objectives = (
+            {
+                "objective_id": "OBJECTIVE-CAPITAL",
+                "component_id": "capital_allocation",
+            },
+            {
+                "objective_id": "OBJECTIVE-MARKET",
+                "component_id": "market_mispricing",
+            },
+        )
+        initial = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveLocalFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=objectives,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        legacy_dispositions = []
+        for raw in initial.document_dispositions:
+            row = dict(raw)
+            row.pop("extraction_semantics_version", None)
+            legacy_dispositions.append(row)
+        legacy_calls = []
+        for raw in initial.provider_calls:
+            row = dict(raw.to_dict())
+            row.pop("extraction_semantics_version", None)
+            legacy_calls.append(row)
+
+        provider = CrossObjectiveAtomicLegCoverageProvider()
+        refreshed = ResearcherEvidenceFactExtractor(
+            provider=provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=objectives,
+            current_facts=tuple(
+                fact.to_dict() for fact in initial.fact_compilation.facts
+            ),
+            prior_material_claims=initial.material_claims,
+            prior_document_dispositions=legacy_dispositions,
+            prior_provider_calls=legacy_calls,
+            prior_rejections=initial.rejections,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(refreshed.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(len(provider.calls), 1)
+        payload = provider.calls[0]["payload"]
+        self.assertIn("fact_extraction_coverage_audit_context", payload)
+        scope_contract = payload["fact_extraction_scope_contract"]
+        self.assertEqual(
+            scope_contract["document_objective_ids"],
+            [
+                {
+                    "document_id": (
+                        "DOC-STALE-TRUSTED-CROSS-OBJECTIVE"
+                    ),
+                    "objective_ids": [
+                        "OBJECTIVE-CAPITAL",
+                        "OBJECTIVE-MARKET",
+                    ],
+                }
+            ],
+        )
+        self.assertEqual(
+            scope_contract["objective_component_rows"],
+            [
+                {
+                    "objective_id": "OBJECTIVE-CAPITAL",
+                    "component_id": "capital_allocation",
+                },
+                {
+                    "objective_id": "OBJECTIVE-MARKET",
+                    "component_id": "market_mispricing",
+                },
+            ],
+        )
+        reassessment = scope_contract[
+            "objective_lineage_reassessment"
+        ]
+        self.assertEqual(
+            reassessment["documents"],
+            [
+                {
+                    "document_id": (
+                        "DOC-STALE-TRUSTED-CROSS-OBJECTIVE"
+                    ),
+                    "prior_current_objective_ids": [
+                        "OBJECTIVE-CAPITAL"
+                    ],
+                    "current_open_objective_candidates": [
+                        "OBJECTIVE-CAPITAL",
+                        "OBJECTIVE-MARKET",
+                    ],
+                }
+            ],
+        )
+        self.assertIn(
+            "compound",
+            payload["fact_extraction_coverage_audit_context"][
+                "instruction"
+            ],
+        )
+        recovered = [
+            row
+            for row in refreshed.material_claims
+            if row["exact_quote"]
+            == CrossObjectiveAtomicLegCoverageProvider.omitted_quote
+        ]
+        self.assertEqual(len(recovered), 1)
+        self.assertEqual(
+            recovered[0]["objective_ids"],
+            ["OBJECTIVE-MARKET"],
+        )
+        self.assertIn(
+            "market_mispricing",
+            recovered[0]["allowed_component_ids"],
+        )
+        production_rows = production_material_fact_rows(refreshed)
+        self.assertTrue(
+            any(
+                row["value"] == 12.8
+                and row["claim_ids"] == [recovered[0]["claim_id"]]
+                for row in production_rows
+            )
+        )
+        self.assertEqual(
+            refreshed.audit[
+                "bounded_stale_coverage_refresh_document_count"
+            ],
+            1,
+        )
+        self.assertEqual(refreshed.audit["coverage_audit_call_count"], 1)
+        self.assertEqual(refreshed.audit["coverage_audit_new_fact_count"], 1)
+
+        second_provider = CrossObjectiveAtomicLegCoverageProvider()
+        second = ResearcherEvidenceFactExtractor(
+            provider=second_provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=objectives,
+            current_facts=tuple(
+                fact.to_dict() for fact in refreshed.fact_compilation.facts
+            ),
+            prior_material_claims=refreshed.material_claims,
+            prior_document_dispositions=refreshed.document_dispositions,
+            prior_provider_calls=refreshed.provider_calls,
+            prior_rejections=refreshed.rejections,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        self.assertEqual(second.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(second_provider.calls, [])
+
+    def test_cross_objective_fact_requires_mechanism_component_compatibility(
+        self,
+    ) -> None:
+        document = dict(
+            _document(
+                "DOC-STALE-TRUSTED-INCOMPATIBLE-COMPONENT",
+                "TRUSTED_BUSINESS_MEDIA",
+                "MEDIA:independent.example",
+            )
+        )
+        document["objective_ids"] = ["OBJECTIVE-CAPITAL"]
+        text = (
+            f"{document['content_text']} "
+            f"{CrossObjectiveAtomicLegCoverageProvider.omitted_quote}"
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+        objectives = (
+            {
+                "objective_id": "OBJECTIVE-CAPITAL",
+                "component_id": "capital_allocation",
+            },
+            {
+                "objective_id": "OBJECTIVE-MARKET",
+                "component_id": "market_mispricing",
+            },
+        )
+        initial = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveLocalFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=objectives,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        legacy_dispositions = []
+        for raw in initial.document_dispositions:
+            row = dict(raw)
+            row.pop("extraction_semantics_version", None)
+            legacy_dispositions.append(row)
+        legacy_calls = []
+        for raw in initial.provider_calls:
+            row = dict(raw.to_dict())
+            row.pop("extraction_semantics_version", None)
+            legacy_calls.append(row)
+
+        provider = CrossObjectiveAtomicLegCoverageProvider(
+            incompatible_component=True
+        )
+        rejected = ResearcherEvidenceFactExtractor(
+            provider=provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=objectives,
+            current_facts=tuple(
+                fact.to_dict() for fact in initial.fact_compilation.facts
+            ),
+            prior_material_claims=initial.material_claims,
+            prior_document_dispositions=legacy_dispositions,
+            prior_provider_calls=legacy_calls,
+            prior_rejections=initial.rejections,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(rejected.status, "FACT_EXTRACTION_PENDING")
+        self.assertTrue(
+            any(
+                row.reason
+                == "OBJECTIVE_COMPONENT_OUTSIDE_MECHANISM_SCOPE"
+                for row in rejected.rejections
+            )
+        )
+        self.assertFalse(
+            any(
+                row["exact_quote"]
+                == CrossObjectiveAtomicLegCoverageProvider.omitted_quote
+                for row in rejected.material_claims
+            )
+        )
+        self.assertTrue(
+            any(
+                "OBJECTIVE_COMPONENT_OUTSIDE_MECHANISM_SCOPE" in reason
+                for reason in provider.calls[-1]["payload"][
+                    "fact_extraction_retry_context"
+                ]["validation_errors"]
+            )
+        )
+
+    def test_stale_trusted_document_with_prior_coverage_audit_is_not_replayed(
+        self,
+    ) -> None:
+        document = _document(
+            "DOC-STALE-TRUSTED-ALREADY-AUDITED",
+            "TRUSTED_BUSINESS_MEDIA",
+            "MEDIA:independent.example",
+        )
+        objective = {
+            "objective_id": "OBJECTIVE-1",
+            "component_id": "information_confidence",
+        }
+        initial = ResearcherEvidenceFactExtractor(
+            provider=ObjectiveLocalFactProvider()
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "component_findings": [
+                        {
+                            "component_id": "information_confidence",
+                            "memo_sufficient": False,
+                            "missing_fact_needs": [
+                                "independent full-document coverage"
+                            ],
+                        }
+                    ]
+                }
+            },
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        self.assertTrue(
+            any(
+                call.coverage_audit_performed
+                for call in initial.provider_calls
+            )
+        )
+        legacy_dispositions = []
+        for raw in initial.document_dispositions:
+            row = dict(raw)
+            row.pop("extraction_semantics_version", None)
+            legacy_dispositions.append(row)
+        legacy_calls = []
+        for raw in initial.provider_calls:
+            row = dict(raw.to_dict())
+            row.pop("extraction_semantics_version", None)
+            legacy_calls.append(row)
+
+        provider = ObjectiveLocalFactProvider()
+        resumed = ResearcherEvidenceFactExtractor(
+            provider=provider
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(objective,),
+            current_facts=tuple(
+                fact.to_dict() for fact in initial.fact_compilation.facts
+            ),
+            prior_material_claims=initial.material_claims,
+            prior_document_dispositions=legacy_dispositions,
+            prior_provider_calls=legacy_calls,
+            prior_rejections=initial.rejections,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(provider.calls, [])
+        self.assertEqual(
+            resumed.audit[
+                "bounded_stale_coverage_refresh_document_count"
             ],
             0,
         )

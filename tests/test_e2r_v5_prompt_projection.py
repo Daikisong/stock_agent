@@ -651,6 +651,93 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
         self.assertNotIn("검증된 경제 메커니즘 999", supervisor_encoded)
         self.assertNotIn("원문 인용 999", peer_encoded)
 
+    def test_supervisor_projection_exposes_source_family_independence_coverage(
+        self,
+    ) -> None:
+        facts = (
+            {
+                "fact_id": "FACT-ISSUER",
+                "business_segment": "MEMORY",
+                "product_family": "HBM",
+                "subject": "named technical relationship",
+                "economic_mechanism": "technical participation",
+                "predicate": "relationship announced",
+                "direction": "POSITIVE",
+                "current_lifecycle": "CURRENT",
+                "confidence": 0.7,
+                "source_ids": ("DOC-ISSUER",),
+                "claim_ids": ("CLAIM-ISSUER",),
+                "quote_ids": ("QUOTE-ISSUER",),
+                "source_independence_group": "ISSUER_NEWSROOM:issuer.example",
+                "corroborating_independence_groups": (
+                    "ISSUER_NEWSROOM:issuer.example",
+                ),
+                "structured_evidence_roles": (),
+                "allowed_component_ids": ("information_confidence",),
+            },
+            {
+                "fact_id": "FACT-CUSTOMER",
+                "business_segment": "MEMORY",
+                "product_family": "HBM",
+                "subject": "named technical relationship",
+                "economic_mechanism": "independent confirmation",
+                "predicate": "relationship corroborated",
+                "direction": "POSITIVE",
+                "current_lifecycle": "CURRENT",
+                "confidence": 0.9,
+                "source_ids": ("DOC-CUSTOMER",),
+                "claim_ids": ("CLAIM-CUSTOMER",),
+                "quote_ids": ("QUOTE-CUSTOMER",),
+                "source_independence_group": (
+                    "CUSTOMER_OFFICIAL:customer.example"
+                ),
+                "corroborating_independence_groups": (
+                    "ISSUER_NEWSROOM:issuer.example",
+                ),
+                "structured_evidence_roles": (),
+                "allowed_component_ids": ("information_confidence",),
+            },
+        )
+
+        projection = project_supervisor_evidence_facts(facts)
+        review = projection["independent_corroboration_review"]
+
+        self.assertEqual(
+            projection["schema_version"],
+            "e2r_v5_supervisor_fact_prompt_projection_v4",
+        )
+        self.assertEqual(
+            review["primary_source_family_coverage"],
+            {"CUSTOMER_OFFICIAL": 1, "ISSUER_NEWSROOM": 1},
+        )
+        self.assertEqual(
+            review["corroborating_source_family_coverage"],
+            {"ISSUER_NEWSROOM": 1},
+        )
+        self.assertEqual(
+            review["fact_without_explicit_corroborating_group_count"],
+            1,
+        )
+        self.assertTrue(review["llm_owns_gap_materiality"])
+        self.assertNotIn("issuer.example", json.dumps(review))
+        relationship_profiles = review["relationship_profiles"]
+        issuer_only = next(
+            row
+            for row in relationship_profiles
+            if row["relationship"]["economic_mechanism"]
+            == "technical participation"
+        )
+        self.assertEqual(
+            issuer_only["primary_source_family_coverage"],
+            {"ISSUER_NEWSROOM": 1},
+        )
+        self.assertFalse(issuer_only["independent_corroboration_present"])
+        self.assertTrue(
+            review[
+                "every_information_confidence_fact_accounted_by_hash_and_group_count"
+            ]
+        )
+
     def test_supervisor_failure_groups_ignore_literal_transport_detail(self):
         failures = (
             {

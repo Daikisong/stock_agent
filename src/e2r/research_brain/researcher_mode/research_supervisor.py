@@ -1360,6 +1360,51 @@ def _build_supervisor_prompt_material(
                 "transport_wait_score_component_ids": list(
                     transport_wait_score_component_ids
                 ),
+                "independent_corroboration_review_contract": {
+                    "projection_path": (
+                        "current_evidence_fact_graph."
+                        "independent_corroboration_review"
+                    ),
+                    "llm_owns_gap_materiality": True,
+                    "literal_query_generation_owner": (
+                        "SOURCE_QUERY_GENERATION_LLM"
+                    ),
+                    "instruction": (
+                        "For information-confidence findings, compare the "
+                        "named relationships described by current memos and "
+                        "synthesis with the projected primary and corroborating "
+                        "source-family coverage. When a reasonable independent "
+                        "official route remains, emit one concrete missing fact, "
+                        "one objective-bound source-family direction, and one "
+                        "semantic query-direction brief. Do not write a literal "
+                        "query and do not treat an empty corroboration count as "
+                        "deterministic source absence or a mandatory gap."
+                    ),
+                },
+                "structured_report_source_candidate_review_contract": {
+                    "projection_path": (
+                        "deterministic_score_gap_context."
+                        "structured_report_source_candidates"
+                    ),
+                    "llm_owns_candidate_materiality": True,
+                    "literal_query_generation_owner": (
+                        "SOURCE_QUERY_GENERATION_LLM"
+                    ),
+                    "instruction": (
+                        "Treat each structured-provider report row only as a "
+                        "bounded discovery hint, never as evidence. Decide from "
+                        "its broker, title, publication date, provider identity, "
+                        "and current fact graph whether resolving the full report "
+                        "could answer a concrete material fact gap for a canonical "
+                        "objective. For a material candidate, emit that concrete "
+                        "missing fact, an objective-bound PUBLIC_BROKER_PDF source "
+                        "family direction, and a semantic query-direction brief "
+                        "that preserves the candidate identity needed by the query "
+                        "LLM. Do not create a literal query or URL, do not treat "
+                        "preview numbers as facts, and do not open a gap merely "
+                        "because a candidate exists."
+                    ),
+                },
                 "instruction": (
                     "component_findings must contain every canonical component "
                     "id exactly once. failure_assessments must contain every "

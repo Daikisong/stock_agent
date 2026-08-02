@@ -96,6 +96,36 @@ class FixtureStructuredTransport:
             raise AssertionError("DART corp_code was not restored to eight digits")
 
 
+class PaginatedReportStructuredTransport(FixtureStructuredTransport):
+    def get_json(self, *, url, params, headers, timeout_seconds):
+        if "c1080001_data" not in url:
+            return super().get_json(
+                url=url,
+                params=params,
+                headers=headers,
+                timeout_seconds=timeout_seconds,
+            )
+        del headers, timeout_seconds
+        self.calls.append(("json", url, dict(params)))
+        page = int(params["curPage"])
+        rows = _companyguide_reports_payload()["lists"]
+        payload = {
+            "cp": page,
+            "tc": len(rows),
+            "tp": len(rows),
+            "tr": 1,
+            "lists": [rows[page - 1]] if 1 <= page <= len(rows) else [],
+        }
+        raw = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()
+        return StructuredHTTPResponse(
+            status_code=200,
+            canonical_url=url,
+            provider_request_id=f"FIXTURE-REPORT-PAGE-{page}",
+            content_hash=hashlib.sha256(raw).hexdigest(),
+            payload=payload,
+        )
+
+
 class FixturePeerProvider:
     provider_name = "FIXTURE_PEER_PROVIDER"
 
@@ -521,6 +551,24 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         self.assertEqual(payload["FORWARD_12M_PER"], 4.94)
         self.assertEqual(payload["FORWARD_12M_PBR"], 1.99)
         self.assertEqual(payload["FORWARD_12M_EV_EBITDA"], 2.55)
+        self.assertEqual(payload["INVESTMENT_OPINION_SCORE"], 4)
+        self.assertEqual(payload["TARGET_PRC"], 500_000)
+        self.assertEqual(payload["EPS"], 46_664)
+        self.assertEqual(payload["FORWARD_PER"], 6.11)
+        self.assertEqual(payload["CONSENSUS_PROVIDER_COUNT"], 24)
+        self.assertEqual(payload["TRAILING_EPS"], 6_564)
+        self.assertEqual(payload["TRAILING_BPS"], 63_997)
+        self.assertEqual(payload["TRAILING_PER"], 43.42)
+        self.assertEqual(payload["TRAILING_PBR"], 4.45)
+        self.assertEqual(payload["PROVIDER_PREVIOUS_CLOSE"], 285_000)
+        self.assertEqual(
+            payload["TRAILING_VALUATION_AS_OF_DATE"], "2026/07/10"
+        )
+        self.assertTrue(payload["TRAILING_VALUATION_DATE_VERIFIED"])
+        self.assertTrue(
+            payload["score_anchor_text"].startswith("투자의견 컨센서스")
+        )
+        self.assertNotIn("og:description", payload["score_anchor_text"])
 
     def test_live_sources_feed_phase86_and_resume_without_secret_or_refetch(self):
         transport = FixtureStructuredTransport()
@@ -580,6 +628,32 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
                     "OPERATING_PROFIT_REVISION",
                 }.issubset(roles)
             )
+            trailing = {
+                row.metric_id: row
+                for row in first.engine_result.valuation_records
+                if row.record_kind == "PROVIDER_TRAILING_VALUATION_SNAPSHOT"
+            }
+            self.assertEqual(
+                set(trailing),
+                {
+                    "trailing_eps",
+                    "trailing_bps",
+                    "trailing_pe",
+                    "trailing_pb",
+                    "provider_previous_close",
+                },
+            )
+            self.assertEqual(trailing["trailing_pe"].value, 43.42)
+            self.assertEqual(trailing["trailing_pb"].value, 4.45)
+            self.assertEqual(trailing["provider_previous_close"].value, 285_000)
+            self.assertTrue(
+                all(
+                    row.metadata["metric_namespace"] == "TRAILING_ACTUAL"
+                    and row.metadata["forward_value"] is False
+                    and row.source_ids
+                    for row in trailing.values()
+                )
+            )
             self.assertTrue(
                 all(
                     value != "ZERO"
@@ -596,6 +670,81 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
                 "DATA-SECRET-FIXTURE",
             ):
                 self.assertNotIn(secret, cache_text)
+
+    def test_companyguide_report_history_is_bounded_and_hands_off_full_document_candidates(
+        self,
+    ):
+        transport = PaginatedReportStructuredTransport()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                companyguide_report_rows=1,
+                companyguide_report_max_pages=2,
+                companyguide_report_max_candidates=2,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+            )
+
+            report_calls = [
+                call
+                for call in transport.calls
+                if "c1080001_data" in call[1]
+            ]
+            self.assertEqual(
+                [call[2]["curPage"] for call in report_calls], [1, 2]
+            )
+            audit = result.audit["companyguide_report_history"]
+            self.assertTrue(audit["bounded_pagination"])
+            self.assertEqual(audit["max_pages"], 2)
+            self.assertEqual(audit["max_candidates"], 2)
+            self.assertEqual(audit["stop_reason"], "MAX_CANDIDATES_REACHED")
+            self.assertEqual(audit["fetched_page_count"], 2)
+            self.assertEqual(len(result.report_candidates), 2)
+            page_two = next(
+                row
+                for row in result.report_candidates
+                if row["provider_page"] == 2
+            )
+            self.assertEqual(
+                page_two["provider_file_name"], "provider_report_page_2.pdf"
+            )
+            self.assertEqual(page_two["full_document_owner"], "LLM_SOURCE_GRAPH")
+            self.assertTrue(page_two["url_resolution_required"])
+            self.assertIsNone(page_two["canonical_url"])
+            self.assertFalse(page_two["deterministic_url_synthesis"])
+            self.assertFalse(page_two["deterministic_query_synthesis"])
+            self.assertFalse(page_two["evidence_eligible"])
+            handoff_path = (
+                Path(directory) / "current_structured_report_candidates.jsonl"
+            )
+            self.assertTrue(handoff_path.is_file())
+            self.assertEqual(
+                len(
+                    [
+                        line
+                        for line in handoff_path.read_text(
+                            encoding="utf-8"
+                        ).splitlines()
+                        if line.strip()
+                    ]
+                ),
+                2,
+            )
 
     def test_future_companyguide_snapshot_never_becomes_record(self):
         transport = FixtureStructuredTransport(future_companyguide=True)
@@ -1903,10 +2052,26 @@ def _companyguide_html(
 ):
     return f"""
     <title>{company_name} - 기업현황 - 기업모니터</title>
-    <p>[기준:{page_date}]</p>
-    <table id="cTB15"><tbody><tr>
-      <td>4.0</td><td>500,000</td><td>46,664</td><td>6.11</td><td>24</td>
+    <meta property="og:description" content="투자의견 컨센서스 및 재무정보">
+    <table id="metadata-noise"><tbody><tr>
+      <td>9.9</td><td>999,999</td><td>99,999</td><td>99.9</td><td>99</td>
     </tr></tbody></table>
+    <p>[기준:{page_date}]</p>
+    <ul class="company-header">
+      <li><p>EPS<b>6,564</b></p></li>
+      <li><p>BPS<b>63,997</b></p></li>
+      <li><p>PER<b>43.42</b></p></li>
+      <li><p>업종PER<b>36.34</b></p></li>
+      <li><p>PBR<b>4.45</b></p></li>
+      <li><p>전일종가<b>285,000</b></p></li>
+    </ul>
+    <h5>투자의견 컨센서스</h5>
+    <p class="disc table">[기준:{page_date}]</p>
+    <table class="gHead" id="cTB15">
+    <tr><th>투자의견</th><th>목표주가</th><th>EPS</th><th>PER</th><th>추정기관수</th></tr>
+    <tr>
+      <td>4.0</td><td>500,000</td><td>46,664</td><td>6.11</td><td>24</td>
+    </tr></table>
     <table summary="기업 펀더멘털 실적, 컨센서스 정보 리스트입니다.">
       <thead><tr><th>주요지표</th><th>2025/12(A)</th><th>2026/12(E)</th><th>Fwd. 12M(E)</th></tr></thead>
       <tbody>
@@ -1945,6 +2110,7 @@ def _companyguide_reports_payload():
                 "CLOSE_PRC": "100000",
                 "TARGET_PRC": "160000",
                 "RPT_ID": "R0",
+                "FILE_NM": "provider_report_page_2.pdf",
             },
         ]
     }

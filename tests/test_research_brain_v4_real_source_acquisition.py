@@ -2421,7 +2421,7 @@ def _companyguide_consensus_html(*, date_text: str = "2026/07/01") -> str:
     <html><body>
       <h2>투자의견 컨센서스</h2>
       <span class="date">[{date_text}]</span>
-      <table>
+      <table id="cTB15">
         <thead>
           <tr>
             <th>투자의견</th>

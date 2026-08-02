@@ -677,6 +677,9 @@ class CurrentResearcherModeTargetRunner:
             score_gap_context=_score_gap_context_for_supervisor(
                 aggregation=aggregation,
                 scoring_memos=scoring_memos,
+                structured_report_candidates=(
+                    structured_materialization.report_candidates
+                ),
             ),
         )
         write_research_epoch_run(epoch, root)
@@ -873,7 +876,12 @@ def write_production_lane(
     facts = tuple(
         row
         for run in target_runs
-        for row in production_material_fact_rows(run.fact_extraction)
+        for row in (
+            *production_material_fact_rows(run.fact_extraction),
+            *production_structured_material_fact_rows(
+                getattr(run, "structured_result", None)
+            ),
+        )
     )
     memos = tuple(row for run in target_runs for row in run.component_memo_rows)
     inputs = tuple(row for run in target_runs for row in run.production_input_rows)
@@ -919,6 +927,122 @@ def write_production_lane(
     write_jsonl(paths["inputs"], inputs)
     write_json(paths["lane"], lane)
     return paths
+
+
+def production_structured_material_fact_rows(
+    result: StructuredEngineResult | None,
+) -> tuple[Mapping[str, Any], ...]:
+    """Project verified structured observations into the blind fact lane.
+
+    Structured records already pass cutoff, source-lineage, value, and
+    availability validation before they reach ``StructuredEngineResult``.
+    They previously informed component research but disappeared from the
+    post-run Gold comparison because the production lane copied only document
+    extraction facts.  This projection preserves the observation as a
+    non-scoring fact; it does not infer direction, strength, score, or Stage.
+    """
+
+    if result is None:
+        return ()
+    rows: list[Mapping[str, Any]] = []
+    for record in result.records:
+        if record.target_id != result.target_id:
+            raise ValueError(
+                "structured production fact crosses target boundaries"
+            )
+        if record.as_of_date != result.as_of_date:
+            raise ValueError(
+                "structured production fact has a mismatched cutoff"
+            )
+        value_text = json.dumps(
+            record.value,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+        semantic_payload = {
+            "target_id": record.target_id,
+            "question_family_id": (
+                f"STRUCTURED_{record.dataset}_{record.metric_id}"
+            ),
+            "subject_id": record.target_id,
+            "predicate_family": record.metric_id,
+            "normalized_object": (
+                f"{record.metric_id}={value_text} {record.unit}"
+            ),
+            "period": record.period,
+            "mechanism_scope_id": (
+                f"STRUCTURED|{record.dataset}|{record.record_kind}"
+            ).upper(),
+        }
+        rows.append(
+            {
+                "schema_version": (
+                    "e2r_v5_production_structured_material_fact_v1"
+                ),
+                "fact_id": "SFACT-"
+                + stable_hash(
+                    {
+                        "record_id": record.record_id,
+                        **semantic_payload,
+                    }
+                )[:24],
+                **semantic_payload,
+                "discovery_origin": "CANONICAL_SOURCE_TASK",
+                "source_id": record.source_ids[0],
+                "source_ids": list(record.source_ids),
+                "source_tier": _structured_production_source_tier(record),
+                "temporal_status": "CURRENT",
+                "as_of_date": record.as_of_date,
+                "materiality": "NONCRITICAL",
+                "fact_role": "SUPPORT",
+                "economic_mechanism": (
+                    "SOURCE_BACKED_STRUCTURED_OBSERVATION"
+                ),
+                "predicate": record.metric_id,
+                "value": record.value,
+                "unit": record.unit,
+                "confidence": record.confidence,
+                "structured_record_id": record.record_id,
+                "input_record_ids": list(record.input_record_ids),
+                "claim_ids": [],
+                "quote_ids": [],
+                "source_route": record.source_route,
+                "observed_at": record.observed_at,
+                "available_at": record.available_at,
+                "provenance": record.provenance,
+                "score_authority": False,
+                "gold_visibility": False,
+            }
+        )
+    fact_ids = [str(row["fact_id"]) for row in rows]
+    if len(fact_ids) != len(set(fact_ids)):
+        raise ValueError("structured production facts require unique ids")
+    return tuple(rows)
+
+
+def _structured_production_source_tier(
+    record: StructuredMetricRecord,
+) -> str:
+    route = record.source_route.upper()
+    if record.dataset in {"CONSENSUS_REVISION", "VALUATION"} or any(
+        token in route
+        for token in (
+            "COMPANYGUIDE",
+            "KRX_",
+            "PEER",
+            "HISTORICAL_BAND",
+            "DETERMINISTIC_FORWARD_SCENARIO",
+        )
+    ):
+        return "FINANCIAL_REVISION"
+    if "DART" in route:
+        return "REGULATORY_OFFICIAL"
+    if "ISSUER" in route:
+        return "ISSUER_OFFICIAL"
+    if "CUSTOMER" in route:
+        return "CUSTOMER_OFFICIAL"
+    return "TRUSTED_INDEPENDENT"
 
 
 def load_current_research_targets(
@@ -2666,6 +2790,7 @@ def _score_gap_context_for_supervisor(
     *,
     aggregation: DeterministicScoreAggregationRun,
     scoring_memos: ComponentScoringMemoRun,
+    structured_report_candidates: Sequence[Mapping[str, Any]] = (),
 ) -> Mapping[str, Any]:
     """Expose only active score-research leaves to the semantic supervisor.
 
@@ -2717,6 +2842,56 @@ def _score_gap_context_for_supervisor(
         material_components
     )
     context["material_disagreement_judge_reviews"] = judge_reviews
+    # CompanyGuide's public report history is a discovery surface, not a
+    # score source.  Preserve every bounded metadata candidate so the semantic
+    # Supervisor can decide whether one of those reports is worth resolving
+    # through the LLM-owned Source Graph query path.  Numeric preview fields
+    # remain explicitly non-evidence until the full report is independently
+    # discovered, fetched, parsed, and linked to an EvidenceFact.
+    context["structured_report_source_candidates"] = [
+        {
+            key: value
+            for key, value in dict(row).items()
+            if key
+            in {
+                "candidate_id",
+                "provider_name",
+                "source_family_hint",
+                "research_route",
+                "discovery_origin",
+                "published_at",
+                "available_at",
+                "broker",
+                "title",
+                "provider_report_id",
+                "provider_index",
+                "provider_file_name",
+                "provider_page",
+                "metadata_source_ids",
+                "provider_summary",
+                "structured_fields",
+                "url_resolution_required",
+                "full_document_owner",
+                "evidence_eligible",
+                "snippet_only",
+                "deterministic_url_synthesis",
+                "deterministic_query_synthesis",
+                "production_score_authority",
+            }
+        }
+        for row in structured_report_candidates
+    ]
+    context["structured_report_source_candidate_contract"] = {
+        "bounded_candidate_count": len(structured_report_candidates),
+        "candidate_roster_complete_within_materializer_budget": True,
+        "metadata_is_discovery_hint_not_evidence": True,
+        "numeric_preview_is_not_fact_authority": True,
+        "llm_owns_materiality_and_objective_binding": True,
+        "literal_query_generation_owner": "SOURCE_QUERY_GENERATION_LLM",
+        "deterministic_url_or_query_synthesis_allowed": False,
+        "full_document_required_before_fact_extraction": True,
+        "score_or_stage_authority": False,
+    }
     context["score_or_stage_authority"] = False
     return context
 

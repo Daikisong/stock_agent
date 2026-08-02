@@ -1043,9 +1043,96 @@ def project_supervisor_evidence_facts(
             numeric_fields=("confidence",),
         )
     )
+    current_information_confidence_rows = tuple(
+        row
+        for row in payloads
+        if str(row.get("current_lifecycle") or "") in {"CURRENT", "OPEN"}
+        and "information_confidence"
+        in {
+            str(value)
+            for value in row.get("allowed_component_ids") or ()
+        }
+    )
+    primary_independence_family_rows = tuple(
+        {
+            "source_family": _independence_group_source_family(
+                row.get("source_independence_group")
+            )
+        }
+        for row in current_information_confidence_rows
+        if _independence_group_source_family(
+            row.get("source_independence_group")
+        )
+    )
+    corroborating_independence_family_rows = tuple(
+        {"source_family": _independence_group_source_family(value)}
+        for row in current_information_confidence_rows
+        for value in _independent_corroborating_groups(row)
+        if _independence_group_source_family(value)
+    )
+    relationship_fields = (
+        "subject",
+        "business_segment",
+        "product_family",
+        "economic_mechanism",
+        "predicate",
+        "direction",
+        "current_lifecycle",
+    )
+    relationship_groups: dict[
+        tuple[str, ...], list[Mapping[str, Any]]
+    ] = {}
+    for row in current_information_confidence_rows:
+        key = tuple(str(row.get(field) or "") for field in relationship_fields)
+        relationship_groups.setdefault(key, []).append(row)
+    relationship_profiles = []
+    for key in sorted(relationship_groups):
+        grouped_rows = relationship_groups[key]
+        independent_groups = tuple(
+            value
+            for row in grouped_rows
+            for value in _independent_corroborating_groups(row)
+        )
+        relationship_profiles.append(
+            {
+                "relationship": {
+                    field: key[index]
+                    for index, field in enumerate(relationship_fields)
+                },
+                "fact_count": len(grouped_rows),
+                "fact_roster_hash": _stable_hash(grouped_rows),
+                "primary_source_family_coverage": _relation_coverage(
+                    tuple(
+                        {
+                            "source_family": (
+                                _independence_group_source_family(
+                                    row.get("source_independence_group")
+                                )
+                            )
+                        }
+                        for row in grouped_rows
+                    ),
+                    "source_family",
+                ),
+                "independent_corroborating_source_family_coverage": (
+                    _relation_coverage(
+                        tuple(
+                            {
+                                "source_family": (
+                                    _independence_group_source_family(value)
+                                )
+                            }
+                            for value in independent_groups
+                        ),
+                        "source_family",
+                    )
+                ),
+                "independent_corroboration_present": bool(independent_groups),
+            }
+        )
     projection.update(
         {
-            "schema_version": "e2r_v5_supervisor_fact_prompt_projection_v3",
+            "schema_version": "e2r_v5_supervisor_fact_prompt_projection_v4",
             "fact_id_roster": _project_text_roster(
                 row.get("fact_id") for row in payloads
             ),
@@ -1081,6 +1168,45 @@ def project_supervisor_evidence_facts(
                 for row in payloads
                 for value in row.get("corroborating_independence_groups") or ()
             ),
+            "independent_corroboration_review": {
+                "schema_version": (
+                    "e2r_v5_independent_corroboration_review_projection_v1"
+                ),
+                "current_information_confidence_fact_count": len(
+                    current_information_confidence_rows
+                ),
+                "primary_source_family_coverage": _relation_coverage(
+                    primary_independence_family_rows,
+                    "source_family",
+                ),
+                "corroborating_source_family_coverage": _relation_coverage(
+                    corroborating_independence_family_rows,
+                    "source_family",
+                ),
+                "fact_with_explicit_corroborating_group_count": sum(
+                    bool(_independent_corroborating_groups(row))
+                    for row in current_information_confidence_rows
+                ),
+                "fact_without_explicit_corroborating_group_count": sum(
+                    not bool(_independent_corroborating_groups(row))
+                    for row in current_information_confidence_rows
+                ),
+                "relationship_profiles": relationship_profiles,
+                "every_information_confidence_fact_accounted_by_hash_and_group_count": (
+                    sum(row["fact_count"] for row in relationship_profiles)
+                    == len(current_information_confidence_rows)
+                ),
+                "review_required": True,
+                "llm_owns_gap_materiality": True,
+                "absence_of_corroboration_is_not_source_absence": True,
+                "instruction": (
+                    "Use this provenance coverage together with the supplied "
+                    "component memos and synthesis to decide whether a named "
+                    "relationship still needs an independent source family. "
+                    "Coverage counts are diagnostic and never create a gap, "
+                    "query, fact, score, or absence deterministically."
+                ),
+            },
             "value_observation_roster": _project_text_roster(
                 json.dumps(
                     {
@@ -1112,6 +1238,32 @@ def project_supervisor_evidence_facts(
         }
     )
     return projection
+
+
+def _independence_group_source_family(value: Any) -> str:
+    """Project only the canonical provenance family, not host or URL detail."""
+
+    text = str(value or "").strip()
+    if not text:
+        return ""
+    return text.split(":", 1)[0].strip()
+
+
+def _independent_corroborating_groups(
+    row: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Exclude the primary provenance group from compiler group coverage."""
+
+    primary = str(row.get("source_independence_group") or "").strip()
+    primary_key = primary.casefold()
+    return tuple(
+        dict.fromkeys(
+            str(value).strip()
+            for value in row.get("corroborating_independence_groups") or ()
+            if str(value).strip()
+            and str(value).strip().casefold() != primary_key
+        )
+    )
 
 
 def project_peer_selection_context(

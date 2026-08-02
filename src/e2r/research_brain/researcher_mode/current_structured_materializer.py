@@ -136,6 +136,7 @@ FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS: Mapping[
 CURRENT_STRUCTURED_OUTPUT_FILES: Mapping[str, str] = {
     "fetch_attempts": "current_structured_fetch_attempts.jsonl",
     "payload_manifest": "current_structured_payload_manifest.jsonl",
+    "report_candidates": "current_structured_report_candidates.jsonl",
     "result": "current_structured_materialization.json",
     "audit": "current_structured_materialization_audit.json",
 }
@@ -281,6 +282,7 @@ class CurrentStructuredMaterializationResult:
     payload_manifest: tuple[Mapping[str, Any], ...]
     pending_reasons: tuple[str, ...]
     audit: Mapping[str, Any]
+    report_candidates: tuple[Mapping[str, Any], ...] = ()
     production_score_authority: bool = False
     schema_version: str = "e2r_v5_current_structured_materialization_v1"
 
@@ -302,6 +304,7 @@ class CurrentStructuredMaterializationResult:
             "engine_result": self.engine_result.to_dict(),
             "fetch_attempts": [row.to_dict() for row in self.fetch_attempts],
             "payload_manifest": [dict(row) for row in self.payload_manifest],
+            "report_candidates": [dict(row) for row in self.report_candidates],
             "pending_reasons": list(self.pending_reasons),
             "audit": dict(self.audit),
             "production_score_authority": False,
@@ -389,6 +392,8 @@ class CurrentStructuredSourceMaterializer:
         timeout_seconds: float = 30.0,
         price_lookback_days: int = 1_825,
         companyguide_report_rows: int = 100,
+        companyguide_report_max_pages: int = 3,
+        companyguide_report_max_candidates: int = 300,
         peer_provider: StructuredResearchProvider | None = None,
     ) -> None:
         if timeout_seconds <= 0 or timeout_seconds > 120:
@@ -397,10 +402,19 @@ class CurrentStructuredSourceMaterializer:
             raise ValueError("structured price history must cover at least one year")
         if companyguide_report_rows <= 0 or companyguide_report_rows > 100:
             raise ValueError("CompanyGuide report rows exceed provider page maximum")
+        if companyguide_report_max_pages <= 0 or companyguide_report_max_pages > 20:
+            raise ValueError("CompanyGuide report pagination must be explicitly bounded")
+        if (
+            companyguide_report_max_candidates <= 0
+            or companyguide_report_max_candidates > 2_000
+        ):
+            raise ValueError("CompanyGuide report candidate budget is invalid")
         self.transport = transport or RequestsCurrentStructuredHTTPTransport()
         self.timeout_seconds = timeout_seconds
         self.price_lookback_days = price_lookback_days
         self.companyguide_report_rows = companyguide_report_rows
+        self.companyguide_report_max_pages = companyguide_report_max_pages
+        self.companyguide_report_max_candidates = companyguide_report_max_candidates
         self.peer_provider = peer_provider
 
     def materialize(
@@ -437,6 +451,8 @@ class CurrentStructuredSourceMaterializer:
         )
         attempts: list[CurrentStructuredFetchAttempt] = []
         manifests: list[Mapping[str, Any]] = []
+        report_candidates: list[Mapping[str, Any]] = []
+        companyguide_report_audit: dict[str, Any] = {}
 
         dart_route = self._opendart_route(
             target_id=target_id,
@@ -456,6 +472,8 @@ class CurrentStructuredSourceMaterializer:
             attempts=attempts,
             manifests=manifests,
             shared_cache_roots=reusable_cache_roots,
+            report_candidates=report_candidates,
+            report_pagination_audit=companyguide_report_audit,
         )
         (
             price_route,
@@ -576,6 +594,7 @@ class CurrentStructuredSourceMaterializer:
             "fetch_attempt_count": len(attempts),
             "cache_hit_count": sum(row.cache_hit for row in attempts),
             "payload_manifest_count": len(manifests),
+            "report_candidate_count": len(report_candidates),
             "structured_record_count": len(engine.records),
             "financial_record_count": len(engine.financial_records),
             "consensus_revision_record_count": len(
@@ -590,6 +609,7 @@ class CurrentStructuredSourceMaterializer:
             },
             "issuer_fact_materialization": issuer_fact_audit,
             "peer_selection": peer_selection_audit,
+            "companyguide_report_history": companyguide_report_audit,
             "fixed_transport_count_is_completion": False,
             "provider_failure_is_zero_score": False,
             "future_data_is_rejected": True,
@@ -608,6 +628,7 @@ class CurrentStructuredSourceMaterializer:
             payload_manifest=tuple(manifests),
             pending_reasons=pending,
             audit=audit,
+            report_candidates=tuple(report_candidates),
         )
         write_current_structured_materialization(result, root)
         return result
@@ -722,6 +743,8 @@ class CurrentStructuredSourceMaterializer:
         attempts: list[CurrentStructuredFetchAttempt],
         manifests: list[Mapping[str, Any]],
         shared_cache_roots: Sequence[Path] = (),
+        report_candidates: list[Mapping[str, Any]],
+        report_pagination_audit: dict[str, Any],
     ):
         snapshot = self._text(
             target_id=target_id,
@@ -749,25 +772,87 @@ class CurrentStructuredSourceMaterializer:
                 )
             ),
         )
-        reports_payload = self._json(
-            target_id=target_id,
-            cutoff=cutoff,
-            provider_name="CompanyGuide",
-            source_role="BROKER_REPORT_HISTORY",
-            cache_key=f"companyguide_reports_{target_id}",
-            cache_root=cache_root,
-            checkpoint_resume=checkpoint_resume,
-            url=_COMPANYGUIDE_REPORTS_URL,
-            params={
-                "cmp_cd": target_id,
-                "perPage": self.companyguide_report_rows,
-                "curPage": 1,
-            },
-            headers={"User-Agent": "Mozilla/5.0 E2R-ResearcherMode/5.0"},
-            attempts=attempts,
-            manifests=manifests,
-            rows_getter=lambda value: value.get("lists") or (),
-        )
+        report_pages: list[tuple[Mapping[str, Any], str, int]] = []
+        selected_candidate_count = 0
+        fetched_page_count = 0
+        provider_total_pages: int | None = None
+        stop_reason = "MAX_PAGES_REACHED"
+        for page_number in range(1, self.companyguide_report_max_pages + 1):
+            manifest_start = len(manifests)
+            reports_payload = self._json(
+                target_id=target_id,
+                cutoff=cutoff,
+                provider_name="CompanyGuide",
+                source_role="BROKER_REPORT_HISTORY",
+                cache_key=(
+                    f"companyguide_reports_{target_id}"
+                    if page_number == 1
+                    else f"companyguide_reports_{target_id}_page_{page_number}"
+                ),
+                cache_root=cache_root,
+                checkpoint_resume=checkpoint_resume,
+                url=_COMPANYGUIDE_REPORTS_URL,
+                params={
+                    "cmp_cd": target_id,
+                    "perPage": self.companyguide_report_rows,
+                    "curPage": page_number,
+                },
+                headers={"User-Agent": "Mozilla/5.0 E2R-ResearcherMode/5.0"},
+                attempts=attempts,
+                manifests=manifests,
+                rows_getter=lambda value: value.get("lists") or (),
+            )
+            if reports_payload is None:
+                stop_reason = "PROVIDER_ERROR"
+                break
+            fetched_page_count += 1
+            raw_rows = tuple(
+                row
+                for row in reports_payload.get("lists") or ()
+                if isinstance(row, Mapping)
+            )
+            declared_total_pages = _int(reports_payload.get("tp"))
+            if declared_total_pages is not None and declared_total_pages > 0:
+                provider_total_pages = declared_total_pages
+            page_source_id = next(
+                (
+                    str(row["source_id"])
+                    for row in reversed(manifests[manifest_start:])
+                    if row.get("provider_name") == "CompanyGuide"
+                    and row.get("source_role") == "BROKER_REPORT_HISTORY"
+                ),
+                "",
+            )
+            if not raw_rows:
+                stop_reason = "PROVIDER_PAGE_EMPTY"
+                break
+            remaining = (
+                self.companyguide_report_max_candidates - selected_candidate_count
+            )
+            selected_rows = raw_rows[:remaining]
+            selected_candidate_count += len(selected_rows)
+            if selected_rows and page_source_id:
+                report_pages.append(
+                    ({"lists": list(selected_rows)}, page_source_id, page_number)
+                )
+            if len(selected_rows) < len(raw_rows) or (
+                selected_candidate_count
+                >= self.companyguide_report_max_candidates
+            ):
+                stop_reason = "MAX_CANDIDATES_REACHED"
+                break
+            if provider_total_pages is None:
+                # Older/fixture payloads do not expose tp.  One page remains a
+                # bounded, fail-closed read instead of guessing more pages.
+                stop_reason = "PROVIDER_TOTAL_PAGES_UNKNOWN_SINGLE_PAGE"
+                break
+            if page_number >= provider_total_pages:
+                stop_reason = "PROVIDER_TOTAL_PAGES_REACHED"
+                break
+        provider_archive_exhausted = stop_reason in {
+            "PROVIDER_PAGE_EMPTY",
+            "PROVIDER_TOTAL_PAGES_REACHED",
+        }
         source_ids = tuple(
             dict.fromkeys(
                 row["source_id"]
@@ -776,7 +861,7 @@ class CurrentStructuredSourceMaterializer:
             )
         )
         snapshots: list[ConsensusSnapshot] = []
-        reports: tuple[ResearchReport, ...] = ()
+        parsed_report_rows: list[ResearchReport] = []
         seed_records: list[StructuredMetricRecord] = []
         if snapshot:
             parsed = parse_companyguide_live_consensus_payload(
@@ -802,7 +887,26 @@ class CurrentStructuredSourceMaterializer:
             )
             if consensus is not None:
                 snapshots.append(consensus)
-        if reports_payload:
+            snapshot_source_id = next(
+                (
+                    str(row["source_id"])
+                    for row in reversed(manifests)
+                    if row.get("provider_name") == "CompanyGuide"
+                    and row.get("source_role")
+                    == "CONSENSUS_VALUATION_SNAPSHOT"
+                ),
+                "",
+            )
+            if snapshot_source_id:
+                seed_records.extend(
+                    _companyguide_trailing_valuation_records(
+                        target_id=target_id,
+                        cutoff=cutoff,
+                        payload=parsed,
+                        source_id=snapshot_source_id,
+                    )
+                )
+        for reports_payload, report_source_id, page_number in report_pages:
             try:
                 parsed_reports = CompanyGuideConnector.parse_recent_reports_payload(
                     reports_payload,
@@ -811,32 +915,72 @@ class CurrentStructuredSourceMaterializer:
                 )
             except (TypeError, ValueError, json.JSONDecodeError):
                 parsed_reports = ()
-            reports = tuple(_enrich_report(row) for row in parsed_reports)
-            report_source_id = next(
-                (
-                    row["source_id"]
-                    for row in reversed(manifests)
-                    if row["provider_name"] == "CompanyGuide"
-                    and row["source_role"] == "BROKER_REPORT_HISTORY"
-                ),
-                None,
+            for report in parsed_reports:
+                parsed_report_rows.append(
+                    _enrich_report(
+                        replace(
+                            report,
+                            parsed_fields={
+                                **dict(report.parsed_fields),
+                                "structured_page_source_id": report_source_id,
+                                "provider_page": page_number,
+                            },
+                        )
+                    )
+                )
+        reports = tuple(parsed_report_rows)
+        if reports:
+            snapshots.extend(
+                _report_consensus_snapshots(
+                    reports,
+                    target_id=target_id,
+                    cutoff=cutoff,
+                )
             )
-            if report_source_id:
-                snapshots.extend(
-                    _report_consensus_snapshots(
-                        reports,
-                        target_id=target_id,
-                        cutoff=cutoff,
-                    )
+            seed_records.extend(
+                _report_direction_records(
+                    reports,
+                    target_id=target_id,
+                    cutoff=cutoff,
                 )
-                seed_records.extend(
-                    _report_direction_records(
-                        reports,
-                        target_id=target_id,
-                        cutoff=cutoff,
-                        source_id=report_source_id,
-                    )
+            )
+            known_candidate_ids = {
+                str(row.get("candidate_id") or "") for row in report_candidates
+            }
+            for report in reports:
+                candidate = _companyguide_report_source_candidate(
+                    report,
+                    target_id=target_id,
+                    cutoff=cutoff,
                 )
+                if candidate is None or candidate["candidate_id"] in known_candidate_ids:
+                    continue
+                report_candidates.append(candidate)
+                known_candidate_ids.add(str(candidate["candidate_id"]))
+        report_pagination_audit.update(
+            {
+                "schema_version": "e2r_v5_companyguide_report_pagination_audit_v1",
+                "status": (
+                    "REPORT_CANDIDATE_HANDOFF_READY"
+                    if report_candidates
+                    else "REPORT_CANDIDATE_HANDOFF_EMPTY"
+                ),
+                "max_pages": self.companyguide_report_max_pages,
+                "max_candidates": self.companyguide_report_max_candidates,
+                "results_per_page": self.companyguide_report_rows,
+                "fetched_page_count": fetched_page_count,
+                "selected_candidate_count": selected_candidate_count,
+                "eligible_report_count": len(reports),
+                "handoff_candidate_count": len(report_candidates),
+                "provider_total_pages": provider_total_pages,
+                "stop_reason": stop_reason,
+                "provider_archive_exhausted": provider_archive_exhausted,
+                "bounded_pagination": True,
+                "full_document_owner": "LLM_SOURCE_GRAPH",
+                "full_document_fetch_performed": False,
+                "deterministic_url_or_query_synthesis": False,
+            }
+        )
         has_rows = bool(snapshots or reports or seed_records)
         if not has_rows or not source_ids:
             return UnavailableStructuredSourceRoute(
@@ -851,7 +995,16 @@ class CurrentStructuredSourceMaterializer:
             diagnostics={
                 "snapshot_count": len(snapshots),
                 "report_count": len(reports),
-                "direction_record_count": len(seed_records),
+                "direction_record_count": sum(
+                    row.record_kind == "STRUCTURED_BROKER_REPORT_DIRECTION"
+                    for row in seed_records
+                ),
+                "trailing_valuation_record_count": sum(
+                    row.record_kind == "PROVIDER_TRAILING_VALUATION_SNAPSHOT"
+                    for row in seed_records
+                ),
+                "report_candidate_count": len(report_candidates),
+                "report_pagination_stop_reason": stop_reason,
                 "report_page_is_provider_bounded_not_research_completion": True,
             },
         )
@@ -2899,6 +3052,7 @@ def write_current_structured_materialization(
     }
     write_jsonl(paths["fetch_attempts"], (row.to_dict() for row in result.fetch_attempts))
     write_jsonl(paths["payload_manifest"], result.payload_manifest)
+    write_jsonl(paths["report_candidates"], result.report_candidates)
     write_json(paths["result"], result.to_dict())
     write_json(paths["audit"], result.audit)
     return paths
@@ -3008,6 +3162,107 @@ def _companyguide_consensus_snapshot(
     )
 
 
+def _companyguide_trailing_valuation_records(
+    *,
+    target_id: str,
+    cutoff: date,
+    payload: Mapping[str, Any],
+    source_id: str,
+) -> tuple[StructuredMetricRecord, ...]:
+    if payload.get("TRAILING_VALUATION_DATE_VERIFIED") is not True:
+        return ()
+    raw_date = str(
+        payload.get("TRAILING_VALUATION_AS_OF_DATE") or ""
+    ).replace("/", "-")[:10]
+    try:
+        observed = date.fromisoformat(raw_date)
+    except ValueError:
+        return ()
+    if observed > cutoff:
+        return ()
+    anchors = payload.get("TRAILING_VALUATION_FIELD_ANCHORS") or {}
+    if not isinstance(anchors, Mapping):
+        anchors = {}
+    specs = (
+        (
+            "trailing_eps",
+            "TRAILING_EPS",
+            "CURRENCY_PER_SHARE",
+            ("TRAILING_EPS", "CURRENT_VALUATION"),
+        ),
+        (
+            "trailing_bps",
+            "TRAILING_BPS",
+            "CURRENCY_PER_SHARE",
+            ("TRAILING_BPS", "CURRENT_VALUATION"),
+        ),
+        (
+            "trailing_pe",
+            "TRAILING_PER",
+            "MULTIPLE",
+            ("TRAILING_PE", "CURRENT_VALUATION"),
+        ),
+        (
+            "trailing_pb",
+            "TRAILING_PBR",
+            "MULTIPLE",
+            ("TRAILING_PB", "CURRENT_VALUATION"),
+        ),
+        (
+            "provider_previous_close",
+            "PROVIDER_PREVIOUS_CLOSE",
+            "CURRENCY_PER_SHARE",
+            ("CURRENT_PRICE", "CURRENT_VALUATION"),
+        ),
+    )
+    records: list[StructuredMetricRecord] = []
+    for metric_id, payload_key, unit, roles in specs:
+        value = _float(payload.get(payload_key))
+        if value is None:
+            continue
+        records.append(
+            StructuredMetricRecord(
+                record_id="STRUCT-" + stable_hash(
+                    {
+                        "target_id": target_id,
+                        "metric_namespace": "TRAILING_ACTUAL",
+                        "metric_id": metric_id,
+                        "value": value,
+                        "observed_at": observed.isoformat(),
+                        "source_id": source_id,
+                    }
+                )[:24],
+                target_id=target_id,
+                as_of_date=cutoff.isoformat(),
+                metric_id=metric_id,
+                value=value,
+                unit=unit,
+                period=f"TRAILING_AS_OF_{observed.isoformat()}",
+                evidence_roles=roles,
+                source_ids=(source_id,),
+                source_route="COMPANYGUIDE",
+                observed_at=observed.isoformat(),
+                available_at=observed.isoformat(),
+                record_kind="PROVIDER_TRAILING_VALUATION_SNAPSHOT",
+                confidence=0.9,
+                dataset="VALUATION",
+                provenance="STRUCTURED_EXTRACTED",
+                metadata={
+                    "structured_source": True,
+                    "provider_name": "CompanyGuide",
+                    "metric_namespace": "TRAILING_ACTUAL",
+                    "provider_field": payload_key,
+                    "field_anchor": anchors.get(payload_key),
+                    "provider_published_value": True,
+                    "forward_value": False,
+                    "date_verified": True,
+                    "snippet_only": False,
+                },
+            )
+        )
+    return tuple(records)
+
+
 def _enrich_report(row: ResearchReport) -> ResearchReport:
     est_per = row.est_per
     if (
@@ -3023,6 +3278,69 @@ def _enrich_report(row: ResearchReport) -> ResearchReport:
         parsed["est_per_formula"] = "report_close_price / report_fy1_eps"
         parsed["est_per_derived_from_structured_report_fields"] = True
     return replace(row, est_per=est_per, parsed_fields=parsed)
+
+
+def _companyguide_report_source_candidate(
+    report: ResearchReport,
+    *,
+    target_id: str,
+    cutoff: date,
+) -> Mapping[str, Any] | None:
+    parsed = dict(report.parsed_fields)
+    source_id = str(parsed.get("structured_page_source_id") or "").strip()
+    file_name = str(parsed.get("file_name") or "").strip()
+    report_id = str(parsed.get("report_id") or "").strip()
+    provider_index = str(parsed.get("idx") or "").strip()
+    if not source_id or not (file_name or report_id or provider_index):
+        return None
+    if report.publish_date > cutoff:
+        return None
+    identity = {
+        "target_id": target_id,
+        "published_at": report.publish_date.isoformat(),
+        "broker": report.broker,
+        "title": report.title,
+        "report_id": report_id,
+        "provider_index": provider_index,
+        "file_name": file_name,
+        "metadata_source_id": source_id,
+    }
+    return {
+        "schema_version": "e2r_v5_structured_report_source_candidate_v1",
+        "candidate_id": "STRUCTCAND-" + stable_hash(identity)[:24],
+        "target_id": target_id,
+        "as_of_date": cutoff.isoformat(),
+        "provider_name": "CompanyGuide",
+        "source_family_hint": "PUBLIC_BROKER_PDF",
+        "research_route": "PUBLIC_BROKER_REPORT",
+        "discovery_origin": "STRUCTURED_PROVIDER_METADATA",
+        "published_at": report.publish_date.isoformat(),
+        "available_at": report.publish_date.isoformat(),
+        "broker": report.broker,
+        "title": report.title,
+        "provider_report_id": report_id or None,
+        "provider_index": provider_index or None,
+        "provider_file_name": file_name or None,
+        "provider_page": parsed.get("provider_page"),
+        "metadata_source_ids": [source_id],
+        "provider_summary": str(parsed.get("comment") or report.raw_text or ""),
+        "structured_fields": {
+            "close_price": report.current_price,
+            "target_price": report.target_price,
+            "fy1_eps": report.fy1_eps,
+            "est_per": report.est_per,
+        },
+        "canonical_url": None,
+        "url_resolution_required": True,
+        "full_document_owner": "LLM_SOURCE_GRAPH",
+        "full_fetch_performed": False,
+        "evidence_eligible": False,
+        "snippet_only": True,
+        "snippet_used_as_document": False,
+        "deterministic_url_synthesis": False,
+        "deterministic_query_synthesis": False,
+        "production_score_authority": False,
+    }
 
 
 def _report_consensus_snapshots(
@@ -3061,7 +3379,7 @@ def _report_direction_records(
     *,
     target_id: str,
     cutoff: date,
-    source_id: str,
+    source_id: str | None = None,
 ) -> tuple[StructuredMetricRecord, ...]:
     records: list[StructuredMetricRecord] = []
     for report in reports:
@@ -3069,6 +3387,13 @@ def _report_direction_records(
             report.parsed_fields.get("report_id")
             or stable_hash((report.broker, report.publish_date.isoformat(), report.title))[:16]
         )
+        effective_source_id = str(
+            report.parsed_fields.get("structured_page_source_id")
+            or source_id
+            or ""
+        ).strip()
+        if not effective_source_id:
+            continue
         directions: list[tuple[str, str, str]] = []
         eps_direction = str(
             report.parsed_fields.get("eps_revision_direction") or ""
@@ -3107,7 +3432,7 @@ def _report_direction_records(
                     unit="DIRECTION",
                     period=report.publish_date.isoformat(),
                     evidence_roles=(role,),
-                    source_ids=(source_id,),
+                    source_ids=(effective_source_id,),
                     source_route="COMPANYGUIDE",
                     observed_at=report.publish_date.isoformat(),
                     available_at=report.publish_date.isoformat(),

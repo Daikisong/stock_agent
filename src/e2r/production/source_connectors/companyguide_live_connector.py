@@ -122,6 +122,7 @@ def parse_companyguide_live_consensus_payload(
         "CONSENSUS_PROVIDER_COUNT": _number(row_values[4]),
         "score_anchor_text": block[:4000],
         **_parse_companyguide_forward_fundamentals(text),
+        **_parse_companyguide_trailing_header(text),
     }
     return {key: value for key, value in payload.items() if value not in (None, "")}
 
@@ -131,24 +132,26 @@ _parse_companyguide_consensus = parse_companyguide_live_consensus_payload
 
 
 def _companyguide_consensus_block(text: str) -> str:
-    marker = "투자의견 컨센서스"
-    start = text.find(marker)
-    table_start = text.find("<table", start) if start >= 0 else -1
-    if table_start < 0:
-        match = re.search(
-            r'<table[^>]+id=["\']cTB15["\'][^>]*>',
-            text,
-            flags=re.IGNORECASE,
-        )
-        table_start = match.start() if match else -1
-    table_end = text.find("</table>", table_start) if table_start >= 0 else -1
-    if table_start < 0 or table_end < 0:
+    table_match = re.search(
+        r'<table\b(?=[^>]*\bid=["\']cTB15["\'])[^>]*>',
+        text,
+        flags=re.IGNORECASE,
+    )
+    if table_match is None:
         return ""
-    # Keep the section heading and its explicit date together with the table.
-    # Older consumers use the heading as the semantic score anchor, while the
-    # point-in-time parser must read a date that commonly sits between the
-    # heading and the table rather than inside the table itself.
-    block_start = start if start >= 0 else table_start
+    table_start = table_match.start()
+    table_end = text.find("</table>", table_start)
+    if table_end < 0:
+        return ""
+
+    # The provider repeats this phrase in the page metadata.  Anchor the
+    # section from the exact cTB15 table first, then search backwards only in
+    # the nearby section.  This prevents an og:description/meta hit from
+    # selecting an unrelated table near the top of the document.
+    marker = "투자의견 컨센서스"
+    nearby_start = max(0, table_start - 4_000)
+    heading_start = text.rfind(marker, nearby_start, table_start)
+    block_start = heading_start if heading_start >= 0 else table_start
     return text[block_start : table_end + len("</table>")]
 
 
@@ -156,7 +159,7 @@ def _companyguide_consensus_date(block: str) -> str | None:
     match = re.search(r"class=[\"']date[\"']>\s*\[(\d{4}/\d{2}/\d{2})\]", block)
     if match:
         return match.group(1)
-    return None
+    return _companyguide_page_date(block)
 
 
 def _companyguide_page_date(text: str) -> str | None:
@@ -182,11 +185,69 @@ def _companyguide_company_name(text: str) -> str | None:
 
 
 def _first_table_row_values(block: str) -> tuple[str, ...]:
-    row_match = re.search(r"<tbody[^>]*>.*?<tr[^>]*>(.*?)</tr>", block, flags=re.IGNORECASE | re.DOTALL)
-    if not row_match:
-        return ()
-    cells = re.findall(r"<td[^>]*>(.*?)</td>", row_match.group(1), flags=re.IGNORECASE | re.DOTALL)
-    return tuple(_strip_html(cell) for cell in cells)
+    for row_html in re.findall(
+        r"<tr[^>]*>(.*?)</tr>", block, flags=re.IGNORECASE | re.DOTALL
+    ):
+        cells = re.findall(
+            r"<td[^>]*>(.*?)</td>",
+            row_html,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+        if len(cells) >= 5:
+            return tuple(_strip_html(cell) for cell in cells)
+    return ()
+
+
+def _parse_companyguide_trailing_header(text: str) -> dict[str, Any]:
+    """Parse provider-published trailing values without relabeling as forward.
+
+    CompanyGuide exposes these values in the company header and documents PER
+    and PBR as previous-close divided by the latest fiscal EPS/BPS.  Keep that
+    namespace separate from both the consensus table and the Fwd. 12M table.
+    """
+
+    definitions = {
+        "EPS": "TRAILING_EPS",
+        "BPS": "TRAILING_BPS",
+        "PER": "TRAILING_PER",
+        "PBR": "TRAILING_PBR",
+    }
+    parsed: dict[str, Any] = {}
+    anchors: dict[str, str] = {}
+    for label, key in definitions.items():
+        match = re.search(
+            rf"<p[^>]*>\s*{label}\s*<b[^>]*>(?P<value>.*?)</b>\s*</p>",
+            text,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+        if match is None:
+            continue
+        value_text = _strip_html(match.group("value"))
+        value = _number(value_text)
+        if value is None:
+            continue
+        parsed[key] = value
+        anchors[key] = f"{label} {value_text}"
+    close_match = re.search(
+        r"<p[^>]*>\s*전일종가\s*<b[^>]*>(?P<value>.*?)</b>\s*</p>",
+        text,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if close_match is not None:
+        value_text = _strip_html(close_match.group("value"))
+        value = _number(value_text)
+        if value is not None:
+            parsed["PROVIDER_PREVIOUS_CLOSE"] = value
+            anchors["PROVIDER_PREVIOUS_CLOSE"] = f"전일종가 {value_text}"
+    if not parsed:
+        return {}
+    page_date = _companyguide_page_date(text)
+    if page_date is not None:
+        parsed["TRAILING_VALUATION_AS_OF_DATE"] = page_date
+        parsed["TRAILING_VALUATION_DATE_VERIFIED"] = True
+    parsed["TRAILING_VALUATION_STRUCTURED"] = True
+    parsed["TRAILING_VALUATION_FIELD_ANCHORS"] = anchors
+    return parsed
 
 
 def _parse_companyguide_forward_fundamentals(text: str) -> dict[str, Any]:

@@ -185,6 +185,49 @@ class PendingThenCompleteRankingProvider(SourceBrainProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class SparseReferenceRevalidationProvider(SourceBrainProvider):
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        if pass_name != "SOURCE_CANDIDATE_RANKING":
+            return super().complete(pass_name=pass_name, payload=payload)
+        self.calls.append({"pass_name": pass_name, "payload": payload})
+        decisions = []
+        for index, row in enumerate(payload["discovery_candidates"]):
+            context = row.get("reference_transport_context") or {}
+            sparse = bool(context.get("metadata_sparse"))
+            has_full_text = bool(context.get("full_fetch_content_text"))
+            material = bool(not sparse or has_full_text)
+            decisions.append(
+                {
+                    "candidate_id": row["candidate_id"],
+                    "material_relevance": material,
+                    "priority": 1.0 - index * 0.01,
+                    "objective_ids": list(row["objective_ids"]),
+                    "matched_requested_source_family": (
+                        next(
+                            iter(row.get("requested_source_families") or ()),
+                            "NONE",
+                        )
+                        if material
+                        else "NONE"
+                    ),
+                    "rationale": (
+                        "full fetched text resolves materiality"
+                        if has_full_text
+                        else "sparse discovery metadata is inconclusive"
+                        if sparse
+                        else "direct candidate is material"
+                    ),
+                }
+            )
+        return {
+            "decisions": decisions,
+            "ranking_complete": True,
+            "unresolved_notes": [],
+        }
+
+
 class TwoScopeRepairProvider(SourceBrainProvider):
     def __init__(self, *, query_by_objective: Mapping[str, str]) -> None:
         super().__init__(queries=())
@@ -2926,6 +2969,142 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 "OBJECTIVE-1:CUSTOMER_OFFICIAL"
                 for value in second.checkpoint["pending_reasons"]
             )
+        )
+
+    def test_new_supervisor_family_direction_reopens_resolved_without_prior_query(
+        self,
+    ) -> None:
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state.update(
+            status="STOPPED_ON_RESOLUTION",
+            resolved_objective_ids=["OBJECTIVE-1"],
+        )
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        provider = SourceBrainProvider(
+            queries=("Current Corp independent official relationship",),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        mandatory_gap_context = {
+            "prior_supervisor_gap": {
+                "new_source_family_directions": [
+                    {
+                        "objective_id": "OBJECTIVE-1",
+                        "source_family": "CUSTOMER_OFFICIAL",
+                        "direction": "independent official corroboration",
+                    }
+                ]
+            }
+        }
+
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+            score_gap_context=mandatory_gap_context,
+        )
+
+        self.assertNotIn(
+            "OBJECTIVE-1",
+            run.checkpoint["resolved_objective_ids"],
+        )
+        query_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+        )
+        projected_failures = json.dumps(
+            query_payload["prior_query_or_source_failures"],
+            ensure_ascii=False,
+        )
+        self.assertIn(
+            "REQUESTED_SOURCE_FAMILY_WITHOUT_"
+            "ACCEPTED_CLAIM_FACT_LINEAGE",
+            projected_failures,
+        )
+        self.assertIn("CUSTOMER_OFFICIAL", projected_failures)
+
+    def test_sparse_verified_reference_gets_one_fetch_then_full_text_revalidation(
+        self,
+    ) -> None:
+        provider = SparseReferenceRevalidationProvider(
+            source_families=("ISSUER_NEWSROOM",),
+        )
+        parent_url = "https://issuer.example.com/current"
+        child_url = "https://issuer.example.com/current/full.pdf"
+        fetcher = ReferencedRouteFetcher(
+            parent_url=parent_url,
+            child_url=child_url,
+            parent_text="Current Corp official landing page",
+        )
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp official landing", parent_url),)}
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            official_domains=("issuer.example.com",),
+        )
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=first.checkpoint,
+            official_domains=("issuer.example.com",),
+        )
+        child_after_fetch = next(
+            row
+            for row in second.checkpoint["search_candidates"]
+            if row.get("url") == child_url
+        )
+        self.assertEqual(
+            child_after_fetch["fetch_status"],
+            "FULL_DOCUMENT_REVALIDATION_PENDING",
+        )
+        self.assertTrue(
+            child_after_fetch[
+                "sparse_reference_transport_revalidation_attempted"
+            ]
+        )
+        self.assertEqual(fetcher.calls.count(child_url), 1)
+
+        third = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            checkpoint=second.checkpoint,
+            official_domains=("issuer.example.com",),
+        )
+        child_final = next(
+            row
+            for row in third.checkpoint["search_candidates"]
+            if row.get("url") == child_url
+        )
+        self.assertEqual(child_final["ranking_status"], "MATERIAL")
+        self.assertEqual(child_final["fetch_status"], "FULL_DOCUMENT_FETCHED")
+        self.assertEqual(fetcher.calls.count(child_url), 1)
+        full_text_payload = next(
+            row["payload"]
+            for row in reversed(provider.calls)
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+            and any(
+                (candidate.get("reference_transport_context") or {}).get(
+                    "full_fetch_content_text"
+                )
+                for candidate in row["payload"]["discovery_candidates"]
+            )
+        )
+        self.assertIn(
+            "linked-official-transcript",
+            json.dumps(full_text_payload, ensure_ascii=False),
         )
 
     def test_supervisor_query_direction_preempts_reference_backlog(

@@ -3535,6 +3535,50 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         self.assertEqual(context["query_direction_briefs"], [])
         self.assertNotIn("suggested_queries", context)
 
+    def test_supervisor_prompt_requires_llm_owned_independence_review(
+        self,
+    ) -> None:
+        provider = Phase87SupervisorProvider("READY")
+        ResearchSupervisor(provider=provider).review_epoch(
+            **_supervisor_inputs()
+        )
+
+        required = provider.calls[0]["payload"]["required_output_rosters"]
+        contract = required[
+            "independent_corroboration_review_contract"
+        ]
+        self.assertTrue(contract["llm_owns_gap_materiality"])
+        self.assertEqual(
+            contract["literal_query_generation_owner"],
+            "SOURCE_QUERY_GENERATION_LLM",
+        )
+        self.assertIn("source-family direction", contract["instruction"])
+        self.assertNotIn(
+            "literal query",
+            contract["instruction"].split("Do not")[0],
+        )
+
+    def test_supervisor_prompt_keeps_structured_report_handoff_llm_owned(
+        self,
+    ) -> None:
+        provider = Phase87SupervisorProvider("READY")
+        ResearchSupervisor(provider=provider).review_epoch(
+            **_supervisor_inputs()
+        )
+
+        required = provider.calls[0]["payload"]["required_output_rosters"]
+        contract = required[
+            "structured_report_source_candidate_review_contract"
+        ]
+        self.assertTrue(contract["llm_owns_candidate_materiality"])
+        self.assertEqual(
+            contract["literal_query_generation_owner"],
+            "SOURCE_QUERY_GENERATION_LLM",
+        )
+        self.assertIn("never as evidence", contract["instruction"])
+        self.assertIn("PUBLIC_BROKER_PDF", contract["instruction"])
+        self.assertIn("Do not create a literal query or URL", contract["instruction"])
+
     def test_supervisor_semantic_error_gets_one_bounded_correction(self) -> None:
         provider = Phase87CorrectingSupervisorProvider(
             "COUNTER_WITHOUT_PROOF"

@@ -79,13 +79,14 @@ OBJECTIVE_FACT_RELATIONS = frozenset(
     {"ADVANCE", "COUNTER", "SUPERSEDE"}
 )
 FACT_EXTRACTION_SEMANTICS_VERSION = (
-    "e2r_v5_objective_local_lineage_coverage_audit_v2"
+    "e2r_v5_cross_objective_compound_coverage_audit_v3"
 )
-_OFFICIAL_COVERAGE_REFRESH_SOURCE_TIERS = frozenset(
+_TRUSTED_COVERAGE_REFRESH_SOURCE_TIERS = frozenset(
     {
         "REGULATORY_OFFICIAL",
         "ISSUER_OFFICIAL",
         "CUSTOMER_OFFICIAL",
+        "TRUSTED_INDEPENDENT",
     }
 )
 
@@ -576,11 +577,28 @@ class ResearcherEvidenceFactExtractor:
         }
         if "" in objective_ids or len(objective_ids) != len(open_objectives):
             raise ValueError("fact extraction objectives require unique ids")
+        objective_component_by_id = {
+            str(row.get("objective_id") or "").strip(): str(
+                row.get("component_id") or ""
+            ).strip()
+            for row in open_objectives
+        }
         objective_scope_by_document: Mapping[str, frozenset[str]] | None = None
         if extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL":
             if not objective_ids:
                 raise ValueError(
                     "production objective-local extraction requires open objectives"
+                )
+            invalid_objective_component_ids = sorted(
+                objective_id
+                for objective_id, component_id
+                in objective_component_by_id.items()
+                if component_id not in CANONICAL_COMPONENT_ORDER
+            )
+            if invalid_objective_component_ids:
+                raise ValueError(
+                    "production objectives require canonical component ids:"
+                    + ",".join(invalid_objective_component_ids)
                 )
             objective_scope_by_document = {
                 str(document["document_id"]): frozenset(
@@ -667,6 +685,12 @@ class ResearcherEvidenceFactExtractor:
             == FACT_EXTRACTION_SEMANTICS_VERSION
             for document_id in call.document_ids
         } - set(carried_coverage_refresh_document_ids)
+        previously_coverage_audited_document_ids = {
+            document_id
+            for call in all_checkpoint_calls
+            if call.coverage_audit_performed
+            for document_id in call.document_ids
+        }
         stale_semantics_document_ids = (
             stale_semantics_disposition_ids
             | {
@@ -693,10 +717,20 @@ class ResearcherEvidenceFactExtractor:
                 coverage_complete_document_ids=(
                     coverage_complete_document_ids
                 ),
+                previously_coverage_audited_document_ids=(
+                    previously_coverage_audited_document_ids
+                ),
                 open_objective_ids=frozenset(objective_ids),
             )
             if extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
             else frozenset()
+        )
+        cross_objective_coverage_refresh_document_ids = frozenset(
+            set(bounded_stale_coverage_refresh_document_ids)
+            | (
+                set(carried_coverage_refresh_document_ids)
+                & stale_semantics_document_ids
+            )
         )
         coverage_refresh_document_ids = {
             str(document["document_id"])
@@ -741,19 +775,10 @@ class ResearcherEvidenceFactExtractor:
             coverage_refresh_document_ids = set()
         coverage_refresh_objective_scope_by_document = (
             {
-                document_id: frozenset(
-                    (
-                        objective_scope_by_document[document_id]
-                        | {
-                            str(value).strip()
-                            for value in document.get(
-                                "historical_objective_ids", ()
-                            )
-                            if str(value).strip() in objective_ids
-                        }
-                    )
+                document_id: (
+                    frozenset(objective_ids)
                     if document_id
-                    in bounded_stale_coverage_refresh_document_ids
+                    in cross_objective_coverage_refresh_document_ids
                     else objective_scope_by_document[document_id]
                 )
                 for document in prepared
@@ -1078,6 +1103,28 @@ class ResearcherEvidenceFactExtractor:
                                 "allowed_objective_relations": sorted(
                                     OBJECTIVE_FACT_RELATIONS
                                 ),
+                                "objective_component_rows": [
+                                    {
+                                        "objective_id": objective_id,
+                                        "component_id": (
+                                            objective_component_by_id[
+                                                objective_id
+                                            ]
+                                        ),
+                                    }
+                                    for objective_id in sorted(
+                                        {
+                                            objective_id
+                                            for document_id
+                                            in batch_document_ids
+                                            for objective_id in (
+                                                batch_objective_scope_by_document[
+                                                    document_id
+                                                ]
+                                            )
+                                        }
+                                    )
+                                ],
                                 "document_objective_ids": [
                                     {
                                         "document_id": str(row["document_id"]),
@@ -1111,7 +1158,8 @@ class ResearcherEvidenceFactExtractor:
                                 "deterministic_validation_scope": (
                                     "objective roster, document lineage, exact "
                                     "quote, as_of_date, and closed-vocabulary "
-                                    "mechanism coordinates only"
+                                    "mechanism coordinates plus objective-component "
+                                    "compatibility only"
                                 ),
                                 "llm_owns_economic_relevance": True,
                                 **(
@@ -1123,13 +1171,21 @@ class ResearcherEvidenceFactExtractor:
                                             ),
                                             "instruction": (
                                                 "For this stale-semantics full-document "
-                                                "coverage refresh, reassess which listed "
-                                                "current open objectives the literal source "
-                                                "fact advances, counters, or supersedes. "
-                                                "Emit only relations supported by the supplied "
-                                                "full text. Historical lineage only expands the "
-                                                "bounded candidate roster; it is not itself "
-                                                "evidence that a relation exists."
+                                                "coverage refresh, independently reassess which "
+                                                "listed current open objectives each literal "
+                                                "source fact advances, counters, or supersedes, "
+                                                "including an objective outside the document's "
+                                                "original discovery lineage. Re-read compound "
+                                                "statements as distinct atomic economic legs when "
+                                                "each leg has its own literal numeric, temporal, "
+                                                "cash-flow, valuation, or market-response meaning "
+                                                "needed to reconstruct the source statement. Emit "
+                                                "only economically material relations supported by "
+                                                "the supplied full text. The proposal's closed-"
+                                                "vocabulary mechanism scope must allow the component "
+                                                "of every cited objective. The expanded candidate "
+                                                "roster is not evidence that a relation exists, and "
+                                                "does not make general background material."
                                             ),
                                         }
                                     }
@@ -1375,6 +1431,9 @@ class ResearcherEvidenceFactExtractor:
                     },
                     objective_scope_by_document=(
                         batch_objective_scope_by_document
+                    ),
+                    objective_component_by_id=(
+                        objective_component_by_id
                     ),
                 )
                 page_boundary_reached = (
@@ -2774,6 +2833,7 @@ def _validate_response(
     objective_scope_by_document: (
         Mapping[str, frozenset[str]] | None
     ) = None,
+    objective_component_by_id: Mapping[str, str] | None = None,
 ) -> tuple[
     list[Mapping[str, Any]],
     list[FactExtractionRejection],
@@ -2853,6 +2913,9 @@ def _validate_response(
         objective_scope_reason = _objective_scope_rejection_reason(
             proposal,
             objective_scope_by_document=objective_scope_by_document,
+            objective_component_by_id=objective_component_by_id,
+            target_id=target_id,
+            scope_contract=scope_contract,
         )
         if objective_scope_reason:
             rejections.append(
@@ -3290,6 +3353,9 @@ def _objective_scope_rejection_reason(
     proposal: Any,
     *,
     objective_scope_by_document: Mapping[str, frozenset[str]] | None,
+    objective_component_by_id: Mapping[str, str] | None,
+    target_id: str,
+    scope_contract: ArchetypeMechanismScopeContract,
 ) -> str | None:
     if objective_scope_by_document is None:
         return None
@@ -3315,8 +3381,26 @@ def _objective_scope_rejection_reason(
         return "OBJECTIVE_IDS_MISSING_OR_DUPLICATED"
     if set(cited_objective_ids) - set(allowed_objective_ids):
         return "OBJECTIVE_ID_OUTSIDE_DOCUMENT_LINEAGE"
-    if str(proposal.get("objective_relation") or "") not in OBJECTIVE_FACT_RELATIONS:
+    if (
+        str(proposal.get("objective_relation") or "")
+        not in OBJECTIVE_FACT_RELATIONS
+    ):
         return "INVALID_OBJECTIVE_FACT_RELATION"
+    allowed_component_ids, _ = _allowed_components(
+        proposal,
+        target_id=target_id,
+        scope_contract=scope_contract,
+    )
+    if allowed_component_ids and objective_component_by_id is not None:
+        cited_objective_component_ids = {
+            str(objective_component_by_id.get(objective_id) or "")
+            for objective_id in cited_objective_ids
+        }
+        if (
+            "" in cited_objective_component_ids
+            or cited_objective_component_ids - set(allowed_component_ids)
+        ):
+            return "OBJECTIVE_COMPONENT_OUTSIDE_MECHANISM_SCOPE"
     return None
 
 
@@ -3700,17 +3784,19 @@ def _bounded_stale_coverage_refresh_document_ids(
     prior_disposition_by_document_id: Mapping[str, Mapping[str, Any]],
     stale_semantics_document_ids: set[str] | frozenset[str],
     coverage_complete_document_ids: set[str] | frozenset[str],
+    previously_coverage_audited_document_ids: set[str] | frozenset[str],
     open_objective_ids: frozenset[str],
 ) -> frozenset[str]:
-    """Select only high-value stale checkpoints needing lineage reassessment.
+    """Select stale trusted documents for exactly one semantic coverage audit.
 
-    A legacy checkpoint alone is too broad a reason to replay a large source
-    graph.  The zero-gap repair is therefore limited to source-backed documents
-    that already produced an accepted material fact, have official provenance,
-    and have verified historical lineage to a *current* open objective that is
-    absent from their narrowed current document scope.  The provider, not this
-    selector, decides whether any literal fact actually relates to that
-    objective during the independent full-text coverage audit.
+    Replaying every legacy document would be unbounded and would confuse an old
+    checkpoint with a live evidence gap.  A document is therefore eligible only
+    when it is a full validated production input, already produced at least one
+    accepted material fact, has trusted independent or official provenance, and
+    has never received a coverage audit.  The audit may present every current
+    open objective as a bounded candidate roster; the provider still owns
+    economic relevance, while deterministic validation checks literal source
+    support and objective/mechanism component compatibility.
     """
 
     selected: set[str] = set()
@@ -3719,8 +3805,9 @@ def _bounded_stale_coverage_refresh_document_ids(
         if (
             document_id not in stale_semantics_document_ids
             or document_id in coverage_complete_document_ids
+            or document_id in previously_coverage_audited_document_ids
             or _source_tier(str(document.get("source_family") or ""))
-            not in _OFFICIAL_COVERAGE_REFRESH_SOURCE_TIERS
+            not in _TRUSTED_COVERAGE_REFRESH_SOURCE_TIERS
         ):
             continue
         disposition = prior_disposition_by_document_id.get(document_id, {})
@@ -3729,17 +3816,7 @@ def _bounded_stale_coverage_refresh_document_ids(
             or int(disposition.get("accepted_fact_count") or 0) <= 0
         ):
             continue
-        current_scope = {
-            str(value).strip()
-            for value in document.get("objective_ids") or ()
-            if str(value).strip() in open_objective_ids
-        }
-        historical_current_scope = {
-            str(value).strip()
-            for value in document.get("historical_objective_ids") or ()
-            if str(value).strip() in open_objective_ids
-        }
-        if historical_current_scope - current_scope:
+        if open_objective_ids:
             selected.add(document_id)
     return frozenset(selected)
 
@@ -3936,7 +4013,12 @@ def _coverage_audit_attempt_payload(
                     "Perform one independent coverage review of the same "
                     "supplied full documents from start to finish. Return "
                     "only distinct objective-linked facts or counterfacts "
-                    "omitted from previously_accepted_facts. Recheck named "
+                    "omitted from previously_accepted_facts. Re-read compound "
+                    "source statements as distinct atomic economic legs when "
+                    "each leg has its own literal numeric, temporal, cash-flow, "
+                    "valuation, or market-response meaning needed to reconstruct "
+                    "the statement. This is a semantic completeness review, not "
+                    "a keyword or number checklist. Recheck named "
                     "relationships and attribution spans such as events, "
                     "sessions, speakers, participants, products, platforms, "
                     "and counterparties, and recheck source-quality or "
@@ -3946,7 +4028,11 @@ def _coverage_audit_attempt_payload(
                     "coverage families, not a keyword checklist. Do not "
                     "infer a fact or source absence from silence, and do not "
                     "repeat an accepted quote with the same normalized "
-                    "economic identity. The same literal may be reused only "
+                    "economic identity. Cite an expanded-lineage objective only "
+                    "when the literal fact directly affects it and the fact's "
+                    "closed-vocabulary mechanism scope allows that objective's "
+                    "component. The expanded roster alone does not make adjacent "
+                    "background material. The same literal may be reused only "
                     "when it explicitly supports a materially distinct "
                     "objective-linked predicate or limitation; do not split "
                     "one meaning into cosmetic duplicates. If no "
