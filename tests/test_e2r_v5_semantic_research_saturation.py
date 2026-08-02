@@ -3138,6 +3138,58 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             ],
         )
 
+    def test_supervisor_resume_reuses_request_identity_after_transport_wait(
+        self,
+    ) -> None:
+        class PendingThenReadySupervisorProvider(Phase87SupervisorProvider):
+            def __init__(self) -> None:
+                super().__init__("READY")
+                self.transport_pending = True
+
+            def complete(self, *, pass_name, payload):
+                if self.transport_pending:
+                    self.calls.append(
+                        {"pass_name": pass_name, "payload": payload}
+                    )
+                    raise StructuredProviderUnavailable(
+                        "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                        + _stable_test_hash(payload)
+                    )
+                return super().complete(
+                    pass_name=pass_name,
+                    payload=payload,
+                )
+
+        provider = PendingThenReadySupervisorProvider()
+        supervisor = ResearchSupervisor(provider=provider)
+        pending = supervisor.review_epoch(**_supervisor_inputs())
+        first_payload = provider.calls[-1]["payload"]
+
+        self.assertFalse(
+            pending.ready_for_independent_saturation_review
+        )
+        self.assertIn(
+            "COLLABORATION_RESPONSE_PENDING",
+            pending.rationale,
+        )
+
+        provider.transport_pending = False
+        resumed_inputs = dict(_supervisor_inputs())
+        resumed_inputs["epoch"] = 2
+        resumed = supervisor.review_epoch(
+            **resumed_inputs,
+            prior_review=pending,
+        )
+        resumed_payload = provider.calls[-1]["payload"]
+
+        self.assertEqual(resumed_payload, first_payload)
+        self.assertTrue(
+            resumed.ready_for_independent_saturation_review
+        )
+        self.assertIsNone(
+            resumed_payload["prior_supervisor_review"]
+        )
+
     def test_supervisor_prompt_preserves_noncanonical_provider_errors(self) -> None:
         seed = ResearchSupervisor(
             provider=Phase87SupervisorProvider("GAP")

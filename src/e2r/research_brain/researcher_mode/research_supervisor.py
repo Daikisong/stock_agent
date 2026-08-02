@@ -378,11 +378,24 @@ class ResearchSupervisor:
             )
         current_synthesis_memo = synthesis_result.memo
         assert current_synthesis_memo is not None
+        prior_review_prompt_projection = None
         if prior_review is not None and not _prior_review_matches_synthesis(
             prior_review,
             synthesis_binding=synthesis_binding,
         ):
             prior_review = None
+        if prior_review is not None:
+            (
+                transport_wait_only,
+                restored_prior_projection,
+            ) = _prior_supervisor_transport_wait_projection(prior_review)
+            if transport_wait_only:
+                # A collaboration response wait is transport state, not a new
+                # Supervisor judgment.  Replaying the pending scaffold as the
+                # next prior review changes the prompt/request id and makes the
+                # already awaited response impossible to consume on resume.
+                prior_review = None
+                prior_review_prompt_projection = restored_prior_projection
         if self.provider is None:
             return _provider_pending_review(
                 epoch=epoch,
@@ -409,6 +422,7 @@ class ResearchSupervisor:
                 counter_and_supersession_route_proof
             ),
             prior_review=prior_review,
+            prior_review_prompt_projection=prior_review_prompt_projection,
             score_gap_context=score_gap_context,
         )
         payload = material.payload
@@ -2126,6 +2140,59 @@ def _prior_supervisor_review_prompt_projection(
     payload["prompt_projection_is_research_cap"] = False
     payload["score_authority"] = False
     return payload
+
+
+_SUPERVISOR_COLLABORATION_RESPONSE_PENDING_RE = re.compile(
+    r"^SUPERVISOR_PROVIDER_OR_OUTPUT_ERROR:"
+    r"StructuredProviderUnavailable:"
+    r"COLLABORATION_RESPONSE_PENDING:COLLABREQ-[0-9a-f]{64}$"
+)
+
+
+def _prior_supervisor_transport_wait_projection(
+    review: ResearchSupervisorReview | Mapping[str, Any],
+) -> tuple[bool, Mapping[str, Any] | None]:
+    """Recover the semantic prior hidden by one async transport wait.
+
+    ``_provider_pending_review`` persists the exact prior prompt projection so
+    a resumed collaboration request can rebuild the same identity.  Only the
+    canonical, transport-only scaffold is unwrapped here; semantic Supervisor
+    gaps and noncanonical provider errors remain visible to the next review.
+    """
+
+    payload = dict(_canonical_prior_review_prompt_source(review))
+    reason = str(payload.get("rationale") or "").strip()
+    unresolved = tuple(
+        str(value)
+        for value in payload.get("unresolved_material_questions") or ()
+    )
+    next_actions = tuple(
+        str(value) for value in payload.get("next_actions") or ()
+    )
+    transport_wait_only = bool(
+        _SUPERVISOR_COLLABORATION_RESPONSE_PENDING_RE.fullmatch(reason)
+        and unresolved == (reason,)
+        and next_actions
+        == ("retry LLM Research Supervisor with failure context",)
+        and payload.get("status") == "NEXT_RESEARCH_REQUIRED"
+        and payload.get("ready_for_independent_saturation_review") is False
+        and payload.get("reasonable_positive_routes_remaining") is True
+        and payload.get("counter_and_supersession_checked") is False
+        and payload.get("structured_data_complete") is False
+        and payload.get("component_memos_sufficient") is False
+        and not (payload.get("missing_material_facts") or ())
+        and not (payload.get("new_source_family_directions") or ())
+        and not (payload.get("query_direction_briefs") or ())
+    )
+    if not transport_wait_only:
+        return False, None
+    restored = payload.get("prior_review_prompt_projection")
+    if restored is None:
+        return True, None
+    if not isinstance(restored, Mapping):
+        raise TypeError("pending Supervisor prior projection must be an object")
+    _validate_prior_review_prompt_projection(restored)
+    return True, dict(restored)
 
 
 def project_current_supervisor_review(
