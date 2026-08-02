@@ -180,7 +180,55 @@ class PendingThenCompleteRankingProvider(SourceBrainProvider):
         if pass_name == "SOURCE_CANDIDATE_RANKING" and self.ranking_pending:
             self.calls.append({"pass_name": pass_name, "payload": payload})
             raise RuntimeError(
-                "COLLABORATION_RESPONSE_PENDING:TEST_PENDING_RANKING"
+                "COLLABORATION_RESPONSE_PENDING:"
+                "COLLABREQ-" + "d" * 64
+            )
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
+class EpochPendingRankingProvider(SourceBrainProvider):
+    def __init__(
+        self,
+        *,
+        pending_request_ids: Sequence[str],
+        **kwargs: Any,
+    ) -> None:
+        super().__init__(**kwargs)
+        self.pending_request_ids = list(pending_request_ids)
+
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        if pass_name == "SOURCE_CANDIDATE_RANKING" and self.pending_request_ids:
+            request_id = self.pending_request_ids.pop(0)
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            raise RuntimeError(
+                "COLLABORATION_RESPONSE_PENDING:" + request_id
+            )
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
+class PartialThenCompleteRankingProvider(SourceBrainProvider):
+    candidate_ranking_page_candidate_limit = 1
+
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.partial_ranking_pending = True
+
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        if (
+            pass_name == "SOURCE_CANDIDATE_RANKING"
+            and self.partial_ranking_pending
+            and str(payload["discovery_candidates"][0]["title"]).endswith(
+                "2"
+            )
+        ):
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            raise RuntimeError(
+                "COLLABORATION_RESPONSE_PENDING:"
+                "COLLABREQ-" + "e" * 64
             )
         return super().complete(pass_name=pass_name, payload=payload)
 
@@ -1727,6 +1775,516 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             loaded = load_source_graph_checkpoint(paths["checkpoint"])
             self.assertEqual(loaded["checkpoint_hash"], run3.checkpoint["checkpoint_hash"])
 
+    def test_collaboration_pending_ranking_replays_after_resolved_and_fetches(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        url = "https://customer.example.com/current-official-platform"
+        search = RecordingSearchProvider(
+            {
+                QUERY: (
+                    _result(
+                        "Current Corp customer official platform",
+                        url,
+                    ),
+                )
+            }
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={
+                url: _document_text("customer-official-platform")
+            }
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+        )
+
+        self.assertEqual(first.status, "CANDIDATE_RANKING_PENDING")
+        first_context = first.checkpoint[
+            "pending_candidate_ranking_replay_context"
+        ]
+        self.assertEqual(
+            first_context["replay_phase"],
+            "AWAITING_COLLABORATION_RESPONSE",
+        )
+        first_ranking_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+
+        provider.ranking_pending = False
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=first.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(len(ranking_payloads), 2)
+        self.assertEqual(ranking_payloads[-1], first_ranking_payload)
+        candidate = second.checkpoint["search_candidates"][0]
+        self.assertEqual(candidate["ranking_status"], "MATERIAL")
+        self.assertEqual(
+            candidate["fetch_status"],
+            "FULL_DOCUMENT_FETCHED",
+        )
+        self.assertEqual(candidate["full_fetch_attempt_count"], 1)
+        self.assertEqual(len(second.evidence_documents), 1)
+        self.assertEqual(second.status, "STOPPED_ON_RESOLUTION")
+        self.assertNotIn(
+            "pending_candidate_ranking_replay_context",
+            second.checkpoint,
+        )
+
+    def test_collaboration_ranking_prompt_lineage_allows_a_b_a_revisit(
+        self,
+    ) -> None:
+        request_ids = tuple(
+            "COLLABREQ-" + value * 64 for value in ("a", "b", "c")
+        )
+        provider = EpochPendingRankingProvider(
+            pending_request_ids=request_ids,
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        url = "https://customer.example.com/prompt-lineage-official"
+        search = RecordingSearchProvider(
+            {
+                QUERY: (
+                    _result(
+                        "Current Corp prompt lineage official",
+                        url,
+                    ),
+                )
+            }
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={url: _document_text("prompt-lineage")}
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+        business_model_a = {"revenue_model": "capacity hardware"}
+        business_model_b = {"revenue_model": "recurring service"}
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            target_business_model=business_model_a,
+            source_coverage=(),
+        )
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=first.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+            target_business_model=business_model_b,
+            source_coverage=("ISSUER_FILING",),
+        )
+        third = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=second.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+            target_business_model=business_model_a,
+            source_coverage=(),
+        )
+
+        first_context = first.checkpoint[
+            "pending_candidate_ranking_replay_context"
+        ]
+        second_context = second.checkpoint[
+            "pending_candidate_ranking_replay_context"
+        ]
+        third_context = third.checkpoint[
+            "pending_candidate_ranking_replay_context"
+        ]
+        self.assertNotEqual(
+            first_context["prompt_hash"],
+            second_context["prompt_hash"],
+        )
+        self.assertEqual(
+            third_context["prompt_hash"],
+            first_context["prompt_hash"],
+        )
+        self.assertEqual(
+            third_context["prompt_hash_lineage"],
+            [first_context["prompt_hash"], second_context["prompt_hash"]],
+        )
+        self.assertEqual(
+            third_context["collaboration_request_ids"],
+            list(request_ids),
+        )
+
+        completed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=third.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+            target_business_model=business_model_a,
+            source_coverage=(),
+        )
+
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(len(ranking_payloads), 4)
+        self.assertEqual(ranking_payloads[0], ranking_payloads[2])
+        self.assertEqual(ranking_payloads[2], ranking_payloads[3])
+        self.assertNotEqual(ranking_payloads[0], ranking_payloads[1])
+        self.assertEqual(completed.status, "STOPPED_ON_RESOLUTION")
+        self.assertEqual(len(completed.evidence_documents), 1)
+        self.assertNotIn(
+            "pending_candidate_ranking_replay_context",
+            completed.checkpoint,
+        )
+
+    def test_collaboration_ranking_replay_survives_migration_only_resume(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        url = "https://customer.example.com/migration-replay-official"
+        search = RecordingSearchProvider(
+            {
+                QUERY: (
+                    _result(
+                        "Current Corp migration replay official",
+                        url,
+                    ),
+                )
+            }
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={url: _document_text("migration-replay")}
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+        )
+        provider_call_count = len(provider.calls)
+        migrated = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=first.checkpoint,
+            checkpoint_migration_only=True,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        self.assertEqual(len(provider.calls), provider_call_count)
+        self.assertEqual(migrated.status, "CANDIDATE_RANKING_PENDING")
+        self.assertTrue(migrated.audit["checkpoint_migration_only"])
+        self.assertEqual(
+            migrated.checkpoint[
+                "pending_candidate_ranking_replay_context"
+            ],
+            first.checkpoint["pending_candidate_ranking_replay_context"],
+        )
+        self.assertTrue(
+            all(
+                row["ranking_status"] == "PENDING"
+                for row in migrated.checkpoint["search_candidates"]
+            )
+        )
+
+        provider.ranking_pending = False
+        completed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=migrated.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        self.assertEqual(completed.status, "STOPPED_ON_RESOLUTION")
+        self.assertEqual(len(completed.evidence_documents), 1)
+        self.assertNotIn(
+            "pending_candidate_ranking_replay_context",
+            completed.checkpoint,
+        )
+
+    def test_collaboration_ranking_fetch_handoff_survives_resolved_resume(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        urls = (
+            "https://customer.example.com/current-official-platform-a",
+            "https://customer.example.com/current-official-platform-b",
+        )
+        search = RecordingSearchProvider(
+            {
+                QUERY: tuple(
+                    _result(
+                        f"Current Corp customer official platform {index}",
+                        url,
+                        rank=index,
+                    )
+                    for index, url in enumerate(urls, start=1)
+                )
+            }
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={
+                url: _document_text(f"customer-official-{index}")
+                for index, url in enumerate(urls, start=1)
+            }
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=2,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+        )
+        first_ranking_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+        provider.ranking_pending = False
+
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=first.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(ranking_payloads[-1], first_ranking_payload)
+        second_candidates = second.checkpoint["search_candidates"]
+        self.assertEqual(
+            sum(
+                row["fetch_status"] == "FULL_DOCUMENT_FETCHED"
+                for row in second_candidates
+            ),
+            1,
+        )
+        self.assertEqual(
+            sum(
+                row["fetch_status"] == "MATERIAL_PENDING_FETCH"
+                for row in second_candidates
+            ),
+            1,
+        )
+        self.assertEqual(second.status, "CHECKPOINT_PENDING")
+        second_context = second.checkpoint[
+            "pending_candidate_ranking_replay_context"
+        ]
+        self.assertEqual(
+            second_context["replay_phase"],
+            "FETCH_HANDOFF_PENDING",
+        )
+        self.assertEqual(
+            len(second_context["fetch_handoff_candidate_ids"]),
+            1,
+        )
+
+        provider.calls.clear()
+        third = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=second.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        self.assertFalse(
+            any(
+                row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+                for row in provider.calls
+            )
+        )
+        self.assertTrue(
+            all(
+                row["fetch_status"] == "FULL_DOCUMENT_FETCHED"
+                for row in third.checkpoint["search_candidates"]
+            )
+        )
+        self.assertEqual(
+            sum(
+                int(row.get("full_fetch_attempt_count") or 0)
+                for row in third.checkpoint["search_candidates"]
+            ),
+            2,
+        )
+        self.assertEqual(len(third.evidence_documents), 2)
+        self.assertEqual(third.status, "STOPPED_ON_RESOLUTION")
+        self.assertNotIn(
+            "pending_candidate_ranking_replay_context",
+            third.checkpoint,
+        )
+
+    def test_partial_collaboration_partition_replays_original_exact_batch(
+        self,
+    ) -> None:
+        provider = PartialThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        urls = (
+            "https://customer.example.com/partitioned-official-1",
+            "https://customer.example.com/partitioned-official-2",
+        )
+        search = RecordingSearchProvider(
+            {
+                QUERY: tuple(
+                    _result(
+                        f"Current Corp partitioned official {index}",
+                        url,
+                        rank=index,
+                    )
+                    for index, url in enumerate(urls, start=1)
+                )
+            }
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={
+                url: _document_text(f"partitioned-official-{index}")
+                for index, url in enumerate(urls, start=1)
+            }
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=2,
+            max_fetches_per_checkpoint=2,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+        )
+
+        first_ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(len(first_ranking_payloads), 2)
+        self.assertTrue(
+            all(
+                row["ranking_status"] == "PENDING"
+                for row in first.checkpoint["search_candidates"]
+            )
+        )
+        self.assertEqual(
+            first.checkpoint["candidate_materiality_decisions"],
+            [],
+        )
+        self.assertEqual(first.checkpoint["query_failures"], [])
+        self.assertTrue(
+            all(
+                "materiality_decision_id" not in row
+                and "material_priority" not in row
+                for row in first.checkpoint["search_candidates"]
+            )
+        )
+        self.assertEqual(
+            first.checkpoint[
+                "pending_candidate_ranking_replay_context"
+            ]["rank_batch_candidate_ids"],
+            [
+                row["candidate_id"]
+                for row in first.checkpoint["search_candidates"]
+            ],
+        )
+
+        provider.partial_ranking_pending = False
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=first.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        all_ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(len(all_ranking_payloads), 4)
+        self.assertEqual(
+            all_ranking_payloads[:2],
+            all_ranking_payloads[2:],
+        )
+        self.assertTrue(
+            all(
+                row["fetch_status"] == "FULL_DOCUMENT_FETCHED"
+                for row in second.checkpoint["search_candidates"]
+            )
+        )
+        self.assertEqual(len(second.evidence_documents), 2)
+        self.assertEqual(second.status, "STOPPED_ON_RESOLUTION")
+
     def test_resume_finishes_pending_ranking_before_executing_pending_query(
         self,
     ) -> None:
@@ -2419,6 +2977,21 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         ]
         self.assertTrue(
             all(row["ranking_status"] == "PENDING" for row in stale_candidates)
+        )
+        ranked_candidate_ids = {
+            candidate["candidate_id"]
+            for call in provider.calls
+            if call["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+            for candidate in call["payload"]["discovery_candidates"]
+        }
+        self.assertTrue(
+            {
+                row["candidate_id"] for row in stale_candidates
+            }.isdisjoint(ranked_candidate_ids)
+        )
+        self.assertNotIn(
+            "pending_candidate_ranking_replay_context",
+            second.checkpoint,
         )
 
     def test_production_general_web_requires_recorded_official_gap(self) -> None:
@@ -7473,6 +8046,8 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         official_documents: Sequence[Mapping[str, Any]] = (),
         official_domains: Sequence[str] = (),
         current_evidence_facts: Sequence[Mapping[str, Any]] = (),
+        target_business_model: Mapping[str, Any] | None = None,
+        source_coverage: Sequence[str | Mapping[str, Any]] = (),
         score_gap_context: Mapping[str, Any] | None = None,
         checkpoint_migration_only: bool = False,
         resolved_objective_ids: Sequence[str] = (),
@@ -7490,8 +8065,8 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             as_of_date=AS_OF_DATE,
             open_objectives=tuple(open_objectives or (_objective(),)),
             current_evidence_facts=current_evidence_facts,
-            target_business_model=None,
-            source_coverage=(),
+            target_business_model=target_business_model,
+            source_coverage=source_coverage,
             official_documents=official_documents,
             official_gap_reasons_by_objective=(
                 official_gaps

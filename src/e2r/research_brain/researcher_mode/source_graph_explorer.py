@@ -79,6 +79,9 @@ SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION = (
 QUERY_GENERATION_REPLAY_CONTEXT_SCHEMA_VERSION = (
     "e2r_v5_query_generation_replay_context_v1"
 )
+CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION = (
+    "e2r_v5_candidate_ranking_replay_context_v1"
+)
 _WEAK_DISCOVERY_SOURCE_FAMILIES = frozenset(
     {"GENERAL_WEB_DISCOVERY", "TRUSTED_BUSINESS_MEDIA"}
 )
@@ -716,6 +719,52 @@ class ResearcherSourceGraphAcquirer:
             candidates,
             rejected_documents=rejected_rows,
         )
+        pending_candidate_ranking_replay = (
+            _validated_pending_candidate_ranking_replay_context(
+                state,
+                candidates=candidates,
+                objective_by_id=objective_by_id,
+                evidence_documents=evidence_documents,
+            )
+        )
+        candidate_ranking_replay_awaiting = bool(
+            pending_candidate_ranking_replay is not None
+            and pending_candidate_ranking_replay["replay_phase"]
+            == "AWAITING_COLLABORATION_RESPONSE"
+        )
+        candidate_ranking_fetch_handoff_pending = bool(
+            pending_candidate_ranking_replay is not None
+            and pending_candidate_ranking_replay["replay_phase"]
+            == "FETCH_HANDOFF_PENDING"
+        )
+        candidate_ranking_transport_candidate_ids: set[str] = set()
+        if pending_candidate_ranking_replay is not None:
+            if candidate_ranking_replay_awaiting:
+                candidate_ranking_transport_candidate_ids.update(
+                    pending_candidate_ranking_replay[
+                        "rank_batch_candidate_ids"
+                    ]
+                )
+            else:
+                candidate_ranking_transport_candidate_ids.update(
+                    pending_candidate_ranking_replay[
+                        "fetch_handoff_candidate_ids"
+                    ]
+                )
+
+        def _candidate_resolution_suppresses_transport(
+            candidate: Mapping[str, Any],
+        ) -> bool:
+            candidate_id = str(candidate.get("candidate_id") or "")
+            return bool(
+                candidate_id
+                not in candidate_ranking_transport_candidate_ids
+                and _candidate_scope_is_fully_resolved(
+                    candidate,
+                    resolved,
+                )
+            )
+
         mandatory_source_family_pairs = (
             _current_supervisor_mandatory_source_family_pairs(
                 score_gap_context=effective_score_gap_context,
@@ -1046,7 +1095,7 @@ class ResearcherSourceGraphAcquirer:
         ]
         pending_ranking_at_checkpoint_start = any(
             row.get("ranking_status") == "PENDING"
-            and not _candidate_scope_is_fully_resolved(row, resolved)
+            and not _candidate_resolution_suppresses_transport(row)
             and not (
                 supervisor_query_direction_priority
                 and _candidate_is_reference_only(row)
@@ -1059,7 +1108,7 @@ class ResearcherSourceGraphAcquirer:
                 or row.get("fetch_status")
                 in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
             )
-            and not _candidate_scope_is_fully_resolved(row, resolved)
+            and not _candidate_resolution_suppresses_transport(row)
             and not (
                 supervisor_query_direction_priority
                 and _candidate_is_reference_only(row)
@@ -1427,19 +1476,25 @@ class ResearcherSourceGraphAcquirer:
                 )
             )
         }
+        candidate_by_id = {
+            str(row.get("candidate_id") or ""): row for row in candidates
+        }
         pending_rank = (
             []
-            if checkpoint_migration_only
+            if (
+                checkpoint_migration_only
+                or candidate_ranking_fetch_handoff_pending
+            )
             else sorted(
                 (
                     row
                     for row in candidates
                     if row.get("ranking_status") == "PENDING"
-                    and not _candidate_scope_is_fully_resolved(
-                        row, resolved
-                    )
+                    and not _candidate_resolution_suppresses_transport(row)
                     and (
-                        not candidate_query_edge_work_priority
+                        str(row.get("candidate_id") or "")
+                        in candidate_ranking_transport_candidate_ids
+                        or not candidate_query_edge_work_priority
                         or str(row.get("candidate_id") or "")
                         in candidate_query_edge_actionable_ids
                     )
@@ -1455,7 +1510,17 @@ class ResearcherSourceGraphAcquirer:
         ranking_results: list[CandidateRankingResult] = []
         candidate_query_edge_priority_ranked = False
         if pending_rank:
-            rank_batch = pending_rank[: config.max_candidates_per_checkpoint]
+            if candidate_ranking_replay_awaiting:
+                rank_batch = [
+                    candidate_by_id[candidate_id]
+                    for candidate_id in pending_candidate_ranking_replay[
+                        "rank_batch_candidate_ids"
+                    ]
+                ]
+            else:
+                rank_batch = pending_rank[
+                    : config.max_candidates_per_checkpoint
+                ]
             candidate_query_edge_priority_ranked = bool(
                 candidate_query_edge_work_priority
                 and any(
@@ -1464,41 +1529,137 @@ class ResearcherSourceGraphAcquirer:
                     for row in rank_batch
                 )
             )
-            if len(pending_rank) > len(rank_batch):
+            if (
+                not candidate_ranking_replay_awaiting
+                and len(pending_rank) > len(rank_batch)
+            ):
                 pending_reasons.append("CANDIDATE_RANKING_TRANSPORT_BUDGET_CHECKPOINT")
+            rank_objectives = tuple(
+                row
+                for row in objectives
+                if str(row["objective_id"])
+                in {
+                    str(value)
+                    for candidate in rank_batch
+                    for value in candidate.get("objective_ids") or ()
+                }
+            )
+            rank_transport_rows = _candidate_ranking_transport_rows(
+                rank_batch,
+                evidence_documents=evidence_documents,
+            )
             ranking = self.document_ranker.rank_candidates(
                 target_id=target_id,
                 target_name=target_name,
                 as_of_date=as_of_date,
-                open_objectives=tuple(
-                    row
-                    for row in objectives
-                    if str(row["objective_id"])
-                    in {
-                        str(value)
-                        for candidate in rank_batch
-                        for value in candidate.get("objective_ids") or ()
-                    }
-                ),
-                candidates=_candidate_ranking_transport_rows(
-                    rank_batch,
-                    evidence_documents=evidence_documents,
-                ),
+                open_objectives=rank_objectives,
+                candidates=rank_transport_rows,
                 current_evidence_facts=facts,
                 target_business_model=target_business_model,
                 source_coverage=source_coverage,
             )
             ranking_results.append(ranking)
             pending_reasons.extend(ranking.pending_reasons)
-            query_failures.extend(
-                _candidate_source_family_query_edge_failures(
-                    ranking=ranking,
-                    candidates=rank_batch,
-                )
+            collaboration_request_ids = (
+                _candidate_ranking_collaboration_request_ids(ranking)
             )
-            decision_by_candidate = {
-                row.candidate_id: row for row in ranking.decisions
-            }
+            rank_batch_hash = stable_intelligence_id(
+                "RANKBATCH",
+                list(rank_transport_rows),
+            )
+            rank_objective_hash = stable_intelligence_id(
+                "RANKOBJECTIVES",
+                list(rank_objectives),
+            )
+            if candidate_ranking_replay_awaiting:
+                prompt_hash_lineage = list(
+                    pending_candidate_ranking_replay[
+                        "prompt_hash_lineage"
+                    ]
+                )
+                if ranking.prompt_hash not in prompt_hash_lineage:
+                    prompt_hash_lineage.append(ranking.prompt_hash)
+                pending_candidate_ranking_replay = {
+                    **dict(pending_candidate_ranking_replay),
+                    "prompt_hash": ranking.prompt_hash,
+                    "prompt_hash_lineage": prompt_hash_lineage,
+                    "collaboration_request_ids": list(
+                        dict.fromkeys(
+                            (
+                                *pending_candidate_ranking_replay[
+                                    "collaboration_request_ids"
+                                ],
+                                *collaboration_request_ids,
+                            )
+                        )
+                    ),
+                }
+                state[
+                    "pending_candidate_ranking_replay_context"
+                ] = pending_candidate_ranking_replay
+            elif ranking.status == "PENDING" and collaboration_request_ids:
+                rank_batch_candidate_ids = [
+                    str(row.get("candidate_id") or "")
+                    for row in rank_batch
+                ]
+                rank_objective_ids = [
+                    str(row["objective_id"]) for row in rank_objectives
+                ]
+                pending_candidate_ranking_replay = {
+                    "schema_version": (
+                        CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION
+                    ),
+                    "rank_batch_candidate_ids": (
+                        rank_batch_candidate_ids
+                    ),
+                    "objective_ids": rank_objective_ids,
+                    "rank_batch_hash": rank_batch_hash,
+                    "objective_scope_hash": rank_objective_hash,
+                    "prompt_hash": ranking.prompt_hash,
+                    "origin_prompt_hash": ranking.prompt_hash,
+                    "prompt_hash_lineage": [ranking.prompt_hash],
+                    "collaboration_request_ids": list(
+                        collaboration_request_ids
+                    ),
+                    "replay_phase": (
+                        "AWAITING_COLLABORATION_RESPONSE"
+                    ),
+                    "fetch_handoff_candidate_ids": [],
+                    "originated_from_collaboration_transport_wait": True,
+                    "transport_state_only": True,
+                    "candidate_ranking_owner": (
+                        "SOURCE_CANDIDATE_RANKING_LLM"
+                    ),
+                    "deterministic_fallback_query_allowed": False,
+                    "production_score_authority": False,
+                }
+                state[
+                    "pending_candidate_ranking_replay_context"
+                ] = pending_candidate_ranking_replay
+                candidate_ranking_transport_candidate_ids.update(
+                    rank_batch_candidate_ids
+                )
+            collaboration_ranking_wait = bool(
+                (
+                    candidate_ranking_replay_awaiting
+                    or collaboration_request_ids
+                )
+                and ranking.status == "PENDING"
+            )
+            if not collaboration_ranking_wait:
+                query_failures.extend(
+                    _candidate_source_family_query_edge_failures(
+                        ranking=ranking,
+                        candidates=rank_batch,
+                    )
+                )
+            decision_by_candidate = (
+                {}
+                if collaboration_ranking_wait
+                else {
+                    row.candidate_id: row for row in ranking.decisions
+                }
+            )
             for candidate in rank_batch:
                 decision = decision_by_candidate.get(str(candidate["candidate_id"]))
                 if decision is None:
@@ -1677,6 +1838,45 @@ class ResearcherSourceGraphAcquirer:
                         candidate["fetch_status"] = (
                             "DISCOVERY_ONLY_NOT_FETCHED"
                         )
+            if (
+                pending_candidate_ranking_replay is not None
+                and ranking.status == "COMPLETE"
+            ):
+                fetch_handoff_candidate_ids = [
+                    candidate_id
+                    for candidate_id in pending_candidate_ranking_replay[
+                        "rank_batch_candidate_ids"
+                    ]
+                    if str(
+                        candidate_by_id[candidate_id].get("fetch_status")
+                        or ""
+                    )
+                    in {
+                        "MATERIAL_PENDING_FETCH",
+                        "FETCH_RETRY_PENDING",
+                    }
+                ]
+                candidate_ranking_transport_candidate_ids.clear()
+                candidate_ranking_transport_candidate_ids.update(
+                    fetch_handoff_candidate_ids
+                )
+                if fetch_handoff_candidate_ids:
+                    pending_candidate_ranking_replay = {
+                        **dict(pending_candidate_ranking_replay),
+                        "replay_phase": "FETCH_HANDOFF_PENDING",
+                        "fetch_handoff_candidate_ids": (
+                            fetch_handoff_candidate_ids
+                        ),
+                    }
+                    state[
+                        "pending_candidate_ranking_replay_context"
+                    ] = pending_candidate_ranking_replay
+                else:
+                    pending_candidate_ranking_replay = None
+                    state.pop(
+                        "pending_candidate_ranking_replay_context",
+                        None,
+                    )
         pending_fetch = (
             []
             if checkpoint_migration_only
@@ -1686,7 +1886,7 @@ class ResearcherSourceGraphAcquirer:
                     for row in candidates
                     if row.get("fetch_status")
                     in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
-                    and not _candidate_scope_is_fully_resolved(row, resolved)
+                    and not _candidate_resolution_suppresses_transport(row)
                 ),
                 key=lambda row: (
                     0
@@ -1870,6 +2070,46 @@ class ResearcherSourceGraphAcquirer:
                 candidate[
                     "sparse_reference_full_fetch_revalidation_pending"
                 ] = True
+        if (
+            pending_candidate_ranking_replay is not None
+            and pending_candidate_ranking_replay["replay_phase"]
+            == "FETCH_HANDOFF_PENDING"
+        ):
+            candidate_by_id = {
+                str(row.get("candidate_id") or ""): row
+                for row in candidates
+            }
+            remaining_fetch_handoff_ids = [
+                candidate_id
+                for candidate_id in pending_candidate_ranking_replay[
+                    "fetch_handoff_candidate_ids"
+                ]
+                if candidate_by_id[candidate_id].get("fetch_status")
+                in {
+                    "MATERIAL_PENDING_FETCH",
+                    "FETCH_RETRY_PENDING",
+                }
+            ]
+            candidate_ranking_transport_candidate_ids.clear()
+            candidate_ranking_transport_candidate_ids.update(
+                remaining_fetch_handoff_ids
+            )
+            if remaining_fetch_handoff_ids:
+                pending_candidate_ranking_replay = {
+                    **dict(pending_candidate_ranking_replay),
+                    "fetch_handoff_candidate_ids": (
+                        remaining_fetch_handoff_ids
+                    ),
+                }
+                state[
+                    "pending_candidate_ranking_replay_context"
+                ] = pending_candidate_ranking_replay
+            else:
+                pending_candidate_ranking_replay = None
+                state.pop(
+                    "pending_candidate_ranking_replay_context",
+                    None,
+                )
         state["query_failures"] = _dedupe_mapping_rows(
             query_failures,
             key_fields=("query_id", "candidate_id", "failure_reason"),
@@ -1914,13 +2154,13 @@ class ResearcherSourceGraphAcquirer:
         )
         still_pending_rank = any(
             row.get("ranking_status") == "PENDING"
-            and not _candidate_scope_is_fully_resolved(row, resolved)
+            and not _candidate_resolution_suppresses_transport(row)
             for row in candidates
         )
         still_pending_fetch = any(
             row.get("fetch_status")
             in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
-            and not _candidate_scope_is_fully_resolved(row, resolved)
+            and not _candidate_resolution_suppresses_transport(row)
             for row in candidates
         )
         if query_generation and query_generation.status == "PENDING" and not query_generation.queries:
@@ -2363,6 +2603,214 @@ def _query_generation_has_collaboration_transport_wait(
         is not None
         for reason in value.get("feedback_for_next_llm_call") or ()
     )
+
+
+def _candidate_ranking_collaboration_request_ids(
+    ranking: CandidateRankingResult,
+) -> tuple[str, ...]:
+    return tuple(
+        dict.fromkeys(
+            match.group(1)
+            for reason in ranking.pending_reasons
+            for match in re.finditer(
+                r"(?:^|:)COLLABORATION_RESPONSE_PENDING:"
+                r"(COLLABREQ-[0-9a-f]{64})(?=$|:)",
+                str(reason or ""),
+            )
+        )
+    )
+
+
+def _validated_pending_candidate_ranking_replay_context(
+    state: Mapping[str, Any],
+    *,
+    candidates: Sequence[Mapping[str, Any]],
+    objective_by_id: Mapping[str, Mapping[str, Any]],
+    evidence_documents: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any] | None:
+    """Validate one exact asynchronous ranking-to-fetch transport handoff."""
+
+    raw = state.get("pending_candidate_ranking_replay_context")
+    if raw is None:
+        return None
+    if not isinstance(raw, Mapping):
+        raise ValueError(
+            "pending candidate ranking replay context must be an object"
+        )
+    if str(state.get("status") or "") not in {
+        "CANDIDATE_RANKING_PENDING",
+        "CHECKPOINT_PENDING",
+        "SOURCE_PROVIDER_PENDING",
+    }:
+        raise ValueError(
+            "pending candidate ranking replay context status mismatch"
+        )
+    if raw.get("schema_version") != (
+        CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION
+    ):
+        raise ValueError(
+            "pending candidate ranking replay context schema mismatch"
+        )
+    if (
+        raw.get("transport_state_only") is not True
+        or raw.get("originated_from_collaboration_transport_wait") is not True
+        or raw.get("candidate_ranking_owner")
+        != "SOURCE_CANDIDATE_RANKING_LLM"
+        or raw.get("deterministic_fallback_query_allowed") is not False
+        or raw.get("production_score_authority") is not False
+    ):
+        raise ValueError(
+            "pending candidate ranking replay context authority mismatch"
+        )
+    rank_batch_candidate_ids = tuple(
+        str(value)
+        for value in raw.get("rank_batch_candidate_ids") or ()
+        if str(value)
+    )
+    objective_ids = tuple(
+        str(value)
+        for value in raw.get("objective_ids") or ()
+        if str(value)
+    )
+    if (
+        not rank_batch_candidate_ids
+        or len(rank_batch_candidate_ids)
+        != len(set(rank_batch_candidate_ids))
+        or not objective_ids
+        or len(objective_ids) != len(set(objective_ids))
+    ):
+        raise ValueError(
+            "pending candidate ranking replay roster is invalid"
+        )
+    candidate_by_id = {
+        str(row.get("candidate_id") or ""): row
+        for row in candidates
+        if str(row.get("candidate_id") or "")
+    }
+    if not set(rank_batch_candidate_ids).issubset(candidate_by_id):
+        raise ValueError(
+            "pending candidate ranking replay candidate is missing"
+        )
+    if not set(objective_ids).issubset(objective_by_id):
+        raise ValueError(
+            "pending candidate ranking replay objective is unknown"
+        )
+    candidate_objective_ids = {
+        str(value)
+        for candidate_id in rank_batch_candidate_ids
+        for value in candidate_by_id[candidate_id].get("objective_ids") or ()
+        if str(value)
+    }
+    if candidate_objective_ids != set(objective_ids):
+        raise ValueError(
+            "pending candidate ranking replay objective lineage mismatch"
+        )
+    prompt_hash = str(raw.get("prompt_hash") or "")
+    origin_prompt_hash = str(raw.get("origin_prompt_hash") or "")
+    prompt_hash_lineage = tuple(
+        str(value)
+        for value in raw.get("prompt_hash_lineage") or ()
+        if str(value)
+    )
+    collaboration_request_ids = tuple(
+        str(value)
+        for value in raw.get("collaboration_request_ids") or ()
+        if str(value)
+    )
+    if (
+        not prompt_hash.startswith("RANKPROMPT")
+        or not origin_prompt_hash.startswith("RANKPROMPT")
+        or not prompt_hash_lineage
+        or prompt_hash_lineage[0] != origin_prompt_hash
+        or prompt_hash not in prompt_hash_lineage
+        or len(prompt_hash_lineage) != len(set(prompt_hash_lineage))
+        or not collaboration_request_ids
+        or len(collaboration_request_ids)
+        != len(set(collaboration_request_ids))
+        or any(
+            re.fullmatch(r"COLLABREQ-[0-9a-f]{64}", value) is None
+            for value in collaboration_request_ids
+        )
+    ):
+        raise ValueError(
+            "pending candidate ranking replay prompt lineage mismatch"
+        )
+    replay_phase = str(raw.get("replay_phase") or "")
+    fetch_handoff_candidate_ids = tuple(
+        str(value)
+        for value in raw.get("fetch_handoff_candidate_ids") or ()
+        if str(value)
+    )
+    if replay_phase == "AWAITING_COLLABORATION_RESPONSE":
+        if fetch_handoff_candidate_ids or any(
+            candidate_by_id[candidate_id].get("ranking_status")
+            != "PENDING"
+            for candidate_id in rank_batch_candidate_ids
+        ):
+            raise ValueError(
+                "pending candidate ranking replay batch state mismatch"
+            )
+        current_rank_batch = tuple(
+            candidate_by_id[candidate_id]
+            for candidate_id in rank_batch_candidate_ids
+        )
+        current_rank_batch_hash = stable_intelligence_id(
+            "RANKBATCH",
+            list(
+                _candidate_ranking_transport_rows(
+                    current_rank_batch,
+                    evidence_documents=evidence_documents,
+                )
+            ),
+        )
+        current_objective_scope_hash = stable_intelligence_id(
+            "RANKOBJECTIVES",
+            [objective_by_id[objective_id] for objective_id in objective_ids],
+        )
+        if (
+            str(raw.get("rank_batch_hash") or "")
+            != current_rank_batch_hash
+            or str(raw.get("objective_scope_hash") or "")
+            != current_objective_scope_hash
+        ):
+            raise ValueError(
+                "pending candidate ranking replay input hash mismatch"
+            )
+    elif replay_phase == "FETCH_HANDOFF_PENDING":
+        if (
+            not fetch_handoff_candidate_ids
+            or len(fetch_handoff_candidate_ids)
+            != len(set(fetch_handoff_candidate_ids))
+            or not set(fetch_handoff_candidate_ids).issubset(
+                rank_batch_candidate_ids
+            )
+            or any(
+                candidate_by_id[candidate_id].get("ranking_status")
+                != "MATERIAL"
+                or candidate_by_id[candidate_id].get("fetch_status")
+                not in {
+                    "MATERIAL_PENDING_FETCH",
+                    "FETCH_RETRY_PENDING",
+                }
+                for candidate_id in fetch_handoff_candidate_ids
+            )
+        ):
+            raise ValueError(
+                "pending candidate ranking fetch handoff mismatch"
+            )
+    else:
+        raise ValueError(
+            "pending candidate ranking replay phase is invalid"
+        )
+    return {
+        **dict(raw),
+        "rank_batch_candidate_ids": rank_batch_candidate_ids,
+        "objective_ids": objective_ids,
+        "prompt_hash_lineage": prompt_hash_lineage,
+        "collaboration_request_ids": collaboration_request_ids,
+        "fetch_handoff_candidate_ids": fetch_handoff_candidate_ids,
+        "replay_phase": replay_phase,
+    }
 
 
 def _new_acquisition_state(
