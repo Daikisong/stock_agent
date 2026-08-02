@@ -2848,12 +2848,29 @@ def _score_gap_context_for_supervisor(
     # through the LLM-owned Source Graph query path.  Numeric preview fields
     # remain explicitly non-evidence until the full report is independently
     # discovered, fetched, parsed, and linked to an EvidenceFact.
+    invalid_report_candidate_constants = [
+        str(dict(row).get("candidate_id") or "UNKNOWN")
+        for row in structured_report_candidates
+        if str(dict(row).get("provider_name") or "") != "CompanyGuide"
+        or str(dict(row).get("source_family_hint") or "")
+        != "PUBLIC_BROKER_PDF"
+        or str(dict(row).get("research_route") or "")
+        != "PUBLIC_BROKER_REPORT"
+    ]
+    if invalid_report_candidate_constants:
+        raise ValueError(
+            "structured report prompt projection has mixed route constants:"
+            + ",".join(invalid_report_candidate_constants)
+        )
     report_candidate_fields = (
+        "candidate_id",
         "published_at",
         "broker",
         "title",
         "provider_report_id",
+        "provider_index",
         "provider_file_name",
+        "provider_summary",
     )
     context["structured_report_source_candidates"] = {
         "schema_version": (
@@ -2871,9 +2888,16 @@ def _score_gap_context_for_supervisor(
                 for row in structured_report_candidates
             ]
         ),
+        "candidate_id_roster_hash": stable_hash(
+            sorted(
+                str(dict(row).get("candidate_id") or "")
+                for row in structured_report_candidates
+            )
+        ),
         "every_candidate_projected": True,
         "fixed_top_n_used": False,
         "metadata_only_not_evidence": True,
+        "provider_summary_is_non_evidence_discovery_hint": True,
         "provider_name": "CompanyGuide",
         "source_family_hint": "PUBLIC_BROKER_PDF",
         "research_route": "PUBLIC_BROKER_REPORT",

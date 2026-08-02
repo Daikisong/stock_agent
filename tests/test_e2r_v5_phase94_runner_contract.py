@@ -4939,6 +4939,8 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     "broker": "Example Securities",
                     "title": "Target quarterly preview",
                     "provider_file_name": "report.pdf",
+                    "provider_index": "provider-index-1",
+                    "provider_summary": "full report may contain revision detail",
                     "structured_fields": {"fy1_eps": 1234.0},
                     "url_resolution_required": True,
                     "full_document_owner": "LLM_SOURCE_GRAPH",
@@ -4979,8 +4981,17 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             "PUBLIC_BROKER_PDF",
         )
         self.assertNotIn("canonical_url", report_candidates["fields"])
+        self.assertIn("candidate_id", report_candidates["fields"])
+        self.assertIn("provider_index", report_candidates["fields"])
+        self.assertIn("provider_summary", report_candidates["fields"])
+        self.assertEqual(projected["provider_index"], "provider-index-1")
         self.assertTrue(report_candidates["every_candidate_projected"])
         self.assertFalse(report_candidates["fixed_top_n_used"])
+        self.assertTrue(
+            report_candidates[
+                "provider_summary_is_non_evidence_discovery_hint"
+            ]
+        )
         contract = context[
             "structured_report_source_candidate_contract"
         ]
@@ -4993,6 +5004,20 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertFalse(
             contract["deterministic_url_or_query_synthesis_allowed"]
         )
+
+        with self.assertRaisesRegex(ValueError, "mixed route constants"):
+            _score_gap_context_for_supervisor(
+                aggregation=aggregation,
+                scoring_memos=scoring_memos,
+                structured_report_candidates=(
+                    {
+                        "candidate_id": "STRUCTCAND-invalid-route",
+                        "provider_name": "OtherProvider",
+                        "source_family_hint": "GENERAL_WEB_DISCOVERY",
+                        "research_route": "OTHER_ROUTE",
+                    },
+                ),
+            )
 
 
 if __name__ == "__main__":

@@ -1321,19 +1321,30 @@ def _build_supervisor_prompt_material(
             else None
         )
     )
-    information_confidence_memo_fact_ids = tuple(
-        dict.fromkeys(
-            fact_id
+    information_confidence_result = next(
+        (
+            result
             for result in component_results
             if result.component_id == "information_confidence"
-            and result.memo is not None
-            for fact_id in (
-                *result.memo.positive_fact_ids,
-                *result.memo.counter_fact_ids,
-                *result.memo.resolution_fact_ids,
-                *result.memo.context_fact_ids,
+        ),
+        None,
+    )
+    information_confidence_memo_fact_ids = (
+        tuple(
+            dict.fromkeys(
+                (
+                    *information_confidence_result.memo.positive_fact_ids,
+                    *information_confidence_result.memo.counter_fact_ids,
+                    *information_confidence_result.memo.resolution_fact_ids,
+                    *information_confidence_result.memo.context_fact_ids,
+                )
             )
         )
+        if information_confidence_result is not None
+        and information_confidence_result.status == "COMPLETE"
+        and information_confidence_result.memo is not None
+        and information_confidence_result.memo.research_complete
+        else None
     )
     payload = scrub_blind_research_payload(
         {

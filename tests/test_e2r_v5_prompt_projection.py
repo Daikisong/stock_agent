@@ -767,7 +767,11 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
 
         projection = project_supervisor_evidence_facts(
             facts,
-            independent_corroboration_fact_ids=("FACT-3", "FACT-7"),
+            independent_corroboration_fact_ids=(
+                "FACT-3",
+                "FACT-7",
+                "FACT-MISSING",
+            ),
         )
         review = projection["independent_corroboration_review"]
 
@@ -775,6 +779,14 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             review["all_current_information_confidence_fact_count"], 100
         )
         self.assertEqual(review["current_information_confidence_fact_count"], 2)
+        self.assertEqual(review["review_scope_requested_fact_count"], 3)
+        self.assertEqual(review["review_scope_matched_fact_count"], 2)
+        self.assertEqual(review["review_scope_unmatched_fact_count"], 1)
+        self.assertTrue(
+            review[
+                "review_scope_requested_equals_matched_plus_unmatched"
+            ]
+        )
         self.assertEqual(
             review["review_scope"],
             "CURRENT_INFORMATION_CONFIDENCE_MEMO_FACTS",

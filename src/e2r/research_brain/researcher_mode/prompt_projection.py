@@ -1122,6 +1122,14 @@ def project_supervisor_evidence_facts(
         or str(row.get("fact_id") or "")
         in independent_corroboration_scope
     )
+    matched_independent_corroboration_scope = frozenset(
+        str(row.get("fact_id") or "")
+        for row in current_information_confidence_rows
+        if str(row.get("fact_id") or "")
+    )
+    unmatched_independent_corroboration_scope = frozenset(
+        (independent_corroboration_scope or ())
+    ) - matched_independent_corroboration_scope
     primary_independence_family_rows = tuple(
         {
             "source_family": _independence_group_source_family(
@@ -1286,6 +1294,29 @@ def project_supervisor_evidence_facts(
                 ),
                 "review_scope_fact_id_roster_hash": _stable_hash(
                     sorted(independent_corroboration_scope or ())
+                ),
+                "review_scope_requested_fact_count": (
+                    len(independent_corroboration_scope)
+                    if independent_corroboration_scope is not None
+                    else len(all_current_information_confidence_rows)
+                ),
+                "review_scope_matched_fact_count": len(
+                    current_information_confidence_rows
+                ),
+                "review_scope_unmatched_fact_count": len(
+                    unmatched_independent_corroboration_scope
+                ),
+                "review_scope_unmatched_fact_id_roster_hash": _stable_hash(
+                    sorted(unmatched_independent_corroboration_scope)
+                ),
+                "review_scope_requested_equals_matched_plus_unmatched": (
+                    (
+                        len(independent_corroboration_scope)
+                        if independent_corroboration_scope is not None
+                        else len(all_current_information_confidence_rows)
+                    )
+                    == len(current_information_confidence_rows)
+                    + len(unmatched_independent_corroboration_scope)
                 ),
                 "review_scope_uses_fixed_top_n": False,
                 "facts_outside_current_memo_remain_accounted_in_semantic_groups": True,
