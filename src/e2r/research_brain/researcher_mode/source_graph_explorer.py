@@ -76,6 +76,9 @@ NAVIGATION_ONLY_REFERENCE_POLICY_VERSION = (
 SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION = (
     "e2r_v5_customer_official_weak_discovery_override_v1"
 )
+QUERY_GENERATION_REPLAY_CONTEXT_SCHEMA_VERSION = (
+    "e2r_v5_query_generation_replay_context_v1"
+)
 _WEAK_DISCOVERY_SOURCE_FAMILIES = frozenset(
     {"GENERAL_WEB_DISCOVERY", "TRUSTED_BUSINESS_MEDIA"}
 )
@@ -596,6 +599,32 @@ class ResearcherSourceGraphAcquirer:
                 as_of_date=as_of_date,
                 mode=config.mode,
             )
+        effective_score_gap_context = dict(score_gap_context or {})
+        pending_query_generation_replay = (
+            _validated_pending_query_generation_replay_context(
+                state,
+                objective_ids=frozenset(objective_by_id),
+            )
+            if not checkpoint_migration_only
+            else None
+        )
+        if pending_query_generation_replay is not None:
+            # SOURCE_QUERY_GENERATION is an asynchronous transport boundary.
+            # Downstream component/supervisor artifacts can temporarily lose
+            # their semantic gap while the collaboration response is pending.
+            # Keep the exact LLM-authored gap and unresolved objective roster
+            # that produced the pending request until that request is replayed.
+            # This preserves request identity; it never manufactures a query.
+            effective_score_gap_context = dict(
+                pending_query_generation_replay["score_gap_context"]
+            )
+            resolved.difference_update(
+                pending_query_generation_replay[
+                    "unresolved_objective_ids"
+                ]
+            )
+        else:
+            state.pop("pending_query_generation_replay_context", None)
         _merge_official_documents(
             state,
             official_documents,
@@ -628,10 +657,14 @@ class ResearcherSourceGraphAcquirer:
             *_quarantine_unreadable_documents(
                 state,
                 parser_repair_document_ids=(
-                    _fact_parser_repair_document_ids(score_gap_context or {})
+                    _fact_parser_repair_document_ids(
+                        effective_score_gap_context
+                    )
                 ),
                 fact_unreadable_document_ids=(
-                    _fact_unreadable_document_ids(score_gap_context or {})
+                    _fact_unreadable_document_ids(
+                        effective_score_gap_context
+                    )
                 ),
             ),
             *_quarantine_navigation_only_documents(state),
@@ -685,7 +718,7 @@ class ResearcherSourceGraphAcquirer:
         )
         mandatory_source_family_pairs = (
             _current_supervisor_mandatory_source_family_pairs(
-                score_gap_context=score_gap_context or {},
+                score_gap_context=effective_score_gap_context,
                 objectives=objectives,
             )
         )
@@ -874,7 +907,7 @@ class ResearcherSourceGraphAcquirer:
         )
         supervisor_query_direction_priority = (
             _has_actionable_supervisor_query_direction(
-                score_gap_context or {},
+                effective_score_gap_context,
                 unresolved_objective_ids={
                     str(row["objective_id"])
                     for row in unresolved_objectives
@@ -1040,6 +1073,7 @@ class ResearcherSourceGraphAcquirer:
             and pending_candidate_work
             and not candidate_query_edge_work_priority
         )
+        planner_query_failures = _dedupe_exact_mapping_rows(query_failures)
         if (
             not checkpoint_migration_only
             and unresolved_objectives
@@ -1051,6 +1085,7 @@ class ResearcherSourceGraphAcquirer:
             and (
                 not repeated_source_family_lineage_failures
                 or candidate_query_edge_direction_priority
+                or pending_query_generation_replay is not None
             )
         ):
             query_generation_objectives = (
@@ -1077,10 +1112,10 @@ class ResearcherSourceGraphAcquirer:
                 ),
                 target_business_model=target_business_model,
                 source_coverage=source_coverage,
-                prior_query_failures=query_failures,
+                prior_query_failures=planner_query_failures,
                 previously_executed_queries=state["executed_queries"],
                 theme_context=theme_context or {},
-                score_gap_context=score_gap_context or {},
+                score_gap_context=effective_score_gap_context,
                 generator_kind=(
                     "TEST_FIXTURE_LLM"
                     if config.mode == SourceGraphAcquisitionMode.TEST.value
@@ -1088,6 +1123,60 @@ class ResearcherSourceGraphAcquirer:
                 ),
             )
             state["query_generation_history"].append(query_generation.to_dict())
+            collaboration_transport_wait = (
+                _query_generation_has_collaboration_transport_wait(
+                    query_generation.to_dict()
+                )
+            )
+            if (
+                query_generation.status == "PENDING"
+                and not query_generation.queries
+                and (
+                    collaboration_transport_wait
+                    or pending_query_generation_replay is not None
+                )
+            ):
+                state["pending_query_generation_replay_context"] = {
+                    "schema_version": (
+                        QUERY_GENERATION_REPLAY_CONTEXT_SCHEMA_VERSION
+                    ),
+                    "unresolved_objective_ids": sorted(
+                        str(row["objective_id"])
+                        for row in query_generation_objectives
+                    ),
+                    "score_gap_context": json.loads(
+                        json.dumps(
+                            effective_score_gap_context,
+                            ensure_ascii=False,
+                            default=str,
+                        )
+                    ),
+                    "prompt_hash": query_generation.prompt_hash,
+                    "origin_prompt_hash": (
+                        str(
+                            pending_query_generation_replay.get(
+                                "origin_prompt_hash"
+                            )
+                            or pending_query_generation_replay.get(
+                                "prompt_hash"
+                            )
+                        )
+                        if pending_query_generation_replay is not None
+                        else query_generation.prompt_hash
+                    ),
+                    "replay_phase": (
+                        "AWAITING_COLLABORATION_RESPONSE"
+                        if collaboration_transport_wait
+                        else "POST_RESPONSE_SEMANTIC_RETRY"
+                    ),
+                    "originated_from_collaboration_transport_wait": True,
+                    "transport_state_only": True,
+                    "query_generation_owner": "SOURCE_QUERY_GENERATION_LLM",
+                    "deterministic_fallback_query_allowed": False,
+                    "production_score_authority": False,
+                }
+            else:
+                state.pop("pending_query_generation_replay_context", None)
             pending_reasons.extend(query_generation.feedback_for_next_llm_call)
             query_failures.extend(
                 {
@@ -1884,6 +1973,8 @@ class ResearcherSourceGraphAcquirer:
         state["generated_queries"] = generated_rows
         state["search_candidates"] = candidates
         state["source_graph"] = graph.to_dict()
+        if status != "QUERY_GENERATION_PENDING":
+            state.pop("pending_query_generation_replay_context", None)
         checkpoint = _finalize_checkpoint(state)
         audit = _audit_acquisition_run(
             config=config,
@@ -1920,6 +2011,14 @@ class ResearcherSourceGraphAcquirer:
             ),
             "candidate_query_edge_rebound_priority_requested": bool(
                 candidate_query_edge_pending_rebound_ids
+            ),
+            "pending_query_generation_replay_context_consumed": bool(
+                pending_query_generation_replay is not None
+                and query_generation is not None
+                and query_generation.status != "PENDING"
+            ),
+            "pending_query_generation_replay_context_preserved": bool(
+                checkpoint.get("pending_query_generation_replay_context")
             ),
         }
         if checkpoint_migration_only:
@@ -2175,6 +2274,95 @@ def _objective_dict(
 
 def _fact_dict(row: EvidenceFact | Mapping[str, Any]) -> Mapping[str, Any]:
     return row.to_dict() if isinstance(row, EvidenceFact) else dict(row)
+
+
+def _validated_pending_query_generation_replay_context(
+    state: Mapping[str, Any],
+    *,
+    objective_ids: frozenset[str],
+) -> Mapping[str, Any] | None:
+    """Return the semantic input frozen at an unfinished planner call.
+
+    The collaboration provider is asynchronous: the first call persists an
+    exact request and returns ``PENDING``.  A downstream memo refresh can then
+    temporarily hide the Supervisor gap before the response is imported.  The
+    source checkpoint, not that temporary downstream projection, owns the
+    unfinished planner handoff.
+    """
+
+    raw = state.get("pending_query_generation_replay_context")
+    if raw is None:
+        return None
+    if not isinstance(raw, Mapping):
+        raise ValueError("pending query generation replay context must be an object")
+    if str(state.get("status") or "") != "QUERY_GENERATION_PENDING":
+        return None
+    if raw.get("schema_version") != (
+        QUERY_GENERATION_REPLAY_CONTEXT_SCHEMA_VERSION
+    ):
+        raise ValueError("pending query generation replay context schema mismatch")
+    if (
+        raw.get("transport_state_only") is not True
+        or raw.get("originated_from_collaboration_transport_wait") is not True
+        or raw.get("query_generation_owner")
+        != "SOURCE_QUERY_GENERATION_LLM"
+        or raw.get("deterministic_fallback_query_allowed") is not False
+        or raw.get("production_score_authority") is not False
+    ):
+        raise ValueError("pending query generation replay context authority mismatch")
+    unresolved = tuple(
+        str(value)
+        for value in raw.get("unresolved_objective_ids") or ()
+        if str(value)
+    )
+    if not unresolved or len(unresolved) != len(set(unresolved)):
+        raise ValueError("pending query generation replay objectives are invalid")
+    if not set(unresolved).issubset(objective_ids):
+        raise ValueError("pending query generation replay objective is unknown")
+    score_gap_context = raw.get("score_gap_context")
+    if not isinstance(score_gap_context, Mapping):
+        raise ValueError("pending query generation replay gap context is invalid")
+    prompt_hash = str(raw.get("prompt_hash") or "")
+    origin_prompt_hash = str(raw.get("origin_prompt_hash") or "")
+    replay_phase = str(raw.get("replay_phase") or "")
+    history = tuple(state.get("query_generation_history") or ())
+    latest = history[-1] if history else None
+    if (
+        not prompt_hash.startswith("QUERYPROMPT-")
+        or not origin_prompt_hash.startswith("QUERYPROMPT-")
+        or replay_phase
+        not in {
+            "AWAITING_COLLABORATION_RESPONSE",
+            "POST_RESPONSE_SEMANTIC_RETRY",
+        }
+        or not isinstance(latest, Mapping)
+        or str(latest.get("status") or "") != "PENDING"
+        or str(latest.get("prompt_hash") or "") != prompt_hash
+        or latest.get("queries")
+        or (
+            replay_phase == "AWAITING_COLLABORATION_RESPONSE"
+            and not _query_generation_has_collaboration_transport_wait(latest)
+        )
+    ):
+        raise ValueError("pending query generation replay lineage mismatch")
+    return {
+        **dict(raw),
+        "unresolved_objective_ids": unresolved,
+        "score_gap_context": dict(score_gap_context),
+    }
+
+
+def _query_generation_has_collaboration_transport_wait(
+    value: Mapping[str, Any],
+) -> bool:
+    return any(
+        re.search(
+            r"COLLABORATION_RESPONSE_PENDING:COLLABREQ-[0-9a-f]{64}(?:$|:)",
+            str(reason or "").strip(),
+        )
+        is not None
+        for reason in value.get("feedback_for_next_llm_call") or ()
+    )
 
 
 def _new_acquisition_state(
@@ -6675,6 +6863,25 @@ def _dedupe_mapping_rows(
     for row in rows:
         key = tuple(str(row.get(field) or "") for field in key_fields)
         result[key] = dict(row)
+    return list(result.values())
+
+
+def _dedupe_exact_mapping_rows(
+    rows: Sequence[Mapping[str, Any]],
+) -> list[dict[str, Any]]:
+    """Drop only byte-semantic duplicates before prompt projection."""
+
+    result: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        normalized = dict(row)
+        key = json.dumps(
+            normalized,
+            ensure_ascii=False,
+            sort_keys=True,
+            default=str,
+            separators=(",", ":"),
+        )
+        result[key] = normalized
     return list(result.values())
 
 

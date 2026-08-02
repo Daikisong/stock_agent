@@ -185,6 +185,23 @@ class PendingThenCompleteRankingProvider(SourceBrainProvider):
         return super().complete(pass_name=pass_name, payload=payload)
 
 
+class PendingThenCompleteQueryProvider(SourceBrainProvider):
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self.query_pending = True
+
+    def complete(
+        self, *, pass_name: str, payload: Mapping[str, Any]
+    ) -> Mapping[str, Any]:
+        if pass_name == "SOURCE_QUERY_GENERATION" and self.query_pending:
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            raise RuntimeError(
+                "COLLABORATION_RESPONSE_PENDING:"
+                "COLLABREQ-" + "c" * 64
+            )
+        return super().complete(pass_name=pass_name, payload=payload)
+
+
 class SparseReferenceRevalidationProvider(SourceBrainProvider):
     def complete(
         self, *, pass_name: str, payload: Mapping[str, Any]
@@ -1292,6 +1309,187 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertNotEqual(
             repeated_wait.prompt_hash,
             changed_real_failure.prompt_hash,
+        )
+
+    def test_pending_query_response_survives_downstream_gap_projection_loss(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteQueryProvider()
+        search = RecordingSearchProvider({QUERY: ()})
+        gap_context = {
+            "prior_supervisor_gap": {
+                "status": "NEXT_RESEARCH_REQUIRED",
+                "missing_material_facts": [
+                    {
+                        "objective_id": "OBJECTIVE-1",
+                        "component_id": "eps_fcf_explosion",
+                        "missing_fact": "counterparty official confirmation",
+                    }
+                ],
+                "new_source_family_directions": [
+                    {
+                        "objective_id": "OBJECTIVE-1",
+                        "component_id": "eps_fcf_explosion",
+                        "source_family": "CUSTOMER_OFFICIAL",
+                        "direction": "check the named counterparty catalog",
+                    }
+                ],
+                "query_direction_briefs": [
+                    {
+                        "objective_id": "OBJECTIVE-1",
+                        "component_id": "eps_fcf_explosion",
+                        "source_family": "CUSTOMER_OFFICIAL",
+                        "direction": "check the named counterparty catalog",
+                    }
+                ],
+            }
+        }
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            score_gap_context=gap_context,
+        )
+        self.assertEqual(first.status, "QUERY_GENERATION_PENDING")
+        self.assertEqual(search.calls, [])
+        replay = first.checkpoint[
+            "pending_query_generation_replay_context"
+        ]
+        self.assertEqual(
+            replay["unresolved_objective_ids"], ["OBJECTIVE-1"]
+        )
+        first_payload = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+        ][-1]
+
+        # Simulate the real async race: the downstream component/supervisor
+        # projection temporarily loses the material gap and marks the
+        # objective resolved before the collaboration response is consumed.
+        provider.query_pending = False
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=first.checkpoint,
+            score_gap_context={},
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        query_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+        ]
+        self.assertEqual(len(query_payloads), 2)
+        self.assertEqual(query_payloads[0], query_payloads[1])
+        self.assertEqual(search.calls[0][0], QUERY)
+        self.assertTrue(
+            second.audit[
+                "pending_query_generation_replay_context_consumed"
+            ]
+        )
+        self.assertNotIn(
+            "pending_query_generation_replay_context", second.checkpoint
+        )
+
+    def test_query_replay_dedupe_preserves_distinct_failure_lineage(
+        self,
+    ) -> None:
+        rows = [
+            {
+                "query_id": "QUERY-1",
+                "candidate_id": "CANDIDATE-1",
+                "document_id": "DOCUMENT-1",
+                "objective_id": "OBJECTIVE-1",
+                "failure_reason": "FETCH_TIMEOUT",
+            },
+            {
+                "query_id": "QUERY-1",
+                "candidate_id": "CANDIDATE-2",
+                "document_id": "DOCUMENT-2",
+                "objective_id": "OBJECTIVE-1",
+                "failure_reason": "FETCH_TIMEOUT",
+            },
+        ]
+
+        deduped = source_graph_module._dedupe_exact_mapping_rows(
+            [rows[0], rows[1], dict(rows[0])]
+        )
+
+        self.assertEqual(len(deduped), 2)
+        self.assertEqual(
+            {row["candidate_id"] for row in deduped},
+            {"CANDIDATE-1", "CANDIDATE-2"},
+        )
+
+    def test_query_replay_keeps_gap_after_empty_collaboration_response(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteQueryProvider(queries=())
+        search = RecordingSearchProvider({QUERY: ()})
+        gap_context = {
+            "prior_supervisor_gap": {
+                "status": "NEXT_RESEARCH_REQUIRED",
+                "new_source_family_directions": [
+                    {
+                        "objective_id": "OBJECTIVE-1",
+                        "component_id": "eps_fcf_explosion",
+                        "source_family": "CUSTOMER_OFFICIAL",
+                        "direction": "check counterparty official material",
+                    }
+                ],
+            }
+        }
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            score_gap_context=gap_context,
+        )
+        self.assertEqual(first.status, "QUERY_GENERATION_PENDING")
+
+        provider.query_pending = False
+        empty = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=first.checkpoint,
+            score_gap_context={},
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+        self.assertEqual(empty.status, "QUERY_GENERATION_PENDING")
+        self.assertEqual(
+            empty.checkpoint["pending_query_generation_replay_context"][
+                "replay_phase"
+            ],
+            "POST_RESPONSE_SEMANTIC_RETRY",
+        )
+        self.assertEqual(search.calls, [])
+
+        provider.queries = (QUERY,)
+        completed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=empty.checkpoint,
+            score_gap_context={},
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        query_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_QUERY_GENERATION"
+        ]
+        self.assertEqual(len(query_payloads), 3)
+        self.assertEqual(query_payloads[0], query_payloads[1])
+        self.assertNotEqual(query_payloads[1], query_payloads[2])
+        self.assertEqual(search.calls[0][0], QUERY)
+        self.assertNotIn(
+            "pending_query_generation_replay_context",
+            completed.checkpoint,
         )
 
     def test_future_dated_llm_query_is_rejected_before_search(self) -> None:
