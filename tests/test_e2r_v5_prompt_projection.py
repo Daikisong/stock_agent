@@ -1228,6 +1228,77 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             project_supervisor_source_graph_checkpoint(changed_content),
         )
 
+    def test_supervisor_source_graph_projection_ignores_candidate_rediscovery_lineage(self):
+        candidate = {
+            "candidate_id": "CANDIDATE-1",
+            "url": "https://issuer.example/current.pdf",
+            "title": "현재 발행사 원문",
+            "snippet": "현재 판단에 쓰인 발견 메타데이터",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FULL_DOCUMENT_FETCHED",
+            "candidate_source_family_hint": "ISSUER_PRESENTATION",
+            "verified_official_domain_candidate": True,
+            "objective_ids": ["OBJECTIVE-1"],
+            "requested_source_families": ["ISSUER_PRESENTATION"],
+            "materiality_query_ids": ["QUERY-RANKED"],
+            "query_ids": ["QUERY-RANKED"],
+            "material_priority": 0.9,
+            "rank": 1,
+        }
+        checkpoint = {
+            "generated_queries": [],
+            "search_candidates": [candidate],
+            "candidate_materiality_decisions": [],
+            "fetch_records": [],
+            "rejected_documents": [],
+            "query_failures": [],
+            "provider_failures": [],
+            "evidence_documents": [],
+            "quarantined_documents": [],
+            "resolved_objective_ids": ["OBJECTIVE-1"],
+            "transport_budget_can_complete_research": False,
+            "semantic_saturation_certified": False,
+        }
+        rediscovered = {
+            **checkpoint,
+            "search_candidates": [
+                {
+                    **candidate,
+                    "query_ids": ["QUERY-RANKED", "QUERY-REDISCOVERED"],
+                }
+            ],
+        }
+
+        projected = project_supervisor_source_graph_checkpoint(checkpoint)
+        self.assertEqual(
+            projected,
+            project_supervisor_source_graph_checkpoint(rediscovered),
+        )
+        self.assertEqual(
+            projected["search_candidates"][
+                "excluded_acquisition_lineage_fields"
+            ],
+            ["query_ids"],
+        )
+        changed_materiality_scope = {
+            **rediscovered,
+            "search_candidates": [
+                {
+                    **rediscovered["search_candidates"][0],
+                    "materiality_query_ids": [
+                        "QUERY-RANKED",
+                        "QUERY-RERANKED",
+                    ],
+                }
+            ],
+        }
+        self.assertNotEqual(
+            projected,
+            project_supervisor_source_graph_checkpoint(
+                changed_materiality_scope
+            ),
+        )
+
     def test_supervisor_quarantine_projection_accounts_unbounded_rows(self):
         checkpoint = {
             "generated_queries": [],

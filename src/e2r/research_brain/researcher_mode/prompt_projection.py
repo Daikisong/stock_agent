@@ -52,6 +52,8 @@ _DOCUMENT_RELATION_FIELDS = (
     "referenced_document_ids",
 )
 
+_SUPERVISOR_CANDIDATE_ACQUISITION_LINEAGE_FIELDS = ("query_ids",)
+
 _DOCUMENT_TABLE_FIELDS = (
     *_DOCUMENT_MANIFEST_FIELDS,
     "source_manifest_hash",
@@ -595,9 +597,22 @@ def project_supervisor_source_graph_checkpoint(
         hashed_text_fields,
     ) in collection_specs.items():
         rows = tuple(dict(row) for row in checkpoint.get(key) or ())
+        semantic_rows = (
+            tuple(
+                {
+                    field: value
+                    for field, value in row.items()
+                    if field
+                    not in _SUPERVISOR_CANDIDATE_ACQUISITION_LINEAGE_FIELDS
+                }
+                for row in rows
+            )
+            if key == "search_candidates"
+            else rows
+        )
         projection = dict(
             _project_state_collection(
-                rows,
+                semantic_rows,
                 collection_name=f"supervisor_{key}",
                 identity_fields=identity_fields,
                 group_fields=group_fields,
@@ -609,6 +624,19 @@ def project_supervisor_source_graph_checkpoint(
             field: _project_text_roster(row.get(field) for row in rows)
             for field in hashed_text_fields
         }
+        if key == "search_candidates":
+            projection.update(
+                {
+                    "acquisition_lineage_excluded_from_provider": True,
+                    "excluded_acquisition_lineage_fields": list(
+                        _SUPERVISOR_CANDIDATE_ACQUISITION_LINEAGE_FIELDS
+                    ),
+                    "full_acquisition_lineage_persisted_in_source_graph": True,
+                    "every_semantic_candidate_accounted": (
+                        len(semantic_rows) == len(rows)
+                    ),
+                }
+            )
         output[key] = projection
 
     queries = tuple(
@@ -703,7 +731,7 @@ def project_supervisor_source_graph_checkpoint(
     )
     output["evidence_documents"] = document_projection
     output["source_graph_prompt_projection"] = {
-        "schema_version": "e2r_v5_supervisor_source_graph_projection_v4",
+        "schema_version": "e2r_v5_supervisor_source_graph_projection_v5",
         "complete_artifact_persisted_outside_prompt": True,
         "every_query_document_and_state_row_accounted": True,
         "checkpoint_lineage_excluded_from_provider": True,

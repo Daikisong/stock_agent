@@ -48,6 +48,11 @@ from e2r.research_brain.researcher_mode.sealed_production import (
 )
 
 
+_EXACT_COLLABORATION_RESPONSE_WAIT_RE = re.compile(
+    r"COLLABORATION_RESPONSE_PENDING:COLLABREQ-[0-9a-f]{64}"
+)
+
+
 def _bool(value: str | bool) -> bool:
     if isinstance(value, bool):
         return value
@@ -610,11 +615,17 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
                 source_transport_snapshot["work_state"],
             )
         )
+        collaboration_response_waiting = (
+            _result_has_exact_collaboration_response_wait(result)
+        )
         next_source_resume_mode = (
             "REUSE_READY_CHECKPOINT"
-            if _terminal_source_snapshot_has_pending_fact_extraction(
-                result,
-                source_transport_snapshot["work_state"],
+            if (
+                collaboration_response_waiting
+                or _terminal_source_snapshot_has_pending_fact_extraction(
+                    result,
+                    source_transport_snapshot["work_state"],
+                )
             )
             else "ADVANCE"
         )
@@ -641,6 +652,9 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
                     source_transport_chain_valid
                 ),
                 "source_transport_advanced": source_transport_advanced,
+                "collaboration_response_waiting": (
+                    collaboration_response_waiting
+                ),
                 "source_transport_work": _source_transport_work_summary(
                     source_transport_snapshot["work_state"]
                 ),
@@ -987,6 +1001,63 @@ def _terminal_source_snapshot_has_pending_fact_extraction(
         and fact_extraction_has_exact_checkpoint_recovery_wait(
             getattr(fact_extraction, "pending_reasons", ())
         )
+    )
+
+
+def _result_has_exact_collaboration_response_wait(result: Any) -> bool:
+    """Keep the source snapshot fixed while a downstream Codex reply is due."""
+
+    def field(row: Any, key: str, default: Any = None) -> Any:
+        if isinstance(row, Mapping):
+            return row.get(key, default)
+        return getattr(row, key, default) if row is not None else default
+
+    def add_reasons(values: list[str], row: Any) -> None:
+        reasons = field(row, "pending_reasons", ())
+        if isinstance(reasons, (list, tuple)):
+            values.extend(str(value) for value in reasons)
+
+    values: list[str] = []
+    fact_extraction = getattr(result, "fact_extraction", None)
+    add_reasons(values, fact_extraction)
+
+    dossier = getattr(result, "dossier", None)
+    add_reasons(values, dossier)
+    business_model = field(dossier, "business_model_result")
+    add_reasons(values, business_model)
+    for component in field(dossier, "component_results", ()) or ():
+        add_reasons(values, component)
+    add_reasons(values, field(dossier, "red_team_result"))
+    scoring_memos = getattr(result, "scoring_memos", None)
+    for component in field(scoring_memos, "component_memos", ()) or ():
+        add_reasons(values, component)
+    score_aggregation = getattr(result, "score_aggregation", None)
+    add_reasons(values, score_aggregation)
+    for component in field(score_aggregation, "component_results", ()) or ():
+        add_reasons(values, component)
+    stagecourt = getattr(result, "stagecourt", None)
+    add_reasons(values, field(stagecourt, "decision"))
+
+    epoch = getattr(result, "research_epoch", None)
+    supervisor = field(epoch, "supervisor_review")
+    for key in (
+        "unresolved_material_questions",
+        "next_actions",
+    ):
+        rows = field(supervisor, key, ())
+        if isinstance(rows, (list, tuple)):
+            values.extend(str(value) for value in rows)
+    values.append(str(field(supervisor, "rationale", "")))
+    for review_result in field(
+        epoch,
+        "saturation_reviewer_results",
+        (),
+    ) or ():
+        add_reasons(values, review_result)
+
+    return any(
+        _EXACT_COLLABORATION_RESPONSE_WAIT_RE.search(value) is not None
+        for value in values
     )
 
 

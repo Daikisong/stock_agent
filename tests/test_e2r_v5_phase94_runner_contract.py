@@ -18,6 +18,7 @@ from e2r.cli.run_e2r_researcher_mode_until_pass import (
     _load_prior_no_progress_signature,
     _load_prior_source_transport_work_state,
     _result_source_transport_work_state,
+    _result_has_exact_collaboration_response_wait,
     _run_target_until_semantic_terminal,
     _semantic_signature,
     _source_transport_advanced,
@@ -612,6 +613,135 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertEqual(
             runner.modes,
             ["REUSE_READY_CHECKPOINT", "ADVANCE"],
+        )
+
+    def test_downstream_collaboration_wait_keeps_source_snapshot_frozen(
+        self,
+    ) -> None:
+        checkpoint = _phase94_source_checkpoint(epoch=1)
+        snapshot = _source_transport_snapshot(checkpoint)
+        wait_reason = (
+            "PROVIDER_OR_OUTPUT_ERROR:StructuredProviderUnavailable:"
+            "COLLABORATION_RESPONSE_PENDING:COLLABREQ-" + "a" * 64
+        )
+        pending_result = SimpleNamespace(
+            status="RESEARCH_CHECKPOINT_PENDING",
+            completion_gates={"source_graph_checkpoint_ready": True},
+            audit={"source_checkpoint_readonly_replayed": True},
+            fact_extraction=SimpleNamespace(pending_reasons=()),
+            dossier=SimpleNamespace(
+                pending_reasons=(),
+                business_model_result=SimpleNamespace(
+                    pending_reasons=(wait_reason,)
+                ),
+                component_results=(),
+                red_team_result=None,
+            ),
+            scoring_memos=SimpleNamespace(component_memos=()),
+            score_aggregation=SimpleNamespace(
+                pending_reasons=(),
+                component_results=(),
+            ),
+            stagecourt=SimpleNamespace(
+                decision=SimpleNamespace(pending_reasons=())
+            ),
+            research_epoch=SimpleNamespace(
+                supervisor_review={},
+                saturation_reviewer_results=(),
+            ),
+        )
+
+        class Runner:
+            def __init__(self) -> None:
+                self.modes = []
+
+            def run_checkpoint(self, **kwargs):
+                self.modes.append(kwargs["source_resume_mode"])
+                return pending_result
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            runner = Runner()
+            with (
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_signature",
+                    return_value="a" * 64,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_semantic_state",
+                    return_value={},
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_load_prior_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "_result_source_transport_work_state",
+                    return_value=snapshot,
+                ),
+                patch(
+                    "e2r.cli.run_e2r_researcher_mode_until_pass."
+                    "refresh_canary_target_manifest_hash"
+                ),
+            ):
+                returned = _run_target_until_semantic_terminal(
+                    runner=runner,
+                    config=SimpleNamespace(
+                        output_root=str(root),
+                        as_of_date=AS_OF_DATE,
+                    ),
+                    target=SimpleNamespace(target_id="CURRENT-TARGET"),
+                )
+
+        self.assertIs(returned, pending_result)
+        self.assertEqual(
+            runner.modes,
+            ["REUSE_READY_CHECKPOINT", "REUSE_READY_CHECKPOINT"],
+        )
+        self.assertTrue(
+            _result_has_exact_collaboration_response_wait(pending_result)
+        )
+        pending_result.dossier.business_model_result.pending_reasons = (
+            "PROVIDER_OR_OUTPUT_ERROR:INVALID_PROVIDER_OUTPUT",
+        )
+        self.assertFalse(
+            _result_has_exact_collaboration_response_wait(pending_result)
+        )
+        pending_result.research_epoch.supervisor_review = {
+            "unresolved_material_questions": [wait_reason]
+        }
+        self.assertTrue(
+            _result_has_exact_collaboration_response_wait(pending_result)
+        )
+        pending_result.research_epoch.supervisor_review = {}
+        pending_result.research_epoch.saturation_reviewer_results = (
+            SimpleNamespace(pending_reasons=(wait_reason,)),
+        )
+        self.assertTrue(
+            _result_has_exact_collaboration_response_wait(pending_result)
+        )
+        pending_result.research_epoch.saturation_reviewer_results = ()
+        pending_result.scoring_memos.component_memos = (
+            SimpleNamespace(pending_reasons=(wait_reason,)),
+        )
+        self.assertTrue(
+            _result_has_exact_collaboration_response_wait(pending_result)
+        )
+        pending_result.scoring_memos.component_memos = ()
+        pending_result.score_aggregation.component_results = (
+            SimpleNamespace(pending_reasons=(wait_reason,)),
+        )
+        self.assertTrue(
+            _result_has_exact_collaboration_response_wait(pending_result)
+        )
+        pending_result.score_aggregation.component_results = ()
+        pending_result.stagecourt.decision.pending_reasons = (wait_reason,)
+        self.assertTrue(
+            _result_has_exact_collaboration_response_wait(pending_result)
         )
 
     def test_until_pass_reuses_terminal_source_until_fact_queue_drains(
@@ -1411,6 +1541,86 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 _source_checkpoint_needs_downstream_provider_recovery(
                     root=root,
                     checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+    def test_production_downstream_roster_controls_provider_recovery(self) -> None:
+        checkpoint = {
+            "status": "STOPPED_ON_RESOLUTION",
+            "generated_queries": [{"execution_status": "SEARCH_EXECUTED"}],
+            "search_candidates": [
+                {
+                    "ranking_status": "PENDING",
+                    "fetch_status": "NOT_STARTED",
+                }
+            ],
+            "evidence_documents": [
+                {"document_id": "DOC-PRODUCTION"},
+                {"document_id": "DOC-LEGACY"},
+            ],
+            "production_downstream_document_ids": ["DOC-PRODUCTION"],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "fact_extraction_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": AS_OF_DATE,
+                        "status": "FACT_EXTRACTION_COMPLETE",
+                        "document_dispositions": [
+                            {
+                                "document_id": "DOC-PRODUCTION",
+                                "status": "FACTS_EXTRACTED",
+                            }
+                        ],
+                        "audit": {
+                            "critical_count_sum": 0,
+                            "input_document_count": 1,
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "researcher_mode_dossier.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": AS_OF_DATE,
+                        "business_model_result": {
+                            "pending_reasons": [
+                                "PROVIDER_OR_OUTPUT_ERROR:"
+                                "StructuredProviderUnavailable:"
+                                "COLLABORATION_RESPONSE_PENDING:COLLABREQ-"
+                                + "a" * 64
+                            ]
+                        },
+                        "component_results": [],
+                        "red_team_result": None,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            self.assertTrue(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            invalid = {
+                **checkpoint,
+                "production_downstream_document_ids": ["DOC-MISSING"],
+            }
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=invalid,
                     target_id="CURRENT-TARGET",
                     as_of_date=AS_OF_DATE,
                 )

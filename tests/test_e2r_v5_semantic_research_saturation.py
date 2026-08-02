@@ -3498,7 +3498,7 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             supervisor_source_graph["source_graph_prompt_projection"][
                 "schema_version"
             ],
-            "e2r_v5_supervisor_source_graph_projection_v4",
+            "e2r_v5_supervisor_source_graph_projection_v5",
         )
         self.assertEqual(
             supervisor_payload["current_evidence_fact_graph"]["record_count"],

@@ -1797,11 +1797,25 @@ def _source_checkpoint_needs_downstream_provider_recovery(
         or str(dossier.get("as_of_date") or "") != as_of_date
     ):
         return False
-    document_ids = {
+    evidence_document_ids = {
         str(row.get("document_id") or "")
         for row in checkpoint.get("evidence_documents") or ()
         if str(row.get("document_id") or "")
     }
+    if "production_downstream_document_ids" in checkpoint:
+        document_ids = {
+            str(value)
+            for value in checkpoint.get("production_downstream_document_ids")
+            or ()
+            if str(value).strip()
+        }
+        if (
+            not document_ids
+            or not document_ids.issubset(evidence_document_ids)
+        ):
+            return False
+    else:
+        document_ids = evidence_document_ids
     dispositions = tuple(
         row
         for row in fact_result.get("document_dispositions") or ()
@@ -1813,7 +1827,8 @@ def _source_checkpoint_needs_downstream_provider_recovery(
         if str(row.get("document_id") or "")
     }
     if (
-        not document_ids
+        not evidence_document_ids
+        or not document_ids
         or disposition_ids != document_ids
         or any(row.get("status") == "UNREADABLE" for row in dispositions)
         or int((fact_result.get("audit") or {}).get("input_document_count") or 0)
