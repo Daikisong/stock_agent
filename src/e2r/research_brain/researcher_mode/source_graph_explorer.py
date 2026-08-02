@@ -1488,6 +1488,13 @@ class ResearcherSourceGraphAcquirer:
                 )
             )
         }
+        _reconcile_resolved_scope_candidate_ranking_statuses(
+            candidates,
+            resolved_objective_ids=resolved,
+            ranking_transport_candidate_ids=(
+                candidate_ranking_transport_candidate_ids
+            ),
+        )
         candidate_by_id = {
             str(row.get("candidate_id") or ""): row for row in candidates
         }
@@ -6295,6 +6302,98 @@ def _candidate_scope_is_fully_resolved(
         if str(value).strip()
     }
     return candidate_objective_ids.issubset(resolved_objective_ids)
+
+
+def _reconcile_resolved_scope_candidate_ranking_statuses(
+    candidates: Sequence[dict[str, Any]],
+    *,
+    resolved_objective_ids: set[str],
+    ranking_transport_candidate_ids: set[str],
+) -> None:
+    """Make resolved ranking suppression explicit and reversible.
+
+    A bounded ranking batch can leave historical ``PENDING`` rows behind
+    after their complete objective scope is resolved by other evidence.  They
+    are correctly excluded from transport, but retaining the raw pending
+    label makes downstream completeness reviewers treat them as unfinished
+    material routes.  Record the actual lifecycle state without inventing a
+    MATERIAL/NOT_MATERIAL decision.  If the objective or current provenance
+    route reopens, restore the exact prior pending state.
+    """
+
+    for candidate in candidates:
+        candidate_id = str(candidate.get("candidate_id") or "")
+        ranking_status = str(candidate.get("ranking_status") or "")
+        disposition = str(
+            candidate.get("objective_resolution_transport_disposition")
+            or ""
+        )
+        candidate_objective_ids = {
+            str(value)
+            for value in candidate.get("objective_ids") or ()
+            if str(value).strip()
+        }
+        has_current_provenance_work = bool(
+            str(
+                candidate.get("materiality_revalidation_reason") or ""
+            ).strip()
+            or candidate.get("alternate_route_required") is True
+        )
+        if (
+            ranking_status != "RESOLVED_SCOPE_NOT_RANKED"
+            and disposition
+        ):
+            candidate.pop(
+                "objective_resolution_transport_disposition",
+                None,
+            )
+            candidate.pop(
+                "objective_resolution_suppressed_objective_ids",
+                None,
+            )
+            disposition = ""
+        should_restore = bool(
+            ranking_status == "RESOLVED_SCOPE_NOT_RANKED"
+            and disposition == "RANKING_NOT_REQUIRED_SCOPE_RESOLVED"
+            and (
+                candidate_id in ranking_transport_candidate_ids
+                or not candidate_objective_ids.issubset(
+                    resolved_objective_ids
+                )
+                or has_current_provenance_work
+            )
+        )
+        if should_restore:
+            candidate["ranking_status"] = "PENDING"
+            candidate.pop(
+                "objective_resolution_transport_disposition",
+                None,
+            )
+            candidate.pop(
+                "objective_resolution_suppressed_objective_ids",
+                None,
+            )
+            ranking_status = str(candidate.get("ranking_status") or "")
+
+        if (
+            ranking_status != "PENDING"
+            or str(candidate.get("fetch_status") or "") != "NOT_STARTED"
+            or candidate_id in ranking_transport_candidate_ids
+            or not _candidate_scope_is_fully_resolved(
+                candidate,
+                resolved_objective_ids,
+            )
+            ):
+            continue
+        candidate["ranking_status"] = "RESOLVED_SCOPE_NOT_RANKED"
+        candidate["objective_resolution_transport_disposition"] = (
+            "RANKING_NOT_REQUIRED_SCOPE_RESOLVED"
+        )
+        candidate[
+            "objective_resolution_suppressed_objective_ids"
+        ] = sorted(candidate_objective_ids)
+        candidate["score_authority"] = False
+        candidate["snippet_evidence_eligible"] = False
 
 
 def _candidate_has_actionable_current_provenance_work(

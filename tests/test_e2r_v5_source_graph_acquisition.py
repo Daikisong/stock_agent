@@ -17,9 +17,15 @@ from e2r.research.publication_date import (
     infer_source_locator_publication_date,
 )
 from e2r.research.search_provider import SearchResult
+from e2r.cli.run_e2r_researcher_mode_until_pass import (
+    _source_transport_work_state,
+)
 import e2r.research_brain.researcher_mode.source_graph_explorer as source_graph_module
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _source_checkpoint_is_ready_for_readonly_replay,
+)
+from e2r.research_brain.researcher_mode.prompt_projection import (
+    project_source_graph_checkpoint,
 )
 from e2r.research_brain.researcher_mode import (
     PHASE85_PASS,
@@ -3300,7 +3306,12 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             if row.get("url") in stale_urls
         ]
         self.assertTrue(
-            all(row["ranking_status"] == "PENDING" for row in stale_candidates)
+            all(
+                row["ranking_status"] == "RESOLVED_SCOPE_NOT_RANKED"
+                and row["objective_resolution_transport_disposition"]
+                == "RANKING_NOT_REQUIRED_SCOPE_RESOLVED"
+                for row in stale_candidates
+            )
         )
         ranked_candidate_ids = {
             candidate["candidate_id"]
@@ -7152,6 +7163,276 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 candidate,
                 {"OBJECTIVE-1"},
             )
+        )
+
+    def test_resolved_scope_pending_candidate_is_explicit_and_reversible(
+        self,
+    ) -> None:
+        candidate = {
+            "candidate_id": "RESOLVED-RANKING-TAIL",
+            "objective_ids": ["OBJECTIVE-1"],
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+            "materiality_decision_id": None,
+            "snippet_discovery_only": True,
+            "snippet_evidence_eligible": False,
+        }
+
+        source_graph_module._reconcile_resolved_scope_candidate_ranking_statuses(
+            [candidate],
+            resolved_objective_ids={"OBJECTIVE-1"},
+            ranking_transport_candidate_ids=set(),
+        )
+
+        self.assertEqual(
+            candidate["ranking_status"],
+            "RESOLVED_SCOPE_NOT_RANKED",
+        )
+        self.assertEqual(candidate["fetch_status"], "NOT_STARTED")
+        self.assertIsNone(candidate["materiality_decision_id"])
+        self.assertEqual(
+            candidate["objective_resolution_transport_disposition"],
+            "RANKING_NOT_REQUIRED_SCOPE_RESOLVED",
+        )
+
+        source_graph_module._reconcile_resolved_scope_candidate_ranking_statuses(
+            [candidate],
+            resolved_objective_ids=set(),
+            ranking_transport_candidate_ids=set(),
+        )
+
+        self.assertEqual(candidate["ranking_status"], "PENDING")
+        self.assertNotIn(
+            "objective_resolution_transport_disposition",
+            candidate,
+        )
+
+    def test_resolved_scope_status_does_not_hide_current_provenance_work(
+        self,
+    ) -> None:
+        candidate = {
+            "candidate_id": "CURRENT-PROVENANCE-ROUTE",
+            "objective_ids": ["OBJECTIVE-1"],
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+            "materiality_revalidation_reason": (
+                "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
+            ),
+            "alternate_route_required": True,
+        }
+
+        source_graph_module._reconcile_resolved_scope_candidate_ranking_statuses(
+            [candidate],
+            resolved_objective_ids={"OBJECTIVE-1"},
+            ranking_transport_candidate_ids=set(),
+        )
+
+        self.assertEqual(candidate["ranking_status"], "PENDING")
+
+        replay_candidate = {
+            "candidate_id": "PENDING-RANKING-REPLAY",
+            "objective_ids": ["OBJECTIVE-1"],
+            "ranking_status": "PENDING",
+            "fetch_status": "NOT_STARTED",
+        }
+        source_graph_module._reconcile_resolved_scope_candidate_ranking_statuses(
+            [replay_candidate],
+            resolved_objective_ids={"OBJECTIVE-1"},
+            ranking_transport_candidate_ids={"PENDING-RANKING-REPLAY"},
+        )
+        self.assertEqual(replay_candidate["ranking_status"], "PENDING")
+
+        decided_candidates = [
+            {
+                "candidate_id": "MATERIAL-CANDIDATE",
+                "objective_ids": ["OBJECTIVE-1"],
+                "ranking_status": "MATERIAL",
+                "fetch_status": "FULL_DOCUMENT_FETCHED",
+            },
+            {
+                "candidate_id": "NONMATERIAL-CANDIDATE",
+                "objective_ids": ["OBJECTIVE-1"],
+                "ranking_status": "NOT_MATERIAL",
+                "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
+            },
+        ]
+        source_graph_module._reconcile_resolved_scope_candidate_ranking_statuses(
+            decided_candidates,
+            resolved_objective_ids={"OBJECTIVE-1"},
+            ranking_transport_candidate_ids=set(),
+        )
+        self.assertEqual(
+            [row["ranking_status"] for row in decided_candidates],
+            ["MATERIAL", "NOT_MATERIAL"],
+        )
+
+    def test_acquirer_persists_resolved_ranking_tail_and_reopens_it(
+        self,
+    ) -> None:
+        url = "https://issuer.example.com/resolved-ranking-tail"
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="TEST",
+        )
+        state.update(
+            status="STOPPED_ON_RESOLUTION",
+            generated_queries=[
+                {
+                    "query_id": "QUERY-1",
+                    "objective_id": "OBJECTIVE-1",
+                    "literal_query": QUERY,
+                    "source_families": ["ISSUER_NEWSROOM"],
+                    "execution_status": "SEARCH_EXECUTED",
+                }
+            ],
+            executed_queries=[QUERY],
+            resolved_objective_ids=["OBJECTIVE-1"],
+            search_candidates=[
+                {
+                    "candidate_id": "RESOLVED-RANKING-TAIL",
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "title": "Current Corp unresolved ranking tail",
+                    "url": url,
+                    "normalized_url": url,
+                    "published_at": "2026-06-20",
+                    "query_ids": ["QUERY-1"],
+                    "materiality_query_ids": ["QUERY-1"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "requested_source_families": ["ISSUER_NEWSROOM"],
+                    "ranking_status": "PENDING",
+                    "fetch_status": "NOT_STARTED",
+                    "snippet_discovery_only": True,
+                    "snippet_evidence_eligible": False,
+                    "score_authority": False,
+                }
+            ],
+        )
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        first_provider = SourceBrainProvider()
+        expected_lineage = {
+            key: list(state["search_candidates"][0][key])
+            for key in (
+                "query_ids",
+                "materiality_query_ids",
+                "objective_ids",
+                "requested_source_families",
+            )
+        }
+
+        closed = self._run(
+            provider=first_provider,
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        closed_candidate = next(
+            row
+            for row in closed.checkpoint["search_candidates"]
+            if row["candidate_id"] == "RESOLVED-RANKING-TAIL"
+        )
+        self.assertEqual(closed.status, "STOPPED_ON_RESOLUTION")
+        self.assertEqual(
+            closed_candidate["ranking_status"],
+            "RESOLVED_SCOPE_NOT_RANKED",
+        )
+        self.assertEqual(closed.audit["pending_candidate_count"], 0)
+        self.assertEqual(
+            closed.checkpoint["candidate_materiality_decisions"],
+            [],
+        )
+        self.assertIsNone(closed_candidate.get("materiality_decision_id"))
+        self.assertEqual(
+            {
+                key: list(closed_candidate[key])
+                for key in expected_lineage
+            },
+            expected_lineage,
+        )
+        source_graph_module.validate_source_graph_checkpoint(
+            closed.checkpoint
+        )
+        self.assertTrue(
+            _source_checkpoint_is_ready_for_readonly_replay(
+                closed.checkpoint
+            )
+        )
+        self.assertEqual(
+            _source_transport_work_state(closed.checkpoint)["candidates"][
+                "RESOLVED-RANKING-TAIL"
+            ],
+            "TERMINAL",
+        )
+        supervisor_projection = project_source_graph_checkpoint(
+            closed.checkpoint,
+            keys=("search_candidates",),
+        )
+        self.assertEqual(
+            supervisor_projection["search_candidates"][
+                "semantic_groups"
+            ][0]["state"]["ranking_status"],
+            "RESOLVED_SCOPE_NOT_RANKED",
+        )
+        self.assertFalse(
+            any(
+                row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+                for row in first_provider.calls
+            )
+        )
+
+        reopened_provider = SourceBrainProvider(
+            source_families=("ISSUER_NEWSROOM",),
+        )
+        reopened = self._run(
+            provider=reopened_provider,
+            search=RecordingSearchProvider({}),
+            fetcher=PageFetcher(
+                fixture_text_by_url={url: _document_text("reopened-tail")}
+            ),
+            checkpoint=closed.checkpoint,
+            resolved_objective_ids=(),
+        )
+
+        reopened_candidate = next(
+            row
+            for row in reopened.checkpoint["search_candidates"]
+            if row["candidate_id"] == "RESOLVED-RANKING-TAIL"
+        )
+        self.assertNotEqual(
+            reopened_candidate["ranking_status"],
+            "RESOLVED_SCOPE_NOT_RANKED",
+        )
+        self.assertTrue(
+            any(
+                row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+                for row in reopened_provider.calls
+            )
+        )
+        ranking_call = next(
+            row
+            for row in reopened_provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+        ranking_candidate = next(
+            row
+            for row in ranking_call["payload"]["discovery_candidates"]
+            if row["candidate_id"] == "RESOLVED-RANKING-TAIL"
+        )
+        self.assertEqual(
+            ranking_candidate["query_ids"],
+            expected_lineage["materiality_query_ids"],
+        )
+        self.assertEqual(
+            ranking_candidate["objective_ids"],
+            expected_lineage["objective_ids"],
+        )
+        self.assertEqual(
+            ranking_candidate["requested_source_families"],
+            expected_lineage["requested_source_families"],
         )
 
     def test_alternate_route_revalidation_ranks_before_legacy_backlog(
