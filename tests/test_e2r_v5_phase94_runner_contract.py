@@ -19,6 +19,7 @@ from e2r.cli.run_e2r_researcher_mode_until_pass import (
     _load_prior_source_transport_work_state,
     _result_source_transport_work_state,
     _result_has_exact_collaboration_response_wait,
+    _result_research_epoch_checkpoint_binding,
     _run_target_until_semantic_terminal,
     _semantic_signature,
     _source_transport_advanced,
@@ -147,6 +148,19 @@ def _phase94_research_epoch_payload(
     payload["checkpoint_id"] = _research_checkpoint_id(payload)
     payload["checkpoint_hash"] = _research_checkpoint_hash(payload)
     return payload
+
+
+def _phase94_research_epoch_binding(payload):
+    return {
+        "target_id": payload["target_id"],
+        "as_of_date": payload["as_of_date"],
+        "checkpoint_id": payload["checkpoint_id"],
+        "checkpoint_hash": payload["checkpoint_hash"],
+        "epoch": payload["epoch"],
+        "source_graph_checkpoint_id": payload[
+            "source_graph_checkpoint_id"
+        ],
+    }
 
 
 def _bound_no_progress_payload(
@@ -1746,33 +1760,34 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            (root / "until_pass_progress.json").write_text(
-                json.dumps(
-                    {
-                        "target_id": "CURRENT-TARGET",
-                        "as_of_date": AS_OF_DATE,
-                        "source_checkpoint_binding": source_binding,
-                    }
-                ),
-                encoding="utf-8",
-            )
-
             for name, body in leaves.items():
                 with self.subTest(name=name):
                     path = root / name
                     epoch_path = root / "research_epoch_checkpoint.json"
+                    epoch_payload = _phase94_research_epoch_payload(
+                        source_checkpoint_id=checkpoint["checkpoint_id"],
+                        saturation_reviews=(
+                            [{"pending_reasons": [wait_reason]}]
+                            if name == epoch_path.name
+                            else []
+                        ),
+                    )
                     epoch_path.write_text(
+                        json.dumps(epoch_payload),
+                        encoding="utf-8",
+                    )
+                    (root / "until_pass_progress.json").write_text(
                         json.dumps(
-                            _phase94_research_epoch_payload(
-                                source_checkpoint_id=checkpoint[
-                                    "checkpoint_id"
-                                ],
-                                saturation_reviews=(
-                                    [{"pending_reasons": [wait_reason]}]
-                                    if name == epoch_path.name
-                                    else []
+                            {
+                                "target_id": "CURRENT-TARGET",
+                                "as_of_date": AS_OF_DATE,
+                                "source_checkpoint_binding": source_binding,
+                                "research_epoch_checkpoint_binding": (
+                                    _phase94_research_epoch_binding(
+                                        epoch_payload
+                                    )
                                 ),
-                            )
+                            }
                         ),
                         encoding="utf-8",
                     )
@@ -1809,34 +1824,45 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            stale_progress = {
+            current_bound_progress = {
                 "target_id": "CURRENT-TARGET",
                 "as_of_date": AS_OF_DATE,
-                "source_checkpoint_binding": {
-                    **source_binding,
-                    "checkpoint_id": "SGCHECK-STALE",
-                },
+                "source_checkpoint_binding": source_binding,
+                "research_epoch_checkpoint_binding": (
+                    _phase94_research_epoch_binding(epoch_payload)
+                ),
             }
-            (root / "until_pass_progress.json").write_text(
-                json.dumps(stale_progress),
-                encoding="utf-8",
-            )
-            self.assertFalse(
-                _source_checkpoint_needs_downstream_provider_recovery(
-                    root=root,
-                    checkpoint=checkpoint,
-                    target_id="CURRENT-TARGET",
-                    as_of_date=AS_OF_DATE,
-                )
-            )
+            for field, stale_value in (
+                ("target_id", "OTHER-TARGET"),
+                ("as_of_date", "2026-06-28"),
+                ("checkpoint_id", "SGCHECK-STALE"),
+                ("checkpoint_hash", "0" * 64),
+                ("epoch", source_binding["epoch"] + 1),
+            ):
+                with self.subTest(stale_source_binding_field=field):
+                    (root / "until_pass_progress.json").write_text(
+                        json.dumps(
+                            {
+                                **current_bound_progress,
+                                "source_checkpoint_binding": {
+                                    **source_binding,
+                                    field: stale_value,
+                                },
+                            }
+                        ),
+                        encoding="utf-8",
+                    )
+                    self.assertFalse(
+                        _source_checkpoint_needs_downstream_provider_recovery(
+                            root=root,
+                            checkpoint=checkpoint,
+                            target_id="CURRENT-TARGET",
+                            as_of_date=AS_OF_DATE,
+                        )
+                    )
 
             (root / "until_pass_progress.json").write_text(
-                json.dumps(
-                    {
-                        **stale_progress,
-                        "source_checkpoint_binding": source_binding,
-                    }
-                ),
+                json.dumps(current_bound_progress),
                 encoding="utf-8",
             )
             stale_epoch = _phase94_research_epoch_payload(
@@ -1863,6 +1889,23 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
+            current_epoch = json.loads(
+                (root / "research_epoch_checkpoint.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            current_progress = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": AS_OF_DATE,
+                "source_checkpoint_binding": source_binding,
+                "research_epoch_checkpoint_binding": (
+                    _phase94_research_epoch_binding(current_epoch)
+                ),
+            }
+            (root / "until_pass_progress.json").write_text(
+                json.dumps(current_progress),
+                encoding="utf-8",
+            )
             stagecourt_path.unlink()
             (root / "component_scoring_memo_run.json").write_text(
                 json.dumps(
@@ -1882,6 +1925,110 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     as_of_date=AS_OF_DATE,
                 )
             )
+
+            replayed_epoch = _phase94_research_epoch_payload(
+                source_checkpoint_id="SGCHECK-PRIOR-SEMANTIC-EPOCH",
+                saturation_reviews=[{"pending_reasons": [wait_reason]}],
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                json.dumps(replayed_epoch),
+                encoding="utf-8",
+            )
+            (root / "until_pass_progress.json").write_text(
+                json.dumps(
+                    {
+                        **current_progress,
+                        "research_epoch_checkpoint_binding": (
+                            _phase94_research_epoch_binding(replayed_epoch)
+                        ),
+                    }
+                ),
+                encoding="utf-8",
+            )
+            self.assertTrue(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+            replayed_binding = _phase94_research_epoch_binding(
+                replayed_epoch
+            )
+            for field, stale_value in (
+                ("target_id", "OTHER-TARGET"),
+                ("as_of_date", "2026-06-28"),
+                ("checkpoint_id", "REPOCH-STALE"),
+                ("checkpoint_hash", "0" * 64),
+                ("epoch", replayed_binding["epoch"] + 1),
+                ("source_graph_checkpoint_id", "SGCHECK-OTHER-PRIOR"),
+            ):
+                with self.subTest(stale_epoch_binding_field=field):
+                    (root / "until_pass_progress.json").write_text(
+                        json.dumps(
+                            {
+                                **current_progress,
+                                "research_epoch_checkpoint_binding": {
+                                    **replayed_binding,
+                                    field: stale_value,
+                                },
+                            }
+                        ),
+                        encoding="utf-8",
+                    )
+                    self.assertFalse(
+                        _source_checkpoint_needs_downstream_provider_recovery(
+                            root=root,
+                            checkpoint=checkpoint,
+                            target_id="CURRENT-TARGET",
+                            as_of_date=AS_OF_DATE,
+                        )
+                    )
+
+            (root / "until_pass_progress.json").write_text(
+                json.dumps(
+                    {
+                        **current_progress,
+                        "research_epoch_checkpoint_binding": replayed_binding,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        **replayed_epoch,
+                        "checkpoint_hash": "0" * 64,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+    def test_until_pass_progress_binds_exact_replayed_research_epoch(
+        self,
+    ) -> None:
+        epoch_payload = _phase94_research_epoch_payload(
+            source_checkpoint_id="SGCHECK-PRIOR-SEMANTIC-EPOCH"
+        )
+        checkpoint = SimpleNamespace(**epoch_payload)
+        binding = _result_research_epoch_checkpoint_binding(
+            SimpleNamespace(
+                research_epoch=SimpleNamespace(checkpoint=checkpoint)
+            )
+        )
+        self.assertEqual(
+            binding,
+            _phase94_research_epoch_binding(epoch_payload),
+        )
 
     def test_completed_resume_removes_stale_no_progress_leaf(self) -> None:
         signature = "e" * 64

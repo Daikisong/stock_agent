@@ -602,6 +602,9 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
             target_id=target.target_id,
             as_of_date=config.as_of_date,
         )
+        research_epoch_checkpoint_binding = (
+            _result_research_epoch_checkpoint_binding(result)
+        )
         source_transport_chain_valid = _source_transport_chain_is_valid(
             prior_source_transport_snapshot,
             source_transport_snapshot,
@@ -647,6 +650,11 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
                 "transport_budget_treated_as_completion": False,
                 "source_checkpoint_binding": dict(
                     source_transport_snapshot["checkpoint_binding"]
+                ),
+                "research_epoch_checkpoint_binding": (
+                    dict(research_epoch_checkpoint_binding)
+                    if research_epoch_checkpoint_binding is not None
+                    else None
                 ),
                 "source_transport_chain_valid": (
                     source_transport_chain_valid
@@ -814,6 +822,43 @@ def _result_source_transport_work_state(
         as_of_date=as_of_date,
     )
     return _source_transport_snapshot(validated)
+
+
+def _result_research_epoch_checkpoint_binding(
+    result: Any,
+) -> Mapping[str, Any] | None:
+    """Bind progress to the exact epoch output used for this source replay."""
+
+    epoch_run = getattr(result, "research_epoch", None)
+    checkpoint = getattr(epoch_run, "checkpoint", None)
+    if checkpoint is None:
+        return None
+
+    def field(name: str, default: Any = None) -> Any:
+        if isinstance(checkpoint, Mapping):
+            return checkpoint.get(name, default)
+        return getattr(checkpoint, name, default)
+
+    binding = {
+        "target_id": str(field("target_id") or ""),
+        "as_of_date": str(field("as_of_date") or ""),
+        "checkpoint_id": str(field("checkpoint_id") or ""),
+        "checkpoint_hash": str(field("checkpoint_hash") or ""),
+        "epoch": int(field("epoch") or 0),
+        "source_graph_checkpoint_id": str(
+            field("source_graph_checkpoint_id") or ""
+        ),
+    }
+    if (
+        not binding["target_id"]
+        or not binding["as_of_date"]
+        or not binding["checkpoint_id"]
+        or not binding["checkpoint_hash"]
+        or binding["epoch"] < 1
+        or not binding["source_graph_checkpoint_id"]
+    ):
+        return None
+    return binding
 
 
 def _source_transport_snapshot(

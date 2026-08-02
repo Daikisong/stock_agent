@@ -1911,9 +1911,25 @@ def _current_downstream_provider_failure_texts(
         or progress.get("source_checkpoint_binding") != source_binding
         or epoch_checkpoint.target_id != target_id
         or epoch_checkpoint.as_of_date != as_of_date
-        or epoch_checkpoint.source_graph_checkpoint_id
-        != source_binding["checkpoint_id"]
     ):
+        return ()
+    epoch_binding = {
+        "target_id": epoch_checkpoint.target_id,
+        "as_of_date": epoch_checkpoint.as_of_date,
+        "checkpoint_id": epoch_checkpoint.checkpoint_id,
+        "checkpoint_hash": epoch_checkpoint.checkpoint_hash,
+        "epoch": epoch_checkpoint.epoch,
+        "source_graph_checkpoint_id": str(
+            epoch_checkpoint.source_graph_checkpoint_id or ""
+        ),
+    }
+    if progress.get("research_epoch_checkpoint_binding") != epoch_binding:
+        # A semantic transport replay may intentionally retain the prior
+        # research checkpoint identity after proving that every current
+        # provider prompt hash is unchanged.  The until-pass progress leaf is
+        # written only after that replay returns, so bind the current source
+        # and the exact replayed epoch independently instead of falsely
+        # requiring their checkpoint ids to be equal.
         return ()
 
     def load_current(name: str) -> Mapping[str, Any]:
