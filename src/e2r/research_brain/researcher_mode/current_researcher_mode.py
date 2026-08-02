@@ -1856,7 +1856,111 @@ def _source_checkpoint_needs_downstream_provider_recovery(
                 supervisor.get("unresolved_material_questions") or ()
             )
             failure_texts.append(supervisor.get("rationale") or "")
+    failure_texts.extend(
+        _current_downstream_provider_failure_texts(
+            root=root,
+            target_id=target_id,
+            as_of_date=as_of_date,
+            source_checkpoint=checkpoint,
+        )
+    )
     return any(_is_downstream_provider_or_output_failure(value) for value in failure_texts)
+
+
+def _current_downstream_provider_failure_texts(
+    *,
+    root: Path,
+    target_id: str,
+    as_of_date: str,
+    source_checkpoint: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Read provider waits from the current scoring, saturation, and Stage leaves."""
+
+    source_binding = {
+        "target_id": str(source_checkpoint.get("target_id") or target_id),
+        "as_of_date": str(source_checkpoint.get("as_of_date") or as_of_date),
+        "checkpoint_id": str(source_checkpoint.get("checkpoint_id") or ""),
+        "checkpoint_hash": str(source_checkpoint.get("checkpoint_hash") or ""),
+        "epoch": int(source_checkpoint.get("epoch") or 0),
+    }
+    if (
+        source_binding["target_id"] != target_id
+        or source_binding["as_of_date"] != as_of_date
+        or not source_binding["checkpoint_id"]
+        or not source_binding["checkpoint_hash"]
+        or source_binding["epoch"] < 1
+    ):
+        return ()
+    progress_path = root / "until_pass_progress.json"
+    epoch_path = root / "research_epoch_checkpoint.json"
+    if not progress_path.is_file() or not epoch_path.is_file():
+        return ()
+    try:
+        progress = _read_json(progress_path)
+        epoch_checkpoint = load_research_epoch_checkpoint(epoch_path)
+    except (
+        OSError,
+        UnicodeError,
+        ValueError,
+        TypeError,
+        json.JSONDecodeError,
+    ):
+        return ()
+    if (
+        not isinstance(progress, Mapping)
+        or progress.get("source_checkpoint_binding") != source_binding
+        or epoch_checkpoint.target_id != target_id
+        or epoch_checkpoint.as_of_date != as_of_date
+        or epoch_checkpoint.source_graph_checkpoint_id
+        != source_binding["checkpoint_id"]
+    ):
+        return ()
+
+    def load_current(name: str) -> Mapping[str, Any]:
+        path = root / name
+        if not path.is_file():
+            return {}
+        try:
+            payload = _read_json(path)
+        except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
+            return {}
+        if (
+            not isinstance(payload, Mapping)
+            or str(payload.get("target_id") or "") != target_id
+            or str(payload.get("as_of_date") or "") != as_of_date
+        ):
+            return {}
+        return payload
+
+    def add_reasons(output: list[str], row: Any) -> None:
+        if not isinstance(row, Mapping):
+            return
+        reasons = row.get("pending_reasons") or ()
+        if isinstance(reasons, (list, tuple)):
+            output.extend(str(value) for value in reasons)
+
+    def mapping_rows(value: Any) -> tuple[Mapping[str, Any], ...]:
+        if not isinstance(value, (list, tuple)):
+            return ()
+        return tuple(row for row in value if isinstance(row, Mapping))
+
+    output: list[str] = []
+    scoring = load_current("component_scoring_memo_run.json")
+    for row in mapping_rows(scoring.get("component_memos")):
+        add_reasons(output, row)
+
+    aggregation = load_current("deterministic_score_aggregation_run.json")
+    add_reasons(output, aggregation)
+    add_reasons(output, aggregation.get("total_result"))
+    for row in mapping_rows(aggregation.get("component_results")):
+        add_reasons(output, row)
+
+    stagecourt = load_current("stagecourt.json")
+    add_reasons(output, stagecourt)
+
+    for row in epoch_checkpoint.saturation_reviews:
+        add_reasons(output, row)
+    return tuple(output)
 
 
 def _is_downstream_provider_or_output_failure(value: Any) -> bool:

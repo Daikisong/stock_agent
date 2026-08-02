@@ -65,6 +65,10 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
 )
+from e2r.research_brain.researcher_mode.research_epoch import (
+    _research_checkpoint_hash,
+    _research_checkpoint_id,
+)
 from e2r.research_brain.researcher_mode.source_graph_explorer import (
     _finalize_checkpoint,
     source_graph_acquisition_safety_critical_counts,
@@ -102,6 +106,47 @@ def _phase94_source_checkpoint(
             "quarantined_documents": [],
         }
     )
+
+
+def _phase94_research_epoch_payload(
+    *,
+    source_checkpoint_id: str,
+    saturation_reviews=(),
+):
+    payload = {
+        "schema_version": "e2r_research_epoch_checkpoint_v1",
+        "target_id": "CURRENT-TARGET",
+        "as_of_date": AS_OF_DATE,
+        "epoch": 1,
+        "status": "READY_FOR_INDEPENDENT_SATURATION_REVIEW",
+        "resumed_from_checkpoint_id": None,
+        "source_graph_checkpoint_id": source_checkpoint_id,
+        "queries": [],
+        "documents": [],
+        "new_facts": [],
+        "retired_facts": [],
+        "changed_component_memos": [],
+        "unresolved_material_questions": [],
+        "next_actions": [],
+        "supervisor_review": {},
+        "saturation_reviews": list(saturation_reviews),
+        "saturation_certificate": None,
+        "cumulative_query_ids": [],
+        "cumulative_document_ids": [],
+        "cumulative_fact_ids": [],
+        "current_fact_ids": [],
+        "retired_fact_ids": [],
+        "component_memo_hashes": {},
+        "semantic_saturation_certified": False,
+        "gold_critical_fact_miss_count": None,
+        "completion_based_on_fixed_rounds": False,
+        "zero_search_result_treated_as_saturation": False,
+        "transport_budget_treated_as_completion": False,
+        "production_score_authority": False,
+    }
+    payload["checkpoint_id"] = _research_checkpoint_id(payload)
+    payload["checkpoint_hash"] = _research_checkpoint_hash(payload)
+    return payload
 
 
 def _bound_no_progress_payload(
@@ -1621,6 +1666,218 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 _source_checkpoint_needs_downstream_provider_recovery(
                     root=root,
                     checkpoint=invalid,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+    def test_downstream_recovery_reads_current_phase_provider_wait_leaves(
+        self,
+    ) -> None:
+        checkpoint = _finalize_checkpoint({
+            "schema_version": "e2r_v5_source_graph_checkpoint_v1",
+            "target_id": "CURRENT-TARGET",
+            "target_name": "Current Corp",
+            "as_of_date": AS_OF_DATE,
+            "mode": "PRODUCTION_DAILY",
+            "epoch": 335,
+            "status": "STOPPED_ON_RESOLUTION",
+            "generated_queries": [{"execution_status": "SEARCH_EXECUTED"}],
+            "search_candidates": [
+                {
+                    "ranking_status": "PENDING",
+                    "fetch_status": "NOT_STARTED",
+                }
+            ],
+            "evidence_documents": [{"document_id": "DOC-1"}],
+            "production_downstream_document_ids": ["DOC-1"],
+        })
+        source_binding = _source_transport_snapshot(checkpoint)[
+            "checkpoint_binding"
+        ]
+        wait_reason = (
+            "StructuredProviderUnavailable:COLLABORATION_RESPONSE_PENDING:"
+            "COLLABREQ-" + "a" * 64
+        )
+        leaves = {
+            "component_scoring_memo_run.json": {
+                "component_memos": [{"pending_reasons": [wait_reason]}]
+            },
+            "deterministic_score_aggregation_run.json": {
+                "component_results": [{"pending_reasons": [wait_reason]}],
+                "pending_reasons": [],
+            },
+            "stagecourt.json": {"pending_reasons": [wait_reason]},
+            "research_epoch_checkpoint.json": None,
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "fact_extraction_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": AS_OF_DATE,
+                        "status": "FACT_EXTRACTION_COMPLETE",
+                        "document_dispositions": [
+                            {
+                                "document_id": "DOC-1",
+                                "status": "FACTS_EXTRACTED",
+                            }
+                        ],
+                        "audit": {
+                            "critical_count_sum": 0,
+                            "input_document_count": 1,
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "researcher_mode_dossier.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": AS_OF_DATE,
+                        "business_model_result": {
+                            "pending_reasons": ["MATERIAL_FACT_GAP_REMAINS"]
+                        },
+                        "component_results": [],
+                        "red_team_result": None,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "until_pass_progress.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": AS_OF_DATE,
+                        "source_checkpoint_binding": source_binding,
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            for name, body in leaves.items():
+                with self.subTest(name=name):
+                    path = root / name
+                    epoch_path = root / "research_epoch_checkpoint.json"
+                    epoch_path.write_text(
+                        json.dumps(
+                            _phase94_research_epoch_payload(
+                                source_checkpoint_id=checkpoint[
+                                    "checkpoint_id"
+                                ],
+                                saturation_reviews=(
+                                    [{"pending_reasons": [wait_reason]}]
+                                    if name == epoch_path.name
+                                    else []
+                                ),
+                            )
+                        ),
+                        encoding="utf-8",
+                    )
+                    if body is not None:
+                        path.write_text(
+                            json.dumps(
+                                {
+                                    "target_id": "CURRENT-TARGET",
+                                    "as_of_date": AS_OF_DATE,
+                                    **body,
+                                }
+                            ),
+                            encoding="utf-8",
+                        )
+                    self.assertTrue(
+                        _source_checkpoint_needs_downstream_provider_recovery(
+                            root=root,
+                            checkpoint=checkpoint,
+                            target_id="CURRENT-TARGET",
+                            as_of_date=AS_OF_DATE,
+                        )
+                    )
+                    if body is not None:
+                        path.unlink()
+
+            stagecourt_path = root / "stagecourt.json"
+            stagecourt_path.write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": AS_OF_DATE,
+                        "pending_reasons": [wait_reason],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            stale_progress = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": AS_OF_DATE,
+                "source_checkpoint_binding": {
+                    **source_binding,
+                    "checkpoint_id": "SGCHECK-STALE",
+                },
+            }
+            (root / "until_pass_progress.json").write_text(
+                json.dumps(stale_progress),
+                encoding="utf-8",
+            )
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            (root / "until_pass_progress.json").write_text(
+                json.dumps(
+                    {
+                        **stale_progress,
+                        "source_checkpoint_binding": source_binding,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            stale_epoch = _phase94_research_epoch_payload(
+                source_checkpoint_id="SGCHECK-STALE"
+            )
+            (root / "research_epoch_checkpoint.json").write_text(
+                json.dumps(stale_epoch),
+                encoding="utf-8",
+            )
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            (root / "research_epoch_checkpoint.json").write_text(
+                json.dumps(
+                    _phase94_research_epoch_payload(
+                        source_checkpoint_id=checkpoint["checkpoint_id"]
+                    )
+                ),
+                encoding="utf-8",
+            )
+            stagecourt_path.unlink()
+            (root / "component_scoring_memo_run.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": "CURRENT-TARGET",
+                        "as_of_date": AS_OF_DATE,
+                        "component_memos": 1,
+                    }
+                ),
+                encoding="utf-8",
+            )
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=checkpoint,
                     target_id="CURRENT-TARGET",
                     as_of_date=AS_OF_DATE,
                 )
