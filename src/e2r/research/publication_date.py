@@ -9,7 +9,7 @@ from urllib.parse import unquote
 
 
 PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION = (
-    "e2r_publication_date_inference_v3"
+    "e2r_publication_date_inference_v4"
 )
 
 _ENGLISH_MONTHS = {
@@ -266,10 +266,13 @@ def _leading_release_publication_dates(
 
     Some official newsrooms render ``Press Release`` followed by the title,
     subtitle, and a standalone date line, without exposing ``datePublished``
-    metadata.  Treating every standalone body date as publication metadata
-    would be unsafe, so this route is deliberately narrow: the release marker
-    must occur near the document head, the date must be one of the next few
-    non-empty lines, and article/footer boundaries end the search.
+    metadata.  Navigation-heavy investor-relations templates may instead use
+    ``Press Release Details`` and repeat their menu between that marker and the
+    title.  Treating every standalone body date as publication metadata would
+    be unsafe, so this route is deliberately narrow: the release marker must
+    occur near the document head, only the stronger details-page marker gets a
+    modestly wider menu allowance, its date must be followed immediately by a
+    release-download marker, and article/footer boundaries end the search.
     """
 
     lines = tuple(
@@ -278,12 +281,19 @@ def _leading_release_publication_dates(
         if line.strip()
     )
     marker_index: int | None = None
+    details_marker = False
+    marker_window_end_offset = 25
     for index, line in enumerate(lines[:80]):
-        if re.fullmatch(
-            r"(?i)(?:press|news|media)\s+releases?",
+        marker = re.fullmatch(
+            r"(?i)(?:press|news|media)\s+releases?"
+            r"(?P<details>\s+details?)?",
             re.sub(r"\s+", " ", line),
-        ):
+        )
+        if marker is not None:
             marker_index = index
+            if marker.group("details"):
+                details_marker = True
+                marker_window_end_offset = 40
             break
     if marker_index is None:
         return ()
@@ -292,16 +302,33 @@ def _leading_release_publication_dates(
         r"(?i)^(?:"
         r"news\s+summary|summary|highlights?|key\s+points?"
         r"|more\s+news|related\s+news|latest\s+news"
+        r"|related\s+articles?"
+        r"|related\s+(?:press|news|media)\s+releases?"
         r"|media\s+contacts?|about\s+.+"
         r")\s*:?$"
     )
     candidates: list[date] = []
-    for line in lines[marker_index + 1 : marker_index + 25]:
+    for line_index in range(
+        marker_index + 1,
+        min(len(lines), marker_index + marker_window_end_offset),
+    ):
+        line = lines[line_index]
         normalized = re.sub(r"\s+", " ", line)
         if boundary.fullmatch(normalized):
             break
         candidate = _standalone_english_month_date(normalized)
         if candidate is not None:
+            if details_marker and not any(
+                re.match(
+                    r"(?i)^download\s+this\s+"
+                    r"(?:press|news|media)\s+releases?\b",
+                    re.sub(r"\s+", " ", following_line),
+                )
+                for following_line in lines[
+                    line_index + 1 : line_index + 4
+                ]
+            ):
+                break
             candidates.append(candidate)
             break
     return tuple(candidates)

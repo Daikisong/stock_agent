@@ -719,6 +719,82 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             date(2026, 6, 7),
         )
 
+    def test_navigation_heavy_press_release_details_accepts_date(self) -> None:
+        self.assertEqual(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=(
+                    _navigation_heavy_press_release_details_text()
+                ),
+                as_of_date=date(2026, 7, 12),
+            ),
+            date(2025, 10, 31),
+        )
+
+    def test_press_release_details_stops_before_more_news_footer(self) -> None:
+        self.assertIsNone(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=(
+                    "Press Release Details\n"
+                    + "\n".join(
+                        f"Investor navigation item {index}"
+                        for index in range(30)
+                    )
+                    + "\nMore News\n"
+                    "Another Company Announces a Product\n"
+                    "November 14, 2025\n"
+                ),
+                as_of_date=date(2026, 7, 12),
+            )
+        )
+
+    def test_press_release_details_view_all_news_date_needs_download_marker(
+        self,
+    ) -> None:
+        self.assertIsNone(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=(
+                    "Press Release Details\n"
+                    + "\n".join(
+                        f"Investor navigation item {index}"
+                        for index in range(30)
+                    )
+                    + "\nView all news\n"
+                    "Related Company Announces a Product\n"
+                    "July 29, 2026\n"
+                    "Read the related article\n"
+                ),
+                as_of_date=date(2026, 7, 12),
+            )
+        )
+
+    def test_press_release_details_stops_before_related_sections(self) -> None:
+        for related_heading in (
+            "Related Articles",
+            "Related Press Releases",
+        ):
+            with self.subTest(related_heading=related_heading):
+                self.assertIsNone(
+                    infer_publication_date(
+                        explicit=None,
+                        metadata_parts=(),
+                        document_text=(
+                            "Press Release Details\n"
+                            "Current release has no visible date\n"
+                            f"{related_heading}\n"
+                            "Related Company Announces a Product\n"
+                            "July 29, 2026\n"
+                            "Download this Press Release\n"
+                        ),
+                        as_of_date=date(2026, 7, 12),
+                    )
+                )
+
     def test_release_footer_more_news_date_is_not_publication_date(self) -> None:
         self.assertIsNone(
             infer_publication_date(
@@ -6718,7 +6794,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "fetch_status": "FETCH_REJECTED",
             "publication_metadata_fetch_retry_attempted": True,
             "fetch_semantics_policy_version": (
-                "e2r_page_fetch_publication_metadata_v1"
+                "e2r_publication_date_inference_v3"
             ),
         }
         rejected = (
@@ -7887,6 +7963,52 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
+    def test_navigation_heavy_press_release_details_is_fetched_with_date(
+        self,
+    ) -> None:
+        provider = SourceBrainProvider(
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        url = "https://customer.example.com/investor/press-release-details"
+        run = self._run(
+            provider=provider,
+            search=RecordingSearchProvider(
+                {
+                    QUERY: (
+                        _result(
+                            "Current Corp customer collaboration release",
+                            url,
+                            published=None,
+                        ),
+                    )
+                }
+            ),
+            fetcher=PageFetcher(
+                fixture_text_by_url={
+                    url: _navigation_heavy_press_release_details_text()
+                }
+            ),
+        )
+
+        document = next(
+            row
+            for row in run.evidence_documents
+            if row.get("canonical_url") == url
+        )
+        self.assertEqual(document["published_at"], "2025-10-31")
+        self.assertEqual(
+            document["publication_date_source"],
+            "DOCUMENT_CONTENT_INFERENCE",
+        )
+        self.assertEqual(document["publication_metadata_parts"], [])
+        self.assertFalse(
+            any(
+                row.get("rejection_reason")
+                == "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH"
+                for row in run.checkpoint["rejected_documents"]
+            )
+        )
+
     def test_old_http_header_cannot_mask_future_labelled_publication_date(self) -> None:
         provider = SourceBrainProvider()
         url = "https://example.com/future-transcript.pdf"
@@ -8117,6 +8239,28 @@ def _document_text(unique: str) -> str:
         f"Published 2026-06-20\n{TARGET_NAME} disclosed current earnings, capacity, "
         f"cash conversion, customer allocation, and counter evidence. {unique} "
         + "source-backed detail " * 10
+    )
+
+
+def _navigation_heavy_press_release_details_text() -> str:
+    before_marker = "\n".join(
+        f"Header navigation item {index}" for index in range(66)
+    )
+    after_marker = "\n".join(
+        f"Investor navigation item {index}" for index in range(30)
+    )
+    return (
+        "Current Corp Investor Relations\n"
+        + before_marker
+        + "\nPress Release Details\n"
+        + after_marker
+        + "\nView all news\n"
+        "Current Corp and Customer Build AI Factory\n"
+        "October 31, 2025\n"
+        "Download this Press Release\n"
+        "Current Corp and its customer described HBM3E and HBM4 collaboration, "
+        "capacity qualification, cash conversion, and counter evidence. "
+        + "source-backed release detail " * 12
     )
 
 
