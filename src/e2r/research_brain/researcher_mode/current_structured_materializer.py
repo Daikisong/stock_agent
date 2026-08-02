@@ -928,7 +928,9 @@ class CurrentStructuredSourceMaterializer:
                         )
                     )
                 )
-        reports = tuple(parsed_report_rows)
+        reports, duplicate_report_count = _dedupe_companyguide_reports(
+            parsed_report_rows
+        )
         if reports:
             snapshots.extend(
                 _report_consensus_snapshots(
@@ -971,6 +973,7 @@ class CurrentStructuredSourceMaterializer:
                 "fetched_page_count": fetched_page_count,
                 "selected_candidate_count": selected_candidate_count,
                 "eligible_report_count": len(reports),
+                "duplicate_report_count": duplicate_report_count,
                 "handoff_candidate_count": len(report_candidates),
                 "provider_total_pages": provider_total_pages,
                 "stop_reason": stop_reason,
@@ -3278,6 +3281,45 @@ def _enrich_report(row: ResearchReport) -> ResearchReport:
         parsed["est_per_formula"] = "report_close_price / report_fy1_eps"
         parsed["est_per_derived_from_structured_report_fields"] = True
     return replace(row, est_per=est_per, parsed_fields=parsed)
+
+
+def _dedupe_companyguide_reports(
+    reports: Sequence[ResearchReport],
+) -> tuple[tuple[ResearchReport, ...], int]:
+    """Collapse provider page overlap before structured ids are compiled.
+
+    CompanyGuide's archive may advance pages by fewer rows than ``perPage``;
+    the same provider report can therefore appear at both page boundaries.
+    The provider report id/file name is transport identity, so keeping its
+    first occurrence preserves one source lineage without merging unrelated
+    reports or hiding the overlap from the pagination audit.
+    """
+
+    deduped: dict[tuple[str, ...], ResearchReport] = {}
+    duplicate_count = 0
+    for report in reports:
+        parsed = dict(report.parsed_fields)
+        report_id = str(parsed.get("report_id") or "").strip()
+        file_name = str(parsed.get("file_name") or "").strip()
+        provider_index = str(parsed.get("idx") or "").strip()
+        if report_id:
+            identity = ("REPORT_ID", report_id)
+        elif file_name:
+            identity = ("FILE_NAME", file_name.casefold())
+        elif provider_index:
+            identity = ("PROVIDER_INDEX", provider_index)
+        else:
+            identity = (
+                "SEMANTIC_FALLBACK",
+                report.broker.casefold(),
+                report.publish_date.isoformat(),
+                report.title.casefold(),
+            )
+        if identity in deduped:
+            duplicate_count += 1
+            continue
+        deduped[identity] = report
+    return tuple(deduped.values()), duplicate_count
 
 
 def _companyguide_report_source_candidate(

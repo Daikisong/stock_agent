@@ -738,6 +738,70 @@ class E2RV5PromptProjectionTests(unittest.TestCase):
             ]
         )
 
+    def test_supervisor_independence_profiles_follow_current_memo_fact_roster(
+        self,
+    ) -> None:
+        facts = tuple(
+            {
+                "fact_id": f"FACT-{index}",
+                "business_segment": "MEMORY",
+                "product_family": "HBM",
+                "subject": f"relationship {index}",
+                "economic_mechanism": "named relationship",
+                "predicate": "corroborated",
+                "direction": "POSITIVE",
+                "current_lifecycle": "CURRENT",
+                "confidence": 0.8,
+                "source_ids": (f"DOC-{index}",),
+                "claim_ids": (f"CLAIM-{index}",),
+                "quote_ids": (f"QUOTE-{index}",),
+                "source_independence_group": (
+                    "CUSTOMER_OFFICIAL:customer.example"
+                ),
+                "corroborating_independence_groups": (),
+                "structured_evidence_roles": (),
+                "allowed_component_ids": ("information_confidence",),
+            }
+            for index in range(100)
+        )
+
+        projection = project_supervisor_evidence_facts(
+            facts,
+            independent_corroboration_fact_ids=("FACT-3", "FACT-7"),
+        )
+        review = projection["independent_corroboration_review"]
+
+        self.assertEqual(
+            review["all_current_information_confidence_fact_count"], 100
+        )
+        self.assertEqual(review["current_information_confidence_fact_count"], 2)
+        self.assertEqual(
+            review["review_scope"],
+            "CURRENT_INFORMATION_CONFIDENCE_MEMO_FACTS",
+        )
+        profiles = review["relationship_profiles"]
+        self.assertEqual(len(profiles["rows"]), 2)
+        self.assertEqual(
+            review["relationship_profile_encoding"],
+            "LOSSLESS_COLUMNAR_ALL_ROWS",
+        )
+        self.assertTrue(review["every_relationship_profile_projected"])
+        self.assertFalse(review["review_scope_uses_fixed_top_n"])
+        self.assertTrue(
+            review[
+                "facts_outside_current_memo_remain_accounted_in_semantic_groups"
+            ]
+        )
+        self.assertEqual(
+            projection["semantic_group_encoding"],
+            "LOSSLESS_COLUMNAR_ALL_ROWS",
+        )
+        self.assertTrue(projection["every_semantic_group_projected"])
+        self.assertEqual(
+            len(projection["semantic_groups"]["rows"]),
+            projection["semantic_group_count"],
+        )
+
     def test_supervisor_failure_groups_ignore_literal_transport_detail(self):
         failures = (
             {

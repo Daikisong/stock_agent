@@ -1321,6 +1321,20 @@ def _build_supervisor_prompt_material(
             else None
         )
     )
+    information_confidence_memo_fact_ids = tuple(
+        dict.fromkeys(
+            fact_id
+            for result in component_results
+            if result.component_id == "information_confidence"
+            and result.memo is not None
+            for fact_id in (
+                *result.memo.positive_fact_ids,
+                *result.memo.counter_fact_ids,
+                *result.memo.resolution_fact_ids,
+                *result.memo.context_fact_ids,
+            )
+        )
+    )
     payload = scrub_blind_research_payload(
         {
             "reviewer_role": reviewer_role,
@@ -1336,7 +1350,10 @@ def _build_supervisor_prompt_material(
             },
             "structured_result": project_structured_result(structured_result),
             "current_evidence_fact_graph": project_supervisor_evidence_facts(
-                facts
+                facts,
+                independent_corroboration_fact_ids=(
+                    information_confidence_memo_fact_ids
+                ),
             ),
             "source_graph_checkpoint": _supervisor_source_graph_payload(
                 source_graph_checkpoint

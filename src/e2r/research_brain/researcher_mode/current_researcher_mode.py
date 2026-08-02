@@ -2848,39 +2848,36 @@ def _score_gap_context_for_supervisor(
     # through the LLM-owned Source Graph query path.  Numeric preview fields
     # remain explicitly non-evidence until the full report is independently
     # discovered, fetched, parsed, and linked to an EvidenceFact.
-    context["structured_report_source_candidates"] = [
-        {
-            key: value
-            for key, value in dict(row).items()
-            if key
-            in {
-                "candidate_id",
-                "provider_name",
-                "source_family_hint",
-                "research_route",
-                "discovery_origin",
-                "published_at",
-                "available_at",
-                "broker",
-                "title",
-                "provider_report_id",
-                "provider_index",
-                "provider_file_name",
-                "provider_page",
-                "metadata_source_ids",
-                "provider_summary",
-                "structured_fields",
-                "url_resolution_required",
-                "full_document_owner",
-                "evidence_eligible",
-                "snippet_only",
-                "deterministic_url_synthesis",
-                "deterministic_query_synthesis",
-                "production_score_authority",
-            }
-        }
-        for row in structured_report_candidates
-    ]
+    report_candidate_fields = (
+        "published_at",
+        "broker",
+        "title",
+        "provider_report_id",
+        "provider_file_name",
+    )
+    context["structured_report_source_candidates"] = {
+        "schema_version": (
+            "e2r_v5_structured_report_candidate_prompt_projection_v1"
+        ),
+        "fields": list(report_candidate_fields),
+        "rows": [
+            [dict(row).get(field) for field in report_candidate_fields]
+            for row in structured_report_candidates
+        ],
+        "candidate_count": len(structured_report_candidates),
+        "candidate_roster_hash": stable_hash(
+            [
+                [dict(row).get(field) for field in report_candidate_fields]
+                for row in structured_report_candidates
+            ]
+        ),
+        "every_candidate_projected": True,
+        "fixed_top_n_used": False,
+        "metadata_only_not_evidence": True,
+        "provider_name": "CompanyGuide",
+        "source_family_hint": "PUBLIC_BROKER_PDF",
+        "research_route": "PUBLIC_BROKER_REPORT",
+    }
     context["structured_report_source_candidate_contract"] = {
         "bounded_candidate_count": len(structured_report_candidates),
         "candidate_roster_complete_within_materializer_budget": True,

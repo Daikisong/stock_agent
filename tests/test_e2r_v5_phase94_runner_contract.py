@@ -4969,12 +4969,18 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         report_candidates = context[
             "structured_report_source_candidates"
         ]
-        self.assertEqual(len(report_candidates), 1)
+        self.assertEqual(report_candidates["candidate_count"], 1)
+        self.assertEqual(len(report_candidates["rows"]), 1)
+        projected = dict(
+            zip(report_candidates["fields"], report_candidates["rows"][0])
+        )
         self.assertEqual(
-            report_candidates[0]["source_family_hint"],
+            report_candidates["source_family_hint"],
             "PUBLIC_BROKER_PDF",
         )
-        self.assertNotIn("canonical_url", report_candidates[0])
+        self.assertNotIn("canonical_url", report_candidates["fields"])
+        self.assertTrue(report_candidates["every_candidate_projected"])
+        self.assertFalse(report_candidates["fixed_top_n_used"])
         contract = context[
             "structured_report_source_candidate_contract"
         ]

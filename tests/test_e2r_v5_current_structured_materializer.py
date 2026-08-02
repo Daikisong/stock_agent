@@ -126,6 +126,38 @@ class PaginatedReportStructuredTransport(FixtureStructuredTransport):
         )
 
 
+class OverlappingPaginatedReportStructuredTransport(
+    PaginatedReportStructuredTransport
+):
+    def get_json(self, *, url, params, headers, timeout_seconds):
+        if "c1080001_data" not in url:
+            return super().get_json(
+                url=url,
+                params=params,
+                headers=headers,
+                timeout_seconds=timeout_seconds,
+            )
+        del headers, timeout_seconds
+        self.calls.append(("json", url, dict(params)))
+        page = int(params["curPage"])
+        row = _companyguide_reports_payload()["lists"][0]
+        payload = {
+            "cp": page,
+            "tc": 2,
+            "tp": 2,
+            "tr": 1,
+            "lists": [row],
+        }
+        raw = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()
+        return StructuredHTTPResponse(
+            status_code=200,
+            canonical_url=url,
+            provider_request_id=f"FIXTURE-OVERLAP-PAGE-{page}",
+            content_hash=hashlib.sha256(raw).hexdigest(),
+            payload=payload,
+        )
+
+
 class FixturePeerProvider:
     provider_name = "FIXTURE_PEER_PROVIDER"
 
@@ -744,6 +776,49 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
                     ]
                 ),
                 2,
+            )
+
+    def test_companyguide_report_page_overlap_is_deduped_before_engine_compile(
+        self,
+    ):
+        transport = OverlappingPaginatedReportStructuredTransport()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                companyguide_report_rows=1,
+                companyguide_report_max_pages=2,
+                companyguide_report_max_candidates=2,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+            )
+
+            audit = result.audit["companyguide_report_history"]
+            self.assertEqual(audit["selected_candidate_count"], 2)
+            self.assertEqual(audit["eligible_report_count"], 1)
+            self.assertEqual(audit["duplicate_report_count"], 1)
+            self.assertEqual(len(result.report_candidates), 1)
+            report_record_ids = [
+                row.record_id
+                for row in result.engine_result.records
+                if row.record_kind == "STRUCTURED_BROKER_REPORT_DIRECTION"
+            ]
+            self.assertEqual(
+                len(report_record_ids), len(set(report_record_ids))
             )
 
     def test_future_companyguide_snapshot_never_becomes_record(self):

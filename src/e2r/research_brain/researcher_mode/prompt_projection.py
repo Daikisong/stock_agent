@@ -1018,6 +1018,8 @@ def project_fact_extraction_evidence_context(
 
 def project_supervisor_evidence_facts(
     rows: Sequence[Mapping[str, Any]],
+    *,
+    independent_corroboration_fact_ids: Sequence[str] | None = None,
 ) -> Mapping[str, Any]:
     """Account for the complete fact graph without replaying every narrative.
 
@@ -1043,7 +1045,58 @@ def project_supervisor_evidence_facts(
             numeric_fields=("confidence",),
         )
     )
-    current_information_confidence_rows = tuple(
+    semantic_group_fields = (
+        *_SUPERVISOR_FACT_GROUP_FIELDS,
+        "record_count",
+        "record_roster_hash",
+        "confidence_distribution",
+        "structured_evidence_role_coverage",
+        "allowed_component_coverage",
+    )
+    verbose_semantic_groups = tuple(projection.get("semantic_groups") or ())
+    projection["semantic_groups"] = {
+        "fields": list(semantic_group_fields),
+        "confidence_distribution_fields": [
+            "count",
+            "minimum",
+            "median",
+            "maximum",
+        ],
+        "rows": [
+            [
+                *(
+                    row.get("state", {}).get(field)
+                    for field in _SUPERVISOR_FACT_GROUP_FIELDS
+                ),
+                row.get("record_count"),
+                row.get("record_roster_hash"),
+                [
+                    (row.get("numeric_distributions", {})
+                     .get("confidence", {})
+                     .get(field))
+                    for field in (
+                        "count",
+                        "minimum",
+                        "median",
+                        "maximum",
+                    )
+                ],
+                (row.get("relation_coverage", {}) or {}).get(
+                    "structured_evidence_roles", {}
+                ),
+                (row.get("relation_coverage", {}) or {}).get(
+                    "allowed_component_ids", {}
+                ),
+            ]
+            for row in verbose_semantic_groups
+        ],
+    }
+    projection["semantic_group_encoding"] = "LOSSLESS_COLUMNAR_ALL_ROWS"
+    projection["every_semantic_group_projected"] = (
+        len(projection["semantic_groups"]["rows"])
+        == int(projection.get("semantic_group_count") or 0)
+    )
+    all_current_information_confidence_rows = tuple(
         row
         for row in payloads
         if str(row.get("current_lifecycle") or "") in {"CURRENT", "OPEN"}
@@ -1052,6 +1105,22 @@ def project_supervisor_evidence_facts(
             str(value)
             for value in row.get("allowed_component_ids") or ()
         }
+    )
+    independent_corroboration_scope = (
+        None
+        if independent_corroboration_fact_ids is None
+        else frozenset(
+            str(value)
+            for value in independent_corroboration_fact_ids
+            if str(value)
+        )
+    )
+    current_information_confidence_rows = tuple(
+        row
+        for row in all_current_information_confidence_rows
+        if independent_corroboration_scope is None
+        or str(row.get("fact_id") or "")
+        in independent_corroboration_scope
     )
     primary_independence_family_rows = tuple(
         {
@@ -1130,6 +1199,38 @@ def project_supervisor_evidence_facts(
                 "independent_corroboration_present": bool(independent_groups),
             }
         )
+    if independent_corroboration_scope is None:
+        projected_relationship_profiles: Any = relationship_profiles
+        relationship_profile_encoding = "VERBOSE_OBJECT_ROWS"
+    else:
+        relationship_profile_fields = (
+            *relationship_fields,
+            "fact_count",
+            "fact_roster_hash",
+            "primary_source_family_coverage",
+            "independent_corroborating_source_family_coverage",
+            "independent_corroboration_present",
+        )
+        projected_relationship_profiles = {
+            "fields": list(relationship_profile_fields),
+            "rows": [
+                [
+                    *(
+                        row["relationship"].get(field)
+                        for field in relationship_fields
+                    ),
+                    row["fact_count"],
+                    row["fact_roster_hash"],
+                    row["primary_source_family_coverage"],
+                    row[
+                        "independent_corroborating_source_family_coverage"
+                    ],
+                    row["independent_corroboration_present"],
+                ]
+                for row in relationship_profiles
+            ],
+        }
+        relationship_profile_encoding = "LOSSLESS_COLUMNAR_ALL_ROWS"
     projection.update(
         {
             "schema_version": "e2r_v5_supervisor_fact_prompt_projection_v4",
@@ -1175,6 +1276,19 @@ def project_supervisor_evidence_facts(
                 "current_information_confidence_fact_count": len(
                     current_information_confidence_rows
                 ),
+                "all_current_information_confidence_fact_count": len(
+                    all_current_information_confidence_rows
+                ),
+                "review_scope": (
+                    "ALL_CURRENT_INFORMATION_CONFIDENCE_FACTS"
+                    if independent_corroboration_scope is None
+                    else "CURRENT_INFORMATION_CONFIDENCE_MEMO_FACTS"
+                ),
+                "review_scope_fact_id_roster_hash": _stable_hash(
+                    sorted(independent_corroboration_scope or ())
+                ),
+                "review_scope_uses_fixed_top_n": False,
+                "facts_outside_current_memo_remain_accounted_in_semantic_groups": True,
                 "primary_source_family_coverage": _relation_coverage(
                     primary_independence_family_rows,
                     "source_family",
@@ -1191,7 +1305,11 @@ def project_supervisor_evidence_facts(
                     not bool(_independent_corroborating_groups(row))
                     for row in current_information_confidence_rows
                 ),
-                "relationship_profiles": relationship_profiles,
+                "relationship_profiles": projected_relationship_profiles,
+                "relationship_profile_encoding": (
+                    relationship_profile_encoding
+                ),
+                "every_relationship_profile_projected": True,
                 "every_information_confidence_fact_accounted_by_hash_and_group_count": (
                     sum(row["fact_count"] for row in relationship_profiles)
                     == len(current_information_confidence_rows)
