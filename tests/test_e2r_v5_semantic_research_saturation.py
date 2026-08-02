@@ -2059,6 +2059,25 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
             fact_projection["every_record_accounted_by_hash_and_group_count"]
         )
         self.assertFalse(fact_projection["fixed_top_n_used"])
+        corroboration_review = fact_projection[
+            "independent_corroboration_review"
+        ]
+        self.assertEqual(
+            corroboration_review["review_scope"],
+            "CURRENT_INFORMATION_CONFIDENCE_MEMO_FACTS",
+        )
+        self.assertEqual(
+            corroboration_review["review_scope_requested_fact_count"],
+            1,
+        )
+        self.assertTrue(
+            corroboration_review[
+                "facts_outside_current_memo_remain_accounted_in_semantic_groups"
+            ]
+        )
+        self.assertFalse(
+            corroboration_review["review_scope_uses_fixed_top_n"]
+        )
         supervisor_projection = payloads[0]["supervisor_review"]
         self.assertEqual(
             supervisor_projection["failure_assessment_projection"][

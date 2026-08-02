@@ -979,6 +979,9 @@ def _semantic_saturation_prompt_payload(
         row.to_dict() if isinstance(row, EvidenceFact) else dict(row)
         for row in evidence_facts
     )
+    information_confidence_memo_fact_ids = (
+        _information_confidence_memo_fact_ids(component_payloads)
+    )
     return scrub_blind_research_payload(
         {
             "reviewer_role": reviewer_role,
@@ -989,7 +992,10 @@ def _semantic_saturation_prompt_payload(
                 supervisor_review
             ),
             "current_evidence_fact_graph": project_supervisor_evidence_facts(
-                fact_payloads
+                fact_payloads,
+                independent_corroboration_fact_ids=(
+                    information_confidence_memo_fact_ids
+                ),
             ),
             # Independent reviewers keep the full current memo, red-team, and
             # structured semantics; only repeated lineage ledgers are grouped.
@@ -1000,6 +1006,47 @@ def _semantic_saturation_prompt_payload(
                 source_graph_checkpoint
             ),
         }
+    )
+
+
+def _information_confidence_memo_fact_ids(
+    component_payloads: Sequence[Mapping[str, Any]],
+) -> tuple[str, ...] | None:
+    """Scope detailed corroboration review to the current memo's fact roster.
+
+    Every fact remains loss-accounted in the surrounding semantic-group
+    projection.  Only the repeated relationship profiles are limited to facts
+    the current information-confidence memo actually uses, matching the
+    Supervisor prompt contract and avoiding a second expansion of the whole
+    fact graph for each independent reviewer.
+    """
+
+    result = next(
+        (
+            row
+            for row in component_payloads
+            if str(row.get("component_id") or "")
+            == "information_confidence"
+        ),
+        None,
+    )
+    if result is None or str(result.get("status") or "") != "COMPLETE":
+        return None
+    memo = result.get("memo")
+    if not isinstance(memo, Mapping) or not bool(memo.get("research_complete")):
+        return None
+    return tuple(
+        dict.fromkeys(
+            str(value)
+            for field in (
+                "positive_fact_ids",
+                "counter_fact_ids",
+                "resolution_fact_ids",
+                "context_fact_ids",
+            )
+            for value in memo.get(field) or ()
+            if str(value)
+        )
     )
 
 
