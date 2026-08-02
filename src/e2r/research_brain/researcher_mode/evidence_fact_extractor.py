@@ -677,14 +677,14 @@ class ResearcherEvidenceFactExtractor:
         ]
         if any(row.status != "COMPLETE" for row in all_checkpoint_calls):
             raise ValueError("only completed fact provider calls may be resumed")
-        coverage_complete_document_ids = {
+        raw_coverage_complete_document_ids = {
             document_id
             for call in all_checkpoint_calls
             if call.coverage_audit_performed
             and call.extraction_semantics_version
             == FACT_EXTRACTION_SEMANTICS_VERSION
             for document_id in call.document_ids
-        } - set(carried_coverage_refresh_document_ids)
+        }
         previously_coverage_audited_document_ids = {
             document_id
             for call in all_checkpoint_calls
@@ -715,20 +715,59 @@ class ResearcherEvidenceFactExtractor:
                     stale_semantics_document_ids
                 ),
                 coverage_complete_document_ids=(
-                    coverage_complete_document_ids
+                    raw_coverage_complete_document_ids
+                    - set(carried_coverage_refresh_document_ids)
                 ),
                 previously_coverage_audited_document_ids=(
                     previously_coverage_audited_document_ids
                 ),
-                open_objective_ids=frozenset(objective_ids),
+                coverage_gap_objective_ids=(
+                    coverage_gap_objective_ids
+                ),
             )
             if extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
             else frozenset()
         )
+        regular_live_gap_document_ids = {
+            str(document["document_id"])
+            for document in prepared
+            if bool(
+                set(document.get("objective_ids") or ())
+                & coverage_gap_objective_ids
+            )
+        }
+        live_gap_lineage_document_ids = {
+            str(document["document_id"])
+            for document in prepared
+            if bool(
+                {
+                    str(value).strip()
+                    for key in (
+                        "objective_ids",
+                        "historical_objective_ids",
+                    )
+                    for value in document.get(key) or ()
+                    if str(value).strip()
+                }
+                & coverage_gap_objective_ids
+            )
+        }
+        active_carried_coverage_refresh_document_ids = frozenset(
+            carried_coverage_refresh_document_ids
+            if extraction_mode != "PRODUCTION_OBJECTIVE_LOCAL"
+            else (
+                set(carried_coverage_refresh_document_ids)
+                & live_gap_lineage_document_ids
+            )
+        )
+        coverage_complete_document_ids = (
+            raw_coverage_complete_document_ids
+            - active_carried_coverage_refresh_document_ids
+        )
         cross_objective_coverage_refresh_document_ids = frozenset(
             set(bounded_stale_coverage_refresh_document_ids)
             | (
-                set(carried_coverage_refresh_document_ids)
+                set(active_carried_coverage_refresh_document_ids)
                 & stale_semantics_document_ids
             )
         )
@@ -749,7 +788,7 @@ class ResearcherEvidenceFactExtractor:
             )
         }
         coverage_refresh_document_ids.update(
-            carried_coverage_refresh_document_ids
+            active_carried_coverage_refresh_document_ids
         )
         new_unprocessed_document_ids = {
             str(document["document_id"])
@@ -776,7 +815,10 @@ class ResearcherEvidenceFactExtractor:
         coverage_refresh_objective_scope_by_document = (
             {
                 document_id: (
-                    frozenset(objective_ids)
+                    frozenset(
+                        set(objective_scope_by_document[document_id])
+                        | set(coverage_gap_objective_ids)
+                    )
                     if document_id
                     in cross_objective_coverage_refresh_document_ids
                     else objective_scope_by_document[document_id]
@@ -3785,27 +3827,38 @@ def _bounded_stale_coverage_refresh_document_ids(
     stale_semantics_document_ids: set[str] | frozenset[str],
     coverage_complete_document_ids: set[str] | frozenset[str],
     previously_coverage_audited_document_ids: set[str] | frozenset[str],
-    open_objective_ids: frozenset[str],
+    coverage_gap_objective_ids: frozenset[str],
 ) -> frozenset[str]:
-    """Select stale trusted documents for exactly one semantic coverage audit.
+    """Select stale trusted documents only for a live lineage-scoped gap.
 
-    Replaying every legacy document would be unbounded and would confuse an old
-    checkpoint with a live evidence gap.  A document is therefore eligible only
-    when it is a full validated production input, already produced at least one
-    accepted material fact, has trusted independent or official provenance, and
-    has never received a coverage audit.  The audit may present every current
-    open objective as a bounded candidate roster; the provider still owns
-    economic relevance, while deterministic validation checks literal source
-    support and objective/mechanism component compatibility.
+    A semantics-version change is not itself a material research gap. Replaying
+    every legacy document merely because the extractor version changed is an
+    unbounded migration, not production research. A stale document is eligible
+    only when a current Supervisor/score gap names an objective already present
+    in its current or historical lineage. The provider still owns economic
+    relevance, while deterministic validation checks literal source support and
+    objective/mechanism component compatibility.
     """
 
+    if not coverage_gap_objective_ids:
+        return frozenset()
     selected: set[str] = set()
     for document in documents:
         document_id = str(document.get("document_id") or "")
+        document_objective_lineage = {
+            str(value).strip()
+            for key in ("objective_ids", "historical_objective_ids")
+            for value in document.get(key) or ()
+            if str(value).strip()
+        }
         if (
             document_id not in stale_semantics_document_ids
             or document_id in coverage_complete_document_ids
             or document_id in previously_coverage_audited_document_ids
+            or not (
+                document_objective_lineage
+                & coverage_gap_objective_ids
+            )
             or _source_tier(str(document.get("source_family") or ""))
             not in _TRUSTED_COVERAGE_REFRESH_SOURCE_TIERS
         ):
@@ -3816,8 +3869,7 @@ def _bounded_stale_coverage_refresh_document_ids(
             or int(disposition.get("accepted_fact_count") or 0) <= 0
         ):
             continue
-        if open_objective_ids:
-            selected.add(document_id)
+        selected.add(document_id)
     return frozenset(selected)
 
 

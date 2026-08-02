@@ -3562,6 +3562,19 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             legacy.pop("extraction_semantics_version", None)
             legacy["coverage_audit_performed"] = True
             legacy_coverage_calls.append(legacy)
+        extractor_kwargs["score_gap_context"] = {
+            "prior_supervisor_gap": {
+                "component_findings": [
+                    {
+                        "component_id": "capital_allocation",
+                        "memo_sufficient": False,
+                        "missing_fact_needs": [
+                            "source-backed capital allocation fact"
+                        ],
+                    }
+                ]
+            }
+        }
         semantics_refresh_provider = NoNewFactCoverageChunkProvider(
             fail_chunk_index=1
         )
@@ -3900,7 +3913,7 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             [],
         )
 
-    def test_zero_gap_stale_trusted_documents_reassess_all_open_lineage(
+    def test_zero_gap_stale_trusted_documents_are_not_replayed_for_version_only(
         self,
     ) -> None:
         disclaimer = (
@@ -4008,68 +4021,31 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         )
 
         self.assertEqual(resumed.status, "FACT_EXTRACTION_COMPLETE")
-        self.assertEqual(len(resumed_provider.calls), 1)
-        payload = resumed_provider.calls[0]["payload"]
-        self.assertEqual(
-            [row["document_id"] for row in payload["full_documents"]],
-            [
-                "DOC-STALE-OFFICIAL-LINEAGE",
-                "DOC-STALE-UNOFFICIAL-LINEAGE",
-            ],
+        self.assertEqual(resumed_provider.calls, [])
+        self.assertFalse(
+            any(
+                row["exact_quote"] == disclaimer
+                for row in resumed.material_claims
+            )
         )
-        self.assertIn("fact_extraction_coverage_audit_context", payload)
-        scope = payload["fact_extraction_scope_contract"]
-        self.assertEqual(
-            scope["document_objective_ids"],
-            [
-                {
-                    "document_id": "DOC-STALE-OFFICIAL-LINEAGE",
-                    "objective_ids": [
-                        "OBJECTIVE-CAPITAL",
-                        "OBJECTIVE-INFORMATION",
-                    ],
-                },
-                {
-                    "document_id": "DOC-STALE-UNOFFICIAL-LINEAGE",
-                    "objective_ids": [
-                        "OBJECTIVE-CAPITAL",
-                        "OBJECTIVE-INFORMATION",
-                    ],
-                },
-            ],
-        )
-        self.assertTrue(
-            scope["objective_lineage_reassessment"]["enabled"]
-        )
-        recovered = [
-            row
-            for row in resumed.material_claims
-            if row["exact_quote"] == disclaimer
-        ]
-        self.assertEqual(len(recovered), 1)
-        self.assertEqual(
-            recovered[0]["objective_ids"],
-            ["OBJECTIVE-INFORMATION"],
-        )
-        self.assertEqual(recovered[0]["objective_relation"], "COUNTER")
         self.assertEqual(resumed.audit["coverage_gap_objective_count"], 0)
         self.assertEqual(
             resumed.audit[
                 "bounded_stale_coverage_refresh_document_count"
             ],
-            2,
+            0,
         )
         self.assertEqual(
             resumed.audit[
                 "coverage_refresh_objective_lineage_reassessment_document_count"
             ],
-            2,
+            0,
         )
         self.assertEqual(
             resumed.audit["coverage_audit_required_document_count"],
-            2,
+            0,
         )
-        self.assertEqual(resumed.audit["coverage_audit_call_count"], 1)
+        self.assertEqual(resumed.audit["coverage_audit_call_count"], 0)
         self.assertEqual(
             resumed.audit["critical_counts"][
                 "production_document_without_coverage_audit_count"
@@ -4088,6 +4064,7 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             )
         )
         document["objective_ids"] = ["OBJECTIVE-CAPITAL"]
+        document["historical_objective_ids"] = ["OBJECTIVE-MARKET"]
         text = (
             f"{document['content_text']} "
             f"{CrossObjectiveAtomicLegCoverageProvider.omitted_quote}"
@@ -4147,6 +4124,19 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             prior_document_dispositions=legacy_dispositions,
             prior_provider_calls=legacy_calls,
             prior_rejections=initial.rejections,
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "component_findings": [
+                        {
+                            "component_id": "market_mispricing",
+                            "memo_sufficient": False,
+                            "missing_fact_needs": [
+                                "source-backed market response"
+                            ],
+                        }
+                    ]
+                }
+            },
             extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
         )
 
@@ -4274,6 +4264,7 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             )
         )
         document["objective_ids"] = ["OBJECTIVE-CAPITAL"]
+        document["historical_objective_ids"] = ["OBJECTIVE-MARKET"]
         text = (
             f"{document['content_text']} "
             f"{CrossObjectiveAtomicLegCoverageProvider.omitted_quote}"
@@ -4335,6 +4326,19 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             prior_document_dispositions=legacy_dispositions,
             prior_provider_calls=legacy_calls,
             prior_rejections=initial.rejections,
+            score_gap_context={
+                "prior_supervisor_gap": {
+                    "component_findings": [
+                        {
+                            "component_id": "market_mispricing",
+                            "memo_sufficient": False,
+                            "missing_fact_needs": [
+                                "source-backed market response"
+                            ],
+                        }
+                    ]
+                }
+            },
             extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
         )
 
