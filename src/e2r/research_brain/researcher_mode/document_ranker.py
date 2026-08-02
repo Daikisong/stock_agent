@@ -117,6 +117,72 @@ class CandidateRankingResult:
         }
 
 
+def project_candidate_ranking_discovery_candidates(
+    candidates: Sequence[Mapping[str, Any]],
+) -> list[Mapping[str, Any]]:
+    """Return the exact candidate rows exposed to the semantic ranker.
+
+    Persisted candidates also contain append-only transport and audit fields.
+    Those fields must not redefine the identity of an asynchronous ranking
+    request when they are not present in the LLM prompt.
+    """
+
+    return [
+        {
+            "candidate_id": row["candidate_id"],
+            "title": row.get("title"),
+            "url": row.get("url"),
+            "snippet": row.get("snippet"),
+            "source": row.get("source"),
+            "published_at": row.get("published_at"),
+            "is_pdf": bool(row.get("is_pdf")),
+            "is_news": bool(row.get("is_news")),
+            "is_disclosure": bool(row.get("is_disclosure")),
+            "query_ids": list(
+                row.get("materiality_query_ids")
+                or row.get("query_ids")
+                or ()
+            ),
+            "objective_ids": list(row.get("objective_ids") or ()),
+            "requested_source_families": list(
+                row.get("requested_source_families") or ()
+            ),
+            "verified_official_domain_candidate": bool(
+                row.get("verified_official_domain_candidate")
+            ),
+            "candidate_source_family_hint": row.get(
+                "candidate_source_family_hint"
+            ),
+            "graph_expansion_parent_document_ids": list(
+                row.get("graph_expansion_parent_document_ids") or ()
+            ),
+            "graph_expansion_parent_candidate_ids": list(
+                row.get("graph_expansion_parent_candidate_ids") or ()
+            ),
+            "reference_transport_context": {
+                "parent_authority_verified": bool(
+                    row.get("reference_expansion_parent_authority_verified")
+                ),
+                "current_scope_inherited": bool(
+                    row.get("reference_current_scope_inherited")
+                ),
+                "metadata_sparse": bool(row.get("reference_metadata_sparse")),
+                "bounded_full_fetch_revalidation": bool(
+                    row.get(
+                        "sparse_reference_full_fetch_revalidation_pending"
+                    )
+                ),
+                "full_fetch_document_id": row.get("revalidation_document_id"),
+                "full_fetch_content_text": row.get(
+                    "full_fetch_revalidation_content_text"
+                ),
+            },
+            "snippet_discovery_only": True,
+        }
+        for row in candidates
+    ]
+
+
 class ResearcherDocumentRanker:
     """LLM semantic ranker that accounts for every discovery candidate."""
 
@@ -151,66 +217,9 @@ class ResearcherDocumentRanker:
                 "target_name": target_name,
                 "as_of_date": as_of_date,
                 "open_research_objectives": list(open_objectives),
-                "discovery_candidates": [
-                    {
-                        "candidate_id": row["candidate_id"],
-                        "title": row.get("title"),
-                        "url": row.get("url"),
-                        "snippet": row.get("snippet"),
-                        "source": row.get("source"),
-                        "published_at": row.get("published_at"),
-                        "is_pdf": bool(row.get("is_pdf")),
-                        "is_news": bool(row.get("is_news")),
-                        "is_disclosure": bool(row.get("is_disclosure")),
-                        "query_ids": list(
-                            row.get("materiality_query_ids")
-                            or row.get("query_ids")
-                            or ()
-                        ),
-                        "objective_ids": list(row.get("objective_ids") or ()),
-                        "requested_source_families": list(
-                            row.get("requested_source_families") or ()
-                        ),
-                        "verified_official_domain_candidate": bool(
-                            row.get("verified_official_domain_candidate")
-                        ),
-                        "candidate_source_family_hint": row.get(
-                            "candidate_source_family_hint"
-                        ),
-                        "graph_expansion_parent_document_ids": list(
-                            row.get("graph_expansion_parent_document_ids") or ()
-                        ),
-                        "graph_expansion_parent_candidate_ids": list(
-                            row.get("graph_expansion_parent_candidate_ids") or ()
-                        ),
-                        "reference_transport_context": {
-                            "parent_authority_verified": bool(
-                                row.get(
-                                    "reference_expansion_parent_authority_verified"
-                                )
-                            ),
-                            "current_scope_inherited": bool(
-                                row.get("reference_current_scope_inherited")
-                            ),
-                            "metadata_sparse": bool(
-                                row.get("reference_metadata_sparse")
-                            ),
-                            "bounded_full_fetch_revalidation": bool(
-                                row.get(
-                                    "sparse_reference_full_fetch_revalidation_pending"
-                                )
-                            ),
-                            "full_fetch_document_id": row.get(
-                                "revalidation_document_id"
-                            ),
-                            "full_fetch_content_text": row.get(
-                                "full_fetch_revalidation_content_text"
-                            ),
-                        },
-                        "snippet_discovery_only": True,
-                    }
-                    for row in candidates
-                ],
+                "discovery_candidates": (
+                    project_candidate_ranking_discovery_candidates(candidates)
+                ),
                 "current_evidence_fact_graph": (
                     project_candidate_ranking_evidence_context(
                         current_evidence_facts

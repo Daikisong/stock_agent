@@ -33,7 +33,11 @@ from e2r.research.search_provider import SearchProvider, SearchResult
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
 
 from .component_researcher import StructuredResearchProvider
-from .document_ranker import CandidateRankingResult, ResearcherDocumentRanker
+from .document_ranker import (
+    CandidateRankingResult,
+    ResearcherDocumentRanker,
+    project_candidate_ranking_discovery_candidates,
+)
 from .schemas import ComponentResearchPlan, EvidenceFact
 from .source_query_planner import (
     CANONICAL_SOURCE_FAMILIES,
@@ -80,6 +84,9 @@ QUERY_GENERATION_REPLAY_CONTEXT_SCHEMA_VERSION = (
     "e2r_v5_query_generation_replay_context_v1"
 )
 CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION = (
+    "e2r_v5_candidate_ranking_replay_context_v2"
+)
+LEGACY_CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION = (
     "e2r_v5_candidate_ranking_replay_context_v1"
 )
 _WEAK_DISCOVERY_SOURCE_FAMILIES = frozenset(
@@ -727,6 +734,10 @@ class ResearcherSourceGraphAcquirer:
                 evidence_documents=evidence_documents,
             )
         )
+        if pending_candidate_ranking_replay is not None:
+            state["pending_candidate_ranking_replay_context"] = dict(
+                pending_candidate_ranking_replay
+            )
         candidate_ranking_replay_awaiting = bool(
             pending_candidate_ranking_replay is not None
             and pending_candidate_ranking_replay["replay_phase"]
@@ -999,6 +1010,7 @@ class ResearcherSourceGraphAcquirer:
         # before using the checkpoint budget on broader document citations.
         if (
             not checkpoint_migration_only
+            and not candidate_ranking_replay_awaiting
             and not supervisor_query_direction_priority
             and not candidate_query_edge_work_priority
         ):
@@ -1509,6 +1521,7 @@ class ResearcherSourceGraphAcquirer:
         )
         ranking_results: list[CandidateRankingResult] = []
         candidate_query_edge_priority_ranked = False
+        collaboration_ranking_wait = False
         if pending_rank:
             if candidate_ranking_replay_awaiting:
                 rank_batch = [
@@ -1563,9 +1576,11 @@ class ResearcherSourceGraphAcquirer:
             collaboration_request_ids = (
                 _candidate_ranking_collaboration_request_ids(ranking)
             )
-            rank_batch_hash = stable_intelligence_id(
-                "RANKBATCH",
-                list(rank_transport_rows),
+            candidate_prompt_projection_hash = stable_intelligence_id(
+                "RANKCANDIDATEPROMPT",
+                project_candidate_ranking_discovery_candidates(
+                    rank_transport_rows
+                ),
             )
             rank_objective_hash = stable_intelligence_id(
                 "RANKOBJECTIVES",
@@ -1613,7 +1628,9 @@ class ResearcherSourceGraphAcquirer:
                         rank_batch_candidate_ids
                     ),
                     "objective_ids": rank_objective_ids,
-                    "rank_batch_hash": rank_batch_hash,
+                    "candidate_prompt_projection_hash": (
+                        candidate_prompt_projection_hash
+                    ),
                     "objective_scope_hash": rank_objective_hash,
                     "prompt_hash": ranking.prompt_hash,
                     "origin_prompt_hash": ranking.prompt_hash,
@@ -1879,7 +1896,7 @@ class ResearcherSourceGraphAcquirer:
                     )
         pending_fetch = (
             []
-            if checkpoint_migration_only
+            if checkpoint_migration_only or collaboration_ranking_wait
             else sorted(
                 (
                     row
@@ -2645,9 +2662,11 @@ def _validated_pending_candidate_ranking_replay_context(
         raise ValueError(
             "pending candidate ranking replay context status mismatch"
         )
-    if raw.get("schema_version") != (
-        CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION
-    ):
+    raw_schema_version = str(raw.get("schema_version") or "")
+    if raw_schema_version not in {
+        CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION,
+        LEGACY_CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION,
+    }:
         raise ValueError(
             "pending candidate ranking replay context schema mismatch"
         )
@@ -2691,6 +2710,26 @@ def _validated_pending_candidate_ranking_replay_context(
         raise ValueError(
             "pending candidate ranking replay candidate is missing"
         )
+    for candidate_id in rank_batch_candidate_ids:
+        candidate = candidate_by_id[candidate_id]
+        normalized_url = _normalize_url(str(candidate.get("url") or ""))
+        if (
+            not normalized_url
+            or normalized_url
+            != str(candidate.get("normalized_url") or "")
+            or stable_intelligence_id(
+                "SGCAND",
+                {
+                    "target_id": str(candidate.get("target_id") or ""),
+                    "as_of_date": str(candidate.get("as_of_date") or ""),
+                    "normalized_url": normalized_url,
+                },
+            )
+            != candidate_id
+        ):
+            raise ValueError(
+                "pending candidate ranking replay candidate identity mismatch"
+            )
     if not set(objective_ids).issubset(objective_by_id):
         raise ValueError(
             "pending candidate ranking replay objective is unknown"
@@ -2754,9 +2793,9 @@ def _validated_pending_candidate_ranking_replay_context(
             candidate_by_id[candidate_id]
             for candidate_id in rank_batch_candidate_ids
         )
-        current_rank_batch_hash = stable_intelligence_id(
-            "RANKBATCH",
-            list(
+        current_candidate_prompt_projection_hash = stable_intelligence_id(
+            "RANKCANDIDATEPROMPT",
+            project_candidate_ranking_discovery_candidates(
                 _candidate_ranking_transport_rows(
                     current_rank_batch,
                     evidence_documents=evidence_documents,
@@ -2767,11 +2806,17 @@ def _validated_pending_candidate_ranking_replay_context(
             "RANKOBJECTIVES",
             [objective_by_id[objective_id] for objective_id in objective_ids],
         )
+        if str(raw.get("objective_scope_hash") or "") != (
+            current_objective_scope_hash
+        ):
+            raise ValueError(
+                "pending candidate ranking replay input hash mismatch"
+            )
         if (
-            str(raw.get("rank_batch_hash") or "")
-            != current_rank_batch_hash
-            or str(raw.get("objective_scope_hash") or "")
-            != current_objective_scope_hash
+            raw_schema_version
+            == CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION
+            and str(raw.get("candidate_prompt_projection_hash") or "")
+            != current_candidate_prompt_projection_hash
         ):
             raise ValueError(
                 "pending candidate ranking replay input hash mismatch"
@@ -2802,8 +2847,14 @@ def _validated_pending_candidate_ranking_replay_context(
         raise ValueError(
             "pending candidate ranking replay phase is invalid"
         )
-    return {
+    validated = {
         **dict(raw),
+        "schema_version": CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION,
+        "candidate_prompt_projection_hash": (
+            current_candidate_prompt_projection_hash
+            if replay_phase == "AWAITING_COLLABORATION_RESPONSE"
+            else raw.get("candidate_prompt_projection_hash")
+        ),
         "rank_batch_candidate_ids": rank_batch_candidate_ids,
         "objective_ids": objective_ids,
         "prompt_hash_lineage": prompt_hash_lineage,
@@ -2811,6 +2862,12 @@ def _validated_pending_candidate_ranking_replay_context(
         "fetch_handoff_candidate_ids": fetch_handoff_candidate_ids,
         "replay_phase": replay_phase,
     }
+    if (
+        raw_schema_version
+        == LEGACY_CANDIDATE_RANKING_REPLAY_CONTEXT_SCHEMA_VERSION
+    ):
+        validated["legacy_schema_migrated_from"] = raw_schema_version
+    return validated
 
 
 def _new_acquisition_state(

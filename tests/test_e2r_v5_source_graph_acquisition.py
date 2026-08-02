@@ -2127,6 +2127,254 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             completed.checkpoint,
         )
 
+    def test_collaboration_ranking_replay_uses_prompt_semantic_candidate_hash(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        url = "https://customer.example.com/semantic-replay-official"
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp semantic replay", url),)}
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={url: _document_text("semantic-replay")}
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+        )
+        state = json.loads(json.dumps(first.checkpoint))
+        state.pop("checkpoint_id")
+        state.pop("checkpoint_hash")
+        candidate = state["search_candidates"][0]
+        prompt_query_ids = list(candidate["materiality_query_ids"])
+        candidate["query_ids"].append("SGQUERY-HISTORICAL-AUDIT-ONLY")
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+
+        provider.ranking_pending = False
+        completed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        self.assertEqual(
+            completed.ranking_results[0].status,
+            "COMPLETE",
+        )
+        self.assertEqual(
+            next(
+                row["payload"]["discovery_candidates"][0]["query_ids"]
+                for row in reversed(provider.calls)
+                if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+            ),
+            prompt_query_ids,
+        )
+        self.assertEqual(completed.status, "STOPPED_ON_RESOLUTION")
+
+    def test_legacy_candidate_ranking_full_row_hash_migrates_once(self) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        url = "https://customer.example.com/legacy-ranking-replay"
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp legacy replay", url),)}
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={url: _document_text("legacy-replay")}
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+        )
+        state = json.loads(json.dumps(first.checkpoint))
+        state.pop("checkpoint_id")
+        state.pop("checkpoint_hash")
+        context = state["pending_candidate_ranking_replay_context"]
+        context["schema_version"] = (
+            "e2r_v5_candidate_ranking_replay_context_v1"
+        )
+        context["rank_batch_hash"] = "RANKBATCH-LEGACY-MUTABLE-ROW-HASH"
+        context.pop("candidate_prompt_projection_hash")
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+
+        migrated = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=checkpoint,
+            checkpoint_migration_only=True,
+        )
+
+        migrated_context = migrated.checkpoint[
+            "pending_candidate_ranking_replay_context"
+        ]
+        self.assertEqual(
+            migrated_context["schema_version"],
+            "e2r_v5_candidate_ranking_replay_context_v2",
+        )
+        self.assertEqual(
+            migrated_context["legacy_schema_migrated_from"],
+            "e2r_v5_candidate_ranking_replay_context_v1",
+        )
+        self.assertTrue(
+            migrated_context["candidate_prompt_projection_hash"].startswith(
+                "RANKCANDIDATEPROMPT"
+            )
+        )
+
+    def test_collaboration_ranking_wait_defers_reference_history_merge(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        child_url = "https://customer.example.com/replay-child"
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp replay child", child_url),)}
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={child_url: _document_text("replay-child")}
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=2,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+        )
+        state = json.loads(json.dumps(first.checkpoint))
+        state.pop("checkpoint_id")
+        state.pop("checkpoint_hash")
+        child = state["search_candidates"][0]
+        child_query_ids = list(child["query_ids"])
+        parent_url = "https://customer.example.com/official-reference-parent"
+        normalized_parent_url = source_graph_module._normalize_url(parent_url)
+        parent = dict(child)
+        parent.update(
+            {
+                "candidate_id": source_graph_module.stable_intelligence_id(
+                    "SGCAND",
+                    {
+                        "target_id": TARGET,
+                        "as_of_date": AS_OF_DATE,
+                        "normalized_url": normalized_parent_url,
+                    },
+                ),
+                "url": parent_url,
+                "normalized_url": normalized_parent_url,
+                "title": "Current Corp official reference parent",
+                "query_ids": ["SGQUERY-PARENT-HISTORICAL"],
+                "materiality_query_ids": ["SGQUERY-PARENT-HISTORICAL"],
+                "ranking_status": "NOT_MATERIAL",
+                "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
+                "verified_official_domain_candidate": True,
+                "candidate_source_family_hint": "CUSTOMER_OFFICIAL",
+                "discovered_referenced_urls": [child_url],
+            }
+        )
+        state["search_candidates"].append(parent)
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+
+        resumed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=checkpoint,
+        )
+
+        resumed_child = next(
+            row
+            for row in resumed.checkpoint["search_candidates"]
+            if row["candidate_id"] == child["candidate_id"]
+        )
+        self.assertEqual(resumed_child["query_ids"], child_query_ids)
+        self.assertNotIn(
+            parent["candidate_id"],
+            resumed_child.get("graph_expansion_parent_candidate_ids", ()),
+        )
+        self.assertEqual(resumed.status, "CANDIDATE_RANKING_PENDING")
+
+    def test_collaboration_ranking_wait_defers_full_fetch(self) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("CUSTOMER_OFFICIAL",),
+        )
+        url = "https://customer.example.com/replay-fetch-boundary"
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp replay fetch boundary", url),)}
+        )
+        fetcher = PageFetcher(
+            fixture_text_by_url={url: _document_text("replay-fetch-boundary")}
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+        )
+        state = json.loads(json.dumps(first.checkpoint))
+        state.pop("checkpoint_id")
+        state.pop("checkpoint_hash")
+        state["search_candidates"][0]["fetch_status"] = (
+            "MATERIAL_PENDING_FETCH"
+        )
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+
+        resumed = self._run(
+            provider=provider,
+            search=search,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=checkpoint,
+        )
+
+        candidate = resumed.checkpoint["search_candidates"][0]
+        self.assertEqual(candidate["fetch_status"], "MATERIAL_PENDING_FETCH")
+        self.assertEqual(int(candidate.get("full_fetch_attempt_count") or 0), 0)
+        self.assertEqual(resumed.evidence_documents, ())
+        self.assertEqual(resumed.status, "CANDIDATE_RANKING_PENDING")
+
     def test_collaboration_ranking_fetch_handoff_survives_resolved_resume(
         self,
     ) -> None:
@@ -4074,9 +4322,16 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
     def test_candidate_query_edge_repair_preempts_candidate_backlog(
         self,
     ) -> None:
-        candidate_id = "SGCAND-0123456789abcdef01234567"
         repair_query = "Current Corp official preliminary results newsroom"
         official_url = "https://issuer.example.com/current-results"
+        candidate_id = source_graph_module.stable_intelligence_id(
+            "SGCAND",
+            {
+                "target_id": TARGET,
+                "as_of_date": AS_OF_DATE,
+                "normalized_url": official_url,
+            },
+        )
         alternate_url = "https://issuer.example.com/alternate-results"
         stale_terminal_url = "https://issuer.example.com/stale-results"
         backlog_url = "https://example.com/unrelated-backlog"
