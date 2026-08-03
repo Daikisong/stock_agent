@@ -639,6 +639,124 @@ class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
                 )
             )
 
+    def test_clean_resume_recovers_exact_peer_retry_after_primary_quarantine(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = CollaborationCodexResearcherProvider(
+                transport=CollaborationCodexSubagentTransport()
+            )
+            journal = _configure(provider, Path(directory))
+            primary_payload = {
+                "target_id": "005930",
+                "as_of_date": "2026-07-12",
+            }
+            incomplete_response = {
+                "peers": [
+                    {
+                        "peer_symbol": symbol,
+                        "peer_name": name,
+                        "shared_economic_drivers": ["same cycle"],
+                        "material_differences": ["evidence pending"],
+                        "comparability_rationale": "candidate only",
+                        "confidence": 0.1,
+                    }
+                    for symbol, name in (
+                        ("000660", "SK하이닉스"),
+                        ("000990", "DB하이텍"),
+                    )
+                ],
+                "selection_complete": False,
+                "selection_rationale": "selection is pending",
+                "unresolved_research_notes": ["more evidence required"],
+            }
+            complete_response = {
+                **incomplete_response,
+                "selection_complete": True,
+                "selection_rationale": "selection task is complete",
+            }
+
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.complete(
+                    pass_name="STRUCTURED_PEER_SELECTION",
+                    payload=primary_payload,
+                )
+            _, primary_request = _request(journal)
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=primary_request["request_id"],
+                response_payload=incomplete_response,
+                agent_id="peer-primary-agent",
+                canonical_task_name="/root/peer_primary",
+                agent_model="codex-collaboration",
+            )
+            self.assertEqual(
+                provider.complete(
+                    pass_name="STRUCTURED_PEER_SELECTION",
+                    payload=primary_payload,
+                ),
+                incomplete_response,
+            )
+            provider.invalidate_last_response_cache(
+                "STRUCTURED_PEER_RESPONSE_VALIDATION_REJECTED:"
+                "FRESH_SELECTION_RESPONSE_ATTEMPT_1:"
+                "peer selection is incomplete"
+            )
+            retry_payload = {
+                **primary_payload,
+                "peer_selection_retry_context": {
+                    "validation_error": "peer selection is incomplete",
+                    "instruction": (
+                        "Rewrite the complete peer selection under the original "
+                        "two-to-five peer contract; do not invent any valuation values."
+                    ),
+                },
+            }
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.complete(
+                    pass_name="STRUCTURED_PEER_SELECTION",
+                    payload=retry_payload,
+                )
+            requests = [
+                json.loads(path.read_text(encoding="utf-8"))
+                for path in (journal / "requests").glob("COLLABREQ-*.json")
+            ]
+            retry_requests = [
+                row
+                for row in requests
+                if row["request_id"] != primary_request["request_id"]
+            ]
+            self.assertEqual(len(retry_requests), 1)
+            retry_request = retry_requests[0]
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=retry_request["request_id"],
+                response_payload=complete_response,
+                agent_id="peer-retry-agent",
+                canonical_task_name="/root/peer_retry",
+                agent_model="codex-collaboration",
+            )
+
+            self.assertEqual(
+                provider.validated_peer_selection_retry_payload(
+                    primary_payload=primary_payload,
+                ),
+                retry_payload,
+            )
+            self.assertEqual(
+                provider.complete(
+                    pass_name="STRUCTURED_PEER_SELECTION",
+                    payload=retry_payload,
+                ),
+                complete_response,
+            )
+
     def test_multichunk_usage_limit_falls_back_only_for_missing_leaf(
         self,
     ) -> None:

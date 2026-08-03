@@ -13,6 +13,9 @@ from unittest.mock import patch
 from e2r.production.source_connectors.companyguide_live_connector import (
     parse_companyguide_live_consensus_payload,
 )
+from e2r.research_brain.planning.provider_transport import (
+    StructuredProviderUnavailable,
+)
 from e2r.research_brain.researcher_mode import (
     CurrentStructuredSourceMaterializer,
     EvidenceFact,
@@ -209,6 +212,28 @@ class IncompleteThenCompletePeerProvider(FixturePeerProvider):
                 "selection_rationale": "peer selection needs a clean rewrite",
             }
         return super().complete(pass_name=pass_name, payload=payload)
+
+
+class CleanResumePeerRetryProvider(FixturePeerProvider):
+    def complete(self, *, pass_name, payload):
+        if "peer_selection_retry_context" not in payload:
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            raise StructuredProviderUnavailable(
+                "COLLABORATION_RESPONSE_PENDING:COLLABREQ-" + "a" * 64
+            )
+        return super().complete(pass_name=pass_name, payload=payload)
+
+    def validated_peer_selection_retry_payload(self, *, primary_payload):
+        return {
+            **primary_payload,
+            "peer_selection_retry_context": {
+                "validation_error": "peer selection is incomplete",
+                "instruction": (
+                    "Rewrite the complete peer selection under the original "
+                    "two-to-five peer contract; do not invent any valuation values."
+                ),
+            },
+        }
 
 
 class VerificationFailureThenCompletePeerProvider(FixturePeerProvider):
@@ -1730,6 +1755,50 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         ]
         self.assertIn("peer selection is incomplete", retry["validation_error"])
         self.assertIn("do not invent", retry["instruction"])
+
+    def test_clean_resume_consumes_validated_peer_retry_after_primary_wait(self):
+        transport = FixtureStructuredTransport()
+        peer_provider = CleanResumePeerRetryProvider()
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+
+        audit = result.audit["peer_selection"]
+        self.assertEqual(audit["status"], "PEER_SELECTION_COMPLETE")
+        self.assertEqual(audit["provider_attempt_count"], 2)
+        self.assertTrue(audit["validation_retry_used"])
+        self.assertIsNone(audit["pending_reason"])
+        self.assertNotIn(
+            "peer_selection_retry_context",
+            peer_provider.calls[0]["payload"],
+        )
+        self.assertIn(
+            "peer_selection_retry_context",
+            peer_provider.calls[1]["payload"],
+        )
 
     def test_peer_page_verification_failures_are_fed_back_and_cache_replaced(self):
         transport = FixtureStructuredTransport()

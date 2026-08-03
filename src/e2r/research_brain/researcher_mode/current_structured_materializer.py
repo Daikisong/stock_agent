@@ -28,6 +28,9 @@ from e2r.production.metadata import stable_hash, write_json, write_jsonl
 from e2r.production.source_connectors.companyguide_live_connector import (
     parse_companyguide_live_consensus_payload,
 )
+from e2r.research_brain.planning.provider_transport import (
+    StructuredProviderUnavailable,
+)
 from e2r.sources.company_guide import CompanyGuideConnector
 
 from .component_researcher import StructuredResearchProvider
@@ -361,6 +364,42 @@ def _invalidate_peer_validation_response_cache(
     except (OSError, TypeError, ValueError, RuntimeError):
         return None
     return dict(result) if isinstance(result, Mapping) else None
+
+
+def _recover_validated_peer_selection_retry_payload(
+    provider: StructuredResearchProvider,
+    *,
+    primary_payload: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Recover a journal-bound retry after a clean-process primary replay."""
+
+    recover = getattr(
+        provider,
+        "validated_peer_selection_retry_payload",
+        None,
+    )
+    if not callable(recover):
+        return None
+    try:
+        recovered = recover(primary_payload=primary_payload)
+    except (OSError, TypeError, ValueError, RuntimeError):
+        return None
+    if not isinstance(recovered, Mapping):
+        return None
+    retry_context = recovered.get("peer_selection_retry_context")
+    if (
+        not isinstance(retry_context, Mapping)
+        or set(retry_context) != {"validation_error", "instruction"}
+        or not isinstance(retry_context.get("validation_error"), str)
+        or not str(retry_context["validation_error"]).strip()
+        or retry_context.get("instruction")
+        != (
+            "Rewrite the complete peer selection under the original "
+            "two-to-five peer contract; do not invent any valuation values."
+        )
+    ):
+        return None
+    return dict(recovered)
 
 
 def _delete_peer_selection_route_cache(
@@ -1564,10 +1603,32 @@ class CurrentStructuredSourceMaterializer:
                 attempt_payload = payload
                 for attempt_index in range(2):
                     base_audit["provider_attempt_count"] += 1
-                    response = self.peer_provider.complete(
-                        pass_name="STRUCTURED_PEER_SELECTION",
-                        payload=attempt_payload,
-                    )
+                    try:
+                        response = self.peer_provider.complete(
+                            pass_name="STRUCTURED_PEER_SELECTION",
+                            payload=attempt_payload,
+                        )
+                    except StructuredProviderUnavailable as exc:
+                        recovered_retry_payload = (
+                            _recover_validated_peer_selection_retry_payload(
+                                self.peer_provider,
+                                primary_payload=payload,
+                            )
+                            if (
+                                attempt_index == 0
+                                and attempt_payload == payload
+                                and str(exc).startswith(
+                                    "COLLABORATION_RESPONSE_PENDING:"
+                                    "COLLABREQ-"
+                                )
+                            )
+                            else None
+                        )
+                        if recovered_retry_payload is not None:
+                            base_audit["validation_retry_used"] = True
+                            attempt_payload = recovered_retry_payload
+                            continue
+                        raise
                     try:
                         assert_blind_research_output(response)
                         proposals = _validated_peer_proposals(

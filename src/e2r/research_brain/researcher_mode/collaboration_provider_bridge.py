@@ -851,6 +851,199 @@ class CollaborationCodexSubagentTransport:
             "retry_payload": dict(retry_payload),
         }
 
+    def validated_peer_selection_retry_material(
+        self,
+        *,
+        primary_prompt: str,
+        output_schema: Mapping[str, Any],
+        schema_name: str,
+    ) -> Mapping[str, Any] | None:
+        """Recover one exact peer retry after its primary was quarantined.
+
+        A clean process starts the peer route from the immutable primary
+        payload.  If that response was quarantined, the ordinary call stops at
+        the missing primary response before it can reach the already imported
+        retry.  Bind that retry to the primary payload and quarantine receipt
+        so resume can consume it without treating the rejected response as a
+        cache hit.
+        """
+
+        root = self.journal_root
+        if root is None:
+            return None
+        pass_name = _pass_name_from_schema_name(schema_name)
+        if pass_name != "STRUCTURED_PEER_SELECTION":
+            return None
+        primary_prompt_hash = hashlib.sha256(
+            primary_prompt.encode("utf-8")
+        ).hexdigest()
+        output_schema_hash = _canonical_hash(output_schema)
+        provider_identity_hash = _canonical_hash(self.provider_identity())
+        primary_request_id = _request_id(
+            _request_identity(
+                pass_name=pass_name,
+                prompt_hash=primary_prompt_hash,
+                output_schema_hash=output_schema_hash,
+                provider_identity_hash=provider_identity_hash,
+            )
+        )
+        try:
+            primary_request = _validate_request(
+                _read_json_object(
+                    root / "requests" / f"{primary_request_id}.json"
+                )
+            )
+            primary_payload = json.loads(
+                primary_prompt.rsplit("\n", 1)[-1]
+            )
+        except (
+            FileNotFoundError,
+            OSError,
+            TypeError,
+            ValueError,
+            RuntimeError,
+            json.JSONDecodeError,
+        ):
+            return None
+        if (
+            not isinstance(primary_payload, Mapping)
+            or primary_request.get("request_id") != primary_request_id
+            or primary_request.get("prompt") != primary_prompt
+            or primary_request.get("output_schema") != output_schema
+            or primary_request.get("schema_name") != schema_name
+            or (root / "responses" / f"{primary_request_id}.json").is_file()
+        ):
+            return None
+
+        quarantine_reasons: set[str] = set()
+        quarantine_root = root / "quarantine" / primary_request_id
+        try:
+            reason_paths = tuple(
+                quarantine_root.glob("COLLABRESP-*.json.*.reason.json")
+            )
+        except OSError:
+            return None
+        for reason_path in reason_paths:
+            try:
+                receipt = _read_json_object(reason_path)
+            except (FileNotFoundError, OSError, TypeError, ValueError):
+                continue
+            response_id = str(receipt.get("response_id") or "")
+            reason = str(receipt.get("reason") or "")
+            if (
+                receipt.get("schema_version")
+                != "e2r_v5_collaboration_response_quarantine_v1"
+                or receipt.get("request_id") != primary_request_id
+                or _RESPONSE_ID_RE.fullmatch(response_id) is None
+                or not reason_path.name.startswith(f"{response_id}.json.")
+                or not (quarantine_root / f"{response_id}.json").is_file()
+                or receipt.get("production_score_authority") is not False
+                or receipt.get("reusable_provider_response") is not False
+                or not reason.startswith(
+                    "STRUCTURED_PEER_RESPONSE_VALIDATION_REJECTED:"
+                    "FRESH_SELECTION_RESPONSE_ATTEMPT_1:"
+                )
+            ):
+                continue
+            quarantine_reasons.add(reason)
+        if not quarantine_reasons:
+            return None
+
+        candidates: list[
+            tuple[Mapping[str, Any], Mapping[str, Any], Mapping[str, Any]]
+        ] = []
+        try:
+            request_paths = tuple((root / "requests").glob("COLLABREQ-*.json"))
+        except OSError:
+            return None
+        for request_path in request_paths:
+            try:
+                retry_request = _validate_request(
+                    _read_json_object(request_path)
+                )
+                retry_payload = json.loads(
+                    str(retry_request["prompt"]).rsplit("\n", 1)[-1]
+                )
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+                json.JSONDecodeError,
+            ):
+                continue
+            if (
+                retry_request.get("request_id") == primary_request_id
+                or retry_request.get("pass_name") != pass_name
+                or retry_request.get("schema_name") != schema_name
+                or retry_request.get("output_schema") != output_schema
+                or not isinstance(retry_payload, Mapping)
+            ):
+                continue
+            retry_context = retry_payload.get("peer_selection_retry_context")
+            if (
+                not isinstance(retry_context, Mapping)
+                or set(retry_context) != {"validation_error", "instruction"}
+            ):
+                continue
+            retry_base_payload = dict(retry_payload)
+            retry_base_payload.pop("peer_selection_retry_context", None)
+            if retry_base_payload != primary_payload:
+                continue
+            validation_error = retry_context.get("validation_error")
+            if not isinstance(validation_error, str) or not validation_error.strip():
+                continue
+            if retry_context.get("instruction") != (
+                "Rewrite the complete peer selection under the original "
+                "two-to-five peer contract; do not invent any valuation values."
+            ):
+                continue
+            expected_reason = " ".join(
+                (
+                    "STRUCTURED_PEER_RESPONSE_VALIDATION_REJECTED:"
+                    "FRESH_SELECTION_RESPONSE_ATTEMPT_1:"
+                    + validation_error
+                ).split()
+            )[-500:]
+            if expected_reason not in quarantine_reasons:
+                continue
+            request_id = str(retry_request["request_id"])
+            try:
+                retry_response = _validate_response_envelope(
+                    request=retry_request,
+                    envelope=_read_json_object(
+                        root / "responses" / f"{request_id}.json"
+                    ),
+                )
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+            ):
+                continue
+            if (
+                root
+                / "quarantine"
+                / request_id
+                / f"{retry_response['response_id']}.json"
+            ).is_file():
+                continue
+            candidates.append(
+                (retry_request, retry_response, retry_payload)
+            )
+        if len(candidates) != 1:
+            return None
+        retry_request, retry_response, retry_payload = candidates[0]
+        return {
+            "primary_request": dict(primary_request),
+            "retry_request": dict(retry_request),
+            "retry_response": dict(retry_response),
+            "retry_payload": dict(retry_payload),
+        }
+
     def invalidate_last_response(self, reason: str) -> Mapping[str, Any]:
         request_id = self._last_request_id
         if request_id is None:
@@ -1434,6 +1627,49 @@ class CollaborationCodexResearcherProvider(CodexResearcherProvider):
             return None
         return dict(retry_payload)
 
+    def validated_peer_selection_retry_payload(
+        self,
+        *,
+        primary_payload: Mapping[str, Any],
+    ) -> Mapping[str, Any] | None:
+        """Recover only the exact active peer retry bound to this primary."""
+
+        try:
+            (
+                safe_primary_payload,
+                output_schema,
+                primary_prompt,
+                _primary_prompt_hash,
+                _schema_hash,
+            ) = _single_payload_request_material(
+                pass_name="STRUCTURED_PEER_SELECTION",
+                payload=primary_payload,
+            )
+        except (KeyError, TypeError, ValueError):
+            return None
+        material = self.transport.validated_peer_selection_retry_material(
+            primary_prompt=primary_prompt,
+            output_schema=output_schema,
+            schema_name="e2r_v5_structured_peer_selection",
+        )
+        if not isinstance(material, Mapping):
+            return None
+        request = material.get("retry_request")
+        if not isinstance(request, Mapping):
+            return None
+        retry_payload = self._validated_payload_from_request(
+            request=request,
+            pass_name="STRUCTURED_PEER_SELECTION",
+            prompt_hash=str(request.get("prompt_hash") or ""),
+        )
+        if not isinstance(retry_payload, Mapping):
+            return None
+        retry_base_payload = dict(retry_payload)
+        retry_base_payload.pop("peer_selection_retry_context", None)
+        if retry_base_payload != safe_primary_payload:
+            return None
+        return dict(retry_payload)
+
     @staticmethod
     def _validated_payload_from_request(
         *,
@@ -1627,6 +1863,17 @@ class CodexSubagentFallbackResearchProvider(CodexResearcherProvider):
         """Delegate exact semantic-retry recovery to collaboration only."""
 
         return self.collaboration.validated_fact_extraction_retry_payload(
+            primary_payload=primary_payload,
+        )
+
+    def validated_peer_selection_retry_payload(
+        self,
+        *,
+        primary_payload: Mapping[str, Any],
+    ) -> Mapping[str, Any] | None:
+        """Delegate exact peer-retry recovery to collaboration only."""
+
+        return self.collaboration.validated_peer_selection_retry_payload(
             primary_payload=primary_payload,
         )
 
