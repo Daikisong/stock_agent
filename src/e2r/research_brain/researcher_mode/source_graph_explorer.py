@@ -2554,6 +2554,43 @@ def validate_source_graph_checkpoint(
         raise ValueError("source graph checkpoint target mismatch")
     if as_of_date is not None and str(payload["as_of_date"]) != as_of_date:
         raise ValueError("source graph checkpoint as_of mismatch")
+    forbidden_local_provider_markers = (
+        "OLLAMA",
+        "QWEN",
+        "LLAMACPP",
+        "LMSTUDIO",
+        "LOCALAI",
+        "GPT4ALL",
+        "VLLM",
+        "LOCALLLM",
+        "LOCALMODEL",
+    )
+    forbidden_provider_rows = tuple(
+        (
+            collection,
+            str(row.get("provider_name") or ""),
+        )
+        for collection in (
+            "query_generation_history",
+            "generated_queries",
+        )
+        for row in payload.get(collection) or ()
+        if isinstance(row, Mapping)
+        and any(
+            marker
+            in re.sub(
+                r"[^A-Z0-9]+",
+                "",
+                str(row.get("provider_name") or "").upper(),
+            )
+            for marker in forbidden_local_provider_markers
+        )
+    )
+    if forbidden_provider_rows:
+        raise ValueError(
+            "source graph checkpoint contains forbidden local LLM provider "
+            "lineage; start from a clean checkpoint"
+        )
     documents = tuple(payload.get("evidence_documents") or ())
     document_ids = [
         str(row.get("document_id") or row.get("source_id") or "")

@@ -3939,6 +3939,39 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "future document"):
             validate_source_graph_checkpoint(future)
 
+    def test_source_checkpoint_with_local_llm_lineage_is_rejected(self) -> None:
+        source = _source_checkpoint()
+        for provider_name in (
+            "OLLAMA_STRUCTURED_RESEARCHER_MODE",
+            "QWEN_LOCAL_RESEARCHER",
+            "llama.cpp",
+            "LM Studio",
+            "LMSTUDIO",
+            "LOCALAI",
+            "GPT4ALL",
+            "VLLM",
+            "LOCAL_LLM_PROVIDER",
+            "LOCAL_MODEL_PROVIDER",
+        ):
+            forbidden = _source_checkpoint_with_updates(
+                source,
+                query_generation_history=[
+                    {
+                        "provider_name": provider_name,
+                        "status": "COMPLETE",
+                    }
+                ],
+            )
+
+            with (
+                self.subTest(provider_name=provider_name),
+                self.assertRaisesRegex(
+                    ValueError,
+                    "forbidden local LLM provider lineage",
+                ),
+            ):
+                validate_source_graph_checkpoint(forbidden)
+
     def test_duplicate_provider_prompt_cannot_certify_independence(self) -> None:
         reviews = tuple(
             _manual_saturation_review(

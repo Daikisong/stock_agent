@@ -316,6 +316,7 @@ class E2RV6TrackedReceiptTests(unittest.TestCase):
             "scored_fact_provider_lineage_counts": {"COLLABORATION_CODEX": 7},
             "inherited_qwen_scored_fact_count": 0,
             "inherited_ollama_scored_fact_count": 0,
+            "current_invocation_provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
             "score_or_stage_authority": False,
         }
         self._write_json(target / "receipt_manifest.json", manifest)
@@ -384,6 +385,7 @@ class E2RV6TrackedReceiptTests(unittest.TestCase):
                 [
                     {
                         "provider_call_id": "CALL-OLLAMA",
+                        "provider_name": "OLLAMA_STRUCTURED_RESEARCHER_MODE",
                         "provider_kind": "OLLAMA",
                         "provider_attempt_count": 1,
                     }
@@ -401,6 +403,139 @@ class E2RV6TrackedReceiptTests(unittest.TestCase):
         codes = self._failure_codes(result)
         self.assertIn("OLLAMA_CALL_COUNT_NONZERO", codes)
         self.assertIn("INHERITED_OLLAMA_SCORED_FACT_LINEAGE_PRESENT", codes)
+
+    def test_qwen_call_and_inherited_lineage_are_both_blocking(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            target = self._fixture(Path(directory) / "receipts")
+            self._write_jsonl(
+                target / "provider_calls.jsonl",
+                [
+                    {
+                        "provider_call_id": "CALL-QWEN",
+                        "provider_name": "QWEN_LOCAL_RESEARCHER",
+                        "provider_kind": "QWEN",
+                        "provider_attempt_count": 1,
+                    }
+                ],
+            )
+            manifest_path = target / "receipt_manifest.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["provider_call_counts"] = {"QWEN": 1}
+            manifest["qwen_call_count"] = 1
+            manifest["inherited_qwen_scored_fact_count"] = 1
+            manifest["tracked_receipt_tree_hash"] = receipt_content_tree_hash(
+                target
+            )
+            manifest["tracked_receipt_content_index"] = list(
+                receipt_content_index(target)
+            )
+            self._write_json(manifest_path, manifest)
+            result = verify_target_receipt(target)
+        codes = self._failure_codes(result)
+        self.assertIn("QWEN_CALL_COUNT_NONZERO", codes)
+        self.assertIn("INHERITED_QWEN_SCORED_FACT_LINEAGE_PRESENT", codes)
+
+    def test_any_non_codex_call_or_scored_lineage_is_blocking(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            target = self._fixture(Path(directory) / "receipts")
+            self._write_jsonl(
+                target / "provider_calls.jsonl",
+                [
+                    {
+                        "provider_call_id": "CALL-LOCAL",
+                        "provider_name": "LLAMA_CPP_PROVIDER",
+                        "provider_kind": "LLAMA_CPP",
+                        "provider_attempt_count": 1,
+                    }
+                ],
+            )
+            fact_path = target / "scoring_facts.jsonl"
+            facts = [
+                json.loads(line)
+                for line in fact_path.read_text(encoding="utf-8").splitlines()
+            ]
+            facts[0]["extraction_provider_name"] = "LOCALAI"
+            self._write_jsonl(fact_path, facts)
+            manifest_path = target / "receipt_manifest.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["provider_call_counts"] = {"LLAMA_CPP": 1}
+            manifest["scored_fact_provider_lineage_counts"] = {
+                "COLLABORATION_CODEX": 6,
+                "LOCALAI": 1,
+            }
+            manifest["tracked_receipt_tree_hash"] = receipt_content_tree_hash(
+                target
+            )
+            manifest["tracked_receipt_content_index"] = list(
+                receipt_content_index(target)
+            )
+            self._write_json(manifest_path, manifest)
+            result = verify_target_receipt(target)
+        codes = self._failure_codes(result)
+        self.assertIn("UNAUTHORIZED_RESEARCH_PROVIDER_CALL_KIND", codes)
+        self.assertIn("UNAUTHORIZED_SCORED_FACT_PROVIDER_LINEAGE", codes)
+
+    def test_provider_names_containing_codex_cannot_bypass_allowlist(self) -> None:
+        for provider_name in (
+            "LOCALAI_CODEX",
+            "NOT_CODEX",
+            "LOCALAI_COLLABORATION",
+        ):
+            with self.subTest(provider_name=provider_name), tempfile.TemporaryDirectory() as directory:
+                target = self._fixture(Path(directory) / "receipts")
+                self._write_jsonl(
+                    target / "provider_calls.jsonl",
+                    [
+                        {
+                            "provider_call_id": "CALL-FORGED",
+                            "provider_name": provider_name,
+                            "provider_kind": "CODEX",
+                            "provider_attempt_count": 1,
+                        }
+                    ],
+                )
+                manifest_path = target / "receipt_manifest.json"
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+                manifest["provider_call_counts"] = {provider_name: 1}
+                manifest["tracked_receipt_tree_hash"] = receipt_content_tree_hash(
+                    target
+                )
+                manifest["tracked_receipt_content_index"] = list(
+                    receipt_content_index(target)
+                )
+                self._write_json(manifest_path, manifest)
+                result = verify_target_receipt(target)
+            self.assertIn(
+                "UNAUTHORIZED_RESEARCH_PROVIDER_CALL_KIND",
+                self._failure_codes(result),
+            )
+
+    def test_judge_and_current_invocation_provider_lineage_are_blocking(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            target = self._fixture(Path(directory) / "receipts")
+            judges_path = target / "judge_decisions.jsonl"
+            judges = [
+                json.loads(line)
+                for line in judges_path.read_text(encoding="utf-8").splitlines()
+            ]
+            judges[0]["provider_name"] = "OLLAMA_STRUCTURED_RESEARCHER_MODE"
+            judges[1]["provider_route"] = "LOCAL_PROVIDER_ROUTE"
+            self._write_jsonl(judges_path, judges)
+            manifest_path = target / "receipt_manifest.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["current_invocation_provider_name"] = "LOCALAI_CODEX"
+            manifest["tracked_receipt_tree_hash"] = receipt_content_tree_hash(
+                target
+            )
+            manifest["tracked_receipt_content_index"] = list(
+                receipt_content_index(target)
+            )
+            self._write_json(manifest_path, manifest)
+            result = verify_target_receipt(target)
+        codes = self._failure_codes(result)
+        self.assertIn("UNAUTHORIZED_CURRENT_INVOCATION_PROVIDER", codes)
+        self.assertIn("UNAUTHORIZED_JUDGE_PROVIDER_LINEAGE", codes)
+        self.assertIn("JUDGE_PROVIDER_ROUTE_MISMATCH", codes)
 
     def test_manifest_is_excluded_from_immutable_content_hash(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

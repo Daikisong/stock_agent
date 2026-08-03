@@ -211,15 +211,23 @@ def _excerpt(text: str, limit: int = 240) -> str:
 
 def _provider_kind(value: Any) -> str:
     normalized = str(value or "").upper()
+    if normalized == "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE":
+        return "COLLABORATION_CODEX"
+    if normalized in {
+        "CODEX_STRUCTURED_RESEARCHER_MODE",
+        "CODEX_STRUCTURED_RESEARCHER_WITH_COLLABORATION_SUBAGENT_FALLBACK",
+    }:
+        return "CODEX"
     if "QWEN" in normalized:
         return "QWEN"
     if "OLLAMA" in normalized:
         return "OLLAMA"
-    if "COLLABORATION" in normalized:
-        return "COLLABORATION_CODEX"
-    if "CODEX" in normalized:
-        return "CODEX"
     return normalized or "UNKNOWN"
+
+
+_ALLOWED_RESEARCH_PROVIDER_KINDS = frozenset(
+    {"CODEX", "COLLABORATION_CODEX"}
+)
 
 
 def _provider_call_receipts(target_root: Path) -> tuple[Mapping[str, Any], ...]:
@@ -248,7 +256,7 @@ def _provider_call_receipts(target_root: Path) -> tuple[Mapping[str, Any], ...]:
 def _provider_call_counts(rows: Sequence[Mapping[str, Any]]) -> Mapping[str, int]:
     counts: Counter[str] = Counter()
     for row in rows:
-        counts[str(row.get("provider_kind") or "UNKNOWN")] += int(
+        counts[_provider_kind(row.get("provider_name"))] += int(
             row.get("provider_attempt_count") or 0
         )
     return dict(sorted(counts.items()))
@@ -966,6 +974,27 @@ def verify_target_receipt(target_root: str | Path) -> Mapping[str, Any]:
         _add_failure(failures, "QWEN_CALL_COUNT_RECOMPUTE_MISMATCH")
     if int(manifest.get("ollama_call_count") or 0) != int(recomputed_provider_counts.get("OLLAMA", 0)):
         _add_failure(failures, "OLLAMA_CALL_COUNT_RECOMPUTE_MISMATCH")
+    unauthorized_call_kinds = sorted(
+        set(recomputed_provider_counts) - _ALLOWED_RESEARCH_PROVIDER_KINDS
+    )
+    if unauthorized_call_kinds:
+        _add_failure(
+            failures,
+            "UNAUTHORIZED_RESEARCH_PROVIDER_CALL_KIND",
+            unauthorized_call_kinds,
+        )
+    recomputed_lineage_counts = _scored_lineage_counts(facts)
+    if dict(manifest.get("scored_fact_provider_lineage_counts") or {}) != recomputed_lineage_counts:
+        _add_failure(failures, "SCORED_FACT_PROVIDER_LINEAGE_COUNTS_MISMATCH")
+    unauthorized_lineage_kinds = sorted(
+        set(recomputed_lineage_counts) - _ALLOWED_RESEARCH_PROVIDER_KINDS
+    )
+    if unauthorized_lineage_kinds:
+        _add_failure(
+            failures,
+            "UNAUTHORIZED_SCORED_FACT_PROVIDER_LINEAGE",
+            unauthorized_lineage_kinds,
+        )
     if int(manifest.get("inherited_qwen_scored_fact_count") or 0) != 0:
         _add_failure(failures, "INHERITED_QWEN_SCORED_FACT_LINEAGE_PRESENT", manifest.get("inherited_qwen_scored_fact_count"))
     if int(manifest.get("inherited_ollama_scored_fact_count") or 0) != 0:
@@ -974,6 +1003,15 @@ def verify_target_receipt(target_root: str | Path) -> Mapping[str, Any]:
         _add_failure(failures, "PROVIDER_ROUTE_MISMATCH", manifest.get("provider_route"))
     if manifest.get("provider_selected_explicitly") is not True:
         _add_failure(failures, "PROVIDER_NOT_SELECTED_EXPLICITLY")
+    current_invocation_provider_kind = _provider_kind(
+        manifest.get("current_invocation_provider_name")
+    )
+    if current_invocation_provider_kind not in _ALLOWED_RESEARCH_PROVIDER_KINDS:
+        _add_failure(
+            failures,
+            "UNAUTHORIZED_CURRENT_INVOCATION_PROVIDER",
+            manifest.get("current_invocation_provider_name"),
+        )
     if manifest.get("gold_visible_during_production") is not False:
         _add_failure(failures, "GOLD_VISIBLE_DURING_PRODUCTION")
 
@@ -1009,6 +1047,18 @@ def verify_target_receipt(target_root: str | Path) -> Mapping[str, Any]:
     if len(judges) != 21:
         _add_failure(failures, "EXACT_TWENTY_ONE_JUDGES_REQUIRED", len(judges))
     for judge in judges:
+        if _provider_kind(judge.get("provider_name")) not in _ALLOWED_RESEARCH_PROVIDER_KINDS:
+            _add_failure(
+                failures,
+                "UNAUTHORIZED_JUDGE_PROVIDER_LINEAGE",
+                judge.get("judge_decision_id"),
+            )
+        if judge.get("provider_route") != PROVIDER_ROUTE:
+            _add_failure(
+                failures,
+                "JUDGE_PROVIDER_ROUTE_MISMATCH",
+                judge.get("judge_decision_id"),
+            )
         for fact_id in (*judge.get("support_fact_ids", ()), *judge.get("counter_fact_ids", ())):
             if str(fact_id) not in fact_by_id:
                 _add_failure(failures, "ORPHAN_JUDGE_FACT_ID", fact_id)

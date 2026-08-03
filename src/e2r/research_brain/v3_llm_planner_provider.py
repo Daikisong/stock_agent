@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import urllib.error
+import urllib.parse
 import urllib.request
 from abc import ABC, abstractmethod
 from typing import Any, Mapping, Sequence
@@ -64,6 +65,25 @@ class OpenAIPlannerProvider(ResearchBrainPlannerProvider):
         endpoint: str = "https://api.openai.com/v1/chat/completions",
         timeout_seconds: int = 60,
     ) -> None:
+        parsed_endpoint = urllib.parse.urlparse(endpoint)
+        try:
+            endpoint_port = parsed_endpoint.port
+        except ValueError:
+            endpoint_port = -1
+        if (
+            parsed_endpoint.scheme != "https"
+            or str(parsed_endpoint.hostname or "").casefold() != "api.openai.com"
+            or endpoint_port not in {None, 443}
+            or parsed_endpoint.username is not None
+            or parsed_endpoint.password is not None
+            or parsed_endpoint.path != "/v1/chat/completions"
+            or bool(parsed_endpoint.params)
+            or bool(parsed_endpoint.query)
+            or bool(parsed_endpoint.fragment)
+        ):
+            raise ValueError(
+                "planner endpoint must be the official OpenAI HTTPS endpoint"
+            )
         self.api_key = api_key or os.getenv("OPENAI_API_KEY")
         self.model = model or os.getenv("OPENAI_MODEL", "gpt-5-mini")
         self.endpoint = endpoint

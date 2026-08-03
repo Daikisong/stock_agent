@@ -18,9 +18,6 @@ from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
     CollaborationCodexResearcherProvider,
     CodexSubagentFallbackResearchProvider,
 )
-from e2r.research_brain.researcher_mode.component_researcher import (
-    OllamaResearcherProvider,
-)
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeConfig,
     CurrentResearcherModeTargetRunner,
@@ -94,7 +91,6 @@ def build_parser() -> argparse.ArgumentParser:
             "codex",
             "codex-subagent",
             "codex-collaboration",
-            "ollama",
         ),
         default="codex",
         help=(
@@ -105,13 +101,6 @@ def build_parser() -> argparse.ArgumentParser:
             "the audited collaboration-subagent journal."
         ),
     )
-    parser.add_argument("--ollama-base-url")
-    parser.add_argument("--ollama-model")
-    parser.add_argument("--ollama-context-length", type=int)
-    parser.add_argument("--ollama-max-output-tokens", type=int)
-    parser.add_argument("--ollama-prompt-character-limit", type=int)
-    parser.add_argument("--ollama-fact-document-chunk-chars", type=int)
-    parser.add_argument("--ollama-timeout-seconds", type=float)
     return parser
 
 
@@ -447,41 +436,13 @@ def _load_post_run_gold_tools():
 
 
 def _build_research_provider(args: argparse.Namespace):
-    if args.research_provider in {
-        "codex",
-        "codex-subagent",
-        "codex-collaboration",
-    }:
-        ollama_options = {
-            key: value
-            for key, value in vars(args).items()
-            if key.startswith("ollama_") and value is not None
-        }
-        if ollama_options:
-            raise ValueError(
-                "Ollama options require --research-provider ollama:"
-                f" {sorted(ollama_options)}"
-            )
-        if args.research_provider == "codex":
-            return None
-        if args.research_provider == "codex-collaboration":
-            return CollaborationCodexResearcherProvider.default()
-        return CodexSubagentFallbackResearchProvider.default(
-            working_directory=Path.cwd(),
-            timeout_seconds=300.0,
-        )
-    return OllamaResearcherProvider.default(
-        base_url=args.ollama_base_url or "http://127.0.0.1:11434",
-        model=args.ollama_model or "qwen3.5:27b",
-        timeout_seconds=args.ollama_timeout_seconds or 900.0,
-        context_length=args.ollama_context_length or 262_144,
-        max_output_tokens=args.ollama_max_output_tokens or 32_768,
-        prompt_character_limit=(
-            args.ollama_prompt_character_limit or 500_000
-        ),
-        fact_document_chunk_chars=(
-            args.ollama_fact_document_chunk_chars or 100_000
-        ),
+    if args.research_provider == "codex":
+        return None
+    if args.research_provider == "codex-collaboration":
+        return CollaborationCodexResearcherProvider.default()
+    return CodexSubagentFallbackResearchProvider.default(
+        working_directory=Path.cwd(),
+        timeout_seconds=300.0,
     )
 
 
@@ -496,30 +457,17 @@ def _research_provider_manifest(provider) -> Mapping[str, Any]:
                 type(transport).__qualname__ if transport is not None else None
             ),
             "model": getattr(transport, "model", None),
-            "context_length": getattr(transport, "context_length", None),
-            "max_output_tokens": getattr(
-                transport, "max_output_tokens", None
+            "profile": getattr(transport, "profile", None),
+            "sandbox": getattr(transport, "sandbox", None),
+            "approval_policy": getattr(
+                transport, "approval_policy", None
             ),
-            "prompt_character_limit": getattr(
-                transport, "prompt_character_limit", None
-            ),
-            "temperature": getattr(transport, "temperature", None),
-            "seed": getattr(transport, "seed", None),
-            "think": getattr(transport, "think", None),
-            "keep_alive": getattr(transport, "keep_alive", None),
-            "fact_document_chunk_chars": getattr(
-                provider, "fact_document_chunk_chars", None
-            ),
+            "extra_args": list(getattr(transport, "extra_args", ())),
         }
         identity_error = (
             f"{type(exc).__name__}:"
             + (" ".join(str(exc).split())[-500:] or "no detail")
         )
-    public_identity = {
-        key: value
-        for key, value in identity.items()
-        if key != "base_url"
-    }
     return {
         "provider_name": str(
             getattr(provider, "provider_name", type(provider).__name__)
@@ -527,14 +475,13 @@ def _research_provider_manifest(provider) -> Mapping[str, Any]:
         "transport_class": (
             type(transport).__qualname__ if transport is not None else None
         ),
-        "provider_identity": public_identity,
+        "provider_identity": identity,
         "provider_identity_hash": stable_hash(identity),
         "provider_identity_resolved": identity_error is None,
         "provider_identity_error": identity_error,
         "provider_selected_explicitly": isinstance(
             provider,
             (
-                OllamaResearcherProvider,
                 CollaborationCodexResearcherProvider,
                 CodexSubagentFallbackResearchProvider,
             ),

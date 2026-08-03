@@ -1104,7 +1104,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
-    def test_ollama_sized_candidate_roster_is_partitioned_before_transport(
+    def test_small_prompt_candidate_roster_is_partitioned_before_transport(
         self,
     ) -> None:
         provider = SourceBrainProvider()

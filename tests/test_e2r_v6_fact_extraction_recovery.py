@@ -9,6 +9,9 @@ from unittest.mock import Mock, patch
 
 from e2r.cli import resume_e2r_researcher_fact_extraction as cli
 from e2r.cli import run_e2r_researcher_mode_until_pass as full_cli
+from e2r.research_brain.planning import provider_transport
+from e2r.research_brain.researcher_mode import component_researcher
+import e2r.research_brain.researcher_mode as researcher_mode
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeConfig,
     CurrentResearchTarget,
@@ -17,6 +20,17 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
 
 
 class FactExtractionRecoveryCliTest(unittest.TestCase):
+    def test_local_llm_runtime_types_are_not_importable_or_exported(self):
+        self.assertFalse(
+            hasattr(provider_transport, "OllamaStructuredProviderTransport")
+        )
+        self.assertFalse(
+            hasattr(component_researcher, "OllamaResearcherProvider")
+        )
+        self.assertFalse(
+            hasattr(researcher_mode, "OllamaResearcherProvider")
+        )
+
     def test_cli_uses_only_collaboration_provider_and_reports_pending(self):
         target = CurrentResearchTarget("005930", "삼성전자", ("Samsung",))
         result = SimpleNamespace(
@@ -112,26 +126,51 @@ class FactExtractionRecoveryCliTest(unittest.TestCase):
             )
         self.assertEqual(status, 0)
 
-    def test_cli_does_not_expose_an_ollama_or_qwen_provider_switch(self):
-        with (
-            self.assertRaises(SystemExit),
-            redirect_stdout(StringIO()),
-            redirect_stderr(StringIO()),
+    def test_clis_do_not_expose_a_local_llm_provider_or_option(self):
+        recovery_base = [
+            "--as-of-date",
+            "2026-07-12",
+            "--symbols",
+            "005930",
+            "--archetype",
+            "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+            "--output-root",
+            "output/recovery",
+        ]
+        full_base = [
+            *recovery_base,
+            "--live-materialization-authorized",
+            "true",
+            "--checkpoint-resume",
+            "true",
+            "--gold-lane-isolated",
+            "true",
+            "--require-researcher-parity",
+            "true",
+        ]
+        forbidden_suffixes = (
+            ("--research-provider", "ollama"),
+            ("--research-provider", "qwen"),
+            ("--ollama-base-url", "http://127.0.0.1:11434"),
+            ("--ollama-model", "local-model"),
+            ("--ollama-context-length", "65536"),
+            ("--ollama-max-output-tokens", "4096"),
+            ("--ollama-prompt-character-limit", "100000"),
+            ("--ollama-fact-document-chunk-chars", "50000"),
+            ("--ollama-timeout-seconds", "60"),
+        )
+        for parser, base in (
+            (cli.build_parser(), recovery_base),
+            (full_cli.build_parser(), full_base),
         ):
-            cli.build_parser().parse_args(
-                [
-                    "--as-of-date",
-                    "2026-07-12",
-                    "--symbols",
-                    "005930",
-                    "--archetype",
-                    "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-                    "--output-root",
-                    "output/recovery",
-                    "--research-provider",
-                    "ollama",
-                ]
-            )
+            for suffix in forbidden_suffixes:
+                with (
+                    self.subTest(parser=parser.prog, suffix=suffix),
+                    self.assertRaises(SystemExit),
+                    redirect_stdout(StringIO()),
+                    redirect_stderr(StringIO()),
+                ):
+                    parser.parse_args([*base, *suffix])
 
     def test_full_and_recovery_clis_share_the_fact_transport_batch_option(self):
         recovery = cli.build_parser().parse_args(

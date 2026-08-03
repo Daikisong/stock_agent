@@ -27,6 +27,14 @@
 
 ## LLM Agent Workflow
 
+- 로컬 LLM은 호출과 계보 재사용을 모두 금지한다. Ollama, Qwen, llama.cpp,
+  LM Studio 같은 로컬 provider의 runtime class, CLI 선택지, fallback, loopback
+  endpoint, 모델 다운로드 workflow를 두지 않는다.
+- 과거 로컬 provider가 만든 query, fact, judge, ranking checkpoint를 이름만
+  Codex로 바꾸거나 새 run에서 재사용하지 않는다. 해당 checkpoint는 폐기하고
+  Codex 또는 Codex Collaboration 경로의 빈 checkpoint에서 다시 생성한다.
+- 감사 코드와 테스트는 과거 로컬 계보를 차단하기 위한 denylist 명칭만 보존할
+  수 있다. 이 명칭은 실행 가능한 provider 경로나 dependency가 아니다.
 - 이 프로젝트는 섹터/아키타입 확장형 리서치 에이전트다. 새 섹터, 새 테마, 새 누락 슬롯이 들어올 때마다 코드에 검색어 템플릿을 추가하는 방식으로 해결하지 않는다.
 - 종목명, 섹터명, 아키타입명, 누락 슬롯명을 조건으로 검색어를 하드코딩하지 않는다. 예: `if C06 then "HBM 장기공급계약 선수금..."`, `if contract_quality missing then "장기공급계약 선수금..."` 같은 deterministic query synthesis는 금지한다.
 - LLM의 역할은 현재 evidence, fetched documents, missing_information, score_gap_context를 보고 다음에 무엇을 찾아야 하는지 판단하고 `suggested_queries`를 생성하는 것이다. deterministic 코드는 LLM이 만든 query를 `as_of_date`, 회사 범위, 중복, 미래누수 기준으로 검증하고 실행만 한다.

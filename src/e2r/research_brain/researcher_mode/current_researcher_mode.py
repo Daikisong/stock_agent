@@ -229,11 +229,7 @@ class CurrentResearcherModeTargetRunner:
                 getattr(
                     effective_provider,
                     "semantic_prompt_chunk_chars",
-                    getattr(
-                        effective_provider,
-                        "fact_document_chunk_chars",
-                        220_000,
-                    ),
+                    220_000,
                 )
             ),
         )
@@ -270,11 +266,7 @@ class CurrentResearcherModeTargetRunner:
                     getattr(
                         self.provider,
                         "semantic_prompt_chunk_chars",
-                        getattr(
-                            self.provider,
-                            "fact_document_chunk_chars",
-                            220_000,
-                        ),
+                        220_000,
                     )
                 ),
             )
@@ -2055,9 +2047,7 @@ def _is_downstream_provider_or_output_failure(value: Any) -> bool:
             "PROVIDER_OR_OUTPUT_ERROR",
             "INVALID_PROVIDER_OUTPUT",
             "STRUCTUREDPROVIDER",
-            "OLLAMA_HTTP_ERROR",
             "CODEX_CLI_",
-            "CUDA ERROR",
             "CONTEXT_WINDOW",
         )
     )
@@ -2542,7 +2532,7 @@ def resume_current_fact_extraction_checkpoint(
             getattr(
                 provider,
                 "semantic_prompt_chunk_chars",
-                getattr(provider, "fact_document_chunk_chars", 220_000),
+                220_000,
             )
         ),
     )
