@@ -2383,6 +2383,136 @@ def _load_fact_checkpoint(
     }
 
 
+def resume_current_fact_extraction_checkpoint(
+    *,
+    config: CurrentResearcherModeConfig,
+    target: CurrentResearchTarget,
+    provider: StructuredResearchProvider,
+    repo_root: str | Path = ".",
+) -> ResearcherFactExtractionResult:
+    """Resume only an exact pending production fact-extraction checkpoint.
+
+    This recovery entry point deliberately reuses the same source checkpoint,
+    objective construction, prior-context projection, provider journal, and
+    fact writer as :class:`CurrentResearcherModeTargetRunner`.  It does not run
+    business-model, component, scoring, StageCourt, or Gold work.  The narrow
+    replay is useful when a collaboration response arrives after the full
+    target checkpoint has already closed: rebuilding and hashing every later
+    artifact cannot change the still-pending fact leaf.
+    """
+
+    root = Path(config.output_root) / target.symbol
+    source_checkpoint_path = root / "source_graph_checkpoint.json"
+    if not source_checkpoint_path.is_file():
+        raise ValueError("fact recovery requires a source graph checkpoint")
+    _configure_provider_response_cache(provider, root)
+
+    anchors = _historical_anchors(
+        repo_root=repo_root,
+        archetype_id=config.archetype_id,
+    )
+    initial_plans = ComponentResearchPlanner().plan(
+        target_id=target.target_id,
+        archetype_id=config.archetype_id,
+        evidence_facts=(),
+        historical_anchors=anchors,
+    )
+    initial_graph = SourceGraphExplorer().explore(
+        target_id=target.target_id,
+        as_of_date=config.as_of_date,
+        documents=(),
+        research_plans=initial_plans,
+        source_coverage=(),
+    )
+    objective_rows = tuple(
+        row.to_dict() for row in initial_graph.open_objectives
+    )
+    checkpoint = validate_source_graph_checkpoint(
+        load_source_graph_checkpoint(source_checkpoint_path),
+        target_id=target.target_id,
+        as_of_date=config.as_of_date,
+    )
+    source_config = SourceGraphAcquisitionConfig(
+        mode=config.source_acquisition_mode,
+        max_results_per_query=100,
+        max_queries_per_checkpoint=10,
+        max_candidates_per_checkpoint=100,
+        max_fetches_per_checkpoint=20,
+    )
+    source_graph = _hydrate_readonly_source_graph_run(
+        root=root,
+        checkpoint=checkpoint,
+        open_objectives=initial_graph.open_objectives,
+        config=source_config,
+        allow_pending_fact_extraction_recovery=(
+            _source_checkpoint_needs_fact_extraction_recovery(
+                root=root,
+                checkpoint=checkpoint,
+                target_id=target.target_id,
+                as_of_date=config.as_of_date,
+            )
+        ),
+    )
+    prior_context = _load_prior_research_context(
+        root,
+        target_id=target.target_id,
+        as_of_date=config.as_of_date,
+        objectives=objective_rows,
+        archetype_id=config.archetype_id,
+    )
+    prior_fact = _load_fact_checkpoint(root, source_graph=source_graph)
+    extractor = ResearcherEvidenceFactExtractor(
+        provider=provider,
+        max_document_chars_per_call=int(
+            getattr(
+                provider,
+                "semantic_prompt_chunk_chars",
+                getattr(provider, "fact_document_chunk_chars", 220_000),
+            )
+        ),
+    )
+    result = extractor.extract(
+        target_id=target.target_id,
+        target_name=target.company_name,
+        target_aliases=target.aliases,
+        archetype_id=config.archetype_id,
+        as_of_date=config.as_of_date,
+        documents=source_graph.evidence_documents,
+        open_objectives=objective_rows,
+        current_facts=prior_context["facts"],
+        score_gap_context={
+            "source_graph_status": source_graph.status,
+            "source_graph_pending_reasons": list(
+                source_graph.checkpoint.get("pending_reasons") or ()
+            ),
+            "prior_fact_extraction_feedback": list(
+                prior_context["research_gap_feedback"]
+            ),
+            "prior_structured_source_gap": dict(
+                prior_context["structured_gap_context"]
+            ),
+            "prior_deterministic_score_gap": dict(
+                prior_context["score_gap_context"]
+            ),
+            "prior_supervisor_gap": dict(
+                prior_context["supervisor_source_gap_context"]
+            ),
+        },
+        extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        **prior_fact,
+    )
+    write_researcher_fact_extraction_result(result, root)
+    write_jsonl(
+        root / "counterfacts.jsonl",
+        (
+            row.to_dict()
+            for row in result.facts
+            if row.direction == EvidenceDirection.COUNTER.value
+        ),
+    )
+    return result
+
+
 def _load_prior_research_context(
     root: Path,
     *,
