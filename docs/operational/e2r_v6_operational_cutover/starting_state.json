@@ -1,0 +1,68 @@
+{
+  "schema_version": "e2r_v6_operational_cutover_starting_state_v1",
+  "goal_file": "e2r_v6_operational_acceptance_verifiable_market_cutover_goal.md",
+  "goal_sha256": "b7f7706774f284859dbdf7aaf8799aa793b94b2a9b765b5e6d85806d451d9057",
+  "starting_commit_sha": "2e3d2c972743115a907fd41b5d4871ba59ad1102",
+  "starting_origin_main_sha": "2e3d2c972743115a907fd41b5d4871ba59ad1102",
+  "starting_worktree_clean": true,
+  "v5_reviewer_gate_status": "PHASE100_INDEPENDENT_REVIEW_PASS",
+  "v5_exact_verdict": "MEANINGFUL_E2R_RESEARCHER_PARITY_READY",
+  "v5_reviewer_roster": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J"
+  ],
+  "v5_critical_count_sum": 0,
+  "v5_full_test_count": 6637,
+  "v6_starting_status": "PHASE_101_TO_109_NOT_IMPLEMENTED",
+  "starting_canary_truth": {
+    "005930": {
+      "company_name": "삼성전자",
+      "component_score_vector": {
+        "eps_fcf_explosion": 16.0,
+        "earnings_visibility": 15.5,
+        "bottleneck_pricing": 14.5,
+        "market_mispricing": 6.8,
+        "valuation_rerating": 7.0,
+        "capital_allocation": 3.2,
+        "information_confidence": 3.8
+      },
+      "total_score": 66.8,
+      "canonical_stage": "2",
+      "stage_status": "FINAL",
+      "score_valid": true
+    },
+    "000660": {
+      "company_name": "SK하이닉스",
+      "component_score_vector": {
+        "eps_fcf_explosion": 18.0,
+        "earnings_visibility": 16.0,
+        "bottleneck_pricing": 16.5,
+        "market_mispricing": 6.4,
+        "valuation_rerating": 5.0,
+        "capital_allocation": 3.3,
+        "information_confidence": 3.6
+      },
+      "total_score": 68.8,
+      "canonical_stage": "0",
+      "stage_status": "FINAL",
+      "score_valid": true
+    }
+  },
+  "starting_krx_probe": {
+    "probe_date": "2026-08-03",
+    "effective_trading_date": "2026-07-31",
+    "raw_symbol_count": 2763,
+    "eligible_symbol_count": 2542,
+    "excluded_symbol_count": 221,
+    "status": "CURRENT_UNIVERSE_MATERIALIZATION_PASS"
+  },
+  "acceptance_authority": false
+}

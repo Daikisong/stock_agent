@@ -1,0 +1,47 @@
+{
+  "schema_version": "e2r_v6_provider_lineage_blocker_audit_v1",
+  "audit_status": "EXACT_BLOCKER_IDENTIFIED",
+  "provider_selected_for_current_invocation": "COLLABORATION_CODEX_SUBAGENT",
+  "current_invocation_provider_error_count": 0,
+  "targets": {
+    "005930": {
+      "actual_score": 66.8,
+      "actual_stage": "2",
+      "receipt_only_score_recomputed": 66.8,
+      "receipt_only_stage_recomputed": "2",
+      "component_count": 7,
+      "judge_count": 21,
+      "scoring_fact_receipt_count": 2261,
+      "source_receipt_count": 606,
+      "anchor_receipt_count": 23,
+      "fact_extraction_ollama_attempt_count": 489,
+      "inherited_ollama_scored_fact_count": 317,
+      "non_provider_verification_failure_count": 0
+    },
+    "000660": {
+      "actual_score": 68.8,
+      "actual_stage": "0",
+      "receipt_only_score_recomputed": 68.8,
+      "receipt_only_stage_recomputed": "0",
+      "component_count": 7,
+      "judge_count": 21,
+      "scoring_fact_receipt_count": 532,
+      "source_receipt_count": 237,
+      "anchor_receipt_count": 15,
+      "fact_extraction_ollama_attempt_count": 262,
+      "inherited_ollama_scored_fact_count": 10,
+      "non_provider_verification_failure_count": 0
+    }
+  },
+  "hard_acceptance_failures": [
+    "OLLAMA_CALL_COUNT_NONZERO",
+    "INHERITED_OLLAMA_SCORED_FACT_LINEAGE_PRESENT"
+  ],
+  "forbidden_repairs": [
+    "OLLAMA 계보를 CODEX로 재라벨링",
+    "receipt에서 provider 필드를 삭제",
+    "검증기에서 Ollama hard gate를 완화"
+  ],
+  "required_repair": "빈 또는 정확히 무효화된 checkpoint에서 COLLABORATION_CODEX_SUBAGENT 경로로 fact extraction과 downstream judge 결정을 재생성한 뒤 receipt를 다시 export한다.",
+  "acceptance_authority": false
+}
