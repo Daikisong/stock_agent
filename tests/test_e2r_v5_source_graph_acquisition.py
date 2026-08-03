@@ -1964,6 +1964,120 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             second.checkpoint,
         )
 
+    def test_collaboration_pending_ranking_roster_survives_navigation_migration(
+        self,
+    ) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("ISSUER_NEWSROOM",),
+            material_titles=("never-material",),
+        )
+        url = "https://issuer.example.com/category/press"
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp press archive", url),)}
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            config=config,
+        )
+        candidate_id = first.checkpoint[
+            "pending_candidate_ranking_replay_context"
+        ]["rank_batch_candidate_ids"][0]
+        self.assertEqual(
+            first.checkpoint["search_candidates"][0]["ranking_status"],
+            "PENDING",
+        )
+        first_ranking_payload = next(
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        )
+
+        provider.ranking_pending = False
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            config=config,
+            checkpoint=first.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        candidate = next(
+            row
+            for row in second.checkpoint["search_candidates"]
+            if row["candidate_id"] == candidate_id
+        )
+        self.assertEqual(candidate["ranking_status"], "NOT_MATERIAL")
+        self.assertEqual(candidate["fetch_status"], "DISCOVERY_ONLY_NOT_FETCHED")
+        ranking_payloads = [
+            row["payload"]
+            for row in provider.calls
+            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
+        ]
+        self.assertEqual(ranking_payloads, [first_ranking_payload] * 2)
+        self.assertNotIn(
+            "pending_candidate_ranking_replay_context",
+            second.checkpoint,
+        )
+
+    def test_navigation_policy_runs_after_pending_ranking_response(self) -> None:
+        provider = PendingThenCompleteRankingProvider(
+            queries=(QUERY,),
+            source_families=("ISSUER_NEWSROOM",),
+        )
+        url = "https://issuer.example.com/category/press"
+        search = RecordingSearchProvider(
+            {QUERY: (_result("Current Corp press archive", url),)}
+        )
+        config = SourceGraphAcquisitionConfig(
+            mode="TEST",
+            max_queries_per_checkpoint=1,
+            max_candidates_per_checkpoint=1,
+            max_fetches_per_checkpoint=1,
+        )
+
+        first = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(
+                fixture_text_by_url={url: _document_text("archive")}
+            ),
+            config=config,
+        )
+        provider.ranking_pending = False
+        second = self._run(
+            provider=provider,
+            search=search,
+            fetcher=PageFetcher(
+                fixture_text_by_url={url: _document_text("archive")}
+            ),
+            config=config,
+            checkpoint=first.checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        candidate = second.checkpoint["search_candidates"][0]
+        self.assertEqual(candidate["ranking_status"], "NOT_MATERIAL")
+        self.assertEqual(
+            candidate["fetch_status"],
+            "REFERENCE_DISCOVERY_REJECTED_NAVIGATION_ONLY",
+        )
+        self.assertEqual(second.evidence_documents, ())
+        self.assertNotIn(
+            "pending_candidate_ranking_replay_context",
+            second.checkpoint,
+        )
+
     def test_collaboration_ranking_prompt_lineage_allows_a_b_a_revisit(
         self,
     ) -> None:

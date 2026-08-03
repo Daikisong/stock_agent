@@ -745,10 +745,52 @@ class ResearcherSourceGraphAcquirer:
         state["source_family_provenance_semantics_version"] = (
             SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION
         )
-        _close_navigation_only_reference_routes(candidates)
-        _close_non_authority_candidate_reference_routes(candidates)
+        pending_candidate_ranking_replay = None
+        raw_candidate_ranking_replay = state.get(
+            "pending_candidate_ranking_replay_context"
+        )
+        if (
+            not checkpoint_source_repair_only
+            and isinstance(raw_candidate_ranking_replay, Mapping)
+            and raw_candidate_ranking_replay.get("replay_phase")
+            == "AWAITING_COLLABORATION_RESPONSE"
+        ):
+            pending_candidate_ranking_replay = (
+                _validated_pending_candidate_ranking_replay_context(
+                    state,
+                    candidates=candidates,
+                    objective_by_id=objective_by_id,
+                    evidence_documents=evidence_documents,
+                )
+            )
+            state["pending_candidate_ranking_replay_context"] = dict(
+                pending_candidate_ranking_replay
+            )
+        awaiting_candidate_ranking_replay_ids = {
+            str(value)
+            for value in (
+                pending_candidate_ranking_replay or {}
+            ).get("rank_batch_candidate_ids", ())
+            if str(value)
+        }
+
+        # Every deterministic migration below must leave the validated
+        # asynchronous ranking roster byte-for-byte replayable until its
+        # collaboration response has been consumed.
+        def _mutable_candidates() -> list[dict[str, Any]]:
+            return [
+                row
+                for row in candidates
+                if str(row.get("candidate_id") or "")
+                not in awaiting_candidate_ranking_replay_ids
+            ]
+
+        _close_navigation_only_reference_routes(_mutable_candidates())
+        _close_non_authority_candidate_reference_routes(
+            _mutable_candidates()
+        )
         _retire_nonmaterial_sparse_reference_transports(
-            candidates,
+            _mutable_candidates(),
             materiality_decisions=ranking_rows,
         )
         _reconcile_terminal_candidate_ranking_fetch_handoff(
@@ -757,23 +799,25 @@ class ResearcherSourceGraphAcquirer:
         )
         if not checkpoint_source_repair_only:
             _reopen_authority_link_extraction_candidates(
-                candidates,
+                _mutable_candidates(),
                 rejected_documents=rejected_rows,
             )
             _reopen_fetch_semantics_candidates(
-                candidates,
+                _mutable_candidates(),
                 rejected_documents=rejected_rows,
             )
-        pending_candidate_ranking_replay = (
-            _validated_pending_candidate_ranking_replay_context(
-                state,
-                candidates=candidates,
-                objective_by_id=objective_by_id,
-                evidence_documents=evidence_documents,
+        if (
+            pending_candidate_ranking_replay is None
+            and not checkpoint_source_repair_only
+        ):
+            pending_candidate_ranking_replay = (
+                _validated_pending_candidate_ranking_replay_context(
+                    state,
+                    candidates=candidates,
+                    objective_by_id=objective_by_id,
+                    evidence_documents=evidence_documents,
+                )
             )
-            if not checkpoint_source_repair_only
-            else None
-        )
         if pending_candidate_ranking_replay is not None:
             state["pending_candidate_ranking_replay_context"] = dict(
                 pending_candidate_ranking_replay
@@ -1092,7 +1136,7 @@ class ResearcherSourceGraphAcquirer:
                     max_total_candidates=checkpoint_candidate_limit,
                 )
         future_candidate_ids = _reject_future_candidate_metadata(
-            candidates,
+            _mutable_candidates(),
             rejected_rows,
             cutoff=cutoff,
         )
@@ -1416,7 +1460,7 @@ class ResearcherSourceGraphAcquirer:
             )
         newly_rejected_future_candidate_ids = (
             _reject_future_candidate_metadata(
-                candidates,
+                _mutable_candidates(),
                 rejected_rows,
                 cutoff=cutoff,
             )
@@ -1435,7 +1479,7 @@ class ResearcherSourceGraphAcquirer:
             query_failures, key_fields=("query_id", "failure_reason")
         )
         _annotate_candidate_source_hints(
-            candidates,
+            _mutable_candidates(),
             official_hosts=allowed_hosts,
         )
         current_query_edge_scope_repaired_count = 0
@@ -1446,7 +1490,7 @@ class ResearcherSourceGraphAcquirer:
         ):
             current_query_edge_scope_repaired_count = (
                 _reconcile_candidate_current_query_edge_scopes(
-                    candidates,
+                    _mutable_candidates(),
                     generated_rows,
                     ranking_rows,
                 )
@@ -1458,7 +1502,9 @@ class ResearcherSourceGraphAcquirer:
             and not checkpoint_source_repair_only
         ):
             stale_pending_materiality_count = (
-                _reopen_stale_pending_materiality_candidates(candidates)
+                _reopen_stale_pending_materiality_candidates(
+                    _mutable_candidates()
+                )
             )
             if stale_pending_materiality_count:
                 pending_reasons.append(
@@ -1479,7 +1525,7 @@ class ResearcherSourceGraphAcquirer:
                 & candidate_query_edge_repair_query_ids
             )
         }
-        for row in candidates:
+        for row in _mutable_candidates():
             if (
                 str(row.get("candidate_id") or "")
                 not in candidate_query_edge_exact_rebound_ids
@@ -1894,6 +1940,19 @@ class ResearcherSourceGraphAcquirer:
                         candidate["fetch_status"] = (
                             "DISCOVERY_ONLY_NOT_FETCHED"
                         )
+            if (
+                candidate_ranking_replay_awaiting
+                and ranking.status == "COMPLETE"
+            ):
+                # The exact asynchronous roster stays immutable until its
+                # response is consumed.  Transport-only URL policy then runs
+                # before any material candidate can enter the fetch handoff.
+                _close_navigation_only_reference_routes(
+                    [
+                        candidate_by_id[candidate_id]
+                        for candidate_id in awaiting_candidate_ranking_replay_ids
+                    ]
+                )
             if (
                 pending_candidate_ranking_replay is not None
                 and ranking.status == "COMPLETE"
