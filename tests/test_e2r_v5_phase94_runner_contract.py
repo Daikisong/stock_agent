@@ -1562,6 +1562,40 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 )
             )
 
+            query_pending = {
+                **checkpoint,
+                "status": "QUERY_GENERATION_PENDING",
+                "generated_queries": [],
+                "search_candidates": [],
+                "pending_reasons": [
+                    "QUERY_PROVIDER_ERROR:COLLABORATION_RESPONSE_PENDING:"
+                    "COLLABREQ-" + "a" * 64
+                ],
+            }
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=query_pending,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            query_execution_pending = {
+                **checkpoint,
+                "status": "QUERY_EXECUTION_PENDING",
+                "generated_queries": [{"execution_status": "PENDING"}],
+                "search_candidates": [],
+            }
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=query_execution_pending,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
             dossier["business_model_result"]["pending_reasons"] = [
                 "MATERIAL_FACT_GAP_REMAINS"
             ]

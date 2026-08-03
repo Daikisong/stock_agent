@@ -1932,6 +1932,20 @@ def _source_checkpoint_needs_downstream_provider_recovery(
     source candidates are still needed.
     """
 
+    # Query planning/execution is already committed upstream work.  Consume it
+    # before retrying any dossier/scoring leaf; otherwise an old downstream
+    # provider wait can keep the source checkpoint frozen and create requests
+    # against a document graph that is known to be incomplete.
+    if (
+        str(checkpoint.get("status") or "")
+        in {"QUERY_GENERATION_PENDING", "QUERY_EXECUTION_PENDING"}
+        or any(
+            isinstance(row, Mapping)
+            and row.get("execution_status") == "PENDING"
+            for row in checkpoint.get("generated_queries") or ()
+        )
+    ):
+        return False
     if (
         _source_checkpoint_has_terminal_source_work(checkpoint)
         or not checkpoint.get("evidence_documents")
