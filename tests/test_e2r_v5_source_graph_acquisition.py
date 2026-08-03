@@ -7984,6 +7984,19 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "objective_ids": ["OBJECTIVE-1"],
             "published_at": "2026-06-20",
         }
+        unrelated_terminal_candidate = {
+            "candidate_id": "UNRELATED-TERMINAL-CANDIDATE",
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+            "url": "https://issuer.example.com/unrelated-terminal.pdf",
+            "normalized_url": (
+                "https://issuer.example.com/unrelated-terminal.pdf"
+            ),
+            "query_ids": ["QUERY-OLD"],
+            "objective_ids": ["OBJECTIVE-1"],
+        }
         state = source_graph_module._new_acquisition_state(
             target_id=TARGET,
             target_name=TARGET_NAME,
@@ -8009,7 +8022,17 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 "evidence_eligible": True,
             }
         ]
-        state["search_candidates"] = [candidate]
+        state["search_candidates"] = [
+            candidate,
+            unrelated_terminal_candidate,
+        ]
+        state["rejected_documents"] = [
+            source_graph_module._candidate_rejection(
+                unrelated_terminal_candidate,
+                "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH",
+                retryable=False,
+            )
+        ]
         state["production_downstream_document_ids"] = ["SGDOC-capped"]
         checkpoint = source_graph_module._finalize_checkpoint(state)
         provider = SourceBrainProvider(queries=())
@@ -8066,6 +8089,27 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "SGDOC-capped",
         )
         self.assertFalse(repaired_candidate["source_repair_pending"])
+        unchanged_unrelated = next(
+            row
+            for row in run.checkpoint["search_candidates"]
+            if row["candidate_id"] == "UNRELATED-TERMINAL-CANDIDATE"
+        )
+        self.assertEqual(
+            unchanged_unrelated["fetch_status"],
+            "FETCH_REJECTED",
+        )
+        self.assertNotIn(
+            "publication_metadata_fetch_retry_attempted",
+            unchanged_unrelated,
+        )
+        self.assertFalse(
+            any(
+                row.get("fetch_status")
+                in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+                for row in run.checkpoint["search_candidates"]
+                if row["candidate_id"] != "CAPPED-CANDIDATE"
+            )
+        )
         self.assertEqual(
             run.checkpoint["production_downstream_document_ids"],
             [repaired_candidate["document_id"]],

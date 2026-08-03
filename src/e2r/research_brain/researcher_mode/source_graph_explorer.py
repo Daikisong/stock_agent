@@ -747,14 +747,15 @@ class ResearcherSourceGraphAcquirer:
         )
         _close_navigation_only_reference_routes(candidates)
         _close_non_authority_candidate_reference_routes(candidates)
-        _reopen_authority_link_extraction_candidates(
-            candidates,
-            rejected_documents=rejected_rows,
-        )
-        _reopen_fetch_semantics_candidates(
-            candidates,
-            rejected_documents=rejected_rows,
-        )
+        if not checkpoint_source_repair_only:
+            _reopen_authority_link_extraction_candidates(
+                candidates,
+                rejected_documents=rejected_rows,
+            )
+            _reopen_fetch_semantics_candidates(
+                candidates,
+                rejected_documents=rejected_rows,
+            )
         pending_candidate_ranking_replay = (
             _validated_pending_candidate_ranking_replay_context(
                 state,
