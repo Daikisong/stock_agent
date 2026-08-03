@@ -124,6 +124,9 @@ def build_current_production_semantics(
         "source_acquisition_mode": str(
             getattr(config, "source_acquisition_mode", "")
         ),
+        "fact_documents_per_call": int(
+            getattr(config, "fact_documents_per_call", 1)
+        ),
     }
     target_contract = tuple(
         {

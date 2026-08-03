@@ -36,6 +36,50 @@ TARGET_IDS = ("CURRENT-A", "CURRENT-B")
 
 
 class E2RV5PostRunOnlySealTests(unittest.TestCase):
+    def test_fact_transport_batch_is_bound_into_production_semantics(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            registry = _write_registry(root)
+            rows = load_current_research_target_registry(registry)
+            targets = load_current_research_targets(
+                symbols=TARGET_IDS,
+                registry_path=registry,
+                registry_rows=rows,
+                as_of_date=AS_OF_DATE,
+            )
+
+            def semantics(batch: int):
+                config = CurrentResearcherModeConfig(
+                    as_of_date=AS_OF_DATE,
+                    archetype_id=ARCHETYPE,
+                    output_root=root,
+                    live_materialization_authorized=True,
+                    checkpoint_resume=True,
+                    gold_lane_isolated=True,
+                    require_researcher_parity=True,
+                    latest_trading_snapshot_date=AS_OF_DATE,
+                    fact_documents_per_call=batch,
+                )
+                return build_current_production_semantics(
+                    config=config,
+                    targets=targets,
+                    registry_rows=rows,
+                    target_registry_path=registry,
+                    provider_manifest={"provider_name": "TEST"},
+                    repo_root=Path.cwd(),
+                )
+
+            one = semantics(1)
+            two = semantics(2)
+            self.assertNotEqual(
+                one["config_fingerprint"],
+                two["config_fingerprint"],
+            )
+            self.assertNotEqual(
+                one["input_semantics_fingerprint"],
+                two["input_semantics_fingerprint"],
+            )
+
     def test_production_fingerprint_does_not_read_post_run_gold_code(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
