@@ -35,6 +35,8 @@ from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     PUNCTUATION_ONLY_VALUE_NORMALIZATION,
     STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED,
     TRANSPORT_FRAGMENT_VALUE_NORMALIZATION,
+    _document_transport_chunks,
+    _source_boundary_context_by_document_id,
     normalize_punctuation_only_fact_value,
 )
 
@@ -126,6 +128,83 @@ class FactProvider:
     def assert_fact_pass(self, pass_name: str) -> None:
         if pass_name != "EVIDENCE_FACT_EXTRACTION":
             raise AssertionError(pass_name)
+
+
+class BoundaryPeriodFactProvider:
+    provider_name = "TEST_BOUNDARY_PERIOD_PROVIDER"
+
+    def __init__(self, *, period: str) -> None:
+        self.period = period
+        self.calls: list[Mapping[str, Any]] = []
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        if pass_name != "EVIDENCE_FACT_EXTRACTION":
+            raise AssertionError(pass_name)
+        self.calls.append(payload)
+        documents = payload["full_documents"]
+        current = next(
+            row for row in documents if row["document_id"] == "DOC-BOUNDARY-1"
+        )
+        context = current["source_boundary_context"]
+        if context["preceding_tail_text"] != "현금흐름표\n전분기":
+            raise AssertionError(context)
+        if context["preceding_context_exact_quote_authority"] is not False:
+            raise AssertionError(context)
+        quote = "영업활동으로 인한 자산 부채의 변동\n(1,973,975)"
+        coverage_audit = "fact_extraction_coverage_audit_context" in payload
+        return {
+            "facts": [] if coverage_audit else [
+                {
+                    "document_id": current["document_id"],
+                    "question_family_id": "cash_earnings_conversion",
+                    "subject_id": "target_issuer",
+                    "subject": "Current Corp",
+                    "business_segment": "CORPORATE_GENERIC",
+                    "product_family": "CORPORATE_GENERIC",
+                    "scope_business_segment": "CORPORATE_GENERIC",
+                    "scope_product_family": "CORPORATE_GENERIC",
+                    "scope_technology_family": "CORPORATE_GENERIC",
+                    "scope_transaction_type": "GENERIC_INFORMATION",
+                    "scope_economic_mechanism": "INFORMATION_ONLY",
+                    "scope_confidence": 0.9,
+                    "economic_mechanism": "working capital cash conversion",
+                    "mechanism_scope_id": "TARGET_DIRECT_CASH_EARNINGS",
+                    "predicate": "reported working capital movement",
+                    "predicate_family": "operating_cash_flow_actual",
+                    "value": -1973975,
+                    "normalized_object": "working_capital_movement",
+                    "unit": "KRW million",
+                    "period": self.period,
+                    "direction": "COUNTER",
+                    "current_lifecycle": "CURRENT",
+                    "exact_quote": quote,
+                    "material": True,
+                    "materiality": "CRITICAL",
+                    "materiality_rationale": "cash conversion is material",
+                    "confidence": 0.9,
+                    "question_family_tags": ["cash_conversion"],
+                    "primitive_tags": [],
+                    "structured_evidence_roles": [],
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "objective_relation": "ADVANCE",
+                }
+            ],
+            "document_dispositions": [
+                {
+                    "document_id": row["document_id"],
+                    "status": (
+                        "FACTS_EXTRACTED"
+                        if row["document_id"] == current["document_id"]
+                        else "NO_MATERIAL_FACT"
+                    ),
+                    "rationale": "canonical source boundary was inspected",
+                }
+                for row in documents
+            ],
+            "unresolved_document_ids": [],
+            "unresolved_research_notes": [],
+            "extraction_complete": True,
+        }
 
 
 class CorrectingQuoteFactProvider(FactProvider):
@@ -785,6 +864,211 @@ class NoNewFactCoverageChunkProvider(
 
 
 class E2RV5FactExtractionTests(unittest.TestCase):
+    def test_source_boundary_context_is_bound_only_to_first_transport_chunk(
+        self,
+    ) -> None:
+        documents = [dict(row) for row in _boundary_documents()]
+        long_text = "분기 표 본문\n" + ("가" * 15_000)
+        documents[1]["content_text"] = long_text
+        documents[1]["content_hash"] = hashlib.sha256(
+            long_text.encode("utf-8")
+        ).hexdigest()
+        contexts = _source_boundary_context_by_document_id(documents)
+        chunks = _document_transport_chunks(
+            documents[1],
+            max_chars=10_000,
+            source_boundary_context=contexts["DOC-BOUNDARY-1"],
+        )
+
+        self.assertGreater(len(chunks), 1)
+        self.assertIn("_source_boundary_context", chunks[0])
+        self.assertTrue(
+            all("_source_boundary_context" not in row for row in chunks[1:])
+        )
+        self.assertTrue(
+            all(
+                len(str(row["content_text"]))
+                + len(
+                    str(
+                        (row.get("_source_boundary_context") or {}).get(
+                            "preceding_tail_text"
+                        )
+                        or ""
+                    )
+                )
+                <= 10_000
+                for row in chunks
+            )
+        )
+
+    def test_source_boundary_context_reextracts_the_whole_legacy_call(self) -> None:
+        documents = _boundary_documents()
+        objectives = (
+            {
+                "objective_id": "OBJECTIVE-1",
+                "component_id": "capital_allocation",
+            },
+        )
+        wrong = ResearcherEvidenceFactExtractor(
+            provider=BoundaryPeriodFactProvider(period="2026Q1"),
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=documents,
+            open_objectives=objectives,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        self.assertEqual(wrong.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(
+            {row["period"] for row in wrong.material_claims},
+            {"2026Q1"},
+        )
+
+        legacy_dispositions = []
+        for row in wrong.document_dispositions:
+            legacy = dict(row)
+            legacy["extraction_semantics_version"] = "pre_boundary_context_v3"
+            legacy["batch_id"] = "FACTBATCH-LEGACY"
+            legacy_dispositions.append(legacy)
+        legacy_calls = []
+        for row in wrong.provider_calls:
+            legacy = dict(row.to_dict())
+            legacy["extraction_semantics_version"] = "pre_boundary_context_v3"
+            legacy["batch_id"] = "FACTBATCH-LEGACY"
+            legacy["prompt_hash"] = "FACTPROMPT-LEGACY"
+            legacy_calls.append(legacy)
+        legacy_rejections = (
+            {
+                "schema_version": "e2r_v5_fact_extraction_rejection_v1",
+                "batch_id": "FACTBATCH-LEGACY",
+                "proposal_index": 99,
+                "document_id": "DOC-BOUNDARY-1",
+                "reason": "IMMATERIAL_PROPOSAL_TERMINAL",
+                "material_proposal": False,
+                "proposed_exact_quote": None,
+                "extraction_semantics_version": "pre_boundary_context_v3",
+            },
+        )
+
+        migration_pending = ResearcherEvidenceFactExtractor(
+            provider=FactProvider(fail=True),
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=documents,
+            open_objectives=objectives,
+            current_facts=tuple(row.to_dict() for row in wrong.facts),
+            prior_material_claims=wrong.material_claims,
+            prior_document_dispositions=legacy_dispositions,
+            prior_provider_calls=legacy_calls,
+            prior_rejections=legacy_rejections,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+        self.assertEqual(migration_pending.status, "FACT_EXTRACTION_PENDING")
+        self.assertEqual(migration_pending.material_claims, ())
+        self.assertEqual(migration_pending.facts, ())
+        self.assertEqual(migration_pending.document_dispositions, ())
+        self.assertEqual(migration_pending.rejections, ())
+        self.assertEqual(
+            migration_pending.audit["base_reextraction_document_count"],
+            0,
+        )
+        self.assertEqual(
+            migration_pending.audit[
+                "boundary_context_reextraction_selected_document_count"
+            ],
+            2,
+        )
+        self.assertEqual(
+            migration_pending.audit[
+                "boundary_context_reextraction_completed_document_count"
+            ],
+            0,
+        )
+        self.assertEqual(
+            migration_pending.audit[
+                "boundary_context_invalidated_prior_claim_count"
+            ],
+            1,
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint_root = Path(directory)
+            write_researcher_fact_extraction_result(
+                migration_pending,
+                checkpoint_root,
+            )
+            clean_checkpoint = _load_fact_checkpoint(
+                checkpoint_root,
+                source_graph=SimpleNamespace(evidence_documents=documents),
+            )
+        self.assertEqual(clean_checkpoint["prior_material_claims"], ())
+        self.assertEqual(clean_checkpoint["prior_document_dispositions"], ())
+        self.assertEqual(clean_checkpoint["prior_provider_calls"], ())
+        self.assertEqual(clean_checkpoint["prior_rejections"], ())
+
+        corrected_provider = BoundaryPeriodFactProvider(period="2025Q1")
+        corrected = ResearcherEvidenceFactExtractor(
+            provider=corrected_provider,
+            documents_per_call=2,
+        ).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=documents,
+            open_objectives=objectives,
+            current_facts=tuple(
+                row.to_dict() for row in migration_pending.facts
+            ),
+            **clean_checkpoint,
+            extraction_mode="PRODUCTION_OBJECTIVE_LOCAL",
+        )
+
+        self.assertEqual(corrected.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertGreaterEqual(len(corrected_provider.calls), 1)
+        self.assertEqual(
+            corrected_provider.calls[0]["current_evidence_facts"][
+                "fact_count"
+            ],
+            0,
+        )
+        self.assertEqual(
+            corrected_provider.calls[0][
+                "fact_extraction_semantics_version"
+            ],
+            "e2r_v5_source_boundary_context_v4",
+        )
+        self.assertEqual(
+            {row["period"] for row in corrected.material_claims},
+            {"2025Q1"},
+        )
+        self.assertNotIn(
+            wrong.material_claims[0]["claim_id"],
+            {row["claim_id"] for row in corrected.material_claims},
+        )
+        self.assertNotIn(
+            "FACTBATCH-LEGACY",
+            {row.batch_id for row in corrected.provider_calls},
+        )
+        self.assertNotIn(
+            "FACTPROMPT-LEGACY",
+            {row.prompt_hash for row in corrected.provider_calls},
+        )
+        self.assertEqual(
+            corrected.audit["source_boundary_context_document_count"],
+            1,
+        )
+
     def test_llm_instructions_keep_corroboration_and_uncertainty_distinct(
         self,
     ) -> None:
@@ -5205,6 +5489,28 @@ class E2RV5FactExtractionTests(unittest.TestCase):
                 ]
             },
         )
+
+
+def _boundary_documents() -> tuple[Mapping[str, Any], ...]:
+    texts = (
+        "현금흐름표\n전분기",
+        "(단위 : 백만원)\n영업활동으로 인한 자산 부채의 변동\n(1,973,975)",
+    )
+    full_source_hash = hashlib.sha256("\n".join(texts).encode("utf-8")).hexdigest()
+    return tuple(
+        {
+            **dict(_document(f"DOC-BOUNDARY-{index}", "OPENDART", "OPENDART")),
+            "canonical_url": "https://example.com/boundary-source",
+            "content_text": text,
+            "content_hash": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+            "full_source_document_id": "OFFICIALSOURCE-BOUNDARY",
+            "full_source_content_hash": full_source_hash,
+            "chunk_index": index,
+            "chunk_count": len(texts),
+            "all_chunks_preserved": True,
+        }
+        for index, text in enumerate(texts)
+    )
 
 
 def _document(

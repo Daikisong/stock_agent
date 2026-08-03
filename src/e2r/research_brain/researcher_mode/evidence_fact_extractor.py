@@ -79,8 +79,9 @@ OBJECTIVE_FACT_RELATIONS = frozenset(
     {"ADVANCE", "COUNTER", "SUPERSEDE"}
 )
 FACT_EXTRACTION_SEMANTICS_VERSION = (
-    "e2r_v5_cross_objective_compound_coverage_audit_v3"
+    "e2r_v5_source_boundary_context_v4"
 )
+SOURCE_BOUNDARY_CONTEXT_CHARS = 4_000
 _TRUSTED_COVERAGE_REFRESH_SOURCE_TIERS = frozenset(
     {
         "REGULATORY_OFFICIAL",
@@ -575,6 +576,9 @@ class ResearcherEvidenceFactExtractor:
             as_of_date=as_of_date,
             cutoff=cutoff,
         )
+        source_boundary_context_by_document_id = (
+            _source_boundary_context_by_document_id(prepared)
+        )
         objective_ids = {
             str(row.get("objective_id") or "").strip()
             for row in open_objectives
@@ -681,6 +685,31 @@ class ResearcherEvidenceFactExtractor:
         ]
         if any(row.status != "COMPLETE" for row in all_checkpoint_calls):
             raise ValueError("only completed fact provider calls may be resumed")
+        boundary_context_reextraction_document_ids = (
+            _boundary_context_reextraction_document_ids(
+                documents=prepared,
+                source_boundary_context_by_document_id=(
+                    source_boundary_context_by_document_id
+                ),
+                prior_material_claims=prior_material_claims,
+                prior_document_dispositions=all_prior_dispositions,
+                prior_provider_calls=all_checkpoint_calls,
+            )
+        )
+        effective_current_facts = tuple(
+            row
+            for row in current_facts
+            if not (
+                {
+                    str(value)
+                    for value in row.get("source_ids") or ()
+                    if str(value)
+                }
+                & boundary_context_reextraction_document_ids
+            )
+            and str(row.get("document_id") or "")
+            not in boundary_context_reextraction_document_ids
+        )
         raw_coverage_complete_document_ids = {
             document_id
             for call in all_checkpoint_calls
@@ -794,11 +823,18 @@ class ResearcherEvidenceFactExtractor:
         coverage_refresh_document_ids.update(
             active_carried_coverage_refresh_document_ids
         )
+        coverage_refresh_document_ids.difference_update(
+            boundary_context_reextraction_document_ids
+        )
         new_unprocessed_document_ids = {
             str(document["document_id"])
             for document in prepared
-            if str(document["document_id"])
-            not in set(all_prior_disposition_ids)
+            if (
+                str(document["document_id"])
+                not in set(all_prior_disposition_ids)
+                or str(document["document_id"])
+                in boundary_context_reextraction_document_ids
+            )
             and str(document["document_id"])
             not in coverage_refresh_document_ids
         }
@@ -839,6 +875,7 @@ class ResearcherEvidenceFactExtractor:
         retained_prior_disposition_ids = (
             set(all_prior_disposition_ids)
             - coverage_refresh_document_ids
+            - boundary_context_reextraction_document_ids
         )
         dispositions: list[Mapping[str, Any]] = [
             row
@@ -847,7 +884,10 @@ class ResearcherEvidenceFactExtractor:
             in retained_prior_disposition_ids
         ]
         claims: list[Mapping[str, Any]] = [
-            dict(row) for row in prior_material_claims
+            dict(row)
+            for row in prior_material_claims
+            if str(row.get("document_id") or "")
+            not in boundary_context_reextraction_document_ids
         ]
         claim_ids = [str(row.get("claim_id") or "") for row in claims]
         if any(not value for value in claim_ids) or len(claim_ids) != len(set(claim_ids)):
@@ -863,6 +903,12 @@ class ResearcherEvidenceFactExtractor:
         rejections: list[FactExtractionRejection] = [
             _coerce_rejection(row)
             for row in prior_rejections
+            if str(
+                row.document_id
+                if isinstance(row, FactExtractionRejection)
+                else row.get("document_id") or ""
+            )
+            not in boundary_context_reextraction_document_ids
         ]
         pending: list[str] = []
         provider_name = str(
@@ -881,8 +927,12 @@ class ResearcherEvidenceFactExtractor:
                 str(document["document_id"])
                 in coverage_refresh_document_ids
                 or (
-                    str(document["document_id"])
-                    not in set(all_prior_disposition_ids)
+                    (
+                        str(document["document_id"])
+                        not in set(all_prior_disposition_ids)
+                        or str(document["document_id"])
+                        in boundary_context_reextraction_document_ids
+                    )
                     and bool(
                         set(document.get("objective_ids") or ())
                         & coverage_gap_objective_ids
@@ -896,6 +946,11 @@ class ResearcherEvidenceFactExtractor:
             for chunk in _document_transport_chunks(
                 document,
                 max_chars=self.max_document_chars_per_call,
+                source_boundary_context=(
+                    source_boundary_context_by_document_id.get(
+                        str(document["document_id"])
+                    )
+                ),
             )
         )
         split_chunk_ids_by_document = _split_chunk_ids_by_document(
@@ -910,7 +965,11 @@ class ResearcherEvidenceFactExtractor:
             calls=tuple(
                 call
                 for call in all_checkpoint_calls
-                if (
+                if not (
+                    set(call.document_ids)
+                    & boundary_context_reextraction_document_ids
+                )
+                and (
                     not (
                         set(call.document_ids)
                         & coverage_refresh_document_ids
@@ -931,6 +990,10 @@ class ResearcherEvidenceFactExtractor:
             for row in all_checkpoint_calls
             if set(row.document_ids).issubset(
                 set(all_prior_disposition_ids)
+            )
+            and not (
+                set(row.document_ids)
+                & boundary_context_reextraction_document_ids
             )
         ]
         checkpoint_call_object_ids = {id(row) for row in calls}
@@ -954,7 +1017,7 @@ class ResearcherEvidenceFactExtractor:
         provider_circuit_breaker_open = False
         current_fact_prompt_context = (
             _project_current_facts_with_accepted_claims(
-                current_facts=current_facts,
+                current_facts=effective_current_facts,
                 accepted_claims=claims,
                 target_id=target_id,
                 as_of_date=as_of_date,
@@ -979,6 +1042,7 @@ class ResearcherEvidenceFactExtractor:
             default=0,
         )
         max_transport_chunk_chars = 0
+        max_contextual_transport_chars = 0
         pagination_continuation_call_count = 0
         maximum_pagination_page_count = 1
         coverage_audit_call_count = 0
@@ -1027,7 +1091,7 @@ class ResearcherEvidenceFactExtractor:
             )
             current_fact_prompt_context = (
                 _project_current_facts_with_accepted_claims(
-                    current_facts=current_facts,
+                    current_facts=effective_current_facts,
                     accepted_claims=claims,
                     target_id=target_id,
                     as_of_date=as_of_date,
@@ -1044,6 +1108,9 @@ class ResearcherEvidenceFactExtractor:
             batch_identity = {
                 "target_id": target_id,
                 "as_of_date": as_of_date,
+                "extraction_semantics_version": (
+                    FACT_EXTRACTION_SEMANTICS_VERSION
+                ),
                 "document_ids": [str(row["document_id"]) for row in batch],
             }
             batch_document_ids = {
@@ -1101,6 +1168,9 @@ class ResearcherEvidenceFactExtractor:
                     "target_aliases": list(target_aliases),
                     "archetype_hypothesis": archetype_id,
                     "as_of_date": as_of_date,
+                    "fact_extraction_semantics_version": (
+                        FACT_EXTRACTION_SEMANTICS_VERSION
+                    ),
                     "open_research_objectives": [dict(row) for row in open_objectives],
                     "current_evidence_facts": current_fact_prompt_context,
                     "score_gap_context": score_gap_prompt_context,
@@ -1141,7 +1211,15 @@ class ResearcherEvidenceFactExtractor:
                             ),
                         },
                     },
-                    "full_documents": [_document_prompt_row(row) for row in batch],
+                    "full_documents": [
+                        _document_prompt_row(
+                            row,
+                            source_boundary_context=(
+                                row.get("_source_boundary_context")
+                            ),
+                        )
+                        for row in batch
+                    ],
                     **(
                         {
                             "fact_extraction_scope_contract": {
@@ -1261,6 +1339,22 @@ class ResearcherEvidenceFactExtractor:
             max_transport_chunk_chars = max(
                 max_transport_chunk_chars,
                 *(len(str(row.get("content_text") or "")) for row in batch),
+            )
+            max_contextual_transport_chars = max(
+                max_contextual_transport_chars,
+                *(
+                    len(str(row.get("content_text") or ""))
+                    + len(
+                        str(
+                            (
+                                row.get("_source_boundary_context")
+                                or {}
+                            ).get("preceding_tail_text")
+                            or ""
+                        )
+                    )
+                    for row in batch
+                ),
             )
             attempt_base_payload = payload
             attempt_payload = payload
@@ -1991,6 +2085,10 @@ class ResearcherEvidenceFactExtractor:
             if _extraction_semantics_version(row)
             == FACT_EXTRACTION_SEMANTICS_VERSION
         }
+        completed_boundary_context_reextraction_document_ids = (
+            boundary_context_reextraction_document_ids
+            & current_semantics_disposition_ids
+        )
         completed_coverage_refresh_document_ids = {
             document_id
             for document_id in set(coverage_refresh_document_ids)
@@ -2179,7 +2277,11 @@ class ResearcherEvidenceFactExtractor:
             "stale_semantics_provider_call_count": (
                 stale_semantics_provider_call_count
             ),
-            "stale_semantics_checkpoint_reextracted": False,
+            "stale_semantics_checkpoint_reextracted": bool(
+                boundary_context_reextraction_document_ids
+                and boundary_context_reextraction_document_ids
+                <= current_semantics_disposition_ids
+            ),
             "stale_semantics_checkpoint_coverage_refreshed": bool(
                 coverage_refresh_document_ids
                 & stale_semantics_disposition_ids
@@ -2187,8 +2289,15 @@ class ResearcherEvidenceFactExtractor:
             "prior_checkpoint_coverage_refreshed": bool(
                 coverage_refresh_document_ids
             ),
-            "preserved_prior_claim_count": len(
-                prior_material_claims
+            "preserved_prior_claim_count": sum(
+                str(row.get("document_id") or "")
+                not in boundary_context_reextraction_document_ids
+                for row in prior_material_claims
+            ),
+            "boundary_context_invalidated_prior_claim_count": sum(
+                str(row.get("document_id") or "")
+                in boundary_context_reextraction_document_ids
+                for row in prior_material_claims
             ),
             "prior_claim_source_provenance_rematerialized_count": sum(
                 row.get("source_provenance_rematerialized") is True
@@ -2199,7 +2308,25 @@ class ResearcherEvidenceFactExtractor:
                 for call in all_checkpoint_calls
                 for claim in call.accepted_claims or ()
             ),
-            "base_reextraction_document_count": 0,
+            "base_reextraction_document_count": len(
+                completed_boundary_context_reextraction_document_ids
+            ),
+            "boundary_context_reextraction_selected_document_count": len(
+                boundary_context_reextraction_document_ids
+            ),
+            "boundary_context_reextraction_completed_document_count": len(
+                completed_boundary_context_reextraction_document_ids
+            ),
+            "source_boundary_context_document_count": len(
+                source_boundary_context_by_document_id
+            ),
+            "source_boundary_context_total_chars": sum(
+                int(row["preceding_tail_chars"])
+                for row in source_boundary_context_by_document_id.values()
+            ),
+            "boundary_context_reextraction_document_ids": sorted(
+                boundary_context_reextraction_document_ids
+            ),
             "production_objective_local_completion": (
                 extraction_mode == "PRODUCTION_OBJECTIVE_LOCAL"
             ),
@@ -2273,8 +2400,11 @@ class ResearcherEvidenceFactExtractor:
                 "score_gap_projection_chars": score_gap_prompt_context_chars,
                 "maximum_full_document_chars": max_full_document_chars,
                 "maximum_transport_chunk_chars": max_transport_chunk_chars,
+                "maximum_contextual_transport_chars": (
+                    max_contextual_transport_chars
+                ),
                 "transport_character_bound_enforced": (
-                    max_transport_chunk_chars
+                    max_contextual_transport_chars
                     <= self.max_document_chars_per_call
                 ),
                 "split_document_count": len(split_chunk_ids_by_document),
@@ -2412,7 +2542,10 @@ def _document_batches(
     current: list[Mapping[str, Any]] = []
     current_chars = 0
     for document in documents:
-        chars = len(str(document.get("content_text") or ""))
+        boundary_context = document.get("_source_boundary_context") or {}
+        chars = len(str(document.get("content_text") or "")) + len(
+            str(boundary_context.get("preceding_tail_text") or "")
+        )
         if int(document.get("transport_chunk_count") or 1) > 1:
             if current:
                 batches.append(tuple(current))
@@ -2470,7 +2603,11 @@ def _validate_documents(
     return rows
 
 
-def _document_prompt_row(row: Mapping[str, Any]) -> Mapping[str, Any]:
+def _document_prompt_row(
+    row: Mapping[str, Any],
+    *,
+    source_boundary_context: Mapping[str, Any] | None = None,
+) -> Mapping[str, Any]:
     payload = {
         "document_id": row["document_id"],
         "canonical_url": row["canonical_url"],
@@ -2484,6 +2621,18 @@ def _document_prompt_row(row: Mapping[str, Any]) -> Mapping[str, Any]:
         "full_fetch_performed": True,
         "snippet_used_as_document": False,
     }
+    if source_boundary_context is not None:
+        payload["source_boundary_context"] = {
+            **dict(source_boundary_context),
+            "instruction": (
+                "This literal tail belongs to the immediately preceding chunk "
+                "of the same fully fetched canonical source. Use it only to "
+                "interpret a table heading, period, sentence, or section that "
+                "continues into content_text. Never emit a fact whose exact_quote "
+                "exists only in this context: every accepted exact_quote must "
+                "still be copied from this document's content_text."
+            ),
+        }
     if int(row.get("transport_chunk_count") or 1) > 1:
         payload["transport_chunk"] = {
             "transport_chunk_id": row["transport_chunk_id"],
@@ -2507,24 +2656,195 @@ def _document_prompt_row(row: Mapping[str, Any]) -> Mapping[str, Any]:
     return payload
 
 
+def _source_boundary_context_by_document_id(
+    documents: Sequence[Mapping[str, Any]],
+    *,
+    context_chars: int = SOURCE_BOUNDARY_CONTEXT_CHARS,
+) -> Mapping[str, Mapping[str, Any]]:
+    """Bind a chunk start to the literal tail of its canonical predecessor.
+
+    Official source materialization preserves every chunk, but a size boundary
+    can fall between a table's period heading and its first value.  The
+    predecessor tail is therefore prompt-only context: it does not change the
+    canonical document, its content hash, or the exact-quote authority of the
+    current chunk.
+    """
+
+    if isinstance(context_chars, bool) or not isinstance(context_chars, int):
+        raise ValueError("source boundary context size must be a positive integer")
+    if context_chars <= 0:
+        raise ValueError("source boundary context size must be a positive integer")
+    groups: dict[str, dict[int, Mapping[str, Any]]] = {}
+    for row in documents:
+        full_source_id = str(row.get("full_source_document_id") or "").strip()
+        raw_index = row.get("chunk_index")
+        raw_count = row.get("chunk_count")
+        if not full_source_id:
+            continue
+        if (
+            isinstance(raw_index, bool)
+            or not isinstance(raw_index, int)
+            or raw_index < 0
+            or isinstance(raw_count, bool)
+            or not isinstance(raw_count, int)
+            or raw_count <= 0
+            or raw_index >= raw_count
+            or row.get("all_chunks_preserved") is not True
+        ):
+            raise ValueError("canonical source chunk metadata is malformed")
+        group = groups.setdefault(full_source_id, {})
+        if raw_index in group:
+            raise ValueError("canonical source chunk index is duplicated")
+        group[raw_index] = row
+
+    output: dict[str, Mapping[str, Any]] = {}
+    for full_source_id, indexed_rows in groups.items():
+        counts = {int(row["chunk_count"]) for row in indexed_rows.values()}
+        source_hashes = {
+            str(row.get("full_source_content_hash") or "")
+            for row in indexed_rows.values()
+        }
+        canonical_urls = {
+            str(row.get("canonical_url") or "")
+            for row in indexed_rows.values()
+        }
+        targets = {
+            str(row.get("target_id") or "")
+            for row in indexed_rows.values()
+        }
+        if (
+            len(counts) != 1
+            or len(source_hashes) != 1
+            or "" in source_hashes
+            or len(canonical_urls) != 1
+            or len(targets) != 1
+        ):
+            raise ValueError("canonical source chunks disagree on source identity")
+        chunk_count = next(iter(counts))
+        if set(indexed_rows) != set(range(chunk_count)):
+            raise ValueError("canonical source chunks are not fully preserved")
+        for index in range(1, chunk_count):
+            current = indexed_rows[index]
+            preceding = indexed_rows[index - 1]
+            preceding_text = str(preceding.get("content_text") or "")
+            context_text = preceding_text[-context_chars:]
+            if not context_text:
+                raise ValueError("canonical predecessor chunk is empty")
+            output[str(current["document_id"])] = {
+                "schema_version": "e2r_v5_source_boundary_context_v1",
+                "full_source_document_id": full_source_id,
+                "current_chunk_index": index,
+                "preceding_chunk_index": index - 1,
+                "preceding_document_id": str(preceding["document_id"]),
+                "preceding_content_hash": str(preceding["content_hash"]),
+                "preceding_tail_chars": len(context_text),
+                "preceding_tail_text": context_text,
+                "context_only": True,
+                "current_document_exact_quote_authority": True,
+                "preceding_context_exact_quote_authority": False,
+            }
+    return output
+
+
+def _boundary_context_reextraction_document_ids(
+    *,
+    documents: Sequence[Mapping[str, Any]],
+    source_boundary_context_by_document_id: Mapping[
+        str, Mapping[str, Any]
+    ],
+    prior_material_claims: Sequence[Mapping[str, Any]],
+    prior_document_dispositions: Sequence[Mapping[str, Any]],
+    prior_provider_calls: Sequence[FactExtractionProviderCall],
+) -> frozenset[str]:
+    """Invalidate an old call atomically when a claim lacked chunk context.
+
+    A provider call is the durable response unit.  If one member contained a
+    claim from a non-initial canonical source chunk under the pre-context
+    semantics, removing only that claim would leave its call, disposition, and
+    compiled fact out of sync.  Expand to every document in the same completed
+    call and re-extract that bounded unit from the canonical source instead.
+    """
+
+    document_ids = {
+        str(row.get("document_id") or "") for row in documents
+    }
+    stale_document_ids = {
+        str(row.get("document_id") or "")
+        for row in prior_document_dispositions
+        if _extraction_semantics_version(row)
+        != FACT_EXTRACTION_SEMANTICS_VERSION
+    }
+    stale_document_ids.update(
+        document_id
+        for call in prior_provider_calls
+        if call.extraction_semantics_version
+        != FACT_EXTRACTION_SEMANTICS_VERSION
+        for document_id in call.document_ids
+    )
+    affected = {
+        str(claim.get("document_id") or "")
+        for claim in prior_material_claims
+        if str(claim.get("document_id") or "")
+        in source_boundary_context_by_document_id
+        and str(claim.get("document_id") or "") in stale_document_ids
+    }
+    if not affected:
+        return frozenset()
+    changed = True
+    while changed:
+        changed = False
+        for call in prior_provider_calls:
+            call_document_ids = set(call.document_ids)
+            if affected & call_document_ids and not call_document_ids <= affected:
+                affected.update(call_document_ids)
+                changed = True
+    if not affected <= document_ids:
+        raise ValueError(
+            "boundary-context re-extraction escaped current document scope"
+        )
+    return frozenset(affected)
+
+
 def _document_transport_chunks(
     document: Mapping[str, Any],
     *,
     max_chars: int,
+    source_boundary_context: Mapping[str, Any] | None = None,
 ) -> tuple[Mapping[str, Any], ...]:
     """Split one canonical document into overlapping literal transport chunks."""
 
     text = str(document.get("content_text") or "")
-    if len(text) <= max_chars:
-        return (document,)
+    boundary_context_chars = len(
+        str(
+            (source_boundary_context or {}).get(
+                "preceding_tail_text"
+            )
+            or ""
+        )
+    )
+    first_chunk_max_chars = max_chars - boundary_context_chars
+    if first_chunk_max_chars <= 0:
+        raise ValueError("source boundary context exhausts fact transport bound")
+    if len(text) <= first_chunk_max_chars:
+        return (
+            {
+                **dict(document),
+                **(
+                    {"_source_boundary_context": dict(source_boundary_context)}
+                    if source_boundary_context is not None
+                    else {}
+                ),
+            },
+        )
     overlap = min(4_000, max(1_000, max_chars // 50))
     ranges: list[tuple[int, int]] = []
     start = 0
     while start < len(text):
-        hard_end = min(len(text), start + max_chars)
+        chunk_bound = first_chunk_max_chars if not ranges else max_chars
+        hard_end = min(len(text), start + chunk_bound)
         end = hard_end
         if hard_end < len(text):
-            minimum_boundary = start + int(max_chars * 0.80)
+            minimum_boundary = start + int(chunk_bound * 0.80)
             newline = text.rfind("\n", minimum_boundary, hard_end)
             if newline >= minimum_boundary:
                 end = newline + 1
@@ -2552,6 +2872,11 @@ def _document_transport_chunks(
             {
                 **dict(document),
                 "content_text": chunk_text,
+                **(
+                    {"_source_boundary_context": dict(source_boundary_context)}
+                    if index == 0 and source_boundary_context is not None
+                    else {}
+                ),
                 "transport_chunk_id": chunk_id,
                 "transport_chunk_index": index,
                 "transport_chunk_count": count,
@@ -2567,7 +2892,19 @@ def _document_transport_chunks(
         not chunks
         or chunks[0]["transport_chunk_start"] != 0
         or chunks[-1]["transport_chunk_end"] != len(text)
-        or any(len(str(row["content_text"])) > max_chars for row in chunks)
+        or any(
+            len(str(row["content_text"]))
+            + len(
+                str(
+                    (row.get("_source_boundary_context") or {}).get(
+                        "preceding_tail_text"
+                    )
+                    or ""
+                )
+            )
+            > max_chars
+            for row in chunks
+        )
         or any(
             int(right["transport_chunk_start"])
             > int(left["transport_chunk_end"])
