@@ -1494,18 +1494,18 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     )
                 )
 
-    def test_pending_source_snapshot_recovers_downstream_provider_before_fetch(
+    def test_pending_source_transport_precedes_downstream_provider_recovery(
         self,
     ) -> None:
         checkpoint = {
-            "status": "CANDIDATE_RANKING_PENDING",
+            "status": "SOURCE_PROVIDER_PENDING",
             "generated_queries": [
                 {"execution_status": "SEARCH_EXECUTED"}
             ],
             "search_candidates": [
                 {
-                    "ranking_status": "MATERIAL",
-                    "fetch_status": "MATERIAL_PENDING_FETCH",
+                    "ranking_status": "NOT_MATERIAL",
+                    "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
                 }
             ],
             "evidence_documents": [
@@ -1557,6 +1557,83 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 _source_checkpoint_needs_downstream_provider_recovery(
                     root=root,
                     checkpoint=checkpoint,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            ranking_pending = {
+                **checkpoint,
+                "status": "CANDIDATE_RANKING_PENDING",
+                "search_candidates": [
+                    {
+                        "ranking_status": "PENDING",
+                        "fetch_status": "NOT_STARTED",
+                    }
+                ],
+            }
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=ranking_pending,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            fetch_retry_pending = {
+                **checkpoint,
+                "status": "CHECKPOINT_PENDING",
+                "search_candidates": [
+                    {
+                        "ranking_status": "MATERIAL",
+                        "fetch_status": "FETCH_RETRY_PENDING",
+                    }
+                ],
+            }
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=fetch_retry_pending,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            fetch_pending = {
+                **checkpoint,
+                "status": "CANDIDATE_RANKING_PENDING",
+                "search_candidates": [
+                    {
+                        "ranking_status": "MATERIAL",
+                        "fetch_status": "MATERIAL_PENDING_FETCH",
+                    }
+                ],
+            }
+            self.assertFalse(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=fetch_pending,
+                    target_id="CURRENT-TARGET",
+                    as_of_date=AS_OF_DATE,
+                )
+            )
+
+            resolved_with_suppressed_legacy_marker = {
+                **fetch_pending,
+                "status": "STOPPED_ON_RESOLUTION",
+                "resolved_objective_ids": ["OBJECTIVE-1"],
+                "search_candidates": [
+                    {
+                        **fetch_pending["search_candidates"][0],
+                        "objective_ids": ["OBJECTIVE-1"],
+                    }
+                ],
+            }
+            self.assertTrue(
+                _source_checkpoint_needs_downstream_provider_recovery(
+                    root=root,
+                    checkpoint=resolved_with_suppressed_legacy_marker,
                     target_id="CURRENT-TARGET",
                     as_of_date=AS_OF_DATE,
                 )
@@ -1635,12 +1712,12 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
 
     def test_production_downstream_roster_controls_provider_recovery(self) -> None:
         checkpoint = {
-            "status": "STOPPED_ON_RESOLUTION",
+            "status": "SOURCE_PROVIDER_PENDING",
             "generated_queries": [{"execution_status": "SEARCH_EXECUTED"}],
             "search_candidates": [
                 {
-                    "ranking_status": "PENDING",
-                    "fetch_status": "NOT_STARTED",
+                    "ranking_status": "NOT_MATERIAL",
+                    "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
                 }
             ],
             "evidence_documents": [
@@ -1723,12 +1800,12 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             "as_of_date": AS_OF_DATE,
             "mode": "PRODUCTION_DAILY",
             "epoch": 335,
-            "status": "STOPPED_ON_RESOLUTION",
+            "status": "SOURCE_PROVIDER_PENDING",
             "generated_queries": [{"execution_status": "SEARCH_EXECUTED"}],
             "search_candidates": [
                 {
-                    "ranking_status": "PENDING",
-                    "fetch_status": "NOT_STARTED",
+                    "ranking_status": "NOT_MATERIAL",
+                    "fetch_status": "DISCOVERY_ONLY_NOT_FETCHED",
                 }
             ],
             "evidence_documents": [{"document_id": "DOC-1"}],

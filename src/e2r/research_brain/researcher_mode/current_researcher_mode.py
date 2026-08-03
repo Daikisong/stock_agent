@@ -1932,13 +1932,22 @@ def _source_checkpoint_needs_downstream_provider_recovery(
     source candidates are still needed.
     """
 
-    # Query planning/execution is already committed upstream work.  Consume it
-    # before retrying any dossier/scoring leaf; otherwise an old downstream
-    # provider wait can keep the source checkpoint frozen and create requests
-    # against a document graph that is known to be incomplete.
+    # Active query, ranking, and fetch states are already committed upstream
+    # work.  Drain them before retrying any dossier/scoring leaf; otherwise a
+    # stale downstream provider wait can freeze an exact ranking response (or
+    # its selected fetch route) against a document graph known to be
+    # incomplete.  STOPPED_ON_RESOLUTION may retain suppressed historical
+    # pending rows, so use the source state machine status rather than treating
+    # every raw legacy marker as active.  Fact extraction has its own narrower
+    # immutable-snapshot recovery path and is evaluated separately.
     if (
         str(checkpoint.get("status") or "")
-        in {"QUERY_GENERATION_PENDING", "QUERY_EXECUTION_PENDING"}
+        in {
+            "QUERY_GENERATION_PENDING",
+            "QUERY_EXECUTION_PENDING",
+            "CANDIDATE_RANKING_PENDING",
+            "CHECKPOINT_PENDING",
+        }
         or any(
             isinstance(row, Mapping)
             and row.get("execution_status") == "PENDING"
