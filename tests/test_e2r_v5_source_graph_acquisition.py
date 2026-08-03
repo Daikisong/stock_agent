@@ -4,6 +4,7 @@ import hashlib
 import json
 import tempfile
 import unittest
+from unittest import mock
 from dataclasses import replace
 from datetime import date, datetime
 from pathlib import Path
@@ -654,6 +655,30 @@ class PublicationMetadataFetcher:
             publication_metadata_semantics_version=(
                 "e2r_page_fetch_publication_metadata_v1"
             ),
+        )
+
+
+class IncompleteBoundedRepairFetcher(PageFetcher):
+    def fetch(self, url, *, as_of_date):
+        returned = self.max_text_chars or 2_000_000
+        return FetchResult(
+            url=url,
+            ok=True,
+            text="Current Corp incomplete bounded filing",
+            content_type="application/pdf",
+            fetched_at=datetime(2026, 6, 20, 8),
+            text_complete=False,
+            original_text_chars=returned + 1,
+            returned_text_chars=returned,
+        )
+
+
+class TimeoutRepairFetcher(PageFetcher):
+    def fetch(self, url, *, as_of_date):
+        return FetchResult(
+            url=url,
+            ok=False,
+            reason="live_fetch_failed:timeout",
         )
 
 
@@ -3332,7 +3357,12 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
     def test_production_general_web_requires_recorded_official_gap(self) -> None:
         provider = SourceBrainProvider()
         naver = NoNetworkLiveNaver()
-        fetcher = PageFetcher(live_enabled=True)
+        fetcher = PageFetcher(
+            live_enabled=True,
+            max_text_chars=(
+                source_graph_module.PRODUCTION_PAGE_FETCH_TEXT_CHAR_BOUND
+            ),
+        )
         config = SourceGraphAcquisitionConfig(
             mode="PRODUCTION_DAILY",
             max_queries_per_checkpoint=1,
@@ -3368,6 +3398,27 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 fetcher=PageFetcher(
                     live_enabled=True,
                     max_text_chars=None,
+                ),
+                config=SourceGraphAcquisitionConfig(
+                    mode="PRODUCTION_DAILY",
+                    max_queries_per_checkpoint=1,
+                    max_candidates_per_checkpoint=10,
+                    max_fetches_per_checkpoint=2,
+                ),
+                official_gaps={},
+            )
+
+    def test_production_daily_rejects_legacy_small_text_bound(self) -> None:
+        with self.assertRaisesRegex(
+            ValueError,
+            "complete-filing transport minimum",
+        ):
+            self._run(
+                provider=SourceBrainProvider(),
+                search=NoNetworkLiveNaver(),
+                fetcher=PageFetcher(
+                    live_enabled=True,
+                    max_text_chars=200_000,
                 ),
                 config=SourceGraphAcquisitionConfig(
                     mode="PRODUCTION_DAILY",
@@ -3434,6 +3485,24 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
         )
         checkpoint["production_downstream_document_ids"] = []
+        self.assertTrue(
+            _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
+        )
+
+        checkpoint["evidence_documents"] = [
+            {
+                "document_id": "SGDOC-legacy-cap",
+                "source_provider": "PageFetcher",
+                "content_text": "x" * 199_999,
+            }
+        ]
+        checkpoint["production_downstream_document_ids"] = [
+            "SGDOC-legacy-cap"
+        ]
+        self.assertFalse(
+            _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
+        )
+        checkpoint["evidence_documents"][0]["text_complete"] = True
         self.assertTrue(
             _source_checkpoint_is_ready_for_readonly_replay(checkpoint)
         )
@@ -7835,57 +7904,316 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
 
     def test_legacy_text_cap_document_is_quarantined_and_refetched_once(self) -> None:
-        content = "x" * 200_000
-        content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
-        candidate = {
-            "candidate_id": "CAPPED-CANDIDATE",
-            "ranking_status": "MATERIAL",
-            "fetch_status": "FULL_DOCUMENT_FETCHED",
-            "document_id": "SGDOC-capped",
-            "url": "https://issuer.example.com/capped.pdf",
-            "query_ids": ["QUERY-1"],
-            "objective_ids": ["OBJECTIVE-1"],
-        }
-        state = {
-            "target_id": TARGET,
-            "as_of_date": AS_OF_DATE,
-            "evidence_documents": [
-                {
+        for content_length in (199_999, 200_000):
+            with self.subTest(content_length=content_length):
+                content = "x" * content_length
+                content_hash = hashlib.sha256(content.encode("utf-8")).hexdigest()
+                candidate = {
+                    "candidate_id": "CAPPED-CANDIDATE",
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "FULL_DOCUMENT_FETCHED",
                     "document_id": "SGDOC-capped",
-                    "target_id": TARGET,
-                    "as_of_date": AS_OF_DATE,
-                    "canonical_url": candidate["url"],
-                    "content_hash": content_hash,
-                    "content_text": content,
-                    "source_provider": "PageFetcher",
+                    "url": "https://issuer.example.com/capped.pdf",
                     "query_ids": ["QUERY-1"],
                     "objective_ids": ["OBJECTIVE-1"],
                 }
-            ],
-            "search_candidates": [candidate],
-            "quarantined_documents": [],
-            "rejected_documents": [],
-            "query_failures": [],
-        }
+                state = {
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "evidence_documents": [
+                        {
+                            "document_id": "SGDOC-capped",
+                            "target_id": TARGET,
+                            "as_of_date": AS_OF_DATE,
+                            "canonical_url": candidate["url"],
+                            "content_hash": content_hash,
+                            "content_text": content,
+                            "source_provider": "PageFetcher",
+                            "query_ids": ["QUERY-1"],
+                            "objective_ids": ["OBJECTIVE-1"],
+                        }
+                    ],
+                    "search_candidates": [candidate],
+                    "quarantined_documents": [],
+                    "rejected_documents": [],
+                    "query_failures": [],
+                }
 
-        first = source_graph_module._quarantine_unreadable_documents(state)
-        second = source_graph_module._quarantine_unreadable_documents(state)
+                first = source_graph_module._quarantine_unreadable_documents(state)
+                second = source_graph_module._quarantine_unreadable_documents(state)
 
-        self.assertEqual(
-            first,
-            (
-                "INCOMPLETE_FULL_DOCUMENT_TEXT:"
-                "LEGACY_PAGE_FETCH_200000_CHAR_CAP",
-            ),
+                self.assertEqual(
+                    first,
+                    (
+                        "INCOMPLETE_FULL_DOCUMENT_TEXT:"
+                        "LEGACY_PAGE_FETCH_200000_CHAR_CAP",
+                    ),
+                )
+                self.assertEqual(second, ())
+                self.assertEqual(state["evidence_documents"], [])
+                self.assertEqual(
+                    candidate["fetch_status"],
+                    "MATERIAL_PENDING_FETCH",
+                )
+                self.assertTrue(candidate["parser_semantics_refetch_required"])
+                self.assertEqual(
+                    source_graph_module.validated_quarantined_document_ids(state),
+                    frozenset({"SGDOC-capped"}),
+                )
+
+    def test_source_repair_only_refetches_capped_document_without_new_research(self) -> None:
+        url = "https://issuer.example.com/capped.pdf"
+        capped = ("Current Corp legacy capped evidence " * 8_000)[:199_999]
+        repaired_text = (
+            "Published 2026-06-20\nCurrent Corp complete filing Page 299\n"
+            + "source-backed complete filing detail " * 15_000
         )
-        self.assertEqual(second, ())
-        self.assertEqual(state["evidence_documents"], [])
-        self.assertEqual(candidate["fetch_status"], "MATERIAL_PENDING_FETCH")
-        self.assertTrue(candidate["parser_semantics_refetch_required"])
+        candidate = {
+            "candidate_id": "CAPPED-CANDIDATE",
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FULL_DOCUMENT_FETCHED",
+            "document_id": "SGDOC-capped",
+            "url": url,
+            "normalized_url": url,
+            "title": "Current Corp capped filing",
+            "snippet": "Current Corp complete filing",
+            "source_family": "NAVER_DISCOVERY",
+            "query_ids": ["QUERY-1"],
+            "objective_ids": ["OBJECTIVE-1"],
+            "published_at": "2026-06-20",
+        }
+        state = source_graph_module._new_acquisition_state(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            as_of_date=AS_OF_DATE,
+            mode="PRODUCTION_DAILY",
+        )
+        state["status"] = "EPOCH_COMPLETE_REQUIRES_SUPERVISOR"
+        state["evidence_documents"] = [
+            {
+                "document_id": "SGDOC-capped",
+                "target_id": TARGET,
+                "as_of_date": AS_OF_DATE,
+                "canonical_url": url,
+                "content_hash": hashlib.sha256(capped.encode()).hexdigest(),
+                "content_text": capped,
+                "source_provider": "PageFetcher",
+                "source_family": "NAVER_DISCOVERY",
+                "published_at": "2026-06-20",
+                "available_at": "2026-06-20",
+                "query_ids": ["QUERY-1"],
+                "objective_ids": ["OBJECTIVE-1"],
+                "full_fetch_performed": True,
+                "evidence_eligible": True,
+            }
+        ]
+        state["search_candidates"] = [candidate]
+        state["production_downstream_document_ids"] = ["SGDOC-capped"]
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        provider = SourceBrainProvider(queries=())
+        search = RecordingSearchProvider({})
+
+        with mock.patch.object(
+            source_graph_module,
+            "_validate_provider_mode",
+        ):
+            run = self._run(
+                provider=provider,
+                search=search,
+                fetcher=PageFetcher(
+                    fixture_text_by_url={url: repaired_text},
+                    max_text_chars=(
+                        source_graph_module.PRODUCTION_PAGE_FETCH_TEXT_CHAR_BOUND
+                    ),
+                ),
+                config=SourceGraphAcquisitionConfig(
+                    mode="PRODUCTION_DAILY",
+                    max_queries_per_checkpoint=1,
+                    max_candidates_per_checkpoint=10,
+                    max_fetches_per_checkpoint=2,
+                ),
+                checkpoint=checkpoint,
+                resolved_objective_ids=("OBJECTIVE-1",),
+                checkpoint_source_repair_only=True,
+            )
+
+        self.assertEqual(provider.calls, [])
+        self.assertEqual(search.calls, [])
+        self.assertTrue(run.audit["checkpoint_source_repair_only"])
+        self.assertNotIn(
+            "SGDOC-capped",
+            {row["document_id"] for row in run.evidence_documents},
+        )
         self.assertEqual(
-            source_graph_module.validated_quarantined_document_ids(state),
+            source_graph_module.validated_quarantined_document_ids(
+                run.checkpoint
+            ),
             frozenset({"SGDOC-capped"}),
         )
+        repaired_candidate = next(
+            row
+            for row in run.checkpoint["search_candidates"]
+            if row["candidate_id"] == "CAPPED-CANDIDATE"
+        )
+        self.assertEqual(
+            repaired_candidate["fetch_status"],
+            "FULL_DOCUMENT_FETCHED",
+        )
+        self.assertNotEqual(
+            repaired_candidate["document_id"],
+            "SGDOC-capped",
+        )
+        self.assertFalse(repaired_candidate["source_repair_pending"])
+        self.assertEqual(
+            run.checkpoint["production_downstream_document_ids"],
+            [repaired_candidate["document_id"]],
+        )
+        repaired_document = run.evidence_documents[0]
+        self.assertEqual(
+            repaired_document["source_repair_replaces_document_id"],
+            "SGDOC-capped",
+        )
+        self.assertIn("Page 299", repaired_document["content_text"])
+        self.assertGreater(len(repaired_document["content_text"]), 500_000)
+        self.assertEqual(
+            source_graph_module.source_graph_pending_source_repair_ids(
+                run.checkpoint
+            ),
+            (),
+        )
+        self.assertFalse(
+            any(
+                row.get("graph_expansion_parent_candidate_ids")
+                == ["CAPPED-CANDIDATE"]
+                for row in run.checkpoint["search_candidates"]
+                if row["candidate_id"] != "CAPPED-CANDIDATE"
+            )
+        )
+
+    def test_source_repair_failure_remains_pending_across_identical_retries(
+        self,
+    ) -> None:
+        url = "https://issuer.example.com/capped-pending.pdf"
+        capped = ("Current Corp legacy capped evidence " * 8_000)[:199_999]
+        for fetcher in (
+            IncompleteBoundedRepairFetcher(
+                max_text_chars=(
+                    source_graph_module.PRODUCTION_PAGE_FETCH_TEXT_CHAR_BOUND
+                )
+            ),
+            TimeoutRepairFetcher(
+                max_text_chars=(
+                    source_graph_module.PRODUCTION_PAGE_FETCH_TEXT_CHAR_BOUND
+                )
+            ),
+        ):
+            with self.subTest(fetcher=type(fetcher).__name__):
+                candidate = {
+                    "candidate_id": "CAPPED-PENDING-CANDIDATE",
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "ranking_status": "MATERIAL",
+                    "fetch_status": "FULL_DOCUMENT_FETCHED",
+                    "document_id": "SGDOC-capped-pending",
+                    "url": url,
+                    "normalized_url": url,
+                    "title": "Current Corp capped filing",
+                    "query_ids": ["QUERY-1"],
+                    "objective_ids": ["OBJECTIVE-1"],
+                    "published_at": "2026-06-20",
+                }
+                state = source_graph_module._new_acquisition_state(
+                    target_id=TARGET,
+                    target_name=TARGET_NAME,
+                    as_of_date=AS_OF_DATE,
+                    mode="PRODUCTION_DAILY",
+                )
+                state["status"] = "EPOCH_COMPLETE_REQUIRES_SUPERVISOR"
+                state["evidence_documents"] = [
+                    {
+                        "document_id": "SGDOC-capped-pending",
+                        "target_id": TARGET,
+                        "as_of_date": AS_OF_DATE,
+                        "canonical_url": url,
+                        "content_hash": hashlib.sha256(
+                            capped.encode()
+                        ).hexdigest(),
+                        "content_text": capped,
+                        "source_provider": "PageFetcher",
+                        "source_family": "ISSUER_NEWSROOM",
+                        "published_at": "2026-06-20",
+                        "query_ids": ["QUERY-1"],
+                        "objective_ids": ["OBJECTIVE-1"],
+                        "full_fetch_performed": True,
+                        "evidence_eligible": True,
+                    }
+                ]
+                state["search_candidates"] = [candidate]
+                state["production_downstream_document_ids"] = [
+                    "SGDOC-capped-pending"
+                ]
+                checkpoint = source_graph_module._finalize_checkpoint(state)
+                provider = SourceBrainProvider(queries=())
+                search = RecordingSearchProvider({})
+                config = SourceGraphAcquisitionConfig(
+                    mode="PRODUCTION_DAILY",
+                    max_queries_per_checkpoint=1,
+                    max_candidates_per_checkpoint=10,
+                    max_fetches_per_checkpoint=1,
+                )
+
+                with mock.patch.object(
+                    source_graph_module,
+                    "_validate_provider_mode",
+                ):
+                    first = self._run(
+                        provider=provider,
+                        search=search,
+                        fetcher=fetcher,
+                        config=config,
+                        checkpoint=checkpoint,
+                        resolved_objective_ids=("OBJECTIVE-1",),
+                        checkpoint_source_repair_only=True,
+                    )
+                    second = self._run(
+                        provider=provider,
+                        search=search,
+                        fetcher=fetcher,
+                        config=config,
+                        checkpoint=first.checkpoint,
+                        resolved_objective_ids=("OBJECTIVE-1",),
+                        checkpoint_source_repair_only=True,
+                    )
+
+                self.assertEqual(provider.calls, [])
+                self.assertEqual(search.calls, [])
+                self.assertEqual(first.status, "SOURCE_PROVIDER_PENDING")
+                self.assertEqual(second.status, "SOURCE_PROVIDER_PENDING")
+                self.assertEqual(
+                    source_graph_module.source_graph_pending_source_repair_ids(
+                        second.checkpoint
+                    ),
+                    ("SGDOC-capped-pending",),
+                )
+                self.assertFalse(
+                    _source_checkpoint_is_ready_for_readonly_replay(
+                        second.checkpoint
+                    )
+                )
+                pending_candidate = second.checkpoint[
+                    "search_candidates"
+                ][0]
+                self.assertEqual(
+                    pending_candidate["fetch_status"],
+                    "FETCH_RETRY_PENDING",
+                )
+                self.assertGreaterEqual(
+                    pending_candidate["same_fetch_failure_count"],
+                    2,
+                )
+                self.assertEqual(second.evidence_documents, ())
 
     def test_exact_quote_failure_reopens_only_the_named_stale_pdf(self) -> None:
         document_id = "SGDOC-abcdef123456"
@@ -8708,6 +9036,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         source_coverage: Sequence[str | Mapping[str, Any]] = (),
         score_gap_context: Mapping[str, Any] | None = None,
         checkpoint_migration_only: bool = False,
+        checkpoint_source_repair_only: bool = False,
         resolved_objective_ids: Sequence[str] = (),
         open_objectives: Sequence[SourceResearchObjective] | None = None,
     ):
@@ -8736,6 +9065,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             prior_checkpoint=checkpoint,
             official_domain_allowlist=official_domains,
             checkpoint_migration_only=checkpoint_migration_only,
+            checkpoint_source_repair_only=checkpoint_source_repair_only,
         )
 
 

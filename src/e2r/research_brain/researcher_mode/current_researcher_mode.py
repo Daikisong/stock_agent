@@ -91,6 +91,8 @@ from .source_graph_explorer import (
     source_graph_active_navigation_only_document_ids,
     source_graph_acquisition_safety_critical_counts,
     source_graph_checkpoint_audit_binding,
+    source_graph_legacy_text_cap_document_ids,
+    source_graph_pending_source_repair_ids,
     validate_source_graph_checkpoint,
     write_source_graph_acquisition_run,
 )
@@ -368,6 +370,17 @@ class CurrentResearcherModeTargetRunner:
                 prior_source_checkpoint
             )
         )
+        source_checkpoint_legacy_text_cap_repair_only = bool(
+            prior_source_checkpoint is not None
+            and (
+                source_graph_legacy_text_cap_document_ids(
+                    prior_source_checkpoint
+                )
+                or source_graph_pending_source_repair_ids(
+                    prior_source_checkpoint
+                )
+            )
+        )
         source_checkpoint_migration_only = bool(
             source_checkpoint_navigation_migration_only
             or source_checkpoint_provenance_migration_only
@@ -376,6 +389,7 @@ class CurrentResearcherModeTargetRunner:
             source_resume_mode == "REUSE_READY_CHECKPOINT"
             and prior_source_checkpoint is not None
             and not source_checkpoint_migration_only
+            and not source_checkpoint_legacy_text_cap_repair_only
             and _source_checkpoint_is_ready_for_readonly_replay(
                 prior_source_checkpoint
             )
@@ -385,6 +399,7 @@ class CurrentResearcherModeTargetRunner:
             and prior_source_checkpoint is not None
             and not source_checkpoint_readonly_replayed
             and not source_checkpoint_migration_only
+            and not source_checkpoint_legacy_text_cap_repair_only
             and _source_checkpoint_needs_downstream_provider_recovery(
                 root=root,
                 checkpoint=prior_source_checkpoint,
@@ -397,6 +412,7 @@ class CurrentResearcherModeTargetRunner:
             and prior_source_checkpoint is not None
             and not source_checkpoint_readonly_replayed
             and not source_checkpoint_migration_only
+            and not source_checkpoint_legacy_text_cap_repair_only
             and not source_checkpoint_downstream_recovery_replayed
             and _source_checkpoint_needs_fact_extraction_recovery(
                 root=root,
@@ -462,6 +478,9 @@ class CurrentResearcherModeTargetRunner:
                 official_domain_allowlist=target.official_domains,
                 checkpoint_migration_only=(
                     source_checkpoint_migration_only
+                ),
+                checkpoint_source_repair_only=(
+                    source_checkpoint_legacy_text_cap_repair_only
                 ),
             )
             write_source_graph_acquisition_run(source_graph, output_root=root)
@@ -817,6 +836,9 @@ class CurrentResearcherModeTargetRunner:
             ),
             "source_checkpoint_provenance_migration_only": (
                 source_checkpoint_provenance_migration_only
+            ),
+            "source_checkpoint_legacy_text_cap_repair_only": (
+                source_checkpoint_legacy_text_cap_repair_only
             ),
             "component_memo_count": len(component_memos),
             "fact_count": len(fact_extraction.facts),
@@ -1691,6 +1713,17 @@ def _source_checkpoint_is_ready_for_readonly_replay(
         # page.  Route it through one bounded migration ADVANCE so source
         # acquisition can preserve lineage and retire derived facts without
         # creating a query, candidate, fetch, or source document.
+        return False
+    if source_graph_legacy_text_cap_document_ids(checkpoint):
+        # A legacy PageFetcher row can look terminal even though the old
+        # 200,000-character transport cap was persisted as source content.
+        # Force the existing bounded quarantine/refetch migration before any
+        # downstream fact leaf is allowed to certify that source as complete.
+        return False
+    if source_graph_pending_source_repair_ids(checkpoint):
+        # A quarantined production source cannot disappear into a resolved
+        # objective while its exact same-URL byte replacement is still
+        # pending.  Keep the target at Source/Provider Pending.
         return False
     return True
 

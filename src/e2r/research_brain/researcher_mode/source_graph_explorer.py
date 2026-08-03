@@ -80,6 +80,14 @@ NAVIGATION_ONLY_REFERENCE_POLICY_VERSION = (
 SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION = (
     "e2r_v5_customer_official_weak_discovery_override_v1"
 )
+
+# A production fetch remains bounded, while the complete fetched text stays
+# large enough for ordinary issuer filings to reach the downstream semantic
+# transport chunker.  The byte and per-checkpoint fetch bounds remain enforced
+# independently by ``PageFetcher`` and ``SourceGraphAcquisitionConfig``.
+PRODUCTION_PAGE_FETCH_TEXT_CHAR_BOUND = 2_000_000
+LEGACY_PAGE_FETCH_TEXT_CHAR_CAP = 200_000
+SOURCE_REPAIR_LINEAGE_VERSION = "e2r_v5_one_way_source_transport_repair_v1"
 QUERY_GENERATION_REPLAY_CONTEXT_SCHEMA_VERSION = (
     "e2r_v5_query_generation_replay_context_v1"
 )
@@ -575,11 +583,22 @@ class ResearcherSourceGraphAcquirer:
         prior_checkpoint: Mapping[str, Any] | None = None,
         official_domain_allowlist: Sequence[str] = (),
         checkpoint_migration_only: bool = False,
+        checkpoint_source_repair_only: bool = False,
     ) -> SourceGraphAcquisitionRun:
-        if checkpoint_migration_only and prior_checkpoint is None:
+        if (
+            checkpoint_migration_only or checkpoint_source_repair_only
+        ) and prior_checkpoint is None:
             raise ValueError(
-                "checkpoint migration requires a prior source checkpoint"
+                "checkpoint migration or source repair requires a prior "
+                "source checkpoint"
             )
+        if checkpoint_migration_only and checkpoint_source_repair_only:
+            raise ValueError(
+                "checkpoint migration and source repair modes are exclusive"
+            )
+        checkpoint_nonresearch_only = bool(
+            checkpoint_migration_only or checkpoint_source_repair_only
+        )
         cutoff = date.fromisoformat(as_of_date)
         objectives = tuple(_objective_dict(row) for row in open_objectives)
         objective_by_id = {
@@ -615,7 +634,7 @@ class ResearcherSourceGraphAcquirer:
                 state,
                 objective_ids=frozenset(objective_by_id),
             )
-            if not checkpoint_migration_only
+            if not checkpoint_nonresearch_only
             else None
         )
         if pending_query_generation_replay is not None:
@@ -655,13 +674,18 @@ class ResearcherSourceGraphAcquirer:
                 None
                 if config.mode
                 == SourceGraphAcquisitionMode.RESEARCH_BACKFILL.value
-                else 200_000
+                else PRODUCTION_PAGE_FETCH_TEXT_CHAR_BOUND
             ),
         )
         _validate_provider_mode(
             config=config,
             search_provider=search_provider,
             page_fetcher=page_fetcher,
+        )
+        source_repair_authorities = (
+            _source_repair_authorities(state)
+            if checkpoint_source_repair_only
+            else {}
         )
         checkpoint_quarantine_reasons = (
             *_quarantine_unreadable_documents(
@@ -675,6 +699,11 @@ class ResearcherSourceGraphAcquirer:
                     _fact_unreadable_document_ids(
                         effective_score_gap_context
                     )
+                ),
+                legacy_source_repair_authorities=(
+                    source_repair_authorities
+                    if checkpoint_source_repair_only
+                    else None
                 ),
             ),
             *_quarantine_navigation_only_documents(state),
@@ -733,6 +762,8 @@ class ResearcherSourceGraphAcquirer:
                 objective_by_id=objective_by_id,
                 evidence_documents=evidence_documents,
             )
+            if not checkpoint_source_repair_only
+            else None
         )
         if pending_candidate_ranking_replay is not None:
             state["pending_candidate_ranking_replay_context"] = dict(
@@ -789,6 +820,9 @@ class ResearcherSourceGraphAcquirer:
                 candidates=candidates,
                 materiality_decisions=ranking_rows,
                 fetch_records=fetch_rows,
+                quarantined_documents=(
+                    state.get("quarantined_documents") or ()
+                ),
                 facts=facts,
                 unresolved_objectives=objectives,
                 required_source_family_pairs=(
@@ -811,6 +845,11 @@ class ResearcherSourceGraphAcquirer:
             )
             in mandatory_source_family_pairs
         )
+        if checkpoint_source_repair_only:
+            # Byte transport repair must preserve the already decided
+            # objective plane.  It cannot turn historical query/family
+            # diagnostics into new semantic research work.
+            source_family_lineage_failures = ()
         source_family_gap_objective_ids = {
             str(row.get("objective_id") or "")
             for row in source_family_lineage_failures
@@ -826,6 +865,8 @@ class ResearcherSourceGraphAcquirer:
             persisted_candidate_query_edge_failures,
             key_fields=("query_id", "candidate_id", "failure_reason"),
         )
+        if checkpoint_source_repair_only:
+            candidate_query_edge_failure_roster = []
         candidate_query_edge_failure_roster = (
             _prioritize_candidate_source_family_query_edge_failures(
                 candidate_query_edge_failure_roster,
@@ -871,6 +912,8 @@ class ResearcherSourceGraphAcquirer:
             tuple[str, str]
         ] = set()
         for candidate in candidates:
+            if checkpoint_source_repair_only:
+                continue
             candidate_id = str(candidate.get("candidate_id") or "")
             source_family = str(
                 candidate.get("candidate_source_family_hint") or ""
@@ -1009,7 +1052,7 @@ class ResearcherSourceGraphAcquirer:
         # the original transcript.  Preserve those candidate-level routes
         # before using the checkpoint budget on broader document citations.
         if (
-            not checkpoint_migration_only
+            not checkpoint_nonresearch_only
             and not candidate_ranking_replay_awaiting
             and not supervisor_query_direction_priority
             and not candidate_query_edge_work_priority
@@ -1128,7 +1171,7 @@ class ResearcherSourceGraphAcquirer:
             for row in candidates
         )
         query_generation_deferred_by_candidate_work = bool(
-            not checkpoint_migration_only
+            not checkpoint_nonresearch_only
             and unresolved_objectives
             and not pending_query_rows
             and pending_candidate_work
@@ -1136,7 +1179,7 @@ class ResearcherSourceGraphAcquirer:
         )
         planner_query_failures = _dedupe_exact_mapping_rows(query_failures)
         if (
-            not checkpoint_migration_only
+            not checkpoint_nonresearch_only
             and unresolved_objectives
             and not pending_query_rows
             and (
@@ -1262,7 +1305,7 @@ class ResearcherSourceGraphAcquirer:
                 if row.get("execution_status") == "PENDING"
                 and str(row.get("objective_id")) not in resolved
             ]
-        if checkpoint_migration_only or (
+        if checkpoint_nonresearch_only or (
             pending_ranking_at_checkpoint_start
             and not candidate_query_edge_direction_priority
         ):
@@ -1387,7 +1430,11 @@ class ResearcherSourceGraphAcquirer:
             official_hosts=allowed_hosts,
         )
         current_query_edge_scope_repaired_count = 0
-        if config.mode == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value:
+        if (
+            config.mode
+            == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+            and not checkpoint_source_repair_only
+        ):
             current_query_edge_scope_repaired_count = (
                 _reconcile_candidate_current_query_edge_scopes(
                     candidates,
@@ -1396,7 +1443,11 @@ class ResearcherSourceGraphAcquirer:
                 )
             )
         stale_pending_materiality_count = 0
-        if config.mode == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value:
+        if (
+            config.mode
+            == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+            and not checkpoint_source_repair_only
+        ):
             stale_pending_materiality_count = (
                 _reopen_stale_pending_materiality_candidates(candidates)
             )
@@ -1501,7 +1552,7 @@ class ResearcherSourceGraphAcquirer:
         pending_rank = (
             []
             if (
-                checkpoint_migration_only
+                checkpoint_nonresearch_only
                 or candidate_ranking_fetch_handoff_pending
             )
             else sorted(
@@ -1910,6 +1961,13 @@ class ResearcherSourceGraphAcquirer:
                     for row in candidates
                     if row.get("fetch_status")
                     in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+                    and (
+                        not checkpoint_source_repair_only
+                        or _candidate_has_source_repair_authority(
+                            row,
+                            authorities=source_repair_authorities,
+                        )
+                    )
                     and not _candidate_resolution_suppresses_transport(row)
                 ),
                 key=lambda row: (
@@ -1950,14 +2008,23 @@ class ResearcherSourceGraphAcquirer:
                     candidate.get("matched_requested_source_family") or ""
                 )
                 if (
-                    not matched_source_family
-                    or matched_source_family == "NONE"
-                    or matched_source_family
-                    not in set(
-                        candidate.get("requested_source_families") or ()
+                    checkpoint_source_repair_only
+                    and not _candidate_has_source_repair_authority(
+                        candidate,
+                        authorities=source_repair_authorities,
                     )
-                    or candidate.get("materiality_scope_hash")
-                    != _candidate_materiality_scope_hash(candidate)
+                ) or (
+                    not checkpoint_source_repair_only
+                    and (
+                        not matched_source_family
+                        or matched_source_family == "NONE"
+                        or matched_source_family
+                        not in set(
+                            candidate.get("requested_source_families") or ()
+                        )
+                        or candidate.get("materiality_scope_hash")
+                        != _candidate_materiality_scope_hash(candidate)
+                    )
                 ):
                     raise ValueError(
                         "production fetch candidate lacks current "
@@ -1979,12 +2046,16 @@ class ResearcherSourceGraphAcquirer:
                 content_hash_to_document=content_hash_to_document,
             )
             fetch_rows.append(fetch_record)
-            deferred_reference_count = _enqueue_candidate_discovery_references(
-                candidates,
-                parent_candidate=candidate,
-                target_id=target_id,
-                as_of_date=as_of_date,
-                max_total_candidates=checkpoint_candidate_limit,
+            deferred_reference_count = (
+                0
+                if checkpoint_source_repair_only
+                else _enqueue_candidate_discovery_references(
+                    candidates,
+                    parent_candidate=candidate,
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    max_total_candidates=checkpoint_candidate_limit,
+                )
             )
             if deferred_reference_count:
                 pending_reasons.append(
@@ -2022,7 +2093,38 @@ class ResearcherSourceGraphAcquirer:
                         ),
                     }
                 )
-                if rejection.get("retryable"):
+                if (
+                    checkpoint_source_repair_only
+                    and _candidate_has_source_repair_authority(
+                        candidate,
+                        authorities=source_repair_authorities,
+                    )
+                ):
+                    # The exact old production document remains a material
+                    # source barrier until its same-URL transport replacement
+                    # succeeds.  A checkpoint spends only its bounded fetch
+                    # budget, but an identical network/truncation failure must
+                    # never turn that missing source into a normal low score.
+                    candidate["fetch_status"] = "FETCH_RETRY_PENDING"
+                    candidate["source_repair_pending"] = True
+                    candidate["same_fetch_failure_count"] = max(
+                        1,
+                        int(candidate.get("same_fetch_failure_count") or 0)
+                        + 1,
+                    )
+                    candidate["last_fetch_failure_reason"] = rejection_reason
+                    pending_reasons.append(
+                        "SOURCE_REPAIR_TRANSPORT_PENDING:"
+                        + str(
+                            candidate.get(
+                                "source_repair_replaces_document_id"
+                            )
+                            or "UNKNOWN"
+                        )
+                        + ":"
+                        + rejection_reason
+                    )
+                elif rejection.get("retryable"):
                     if repeated_identical_failure:
                         # The transport failure may be externally retryable, but
                         # another identical request with the same local route is
@@ -2053,6 +2155,18 @@ class ResearcherSourceGraphAcquirer:
                 continue
             if document is None:
                 raise ValueError("fetch candidate terminated without document or rejection")
+            if _candidate_has_source_repair_authority(
+                candidate,
+                authorities=source_repair_authorities,
+            ):
+                if not isinstance(document, dict):
+                    raise ValueError(
+                        "source repair replacement document must be mutable"
+                    )
+                _bind_source_repair_lineage(
+                    document=document,
+                    candidate=candidate,
+                )
             if fetch_record.get("disposition") == "DUPLICATE_CONTENT":
                 candidate["fetch_status"] = "DUPLICATE_CONTENT"
                 existing_document_id = str(
@@ -2063,16 +2177,26 @@ class ResearcherSourceGraphAcquirer:
                     candidate[
                         "duplicate_content_document_id"
                     ] = existing_document_id
+                    candidate["source_repair_pending"] = False
+                    candidate["source_repair_replacement_document_id"] = (
+                        existing_document_id
+                    )
                 continue
             evidence_documents.append(document)
             content_hash_to_document[str(document["content_hash"])] = document
-            deferred_reference_count = _enqueue_reference_candidates(
-                candidates,
-                document=document,
-                target_id=target_id,
-                as_of_date=as_of_date,
-                default_objective_ids=tuple(candidate.get("objective_ids") or ()),
-                max_total_candidates=checkpoint_candidate_limit,
+            deferred_reference_count = (
+                0
+                if checkpoint_source_repair_only
+                else _enqueue_reference_candidates(
+                    candidates,
+                    document=document,
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    default_objective_ids=tuple(
+                        candidate.get("objective_ids") or ()
+                    ),
+                    max_total_candidates=checkpoint_candidate_limit,
+                )
             )
             if deferred_reference_count:
                 pending_reasons.append(
@@ -2081,6 +2205,11 @@ class ResearcherSourceGraphAcquirer:
                 )
             candidate["fetch_status"] = "FULL_DOCUMENT_FETCHED"
             candidate["document_id"] = document["document_id"]
+            if candidate.get("source_repair_replaces_document_id"):
+                candidate["source_repair_pending"] = False
+                candidate["source_repair_replacement_document_id"] = (
+                    document["document_id"]
+                )
             if candidate.get(
                 "sparse_reference_transport_revalidation_attempted"
             ):
@@ -2151,6 +2280,9 @@ class ResearcherSourceGraphAcquirer:
                 candidates=candidates,
                 materiality_decisions=ranking_rows,
                 fetch_records=fetch_rows,
+                quarantined_documents=(
+                    state.get("quarantined_documents") or ()
+                ),
             )
             if config.mode
             == SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
@@ -2187,7 +2319,16 @@ class ResearcherSourceGraphAcquirer:
             and not _candidate_resolution_suppresses_transport(row)
             for row in candidates
         )
-        if query_generation and query_generation.status == "PENDING" and not query_generation.queries:
+        pending_source_repair_ids = source_graph_pending_source_repair_ids(
+            state
+        )
+        if checkpoint_source_repair_only and pending_source_repair_ids:
+            status = "SOURCE_PROVIDER_PENDING"
+            pending_reasons.extend(
+                "SOURCE_REPAIR_BARRIER_PENDING:" + document_id
+                for document_id in pending_source_repair_ids
+            )
+        elif query_generation and query_generation.status == "PENDING" and not query_generation.queries:
             status = "QUERY_GENERATION_PENDING"
         elif still_pending_rank:
             status = "CANDIDATE_RANKING_PENDING"
@@ -2289,6 +2430,11 @@ class ResearcherSourceGraphAcquirer:
             audit = {
                 **audit,
                 "checkpoint_migration_only": True,
+            }
+        if checkpoint_source_repair_only:
+            audit = {
+                **audit,
+                "checkpoint_source_repair_only": True,
             }
         audit = {
             **audit,
@@ -3057,6 +3203,11 @@ def _validate_provider_mode(
         raise ValueError(
             "production daily source graph requires a bounded PageFetcher"
         )
+    if page_fetcher.max_text_chars < PRODUCTION_PAGE_FETCH_TEXT_CHAR_BOUND:
+        raise ValueError(
+            "production daily PageFetcher text bound is below the "
+            "complete-filing transport minimum"
+        )
 
 
 def _quarantine_unreadable_documents(
@@ -3064,6 +3215,10 @@ def _quarantine_unreadable_documents(
     *,
     parser_repair_document_ids: Sequence[str] = (),
     fact_unreadable_document_ids: Sequence[str] = (),
+    legacy_source_repair_authorities: Mapping[
+        str, Mapping[str, Any]
+    ]
+    | None = None,
 ) -> tuple[str, ...]:
     """Remove unreadable or parser-stale documents on checkpoint resume.
 
@@ -3114,11 +3269,7 @@ def _quarantine_unreadable_documents(
         )
         unreadable = extracted_text_unreadable_reason(content)
         document_id = str(document.get("document_id") or "")
-        legacy_text_cap = (
-            str(document.get("source_provider") or "") == "PageFetcher"
-            and len(content) == 200_000
-            and document.get("text_complete") is not True
-        )
+        legacy_text_cap = _is_legacy_page_fetch_text_cap_document(document)
         document_is_pdf = (
             bool(document.get("is_pdf"))
             or "pdf" in str(document.get("content_type") or "").casefold()
@@ -3142,7 +3293,25 @@ def _quarantine_unreadable_documents(
             kept.append(document)
             continue
         url = str(document.get("canonical_url") or document.get("url") or "")
-        repair_refetch_required = legacy_text_cap or stale_pdf_reading_order
+        source_repair_authority = (
+            legacy_source_repair_authorities.get(document_id)
+            if legacy_text_cap
+            and legacy_source_repair_authorities is not None
+            else None
+        )
+        legacy_refetch_authorized = bool(
+            legacy_text_cap
+            and (
+                legacy_source_repair_authorities is None
+                or source_repair_authority is not None
+            )
+        )
+        repair_refetch_required = (
+            legacy_refetch_authorized or stale_pdf_reading_order
+        )
+        quarantine_retryable = bool(
+            legacy_text_cap or stale_pdf_reading_order
+        )
         rejection_reason = (
             "INCOMPLETE_FULL_DOCUMENT_TEXT:LEGACY_PAGE_FETCH_200000_CHAR_CAP"
             if legacy_text_cap
@@ -3186,11 +3355,27 @@ def _quarantine_unreadable_documents(
                     if stale_pdf_reading_order
                     else TEXT_CACHE_SEMANTICS_VERSION
                 )
+            if source_repair_authority is not None:
+                candidate.update(
+                    {
+                        "source_repair_lineage_version": (
+                            SOURCE_REPAIR_LINEAGE_VERSION
+                        ),
+                        "source_repair_replaces_document_id": document_id,
+                        "source_repair_normalized_url": (
+                            source_repair_authority["normalized_url"]
+                        ),
+                        "source_repair_prior_production_downstream_authority": (
+                            True
+                        ),
+                        "source_repair_pending": True,
+                    }
+                )
         rejection = dict(
             _candidate_rejection(
                 candidate_payload,
                 rejection_reason,
-                retryable=repair_refetch_required,
+                retryable=quarantine_retryable,
                 content_hash=str(document.get("content_hash") or "") or None,
             )
         )
@@ -3203,9 +3388,20 @@ def _quarantine_unreadable_documents(
                 "parser_refetch_required": repair_refetch_required,
             }
         )
+        if source_repair_authority is not None:
+            rejection.update(
+                {
+                    "source_repair_lineage_version": (
+                        SOURCE_REPAIR_LINEAGE_VERSION
+                    ),
+                    "source_repair_transport_authorized": True,
+                    "source_repair_normalized_url": (
+                        source_repair_authority["normalized_url"]
+                    ),
+                }
+            )
         rejected_rows.append(rejection)
-        quarantine_rows.append(
-            {
+        quarantine_row = {
                 "schema_version": "e2r_v5_source_graph_quarantine_v1",
                 "document_id": document_id,
                 "target_id": state.get("target_id"),
@@ -3220,7 +3416,25 @@ def _quarantine_unreadable_documents(
                 "score_authority": False,
                 "parser_refetch_required": repair_refetch_required,
             }
-        )
+        if source_repair_authority is not None:
+            quarantine_row.update(
+                {
+                    "source_repair_lineage_version": (
+                        SOURCE_REPAIR_LINEAGE_VERSION
+                    ),
+                    "source_repair_transport_authorized": True,
+                    "source_repair_candidate_id": (
+                        source_repair_authority["candidate_id"]
+                    ),
+                    "source_repair_normalized_url": (
+                        source_repair_authority["normalized_url"]
+                    ),
+                    "source_repair_prior_production_downstream_authority": (
+                        True
+                    ),
+                }
+            )
+        quarantine_rows.append(quarantine_row)
         query_failures.append(
             {
                 "query_id": str(
@@ -3244,6 +3458,250 @@ def _quarantine_unreadable_documents(
         quarantine_rows, key_fields=("document_id", "quarantine_reason")
     )
     return tuple(dict.fromkeys(reasons))
+
+
+def _is_legacy_page_fetch_text_cap_document(
+    document: Mapping[str, Any],
+) -> bool:
+    """Detect the old 200k PageFetcher cap after legacy ``strip()``.
+
+    The legacy fetch path bounded the returned text at exactly 200,000
+    characters and `_fetch_candidate_document` then stripped it before the
+    checkpoint row was hashed.  When the cap landed on one trailing whitespace
+    character, an incomplete document was therefore persisted as 199,999
+    characters and evaded the original exact-length migration check.
+    """
+
+    content = str(
+        document.get("content_text")
+        or document.get("full_text")
+        or document.get("content")
+        or ""
+    )
+    return bool(
+        str(document.get("source_provider") or "") == "PageFetcher"
+        and document.get("text_complete") is not True
+        and len(content)
+        in {
+            LEGACY_PAGE_FETCH_TEXT_CHAR_CAP - 1,
+            LEGACY_PAGE_FETCH_TEXT_CHAR_CAP,
+        }
+    )
+
+
+def source_graph_legacy_text_cap_document_ids(
+    checkpoint: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Return active legacy PageFetcher rows that require source migration."""
+
+    return tuple(
+        sorted(
+            str(row.get("document_id") or "")
+            for row in checkpoint.get("evidence_documents") or ()
+            if isinstance(row, Mapping)
+            and str(row.get("document_id") or "")
+            and _is_legacy_page_fetch_text_cap_document(row)
+        )
+    )
+
+
+def _source_repair_authorities(
+    state: Mapping[str, Any],
+) -> dict[str, Mapping[str, Any]]:
+    """Bind a transport repair to prior downstream membership and one URL.
+
+    The initial authority is created only while the truncated document is
+    still active and named in the prior production downstream roster.  On a
+    later retry, the same authority must be present in both the candidate and
+    its quarantine ledger row.  This lets a bounded network retry continue
+    without converting arbitrary legacy candidates into production evidence.
+    """
+
+    candidates = tuple(
+        row
+        for row in state.get("search_candidates") or ()
+        if isinstance(row, Mapping)
+    )
+    candidate_by_document_id = {
+        str(row.get("document_id") or ""): row
+        for row in candidates
+        if str(row.get("document_id") or "")
+    }
+    candidate_by_url = {
+        _normalize_url(str(row.get("normalized_url") or row.get("url") or "")): row
+        for row in candidates
+        if _normalize_url(
+            str(row.get("normalized_url") or row.get("url") or "")
+        )
+    }
+    prior_downstream_ids = {
+        str(value)
+        for value in state.get("production_downstream_document_ids") or ()
+        if str(value)
+    }
+    authorities: dict[str, Mapping[str, Any]] = {}
+    for document in state.get("evidence_documents") or ():
+        if not isinstance(document, Mapping):
+            continue
+        document_id = str(document.get("document_id") or "")
+        if (
+            not document_id
+            or document_id not in prior_downstream_ids
+            or not _is_legacy_page_fetch_text_cap_document(document)
+        ):
+            continue
+        normalized_url = _normalize_url(
+            str(document.get("canonical_url") or document.get("url") or "")
+        )
+        candidate = candidate_by_document_id.get(
+            document_id
+        ) or candidate_by_url.get(normalized_url)
+        candidate_id = str((candidate or {}).get("candidate_id") or "")
+        candidate_url = _normalize_url(
+            str(
+                (candidate or {}).get("normalized_url")
+                or (candidate or {}).get("url")
+                or ""
+            )
+        )
+        if not normalized_url or not candidate_id or candidate_url != normalized_url:
+            continue
+        authorities[document_id] = {
+            "document_id": document_id,
+            "candidate_id": candidate_id,
+            "normalized_url": normalized_url,
+        }
+
+    quarantine_by_document_id = {
+        str(row.get("document_id") or ""): row
+        for row in state.get("quarantined_documents") or ()
+        if isinstance(row, Mapping) and str(row.get("document_id") or "")
+    }
+    for candidate in candidates:
+        if (
+            candidate.get("source_repair_lineage_version")
+            != SOURCE_REPAIR_LINEAGE_VERSION
+            or candidate.get(
+                "source_repair_prior_production_downstream_authority"
+            )
+            is not True
+        ):
+            continue
+        document_id = str(
+            candidate.get("source_repair_replaces_document_id") or ""
+        )
+        candidate_id = str(candidate.get("candidate_id") or "")
+        normalized_url = _normalize_url(
+            str(candidate.get("source_repair_normalized_url") or "")
+        )
+        candidate_url = _normalize_url(
+            str(candidate.get("normalized_url") or candidate.get("url") or "")
+        )
+        quarantine = quarantine_by_document_id.get(document_id, {})
+        if (
+            not document_id
+            or not candidate_id
+            or not normalized_url
+            or candidate_url != normalized_url
+            or quarantine.get("source_repair_lineage_version")
+            != SOURCE_REPAIR_LINEAGE_VERSION
+            or quarantine.get("source_repair_transport_authorized") is not True
+            or quarantine.get(
+                "source_repair_prior_production_downstream_authority"
+            )
+            is not True
+            or str(quarantine.get("source_repair_candidate_id") or "")
+            != candidate_id
+            or _normalize_url(
+                str(quarantine.get("source_repair_normalized_url") or "")
+            )
+            != normalized_url
+            or _normalize_url(str(quarantine.get("url") or ""))
+            != normalized_url
+        ):
+            continue
+        authorities[document_id] = {
+            "document_id": document_id,
+            "candidate_id": candidate_id,
+            "normalized_url": normalized_url,
+        }
+    return authorities
+
+
+def _candidate_has_source_repair_authority(
+    candidate: Mapping[str, Any],
+    *,
+    authorities: Mapping[str, Mapping[str, Any]],
+) -> bool:
+    document_id = str(
+        candidate.get("source_repair_replaces_document_id") or ""
+    )
+    authority = authorities.get(document_id)
+    if authority is None:
+        return False
+    normalized_url = _normalize_url(
+        str(candidate.get("source_repair_normalized_url") or "")
+    )
+    return bool(
+        candidate.get("source_repair_lineage_version")
+        == SOURCE_REPAIR_LINEAGE_VERSION
+        and candidate.get(
+            "source_repair_prior_production_downstream_authority"
+        )
+        is True
+        and candidate.get("source_repair_pending") is True
+        and str(candidate.get("candidate_id") or "")
+        == str(authority.get("candidate_id") or "")
+        and normalized_url
+        == _normalize_url(str(authority.get("normalized_url") or ""))
+        and normalized_url
+        == _normalize_url(
+            str(candidate.get("normalized_url") or candidate.get("url") or "")
+        )
+    )
+
+
+def source_graph_pending_source_repair_ids(
+    checkpoint: Mapping[str, Any],
+) -> tuple[str, ...]:
+    """Return exact old production documents whose replacement is unfinished."""
+
+    authorities = _source_repair_authorities(checkpoint)
+    return tuple(
+        sorted(
+            document_id
+            for document_id, authority in authorities.items()
+            if any(
+                str(candidate.get("candidate_id") or "")
+                == str(authority.get("candidate_id") or "")
+                and candidate.get("source_repair_pending") is True
+                for candidate in checkpoint.get("search_candidates") or ()
+                if isinstance(candidate, Mapping)
+            )
+        )
+    )
+
+
+def _bind_source_repair_lineage(
+    *,
+    document: dict[str, Any],
+    candidate: Mapping[str, Any],
+) -> None:
+    """Attach the same-URL one-way replacement identity to fetched bytes."""
+
+    document.update(
+        {
+            "source_repair_lineage_version": SOURCE_REPAIR_LINEAGE_VERSION,
+            "source_repair_replaces_document_id": candidate[
+                "source_repair_replaces_document_id"
+            ],
+            "source_repair_candidate_id": candidate["candidate_id"],
+            "source_repair_normalized_url": candidate[
+                "source_repair_normalized_url"
+            ],
+            "source_repair_prior_production_downstream_authority": True,
+        }
+    )
 
 
 def _quarantine_navigation_only_documents(
@@ -3836,6 +4294,118 @@ def _page_fetcher_document_transport_binds_candidate(
     )
 
 
+def _source_repair_lineage_binds_document(
+    *,
+    document: Mapping[str, Any],
+    candidates: Sequence[Mapping[str, Any]],
+    fetch_records: Sequence[Mapping[str, Any]],
+    quarantined_documents: Sequence[Mapping[str, Any]],
+) -> bool:
+    """Validate a one-way byte replacement without granting new semantics."""
+
+    if (
+        document.get("source_repair_lineage_version")
+        != SOURCE_REPAIR_LINEAGE_VERSION
+        or document.get(
+            "source_repair_prior_production_downstream_authority"
+        )
+        is not True
+    ):
+        return False
+    old_document_id = str(
+        document.get("source_repair_replaces_document_id") or ""
+    )
+    new_document_id = str(document.get("document_id") or "")
+    candidate_id = str(document.get("source_repair_candidate_id") or "")
+    normalized_url = _normalize_url(
+        str(document.get("source_repair_normalized_url") or "")
+    )
+    if (
+        not old_document_id
+        or not new_document_id
+        or old_document_id == new_document_id
+        or not candidate_id
+        or not normalized_url
+    ):
+        return False
+    candidate = next(
+        (
+            row
+            for row in candidates
+            if str(row.get("candidate_id") or "") == candidate_id
+        ),
+        None,
+    )
+    quarantine = next(
+        (
+            row
+            for row in quarantined_documents
+            if str(row.get("document_id") or "") == old_document_id
+        ),
+        None,
+    )
+    if candidate is None or quarantine is None:
+        return False
+    candidate_url = _normalize_url(
+        str(candidate.get("normalized_url") or candidate.get("url") or "")
+    )
+    document_urls = {
+        _normalize_url(str(value))
+        for value in (
+            document.get("canonical_url"),
+            document.get("url"),
+            *(document.get("discovery_urls") or ()),
+        )
+        if str(value or "")
+    }
+    if (
+        candidate.get("source_repair_lineage_version")
+        != SOURCE_REPAIR_LINEAGE_VERSION
+        or candidate.get(
+            "source_repair_prior_production_downstream_authority"
+        )
+        is not True
+        or candidate.get("source_repair_pending") is not False
+        or str(candidate.get("source_repair_replaces_document_id") or "")
+        != old_document_id
+        or str(candidate.get("source_repair_replacement_document_id") or "")
+        != new_document_id
+        or str(candidate.get("document_id") or "") != new_document_id
+        or candidate_url != normalized_url
+        or _normalize_url(
+            str(candidate.get("source_repair_normalized_url") or "")
+        )
+        != normalized_url
+        or normalized_url not in document_urls
+        or quarantine.get("source_repair_lineage_version")
+        != SOURCE_REPAIR_LINEAGE_VERSION
+        or quarantine.get("source_repair_transport_authorized") is not True
+        or quarantine.get(
+            "source_repair_prior_production_downstream_authority"
+        )
+        is not True
+        or str(quarantine.get("source_repair_candidate_id") or "")
+        != candidate_id
+        or _normalize_url(str(quarantine.get("url") or ""))
+        != normalized_url
+        or _normalize_url(
+            str(quarantine.get("source_repair_normalized_url") or "")
+        )
+        != normalized_url
+    ):
+        return False
+    return _page_fetcher_document_transport_binds_candidate(
+        document=document,
+        candidate=candidate,
+        fetch_records=tuple(
+            row
+            for row in fetch_records
+            if str(row.get("candidate_id") or "") == candidate_id
+        ),
+        objective_ids=tuple(candidate.get("objective_ids") or ()),
+    )
+
+
 def _production_downstream_documents(
     *,
     documents: Sequence[Mapping[str, Any]],
@@ -3843,6 +4413,7 @@ def _production_downstream_documents(
     candidates: Sequence[Mapping[str, Any]],
     materiality_decisions: Sequence[Mapping[str, Any]] = (),
     fetch_records: Sequence[Mapping[str, Any]] = (),
+    quarantined_documents: Sequence[Mapping[str, Any]] = (),
 ) -> tuple[Mapping[str, Any], ...]:
     """Expose only production-validated documents to fact/supervisor stages.
 
@@ -3887,6 +4458,14 @@ def _production_downstream_documents(
         if (
             str(document.get("source_provider") or "") != "PageFetcher"
             or document_id in fact_backed_document_ids
+        ):
+            active.append(document)
+            continue
+        if _source_repair_lineage_binds_document(
+            document=document,
+            candidates=candidates,
+            fetch_records=fetch_records,
+            quarantined_documents=quarantined_documents,
         ):
             active.append(document)
             continue
@@ -4179,6 +4758,7 @@ def _requested_source_family_without_matched_fetch_failures(
     candidates: Sequence[Mapping[str, Any]],
     materiality_decisions: Sequence[Mapping[str, Any]] = (),
     fetch_records: Sequence[Mapping[str, Any]] = (),
+    quarantined_documents: Sequence[Mapping[str, Any]] = (),
     facts: Sequence[Mapping[str, Any]],
     unresolved_objectives: Sequence[Mapping[str, Any]],
     required_source_family_pairs: Sequence[tuple[str, str]] = (),
@@ -4238,6 +4818,7 @@ def _requested_source_family_without_matched_fetch_failures(
         candidates=candidates,
         materiality_decisions=materiality_decisions,
         fetch_records=fetch_records,
+        quarantined_documents=quarantined_documents,
     )
     accepted_fact_document_ids = {
         str(source_id)
@@ -5924,6 +6505,15 @@ def _audit_acquisition_run(
         ),
         "search_provider_name": type(search_provider).__name__,
         "page_fetcher_name": type(page_fetcher).__name__,
+        "page_fetcher_max_text_chars": getattr(
+            page_fetcher, "max_text_chars", None
+        ),
+        "page_fetcher_max_body_bytes": getattr(
+            page_fetcher, "max_body_bytes", None
+        ),
+        "page_fetcher_max_pdf_body_bytes": getattr(
+            page_fetcher, "max_pdf_body_bytes", None
+        ),
         "reuses_naver_free_search_provider": isinstance(
             search_provider, NaverFreeSearchProvider
         ),
@@ -6283,6 +6873,22 @@ def _candidate_scope_is_fully_resolved(
         # The objective may have been closed under an older source-family
         # interpretation, but that historical resolution cannot hide the
         # revalidation/fetch that decides current production eligibility.
+        return False
+
+    if (
+        candidate.get("fetch_status")
+        in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+        and candidate.get("parser_semantics_refetch_required") is True
+        and str(candidate.get("parser_semantics_policy_version") or "")
+        in {
+            TEXT_CACHE_SEMANTICS_VERSION,
+            PDF_TEXT_EXTRACTION_SEMANTICS_VERSION,
+        }
+    ):
+        # A bounded source-repair pass re-fetches only this exact legacy
+        # document even when another source already resolved its objective.
+        # The repair decides whether the old truncated row can remain evidence;
+        # it never reopens the objective or authorizes a new query.
         return False
 
     if (
