@@ -21,6 +21,7 @@ from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeConfig,
     CurrentResearcherModeTargetRunner,
+    FactExtractionCheckpointPending,
     load_current_research_target_registry,
     load_current_research_targets,
     write_production_lane,
@@ -195,6 +196,7 @@ def main(argv: list[str] | None = None) -> int:
 
     post_run_only = sealed_verification is not None
     runs = ()
+    fact_gate_pending: FactExtractionCheckpointPending | None = None
     if post_run_only:
         # The production lane and all target leaves remain byte-for-byte
         # sealed.  Only the post-run Gold section below may write files.
@@ -234,47 +236,112 @@ def main(argv: list[str] | None = None) -> int:
                 ),
             },
         )
-        runs = tuple(
-            _run_target_until_semantic_terminal(
-                runner=runner,
-                config=config,
-                target=target,
-            )
-            for target in targets
-        )
-        current_semantics_after_run = build_current_production_semantics(
-            config=config,
-            targets=targets,
-            registry_rows=registry_rows,
-            target_registry_path=args.target_registry,
-            provider_manifest=provider_manifest,
-            repo_root=Path.cwd(),
-        )
-        production_semantics_seal = make_production_semantics_seal(
-            before_run=current_semantics_before_run,
-            after_run=current_semantics_after_run,
-        )
-        paths = write_production_lane(
-            config=config,
-            target_runs=runs,
-            research_provider=provider_manifest,
-            production_semantics_seal=production_semantics_seal,
-        )
-        target_statuses = {
-            run.target.target_id: run.status for run in runs
-        }
-        target_completion_gates = {
-            run.target.target_id: dict(run.completion_gates) for run in runs
-        }
-        production_complete = bool(
-            all(
-                run.status
-                == "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+        completed_runs = []
+        for target in targets:
+            try:
+                completed_runs.append(
+                    _run_target_until_semantic_terminal(
+                        runner=runner,
+                        config=config,
+                        target=target,
+                    )
+                )
+            except FactExtractionCheckpointPending as exc:
+                fact_gate_pending = exc
+                break
+        runs = tuple(completed_runs)
+        if fact_gate_pending is not None:
+            # Do not synthesize a partial production lane from stale
+            # downstream outputs.  The exact fact request/response journal is
+            # the only authorized continuation point for this target.
+            target_statuses = {
+                target.target_id: (
+                    next(
+                        (
+                            run.status
+                            for run in runs
+                            if run.target.target_id == target.target_id
+                        ),
+                        "RESEARCH_CHECKPOINT_PENDING"
+                        if target.target_id
+                        == fact_gate_pending.target.target_id
+                        else "NOT_STARTED_AFTER_UPSTREAM_FACT_GATE",
+                    )
+                )
+                for target in targets
+            }
+            target_completion_gates = {
+                run.target.target_id: dict(run.completion_gates)
                 for run in runs
+            }
+            target_completion_gates[
+                fact_gate_pending.target.target_id
+            ] = dict(
+                fact_gate_pending.audit.get("completion_gates") or {}
             )
-            and production_semantics_seal.get("status")
-            == SEALED_PRODUCTION_SEMANTICS_MATCH
-        )
+            write_json(
+                output_root / "production_lane_manifest.json",
+                {
+                    "schema_version": "e2r_v5_phase94_production_lane_v1",
+                    "status": "RESEARCH_CHECKPOINT_PENDING",
+                    "as_of_date": config.as_of_date,
+                    "archetype_id": config.archetype_id,
+                    "target_ids": list(selected_target_ids),
+                    "target_statuses": target_statuses,
+                    "exact_completion_gate": str(
+                        fact_gate_pending.audit.get("exact_completion_gate")
+                        or "fact_extraction_complete"
+                    ),
+                    "pending_target_id": (
+                        fact_gate_pending.target.target_id
+                    ),
+                    "gold_visibility": False,
+                    "gold_query_visibility": False,
+                    "gold_url_visibility": False,
+                    "gold_fact_visibility": False,
+                    "comparison_timing": "POST_RUN_ONLY",
+                    "production_research_complete": False,
+                    "completion_based_on_fixed_rounds": False,
+                    "research_provider": provider_manifest,
+                },
+            )
+            paths = {"lane": output_root / "production_lane_manifest.json"}
+            production_complete = False
+        else:
+            current_semantics_after_run = build_current_production_semantics(
+                config=config,
+                targets=targets,
+                registry_rows=registry_rows,
+                target_registry_path=args.target_registry,
+                provider_manifest=provider_manifest,
+                repo_root=Path.cwd(),
+            )
+            production_semantics_seal = make_production_semantics_seal(
+                before_run=current_semantics_before_run,
+                after_run=current_semantics_after_run,
+            )
+            paths = write_production_lane(
+                config=config,
+                target_runs=runs,
+                research_provider=provider_manifest,
+                production_semantics_seal=production_semantics_seal,
+            )
+            target_statuses = {
+                run.target.target_id: run.status for run in runs
+            }
+            target_completion_gates = {
+                run.target.target_id: dict(run.completion_gates)
+                for run in runs
+            }
+            production_complete = bool(
+                all(
+                    run.status
+                    == "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+                    for run in runs
+                )
+                and production_semantics_seal.get("status")
+                == SEALED_PRODUCTION_SEMANTICS_MATCH
+            )
     post_run_status = "PENDING_PRODUCTION_RESEARCH_COMPLETION"
     gold_critical_fact_miss_count = None
     comparison_executed = False
@@ -628,6 +695,13 @@ def _run_target_until_semantic_terminal(*, runner, config, target):
         )
         refresh_canary_target_manifest_hash(progress_path.parent)
         if result.status == "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD":
+            no_progress_path.unlink(missing_ok=True)
+            refresh_canary_target_manifest_hash(progress_path.parent)
+            return result
+        if collaboration_response_waiting:
+            # An exact audited Codex request cannot resolve by immediately
+            # rerunning the same checkpoint.  Return control after one pass;
+            # the imported response will be consumed on the next clean resume.
             no_progress_path.unlink(missing_ok=True)
             refresh_canary_target_manifest_hash(progress_path.parent)
             return result

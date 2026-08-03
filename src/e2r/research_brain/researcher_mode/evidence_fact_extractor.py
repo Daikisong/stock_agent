@@ -1413,6 +1413,28 @@ class ResearcherEvidenceFactExtractor:
                     ),
                 )
                 attempt_payload = attempt_base_payload
+            if (
+                not coverage_only_batch
+                and "fact_extraction_continuation_context"
+                not in attempt_base_payload
+                and "fact_extraction_retry_context" not in attempt_base_payload
+            ):
+                # A clean resume can arrive with a changed downstream
+                # ``score_gap_context`` while an earlier pagination chain is
+                # still open.  Recover that immutable page-one origin before
+                # calling ``complete``.  Calling the current payload first
+                # would journal a second base request for the same documents
+                # merely because the downstream diagnostic changed.
+                recovered_pagination_origin = (
+                    _recover_validated_fact_extraction_pagination_origin_payload(
+                        self.provider,
+                        primary_payload=attempt_base_payload,
+                    )
+                )
+                if recovered_pagination_origin is not None:
+                    attempt_base_payload = recovered_pagination_origin
+                    attempt_payload = recovered_pagination_origin
+                    pagination_page_number = 1
             while True:
                 max_attempt_payload_chars = max(
                     max_attempt_payload_chars,

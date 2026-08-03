@@ -27,11 +27,13 @@ from e2r.models import ConsensusSnapshot, PriceBar, ResearchReport
 from e2r.production.metadata import stable_hash, write_json, write_jsonl
 from e2r.production.source_connectors.companyguide_live_connector import (
     parse_companyguide_live_consensus_payload,
+    parse_companyguide_live_page_metadata,
 )
 from e2r.research_brain.planning.provider_transport import (
     StructuredProviderUnavailable,
 )
 from e2r.sources.company_guide import CompanyGuideConnector
+from e2r.sources.opendart import OpenDARTConnector
 
 from .component_researcher import StructuredResearchProvider
 from .official_source_materializer import OfficialSourceMaterializationResult
@@ -56,6 +58,8 @@ from .structured_source_routes import (
 _DART_FULL_ACCOUNT_URL = (
     "https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json"
 )
+_DART_DISCLOSURE_LIST_URL = "https://opendart.fss.or.kr/api/list.json"
+_DART_CORP_CODE_URL = "https://opendart.fss.or.kr/api/corpCode.xml"
 _COMPANYGUIDE_SNAPSHOT_URL = (
     "https://comp.wisereport.co.kr/company/c1010001.aspx"
 )
@@ -434,6 +438,10 @@ class CurrentStructuredSourceMaterializer:
         companyguide_report_max_pages: int = 3,
         companyguide_report_max_candidates: int = 300,
         peer_provider: StructuredResearchProvider | None = None,
+        opendart_corp_code_cache_root: str | Path = (
+            "data/cache/opendart_corp_code"
+        ),
+        opendart_corp_code_max_archives: int = 3,
     ) -> None:
         if timeout_seconds <= 0 or timeout_seconds > 120:
             raise ValueError("structured source timeout must be bounded")
@@ -448,6 +456,8 @@ class CurrentStructuredSourceMaterializer:
             or companyguide_report_max_candidates > 2_000
         ):
             raise ValueError("CompanyGuide report candidate budget is invalid")
+        if not 1 <= opendart_corp_code_max_archives <= 10:
+            raise ValueError("OpenDART corp-code archive scan must be bounded")
         self.transport = transport or RequestsCurrentStructuredHTTPTransport()
         self.timeout_seconds = timeout_seconds
         self.price_lookback_days = price_lookback_days
@@ -455,6 +465,8 @@ class CurrentStructuredSourceMaterializer:
         self.companyguide_report_max_pages = companyguide_report_max_pages
         self.companyguide_report_max_candidates = companyguide_report_max_candidates
         self.peer_provider = peer_provider
+        self.opendart_corp_code_cache_root = Path(opendart_corp_code_cache_root)
+        self.opendart_corp_code_max_archives = opendart_corp_code_max_archives
 
     def materialize(
         self,
@@ -518,6 +530,7 @@ class CurrentStructuredSourceMaterializer:
             price_route,
             listing_identity_roster,
             listing_identity_roster_audit,
+            peer_price_rows,
         ) = self._price_route(
             target_id=target_id,
             cutoff=cutoff,
@@ -543,6 +556,7 @@ class CurrentStructuredSourceMaterializer:
             listing_identity_roster=listing_identity_roster,
             listing_identity_roster_audit=listing_identity_roster_audit,
             listing_snapshot_date=trading_date,
+            peer_price_rows=peer_price_rows,
             cache_root=cache_root,
             checkpoint_resume=checkpoint_resume,
             attempts=attempts,
@@ -1065,6 +1079,7 @@ class CurrentStructuredSourceMaterializer:
     ):
         bars: list[PriceBar] = []
         listing_identity_rows: list[Mapping[str, str]] = []
+        peer_price_rows: list[Mapping[str, Any]] = []
         required_listing_markets = tuple(_KRX_STOCK_URLS)
         complete_listing_markets: list[str] = []
         listing_market_details: dict[str, Mapping[str, Any]] = {}
@@ -1208,6 +1223,34 @@ class CurrentStructuredSourceMaterializer:
                 listing_identity_rows.extend(
                     market_identities
                 )
+                identity_names = {
+                    str(row["peer_symbol"]): str(row["peer_name"])
+                    for row in market_identities
+                }
+                for row in exact_snapshot_rows:
+                    symbol = str(
+                        row.get("ISU_CD") or row.get("ISU_SRT_CD") or ""
+                    )
+                    close = _float(row.get("TDD_CLSPRC"))
+                    market_cap = _float(row.get("MKTCAP"))
+                    if (
+                        symbol not in identity_names
+                        or close is None
+                        or close <= 0
+                        or market_cap is None
+                        or market_cap <= 0
+                    ):
+                        continue
+                    peer_price_rows.append(
+                        {
+                            "peer_symbol": symbol,
+                            "peer_name": identity_names[symbol],
+                            "close": close,
+                            "market_cap": market_cap,
+                            "observed_at": trading_date.isoformat(),
+                            "source_id": market_source_id,
+                        }
+                    )
                 target_row = next(
                     (
                         row
@@ -1226,6 +1269,24 @@ class CurrentStructuredSourceMaterializer:
             listing_identity_roster = _merge_listing_identity_rosters(
                 listing_identity_rows
             )
+            equity_line_counts: dict[str, int] = {}
+            for identity in listing_identity_roster:
+                base_name = _krx_equity_issuer_name_key(
+                    identity.get("peer_name")
+                )
+                equity_line_counts[base_name] = (
+                    equity_line_counts.get(base_name, 0) + 1
+                )
+            peer_price_rows = [
+                {
+                    **dict(row),
+                    "listed_equity_line_count": equity_line_counts.get(
+                        _krx_equity_issuer_name_key(row.get("peer_name")),
+                        0,
+                    ),
+                }
+                for row in peer_price_rows
+            ]
             if market:
                 for benchmark_date in (
                     trading_date - timedelta(days=35),
@@ -1354,6 +1415,7 @@ class CurrentStructuredSourceMaterializer:
                 ),
                 listing_identity_roster,
                 listing_identity_roster_audit,
+                tuple(peer_price_rows),
             )
         payload = StructuredSourcePayload(
             route_name="KRX_PRICE_MARKET_CAP",
@@ -1371,6 +1433,7 @@ class CurrentStructuredSourceMaterializer:
             InMemoryStructuredSourceRoute("KRX_PRICE_MARKET_CAP", payload),
             listing_identity_roster,
             listing_identity_roster_audit,
+            tuple(peer_price_rows),
         )
 
     def _peer_route(
@@ -1384,6 +1447,7 @@ class CurrentStructuredSourceMaterializer:
         listing_identity_roster: Sequence[Mapping[str, str]],
         listing_identity_roster_audit: Mapping[str, Any],
         listing_snapshot_date: date,
+        peer_price_rows: Sequence[Mapping[str, Any]],
         cache_root: Path,
         checkpoint_resume: bool,
         attempts: list[CurrentStructuredFetchAttempt],
@@ -1421,6 +1485,7 @@ class CurrentStructuredSourceMaterializer:
             "peer_observation_count": 0,
             "common_metric_peer_counts": {},
             "selected_peers": [],
+            "official_trailing_pb_fallbacks": [],
             "pending_reason": None,
             "listing_identity_roster": dict(listing_identity_roster_audit),
             "provider_response_cache_invalidations": [],
@@ -1750,39 +1815,31 @@ class CurrentStructuredSourceMaterializer:
                     )
                 ),
             )
-            if not text:
-                proposal_failures.append(f"{symbol}:SNAPSHOT_FETCH_FAILED")
-                continue
-            parsed = parse_companyguide_live_consensus_payload(
-                text, as_of_date=cutoff
-            )
-            actual_name = str(parsed.get("COMPANY_NAME") or "").strip()
-            if not actual_name:
-                proposal_failures.append(f"{symbol}:COMPANY_IDENTITY_UNVERIFIED")
-                continue
-            if _company_name_key(actual_name) != _company_name_key(
-                proposal["peer_name"]
-            ):
-                proposal_failures.append(f"{symbol}:COMPANY_IDENTITY_MISMATCH")
-                continue
-            if parsed.get("CONSENSUS_DATE_VERIFIED") is not True:
-                proposal_failures.append(f"{symbol}:SNAPSHOT_DATE_UNVERIFIED")
-                continue
-            try:
-                observed = date.fromisoformat(
-                    str(parsed["CONSENSUS_AS_OF_DATE"]).replace("/", "-")[:10]
+            # The exact-date KRX roster already establishes listing identity.
+            # CompanyGuide is optional here: a missing/current-only page must
+            # not prevent the bounded KRX + DART trailing-value fallback.
+            actual_name = str(proposal["peer_name"])
+            parsed: Mapping[str, Any] = {}
+            snapshot_failure = "SNAPSHOT_FETCH_FAILED"
+            if text:
+                page_metadata = parse_companyguide_live_page_metadata(text)
+                parsed = parse_companyguide_live_consensus_payload(
+                    text, as_of_date=cutoff
                 )
-            except (KeyError, ValueError):
-                proposal_failures.append(f"{symbol}:SNAPSHOT_DATE_INVALID")
-                continue
-            if observed > cutoff:
-                _mark_attempt_future_rejected(
-                    attempts,
-                    source_role=role,
-                    effective_date=observed.isoformat(),
-                )
-                proposal_failures.append(f"{symbol}:FUTURE_SNAPSHOT_REJECTED")
-                continue
+                page_name = str(
+                    page_metadata.get("COMPANY_NAME")
+                    or parsed.get("COMPANY_NAME")
+                    or ""
+                ).strip()
+                if not page_name:
+                    snapshot_failure = "COMPANY_IDENTITY_UNVERIFIED"
+                elif _company_name_key(page_name) != _company_name_key(
+                    proposal["peer_name"]
+                ):
+                    snapshot_failure = "COMPANY_IDENTITY_MISMATCH"
+                else:
+                    actual_name = page_name
+                    snapshot_failure = "CONSENSUS_PAYLOAD_UNAVAILABLE"
             source_id = next(
                 (
                     str(row["source_id"])
@@ -1792,51 +1849,100 @@ class CurrentStructuredSourceMaterializer:
                 ),
                 None,
             )
-            if not source_id:
-                proposal_failures.append(f"{symbol}:SOURCE_MANIFEST_MISSING")
-                continue
-            metrics = (
-                ("forward_pe", parsed.get("FORWARD_12M_PER")),
-                ("forward_pb", parsed.get("FORWARD_12M_PBR")),
-                ("forward_ev_ebitda", parsed.get("FORWARD_12M_EV_EBITDA")),
-            )
+            observed: date | None = None
+            if (
+                snapshot_failure not in {
+                    "COMPANY_IDENTITY_UNVERIFIED",
+                    "COMPANY_IDENTITY_MISMATCH",
+                }
+                and parsed.get("CONSENSUS_DATE_VERIFIED") is True
+            ):
+                try:
+                    observed = date.fromisoformat(
+                        str(parsed["CONSENSUS_AS_OF_DATE"])
+                        .replace("/", "-")[:10]
+                    )
+                    snapshot_failure = (
+                        "FUTURE_SNAPSHOT_REJECTED"
+                        if observed > cutoff
+                        else "NO_FORWARD_MULTIPLE"
+                    )
+                except (KeyError, ValueError):
+                    snapshot_failure = "SNAPSHOT_DATE_INVALID"
             metric_count = 0
-            for metric_id, raw_value in metrics:
-                value = _float(raw_value)
-                if value is None or value <= 0:
+            if observed is not None and observed <= cutoff and source_id:
+                metrics = (
+                    ("forward_pe", parsed.get("FORWARD_12M_PER")),
+                    ("forward_pb", parsed.get("FORWARD_12M_PBR")),
+                    (
+                        "forward_ev_ebitda",
+                        parsed.get("FORWARD_12M_EV_EBITDA"),
+                    ),
+                )
+                for metric_id, raw_value in metrics:
+                    value = _float(raw_value)
+                    if value is None or value <= 0:
+                        continue
+                    observations.append(
+                        _peer_valuation_observation(
+                            proposal=proposal,
+                            peer_name=actual_name,
+                            cutoff=cutoff,
+                            metric_id=metric_id,
+                            value=value,
+                            observed_at=observed,
+                            source_ids=(source_id,),
+                            valuation_source=(
+                                "COMPANYGUIDE_POINT_IN_TIME_SNAPSHOT"
+                            ),
+                        )
+                    )
+                    metric_count += 1
+            if metric_count == 0:
+                if snapshot_failure == "COMPANY_IDENTITY_MISMATCH":
+                    proposal_failures.append(
+                        f"{symbol}:COMPANY_IDENTITY_MISMATCH"
+                    )
                     continue
-                observations.append(
-                    PeerValuationObservation(
-                        peer_id=symbol,
-                        as_of_date=cutoff.isoformat(),
-                        metric_id=metric_id,
-                        value=value,
-                        unit="MULTIPLE",
-                        observed_at=observed.isoformat(),
-                        source_ids=(source_id,),
-                        source_route="PEER_STRUCTURED",
-                        confidence=float(proposal["confidence"]),
-                        metadata={
-                            "peer_name": actual_name,
-                            "symbol_identity_verified_from_page": True,
-                            "comparability_rationale": proposal[
-                                "comparability_rationale"
-                            ],
-                            "shared_economic_drivers": list(
-                                proposal["shared_economic_drivers"]
-                            ),
-                            "material_differences": list(
-                                proposal["material_differences"]
-                            ),
-                            "structured_source": True,
-                            "llm_supplied_metric_value": False,
-                        },
+                fallback_observation, fallback_audit = (
+                    self._peer_official_trailing_pb_observation(
+                        target_id=target_id,
+                        cutoff=cutoff,
+                        listing_snapshot_date=listing_snapshot_date,
+                        proposal=proposal,
+                        peer_price_rows=peer_price_rows,
+                        cache_root=cache_root,
+                        checkpoint_resume=checkpoint_resume,
+                        attempts=attempts,
+                        manifests=manifests,
+                        snapshot_failure=snapshot_failure,
                     )
                 )
-                metric_count += 1
-            if metric_count == 0:
-                proposal_failures.append(f"{symbol}:NO_FORWARD_MULTIPLE")
-                continue
+                base_audit["official_trailing_pb_fallbacks"].append(
+                    fallback_audit
+                )
+                if fallback_observation is None:
+                    if snapshot_failure == "FUTURE_SNAPSHOT_REJECTED":
+                        _mark_attempt_future_rejected(
+                            attempts,
+                            source_role=role,
+                            effective_date=(
+                                observed.isoformat() if observed else ""
+                            ),
+                        )
+                    proposal_failures.append(
+                        f"{symbol}:"
+                        + str(
+                            fallback_audit.get("failure_reason")
+                            or snapshot_failure
+                        )
+                    )
+                    continue
+                observations.append(fallback_observation)
+                observed = date.fromisoformat(
+                    fallback_observation.observed_at[:10]
+                )
+                metric_count = 1
             selected_rows.append(
                 {
                     "peer_symbol": symbol,
@@ -1844,8 +1950,26 @@ class CurrentStructuredSourceMaterializer:
                     "verified_peer_name": actual_name,
                     "observed_at": observed.isoformat(),
                     "structured_metric_count": metric_count,
+                    "valuation_source": (
+                        observations[-1].metadata.get("valuation_source")
+                    ),
                 }
             )
+            metric_peer_counts = {
+                metric_id: len(
+                    {
+                        row.peer_id
+                        for row in observations
+                        if row.metric_id == metric_id
+                    }
+                )
+                for metric_id in {row.metric_id for row in observations}
+            }
+            if any(count >= 2 for count in metric_peer_counts.values()):
+                base_audit["structured_fetch_stop_condition"] = (
+                    "COMMON_PEER_MULTIPLE_RESOLVED"
+                )
+                break
 
         common_counts: dict[str, int] = {}
         for metric_id in sorted({row.metric_id for row in observations}):
@@ -1976,6 +2100,7 @@ class CurrentStructuredSourceMaterializer:
                         listing_identity_roster_audit
                     ),
                     listing_snapshot_date=listing_snapshot_date,
+                    peer_price_rows=peer_price_rows,
                     cache_root=cache_root,
                     checkpoint_resume=True,
                     attempts=attempts,
@@ -2030,6 +2155,506 @@ class CurrentStructuredSourceMaterializer:
             diagnostics=base_audit,
         )
         return InMemoryStructuredSourceRoute("PEER_STRUCTURED", route_payload), base_audit
+
+    def _peer_corp_code_from_archived_directory(
+        self,
+        *,
+        target_id: str,
+        cutoff: date,
+        symbol: str,
+        company_name: str,
+        cache_root: Path,
+        attempts: list[CurrentStructuredFetchAttempt],
+        manifests: list[Mapping[str, Any]],
+    ) -> tuple[str | None, str | None, Mapping[str, Any]]:
+        """Resolve a peer identifier through a non-economic DART locator bridge.
+
+        Legacy cache folder dates are not trusted as fetch timestamps.  The
+        directory is therefore never presented as a historical source.  Only a
+        mapping whose own DART ``modify_date`` is pre-cutoff and whose name
+        matches the exact-date KRX roster may locate the issuer's dated
+        financial response.  The selected row and archive hash are persisted
+        solely to make that identifier bridge reproducible.
+        """
+
+        audit: dict[str, Any] = {
+            "status": "PENDING",
+            "archive_directory_label": None,
+            "archive_content_hash": None,
+            "mapping_modify_date": None,
+            "failure_reason": None,
+            "maximum_archive_candidates": self.opendart_corp_code_max_archives,
+            "archive_candidate_count": 0,
+            "parsed_archive_count": 0,
+            "stop_condition": None,
+            "folder_date_used_as_source_availability": False,
+            "identifier_bridge_only": True,
+            "economic_value_authority": False,
+        }
+        candidates: list[tuple[date, Path]] = []
+        for path in self.opendart_corp_code_cache_root.glob("*/corpCode.zip"):
+            try:
+                snapshot_date = date.fromisoformat(path.parent.name)
+            except ValueError:
+                continue
+            candidates.append((snapshot_date, path))
+        audit["archive_candidate_count"] = len(candidates)
+        bounded_candidates = sorted(candidates, reverse=True)[
+            : self.opendart_corp_code_max_archives
+        ]
+        for snapshot_date, path in bounded_candidates:
+            try:
+                content = path.read_bytes()
+                rows = OpenDARTConnector.normalize_company_code_archive(content)
+            except (OSError, TypeError, ValueError):
+                continue
+            audit["parsed_archive_count"] += 1
+            row = next((item for item in rows if item.stock_code == symbol), None)
+            if row is None:
+                continue
+            if _company_name_key(row.corp_name) != _company_name_key(company_name):
+                audit["failure_reason"] = "CORP_CODE_DIRECTORY_NAME_MISMATCH"
+                continue
+            if row.modify_date is None:
+                audit["failure_reason"] = "CORP_CODE_MAPPING_MODIFY_DATE_MISSING"
+                continue
+            if row.modify_date > cutoff:
+                audit["failure_reason"] = "CORP_CODE_MAPPING_MODIFIED_AFTER_CUTOFF"
+                continue
+            content_hash = hashlib.sha256(content).hexdigest()
+            response = StructuredHTTPResponse(
+                status_code=200,
+                canonical_url=_DART_CORP_CODE_URL,
+                provider_request_id="CACHE-" + content_hash[:20],
+                content_hash=content_hash,
+            )
+            role = f"PEER_CORP_CODE_DIRECTORY:{symbol}"
+            attempts.append(
+                _attempt(
+                    target_id=target_id,
+                    cutoff=cutoff,
+                    provider_name="OpenDART",
+                    source_role=role,
+                    canonical_url=_DART_CORP_CODE_URL,
+                    status="FETCHED",
+                    response=response,
+                    row_count=len(rows),
+                    effective_date=None,
+                    cache_hit=True,
+                    error=None,
+                )
+            )
+            manifest = _manifest_row(
+                target_id=target_id,
+                cutoff=cutoff,
+                provider_name="OpenDART",
+                source_role=role,
+                response=response,
+                row_count=len(rows),
+                effective_date=None,
+            )
+            manifests.append(manifest)
+            selected_mapping = {
+                "schema_version": "e2r_v5_peer_corp_code_mapping_v1",
+                "symbol": symbol,
+                "company_name": row.corp_name,
+                "corp_code": row.corp_code,
+                "mapping_modify_date": (
+                    row.modify_date.isoformat() if row.modify_date else None
+                ),
+                "archive_directory_label": snapshot_date.isoformat(),
+                "archive_directory_label_is_not_fetch_date": True,
+                "archive_content_hash": content_hash,
+                "source_id": manifest["source_id"],
+                "identity_cross_checked_with_krx_roster": True,
+                "production_score_authority": False,
+            }
+            write_json(
+                cache_root / f"dart_peer_corp_code_{symbol}.json",
+                selected_mapping,
+            )
+            audit.update(
+                {
+                    "status": "RESOLVED",
+                    "archive_directory_label": snapshot_date.isoformat(),
+                    "archive_content_hash": content_hash,
+                    "mapping_modify_date": (
+                        row.modify_date.isoformat() if row.modify_date else None
+                    ),
+                    "failure_reason": None,
+                    "stop_condition": "IDENTITY_MAPPING_RESOLVED",
+                }
+            )
+            return row.corp_code.zfill(8), str(manifest["source_id"]), audit
+        if audit["failure_reason"] is None:
+            audit["failure_reason"] = "USABLE_CORP_CODE_DIRECTORY_MAPPING_MISSING"
+        audit["stop_condition"] = "ARCHIVE_CANDIDATE_BUDGET_EXHAUSTED"
+        return None, None, audit
+
+    def _peer_official_trailing_pb_observation(
+        self,
+        *,
+        target_id: str,
+        cutoff: date,
+        listing_snapshot_date: date,
+        proposal: Mapping[str, Any],
+        peer_price_rows: Sequence[Mapping[str, Any]],
+        cache_root: Path,
+        checkpoint_resume: bool,
+        attempts: list[CurrentStructuredFetchAttempt],
+        manifests: list[Mapping[str, Any]],
+        snapshot_failure: str,
+    ) -> tuple[PeerValuationObservation | None, Mapping[str, Any]]:
+        """Derive a cutoff-valid peer P/B from bounded official observations.
+
+        A current-only CompanyGuide page cannot prove a historical forward
+        multiple, and a report-list EPS field does not identify its forecast
+        horizon.  This fallback therefore uses only an exact-date KRX market
+        capitalization and the newest pre-cutoff OpenDART consolidated total
+        equity.  It tries at most two explicitly dated statement periods and
+        creates neither report downloads nor EvidenceFacts.
+        """
+
+        symbol = str(proposal.get("peer_symbol") or "")
+        proposed_name = str(proposal.get("peer_name") or "")
+        audit: dict[str, Any] = {
+            "peer_symbol": symbol,
+            "peer_name": proposed_name,
+            "snapshot_failure": snapshot_failure,
+            "route": "KRX_MARKET_CAP_X_OPENDART_PARENT_EQUITY",
+            "maximum_statement_fetches": 2,
+            "statement_fetch_count": 0,
+            "maximum_filing_metadata_fetches": 2,
+            "filing_metadata_fetch_count": 0,
+            "report_pdf_fetch_count": 0,
+            "evidence_fact_count_added": 0,
+            "status": "PENDING",
+            "failure_reason": None,
+        }
+        price_row = next(
+            (
+                row
+                for row in peer_price_rows
+                if str(row.get("peer_symbol") or "") == symbol
+                and _company_name_key(row.get("peer_name"))
+                == _company_name_key(proposed_name)
+                and str(row.get("observed_at") or "")[:10]
+                == listing_snapshot_date.isoformat()
+            ),
+            None,
+        )
+        if price_row is None:
+            audit["failure_reason"] = "POINT_IN_TIME_KRX_PRICE_MISSING"
+            return None, audit
+        if int(price_row.get("listed_equity_line_count") or 0) != 1:
+            audit["failure_reason"] = (
+                "MULTIPLE_LISTED_EQUITY_LINES_REQUIRE_SCOPE_MATCHING"
+            )
+            return None, audit
+
+        credential = os.environ.get("OPENDART_API_KEY") or os.environ.get(
+            "OPEN_DART_API_KEY"
+        )
+        if not credential:
+            audit["failure_reason"] = "OPENDART_CREDENTIAL_MISSING"
+            return None, audit
+        corp_code, corp_code_source_id, corp_code_audit = (
+            self._peer_corp_code_from_archived_directory(
+                target_id=target_id,
+                cutoff=cutoff,
+                symbol=symbol,
+                company_name=proposed_name,
+                cache_root=cache_root,
+                attempts=attempts,
+                manifests=manifests,
+            )
+        )
+        audit["corp_code_resolution"] = dict(corp_code_audit)
+        if not corp_code or not corp_code_source_id:
+            audit["failure_reason"] = str(
+                corp_code_audit.get("failure_reason")
+                or "OPENDART_CORP_CODE_IDENTITY_UNVERIFIED"
+            )
+            return None, audit
+
+        equity_value: float | None = None
+        equity_metadata: Mapping[str, Any] = {}
+        equity_source_id = ""
+        filing_metadata_source_id = ""
+        selected_period: Mapping[str, Any] | None = None
+        period_attempts: list[Mapping[str, Any]] = []
+        terminal_statement_failure: str | None = None
+        for period in _latest_balance_sheet_periods(cutoff, maximum=2):
+            role = (
+                f"PEER_PARENT_EQUITY:{symbol}:"
+                f"{period['fiscal_year']}:{period['report_code']}"
+            )
+            manifest_start = len(manifests)
+            payload = self._json(
+                target_id=target_id,
+                cutoff=cutoff,
+                provider_name="OpenDART",
+                source_role=role,
+                cache_key=(
+                    f"dart_peer_equity_{symbol}_{corp_code}_"
+                    f"{period['fiscal_year']}_{period['report_code']}_CFS"
+                ),
+                cache_root=cache_root,
+                checkpoint_resume=checkpoint_resume,
+                url=_DART_FULL_ACCOUNT_URL,
+                params={
+                    "crtfc_key": credential,
+                    "corp_code": corp_code,
+                    "bsns_year": str(period["fiscal_year"]),
+                    "reprt_code": str(period["report_code"]),
+                    "fs_div": "CFS",
+                },
+                headers={},
+                attempts=attempts,
+                manifests=manifests,
+                effective_date=period["reported_at"].isoformat(),
+                rows_getter=lambda value: value.get("list") or (),
+            )
+            audit["statement_fetch_count"] += 1
+            if payload is None:
+                terminal_statement_failure = "PEER_EQUITY_PROVIDER_ERROR"
+                period_attempts.append(
+                    {
+                        "fiscal_year": period["fiscal_year"],
+                        "report_code": period["report_code"],
+                        "period_end": period["period_end"].isoformat(),
+                        "reported_at": period["reported_at"].isoformat(),
+                        "status": terminal_statement_failure,
+                    }
+                )
+                break
+            dart_status = str(payload.get("status") or "")
+            if dart_status == "013":
+                period_attempts.append(
+                    {
+                        "fiscal_year": period["fiscal_year"],
+                        "report_code": period["report_code"],
+                        "period_end": period["period_end"].isoformat(),
+                        "reported_at": period["reported_at"].isoformat(),
+                        "status": "DART_NO_RESULT",
+                    }
+                )
+                continue
+            if dart_status != "000":
+                terminal_statement_failure = (
+                    f"PEER_EQUITY_DART_STATUS_ERROR:{dart_status}"
+                )
+                period_attempts.append(
+                    {
+                        "fiscal_year": period["fiscal_year"],
+                        "report_code": period["report_code"],
+                        "period_end": period["period_end"].isoformat(),
+                        "reported_at": period["reported_at"].isoformat(),
+                        "status": terminal_statement_failure,
+                    }
+                )
+                break
+            parsed_equity, parse_audit = _opendart_parent_equity(
+                payload or {},
+                cutoff=cutoff,
+                expected_corp_code=corp_code,
+                expected_fiscal_year=int(period["fiscal_year"]),
+                expected_report_code=str(period["report_code"]),
+            )
+            period_attempts.append(
+                {
+                    "fiscal_year": period["fiscal_year"],
+                    "report_code": period["report_code"],
+                    "period_end": period["period_end"].isoformat(),
+                    "reported_at": period["reported_at"].isoformat(),
+                    **dict(parse_audit),
+                }
+            )
+            if parsed_equity is None:
+                rejected = set(
+                    (parse_audit.get("rejected_reasons") or {}).keys()
+                )
+                if rejected.intersection(
+                    {
+                        "CORP_CODE_MISMATCH",
+                        "FISCAL_YEAR_MISMATCH",
+                        "REPORT_CODE_MISMATCH",
+                        "NON_KRW_CURRENCY",
+                        "RECEIPT_DATE_INVALID",
+                        "FUTURE_RECEIPT_REJECTED",
+                        "FILING_PERIOD_END_UNVERIFIED",
+                    }
+                ):
+                    terminal_statement_failure = (
+                        "PEER_EQUITY_IDENTITY_OR_DATE_VALIDATION_FAILED"
+                    )
+                    break
+                continue
+            receipt_date = date.fromisoformat(str(parse_audit["rcept_date"]))
+            filing_role = (
+                f"PEER_FILING_PERIOD:{symbol}:"
+                f"{period['fiscal_year']}:{period['report_code']}"
+            )
+            filing_manifest_start = len(manifests)
+            filing_payload = self._json(
+                target_id=target_id,
+                cutoff=cutoff,
+                provider_name="OpenDART",
+                source_role=filing_role,
+                cache_key=(
+                    f"dart_peer_filing_period_{symbol}_{corp_code}_"
+                    f"{parse_audit['rcept_no']}"
+                ),
+                cache_root=cache_root,
+                checkpoint_resume=checkpoint_resume,
+                url=_DART_DISCLOSURE_LIST_URL,
+                params={
+                    "crtfc_key": credential,
+                    "corp_code": corp_code,
+                    "bgn_de": receipt_date.strftime("%Y%m%d"),
+                    "end_de": receipt_date.strftime("%Y%m%d"),
+                    "page_no": "1",
+                    "page_count": "100",
+                },
+                headers={},
+                attempts=attempts,
+                manifests=manifests,
+                effective_date=receipt_date.isoformat(),
+                rows_getter=lambda value: value.get("list") or (),
+            )
+            audit["filing_metadata_fetch_count"] += 1
+            if filing_payload is None:
+                terminal_statement_failure = (
+                    "PEER_FILING_PERIOD_PROVIDER_ERROR"
+                )
+                period_attempts[-1]["filing_period_status"] = (
+                    terminal_statement_failure
+                )
+                break
+            filing_period_end, filing_audit = (
+                _opendart_filing_period_end(
+                    filing_payload,
+                    cutoff=cutoff,
+                    expected_corp_code=corp_code,
+                    expected_rcept_no=str(parse_audit["rcept_no"]),
+                    expected_report_code=str(period["report_code"]),
+                    expected_period_end=period["period_end"],
+                )
+            )
+            period_attempts[-1]["filing_period_confirmation"] = dict(
+                filing_audit
+            )
+            if filing_period_end is None:
+                terminal_statement_failure = (
+                    "PEER_FILING_PERIOD_VALIDATION_FAILED"
+                )
+                break
+            filing_metadata_source_id = next(
+                (
+                    str(row["source_id"])
+                    for row in reversed(
+                        manifests[filing_manifest_start:]
+                    )
+                    if row.get("provider_name") == "OpenDART"
+                    and row.get("source_role") == filing_role
+                ),
+                "",
+            )
+            if not filing_metadata_source_id:
+                terminal_statement_failure = (
+                    "PEER_FILING_PERIOD_SOURCE_MANIFEST_MISSING"
+                )
+                break
+            source_id = next(
+                (
+                    str(row["source_id"])
+                    for row in reversed(manifests[manifest_start:])
+                    if row.get("provider_name") == "OpenDART"
+                    and row.get("source_role") == role
+                ),
+                "",
+            )
+            if not source_id:
+                continue
+            equity_value = parsed_equity
+            equity_metadata = {
+                **dict(parse_audit),
+                "filing_period_confirmation": dict(filing_audit),
+            }
+            equity_source_id = source_id
+            selected_period = period
+            break
+        audit["statement_period_attempts"] = period_attempts
+        if (
+            equity_value is None
+            or selected_period is None
+            or not equity_source_id
+            or not filing_metadata_source_id
+        ):
+            audit["failure_reason"] = terminal_statement_failure or (
+                "PRE_CUTOFF_CONSOLIDATED_PARENT_EQUITY_MISSING"
+            )
+            return None, audit
+
+        market_cap = _float(price_row.get("market_cap"))
+        price_source_id = str(price_row.get("source_id") or "")
+        if market_cap is None or market_cap <= 0:
+            audit["failure_reason"] = "POINT_IN_TIME_KRX_MARKET_CAP_MISSING"
+            return None, audit
+        if not price_source_id:
+            audit["failure_reason"] = "FALLBACK_SOURCE_MANIFEST_MISSING"
+            return None, audit
+
+        value = market_cap / equity_value
+        equity_received_at = date.fromisoformat(
+            str(equity_metadata["rcept_date"])
+        )
+        value_observed_at = max(listing_snapshot_date, equity_received_at)
+        observation = _peer_valuation_observation(
+            proposal=proposal,
+            peer_name=proposed_name,
+            cutoff=cutoff,
+            metric_id="trailing_parent_pb",
+            value=value,
+            observed_at=value_observed_at,
+            source_ids=(
+                price_source_id,
+                equity_source_id,
+                corp_code_source_id,
+                filing_metadata_source_id,
+            ),
+            valuation_source="KRX_MARKET_CAP_X_OPENDART_PARENT_EQUITY",
+            extra_metadata={
+                "krx_market_cap_date": listing_snapshot_date.isoformat(),
+                "krx_market_cap_krw": market_cap,
+                "dart_parent_equity_krw": equity_value,
+                "dart_corp_code": corp_code,
+                "dart_fiscal_year": selected_period["fiscal_year"],
+                "dart_report_code": selected_period["report_code"],
+                "dart_period_end": selected_period["period_end"].isoformat(),
+                "dart_available_at": equity_received_at.isoformat(),
+                "corp_code_directory_source_id": corp_code_source_id,
+                "dart_filing_period_source_id": filing_metadata_source_id,
+                "corp_code_identity_cross_checked_with_krx_name": True,
+                **dict(equity_metadata),
+            },
+        )
+        audit.update(
+            {
+                "status": "RESOLVED",
+                "failure_reason": None,
+                "derived_metric_id": "trailing_parent_pb",
+                "derived_value": round(value, 6),
+                "source_ids": [
+                    price_source_id,
+                    equity_source_id,
+                    corp_code_source_id,
+                    filing_metadata_source_id,
+                ],
+                "stop_condition": "POINT_IN_TIME_TRAILING_PARENT_PB_RESOLVED",
+            }
+        )
+        return observation, audit
 
 
     def _json(
@@ -3071,6 +3696,53 @@ def _company_name_key(value: Any) -> str:
     return re.sub(r"[^0-9a-z가-힣]", "", text)
 
 
+def _krx_equity_issuer_name_key(value: Any) -> str:
+    """Collapse only KRX-style preferred-share suffixes for scope detection."""
+
+    normalized = _company_name_key(value)
+    return re.sub(r"(?:[0-9]+우b|[0-9]+우|우b|우)$", "", normalized)
+
+
+def _peer_valuation_observation(
+    *,
+    proposal: Mapping[str, Any],
+    peer_name: str,
+    cutoff: date,
+    metric_id: str,
+    value: float,
+    observed_at: date,
+    source_ids: Sequence[str],
+    valuation_source: str,
+    extra_metadata: Mapping[str, Any] | None = None,
+) -> PeerValuationObservation:
+    """Build one source-backed value after deterministic peer verification."""
+
+    return PeerValuationObservation(
+        peer_id=str(proposal["peer_symbol"]),
+        as_of_date=cutoff.isoformat(),
+        metric_id=metric_id,
+        value=float(value),
+        unit="MULTIPLE",
+        observed_at=observed_at.isoformat(),
+        source_ids=tuple(dict.fromkeys(str(value) for value in source_ids)),
+        source_route="PEER_STRUCTURED",
+        confidence=float(proposal["confidence"]),
+        metadata={
+            "peer_name": peer_name,
+            "symbol_identity_verified": True,
+            "comparability_rationale": proposal["comparability_rationale"],
+            "shared_economic_drivers": list(
+                proposal["shared_economic_drivers"]
+            ),
+            "material_differences": list(proposal["material_differences"]),
+            "structured_source": True,
+            "llm_supplied_metric_value": False,
+            "valuation_source": valuation_source,
+            **dict(extra_metadata or {}),
+        },
+    )
+
+
 def _mark_attempt_future_rejected(
     attempts: list[CurrentStructuredFetchAttempt],
     *,
@@ -3177,6 +3849,267 @@ def _financial_statement_periods(cutoff: date) -> tuple[Mapping[str, Any], ...]:
                 }
             )
     return tuple(periods)
+
+
+def _latest_balance_sheet_periods(
+    cutoff: date, *, maximum: int
+) -> tuple[Mapping[str, Any], ...]:
+    """Return the newest distinct pre-cutoff statement periods, bounded."""
+
+    candidates: list[Mapping[str, Any]] = []
+    for fiscal_year in range(cutoff.year, cutoff.year - 4, -1):
+        for quarter, month, report_code, available_month, available_day in (
+            (1, 3, "11013", 5, 16),
+            (2, 6, "11012", 8, 16),
+            (3, 9, "11014", 11, 16),
+        ):
+            reported_at = date(
+                fiscal_year, available_month, available_day
+            )
+            if reported_at <= cutoff:
+                candidates.append(
+                    {
+                        "fiscal_year": fiscal_year,
+                        "fiscal_quarter": quarter,
+                        "period_end": date(
+                            fiscal_year,
+                            month,
+                            _month_end(fiscal_year, month),
+                        ),
+                        "report_code": report_code,
+                        "reported_at": reported_at,
+                    }
+                )
+        annual_available = date(fiscal_year + 1, 4, 1)
+        if annual_available <= cutoff:
+            candidates.append(
+                {
+                    "fiscal_year": fiscal_year,
+                    "fiscal_quarter": None,
+                    "period_end": date(fiscal_year, 12, 31),
+                    "report_code": "11011",
+                    "reported_at": annual_available,
+                }
+            )
+    ordered = sorted(
+        candidates,
+        key=lambda row: (row["reported_at"], row["period_end"]),
+        reverse=True,
+    )
+    selected: list[Mapping[str, Any]] = []
+    seen_period_ends: set[date] = set()
+    for row in ordered:
+        period_end = row["period_end"]
+        if period_end in seen_period_ends:
+            continue
+        seen_period_ends.add(period_end)
+        selected.append(row)
+        if len(selected) >= maximum:
+            break
+    return tuple(selected)
+
+
+def _opendart_parent_equity(
+    payload: Mapping[str, Any],
+    *,
+    cutoff: date,
+    expected_corp_code: str,
+    expected_fiscal_year: int,
+    expected_report_code: str,
+) -> tuple[float | None, Mapping[str, Any]]:
+    """Extract one identity/date-bound parent-equity BS observation."""
+
+    status = str(payload.get("status") or "")
+    if status != "000":
+        return None, {"status": "DART_STATUS_ERROR", "dart_status": status}
+    rows = payload.get("list") or ()
+    if not isinstance(rows, (list, tuple)):
+        return None, {"status": "DART_ROWS_INVALID"}
+    candidates: list[tuple[float, date, Mapping[str, Any]]] = []
+    rejected_reasons: dict[str, int] = {}
+    for raw in rows:
+        if not isinstance(raw, Mapping):
+            continue
+        if str(raw.get("sj_div") or "") != "BS":
+            continue
+        account_id = str(raw.get("account_id") or "").strip().casefold()
+        if account_id != "ifrs-full_equityattributabletoownersofparent":
+            continue
+        corp_code = str(raw.get("corp_code") or "").strip()
+        if corp_code.isdigit():
+            corp_code = corp_code.zfill(8)
+        if corp_code != expected_corp_code:
+            rejected_reasons["CORP_CODE_MISMATCH"] = (
+                rejected_reasons.get("CORP_CODE_MISMATCH", 0) + 1
+            )
+            continue
+        if str(raw.get("bsns_year") or "") != str(expected_fiscal_year):
+            rejected_reasons["FISCAL_YEAR_MISMATCH"] = (
+                rejected_reasons.get("FISCAL_YEAR_MISMATCH", 0) + 1
+            )
+            continue
+        if str(raw.get("reprt_code") or "") != expected_report_code:
+            rejected_reasons["REPORT_CODE_MISMATCH"] = (
+                rejected_reasons.get("REPORT_CODE_MISMATCH", 0) + 1
+            )
+            continue
+        if str(raw.get("currency") or "") != "KRW":
+            rejected_reasons["NON_KRW_CURRENCY"] = (
+                rejected_reasons.get("NON_KRW_CURRENCY", 0) + 1
+            )
+            continue
+        rcept_no = str(raw.get("rcept_no") or "")
+        if not re.fullmatch(r"[0-9]{14}", rcept_no):
+            rejected_reasons["RECEIPT_DATE_INVALID"] = (
+                rejected_reasons.get("RECEIPT_DATE_INVALID", 0) + 1
+            )
+            continue
+        try:
+            received_at = date.fromisoformat(
+                f"{rcept_no[:4]}-{rcept_no[4:6]}-{rcept_no[6:8]}"
+            )
+        except ValueError:
+            rejected_reasons["RECEIPT_DATE_INVALID"] = (
+                rejected_reasons.get("RECEIPT_DATE_INVALID", 0) + 1
+            )
+            continue
+        if received_at > cutoff:
+            rejected_reasons["FUTURE_RECEIPT_REJECTED"] = (
+                rejected_reasons.get("FUTURE_RECEIPT_REJECTED", 0) + 1
+            )
+            continue
+        amount = _float(raw.get("thstrm_amount"))
+        if amount is None or amount <= 0:
+            continue
+        candidates.append((amount, received_at, raw))
+    if not candidates:
+        return None, {
+            "status": "PARENT_EQUITY_ROW_MISSING",
+            "rejected_reasons": rejected_reasons,
+        }
+    distinct_amounts = {row[0] for row in candidates}
+    if len(distinct_amounts) != 1:
+        return None, {
+            "status": "PARENT_EQUITY_ROW_AMBIGUOUS",
+            "candidate_count": len(candidates),
+            "distinct_amount_count": len(distinct_amounts),
+            "rejected_reasons": rejected_reasons,
+        }
+    amount, received_at, selected = min(
+        candidates, key=lambda row: stable_hash(row[2])
+    )
+    return amount, {
+        "status": "RESOLVED",
+        "candidate_count": len(candidates),
+        "account_id": str(selected.get("account_id") or ""),
+        "account_name": str(selected.get("account_nm") or ""),
+        "currency": "KRW",
+        "corp_code": expected_corp_code,
+        "fiscal_year": expected_fiscal_year,
+        "report_code": expected_report_code,
+        "rcept_no": str(selected.get("rcept_no") or ""),
+        "rcept_date": received_at.isoformat(),
+        "requested_fs_div": "CFS",
+        "parent_equity_row_hash": stable_hash(selected),
+        "rejected_reasons": rejected_reasons,
+    }
+
+
+def _opendart_filing_period_end(
+    payload: Mapping[str, Any],
+    *,
+    cutoff: date,
+    expected_corp_code: str,
+    expected_rcept_no: str,
+    expected_report_code: str,
+    expected_period_end: date,
+) -> tuple[date | None, Mapping[str, Any]]:
+    """Verify the fiscal period from the dated DART filing title itself.
+
+    Receipt timing is not a fiscal-calendar proof: a non-December issuer can
+    file inside the same month as a December issuer.  DART's cutoff-valid
+    disclosure list names the actual report period, for example
+    ``분기보고서 (2026.03)``.  Only an exact receipt-number match whose named
+    year/month equals the requested balance-sheet period is accepted.
+    """
+
+    status = str(payload.get("status") or "")
+    if status != "000":
+        return None, {"status": "DART_STATUS_ERROR", "dart_status": status}
+    rows = payload.get("list") or ()
+    if not isinstance(rows, (list, tuple)):
+        return None, {"status": "DART_ROWS_INVALID"}
+    expected_kind = {
+        "11013": "분기보고서",
+        "11012": "반기보고서",
+        "11014": "분기보고서",
+        "11011": "사업보고서",
+    }.get(expected_report_code)
+    candidates: list[tuple[date, Mapping[str, Any]]] = []
+    rejected_reasons: dict[str, int] = {}
+    for raw in rows:
+        if not isinstance(raw, Mapping):
+            continue
+        if str(raw.get("rcept_no") or "") != expected_rcept_no:
+            continue
+        corp_code = str(raw.get("corp_code") or "").strip()
+        if corp_code.isdigit():
+            corp_code = corp_code.zfill(8)
+        if corp_code != expected_corp_code:
+            rejected_reasons["CORP_CODE_MISMATCH"] = 1
+            continue
+        receipt_text = str(raw.get("rcept_dt") or "")
+        try:
+            receipt_date = date.fromisoformat(
+                f"{receipt_text[:4]}-{receipt_text[4:6]}-{receipt_text[6:8]}"
+            )
+        except ValueError:
+            rejected_reasons["RECEIPT_DATE_INVALID"] = 1
+            continue
+        if receipt_text != expected_rcept_no[:8]:
+            rejected_reasons["RECEIPT_DATE_MISMATCH"] = 1
+            continue
+        if receipt_date > cutoff:
+            rejected_reasons["FUTURE_RECEIPT_REJECTED"] = 1
+            continue
+        report_name = str(raw.get("report_nm") or "")
+        if expected_kind is None or expected_kind not in report_name:
+            rejected_reasons["REPORT_KIND_MISMATCH"] = 1
+            continue
+        period_tokens = re.findall(r"\((\d{4})[./-](\d{2})\)", report_name)
+        if len(set(period_tokens)) != 1:
+            rejected_reasons["FILING_PERIOD_TOKEN_UNVERIFIED"] = 1
+            continue
+        year_text, month_text = period_tokens[0]
+        try:
+            period_end = date(
+                int(year_text),
+                int(month_text),
+                _month_end(int(year_text), int(month_text)),
+            )
+        except ValueError:
+            rejected_reasons["FILING_PERIOD_TOKEN_INVALID"] = 1
+            continue
+        if period_end != expected_period_end:
+            rejected_reasons["FILING_PERIOD_END_MISMATCH"] = 1
+            continue
+        candidates.append((period_end, raw))
+    if len(candidates) != 1:
+        return None, {
+            "status": "FILING_PERIOD_END_UNVERIFIED",
+            "candidate_count": len(candidates),
+            "rejected_reasons": rejected_reasons,
+        }
+    period_end, selected = candidates[0]
+    return period_end, {
+        "status": "RESOLVED",
+        "rcept_no": expected_rcept_no,
+        "report_name": str(selected.get("report_nm") or ""),
+        "period_end": period_end.isoformat(),
+        "period_end_authority": "OPENDART_DISCLOSURE_REPORT_NAME",
+        "filing_row_hash": stable_hash(selected),
+        "rejected_reasons": rejected_reasons,
+    }
 
 
 def _month_end(year: int, month: int) -> int:

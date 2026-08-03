@@ -196,6 +196,36 @@ class CurrentResearcherTargetRun:
     audit: Mapping[str, Any]
 
 
+class FactExtractionCheckpointPending(RuntimeError):
+    """Stop a target exactly at its persisted fact-response boundary.
+
+    Fact extraction is an upstream material-evidence gate.  Starting peer,
+    business-model, scoring, or StageCourt providers while its exact Codex
+    collaboration response is still pending creates stale downstream requests
+    that cannot be valid for the eventual fact graph.  The CLI catches this
+    typed boundary, reports the pending leaf, and resumes only after the exact
+    response has been imported.
+    """
+
+    def __init__(
+        self,
+        *,
+        target: CurrentResearchTarget,
+        output_root: Path,
+        source_graph: SourceGraphAcquisitionRun,
+        fact_extraction: ResearcherFactExtractionResult,
+        audit: Mapping[str, Any],
+    ) -> None:
+        super().__init__(
+            f"{target.target_id} fact extraction checkpoint is pending"
+        )
+        self.target = target
+        self.output_root = output_root
+        self.source_graph = source_graph
+        self.fact_extraction = fact_extraction
+        self.audit = dict(audit)
+
+
 class CurrentResearcherModeTargetRunner:
     """Run one semantic checkpoint for one target without fixed-round completion."""
 
@@ -521,6 +551,76 @@ class CurrentResearcherModeTargetRunner:
                 if row.direction == EvidenceDirection.COUNTER.value
             ),
         )
+        if fact_extraction.status != "FACT_EXTRACTION_COMPLETE":
+            # Upstream facts define every downstream prompt and deterministic
+            # input.  A pending exact Codex response is therefore a hard
+            # ordering boundary, not permission to open speculative requests.
+            source_ready = bool(
+                source_graph.status
+                in {
+                    "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
+                    "STOPPED_ON_RESOLUTION",
+                }
+                and int(source_graph.audit.get("critical_count_sum") or 0) == 0
+            )
+            exact_completion_gate = (
+                "fact_extraction_complete"
+                if (
+                    source_ready
+                    or fact_extraction_has_exact_checkpoint_recovery_wait(
+                        fact_extraction.pending_reasons
+                    )
+                )
+                else "source_graph_checkpoint_ready"
+            )
+            gate_audit = {
+                "schema_version": CURRENT_RESEARCHER_MODE_SCHEMA_VERSION,
+                "status": "RESEARCH_CHECKPOINT_PENDING",
+                "target_id": target.target_id,
+                "as_of_date": config.as_of_date,
+                "exact_completion_gate": exact_completion_gate,
+                "fact_extraction_status": fact_extraction.status,
+                "fact_extraction_pending_reasons": list(
+                    fact_extraction.pending_reasons
+                ),
+                "downstream_pipeline_started": False,
+                "blocked_downstream_stages": [
+                    "structured_peer_materialization",
+                    "business_model_research",
+                    "component_research",
+                    "scoring",
+                    "stagecourt",
+                ],
+                "gold_visibility": False,
+                "completion_based_on_fixed_rounds": False,
+                "completion_gates": {
+                    "source_graph_checkpoint_ready": source_ready,
+                    "fact_extraction_complete": False,
+                },
+                "fact_count": len(fact_extraction.facts),
+                "document_count": len(source_graph.evidence_documents),
+            }
+            write_json(root / "current_researcher_mode_audit.json", gate_audit)
+            write_json(
+                root / "target_run_manifest.json",
+                {
+                    **gate_audit,
+                    "company_name": target.company_name,
+                    "aliases": list(target.aliases),
+                    "archetype_id": config.archetype_id,
+                    "latest_trading_snapshot_date": (
+                        config.latest_trading_snapshot_date
+                    ),
+                    "output_tree_hash": _tree_hash(root),
+                },
+            )
+            raise FactExtractionCheckpointPending(
+                target=target,
+                output_root=root,
+                source_graph=source_graph,
+                fact_extraction=fact_extraction,
+                audit=gate_audit,
+            )
         required_structured_roles = {
             plan.component_id: tuple(
                 dict.fromkeys(
@@ -3571,6 +3671,7 @@ __all__ = [
     "CurrentResearcherModeConfig",
     "CurrentResearcherModeTargetRunner",
     "CurrentResearcherTargetRun",
+    "FactExtractionCheckpointPending",
     "load_current_research_target_registry",
     "load_current_research_targets",
     "resume_current_fact_extraction_checkpoint",

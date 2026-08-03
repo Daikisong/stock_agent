@@ -127,6 +127,28 @@ def parse_companyguide_live_consensus_payload(
     return {key: value for key, value in payload.items() if value not in (None, "")}
 
 
+def parse_companyguide_live_page_metadata(text: str) -> dict[str, Any]:
+    """Parse page identity independently from the optional consensus row.
+
+    CompanyGuide keeps the issuer title and page date even when the consensus
+    table says that no recent analyst opinion exists.  Peer verification must
+    therefore not report an identity failure merely because the numeric table
+    is empty.  This helper exposes only identity/time metadata; it never
+    manufactures a valuation value.
+    """
+
+    payload = {
+        "COMPANY_NAME": _companyguide_company_name(text),
+        "PAGE_AS_OF_DATE": _companyguide_page_date(text),
+    }
+    payload["PAGE_DATE_VERIFIED"] = payload["PAGE_AS_OF_DATE"] is not None
+    return {
+        key: value
+        for key, value in payload.items()
+        if value not in (None, "")
+    }
+
+
 # Compatibility alias for tests and older internal imports.
 _parse_companyguide_consensus = parse_companyguide_live_consensus_payload
 
@@ -394,4 +416,5 @@ def _fetch_companyguide_main(symbol: str) -> tuple[str, str, str]:
 __all__ = [
     "CompanyGuideLiveConnector",
     "parse_companyguide_live_consensus_payload",
+    "parse_companyguide_live_page_metadata",
 ]

@@ -33,6 +33,9 @@ from e2r.cli.run_e2r_researcher_mode_until_pass import (
 )
 from e2r.research import EmptySearchProvider, PageFetcher
 from e2r.production.metadata import stable_hash
+from e2r.research_brain.planning.provider_transport import (
+    StructuredProviderUnavailable,
+)
 from e2r.research_brain.researcher_mode import (
     CANONICAL_COMPONENT_ORDER,
     PHASE93_POST_RUN_FAIL,
@@ -263,6 +266,7 @@ class Phase94IntegrationOfficialMaterializer:
         )
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeTargetRunner,
+    FactExtractionCheckpointPending,
     _component_supervisor_feedback_by_component,
     _historical_anchors,
     _load_prior_research_context,
@@ -759,7 +763,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertIs(returned, pending_result)
         self.assertEqual(
             runner.modes,
-            ["REUSE_READY_CHECKPOINT", "REUSE_READY_CHECKPOINT"],
+            ["REUSE_READY_CHECKPOINT"],
         )
         self.assertTrue(
             _result_has_exact_collaboration_response_wait(pending_result)
@@ -930,15 +934,10 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     target=SimpleNamespace(target_id="CURRENT-TARGET"),
                 )
 
-        self.assertIs(returned, results[-1])
+        self.assertIs(returned, results[0])
         self.assertEqual(
             runner.modes,
-            [
-                "REUSE_READY_CHECKPOINT",
-                "REUSE_READY_CHECKPOINT",
-                "REUSE_READY_CHECKPOINT",
-                "ADVANCE",
-            ],
+            ["REUSE_READY_CHECKPOINT"],
         )
         self.assertTrue(
             _terminal_source_snapshot_has_pending_fact_extraction(
@@ -1046,7 +1045,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertIs(returned, pending_result)
         self.assertEqual(
             runner.modes,
-            ["REUSE_READY_CHECKPOINT", "REUSE_READY_CHECKPOINT"],
+            ["REUSE_READY_CHECKPOINT"],
         )
 
     def test_fact_recovery_keeps_non_drained_source_snapshot_frozen(
@@ -1145,10 +1144,10 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     target=SimpleNamespace(target_id="CURRENT-TARGET"),
                 )
 
-        self.assertIs(returned, complete)
+        self.assertIs(returned, pending)
         self.assertEqual(
             runner.modes,
-            ["REUSE_READY_CHECKPOINT", "REUSE_READY_CHECKPOINT"],
+            ["REUSE_READY_CHECKPOINT"],
         )
         self.assertEqual(
             _source_transport_work_summary(snapshot["work_state"])[
@@ -1249,23 +1248,18 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                     ),
                     target=SimpleNamespace(target_id="CURRENT-TARGET"),
                 )
-            no_progress = json.loads(
-                (
-                    root
-                    / "CURRENT-TARGET"
-                    / "semantic_no_progress_checkpoint.json"
-                ).read_text(encoding="utf-8")
+            no_progress_path = (
+                root
+                / "CURRENT-TARGET"
+                / "semantic_no_progress_checkpoint.json"
             )
 
         self.assertIs(returned, pending_result)
         self.assertEqual(
             runner.modes,
-            ["REUSE_READY_CHECKPOINT", "REUSE_READY_CHECKPOINT"],
+            ["REUSE_READY_CHECKPOINT"],
         )
-        self.assertEqual(
-            no_progress["status"],
-            "RESEARCH_PENDING_NO_NEW_SEMANTIC_STATE",
-        )
+        self.assertFalse(no_progress_path.exists())
 
     def test_readonly_source_replay_requires_terminal_source_work(self) -> None:
         ready = {
@@ -4280,6 +4274,7 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             self.assertFalse(
                 audit["completion_gates"]["source_graph_checkpoint_ready"]
             )
+
             component_payload = next(
                 row["payload"]
                 for row in provider.calls
@@ -4366,6 +4361,90 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 ]["query_generation_owner"],
                 "LLM",
             )
+
+    def test_pending_fact_gate_opens_no_downstream_provider_or_structured_work(
+        self,
+    ) -> None:
+        class PendingFactProvider(Phase94IntegrationProvider):
+            def complete(self, *, pass_name, payload):
+                if pass_name == "EVIDENCE_FACT_EXTRACTION":
+                    self.calls.append(
+                        {"pass_name": pass_name, "payload": payload}
+                    )
+                    raise StructuredProviderUnavailable(
+                        "COLLABORATION_RESPONSE_PENDING:COLLABREQ-" + "a" * 64
+                    )
+                return super().complete(pass_name=pass_name, payload=payload)
+
+        provider = PendingFactProvider()
+        structured_materializer = Phase94IntegrationStructuredMaterializer()
+        runner = CurrentResearcherModeTargetRunner(
+            provider=provider,
+            official_materializer=Phase94IntegrationOfficialMaterializer(),
+            structured_materializer=structured_materializer,
+            source_acquirer=ResearcherSourceGraphAcquirer(
+                query_provider=provider,
+                search_provider=EmptySearchProvider(),
+                page_fetcher=PageFetcher(fixture_text_by_url={}),
+            ),
+            fact_extractor=ResearcherEvidenceFactExtractor(
+                provider=provider,
+                documents_per_call=1,
+            ),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            config = CurrentResearcherModeConfig(
+                as_of_date="2026-06-29",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                output_root=directory,
+                live_materialization_authorized=True,
+                checkpoint_resume=True,
+                gold_lane_isolated=True,
+                require_researcher_parity=True,
+                latest_trading_snapshot_date="2026-06-29",
+                source_acquisition_mode="TEST",
+            )
+            with self.assertRaises(FactExtractionCheckpointPending) as caught:
+                runner.run_checkpoint(
+                    config=config,
+                    target=CurrentResearchTarget(
+                        symbol="CURRENT-TARGET",
+                        company_name="Current Corp",
+                        official_domains=("example.com",),
+                    ),
+                    repo_root=self.ROOT,
+                )
+            audit = caught.exception.audit
+            target_manifest = json.loads(
+                (
+                    Path(directory)
+                    / "CURRENT-TARGET"
+                    / "target_run_manifest.json"
+                ).read_text(encoding="utf-8")
+            )
+
+        self.assertEqual(
+            audit["exact_completion_gate"], "fact_extraction_complete"
+        )
+        self.assertFalse(audit["downstream_pipeline_started"])
+        self.assertEqual(structured_materializer.calls, [])
+        self.assertFalse(
+            any(
+                row["pass_name"]
+                in {
+                    "STRUCTURED_PEER_SELECTION",
+                    "BUSINESS_MODEL_RESEARCH",
+                    "COMPONENT_RESEARCH",
+                    "COMPONENT_SCORING_MEMO",
+                    "STAGECOURT",
+                }
+                for row in provider.calls
+            )
+        )
+        self.assertEqual(
+            target_manifest["exact_completion_gate"],
+            "fact_extraction_complete",
+        )
 
     def test_query_wait_snapshot_replays_only_to_recover_pending_facts(
         self,

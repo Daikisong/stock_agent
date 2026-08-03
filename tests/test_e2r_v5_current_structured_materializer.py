@@ -3,10 +3,12 @@ from __future__ import annotations
 from datetime import date
 from dataclasses import replace
 import hashlib
+import io
 import json
 import os
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 from unittest.mock import patch
 
@@ -97,6 +99,175 @@ class FixtureStructuredTransport:
     def assert_dart_corp_code(self, params):
         if params.get("corp_code") != "00126380":
             raise AssertionError("DART corp_code was not restored to eight digits")
+
+
+class HistoricalReportFallbackStructuredTransport(FixtureStructuredTransport):
+    """Peer snapshots lack consensus, while official equity remains available."""
+
+    def __init__(self, *, peer_dart_status_by_report_code=None):
+        super().__init__()
+        self.peer_dart_status_by_report_code = dict(
+            peer_dart_status_by_report_code or {}
+        )
+
+    def get_text(self, *, url, params, headers, timeout_seconds):
+        symbol = str(params.get("cmp_cd") or "")
+        names = {"111111": "Peer Alpha", "222222": "Peer Beta"}
+        if symbol not in names:
+            return super().get_text(
+                url=url,
+                params=params,
+                headers=headers,
+                timeout_seconds=timeout_seconds,
+            )
+        del headers, timeout_seconds
+        self.calls.append(("text", url, dict(params)))
+        text = _companyguide_no_consensus_html(
+            "2026.08.03",
+            company_name=names[symbol],
+        )
+        return StructuredHTTPResponse(
+            status_code=200,
+            canonical_url=url,
+            provider_request_id="FIXTURE-NO-CONSENSUS",
+            content_hash=hashlib.sha256(text.encode()).hexdigest(),
+            text=text,
+        )
+
+    def get_json(self, *, url, params, headers, timeout_seconds):
+        symbol = str(params.get("cmp_cd") or "")
+        names = {"111111": "Peer Alpha", "222222": "Peer Beta"}
+        if "list.json" in url and str(params.get("corp_code")) in {
+            "00000011",
+            "00000022",
+        }:
+            del headers, timeout_seconds
+            self.calls.append(("json", url, dict(params)))
+            receipt_date = str(params["bgn_de"])
+            if receipt_date == "20260515":
+                report_name = "분기보고서 (2026.03)"
+                receipt_no = "20260515000001"
+            elif receipt_date == "20260331":
+                report_name = "사업보고서 (2025.12)"
+                receipt_no = "20260331000001"
+            else:
+                raise AssertionError(
+                    f"unexpected peer filing receipt date: {receipt_date}"
+                )
+            payload = {
+                "status": "000",
+                "list": [
+                    {
+                        "corp_code": str(params["corp_code"]),
+                        "rcept_no": receipt_no,
+                        "rcept_dt": receipt_date,
+                        "report_nm": report_name,
+                    }
+                ],
+            }
+            raw = json.dumps(
+                payload, ensure_ascii=False, sort_keys=True
+            ).encode()
+            return StructuredHTTPResponse(
+                status_code=200,
+                canonical_url=url,
+                provider_request_id="FIXTURE-PEER-FILING-PERIOD",
+                content_hash=hashlib.sha256(raw).hexdigest(),
+                payload=payload,
+            )
+        if "fnlttSinglAcntAll" in url and str(params.get("corp_code")) in {
+            "00000011",
+            "00000022",
+        }:
+            del headers, timeout_seconds
+            self.calls.append(("json", url, dict(params)))
+            report_code = str(params["reprt_code"])
+            fixture_status = self.peer_dart_status_by_report_code.get(
+                report_code,
+                "000",
+            )
+            if fixture_status == "PROVIDER_ERROR":
+                raise OSError("fixture peer DART provider failure")
+            if fixture_status != "000":
+                payload = {"status": fixture_status, "list": []}
+                raw = json.dumps(
+                    payload, ensure_ascii=False, sort_keys=True
+                ).encode()
+                return StructuredHTTPResponse(
+                    status_code=200,
+                    canonical_url=url,
+                    provider_request_id="FIXTURE-PEER-EQUITY-STATUS",
+                    content_hash=hashlib.sha256(raw).hexdigest(),
+                    payload=payload,
+                )
+            fiscal_year = int(params["bsns_year"])
+            receipt_no = (
+                f"{fiscal_year}0515000001"
+                if report_code == "11013"
+                else f"{fiscal_year + 1}0331000001"
+            )
+            payload = {
+                "status": "000",
+                "list": [
+                    {
+                        **_dart_row(
+                            "BS",
+                            "지배기업의 소유주에게 귀속되는 자본",
+                            1_000_000_000,
+                        ),
+                        "account_id": (
+                            "ifrs-full_EquityAttributableToOwnersOfParent"
+                        ),
+                        "corp_code": str(params["corp_code"]),
+                        "bsns_year": str(params["bsns_year"]),
+                        "reprt_code": report_code,
+                        "currency": "KRW",
+                        "rcept_no": receipt_no,
+                    }
+                ],
+            }
+            raw = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()
+            return StructuredHTTPResponse(
+                status_code=200,
+                canonical_url=url,
+                provider_request_id="FIXTURE-PEER-EQUITY",
+                content_hash=hashlib.sha256(raw).hexdigest(),
+                payload=payload,
+            )
+        return super().get_json(
+            url=url,
+            params=params,
+            headers=headers,
+            timeout_seconds=timeout_seconds,
+        )
+
+
+class MultipleEquityLineStructuredTransport(
+    HistoricalReportFallbackStructuredTransport
+):
+    """The KRX roster contains common and preferred lines for one issuer."""
+
+    def get_json(self, *, url, params, headers, timeout_seconds):
+        response = super().get_json(
+            url=url,
+            params=params,
+            headers=headers,
+            timeout_seconds=timeout_seconds,
+        )
+        if "/sto/" not in url:
+            return response
+        payload = dict(response.payload or {})
+        rows = list(payload.get("OutBlock_1") or ())
+        rows.append(_krx_stock_row(symbol="111112", name="Peer Alpha우"))
+        payload["OutBlock_1"] = rows
+        raw = json.dumps(payload, ensure_ascii=False, sort_keys=True).encode()
+        return StructuredHTTPResponse(
+            status_code=200,
+            canonical_url=response.canonical_url,
+            provider_request_id="FIXTURE-MULTIPLE-EQUITY-LINES",
+            content_hash=hashlib.sha256(raw).hexdigest(),
+            payload=payload,
+        )
 
 
 class PaginatedReportStructuredTransport(FixtureStructuredTransport):
@@ -1280,21 +1451,24 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
             },
             clear=False,
         ):
-            route, _, roster_audit = CurrentStructuredSourceMaterializer(
-                transport=transport,
-                price_lookback_days=400,
-            )._price_route(
-                target_id="000660",
-                cutoff=date(2026, 7, 12),
-                trading_date=date(2026, 7, 10),
-                cache_root=Path(directory),
-                checkpoint_resume=True,
-                attempts=attempts,
-                manifests=manifests,
+            route, _, roster_audit, peer_price_rows = (
+                CurrentStructuredSourceMaterializer(
+                    transport=transport,
+                    price_lookback_days=400,
+                )._price_route(
+                    target_id="000660",
+                    cutoff=date(2026, 7, 12),
+                    trading_date=date(2026, 7, 10),
+                    cache_root=Path(directory),
+                    checkpoint_resume=True,
+                    attempts=attempts,
+                    manifests=manifests,
+                )
             )
 
         self.assertEqual(route.payload.diagnostics["market"], "KOSDAQ")
         self.assertTrue(roster_audit["all_required_markets_complete"])
+        self.assertTrue(peer_price_rows)
         kospi_stock_source = roster_audit["market_details"]["KOSPI"][
             "source_id"
         ]
@@ -1714,6 +1888,419 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         self.assertTrue(all(row.provenance == "DERIVED" for row in peer_bands))
         self.assertTrue(
             all(row.metadata["peer_count"] == 2 for row in peer_bands)
+        )
+
+    def test_official_equity_and_krx_market_cap_close_empty_peer_snapshot(self):
+        transport = HistoricalReportFallbackStructuredTransport()
+        peer_provider = FixturePeerProvider()
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            corp_code_root = Path(directory) / "corp_code_archives"
+            _write_corp_code_archive(
+                corp_code_root / "2099-01-01" / "corpCode.zip",
+                (
+                    ("00000011", "Peer Alpha", "111111", "20260101"),
+                    ("00000022", "Peer Beta", "222222", "20260101"),
+                ),
+            )
+            materializer = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+                opendart_corp_code_cache_root=corp_code_root,
+            )
+            result = materializer.materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+            )
+
+        audit = result.audit["peer_selection"]
+        self.assertEqual(audit["status"], "PEER_SELECTION_COMPLETE")
+        self.assertEqual(
+            audit["common_metric_peer_counts"]["trailing_parent_pb"], 2
+        )
+        self.assertEqual(
+            audit["structured_fetch_stop_condition"],
+            "COMMON_PEER_MULTIPLE_RESOLVED",
+        )
+        self.assertEqual(
+            {row["status"] for row in audit["official_trailing_pb_fallbacks"]},
+            {"RESOLVED"},
+        )
+        self.assertTrue(
+            all(
+                row["evidence_fact_count_added"] == 0
+                and row["report_pdf_fetch_count"] == 0
+                for row in audit["official_trailing_pb_fallbacks"]
+            )
+        )
+        peer_inputs = [
+            row
+            for row in result.engine_result.records
+            if row.metric_id == "peer_trailing_parent_pb"
+        ]
+        self.assertEqual(len(peer_inputs), 2)
+        self.assertEqual({round(float(row.value), 2) for row in peer_inputs}, {1.21})
+        self.assertTrue(
+            all(
+                row.metadata["valuation_source"]
+                == "KRX_MARKET_CAP_X_OPENDART_PARENT_EQUITY"
+                and row.observed_at == "2026-07-10"
+                and row.metadata["dart_report_code"] == "11013"
+                and row.metadata["dart_period_end"] == "2026-03-31"
+                and row.metadata["rcept_date"] == "2026-05-15"
+                and len(row.source_ids) == 4
+                and row.metadata["filing_period_confirmation"]["period_end"]
+                == "2026-03-31"
+                for row in peer_inputs
+            )
+        )
+        self.assertFalse(
+            any(
+                row.status == "FUTURE_REJECTED"
+                for row in result.fetch_attempts
+            )
+        )
+        corp_code_manifests = [
+            row
+            for row in result.payload_manifest
+            if str(row["source_role"]).startswith("PEER_CORP_CODE_DIRECTORY:")
+        ]
+        self.assertEqual(len(corp_code_manifests), 2)
+        self.assertTrue(
+            all(
+                row["effective_date"] is None
+                and row["production_score_authority"] is False
+                for row in corp_code_manifests
+            )
+        )
+        self.assertTrue(
+            all(
+                row["corp_code_resolution"]["archive_directory_label"]
+                == "2099-01-01"
+                and row["corp_code_resolution"][
+                    "folder_date_used_as_source_availability"
+                ]
+                is False
+                for row in audit["official_trailing_pb_fallbacks"]
+            )
+        )
+
+    def test_corp_code_bridge_fails_closed_on_modify_date_and_archive_budget(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "archives"
+            # The newest three archives are the entire configured budget.  A
+            # valid fourth archive must not be reached implicitly.
+            for folder, modify_date in (
+                ("2099-04-01", ""),
+                ("2099-03-01", "20260713"),
+                ("2099-02-01", ""),
+                ("2099-01-01", "20260101"),
+            ):
+                _write_corp_code_archive(
+                    root / folder / "corpCode.zip",
+                    (("00000011", "Peer Alpha", "111111", modify_date),),
+                )
+            attempts = []
+            manifests = []
+            corp_code, source_id, audit = CurrentStructuredSourceMaterializer(
+                transport=HistoricalReportFallbackStructuredTransport(),
+                opendart_corp_code_cache_root=root,
+                opendart_corp_code_max_archives=3,
+            )._peer_corp_code_from_archived_directory(
+                target_id="005930",
+                cutoff=date(2026, 7, 12),
+                symbol="111111",
+                company_name="Peer Alpha",
+                cache_root=Path(directory) / "target_cache",
+                attempts=attempts,
+                manifests=manifests,
+            )
+
+        self.assertIsNone(corp_code)
+        self.assertIsNone(source_id)
+        self.assertEqual(audit["archive_candidate_count"], 4)
+        self.assertEqual(audit["parsed_archive_count"], 3)
+        self.assertEqual(audit["maximum_archive_candidates"], 3)
+        self.assertEqual(
+            audit["stop_condition"], "ARCHIVE_CANDIDATE_BUDGET_EXHAUSTED"
+        )
+        self.assertEqual(attempts, [])
+        self.assertEqual(manifests, [])
+
+    def test_peer_equity_only_013_falls_back_to_older_statement(self):
+        for first_status, older_expected in (
+            ("013", True),
+            ("999", False),
+            ("PROVIDER_ERROR", False),
+        ):
+            with self.subTest(first_status=first_status):
+                transport = HistoricalReportFallbackStructuredTransport(
+                    peer_dart_status_by_report_code={"11013": first_status}
+                )
+                result = self._materialize_official_peer_fallback(
+                    transport=transport
+                )
+                peer_dart_calls = [
+                    row[2]
+                    for row in transport.calls
+                    if row[0] == "json"
+                    and "fnlttSinglAcntAll" in row[1]
+                    and str(row[2].get("corp_code"))
+                    in {"00000011", "00000022"}
+                ]
+                has_older_call = any(
+                    str(row.get("reprt_code")) == "11011"
+                    for row in peer_dart_calls
+                )
+                self.assertEqual(has_older_call, older_expected)
+                audit = result.audit["peer_selection"]
+                if older_expected:
+                    self.assertEqual(audit["status"], "PEER_SELECTION_COMPLETE")
+                else:
+                    self.assertNotEqual(
+                        audit["status"], "PEER_SELECTION_COMPLETE"
+                    )
+
+    def test_multiple_listed_equity_lines_block_parent_pb_scope_mismatch(self):
+        materializer = CurrentStructuredSourceMaterializer(
+            transport=HistoricalReportFallbackStructuredTransport()
+        )
+        attempts = []
+        manifests = []
+        with patch.dict(
+            os.environ,
+            {"OPENDART_API_KEY": "DART-SECRET-FIXTURE"},
+            clear=False,
+        ), patch.object(
+            materializer,
+            "_peer_corp_code_from_archived_directory",
+        ) as resolver:
+            observation, audit = (
+                materializer._peer_official_trailing_pb_observation(
+                    target_id="005930",
+                    cutoff=date(2026, 7, 12),
+                    listing_snapshot_date=date(2026, 7, 10),
+                    proposal={
+                        "peer_symbol": "111111",
+                        "peer_name": "Peer Alpha",
+                        "confidence": 0.9,
+                        "comparability_rationale": ("same business",),
+                        "material_differences": (),
+                    },
+                    peer_price_rows=(
+                        {
+                            "peer_symbol": "111111",
+                            "peer_name": "Peer Alpha",
+                            "observed_at": "2026-07-10",
+                            "market_cap": 1_210_000_000,
+                            "source_id": "KRX-SOURCE",
+                            "listed_equity_line_count": 2,
+                        },
+                    ),
+                    cache_root=Path("unused"),
+                    checkpoint_resume=True,
+                    attempts=attempts,
+                    manifests=manifests,
+                    snapshot_failure="CONSENSUS_PAYLOAD_UNAVAILABLE",
+                )
+            )
+
+        self.assertIsNone(observation)
+        self.assertEqual(
+            audit["failure_reason"],
+            "MULTIPLE_LISTED_EQUITY_LINES_REQUIRE_SCOPE_MATCHING",
+        )
+        resolver.assert_not_called()
+        self.assertEqual(attempts, [])
+        self.assertEqual(manifests, [])
+
+    def test_krx_common_and_preferred_rows_reach_scope_mismatch_block(self):
+        transport = MultipleEquityLineStructuredTransport()
+        result = self._materialize_official_peer_fallback(transport=transport)
+        audit = result.audit["peer_selection"]
+        alpha = next(
+            row
+            for row in audit["official_trailing_pb_fallbacks"]
+            if row["peer_symbol"] == "111111"
+        )
+        self.assertEqual(
+            alpha["failure_reason"],
+            "MULTIPLE_LISTED_EQUITY_LINES_REQUIRE_SCOPE_MATCHING",
+        )
+        self.assertNotEqual(audit["status"], "PEER_SELECTION_COMPLETE")
+        alpha_dart_calls = [
+            row
+            for row in transport.calls
+            if row[0] == "json"
+            and str(row[2].get("corp_code")) == "00000011"
+        ]
+        self.assertEqual(alpha_dart_calls, [])
+
+    def _materialize_official_peer_fallback(self, *, transport):
+        peer_provider = FixturePeerProvider()
+        facts, claims, documents = _structured_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            materializer = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=peer_provider,
+            )
+            with patch.object(
+                materializer,
+                "_peer_corp_code_from_archived_directory",
+                side_effect=lambda **kwargs: (
+                    {
+                        "111111": "00000011",
+                        "222222": "00000022",
+                    }.get(kwargs["symbol"]),
+                    f"CORPSRC-{kwargs['symbol']}",
+                    {"status": "RESOLVED", "failure_reason": None},
+                ),
+            ):
+                return materializer.materialize(
+                    target_id="005930",
+                    target_name="Current Corp",
+                    as_of_date="2026-07-12",
+                    latest_trading_snapshot_date="2026-07-10",
+                    official=_official(),
+                    output_root=directory,
+                    checkpoint_resume=True,
+                    evidence_facts=facts,
+                    source_claims=claims,
+                    source_documents=documents,
+                )
+
+    def test_parent_equity_requires_exact_identity_period_currency_and_cutoff(self):
+        base = {
+            **_dart_row(
+                "BS",
+                "지배기업의 소유주에게 귀속되는 자본",
+                1_000_000_000,
+            ),
+            "account_id": "ifrs-full_EquityAttributableToOwnersOfParent",
+            "corp_code": "00000011",
+            "bsns_year": "2026",
+            "reprt_code": "11013",
+            "currency": "KRW",
+            "rcept_no": "20260515000001",
+        }
+        value, audit = structured_materializer_module._opendart_parent_equity(
+            {"status": "000", "list": [base]},
+            cutoff=date(2026, 7, 12),
+            expected_corp_code="00000011",
+            expected_fiscal_year=2026,
+            expected_report_code="11013",
+        )
+        self.assertEqual(value, 1_000_000_000)
+        self.assertEqual(audit["rcept_date"], "2026-05-15")
+
+        for field, invalid in (
+            ("corp_code", "99999999"),
+            ("bsns_year", "2099"),
+            ("reprt_code", "11011"),
+            ("currency", "USD"),
+            ("rcept_no", "20260713000001"),
+        ):
+            bad = {**base, field: invalid}
+            rejected, rejected_audit = (
+                structured_materializer_module._opendart_parent_equity(
+                    {"status": "000", "list": [bad]},
+                    cutoff=date(2026, 7, 12),
+                    expected_corp_code="00000011",
+                    expected_fiscal_year=2026,
+                    expected_report_code="11013",
+                )
+            )
+            self.assertIsNone(rejected, field)
+            self.assertEqual(rejected_audit["status"], "PARENT_EQUITY_ROW_MISSING")
+
+        rejected, rejected_audit = (
+            structured_materializer_module._opendart_filing_period_end(
+                {
+                    "status": "000",
+                    "list": [
+                        {
+                            "corp_code": "00000011",
+                            "rcept_no": "20260415000001",
+                            "rcept_dt": "20260415",
+                            "report_nm": "분기보고서 (2026.02)",
+                        }
+                    ],
+                },
+                cutoff=date(2026, 7, 12),
+                expected_corp_code="00000011",
+                expected_rcept_no="20260415000001",
+                expected_report_code="11013",
+                expected_period_end=date(2026, 3, 31),
+            )
+        )
+        self.assertIsNone(rejected)
+        self.assertEqual(
+            rejected_audit["rejected_reasons"],
+            {"FILING_PERIOD_END_MISMATCH": 1},
+        )
+
+        mismatched_receipt, mismatch_audit = (
+            structured_materializer_module._opendart_filing_period_end(
+                {
+                    "status": "000",
+                    "list": [
+                        {
+                            "corp_code": "00000011",
+                            "rcept_no": "20260515000001",
+                            "rcept_dt": "20260401",
+                            "report_nm": "분기보고서 (2026.03)",
+                        }
+                    ],
+                },
+                cutoff=date(2026, 7, 12),
+                expected_corp_code="00000011",
+                expected_rcept_no="20260515000001",
+                expected_report_code="11013",
+                expected_period_end=date(2026, 3, 31),
+            )
+        )
+        self.assertIsNone(mismatched_receipt)
+        self.assertEqual(
+            mismatch_audit["rejected_reasons"],
+            {"RECEIPT_DATE_MISMATCH": 1},
+        )
+
+    def test_balance_sheet_fallback_calendar_keeps_prior_q3_in_early_year(self):
+        periods = structured_materializer_module._latest_balance_sheet_periods(
+            date(2026, 1, 15), maximum=2
+        )
+        self.assertEqual(
+            [
+                (row["fiscal_year"], row["report_code"])
+                for row in periods
+            ],
+            [(2025, "11014"), (2025, "11012")],
         )
 
     def test_incomplete_peer_selection_is_reprompted_without_value_invention(self):
@@ -2228,6 +2815,41 @@ def _companyguide_html(
       </tbody>
     </table>
     """
+
+
+def _companyguide_no_consensus_html(
+    page_date: str,
+    *,
+    company_name: str,
+):
+    return f"""
+    <title>{company_name} - 기업현황 - 기업모니터</title>
+    <p class="disc table">[기준:{page_date}]</p>
+    <h5>투자의견 컨센서스</h5>
+    <table class="gHead" id="cTB15">
+      <tr><th>투자의견</th><th>목표주가</th><th>EPS</th><th>PER</th><th>추정기관수</th></tr>
+      <tr><td colspan="5">최근3개월 이내에 제시된 의견이 없습니다</td></tr>
+    </table>
+    """
+
+
+def _write_corp_code_archive(path: Path, rows):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    xml = "<result>" + "".join(
+        (
+            "<list>"
+            f"<corp_code>{corp_code}</corp_code>"
+            f"<corp_name>{corp_name}</corp_name>"
+            f"<stock_code>{stock_code}</stock_code>"
+            f"<modify_date>{modify_date}</modify_date>"
+            "</list>"
+        )
+        for corp_code, corp_name, stock_code, modify_date in rows
+    ) + "</result>"
+    payload = io.BytesIO()
+    with zipfile.ZipFile(payload, "w", zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("CORPCODE.xml", xml.encode("utf-8"))
+    path.write_bytes(payload.getvalue())
 
 
 def _companyguide_reports_payload():
