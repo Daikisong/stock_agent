@@ -1468,6 +1468,35 @@ class ResearcherEvidenceFactExtractor:
                         validation_retry_used = True
                         attempt_payload = recovered_retry_payload
                         continue
+                    recovered_pagination_origin = (
+                        _recover_validated_fact_extraction_pagination_origin_payload(
+                            self.provider,
+                            primary_payload=attempt_base_payload,
+                        )
+                        if (
+                            isinstance(exc, StructuredProviderUnavailable)
+                            and str(exc).startswith(
+                                "COLLABORATION_RESPONSE_PENDING:"
+                                "COLLABREQ-"
+                            )
+                            and attempt_payload == attempt_base_payload
+                            and "fact_extraction_retry_context"
+                            not in attempt_payload
+                            and recovered_retry_payload is None
+                        )
+                        else None
+                    )
+                    if recovered_pagination_origin is not None:
+                        # Replaying page one is intentional.  It reconstructs
+                        # the complete accepted-claim objects in memory before
+                        # page two and later cached responses are consumed.
+                        # Jumping directly to the latest page would preserve
+                        # only the compact continuation projection and silently
+                        # lose earlier facts.
+                        attempt_base_payload = recovered_pagination_origin
+                        attempt_payload = recovered_pagination_origin
+                        pagination_page_number = 1
+                        continue
                     reason = (
                         "FACT_EXTRACTION_PROVIDER_OR_OUTPUT_ERROR:"
                         f"{type(exc).__name__}:{_clean_error(exc)}"
@@ -3641,6 +3670,31 @@ def _recover_validated_fact_extraction_retry_payload(
     if (
         len(canonical_recovered) != len(recovered_accepted)
         or canonical_recovered != canonical_expected
+    ):
+        return None
+    return dict(recovered)
+
+
+def _recover_validated_fact_extraction_pagination_origin_payload(
+    provider: StructuredResearchProvider,
+    *,
+    primary_payload: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    recover = getattr(
+        provider,
+        "validated_fact_extraction_pagination_origin_payload",
+        None,
+    )
+    if not callable(recover):
+        return None
+    try:
+        recovered = recover(primary_payload=primary_payload)
+    except (OSError, TypeError, ValueError, RuntimeError):
+        return None
+    if (
+        not isinstance(recovered, Mapping)
+        or "fact_extraction_continuation_context" in recovered
+        or "fact_extraction_retry_context" in recovered
     ):
         return None
     return dict(recovered)

@@ -1044,6 +1044,161 @@ class CollaborationCodexSubagentTransport:
             "retry_payload": dict(retry_payload),
         }
 
+    def validated_fact_extraction_pagination_origin_material(
+        self,
+        *,
+        current_primary_prompt: str,
+        output_schema: Mapping[str, Any],
+        schema_name: str,
+    ) -> Mapping[str, Any] | None:
+        """Recover the exact page-one request for an interrupted page chain.
+
+        Pagination facts are accumulated in memory until the final page.  A
+        collaboration wait therefore has to replay page one, then consume the
+        already imported continuation pages in order.  Only score-gap context
+        may differ from the current primary payload; document, fact, objective,
+        target, and as-of-date inputs remain exact.
+        """
+
+        root = self.journal_root
+        if root is None:
+            return None
+        pass_name = _pass_name_from_schema_name(schema_name)
+        if pass_name != "EVIDENCE_FACT_EXTRACTION":
+            return None
+        try:
+            current_payload = json.loads(
+                current_primary_prompt.rsplit("\n", 1)[-1]
+            )
+        except (TypeError, ValueError, json.JSONDecodeError):
+            return None
+        if not isinstance(current_payload, Mapping):
+            return None
+        current_core = dict(current_payload)
+        current_core.pop("score_gap_context", None)
+
+        try:
+            requests = tuple(
+                _validate_request(_read_json_object(path))
+                for path in (root / "requests").glob("COLLABREQ-*.json")
+            )
+        except (OSError, TypeError, ValueError, RuntimeError):
+            return None
+        request_payloads: dict[str, Mapping[str, Any]] = {}
+        for request in requests:
+            try:
+                payload = json.loads(
+                    str(request["prompt"]).rsplit("\n", 1)[-1]
+                )
+            except (TypeError, ValueError, json.JSONDecodeError):
+                continue
+            if isinstance(payload, Mapping):
+                request_payloads[str(request["request_id"])] = payload
+
+        def active_response(request: Mapping[str, Any]) -> bool:
+            request_id = str(request["request_id"])
+            try:
+                response = _validate_response_envelope(
+                    request=request,
+                    envelope=_read_json_object(
+                        root / "responses" / f"{request_id}.json"
+                    ),
+                )
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+            ):
+                return False
+            return not (
+                root
+                / "quarantine"
+                / request_id
+                / f"{response['response_id']}.json"
+            ).is_file()
+
+        candidates: list[tuple[int, Mapping[str, Any], Mapping[str, Any]]] = []
+        for origin in requests:
+            origin_id = str(origin["request_id"])
+            origin_payload = request_payloads.get(origin_id)
+            if (
+                origin.get("pass_name") != pass_name
+                or origin.get("schema_name") != schema_name
+                or origin.get("output_schema") != output_schema
+                or not isinstance(origin_payload, Mapping)
+                or "fact_extraction_continuation_context" in origin_payload
+                or "fact_extraction_retry_context" in origin_payload
+                or not active_response(origin)
+            ):
+                continue
+            origin_core = dict(origin_payload)
+            origin_core.pop("score_gap_context", None)
+            if origin_core != current_core:
+                continue
+            continuation_pages: set[int] = set()
+            for continuation in requests:
+                continuation_id = str(continuation["request_id"])
+                continuation_payload = request_payloads.get(continuation_id)
+                if (
+                    continuation.get("pass_name") != pass_name
+                    or continuation.get("schema_name") != schema_name
+                    or continuation.get("output_schema") != output_schema
+                    or not isinstance(continuation_payload, Mapping)
+                ):
+                    continue
+                context = continuation_payload.get(
+                    "fact_extraction_continuation_context"
+                )
+                if not isinstance(context, Mapping):
+                    continue
+                continuation_base = dict(continuation_payload)
+                continuation_base.pop(
+                    "fact_extraction_continuation_context", None
+                )
+                if continuation_base != origin_payload:
+                    continue
+                page_number = context.get("page_number")
+                required_ids = context.get("required_document_ids")
+                previous_facts = context.get("previously_accepted_facts")
+                document_ids = {
+                    str(row.get("document_id") or "")
+                    for row in origin_payload.get("full_documents") or ()
+                    if isinstance(row, Mapping)
+                    and str(row.get("document_id") or "")
+                }
+                if (
+                    isinstance(page_number, bool)
+                    or not isinstance(page_number, int)
+                    or page_number < 2
+                    or context.get("page_fact_limit") != 12
+                    or not isinstance(required_ids, list)
+                    or set(str(value) for value in required_ids)
+                    != document_ids
+                    or not isinstance(previous_facts, list)
+                    or not previous_facts
+                ):
+                    continue
+                continuation_pages.add(page_number)
+            if 2 not in continuation_pages:
+                continue
+            candidates.append(
+                (max(continuation_pages), origin, origin_payload)
+            )
+        if not candidates:
+            return None
+        maximum_page = max(row[0] for row in candidates)
+        selected = [row for row in candidates if row[0] == maximum_page]
+        if len(selected) != 1:
+            return None
+        _, origin_request, origin_payload = selected[0]
+        return {
+            "origin_request": dict(origin_request),
+            "origin_payload": dict(origin_payload),
+            "maximum_requested_page_number": maximum_page,
+        }
+
     def invalidate_last_response(self, reason: str) -> Mapping[str, Any]:
         request_id = self._last_request_id
         if request_id is None:
@@ -1670,6 +1825,53 @@ class CollaborationCodexResearcherProvider(CodexResearcherProvider):
             return None
         return dict(retry_payload)
 
+    def validated_fact_extraction_pagination_origin_payload(
+        self,
+        *,
+        primary_payload: Mapping[str, Any],
+    ) -> Mapping[str, Any] | None:
+        """Recover an exact page-one payload for ordered page replay."""
+
+        try:
+            (
+                safe_primary_payload,
+                output_schema,
+                primary_prompt,
+                _primary_prompt_hash,
+                _schema_hash,
+            ) = _single_payload_request_material(
+                pass_name="EVIDENCE_FACT_EXTRACTION",
+                payload=primary_payload,
+            )
+        except (KeyError, TypeError, ValueError):
+            return None
+        material = (
+            self.transport.validated_fact_extraction_pagination_origin_material(
+                current_primary_prompt=primary_prompt,
+                output_schema=output_schema,
+                schema_name="e2r_v5_evidence_fact_extraction",
+            )
+        )
+        if not isinstance(material, Mapping):
+            return None
+        request = material.get("origin_request")
+        if not isinstance(request, Mapping):
+            return None
+        origin_payload = self._validated_payload_from_request(
+            request=request,
+            pass_name="EVIDENCE_FACT_EXTRACTION",
+            prompt_hash=str(request.get("prompt_hash") or ""),
+        )
+        if not isinstance(origin_payload, Mapping):
+            return None
+        origin_core = dict(origin_payload)
+        origin_core.pop("score_gap_context", None)
+        current_core = dict(safe_primary_payload)
+        current_core.pop("score_gap_context", None)
+        if origin_core != current_core:
+            return None
+        return dict(origin_payload)
+
     @staticmethod
     def _validated_payload_from_request(
         *,
@@ -1874,6 +2076,17 @@ class CodexSubagentFallbackResearchProvider(CodexResearcherProvider):
         """Delegate exact peer-retry recovery to collaboration only."""
 
         return self.collaboration.validated_peer_selection_retry_payload(
+            primary_payload=primary_payload,
+        )
+
+    def validated_fact_extraction_pagination_origin_payload(
+        self,
+        *,
+        primary_payload: Mapping[str, Any],
+    ) -> Mapping[str, Any] | None:
+        """Delegate ordered pagination replay recovery to collaboration."""
+
+        return self.collaboration.validated_fact_extraction_pagination_origin_payload(
             primary_payload=primary_payload,
         )
 

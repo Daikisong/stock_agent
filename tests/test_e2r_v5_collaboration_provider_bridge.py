@@ -757,6 +757,84 @@ class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
                 complete_response,
             )
 
+    def test_clean_resume_recovers_fact_pagination_origin_before_page_two(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = CollaborationCodexResearcherProvider(
+                transport=CollaborationCodexSubagentTransport()
+            )
+            journal = _configure(provider, Path(directory))
+            origin_payload = {
+                "target_id": "CURRENT-TARGET",
+                "as_of_date": "2026-07-12",
+                "full_documents": [
+                    {
+                        "document_id": "DOCUMENT-1",
+                        "content_text": "literal source text",
+                    }
+                ],
+                "score_gap_context": {"pending": ["old gap"]},
+            }
+            empty_response = {
+                "facts": [],
+                "document_dispositions": [],
+                "unresolved_document_ids": [],
+                "unresolved_research_notes": [],
+                "extraction_complete": True,
+            }
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.complete(
+                    pass_name="EVIDENCE_FACT_EXTRACTION",
+                    payload=origin_payload,
+                )
+            _, origin_request = _request(journal)
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=origin_request["request_id"],
+                response_payload=empty_response,
+                agent_id="fact-page-one-agent",
+                canonical_task_name="/root/fact_page_one",
+                agent_model="codex-collaboration",
+            )
+            page_two_payload = {
+                **origin_payload,
+                "fact_extraction_continuation_context": {
+                    "page_number": 2,
+                    "page_fact_limit": 12,
+                    "required_document_ids": ["DOCUMENT-1"],
+                    "previously_accepted_facts": [
+                        {
+                            "document_id": "DOCUMENT-1",
+                            "exact_quote": "literal source text",
+                        }
+                    ],
+                    "instruction": "continue without duplicates",
+                },
+            }
+            with self.assertRaisesRegex(
+                StructuredProviderUnavailable,
+                "COLLABORATION_RESPONSE_PENDING",
+            ):
+                provider.complete(
+                    pass_name="EVIDENCE_FACT_EXTRACTION",
+                    payload=page_two_payload,
+                )
+
+            current_payload = {
+                **origin_payload,
+                "score_gap_context": {"pending": ["new downstream gap"]},
+            }
+            self.assertEqual(
+                provider.validated_fact_extraction_pagination_origin_payload(
+                    primary_payload=current_payload,
+                ),
+                origin_payload,
+            )
+
     def test_multichunk_usage_limit_falls_back_only_for_missing_leaf(
         self,
     ) -> None:

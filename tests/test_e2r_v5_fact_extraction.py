@@ -283,6 +283,36 @@ class PagedFactProvider(FactProvider):
         return response
 
 
+class CleanResumePagedFactProvider(PagedFactProvider):
+    def __init__(self) -> None:
+        super().__init__()
+        self.primary_wait_raised = False
+        self.recovery_call_count = 0
+
+    def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
+        if not self.primary_wait_raised:
+            self.primary_wait_raised = True
+            self.calls.append({"pass_name": pass_name, "payload": payload})
+            raise StructuredProviderUnavailable(
+                "COLLABORATION_RESPONSE_PENDING:COLLABREQ-" + "b" * 64
+            )
+        return super().complete(pass_name=pass_name, payload=payload)
+
+    def validated_fact_extraction_pagination_origin_payload(
+        self,
+        *,
+        primary_payload,
+    ):
+        self.recovery_call_count += 1
+        return {
+            **primary_payload,
+            "score_gap_context": {
+                "recovered_page_one_context": True,
+                "score_authority": False,
+            },
+        }
+
+
 class ObjectiveLocalFactProvider(FactProvider):
     def complete(self, *, pass_name: str, payload: Mapping[str, Any]):
         response = dict(
@@ -3123,6 +3153,47 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             result.audit["pagination_continuation_call_count"], 1
         )
         self.assertFalse(result.audit["fact_page_limit_is_total_fact_cap"])
+
+    def test_clean_resume_replays_page_one_before_continuation(self) -> None:
+        provider = CleanResumePagedFactProvider()
+        document = dict(
+            _document("DOC-PAGED-RESUME", "ISSUER_PRESENTATION", "ISSUER")
+        )
+        text = "\n".join(
+            f"Current Corp material fact number {index}."
+            for index in range(13)
+        )
+        document["content_text"] = text
+        document["content_hash"] = hashlib.sha256(
+            text.encode("utf-8")
+        ).hexdigest()
+
+        result = ResearcherEvidenceFactExtractor(provider=provider).extract(
+            target_id=TARGET,
+            target_name=TARGET_NAME,
+            target_aliases=(),
+            archetype_id=ARCHETYPE,
+            as_of_date=AS_OF_DATE,
+            documents=(document,),
+            open_objectives=(),
+            score_gap_context={"current_downstream_gap": ["peer pending"]},
+        )
+
+        self.assertEqual(result.status, "FACT_EXTRACTION_COMPLETE")
+        self.assertEqual(provider.recovery_call_count, 1)
+        self.assertEqual(len(provider.calls), 3)
+        self.assertEqual(len(result.material_claims), 13)
+        self.assertEqual(len(result.facts), 13)
+        self.assertNotIn(
+            "fact_extraction_continuation_context",
+            provider.calls[1]["payload"],
+        )
+        self.assertEqual(
+            provider.calls[2]["payload"][
+                "fact_extraction_continuation_context"
+            ]["page_number"],
+            2,
+        )
 
     def test_production_long_background_document_stops_at_current_objective(
         self,
