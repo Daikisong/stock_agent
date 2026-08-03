@@ -4205,7 +4205,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         )
         self.assertIn("CUSTOMER_OFFICIAL", projected_failures)
 
-    def test_sparse_verified_reference_gets_one_fetch_then_full_text_revalidation(
+    def test_sparse_reference_nonmaterial_decision_does_not_gain_fetch_authority(
         self,
     ) -> None:
         provider = SparseReferenceRevalidationProvider(
@@ -4235,52 +4235,25 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             checkpoint=first.checkpoint,
             official_domains=("issuer.example.com",),
         )
-        child_after_fetch = next(
+        child_after_ranking = next(
             row
             for row in second.checkpoint["search_candidates"]
             if row.get("url") == child_url
         )
         self.assertEqual(
-            child_after_fetch["fetch_status"],
-            "FULL_DOCUMENT_REVALIDATION_PENDING",
+            child_after_ranking["ranking_status"],
+            "NOT_MATERIAL",
         )
-        self.assertTrue(
-            child_after_fetch[
+        self.assertEqual(
+            child_after_ranking["fetch_status"],
+            "DISCOVERY_ONLY_NOT_FETCHED",
+        )
+        self.assertFalse(
+            child_after_ranking.get(
                 "sparse_reference_transport_revalidation_attempted"
-            ]
-        )
-        self.assertEqual(fetcher.calls.count(child_url), 1)
-
-        third = self._run(
-            provider=provider,
-            search=search,
-            fetcher=fetcher,
-            checkpoint=second.checkpoint,
-            official_domains=("issuer.example.com",),
-        )
-        child_final = next(
-            row
-            for row in third.checkpoint["search_candidates"]
-            if row.get("url") == child_url
-        )
-        self.assertEqual(child_final["ranking_status"], "MATERIAL")
-        self.assertEqual(child_final["fetch_status"], "FULL_DOCUMENT_FETCHED")
-        self.assertEqual(fetcher.calls.count(child_url), 1)
-        full_text_payload = next(
-            row["payload"]
-            for row in reversed(provider.calls)
-            if row["pass_name"] == "SOURCE_CANDIDATE_RANKING"
-            and any(
-                (candidate.get("reference_transport_context") or {}).get(
-                    "full_fetch_content_text"
-                )
-                for candidate in row["payload"]["discovery_candidates"]
             )
         )
-        self.assertIn(
-            "linked-official-transcript",
-            json.dumps(full_text_payload, ensure_ascii=False),
-        )
+        self.assertEqual(fetcher.calls.count(child_url), 0)
 
     def test_supervisor_query_direction_preempts_reference_backlog(
         self,
@@ -6507,8 +6480,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "https://issuer.example.com/tag/results",
             "https://issuer.example.com/category/press/",
             "https://issuer.example.com/en/page/6/?topic=HBM4",
+            "https://issuer.example.com/latest",
             "https://issuer.example.com/?s=HBM4",
             "https://issuer.example.com/search?keyword=HBM4",
+            "https://issuer.example.com/sp?kw=HBM4",
         )
         retained_urls = (
             "https://issuer.example.com/news/customer-allocation-update",
@@ -6762,6 +6737,69 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "FULL_DOCUMENT_FETCHED",
         )
         self.assertEqual(candidates[2]["fetch_status"], "FULL_DOCUMENT_FETCHED")
+
+    def test_legacy_sparse_false_decision_retires_from_fetch_handoff(
+        self,
+    ) -> None:
+        retired_id = "SGCAND-retired"
+        retained_id = "SGCAND-retained"
+        candidates = [
+            {
+                "candidate_id": retired_id,
+                "ranking_status": "MATERIAL",
+                "fetch_status": "MATERIAL_PENDING_FETCH",
+                "matched_requested_source_family": "ISSUER_NEWSROOM",
+                "materiality_decision_id": "MATDEC-false",
+                "sparse_reference_metadata_decision_id": "MATDEC-false",
+                "sparse_reference_transport_revalidation_attempted": True,
+                "sparse_reference_transport_authority": (
+                    "VERIFIED_OFFICIAL_PARENT_CURRENT_SCOPE_BOUNDED_ONE_FETCH"
+                ),
+            },
+            {
+                "candidate_id": retained_id,
+                "ranking_status": "MATERIAL",
+                "fetch_status": "MATERIAL_PENDING_FETCH",
+            },
+        ]
+        decisions = [
+            {
+                "decision_id": "MATDEC-false",
+                "candidate_id": retired_id,
+                "material_relevance": False,
+                "matched_requested_source_family": "NONE",
+            }
+        ]
+        state = {
+            "pending_candidate_ranking_replay_context": {
+                "replay_phase": "FETCH_HANDOFF_PENDING",
+                "fetch_handoff_candidate_ids": [retired_id, retained_id],
+            }
+        }
+
+        retired = (
+            source_graph_module._retire_nonmaterial_sparse_reference_transports(
+                candidates,
+                materiality_decisions=decisions,
+            )
+        )
+        source_graph_module._reconcile_terminal_candidate_ranking_fetch_handoff(
+            state,
+            candidates=candidates,
+        )
+
+        self.assertEqual(retired, 1)
+        self.assertEqual(candidates[0]["ranking_status"], "NOT_MATERIAL")
+        self.assertEqual(
+            candidates[0]["fetch_status"],
+            "DISCOVERY_ONLY_NOT_FETCHED",
+        )
+        self.assertEqual(
+            state["pending_candidate_ranking_replay_context"][
+                "fetch_handoff_candidate_ids"
+            ],
+            [retained_id],
+        )
 
     def test_ready_readonly_checkpoint_advances_navigation_migration(
         self,

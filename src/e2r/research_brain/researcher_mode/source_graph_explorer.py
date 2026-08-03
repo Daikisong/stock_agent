@@ -75,7 +75,7 @@ SOURCE_FAMILY_CLASSES: Mapping[str, tuple[str, ...]] = {
 }
 
 NAVIGATION_ONLY_REFERENCE_POLICY_VERSION = (
-    "e2r_v5_navigation_only_reference_terminal_v1"
+    "e2r_v5_navigation_only_reference_terminal_v2"
 )
 SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION = (
     "e2r_v5_customer_official_weak_discovery_override_v1"
@@ -747,6 +747,14 @@ class ResearcherSourceGraphAcquirer:
         )
         _close_navigation_only_reference_routes(candidates)
         _close_non_authority_candidate_reference_routes(candidates)
+        _retire_nonmaterial_sparse_reference_transports(
+            candidates,
+            materiality_decisions=ranking_rows,
+        )
+        _reconcile_terminal_candidate_ranking_fetch_handoff(
+            state,
+            candidates=candidates,
+        )
         if not checkpoint_source_repair_only:
             _reopen_authority_link_extraction_candidates(
                 candidates,
@@ -1861,38 +1869,13 @@ class ResearcherSourceGraphAcquirer:
                                 "MATERIAL_PENDING_FETCH"
                             )
                 else:
-                    sparse_reference_transport_family = (
-                        _sparse_verified_reference_transport_family(
-                            candidate,
-                            decision=decision,
-                        )
-                    )
-                    if sparse_reference_transport_family:
-                        candidate["ranking_status"] = "MATERIAL"
-                        candidate["fetch_status"] = "MATERIAL_PENDING_FETCH"
-                        candidate["matched_requested_source_family"] = (
-                            sparse_reference_transport_family
-                        )
-                        candidate["materiality_scope_hash"] = (
-                            _candidate_materiality_scope_hash(candidate)
-                        )
-                        candidate[
-                            "sparse_reference_transport_revalidation_attempted"
-                        ] = True
-                        candidate[
-                            "sparse_reference_metadata_decision_id"
-                        ] = decision.decision_id
-                        candidate[
-                            "sparse_reference_transport_authority"
-                        ] = (
-                            "VERIFIED_OFFICIAL_PARENT_CURRENT_SCOPE_"
-                            "BOUNDED_ONE_FETCH"
-                        )
-                    else:
-                        candidate["ranking_status"] = "NOT_MATERIAL"
+                    # Candidate materiality belongs to the LLM.  A sparse
+                    # reference may be fetched when the LLM marks the route
+                    # material, but deterministic transport must not turn an
+                    # explicit false decision into MATERIAL_PENDING_FETCH.
+                    candidate["ranking_status"] = "NOT_MATERIAL"
                     if (
-                        not sparse_reference_transport_family
-                        and candidate.get("revalidation_document_id")
+                        candidate.get("revalidation_document_id")
                     ):
                         candidate["fetch_status"] = (
                             "FULL_DOCUMENT_REVALIDATION_REJECTED"
@@ -1902,15 +1885,12 @@ class ResearcherSourceGraphAcquirer:
                             "sparse_reference_full_fetch_revalidation_pending",
                             None,
                         )
-                    elif (
-                        not sparse_reference_transport_family
-                        and terminal_fetch_status
-                    ):
+                    elif terminal_fetch_status:
                         candidate["fetch_status"] = terminal_fetch_status
                         candidate[
                             "materiality_revalidated_terminal_transport_preserved"
                         ] = True
-                    elif not sparse_reference_transport_family:
+                    else:
                         candidate["fetch_status"] = (
                             "DISCOVERY_ONLY_NOT_FETCHED"
                         )
@@ -7514,59 +7494,6 @@ def _candidate_ranking_transport_rows(
     return tuple(projected)
 
 
-def _sparse_verified_reference_transport_family(
-    candidate: Mapping[str, Any],
-    *,
-    decision: Any,
-) -> str:
-    """Authorize one fetch when sparse metadata cannot support a final rejection.
-
-    The parent decision and exact inherited query edge authorize transport only.
-    The LLM must review the fetched text on the next checkpoint before the
-    document can enter the production downstream set.
-    """
-
-    if (
-        bool(getattr(decision, "material_relevance", False))
-        or candidate.get("direct_search_discovery") is True
-        or candidate.get(
-            "reference_expansion_parent_authority_verified"
-        )
-        is not True
-        or candidate.get("reference_current_scope_inherited") is not True
-        or candidate.get(
-            "sparse_reference_transport_revalidation_attempted"
-        )
-        is True
-        or int(candidate.get("full_fetch_attempt_count") or 0) > 0
-        or not _candidate_reference_metadata_is_sparse(candidate)
-        or _is_navigation_only_reference_url(
-            str(candidate.get("url") or "")
-        )
-        or not (
-            candidate.get("graph_expansion_parent_document_ids")
-            or candidate.get("graph_expansion_parent_candidate_ids")
-        )
-        or not str(candidate.get("materiality_scope_hash") or "")
-        or str(candidate.get("materiality_scope_hash") or "")
-        != _candidate_materiality_scope_hash(candidate)
-    ):
-        return ""
-    source_family = str(
-        candidate.get(
-            "reference_parent_matched_requested_source_family"
-        )
-        or ""
-    )
-    if (
-        source_family not in CANONICAL_SOURCE_FAMILIES
-        or source_family
-        not in set(candidate.get("requested_source_families") or ())
-    ):
-        return ""
-    return source_family
-
-
 def _pending_candidate_ranking_priority(
     candidate: Mapping[str, Any],
     *,
@@ -7667,6 +7594,7 @@ def _is_navigation_only_reference_url(url: str) -> bool:
         "archive",
         "archives",
         "feed",
+        "latest",
         "rss",
     }:
         return True
@@ -7682,6 +7610,7 @@ def _is_navigation_only_reference_url(url: str) -> bool:
             "search_query",
             "search_term",
             "keyword",
+            "kw",
         }
     )
 
@@ -7965,6 +7894,110 @@ def _close_non_authority_candidate_reference_routes(
         candidate["reference_expansion_parent_authority_verified"] = False
         closed += 1
     return closed
+
+
+def _retire_nonmaterial_sparse_reference_transports(
+    candidates: Sequence[dict[str, Any]],
+    *,
+    materiality_decisions: Sequence[Mapping[str, Any]],
+) -> int:
+    """Restore persisted sparse references to their exact LLM decision.
+
+    Older checkpoints could overwrite an explicit non-material decision with a
+    one-fetch transport exception inherited from the parent document.  That
+    exception made menu and social links consume fetch/document budget even
+    though the candidate-ranking LLM had rejected them.  Resume retires only
+    rows carrying that exact legacy marker and a bound false decision.
+    """
+
+    decision_by_id = {
+        str(row.get("decision_id") or ""): row
+        for row in materiality_decisions
+        if str(row.get("decision_id") or "")
+    }
+    retired = 0
+    for candidate in candidates:
+        if str(candidate.get("sparse_reference_transport_authority") or "") != (
+            "VERIFIED_OFFICIAL_PARENT_CURRENT_SCOPE_BOUNDED_ONE_FETCH"
+        ):
+            continue
+        if str(candidate.get("fetch_status") or "") not in {
+            "MATERIAL_PENDING_FETCH",
+            "FETCH_RETRY_PENDING",
+        }:
+            continue
+        decision_id = str(
+            candidate.get("sparse_reference_metadata_decision_id")
+            or candidate.get("materiality_decision_id")
+            or ""
+        )
+        decision = decision_by_id.get(decision_id)
+        if (
+            decision is None
+            or str(decision.get("candidate_id") or "")
+            != str(candidate.get("candidate_id") or "")
+            or decision.get("material_relevance") is not False
+        ):
+            continue
+        candidate["ranking_status"] = "NOT_MATERIAL"
+        candidate["fetch_status"] = "DISCOVERY_ONLY_NOT_FETCHED"
+        candidate["matched_requested_source_family"] = str(
+            decision.get("matched_requested_source_family") or "NONE"
+        )
+        candidate["materiality_scope_hash"] = (
+            _candidate_materiality_scope_hash(candidate)
+        )
+        candidate["score_authority"] = False
+        candidate["snippet_evidence_eligible"] = False
+        candidate["sparse_reference_transport_legacy_authority_retired"] = True
+        candidate["sparse_reference_transport_retirement_reason"] = (
+            "BOUND_LLM_MATERIAL_RELEVANCE_FALSE"
+        )
+        candidate.pop("sparse_reference_transport_authority", None)
+        candidate.pop("sparse_reference_transport_revalidation_attempted", None)
+        retired += 1
+    return retired
+
+
+def _reconcile_terminal_candidate_ranking_fetch_handoff(
+    state: dict[str, Any],
+    *,
+    candidates: Sequence[Mapping[str, Any]],
+) -> None:
+    """Prune only policy-migrated terminal rows from a persisted fetch handoff."""
+
+    raw = state.get("pending_candidate_ranking_replay_context")
+    if not isinstance(raw, Mapping) or str(raw.get("replay_phase") or "") != (
+        "FETCH_HANDOFF_PENDING"
+    ):
+        return
+    candidate_by_id = {
+        str(row.get("candidate_id") or ""): row
+        for row in candidates
+        if str(row.get("candidate_id") or "")
+    }
+    retained_ids: list[str] = []
+    for value in raw.get("fetch_handoff_candidate_ids") or ():
+        candidate_id = str(value or "")
+        candidate = candidate_by_id.get(candidate_id)
+        if candidate is None:
+            retained_ids.append(candidate_id)
+            continue
+        migrated_terminal = bool(
+            candidate.get("sparse_reference_transport_legacy_authority_retired")
+            is True
+            or candidate.get("reference_navigation_disposition")
+            == "TERMINAL_DISCOVERY_ONLY"
+        )
+        if not migrated_terminal:
+            retained_ids.append(candidate_id)
+    if retained_ids:
+        state["pending_candidate_ranking_replay_context"] = {
+            **dict(raw),
+            "fetch_handoff_candidate_ids": retained_ids,
+        }
+    else:
+        state.pop("pending_candidate_ranking_replay_context", None)
 
 
 def _reopen_authority_link_extraction_candidates(
