@@ -8,6 +8,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 from e2r.cli import resume_e2r_researcher_fact_extraction as cli
+from e2r.cli import run_e2r_researcher_mode_until_pass as full_cli
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     CurrentResearcherModeConfig,
     CurrentResearchTarget,
@@ -57,12 +58,18 @@ class FactExtractionRecoveryCliTest(unittest.TestCase):
                     "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
                     "--output-root",
                     "output/recovery",
+                    "--fact-documents-per-call",
+                    "2",
                 ]
             )
         self.assertEqual(status, 2)
         self.assertIn('"provider_route": "COLLABORATION_CODEX_SUBAGENT"', output.getvalue())
         self.assertIn('"score_or_stage_authority": false', output.getvalue())
         self.assertIs(resume.call_args.kwargs["provider"], provider)
+        self.assertEqual(
+            resume.call_args.kwargs["config"].fact_documents_per_call,
+            2,
+        )
 
     def test_cli_returns_zero_only_when_every_target_fact_leaf_is_complete(self):
         targets = (
@@ -126,8 +133,65 @@ class FactExtractionRecoveryCliTest(unittest.TestCase):
                 ]
             )
 
+    def test_full_and_recovery_clis_share_the_fact_transport_batch_option(self):
+        recovery = cli.build_parser().parse_args(
+            [
+                "--as-of-date",
+                "2026-07-12",
+                "--symbols",
+                "005930",
+                "--archetype",
+                "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "--output-root",
+                "output/recovery",
+                "--fact-documents-per-call",
+                "2",
+            ]
+        )
+        full = full_cli.build_parser().parse_args(
+            [
+                "--as-of-date",
+                "2026-07-12",
+                "--symbols",
+                "005930",
+                "--archetype",
+                "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                "--live-materialization-authorized",
+                "true",
+                "--checkpoint-resume",
+                "true",
+                "--gold-lane-isolated",
+                "true",
+                "--require-researcher-parity",
+                "true",
+                "--output-root",
+                "output/recovery",
+                "--fact-documents-per-call",
+                "2",
+            ]
+        )
+        self.assertEqual(recovery.fact_documents_per_call, 2)
+        self.assertEqual(full.fact_documents_per_call, 2)
+
 
 class FactExtractionRecoveryFunctionTest(unittest.TestCase):
+    def test_config_rejects_nonpositive_fact_transport_batch(self):
+        for value in (0, -1):
+            with self.subTest(value=value), self.assertRaisesRegex(
+                ValueError,
+                "positive transport batch",
+            ):
+                CurrentResearcherModeConfig(
+                    as_of_date="2026-07-12",
+                    archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                    output_root="output/recovery",
+                    live_materialization_authorized=True,
+                    checkpoint_resume=True,
+                    gold_lane_isolated=True,
+                    require_researcher_parity=True,
+                    fact_documents_per_call=value,
+                )
+
     def test_recovery_function_rejects_nonproduction_source_semantics(self):
         with TemporaryDirectory() as directory:
             config = CurrentResearcherModeConfig(

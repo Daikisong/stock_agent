@@ -139,6 +139,7 @@ class CurrentResearcherModeConfig:
     require_researcher_parity: bool
     latest_trading_snapshot_date: str | None = None
     source_acquisition_mode: str = SourceGraphAcquisitionMode.PRODUCTION_DAILY.value
+    fact_documents_per_call: int = 1
     schema_version: str = CURRENT_RESEARCHER_MODE_SCHEMA_VERSION
 
     def __post_init__(self) -> None:
@@ -157,6 +158,13 @@ class CurrentResearcherModeConfig:
         if source_mode == SourceGraphAcquisitionMode.RESEARCH_BACKFILL:
             raise ValueError(
                 "Phase 94 current Researcher Mode cannot run with backfill source semantics"
+            )
+        if (
+            isinstance(self.fact_documents_per_call, bool)
+            or self.fact_documents_per_call <= 0
+        ):
+            raise ValueError(
+                "fact_documents_per_call must be a positive transport batch"
             )
         if self.latest_trading_snapshot_date:
             trading_date = date.fromisoformat(self.latest_trading_snapshot_date)
@@ -211,6 +219,7 @@ class CurrentResearcherModeTargetRunner:
         self.source_acquirer = source_acquirer or ResearcherSourceGraphAcquirer(
             query_provider=effective_provider
         )
+        self._fact_extractor_injected = fact_extractor is not None
         self.fact_extractor = fact_extractor or ResearcherEvidenceFactExtractor(
             provider=effective_provider,
             max_document_chars_per_call=int(
@@ -242,6 +251,30 @@ class CurrentResearcherModeTargetRunner:
         root = Path(config.output_root) / target.symbol
         root.mkdir(parents=True, exist_ok=True)
         _configure_provider_response_cache(self.provider, root)
+        fact_extractor = self.fact_extractor
+        if (
+            fact_extractor.documents_per_call
+            != config.fact_documents_per_call
+        ):
+            if self._fact_extractor_injected:
+                raise ValueError(
+                    "injected fact extractor transport batch differs from config"
+                )
+            fact_extractor = ResearcherEvidenceFactExtractor(
+                provider=self.provider,
+                documents_per_call=config.fact_documents_per_call,
+                max_document_chars_per_call=int(
+                    getattr(
+                        self.provider,
+                        "semantic_prompt_chunk_chars",
+                        getattr(
+                            self.provider,
+                            "fact_document_chunk_chars",
+                            220_000,
+                        ),
+                    )
+                ),
+            )
         anchors = _historical_anchors(
             repo_root=repo_root,
             archetype_id=config.archetype_id,
@@ -432,7 +465,7 @@ class CurrentResearcherModeTargetRunner:
             )
             write_source_graph_acquisition_run(source_graph, output_root=root)
         prior_fact = _load_fact_checkpoint(root, source_graph=source_graph)
-        fact_extraction = self.fact_extractor.extract(
+        fact_extraction = fact_extractor.extract(
             target_id=target.target_id,
             target_name=target.company_name,
             target_aliases=target.aliases,
@@ -2470,6 +2503,7 @@ def resume_current_fact_extraction_checkpoint(
     prior_fact = _load_fact_checkpoint(root, source_graph=source_graph)
     extractor = ResearcherEvidenceFactExtractor(
         provider=provider,
+        documents_per_call=config.fact_documents_per_call,
         max_document_chars_per_call=int(
             getattr(
                 provider,

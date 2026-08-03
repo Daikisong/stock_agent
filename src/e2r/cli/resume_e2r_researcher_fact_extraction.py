@@ -23,6 +23,15 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--archetype", required=True)
     parser.add_argument("--output-root", required=True)
     parser.add_argument(
+        "--fact-documents-per-call",
+        type=int,
+        default=1,
+        help=(
+            "Prompt-transport batch size shared with the production runner; "
+            "it is never a document or fact completion cap."
+        ),
+    )
+    parser.add_argument(
         "--target-registry",
         default="configs/e2r_targeted_live_smoke_v1.json",
     )
@@ -57,6 +66,7 @@ def main(argv: list[str] | None = None) -> int:
         checkpoint_resume=True,
         gold_lane_isolated=True,
         require_researcher_parity=True,
+        fact_documents_per_call=args.fact_documents_per_call,
     )
     provider = CollaborationCodexResearcherProvider.default()
     rows = []

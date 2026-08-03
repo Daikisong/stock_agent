@@ -80,6 +80,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--latest-trading-snapshot-date")
     parser.add_argument(
+        "--fact-documents-per-call",
+        type=int,
+        default=1,
+        help=(
+            "Prompt-transport batch size only; every production document and "
+            "continuation page remains loss-accounted."
+        ),
+    )
+    parser.add_argument(
         "--research-provider",
         choices=(
             "codex",
@@ -158,6 +167,7 @@ def main(argv: list[str] | None = None) -> int:
         gold_lane_isolated=args.gold_lane_isolated,
         require_researcher_parity=args.require_researcher_parity,
         latest_trading_snapshot_date=trading_date,
+        fact_documents_per_call=args.fact_documents_per_call,
     )
     output_root = Path(config.output_root)
     output_root.mkdir(parents=True, exist_ok=True)
