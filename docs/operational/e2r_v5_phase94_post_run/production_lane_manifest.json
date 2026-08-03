@@ -1,0 +1,52 @@
+{
+  "archetype_id": "C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+  "as_of_date": "2026-07-12",
+  "comparison_timing": "POST_RUN_ONLY",
+  "completion_based_on_fixed_rounds": false,
+  "gold_fact_visibility": false,
+  "gold_query_visibility": false,
+  "gold_url_visibility": false,
+  "gold_visibility": false,
+  "lane_role": "PRODUCTION",
+  "latest_trading_snapshot_date": "2026-07-10",
+  "production_research_complete": true,
+  "production_semantics_seal": {
+    "after_run_semantics_fingerprint": "85a56046c9e0815289a3ed01a10ab49fb154eb2337b4e35d802dc6cf2788b74c",
+    "before_run_semantics_fingerprint": "85a56046c9e0815289a3ed01a10ab49fb154eb2337b4e35d802dc6cf2788b74c",
+    "code_file_count": 1266,
+    "code_fingerprint": "e9a9189e8d6fca9ccb7ad04b5d82314cf82a72e18082bcbcada88fa33228c16c",
+    "config_fingerprint": "3da217c7c70c59a5b2e1b32943ffcf6b879a05965df4cb282b9c0fcbd807cadc",
+    "input_semantics_fingerprint": "a6f30c067f32717665de844594456ef197e0307ca7d1905aef855bedead44459",
+    "provider_fingerprint": "2c8a2a92044ead5929e0c6c7f293a897417f2f6971bee6077d551ce8c1a00bb8",
+    "reference_file_count": 3,
+    "run_semantics_unchanged": true,
+    "schema_version": "e2r_v5_phase94_production_semantics_seal_v1",
+    "semantics_fingerprint": "85a56046c9e0815289a3ed01a10ab49fb154eb2337b4e35d802dc6cf2788b74c",
+    "status": "SEALED_PRODUCTION_SEMANTICS_MATCH"
+  },
+  "research_provider": {
+    "provider_identity": {
+      "bridge_schema_version": "e2r_v5_collaboration_codex_subagent_bridge_v1",
+      "direct_score_or_stage_authority": false,
+      "provenance_assurance": "ORCHESTRATOR_ATTESTED_NOT_CRYPTOGRAPHIC",
+      "provider_route": "COLLABORATION_CODEX_SUBAGENT",
+      "transport_class": "CollaborationCodexSubagentTransport"
+    },
+    "provider_identity_error": null,
+    "provider_identity_hash": "f95acea216695050b7034ce0f309935093cf3f3b3bda70a086401b2312574cb6",
+    "provider_identity_resolved": true,
+    "provider_name": "COLLABORATION_CODEX_SUBAGENT_STRUCTURED_RESEARCHER_MODE",
+    "provider_selected_explicitly": true,
+    "score_or_stage_authority": false,
+    "transport_class": "CollaborationCodexSubagentTransport"
+  },
+  "schema_version": "e2r_v5_phase94_production_lane_v1",
+  "target_ids": [
+    "005930",
+    "000660"
+  ],
+  "target_statuses": {
+    "000660": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
+    "005930": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD"
+  }
+}

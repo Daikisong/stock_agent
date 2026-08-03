@@ -18,6 +18,7 @@ from e2r.research_brain.researcher_mode.independent_acceptance import (
 )
 from e2r.research_brain.researcher_mode.canary_leaf_contract import (
     CANARY_MASTER_LEAF_FILES,
+    canary_output_tree_hash,
 )
 from e2r.research_brain.researcher_mode import (
     independent_acceptance as acceptance_module,
@@ -127,6 +128,57 @@ class E2RV5Phase100IndependentAcceptanceTests(unittest.TestCase):
                     row["output_tree_hash_matches"],
                     row["output_tree_hash"] == row["actual_output_tree_hash"],
                 )
+
+    def test_live_canary_manifest_hash_excludes_post_run_gold_leaf(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            target_id = "TARGET-A"
+            target_root = (
+                root
+                / "output"
+                / "researcher_mode"
+                / "c06"
+                / "2026-07-12"
+                / target_id
+            )
+            target_root.mkdir(parents=True)
+            config = root / "configs" / "e2r_targeted_live_smoke_v1.json"
+            config.parent.mkdir(parents=True)
+            config.write_text(
+                json.dumps(
+                    {
+                        "mandatory_targets": [
+                            {"symbol": target_id, "company_name": "Target A"}
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (target_root / "documents.jsonl").write_text("{}\n", encoding="utf-8")
+            manifest = {
+                "target_id": target_id,
+                "production_research_complete": True,
+                "output_tree_hash": canary_output_tree_hash(
+                    target_root,
+                    include_post_run_gold=False,
+                ),
+            }
+            (target_root / "target_run_manifest.json").write_text(
+                json.dumps(manifest),
+                encoding="utf-8",
+            )
+            (target_root / "gold_fact_comparison.jsonl").write_text(
+                '{"gold_fact_id":"G-1"}\n',
+                encoding="utf-8",
+            )
+
+            row = acceptance_module._canary_rows(root)[0]
+
+            self.assertEqual(
+                row["actual_output_tree_hash"],
+                manifest["output_tree_hash"],
+            )
+            self.assertTrue(row["output_tree_hash_matches"])
 
     def test_component_calibration_recomputes_historical_thresholds(self) -> None:
         calibration = self.bundle["component_score_calibration"]

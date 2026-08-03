@@ -479,7 +479,12 @@ def _canary_rows(root: Path) -> tuple[Mapping[str, Any], ...]:
         }
         manifest_output_tree_hash = str(manifest.get("output_tree_hash") or "")
         actual_output_tree_hash = (
-            canary_output_tree_hash(output_root) if output_root else ""
+            canary_output_tree_hash(
+                output_root,
+                include_post_run_gold=False,
+            )
+            if output_root
+            else ""
         )
         leaf_contract = (
             _read_json(output_root / "canary_leaf_contract_audit.json")

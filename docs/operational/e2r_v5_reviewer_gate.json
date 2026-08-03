@@ -1,28 +1,11 @@
 {
   "all_reviewers_independently_recomputed": true,
-  "blockers": [
-    "PHASE94_CLEAN_GOLD_RECALL_COMPARISON_PENDING",
-    "LIVE_CANARY_DOSSIER_INCOMPLETE:005930",
-    "LIVE_CANARY_DOSSIER_INCOMPLETE:000660",
-    "FINAL_STAGECOURT_PENDING:005930",
-    "FINAL_STAGECOURT_PENDING:000660",
-    "RUNTIME_NOT_COMPLETE:005930",
-    "RUNTIME_NOT_COMPLETE:000660",
-    "LIVE_RESEARCH_CHECKPOINT_PENDING:005930",
-    "LIVE_RESEARCH_CHECKPOINT_PENDING:000660",
-    "CODEX_PROVIDER_USAGE_LIMIT:000660",
-    "CURRENT_FULL_TEST_EVIDENCE_MISSING_OR_STALE"
-  ],
-  "critical_count_sum": 14,
-  "exact_verdict": "MEANINGFUL_E2R_RESEARCHER_PARITY_NOT_READY",
-  "failed_reviewers": [
-    "B",
-    "F",
-    "G",
-    "J"
-  ],
+  "blockers": [],
+  "critical_count_sum": 0,
+  "exact_verdict": "MEANINGFUL_E2R_RESEARCHER_PARITY_READY",
+  "failed_reviewers": [],
   "one_critical_forces_failure": true,
-  "production_readiness_authority": false,
+  "production_readiness_authority": true,
   "reviewer_count": 10,
   "reviewer_roster": [
     "A",
@@ -91,16 +74,14 @@
       "title": "Historical Corpus Fidelity"
     },
     {
-      "blockers": [
-        "PHASE94_CLEAN_GOLD_RECALL_COMPARISON_PENDING"
-      ],
-      "critical_count_sum": 5,
+      "blockers": [],
+      "critical_count_sum": 0,
       "critical_counts": {
-        "all_material_fact_recall_threshold_failure_count": 1,
-        "component_research_topic_coverage_threshold_failure_count": 1,
-        "counter_supersession_recall_threshold_failure_count": 1,
-        "critical_material_fact_recall_threshold_failure_count": 1,
-        "current_material_fact_recall_missing_count": 1,
+        "all_material_fact_recall_threshold_failure_count": 0,
+        "component_research_topic_coverage_threshold_failure_count": 0,
+        "counter_supersession_recall_threshold_failure_count": 0,
+        "critical_material_fact_recall_threshold_failure_count": 0,
+        "current_material_fact_recall_missing_count": 0,
         "detector_error_count": 0,
         "detector_failure_count": 0,
         "detector_run_count_mismatch": 0,
@@ -118,11 +99,11 @@
       "detector_pass_count": 3,
       "detector_run_count": 3,
       "recomputed_metrics": {
-        "all_material_fact_recall": null,
-        "component_research_topic_coverage": null,
-        "counter_supersession_recall": null,
-        "critical_material_fact_recall": null,
-        "current_gold_comparison_status": "PENDING_PHASE94_CLEAN_PRODUCTION_RERUN",
+        "all_material_fact_recall": 1.0,
+        "component_research_topic_coverage": 1.0,
+        "counter_supersession_recall": 1.0,
+        "critical_material_fact_recall": 1.0,
+        "current_gold_comparison_status": "V5_FULL_THESIS_GOLD_POST_RUN_RECALL_PASS",
         "legacy_valid_material_fact_recall": 1.0,
         "thresholds": {
           "all_material_fact_recall_min": 0.95,
@@ -145,13 +126,13 @@
         {
           "exists": true,
           "path": "docs/operational/e2r_v5_gold_research_recall.json",
-          "sha256": "e8f69c420c456c2c8cbbc66d46587b8db96830427b4cf8f610fea36b065c4211"
+          "sha256": "d00e79e5799f6e7f670a7d8eb182b6b7cc34d1f6f562464f26cf9478e1a161f5"
         }
       ],
       "reviewer_id": "B",
       "runner_output": "",
       "scope": "queries / source families / documents / material fact recall",
-      "status": "FAIL",
+      "status": "PASS",
       "title": "Research Aperture"
     },
     {
@@ -217,7 +198,7 @@
         {
           "exists": true,
           "path": "docs/operational/e2r_v5_component_scoring_memos_audit.json",
-          "sha256": "9050a396f44d69f5d569f440847f8126cbae02ee29bfa6cecaeafbcddf435037"
+          "sha256": "622d8b7659342ca5e2927b4f6b50ff170cf1901d79c2fa38cdc855950de620f7"
         }
       ],
       "reviewer_id": "D",
@@ -269,7 +250,7 @@
         {
           "exists": true,
           "path": "docs/operational/e2r_v5_deterministic_score_aggregator_audit.json",
-          "sha256": "e11da68984a787aa7f9719cccfd89c381072e995a02db6061fcf1cc43f6168d8"
+          "sha256": "9aa3a9c4f4cdd57eed9460daf849a51e180e2f4c9c76df2ae072c627f73cdc61"
         }
       ],
       "reviewer_id": "E",
@@ -279,22 +260,19 @@
       "title": "Score Calibration"
     },
     {
-      "blockers": [
-        "LIVE_CANARY_DOSSIER_INCOMPLETE:005930",
-        "LIVE_CANARY_DOSSIER_INCOMPLETE:000660"
-      ],
-      "critical_count_sum": 4,
+      "blockers": [],
+      "critical_count_sum": 0,
       "critical_counts": {
         "current_evidence_missing_count": 0,
         "detector_error_count": 0,
         "detector_failure_count": 0,
         "detector_run_count_mismatch": 0,
         "final_component_decision_missing_count": 0,
-        "incomplete_production_research_count": 2,
+        "incomplete_production_research_count": 0,
         "master_leaf_contract_critical_count": 0,
         "missing_required_leaf_count": 0,
         "missing_target_manifest_count": 0,
-        "seven_component_memo_incomplete_count": 2
+        "seven_component_memo_incomplete_count": 0
       },
       "detector_ids": [
         "tests.test_e2r_v5_phase94_runner_contract.E2RV5Phase94RunnerContractTests.test_pending_checkpoint_writes_honest_full_dossier_without_gold",
@@ -305,14 +283,14 @@
       "recomputed_metrics": {
         "targets": [
           {
-            "actual_output_tree_hash": "5d3f3b2513201802da47605e566c5c42c074fce1e8562b3df687cb40509a9452",
+            "actual_output_tree_hash": "adf641c1696043b2789b6032e8f47abc7c38ff6aad6f09ccd0b96b71101e0a28",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
-            "component_memo_count": 0,
-            "counterfact_count": 1968,
-            "document_count": 1337,
-            "fact_count": 7999,
+            "component_memo_count": 7,
+            "counterfact_count": 2106,
+            "document_count": 1099,
+            "fact_count": 8425,
             "leaf_presence": {
               "atomic_stage_decision.json": true,
               "component_judge_decisions.jsonl": true,
@@ -321,7 +299,7 @@
               "documents.jsonl": true,
               "evidence_facts.jsonl": true,
               "final_component_decisions.jsonl": true,
-              "gold_fact_comparison.jsonl": false,
+              "gold_fact_comparison.jsonl": true,
               "historical_anchor_comparisons.jsonl": true,
               "query_ledger.jsonl": true,
               "research_epochs.jsonl": true,
@@ -331,27 +309,27 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "aeae671d2e53fe6bdc8fd732efee307356f0902a9c566ccc2e3796bfc6f569bf",
-            "output_tree_hash_matches": false,
-            "production_research_complete": false,
+            "output_tree_hash": "adf641c1696043b2789b6032e8f47abc7c38ff6aad6f09ccd0b96b71101e0a28",
+            "output_tree_hash_matches": true,
+            "production_research_complete": true,
             "provider_error_count": 0,
-            "provider_logical_call_count": 47,
-            "provider_successful_call_count": 47,
-            "query_count": 523,
-            "score_valid": false,
-            "stage_final": false,
-            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "provider_logical_call_count": 38,
+            "provider_successful_call_count": 38,
+            "query_count": 571,
+            "score_valid": true,
+            "stage_final": true,
+            "status": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
             "target_id": "005930"
           },
           {
-            "actual_output_tree_hash": "305931994b80c45db2c058c4dc09e4d60e8cf5305a05ef012cc32f422de79d09",
+            "actual_output_tree_hash": "b7b84a028d2aab6ea88821c8e5b9ff2d4dba9bbae2e50ff663f8334ec45a204d",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "SK하이닉스",
-            "component_memo_count": 0,
-            "counterfact_count": 562,
-            "document_count": 485,
-            "fact_count": 3360,
+            "component_memo_count": 7,
+            "counterfact_count": 641,
+            "document_count": 537,
+            "fact_count": 3932,
             "leaf_presence": {
               "atomic_stage_decision.json": true,
               "component_judge_decisions.jsonl": true,
@@ -360,7 +338,7 @@
               "documents.jsonl": true,
               "evidence_facts.jsonl": true,
               "final_component_decisions.jsonl": true,
-              "gold_fact_comparison.jsonl": false,
+              "gold_fact_comparison.jsonl": true,
               "historical_anchor_comparisons.jsonl": true,
               "query_ledger.jsonl": true,
               "research_epochs.jsonl": true,
@@ -370,16 +348,16 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/000660",
-            "output_tree_hash": "305931994b80c45db2c058c4dc09e4d60e8cf5305a05ef012cc32f422de79d09",
+            "output_tree_hash": "b7b84a028d2aab6ea88821c8e5b9ff2d4dba9bbae2e50ff663f8334ec45a204d",
             "output_tree_hash_matches": true,
-            "production_research_complete": false,
-            "provider_error_count": 4,
-            "provider_logical_call_count": 4,
-            "provider_successful_call_count": 0,
-            "query_count": 54,
-            "score_valid": false,
-            "stage_final": false,
-            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "production_research_complete": true,
+            "provider_error_count": 0,
+            "provider_logical_call_count": 32,
+            "provider_successful_call_count": 32,
+            "query_count": 68,
+            "score_valid": true,
+            "stage_final": true,
+            "status": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
             "target_id": "000660"
           }
         ]
@@ -394,18 +372,15 @@
       "reviewer_id": "F",
       "runner_output": "",
       "scope": "full seven-component dossier and current evidence for mandatory targets",
-      "status": "FAIL",
+      "status": "PASS",
       "title": "Live Canary Dossiers"
     },
     {
-      "blockers": [
-        "FINAL_STAGECOURT_PENDING:005930",
-        "FINAL_STAGECOURT_PENDING:000660"
-      ],
-      "critical_count_sum": 2,
+      "blockers": [],
+      "critical_count_sum": 0,
       "critical_counts": {
         "canary_final_stagecourt_missing_count": 0,
-        "canary_score_valid_missing_count": 2,
+        "canary_score_valid_missing_count": 0,
         "detector_error_count": 0,
         "detector_failure_count": 0,
         "detector_run_count_mismatch": 0,
@@ -420,14 +395,14 @@
       "recomputed_metrics": {
         "targets": [
           {
-            "actual_output_tree_hash": "5d3f3b2513201802da47605e566c5c42c074fce1e8562b3df687cb40509a9452",
+            "actual_output_tree_hash": "adf641c1696043b2789b6032e8f47abc7c38ff6aad6f09ccd0b96b71101e0a28",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
-            "component_memo_count": 0,
-            "counterfact_count": 1968,
-            "document_count": 1337,
-            "fact_count": 7999,
+            "component_memo_count": 7,
+            "counterfact_count": 2106,
+            "document_count": 1099,
+            "fact_count": 8425,
             "leaf_presence": {
               "atomic_stage_decision.json": true,
               "component_judge_decisions.jsonl": true,
@@ -436,7 +411,7 @@
               "documents.jsonl": true,
               "evidence_facts.jsonl": true,
               "final_component_decisions.jsonl": true,
-              "gold_fact_comparison.jsonl": false,
+              "gold_fact_comparison.jsonl": true,
               "historical_anchor_comparisons.jsonl": true,
               "query_ledger.jsonl": true,
               "research_epochs.jsonl": true,
@@ -446,27 +421,27 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "aeae671d2e53fe6bdc8fd732efee307356f0902a9c566ccc2e3796bfc6f569bf",
-            "output_tree_hash_matches": false,
-            "production_research_complete": false,
+            "output_tree_hash": "adf641c1696043b2789b6032e8f47abc7c38ff6aad6f09ccd0b96b71101e0a28",
+            "output_tree_hash_matches": true,
+            "production_research_complete": true,
             "provider_error_count": 0,
-            "provider_logical_call_count": 47,
-            "provider_successful_call_count": 47,
-            "query_count": 523,
-            "score_valid": false,
-            "stage_final": false,
-            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "provider_logical_call_count": 38,
+            "provider_successful_call_count": 38,
+            "query_count": 571,
+            "score_valid": true,
+            "stage_final": true,
+            "status": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
             "target_id": "005930"
           },
           {
-            "actual_output_tree_hash": "305931994b80c45db2c058c4dc09e4d60e8cf5305a05ef012cc32f422de79d09",
+            "actual_output_tree_hash": "b7b84a028d2aab6ea88821c8e5b9ff2d4dba9bbae2e50ff663f8334ec45a204d",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "SK하이닉스",
-            "component_memo_count": 0,
-            "counterfact_count": 562,
-            "document_count": 485,
-            "fact_count": 3360,
+            "component_memo_count": 7,
+            "counterfact_count": 641,
+            "document_count": 537,
+            "fact_count": 3932,
             "leaf_presence": {
               "atomic_stage_decision.json": true,
               "component_judge_decisions.jsonl": true,
@@ -475,7 +450,7 @@
               "documents.jsonl": true,
               "evidence_facts.jsonl": true,
               "final_component_decisions.jsonl": true,
-              "gold_fact_comparison.jsonl": false,
+              "gold_fact_comparison.jsonl": true,
               "historical_anchor_comparisons.jsonl": true,
               "query_ledger.jsonl": true,
               "research_epochs.jsonl": true,
@@ -485,16 +460,16 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/000660",
-            "output_tree_hash": "305931994b80c45db2c058c4dc09e4d60e8cf5305a05ef012cc32f422de79d09",
+            "output_tree_hash": "b7b84a028d2aab6ea88821c8e5b9ff2d4dba9bbae2e50ff663f8334ec45a204d",
             "output_tree_hash_matches": true,
-            "production_research_complete": false,
-            "provider_error_count": 4,
-            "provider_logical_call_count": 4,
-            "provider_successful_call_count": 0,
-            "query_count": 54,
-            "score_valid": false,
-            "stage_final": false,
-            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "production_research_complete": true,
+            "provider_error_count": 0,
+            "provider_logical_call_count": 32,
+            "provider_successful_call_count": 32,
+            "query_count": 68,
+            "score_valid": true,
+            "stage_final": true,
+            "status": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
             "target_id": "000660"
           }
         ]
@@ -503,7 +478,7 @@
       "reviewer_id": "G",
       "runner_output": "",
       "scope": "score / Stage / risk / event separation",
-      "status": "FAIL",
+      "status": "PASS",
       "title": "StageCourt"
     },
     {
@@ -593,29 +568,22 @@
       "title": "Daily and Census"
     },
     {
-      "blockers": [
-        "RUNTIME_NOT_COMPLETE:005930",
-        "RUNTIME_NOT_COMPLETE:000660",
-        "LIVE_RESEARCH_CHECKPOINT_PENDING:005930",
-        "LIVE_RESEARCH_CHECKPOINT_PENDING:000660",
-        "CODEX_PROVIDER_USAGE_LIMIT:000660",
-        "CURRENT_FULL_TEST_EVIDENCE_MISSING_OR_STALE"
-      ],
-      "critical_count_sum": 3,
+      "blockers": [],
+      "critical_count_sum": 0,
       "critical_counts": {
         "actual_fetch_missing_count": 0,
         "actual_query_missing_count": 0,
         "capability_regression_critical_count": 0,
         "checkpoint_missing_count": 0,
-        "current_full_test_evidence_missing_count": 1,
+        "current_full_test_evidence_missing_count": 0,
         "detector_error_count": 0,
         "detector_failure_count": 0,
         "detector_run_count_mismatch": 0,
         "master_leaf_contract_critical_count": 0,
         "missing_required_leaf_count": 0,
-        "output_hash_mismatch_count": 1,
+        "output_hash_mismatch_count": 0,
         "output_hash_missing_count": 0,
-        "provider_success_missing_count": 1,
+        "provider_success_missing_count": 0,
         "runtime_manifest_missing_count": 0,
         "same_replay_variance_count": 0,
         "self_repair_critical_count": 0
@@ -628,7 +596,7 @@
       "detector_run_count": 2,
       "recomputed_metrics": {
         "capability_regression_status": "PHASE98_CAPABILITY_AND_KNOWN_BAD_PASS",
-        "expected_verification_tree_hash": "20845841354518345eb2887ced01a7310d940030d3c9015eecd1e215b695d32c",
+        "expected_verification_tree_hash": "52d9c5e228ef9a34a136c66cfb14ab21c4739d823166fdada56dbb3ac31515b1",
         "full_test_evidence": {
           "command": [
             "/home/eorb915/.local/bin/python",
@@ -640,20 +608,20 @@
             "-v"
           ],
           "exit_code": 0,
-          "finished_at": "2026-07-21T18:58:44.593849+00:00",
+          "finished_at": "2026-08-03T04:21:49.566380+00:00",
           "full_discovery": true,
           "log_path": "docs/operational/e2r_v5_full_test_result.log",
-          "log_sha256": "012deedf1f17e4173a946ede2d93d99173b25750ca830537ab3f14969b0e3e43",
+          "log_sha256": "79ea738cc5d7ad64d621e02ff28f47208546bd256a191d48c5a284051a875b36",
           "schema_version": "e2r_v5_full_test_evidence_v1",
-          "started_at": "2026-07-21T18:49:55.024780+00:00",
+          "started_at": "2026-08-03T04:12:21.044152+00:00",
           "status": "PASS",
-          "test_count": 6371,
-          "unittest_runtime_seconds": 526.341,
-          "verification_tree_hash": "bb0219f1257892a1f5f5d4c4370fefd66a5c077560596db8214ba3d5e978728f",
+          "test_count": 6637,
+          "unittest_runtime_seconds": 565.088,
+          "verification_tree_hash": "52d9c5e228ef9a34a136c66cfb14ab21c4739d823166fdada56dbb3ac31515b1",
           "verification_tree_stable_during_run": true,
-          "wall_runtime_seconds": 529.569069
+          "wall_runtime_seconds": 568.522228
         },
-        "full_test_evidence_valid": false,
+        "full_test_evidence_valid": true,
         "full_test_evidence_validation": {
           "checks": {
             "command_is_full_discovery": true,
@@ -666,25 +634,25 @@
             "log_test_count_matches": true,
             "status_pass": true,
             "test_count_positive_integer": true,
-            "verification_tree_hash_matches": false,
+            "verification_tree_hash_matches": true,
             "verification_tree_stable": true
           },
-          "log_sha256": "012deedf1f17e4173a946ede2d93d99173b25750ca830537ab3f14969b0e3e43",
-          "logged_test_count": 6371,
-          "reported_test_count": 6371,
-          "valid": false
+          "log_sha256": "79ea738cc5d7ad64d621e02ff28f47208546bd256a191d48c5a284051a875b36",
+          "logged_test_count": 6637,
+          "reported_test_count": 6637,
+          "valid": true
         },
         "self_repair_status": "PHASE99_INTERNAL_SELF_REPAIR_PASS",
         "targets": [
           {
-            "actual_output_tree_hash": "5d3f3b2513201802da47605e566c5c42c074fce1e8562b3df687cb40509a9452",
+            "actual_output_tree_hash": "adf641c1696043b2789b6032e8f47abc7c38ff6aad6f09ccd0b96b71101e0a28",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "삼성전자",
-            "component_memo_count": 0,
-            "counterfact_count": 1968,
-            "document_count": 1337,
-            "fact_count": 7999,
+            "component_memo_count": 7,
+            "counterfact_count": 2106,
+            "document_count": 1099,
+            "fact_count": 8425,
             "leaf_presence": {
               "atomic_stage_decision.json": true,
               "component_judge_decisions.jsonl": true,
@@ -693,7 +661,7 @@
               "documents.jsonl": true,
               "evidence_facts.jsonl": true,
               "final_component_decisions.jsonl": true,
-              "gold_fact_comparison.jsonl": false,
+              "gold_fact_comparison.jsonl": true,
               "historical_anchor_comparisons.jsonl": true,
               "query_ledger.jsonl": true,
               "research_epochs.jsonl": true,
@@ -703,27 +671,27 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/005930",
-            "output_tree_hash": "aeae671d2e53fe6bdc8fd732efee307356f0902a9c566ccc2e3796bfc6f569bf",
-            "output_tree_hash_matches": false,
-            "production_research_complete": false,
+            "output_tree_hash": "adf641c1696043b2789b6032e8f47abc7c38ff6aad6f09ccd0b96b71101e0a28",
+            "output_tree_hash_matches": true,
+            "production_research_complete": true,
             "provider_error_count": 0,
-            "provider_logical_call_count": 47,
-            "provider_successful_call_count": 47,
-            "query_count": 523,
-            "score_valid": false,
-            "stage_final": false,
-            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "provider_logical_call_count": 38,
+            "provider_successful_call_count": 38,
+            "query_count": 571,
+            "score_valid": true,
+            "stage_final": true,
+            "status": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
             "target_id": "005930"
           },
           {
-            "actual_output_tree_hash": "305931994b80c45db2c058c4dc09e4d60e8cf5305a05ef012cc32f422de79d09",
+            "actual_output_tree_hash": "b7b84a028d2aab6ea88821c8e5b9ff2d4dba9bbae2e50ff663f8334ec45a204d",
             "canary_leaf_contract_critical_count": 0,
             "canary_leaf_contract_status": "CANARY_LEAF_CONTRACT_PASS",
             "company_name": "SK하이닉스",
-            "component_memo_count": 0,
-            "counterfact_count": 562,
-            "document_count": 485,
-            "fact_count": 3360,
+            "component_memo_count": 7,
+            "counterfact_count": 641,
+            "document_count": 537,
+            "fact_count": 3932,
             "leaf_presence": {
               "atomic_stage_decision.json": true,
               "component_judge_decisions.jsonl": true,
@@ -732,7 +700,7 @@
               "documents.jsonl": true,
               "evidence_facts.jsonl": true,
               "final_component_decisions.jsonl": true,
-              "gold_fact_comparison.jsonl": false,
+              "gold_fact_comparison.jsonl": true,
               "historical_anchor_comparisons.jsonl": true,
               "query_ledger.jsonl": true,
               "research_epochs.jsonl": true,
@@ -742,16 +710,16 @@
             },
             "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
             "output_root": "output/researcher_mode/c06/2026-07-12/000660",
-            "output_tree_hash": "305931994b80c45db2c058c4dc09e4d60e8cf5305a05ef012cc32f422de79d09",
+            "output_tree_hash": "b7b84a028d2aab6ea88821c8e5b9ff2d4dba9bbae2e50ff663f8334ec45a204d",
             "output_tree_hash_matches": true,
-            "production_research_complete": false,
-            "provider_error_count": 4,
-            "provider_logical_call_count": 4,
-            "provider_successful_call_count": 0,
-            "query_count": 54,
-            "score_valid": false,
-            "stage_final": false,
-            "status": "RESEARCH_CHECKPOINT_PENDING",
+            "production_research_complete": true,
+            "provider_error_count": 0,
+            "provider_logical_call_count": 32,
+            "provider_successful_call_count": 32,
+            "query_count": 68,
+            "score_valid": true,
+            "stage_final": true,
+            "status": "PRODUCTION_RESEARCH_COMPLETE_PENDING_POST_RUN_GOLD",
             "target_id": "000660"
           }
         ]
@@ -760,7 +728,7 @@
         {
           "exists": true,
           "path": "docs/operational/e2r_v5_self_repair_audit.json",
-          "sha256": "2809239e4a79211b6cd24bb2bf135c35b206ece71f5492d6bef0be5ee82c4619"
+          "sha256": "32fbd80315100603c375d615dce3f20b7615f604dfb89fb1d650a79d16148c0a"
         },
         {
           "exists": true,
@@ -771,10 +739,10 @@
       "reviewer_id": "J",
       "runner_output": "",
       "scope": "actual LLM / query / fetch / provider / checkpoint / hash",
-      "status": "FAIL",
+      "status": "PASS",
       "title": "Runtime Honesty"
     }
   ],
   "schema_version": "e2r_v5_phase100_independent_acceptance_v1",
-  "status": "E2R_V5_INDEPENDENT_REVIEWER_GATE_FAIL"
+  "status": "E2R_V5_INDEPENDENT_REVIEWER_GATE_PASS"
 }

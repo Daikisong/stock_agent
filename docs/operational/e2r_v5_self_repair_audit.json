@@ -1,10 +1,6 @@
 {
-  "canary_completion_blockers": [
-    "LIVE_RESEARCH_CHECKPOINT_PENDING:005930",
-    "LIVE_RESEARCH_CHECKPOINT_PENDING:000660",
-    "CODEX_PROVIDER_USAGE_LIMIT:000660"
-  ],
-  "canary_goal_complete": false,
+  "canary_completion_blockers": [],
+  "canary_goal_complete": true,
   "clean_rerun": {
     "outcome_hash": "e72962d576c49d4d8ec7e1544b6c952c169b985ab68e8f03883bebedf5cf124f",
     "passed_count": 23,
@@ -48,51 +44,38 @@
     "test_count": 23
   },
   "live_canaries": {
-    "blockers": [
-      "LIVE_RESEARCH_CHECKPOINT_PENDING:005930",
-      "LIVE_RESEARCH_CHECKPOINT_PENDING:000660",
-      "CODEX_PROVIDER_USAGE_LIMIT:000660"
-    ],
-    "canary_goal_complete": false,
-    "provider_usage_limit_detected": true,
-    "provider_usage_limit_evidence_paths": [
-      "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
-      "output/researcher_mode/c06/2026-07-12/000660/business_model_memo.json",
-      "output/researcher_mode/c06/2026-07-12/000660/research_supervisor_review.json",
-      "output/researcher_mode/c06/2026-07-12/000660/research_epoch_checkpoint.json"
-    ],
-    "provider_usage_limit_reset_hints": [
-      "Jul 25th, 2026 7:53 PM"
-    ],
-    "provider_usage_limit_target_ids": [
-      "000660"
-    ],
+    "blockers": [],
+    "canary_goal_complete": true,
+    "provider_usage_limit_detected": false,
+    "provider_usage_limit_evidence_paths": [],
+    "provider_usage_limit_reset_hints": [],
+    "provider_usage_limit_target_ids": [],
     "target_registry_path": "configs/e2r_targeted_live_smoke_v1.json",
     "targets": [
       {
         "company_name": "삼성전자",
-        "component_memo_count": 0,
-        "counterfact_count": 1968,
-        "document_count": 1337,
-        "fact_count": 7999,
+        "component_memo_count": 7,
+        "counterfact_count": 2106,
+        "document_count": 1099,
+        "fact_count": 8425,
         "manifest_path": "output/researcher_mode/c06/2026-07-12/005930/target_run_manifest.json",
-        "production_research_complete": false,
+        "production_research_complete": true,
         "score_valid": false,
         "stage_final": false,
-        "status": "RESEARCH_CHECKPOINT_PENDING",
+        "status": "PRODUCTION_RESEARCH_COMPLETE",
         "target_id": "005930"
       },
       {
         "company_name": "SK하이닉스",
-        "component_memo_count": 0,
-        "counterfact_count": 562,
-        "document_count": 485,
-        "fact_count": 3360,
+        "component_memo_count": 7,
+        "counterfact_count": 641,
+        "document_count": 537,
+        "fact_count": 3932,
         "manifest_path": "output/researcher_mode/c06/2026-07-12/000660/target_run_manifest.json",
-        "production_research_complete": false,
+        "production_research_complete": true,
         "score_valid": false,
         "stage_final": false,
-        "status": "RESEARCH_CHECKPOINT_PENDING",
+        "status": "PRODUCTION_RESEARCH_COMPLETE",
         "target_id": "000660"
       }
     ]

@@ -1,0 +1,541 @@
+{
+  "as_of_date": "2026-07-12",
+  "blind_leakage_audit": {
+    "fact_leak_input_ids": [],
+    "gold_fact_leaked_into_production_prompt_count": 0,
+    "gold_query_leaked_into_production_count": 0,
+    "gold_source_injected_into_production_count": 0,
+    "production_lane_gold_visibility_count": 0,
+    "proof_source": "LIVE_POST_RUN_INPUT_MANIFEST",
+    "query_leak_input_ids": [],
+    "source_injection_input_ids": []
+  },
+  "comparison_timing": "POST_RUN_ONLY",
+  "comparisons": [
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-005930-EPS-S",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-2743375b36784c0d200eaf6f",
+      "production_fact_ids": [
+        "EFACT-2743375b36784c0d200eaf6f",
+        "EFACT-88bbc616e635d78a5c8761a7"
+      ],
+      "question_family_id": "revenue_operating_profit_conversion",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-005930-EPS-C",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-0b218424778da7d60c40f266",
+      "production_fact_ids": [
+        "EFACT-0b218424778da7d60c40f266",
+        "EFACT-06aeff040c3e1c6aa14d4d5b"
+      ],
+      "question_family_id": "margin_fcf_conversion",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-005930-VIS-S",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-1deef01a1af7a2afaa52e1cd",
+      "production_fact_ids": [
+        "EFACT-1deef01a1af7a2afaa52e1cd",
+        "EFACT-19f4f722e09982bb2dbe4c01"
+      ],
+      "question_family_id": "shipment_mass_production_generation",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-005930-VIS-C",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-e775471e8b45c6f27c913cbd",
+      "production_fact_ids": [
+        "EFACT-e775471e8b45c6f27c913cbd"
+      ],
+      "question_family_id": "current_customer_allocation_commitment",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-005930-BOT-S",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-00fb46dd8d53b12f75f8ffed",
+      "production_fact_ids": [
+        "EFACT-00fb46dd8d53b12f75f8ffed"
+      ],
+      "question_family_id": "asp_pricing_actual",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-005930-BOT-C",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-91e6aacc814193df529bd8b0",
+      "production_fact_ids": [
+        "EFACT-91e6aacc814193df529bd8b0"
+      ],
+      "question_family_id": "capex_supply_oversupply",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-005930-MKT-S",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-d41bfaaeb1b7078a8807c8c7",
+      "production_fact_ids": [
+        "EFACT-d41bfaaeb1b7078a8807c8c7"
+      ],
+      "question_family_id": "medium_term_revision_consensus",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-005930-MKT-C",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "SFACT-5f0771008f219eabcb390e55",
+      "production_fact_ids": [
+        "SFACT-5f0771008f219eabcb390e55",
+        "SFACT-623f1888b6ab836ddf66176e"
+      ],
+      "question_family_id": "valuation_market_expectation",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-005930-VAL-S",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-961950cf5082d9122edd1f97",
+      "production_fact_ids": [
+        "EFACT-961950cf5082d9122edd1f97"
+      ],
+      "question_family_id": "valuation_market_expectation",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-005930-VAL-C",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "SFACT-0fe4967974f6c7a487238d12",
+      "production_fact_ids": [
+        "SFACT-0fe4967974f6c7a487238d12"
+      ],
+      "question_family_id": "current_valuation_vs_earnings",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-005930-CAP-S",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-6b3bb688d90b88d21ac6a44b",
+      "production_fact_ids": [
+        "EFACT-6b3bb688d90b88d21ac6a44b"
+      ],
+      "question_family_id": "shareholder_return",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-005930-CAP-C",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-3dad40dc2210f4fdbf5eea8b",
+      "production_fact_ids": [
+        "EFACT-3dad40dc2210f4fdbf5eea8b"
+      ],
+      "question_family_id": "capex_supply_oversupply",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-005930-INF-S",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-0f162fabdfa43e6ae63fb6a4",
+      "production_fact_ids": [
+        "EFACT-0f162fabdfa43e6ae63fb6a4"
+      ],
+      "question_family_id": "independent_corroboration",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-005930-INF-C",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-af9aafb9c2faaa17d4036ca2",
+      "production_fact_ids": [
+        "EFACT-af9aafb9c2faaa17d4036ca2",
+        "EFACT-107f90ee6967677f88928655"
+      ],
+      "question_family_id": "contract_terms_disclosure",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "005930"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-EPS-S",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-23a1ba20faca713b97306b9b",
+      "production_fact_ids": [
+        "EFACT-23a1ba20faca713b97306b9b",
+        "EFACT-2e46e7afe87efc88998619eb"
+      ],
+      "question_family_id": "revenue_operating_profit_conversion",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-000660-EPS-C",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-5507c13eea3a1624dcb68e8e",
+      "production_fact_ids": [
+        "EFACT-5507c13eea3a1624dcb68e8e",
+        "EFACT-359d4f8a93eedb2c9089c773",
+        "EFACT-b5b2b6fb6e390219a85c6ff8"
+      ],
+      "question_family_id": "margin_fcf_conversion",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-VIS-S",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-72454d8a4913267c602ee94b",
+      "production_fact_ids": [
+        "EFACT-72454d8a4913267c602ee94b",
+        "EFACT-342cedd13a8926f7612b31b2"
+      ],
+      "question_family_id": "capacity_constraint_presold_status",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-000660-VIS-C",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-64eee243a6d4c4f6d56a1ff4",
+      "production_fact_ids": [
+        "EFACT-64eee243a6d4c4f6d56a1ff4"
+      ],
+      "question_family_id": "current_customer_allocation_commitment",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-BOT-S",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-1b3a7f0b99bceaf12ec63fee",
+      "production_fact_ids": [
+        "EFACT-1b3a7f0b99bceaf12ec63fee"
+      ],
+      "question_family_id": "asp_pricing_actual",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-000660-BOT-C",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-08495a1b00964ecfc7506f1e",
+      "production_fact_ids": [
+        "EFACT-08495a1b00964ecfc7506f1e",
+        "EFACT-2f4cd4def465d6e7c7e30d58",
+        "EFACT-7fe9fba89fc2928119355dfc",
+        "EFACT-de10fa78c82be2270d10eb9b"
+      ],
+      "question_family_id": "capex_supply_oversupply",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-MKT-S",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-a32f1346aaaa27d480b6ebe1",
+      "production_fact_ids": [
+        "EFACT-a32f1346aaaa27d480b6ebe1"
+      ],
+      "question_family_id": "medium_term_revision_consensus",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-000660-MKT-C",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-3659fa1b4b69b05591588ff0",
+      "production_fact_ids": [
+        "EFACT-3659fa1b4b69b05591588ff0",
+        "EFACT-255dbf34655beca005af682f"
+      ],
+      "question_family_id": "valuation_market_expectation",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-VAL-S",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-b8085fae2deddf90e4ed2941",
+      "production_fact_ids": [
+        "EFACT-b8085fae2deddf90e4ed2941",
+        "EFACT-4e673ecd61acdc85c432278d",
+        "EFACT-217292d38e352e165063123a"
+      ],
+      "question_family_id": "valuation_market_expectation",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-000660-VAL-C",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "SFACT-5a5c829b315fe14dd27b3934",
+      "production_fact_ids": [
+        "SFACT-5a5c829b315fe14dd27b3934",
+        "SFACT-4ac238fc00c1a1961e8a41c4",
+        "SFACT-92a25ac660545bf2e2469c7b"
+      ],
+      "question_family_id": "current_valuation_vs_earnings",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-CAP-S",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-5fb7d8c3f31da7e1389a7377",
+      "production_fact_ids": [
+        "EFACT-5fb7d8c3f31da7e1389a7377",
+        "EFACT-1b2c208110698b2c6eb505fc"
+      ],
+      "question_family_id": "external_capital_funding",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-000660-CAP-C",
+      "materiality": "CRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-a6c91bbc4f43355c939520dc",
+      "production_fact_ids": [
+        "EFACT-a6c91bbc4f43355c939520dc",
+        "EFACT-d4f5430587bef36f45015f84"
+      ],
+      "question_family_id": "share_dilution",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "SUPPORT",
+      "gold_fact_id": "G-000660-INF-S",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-c4d36add2544f286e765c5de",
+      "production_fact_ids": [
+        "EFACT-c4d36add2544f286e765c5de",
+        "EFACT-080a576f5bcf061f6d11bc94"
+      ],
+      "question_family_id": "independent_corroboration",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    },
+    {
+      "currentness_match": true,
+      "fact_role": "COUNTER",
+      "gold_fact_id": "G-000660-INF-C",
+      "materiality": "NONCRITICAL",
+      "mechanism_scope_match": true,
+      "miss_reason": null,
+      "production_fact_id": "EFACT-3708c95b22cb59e888dbcff1",
+      "production_fact_ids": [
+        "EFACT-3708c95b22cb59e888dbcff1",
+        "EFACT-0bcb78eb142cb06c770d879d"
+      ],
+      "question_family_id": "source_uncertainty_disclaimer",
+      "semantic_match": true,
+      "semantic_match_method": "POST_RUN_INDEPENDENT_SEMANTIC_ADJUDICATION",
+      "source_quality_match": true,
+      "target_id": "000660"
+    }
+  ],
+  "covered_target_component_count": 14,
+  "critical_count_sum": 0,
+  "critical_counts": {
+    "all_material_fact_recall_below_threshold_count": 0,
+    "component_research_topic_coverage_below_threshold_count": 0,
+    "counter_supersession_recall_below_threshold_count": 0,
+    "critical_material_fact_recall_below_threshold_count": 0,
+    "gold_leakage_count": 0,
+    "production_component_memo_incomplete_count": 0
+  },
+  "gold_fact_count": 28,
+  "gold_visibility_during_production": false,
+  "metrics": {
+    "all_material_fact_recall": 1.0,
+    "component_research_topic_coverage": 1.0,
+    "counter_supersession_recall": 1.0,
+    "critical_material_fact_recall": 1.0
+  },
+  "qualified_material_fact_match_count": 28,
+  "required_target_component_count": 14,
+  "schema_version": "e2r_v5_full_thesis_gold_research_recall_v1",
+  "status": "V5_FULL_THESIS_GOLD_POST_RUN_RECALL_PASS",
+  "thresholds": {
+    "all_material_fact_recall_min": 0.95,
+    "component_research_topic_coverage_min": 1.0,
+    "counter_supersession_recall_min": 1.0,
+    "critical_material_fact_recall_min": 1.0
+  }
+}

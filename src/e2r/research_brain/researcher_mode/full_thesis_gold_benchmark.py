@@ -34,6 +34,11 @@ PHASE93_GOLD_ROOT = (
     "data/benchmark_labels/e2r_v5_full_thesis_gold_2026-07-12"
 )
 PHASE93_AUDIT_PATH = "docs/operational/e2r_v5_gold_research_recall.json"
+PHASE94_TRACKED_POST_RUN_ROOT = (
+    "docs/operational/e2r_v5_phase94_post_run"
+)
+PHASE94_POST_RUN_AUDIT_FILE = "post_run_gold_recall_audit.json"
+PHASE94_PRODUCTION_LANE_FILE = "production_lane_manifest.json"
 PHASE93_BASELINE_PRODUCTION_ROOT = (
     "output/evidence_to_score_v2/blind_2026-07-11/production"
 )
@@ -551,13 +556,56 @@ def write_phase93_gold_research_recall_audit(
     repo_root: str | Path = ".",
     *,
     output_path: str | Path | None = None,
+    production_root: str | Path = PHASE93_BASELINE_PRODUCTION_ROOT,
+    post_run_audit_path: str | Path | None = None,
 ) -> Path:
     root = Path(repo_root).resolve()
     path = Path(output_path) if output_path is not None else root / PHASE93_AUDIT_PATH
     if not path.is_absolute():
         path = root / path
-    write_json(path, compile_phase93_gold_research_recall_audit(root))
+    write_json(
+        path,
+        compile_phase93_gold_research_recall_audit(
+            root,
+            production_root=production_root,
+            post_run_audit_path=post_run_audit_path,
+        ),
+    )
     return path
+
+
+def write_phase94_tracked_post_run_receipt(
+    repo_root: str | Path = ".",
+    *,
+    production_root: str | Path,
+) -> Mapping[str, Path]:
+    """Publish the minimal verified Phase 94 receipt needed for clean rebuilds."""
+
+    root = Path(repo_root).resolve()
+    production = Path(production_root)
+    if not production.is_absolute():
+        production = root / production
+    audit = _read_json(production / PHASE94_POST_RUN_AUDIT_FILE)
+    lane = _read_json(production / PHASE94_PRODUCTION_LANE_FILE)
+    corpus = load_phase93_gold_corpus(root)
+    manifest = corpus["manifest"]
+    target_ids = tuple(str(value) for value in manifest["target_ids"])
+    gold_as_of = str(manifest["as_of_date"])
+    if not _phase94_post_run_audit_is_scope_matched_pass(
+        audit=audit,
+        lane=lane,
+        gold_as_of=gold_as_of,
+        target_ids=target_ids,
+    ):
+        raise ValueError("tracked Phase 94 receipt requires a scope-matched PASS")
+    destination = root / PHASE94_TRACKED_POST_RUN_ROOT
+    paths = {
+        "audit": destination / PHASE94_POST_RUN_AUDIT_FILE,
+        "production_lane": destination / PHASE94_PRODUCTION_LANE_FILE,
+    }
+    write_json(paths["audit"], audit)
+    write_json(paths["production_lane"], lane)
+    return paths
 
 
 def write_phase93_post_run_comparison(
@@ -614,8 +662,15 @@ def _load_verified_phase94_post_run_audit(
         candidate_paths = (path if path.is_absolute() else root / path,)
     else:
         scoped = production_root / "post_run_gold_recall_audit.json"
+        tracked = (
+            root
+            / PHASE94_TRACKED_POST_RUN_ROOT
+            / PHASE94_POST_RUN_AUDIT_FILE
+        )
         if scoped.is_file():
             candidate_paths = (scoped,)
+        elif tracked.is_file():
+            candidate_paths = (tracked,)
         else:
             candidate_paths = tuple(
                 sorted(
@@ -1296,6 +1351,7 @@ def _file_sha256(path: Path) -> str:
 __all__ = [
     "FullThesisPostRunComparison",
     "PHASE93_AUDIT_PATH",
+    "PHASE93_BASELINE_PRODUCTION_ROOT",
     "PHASE93_GOLD_ROOT",
     "PHASE93_OUTPUT_FILES",
     "PHASE93_POST_RUN_FAIL",
@@ -1305,10 +1361,14 @@ __all__ = [
     "PHASE93_RECALL_THRESHOLDS",
     "PHASE93_SCHEMA_VERSION",
     "PHASE93_SOURCE_FAMILIES",
+    "PHASE94_POST_RUN_AUDIT_FILE",
+    "PHASE94_PRODUCTION_LANE_FILE",
+    "PHASE94_TRACKED_POST_RUN_ROOT",
     "compare_phase93_gold_post_run",
     "compile_phase93_gold_research_recall_audit",
     "gold_authority_leakage_paths",
     "load_phase93_gold_corpus",
     "write_phase93_gold_research_recall_audit",
     "write_phase93_post_run_comparison",
+    "write_phase94_tracked_post_run_receipt",
 ]
