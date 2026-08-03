@@ -1358,10 +1358,16 @@ class ResearcherSourceGraphAcquirer:
                 if row.get("execution_status") == "PENDING"
                 and str(row.get("objective_id")) not in resolved
             ]
-        if checkpoint_nonresearch_only or (
-            pending_ranking_at_checkpoint_start
-            and not candidate_query_edge_direction_priority
+        if (
+            checkpoint_nonresearch_only
+            or candidate_ranking_replay_awaiting
+            or (
+                pending_ranking_at_checkpoint_start
+                and not candidate_query_edge_direction_priority
+            )
         ):
+            # Consume the exact asynchronous ranking roster before any query
+            # can merge new edges into one of its frozen candidate rows.
             pending_query_rows = []
         candidate_query_edge_repair_query_ids = (
             _candidate_query_edge_repair_query_ids(

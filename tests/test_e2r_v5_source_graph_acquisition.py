@@ -2820,20 +2820,35 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         provider.calls.clear()
         search.calls.clear()
 
-        first = self._run(
-            provider=provider,
-            search=search,
-            fetcher=fetcher,
-            config=config,
-            checkpoint=checkpoint,
+        forced_edge_priority = (
+            {
+                "candidate_id": old_candidate_id,
+                "objective_id": "OBJECTIVE-1",
+                "source_family": "ISSUER_NEWSROOM",
+                "failure_reason": (
+                    "LLM_IDENTIFIED_SOURCE_FAMILY_OUTSIDE_QUERY_EDGE"
+                ),
+            },
         )
-        second = self._run(
-            provider=provider,
-            search=search,
-            fetcher=fetcher,
-            config=config,
-            checkpoint=first.checkpoint,
-        )
+        with mock.patch.object(
+            source_graph_module,
+            "_unresolved_candidate_source_family_query_edge_failures",
+            return_value=forced_edge_priority,
+        ):
+            first = self._run(
+                provider=provider,
+                search=search,
+                fetcher=fetcher,
+                config=config,
+                checkpoint=checkpoint,
+            )
+            second = self._run(
+                provider=provider,
+                search=search,
+                fetcher=fetcher,
+                config=config,
+                checkpoint=first.checkpoint,
+            )
         self.assertEqual(search.calls, [])
         self.assertEqual(
             first.ranking_results[0].prompt_hash,
