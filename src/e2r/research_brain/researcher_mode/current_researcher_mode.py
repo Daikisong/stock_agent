@@ -2401,6 +2401,13 @@ def resume_current_fact_extraction_checkpoint(
     artifact cannot change the still-pending fact leaf.
     """
 
+    if (
+        SourceGraphAcquisitionMode(config.source_acquisition_mode)
+        != SourceGraphAcquisitionMode.PRODUCTION_DAILY
+    ):
+        raise ValueError(
+            "fact recovery is restricted to production daily checkpoints"
+        )
     root = Path(config.output_root) / target.symbol
     source_checkpoint_path = root / "source_graph_checkpoint.json"
     if not source_checkpoint_path.is_file():
@@ -3508,5 +3515,6 @@ __all__ = [
     "CurrentResearcherTargetRun",
     "load_current_research_target_registry",
     "load_current_research_targets",
+    "resume_current_fact_extraction_checkpoint",
     "write_production_lane",
 ]

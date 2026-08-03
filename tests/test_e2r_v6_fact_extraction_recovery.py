@@ -128,6 +128,28 @@ class FactExtractionRecoveryCliTest(unittest.TestCase):
 
 
 class FactExtractionRecoveryFunctionTest(unittest.TestCase):
+    def test_recovery_function_rejects_nonproduction_source_semantics(self):
+        with TemporaryDirectory() as directory:
+            config = CurrentResearcherModeConfig(
+                as_of_date="2026-07-12",
+                archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
+                output_root=directory,
+                live_materialization_authorized=True,
+                checkpoint_resume=True,
+                gold_lane_isolated=True,
+                require_researcher_parity=True,
+                source_acquisition_mode="TEST",
+            )
+            with self.assertRaisesRegex(
+                ValueError,
+                "restricted to production daily checkpoints",
+            ):
+                resume_current_fact_extraction_checkpoint(
+                    config=config,
+                    target=CurrentResearchTarget("005930", "삼성전자"),
+                    provider=Mock(),
+                )
+
     def test_missing_source_checkpoint_fails_before_provider_configuration(self):
         with TemporaryDirectory() as directory:
             config = CurrentResearcherModeConfig(
