@@ -79,6 +79,10 @@ class E2RV5PostRunOnlySealTests(unittest.TestCase):
                 one["input_semantics_fingerprint"],
                 two["input_semantics_fingerprint"],
             )
+            self.assertNotEqual(
+                one["semantics_fingerprint"],
+                two["semantics_fingerprint"],
+            )
 
     def test_production_fingerprint_does_not_read_post_run_gold_code(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

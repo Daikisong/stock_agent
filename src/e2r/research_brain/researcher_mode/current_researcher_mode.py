@@ -161,6 +161,7 @@ class CurrentResearcherModeConfig:
             )
         if (
             isinstance(self.fact_documents_per_call, bool)
+            or not isinstance(self.fact_documents_per_call, int)
             or self.fact_documents_per_call <= 0
         ):
             raise ValueError(

@@ -526,7 +526,11 @@ class ResearcherEvidenceFactExtractor:
         documents_per_call: int = 1,
         max_document_chars_per_call: int = 220_000,
     ) -> None:
-        if isinstance(documents_per_call, bool) or documents_per_call <= 0:
+        if (
+            isinstance(documents_per_call, bool)
+            or not isinstance(documents_per_call, int)
+            or documents_per_call <= 0
+        ):
             raise ValueError("documents_per_call must be a positive transport chunk")
         if (
             isinstance(max_document_chars_per_call, bool)

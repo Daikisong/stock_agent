@@ -175,8 +175,8 @@ class FactExtractionRecoveryCliTest(unittest.TestCase):
 
 
 class FactExtractionRecoveryFunctionTest(unittest.TestCase):
-    def test_config_rejects_nonpositive_fact_transport_batch(self):
-        for value in (0, -1):
+    def test_config_rejects_invalid_fact_transport_batch(self):
+        for value in (True, 0, -1, 1.5, "2"):
             with self.subTest(value=value), self.assertRaisesRegex(
                 ValueError,
                 "positive transport batch",
