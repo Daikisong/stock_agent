@@ -1039,6 +1039,202 @@ OPM 개선폭 6%
             urlopen.assert_not_called()
             urlopen.assert_not_called()
 
+    def test_page_fetcher_detects_pdf_attachment_with_octet_stream_content_type(self):
+        extractor = _FakePDFExtractor("SK하이닉스 HBM 장기공급계약 검증 본문")
+        with tempfile.TemporaryDirectory() as tmpdir:
+            fetcher = PageFetcher(
+                live_enabled=True,
+                cache_directory=tmpdir,
+                max_body_bytes=10,
+                max_pdf_body_bytes=200,
+                pdf_text_extractor=extractor,
+            )
+            response = _FakeHTTPResponse(
+                "%PDF-1.5\n" + ("x" * 80),
+                content_type="application/octet-stream; charset=euc-kr",
+                content_disposition='attachment; filename="broker-report.pdf"',
+                max_read_chunk_size=3,
+            )
+            url = "https://broker.example.com/downloadPage.asp?number=1"
+
+            with patch(
+                "e2r.research.page_fetcher.request.urlopen",
+                return_value=response,
+            ):
+                result = fetcher.fetch(url, as_of_date=date(2026, 6, 8))
+
+            with patch(
+                "e2r.research.page_fetcher.request.urlopen"
+            ) as urlopen:
+                cached = fetcher.fetch(url, as_of_date=date(2026, 6, 8))
+
+        self.assertTrue(result.ok)
+        self.assertEqual(result.content_type, "application/pdf")
+        self.assertEqual(extractor.payload_count, 1)
+        self.assertEqual(extractor.last_payload_size, len(response._body))
+        self.assertTrue(cached.ok)
+        self.assertEqual(cached.content_type, "application/pdf")
+        self.assertEqual(
+            cached.text_extraction_semantics_version,
+            result.text_extraction_semantics_version,
+        )
+        urlopen.assert_not_called()
+
+    def test_page_fetcher_detects_pdf_magic_without_pdf_url_or_headers(self):
+        extractor = _FakePDFExtractor("삼성전자 실적 원문")
+        fetcher = PageFetcher(
+            live_enabled=True,
+            max_body_bytes=10,
+            max_pdf_body_bytes=200,
+            pdf_text_extractor=extractor,
+        )
+        response = _FakeHTTPResponse(
+            "%PDF-1.5\n" + ("x" * 80),
+            content_type="application/octet-stream",
+            max_read_chunk_size=3,
+        )
+
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=response,
+        ):
+            result = fetcher.fetch(
+                "https://broker.example.com/download?id=1",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertTrue(result.ok)
+        self.assertEqual(result.content_type, "application/pdf")
+        self.assertEqual(extractor.payload_count, 1)
+        self.assertEqual(extractor.last_payload_size, len(response._body))
+
+    def test_page_fetcher_rejects_reader_that_returns_more_than_requested(self):
+        extractor = _FakePDFExtractor("잘린 PDF를 승인하면 안 된다")
+        fetcher = PageFetcher(
+            live_enabled=True,
+            max_body_bytes=100,
+            max_pdf_body_bytes=2_000,
+            pdf_text_extractor=extractor,
+        )
+        response = _OverReadingHTTPResponse(
+            "%PDF-1.5\n" + ("x" * 1_490),
+            content_type="application/octet-stream",
+        )
+
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=response,
+        ):
+            result = fetcher.fetch(
+                "https://broker.example.com/download?id=overread",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertFalse(result.ok)
+        self.assertIn(
+            "response_reader_exceeded_requested_byte_count",
+            result.reason or "",
+        )
+        self.assertEqual(extractor.payload_count, 0)
+
+    def test_page_fetcher_octet_stream_non_pdf_is_not_truncated_when_pdf_cap_is_smaller(self):
+        body = "plain binary export " * 6
+        response = _FakeHTTPResponse(
+            body,
+            content_type="application/octet-stream",
+            max_read_chunk_size=3,
+        )
+        fetcher = PageFetcher(
+            live_enabled=True,
+            max_body_bytes=200,
+            max_pdf_body_bytes=10,
+        )
+
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=response,
+        ):
+            result = fetcher.fetch(
+                "https://broker.example.com/export?id=1",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertTrue(result.ok)
+        self.assertEqual(result.text, body.strip())
+        self.assertEqual(result.original_text_chars, len(body.strip()))
+
+    def test_page_fetcher_content_disposition_requires_real_filename_parameter(self):
+        extractor = _FakePDFExtractor("이 추출기는 호출되면 안 된다")
+        response = _FakeHTTPResponse(
+            "ordinary export text",
+            content_type="application/octet-stream",
+            content_disposition="attachment; xfilename=not-a-pdf.pdf",
+        )
+        fetcher = PageFetcher(
+            live_enabled=True,
+            pdf_text_extractor=extractor,
+        )
+
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=response,
+        ):
+            result = fetcher.fetch(
+                "https://broker.example.com/export?id=2",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertTrue(result.ok)
+        self.assertEqual(extractor.payload_count, 0)
+
+    def test_page_fetcher_detects_rfc2231_pdf_attachment_filename(self):
+        extractor = _FakePDFExtractor("증권사 원문")
+        response = _FakeHTTPResponse(
+            "%PDF-1.5\nbody",
+            content_type="application/octet-stream",
+            content_disposition="attachment; filename*=UTF-8''broker%20report.pdf",
+        )
+        fetcher = PageFetcher(
+            live_enabled=True,
+            pdf_text_extractor=extractor,
+        )
+
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=response,
+        ):
+            result = fetcher.fetch(
+                "https://broker.example.com/export?id=3",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertTrue(result.ok)
+        self.assertEqual(extractor.payload_count, 1)
+
+    def test_page_fetcher_does_not_treat_pdf_marker_inside_html_as_pdf(self):
+        extractor = _FakePDFExtractor("이 추출기는 호출되면 안 된다")
+        fetcher = PageFetcher(
+            live_enabled=True,
+            pdf_text_extractor=extractor,
+        )
+        response = _FakeHTTPResponse(
+            "<html><body>PDF signature example: %PDF-1.5</body></html>",
+            content_type="text/html; charset=utf-8",
+        )
+
+        with patch(
+            "e2r.research.page_fetcher.request.urlopen",
+            return_value=response,
+        ):
+            result = fetcher.fetch(
+                "https://issuer.example.com/pdf-help",
+                as_of_date=date(2026, 6, 8),
+            )
+
+        self.assertTrue(result.ok)
+        self.assertIn("PDF signature example", result.text)
+        self.assertEqual(extractor.payload_count, 0)
+
     def test_page_fetcher_rejects_pdf_extractor_false_success_with_control_glyphs(self):
         extractor = _FakePDFExtractor(("삼성전자" + ("\x01" * 40)) * 20)
         fetcher = PageFetcher(live_enabled=True, pdf_text_extractor=extractor)
@@ -1935,12 +2131,18 @@ class _FakeHTTPResponse:
         body: str,
         content_type: str = "text/html; charset=utf-8",
         last_modified: str | None = None,
+        content_disposition: str | None = None,
+        max_read_chunk_size: int | None = None,
     ) -> None:
         self._body = body.encode("utf-8")
+        self._offset = 0
+        self._max_read_chunk_size = max_read_chunk_size
         self.headers = Message()
         self.headers["Content-Type"] = content_type
         if last_modified is not None:
             self.headers["Last-Modified"] = last_modified
+        if content_disposition is not None:
+            self.headers["Content-Disposition"] = content_disposition
 
     def __enter__(self):
         return self
@@ -1950,8 +2152,21 @@ class _FakeHTTPResponse:
 
     def read(self, size: int = -1) -> bytes:
         if size is None or size < 0:
-            return self._body
-        return self._body[:size]
+            value = self._body[self._offset :]
+            self._offset = len(self._body)
+            return value
+        if self._max_read_chunk_size is not None:
+            size = min(size, self._max_read_chunk_size)
+        value = self._body[self._offset : self._offset + size]
+        self._offset += len(value)
+        return value
+
+
+class _OverReadingHTTPResponse(_FakeHTTPResponse):
+    def read(self, size: int = -1) -> bytes:
+        value = self._body[self._offset :]
+        self._offset = len(self._body)
+        return value
 
 
 class _FakePDFExtractor:

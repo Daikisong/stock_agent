@@ -750,6 +750,46 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             date(2026, 6, 7),
         )
 
+    def test_leading_broker_pdf_header_accepts_date_only_when_enabled(self) -> None:
+        text = (
+            "2025-10-29 Current Corp COMMENT 3Q25 Conference call summary\n"
+            "Broker analyst and report details\n"
+            "2026-12-31 is a forecast period in the body\n"
+        )
+        self.assertEqual(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=text,
+                as_of_date=date(2026, 7, 12),
+                allow_leading_broker_report_date=True,
+            ),
+            date(2025, 10, 29),
+        )
+        self.assertIsNone(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=text,
+                as_of_date=date(2026, 7, 12),
+            )
+        )
+
+    def test_broker_pdf_body_date_is_not_publication_header(self) -> None:
+        self.assertIsNone(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=(
+                    "Current Corp report without a dated header\n"
+                    "Detailed report discussion " * 8
+                    + "\n2025-10-29 historical table row\n"
+                ),
+                as_of_date=date(2026, 7, 12),
+                allow_leading_broker_report_date=True,
+            )
+        )
+
     def test_navigation_heavy_press_release_details_accepts_date(self) -> None:
         self.assertEqual(
             infer_publication_date(
@@ -7253,6 +7293,18 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             "ranking_status": "MATERIAL",
             "fetch_status": "FETCH_REJECTED",
         }
+        binary_pdf_candidate = {
+            "candidate_id": "MISCLASSIFIED-BINARY-PDF",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+            "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        }
+        non_pdf_binary_candidate = {
+            "candidate_id": "MISCLASSIFIED-NON-PDF-BINARY",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+            "matched_requested_source_family": "ISSUER_PRESENTATION",
+        }
         rejected = (
             {
                 "candidate_id": "UNKNOWN-DATE",
@@ -7265,20 +7317,47 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                     "live_pdf_text_extraction_failed:pypdf_unreadable"
                 ),
             },
+            {
+                "candidate_id": "MISCLASSIFIED-BINARY-PDF",
+                "rejection_reason": (
+                    "SNIPPET_ONLY_FULL_FETCH_REQUIRED:"
+                    "live_fetch_unreadable_text:"
+                    "excessive_control_characters:40483/508839"
+                ),
+            },
+            {
+                "candidate_id": "MISCLASSIFIED-NON-PDF-BINARY",
+                "rejection_reason": (
+                    "SNIPPET_ONLY_FULL_FETCH_REQUIRED:"
+                    "live_fetch_unreadable_text:"
+                    "excessive_control_characters:80/100"
+                ),
+            },
         )
 
         first = source_graph_module._reopen_fetch_semantics_candidates(
-            [date_candidate, pdf_candidate],
+            [
+                date_candidate,
+                pdf_candidate,
+                binary_pdf_candidate,
+                non_pdf_binary_candidate,
+            ],
             rejected_documents=rejected,
         )
         date_candidate["fetch_status"] = "FETCH_REJECTED"
         pdf_candidate["fetch_status"] = "FETCH_REJECTED"
+        binary_pdf_candidate["fetch_status"] = "FETCH_REJECTED"
         second = source_graph_module._reopen_fetch_semantics_candidates(
-            [date_candidate, pdf_candidate],
+            [
+                date_candidate,
+                pdf_candidate,
+                binary_pdf_candidate,
+                non_pdf_binary_candidate,
+            ],
             rejected_documents=rejected,
         )
 
-        self.assertEqual(first, 2)
+        self.assertEqual(first, 3)
         self.assertEqual(second, 0)
         self.assertTrue(
             date_candidate["publication_metadata_fetch_retry_attempted"]
@@ -7288,6 +7367,19 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION,
         )
         self.assertTrue(pdf_candidate["pdf_fallback_fetch_retry_attempted"])
+        self.assertTrue(
+            binary_pdf_candidate[
+                "response_content_classification_retry_attempted"
+            ]
+        )
+        self.assertEqual(
+            binary_pdf_candidate["fetch_semantics_policy_version"],
+            source_graph_module.RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION,
+        )
+        self.assertNotIn(
+            "response_content_classification_retry_attempted",
+            non_pdf_binary_candidate,
+        )
 
     def test_old_date_inference_retry_reopens_for_new_policy_once(self) -> None:
         candidate = {
@@ -8006,10 +8098,10 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                     "fetch_status": "MATERIAL_PENDING_FETCH",
                     "material_priority": 1.0,
                     "fetch_semantics_retry_reason": (
-                        "PRIOR_UNKNOWN_DATE_PRECEDED_PUBLICATION_DATE_INFERENCE"
+                        "PRIOR_BINARY_PDF_PRECEDED_RESPONSE_CONTENT_CLASSIFICATION"
                     ),
                     "fetch_semantics_policy_version": (
-                        PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION
+                        source_graph_module.RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION
                     ),
                 }
             ],

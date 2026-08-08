@@ -9,7 +9,7 @@ from urllib.parse import unquote
 
 
 PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION = (
-    "e2r_publication_date_inference_v4"
+    "e2r_publication_date_inference_v5"
 )
 
 _ENGLISH_MONTHS = {
@@ -49,6 +49,7 @@ def infer_publication_date(
     metadata_parts: Iterable[str],
     document_text: str = "",
     as_of_date: date | None = None,
+    allow_leading_broker_report_date: bool = False,
 ) -> date | None:
     """Return an auditable source date, never an arbitrary body fact date.
 
@@ -73,6 +74,10 @@ def infer_publication_date(
                 document_text,
                 as_of_date=as_of_date,
             )
+        )
+    if not candidates and allow_leading_broker_report_date:
+        candidates.extend(
+            _leading_broker_report_publication_dates(document_text)
         )
     return max(candidates) if candidates else None
 
@@ -332,6 +337,35 @@ def _leading_release_publication_dates(
             candidates.append(candidate)
             break
     return tuple(candidates)
+
+
+def _leading_broker_report_publication_dates(text: str) -> tuple[date, ...]:
+    """Read a full calendar date only from the PDF report header.
+
+    Broker PDFs commonly begin with ``YYYY-MM-DD Company ...`` while their
+    download endpoint and search result carry no publication timestamp.  The
+    caller enables this narrow fallback only for a fetched PDF whose current
+    materiality decision is bound to ``PUBLIC_BROKER_PDF``.  Restricting the
+    scan to the first non-empty line prevents forecast periods and table
+    dates in the report body from becoming publication authority.
+    """
+
+    lines = tuple(
+        line.strip()
+        for line in str(text or "").splitlines()
+        if line.strip()
+    )
+    candidates: list[date] = []
+    for line in lines[:1]:
+        match = re.match(
+            r"^(20\d{2})\s*[./_-]\s*([01]?\d)\s*[./_-]\s*([0-3]?\d)"
+            r"(?=\s|$)",
+            line,
+        )
+        if match is None:
+            continue
+        _append_valid(candidates, *map(int, match.groups()))
+    return tuple(dict.fromkeys(candidates))
 
 
 def _standalone_english_month_date(text: str) -> date | None:

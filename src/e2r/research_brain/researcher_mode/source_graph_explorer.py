@@ -18,7 +18,10 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from e2r.production.metadata import write_json, write_jsonl
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
-from e2r.research.page_fetcher import TEXT_CACHE_SEMANTICS_VERSION
+from e2r.research.page_fetcher import (
+    RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION,
+    TEXT_CACHE_SEMANTICS_VERSION,
+)
 from e2r.research.page_fetcher import PageFetcher
 from e2r.research.pdf_text_extractor import (
     PDF_TEXT_EXTRACTION_SEMANTICS_VERSION,
@@ -6142,6 +6145,10 @@ def _fetch_candidate_document(
         metadata_parts=publication_metadata_parts,
         as_of_date=as_of_date,
     )
+    matched_requested_source_family = str(
+        candidate.get("matched_requested_source_family") or ""
+    )
+    fetched_content_type = str(getattr(result, "content_type", "") or "")
     content_inferred_date = infer_publication_date(
         explicit=None,
         metadata_parts=(
@@ -6152,6 +6159,10 @@ def _fetch_candidate_document(
         ),
         document_text=text,
         as_of_date=as_of_date,
+        allow_leading_broker_report_date=(
+            matched_requested_source_family == "PUBLIC_BROKER_PDF"
+            and "pdf" in fetched_content_type.casefold()
+        ),
     )
     if explicit is not None:
         published = explicit
@@ -6183,9 +6194,6 @@ def _fetch_candidate_document(
         reason = "WRONG_SUBJECT_FULL_DOCUMENT"
         rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
         return _fetch_record(fetch_id, candidate, "REJECTED", reason, content_hash), None, rejection
-    matched_requested_source_family = str(
-        candidate.get("matched_requested_source_family") or ""
-    )
     classified_source_family = _classify_source_family(
         candidate, url=url, official_hosts=official_hosts
     )
@@ -7113,6 +7121,14 @@ def _candidate_has_current_fetch_semantics_retry(
         return policy_version == PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION
     if reason == "PRIOR_PDF_FAILURE_PRECEDED_PDFPLUMBER_FALLBACK":
         return policy_version == "e2r_pdf_text_fallback_v1"
+    if (
+        reason
+        == "PRIOR_BINARY_PDF_PRECEDED_RESPONSE_CONTENT_CLASSIFICATION"
+    ):
+        return (
+            policy_version
+            == RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION
+        )
     return False
 
 
@@ -8164,6 +8180,28 @@ def _reopen_fetch_semantics_candidates(
             )
             candidate["fetch_semantics_policy_version"] = (
                 "e2r_pdf_text_fallback_v1"
+            )
+        elif (
+            "live_fetch_unreadable_text:excessive_control_characters:"
+            in reason
+            and str(
+                candidate.get("matched_requested_source_family") or ""
+            )
+            == "PUBLIC_BROKER_PDF"
+        ):
+            flag = "response_content_classification_retry_attempted"
+            if (
+                candidate.get(flag)
+                and candidate.get("fetch_semantics_policy_version")
+                == RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION
+            ):
+                continue
+            candidate[flag] = True
+            candidate["fetch_semantics_retry_reason"] = (
+                "PRIOR_BINARY_PDF_PRECEDED_RESPONSE_CONTENT_CLASSIFICATION"
+            )
+            candidate["fetch_semantics_policy_version"] = (
+                RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION
             )
         else:
             continue

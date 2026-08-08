@@ -8,6 +8,7 @@ import json
 import re
 from dataclasses import dataclass
 from datetime import date, datetime
+from email.message import Message
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
@@ -25,6 +26,9 @@ PUBLICATION_METADATA_SEMANTICS_VERSION = (
     "e2r_page_fetch_publication_metadata_v1"
 )
 TEXT_CACHE_SEMANTICS_VERSION = "e2r_page_fetch_text_cache_v2"
+RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION = (
+    "e2r_page_fetch_response_content_classification_v2"
+)
 
 
 @dataclass(frozen=True)
@@ -217,10 +221,24 @@ class PageFetcher:
             )
             with request.urlopen(req, timeout=self.timeout_seconds) as response:
                 content_type = _content_type(response)
+                content_disposition_filename = (
+                    _content_disposition_filename(response)
+                )
                 response_last_modified_at = _response_last_modified_at(response)
-                pdf_like = _looks_like_pdf_url(url) or "pdf" in content_type.lower()
-                body_limit = max(1, self.max_pdf_body_bytes if pdf_like else self.max_body_bytes)
-                body = response.read(body_limit + 1)
+                declared_pdf_like = _looks_like_pdf_response(
+                    url=url,
+                    content_type=content_type,
+                    content_disposition_filename=(
+                        content_disposition_filename
+                    ),
+                )
+                body, pdf_like, body_limit = _read_bounded_response_body(
+                    response,
+                    declared_pdf_like=declared_pdf_like,
+                    content_type=content_type,
+                    max_body_bytes=self.max_body_bytes,
+                    max_pdf_body_bytes=self.max_pdf_body_bytes,
+                )
                 if len(body) > body_limit:
                     return FetchResult(
                         url=url,
@@ -251,14 +269,19 @@ class PageFetcher:
                 reason=f"live_fetch_failed:{type(exc).__name__}:{exc}",
             )
 
-        if _looks_like_pdf_url(url) or "pdf" in content_type.lower():
+        if pdf_like:
+            effective_content_type = (
+                content_type
+                if "pdf" in content_type.casefold()
+                else "application/pdf"
+            )
             extraction = (self.pdf_text_extractor or PDFTextExtractor()).extract_text_from_bytes(body)
             if not extraction.ok or not (extraction.text or "").strip():
                 reason = extraction.reason or "empty_pdf_text"
                 return FetchResult(
                     url=url,
                     ok=False,
-                    content_type=content_type or "application/pdf",
+                    content_type=effective_content_type,
                     fetched_at=fetched_at,
                     reason=f"live_pdf_text_extraction_failed:{reason}",
                 )
@@ -267,7 +290,7 @@ class PageFetcher:
                 return FetchResult(
                     url=url,
                     ok=False,
-                    content_type=content_type or "application/pdf",
+                    content_type=effective_content_type,
                     fetched_at=fetched_at,
                     reason=f"live_pdf_text_extraction_failed:{unreadable}",
                 )
@@ -283,7 +306,7 @@ class PageFetcher:
             source_path = _write_cache(
                 cache_path,
                 full_text,
-                content_type=content_type or "application/pdf",
+                content_type=effective_content_type,
                 response_last_modified_at=response_last_modified_at,
                 text_extraction_semantics_version=(
                     extraction_semantics_version
@@ -293,7 +316,7 @@ class PageFetcher:
                 url=url,
                 ok=True,
                 text=text,
-                content_type=content_type or "application/pdf",
+                content_type=effective_content_type,
                 fetched_at=fetched_at,
                 source_path=source_path,
                 response_last_modified_at=response_last_modified_at,
@@ -385,6 +408,84 @@ def _http_request_url(url: str) -> str:
 def _looks_like_pdf_url(url: str) -> bool:
     lowered = url.lower()
     return parse.urlparse(lowered).path.endswith(".pdf") or ".pdf?" in lowered
+
+
+def _looks_like_pdf_response(
+    *,
+    url: str,
+    content_type: str,
+    content_disposition_filename: str | None,
+) -> bool:
+    if _looks_like_pdf_url(url) or "pdf" in content_type.casefold():
+        return True
+    return bool(
+        content_disposition_filename
+        and content_disposition_filename.casefold().endswith(".pdf")
+    )
+
+
+def _body_looks_like_pdf(body: bytes) -> bool:
+    marker_index = body[:1024].find(b"%PDF-")
+    return marker_index >= 0
+
+
+def _content_type_allows_pdf_magic(content_type: str) -> bool:
+    media_type = content_type.partition(";")[0].strip().casefold()
+    return media_type in {
+        "",
+        "application/download",
+        "application/octet-stream",
+        "application/x-download",
+        "binary/octet-stream",
+    }
+
+
+def _read_bounded_response_body(
+    response: object,
+    *,
+    declared_pdf_like: bool,
+    content_type: str,
+    max_body_bytes: int,
+    max_pdf_body_bytes: int,
+) -> tuple[bytes, bool, int]:
+    html_limit = max(1, max_body_bytes)
+    pdf_limit = max(1, max_pdf_body_bytes)
+    reader = getattr(response, "read")
+    if declared_pdf_like:
+        return _read_up_to(reader, pdf_limit + 1), True, pdf_limit
+    if not _content_type_allows_pdf_magic(content_type):
+        return _read_up_to(reader, html_limit + 1), False, html_limit
+
+    probe_limit = min(1024, max(html_limit, pdf_limit) + 1)
+    prefix = _read_up_to(reader, probe_limit)
+    pdf_like = _body_looks_like_pdf(prefix)
+    body_limit = pdf_limit if pdf_like else html_limit
+    remaining_limit = body_limit + 1 - len(prefix)
+    if remaining_limit <= 0:
+        return prefix, pdf_like, body_limit
+    return (
+        prefix + _read_up_to(reader, remaining_limit),
+        pdf_like,
+        body_limit,
+    )
+
+
+def _read_up_to(reader: Any, limit: int) -> bytes:
+    chunks: list[bytes] = []
+    remaining = max(0, limit)
+    while remaining:
+        chunk = reader(remaining)
+        if not chunk:
+            break
+        value = bytes(chunk)
+        if len(value) > remaining:
+            raise ValueError(
+                "response_reader_exceeded_requested_byte_count:"
+                f"{len(value)}>{remaining}"
+            )
+        chunks.append(value)
+        remaining -= len(value)
+    return b"".join(chunks)
 
 
 def _cache_path(cache_directory: str | Path | None, url: str, as_of_date: date) -> Path | None:
@@ -483,6 +584,21 @@ def _content_type(response: object) -> str:
     if headers is not None and hasattr(headers, "get"):
         return str(headers.get("Content-Type") or headers.get("content-type") or "")
     return ""
+
+
+def _content_disposition_filename(response: object) -> str | None:
+    headers = getattr(response, "headers", None)
+    if headers is None or not hasattr(headers, "get"):
+        return None
+    value = headers.get("Content-Disposition") or headers.get(
+        "content-disposition"
+    )
+    if not value:
+        return None
+    message = Message()
+    message["Content-Disposition"] = str(value)
+    filename = message.get_filename()
+    return str(filename).strip() if filename else None
 
 
 def _charset(response: object) -> str | None:
@@ -816,6 +932,7 @@ def _normalize_text(text: str) -> str:
 __all__ = [
     "FetchResult",
     "PUBLICATION_METADATA_SEMANTICS_VERSION",
+    "RESPONSE_CONTENT_CLASSIFICATION_SEMANTICS_VERSION",
     "TEXT_CACHE_SEMANTICS_VERSION",
     "PageFetcher",
 ]
