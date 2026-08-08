@@ -36,6 +36,7 @@ from e2r.production.metadata import stable_hash
 from e2r.research_brain.planning.provider_transport import (
     StructuredProviderUnavailable,
 )
+from e2r.research_brain.intelligence_schema import stable_intelligence_id
 from e2r.research_brain.researcher_mode import (
     CANONICAL_COMPONENT_ORDER,
     PHASE93_POST_RUN_FAIL,
@@ -57,6 +58,7 @@ from tests.test_e2r_v5_fact_extraction import FactProvider, _document
 from tests.test_e2r_v5_researcher_mode import ScriptedResearchProvider
 from tests.test_e2r_v5_source_graph_acquisition import SourceBrainProvider
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
+    _fact_extraction_is_complete_for_source_checkpoint,
     _official_gap_reasons,
     _score_gap_context_for_supervisor,
     _source_checkpoint_is_ready_for_readonly_replay,
@@ -74,6 +76,7 @@ from e2r.research_brain.researcher_mode.research_epoch import (
     _research_checkpoint_id,
 )
 from e2r.research_brain.researcher_mode.source_graph_explorer import (
+    OFFICIAL_SOURCE_SUCCESS_DISCOVERY_FALLBACK_REASON,
     _finalize_checkpoint,
     source_graph_acquisition_safety_critical_counts,
     source_graph_checkpoint_audit_binding,
@@ -5077,7 +5080,6 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 as_of_date=as_of_date,
                 objectives=objectives,
             )
-
         self.assertNotIn(
             "OBJECTIVE-eps_fcf_explosion", context["resolved_objective_ids"]
         )
@@ -5199,6 +5201,432 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                 for component_id in CANONICAL_COMPONENT_ORDER
             },
         )
+
+    def test_complete_component_does_not_resolve_pending_source_query(self) -> None:
+        target_id = "CURRENT-TARGET"
+        as_of_date = "2026-06-29"
+        objectives = tuple(
+            {
+                "objective_id": f"OBJECTIVE-{component_id}",
+                "component_id": component_id,
+            }
+            for component_id in CANONICAL_COMPONENT_ORDER
+        )
+        pending_objective_id = "OBJECTIVE-information_confidence"
+        lineage_gap_objective_id = "OBJECTIVE-market_mispricing"
+        official_objective_id = "OBJECTIVE-capital_allocation"
+        official_query_id = "SGQUERY-OFFICIAL-SUPERSEDED"
+        official_reasons = [
+            OFFICIAL_SOURCE_SUCCESS_DISCOVERY_FALLBACK_REASON
+        ]
+        official_record_id = stable_intelligence_id(
+            "SGOFFICIALRES",
+            {
+                "query_id": official_query_id,
+                "objective_id": official_objective_id,
+                "as_of_date": as_of_date,
+                "official_gap_reasons": official_reasons,
+            },
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "component_research_memos.jsonl").write_text(
+                "\n".join(
+                    json.dumps(
+                        {
+                            "component_id": component_id,
+                            "research_complete": True,
+                        }
+                    )
+                    for component_id in CANONICAL_COMPONENT_ORDER
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "source_graph_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "resolved_objective_ids": [
+                            row["objective_id"] for row in objectives
+                        ],
+                        "production_downstream_document_ids": [
+                            "DOC-CURRENT"
+                        ],
+                        "generated_queries": [
+                            {
+                                "query_id": "SGQUERY-CURRENT-PENDING",
+                                "objective_id": pending_objective_id,
+                                "execution_status": "PENDING",
+                            },
+                            {
+                                "query_id": "SGQUERY-NO-FACT-LINEAGE",
+                                "objective_id": lineage_gap_objective_id,
+                                "literal_query": "current independent route",
+                                "source_families": ["CUSTOMER_OFFICIAL"],
+                                "execution_status": "PROVIDER_ERROR",
+                                "search_result_count": 10,
+                            },
+                            {
+                                "query_id": official_query_id,
+                                "objective_id": official_objective_id,
+                                "execution_status": (
+                                    "SUPERSEDED_BY_OFFICIAL_RESOLUTION"
+                                ),
+                                "official_gap_reasons": official_reasons,
+                                "official_first_resolution_disposition": (
+                                    "SEMANTIC_OBJECTIVE_RESOLVED_WITHOUT_GENERAL_WEB"
+                                ),
+                            },
+                        ],
+                        "official_first_resolution_records": [
+                            {
+                                "record_id": official_record_id,
+                                "query_id": official_query_id,
+                                "objective_id": official_objective_id,
+                                "prior_execution_status": (
+                                    "BLOCKED_OFFICIAL_FIRST"
+                                ),
+                                "execution_status": (
+                                    "SUPERSEDED_BY_OFFICIAL_RESOLUTION"
+                                ),
+                                "official_gap_reasons": official_reasons,
+                                "search_executed": False,
+                                "production_score_authority": False,
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "fact_extraction_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "status": "FACT_EXTRACTION_COMPLETE",
+                        "pending_reasons": [],
+                        "research_gap_feedback": [],
+                        "document_dispositions": [
+                            {
+                                "document_id": "DOC-CURRENT",
+                                "status": "FACTS_EXTRACTED",
+                            }
+                        ],
+                        "audit": {
+                            "critical_count_sum": 0,
+                            "input_document_count": 1,
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "structured_engine_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "status": "COMPLETE",
+                        "missing_roles_by_component": {},
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "current_structured_materialization.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "report_candidates": [
+                            {
+                                "candidate_id": "STRUCTCAND-CURRENT",
+                                "provider_name": "CompanyGuide",
+                                "source_family_hint": "PUBLIC_BROKER_PDF",
+                                "research_route": "PUBLIC_BROKER_REPORT",
+                                "published_at": "2026-06-20",
+                                "broker": "Example Securities",
+                                "title": "Current report route",
+                                "provider_report_id": "REPORT-1",
+                                "provider_index": "INDEX-1",
+                                "provider_file_name": "report.pdf",
+                                "provider_summary": "metadata discovery hint",
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=objectives,
+            )
+            materialization = json.loads(
+                (root / "current_structured_materialization.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+            mismatched = {**materialization, "target_id": "OTHER-TARGET"}
+            (root / "current_structured_materialization.json").write_text(
+                json.dumps(mismatched), encoding="utf-8"
+            )
+            with self.assertRaisesRegex(ValueError, "target/as_of mismatch"):
+                _load_prior_research_context(
+                    root,
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    objectives=objectives,
+                )
+            future = json.loads(json.dumps(materialization))
+            future["report_candidates"][0]["published_at"] = "2026-06-30"
+            (root / "current_structured_materialization.json").write_text(
+                json.dumps(future), encoding="utf-8"
+            )
+            with self.assertRaisesRegex(
+                ValueError, "future structured report candidate"
+            ):
+                _load_prior_research_context(
+                    root,
+                    target_id=target_id,
+                    as_of_date=as_of_date,
+                    objectives=objectives,
+                )
+
+        self.assertNotIn(
+            pending_objective_id, context["resolved_objective_ids"]
+        )
+        self.assertNotIn(
+            lineage_gap_objective_id, context["resolved_objective_ids"]
+        )
+        self.assertEqual(
+            context["source_transport_pending_objective_ids"],
+            (pending_objective_id,),
+        )
+        self.assertEqual(
+            context["source_queries_without_accepted_fact_lineage"],
+            (
+                {
+                    "query_id": "SGQUERY-NO-FACT-LINEAGE",
+                    "objective_id": lineage_gap_objective_id,
+                    "literal_query": "current independent route",
+                    "source_families": ["CUSTOMER_OFFICIAL"],
+                    "execution_status": "PROVIDER_ERROR",
+                    "search_result_count": 10,
+                    "failure_reason": (
+                        "QUERY_WITHOUT_ACCEPTED_CLAIM_FACT_LINEAGE"
+                    ),
+                    "query_generation_owner": "SOURCE_QUERY_GENERATION_LLM",
+                    "deterministic_fallback_query_allowed": False,
+                },
+            ),
+        )
+        report_context = context["structured_report_candidate_context"]
+        self.assertEqual(
+            report_context["structured_report_source_candidates"][
+                "candidate_count"
+            ],
+            1,
+        )
+        self.assertTrue(
+            report_context[
+                "structured_report_source_candidate_contract"
+            ]["llm_owns_materiality_and_objective_binding"]
+        )
+
+    def test_fact_completion_requires_exact_current_source_document_roster(
+        self,
+    ) -> None:
+        target_id = "CURRENT-TARGET"
+        as_of_date = "2026-06-29"
+        source_checkpoint = {
+            "target_id": target_id,
+            "as_of_date": as_of_date,
+            "production_downstream_document_ids": ["DOC-NEW"],
+        }
+        fact_result = {
+            "target_id": target_id,
+            "as_of_date": as_of_date,
+            "status": "FACT_EXTRACTION_COMPLETE",
+            "document_dispositions": [
+                {"document_id": "DOC-OLD", "status": "FACTS_EXTRACTED"}
+            ],
+            "audit": {
+                "critical_count_sum": 0,
+                "input_document_count": 1,
+            },
+        }
+        self.assertFalse(
+            _fact_extraction_is_complete_for_source_checkpoint(
+                fact_result=fact_result,
+                source_checkpoint=source_checkpoint,
+                target_id=target_id,
+                as_of_date=as_of_date,
+            )
+        )
+        fact_result["document_dispositions"][0]["document_id"] = "DOC-NEW"
+        self.assertTrue(
+            _fact_extraction_is_complete_for_source_checkpoint(
+                fact_result=fact_result,
+                source_checkpoint=source_checkpoint,
+                target_id=target_id,
+                as_of_date=as_of_date,
+            )
+        )
+
+    def test_alternate_query_fact_lineage_closes_earlier_no_fact_query(
+        self,
+    ) -> None:
+        target_id = "CURRENT-TARGET"
+        as_of_date = "2026-06-29"
+        component_id = "information_confidence"
+        objective_id = "OBJECTIVE-information_confidence"
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "component_research_memos.jsonl").write_text(
+                json.dumps(
+                    {
+                        "component_id": component_id,
+                        "research_complete": True,
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "evidence_facts.jsonl").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "fact_id": "EFACT-ALTERNATE-ROUTE",
+                        "source_ids": ["SGDOC-ALTERNATE-ROUTE"],
+                        "allowed_component_ids": [
+                            "capital_allocation"
+                        ],
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "fact_extraction_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "status": "FACT_EXTRACTION_COMPLETE",
+                        "document_dispositions": [
+                            {
+                                "document_id": "SGDOC-ALTERNATE-ROUTE",
+                                "status": "FACTS_EXTRACTED",
+                            }
+                        ],
+                        "audit": {
+                            "critical_count_sum": 0,
+                            "input_document_count": 1,
+                        },
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "source_graph_checkpoint.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "production_downstream_document_ids": [
+                            "SGDOC-ALTERNATE-ROUTE"
+                        ],
+                        "generated_queries": [
+                            {
+                                "query_id": "SGQUERY-FIRST-NO-FACT",
+                                "objective_id": objective_id,
+                                "execution_status": "PROVIDER_ERROR",
+                            },
+                            {
+                                "query_id": "SGQUERY-ALTERNATE-SUCCESS",
+                                "objective_id": objective_id,
+                                "execution_status": "PROVIDER_ERROR",
+                            },
+                        ],
+                        "evidence_documents": [
+                            {
+                                "document_id": "SGDOC-ALTERNATE-ROUTE",
+                                "query_ids": [
+                                    "SGQUERY-ALTERNATE-SUCCESS"
+                                ],
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            (root / "structured_engine_result.json").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "status": "COMPLETE",
+                        "missing_roles_by_component": {},
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=(
+                    {
+                        "objective_id": objective_id,
+                        "component_id": component_id,
+                    },
+                ),
+            )
+
+            self.assertEqual(
+                tuple(
+                    row["query_id"]
+                    for row in context[
+                        "source_queries_without_accepted_fact_lineage"
+                    ]
+                ),
+                (
+                    "SGQUERY-FIRST-NO-FACT",
+                    "SGQUERY-ALTERNATE-SUCCESS",
+                ),
+            )
+            # The same document becomes valid lineage only when the accepted
+            # fact is scoped to the query objective's component.  A fact for
+            # another component cannot be used as a generic completion stamp.
+            fact = json.loads(
+                (root / "evidence_facts.jsonl").read_text(
+                    encoding="utf-8"
+                )
+            )
+            fact["allowed_component_ids"] = [component_id]
+            (root / "evidence_facts.jsonl").write_text(
+                json.dumps(fact) + "\n",
+                encoding="utf-8",
+            )
+            context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=(
+                    {
+                        "objective_id": objective_id,
+                        "component_id": component_id,
+                    },
+                ),
+            )
+
+        self.assertEqual(
+            context["source_queries_without_accepted_fact_lineage"], ()
+        )
+        self.assertEqual(context["resolved_objective_ids"], (objective_id,))
 
     def test_hash_bound_complete_memo_survives_transport_pending_and_semantic_rewrite_does_not_reopen_source(
         self,

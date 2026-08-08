@@ -4179,6 +4179,7 @@ def _run_free(
 class _FakeHTTPResponse:
     def __init__(self, body: str, content_type: str = "text/html; charset=utf-8") -> None:
         self._body = body.encode("utf-8")
+        self._cursor = 0
         self.headers = Message()
         self.headers["Content-Type"] = content_type
 
@@ -4190,8 +4191,12 @@ class _FakeHTTPResponse:
 
     def read(self, size: int = -1) -> bytes:
         if size is None or size < 0:
-            return self._body
-        return self._body[:size]
+            chunk = self._body[self._cursor :]
+            self._cursor = len(self._body)
+            return chunk
+        chunk = self._body[self._cursor : self._cursor + size]
+        self._cursor += len(chunk)
+        return chunk
 
 
 if __name__ == "__main__":

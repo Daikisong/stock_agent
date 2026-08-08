@@ -62,6 +62,7 @@ from e2r.research_brain.planning.provider_transport import (
 )
 from e2r.research_brain.researcher_mode.saturation import (
     _semantic_saturation_prompt_payload,
+    _source_graph_allows_saturation,
 )
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _completion_gates,
@@ -88,6 +89,33 @@ def _source_candidate_id(url: str) -> str:
         },
     )
 ARCHETYPE = "CURRENT-ARCHETYPE"
+
+
+class SourceGraphSaturationBoundaryTests(unittest.TestCase):
+    def test_stopped_status_cannot_hide_pending_query(self) -> None:
+        checkpoint = {
+            "checkpoint_id": "SGCHECK-CURRENT",
+            "status": "STOPPED_ON_RESOLUTION",
+            "transport_budget_can_complete_research": False,
+            "generated_queries": [
+                {
+                    "query_id": "SGQUERY-PENDING",
+                    "objective_id": "SGOBJ-CURRENT",
+                    "execution_status": "PENDING",
+                }
+            ],
+            "evidence_documents": [{"document_id": "SGDOC-1"}],
+        }
+        research_checkpoint = {
+            "source_graph_checkpoint_id": "SGCHECK-CURRENT"
+        }
+
+        self.assertFalse(
+            _source_graph_allows_saturation(
+                checkpoint,
+                research_checkpoint=research_checkpoint,
+            )
+        )
 OBJECTIVE_ID = "OBJ-CURRENT"
 
 

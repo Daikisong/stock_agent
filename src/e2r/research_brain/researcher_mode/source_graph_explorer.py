@@ -95,6 +95,9 @@ SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION = (
 PRODUCTION_PAGE_FETCH_TEXT_CHAR_BOUND = 2_000_000
 LEGACY_PAGE_FETCH_TEXT_CHAR_CAP = 200_000
 SOURCE_REPAIR_LINEAGE_VERSION = "e2r_v5_one_way_source_transport_repair_v1"
+OFFICIAL_SOURCE_SUCCESS_DISCOVERY_FALLBACK_REASON = (
+    "official sources fetched; unresolved semantic facts require discovery"
+)
 QUERY_GENERATION_REPLAY_CONTEXT_SCHEMA_VERSION = (
     "e2r_v5_query_generation_replay_context_v1"
 )
@@ -587,6 +590,7 @@ class ResearcherSourceGraphAcquirer:
         theme_context: Mapping[str, Any] | None = None,
         score_gap_context: Mapping[str, Any] | None = None,
         resolved_objective_ids: Sequence[str] = (),
+        semantic_resolved_objective_ids: Sequence[str] | None = None,
         prior_checkpoint: Mapping[str, Any] | None = None,
         official_domain_allowlist: Sequence[str] = (),
         checkpoint_migration_only: bool = False,
@@ -614,9 +618,22 @@ class ResearcherSourceGraphAcquirer:
         if len(objective_by_id) != len(objectives):
             raise ValueError("source graph objectives must be unique")
         resolved = set(str(value) for value in resolved_objective_ids)
+        semantic_resolved = set(
+            resolved
+            if semantic_resolved_objective_ids is None
+            else (
+                str(value)
+                for value in semantic_resolved_objective_ids
+            )
+        )
         unknown_resolved = resolved - set(objective_by_id)
-        if unknown_resolved:
+        unknown_semantic_resolved = semantic_resolved - set(objective_by_id)
+        if unknown_resolved or unknown_semantic_resolved:
             raise ValueError("resolved objective ids are unknown")
+        if not resolved.issubset(semantic_resolved):
+            raise ValueError(
+                "transport-resolved objectives must be semantically resolved"
+            )
         facts = tuple(_fact_dict(row) for row in current_evidence_facts)
         if any(str(row.get("target_id")) != target_id for row in facts):
             raise ValueError("source graph received cross-target EvidenceFacts")
@@ -730,6 +747,87 @@ class ResearcherSourceGraphAcquirer:
                 + str(invalidated_prior_fact_count)
             )
         generated_rows = state["generated_queries"]
+        official_first_resolution_records = list(
+            state.get("official_first_resolution_records") or ()
+        )
+        for row in generated_rows:
+            if row.get("execution_status") != "BLOCKED_OFFICIAL_FIRST":
+                continue
+            objective_id = str(row.get("objective_id") or "")
+            refreshed_gaps = tuple(
+                dict.fromkeys(
+                    str(value)
+                    for value in (
+                        (official_gap_reasons_by_objective or {}).get(
+                            objective_id, ()
+                        )
+                    )
+                    if str(value).strip()
+                )
+            )
+            if (
+                objective_id in semantic_resolved
+                and refreshed_gaps
+                == (OFFICIAL_SOURCE_SUCCESS_DISCOVERY_FALLBACK_REASON,)
+            ):
+                resolved.add(objective_id)
+                row["execution_status"] = (
+                    "SUPERSEDED_BY_OFFICIAL_RESOLUTION"
+                )
+                row["official_gap_reasons"] = list(refreshed_gaps)
+                row["official_first_resolution_disposition"] = (
+                    "SEMANTIC_OBJECTIVE_RESOLVED_WITHOUT_GENERAL_WEB"
+                )
+                official_first_resolution_records.append(
+                    {
+                        "record_id": stable_intelligence_id(
+                            "SGOFFICIALRES",
+                            {
+                                "query_id": row.get("query_id"),
+                                "objective_id": objective_id,
+                                "as_of_date": as_of_date,
+                                "official_gap_reasons": list(
+                                    refreshed_gaps
+                                ),
+                            },
+                        ),
+                        "query_id": row.get("query_id"),
+                        "objective_id": objective_id,
+                        "prior_execution_status": (
+                            "BLOCKED_OFFICIAL_FIRST"
+                        ),
+                        "execution_status": (
+                            "SUPERSEDED_BY_OFFICIAL_RESOLUTION"
+                        ),
+                        "official_gap_reasons": list(refreshed_gaps),
+                        "search_executed": False,
+                        "production_score_authority": False,
+                    }
+                )
+            elif refreshed_gaps and refreshed_gaps != (
+                OFFICIAL_SOURCE_SUCCESS_DISCOVERY_FALLBACK_REASON,
+            ):
+                # A real issuer/IR/provider gap authorizes the bounded
+                # fallback query.  The generic success marker alone does not.
+                row["official_gap_reasons"] = list(refreshed_gaps)
+                row["execution_status"] = "PENDING"
+        state["official_first_resolution_records"] = _dedupe_mapping_rows(
+            official_first_resolution_records,
+            key_fields=("query_id", "execution_status"),
+        )
+        # A component memo can be complete while an already-authorized source
+        # query is still waiting on transport.  The source objective is not
+        # resolved until that query reaches a terminal result.  Otherwise a
+        # stale component-complete bit can suppress the very query that was
+        # opened to verify it.
+        transport_pending_objective_ids = {
+            str(row.get("objective_id") or "")
+            for row in generated_rows
+            if str(row.get("execution_status") or "")
+            in {"PENDING", "BLOCKED_OFFICIAL_FIRST"}
+            and str(row.get("objective_id") or "")
+        }
+        resolved.difference_update(transport_pending_objective_ids)
         candidates = state["search_candidates"]
         ranking_rows = state["candidate_materiality_decisions"]
         fetch_rows = state["fetch_records"]
@@ -1191,22 +1289,15 @@ class ResearcherSourceGraphAcquirer:
             ),
             *source_family_lineage_failures,
         ]
-        for row in generated_rows:
-            if row.get("execution_status") != "BLOCKED_OFFICIAL_FIRST":
-                continue
-            refreshed_gaps = list(
-                (official_gap_reasons_by_objective or {}).get(
-                    str(row.get("objective_id")), ()
-                )
-            )
-            if refreshed_gaps:
-                row["official_gap_reasons"] = refreshed_gaps
-                row["execution_status"] = "PENDING"
         pending_query_rows = [
             row
             for row in generated_rows
             if row.get("execution_status") == "PENDING"
-            and str(row.get("objective_id")) not in resolved
+        ]
+        blocked_official_first_rows = [
+            row
+            for row in generated_rows
+            if row.get("execution_status") == "BLOCKED_OFFICIAL_FIRST"
         ]
         pending_ranking_at_checkpoint_start = any(
             row.get("ranking_status") == "PENDING"
@@ -1242,6 +1333,7 @@ class ResearcherSourceGraphAcquirer:
             not checkpoint_nonresearch_only
             and unresolved_objectives
             and not pending_query_rows
+            and not blocked_official_first_rows
             and (
                 not pending_candidate_work
                 or candidate_query_edge_direction_priority
@@ -1363,7 +1455,6 @@ class ResearcherSourceGraphAcquirer:
                 row
                 for row in generated_rows
                 if row.get("execution_status") == "PENDING"
-                and str(row.get("objective_id")) not in resolved
             ]
         if (
             checkpoint_nonresearch_only
@@ -2365,7 +2456,9 @@ class ResearcherSourceGraphAcquirer:
             discovery_candidates=candidates,
         )
         still_pending_query = any(
-            row.get("execution_status") == "PENDING" for row in generated_rows
+            row.get("execution_status")
+            in {"PENDING", "BLOCKED_OFFICIAL_FIRST"}
+            for row in generated_rows
         )
         still_pending_rank = any(
             row.get("ranking_status") == "PENDING"
@@ -2393,10 +2486,10 @@ class ResearcherSourceGraphAcquirer:
             status = "CANDIDATE_RANKING_PENDING"
         elif still_pending_fetch:
             status = "CHECKPOINT_PENDING"
-        elif not unresolved_objectives:
-            status = "STOPPED_ON_RESOLUTION"
         elif still_pending_query:
             status = "CHECKPOINT_PENDING"
+        elif not unresolved_objectives:
+            status = "STOPPED_ON_RESOLUTION"
         elif repeated_source_family_lineage_failures or any(
             "PROVIDER_ERROR" in value for value in pending_reasons
         ):
@@ -2483,6 +2576,9 @@ class ResearcherSourceGraphAcquirer:
             ),
             "pending_query_generation_replay_context_preserved": bool(
                 checkpoint.get("pending_query_generation_replay_context")
+            ),
+            "official_first_resolution_record_count": len(
+                checkpoint.get("official_first_resolution_records") or ()
             ),
         }
         if checkpoint_migration_only:
@@ -2665,6 +2761,7 @@ def validate_source_graph_checkpoint(
     ]
     if any(not value for value in query_ids) or len(query_ids) != len(set(query_ids)):
         raise ValueError("source graph query ids must be unique and non-empty")
+    validated_official_first_resolution_query_ids(payload)
     for row in documents:
         if row.get("target_id") not in {None, "", payload["target_id"]}:
             raise ValueError("cross-target document found in source graph checkpoint")
@@ -2677,6 +2774,84 @@ def validate_source_graph_checkpoint(
         if observed and date.fromisoformat(observed) > cutoff:
             raise ValueError("future document found in source graph checkpoint")
     return payload
+
+
+def validated_official_first_resolution_query_ids(
+    checkpoint: Mapping[str, Any],
+) -> frozenset[str]:
+    """Validate exact official-resolution authority for blocked web queries."""
+
+    generated = tuple(
+        row
+        for row in checkpoint.get("generated_queries") or ()
+        if isinstance(row, Mapping)
+    )
+    superseded_by_id = {
+        str(row.get("query_id") or ""): row
+        for row in generated
+        if str(row.get("execution_status") or "")
+        == "SUPERSEDED_BY_OFFICIAL_RESOLUTION"
+    }
+    records = tuple(checkpoint.get("official_first_resolution_records") or ())
+    if any(not isinstance(row, Mapping) for row in records):
+        raise ValueError("official-first resolution record must be an object")
+    record_by_query_id: dict[str, Mapping[str, Any]] = {}
+    for record in records:
+        query_id = str(record.get("query_id") or "")
+        if not query_id or query_id in record_by_query_id:
+            raise ValueError(
+                "official-first resolution query ids must be unique and non-empty"
+            )
+        record_by_query_id[query_id] = record
+    if set(record_by_query_id) != set(superseded_by_id):
+        raise ValueError(
+            "official-first resolution query/record roster mismatch"
+        )
+    resolved_objective_ids = {
+        str(value)
+        for value in checkpoint.get("resolved_objective_ids") or ()
+        if str(value).strip()
+    }
+    as_of_date = str(checkpoint.get("as_of_date") or "")
+    for query_id, query in superseded_by_id.items():
+        record = record_by_query_id[query_id]
+        objective_id = str(query.get("objective_id") or "")
+        reasons = tuple(query.get("official_gap_reasons") or ())
+        if (
+            not objective_id
+            or objective_id not in resolved_objective_ids
+            or reasons
+            != (OFFICIAL_SOURCE_SUCCESS_DISCOVERY_FALLBACK_REASON,)
+            or query.get("official_first_resolution_disposition")
+            != "SEMANTIC_OBJECTIVE_RESOLVED_WITHOUT_GENERAL_WEB"
+        ):
+            raise ValueError(
+                "official-first superseded query scope is invalid"
+            )
+        expected_record_id = stable_intelligence_id(
+            "SGOFFICIALRES",
+            {
+                "query_id": query_id,
+                "objective_id": objective_id,
+                "as_of_date": as_of_date,
+                "official_gap_reasons": list(reasons),
+            },
+        )
+        if (
+            str(record.get("record_id") or "") != expected_record_id
+            or str(record.get("objective_id") or "") != objective_id
+            or record.get("prior_execution_status")
+            != "BLOCKED_OFFICIAL_FIRST"
+            or record.get("execution_status")
+            != "SUPERSEDED_BY_OFFICIAL_RESOLUTION"
+            or tuple(record.get("official_gap_reasons") or ()) != reasons
+            or record.get("search_executed") is not False
+            or record.get("production_score_authority") is not False
+        ):
+            raise ValueError(
+                "official-first resolution record identity mismatch"
+            )
+    return frozenset(superseded_by_id)
 
 
 def validated_quarantined_document_ids(
@@ -3159,6 +3334,7 @@ def _resume_acquisition_state(
 ) -> dict[str, Any]:
     if checkpoint.get("checkpoint_hash") != _checkpoint_hash(checkpoint):
         raise ValueError("source graph checkpoint hash mismatch")
+    validated_official_first_resolution_query_ids(checkpoint)
     for key, expected in (("target_id", target_id), ("as_of_date", as_of_date)):
         if str(checkpoint.get(key)) != expected:
             raise ValueError(f"source graph checkpoint {key} mismatch")

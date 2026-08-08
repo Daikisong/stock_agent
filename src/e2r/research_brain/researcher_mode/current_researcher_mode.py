@@ -82,6 +82,7 @@ from .stagecourt import (
     write_researcher_stagecourt_run,
 )
 from .source_graph_explorer import (
+    OFFICIAL_SOURCE_SUCCESS_DISCOVERY_FALLBACK_REASON,
     ResearcherSourceGraphAcquirer,
     SourceGraphAcquisitionConfig,
     SourceGraphAcquisitionMode,
@@ -94,6 +95,7 @@ from .source_graph_explorer import (
     source_graph_checkpoint_audit_binding,
     source_graph_legacy_text_cap_document_ids,
     source_graph_pending_source_repair_ids,
+    validated_official_first_resolution_query_ids,
     validate_source_graph_checkpoint,
     write_source_graph_acquisition_run,
 )
@@ -347,6 +349,12 @@ class CurrentResearcherModeTargetRunner:
             objectives=objective_rows,
             archetype_id=config.archetype_id,
         )
+        source_context_requires_acquisition = bool(
+            prior_context["source_transport_pending_objective_ids"]
+            or prior_context[
+                "source_queries_without_accepted_fact_lineage"
+            ]
+        )
         source_coverage = tuple(
             sorted(
                 {
@@ -368,6 +376,25 @@ class CurrentResearcherModeTargetRunner:
             max_candidates_per_checkpoint=100,
             max_fetches_per_checkpoint=20,
         )
+        if (
+            source_context_requires_acquisition
+            and source_resume_mode == "REUSE_READY_CHECKPOINT"
+            and prior_source_checkpoint is not None
+            and _source_checkpoint_is_ready_for_readonly_replay(
+                prior_source_checkpoint
+            )
+        ):
+            # A completed fact pass may legitimately reopen acquisition, but
+            # the ready checkpoint is still the prior input authority.  Verify
+            # its graph/audit binding before giving it to a mutating acquirer;
+            # otherwise a stale or tampered audit could bypass the readonly
+            # replay validation merely because a new semantic gap appeared.
+            _hydrate_readonly_source_graph_run(
+                root=root,
+                checkpoint=prior_source_checkpoint,
+                open_objectives=initial_graph.open_objectives,
+                config=source_acquisition_config,
+            )
         source_checkpoint_navigation_migration_only = bool(
             source_resume_mode == "REUSE_READY_CHECKPOINT"
             and prior_source_checkpoint is not None
@@ -411,6 +438,7 @@ class CurrentResearcherModeTargetRunner:
         source_checkpoint_readonly_replayed = bool(
             source_resume_mode == "REUSE_READY_CHECKPOINT"
             and prior_source_checkpoint is not None
+            and not source_context_requires_acquisition
             and not source_checkpoint_migration_only
             and not source_checkpoint_legacy_text_cap_repair_only
             and _source_checkpoint_is_ready_for_readonly_replay(
@@ -420,6 +448,7 @@ class CurrentResearcherModeTargetRunner:
         source_checkpoint_downstream_recovery_replayed = bool(
             source_resume_mode == "REUSE_READY_CHECKPOINT"
             and prior_source_checkpoint is not None
+            and not source_context_requires_acquisition
             and not source_checkpoint_readonly_replayed
             and not source_checkpoint_migration_only
             and not source_checkpoint_legacy_text_cap_repair_only
@@ -433,6 +462,7 @@ class CurrentResearcherModeTargetRunner:
         source_checkpoint_fact_extraction_recovery_replayed = bool(
             source_resume_mode == "REUSE_READY_CHECKPOINT"
             and prior_source_checkpoint is not None
+            and not source_context_requires_acquisition
             and not source_checkpoint_readonly_replayed
             and not source_checkpoint_migration_only
             and not source_checkpoint_legacy_text_cap_repair_only
@@ -488,15 +518,28 @@ class CurrentResearcherModeTargetRunner:
                     "prior_structured_source_gap": dict(
                         prior_context["structured_gap_context"]
                     ),
+                    "prior_structured_report_source_candidates": dict(
+                        prior_context[
+                            "structured_report_candidate_context"
+                        ]
+                    ),
                     "prior_deterministic_score_gap": dict(
                         prior_context["score_gap_context"]
                     ),
                     "prior_supervisor_gap": dict(
                         prior_context["supervisor_source_gap_context"]
                     ),
+                    "prior_queries_without_accepted_fact_lineage": list(
+                        prior_context[
+                            "source_queries_without_accepted_fact_lineage"
+                        ]
+                    ),
                     "prior_research_epoch": prior_context["research_epoch"],
                 },
                 resolved_objective_ids=prior_context["resolved_objective_ids"],
+                semantic_resolved_objective_ids=prior_context[
+                    "semantic_resolved_objective_ids"
+                ],
                 prior_checkpoint=prior_source_checkpoint,
                 official_domain_allowlist=target.official_domains,
                 checkpoint_migration_only=(
@@ -1341,11 +1384,18 @@ def _registry_date(value: Any) -> date | None:
 
 
 def _historical_anchors(
-    *, repo_root: str | Path, archetype_id: str
+    *,
+    repo_root: str | Path,
+    archetype_id: str,
+    allow_output_fallback: bool = True,
 ) -> tuple[Mapping[str, Any], ...]:
     atlas_path = Path(repo_root) / "docs/operational/e2r_v5_component_anchor_atlas.json"
     if atlas_path.is_file():
         payload = _read_json(atlas_path)
+    elif not allow_output_fallback:
+        raise ValueError(
+            "tracked historical anchor atlas is required when output fallback is disabled"
+        )
     else:
         payload = compile_component_anchor_atlas_from_files(
             atlas_root=Path(repo_root) / "output/researcher_parity/judgment_atlas"
@@ -1840,7 +1890,8 @@ def _source_checkpoint_has_drained_persisted_work(
     """Return whether no persisted query, ranking, or fetch action is pending."""
 
     if any(
-        row.get("execution_status") == "PENDING"
+        row.get("execution_status")
+        in {"PENDING", "BLOCKED_OFFICIAL_FIRST"}
         for row in checkpoint.get("generated_queries") or ()
         if isinstance(row, Mapping)
     ):
@@ -2397,7 +2448,7 @@ def _official_gap_reasons(
             + provider_error
         )
     return tuple(dict.fromkeys(reasons)) or (
-        "official sources fetched; unresolved semantic facts require discovery",
+        OFFICIAL_SOURCE_SUCCESS_DISCOVERY_FALLBACK_REASON,
     )
 
 
@@ -2807,6 +2858,59 @@ def resume_current_fact_extraction_checkpoint(
     return result
 
 
+def _fact_extraction_is_complete_for_source_checkpoint(
+    *,
+    fact_result: Mapping[str, Any],
+    source_checkpoint: Mapping[str, Any],
+    target_id: str,
+    as_of_date: str,
+) -> bool:
+    """Bind fact completion to the exact current production document roster."""
+
+    if (
+        str(source_checkpoint.get("target_id") or "") != target_id
+        or str(source_checkpoint.get("as_of_date") or "") != as_of_date
+        or str(fact_result.get("target_id") or "") != target_id
+        or str(fact_result.get("as_of_date") or "") != as_of_date
+        or fact_result.get("status") != "FACT_EXTRACTION_COMPLETE"
+    ):
+        return False
+    audit = fact_result.get("audit") or {}
+    if (
+        not isinstance(audit, Mapping)
+        or int(audit.get("critical_count_sum") or 0) != 0
+    ):
+        return False
+    raw_document_ids = source_checkpoint.get(
+        "production_downstream_document_ids"
+    )
+    if not isinstance(raw_document_ids, (list, tuple)):
+        return False
+    document_ids = tuple(str(value or "").strip() for value in raw_document_ids)
+    if (
+        any(not value for value in document_ids)
+        or len(document_ids) != len(set(document_ids))
+    ):
+        return False
+    raw_dispositions = fact_result.get("document_dispositions")
+    if not isinstance(raw_dispositions, (list, tuple)) or any(
+        not isinstance(row, Mapping) for row in raw_dispositions
+    ):
+        return False
+    disposition_ids = tuple(
+        str(row.get("document_id") or "").strip()
+        for row in raw_dispositions
+    )
+    return bool(
+        not any(not value for value in disposition_ids)
+        and len(disposition_ids) == len(set(disposition_ids))
+        and set(disposition_ids) == set(document_ids)
+        and len(disposition_ids) == len(document_ids)
+        and int(audit.get("input_document_count") or 0)
+        == len(document_ids)
+    )
+
+
 def _load_prior_research_context(
     root: Path,
     *,
@@ -2833,6 +2937,8 @@ def _load_prior_research_context(
         ):
             business_model = candidate
     feedback = ()
+    fact_extraction_result: Mapping[str, Any] = {}
+    fact_extraction_complete = False
     extraction_path = root / "fact_extraction_result.json"
     if extraction_path.is_file():
         extraction = _read_json(extraction_path)
@@ -2840,6 +2946,7 @@ def _load_prior_research_context(
             str(extraction.get("target_id") or "") == target_id
             and str(extraction.get("as_of_date") or "") == as_of_date
         ):
+            fact_extraction_result = extraction
             feedback = tuple(
                 dict.fromkeys(
                     (
@@ -2882,6 +2989,7 @@ def _load_prior_research_context(
             if memo.get("research_complete") is True
         )
     structured_gap_context: Mapping[str, Any] = {}
+    structured_report_candidate_context: Mapping[str, Any] = {}
     structured_engine_result: Mapping[str, Any] = {}
     structured_missing_components: set[str] = set()
     structured_path = root / "structured_engine_result.json"
@@ -2917,6 +3025,37 @@ def _load_prior_research_context(
                 if materialization_path.is_file()
                 else {}
             )
+            if materialization and (
+                str(materialization.get("target_id") or "") != target_id
+                or str(materialization.get("as_of_date") or "")
+                != as_of_date
+            ):
+                raise ValueError(
+                    "structured report candidate context target/as_of mismatch"
+                )
+            raw_report_candidates = materialization.get("report_candidates")
+            if isinstance(raw_report_candidates, list) and all(
+                isinstance(row, Mapping) for row in raw_report_candidates
+            ):
+                future_candidate_ids = [
+                    str(row.get("candidate_id") or "UNKNOWN")
+                    for row in raw_report_candidates
+                    if str(row.get("published_at") or "").strip()
+                    and date.fromisoformat(
+                        str(row.get("published_at"))[:10]
+                    )
+                    > date.fromisoformat(as_of_date)
+                ]
+                if future_candidate_ids:
+                    raise ValueError(
+                        "future structured report candidate context:"
+                        + ",".join(future_candidate_ids)
+                    )
+                structured_report_candidate_context = (
+                    _structured_report_source_candidate_context(
+                        tuple(raw_report_candidates)
+                    )
+                )
             materialization_audit = (
                 _read_json(materialization_audit_path)
                 if materialization_audit_path.is_file()
@@ -2971,9 +3110,136 @@ def _load_prior_research_context(
         if str(row.get("objective_id") or "")
     }
     source_failure_by_id: dict[str, Mapping[str, Any]] = {}
+    source_transport_pending_objectives: set[str] = set()
+    source_queries_without_accepted_fact_lineage: list[Mapping[str, Any]] = []
+    source_query_lineage_gap_objectives: set[str] = set()
     source_checkpoint_path = root / "source_graph_checkpoint.json"
     if source_checkpoint_path.is_file():
         source_checkpoint = _read_json(source_checkpoint_path)
+        fact_extraction_complete = (
+            _fact_extraction_is_complete_for_source_checkpoint(
+                fact_result=fact_extraction_result,
+                source_checkpoint=source_checkpoint,
+                target_id=target_id,
+                as_of_date=as_of_date,
+            )
+        )
+        official_resolution_query_ids = (
+            validated_official_first_resolution_query_ids(
+                source_checkpoint
+            )
+        )
+        source_transport_pending_objectives.update(
+            str(row.get("objective_id") or "")
+            for row in source_checkpoint.get("generated_queries") or ()
+            if isinstance(row, Mapping)
+            and str(row.get("execution_status") or "")
+            in {"PENDING", "BLOCKED_OFFICIAL_FIRST"}
+            and str(row.get("objective_id") or "")
+        )
+        accepted_fact_components_by_document: dict[str, set[str]] = {}
+        for fact in facts:
+            allowed_components = {
+                str(value)
+                for value in fact.get("allowed_component_ids") or ()
+                if str(value) in CANONICAL_COMPONENT_ORDER
+            }
+            if not allowed_components:
+                continue
+            for source_id in (
+                *(fact.get("source_ids") or ()),
+                fact.get("source_document_id"),
+            ):
+                document_id = str(source_id or "").strip()
+                if document_id:
+                    accepted_fact_components_by_document.setdefault(
+                        document_id, set()
+                    ).update(allowed_components)
+        query_objective_by_id = {
+            str(query.get("query_id") or ""): str(
+                query.get("objective_id") or ""
+            )
+            for query in source_checkpoint.get("generated_queries") or ()
+            if isinstance(query, Mapping)
+            and str(query.get("query_id") or "")
+        }
+        accepted_query_ids: set[str] = set()
+        for document in source_checkpoint.get("evidence_documents") or ():
+            if not isinstance(document, Mapping):
+                continue
+            document_id = str(document.get("document_id") or "")
+            allowed_components = accepted_fact_components_by_document.get(
+                document_id, set()
+            )
+            if not allowed_components:
+                continue
+            for query_id in (
+                str(value)
+                for key in ("query_ids", "materiality_query_ids")
+                for value in document.get(key) or ()
+                if str(value).strip()
+            ):
+                objective_id = query_objective_by_id.get(query_id, "")
+                component_id = objective_component_by_id.get(
+                    objective_id, ""
+                )
+                if component_id in allowed_components:
+                    accepted_query_ids.add(query_id)
+        accepted_objective_ids = {
+            str(query.get("objective_id") or "")
+            for query in source_checkpoint.get("generated_queries") or ()
+            if isinstance(query, Mapping)
+            and str(query.get("query_id") or "") in accepted_query_ids
+            and str(query.get("objective_id") or "")
+        }
+        # A terminal search without accepted fact lineage is actionable only
+        # after the canonical fact pass has completed.  Before that boundary,
+        # the document may simply be waiting for extraction/recovery; reopening
+        # acquisition here would be equivalent to ordering the same parcel
+        # again while it is still waiting in the inspection queue.
+        if fact_extraction_complete:
+            for query in source_checkpoint.get("generated_queries") or ():
+                if not isinstance(query, Mapping):
+                    continue
+                query_id = str(query.get("query_id") or "")
+                objective_id = str(query.get("objective_id") or "")
+                execution_status = str(query.get("execution_status") or "")
+                if (
+                    not query_id
+                    or not objective_id
+                    or objective_id in accepted_objective_ids
+                    or query_id in accepted_query_ids
+                    or execution_status
+                    in {"", "PENDING", "BLOCKED_OFFICIAL_FIRST"}
+                    or (
+                        execution_status
+                        == "SUPERSEDED_BY_OFFICIAL_RESOLUTION"
+                        and query_id in official_resolution_query_ids
+                    )
+                ):
+                    continue
+                source_query_lineage_gap_objectives.add(objective_id)
+                source_queries_without_accepted_fact_lineage.append(
+                    {
+                        "query_id": query_id,
+                        "objective_id": objective_id,
+                        "literal_query": query.get("literal_query"),
+                        "source_families": list(
+                            query.get("source_families") or ()
+                        ),
+                        "execution_status": execution_status,
+                        "search_result_count": int(
+                            query.get("search_result_count") or 0
+                        ),
+                        "failure_reason": (
+                            "QUERY_WITHOUT_ACCEPTED_CLAIM_FACT_LINEAGE"
+                        ),
+                        "query_generation_owner": (
+                            "SOURCE_QUERY_GENERATION_LLM"
+                        ),
+                        "deterministic_fallback_query_allowed": False,
+                    }
+                )
         resolved_source_objectives = {
             str(value)
             for value in source_checkpoint.get("resolved_objective_ids") or ()
@@ -3164,7 +3430,7 @@ def _load_prior_research_context(
                     "source_family_gaps": source_family_gaps,
                     "parser_or_extractor_failures": parser_failures,
                 }
-    resolved_objective_ids = tuple(
+    semantic_resolved_objective_ids = tuple(
         str(row["objective_id"])
         for row in objectives
         if str(row.get("component_id") or "") in complete_components
@@ -3174,17 +3440,37 @@ def _load_prior_research_context(
         not in supervisor_unresolved_components
         and str(row.get("objective_id") or "")
         not in supervisor_unresolved_objectives
+        and str(row.get("objective_id") or "")
+        not in source_query_lineage_gap_objectives
+    )
+    resolved_objective_ids = tuple(
+        objective_id
+        for objective_id in semantic_resolved_objective_ids
+        if objective_id not in source_transport_pending_objectives
     )
     return {
         "facts": facts,
         "fact_snapshot_available": fact_snapshot_available,
+        "fact_extraction_complete": fact_extraction_complete,
         "business_model": business_model,
         "research_gap_feedback": feedback,
         "structured_gap_context": structured_gap_context,
         "structured_engine_result": structured_engine_result,
+        "structured_report_candidate_context": (
+            structured_report_candidate_context
+        ),
         "score_gap_context": score_gap_context,
         "supervisor_gap_context": supervisor_gap_context,
         "supervisor_source_gap_context": supervisor_source_gap_context,
+        "source_transport_pending_objective_ids": tuple(
+            sorted(source_transport_pending_objectives)
+        ),
+        "source_queries_without_accepted_fact_lineage": tuple(
+            source_queries_without_accepted_fact_lineage
+        ),
+        "semantic_resolved_objective_ids": (
+            semantic_resolved_objective_ids
+        ),
         "resolved_objective_ids": resolved_objective_ids,
         "research_epoch": epoch_context,
     }
@@ -3345,6 +3631,90 @@ def _component_supervisor_feedback_by_component(
     return result
 
 
+def _structured_report_source_candidate_context(
+    structured_report_candidates: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any]:
+    """Project metadata-only report hints for both Query LLM and Supervisor.
+
+    These rows can help the LLM name a bounded full-document route, but they
+    never become EvidenceFacts or numeric score inputs on their own.
+    """
+
+    # CompanyGuide's public report history is a discovery surface, not a
+    # score source.  Preserve every bounded metadata candidate so the semantic
+    # Supervisor can decide whether one of those reports is worth resolving
+    # through the LLM-owned Source Graph query path.  Numeric preview fields
+    # remain explicitly non-evidence until the full report is independently
+    # discovered, fetched, parsed, and linked to an EvidenceFact.
+    invalid_report_candidate_constants = [
+        str(dict(row).get("candidate_id") or "UNKNOWN")
+        for row in structured_report_candidates
+        if str(dict(row).get("provider_name") or "") != "CompanyGuide"
+        or str(dict(row).get("source_family_hint") or "")
+        != "PUBLIC_BROKER_PDF"
+        or str(dict(row).get("research_route") or "")
+        != "PUBLIC_BROKER_REPORT"
+    ]
+    if invalid_report_candidate_constants:
+        raise ValueError(
+            "structured report prompt projection has mixed route constants:"
+            + ",".join(invalid_report_candidate_constants)
+        )
+    report_candidate_fields = (
+        "candidate_id",
+        "published_at",
+        "broker",
+        "title",
+        "provider_report_id",
+        "provider_index",
+        "provider_file_name",
+        "provider_summary",
+    )
+    result: dict[str, Any] = {}
+    result["structured_report_source_candidates"] = {
+        "schema_version": (
+            "e2r_v5_structured_report_candidate_prompt_projection_v1"
+        ),
+        "fields": list(report_candidate_fields),
+        "rows": [
+            [dict(row).get(field) for field in report_candidate_fields]
+            for row in structured_report_candidates
+        ],
+        "candidate_count": len(structured_report_candidates),
+        "candidate_roster_hash": stable_hash(
+            [
+                [dict(row).get(field) for field in report_candidate_fields]
+                for row in structured_report_candidates
+            ]
+        ),
+        "candidate_id_roster_hash": stable_hash(
+            sorted(
+                str(dict(row).get("candidate_id") or "")
+                for row in structured_report_candidates
+            )
+        ),
+        "every_candidate_projected": True,
+        "fixed_top_n_used": False,
+        "metadata_only_not_evidence": True,
+        "provider_summary_is_non_evidence_discovery_hint": True,
+        "provider_name": "CompanyGuide",
+        "source_family_hint": "PUBLIC_BROKER_PDF",
+        "research_route": "PUBLIC_BROKER_REPORT",
+    }
+    result["structured_report_source_candidate_contract"] = {
+        "bounded_candidate_count": len(structured_report_candidates),
+        "candidate_roster_complete_within_materializer_budget": True,
+        "metadata_is_discovery_hint_not_evidence": True,
+        "numeric_preview_is_not_fact_authority": True,
+        "llm_owns_materiality_and_objective_binding": True,
+        "literal_query_generation_owner": "SOURCE_QUERY_GENERATION_LLM",
+        "deterministic_url_or_query_synthesis_allowed": False,
+        "full_document_required_before_fact_extraction": True,
+        "score_or_stage_authority": False,
+    }
+    return result
+
+
 def _score_gap_context_for_supervisor(
     *,
     aggregation: DeterministicScoreAggregationRun,
@@ -3401,77 +3771,11 @@ def _score_gap_context_for_supervisor(
         material_components
     )
     context["material_disagreement_judge_reviews"] = judge_reviews
-    # CompanyGuide's public report history is a discovery surface, not a
-    # score source.  Preserve every bounded metadata candidate so the semantic
-    # Supervisor can decide whether one of those reports is worth resolving
-    # through the LLM-owned Source Graph query path.  Numeric preview fields
-    # remain explicitly non-evidence until the full report is independently
-    # discovered, fetched, parsed, and linked to an EvidenceFact.
-    invalid_report_candidate_constants = [
-        str(dict(row).get("candidate_id") or "UNKNOWN")
-        for row in structured_report_candidates
-        if str(dict(row).get("provider_name") or "") != "CompanyGuide"
-        or str(dict(row).get("source_family_hint") or "")
-        != "PUBLIC_BROKER_PDF"
-        or str(dict(row).get("research_route") or "")
-        != "PUBLIC_BROKER_REPORT"
-    ]
-    if invalid_report_candidate_constants:
-        raise ValueError(
-            "structured report prompt projection has mixed route constants:"
-            + ",".join(invalid_report_candidate_constants)
+    context.update(
+        _structured_report_source_candidate_context(
+            structured_report_candidates
         )
-    report_candidate_fields = (
-        "candidate_id",
-        "published_at",
-        "broker",
-        "title",
-        "provider_report_id",
-        "provider_index",
-        "provider_file_name",
-        "provider_summary",
     )
-    context["structured_report_source_candidates"] = {
-        "schema_version": (
-            "e2r_v5_structured_report_candidate_prompt_projection_v1"
-        ),
-        "fields": list(report_candidate_fields),
-        "rows": [
-            [dict(row).get(field) for field in report_candidate_fields]
-            for row in structured_report_candidates
-        ],
-        "candidate_count": len(structured_report_candidates),
-        "candidate_roster_hash": stable_hash(
-            [
-                [dict(row).get(field) for field in report_candidate_fields]
-                for row in structured_report_candidates
-            ]
-        ),
-        "candidate_id_roster_hash": stable_hash(
-            sorted(
-                str(dict(row).get("candidate_id") or "")
-                for row in structured_report_candidates
-            )
-        ),
-        "every_candidate_projected": True,
-        "fixed_top_n_used": False,
-        "metadata_only_not_evidence": True,
-        "provider_summary_is_non_evidence_discovery_hint": True,
-        "provider_name": "CompanyGuide",
-        "source_family_hint": "PUBLIC_BROKER_PDF",
-        "research_route": "PUBLIC_BROKER_REPORT",
-    }
-    context["structured_report_source_candidate_contract"] = {
-        "bounded_candidate_count": len(structured_report_candidates),
-        "candidate_roster_complete_within_materializer_budget": True,
-        "metadata_is_discovery_hint_not_evidence": True,
-        "numeric_preview_is_not_fact_authority": True,
-        "llm_owns_materiality_and_objective_binding": True,
-        "literal_query_generation_owner": "SOURCE_QUERY_GENERATION_LLM",
-        "deterministic_url_or_query_synthesis_allowed": False,
-        "full_document_required_before_fact_extraction": True,
-        "score_or_stage_authority": False,
-    }
     context["score_or_stage_authority"] = False
     return context
 

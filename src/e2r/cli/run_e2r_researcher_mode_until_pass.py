@@ -952,7 +952,8 @@ def _source_transport_work_state(
             continue
         queries[query_id] = (
             "QUERY_PENDING"
-            if row.get("execution_status") == "PENDING"
+            if row.get("execution_status")
+            in {"PENDING", "BLOCKED_OFFICIAL_FIRST"}
             else "TERMINAL"
         )
     candidates: dict[str, str] = {}

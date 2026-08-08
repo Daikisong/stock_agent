@@ -28,13 +28,12 @@
 
 ## Live canary truth
 
-- 삼성전자 (005930) status: `LIVE_RESEARCH_NOT_STARTED`
-- SK하이닉스 (000660) status: `LIVE_RESEARCH_NOT_STARTED`
+- 삼성전자 (005930) status: `RESEARCH_CHECKPOINT_PENDING`
+- SK하이닉스 (000660) status: `PRODUCTION_RESEARCH_COMPLETE`
 - canary goal complete: `false`
 - provider usage limit detected: `false`
 - blockers:
-  - `LIVE_RESEARCH_NOT_STARTED:005930`
-  - `LIVE_RESEARCH_NOT_STARTED:000660`
+  - `LIVE_RESEARCH_CHECKPOINT_PENDING:005930`
 
 내부 자가수리 회귀 통과는 target registry의 live dossier 완료를 대신하지 않는다.
 따라서 현재 `MEANINGFUL_E2R_RESEARCHER_PARITY_READY` 선언은 허용되지 않는다.

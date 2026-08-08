@@ -3598,6 +3598,109 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         self.assertIn("GENERAL_WEB_WITHOUT_OFFICIAL_GAP", run.checkpoint["pending_reasons"])
         self.assertEqual(naver.built_requests, [])
         self.assertEqual(run.checkpoint["generated_queries"][0]["execution_status"], "BLOCKED_OFFICIAL_FIRST")
+        self.assertEqual(
+            _source_transport_work_state(run.checkpoint)["queries"][
+                run.checkpoint["generated_queries"][0]["query_id"]
+            ],
+            "QUERY_PENDING",
+        )
+        success_fallback = (
+            source_graph_module.
+            OFFICIAL_SOURCE_SUCCESS_DISCOVERY_FALLBACK_REASON,
+        )
+        unresolved = self._run(
+            provider=provider,
+            search=naver,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=run.checkpoint,
+            official_gaps={"OBJECTIVE-1": success_fallback},
+        )
+        self.assertEqual(naver.calls, [])
+        self.assertEqual(unresolved.status, "CHECKPOINT_PENDING")
+        self.assertEqual(
+            unresolved.checkpoint["generated_queries"][0][
+                "execution_status"
+            ],
+            "BLOCKED_OFFICIAL_FIRST",
+        )
+
+        resolved_naver = NoNetworkLiveNaver()
+        resolved = self._run(
+            provider=provider,
+            search=resolved_naver,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=run.checkpoint,
+            official_gaps={"OBJECTIVE-1": success_fallback},
+            semantic_resolved_objective_ids=("OBJECTIVE-1",),
+        )
+        self.assertEqual(resolved_naver.calls, [])
+        self.assertEqual(resolved.status, "STOPPED_ON_RESOLUTION")
+        self.assertEqual(
+            resolved.checkpoint["generated_queries"][0][
+                "execution_status"
+            ],
+            "SUPERSEDED_BY_OFFICIAL_RESOLUTION",
+        )
+        self.assertEqual(
+            len(
+                resolved.checkpoint[
+                    "official_first_resolution_records"
+                ]
+            ),
+            1,
+        )
+        replayed = self._run(
+            provider=provider,
+            search=resolved_naver,
+            fetcher=fetcher,
+            config=config,
+            checkpoint=resolved.checkpoint,
+            official_gaps={"OBJECTIVE-1": success_fallback},
+            resolved_objective_ids=("OBJECTIVE-1",),
+            semantic_resolved_objective_ids=("OBJECTIVE-1",),
+        )
+        self.assertEqual(replayed.status, "STOPPED_ON_RESOLUTION")
+        self.assertEqual(resolved_naver.calls, [])
+        self.assertEqual(
+            len(
+                replayed.checkpoint[
+                    "official_first_resolution_records"
+                ]
+            ),
+            1,
+        )
+        binding_mutations = []
+        missing_record = json.loads(json.dumps(resolved.checkpoint))
+        missing_record["official_first_resolution_records"] = []
+        binding_mutations.append(missing_record)
+        mutated_record = json.loads(json.dumps(resolved.checkpoint))
+        mutated_record["official_first_resolution_records"][0][
+            "prior_execution_status"
+        ] = "PENDING"
+        binding_mutations.append(mutated_record)
+        duplicate_record = json.loads(json.dumps(resolved.checkpoint))
+        duplicate_record["official_first_resolution_records"].append(
+            dict(duplicate_record["official_first_resolution_records"][0])
+        )
+        binding_mutations.append(duplicate_record)
+        orphan_record = json.loads(json.dumps(resolved.checkpoint))
+        orphan_record["official_first_resolution_records"].append(
+            {
+                **orphan_record["official_first_resolution_records"][0],
+                "record_id": "SGOFFICIALRES-ORPHAN",
+                "query_id": "SGQUERY-ORPHAN",
+            }
+        )
+        binding_mutations.append(orphan_record)
+        for mutation in binding_mutations:
+            with self.subTest(mutation=mutation["official_first_resolution_records"]):
+                with self.assertRaisesRegex(ValueError, "official-first"):
+                    source_graph_module.validate_source_graph_checkpoint(
+                        source_graph_module._finalize_checkpoint(mutation)
+                    )
+
         resumed = self._run(
             provider=provider,
             search=naver,
@@ -3605,6 +3708,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             config=config,
             checkpoint=run.checkpoint,
             official_gaps={"OBJECTIVE-1": ("official provider returned no document",)},
+            semantic_resolved_objective_ids=("OBJECTIVE-1",),
         )
         self.assertEqual(naver.calls, [QUERY])
         self.assertEqual(len(resumed.checkpoint["generated_queries"]), 1)
@@ -4218,6 +4322,42 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                 for row in run.checkpoint["query_failures"]
             )
         )
+
+    def test_pending_query_cannot_be_suppressed_by_resolved_objective(self) -> None:
+        provider = SourceBrainProvider(queries=(QUERY,))
+        bootstrap = self._run(
+            provider=provider,
+            search=RecordingSearchProvider({QUERY: ()}),
+            fetcher=PageFetcher(fixture_text_by_url={}),
+        )
+        state = json.loads(json.dumps(bootstrap.checkpoint))
+        state.pop("checkpoint_id")
+        state.pop("checkpoint_hash")
+        pending = dict(state["generated_queries"][0])
+        pending.update(
+            query_id="QUERY-CURRENT-PENDING",
+            literal_query=ALTERNATE_QUERY,
+            execution_status="PENDING",
+            official_gap_reasons=["official source gap recorded"],
+        )
+        state["generated_queries"] = [pending]
+        state["resolved_objective_ids"] = ["OBJECTIVE-1"]
+        checkpoint = source_graph_module._finalize_checkpoint(state)
+        search = RecordingSearchProvider({ALTERNATE_QUERY: ()})
+
+        resumed = self._run(
+            provider=SourceBrainProvider(queries=()),
+            search=search,
+            fetcher=PageFetcher(fixture_text_by_url={}),
+            checkpoint=checkpoint,
+            resolved_objective_ids=("OBJECTIVE-1",),
+        )
+
+        self.assertEqual(search.calls[0][0], ALTERNATE_QUERY)
+        self.assertNotIn(
+            "OBJECTIVE-1", resumed.checkpoint["resolved_objective_ids"]
+        )
+        self.assertNotEqual(resumed.status, "STOPPED_ON_RESOLUTION")
 
     def test_mandatory_family_pairs_use_only_current_supervisor_gap_keys(
         self,
@@ -9647,6 +9787,7 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
         checkpoint_migration_only: bool = False,
         checkpoint_source_repair_only: bool = False,
         resolved_objective_ids: Sequence[str] = (),
+        semantic_resolved_objective_ids: Sequence[str] | None = None,
         open_objectives: Sequence[SourceResearchObjective] | None = None,
     ):
         return ResearcherSourceGraphAcquirer(
@@ -9671,6 +9812,9 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             ),
             score_gap_context=score_gap_context,
             resolved_objective_ids=resolved_objective_ids,
+            semantic_resolved_objective_ids=(
+                semantic_resolved_objective_ids
+            ),
             prior_checkpoint=checkpoint,
             official_domain_allowlist=official_domains,
             checkpoint_migration_only=checkpoint_migration_only,

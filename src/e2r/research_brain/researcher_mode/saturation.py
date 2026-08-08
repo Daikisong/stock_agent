@@ -1238,6 +1238,13 @@ def _source_graph_allows_saturation(
 ) -> bool:
     if bool(checkpoint.get("transport_budget_can_complete_research")):
         return False
+    if any(
+        str(row.get("execution_status") or "")
+        in {"PENDING", "BLOCKED_OFFICIAL_FIRST"}
+        for row in checkpoint.get("generated_queries") or ()
+        if isinstance(row, Mapping)
+    ):
+        return False
     if str(checkpoint.get("status") or "") not in {
         "EPOCH_COMPLETE_REQUIRES_SUPERVISOR",
         "STOPPED_ON_RESOLUTION",
