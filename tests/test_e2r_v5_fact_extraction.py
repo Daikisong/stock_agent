@@ -1532,6 +1532,9 @@ class E2RV5FactExtractionTests(unittest.TestCase):
         supervisor_instruction = _pass_instruction(
             "RESEARCH_SUPERVISOR_REVIEW"
         )
+        saturation_instruction = _pass_instruction(
+            "SEMANTIC_SATURATION_REVIEW"
+        )
 
         self.assertIn(
             "counterparty's official catalog",
@@ -1562,6 +1565,27 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             "corroboration",
             supervisor_instruction,
         )
+        self.assertIn(
+            "Check evidence currentness against the supplied as_of_date",
+            query_instruction,
+        )
+        self.assertIn(
+            "Older evidence is not complete merely because it exists",
+            supervisor_instruction,
+        )
+        self.assertIn(
+            "Evidence age is also not saturation proof",
+            saturation_instruction,
+        )
+        combined_currentness_contract = " ".join(
+            (
+                query_instruction,
+                supervisor_instruction,
+                saturation_instruction,
+            )
+        )
+        self.assertNotIn("005930", combined_currentness_contract)
+        self.assertNotIn("000660", combined_currentness_contract)
 
     def test_punctuation_only_semantic_value_normalizer_is_narrow(self) -> None:
         repaired = normalize_punctuation_only_fact_value(

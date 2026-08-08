@@ -61,6 +61,9 @@ from .research_epoch import (
     load_research_epoch_checkpoint,
     write_research_epoch_run,
 )
+from .research_question_seed_catalog import (
+    load_research_question_seed_catalog,
+)
 from .research_supervisor import (
     ResearchSupervisor,
     build_counter_and_supersession_route_proof,
@@ -70,7 +73,11 @@ from .saturation import (
     SATURATION_REVIEW_ROLES,
     SemanticSaturationReviewer,
 )
-from .schemas import CANONICAL_COMPONENT_ORDER, EvidenceDirection
+from .schemas import (
+    CANONICAL_COMPONENT_ORDER,
+    ComponentResearchPlan,
+    EvidenceDirection,
+)
 from .score_aggregator import (
     DeterministicScoreAggregationRun,
     DeterministicScoreAggregator,
@@ -199,6 +206,30 @@ class CurrentResearcherTargetRun:
     audit: Mapping[str, Any]
 
 
+def _initial_component_research_plans(
+    *,
+    target_id: str,
+    archetype_id: str,
+    historical_anchors: Sequence[Mapping[str, Any]],
+) -> tuple[ComponentResearchPlan, ...]:
+    """Build Source Graph plans from the same extensible seed catalog as dossiers.
+
+    Research questions remain semantic hints rather than score gates.  Omitting
+    the catalog here made the acquisition LLM see only two generic sentences,
+    while the later component researchers received the actual archetype
+    questions.  Keeping both stages on one catalog preserves sector expansion
+    without introducing target-specific query templates.
+    """
+
+    return ComponentResearchPlanner().plan(
+        target_id=target_id,
+        archetype_id=archetype_id,
+        evidence_facts=(),
+        historical_anchors=historical_anchors,
+        research_seeds=load_research_question_seed_catalog().seeds,
+    )
+
+
 class FactExtractionCheckpointPending(RuntimeError):
     """Stop a target exactly at its persisted fact-response boundary.
 
@@ -307,10 +338,9 @@ class CurrentResearcherModeTargetRunner:
             repo_root=repo_root,
             archetype_id=config.archetype_id,
         )
-        initial_plans = ComponentResearchPlanner().plan(
+        initial_plans = _initial_component_research_plans(
             target_id=target.target_id,
             archetype_id=config.archetype_id,
-            evidence_facts=(),
             historical_anchors=anchors,
         )
         initial_graph = SourceGraphExplorer().explore(
@@ -2755,10 +2785,9 @@ def resume_current_fact_extraction_checkpoint(
         repo_root=repo_root,
         archetype_id=config.archetype_id,
     )
-    initial_plans = ComponentResearchPlanner().plan(
+    initial_plans = _initial_component_research_plans(
         target_id=target.target_id,
         archetype_id=config.archetype_id,
-        evidence_facts=(),
         historical_anchors=anchors,
     )
     initial_graph = SourceGraphExplorer().explore(
@@ -3137,7 +3166,7 @@ def _load_prior_research_context(
             in {"PENDING", "BLOCKED_OFFICIAL_FIRST"}
             and str(row.get("objective_id") or "")
         )
-        accepted_fact_components_by_document: dict[str, set[str]] = {}
+        compiled_fact_components_by_claim: dict[str, set[str]] = {}
         for fact in facts:
             allowed_components = {
                 str(value)
@@ -3146,15 +3175,52 @@ def _load_prior_research_context(
             }
             if not allowed_components:
                 continue
-            for source_id in (
-                *(fact.get("source_ids") or ()),
-                fact.get("source_document_id"),
-            ):
-                document_id = str(source_id or "").strip()
-                if document_id:
-                    accepted_fact_components_by_document.setdefault(
-                        document_id, set()
+            for claim_id in fact.get("claim_ids") or ():
+                normalized_claim_id = str(claim_id or "").strip()
+                if normalized_claim_id:
+                    compiled_fact_components_by_claim.setdefault(
+                        normalized_claim_id, set()
                     ).update(allowed_components)
+        accepted_claim_objectives_by_document: dict[str, set[str]] = {}
+        for claim in _read_jsonl(root / "material_fact_claims.jsonl"):
+            if (
+                str(claim.get("target_id") or "") != target_id
+                or str(claim.get("as_of_date") or "") != as_of_date
+                or claim.get("accepted") is not True
+                or claim.get("accepted_by_evidence_os") is not True
+            ):
+                continue
+            claim_id = str(claim.get("claim_id") or "").strip()
+            document_id = str(claim.get("document_id") or "").strip()
+            compiled_components = compiled_fact_components_by_claim.get(
+                claim_id, set()
+            )
+            claim_components = {
+                str(value)
+                for value in claim.get("allowed_component_ids") or ()
+                if str(value) in CANONICAL_COMPONENT_ORDER
+            }
+            if (
+                not claim_id
+                or not document_id
+                or not compiled_components
+                or not claim_components
+            ):
+                continue
+            for objective_id in claim.get("objective_ids") or ():
+                normalized_objective_id = str(objective_id or "").strip()
+                component_id = objective_component_by_id.get(
+                    normalized_objective_id, ""
+                )
+                if (
+                    normalized_objective_id
+                    and component_id
+                    and component_id in claim_components
+                    and component_id in compiled_components
+                ):
+                    accepted_claim_objectives_by_document.setdefault(
+                        document_id, set()
+                    ).add(normalized_objective_id)
         query_objective_by_id = {
             str(query.get("query_id") or ""): str(
                 query.get("objective_id") or ""
@@ -3168,10 +3234,10 @@ def _load_prior_research_context(
             if not isinstance(document, Mapping):
                 continue
             document_id = str(document.get("document_id") or "")
-            allowed_components = accepted_fact_components_by_document.get(
-                document_id, set()
+            accepted_objective_ids_for_document = (
+                accepted_claim_objectives_by_document.get(document_id, set())
             )
-            if not allowed_components:
+            if not accepted_objective_ids_for_document:
                 continue
             for query_id in (
                 str(value)
@@ -3180,10 +3246,7 @@ def _load_prior_research_context(
                 if str(value).strip()
             ):
                 objective_id = query_objective_by_id.get(query_id, "")
-                component_id = objective_component_by_id.get(
-                    objective_id, ""
-                )
-                if component_id in allowed_components:
+                if objective_id in accepted_objective_ids_for_document:
                     accepted_query_ids.add(query_id)
         accepted_objective_ids = {
             str(query.get("objective_id") or "")

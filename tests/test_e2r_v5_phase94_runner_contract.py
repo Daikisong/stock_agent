@@ -59,6 +59,7 @@ from tests.test_e2r_v5_researcher_mode import ScriptedResearchProvider
 from tests.test_e2r_v5_source_graph_acquisition import SourceBrainProvider
 from e2r.research_brain.researcher_mode.current_researcher_mode import (
     _fact_extraction_is_complete_for_source_checkpoint,
+    _initial_component_research_plans,
     _official_gap_reasons,
     _score_gap_context_for_supervisor,
     _source_checkpoint_is_ready_for_readonly_replay,
@@ -2738,10 +2739,9 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             self.assertEqual(legacy[0].company_name, "Current Legacy")
 
     def test_source_graph_has_one_full_thesis_objective_per_component(self) -> None:
-        plans = ComponentResearchPlanner().plan(
+        plans = _initial_component_research_plans(
             target_id="CURRENT",
             archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-            evidence_facts=(),
             historical_anchors=(),
         )
         graph = SourceGraphExplorer().explore(
@@ -2760,6 +2760,24 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
         self.assertTrue(
             all(row.query_must_be_generated_by_llm for row in graph.open_objectives)
         )
+        objective_by_component = {
+            row.component_id: row for row in graph.open_objectives
+        }
+        self.assertIn(
+            "margin, FCF, cash flow, or profit conversion",
+            objective_by_component[
+                "eps_fcf_explosion"
+            ].research_objective,
+        )
+        self.assertIn(
+            "current or forward earnings multiple with period and denominator",
+            objective_by_component[
+                "market_mispricing"
+            ].research_objective,
+        )
+        serialized = json.dumps(graph.to_dict(), ensure_ascii=False)
+        self.assertNotIn("005930", serialized)
+        self.assertNotIn("000660", serialized)
 
     def test_production_runner_cannot_import_or_read_private_gold(self) -> None:
         source = (
@@ -4569,10 +4587,9 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             official_domains=("example.com",),
         )
         as_of_date = "2026-06-29"
-        plans = ComponentResearchPlanner().plan(
+        plans = _initial_component_research_plans(
             target_id=target.target_id,
             archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-            evidence_facts=(),
             historical_anchors=(),
         )
         graph = SourceGraphExplorer().explore(
@@ -4751,10 +4768,9 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             official_domains=("example.com",),
         )
         as_of_date = "2026-06-29"
-        plans = ComponentResearchPlanner().plan(
+        plans = _initial_component_research_plans(
             target_id=target.target_id,
             archetype_id="C06_HBM_MEMORY_CUSTOMER_CAPACITY",
-            evidence_facts=(),
             historical_anchors=(),
         )
         graph = SourceGraphExplorer().explore(
@@ -5501,10 +5517,27 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
                         "target_id": target_id,
                         "as_of_date": as_of_date,
                         "fact_id": "EFACT-ALTERNATE-ROUTE",
+                        "claim_ids": ["RFC-ALTERNATE-ROUTE"],
                         "source_ids": ["SGDOC-ALTERNATE-ROUTE"],
                         "allowed_component_ids": [
                             "capital_allocation"
                         ],
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+            (root / "material_fact_claims.jsonl").write_text(
+                json.dumps(
+                    {
+                        "target_id": target_id,
+                        "as_of_date": as_of_date,
+                        "claim_id": "RFC-ALTERNATE-ROUTE",
+                        "document_id": "SGDOC-ALTERNATE-ROUTE",
+                        "accepted": True,
+                        "accepted_by_evidence_os": True,
+                        "allowed_component_ids": [component_id],
+                        "objective_ids": ["OBJECTIVE-SIBLING-SAME-COMPONENT"],
                     }
                 )
                 + "\n",
@@ -5609,6 +5642,43 @@ class E2RV5Phase94RunnerContractTests(unittest.TestCase):
             fact["allowed_component_ids"] = [component_id]
             (root / "evidence_facts.jsonl").write_text(
                 json.dumps(fact) + "\n",
+                encoding="utf-8",
+            )
+            context = _load_prior_research_context(
+                root,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                objectives=(
+                    {
+                        "objective_id": objective_id,
+                        "component_id": component_id,
+                    },
+                ),
+            )
+
+            # Matching only the component is still insufficient.  The
+            # accepted claim must explicitly answer the exact source-query
+            # objective rather than a sibling question in the same component.
+            self.assertEqual(
+                tuple(
+                    row["query_id"]
+                    for row in context[
+                        "source_queries_without_accepted_fact_lineage"
+                    ]
+                ),
+                (
+                    "SGQUERY-FIRST-NO-FACT",
+                    "SGQUERY-ALTERNATE-SUCCESS",
+                ),
+            )
+            claim = json.loads(
+                (root / "material_fact_claims.jsonl").read_text(
+                    encoding="utf-8"
+                )
+            )
+            claim["objective_ids"] = [objective_id]
+            (root / "material_fact_claims.jsonl").write_text(
+                json.dumps(claim) + "\n",
                 encoding="utf-8",
             )
             context = _load_prior_research_context(
