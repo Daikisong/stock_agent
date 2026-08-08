@@ -39,7 +39,12 @@ from .component_researcher import StructuredResearchProvider
 from .official_source_materializer import OfficialSourceMaterializationResult
 from .prompt_projection import project_peer_selection_context
 from .schemas import EvidenceFact, assert_blind_research_output
-from .structured_data_researcher import StructuredMetricRecord
+from .structured_data_researcher import (
+    BROKER_VALUATION_FACT_RECORD_CONTRACTS,
+    StructuredMetricRecord,
+    broker_valuation_forward_period_end,
+    broker_valuation_quote_matches_claim,
+)
 from .structured_financial_engine import (
     ForwardGuidanceObservation,
     PeerValuationObservation,
@@ -47,6 +52,8 @@ from .structured_financial_engine import (
     StructuredEngineResult,
     StructuredFinancialConsensusValuationEngine,
     StructuredSourcePayload,
+    _issue_verified_broker_fact_ingress,
+    structured_requirement_is_covered,
 )
 from .structured_source_routes import (
     InMemoryStructuredSourceRoute,
@@ -100,7 +107,36 @@ _QOQ_STRUCTURED_SOURCE_FAMILIES = frozenset(
     }
 )
 _FACT_STRUCTURED_ROLES = frozenset(
-    {"SEGMENT_CONTRIBUTION", "QOQ_GROWTH", "FORWARD_GUIDANCE"}
+    {
+        "SEGMENT_CONTRIBUTION",
+        "QOQ_GROWTH",
+        "FORWARD_GUIDANCE",
+        "FORWARD_BOOK_VALUE",
+        "FORWARD_PB",
+        "FORWARD_EV_EBITDA",
+    }
+)
+_BROKER_VALUATION_STRUCTURED_ROLES = frozenset(
+    {"FORWARD_BOOK_VALUE", "FORWARD_PB", "FORWARD_EV_EBITDA"}
+)
+_BROKER_VALUATION_STRUCTURED_SOURCE_FAMILIES = frozenset(
+    {"PUBLIC_BROKER_PDF"}
+)
+_COMPANYGUIDE_TARGET_SNAPSHOT_REQUIREMENTS = frozenset(
+    {
+        "CONSENSUS_HISTORY",
+        "EPS_REVISION",
+        "OPERATING_PROFIT_REVISION",
+        "EARNINGS_SURPRISE",
+        "FORWARD_EPS",
+        "FORWARD_FCF",
+        "FORWARD_BOOK_VALUE",
+        "FORWARD_PE",
+        "FORWARD_PB",
+        "FORWARD_EV_EBITDA",
+        "FORWARD_FCF_YIELD",
+        "OWN_HISTORICAL_BAND",
+    }
 )
 
 # Public discovery contract: this tells the LLM what kind of source-backed
@@ -137,6 +173,39 @@ FACT_STRUCTURED_ROLE_RESOLUTION_CONTRACTS: Mapping[
         "period_must_be_forward_from_source_availability_date": True,
         "issuer_source_required": True,
         "third_party_estimate_is_not_substitutable": True,
+    },
+    "FORWARD_BOOK_VALUE": {
+        "allowed_source_families": tuple(
+            sorted(_BROKER_VALUATION_STRUCTURED_SOURCE_FAMILIES)
+        ),
+        "exact_quote_required": True,
+        "machine_numeric_value_required": True,
+        "point_value_required": True,
+        "krw_per_share_unit_required": True,
+        "period_must_be_forward_from_source_availability_date": True,
+        "current_or_open_lifecycle_required": True,
+    },
+    "FORWARD_PB": {
+        "allowed_source_families": tuple(
+            sorted(_BROKER_VALUATION_STRUCTURED_SOURCE_FAMILIES)
+        ),
+        "exact_quote_required": True,
+        "machine_numeric_value_required": True,
+        "point_value_required": True,
+        "multiple_unit_required": True,
+        "period_must_be_forward_from_source_availability_date": True,
+        "current_or_open_lifecycle_required": True,
+    },
+    "FORWARD_EV_EBITDA": {
+        "allowed_source_families": tuple(
+            sorted(_BROKER_VALUATION_STRUCTURED_SOURCE_FAMILIES)
+        ),
+        "exact_quote_required": True,
+        "machine_numeric_value_required": True,
+        "point_value_required": True,
+        "multiple_unit_required": True,
+        "period_must_be_forward_from_source_availability_date": True,
+        "current_or_open_lifecycle_required": True,
     },
 }
 
@@ -316,6 +385,16 @@ class CurrentStructuredMaterializationResult:
             "audit": dict(self.audit),
             "production_score_authority": False,
         }
+
+
+def _structured_fetch_supported_requirements(
+    attempt: CurrentStructuredFetchAttempt,
+) -> frozenset[str] | None:
+    if attempt.source_role == "CONSENSUS_VALUATION_SNAPSHOT":
+        return _COMPANYGUIDE_TARGET_SNAPSHOT_REQUIREMENTS
+    if attempt.source_role.startswith("PEER_VALUATION_SNAPSHOT:"):
+        return frozenset({"PEER_SELECTION_COMPLETE"})
+    return None
 
 
 @dataclass(frozen=True)
@@ -540,7 +619,11 @@ class CurrentStructuredSourceMaterializer:
             attempts=attempts,
             manifests=manifests,
         )
-        issuer_route, issuer_fact_audit = _issuer_fact_route(
+        (
+            issuer_route,
+            broker_fact_route,
+            issuer_fact_audit,
+        ) = _fact_structured_routes(
             target_id=target_id,
             cutoff=cutoff,
             evidence_facts=evidence_facts,
@@ -565,10 +648,7 @@ class CurrentStructuredSourceMaterializer:
         )
         routes = (
             companyguide_route,
-            UnavailableStructuredSourceRoute(
-                "PUBLIC_BROKER_REPORT",
-                "full public report route remains LLM source-graph owned",
-            ),
+            broker_fact_route,
             issuer_route,
             dart_route,
             price_route,
@@ -583,14 +663,73 @@ class CurrentStructuredSourceMaterializer:
             required_roles_by_component=required_roles_by_component,
             deep_researched_canary=True,
         )
+        failed_fetch_attempts = tuple(
+            row
+            for row in attempts
+            if row.status in {"AUTH_FAILED", "PROVIDER_ERROR", "FUTURE_REJECTED"}
+        )
+        unresolved_requirements = {
+            role
+            for roles in engine.missing_roles_by_component.values()
+            for role in roles
+        }
+        if peer_selection_audit.get("status") != "PEER_SELECTION_COMPLETE":
+            unresolved_requirements.add("PEER_SELECTION_COMPLETE")
+        failure_requirement_audit: list[Mapping[str, Any]] = []
+        for row in failed_fetch_attempts:
+            supported = _structured_fetch_supported_requirements(row)
+            impacted = (
+                tuple(
+                    sorted(
+                        requirement
+                        for requirement in unresolved_requirements
+                        if structured_requirement_is_covered(
+                            requirement, set(supported)
+                        )
+                    )
+                )
+                if supported is not None
+                else ()
+            )
+            failure_requirement_audit.append(
+                {
+                    "attempt_id": row.attempt_id,
+                    "source_role": row.source_role,
+                    "supported_requirements": (
+                        sorted(supported) if supported is not None else None
+                    ),
+                    "impacted_unresolved_requirements": list(impacted),
+                    "disposition": (
+                        "BLOCKING_NO_SUBSTITUTION_CONTRACT"
+                        if supported is None
+                        else "BLOCKING_UNRESOLVED_REQUIREMENT"
+                        if impacted
+                        else "NONBLOCKING_SUBSTITUTED_REQUIREMENT"
+                    ),
+                }
+            )
+        nonblocking_attempt_ids = {
+            str(row["attempt_id"])
+            for row in failure_requirement_audit
+            if row["disposition"]
+            == "NONBLOCKING_SUBSTITUTED_REQUIREMENT"
+        }
+        nonblocking_fetch_attempts = tuple(
+            row
+            for row in failed_fetch_attempts
+            if row.attempt_id in nonblocking_attempt_ids
+        )
+        blocking_fetch_attempts = tuple(
+            row
+            for row in failed_fetch_attempts
+            if row.attempt_id not in nonblocking_attempt_ids
+        )
         pending = tuple(
             dict.fromkeys(
                 (
                     *(
                         f"STRUCTURED_FETCH_PENDING:{row.provider_name}:{row.source_role}:{row.status}"
-                        for row in attempts
-                        if row.status
-                        in {"AUTH_FAILED", "PROVIDER_ERROR", "FUTURE_REJECTED"}
+                        for row in blocking_fetch_attempts
                     ),
                     *(
                         f"STRUCTURED_ROLE_MISSING:{component_id}:{role}"
@@ -612,11 +751,12 @@ class CurrentStructuredSourceMaterializer:
         complete = engine.status == "COMPLETE" and not pending
         critical_counts = {
             "future_structured_source_count": sum(
-                row.status == "FUTURE_REJECTED" for row in attempts
+                row.status == "FUTURE_REJECTED"
+                for row in blocking_fetch_attempts
             ),
             "provider_or_auth_failure_count": sum(
                 row.status in {"AUTH_FAILED", "PROVIDER_ERROR"}
-                for row in attempts
+                for row in blocking_fetch_attempts
             ),
             "missing_structured_role_count": sum(
                 len(value) for value in engine.missing_roles_by_component.values()
@@ -670,6 +810,16 @@ class CurrentStructuredSourceMaterializer:
             "structured_fact_requires_verified_exact_quote": True,
             "critical_counts": critical_counts,
             "critical_count_sum": sum(critical_counts.values()),
+            "observed_nonblocking_fetch_failure_count": len(
+                nonblocking_fetch_attempts
+            ),
+            "nonblocking_fetch_failure_attempt_ids": [
+                row.attempt_id for row in nonblocking_fetch_attempts
+            ],
+            "structured_fetch_failure_requirement_audit": (
+                failure_requirement_audit
+            ),
+            "only_substituted_requirement_failure_is_nonblocking": True,
         }
         result = CurrentStructuredMaterializationResult(
             target_id=target_id,
@@ -3105,7 +3255,7 @@ def _point_in_time_peer_identity_roster(
     return tuple(available)
 
 
-def _issuer_fact_route(
+def _fact_structured_routes(
     *,
     target_id: str,
     cutoff: date,
@@ -3113,7 +3263,7 @@ def _issuer_fact_route(
     source_claims: Sequence[Mapping[str, Any]],
     source_documents: Sequence[Mapping[str, Any]],
 ):
-    """Promote only verified numeric fact claims into typed issuer rows.
+    """Promote verified numeric fact claims into isolated typed source routes.
 
     The LLM may nominate a semantic role, but this boundary independently
     verifies claim/fact/document lineage, exact-quote presence, source class,
@@ -3125,7 +3275,8 @@ def _issuer_fact_route(
     claims = _unique_rows_by_id(source_claims, "claim_id")
     segment_rows: list[SegmentFinancialObservation] = []
     guidance_rows: list[ForwardGuidanceObservation] = []
-    metric_rows: list[StructuredMetricRecord] = []
+    issuer_metric_rows: list[StructuredMetricRecord] = []
+    broker_metric_rows: list[StructuredMetricRecord] = []
     rejection_counts: dict[str, int] = {}
     tagged_claim_count = 0
 
@@ -3180,6 +3331,12 @@ def _issuer_fact_route(
             if not roles:
                 continue
             tagged_claim_count += 1
+            if (
+                set(roles) & _BROKER_VALUATION_STRUCTURED_ROLES
+                and len(roles) != 1
+            ):
+                reject("BROKER_VALUATION_CLAIM_REQUIRES_ONE_ROLE")
+                continue
             if not set(roles).issubset(fact_roles):
                 reject("CLAIM_FACT_STRUCTURED_ROLE_MISMATCH")
                 continue
@@ -3203,6 +3360,9 @@ def _issuer_fact_route(
             parsed = _parse_reported_numeric(
                 claim.get("value"), claim.get("unit")
             )
+            fact_parsed = _parse_reported_numeric(
+                fact.get("value"), fact.get("unit")
+            )
             confidence = min(
                 _probability(fact.get("confidence"), default=0.0),
                 _probability(claim.get("confidence"), default=0.0),
@@ -3211,12 +3371,34 @@ def _issuer_fact_route(
                 for _ in roles:
                     reject("TAGGED_VALUE_NOT_MACHINE_NUMERIC")
                 continue
+            if (
+                fact_parsed is None
+                or not _parsed_reported_numeric_matches(fact_parsed, parsed)
+                or str(fact.get("period") or "").strip() != period
+            ):
+                for _ in roles:
+                    reject("CLAIM_FACT_VALUE_UNIT_PERIOD_MISMATCH")
+                continue
             for role in roles:
-                if role != "FORWARD_GUIDANCE" and lifecycle != "CURRENT":
+                broker_valuation_role = (
+                    role in _BROKER_VALUATION_STRUCTURED_ROLES
+                )
+                if (
+                    role != "FORWARD_GUIDANCE"
+                    and not broker_valuation_role
+                    and lifecycle != "CURRENT"
+                ):
                     reject(f"ROLE_REQUIRES_CURRENT_LIFECYCLE:{role}")
+                    continue
+                if broker_valuation_role and lifecycle not in {"CURRENT", "OPEN"}:
+                    reject(f"ROLE_REQUIRES_CURRENT_OR_OPEN_LIFECYCLE:{role}")
                     continue
                 if role in {"SEGMENT_CONTRIBUTION", "FORWARD_GUIDANCE"}:
                     allowed_families = _ISSUER_STRUCTURED_SOURCE_FAMILIES
+                elif broker_valuation_role:
+                    allowed_families = (
+                        _BROKER_VALUATION_STRUCTURED_SOURCE_FAMILIES
+                    )
                 else:
                     allowed_families = _QOQ_STRUCTURED_SOURCE_FAMILIES
                 if source_family not in allowed_families:
@@ -3266,7 +3448,7 @@ def _issuer_fact_route(
                     if parsed.unit != "PERCENT" or parsed.low is not None:
                         reject("QOQ_REQUIRES_POINT_PERCENT")
                         continue
-                    metric_rows.append(
+                    issuer_metric_rows.append(
                         StructuredMetricRecord(
                             record_id="STRUCT-" + stable_hash(
                                 {
@@ -3342,17 +3524,122 @@ def _issuer_fact_route(
                             },
                         )
                     )
+                elif broker_valuation_role:
+                    period_end = broker_valuation_forward_period_end(period)
+                    if (
+                        period_end is None
+                        or period_end <= date.fromisoformat(available_at)
+                    ):
+                        reject(f"VALUATION_PERIOD_NOT_FORWARD:{role}")
+                        continue
+                    if parsed.low is not None or parsed.high is not None:
+                        reject(f"VALUATION_REQUIRES_POINT_VALUE:{role}")
+                        continue
+                    if parsed.midpoint <= 0:
+                        reject(f"VALUATION_REQUIRES_POSITIVE_VALUE:{role}")
+                        continue
+                    if role == "FORWARD_BOOK_VALUE":
+                        if not _reported_unit_is_krw_per_share(
+                            claim.get("unit"), parsed.unit
+                        ):
+                            reject("FORWARD_BOOK_VALUE_REQUIRES_KRW_PER_SHARE")
+                            continue
+                    else:
+                        if parsed.unit != "MULTIPLE":
+                            reject(f"VALUATION_REQUIRES_MULTIPLE_UNIT:{role}")
+                            continue
+                    record_contract = (
+                        BROKER_VALUATION_FACT_RECORD_CONTRACTS[role]
+                    )
+                    output_unit = record_contract["unit"]
+                    metric_id = record_contract["metric_id"]
+                    exact_quote = str(claim.get("exact_quote") or "")
+                    if not broker_valuation_quote_matches_claim(
+                        role=role,
+                        exact_quote=exact_quote,
+                        period=period,
+                        value=parsed.midpoint,
+                    ):
+                        reject(f"VALUATION_QUOTE_ROLE_VALUE_MISMATCH:{role}")
+                        continue
+                    broker_metric_rows.append(
+                        StructuredMetricRecord(
+                            record_id="STRUCT-" + stable_hash(
+                                {
+                                    "fact_id": fact_id,
+                                    "claim_id": claim_id,
+                                    "role": role,
+                                    "value": parsed.midpoint,
+                                    "period": period,
+                                }
+                            )[:24],
+                            target_id=target_id,
+                            as_of_date=cutoff.isoformat(),
+                            metric_id=metric_id,
+                            value=parsed.midpoint,
+                            unit=output_unit,
+                            period=period,
+                            evidence_roles=(role,),
+                            source_ids=(document_id,),
+                            source_route="PUBLIC_BROKER_REPORT",
+                            observed_at=observed_at,
+                            available_at=available_at,
+                            record_kind="SOURCE_BACKED_BROKER_VALUATION",
+                            confidence=confidence,
+                            dataset="VALUATION",
+                            provenance="STRUCTURED_EXTRACTED",
+                            metadata={
+                                "fact_id": fact_id,
+                                "claim_id": claim_id,
+                                "document_id": document_id,
+                                "exact_quote": exact_quote,
+                                "exact_quote_hash": hashlib.sha256(
+                                    exact_quote.encode("utf-8")
+                                ).hexdigest(),
+                                "document_content_hash": str(
+                                    document.get("content_hash") or ""
+                                ),
+                                "exact_quote_verified": True,
+                                "fact_boundary_validation_version": (
+                                    "e2r_broker_valuation_fact_boundary_v1"
+                                ),
+                                "llm_role_nomination_only": True,
+                                "structured_source": True,
+                                "reported_unit": str(claim.get("unit") or ""),
+                                "currency": (
+                                    "KRW"
+                                    if role == "FORWARD_BOOK_VALUE"
+                                    else None
+                                ),
+                                "source_family": source_family,
+                            },
+                        )
+                    )
 
-    source_ids = tuple(
+    issuer_source_ids = tuple(
         sorted(
             {
                 source_id
-                for row in (*segment_rows, *guidance_rows, *metric_rows)
+                for row in (*segment_rows, *guidance_rows, *issuer_metric_rows)
                 for source_id in row.source_ids
             }
         )
     )
-    accepted_count = len(segment_rows) + len(guidance_rows) + len(metric_rows)
+    broker_source_ids = tuple(
+        sorted(
+            {
+                source_id
+                for row in broker_metric_rows
+                for source_id in row.source_ids
+            }
+        )
+    )
+    accepted_count = (
+        len(segment_rows)
+        + len(guidance_rows)
+        + len(issuer_metric_rows)
+        + len(broker_metric_rows)
+    )
     audit = {
         "schema_version": "e2r_v5_issuer_fact_materialization_audit_v1",
         "input_fact_count": len(evidence_facts),
@@ -3360,7 +3647,10 @@ def _issuer_fact_route(
         "input_document_count": len(source_documents),
         "tagged_claim_count": tagged_claim_count,
         "segment_observation_count": len(segment_rows),
-        "qoq_record_count": len(metric_rows),
+        "qoq_record_count": sum(
+            "QOQ_GROWTH" in row.evidence_roles for row in issuer_metric_rows
+        ),
+        "broker_valuation_record_count": len(broker_metric_rows),
         "guidance_observation_count": len(guidance_rows),
         "accepted_structured_observation_count": accepted_count,
         "rejection_counts": dict(sorted(rejection_counts.items())),
@@ -3369,23 +3659,47 @@ def _issuer_fact_route(
         "issuer_source_required_for_segment_and_guidance": True,
         "llm_score_authority": False,
     }
-    if not accepted_count:
-        return (
-            UnavailableStructuredSourceRoute(
-                "ISSUER_GUIDANCE",
-                "no validated numeric issuer fact reached the structured boundary",
+    issuer_route = (
+        InMemoryStructuredSourceRoute(
+            "ISSUER_GUIDANCE",
+            StructuredSourcePayload(
+                route_name="ISSUER_GUIDANCE",
+                source_ids=issuer_source_ids,
+                structured_records=tuple(issuer_metric_rows),
+                segment_observations=tuple(segment_rows),
+                guidance_observations=tuple(guidance_rows),
+                diagnostics=audit,
             ),
-            audit,
         )
-    payload = StructuredSourcePayload(
-        route_name="ISSUER_GUIDANCE",
-        source_ids=source_ids,
-        structured_records=tuple(metric_rows),
-        segment_observations=tuple(segment_rows),
-        guidance_observations=tuple(guidance_rows),
-        diagnostics=audit,
+        if issuer_source_ids
+        else UnavailableStructuredSourceRoute(
+            "ISSUER_GUIDANCE",
+            "no validated numeric issuer fact reached the structured boundary",
+        )
     )
-    return InMemoryStructuredSourceRoute("ISSUER_GUIDANCE", payload), audit
+    broker_route = (
+        InMemoryStructuredSourceRoute(
+            "PUBLIC_BROKER_REPORT",
+            StructuredSourcePayload(
+                route_name="PUBLIC_BROKER_REPORT",
+                source_ids=broker_source_ids,
+                structured_records=tuple(broker_metric_rows),
+                diagnostics=audit,
+                verified_seed_ingress=_issue_verified_broker_fact_ingress(
+                    target_id=target_id,
+                    as_of_date=cutoff.isoformat(),
+                    route_name="PUBLIC_BROKER_REPORT",
+                    records=broker_metric_rows,
+                ),
+            ),
+        )
+        if broker_source_ids
+        else UnavailableStructuredSourceRoute(
+            "PUBLIC_BROKER_REPORT",
+            "no exact-quote-verified broker valuation fact reached the structured boundary",
+        )
+    )
+    return issuer_route, broker_route, audit
 
 
 def _unique_rows_by_id(
@@ -3497,7 +3811,11 @@ def _parse_reported_numeric(value: Any, unit: Any) -> _ParsedReportedNumeric | N
         normalized_unit = "KRW"
     elif re.search(r"\busd\b|달러|\$", combined):
         normalized_unit = "USD"
-    elif "배" in combined or "multiple" in combined:
+    elif (
+        "배" in combined
+        or "multiple" in combined
+        or re.search(r"(?:^|[/\s])x(?:$|[/\s])", combined)
+    ):
         normalized_unit = "MULTIPLE"
     elif raw_unit:
         normalized_unit = _metric_slug(raw_unit).upper()
@@ -3518,6 +3836,49 @@ def _parse_reported_numeric(value: Any, unit: Any) -> _ParsedReportedNumeric | N
         midpoint=(low + high) / 2.0,
         unit=normalized_unit,
     )
+
+
+def _reported_unit_is_krw_per_share(
+    raw_unit: Any,
+    normalized_unit: str,
+) -> bool:
+    unit = str(raw_unit or "").strip().casefold()
+    if normalized_unit != "KRW":
+        return False
+    return bool(
+        re.search(
+            r"(?:/\s*share\b|\bper\s+share\b|/\s*주(?:\b|$)|주당|원\s*/\s*주)",
+            unit,
+            flags=re.IGNORECASE,
+        )
+    )
+
+
+def _same_reported_number(left: float, right: float) -> bool:
+    tolerance = max(1e-9, abs(float(right)) * 1e-9)
+    return abs(float(left) - float(right)) <= tolerance
+
+
+def _parsed_reported_numeric_matches(
+    left: _ParsedReportedNumeric,
+    right: _ParsedReportedNumeric,
+) -> bool:
+    if left.unit != right.unit:
+        return False
+    for left_value, right_value in (
+        (left.low, right.low),
+        (left.high, right.high),
+        (left.midpoint, right.midpoint),
+    ):
+        if (left_value is None) != (right_value is None):
+            return False
+        if (
+            left_value is not None
+            and right_value is not None
+            and not _same_reported_number(left_value, right_value)
+        ):
+            return False
+    return True
 
 
 def _meaningful_segment_id(claim: Mapping[str, Any]) -> str | None:
@@ -3581,6 +3942,9 @@ def _period_end(period: str) -> date | None:
         )
         return date(year, 6 if half == 1 else 12, 30 if half == 1 else 31)
     match = re.fullmatch(r"(?:FY)?(20\d{2})(?:년)?", normalized)
+    if match:
+        return date(int(match.group(1)), 12, 31)
+    match = re.match(r"^(?:FY)?(20\d{2})(?:년|[EF])(?:\b|\(|;|,|$)", normalized)
     if match:
         return date(int(match.group(1)), 12, 31)
     match = re.fullmatch(r"(20\d{2})[-/](\d{1,2})(?:[-/](\d{1,2}))?", normalized)

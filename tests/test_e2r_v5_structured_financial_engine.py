@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -36,6 +37,9 @@ from e2r.research_brain.researcher_mode import (
     build_structured_source_routes,
     compile_phase86_structured_financial_engine_audit,
     write_structured_financial_outputs,
+)
+from e2r.research_brain.researcher_mode import (
+    structured_financial_engine as structured_engine_module,
 )
 
 
@@ -365,6 +369,485 @@ class E2RV5StructuredFinancialEngineTests(unittest.TestCase):
             covered.to_component_structured_metrics(requirements)[
                 "valuation_rerating"
             ],
+        )
+
+    def test_issuer_seed_cannot_bypass_broker_valuation_contract(self) -> None:
+        forged = StructuredMetricRecord(
+            record_id="REC-FORGED-ISSUER-PB",
+            target_id=TARGET,
+            as_of_date=AS_OF.isoformat(),
+            metric_id="broker_forward_pb",
+            value=3.1,
+            unit="KRW",
+            period="historical 2024",
+            evidence_roles=("FORWARD_PB",),
+            source_ids=("SRC-FORGED",),
+            source_route="ISSUER_GUIDANCE",
+            observed_at="2026-06-20",
+            record_kind="STRUCTURED_INPUT",
+            confidence=0.9,
+            dataset="VALUATION",
+            provenance="STRUCTURED_EXTRACTED",
+            metadata={"structured_source": True},
+        )
+        result = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(route("ISSUER_GUIDANCE", structured_records=(forged,)),),
+            required_roles_by_component={
+                "valuation_rerating": ("FORWARD_PB",)
+            },
+        )
+
+        self.assertEqual(result.status, "SOURCE_PENDING")
+        self.assertEqual(
+            result.missing_roles_by_component["valuation_rerating"],
+            ("FORWARD_PB",),
+        )
+        self.assertEqual(
+            [row.reason for row in result.rejections],
+            ["BROKER_VALUATION_METRIC_REQUIRES_PUBLIC_BROKER_ROUTE"],
+        )
+
+        forged_public = replace(
+            forged,
+            record_id="REC-FORGED-PUBLIC-BROKER-PB",
+            source_route="PUBLIC_BROKER_REPORT",
+            record_kind="SOURCE_BACKED_BROKER_VALUATION",
+            unit="MULTIPLE",
+            period="FY2026E",
+            metadata={
+                "structured_source": True,
+                "source_family": "PUBLIC_BROKER_PDF",
+                "exact_quote_verified": True,
+            },
+        )
+        public_result = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                route(
+                    "PUBLIC_BROKER_REPORT",
+                    structured_records=(forged_public,),
+                ),
+            ),
+            required_roles_by_component={
+                "valuation_rerating": ("FORWARD_PB",)
+            },
+        )
+        self.assertEqual(public_result.status, "SOURCE_PENDING")
+        self.assertEqual(
+            [row.reason for row in public_result.rejections],
+            ["BROKER_VALUATION_VERIFIED_INGRESS_REQUIRED"],
+        )
+
+    def test_self_attested_broker_seed_requires_canonical_fact_graph(self) -> None:
+        quote = "The broker estimates 2026E PBR at 99x."
+        forged = StructuredMetricRecord(
+            record_id="REC-SELF-ATTESTED-PUBLIC-BROKER-PB",
+            target_id=TARGET,
+            as_of_date=AS_OF.isoformat(),
+            metric_id="broker_forward_pb",
+            value=99.0,
+            unit="MULTIPLE",
+            period="FY2026E",
+            evidence_roles=("FORWARD_PB",),
+            source_ids=("DOC-FORGED",),
+            source_route="PUBLIC_BROKER_REPORT",
+            observed_at="2026-06-20",
+            available_at="2026-06-20",
+            record_kind="SOURCE_BACKED_BROKER_VALUATION",
+            confidence=0.9,
+            dataset="VALUATION",
+            provenance="STRUCTURED_EXTRACTED",
+            metadata={
+                "structured_source": True,
+                "source_family": "PUBLIC_BROKER_PDF",
+                "exact_quote_verified": True,
+                "fact_boundary_validation_version": (
+                    "e2r_broker_valuation_fact_boundary_v1"
+                ),
+                "fact_id": "FACT-FORGED",
+                "claim_id": "CLAIM-FORGED",
+                "document_id": "DOC-FORGED",
+                "exact_quote": quote,
+                "exact_quote_hash": hashlib.sha256(
+                    quote.encode("utf-8")
+                ).hexdigest(),
+                "document_content_hash": "0" * 64,
+            },
+        )
+
+        result = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                route(
+                    "PUBLIC_BROKER_REPORT",
+                    structured_records=(forged,),
+                ),
+            ),
+            required_roles_by_component={
+                "valuation_rerating": ("FORWARD_PB",)
+            },
+        )
+
+        self.assertEqual(result.status, "SOURCE_PENDING")
+        self.assertEqual(
+            [row.reason for row in result.rejections],
+            ["BROKER_VALUATION_VERIFIED_INGRESS_REQUIRED"],
+        )
+
+    def test_public_broker_metric_alias_cannot_recreate_role_without_seal(
+        self,
+    ) -> None:
+        alias_seed = StructuredMetricRecord(
+            record_id="REC-UNSEALED-BROKER-BOOK-VALUE-ALIAS",
+            target_id=TARGET,
+            as_of_date=AS_OF.isoformat(),
+            metric_id="broker_forward_book_value",
+            value=1.0,
+            unit="KRW_PER_SHARE",
+            period="FY2026E",
+            evidence_roles=("UNRELATED_INPUT",),
+            source_ids=("DOC-UNSEALED",),
+            source_route="PUBLIC_BROKER_REPORT",
+            observed_at="2026-06-20",
+            available_at="2026-06-20",
+            record_kind="GENERIC_STRUCTURED_INPUT",
+            confidence=0.9,
+            dataset="VALUATION",
+            provenance="STRUCTURED_EXTRACTED",
+            metadata={"structured_source": True},
+        )
+        result = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                route(
+                    "PUBLIC_BROKER_REPORT",
+                    structured_records=(alias_seed,),
+                ),
+            ),
+            required_roles_by_component={
+                "valuation_rerating": ("FORWARD_BOOK_VALUE",)
+            },
+        )
+        self.assertEqual(result.status, "SOURCE_PENDING")
+        self.assertEqual(
+            [row.reason for row in result.rejections],
+            ["BROKER_VALUATION_METRIC_REQUIRES_VERIFIED_RECORD_KIND"],
+        )
+        self.assertFalse(
+            any(
+                "FORWARD_BOOK_VALUE" in row.evidence_roles
+                for row in result.records
+            )
+        )
+
+    def test_broker_metric_alias_cannot_masquerade_as_another_route(self) -> None:
+        for source_route in ("ISSUER_GUIDANCE", "UNTRUSTED_ALIAS_ROUTE"):
+            with self.subTest(source_route=source_route):
+                alias_seed = StructuredMetricRecord(
+                    record_id=f"REC-{source_route}-BROKER-BOOK-VALUE-ALIAS",
+                    target_id=TARGET,
+                    as_of_date=AS_OF.isoformat(),
+                    metric_id="broker_forward_book_value",
+                    value=1.0,
+                    unit="KRW_PER_SHARE",
+                    period="FY2026E",
+                    evidence_roles=("UNRELATED_INPUT",),
+                    source_ids=(f"DOC-{source_route}",),
+                    source_route=source_route,
+                    observed_at="2026-06-20",
+                    available_at="2026-06-20",
+                    record_kind="GENERIC_STRUCTURED_INPUT",
+                    confidence=0.9,
+                    dataset="GENERIC",
+                    provenance="STRUCTURED_EXTRACTED",
+                    metadata={"structured_source": True},
+                )
+                result = StructuredFinancialConsensusValuationEngine().research(
+                    target_id=TARGET,
+                    symbol=SYMBOL,
+                    company_name="Current Target Corp",
+                    as_of_date=AS_OF,
+                    routes=(
+                        route(
+                            source_route,
+                            structured_records=(alias_seed,),
+                        ),
+                    ),
+                    required_roles_by_component={
+                        "valuation_rerating": ("FORWARD_BOOK_VALUE",)
+                    },
+                )
+                self.assertEqual(result.status, "SOURCE_PENDING")
+                self.assertEqual(
+                    [row.reason for row in result.rejections],
+                    ["BROKER_VALUATION_METRIC_REQUIRES_PUBLIC_BROKER_ROUTE"],
+                )
+
+        generic_alias = replace(
+            alias_seed,
+            record_id="REC-GENERIC-FORWARD-BOOK-VALUE-ALIAS",
+            metric_id="forward_book_value",
+        )
+        generic_result = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                route(
+                    "UNTRUSTED_ALIAS_ROUTE",
+                    structured_records=(generic_alias,),
+                ),
+            ),
+            required_roles_by_component={
+                "valuation_rerating": ("FORWARD_BOOK_VALUE",)
+            },
+        )
+        self.assertEqual(generic_result.status, "SOURCE_PENDING")
+        self.assertFalse(
+            any(
+                "FORWARD_BOOK_VALUE" in row.evidence_roles
+                for row in generic_result.records
+            )
+        )
+
+    def test_issuer_guidance_alias_requires_typed_observation(self) -> None:
+        for record_kind, expected_rejections in (
+            ("GENERIC_STRUCTURED_INPUT", ()),
+            (
+                "ISSUER_FORWARD_GUIDANCE",
+                ("ISSUER_FORWARD_GUIDANCE_REQUIRES_TYPED_OBSERVATION",),
+            ),
+        ):
+            with self.subTest(record_kind=record_kind):
+                alias_seed = StructuredMetricRecord(
+                    record_id=f"REC-{record_kind}-ISSUER-BOOK-VALUE",
+                    target_id=TARGET,
+                    as_of_date=AS_OF.isoformat(),
+                    metric_id="issuer_guidance_book_value_midpoint",
+                    value=1.0,
+                    unit="KRW_PER_SHARE",
+                    period="FY2026E",
+                    evidence_roles=("FORWARD_GUIDANCE",),
+                    source_ids=("DOC-SELF-ATTESTED-ISSUER",),
+                    source_route="ISSUER_GUIDANCE",
+                    observed_at="2026-06-20",
+                    available_at="2026-06-20",
+                    record_kind=record_kind,
+                    confidence=0.9,
+                    dataset="GENERIC",
+                    provenance="STRUCTURED_EXTRACTED",
+                    metadata={"structured_source": True},
+                )
+                result = StructuredFinancialConsensusValuationEngine().research(
+                    target_id=TARGET,
+                    symbol=SYMBOL,
+                    company_name="Current Target Corp",
+                    as_of_date=AS_OF,
+                    routes=(
+                        route(
+                            "ISSUER_GUIDANCE",
+                            structured_records=(alias_seed,),
+                        ),
+                    ),
+                    required_roles_by_component={
+                        "valuation_rerating": ("FORWARD_BOOK_VALUE",)
+                    },
+                )
+                self.assertEqual(result.status, "SOURCE_PENDING")
+                self.assertEqual(
+                    tuple(row.reason for row in result.rejections),
+                    expected_rejections,
+                )
+                self.assertFalse(
+                    any(
+                        "FORWARD_BOOK_VALUE" in row.evidence_roles
+                        for row in result.records
+                    )
+                )
+
+    def test_broker_fact_ingress_is_bound_to_roster_and_scope(self) -> None:
+        quote = "The broker estimates 2026E PBR at 3.1x."
+        valid = StructuredMetricRecord(
+            record_id="REC-SEALED-PUBLIC-BROKER-PB",
+            target_id=TARGET,
+            as_of_date=AS_OF.isoformat(),
+            metric_id="broker_forward_pb",
+            value=3.1,
+            unit="MULTIPLE",
+            period="FY2026E",
+            evidence_roles=("FORWARD_PB",),
+            source_ids=("DOC-SEALED",),
+            source_route="PUBLIC_BROKER_REPORT",
+            observed_at="2026-06-20",
+            available_at="2026-06-20",
+            record_kind="SOURCE_BACKED_BROKER_VALUATION",
+            confidence=0.9,
+            dataset="VALUATION",
+            provenance="STRUCTURED_EXTRACTED",
+            metadata={
+                "structured_source": True,
+                "source_family": "PUBLIC_BROKER_PDF",
+                "exact_quote_verified": True,
+                "fact_boundary_validation_version": (
+                    "e2r_broker_valuation_fact_boundary_v1"
+                ),
+                "fact_id": "FACT-SEALED",
+                "claim_id": "CLAIM-SEALED",
+                "document_id": "DOC-SEALED",
+                "exact_quote": quote,
+                "exact_quote_hash": hashlib.sha256(
+                    quote.encode("utf-8")
+                ).hexdigest(),
+                "document_content_hash": "1" * 64,
+            },
+        )
+        ingress = structured_engine_module._issue_verified_broker_fact_ingress(
+            target_id=TARGET,
+            as_of_date=AS_OF.isoformat(),
+            route_name="PUBLIC_BROKER_REPORT",
+            records=(valid,),
+        )
+
+        tampered = replace(valid, value=99.0)
+        tampered_result = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                route(
+                    "PUBLIC_BROKER_REPORT",
+                    structured_records=(tampered,),
+                    verified_seed_ingress=ingress,
+                ),
+            ),
+            required_roles_by_component={
+                "valuation_rerating": ("FORWARD_PB",)
+            },
+        )
+        self.assertEqual(
+            [row.reason for row in tampered_result.rejections],
+            ["BROKER_VALUATION_VERIFIED_INGRESS_ROSTER_MISMATCH"],
+        )
+        for changed in (
+            replace(valid, period="FY2027E"),
+            replace(
+                valid,
+                metric_id="broker_forward_ev_ebitda",
+                evidence_roles=("FORWARD_EV_EBITDA",),
+            ),
+        ):
+            with self.subTest(changed=changed.record_id + changed.period):
+                changed_result = (
+                    StructuredFinancialConsensusValuationEngine().research(
+                        target_id=TARGET,
+                        symbol=SYMBOL,
+                        company_name="Current Target Corp",
+                        as_of_date=AS_OF,
+                        routes=(
+                            route(
+                                "PUBLIC_BROKER_REPORT",
+                                structured_records=(changed,),
+                                verified_seed_ingress=ingress,
+                            ),
+                        ),
+                        required_roles_by_component={
+                            "valuation_rerating": ("FORWARD_PB",)
+                        },
+                    )
+                )
+                self.assertEqual(
+                    [row.reason for row in changed_result.rejections],
+                    ["BROKER_VALUATION_VERIFIED_INGRESS_ROSTER_MISMATCH"],
+                )
+
+        extra = replace(valid, record_id="REC-SEALED-EXTRA")
+        expanded_result = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                route(
+                    "PUBLIC_BROKER_REPORT",
+                    structured_records=(valid, extra),
+                    verified_seed_ingress=ingress,
+                ),
+            ),
+            required_roles_by_component={
+                "valuation_rerating": ("FORWARD_PB",)
+            },
+        )
+        self.assertEqual(
+            [row.reason for row in expanded_result.rejections],
+            [
+                "BROKER_VALUATION_VERIFIED_INGRESS_ROSTER_MISMATCH",
+                "BROKER_VALUATION_VERIFIED_INGRESS_ROSTER_MISMATCH",
+            ],
+        )
+
+        other_target = replace(valid, target_id="OTHER_TARGET")
+        scoped_result = StructuredFinancialConsensusValuationEngine().research(
+            target_id="OTHER_TARGET",
+            symbol="OTHER",
+            company_name="Other Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                route(
+                    "PUBLIC_BROKER_REPORT",
+                    structured_records=(other_target,),
+                    verified_seed_ingress=ingress,
+                ),
+            ),
+            required_roles_by_component={
+                "valuation_rerating": ("FORWARD_PB",)
+            },
+        )
+        self.assertEqual(
+            [row.reason for row in scoped_result.rejections],
+            ["BROKER_VALUATION_VERIFIED_INGRESS_SCOPE_MISMATCH"],
+        )
+
+        other_as_of = date(2026, 6, 28)
+        other_date_record = replace(
+            valid,
+            as_of_date=other_as_of.isoformat(),
+        )
+        date_scoped_result = (
+            StructuredFinancialConsensusValuationEngine().research(
+                target_id=TARGET,
+                symbol=SYMBOL,
+                company_name="Current Target Corp",
+                as_of_date=other_as_of,
+                routes=(
+                    route(
+                        "PUBLIC_BROKER_REPORT",
+                        structured_records=(other_date_record,),
+                        verified_seed_ingress=ingress,
+                    ),
+                ),
+                required_roles_by_component={
+                    "valuation_rerating": ("FORWARD_PB",)
+                },
+            )
+        )
+        self.assertEqual(
+            [row.reason for row in date_scoped_result.rejections],
+            ["BROKER_VALUATION_VERIFIED_INGRESS_SCOPE_MISMATCH"],
         )
 
     def test_structured_result_feeds_component_researcher_roles_without_points(self) -> None:
@@ -855,6 +1338,69 @@ class E2RV5StructuredFinancialEngineTests(unittest.TestCase):
         )
         self.assertFalse(
             any(row.metric_id == "broker_eps_revision_pct" for row in result.records)
+        )
+
+    def test_public_broker_valuation_fields_cannot_bypass_verified_fact_ingress(
+        self,
+    ) -> None:
+        report = ResearchReport(
+            symbol=SYMBOL,
+            publish_date=date(2026, 6, 20),
+            broker="Broker",
+            title="Unbound valuation fields",
+            as_of_date=AS_OF,
+            est_per=88.0,
+            est_pbr=99.0,
+            raw_text="Full report says nothing that binds a valuation or period.",
+        )
+        report_result = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                PublicBrokerReportStructuredRoute(
+                    reports=(report,),
+                    source_ids=("SRC-REPORT",),
+                ),
+            ),
+            required_roles_by_component={
+                "valuation_rerating": ("FORWARD_PE", "FORWARD_PB")
+            },
+        )
+        self.assertEqual(report_result.status, "SOURCE_PENDING")
+        self.assertEqual(
+            report_result.missing_roles_by_component["valuation_rerating"],
+            ("FORWARD_PB", "FORWARD_PE"),
+        )
+        self.assertFalse(
+            any(
+                row.record_kind == "PUBLIC_BROKER_STRUCTURED_VALUATION"
+                for row in report_result.records
+            )
+        )
+
+        snapshot_result = StructuredFinancialConsensusValuationEngine().research(
+            target_id=TARGET,
+            symbol=SYMBOL,
+            company_name="Current Target Corp",
+            as_of_date=AS_OF,
+            routes=(
+                route(
+                    "PUBLIC_BROKER_REPORT",
+                    consensus_snapshots=(
+                        consensus(date(2026, 6, 20), pbr=99.0),
+                    ),
+                ),
+            ),
+            required_roles_by_component={
+                "valuation_rerating": ("FORWARD_PB",)
+            },
+        )
+        self.assertEqual(snapshot_result.status, "SOURCE_PENDING")
+        self.assertEqual(
+            [row.reason for row in snapshot_result.rejections],
+            ["PUBLIC_BROKER_CONSENSUS_REQUIRES_VERIFIED_FACT_INGRESS"],
         )
 
     def test_issuer_and_peer_routes_preserve_structured_lineage(self) -> None:

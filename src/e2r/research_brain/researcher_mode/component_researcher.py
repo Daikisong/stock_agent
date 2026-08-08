@@ -470,8 +470,12 @@ EVIDENCE_FACT_EXTRACTION_SCHEMA: Mapping[str, Any] = {
                                 "SEGMENT_CONTRIBUTION",
                                 "QOQ_GROWTH",
                                 "FORWARD_GUIDANCE",
+                                "FORWARD_BOOK_VALUE",
+                                "FORWARD_PB",
+                                "FORWARD_EV_EBITDA",
                             ],
                         },
+                        "maxItems": 1,
                     },
                 },
             },
@@ -5119,7 +5123,8 @@ def _pass_instruction(pass_name: str) -> str:
             "documents. Cite an exact quote that occurs in the cited document, keep issuer, "
             "business segment, product, period, direction, and lifecycle explicit, and account "
             "for every document with one disposition. Tag SEGMENT_CONTRIBUTION, QOQ_GROWTH, "
-            "or FORWARD_GUIDANCE only when the exact quote and value explicitly establish that "
+            "FORWARD_GUIDANCE, FORWARD_BOOK_VALUE, FORWARD_PB, or FORWARD_EV_EBITDA only when "
+            "the exact quote and value explicitly establish that "
             "structured role; keep value as only the reported numeric point/range, unit separately, "
             "and the time horizon in period. Otherwise return an empty structured_evidence_roles array. Tags "
             "are extraction context only and never assign points. Read prior fact-extraction retry "

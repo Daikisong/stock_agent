@@ -1789,6 +1789,281 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
         self.assertTrue(all(row.metadata["exact_quote_verified"] for row in promoted))
         self.assertTrue(all(row.metadata["llm_role_nomination_only"] for row in promoted))
 
+    def test_verified_broker_facts_close_valuation_roles_without_future_snapshot(self):
+        class TargetFutureSnapshotTransport(FixtureStructuredTransport):
+            def get_text(self, *, url, params, headers, timeout_seconds):
+                response = super().get_text(
+                    url=url,
+                    params=params,
+                    headers=headers,
+                    timeout_seconds=timeout_seconds,
+                )
+                if str(params.get("cmp_cd") or "") != "005930":
+                    return response
+                text = _companyguide_html("2026.07.13")
+                return replace(
+                    response,
+                    content_hash=hashlib.sha256(text.encode()).hexdigest(),
+                    text=text,
+                )
+
+        transport = TargetFutureSnapshotTransport()
+        facts, claims, documents = _broker_valuation_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "DART-SECRET-FIXTURE",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=FixturePeerProvider(),
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+                required_roles_by_component={
+                    "valuation_rerating": (
+                        "FORWARD_BOOK_VALUE",
+                        "FORWARD_PB",
+                        "FORWARD_EV_EBITDA",
+                    ),
+                },
+            )
+
+        self.assertEqual(
+            (result.status, result.pending_reasons),
+            ("COMPLETE", ()),
+        )
+        self.assertEqual(
+            result.engine_result.missing_roles_by_component[
+                "valuation_rerating"
+            ],
+            (),
+        )
+        promoted = [
+            row
+            for row in result.engine_result.records
+            if row.record_kind == "SOURCE_BACKED_BROKER_VALUATION"
+        ]
+        self.assertEqual(
+            {role for row in promoted for role in row.evidence_roles},
+            {"FORWARD_BOOK_VALUE", "FORWARD_PB", "FORWARD_EV_EBITDA"},
+        )
+        self.assertTrue(
+            all(
+                row.source_route == "PUBLIC_BROKER_REPORT"
+                and row.metadata["exact_quote_verified"] is True
+                and row.metadata["llm_role_nomination_only"] is True
+                and row.metadata["source_family"] == "PUBLIC_BROKER_PDF"
+                for row in promoted
+            )
+        )
+        self.assertEqual(
+            {row.metric_id for row in promoted},
+            {
+                "broker_forward_book_value",
+                "broker_forward_pb",
+                "broker_forward_ev_ebitda",
+            },
+        )
+        self.assertTrue(
+            any(
+                row.source_role == "CONSENSUS_VALUATION_SNAPSHOT"
+                and row.status == "PROVIDER_ERROR"
+                for row in result.fetch_attempts
+            )
+        )
+        self.assertEqual(
+            result.audit["critical_counts"][
+                "provider_or_auth_failure_count"
+            ],
+            0,
+        )
+        self.assertGreaterEqual(
+            result.audit["observed_nonblocking_fetch_failure_count"], 1
+        )
+
+    def test_broker_quote_binding_uses_matching_metric_row_and_period_column(self):
+        quote = """2023 2024 2025F 2026F
+BPS [원] 73,495 101,515 159,734 342,488
+PBR(배) 1.9 1.7 4.1 3.1
+EV/EBITDA(배) 22.0 3.9 2.4 0.4"""
+        matches = structured_materializer_module.broker_valuation_quote_matches_claim
+        self.assertTrue(
+            matches(
+                role="FORWARD_BOOK_VALUE",
+                exact_quote=quote,
+                period="2026F; report dated 2026-03-03",
+                value=342488,
+            )
+        )
+        self.assertTrue(
+            matches(
+                role="FORWARD_PB",
+                exact_quote=quote,
+                period="2026F; report dated 2026-03-03",
+                value=3.1,
+            )
+        )
+        self.assertTrue(
+            matches(
+                role="FORWARD_EV_EBITDA",
+                exact_quote=quote,
+                period="2026F; report dated 2026-03-03",
+                value=0.4,
+            )
+        )
+        self.assertFalse(
+            matches(
+                role="FORWARD_EV_EBITDA",
+                exact_quote=quote,
+                period="2026F; report dated 2026-03-03",
+                value=3.1,
+            )
+        )
+        self.assertFalse(
+            matches(
+                role="FORWARD_PB",
+                exact_quote="PBR(배) 2025F 3.1 2026F 4.1",
+                period="2026F",
+                value=3.1,
+            )
+        )
+        flattened = (
+            "2023 2024 2025F 2026F BPS 73,495 101,515 159,734 "
+            "342,488 PBR 1.9 1.7 4.1 3.1 EV/EBITDA 22.0 3.9 2.4 0.4"
+        )
+        for role, wrong_value in (
+            ("FORWARD_BOOK_VALUE", 3.1),
+            ("FORWARD_PB", 0.4),
+            ("FORWARD_EV_EBITDA", 3.1),
+        ):
+            with self.subTest(role=role):
+                self.assertFalse(
+                    matches(
+                        role=role,
+                        exact_quote=flattened,
+                        period="2026F",
+                        value=wrong_value,
+                    )
+                )
+
+    def test_broker_role_rejects_generic_period_and_non_krw_book_value(self):
+        self.assertEqual(
+            structured_materializer_module.broker_valuation_forward_period_end(
+                "2026Q1"
+            ),
+            date(2026, 3, 31),
+        )
+        facts, claims, documents = _broker_valuation_fact_bundle()
+        generic_fact = replace(facts[0], period="forward")
+        generic_claim = {**claims[0], "period": "forward"}
+        _, _, generic_audit = structured_materializer_module._fact_structured_routes(
+            target_id="005930",
+            cutoff=date(2026, 7, 12),
+            evidence_facts=(generic_fact,),
+            source_claims=(generic_claim,),
+            source_documents=documents,
+        )
+        self.assertEqual(generic_audit["broker_valuation_record_count"], 0)
+        self.assertEqual(
+            generic_audit["rejection_counts"],
+            {"VALUATION_PERIOD_NOT_FORWARD:FORWARD_BOOK_VALUE": 1},
+        )
+
+        usd_quote = "The broker estimates 2026E BPS at USD 45 per share."
+        usd_fact = replace(
+            facts[0],
+            value=45,
+            unit="USD/share",
+        )
+        usd_claim = {
+            **claims[0],
+            "exact_quote": usd_quote,
+            "value": 45,
+            "unit": "USD/share",
+        }
+        usd_document = {
+            **documents[0],
+            "content_text": usd_quote,
+            "content_hash": hashlib.sha256(usd_quote.encode()).hexdigest(),
+        }
+        _, _, usd_audit = structured_materializer_module._fact_structured_routes(
+            target_id="005930",
+            cutoff=date(2026, 7, 12),
+            evidence_facts=(usd_fact,),
+            source_claims=(usd_claim,),
+            source_documents=(usd_document,),
+        )
+        self.assertEqual(usd_audit["broker_valuation_record_count"], 0)
+        self.assertEqual(
+            usd_audit["rejection_counts"],
+            {"FORWARD_BOOK_VALUE_REQUIRES_KRW_PER_SHARE": 1},
+        )
+
+    def test_required_dart_auth_failure_is_not_hidden_by_broker_substitution(self):
+        transport = FixtureStructuredTransport(future_companyguide=True)
+        facts, claims, documents = _broker_valuation_fact_bundle()
+        with tempfile.TemporaryDirectory() as directory, patch.dict(
+            os.environ,
+            {
+                "OPENDART_API_KEY": "",
+                "OPEN_DART_API_KEY": "",
+                "KRX_OPENAPI_KEY": "KRX-SECRET-FIXTURE",
+                "DATA_GO_KR_SERVICE_KEY": "DATA-SECRET-FIXTURE",
+            },
+            clear=False,
+        ):
+            result = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+                peer_provider=FixturePeerProvider(),
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+                evidence_facts=facts,
+                source_claims=claims,
+                source_documents=documents,
+                required_roles_by_component={
+                    "valuation_rerating": (
+                        "ACTUAL_EARNINGS",
+                        "FORWARD_BOOK_VALUE",
+                        "FORWARD_PB",
+                        "FORWARD_EV_EBITDA",
+                    ),
+                },
+            )
+
+        self.assertEqual(result.engine_result.status, "SOURCE_PENDING")
+        self.assertEqual(result.status, "SOURCE_PENDING")
+        self.assertTrue(
+            any(
+                "OpenDART:FINANCIAL_ACTUALS:AUTH_FAILED" in reason
+                for reason in result.pending_reasons
+            )
+        )
+        self.assertGreater(
+            result.audit["critical_counts"]["provider_or_auth_failure_count"],
+            0,
+        )
+
     def test_nonissuer_guidance_tag_remains_source_pending(self):
         transport = FixtureStructuredTransport()
         facts, claims, documents = _structured_fact_bundle(roles=("FORWARD_GUIDANCE",))
@@ -2823,6 +3098,103 @@ def _structured_fact_bundle(roles=None):
                 quote_ids=(f"QUOTE-{index}",),
                 current_lifecycle="CURRENT",
                 source_independence_group="ISSUER:issuer.example.com",
+                confidence=0.9,
+                structured_evidence_roles=(role,),
+            )
+        )
+    return tuple(facts), tuple(claims), (document,)
+
+
+def _broker_valuation_fact_bundle():
+    definitions = (
+        (
+            "FORWARD_BOOK_VALUE",
+            "The broker estimates 2026E BPS at KRW 342,488 per share.",
+            342488,
+            "KRW/share",
+            "2026E; report dated 2026-03-03",
+        ),
+        (
+            "FORWARD_PB",
+            "The broker estimates 2026F PBR at 3.1x.",
+            3.1,
+            "x",
+            "2026F; report dated 2026-03-03",
+        ),
+        (
+            "FORWARD_EV_EBITDA",
+            "The broker estimates 2026F EV/EBITDA at 4.3x.",
+            4.3,
+            "x EV/EBITDA",
+            "2026F; report dated 2026-03-03",
+        ),
+    )
+    text = " ".join(row[1] for row in definitions)
+    document = {
+        "document_id": "DOC-BROKER-VALUATION",
+        "target_id": "005930",
+        "as_of_date": "2026-07-12",
+        "canonical_url": "https://broker.example.com/report.pdf",
+        "title": "Current Corp valuation report",
+        "source_family": "PUBLIC_BROKER_PDF",
+        "published_at": "2026-03-03",
+        "available_at": "2026-03-03",
+        "content_hash": hashlib.sha256(text.encode()).hexdigest(),
+        "content_text": text,
+        "source_independence_group": "BROKER:broker.example.com",
+        "full_fetch_performed": True,
+        "snippet_only": False,
+        "evidence_eligible": True,
+    }
+    facts = []
+    claims = []
+    for index, (role, quote, value, unit, period) in enumerate(
+        definitions, start=1
+    ):
+        claim_id = f"BROKER-CLAIM-{index}"
+        fact_id = f"BROKER-FACT-{index}"
+        claims.append(
+            {
+                "claim_id": claim_id,
+                "target_id": "005930",
+                "as_of_date": "2026-07-12",
+                "accepted": True,
+                "accepted_by_evidence_os": True,
+                "material": True,
+                "document_id": document["document_id"],
+                "exact_quote": quote,
+                "business_segment": "MEMORY",
+                "scope_business_segment": "MEMORY",
+                "product_family": "HBM",
+                "scope_product_family": "HBM",
+                "predicate_family": role.casefold(),
+                "normalized_object": role.casefold(),
+                "value": value,
+                "unit": unit,
+                "period": period,
+                "confidence": 0.9,
+                "structured_evidence_roles": [role],
+            }
+        )
+        facts.append(
+            EvidenceFact(
+                fact_id=fact_id,
+                target_id="005930",
+                as_of_date="2026-07-12",
+                subject=f"Current Corp {role}",
+                business_segment="MEMORY",
+                product_family="HBM",
+                economic_mechanism=role.casefold(),
+                predicate=role.casefold(),
+                value=value,
+                unit=unit,
+                period=period,
+                direction="NEUTRAL",
+                source_ids=(document["document_id"],),
+                claim_ids=(claim_id,),
+                quote_ids=(f"BROKER-QUOTE-{index}",),
+                current_lifecycle="OPEN",
+                source_independence_group="BROKER:broker.example.com",
                 confidence=0.9,
                 structured_evidence_roles=(role,),
             )

@@ -31,6 +31,7 @@ from e2r.research_brain.researcher_mode.current_researcher_mode import (
 )
 from e2r.research_brain.researcher_mode.evidence_fact_extractor import (
     FACT_EXTRACTION_CANONICAL_STATE_REFRESH_REQUIRED,
+    FACT_EXTRACTION_SEMANTICS_VERSION,
     NUMERIC_SCALAR_STRING_VALUE_TYPE_RESTORED,
     PUNCTUATION_ONLY_VALUE_NORMALIZATION,
     STRUCTURED_JSON_STRING_VALUE_TYPE_RESTORED,
@@ -1066,7 +1067,7 @@ class E2RV5FactExtractionTests(unittest.TestCase):
             corrected_provider.calls[0][
                 "fact_extraction_semantics_version"
             ],
-            "e2r_v5_source_boundary_context_v4",
+            FACT_EXTRACTION_SEMANTICS_VERSION,
         )
         self.assertEqual(
             {row["period"] for row in corrected.material_claims},

@@ -5,7 +5,167 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from datetime import date
 import math
+import re
 from typing import Any, Mapping, Sequence
+
+
+BROKER_VALUATION_FACT_RECORD_CONTRACTS: Mapping[str, Mapping[str, str]] = {
+    "FORWARD_BOOK_VALUE": {
+        "metric_id": "broker_forward_book_value",
+        "unit": "KRW_PER_SHARE",
+    },
+    "FORWARD_PB": {
+        "metric_id": "broker_forward_pb",
+        "unit": "MULTIPLE",
+    },
+    "FORWARD_EV_EBITDA": {
+        "metric_id": "broker_forward_ev_ebitda",
+        "unit": "MULTIPLE",
+    },
+}
+BROKER_VALUATION_QUOTE_METRIC_PATTERNS: Mapping[str, re.Pattern[str]] = {
+    "FORWARD_BOOK_VALUE": re.compile(
+        r"(?:\bBPS\b|book\s+value\s+per\s+share|주당\s*(?:순자산|장부가))",
+        re.IGNORECASE,
+    ),
+    "FORWARD_PB": re.compile(
+        r"(?:\bPBR\b|\bP\s*/\s*B\b|주가\s*순자산)",
+        re.IGNORECASE,
+    ),
+    "FORWARD_EV_EBITDA": re.compile(
+        r"(?:\bEV\s*/\s*EBITDA\b|enterprise\s+value\s*/?\s*EBITDA)",
+        re.IGNORECASE,
+    ),
+}
+
+
+def broker_valuation_forward_period_end(period: str) -> date | None:
+    normalized = str(period or "").strip().upper().replace(" ", "")
+    quarter = re.match(
+        r"^(?:FY)?(20\d{2})(?:Q([1-4])|([1-4])Q|([1-4])분기)",
+        normalized,
+    )
+    if quarter:
+        year = int(quarter.group(1))
+        value = int(next(item for item in quarter.groups()[1:] if item))
+        month = value * 3
+        day = 31 if month in {3, 12} else 30
+        return date(year, month, day)
+    annual = re.match(
+        r"^(?:FY)?(20\d{2})(?:년|[EF])(?:\b|\(|;|,|$)",
+        normalized,
+    )
+    if annual:
+        return date(int(annual.group(1)), 12, 31)
+    return None
+
+
+def broker_valuation_quote_matches_claim(
+    *,
+    role: str,
+    exact_quote: str,
+    period: str,
+    value: float,
+) -> bool:
+    """Bind a broker metric/value to its exact quote row and period column."""
+
+    pattern = BROKER_VALUATION_QUOTE_METRIC_PATTERNS.get(role)
+    period_end = broker_valuation_forward_period_end(period)
+    if pattern is None or period_end is None or not exact_quote.strip():
+        return False
+    year = period_end.year
+    marker_match = re.search(rf"(?<!\d){year}\s*([EF])\b", period, re.I)
+    expected_marker = marker_match.group(1).upper() if marker_match else ""
+    lines = [line.strip() for line in exact_quote.splitlines() if line.strip()]
+    for index, line in enumerate(lines):
+        if not pattern.search(line):
+            continue
+        if _broker_line_binds_period_and_value(
+            line,
+            year=year,
+            expected_marker=expected_marker,
+            value=value,
+        ):
+            return True
+        for header in reversed(lines[max(0, index - 12) : index]):
+            columns = _broker_period_columns(header)
+            if not columns:
+                continue
+            matching_indices = [
+                column_index
+                for column_index, (column_year, column_marker) in enumerate(columns)
+                if column_year == year
+                and (
+                    not expected_marker
+                    or not column_marker
+                    or column_marker == expected_marker
+                )
+            ]
+            if not matching_indices:
+                continue
+            row_values = _broker_reported_numbers(line)
+            if len(row_values) < len(columns):
+                continue
+            aligned_values = row_values[-len(columns) :]
+            if any(
+                _same_broker_reported_number(
+                    aligned_values[column_index], value
+                )
+                for column_index in matching_indices
+            ):
+                return True
+    return False
+
+
+def _broker_line_binds_period_and_value(
+    line: str,
+    *,
+    year: int,
+    expected_marker: str,
+    value: float,
+) -> bool:
+    period_tokens = _broker_period_columns(line)
+    matched_metric_count = sum(
+        bool(pattern.search(line))
+        for pattern in BROKER_VALUATION_QUOTE_METRIC_PATTERNS.values()
+    )
+    if len(period_tokens) != 1 or matched_metric_count != 1:
+        return False
+    token_year, token_marker = period_tokens[0]
+    if token_year != year or (
+        expected_marker
+        and token_marker
+        and token_marker != expected_marker
+    ):
+        return False
+    return any(
+        not (1900 <= abs(number) <= 2100 and number.is_integer())
+        and _same_broker_reported_number(number, value)
+        for number in _broker_reported_numbers(line)
+    )
+
+
+def _broker_period_columns(text: str) -> tuple[tuple[int, str], ...]:
+    return tuple(
+        (int(match.group(1)), (match.group(2) or "").upper())
+        for match in re.finditer(
+            r"(?<!\d)(20\d{2})\s*([EF]?)(?!\d)",
+            text,
+            re.IGNORECASE,
+        )
+    )
+
+
+def _broker_reported_numbers(text: str) -> tuple[float, ...]:
+    return tuple(
+        float(token.replace(",", ""))
+        for token in re.findall(r"[-+]?\d[\d,]*(?:\.\d+)?", text)
+    )
+
+
+def _same_broker_reported_number(left: float, right: float) -> bool:
+    tolerance = max(1e-9, abs(float(right)) * 1e-9)
+    return abs(float(left) - float(right)) <= tolerance
 
 
 @dataclass(frozen=True)
@@ -191,7 +351,11 @@ def _coerce_record(
 
 
 __all__ = [
+    "BROKER_VALUATION_FACT_RECORD_CONTRACTS",
+    "BROKER_VALUATION_QUOTE_METRIC_PATTERNS",
     "StructuredDataResearcher",
     "StructuredMetricRecord",
     "StructuredResearchResult",
+    "broker_valuation_forward_period_end",
+    "broker_valuation_quote_matches_claim",
 ]

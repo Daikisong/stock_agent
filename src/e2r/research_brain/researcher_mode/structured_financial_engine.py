@@ -11,6 +11,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from datetime import date
 import hashlib
+import json
 import math
 from pathlib import Path
 from statistics import median
@@ -25,7 +26,12 @@ from e2r.models import (
 )
 from e2r.production.metadata import write_jsonl
 
-from .structured_data_researcher import StructuredMetricRecord
+from .structured_data_researcher import (
+    BROKER_VALUATION_FACT_RECORD_CONTRACTS,
+    StructuredMetricRecord,
+    broker_valuation_forward_period_end,
+    broker_valuation_quote_matches_claim,
+)
 from .prompt_projection import project_structured_records
 
 
@@ -135,6 +141,22 @@ PHASE86_COMPONENT_ROLE_COMPATIBILITY: Mapping[str, tuple[str, ...]] = {
     "CAPEX_SUPPLY_RESPONSE": ("CAPEX",),
     "DURABLE_VISIBILITY": ("FORWARD_GUIDANCE",),
 }
+
+_PUBLIC_BROKER_PROTECTED_VALUATION_METRIC_IDS = frozenset(
+    {
+        *(contract["metric_id"] for contract in BROKER_VALUATION_FACT_RECORD_CONTRACTS.values()),
+        "forward_book_value",
+        "forward_bv",
+        "consensus_forward_book_value",
+        "issuer_guidance_book_value_midpoint",
+        "forward_pb",
+        "historical_forward_pb",
+        "consensus_forward_pb",
+        "forward_ev_ebitda",
+        "historical_forward_ev_ebitda",
+        "consensus_forward_ev_ebitda",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -305,6 +327,11 @@ class StructuredSourcePayload:
     segment_observations: tuple[SegmentFinancialObservation, ...] = ()
     guidance_observations: tuple[ForwardGuidanceObservation, ...] = ()
     diagnostics: Mapping[str, Any] = field(default_factory=dict)
+    verified_seed_ingress: Any | None = field(
+        default=None,
+        repr=False,
+        compare=False,
+    )
     schema_version: str = "e2r_structured_source_payload_v1"
 
     def __post_init__(self) -> None:
@@ -598,7 +625,6 @@ class StructuredFinancialConsensusValuationEngine:
         route_names = [route.route_name for route in routes]
         if len(route_names) != len(set(route_names)):
             raise ValueError("structured source routes must be unique per run")
-
         records: list[StructuredMetricRecord] = []
         rejections: list[StructuredRecordRejection] = []
         attempts: list[StructuredSourceAttempt] = []
@@ -732,7 +758,7 @@ class StructuredFinancialConsensusValuationEngine:
                 sorted(
                     role
                     for role in set(required)
-                    if _structured_requirement_is_covered(role, covered_roles)
+                    if structured_requirement_is_covered(role, covered_roles)
                 )
             )
             for component_id, required in requirements.items()
@@ -742,7 +768,7 @@ class StructuredFinancialConsensusValuationEngine:
                 sorted(
                     role
                     for role in set(required)
-                    if not _structured_requirement_is_covered(
+                    if not structured_requirement_is_covered(
                         role, covered_roles
                     )
                 )
@@ -814,6 +840,11 @@ class StructuredFinancialConsensusValuationEngine:
         prices: list[_TaggedRow],
         peers: list[_TaggedRow],
     ) -> None:
+        broker_ingress_reason = _verified_broker_fact_ingress_rejection(
+            payload=payload,
+            target_id=target_id,
+            cutoff=cutoff,
+        )
         for item in payload.financial_actuals:
             identity = _actual_period(item)
             reason = _financial_actual_rejection(item, symbol=symbol, cutoff=cutoff)
@@ -836,7 +867,12 @@ class StructuredFinancialConsensusValuationEngine:
 
         for item in payload.consensus_snapshots:
             identity = f"{item.fiscal_year}:{item.date.isoformat()}:{item.source}"
-            reason = _consensus_rejection(item, symbol=symbol, cutoff=cutoff)
+            reason = _consensus_rejection(
+                item,
+                symbol=symbol,
+                cutoff=cutoff,
+                route_name=payload.route_name,
+            )
             if reason:
                 rejections.append(
                     StructuredRecordRejection(
@@ -917,6 +953,7 @@ class StructuredFinancialConsensusValuationEngine:
                 target_id=target_id,
                 cutoff=cutoff,
                 route_name=payload.route_name,
+                broker_ingress_reason=broker_ingress_reason,
             )
             if reason:
                 rejections.append(
@@ -1524,8 +1561,14 @@ class StructuredFinancialConsensusValuationEngine:
         existing: Sequence[StructuredMetricRecord],
     ) -> tuple[StructuredMetricRecord, ...]:
         result: list[StructuredMetricRecord] = []
-        current_price = _latest_metric(existing, ("current_price",))
-        market_cap = _latest_metric(existing, ("market_cap",))
+        valuation_existing = tuple(
+            row
+            for row in existing
+            if row.source_route != "PUBLIC_BROKER_REPORT"
+            or row.record_kind == "SOURCE_BACKED_BROKER_VALUATION"
+        )
+        current_price = _latest_metric(valuation_existing, ("current_price",))
+        market_cap = _latest_metric(valuation_existing, ("market_cap",))
         latest_consensus = _latest_consensus(consensus, cutoff)
         forward_inputs: dict[str, StructuredMetricRecord] = {}
         if latest_consensus is not None:
@@ -1618,6 +1661,7 @@ class StructuredFinancialConsensusValuationEngine:
                     "forward_book_value",
                     "forward_bv",
                     "consensus_forward_book_value",
+                    "broker_forward_book_value",
                     "issuer_guidance_book_value_midpoint",
                 ),
                 "FORWARD_BOOK_VALUE",
@@ -1636,8 +1680,10 @@ class StructuredFinancialConsensusValuationEngine:
         ):
             if metric_id in forward_inputs:
                 continue
-            source = _latest_metric(existing, aliases)
-            if source is None:
+            source = _latest_metric(valuation_existing, aliases)
+            if source is None or not _valuation_alias_role_is_compatible(
+                source, role
+            ):
                 continue
             record = _copy_as_valuation_input(
                 source,
@@ -1660,7 +1706,7 @@ class StructuredFinancialConsensusValuationEngine:
             actuals=actuals,
             current_price=current_price,
             market_cap=market_cap,
-            existing=(*existing, *result),
+            existing=(*valuation_existing, *result),
         )
         result.extend(scenario_records)
         if "forward_fcf" not in forward_inputs:
@@ -1679,8 +1725,8 @@ class StructuredFinancialConsensusValuationEngine:
                 result.append(forward_fcf_record)
                 forward_inputs["forward_fcf"] = forward_fcf_record
 
-        net_debt = _latest_metric(existing, ("net_debt",))
-        net_cash = _latest_metric(existing, ("net_cash",))
+        net_debt = _latest_metric(valuation_existing, ("net_debt",))
+        net_cash = _latest_metric(valuation_existing, ("net_cash",))
         if net_debt is None and net_cash is not None:
             net_debt = _derived_from_one(
                 net_cash,
@@ -1695,10 +1741,13 @@ class StructuredFinancialConsensusValuationEngine:
             result.append(net_debt)
         if net_debt is None:
             cash = _latest_metric(
-                existing,
+                valuation_existing,
                 ("cash_and_equivalents", "cash", "cash_equivalents"),
             )
-            debt = _latest_metric(existing, ("total_debt", "interest_bearing_debt"))
+            debt = _latest_metric(
+                valuation_existing,
+                ("total_debt", "interest_bearing_debt"),
+            )
             if cash is not None and debt is not None:
                 net_debt = _metric_record(
                     target_id=target_id,
@@ -1749,6 +1798,10 @@ class StructuredFinancialConsensusValuationEngine:
             ),
         ):
             if numerator is None or denominator is None:
+                continue
+            if metric_id == "forward_pb" and not _per_share_currency_matches(
+                numerator.unit, denominator.unit
+            ):
                 continue
             value = _safe_divide(float(numerator.value), float(denominator.value))
             if value is None or value <= 0:
@@ -1822,7 +1875,7 @@ class StructuredFinancialConsensusValuationEngine:
             _historical_band_records(
                 target_id=target_id,
                 cutoff=cutoff,
-                existing=(*existing, *result),
+                existing=(*valuation_existing, *result),
                 current_multiples=derived_multiples,
             )
         )
@@ -1831,7 +1884,7 @@ class StructuredFinancialConsensusValuationEngine:
                 target_id=target_id,
                 cutoff=cutoff,
                 peers=peers,
-                existing=(*existing, *result),
+                existing=(*valuation_existing, *result),
             )
         )
         return tuple(result)
@@ -1871,12 +1924,18 @@ def _financial_actual_rejection(
 
 
 def _consensus_rejection(
-    item: ConsensusSnapshot, *, symbol: str, cutoff: date
+    item: ConsensusSnapshot,
+    *,
+    symbol: str,
+    cutoff: date,
+    route_name: str,
 ) -> str | None:
     if item.symbol != symbol:
         return "CROSS_TARGET_CONSENSUS"
     if item.date > cutoff or item.as_of_date > cutoff:
         return "FUTURE_CONSENSUS"
+    if route_name == "PUBLIC_BROKER_REPORT":
+        return "PUBLIC_BROKER_CONSENSUS_REQUIRES_VERIFIED_FACT_INGRESS"
     return None
 
 
@@ -1928,6 +1987,7 @@ def _seed_record_rejection(
     target_id: str,
     cutoff: date,
     route_name: str,
+    broker_ingress_reason: str | None,
 ) -> str | None:
     if item.target_id != target_id:
         return "CROSS_TARGET_STRUCTURED_RECORD"
@@ -1939,6 +1999,28 @@ def _seed_record_rejection(
         return "FUTURE_STRUCTURED_RECORD"
     if item.source_route != route_name:
         return "STRUCTURED_RECORD_ROUTE_MISMATCH"
+    if item.record_kind == "ISSUER_FORWARD_GUIDANCE":
+        return "ISSUER_FORWARD_GUIDANCE_REQUIRES_TYPED_OBSERVATION"
+    broker_metric_ids = {
+        contract["metric_id"]
+        for contract in BROKER_VALUATION_FACT_RECORD_CONTRACTS.values()
+    }
+    if item.metric_id in broker_metric_ids:
+        if route_name != "PUBLIC_BROKER_REPORT":
+            return "BROKER_VALUATION_METRIC_REQUIRES_PUBLIC_BROKER_ROUTE"
+        if item.record_kind != "SOURCE_BACKED_BROKER_VALUATION":
+            return "BROKER_VALUATION_METRIC_REQUIRES_VERIFIED_RECORD_KIND"
+    if (
+        _public_broker_seed_requires_verified_ingress(item, route_name)
+        and broker_ingress_reason
+    ):
+        return broker_ingress_reason
+    broker_fact_roles = set(BROKER_VALUATION_FACT_RECORD_CONTRACTS)
+    if set(item.evidence_roles) & broker_fact_roles:
+        if route_name != "PUBLIC_BROKER_REPORT":
+            return "BROKER_VALUATION_ROLE_REQUIRES_PUBLIC_BROKER_ROUTE"
+        if item.record_kind != "SOURCE_BACKED_BROKER_VALUATION":
+            return "BROKER_VALUATION_ROLE_REQUIRES_VERIFIED_RECORD_KIND"
     if item.dataset == "VALUATION":
         capabilities = STRUCTURED_ROUTE_CAPABILITIES.get(route_name, ())
         if "VALUATION" not in capabilities:
@@ -1948,7 +2030,188 @@ def _seed_record_rejection(
             "DETERMINISTIC_SCENARIO",
         }:
             return "VALUATION_WITHOUT_STRUCTURED_SOURCE"
+    if item.record_kind == "SOURCE_BACKED_BROKER_VALUATION":
+        if broker_ingress_reason:
+            return broker_ingress_reason
+        if route_name != "PUBLIC_BROKER_REPORT":
+            return "BROKER_VALUATION_REQUIRES_PUBLIC_BROKER_ROUTE"
+        if item.provenance != "STRUCTURED_EXTRACTED":
+            return "BROKER_VALUATION_REQUIRES_EXTRACTED_PROVENANCE"
+        if len(item.evidence_roles) != 1:
+            return "BROKER_VALUATION_REQUIRES_ONE_ROLE"
+        role = item.evidence_roles[0]
+        contract = BROKER_VALUATION_FACT_RECORD_CONTRACTS.get(role)
+        if contract is None:
+            return "BROKER_VALUATION_ROLE_NOT_ALLOWED"
+        if item.metric_id != contract["metric_id"]:
+            return "BROKER_VALUATION_METRIC_ROLE_MISMATCH"
+        if item.unit != contract["unit"]:
+            return "BROKER_VALUATION_UNIT_ROLE_MISMATCH"
+        if item.metadata.get("source_family") != "PUBLIC_BROKER_PDF":
+            return "BROKER_VALUATION_SOURCE_FAMILY_MISMATCH"
+        if item.metadata.get("exact_quote_verified") is not True:
+            return "BROKER_VALUATION_QUOTE_NOT_VERIFIED"
+        if item.metadata.get("fact_boundary_validation_version") != (
+            "e2r_broker_valuation_fact_boundary_v1"
+        ):
+            return "BROKER_VALUATION_FACT_BOUNDARY_UNVERIFIED"
+        fact_id = str(item.metadata.get("fact_id") or "").strip()
+        claim_id = str(item.metadata.get("claim_id") or "").strip()
+        document_id = str(item.metadata.get("document_id") or "").strip()
+        if not fact_id or not claim_id or item.source_ids != (document_id,):
+            return "BROKER_VALUATION_FACT_CLAIM_DOCUMENT_LINEAGE_MISSING"
+        exact_quote = str(item.metadata.get("exact_quote") or "")
+        quote_hash = str(item.metadata.get("exact_quote_hash") or "")
+        document_hash = str(item.metadata.get("document_content_hash") or "")
+        if (
+            not exact_quote
+            or hashlib.sha256(exact_quote.encode("utf-8")).hexdigest()
+            != quote_hash
+            or not _is_sha256(document_hash)
+        ):
+            return "BROKER_VALUATION_QUOTE_OR_DOCUMENT_HASH_INVALID"
+        if not broker_valuation_quote_matches_claim(
+            role=role,
+            exact_quote=exact_quote,
+            period=item.period,
+            value=float(item.value),
+        ):
+            return "BROKER_VALUATION_QUOTE_ROLE_VALUE_MISMATCH"
+        if role == "FORWARD_BOOK_VALUE":
+            reported_unit = str(
+                item.metadata.get("reported_unit") or ""
+            ).casefold()
+            if not (
+                ("krw" in reported_unit or "원" in reported_unit)
+                and (
+                    "share" in reported_unit
+                    or "주당" in reported_unit
+                    or "/주" in reported_unit
+                )
+            ):
+                return "BROKER_BOOK_VALUE_REPORTED_UNIT_INVALID"
+        period_end = broker_valuation_forward_period_end(item.period)
+        if period_end is None:
+            return "BROKER_VALUATION_PERIOD_NOT_CONCRETE"
+        available = date.fromisoformat(
+            (item.available_at or item.observed_at)[:10]
+        )
+        if period_end <= available:
+            return "BROKER_VALUATION_PERIOD_NOT_FORWARD"
     return None
+
+
+_VERIFIED_BROKER_FACT_INGRESS_SEAL = object()
+
+
+@dataclass(frozen=True)
+class _VerifiedBrokerFactIngress:
+    target_id: str
+    as_of_date: str
+    route_name: str
+    record_roster_hash: str
+    seal: object = field(repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        if self.seal is not _VERIFIED_BROKER_FACT_INGRESS_SEAL:
+            raise ValueError("broker fact ingress seal is not authoritative")
+
+
+def _broker_fact_record_roster_hash(
+    rows: Sequence[StructuredMetricRecord],
+) -> str:
+    canonical = [
+        row.to_dict()
+        for row in sorted(rows, key=lambda value: value.record_id)
+    ]
+    payload = json.dumps(
+        canonical,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+        default=str,
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _issue_verified_broker_fact_ingress(
+    *,
+    target_id: str,
+    as_of_date: str,
+    route_name: str,
+    records: Sequence[StructuredMetricRecord],
+) -> _VerifiedBrokerFactIngress:
+    """Issue a process-local capability after the fact boundary has verified rows."""
+
+    if (
+        route_name != "PUBLIC_BROKER_REPORT"
+        or not records
+        or any(
+            row.record_kind != "SOURCE_BACKED_BROKER_VALUATION"
+            for row in records
+        )
+    ):
+        raise ValueError("verified broker fact ingress requires broker records")
+    return _VerifiedBrokerFactIngress(
+        target_id=target_id,
+        as_of_date=as_of_date,
+        route_name=route_name,
+        record_roster_hash=_broker_fact_record_roster_hash(records),
+        seal=_VERIFIED_BROKER_FACT_INGRESS_SEAL,
+    )
+
+
+def _verified_broker_fact_ingress_rejection(
+    *,
+    payload: StructuredSourcePayload,
+    target_id: str,
+    cutoff: date,
+) -> str | None:
+    broker_records = tuple(
+        row
+        for row in payload.structured_records
+        if _public_broker_seed_requires_verified_ingress(
+            row, payload.route_name
+        )
+    )
+    if not broker_records:
+        return None
+    ingress = payload.verified_seed_ingress
+    if (
+        not isinstance(ingress, _VerifiedBrokerFactIngress)
+        or ingress.seal is not _VERIFIED_BROKER_FACT_INGRESS_SEAL
+    ):
+        return "BROKER_VALUATION_VERIFIED_INGRESS_REQUIRED"
+    if (
+        ingress.target_id != target_id
+        or ingress.as_of_date != cutoff.isoformat()
+        or ingress.route_name != payload.route_name
+    ):
+        return "BROKER_VALUATION_VERIFIED_INGRESS_SCOPE_MISMATCH"
+    if ingress.record_roster_hash != _broker_fact_record_roster_hash(
+        broker_records
+    ):
+        return "BROKER_VALUATION_VERIFIED_INGRESS_ROSTER_MISMATCH"
+    return None
+
+
+def _public_broker_seed_requires_verified_ingress(
+    item: StructuredMetricRecord,
+    route_name: str,
+) -> bool:
+    if route_name != "PUBLIC_BROKER_REPORT":
+        return False
+    protected_roles = {
+        *BROKER_VALUATION_FACT_RECORD_CONTRACTS,
+        "FORWARD_PE",
+        "OWN_HISTORICAL_BAND",
+    }
+    return bool(
+        item.record_kind == "SOURCE_BACKED_BROKER_VALUATION"
+        or item.dataset == "VALUATION"
+        or item.metric_id in _PUBLIC_BROKER_PROTECTED_VALUATION_METRIC_IDS
+        or set(item.evidence_roles) & protected_roles
+    )
 
 
 def _segment_rejection(
@@ -2444,36 +2707,6 @@ def _records_from_report(
                     },
                 )
             )
-    for metric_id, value, unit, role in (
-        ("broker_forward_pe", item.est_per, "MULTIPLE", "FORWARD_PE"),
-        ("broker_forward_pb", item.est_pbr, "MULTIPLE", "FORWARD_PB"),
-    ):
-        if value is None:
-            continue
-        rows.append(
-            _metric_record(
-                target_id=target_id,
-                cutoff=cutoff,
-                metric_id=metric_id,
-                value=value,
-                unit=unit,
-                period=f"FY{fiscal_year}E",
-                roles=(role,),
-                source_ids=tagged.source_ids,
-                source_route=tagged.route_name,
-                observed_at=item.publish_date.isoformat(),
-                record_kind="PUBLIC_BROKER_STRUCTURED_VALUATION",
-                confidence=_route_confidence(tagged.route_name),
-                dataset="VALUATION",
-                provenance="STRUCTURED_EXTRACTED",
-                metadata={
-                    "broker": item.broker,
-                    "title": item.title,
-                    "structured_source": True,
-                    "generic_article_claim": False,
-                },
-            )
-        )
     if item.target_price is not None:
         rows.append(
             _metric_record(
@@ -2740,6 +2973,35 @@ def _copy_as_valuation_input(
     )
 
 
+def _valuation_alias_role_is_compatible(
+    source: StructuredMetricRecord,
+    target_role: str,
+) -> bool:
+    if structured_requirement_is_covered(
+        target_role, set(source.evidence_roles)
+    ):
+        return True
+    allowed_issuer_guidance_metrics = {
+        "FORWARD_EPS": {"issuer_guidance_eps_midpoint"},
+        "FORWARD_FCF": {
+            "issuer_guidance_fcf_midpoint",
+            "issuer_guidance_free_cash_flow_midpoint",
+        },
+        "FORWARD_BOOK_VALUE": {
+            "issuer_guidance_book_value_midpoint"
+        },
+        "FORWARD_EBITDA": {"issuer_guidance_ebitda_midpoint"},
+    }
+    return bool(
+        source.source_route == "ISSUER_GUIDANCE"
+        and source.record_kind == "ISSUER_FORWARD_GUIDANCE"
+        and source.provenance == "STRUCTURED_EXTRACTED"
+        and "FORWARD_GUIDANCE" in source.evidence_roles
+        and source.metric_id
+        in allowed_issuer_guidance_metrics.get(target_role, set())
+    )
+
+
 def _derived_from_one(
     source: StructuredMetricRecord,
     *,
@@ -2841,25 +3103,31 @@ def _historical_band_records(
     result: list[StructuredMetricRecord] = []
     definitions = {
         "forward_pe": (
+            "FORWARD_PE",
             "historical_forward_pe",
             "consensus_forward_pe",
             "broker_forward_pe",
         ),
         "forward_pb": (
+            "FORWARD_PB",
             "historical_forward_pb",
             "consensus_forward_pb",
             "broker_forward_pb",
         ),
         "forward_ev_ebitda": (
+            "FORWARD_EV_EBITDA",
             "historical_forward_ev_ebitda",
             "forward_ev_ebitda",
+            "broker_forward_ev_ebitda",
         ),
     }
-    for metric_id, aliases in definitions.items():
+    for metric_id, (required_role, *alias_values) in definitions.items():
+        aliases = tuple(alias_values)
         observations = [
             row
             for row in existing
             if row.metric_id in aliases
+            and "VALUATION_HISTORY" in row.evidence_roles
             and _number(row.value) is not None
             and float(row.value) > 0
             and row.record_kind
@@ -2875,7 +3143,17 @@ def _historical_band_records(
         if len(history) < 3:
             continue
         current = current_multiples.get(metric_id) or _latest_metric(
-            existing, (metric_id, *aliases)
+            tuple(
+                row
+                for row in existing
+                if (
+                    structured_requirement_is_covered(
+                        required_role, set(row.evidence_roles)
+                    )
+                    or "VALUATION_HISTORY" in row.evidence_roles
+                )
+            ),
+            (metric_id, *aliases),
         )
         if current is None or _number(current.value) is None:
             continue
@@ -3318,6 +3596,27 @@ def _percent_change(current: Any, previous: Any) -> float | None:
     return (current_value / previous_value - 1.0) * 100.0
 
 
+def _per_share_currency_matches(price_unit: str, per_share_unit: str) -> bool:
+    normalized_price = str(price_unit or "").strip().upper()
+    normalized_per_share = str(per_share_unit or "").strip().upper()
+    if "PER_SHARE" not in normalized_per_share:
+        return normalized_per_share == "CURRENCY_PER_SHARE"
+
+    def explicit_currency(unit: str) -> str | None:
+        for currency in ("KRW", "USD", "EUR", "JPY", "CNY"):
+            if unit == currency or unit.startswith(currency + "_"):
+                return currency
+        return None
+
+    price_currency = explicit_currency(normalized_price)
+    book_currency = explicit_currency(normalized_per_share)
+    return (
+        price_currency is None
+        or book_currency is None
+        or price_currency == book_currency
+    )
+
+
 def _safe_divide(numerator: Any, denominator: Any) -> float | None:
     left = _number(numerator)
     right = _number(denominator)
@@ -3372,6 +3671,16 @@ def _number(value: Any) -> float | None:
     return parsed if math.isfinite(parsed) else None
 
 
+def _is_sha256(value: str) -> bool:
+    if len(value) != 64:
+        return False
+    try:
+        int(value, 16)
+    except ValueError:
+        return False
+    return True
+
+
 def _quantile(values: Sequence[float], probability: float) -> float:
     ordered = sorted(float(value) for value in values)
     if not ordered:
@@ -3391,7 +3700,7 @@ def _clamp(value: float, lower: float, upper: float) -> float:
     return min(upper, max(lower, float(value)))
 
 
-def _structured_requirement_is_covered(
+def structured_requirement_is_covered(
     requirement: str,
     covered_roles: set[str],
 ) -> bool:
@@ -3461,5 +3770,6 @@ __all__ = [
     "StructuredSourceAttempt",
     "StructuredSourcePayload",
     "StructuredSourceRoute",
+    "structured_requirement_is_covered",
     "write_structured_financial_outputs",
 ]

@@ -79,7 +79,7 @@ OBJECTIVE_FACT_RELATIONS = frozenset(
     {"ADVANCE", "COUNTER", "SUPERSEDE"}
 )
 FACT_EXTRACTION_SEMANTICS_VERSION = (
-    "e2r_v5_source_boundary_context_v4"
+    "e2r_v5_structured_valuation_roles_v5"
 )
 SOURCE_BOUNDARY_CONTEXT_CHARS = 4_000
 _TRUSTED_COVERAGE_REFRESH_SOURCE_TIERS = frozenset(

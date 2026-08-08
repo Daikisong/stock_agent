@@ -261,6 +261,9 @@ class EvidenceFact:
             "SEGMENT_CONTRIBUTION",
             "QOQ_GROWTH",
             "FORWARD_GUIDANCE",
+            "FORWARD_BOOK_VALUE",
+            "FORWARD_PB",
+            "FORWARD_EV_EBITDA",
         }:
             raise ValueError("EvidenceFact contains unknown structured evidence role")
 
