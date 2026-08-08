@@ -4776,7 +4776,13 @@ def _report_consensus_snapshots(
                 source=f"company_guide_report:{report.broker}",
                 op_e=op_value,
                 eps_e=report.fy1_eps,
-                per_e=report.est_per,
+                # CompanyGuide's recent-report rows can repeat the provider
+                # page's current CLOSE_PRC on old reports.  That value is not
+                # the report-date market price and therefore cannot be a
+                # point-in-time forward P/E observation.  The structured
+                # engine combines the report-date EPS with KRX history
+                # instead.
+                per_e=None,
                 target_price=report.target_price,
                 parsed_fields={
                     "structured_consensus_source": True,

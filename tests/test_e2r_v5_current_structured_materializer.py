@@ -12,6 +12,7 @@ import zipfile
 from pathlib import Path
 from unittest.mock import patch
 
+from e2r.models import ResearchReport
 from e2r.production.source_connectors.companyguide_live_connector import (
     parse_companyguide_live_consensus_payload,
 )
@@ -797,6 +798,33 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
             payload["score_anchor_text"].startswith("투자의견 컨센서스")
         )
         self.assertNotIn("og:description", payload["score_anchor_text"])
+
+    def test_report_snapshot_does_not_reuse_provider_current_price_as_historical_pe(
+        self,
+    ):
+        report = ResearchReport(
+            symbol="005930",
+            publish_date=date(2026, 1, 5),
+            broker="Broker",
+            title="Old report",
+            as_of_date=date(2026, 7, 12),
+            current_price=1_567_000,
+            fy1_eps=10_000,
+            est_per=156.7,
+            parsed_fields={
+                "structured_consensus_source": True,
+                "report_id": "REPORT-OLD",
+            },
+        )
+
+        snapshot = structured_materializer_module._report_consensus_snapshots(
+            (report,),
+            target_id="005930",
+            cutoff=date(2026, 7, 12),
+        )[0]
+
+        self.assertEqual(snapshot.eps_e, 10_000)
+        self.assertIsNone(snapshot.per_e)
 
     def test_live_sources_feed_phase86_and_resume_without_secret_or_refetch(self):
         transport = FixtureStructuredTransport()

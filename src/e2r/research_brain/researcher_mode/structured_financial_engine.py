@@ -739,6 +739,7 @@ class StructuredFinancialConsensusValuationEngine:
                 cutoff=cutoff,
                 actuals=actuals,
                 consensus=consensus,
+                reports=reports,
                 prices=prices,
                 peers=peers,
                 existing=records,
@@ -1346,9 +1347,12 @@ class StructuredFinancialConsensusValuationEngine:
         prices: Sequence[_TaggedRow],
         existing: Sequence[StructuredMetricRecord],
     ) -> tuple[StructuredMetricRecord, ...]:
-        target_prices = sorted(
-            (row for row in prices if row.value.symbol == symbol),
-            key=lambda row: row.value.date,
+        target_prices = list(
+            _point_in_time_price_rows(
+                prices,
+                symbol=symbol,
+                fail_if_latest_krx_date_conflicts=True,
+            )
         )
         if not target_prices:
             return ()
@@ -1479,13 +1483,12 @@ class StructuredFinancialConsensusValuationEngine:
             )
             if lookback_target is not None:
                 for benchmark_symbol in benchmark_symbols:
-                    benchmark = sorted(
-                        (
-                            row
-                            for row in prices
-                            if row.value.symbol == benchmark_symbol
-                        ),
-                        key=lambda row: row.value.date,
+                    benchmark = list(
+                        _point_in_time_price_rows(
+                            prices,
+                            symbol=benchmark_symbol,
+                            fail_if_latest_krx_date_conflicts=True,
+                        )
                     )
                     if not benchmark:
                         continue
@@ -1556,6 +1559,7 @@ class StructuredFinancialConsensusValuationEngine:
         cutoff: date,
         actuals: Sequence[_TaggedRow],
         consensus: Sequence[_TaggedRow],
+        reports: Sequence[_TaggedRow],
         prices: Sequence[_TaggedRow],
         peers: Sequence[_TaggedRow],
         existing: Sequence[StructuredMetricRecord],
@@ -1871,6 +1875,15 @@ class StructuredFinancialConsensusValuationEngine:
                     )
                 )
 
+        result.extend(
+            _companyguide_report_forward_pe_history_records(
+                target_id=target_id,
+                symbol=symbol,
+                cutoff=cutoff,
+                reports=reports,
+                prices=prices,
+            )
+        )
         result.extend(
             _historical_band_records(
                 target_id=target_id,
@@ -2669,6 +2682,25 @@ def _records_from_report(
 ) -> tuple[StructuredMetricRecord, ...]:
     item: ResearchReport = tagged.value
     fiscal_year = int(item.parsed_fields.get("fy1_fiscal_year") or item.publish_date.year)
+    report_source_id = str(
+        item.parsed_fields.get("structured_page_source_id") or ""
+    ).strip()
+    validated_report_source_id = (
+        report_source_id if report_source_id in set(tagged.source_ids) else ""
+    )
+    source_ids = (
+        (validated_report_source_id,)
+        if validated_report_source_id
+        else tagged.source_ids
+    )
+    report_lineage = {
+        "report_id": str(item.parsed_fields.get("report_id") or "").strip()
+        or None,
+        "provider_index": str(item.parsed_fields.get("idx") or "").strip()
+        or None,
+        "provider_page": item.parsed_fields.get("provider_page"),
+        "structured_page_source_id": validated_report_source_id or None,
+    }
     rows: list[StructuredMetricRecord] = []
     for forward_index, values in (
         (1, (item.fy1_sales, item.fy1_op, item.fy1_eps)),
@@ -2692,7 +2724,7 @@ def _records_from_report(
                     unit=unit,
                     period=period,
                     roles=(role, "PUBLIC_BROKER_FORWARD_ESTIMATE"),
-                    source_ids=tagged.source_ids,
+                    source_ids=source_ids,
                     source_route=tagged.route_name,
                     observed_at=item.publish_date.isoformat(),
                     record_kind="PUBLIC_BROKER_STRUCTURED_ESTIMATE",
@@ -2704,6 +2736,7 @@ def _records_from_report(
                         "title": item.title,
                         "structured_source": True,
                         "forward_index": forward_index,
+                        **report_lineage,
                     },
                 )
             )
@@ -2717,7 +2750,7 @@ def _records_from_report(
                 unit="PRICE",
                 period=item.publish_date.isoformat(),
                 roles=("TARGET_PRICE_ONLY",),
-                source_ids=tagged.source_ids,
+                source_ids=source_ids,
                 source_route=tagged.route_name,
                 observed_at=item.publish_date.isoformat(),
                 record_kind="TARGET_PRICE_SNAPSHOT",
@@ -2729,6 +2762,7 @@ def _records_from_report(
                     "target_price_only": True,
                     "earnings_revision": False,
                     "structured_source": True,
+                    **report_lineage,
                 },
             )
         )
@@ -2742,7 +2776,7 @@ def _records_from_report(
                 unit="PERCENT",
                 period=item.publish_date.isoformat(),
                 roles=("TARGET_PRICE_ONLY",),
-                source_ids=tagged.source_ids,
+                source_ids=source_ids,
                 source_route=tagged.route_name,
                 observed_at=item.publish_date.isoformat(),
                 record_kind="TARGET_PRICE_REVISION",
@@ -2755,6 +2789,7 @@ def _records_from_report(
                     "target_price_only": True,
                     "earnings_revision": False,
                     "structured_source": True,
+                    **report_lineage,
                 },
             )
         )
@@ -2785,7 +2820,7 @@ def _records_from_report(
                 unit="PERCENT",
                 period=f"FY{fiscal_year}E",
                 roles=(role,),
-                source_ids=tagged.source_ids,
+                source_ids=source_ids,
                 source_route=tagged.route_name,
                 observed_at=item.publish_date.isoformat(),
                 record_kind="EARNINGS_REVISION",
@@ -2797,6 +2832,7 @@ def _records_from_report(
                     "revision_family": "EARNINGS",
                     "target_price_only": False,
                     "structured_source": True,
+                    **report_lineage,
                 },
             )
         )
@@ -3146,11 +3182,16 @@ def _historical_band_records(
             tuple(
                 row
                 for row in existing
-                if (
-                    structured_requirement_is_covered(
-                        required_role, set(row.evidence_roles)
-                    )
-                    or "VALUATION_HISTORY" in row.evidence_roles
+                if "VALUATION_HISTORY" not in row.evidence_roles
+                and row.record_kind
+                not in {
+                    "VALUATION_HISTORY_OBSERVATION",
+                    "VALUATION_HISTORICAL_BAND",
+                    "VALUATION_PEER_BAND",
+                }
+                and row.metric_id != f"historical_{metric_id}"
+                and structured_requirement_is_covered(
+                    required_role, set(row.evidence_roles)
                 )
             ),
             (metric_id, *aliases),
@@ -3201,6 +3242,218 @@ def _historical_band_records(
                 )
             )
     return tuple(result)
+
+
+_HISTORICAL_FORWARD_PE_MAX_PRICE_LAG_DAYS = 7
+
+
+def _companyguide_report_forward_pe_history_records(
+    *,
+    target_id: str,
+    symbol: str,
+    cutoff: date,
+    reports: Sequence[_TaggedRow],
+    prices: Sequence[_TaggedRow],
+) -> tuple[StructuredMetricRecord, ...]:
+    """Build dated own forward-P/E observations from report EPS and KRX closes.
+
+    CompanyGuide report metadata supplies a dated forward EPS, but its
+    ``CLOSE_PRC`` can be the current provider-page value repeated across old
+    reports.  Reconstruct the point-in-time multiple with the last official
+    KRX close available on or before each report date.  Multiple brokers on
+    the same date become one deterministic daily median observation.
+    """
+
+    verified_report_records = tuple(
+        record
+        for tagged in reports
+        if tagged.route_name == "COMPANYGUIDE"
+        for record in _records_from_report(
+            target_id=target_id,
+            cutoff=cutoff,
+            tagged=tagged,
+        )
+    )
+    eps_by_date: dict[date, list[StructuredMetricRecord]] = {}
+    for row in verified_report_records:
+        if not (
+            row.target_id == target_id
+            and row.source_route == "COMPANYGUIDE"
+            and row.metric_id == "broker_forward_eps"
+            and row.record_kind == "PUBLIC_BROKER_STRUCTURED_ESTIMATE"
+            and row.dataset == "CONSENSUS_REVISION"
+            and row.provenance == "STRUCTURED_EXTRACTED"
+            and row.unit == "CURRENCY_PER_SHARE"
+            and row.metadata.get("structured_source") is True
+            and row.metadata.get("forward_index") == 1
+            and {"FORWARD_EPS", "PUBLIC_BROKER_FORWARD_ESTIMATE"}
+            <= set(row.evidence_roles)
+            and _number(row.value) is not None
+            and float(row.value) > 0
+        ):
+            continue
+        try:
+            observed = date.fromisoformat(row.observed_at[:10])
+            available = date.fromisoformat(row.available_at[:10])
+        except ValueError:
+            continue
+        if observed > cutoff or available > cutoff:
+            continue
+        eps_by_date.setdefault(observed, []).append(row)
+
+    target_prices = tuple(
+        row
+        for row in _point_in_time_price_rows(
+            prices,
+            symbol=symbol,
+            fail_if_latest_krx_date_conflicts=False,
+        )
+        if row.route_name == "KRX_PRICE_MARKET_CAP" and row.value.date <= cutoff
+    )
+    if not eps_by_date or not target_prices:
+        return ()
+
+    result: list[StructuredMetricRecord] = []
+    for report_date in sorted(eps_by_date):
+        price = _bar_on_or_before(target_prices, report_date.toordinal())
+        if price is None:
+            continue
+        lag_days = (report_date - price.value.date).days
+        if lag_days < 0 or lag_days > _HISTORICAL_FORWARD_PE_MAX_PRICE_LAG_DAYS:
+            continue
+        eps_rows = tuple(sorted(eps_by_date[report_date], key=lambda row: row.record_id))
+        rows_by_broker: dict[str, list[StructuredMetricRecord]] = {}
+        broker_labels: dict[str, str] = {}
+        for row in eps_rows:
+            broker = str(row.metadata.get("broker") or "").strip()
+            if not broker:
+                continue
+            broker_key = broker.casefold()
+            rows_by_broker.setdefault(broker_key, []).append(row)
+            broker_labels.setdefault(broker_key, broker)
+        broker_multiples = tuple(
+            sorted(
+                median(
+                    float(price.value.close) / float(row.value)
+                    for row in broker_rows
+                )
+                for broker_rows in rows_by_broker.values()
+            )
+        )
+        if not broker_multiples:
+            continue
+        brokers = tuple(
+            broker_labels[key] for key in sorted(broker_labels)
+        )
+        result.append(
+            _metric_record(
+                target_id=target_id,
+                cutoff=cutoff,
+                metric_id="historical_forward_pe",
+                value=round(float(median(broker_multiples)), 6),
+                unit="MULTIPLE",
+                period=f"FWD_1Y_AS_OF_{report_date.isoformat()}",
+                roles=("VALUATION_HISTORY",),
+                source_ids=tuple(
+                    dict.fromkeys(
+                        (
+                            *(source_id for row in eps_rows for source_id in row.source_ids),
+                            *price.source_ids,
+                        )
+                    )
+                ),
+                source_route="COMPANYGUIDE+KRX_PRICE_MARKET_CAP",
+                observed_at=report_date.isoformat(),
+                record_kind="VALUATION_HISTORY_OBSERVATION",
+                confidence=min(
+                    *(row.confidence for row in eps_rows),
+                    _route_confidence(price.route_name),
+                ),
+                dataset="VALUATION",
+                provenance="DERIVED",
+                input_record_ids=(
+                    *(row.record_id for row in eps_rows),
+                    _price_bar_input_id(price.value),
+                ),
+                metadata={
+                    "formula": "daily_median_by_unique_broker(krx_close_on_or_before_report_date / broker_forward_eps)",
+                    "structured_source": True,
+                    "price_source": "KRX_PRICE_MARKET_CAP",
+                    "price_date": price.value.date.isoformat(),
+                    "price_lag_days": lag_days,
+                    "maximum_price_lag_days": _HISTORICAL_FORWARD_PE_MAX_PRICE_LAG_DAYS,
+                    "broker_count": len(brokers),
+                    "brokers": brokers,
+                    "report_eps_observation_count": len(eps_rows),
+                    "daily_median": True,
+                    "provider_close_price_ignored": True,
+                },
+            )
+        )
+    return tuple(result)
+
+
+def _point_in_time_price_rows(
+    rows: Sequence[_TaggedRow],
+    *,
+    symbol: str,
+    fail_if_latest_krx_date_conflicts: bool,
+) -> tuple[_TaggedRow, ...]:
+    """Return deterministic prices while rejecting ambiguous KRX dates."""
+
+    matching = tuple(
+        row
+        for row in rows
+        if row.value.symbol == symbol
+        and _number(row.value.close) is not None
+        and float(row.value.close) > 0
+    )
+    krx_rows = tuple(
+        row for row in matching if row.route_name == "KRX_PRICE_MARKET_CAP"
+    )
+    if not krx_rows:
+        return tuple(
+            sorted(
+                matching,
+                key=lambda row: (
+                    row.value.date,
+                    row.route_name,
+                    row.value.source,
+                    row.source_ids,
+                ),
+            )
+        )
+
+    by_date: dict[date, list[_TaggedRow]] = {}
+    for row in krx_rows:
+        by_date.setdefault(row.value.date, []).append(row)
+    latest_date = max(by_date)
+    selected: list[_TaggedRow] = []
+    latest_conflicts = False
+    for observed, dated_rows in sorted(by_date.items()):
+        signatures = {
+            (
+                float(row.value.close),
+                (
+                    float(row.value.market_cap)
+                    if _number(row.value.market_cap) is not None
+                    else None
+                ),
+            )
+            for row in dated_rows
+        }
+        if len(signatures) != 1:
+            latest_conflicts = latest_conflicts or observed == latest_date
+            continue
+        selected.append(
+            sorted(
+                dated_rows,
+                key=lambda row: (row.value.source, row.source_ids),
+            )[0]
+        )
+    if fail_if_latest_krx_date_conflicts and latest_conflicts:
+        return ()
+    return tuple(selected)
 
 
 def _peer_band_records(

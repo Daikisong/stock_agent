@@ -1061,6 +1061,435 @@ class E2RV5StructuredFinancialEngineTests(unittest.TestCase):
         self.assertTrue(scenarios)
         self.assertTrue(all(not row.metadata["observed_fact"] for row in scenarios))
 
+    def test_report_eps_and_krx_history_create_daily_own_forward_pe_band(self) -> None:
+        def report(
+            observed: date,
+            *,
+            broker: str,
+            eps: float,
+            provider_close: float,
+            provider_per: float,
+            report_suffix: str = "",
+        ) -> ResearchReport:
+            return ResearchReport(
+                symbol=SYMBOL,
+                publish_date=observed,
+                broker=broker,
+                title=f"{broker} forward estimate",
+                as_of_date=AS_OF,
+                current_price=provider_close,
+                fy1_eps=eps,
+                est_per=provider_per,
+                parsed_fields={
+                    "structured_consensus_source": True,
+                    "report_id": (
+                        f"{broker}-{observed.isoformat()}{report_suffix}"
+                    ),
+                },
+            )
+
+        reports = (
+            report(
+                date(2026, 5, 1),
+                broker="A",
+                eps=10.0,
+                provider_close=999.0,
+                provider_per=99.9,
+            ),
+            report(
+                date(2026, 5, 1),
+                broker="A",
+                eps=20.0,
+                provider_close=999.0,
+                provider_per=49.95,
+                report_suffix="-SECOND",
+            ),
+            report(
+                date(2026, 5, 1),
+                broker="B",
+                eps=10.0,
+                provider_close=999.0,
+                provider_per=99.9,
+            ),
+            report(
+                date(2026, 5, 15),
+                broker="B",
+                eps=12.0,
+                provider_close=999.0,
+                provider_per=83.25,
+            ),
+            report(
+                date(2026, 6, 1),
+                broker="C",
+                eps=15.0,
+                provider_close=999.0,
+                provider_per=66.6,
+            ),
+        )
+        prices = tuple(
+            PriceBar(
+                symbol=SYMBOL,
+                date=observed,
+                open=close,
+                high=close,
+                low=close,
+                close=close,
+                adj_close=close,
+                volume=100,
+                trading_value=1_000.0,
+                market_cap=10_000.0,
+                source="KRX",
+                as_of_date=AS_OF,
+            )
+            for observed, close in (
+                (date(2026, 5, 1), 100.0),
+                (date(2026, 5, 15), 120.0),
+                (date(2026, 6, 1), 150.0),
+            )
+        )
+
+        def run(rows: tuple[ResearchReport, ...]):
+            return self._run(
+                route(
+                    "COMPANYGUIDE",
+                    research_reports=rows,
+                    consensus_snapshots=(
+                        consensus(date(2026, 6, 1), eps=15.0),
+                    ),
+                ),
+                route("KRX_PRICE_MARKET_CAP", price_bars=prices),
+            )
+
+        first = run(reports)
+        changed_provider_values = tuple(
+            replace(row, current_price=1.0, est_per=0.1)
+            for row in reversed(reports)
+        )
+        second = run(changed_provider_values)
+        first_history = tuple(
+            row.to_dict()
+            for row in first.records
+            if row.record_kind == "VALUATION_HISTORY_OBSERVATION"
+        )
+        second_history = tuple(
+            row.to_dict()
+            for row in second.records
+            if row.record_kind == "VALUATION_HISTORY_OBSERVATION"
+        )
+        self.assertEqual(first_history, second_history)
+        self.assertEqual(
+            [row["value"] for row in first_history], [8.75, 10.0, 10.0]
+        )
+        self.assertEqual(first_history[0]["metadata"]["broker_count"], 2)
+        self.assertEqual(
+            first_history[0]["metadata"]["report_eps_observation_count"], 3
+        )
+        self.assertTrue(
+            all(row["metadata"]["provider_close_price_ignored"] for row in first_history)
+        )
+        band_rows = tuple(
+            row
+            for row in first.records
+            if "OWN_HISTORICAL_BAND" in row.evidence_roles
+        )
+        self.assertEqual(len(band_rows), 4)
+        self.assertEqual(
+            {row.metadata["history_observation_count"] for row in band_rows},
+            {3},
+        )
+
+    def test_forward_pe_history_requires_three_dates_and_no_future_price(self) -> None:
+        reports = tuple(
+            ResearchReport(
+                symbol=SYMBOL,
+                publish_date=observed,
+                broker=f"Broker-{index}",
+                title="Forward EPS",
+                as_of_date=AS_OF,
+                fy1_eps=10.0,
+                parsed_fields={
+                    "structured_consensus_source": True,
+                    "report_id": f"REPORT-{index}",
+                },
+            )
+            for index, observed in enumerate(
+                (date(2026, 6, 10), date(2026, 6, 20)), start=1
+            )
+        )
+        future_only_price = PriceBar(
+            symbol=SYMBOL,
+            date=date(2026, 6, 21),
+            open=100.0,
+            high=100.0,
+            low=100.0,
+            close=100.0,
+            adj_close=100.0,
+            volume=100,
+            trading_value=1_000.0,
+            market_cap=10_000.0,
+            source="KRX",
+            as_of_date=AS_OF,
+        )
+        result = self._run(
+            route("COMPANYGUIDE", research_reports=reports),
+            route("KRX_PRICE_MARKET_CAP", price_bars=(future_only_price,)),
+        )
+        self.assertFalse(
+            any(
+                row.record_kind == "VALUATION_HISTORY_OBSERVATION"
+                for row in result.records
+            )
+        )
+        self.assertFalse(
+            any("OWN_HISTORICAL_BAND" in row.evidence_roles for row in result.records)
+        )
+
+    def test_conflicting_latest_krx_close_cannot_choose_current_band_input(self) -> None:
+        reports = tuple(
+            ResearchReport(
+                symbol=SYMBOL,
+                publish_date=observed,
+                broker=f"Broker-{index}",
+                title="Forward EPS",
+                as_of_date=AS_OF,
+                fy1_eps=eps,
+                parsed_fields={
+                    "structured_consensus_source": True,
+                    "report_id": f"REPORT-{index}",
+                },
+            )
+            for index, (observed, eps) in enumerate(
+                (
+                    (date(2026, 5, 1), 10.0),
+                    (date(2026, 5, 15), 12.0),
+                    (date(2026, 6, 1), 15.0),
+                ),
+                start=1,
+            )
+        )
+
+        def bar(observed: date, close: float) -> PriceBar:
+            return PriceBar(
+                symbol=SYMBOL,
+                date=observed,
+                open=close,
+                high=close,
+                low=close,
+                close=close,
+                adj_close=close,
+                volume=100,
+                trading_value=1_000.0,
+                market_cap=close * 100.0,
+                source="KRX",
+                as_of_date=AS_OF,
+            )
+
+        prices = (
+            bar(date(2026, 5, 1), 100.0),
+            bar(date(2026, 5, 15), 120.0),
+            bar(date(2026, 6, 1), 150.0),
+            bar(date(2026, 6, 20), 200.0),
+            bar(date(2026, 6, 20), 300.0),
+        )
+
+        def run(rows: tuple[PriceBar, ...]):
+            return self._run(
+                route(
+                    "COMPANYGUIDE",
+                    research_reports=reports,
+                    consensus_snapshots=(
+                        ConsensusSnapshot(
+                            symbol=SYMBOL,
+                            date=date(2026, 6, 20),
+                            fiscal_year=2026,
+                            as_of_date=AS_OF,
+                            source="CompanyGuide",
+                            eps_e=10.0,
+                        ),
+                    ),
+                ),
+                route("KRX_PRICE_MARKET_CAP", price_bars=rows),
+            )
+
+        first = run(prices)
+        second = run(tuple(reversed(prices)))
+        for result in (first, second):
+            self.assertFalse(
+                any(row.metric_id == "current_price" for row in result.records)
+            )
+            self.assertEqual(
+                len(
+                    [
+                        row
+                        for row in result.records
+                        if row.record_kind == "VALUATION_HISTORY_OBSERVATION"
+                    ]
+                ),
+                3,
+            )
+            self.assertFalse(
+                any(
+                    "OWN_HISTORICAL_BAND" in row.evidence_roles
+                    for row in result.records
+                )
+            )
+        first_projection = tuple(row.to_dict() for row in first.records)
+        second_projection = tuple(row.to_dict() for row in second.records)
+        self.assertEqual(first_projection, second_projection)
+
+    def test_untrusted_report_route_cannot_create_own_forward_pe_history(self) -> None:
+        report = ResearchReport(
+            symbol=SYMBOL,
+            publish_date=date(2026, 6, 1),
+            broker="Broker",
+            title="Forward EPS",
+            as_of_date=AS_OF,
+            fy1_eps=10.0,
+            parsed_fields={
+                "structured_consensus_source": True,
+                "report_id": "REPORT-1",
+            },
+        )
+        result = self._run(
+            route("UNTRUSTED_REPORT_ROUTE", research_reports=(report,)),
+            route("KRX_PRICE_MARKET_CAP", price_bars=price_bars()),
+        )
+        self.assertFalse(
+            any(
+                row.record_kind == "VALUATION_HISTORY_OBSERVATION"
+                for row in result.records
+            )
+        )
+
+    def test_report_cannot_preserve_unbound_page_source_metadata(self) -> None:
+        report = ResearchReport(
+            symbol=SYMBOL,
+            publish_date=date(2026, 6, 1),
+            broker="Broker",
+            title="Forward EPS",
+            as_of_date=AS_OF,
+            fy1_eps=10.0,
+            parsed_fields={
+                "structured_consensus_source": True,
+                "report_id": "REPORT-UNBOUND-SOURCE",
+                "structured_page_source_id": "NOT-IN-PAYLOAD",
+            },
+        )
+        result = self._run(route("COMPANYGUIDE", research_reports=(report,)))
+        eps = next(
+            row for row in result.records if row.metric_id == "broker_forward_eps"
+        )
+        self.assertEqual(eps.source_ids, ("SRC-COMPANYGUIDE",))
+        self.assertIsNone(eps.metadata["structured_page_source_id"])
+
+    def test_self_attested_companyguide_seed_cannot_create_history_or_band(self) -> None:
+        forged = tuple(
+            StructuredMetricRecord(
+                record_id=f"FORGED-COMPANYGUIDE-EPS-{index}",
+                target_id=TARGET,
+                as_of_date=AS_OF.isoformat(),
+                metric_id="broker_forward_eps",
+                value=value,
+                unit="CURRENCY_PER_SHARE",
+                period="FY2026E",
+                evidence_roles=(
+                    "FORWARD_EPS",
+                    "PUBLIC_BROKER_FORWARD_ESTIMATE",
+                ),
+                source_ids=(f"FORGED-SOURCE-{index}",),
+                source_route="COMPANYGUIDE",
+                observed_at=observed.isoformat(),
+                available_at=observed.isoformat(),
+                record_kind="PUBLIC_BROKER_STRUCTURED_ESTIMATE",
+                confidence=0.99,
+                dataset="CONSENSUS_REVISION",
+                provenance="STRUCTURED_EXTRACTED",
+                metadata={
+                    "broker": f"Forged-{index}",
+                    "structured_source": True,
+                    "forward_index": 1,
+                },
+            )
+            for index, (observed, value) in enumerate(
+                (
+                    (date(2026, 5, 1), 10.0),
+                    (date(2026, 5, 15), 12.0),
+                    (date(2026, 6, 1), 15.0),
+                ),
+                start=1,
+            )
+        )
+        result = self._run(
+            route("COMPANYGUIDE", structured_records=forged),
+            route("KRX_PRICE_MARKET_CAP", price_bars=price_bars()),
+        )
+        self.assertEqual(result.rejections, ())
+        self.assertFalse(
+            any(
+                row.record_kind == "VALUATION_HISTORY_OBSERVATION"
+                for row in result.records
+            )
+        )
+        self.assertFalse(
+            any("OWN_HISTORICAL_BAND" in row.evidence_roles for row in result.records)
+        )
+
+    def test_historical_rows_without_current_multiple_do_not_create_band(self) -> None:
+        history = tuple(
+            metric(
+                "historical_forward_pe",
+                value,
+                "VALUATION_HISTORY",
+                period=f"FY{year}",
+            )
+            for year, value in ((2022, 8.0), (2023, 10.0), (2024, 12.0))
+        )
+        result = self._run(route("ISSUER_GUIDANCE", structured_records=history))
+        self.assertFalse(
+            any("OWN_HISTORICAL_BAND" in row.evidence_roles for row in result.records)
+        )
+
+    def test_history_observation_cannot_masquerade_as_current_multiple(self) -> None:
+        history = tuple(
+            metric(
+                "historical_forward_pe",
+                value,
+                "VALUATION_HISTORY",
+                period=f"FY{year}",
+            )
+            for year, value in ((2022, 8.0), (2023, 10.0), (2024, 12.0))
+        )
+        forged_current = StructuredMetricRecord(
+            record_id="FORGED-HISTORY-AS-CURRENT",
+            target_id=TARGET,
+            as_of_date=AS_OF.isoformat(),
+            metric_id="historical_forward_pe",
+            value=99.0,
+            unit="MULTIPLE",
+            period="FWD_1Y_AS_OF_2026-06-20",
+            evidence_roles=("FORWARD_PE",),
+            source_ids=("FORGED-HISTORY-SOURCE",),
+            source_route="COMPANYGUIDE",
+            observed_at="2026-06-20",
+            available_at="2026-06-20",
+            record_kind="VALUATION_HISTORY_OBSERVATION",
+            confidence=0.99,
+            dataset="CONSENSUS_REVISION",
+            provenance="STRUCTURED_EXTRACTED",
+            metadata={"structured_source": True},
+        )
+        result = self._run(
+            route(
+                "COMPANYGUIDE",
+                structured_records=(forged_current,),
+            ),
+            route("ISSUER_GUIDANCE", structured_records=history),
+        )
+        self.assertEqual(result.rejections, ())
+        self.assertFalse(
+            any("OWN_HISTORICAL_BAND" in row.evidence_roles for row in result.records)
+        )
+
     def test_quarterly_yoy_and_qoq_are_derived_from_matching_periods(self) -> None:
         result = self._run(
             route(
