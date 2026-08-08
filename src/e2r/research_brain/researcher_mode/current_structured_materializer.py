@@ -824,6 +824,7 @@ class CurrentStructuredSourceMaterializer:
                     expected_company_name=target_name,
                 )
             ),
+            validate_fresh_response=True,
         )
         report_pages: list[tuple[Mapping[str, Any], str, int]] = []
         selected_candidate_count = 0
@@ -2742,6 +2743,7 @@ class CurrentStructuredSourceMaterializer:
         shared_cache_keys: Sequence[str] = (),
         cached_response_validator: Callable[[StructuredHTTPResponse], bool]
         | None = None,
+        validate_fresh_response: bool = False,
     ) -> str | None:
         response, cache_hit, error = self._response(
             cache_key=cache_key,
@@ -2753,6 +2755,7 @@ class CurrentStructuredSourceMaterializer:
             shared_cache_roots=shared_cache_roots,
             shared_cache_keys=shared_cache_keys,
             cached_response_validator=cached_response_validator,
+            validate_fresh_response=validate_fresh_response,
             fetch=lambda: self.transport.get_text(
                 url=url,
                 params=params,
@@ -2805,6 +2808,7 @@ class CurrentStructuredSourceMaterializer:
         shared_cache_keys: Sequence[str] = (),
         cached_response_validator: Callable[[StructuredHTTPResponse], bool]
         | None = None,
+        validate_fresh_response: bool = False,
     ) -> tuple[StructuredHTTPResponse | None, bool, str | None]:
         cache_path = cache_root / f"{cache_key}.json"
         request_fingerprint = _structured_request_fingerprint(
@@ -2864,6 +2868,18 @@ class CurrentStructuredSourceMaterializer:
             value = fetch()
         except Exception as exc:
             return None, False, f"{type(exc).__name__}: {exc}"
+        if validate_fresh_response and cached_response_validator is not None:
+            try:
+                fresh_response_valid = cached_response_validator(value)
+            except (KeyError, TypeError, ValueError):
+                fresh_response_valid = False
+            if not fresh_response_valid:
+                # A point-in-time validator is a source-authority boundary, not
+                # merely a cache-reuse hint.  Returning or persisting a fresh
+                # response that fails it would let a changing post-cutoff page
+                # enter the payload manifest and alter otherwise stable source
+                # ids on every checkpoint resume.
+                return None, False, "fresh_response_validation_failed"
         serialized = (
             json.dumps(value.payload, ensure_ascii=False, sort_keys=True)
             if response_kind == "json"

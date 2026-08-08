@@ -1018,7 +1018,34 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
             )
 
     def test_future_companyguide_snapshot_never_becomes_record(self):
-        transport = FixtureStructuredTransport(future_companyguide=True)
+        class ChangingFutureSnapshotTransport(FixtureStructuredTransport):
+            def __init__(self) -> None:
+                super().__init__(future_companyguide=True)
+                self.current_snapshot_fetch_count = 0
+
+            def get_text(self, *, url, params, headers, timeout_seconds):
+                response = super().get_text(
+                    url=url,
+                    params=params,
+                    headers=headers,
+                    timeout_seconds=timeout_seconds,
+                )
+                if str(params.get("cmp_cd") or "") != "005930":
+                    return response
+                self.current_snapshot_fetch_count += 1
+                text = (
+                    response.text or ""
+                ) + f"<!-- changing-future-{self.current_snapshot_fetch_count} -->"
+                return replace(
+                    response,
+                    provider_request_id=(
+                        f"FIXTURE-FUTURE-{self.current_snapshot_fetch_count}"
+                    ),
+                    content_hash=hashlib.sha256(text.encode()).hexdigest(),
+                    text=text,
+                )
+
+        transport = ChangingFutureSnapshotTransport()
         with tempfile.TemporaryDirectory() as directory, patch.dict(
             os.environ,
             {
@@ -1048,6 +1075,64 @@ class E2RV5CurrentStructuredMaterializerTests(unittest.TestCase):
             )
             self.assertTrue(
                 all(row.observed_at[:10] <= "2026-07-12" for row in result.engine_result.records)
+            )
+            self.assertFalse(
+                any(
+                    row.get("source_role")
+                    == "CONSENSUS_VALUATION_SNAPSHOT"
+                    for row in result.payload_manifest
+                )
+            )
+            self.assertFalse(
+                (
+                    Path(directory)
+                    / "structured_source_cache"
+                    / "companyguide_snapshot_005930.json"
+                ).exists()
+            )
+            rejected_attempts = [
+                row
+                for row in result.fetch_attempts
+                if row.source_role == "CONSENSUS_VALUATION_SNAPSHOT"
+            ]
+            self.assertEqual(len(rejected_attempts), 1)
+            self.assertEqual(rejected_attempts[0].status, "PROVIDER_ERROR")
+            self.assertEqual(
+                rejected_attempts[0].error,
+                "fresh_response_validation_failed",
+            )
+            resumed = CurrentStructuredSourceMaterializer(
+                transport=transport,
+                price_lookback_days=400,
+            ).materialize(
+                target_id="005930",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                latest_trading_snapshot_date="2026-07-10",
+                official=_official(),
+                output_root=directory,
+                checkpoint_resume=True,
+            )
+            companyguide_signature = lambda value: sorted(
+                (
+                    row.record_id,
+                    row.source_ids,
+                    row.value,
+                )
+                for row in value.engine_result.records
+                if row.source_route == "COMPANYGUIDE"
+            )
+            self.assertEqual(
+                companyguide_signature(result),
+                companyguide_signature(resumed),
+            )
+            self.assertEqual(transport.current_snapshot_fetch_count, 2)
+            self.assertFalse(
+                any(
+                    row.get("source_role")
+                    == "CONSENSUS_VALUATION_SNAPSHOT"
+                    for row in resumed.payload_manifest
+                )
             )
 
     def test_same_lane_cache_prefers_pre_cutoff_companyguide_snapshot(self):
