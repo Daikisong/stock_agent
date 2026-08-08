@@ -33,13 +33,19 @@ from e2r.research_brain.planning.provider_transport import (
     StructuredProviderResponse,
     StructuredProviderUnavailable,
 )
+from e2r.research_brain.intelligence_schema import stable_intelligence_id
 
 from .component_researcher import (
     CANDIDATE_RANKING_PAGE_CANDIDATE_LIMIT,
     CodexResearcherProvider,
     _single_payload_request_material,
 )
-from .schemas import assert_blind_research_output
+from .document_ranker import (
+    candidate_materiality_decision_input_hash,
+    candidate_materiality_full_prompt_input_hash,
+    candidate_materiality_scope_hash,
+)
+from .schemas import assert_blind_research_output, scrub_blind_research_payload
 
 
 COLLABORATION_BRIDGE_SCHEMA_VERSION = (
@@ -125,6 +131,18 @@ def _canonical_hash(value: Any) -> str:
         separators=(",", ":"),
     ).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
+
+
+def _journal_unique_strings(value: Any) -> tuple[str, ...]:
+    if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
+        return ()
+    return tuple(
+        dict.fromkeys(
+            clean
+            for clean in (str(item).strip() for item in value)
+            if clean
+        )
+    )
 
 
 def _prior_structured_valuation_fact_output_schema(
@@ -600,6 +618,282 @@ class CollaborationCodexSubagentTransport:
         return {
             "request": dict(request),
             "response": dict(envelope),
+        }
+
+    def validated_candidate_materiality_scope_attestations(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+    ) -> Mapping[str, Any] | None:
+        """Recover decision-time candidate scopes from official journal pairs.
+
+        The source checkpoint stores the current merged URL candidate.  It
+        cannot by itself prove which objective/source-family scope the LLM saw
+        when it made an older materiality decision.  This read-only bridge
+        reconstructs that scope only from a fully validated request/response
+        pair.  Any malformed ranking journal entry fails the whole attestation
+        closed; a response that has not arrived yet is simply not evidence.
+        """
+
+        root = self.journal_root
+        clean_target_id = str(target_id).strip()
+        clean_as_of_date = str(as_of_date).strip()
+        if not root or not clean_target_id:
+            return None
+        try:
+            request_paths = tuple(
+                sorted((root / "requests").glob("COLLABREQ-*.json"))
+            )
+        except OSError:
+            return None
+
+        attestations: dict[str, Mapping[str, Any]] = {}
+        for request_path in request_paths:
+            try:
+                request = _validate_request(_read_json_object(request_path))
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+            ):
+                # A broken immutable request makes the journal unsuitable as
+                # an integrity authority, even if its self-reported pass name
+                # or target was also tampered.
+                return None
+            request_id = str(request["request_id"])
+            if request_path.name != f"{request_id}.json":
+                return None
+            if request.get("pass_name") != "SOURCE_CANDIDATE_RANKING":
+                continue
+            try:
+                request_payload = json.loads(
+                    str(request["prompt"]).rsplit("\n", 1)[-1]
+                )
+            except (TypeError, ValueError, json.JSONDecodeError):
+                return None
+            if not isinstance(request_payload, Mapping):
+                return None
+            request_target_id = str(
+                request_payload.get("target_id") or ""
+            ).strip()
+            request_as_of_date = str(
+                request_payload.get("as_of_date") or ""
+            ).strip()
+            if (
+                request_target_id != clean_target_id
+                or request_as_of_date != clean_as_of_date
+            ):
+                continue
+            raw_candidates = request_payload.get("discovery_candidates")
+            if not isinstance(raw_candidates, list) or not raw_candidates:
+                return None
+            candidate_by_id: dict[str, Mapping[str, Any]] = {}
+            for raw_candidate in raw_candidates:
+                if not isinstance(raw_candidate, Mapping):
+                    return None
+                candidate = dict(raw_candidate)
+                candidate_id = str(candidate.get("candidate_id") or "").strip()
+                if not candidate_id or candidate_id in candidate_by_id:
+                    return None
+                objective_ids = _journal_unique_strings(
+                    candidate.get("objective_ids")
+                )
+                requested_source_families = _journal_unique_strings(
+                    candidate.get("requested_source_families")
+                )
+                materiality_query_ids = _journal_unique_strings(
+                    candidate.get("materiality_query_ids")
+                    or candidate.get("query_ids")
+                )
+                normalized_url = str(
+                    candidate.get("normalized_url")
+                    or candidate.get("url")
+                    or ""
+                ).strip()
+                if (
+                    not objective_ids
+                    or not requested_source_families
+                    or not materiality_query_ids
+                    or not normalized_url
+                ):
+                    return None
+                candidate["normalized_url"] = normalized_url
+                candidate["materiality_query_ids"] = list(
+                    materiality_query_ids
+                )
+                candidate_by_id[candidate_id] = candidate
+
+            response_path = root / "responses" / f"{request_id}.json"
+            if not response_path.is_file():
+                continue
+            try:
+                envelope = _validate_response_envelope(
+                    request=request,
+                    envelope=_read_json_object(response_path),
+                )
+            except (
+                FileNotFoundError,
+                OSError,
+                TypeError,
+                ValueError,
+                RuntimeError,
+            ):
+                return None
+            quarantine_path = (
+                root
+                / "quarantine"
+                / request_id
+                / f"{envelope['response_id']}.json"
+            )
+            if quarantine_path.is_file():
+                return None
+            response_payload = envelope.get("payload")
+            if not isinstance(response_payload, Mapping):
+                return None
+            try:
+                assert_blind_research_output(response_payload)
+            except (TypeError, ValueError):
+                return None
+            raw_decisions = response_payload.get("decisions")
+            if not isinstance(raw_decisions, list):
+                return None
+            decision_candidate_ids: set[str] = set()
+            request_attestations: dict[str, Mapping[str, Any]] = {}
+            for raw_decision in raw_decisions:
+                if not isinstance(raw_decision, Mapping):
+                    return None
+                candidate_id = str(
+                    raw_decision.get("candidate_id") or ""
+                ).strip()
+                if (
+                    candidate_id not in candidate_by_id
+                    or candidate_id in decision_candidate_ids
+                ):
+                    return None
+                decision_candidate_ids.add(candidate_id)
+                candidate = candidate_by_id[candidate_id]
+                candidate_objective_ids = set(
+                    _journal_unique_strings(candidate.get("objective_ids"))
+                )
+                decision_objective_ids = set(
+                    _journal_unique_strings(raw_decision.get("objective_ids"))
+                )
+                requested_source_families = set(
+                    _journal_unique_strings(
+                        candidate.get("requested_source_families")
+                    )
+                )
+                matched_source_family = str(
+                    raw_decision.get("matched_requested_source_family") or ""
+                ).strip()
+                material_relevance = raw_decision.get("material_relevance")
+                if (
+                    not decision_objective_ids.issubset(
+                        candidate_objective_ids
+                    )
+                    or matched_source_family
+                    not in ({"NONE"} | requested_source_families)
+                    or type(material_relevance) is not bool
+                    or (material_relevance and matched_source_family == "NONE")
+                ):
+                    return None
+                decision_id = stable_intelligence_id(
+                    "MATDEC",
+                    {
+                        "candidate_id": candidate_id,
+                        "response": scrub_blind_research_payload(
+                            raw_decision
+                        ),
+                    },
+                )
+                scope_hash = candidate_materiality_scope_hash(candidate)
+                decision_input_hash = (
+                    candidate_materiality_decision_input_hash(candidate)
+                )
+                decision_prompt_input_hash = (
+                    candidate_materiality_full_prompt_input_hash(candidate)
+                )
+                materiality_query_ids = sorted(
+                    _journal_unique_strings(
+                        candidate.get("materiality_query_ids")
+                    )
+                )
+                attestation_id = stable_intelligence_id(
+                    "MATSCOPE",
+                    {
+                        "decision_id": decision_id,
+                        "candidate_id": candidate_id,
+                        "materiality_scope_hash": scope_hash,
+                        "decision_input_hash": decision_input_hash,
+                        "decision_prompt_input_hash": (
+                            decision_prompt_input_hash
+                        ),
+                        "materiality_query_ids": materiality_query_ids,
+                        "request_id": request_id,
+                        "response_id": str(envelope["response_id"]),
+                        "prompt_hash": str(request["prompt_hash"]),
+                    },
+                )
+                attestation = {
+                    "schema_version": (
+                        "e2r_v5_candidate_materiality_scope_attestation_v2"
+                    ),
+                    "attestation_id": attestation_id,
+                    "decision_id": decision_id,
+                    "candidate_id": candidate_id,
+                    "materiality_scope_hash": scope_hash,
+                    "decision_input_hash": decision_input_hash,
+                    "decision_prompt_input_hash": decision_prompt_input_hash,
+                    "materiality_query_ids": materiality_query_ids,
+                    "candidate_objective_ids": sorted(
+                        candidate_objective_ids
+                    ),
+                    "requested_source_families": sorted(
+                        requested_source_families
+                    ),
+                    "request_id": request_id,
+                    "response_id": str(envelope["response_id"]),
+                    "prompt_hash": str(request["prompt_hash"]),
+                    "score_or_stage_authority": False,
+                }
+                prior = request_attestations.get(attestation_id)
+                if prior is not None and prior != attestation:
+                    return None
+                request_attestations[attestation_id] = attestation
+            completion_flag = response_payload.get("ranking_complete")
+            completion_reconciled = bool(
+                completion_flag is False
+                and isinstance(
+                    request_payload.get("ranking_retry_context"), Mapping
+                )
+            )
+            if (
+                (completion_flag is not True and not completion_reconciled)
+                or decision_candidate_ids != set(candidate_by_id)
+            ):
+                return None
+            for attestation_id, attestation in request_attestations.items():
+                prior = attestations.get(attestation_id)
+                if prior is not None and prior != attestation:
+                    return None
+                attestations[attestation_id] = attestation
+
+        roster_hash = _canonical_hash(
+            [attestations[key] for key in sorted(attestations)]
+        )
+        return {
+            "schema_version": (
+                "e2r_v5_candidate_materiality_scope_attestation_roster_v2"
+            ),
+            "target_id": clean_target_id,
+            "as_of_date": clean_as_of_date,
+            "attestation_count": len(attestations),
+            "attestation_roster_hash": roster_hash,
+            "attestations_by_scope_receipt_id": attestations,
+            "score_or_stage_authority": False,
         }
 
     def validated_request_for_prompt_hash(
@@ -1929,6 +2223,21 @@ class CollaborationCodexResearcherProvider(CodexResearcherProvider):
             schema_name=f"e2r_v5_{pass_name.lower()}",
             response_payload=response_payload,
             provider_name=self.provider_name,
+        )
+
+    def validated_candidate_materiality_scope_attestations(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+        source_graph_checkpoint: Mapping[str, Any] | None = None,
+    ) -> Mapping[str, Any] | None:
+        """Delegate read-only materiality scope recovery to the journal."""
+
+        del source_graph_checkpoint
+        return self.transport.validated_candidate_materiality_scope_attestations(
+            target_id=target_id,
+            as_of_date=as_of_date,
         )
 
     def validated_request_payload(

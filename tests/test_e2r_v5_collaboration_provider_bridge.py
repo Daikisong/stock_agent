@@ -37,6 +37,9 @@ from e2r.research_brain.researcher_mode.collaboration_provider_bridge import (
 from e2r.research_brain.researcher_mode.component_researcher import (
     _single_payload_request_material,
 )
+from e2r.research_brain.researcher_mode.document_ranker import (
+    candidate_materiality_full_prompt_input_hash,
+)
 from e2r.research_brain.researcher_mode.prompt_projection import (
     project_current_decision_citable_facts,
 )
@@ -385,6 +388,279 @@ def _semantic_quarantine_worker(
 
 
 class E2RV5CollaborationProviderBridgeTests(unittest.TestCase):
+    def test_candidate_materiality_scope_attestation_binds_official_request(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = CollaborationCodexResearcherProvider(
+                transport=CollaborationCodexSubagentTransport()
+            )
+            provider.configure_response_cache(
+                Path(directory) / "research_provider_response_cache"
+            )
+            journal = (
+                Path(directory) / "collaboration_codex_subagent_provider"
+            )
+            ranker = ResearcherDocumentRanker(provider=provider)
+            kwargs = {
+                "target_id": "CURRENT-TARGET",
+                "target_name": "Current Corp",
+                "as_of_date": "2026-07-12",
+                "open_objectives": [
+                    {
+                        "objective_id": "OBJ-1",
+                        "question": "현재 고객 공식 확인이 있는가?",
+                    }
+                ],
+                "candidates": [
+                    {
+                        "candidate_id": "CAND-1",
+                        "title": "customer update",
+                        "url": "https://example.com/update",
+                        "normalized_url": "https://example.com/update",
+                        "snippet": "customer update",
+                        "source": "test",
+                        "query_ids": ["Q-1"],
+                        "materiality_query_ids": ["Q-1"],
+                        "objective_ids": ["OBJ-1"],
+                        "requested_source_families": [
+                            "CUSTOMER_OFFICIAL"
+                        ],
+                    }
+                ],
+                "current_evidence_facts": [],
+                "target_business_model": None,
+                "source_coverage": [],
+            }
+            first = ranker.rank_candidates(**kwargs)
+            self.assertEqual(first.status, "PENDING")
+            _, request = _request(journal)
+            response = {
+                "decisions": [
+                    {
+                        "candidate_id": "CAND-1",
+                        "material_relevance": False,
+                        "priority": 0.1,
+                        "objective_ids": [],
+                        "matched_requested_source_family": "NONE",
+                        "rationale": "현재 질문을 직접 해결하지 않는다.",
+                    }
+                ],
+                "ranking_complete": True,
+                "unresolved_notes": [],
+            }
+            import_collaboration_response(
+                journal_root=journal,
+                request_id=request["request_id"],
+                response_payload=response,
+                agent_id="agent-scope",
+                canonical_task_name="/root/rank_scope",
+                agent_model="codex-collaboration",
+            )
+
+            roster = provider.validated_candidate_materiality_scope_attestations(
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-07-12",
+            )
+
+            self.assertIsNotNone(roster)
+            assert roster is not None
+            self.assertEqual(roster["attestation_count"], 1)
+            attestation = next(
+                iter(roster["attestations_by_scope_receipt_id"].values())
+            )
+            self.assertEqual(attestation["candidate_id"], "CAND-1")
+            self.assertEqual(
+                attestation["candidate_objective_ids"], ["OBJ-1"]
+            )
+            self.assertEqual(
+                attestation["requested_source_families"],
+                ["CUSTOMER_OFFICIAL"],
+            )
+            self.assertEqual(attestation["materiality_query_ids"], ["Q-1"])
+            self.assertRegex(
+                str(attestation["decision_input_hash"]), r"^[0-9a-f]{64}$"
+            )
+            self.assertRegex(
+                str(attestation["decision_prompt_input_hash"]),
+                r"^[0-9a-f]{64}$",
+            )
+            request_candidate = _request_payload(request)[
+                "discovery_candidates"
+            ][0]
+            self.assertEqual(
+                attestation["decision_prompt_input_hash"],
+                candidate_materiality_full_prompt_input_hash(
+                    request_candidate
+                ),
+            )
+            self.assertEqual(
+                candidate_materiality_full_prompt_input_hash(
+                    request_candidate
+                ),
+                candidate_materiality_full_prompt_input_hash(
+                    kwargs["candidates"][0]
+                ),
+            )
+
+    def test_candidate_scope_attestation_fails_closed_on_request_tamper(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = CollaborationCodexResearcherProvider(
+                transport=CollaborationCodexSubagentTransport()
+            )
+            provider.configure_response_cache(
+                Path(directory) / "research_provider_response_cache"
+            )
+            journal = (
+                Path(directory) / "collaboration_codex_subagent_provider"
+            )
+            ranker = ResearcherDocumentRanker(provider=provider)
+            result = ranker.rank_candidates(
+                target_id="CURRENT-TARGET",
+                target_name="Current Corp",
+                as_of_date="2026-07-12",
+                open_objectives=[
+                    {"objective_id": "OBJ-1", "question": "현재 반증은?"}
+                ],
+                candidates=[
+                    {
+                        "candidate_id": "CAND-1",
+                        "title": "issuer update",
+                        "url": "https://example.com/update",
+                        "snippet": "issuer update",
+                        "source": "test",
+                        "objective_ids": ["OBJ-1"],
+                        "requested_source_families": [
+                            "ISSUER_PRESENTATION"
+                        ],
+                    }
+                ],
+                current_evidence_facts=[],
+                target_business_model=None,
+                source_coverage=[],
+            )
+            self.assertEqual(result.status, "PENDING")
+            request_path, request = _request(journal)
+            request["prompt_hash"] = "0" * 64
+            request_path.write_text(
+                json.dumps(request, ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+            self.assertIsNone(
+                provider.validated_candidate_materiality_scope_attestations(
+                    target_id="CURRENT-TARGET",
+                    as_of_date="2026-07-12",
+                )
+            )
+
+    def test_identical_decision_can_attest_two_legitimate_ranking_scopes(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            provider = CollaborationCodexResearcherProvider(
+                transport=CollaborationCodexSubagentTransport()
+            )
+            provider.configure_response_cache(
+                Path(directory) / "research_provider_response_cache"
+            )
+            journal = (
+                Path(directory) / "collaboration_codex_subagent_provider"
+            )
+            ranker = ResearcherDocumentRanker(provider=provider)
+            response_payload = {
+                "decisions": [
+                    {
+                        "candidate_id": "CAND-SHARED",
+                        "material_relevance": False,
+                        "priority": 0.1,
+                        "objective_ids": [],
+                        "matched_requested_source_family": "NONE",
+                        "rationale": "현재 범위를 직접 해결하지 않는다.",
+                    }
+                ],
+                "ranking_complete": True,
+                "unresolved_notes": [],
+            }
+            for index, (objective_id, query_id, source_family) in enumerate(
+                (
+                    ("OBJ-A", "Q-A", "ISSUER_PRESENTATION"),
+                    ("OBJ-B", "Q-B", "CUSTOMER_OFFICIAL"),
+                )
+            ):
+                result = ranker.rank_candidates(
+                    target_id="CURRENT-TARGET",
+                    target_name="Current Corp",
+                    as_of_date="2026-07-12",
+                    open_objectives=[
+                        {
+                            "objective_id": objective_id,
+                            "question": f"현재 반증 범위 {index}",
+                        }
+                    ],
+                    candidates=[
+                        {
+                            "candidate_id": "CAND-SHARED",
+                            "title": "same unrelated page",
+                            "url": "https://example.com/shared",
+                            "snippet": "same unrelated snippet",
+                            "source": "test",
+                            "query_ids": [query_id],
+                            "materiality_query_ids": [query_id],
+                            "objective_ids": [objective_id],
+                            "requested_source_families": [source_family],
+                        }
+                    ],
+                    current_evidence_facts=[],
+                    target_business_model=None,
+                    source_coverage=[],
+                )
+                self.assertEqual(result.status, "PENDING")
+                pending_requests = []
+                for request_path in sorted(
+                    (journal / "requests").glob("COLLABREQ-*.json")
+                ):
+                    request = json.loads(
+                        request_path.read_text(encoding="utf-8")
+                    )
+                    if not (
+                        journal / "responses" / request_path.name
+                    ).is_file():
+                        pending_requests.append(request)
+                self.assertEqual(len(pending_requests), 1)
+                import_collaboration_response(
+                    journal_root=journal,
+                    request_id=pending_requests[0]["request_id"],
+                    response_payload=response_payload,
+                    agent_id=f"agent-scope-{index}",
+                    canonical_task_name=f"/root/rank_scope_{index}",
+                    agent_model="codex-collaboration",
+                )
+
+            roster = provider.validated_candidate_materiality_scope_attestations(
+                target_id="CURRENT-TARGET",
+                as_of_date="2026-07-12",
+            )
+
+            self.assertIsNotNone(roster)
+            assert roster is not None
+            self.assertEqual(roster["attestation_count"], 2)
+            attestations = tuple(
+                roster["attestations_by_scope_receipt_id"].values()
+            )
+            self.assertEqual(
+                len({row["decision_id"] for row in attestations}), 1
+            )
+            self.assertEqual(
+                {
+                    tuple(row["materiality_query_ids"])
+                    for row in attestations
+                },
+                {("Q-A",), ("Q-B",)},
+            )
+
     def test_v4_fact_semantics_migration_receipt_is_read_only_and_exact(
         self,
     ) -> None:

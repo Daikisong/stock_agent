@@ -46,7 +46,16 @@ from e2r.research_brain.researcher_mode import (
     write_research_epoch_run,
 )
 from e2r.research_brain.researcher_mode.research_supervisor import (
+    _counter_route_proof_complete,
     build_counter_and_supersession_route_proof,
+)
+from e2r.research_brain.researcher_mode.source_graph_explorer import (
+    _candidate_materiality_scope_hash,
+    _normalize_url,
+)
+from e2r.research_brain.researcher_mode.document_ranker import (
+    candidate_materiality_decision_input_hash,
+    candidate_materiality_full_prompt_input_hash,
 )
 from e2r.research_brain.planning.provider_transport import (
     StructuredProviderUnavailable,
@@ -67,6 +76,17 @@ from e2r.research_brain.researcher_mode.research_epoch import (
 
 TARGET = "CURRENT-TARGET"
 AS_OF_DATE = "2026-06-29"
+
+
+def _source_candidate_id(url: str) -> str:
+    return stable_intelligence_id(
+        "SGCAND",
+        {
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "normalized_url": _normalize_url(url),
+        },
+    )
 ARCHETYPE = "CURRENT-ARCHETYPE"
 OBJECTIVE_ID = "OBJ-CURRENT"
 
@@ -76,6 +96,18 @@ class Phase87SupervisorProvider:
         self.mode = mode
         self.provider_name = f"PHASE87_SUPERVISOR_{mode}"
         self.calls: list[Mapping[str, Any]] = []
+
+    def validated_candidate_materiality_scope_attestations(
+        self,
+        *,
+        target_id: str,
+        as_of_date: str,
+        source_graph_checkpoint: Mapping[str, Any],
+    ) -> Mapping[str, Any]:
+        self.assert_test_scope = (target_id, as_of_date)
+        return _test_materiality_scope_attestation_roster(
+            source_graph_checkpoint
+        )
 
     def complete(
         self, *, pass_name: str, payload: Mapping[str, Any]
@@ -3881,6 +3913,872 @@ class E2RV5SemanticResearchSaturationTests(unittest.TestCase):
         )
         self.assertEqual(pending.status, "NEXT_RESEARCH_REQUIRED")
 
+    def test_counter_route_accepts_checked_objective_without_fabricated_event(
+        self,
+    ) -> None:
+        secondary_objective_id = "OBJ-CHECKED-WITHOUT-EVENT"
+        source = dict(_source_checkpoint())
+        source["generated_queries"] = [
+            *source["generated_queries"],
+            {
+                "query_id": "Q-PARTIAL-SECONDARY",
+                "objective_id": secondary_objective_id,
+                "literal_query": "current target secondary counter evidence",
+                "source_families": ["ISSUER_PRESENTATION"],
+                "counter_or_supersession_search": True,
+                "execution_status": "PROVIDER_ERROR",
+                "search_result_count": 1,
+                "provider_errors": ["one provider failed after another returned"],
+            },
+        ]
+        source["search_candidates"] = [
+            *source["search_candidates"],
+            {
+                "schema_version": "e2r_v5_search_candidate_v1",
+                "candidate_id": _source_candidate_id(
+                    "https://issuer.example.com/secondary"
+                ),
+                "target_id": TARGET,
+                "as_of_date": AS_OF_DATE,
+                "query_ids": ["Q-PARTIAL-SECONDARY"],
+                "materiality_query_ids": ["Q-PARTIAL-SECONDARY"],
+                "objective_ids": [secondary_objective_id],
+                "materiality_decision_id": "MATDEC-SECONDARY-NOT-MATERIAL",
+                "query_lineage_valid": True,
+                "ranking_status": "NOT_MATERIAL",
+                "requested_source_families": ["ISSUER_PRESENTATION"],
+                "matched_requested_source_family": "NONE",
+                "normalized_url": "https://issuer.example.com/secondary",
+                "url": "https://issuer.example.com/secondary",
+                "score_authority": False,
+            }
+        ]
+        source["search_candidates"][-1]["materiality_scope_hash"] = (
+            _candidate_materiality_scope_hash(source["search_candidates"][-1])
+        )
+        source["candidate_materiality_decisions"] = [
+            *source["candidate_materiality_decisions"],
+            {
+                "candidate_id": _source_candidate_id(
+                    "https://issuer.example.com/secondary"
+                ),
+                "decision_id": "MATDEC-SECONDARY-NOT-MATERIAL",
+                "objective_ids": [secondary_objective_id],
+                "material_relevance": False,
+                "matched_requested_source_family": "NONE",
+            }
+        ]
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=source,
+            document_dispositions=(
+                {
+                    "document_id": "DOC-1",
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": "fixture facts extracted",
+                },
+            ),
+            evidence_facts=_route_facts(),
+            required_objective_ids=(OBJECTIVE_ID, secondary_objective_id),
+        )
+
+        self.assertEqual(
+            {(row["objective_id"], row["route_kind"]) for row in proof},
+            {
+                (OBJECTIVE_ID, "COUNTER"),
+                (OBJECTIVE_ID, "SUPERSESSION"),
+            },
+        )
+        self.assertTrue(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=source,
+                evidence_facts=_route_facts(),
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                structured_result=_structured(),
+                materiality_scope_attestations=(
+                    _test_materiality_scope_attestations(source)
+                ),
+            )
+        )
+
+    def test_counter_route_rejects_resolved_label_without_executed_route(
+        self,
+    ) -> None:
+        secondary_objective_id = "OBJ-RESOLVED-WITHOUT-EVENT"
+        source = _source_checkpoint_with_updates(
+            _source_checkpoint(),
+            resolved_objective_ids=[secondary_objective_id],
+        )
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=source,
+            document_dispositions=(
+                {
+                    "document_id": "DOC-1",
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": "fixture facts extracted",
+                },
+            ),
+            evidence_facts=_route_facts(),
+            required_objective_ids=(OBJECTIVE_ID, secondary_objective_id),
+        )
+
+        self.assertFalse(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=source,
+                evidence_facts=_route_facts(),
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                structured_result=_structured(),
+                materiality_scope_attestations=(
+                    _test_materiality_scope_attestations(source)
+                ),
+            )
+        )
+    def test_counter_route_accepts_deterministic_future_rejection(self) -> None:
+        secondary_objective_id = "OBJ-FUTURE-REJECTED"
+        query_id = "Q-FUTURE-REJECTED"
+        source = _source_checkpoint_with_updates(
+            _source_checkpoint(),
+            generated_queries=[
+                *_source_checkpoint()["generated_queries"],
+                {
+                    "query_id": query_id,
+                    "objective_id": secondary_objective_id,
+                    "literal_query": "current target counter evidence",
+                    "source_families": ["PUBLIC_BROKER_PDF"],
+                    "counter_or_supersession_search": True,
+                    "execution_status": "PROVIDER_ERROR",
+                    "search_result_count": 1,
+                },
+            ],
+            search_candidates=[
+                *_source_checkpoint()["search_candidates"],
+                {
+                    "schema_version": "e2r_v5_search_candidate_v1",
+                    "candidate_id": _source_candidate_id(
+                        "https://broker.example.com/future.pdf"
+                    ),
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "query_ids": [query_id],
+                    "materiality_query_ids": [query_id],
+                    "objective_ids": [secondary_objective_id],
+                    "query_lineage_valid": True,
+                    "ranking_status": "REJECTED_FUTURE",
+                    "fetch_status": "FETCH_REJECTED",
+                    "future_candidate_rejected_before_llm": True,
+                    "publication_date_state": "REJECTED_FUTURE_SOURCE_LOCATOR",
+                    "publication_date_basis": "OFFICIAL_SOURCE_LOCATOR_METADATA",
+                    "published_at": "2026-07-13",
+                    "requested_source_families": ["PUBLIC_BROKER_PDF"],
+                    "url": "https://broker.example.com/future.pdf",
+                    "normalized_url": "https://broker.example.com/future.pdf",
+                    "score_authority": False,
+                }
+            ],
+            candidate_materiality_decisions=[
+                *_source_checkpoint()["candidate_materiality_decisions"],
+            ],
+            rejected_documents=[
+                {
+                    "schema_version": "e2r_v5_source_graph_rejection_v1",
+                    "rejection_id": stable_intelligence_id(
+                        "SGREJECT",
+                        {
+                            "candidate_id": _source_candidate_id(
+                                "https://broker.example.com/future.pdf"
+                            ),
+                            "reason": "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE",
+                            "content_hash": None,
+                        },
+                    ),
+                    "candidate_id": _source_candidate_id(
+                        "https://broker.example.com/future.pdf"
+                    ),
+                    "content_hash": None,
+                    "as_of_date": AS_OF_DATE,
+                    "inferred_published_at": "2026-07-13",
+                    "objective_ids": [secondary_objective_id],
+                    "query_ids": [query_id],
+                    "rejection_reason": "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE",
+                    "future_candidate_rejected_before_llm": True,
+                    "retryable": False,
+                    "score_authority": False,
+                    "accepted_claim_ids": [],
+                    "snippet_used_as_document": False,
+                    "url": "https://broker.example.com/future.pdf",
+                }
+            ],
+        )
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=source,
+            document_dispositions=(
+                {
+                    "document_id": "DOC-1",
+                    "status": "FACTS_EXTRACTED",
+                    "rationale": "fixture facts extracted",
+                },
+            ),
+            evidence_facts=_route_facts(),
+            required_objective_ids=(OBJECTIVE_ID, secondary_objective_id),
+        )
+
+        self.assertTrue(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=source,
+                evidence_facts=_route_facts(),
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                structured_result=_structured(),
+                materiality_scope_attestations=(
+                    _test_materiality_scope_attestations(source)
+                ),
+            )
+        )
+        missing_rejection = _source_checkpoint_with_updates(
+            source,
+            rejected_documents=[],
+        )
+        self.assertFalse(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=missing_rejection,
+                evidence_facts=_route_facts(),
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                structured_result=_structured(),
+                materiality_scope_attestations=(
+                    _test_materiality_scope_attestations(source)
+                ),
+            )
+        )
+        bad_future_date = _source_checkpoint_with_updates(
+            source,
+            search_candidates=[
+                *source["search_candidates"][:-1],
+                {
+                    **source["search_candidates"][-1],
+                    "published_at": "2026-07-13-not-an-exact-date",
+                },
+            ],
+        )
+        self.assertFalse(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=bad_future_date,
+                evidence_facts=_route_facts(),
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                structured_result=_structured(),
+                materiality_scope_attestations=(
+                    _test_materiality_scope_attestations(source)
+                ),
+            )
+        )
+        bad_rejection_url = _source_checkpoint_with_updates(
+            source,
+            rejected_documents=[
+                {
+                    **source["rejected_documents"][0],
+                    "url": "https://broker.example.com/a-different.pdf",
+                }
+            ],
+        )
+        self.assertFalse(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=bad_rejection_url,
+                evidence_facts=_route_facts(),
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                structured_result=_structured(),
+                materiality_scope_attestations=(
+                    _test_materiality_scope_attestations(source)
+                ),
+            )
+        )
+
+    def test_counter_route_rejects_self_attested_unlinked_search_result(self) -> None:
+        secondary_objective_id = "OBJ-UNEXECUTED-PARTIAL"
+        for execution_status in ("SEARCH_EXECUTED", "PROVIDER_ERROR"):
+            with self.subTest(execution_status=execution_status):
+                source = dict(_source_checkpoint())
+                source["generated_queries"] = [
+                    *source["generated_queries"],
+                    {
+                        "query_id": "Q-UNLINKED-PARTIAL",
+                        "objective_id": secondary_objective_id,
+                        "literal_query": "current target unlinked counter evidence",
+                        "source_families": ["ISSUER_PRESENTATION"],
+                        "counter_or_supersession_search": True,
+                        "execution_status": execution_status,
+                        "search_result_count": 100,
+                        "provider_errors": [
+                            "provider failed without durable results"
+                        ],
+                    },
+                ]
+                proof = build_counter_and_supersession_route_proof(
+                    source_graph_checkpoint=source,
+                    document_dispositions=(
+                        {
+                            "document_id": "DOC-1",
+                            "status": "FACTS_EXTRACTED",
+                            "rationale": "fixture facts extracted",
+                        },
+                    ),
+                    evidence_facts=_route_facts(),
+                    required_objective_ids=(
+                        OBJECTIVE_ID,
+                        secondary_objective_id,
+                    ),
+                )
+
+                self.assertFalse(
+                    _counter_route_proof_complete(
+                        proof,
+                        source_graph_checkpoint=source,
+                        evidence_facts=_route_facts(),
+                        objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                        required_objective_ids={
+                            OBJECTIVE_ID,
+                            secondary_objective_id,
+                        },
+                        structured_result=_structured(),
+                        materiality_scope_attestations=(
+                            _test_materiality_scope_attestations(source)
+                        ),
+                    )
+                )
+
+    def test_counter_route_rejects_nonterminal_or_foreign_candidate_lineage(
+        self,
+    ) -> None:
+        secondary_objective_id = "OBJ-CANDIDATE-BOUNDARY"
+        base_query = {
+            "query_id": "Q-CANDIDATE-BOUNDARY",
+            "objective_id": secondary_objective_id,
+            "literal_query": "current target bounded counter evidence",
+            "source_families": ["ISSUER_PRESENTATION"],
+            "counter_or_supersession_search": True,
+            "execution_status": "PROVIDER_ERROR",
+            "search_result_count": 1,
+            "provider_errors": ["one provider failed after another returned"],
+        }
+        valid_candidate = {
+            "schema_version": "e2r_v5_search_candidate_v1",
+            "candidate_id": _source_candidate_id(
+                "https://issuer.example.com/bounded"
+            ),
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "query_ids": ["Q-CANDIDATE-BOUNDARY"],
+            "materiality_query_ids": ["Q-CANDIDATE-BOUNDARY"],
+            "objective_ids": [secondary_objective_id],
+            "materiality_decision_id": "MATDEC-CANDIDATE-BOUNDARY",
+            "query_lineage_valid": True,
+            "ranking_status": "NOT_MATERIAL",
+            "requested_source_families": ["ISSUER_PRESENTATION"],
+            "matched_requested_source_family": "NONE",
+            "normalized_url": "https://issuer.example.com/bounded",
+            "url": "https://issuer.example.com/bounded",
+            "score_authority": False,
+        }
+        valid_candidate["materiality_scope_hash"] = (
+            _candidate_materiality_scope_hash(valid_candidate)
+        )
+        valid_decision = {
+            "candidate_id": _source_candidate_id(
+                "https://issuer.example.com/bounded"
+            ),
+            "decision_id": "MATDEC-CANDIDATE-BOUNDARY",
+            "objective_ids": [secondary_objective_id],
+            "material_relevance": False,
+            "matched_requested_source_family": "NONE",
+        }
+        invalid_candidates = {
+            "pending": {**valid_candidate, "ranking_status": "PENDING"},
+            "false_lineage": {
+                **valid_candidate,
+                "query_lineage_valid": False,
+            },
+            "foreign_objective": {
+                **valid_candidate,
+                "objective_ids": ["OBJ-FOREIGN"],
+            },
+            "historical_query_only": {
+                **valid_candidate,
+                "materiality_query_ids": ["Q-OTHER"],
+            },
+            "failed_material_fetch": {
+                **valid_candidate,
+                "ranking_status": "MATERIAL",
+                "fetch_status": "FETCH_FAILED",
+            },
+            "bare_candidate": {
+                "query_ids": ["Q-CANDIDATE-BOUNDARY"],
+            },
+            "stale_scope_hash": {
+                **valid_candidate,
+                "materiality_scope_hash": "0" * 64,
+            },
+            "wrong_requested_source_family": {
+                **valid_candidate,
+                "requested_source_families": ["CUSTOMER_OFFICIAL"],
+                "materiality_scope_hash": _candidate_materiality_scope_hash(
+                    {
+                        **valid_candidate,
+                        "requested_source_families": ["CUSTOMER_OFFICIAL"],
+                    }
+                ),
+            },
+            "expanded_requested_source_family": {
+                **valid_candidate,
+                "requested_source_families": [
+                    "ISSUER_PRESENTATION",
+                    "CUSTOMER_OFFICIAL",
+                ],
+                "materiality_scope_hash": _candidate_materiality_scope_hash(
+                    {
+                        **valid_candidate,
+                        "requested_source_families": [
+                            "ISSUER_PRESENTATION",
+                            "CUSTOMER_OFFICIAL",
+                        ],
+                    }
+                ),
+            },
+            "expanded_objective_scope": {
+                **valid_candidate,
+                "objective_ids": [secondary_objective_id, "OBJ-ADDED-LATER"],
+                "materiality_scope_hash": _candidate_materiality_scope_hash(
+                    {
+                        **valid_candidate,
+                        "objective_ids": [
+                            secondary_objective_id,
+                            "OBJ-ADDED-LATER",
+                        ],
+                    }
+                ),
+            },
+        }
+        for label, candidate in invalid_candidates.items():
+            with self.subTest(label=label):
+                source = dict(_source_checkpoint())
+                source["generated_queries"] = [
+                    *source["generated_queries"],
+                    base_query,
+                ]
+                source["search_candidates"] = [
+                    *source["search_candidates"],
+                    candidate,
+                ]
+                source["candidate_materiality_decisions"] = [
+                    *source["candidate_materiality_decisions"],
+                    valid_decision,
+                ]
+                proof = build_counter_and_supersession_route_proof(
+                    source_graph_checkpoint=source,
+                    document_dispositions=(
+                        {
+                            "document_id": "DOC-1",
+                            "status": "FACTS_EXTRACTED",
+                            "rationale": "fixture facts extracted",
+                        },
+                    ),
+                    evidence_facts=_route_facts(),
+                    required_objective_ids=(
+                        OBJECTIVE_ID,
+                        secondary_objective_id,
+                    ),
+                )
+                self.assertFalse(
+                    _counter_route_proof_complete(
+                        proof,
+                        source_graph_checkpoint=source,
+                        evidence_facts=_route_facts(),
+                        objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                        required_objective_ids={
+                            OBJECTIVE_ID,
+                            secondary_objective_id,
+                        },
+                        structured_result=_structured(),
+                        materiality_scope_attestations=(
+                            _test_materiality_scope_attestations(source)
+                        ),
+                    )
+                )
+
+    def test_counter_route_accepts_one_ranked_url_shared_by_two_queries(
+        self,
+    ) -> None:
+        objective_a = "OBJ-MERGED-A"
+        objective_b = "OBJ-MERGED-B"
+        query_a = "Q-MERGED-A"
+        query_b = "Q-MERGED-B"
+        url = "https://issuer.example.com/shared-result"
+        candidate = {
+            "schema_version": "e2r_v5_search_candidate_v1",
+            "candidate_id": _source_candidate_id(url),
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "query_ids": [query_a, query_b],
+            "materiality_query_ids": [query_a, query_b],
+            "objective_ids": [objective_a, objective_b],
+            "materiality_decision_id": "MATDEC-MERGED-SCOPE",
+            "query_lineage_valid": True,
+            "ranking_status": "NOT_MATERIAL",
+            "requested_source_families": [
+                "ISSUER_PRESENTATION",
+                "CUSTOMER_OFFICIAL",
+            ],
+            "matched_requested_source_family": "NONE",
+            "normalized_url": url,
+            "url": url,
+            "score_authority": False,
+        }
+        candidate["materiality_scope_hash"] = (
+            _candidate_materiality_scope_hash(candidate)
+        )
+        decision = {
+            "candidate_id": candidate["candidate_id"],
+            "decision_id": "MATDEC-MERGED-SCOPE",
+            "objective_ids": [objective_a, objective_b],
+            "material_relevance": False,
+            "matched_requested_source_family": "NONE",
+        }
+        base = _source_checkpoint()
+        source = _source_checkpoint_with_updates(
+            base,
+            generated_queries=[
+                *base["generated_queries"],
+                {
+                    "query_id": query_a,
+                    "objective_id": objective_a,
+                    "literal_query": "shared result counter route A",
+                    "source_families": ["ISSUER_PRESENTATION"],
+                    "counter_or_supersession_search": True,
+                    "execution_status": "SEARCH_EXECUTED",
+                    "search_result_count": 1,
+                },
+                {
+                    "query_id": query_b,
+                    "objective_id": objective_b,
+                    "literal_query": "shared result counter route B",
+                    "source_families": ["CUSTOMER_OFFICIAL"],
+                    "counter_or_supersession_search": True,
+                    "execution_status": "SEARCH_EXECUTED",
+                    "search_result_count": 1,
+                },
+            ],
+            search_candidates=[*base["search_candidates"], candidate],
+            candidate_materiality_decisions=[
+                *base["candidate_materiality_decisions"],
+                decision,
+            ],
+        )
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=source,
+            document_dispositions=(
+                {"document_id": "DOC-1", "status": "FACTS_EXTRACTED"},
+            ),
+            evidence_facts=_route_facts(),
+            required_objective_ids=(OBJECTIVE_ID, objective_a, objective_b),
+        )
+
+        self.assertTrue(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=source,
+                evidence_facts=_route_facts(),
+                objective_ids={OBJECTIVE_ID, objective_a, objective_b},
+                required_objective_ids={OBJECTIVE_ID, objective_a, objective_b},
+                structured_result=_structured(),
+                materiality_scope_attestations=(
+                    _test_materiality_scope_attestations(source)
+                ),
+            )
+        )
+
+    def test_counter_route_rejects_decision_reused_after_family_replacement(
+        self,
+    ) -> None:
+        secondary_objective_id = "OBJ-REPLACED-FAMILY"
+        query_id = "Q-REPLACED-FAMILY"
+        url = "https://issuer.example.com/replaced-family"
+        base_query = {
+            "query_id": query_id,
+            "objective_id": secondary_objective_id,
+            "literal_query": "original issuer counter route",
+            "source_families": ["ISSUER_PRESENTATION"],
+            "counter_or_supersession_search": True,
+            "execution_status": "SEARCH_EXECUTED",
+            "search_result_count": 1,
+        }
+        candidate = {
+            "schema_version": "e2r_v5_search_candidate_v1",
+            "candidate_id": _source_candidate_id(url),
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "query_ids": [query_id],
+            "materiality_query_ids": [query_id],
+            "objective_ids": [secondary_objective_id],
+            "materiality_decision_id": "MATDEC-REPLACED-FAMILY",
+            "query_lineage_valid": True,
+            "ranking_status": "NOT_MATERIAL",
+            "requested_source_families": ["ISSUER_PRESENTATION"],
+            "matched_requested_source_family": "NONE",
+            "normalized_url": url,
+            "url": url,
+            "score_authority": False,
+        }
+        candidate["materiality_scope_hash"] = (
+            _candidate_materiality_scope_hash(candidate)
+        )
+        decision = {
+            "candidate_id": candidate["candidate_id"],
+            "decision_id": "MATDEC-REPLACED-FAMILY",
+            "objective_ids": [secondary_objective_id],
+            "material_relevance": False,
+            "matched_requested_source_family": "NONE",
+        }
+        base = _source_checkpoint()
+        original = _source_checkpoint_with_updates(
+            base,
+            generated_queries=[*base["generated_queries"], base_query],
+            search_candidates=[*base["search_candidates"], candidate],
+            candidate_materiality_decisions=[
+                *base["candidate_materiality_decisions"],
+                decision,
+            ],
+        )
+        original_attestations = _test_materiality_scope_attestations(original)
+        replaced_candidate = {
+            **candidate,
+            "requested_source_families": ["CUSTOMER_OFFICIAL"],
+        }
+        replaced_candidate["materiality_scope_hash"] = (
+            _candidate_materiality_scope_hash(replaced_candidate)
+        )
+        replaced = _source_checkpoint_with_updates(
+            original,
+            generated_queries=[
+                *base["generated_queries"],
+                {**base_query, "source_families": ["CUSTOMER_OFFICIAL"]},
+            ],
+            search_candidates=[
+                *base["search_candidates"],
+                replaced_candidate,
+            ],
+        )
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=replaced,
+            document_dispositions=(
+                {"document_id": "DOC-1", "status": "FACTS_EXTRACTED"},
+            ),
+            evidence_facts=_route_facts(),
+            required_objective_ids=(OBJECTIVE_ID, secondary_objective_id),
+        )
+
+        self.assertFalse(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=replaced,
+                evidence_facts=_route_facts(),
+                objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                required_objective_ids={OBJECTIVE_ID, secondary_objective_id},
+                structured_result=_structured(),
+                materiality_scope_attestations=original_attestations,
+            )
+        )
+
+    def test_counter_route_rejects_decision_reused_after_query_replacement(
+        self,
+    ) -> None:
+        objective_id = "OBJ-REPLACED-QUERY"
+        original_query_id = "Q-ORIGINAL-QUERY"
+        replacement_query_id = "Q-REPLACEMENT-QUERY"
+        url = "https://issuer.example.com/same-scope-new-query"
+        query = {
+            "query_id": original_query_id,
+            "objective_id": objective_id,
+            "literal_query": "original issuer counter route",
+            "source_families": ["ISSUER_PRESENTATION"],
+            "counter_or_supersession_search": True,
+            "execution_status": "SEARCH_EXECUTED",
+            "search_result_count": 1,
+        }
+        candidate = {
+            "schema_version": "e2r_v5_search_candidate_v1",
+            "candidate_id": _source_candidate_id(url),
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "query_ids": [original_query_id],
+            "materiality_query_ids": [original_query_id],
+            "objective_ids": [objective_id],
+            "materiality_decision_id": "MATDEC-REPLACED-QUERY",
+            "query_lineage_valid": True,
+            "ranking_status": "NOT_MATERIAL",
+            "requested_source_families": ["ISSUER_PRESENTATION"],
+            "matched_requested_source_family": "NONE",
+            "normalized_url": url,
+            "url": url,
+            "title": "original result",
+            "snippet": "original result snippet",
+            "score_authority": False,
+        }
+        candidate["materiality_scope_hash"] = (
+            _candidate_materiality_scope_hash(candidate)
+        )
+        decision = {
+            "candidate_id": candidate["candidate_id"],
+            "decision_id": candidate["materiality_decision_id"],
+            "objective_ids": [],
+            "material_relevance": False,
+            "matched_requested_source_family": "NONE",
+        }
+        base = _source_checkpoint()
+        original = _source_checkpoint_with_updates(
+            base,
+            generated_queries=[*base["generated_queries"], query],
+            search_candidates=[*base["search_candidates"], candidate],
+            candidate_materiality_decisions=[
+                *base["candidate_materiality_decisions"],
+                decision,
+            ],
+        )
+        original_attestations = _test_materiality_scope_attestations(original)
+        replaced_candidate = {
+            **candidate,
+            "query_ids": [replacement_query_id],
+            "materiality_query_ids": [replacement_query_id],
+        }
+        replaced = _source_checkpoint_with_updates(
+            original,
+            generated_queries=[
+                *base["generated_queries"],
+                {
+                    **query,
+                    "query_id": replacement_query_id,
+                    "literal_query": "replacement issuer counter route",
+                },
+            ],
+            search_candidates=[
+                *base["search_candidates"],
+                replaced_candidate,
+            ],
+        )
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=replaced,
+            document_dispositions=(
+                {"document_id": "DOC-1", "status": "FACTS_EXTRACTED"},
+            ),
+            evidence_facts=_route_facts(),
+            required_objective_ids=(OBJECTIVE_ID, objective_id),
+        )
+
+        self.assertFalse(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=replaced,
+                evidence_facts=_route_facts(),
+                objective_ids={OBJECTIVE_ID, objective_id},
+                required_objective_ids={OBJECTIVE_ID, objective_id},
+                structured_result=_structured(),
+                materiality_scope_attestations=original_attestations,
+            )
+        )
+
+    def test_counter_route_rejects_decision_after_candidate_text_changes(
+        self,
+    ) -> None:
+        objective_id = "OBJ-CHANGED-CANDIDATE-TEXT"
+        query_id = "Q-CHANGED-CANDIDATE-TEXT"
+        url = "https://issuer.example.com/changed-candidate-text"
+        query = {
+            "query_id": query_id,
+            "objective_id": objective_id,
+            "literal_query": "issuer candidate text counter route",
+            "source_families": ["ISSUER_PRESENTATION"],
+            "counter_or_supersession_search": True,
+            "execution_status": "SEARCH_EXECUTED",
+            "search_result_count": 1,
+        }
+        candidate = {
+            "schema_version": "e2r_v5_search_candidate_v1",
+            "candidate_id": _source_candidate_id(url),
+            "target_id": TARGET,
+            "as_of_date": AS_OF_DATE,
+            "query_ids": [query_id],
+            "materiality_query_ids": [query_id],
+            "objective_ids": [objective_id],
+            "materiality_decision_id": "MATDEC-CHANGED-CANDIDATE-TEXT",
+            "query_lineage_valid": True,
+            "ranking_status": "NOT_MATERIAL",
+            "requested_source_families": ["ISSUER_PRESENTATION"],
+            "matched_requested_source_family": "NONE",
+            "normalized_url": url,
+            "url": url,
+            "title": "unrelated issuer page",
+            "snippet": "nothing material was shown",
+            "score_authority": False,
+        }
+        candidate["materiality_scope_hash"] = (
+            _candidate_materiality_scope_hash(candidate)
+        )
+        decision = {
+            "candidate_id": candidate["candidate_id"],
+            "decision_id": candidate["materiality_decision_id"],
+            "objective_ids": [],
+            "material_relevance": False,
+            "matched_requested_source_family": "NONE",
+        }
+        base = _source_checkpoint()
+        original = _source_checkpoint_with_updates(
+            base,
+            generated_queries=[*base["generated_queries"], query],
+            search_candidates=[*base["search_candidates"], candidate],
+            candidate_materiality_decisions=[
+                *base["candidate_materiality_decisions"],
+                decision,
+            ],
+        )
+        original_attestations = _test_materiality_scope_attestations(original)
+        changed = _source_checkpoint_with_updates(
+            original,
+            search_candidates=[
+                *base["search_candidates"],
+                {
+                    **candidate,
+                    "title": "current forward valuation table",
+                    "snippet": "2027E BPS and P/B are now explicitly shown",
+                },
+            ],
+        )
+        proof = build_counter_and_supersession_route_proof(
+            source_graph_checkpoint=changed,
+            document_dispositions=(
+                {"document_id": "DOC-1", "status": "FACTS_EXTRACTED"},
+            ),
+            evidence_facts=_route_facts(),
+            required_objective_ids=(OBJECTIVE_ID, objective_id),
+        )
+
+        self.assertFalse(
+            _counter_route_proof_complete(
+                proof,
+                source_graph_checkpoint=changed,
+                evidence_facts=_route_facts(),
+                objective_ids={OBJECTIVE_ID, objective_id},
+                required_objective_ids={OBJECTIVE_ID, objective_id},
+                structured_result=_structured(),
+                materiality_scope_attestations=original_attestations,
+            )
+        )
+
     def test_completed_memo_uncertainty_and_red_team_monitoring_are_not_open_gaps(
         self,
     ) -> None:
@@ -4228,6 +5126,111 @@ def _stable_test_hash(value: Any) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def _test_materiality_scope_attestation_roster(
+    checkpoint: Mapping[str, Any],
+) -> Mapping[str, Any]:
+    candidate_by_id = {
+        str(row.get("candidate_id") or ""): row
+        for row in checkpoint.get("search_candidates") or ()
+        if str(row.get("candidate_id") or "")
+    }
+    attestations: dict[str, Mapping[str, Any]] = {}
+    for decision in checkpoint.get("candidate_materiality_decisions") or ():
+        decision_id = str(decision.get("decision_id") or "")
+        candidate_id = str(decision.get("candidate_id") or "")
+        candidate = candidate_by_id.get(candidate_id)
+        if not decision_id or candidate is None:
+            continue
+        materiality_query_ids = sorted(
+            str(value)
+            for value in (
+                candidate.get("materiality_query_ids")
+                or candidate.get("query_ids")
+                or ()
+            )
+            if str(value)
+        )
+        scope_hash = _candidate_materiality_scope_hash(candidate)
+        decision_input_hash = candidate_materiality_decision_input_hash(
+            candidate
+        )
+        decision_prompt_input_hash = (
+            candidate_materiality_full_prompt_input_hash(candidate)
+        )
+        request_id = f"TEST-COLLABREQ-{decision_id}"
+        response_id = f"TEST-COLLABRESP-{decision_id}"
+        attestation_id = stable_intelligence_id(
+            "MATSCOPE",
+            {
+                "decision_id": decision_id,
+                "candidate_id": candidate_id,
+                "materiality_scope_hash": scope_hash,
+                "decision_input_hash": decision_input_hash,
+                "decision_prompt_input_hash": decision_prompt_input_hash,
+                "materiality_query_ids": materiality_query_ids,
+                "request_id": request_id,
+                "response_id": response_id,
+                "prompt_hash": "a" * 64,
+            },
+        )
+        attestations[attestation_id] = {
+            "schema_version": (
+                "e2r_v5_candidate_materiality_scope_attestation_v2"
+            ),
+            "attestation_id": attestation_id,
+            "decision_id": decision_id,
+            "candidate_id": candidate_id,
+            "materiality_scope_hash": scope_hash,
+            "decision_input_hash": decision_input_hash,
+            "decision_prompt_input_hash": decision_prompt_input_hash,
+            "materiality_query_ids": materiality_query_ids,
+            "candidate_objective_ids": sorted(
+                str(value)
+                for value in candidate.get("objective_ids") or ()
+                if str(value)
+            ),
+            "requested_source_families": sorted(
+                str(value)
+                for value in candidate.get("requested_source_families") or ()
+                if str(value)
+            ),
+            "request_id": request_id,
+            "response_id": response_id,
+            "prompt_hash": "a" * 64,
+            "score_or_stage_authority": False,
+        }
+    rows = [attestations[key] for key in sorted(attestations)]
+    roster_hash = hashlib.sha256(
+        json.dumps(
+            rows,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+    return {
+        "schema_version": (
+            "e2r_v5_candidate_materiality_scope_attestation_roster_v2"
+        ),
+        "target_id": str(checkpoint.get("target_id") or ""),
+        "as_of_date": str(checkpoint.get("as_of_date") or ""),
+        "attestation_count": len(attestations),
+        "attestation_roster_hash": roster_hash,
+        "attestations_by_scope_receipt_id": attestations,
+        "score_or_stage_authority": False,
+    }
+
+
+def _test_materiality_scope_attestations(
+    checkpoint: Mapping[str, Any],
+) -> Mapping[str, Mapping[str, Any]]:
+    return dict(
+        _test_materiality_scope_attestation_roster(checkpoint)[
+            "attestations_by_scope_receipt_id"
+        ]
+    )
+
+
 def _structured() -> StructuredResearchResult:
     record = StructuredMetricRecord(
         record_id="STRUCTURED-FCF",
@@ -4313,6 +5316,8 @@ def _source_checkpoint(
             }
         ]
         documents: list[Mapping[str, Any]] = []
+        candidates: list[Mapping[str, Any]] = []
+        decisions: list[Mapping[str, Any]] = []
         failures = [
             {
                 "query_id": "Q-ZERO",
@@ -4359,6 +5364,78 @@ def _source_checkpoint(
                 "full_text": "source-backed current evidence and counter evidence",
             }
         ] if with_document and not quarantine_document else []
+        candidates = (
+            [
+                {
+                    "schema_version": "e2r_v5_search_candidate_v1",
+                    "candidate_id": _source_candidate_id(
+                        "https://issuer.example.com/counter"
+                    ),
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "query_ids": ["Q-COUNTER"],
+                    "materiality_query_ids": ["Q-COUNTER"],
+                    "objective_ids": [OBJECTIVE_ID],
+                    "materiality_decision_id": "MATDEC-COUNTER",
+                    "query_lineage_valid": True,
+                    "ranking_status": "NOT_MATERIAL",
+                    "requested_source_families": ["ISSUER_PRESENTATION"],
+                    "matched_requested_source_family": "NONE",
+                    "normalized_url": "https://issuer.example.com/counter",
+                    "url": "https://issuer.example.com/counter",
+                    "score_authority": False,
+                },
+                {
+                    "schema_version": "e2r_v5_search_candidate_v1",
+                    "candidate_id": _source_candidate_id(
+                        "https://issuer.example.com/supersession"
+                    ),
+                    "target_id": TARGET,
+                    "as_of_date": AS_OF_DATE,
+                    "query_ids": ["Q-SUPERSESSION"],
+                    "materiality_query_ids": ["Q-SUPERSESSION"],
+                    "objective_ids": [OBJECTIVE_ID],
+                    "materiality_decision_id": "MATDEC-SUPERSESSION",
+                    "query_lineage_valid": True,
+                    "ranking_status": "NOT_MATERIAL",
+                    "requested_source_families": ["CUSTOMER_OFFICIAL"],
+                    "matched_requested_source_family": "NONE",
+                    "normalized_url": "https://issuer.example.com/supersession",
+                    "url": "https://issuer.example.com/supersession",
+                    "score_authority": False,
+                },
+            ]
+            if with_queries
+            else []
+        )
+        for candidate in candidates:
+            candidate["materiality_scope_hash"] = (
+                _candidate_materiality_scope_hash(candidate)
+            )
+        decisions = (
+            [
+                {
+                    "candidate_id": _source_candidate_id(
+                        "https://issuer.example.com/counter"
+                    ),
+                    "decision_id": "MATDEC-COUNTER",
+                    "objective_ids": [OBJECTIVE_ID],
+                    "material_relevance": False,
+                    "matched_requested_source_family": "NONE",
+                },
+                {
+                    "candidate_id": _source_candidate_id(
+                        "https://issuer.example.com/supersession"
+                    ),
+                    "decision_id": "MATDEC-SUPERSESSION",
+                    "objective_ids": [OBJECTIVE_ID],
+                    "material_relevance": False,
+                    "matched_requested_source_family": "NONE",
+                },
+            ]
+            if with_queries
+            else []
+        )
         failures = []
     if extra_epoch:
         queries.append(
@@ -4393,8 +5470,8 @@ def _source_checkpoint(
         "generated_queries": queries,
         "executed_queries": [row["literal_query"] for row in queries],
         "query_failures": failures,
-        "search_candidates": [],
-        "candidate_materiality_decisions": [],
+        "search_candidates": candidates,
+        "candidate_materiality_decisions": decisions,
         "fetch_records": [],
         "evidence_documents": documents,
         "rejected_documents": (

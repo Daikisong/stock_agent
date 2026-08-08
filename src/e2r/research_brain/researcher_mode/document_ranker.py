@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import dataclass
 from datetime import date
 from typing import Any, Mapping, Sequence
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from e2r.research_brain.intelligence_schema import stable_intelligence_id
 from e2r.research_brain.planning.provider_transport import (
@@ -18,6 +20,134 @@ from .component_researcher import StructuredResearchProvider
 from .prompt_projection import project_candidate_ranking_evidence_context
 from .schemas import ComponentResearchPlan
 from .schemas import assert_blind_research_output, scrub_blind_research_payload
+
+
+def normalize_candidate_url(value: str) -> str:
+    """Canonical URL identity shared by discovery and journal attestation."""
+
+    if not value:
+        return ""
+    parts = urlsplit(value.strip())
+    host = parts.netloc.casefold()
+    path = re.sub(r"/{2,}", "/", parts.path or "/").rstrip("/") or "/"
+    query = urlencode(
+        sorted(
+            (key, item)
+            for key, item in parse_qsl(parts.query, keep_blank_values=True)
+            if not key.casefold().startswith("utm_")
+            and key.casefold() not in {"fbclid", "gclid", "ref", "ocid"}
+        )
+    )
+    return urlunsplit((parts.scheme.casefold(), host, path, query, ""))
+
+
+def candidate_materiality_scope_hash(candidate: Mapping[str, Any]) -> str:
+    """Hash the semantic scope reviewed for one URL-based candidate.
+
+    Candidate identity intentionally stays URL-based so duplicate search
+    results share transport work.  The materiality decision is narrower: the
+    same URL must be reviewed again when its objective or requested source
+    family changes.
+    """
+
+    payload = {
+        "normalized_url": normalize_candidate_url(
+            str(
+                candidate.get("normalized_url")
+                or candidate.get("url")
+                or ""
+            )
+        ),
+        "objective_ids": sorted(
+            str(value)
+            for value in candidate.get("objective_ids") or ()
+            if str(value).strip()
+        ),
+        "requested_source_families": sorted(
+            str(value)
+            for value in candidate.get("requested_source_families") or ()
+            if str(value).strip()
+        ),
+    }
+    return hashlib.sha256(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def candidate_materiality_decision_input_hash(
+    candidate: Mapping[str, Any],
+) -> str:
+    """Hash the exact semantic candidate projection seen by the ranker.
+
+    URL/objective/source-family scope alone is not enough: a later discovery
+    can keep that scope while changing the title, snippet, publication date,
+    or full-fetch revalidation context that the LLM actually reviewed.  The
+    helper accepts either the persisted candidate row or its prompt projection
+    so the immutable journal and current checkpoint can be compared directly.
+    Set-like lineage fields are canonicalized to avoid order-only churn.  The
+    hash intentionally covers the durable semantic fields; transient reference
+    transport hand-off fields are verified by their document/fetch ledgers and
+    are not retained on a terminal candidate.
+    """
+
+    payload = {
+        "candidate_id": str(candidate.get("candidate_id") or "").strip(),
+        "title": candidate.get("title"),
+        "normalized_url": normalize_candidate_url(
+            str(candidate.get("url") or candidate.get("normalized_url") or "")
+        ),
+        "snippet": candidate.get("snippet"),
+        "source": candidate.get("source"),
+        "published_at": candidate.get("published_at"),
+        "is_pdf": bool(candidate.get("is_pdf")),
+        "is_news": bool(candidate.get("is_news")),
+        "is_disclosure": bool(candidate.get("is_disclosure")),
+        "materiality_query_ids": sorted(
+            {
+                str(value).strip()
+                for value in (
+                    candidate.get("materiality_query_ids")
+                    or candidate.get("query_ids")
+                    or ()
+                )
+                if str(value).strip()
+            }
+        ),
+        "objective_ids": sorted(
+            {
+                str(value).strip()
+                for value in candidate.get("objective_ids") or ()
+                if str(value).strip()
+            }
+        ),
+        "requested_source_families": sorted(
+            {
+                str(value).strip()
+                for value in candidate.get("requested_source_families") or ()
+                if str(value).strip()
+            }
+        ),
+        "verified_official_domain_candidate": bool(
+            candidate.get("verified_official_domain_candidate")
+        ),
+        "candidate_source_family_hint": candidate.get(
+            "candidate_source_family_hint"
+        ),
+        "snippet_discovery_only": True,
+    }
+    return hashlib.sha256(
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
 
 
 @dataclass(frozen=True)
@@ -181,6 +311,98 @@ def project_candidate_ranking_discovery_candidates(
         }
         for row in candidates
     ]
+
+
+def candidate_materiality_full_prompt_input_hash(
+    candidate: Mapping[str, Any],
+) -> str:
+    """Hash the full candidate row exactly as exposed to the ranker prompt.
+
+    New checkpoints persist this applied hash before transient reference
+    hand-off fields are removed.  Legacy checkpoints cannot reconstruct those
+    fields, so their completion proof additionally relies on the durable input
+    hash above and the immutable official request/response receipt.
+    """
+
+    if isinstance(candidate.get("reference_transport_context"), Mapping):
+        reference = candidate.get("reference_transport_context") or {}
+        projected = {
+            "candidate_id": candidate.get("candidate_id"),
+            "title": candidate.get("title"),
+            "url": candidate.get("url"),
+            "snippet": candidate.get("snippet"),
+            "source": candidate.get("source"),
+            "published_at": candidate.get("published_at"),
+            "is_pdf": bool(candidate.get("is_pdf")),
+            "is_news": bool(candidate.get("is_news")),
+            "is_disclosure": bool(candidate.get("is_disclosure")),
+            "query_ids": list(
+                candidate.get("materiality_query_ids")
+                or candidate.get("query_ids")
+                or ()
+            ),
+            "objective_ids": list(candidate.get("objective_ids") or ()),
+            "requested_source_families": list(
+                candidate.get("requested_source_families") or ()
+            ),
+            "verified_official_domain_candidate": bool(
+                candidate.get("verified_official_domain_candidate")
+            ),
+            "candidate_source_family_hint": candidate.get(
+                "candidate_source_family_hint"
+            ),
+            "graph_expansion_parent_document_ids": list(
+                candidate.get("graph_expansion_parent_document_ids") or ()
+            ),
+            "graph_expansion_parent_candidate_ids": list(
+                candidate.get("graph_expansion_parent_candidate_ids") or ()
+            ),
+            "reference_transport_context": {
+                "parent_authority_verified": bool(
+                    reference.get("parent_authority_verified")
+                ),
+                "current_scope_inherited": bool(
+                    reference.get("current_scope_inherited")
+                ),
+                "metadata_sparse": bool(reference.get("metadata_sparse")),
+                "bounded_full_fetch_revalidation": bool(
+                    reference.get("bounded_full_fetch_revalidation")
+                ),
+                "full_fetch_document_id": reference.get(
+                    "full_fetch_document_id"
+                ),
+                "full_fetch_content_text": reference.get(
+                    "full_fetch_content_text"
+                ),
+            },
+            "snippet_discovery_only": True,
+        }
+    else:
+        projected = dict(
+            project_candidate_ranking_discovery_candidates((candidate,))[0]
+        )
+    for key in (
+        "query_ids",
+        "objective_ids",
+        "requested_source_families",
+        "graph_expansion_parent_document_ids",
+        "graph_expansion_parent_candidate_ids",
+    ):
+        projected[key] = sorted(
+            {
+                str(value).strip()
+                for value in projected.get(key) or ()
+                if str(value).strip()
+            }
+        )
+    return hashlib.sha256(
+        json.dumps(
+            projected,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
 
 
 class ResearcherDocumentRanker:

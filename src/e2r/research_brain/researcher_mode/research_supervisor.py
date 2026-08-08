@@ -26,6 +26,7 @@ from .schemas import (
     scrub_blind_research_payload,
 )
 from .source_query_planner import CANONICAL_SOURCE_FAMILIES
+from .document_ranker import candidate_materiality_decision_input_hash
 from .prompt_projection import (
     normalize_collaboration_transport_wait,
     project_counter_route_proof,
@@ -34,7 +35,12 @@ from .prompt_projection import (
     project_supervisor_failures,
     project_supervisor_source_graph_checkpoint,
 )
-from .source_graph_explorer import validate_source_graph_checkpoint
+from .source_graph_explorer import (
+    _candidate_materiality_decision_binds_scope,
+    _candidate_materiality_scope_hash,
+    _normalize_url,
+    validate_source_graph_checkpoint,
+)
 from .structured_data_researcher import StructuredResearchResult
 
 
@@ -405,6 +411,14 @@ class ResearchSupervisor:
                 provider_name="UNCONFIGURED",
                 synthesis_binding=synthesis_binding,
             )
+        materiality_scope_attestation_roster = (
+            _validated_materiality_scope_attestation_roster(
+                self.provider,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                source_graph_checkpoint=source_graph_checkpoint,
+            )
+        )
         material = _build_supervisor_prompt_material(
             reviewer_role=self.reviewer_role,
             target_id=target_id,
@@ -424,6 +438,9 @@ class ResearchSupervisor:
             prior_review=prior_review,
             prior_review_prompt_projection=prior_review_prompt_projection,
             score_gap_context=score_gap_context,
+            materiality_scope_attestation_roster=(
+                materiality_scope_attestation_roster
+            ),
         )
         payload = material.payload
         objective_ids = set(material.objective_ids)
@@ -686,6 +703,14 @@ class ResearchSupervisor:
             synthesis_binding=synthesis_binding,
         ):
             prior_review = None
+        materiality_scope_attestation_roster = (
+            _validated_materiality_scope_attestation_roster(
+                self.provider,
+                target_id=target_id,
+                as_of_date=as_of_date,
+                source_graph_checkpoint=source_graph_checkpoint,
+            )
+        )
         material = _build_supervisor_prompt_material(
             reviewer_role=self.reviewer_role,
             target_id=target_id,
@@ -705,6 +730,9 @@ class ResearchSupervisor:
             prior_review=prior_review,
             prior_review_prompt_projection=prior_review_prompt_projection,
             score_gap_context=score_gap_context,
+            materiality_scope_attestation_roster=(
+                materiality_scope_attestation_roster
+            ),
         )
         preview = getattr(self.provider, "preview_prompt_hash", None)
         if callable(preview):
@@ -1231,6 +1259,77 @@ def _prior_review_matches_synthesis(
     )
 
 
+def _validated_materiality_scope_attestation_roster(
+    provider: StructuredResearchProvider,
+    *,
+    target_id: str,
+    as_of_date: str,
+    source_graph_checkpoint: Mapping[str, Any],
+) -> Mapping[str, Any] | None:
+    """Load a fail-closed official decision-time scope roster from provider."""
+
+    loader = getattr(
+        provider,
+        "validated_candidate_materiality_scope_attestations",
+        None,
+    )
+    if not callable(loader):
+        return None
+    try:
+        roster = loader(
+            target_id=target_id,
+            as_of_date=as_of_date,
+            source_graph_checkpoint=source_graph_checkpoint,
+        )
+    except (OSError, RuntimeError, TypeError, ValueError):
+        return None
+    if not isinstance(roster, Mapping):
+        return None
+    raw_attestations = roster.get("attestations_by_scope_receipt_id")
+    if not isinstance(raw_attestations, Mapping):
+        return None
+    attestations: dict[str, Mapping[str, Any]] = {}
+    for raw_attestation_id, raw_attestation in raw_attestations.items():
+        attestation_id = str(raw_attestation_id).strip()
+        if (
+            not attestation_id
+            or not isinstance(raw_attestation, Mapping)
+            or str(raw_attestation.get("attestation_id") or "")
+            != attestation_id
+        ):
+            return None
+        attestations[attestation_id] = dict(raw_attestation)
+    canonical_rows = [attestations[key] for key in sorted(attestations)]
+    canonical_hash = hashlib.sha256(
+        json.dumps(
+            canonical_rows,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+    if (
+        roster.get("schema_version")
+        != "e2r_v5_candidate_materiality_scope_attestation_roster_v2"
+        or str(roster.get("target_id") or "") != target_id
+        or str(roster.get("as_of_date") or "") != as_of_date
+        or roster.get("score_or_stage_authority") is not False
+        or roster.get("attestation_count") != len(attestations)
+        or str(roster.get("attestation_roster_hash") or "")
+        != canonical_hash
+    ):
+        return None
+    return {
+        "schema_version": roster["schema_version"],
+        "target_id": target_id,
+        "as_of_date": as_of_date,
+        "attestation_count": len(attestations),
+        "attestation_roster_hash": canonical_hash,
+        "attestations_by_scope_receipt_id": attestations,
+        "score_or_stage_authority": False,
+    }
+
+
 def _build_supervisor_prompt_material(
     *,
     reviewer_role: str,
@@ -1249,6 +1348,7 @@ def _build_supervisor_prompt_material(
     prior_review: ResearchSupervisorReview | Mapping[str, Any] | None,
     score_gap_context: Mapping[str, Any] | None,
     prior_review_prompt_projection: Mapping[str, Any] | None = None,
+    materiality_scope_attestation_roster: Mapping[str, Any] | None = None,
 ) -> _SupervisorPromptMaterial:
     """Build all deterministic commitments for one Supervisor provider call."""
 
@@ -1302,6 +1402,16 @@ def _build_supervisor_prompt_material(
             if bool(row.get("counter_or_supersession_required", True))
         },
         structured_result=structured_result,
+        materiality_scope_attestations=(
+            dict(
+                materiality_scope_attestation_roster.get(
+                    "attestations_by_scope_receipt_id"
+                )
+                or {}
+            )
+            if isinstance(materiality_scope_attestation_roster, Mapping)
+            else {}
+        ),
     )
     source_graph_zero_result_only = _source_graph_zero_result_only(
         source_graph_checkpoint
@@ -1467,6 +1577,31 @@ def _build_supervisor_prompt_material(
             "deterministic_score_gap_context": dict(score_gap_context or {}),
             "counter_and_supersession_route_proof": project_counter_route_proof(
                 counter_and_supersession_route_proof
+            ),
+            "counter_route_materiality_scope_attestation": (
+                {
+                    "schema_version": materiality_scope_attestation_roster.get(
+                        "schema_version"
+                    ),
+                    "attestation_count": materiality_scope_attestation_roster.get(
+                        "attestation_count"
+                    ),
+                    "attestation_roster_hash": (
+                        materiality_scope_attestation_roster.get(
+                            "attestation_roster_hash"
+                        )
+                    ),
+                    "validated": True,
+                    "score_or_stage_authority": False,
+                }
+                if isinstance(materiality_scope_attestation_roster, Mapping)
+                else {
+                    "schema_version": None,
+                    "attestation_count": 0,
+                    "attestation_roster_hash": None,
+                    "validated": False,
+                    "score_or_stage_authority": False,
+                }
             ),
             "prior_supervisor_review": prior_prompt_projection,
         }
@@ -2392,7 +2527,7 @@ def build_counter_and_supersession_route_proof(
         if str(row.get("query_id") or "").strip()
         and str(row.get("objective_id") or "").strip() in required
         and bool(row.get("counter_or_supersession_search"))
-        and str(row.get("execution_status") or "") == "SEARCH_EXECUTED"
+        and _counter_search_query_reports_positive_results(row)
     }
     disposition_by_document: dict[str, Mapping[str, Any]] = {}
     for source in document_dispositions:
@@ -2495,6 +2630,7 @@ def _counter_route_proof_complete(
     objective_ids: set[str],
     required_objective_ids: set[str],
     structured_result: Any | None,
+    materiality_scope_attestations: Mapping[str, Mapping[str, Any]],
 ) -> bool:
     """Validate that counter and supersession routes were actually executed."""
 
@@ -2523,8 +2659,17 @@ def _counter_route_proof_complete(
         for source_id in (getattr(record, "source_ids", ()) or ())
         if str(source_id)
     }
+    checked_objective_ids = {
+        str(query.get("objective_id") or "").strip()
+        for query in query_by_id.values()
+        if bool(query.get("counter_or_supersession_search"))
+        and _counter_search_query_has_executed_results(
+            source_graph_checkpoint,
+            query,
+            materiality_scope_attestations=materiality_scope_attestations,
+        )
+    }
     covered_route_kinds: set[str] = set()
-    covered_by_objective: dict[str, set[str]] = {}
     for row in rows:
         objective_id = str(row.get("objective_id") or "").strip()
         if not objective_id or objective_id not in objective_ids:
@@ -2533,7 +2678,6 @@ def _counter_route_proof_complete(
         route_kind = str(route_kind_value or "").upper()
         if route_kind in {"COUNTER", "SUPERSESSION"}:
             covered_route_kinds.add(route_kind)
-            covered_by_objective.setdefault(objective_id, set()).add(route_kind)
         else:
             return False
         query_ids = _proof_ids(row, "query_ids", "query_id")
@@ -2551,9 +2695,11 @@ def _counter_route_proof_complete(
             query = query_by_id[query_id]
             if not bool(query.get("counter_or_supersession_search")):
                 return False
-            if str(query.get("execution_status") or "") not in {
-                "SEARCH_EXECUTED",
-            }:
+            if not _counter_search_query_has_executed_results(
+                source_graph_checkpoint,
+                query,
+                materiality_scope_attestations=materiality_scope_attestations,
+            ):
                 return False
             if str(query.get("objective_id") or "") != objective_id:
                 return False
@@ -2617,11 +2763,431 @@ def _counter_route_proof_complete(
         if row.get("parser_extractor_verified") is not True:
             return False
     return bool(
+        # COUNTER and SUPERSESSION are real event kinds, so requiring both
+        # kinds for every objective would force the researcher to invent an
+        # event when no supersession happened.  Keep the two source-backed
+        # kinds mandatory across the research as a whole, while every required
+        # objective must still reach its own verified result-review boundary.
+        # Pending/zero-result/provider-error-only routes never satisfy it.
         covered_route_kinds == {"COUNTER", "SUPERSESSION"}
-        and all(
-            covered_by_objective.get(objective_id) == {"COUNTER", "SUPERSESSION"}
-            for objective_id in required_objective_ids
+        and required_objective_ids.issubset(checked_objective_ids)
+    )
+
+
+def _counter_search_query_has_executed_results(
+    source_graph_checkpoint: Mapping[str, Any],
+    query: Mapping[str, Any],
+    *,
+    materiality_scope_attestations: Mapping[str, Mapping[str, Any]],
+) -> bool:
+    """Return whether a counter route reached a real result-review boundary.
+
+    A provider may fail after another configured search provider has already
+    returned candidates.  The source-graph transport records that mixed
+    outcome as ``PROVIDER_ERROR`` even though the returned candidate roster is
+    ranked and fetched normally.  Such a partial provider failure is an
+    executed route only when the query has a positive result count and durable
+    candidate/fetch/document lineage.  A bare provider error or a zero-result
+    query is never completion proof.
+    """
+
+    query_id = str(query.get("query_id") or "").strip()
+    if not query_id or not bool(query.get("counter_or_supersession_search")):
+        return False
+    if not _counter_search_query_reports_positive_results(query):
+        return False
+    objective_id = str(query.get("objective_id") or "").strip()
+    if not objective_id:
+        return False
+    target_id = str(source_graph_checkpoint.get("target_id") or "").strip()
+    as_of_date = str(source_graph_checkpoint.get("as_of_date") or "").strip()
+    literal_query = " ".join(
+        str(query.get("literal_query") or "").split()
+    ).strip()
+    if (
+        str(source_graph_checkpoint.get("mode") or "").upper() != "TEST"
+        and stable_intelligence_id(
+            "SGQUERY",
+            {
+                "target_id": target_id,
+                "as_of_date": as_of_date,
+                "objective_id": objective_id,
+                "literal_query": literal_query,
+            },
         )
+        != query_id
+    ):
+        return False
+    query_source_families = {
+        str(value).strip()
+        for value in query.get("source_families") or ()
+        if str(value).strip()
+    }
+    if not query_source_families:
+        return False
+    try:
+        cutoff = date.fromisoformat(as_of_date)
+    except ValueError:
+        return False
+
+    def _query_is_linked(row: Mapping[str, Any]) -> bool:
+        return query_id in {
+            str(value).strip()
+            for value in row.get("query_ids") or ()
+            if str(value).strip()
+        }
+
+    decision_by_id = {
+        str(row.get("decision_id") or "").strip(): row
+        for row in source_graph_checkpoint.get("candidate_materiality_decisions")
+        or ()
+        if isinstance(row, Mapping)
+        and str(row.get("decision_id") or "").strip()
+    }
+    query_by_id = {
+        str(row.get("query_id") or "").strip(): row
+        for row in source_graph_checkpoint.get("generated_queries") or ()
+        if isinstance(row, Mapping)
+        and str(row.get("query_id") or "").strip()
+    }
+    future_rejections_by_candidate: dict[str, list[Mapping[str, Any]]] = {}
+    for row in source_graph_checkpoint.get("rejected_documents") or ():
+        if not isinstance(row, Mapping):
+            continue
+        candidate_id = str(row.get("candidate_id") or "").strip()
+        if candidate_id:
+            future_rejections_by_candidate.setdefault(candidate_id, []).append(
+                row
+            )
+    terminal_ranking_statuses = {
+        "MATERIAL",
+        "NOT_MATERIAL",
+        "REJECTED_FUTURE",
+    }
+    terminal_material_fetch_statuses = {
+        "DUPLICATE_CONTENT",
+        "FETCH_REJECTED",
+        "FULL_DOCUMENT_FETCHED",
+        "FULL_DOCUMENT_REVALIDATION_REJECTED",
+        "REFERENCE_DISCOVERY_REJECTED_NAVIGATION_ONLY",
+    }
+    for candidate in source_graph_checkpoint.get("search_candidates") or ():
+        if not isinstance(candidate, Mapping) or not _query_is_linked(candidate):
+            continue
+        candidate_id = str(candidate.get("candidate_id") or "").strip()
+        candidate_url = str(candidate.get("url") or "").strip()
+        normalized_url = _normalize_url(candidate_url)
+        if (
+            not candidate_id
+            or str(candidate.get("schema_version") or "")
+            != "e2r_v5_search_candidate_v1"
+            or candidate.get("score_authority") is not False
+            or candidate.get("query_lineage_valid") is not True
+            or str(candidate.get("target_id") or "").strip() != target_id
+            or str(candidate.get("as_of_date") or "").strip() != as_of_date
+            or re.match(r"^https?://[^\s]+$", candidate_url) is None
+            or not normalized_url
+            or normalized_url
+            != str(candidate.get("normalized_url") or "").strip()
+            or stable_intelligence_id(
+                "SGCAND",
+                {
+                    "target_id": target_id,
+                    "as_of_date": as_of_date,
+                    "normalized_url": normalized_url,
+                },
+            )
+            != candidate_id
+        ):
+            continue
+        current_materiality_query_ids = {
+            str(value).strip()
+            for value in candidate.get("materiality_query_ids") or ()
+            if str(value).strip()
+        }
+        if query_id not in current_materiality_query_ids:
+            continue
+        materiality_query_rows = tuple(
+            query_by_id.get(candidate_query_id)
+            for candidate_query_id in sorted(current_materiality_query_ids)
+        )
+        if not materiality_query_rows or any(
+            not isinstance(row, Mapping) for row in materiality_query_rows
+        ):
+            continue
+        expected_candidate_objective_ids = {
+            str(row.get("objective_id") or "").strip()
+            for row in materiality_query_rows
+            if isinstance(row, Mapping)
+            and str(row.get("objective_id") or "").strip()
+        }
+        expected_candidate_source_families = {
+            str(value).strip()
+            for row in materiality_query_rows
+            if isinstance(row, Mapping)
+            for value in row.get("source_families") or ()
+            if str(value).strip()
+        }
+        candidate_objective_ids = {
+            str(value).strip()
+            for value in candidate.get("objective_ids") or ()
+            if str(value).strip()
+        }
+        if (
+            objective_id not in candidate_objective_ids
+            or candidate_objective_ids != expected_candidate_objective_ids
+        ):
+            continue
+        candidate_requested_source_families = {
+            str(value).strip()
+            for value in candidate.get("requested_source_families") or ()
+            if str(value).strip()
+        }
+        if (
+            not query_source_families.issubset(
+                candidate_requested_source_families
+            )
+            or candidate_requested_source_families
+            != expected_candidate_source_families
+        ):
+            continue
+        ranking_status = str(candidate.get("ranking_status") or "").strip()
+        if ranking_status not in terminal_ranking_statuses:
+            continue
+        if ranking_status == "REJECTED_FUTURE":
+            published_at = str(candidate.get("published_at") or "").strip()
+            if re.fullmatch(r"\d{4}-\d{2}-\d{2}", published_at) is None:
+                continue
+            future_rejections = future_rejections_by_candidate.get(
+                candidate_id, []
+            )
+            try:
+                future_rejected = bool(
+                    candidate.get("future_candidate_rejected_before_llm") is True
+                    and str(candidate.get("fetch_status") or "")
+                    == "FETCH_REJECTED"
+                    and str(candidate.get("publication_date_state") or "")
+                    == "REJECTED_FUTURE_SOURCE_LOCATOR"
+                    and str(candidate.get("publication_date_basis") or "")
+                    == "OFFICIAL_SOURCE_LOCATOR_METADATA"
+                    and date.fromisoformat(published_at) > cutoff
+                    and len(future_rejections) == 1
+                    and _future_candidate_rejection_matches(
+                        future_rejections[0],
+                        candidate=candidate,
+                        materiality_query_ids=current_materiality_query_ids,
+                        objective_ids=candidate_objective_ids,
+                        target_as_of_date=as_of_date,
+                        published_at=published_at,
+                    )
+                )
+            except ValueError:
+                future_rejected = False
+            if not future_rejected:
+                continue
+            if not current_materiality_query_ids.issubset(
+                {
+                    str(value).strip()
+                    for value in candidate.get("query_ids") or ()
+                    if str(value).strip()
+                }
+            ):
+                continue
+            return True
+
+        materiality_decision_id = str(
+            candidate.get("materiality_decision_id") or ""
+        ).strip()
+        decision = decision_by_id.get(materiality_decision_id)
+        expected_material_relevance = ranking_status == "MATERIAL"
+        current_scope_hash = _candidate_materiality_scope_hash(candidate)
+        current_decision_input_hash = (
+            candidate_materiality_decision_input_hash(candidate)
+        )
+        stored_decision_input_hash = str(
+            candidate.get("materiality_decision_input_hash") or ""
+        ).strip()
+        stored_decision_prompt_input_hash = str(
+            candidate.get("materiality_decision_prompt_input_hash") or ""
+        ).strip()
+        if (
+            stored_decision_input_hash
+            and stored_decision_input_hash != current_decision_input_hash
+        ):
+            continue
+        attestation_matches = any(
+            _candidate_scope_attestation_matches(
+                attestation,
+                decision_id=materiality_decision_id,
+                candidate_id=candidate_id,
+                scope_hash=current_scope_hash,
+                decision_input_hash=current_decision_input_hash,
+                decision_prompt_input_hash=(
+                    stored_decision_prompt_input_hash or None
+                ),
+                materiality_query_ids=current_materiality_query_ids,
+                objective_ids=candidate_objective_ids,
+                requested_source_families=(
+                    candidate_requested_source_families
+                ),
+            )
+            for attestation in materiality_scope_attestations.values()
+            if isinstance(attestation, Mapping)
+        )
+        if (
+            decision is None
+            or not attestation_matches
+            or str(decision.get("candidate_id") or "").strip() != candidate_id
+            or decision.get("material_relevance")
+            is not expected_material_relevance
+            or not _candidate_materiality_decision_binds_scope(
+                candidate=candidate,
+                decision=decision,
+                scope_hash=current_scope_hash,
+                requested_source_families=tuple(
+                    sorted(candidate_requested_source_families)
+                ),
+            )
+        ):
+            continue
+        if ranking_status == "MATERIAL" and str(
+            candidate.get("fetch_status") or ""
+        ).strip() not in terminal_material_fetch_statuses:
+            continue
+        return True
+    return False
+
+
+def _future_candidate_rejection_matches(
+    rejection: Mapping[str, Any],
+    *,
+    candidate: Mapping[str, Any],
+    materiality_query_ids: set[str],
+    objective_ids: set[str],
+    target_as_of_date: str,
+    published_at: str,
+) -> bool:
+    """Bind a pre-LLM future rejection to its durable rejection ledger row."""
+
+    return bool(
+        str(rejection.get("rejection_id") or "").strip()
+        and str(rejection.get("schema_version") or "")
+        == "e2r_v5_source_graph_rejection_v1"
+        and str(rejection.get("candidate_id") or "")
+        == str(candidate.get("candidate_id") or "")
+        and str(rejection.get("as_of_date") or "") == target_as_of_date
+        and str(rejection.get("inferred_published_at") or "").strip()
+        == published_at
+        and str(rejection.get("rejection_reason") or "")
+        == "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE"
+        and rejection.get("content_hash") is None
+        and rejection.get("future_candidate_rejected_before_llm") is True
+        and rejection.get("retryable") is False
+        and rejection.get("score_authority") is False
+        and not tuple(rejection.get("accepted_claim_ids") or ())
+        and rejection.get("snippet_used_as_document") is False
+        and {
+            str(value).strip()
+            for value in rejection.get("query_ids") or ()
+            if str(value).strip()
+        }
+        == materiality_query_ids
+        and {
+            str(value).strip()
+            for value in rejection.get("objective_ids") or ()
+            if str(value).strip()
+        }
+        == objective_ids
+        and str(rejection.get("url") or "").strip()
+        == str(candidate.get("url") or "").strip()
+        and str(rejection.get("rejection_id") or "")
+        == stable_intelligence_id(
+            "SGREJECT",
+            {
+                "candidate_id": candidate.get("candidate_id"),
+                "reason": "FUTURE_CANDIDATE_SOURCE_LOCATOR_DATE",
+                "content_hash": None,
+            },
+        )
+    )
+
+
+def _counter_search_query_reports_positive_results(
+    query: Mapping[str, Any],
+) -> bool:
+    result_count = query.get("search_result_count")
+    return bool(
+        type(result_count) is int
+        and result_count > 0
+        and str(query.get("execution_status") or "").strip()
+        in {"SEARCH_EXECUTED", "PROVIDER_ERROR"}
+    )
+
+
+def _candidate_scope_attestation_matches(
+    attestation: Mapping[str, Any] | None,
+    *,
+    decision_id: str,
+    candidate_id: str,
+    scope_hash: str,
+    decision_input_hash: str,
+    decision_prompt_input_hash: str | None,
+    materiality_query_ids: set[str],
+    objective_ids: set[str],
+    requested_source_families: set[str],
+) -> bool:
+    """Verify that the official decision-time request saw this exact scope."""
+
+    if not isinstance(attestation, Mapping):
+        return False
+    return bool(
+        attestation.get("schema_version")
+        == "e2r_v5_candidate_materiality_scope_attestation_v2"
+        and re.fullmatch(
+            r"MATSCOPE-[0-9a-f]{24}",
+            str(attestation.get("attestation_id") or ""),
+        )
+        is not None
+        and str(attestation.get("decision_id") or "") == decision_id
+        and str(attestation.get("candidate_id") or "") == candidate_id
+        and str(attestation.get("materiality_scope_hash") or "")
+        == scope_hash
+        and str(attestation.get("decision_input_hash") or "")
+        == decision_input_hash
+        and (
+            decision_prompt_input_hash is None
+            or str(attestation.get("decision_prompt_input_hash") or "")
+            == decision_prompt_input_hash
+        )
+        and {
+            str(value).strip()
+            for value in attestation.get("materiality_query_ids") or ()
+            if str(value).strip()
+        }
+        == materiality_query_ids
+        and {
+            str(value).strip()
+            for value in attestation.get("candidate_objective_ids") or ()
+            if str(value).strip()
+        }
+        == objective_ids
+        and {
+            str(value).strip()
+            for value in attestation.get("requested_source_families") or ()
+            if str(value).strip()
+        }
+        == requested_source_families
+        and attestation.get("score_or_stage_authority") is False
+        and re.fullmatch(
+            r"COLLABREQ-[0-9a-f]{64}|TEST-COLLABREQ-[A-Za-z0-9._-]+",
+            str(attestation.get("request_id") or ""),
+        )
+        is not None
+        and re.fullmatch(
+            r"COLLABRESP-[0-9a-f]{64}|TEST-COLLABRESP-[A-Za-z0-9._-]+",
+            str(attestation.get("response_id") or ""),
+        )
+        is not None
     )
 
 

@@ -14,7 +14,7 @@ from datetime import date, datetime
 from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Sequence
-from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+from urllib.parse import parse_qsl, urlsplit
 
 from e2r.production.metadata import write_json, write_jsonl
 from e2r.research.naver_search_provider import NaverFreeSearchProvider
@@ -39,6 +39,10 @@ from .component_researcher import StructuredResearchProvider
 from .document_ranker import (
     CandidateRankingResult,
     ResearcherDocumentRanker,
+    candidate_materiality_decision_input_hash,
+    candidate_materiality_full_prompt_input_hash,
+    candidate_materiality_scope_hash,
+    normalize_candidate_url,
     project_candidate_ranking_discovery_candidates,
 )
 from .schemas import ComponentResearchPlan, EvidenceFact
@@ -1816,6 +1820,12 @@ class ResearcherSourceGraphAcquirer:
                 )
                 ranking_rows.append(decision.to_dict())
                 candidate["materiality_decision_id"] = decision.decision_id
+                candidate["materiality_decision_input_hash"] = (
+                    candidate_materiality_decision_input_hash(candidate)
+                )
+                candidate["materiality_decision_prompt_input_hash"] = (
+                    candidate_materiality_full_prompt_input_hash(candidate)
+                )
                 candidate["material_priority"] = decision.priority
                 candidate["materiality_rationale"] = decision.rationale
                 candidate["matched_requested_source_family"] = (
@@ -4238,30 +4248,12 @@ def _candidate_materiality_scope_hash(
     must decide even when the URL is identical.
     """
 
-    payload = {
-        "normalized_url": str(
-            candidate.get("normalized_url")
-            or _normalize_url(str(candidate.get("url") or ""))
-        ),
-        "objective_ids": sorted(
-            str(value)
-            for value in candidate.get("objective_ids") or ()
-            if str(value).strip()
-        ),
-        "requested_source_families": sorted(
-            str(value)
-            for value in candidate.get("requested_source_families") or ()
-            if str(value).strip()
-        ),
-    }
-    return hashlib.sha256(
-        json.dumps(
-            payload,
-            ensure_ascii=False,
-            sort_keys=True,
-            separators=(",", ":"),
-        ).encode("utf-8")
-    ).hexdigest()
+    normalized = dict(candidate)
+    normalized["normalized_url"] = str(
+        candidate.get("normalized_url")
+        or _normalize_url(str(candidate.get("url") or ""))
+    )
+    return candidate_materiality_scope_hash(normalized)
 
 
 def _reopen_stale_pending_materiality_candidates(
@@ -4303,6 +4295,8 @@ def _reopen_stale_pending_materiality_candidates(
             "PRODUCTION_FETCH_REQUIRES_CURRENT_SOURCE_FAMILY_MATCH"
         )
         candidate.pop("materiality_decision_id", None)
+        candidate.pop("materiality_decision_input_hash", None)
+        candidate.pop("materiality_decision_prompt_input_hash", None)
         candidate.pop("material_priority", None)
         candidate.pop("materiality_rationale", None)
         candidate.pop("matched_requested_source_family", None)
@@ -5403,6 +5397,8 @@ def _invalidate_candidate_materiality_for_scope_change(
         candidate["materiality_scope_expanded_after_terminal_fetch"] = True
     candidate["materiality_revalidation_reason"] = reason
     candidate.pop("materiality_decision_id", None)
+    candidate.pop("materiality_decision_input_hash", None)
+    candidate.pop("materiality_decision_prompt_input_hash", None)
     candidate.pop("material_priority", None)
     candidate.pop("materiality_rationale", None)
     candidate.pop("matched_requested_source_family", None)
@@ -8414,20 +8410,7 @@ def _is_http_url(value: str) -> bool:
 
 
 def _normalize_url(value: str) -> str:
-    if not value:
-        return ""
-    parts = urlsplit(value.strip())
-    host = parts.netloc.casefold()
-    path = re.sub(r"/{2,}", "/", parts.path or "/").rstrip("/") or "/"
-    query = urlencode(
-        sorted(
-            (key, item)
-            for key, item in parse_qsl(parts.query, keep_blank_values=True)
-            if not key.casefold().startswith("utm_")
-            and key.casefold() not in {"fbclid", "gclid", "ref", "ocid"}
-        )
-    )
-    return urlunsplit((parts.scheme.casefold(), host, path, query, ""))
+    return normalize_candidate_url(value)
 
 
 def _normalized_host(value: str) -> str:
