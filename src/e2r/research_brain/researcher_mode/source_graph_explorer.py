@@ -81,7 +81,7 @@ NAVIGATION_ONLY_REFERENCE_POLICY_VERSION = (
     "e2r_v5_navigation_only_reference_terminal_v2"
 )
 SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION = (
-    "e2r_v5_customer_official_weak_discovery_override_v1"
+    "e2r_v5_ranker_bound_weak_discovery_override_v2"
 )
 
 # A production fetch remains bounded, while the complete fetched text stays
@@ -6152,6 +6152,9 @@ def _fetch_candidate_document(
     classified_source_family = _classify_source_family(
         candidate, url=url, official_hosts=official_hosts
     )
+    candidate_materiality_scope = _validated_reference_materiality_scope(
+        candidate
+    )
     content_inferred_date = infer_publication_date(
         explicit=None,
         metadata_parts=(
@@ -6218,8 +6221,17 @@ def _fetch_candidate_document(
             ),
         )
     )
+    ranker_public_broker_pdf_provenance = (
+        _ranker_public_broker_pdf_provenance_applies(
+            classified_source_family=classified_source_family,
+            fetched_content_type=fetched_content_type,
+            candidate_materiality_scope=candidate_materiality_scope,
+        )
+    )
     source_family = (
-        "CUSTOMER_OFFICIAL"
+        "PUBLIC_BROKER_PDF"
+        if ranker_public_broker_pdf_provenance
+        else "CUSTOMER_OFFICIAL"
         if ranker_customer_official_provenance
         else classified_source_family
     )
@@ -6320,6 +6332,39 @@ def _fetch_candidate_document(
                     )
                 )
             )
+            existing_scope = _validated_reference_materiality_scope(
+                existing
+            )
+            if (
+                ranker_public_broker_pdf_provenance
+                and existing_family in _WEAK_DISCOVERY_SOURCE_FAMILIES
+                and candidate_scope is not None
+                and existing_scope is not None
+                and dict(existing_scope) == dict(candidate_scope)
+            ):
+                existing[
+                    "source_family_before_provenance_reclassification"
+                ] = existing_family
+                existing["source_family"] = "PUBLIC_BROKER_PDF"
+                existing["canonical_url"] = url
+                existing["source_independence_group"] = (
+                    _source_independence_group(
+                        url,
+                        "PUBLIC_BROKER_PDF",
+                    )
+                )
+                existing["source_family_assigned_by_candidate_ranker"] = (
+                    True
+                )
+                existing["source_family_provenance_reclassified"] = True
+                existing[
+                    "source_family_provenance_reclassification_reason"
+                ] = (
+                    "CURRENT_BOUND_BROKER_PDF_DECISION_OVERRIDES_WEAK_DISCOVERY_HINT"
+                )
+                existing[
+                    "source_family_provenance_semantics_version"
+                ] = SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION
             if source_family in SOURCE_FAMILY_CLASSES["OFFICIAL"]:
                 existing["verified_official_discovery_urls"] = list(
                     dict.fromkeys(
@@ -6453,6 +6498,22 @@ def _fetch_candidate_document(
         ),
         "source_family_assigned_by_candidate_ranker": (
             ranker_customer_official_provenance
+            or ranker_public_broker_pdf_provenance
+        ),
+        "source_family_before_provenance_reclassification": (
+            classified_source_family
+            if source_family != classified_source_family
+            else None
+        ),
+        "source_family_provenance_reclassified": (
+            source_family != classified_source_family
+        ),
+        "source_family_provenance_reclassification_reason": (
+            "CURRENT_BOUND_BROKER_PDF_DECISION_OVERRIDES_WEAK_DISCOVERY_HINT"
+            if ranker_public_broker_pdf_provenance
+            else "CURRENT_CUSTOMER_OFFICIAL_DECISION_OVERRIDES_WEAK_DISCOVERY_HINT"
+            if ranker_customer_official_provenance
+            else None
         ),
         "source_family_provenance_semantics_version": (
             SOURCE_FAMILY_PROVENANCE_SEMANTICS_VERSION
@@ -6752,6 +6813,35 @@ def _ranker_customer_official_provenance_applies(
 
     return (
         matched_requested_source_family == "CUSTOMER_OFFICIAL"
+        and classified_source_family in _WEAK_DISCOVERY_SOURCE_FAMILIES
+    )
+
+
+def _ranker_public_broker_pdf_provenance_applies(
+    *,
+    classified_source_family: str,
+    fetched_content_type: str,
+    candidate_materiality_scope: Mapping[
+        str, tuple[str, ...] | str
+    ] | None,
+) -> bool:
+    """Promote only an exact current, fetched broker-PDF decision.
+
+    Download endpoints often have neither a ``.pdf`` suffix nor a broker host
+    classifier, so deterministic discovery labels them GENERAL_WEB.  A current
+    materiality response may supply the missing semantic family, but only when
+    its URL/objective/request/decision scope validates, the fetched bytes were
+    actually classified as PDF, and no stronger issuer/regulatory/Reuters
+    provenance conflicts with the weak discovery hint.
+    """
+
+    return bool(
+        candidate_materiality_scope is not None
+        and candidate_materiality_scope.get(
+            "matched_requested_source_family"
+        )
+        == "PUBLIC_BROKER_PDF"
+        and "pdf" in str(fetched_content_type or "").casefold()
         and classified_source_family in _WEAK_DISCOVERY_SOURCE_FAMILIES
     )
 

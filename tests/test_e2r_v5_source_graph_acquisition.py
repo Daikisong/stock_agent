@@ -6694,6 +6694,192 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             (),
         )
 
+    def test_bound_weak_discovery_pdf_becomes_canonical_public_broker_pdf(
+        self,
+    ) -> None:
+        url = "https://download.example.net/report?key=1"
+        text = (
+            "2026-04-06 Current Corp Company Report\n"
+            "Forward BPS PBR and EV EBITDA estimates with full discussion."
+        )
+        candidate = {
+            "candidate_id": "BOUND-BROKER-PDF",
+            "url": url,
+            "normalized_url": url,
+            "query_ids": ["QUERY-BROKER"],
+            "materiality_query_ids": ["QUERY-BROKER"],
+            "objective_ids": ["OBJECTIVE-VALUATION"],
+            "requested_source_families": ["PUBLIC_BROKER_PDF"],
+            "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+            "materiality_decision_id": "DECISION-BOUND-BROKER",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "MATERIAL_PENDING_FETCH",
+            "published_at": "2026-04-06",
+        }
+        candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(candidate)
+        )
+
+        class _PDFPageFetcher:
+            def fetch(self, fetched_url: str, *, as_of_date: date) -> FetchResult:
+                return FetchResult(
+                    url=fetched_url,
+                    ok=True,
+                    text=text,
+                    content_type="application/pdf",
+                    fetched_at=datetime(2026, 6, 29),
+                )
+
+        record, document, rejection = (
+            source_graph_module._fetch_candidate_document(
+                candidate=candidate,
+                target_id=TARGET,
+                target_name=TARGET_NAME,
+                target_aliases=(),
+                as_of_date=date.fromisoformat(AS_OF_DATE),
+                page_fetcher=_PDFPageFetcher(),
+                min_chars=10,
+                require_date_verified=True,
+                official_hosts=set(),
+                content_hash_to_document={},
+            )
+        )
+
+        self.assertIsNone(rejection)
+        self.assertEqual(record["disposition"], "FULL_DOCUMENT_FETCHED")
+        self.assertIsNotNone(document)
+        assert document is not None
+        self.assertEqual(document["source_family"], "PUBLIC_BROKER_PDF")
+        self.assertEqual(
+            document["source_family_before_provenance_reclassification"],
+            "GENERAL_WEB_DISCOVERY",
+        )
+        self.assertTrue(document["source_family_assigned_by_candidate_ranker"])
+        self.assertTrue(document["source_family_provenance_reclassified"])
+        self.assertEqual(
+            document["source_independence_group"],
+            "PUBLIC_BROKER_PDF:download.example.net",
+        )
+
+    def test_broker_pdf_override_rejects_unbound_non_pdf_and_strong_family(self) -> None:
+        valid_scope = {
+            "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        }
+        self.assertFalse(
+            source_graph_module._ranker_public_broker_pdf_provenance_applies(
+                classified_source_family="GENERAL_WEB_DISCOVERY",
+                fetched_content_type="application/pdf",
+                candidate_materiality_scope=None,
+            )
+        )
+        self.assertFalse(
+            source_graph_module._ranker_public_broker_pdf_provenance_applies(
+                classified_source_family="GENERAL_WEB_DISCOVERY",
+                fetched_content_type="text/html",
+                candidate_materiality_scope=valid_scope,
+            )
+        )
+        for strong_family in (
+            "OPENDART",
+            "KIND_KRX",
+            "ISSUER_NEWSROOM",
+            "REUTERS",
+        ):
+            self.assertFalse(
+                source_graph_module._ranker_public_broker_pdf_provenance_applies(
+                    classified_source_family=strong_family,
+                    fetched_content_type="application/pdf",
+                    candidate_materiality_scope=valid_scope,
+                )
+            )
+
+    def test_duplicate_weak_document_adopts_bound_broker_pdf_provenance_once(self) -> None:
+        original_url = "https://mirror.example.net/report"
+        broker_url = "https://download.example.net/report?key=2"
+        text = (
+            "2026-04-06 Current Corp Company Report\n"
+            "Forward BPS PBR and EV EBITDA estimates with full discussion."
+        )
+        content_hash = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        existing = {
+            "document_id": "SGDOC-EXISTING-BROKER-BYTES",
+            "target_id": TARGET,
+            "canonical_url": original_url,
+            "source_provider": "PageFetcher",
+            "source_family": "GENERAL_WEB_DISCOVERY",
+            "source_family_observations": ["GENERAL_WEB_DISCOVERY"],
+            "source_independence_group": (
+                "GENERAL_WEB_DISCOVERY:mirror.example.net"
+            ),
+            "published_at": "2026-04-06",
+            "content_hash": content_hash,
+            "content_text": text,
+            "full_fetch_performed": True,
+            "evidence_eligible": True,
+            "snippet_only": False,
+            "snippet_used_as_document": False,
+            "query_ids": ["QUERY-OLD"],
+            "objective_ids": ["OBJECTIVE-OLD"],
+            "requested_source_families": ["GENERAL_WEB_DISCOVERY"],
+        }
+        candidate = {
+            "candidate_id": "DUPLICATE-BOUND-BROKER",
+            "url": broker_url,
+            "normalized_url": broker_url,
+            "query_ids": ["QUERY-BROKER"],
+            "materiality_query_ids": ["QUERY-BROKER"],
+            "objective_ids": ["OBJECTIVE-VALUATION"],
+            "requested_source_families": ["PUBLIC_BROKER_PDF"],
+            "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+            "materiality_decision_id": "DECISION-DUPLICATE-BROKER",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "MATERIAL_PENDING_FETCH",
+            "published_at": "2026-04-06",
+        }
+        candidate["materiality_scope_hash"] = (
+            source_graph_module._candidate_materiality_scope_hash(candidate)
+        )
+
+        class _PDFPageFetcher:
+            def fetch(self, fetched_url: str, *, as_of_date: date) -> FetchResult:
+                return FetchResult(
+                    url=fetched_url,
+                    ok=True,
+                    text=text,
+                    content_type="application/pdf",
+                    fetched_at=datetime(2026, 6, 29),
+                )
+
+        for _ in range(2):
+            record, document, rejection = (
+                source_graph_module._fetch_candidate_document(
+                    candidate=candidate,
+                    target_id=TARGET,
+                    target_name=TARGET_NAME,
+                    target_aliases=(),
+                    as_of_date=date.fromisoformat(AS_OF_DATE),
+                    page_fetcher=_PDFPageFetcher(),
+                    min_chars=10,
+                    require_date_verified=True,
+                    official_hosts=set(),
+                    content_hash_to_document={content_hash: existing},
+                )
+            )
+            self.assertIsNone(rejection)
+            self.assertEqual(record["disposition"], "DUPLICATE_CONTENT")
+            self.assertIs(document, existing)
+
+        self.assertEqual(existing["source_family"], "PUBLIC_BROKER_PDF")
+        self.assertEqual(
+            existing["source_family_before_provenance_reclassification"],
+            "GENERAL_WEB_DISCOVERY",
+        )
+        self.assertEqual(existing["canonical_url"], broker_url)
+        self.assertEqual(
+            existing["source_family_observations"],
+            ["GENERAL_WEB_DISCOVERY", "PUBLIC_BROKER_PDF"],
+        )
+
     def test_navigation_url_classifier_keeps_documents_and_articles(self) -> None:
         navigation_urls = (
             "https://issuer.example.com/tag/results",
