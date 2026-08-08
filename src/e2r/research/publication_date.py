@@ -9,7 +9,7 @@ from urllib.parse import unquote
 
 
 PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION = (
-    "e2r_publication_date_inference_v5"
+    "e2r_publication_date_inference_v6"
 )
 
 _ENGLISH_MONTHS = {
@@ -342,12 +342,13 @@ def _leading_release_publication_dates(
 def _leading_broker_report_publication_dates(text: str) -> tuple[date, ...]:
     """Read a full calendar date only from the PDF report header.
 
-    Broker PDFs commonly begin with ``YYYY-MM-DD Company ...`` while their
+    Broker PDFs commonly begin with ``YYYY-MM-DD Company ...`` or put a
+    standalone date immediately below an explicit report label while their
     download endpoint and search result carry no publication timestamp.  The
     caller enables this narrow fallback only for a fetched PDF whose current
-    materiality decision is bound to ``PUBLIC_BROKER_PDF``.  Restricting the
-    scan to the first non-empty line prevents forecast periods and table
-    dates in the report body from becoming publication authority.
+    materiality decision is bound to ``PUBLIC_BROKER_PDF``.  We accept only
+    those two header shapes; an arbitrary date among the first few body/table
+    rows is not publication authority.
     """
 
     lines = tuple(
@@ -355,15 +356,24 @@ def _leading_broker_report_publication_dates(text: str) -> tuple[date, ...]:
         for line in str(text or "").splitlines()
         if line.strip()
     )
-    candidates: list[date] = []
-    for line in lines[:1]:
-        match = re.match(
-            r"^(20\d{2})\s*[./_-]\s*([01]?\d)\s*[./_-]\s*([0-3]?\d)"
-            r"(?=\s|$)",
-            line,
+    if not lines:
+        return ()
+    date_prefix = re.compile(
+        r"^(20\d{2})\s*[./_-]\s*([01]?\d)\s*[./_-]\s*([0-3]?\d)"
+        r"(?=\s|$)"
+    )
+    match = date_prefix.match(lines[0])
+    if match is None and len(lines) >= 2 and re.fullmatch(
+        r"(?i)(?:company|corporate|equity|research)\s+"
+        r"(?:report|update|analysis)|기업\s*(?:분석|보고서)",
+        re.sub(r"\s+", " ", lines[0]),
+    ):
+        match = re.fullmatch(
+            r"(20\d{2})\s*[./_-]\s*([01]?\d)\s*[./_-]\s*([0-3]?\d)",
+            lines[1],
         )
-        if match is None:
-            continue
+    candidates: list[date] = []
+    if match is not None:
         _append_valid(candidates, *map(int, match.groups()))
     return tuple(dict.fromkeys(candidates))
 

@@ -6149,6 +6149,9 @@ def _fetch_candidate_document(
         candidate.get("matched_requested_source_family") or ""
     )
     fetched_content_type = str(getattr(result, "content_type", "") or "")
+    classified_source_family = _classify_source_family(
+        candidate, url=url, official_hosts=official_hosts
+    )
     content_inferred_date = infer_publication_date(
         explicit=None,
         metadata_parts=(
@@ -6162,6 +6165,11 @@ def _fetch_candidate_document(
         allow_leading_broker_report_date=(
             matched_requested_source_family == "PUBLIC_BROKER_PDF"
             and "pdf" in fetched_content_type.casefold()
+            and classified_source_family
+            in {
+                "PUBLIC_BROKER_PDF",
+                *_WEAK_DISCOVERY_SOURCE_FAMILIES,
+            }
         ),
     )
     if explicit is not None:
@@ -6194,9 +6202,6 @@ def _fetch_candidate_document(
         reason = "WRONG_SUBJECT_FULL_DOCUMENT"
         rejection = _candidate_rejection(candidate, reason, retryable=False, content_hash=content_hash)
         return _fetch_record(fetch_id, candidate, "REJECTED", reason, content_hash), None, rejection
-    classified_source_family = _classify_source_family(
-        candidate, url=url, official_hosts=official_hosts
-    )
     # Target official, regulatory, Reuters, and report routes have strong
     # deterministic provenance classifiers and retain that observation.
     # GENERAL_WEB and is_news are only weak discovery hints: a customer-owned
@@ -8147,12 +8152,47 @@ def _reopen_fetch_semantics_candidates(
         reason = latest_reason_by_candidate.get(candidate_id, "")
         if candidate.get("ranking_status") != "MATERIAL":
             continue
+        broker_date_scope = (
+            str(
+                candidate.get("matched_requested_source_family") or ""
+            )
+            == "PUBLIC_BROKER_PDF"
+        )
+        prior_date_policy = str(
+            candidate.get("fetch_semantics_policy_version") or ""
+        )
+        if (
+            candidate.get("fetch_status")
+            in {"MATERIAL_PENDING_FETCH", "FETCH_RETRY_PENDING"}
+            and candidate.get("fetch_semantics_retry_reason")
+            == "PRIOR_UNKNOWN_DATE_PRECEDED_PUBLICATION_DATE_INFERENCE"
+            and prior_date_policy
+            != PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION
+            and broker_date_scope
+        ):
+            # A prior one-time date retry may already be pending when a
+            # narrower header inference revision lands.  Preserve that exact
+            # transport work and advance only its policy identity; do not
+            # reopen an objective or create another fetch attempt.
+            candidate["fetch_semantics_policy_version"] = (
+                PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION
+            )
         if candidate.get("fetch_status") not in {
             "FETCH_REJECTED",
             "FETCH_ROUTE_EXHAUSTED",
         }:
             continue
         if reason == "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH":
+            if (
+                not broker_date_scope
+                and prior_date_policy
+                in {
+                    "e2r_publication_date_inference_v4",
+                    "e2r_publication_date_inference_v5",
+                    PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION,
+                }
+            ):
+                continue
             flag = "publication_metadata_fetch_retry_attempted"
             policy_version = (
                 PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION

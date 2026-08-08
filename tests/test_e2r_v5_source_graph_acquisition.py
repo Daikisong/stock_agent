@@ -775,6 +775,24 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
             )
         )
 
+    def test_broker_pdf_accepts_standalone_date_below_report_label(self) -> None:
+        self.assertEqual(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=(
+                    "Company Report\n"
+                    "2026.04.06\n"
+                    "Semiconductor\n"
+                    "Current Corp\n"
+                    "2027.12.31 forecast period in the body\n"
+                ),
+                as_of_date=date(2026, 7, 12),
+                allow_leading_broker_report_date=True,
+            ),
+            date(2026, 4, 6),
+        )
+
     def test_broker_pdf_body_date_is_not_publication_header(self) -> None:
         self.assertIsNone(
             infer_publication_date(
@@ -784,6 +802,38 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
                     "Current Corp report without a dated header\n"
                     "Detailed report discussion " * 8
                     + "\n2025-10-29 historical table row\n"
+                ),
+                as_of_date=date(2026, 7, 12),
+                allow_leading_broker_report_date=True,
+            )
+        )
+
+    def test_broker_pdf_does_not_prefer_reference_date_over_future_issue_date(self) -> None:
+        self.assertIsNone(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=(
+                    "Current Corp outlook\n"
+                    "2025.12.31 reference date\n"
+                    "Company Report\n"
+                    "2026.08.01\n"
+                ),
+                as_of_date=date(2026, 7, 12),
+                allow_leading_broker_report_date=True,
+            )
+        )
+
+    def test_broker_pdf_does_not_treat_early_historical_row_as_issue_date(self) -> None:
+        self.assertIsNone(
+            infer_publication_date(
+                explicit=None,
+                metadata_parts=(),
+                document_text=(
+                    "Current Corp outlook\n"
+                    "Semiconductor\n"
+                    "Earnings discussion\n"
+                    "2025.12.31 historical table row\n"
                 ),
                 as_of_date=date(2026, 7, 12),
                 allow_leading_broker_report_date=True,
@@ -7412,9 +7462,79 @@ class E2RV5SourceGraphAcquisitionTests(unittest.TestCase):
 
         self.assertEqual(first, 1)
         self.assertEqual(second, 0)
+
+    def test_pending_old_date_retry_advances_policy_without_reopening(self) -> None:
+        candidate = {
+            "candidate_id": "PENDING-OLD-DATE-POLICY",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "MATERIAL_PENDING_FETCH",
+            "fetch_semantics_retry_reason": (
+                "PRIOR_UNKNOWN_DATE_PRECEDED_PUBLICATION_DATE_INFERENCE"
+            ),
+            "fetch_semantics_policy_version": (
+                "e2r_publication_date_inference_v5"
+            ),
+            "matched_requested_source_family": "PUBLIC_BROKER_PDF",
+        }
+
+        reopened = source_graph_module._reopen_fetch_semantics_candidates(
+            [candidate],
+            rejected_documents=(),
+        )
+
+        self.assertEqual(reopened, 0)
+        self.assertEqual(candidate["fetch_status"], "MATERIAL_PENDING_FETCH")
         self.assertEqual(
             candidate["fetch_semantics_policy_version"],
             PUBLICATION_DATE_INFERENCE_SEMANTICS_VERSION,
+        )
+        self.assertTrue(
+            source_graph_module._candidate_has_current_fetch_semantics_retry(
+                candidate
+            )
+        )
+
+    def test_v6_broker_date_policy_does_not_reopen_non_broker_v5_candidate(self) -> None:
+        terminal = {
+            "candidate_id": "INDUSTRY-TERMINAL-V5",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "FETCH_REJECTED",
+            "matched_requested_source_family": "INDUSTRY_REPORT",
+            "publication_metadata_fetch_retry_attempted": True,
+            "fetch_semantics_policy_version": (
+                "e2r_publication_date_inference_v5"
+            ),
+        }
+        pending = {
+            "candidate_id": "INDUSTRY-PENDING-V5",
+            "ranking_status": "MATERIAL",
+            "fetch_status": "MATERIAL_PENDING_FETCH",
+            "matched_requested_source_family": "INDUSTRY_REPORT",
+            "fetch_semantics_retry_reason": (
+                "PRIOR_UNKNOWN_DATE_PRECEDED_PUBLICATION_DATE_INFERENCE"
+            ),
+            "fetch_semantics_policy_version": (
+                "e2r_publication_date_inference_v5"
+            ),
+        }
+
+        reopened = source_graph_module._reopen_fetch_semantics_candidates(
+            [terminal, pending],
+            rejected_documents=(
+                {
+                    "candidate_id": "INDUSTRY-TERMINAL-V5",
+                    "rejection_reason": (
+                        "UNKNOWN_PUBLISHED_DATE_AFTER_FULL_FETCH"
+                    ),
+                },
+            ),
+        )
+
+        self.assertEqual(reopened, 0)
+        self.assertEqual(terminal["fetch_status"], "FETCH_REJECTED")
+        self.assertEqual(
+            pending["fetch_semantics_policy_version"],
+            "e2r_publication_date_inference_v5",
         )
 
     def test_fetch_semantics_retry_closes_before_unrelated_official_backlog(
